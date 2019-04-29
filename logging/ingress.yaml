@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+  name: kibana-ingress
+spec:
+  rules:
+  - host: lsst-lsp-stable.ncsa.illinois.edu
+    http:
+      paths:
+      - path: /logs
+        backend:
+          serviceName: ardent-ladybug-kibana
+          servicePort: 5601

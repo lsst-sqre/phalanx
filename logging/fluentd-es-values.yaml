@@ -1,0 +1,48 @@
+elasticsearch:
+  host: nordic-bunny-elasticsearch-client
+  buffer_chunk_limit: 100M
+  buffer_queue_limit: 32
+tolerations:
+ - key: "dedicated"
+   operator: "Exists"
+   effect: "NoSchedule"
+extraVolumes:
+  - name: qservlogs
+    hostPath:
+      path: /qserv/log
+extraVolumeMounts:
+  - name: qservlogs
+    mountPath: /qserv/log
+configMaps:
+  qserv.conf: |-
+    # Example line:
+    # 2019-04-24 23:05:29 140240301914240 [Note] InnoDB: 5.7.21 started; log sequence number 28871386
+    <source>
+      @id mysqld
+      @type tail
+      format multiline
+      multiline_flush_interval 5s
+      format_firstline /^\d{4}-\d{2}-\d{2}/
+      format1 /(?<time>[^ ]* [^ ]*) (?<thread_id>[^ ]*) \[(?<level>[^ ]*)\] (?<message>[^ ].*$)/
+      time_format %Y-%m-%d %H:%M:%S
+      path /qserv/log/mysqld.log
+      #pos_file /qserv/log/mysqld.log.pos
+      tag mysqld
+      read_from_head true
+    </source>
+
+    # Example line:
+    # [2019-04-25T19:12:21.484Z] [LWP:323] INFO  xrdssi.msgs (xrootd:0) - qserv.11:21@141.142.181.128 Ssi_ProcessResponse: 0:/worker/db01 [bound doRsp] Resp strm
+    <source>
+      @id xrootd
+      @type tail
+      format multiline
+      multiline_flush_interval 5s
+      format_firstline /^\[\d{4}-\d{2}-\d{2}T/
+      format1 /\[(?<time>[^ ]*T[^ ]*)\] (?<thread_id>[^ ]*) (?<level>[^ ]*)\s*(?<message>[^ ].*$)/
+      time_format %Y-%m-%dT%H:%M:%S
+      path /qserv/log/xrootd.log
+      #pos_file /qserv/log/xrootd.log.pos
+      tag xrootd
+      read_from_head true
+    </source>

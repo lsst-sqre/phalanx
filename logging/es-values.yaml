@@ -1,0 +1,34 @@
+image:
+  repository: "amazon/opendistro-for-elasticsearch"
+  tag: "0.8.0"
+master:
+  persistence:
+    enabled: false
+data:
+  replicas: 3
+  persistence:
+    enabled: false
+    #name: 'pvc-lspelk'
+    #size: '100Gi'
+  heapSize: "2g"
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4096Mi"
+    requests:
+      cpu: "2"
+      memory: "4096Mi"
+client:
+  replicas: 12
+  heapSize: "2g"
+  resources:
+    limits:
+      cpu: "2"
+      memory: "4096Mi"
+    requests:
+      cpu: "2"
+      memory: "4096Mi"
+cluster:
+  config:
+    opendistro_security.disabled: true
+
