@@ -1,7 +1,5 @@
 elasticsearch:
   host: nordic-bunny-elasticsearch-client
-  buffer_chunk_limit: 100M
-  buffer_queue_limit: 32
 tolerations:
  - key: "dedicated"
    operator: "Exists"
@@ -26,9 +24,10 @@ configMaps:
       format1 /(?<time>[^ ]* [^ ]*) (?<thread_id>[^ ]*) \[(?<level>[^ ]*)\] (?<message>[^ ].*$)/
       time_format %Y-%m-%d %H:%M:%S
       path /qserv/log/mysqld.log
-      #pos_file /qserv/log/mysqld.log.pos
-      tag mysqld
+      pos_file /qserv/log/mysqld.log.pos
+      tag "mysqld.#{ENV['K8S_NODE_NAME']}"
       read_from_head true
+      emit_unmatched_lines true
     </source>
 
     # Example line:
@@ -42,7 +41,8 @@ configMaps:
       format1 /\[(?<time>[^ ]*T[^ ]*)\] (?<thread_id>[^ ]*) (?<level>[^ ]*)\s*(?<message>[^ ].*$)/
       time_format %Y-%m-%dT%H:%M:%S
       path /qserv/log/xrootd.log
-      #pos_file /qserv/log/xrootd.log.pos
-      tag xrootd
+      pos_file /qserv/log/xrootd.log.pos
+      tag "xrootd.#{ENV['K8S_NODE_NAME']}"
       read_from_head true
+      emit_unmatched_lines true
     </source>
