@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-    nginx.ingress.kubernetes.io/auth-url:               https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:portal
+    nginx.ingress.kubernetes.io/auth-url:               https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:ops
     nginx.ingress.kubernetes.io/auth-sign-in:           https://lsst-lsp-int.ncsa.illinois.edu/oauth2/sign_in
     nginx.ingress.kubernetes.io/auth-response-headers:  X-Auth-Request-Token
     nginx.ingress.kubernetes.io/configuration-snippet: |
