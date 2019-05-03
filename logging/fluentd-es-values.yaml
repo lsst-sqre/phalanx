@@ -18,14 +18,25 @@ configMaps:
     <source>
       @id mysqld
       @type tail
-      format multiline
-      multiline_flush_interval 5s
-      format_firstline /^\d{4}-\d{2}-\d{2}/
-      format1 /(?<time>[^ ]* [^ ]*) (?<thread_id>[^ ]*) \[(?<level>[^ ]*)\] (?<message>[^ ].*$)/
-      time_format %Y-%m-%d %H:%M:%S
+      format /(?<time>\S*\s+\S*) (?<thread_id>\S+) \[(?<level>\S*)\]\s+(?<message>.*)/
+      time_format %Y-%m-%d %k:%M:%S
       path /qserv/log/mysqld.log
       pos_file /qserv/log/mysqld.log.pos
       tag "mysqld.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>
+
+    # Example line:
+    # 2019-04-24 22:22:42: (message) Initiating shutdown, requested from signal handler
+    <source>
+      @id mysql-proxy
+      @type tail
+      format /(?<time>\S+\s+\S+) \((?<level>\S*)\)\s+(?<message>.*)/
+      time_format %Y-%m-%d %H:%M:%S
+      path /qserv/log/mysql-proxy.log
+      pos_file /qserv/log/mysql-proxy.log.pos
+      tag "mysql-proxy.#{ENV['K8S_NODE_NAME']}"
       read_from_head true
       emit_unmatched_lines true
     </source>
@@ -35,14 +46,25 @@ configMaps:
     <source>
       @id xrootd
       @type tail
-      format multiline
-      multiline_flush_interval 5s
-      format_firstline /^\[\d{4}-\d{2}-\d{2}T/
-      format1 /\[(?<time>[^ ]*T[^ ]*)\] (?<thread_id>[^ ]*) (?<level>[^ ]*)\s*(?<message>[^ ].*$)/
-      time_format %Y-%m-%dT%H:%M:%S
+      format /^\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      time_format %Y-%m-%dT%H:%M:%S.%L
       path /qserv/log/xrootd.log
       pos_file /qserv/log/xrootd.log.pos
       tag "xrootd.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>
+
+    # Example line:
+    # [2019-04-30T22:31:33.975Z] [LWP:393] INFO  mysql-proxy (qserv/mysqlProxy.lua:480) - Intercepted: SELECT 1
+    <source>
+      @id mysql-proxy-lua
+      @type tail
+      format /\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      time_format %Y-%m-%dT%H:%M:%S.%L
+      path /qserv/log/mysql-proxy-lua.log
+      pos_file /qserv/log/mysql-proxy-lua.log.pos
+      tag "mysql-proxy-lua.#{ENV['K8S_NODE_NAME']}"
       read_from_head true
       emit_unmatched_lines true
     </source>
