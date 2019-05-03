@@ -1,0 +1,70 @@
+elasticsearch:
+  host: nordic-bunny-elasticsearch-client
+tolerations:
+ - key: "dedicated"
+   operator: "Exists"
+   effect: "NoSchedule"
+extraVolumes:
+  - name: qservlogs
+    hostPath:
+      path: /qserv/log
+extraVolumeMounts:
+  - name: qservlogs
+    mountPath: /qserv/log
+configMaps:
+  qserv.conf: |-
+    # Example line:
+    # 2019-04-24 23:05:29 140240301914240 [Note] InnoDB: 5.7.21 started; log sequence number 28871386
+    <source>
+      @id mysqld
+      @type tail
+      format /(?<time>\S*\s+\S*) (?<thread_id>\S+) \[(?<level>\S*)\]\s+(?<message>.*)/
+      time_format %Y-%m-%d %k:%M:%S
+      path /qserv/log/mysqld.log
+      pos_file /qserv/log/mysqld.log.pos
+      tag "mysqld.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>
+
+    # Example line:
+    # 2019-04-24 22:22:42: (message) Initiating shutdown, requested from signal handler
+    <source>
+      @id mysql-proxy
+      @type tail
+      format /(?<time>\S+\s+\S+) \((?<level>\S*)\)\s+(?<message>.*)/
+      time_format %Y-%m-%d %H:%M:%S
+      path /qserv/log/mysql-proxy.log
+      pos_file /qserv/log/mysql-proxy.log.pos
+      tag "mysql-proxy.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>
+
+    # Example line:
+    # [2019-04-25T19:12:21.484Z] [LWP:323] INFO  xrdssi.msgs (xrootd:0) - qserv.11:21@141.142.181.128 Ssi_ProcessResponse: 0:/worker/db01 [bound doRsp] Resp strm
+    <source>
+      @id xrootd
+      @type tail
+      format /^\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      time_format %Y-%m-%dT%H:%M:%S.%L
+      path /qserv/log/xrootd.log
+      pos_file /qserv/log/xrootd.log.pos
+      tag "xrootd.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>
+
+    # Example line:
+    # [2019-04-30T22:31:33.975Z] [LWP:393] INFO  mysql-proxy (qserv/mysqlProxy.lua:480) - Intercepted: SELECT 1
+    <source>
+      @id mysql-proxy-lua
+      @type tail
+      format /\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      time_format %Y-%m-%dT%H:%M:%S.%L
+      path /qserv/log/mysql-proxy-lua.log
+      pos_file /qserv/log/mysql-proxy-lua.log.pos
+      tag "mysql-proxy-lua.#{ENV['K8S_NODE_NAME']}"
+      read_from_head true
+      emit_unmatched_lines true
+    </source>

@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+    nginx.ingress.kubernetes.io/auth-url:               https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:ops
+    nginx.ingress.kubernetes.io/auth-sign-in:           https://lsst-lsp-int.ncsa.illinois.edu/oauth2/sign_in
+    nginx.ingress.kubernetes.io/auth-response-headers:  X-Auth-Request-Token
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      error_page 403 = "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+  name: kibana-ingress
+spec:
+  rules:
+  - host: lsst-lsp-int.ncsa.illinois.edu
+    http:
+      paths:
+      - path: /logs
+        backend:
+          serviceName: ardent-ladybug-kibana
+          servicePort: 5601

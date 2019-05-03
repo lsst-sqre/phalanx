@@ -1,0 +1,10 @@
+image:
+  repository: "lsstdax/kibana-no-security"
+  #repository: "amazon/opendistro-for-elasticsearch-kibana"
+  tag: "0.8.0"
+
+files:
+  kibana.yml:
+    elasticsearch.url: http://nordic-bunny-elasticsearch-client:9200
+    server.basePath: /logs
+    server.rewriteBasePath: true
