@@ -1,5 +1,7 @@
 elasticsearch:
   host: nordic-bunny-elasticsearch-client
+env:
+ RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: 0.9
 tolerations:
  - key: "dedicated"
    operator: "Exists"
