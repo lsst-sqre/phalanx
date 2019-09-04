@@ -13,7 +13,7 @@ extraVolumes:
 extraVolumeMounts:
   - name: qservlogs
     mountPath: /qserv/log
-configMaps:
+extraConfigMaps:
   qserv.conf: |-
     # Example line:
     # 2019-04-24 23:05:29 140240301914240 [Note] InnoDB: 5.7.21 started; log sequence number 28871386
