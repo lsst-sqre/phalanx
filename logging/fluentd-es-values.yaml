@@ -44,11 +44,18 @@ extraConfigMaps:
     </source>
 
     # Example line:
-    # [2019-04-25T19:12:21.484Z] [LWP:323] INFO  xrdssi.msgs (xrootd:0) - qserv.11:21@141.142.181.128 Ssi_ProcessResponse: 0:/worker/db01 [bound doRsp] Resp strm
+    # [2019-09-05T10:40:13.189-0700] {{LWP,4567}{QID,4518#0}} DEBUG wdb.QueryRunner (core/modules/wdb/QueryRunner.cc:338) - _sendbuf wait end
+    # Curly braces include Mapped Diagnostic Context with key/value pairs in curly braces separated by commas.
+    # MDC keys are defined by Qserv and here we handle this set of keys:
+    #   - LWP: thread/light-weight process ID (number)
+    #   - CZID: czar ID (number)
+    #   - TID: temporary query ID (number)
+    #   - QID: query and optional job ID (number or two numbers separated by hash)
+    # Unreadable regexp below handles all these keys and values, all unknown keys are ignored (by "[^}]*" expression)
     <source>
       @id xrootd
       @type tail
-      format /^\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
       time_format %Y-%m-%dT%H:%M:%S.%L
       path /qserv/log/xrootd.log
       pos_file /qserv/log/xrootd.log.pos
@@ -58,11 +65,12 @@ extraConfigMaps:
     </source>
 
     # Example line:
-    # [2019-04-30T22:31:33.975Z] [LWP:393] INFO  mysql-proxy (qserv/mysqlProxy.lua:480) - Intercepted: SELECT 1
+    # [2019-09-05T10:40:13.156-0700] {{CZID,1}{LWP,4728}{QID,4518}} DEBUG qdisp.JobQuery (core/modules/qdisp/JobQuery.cc:57) - JobQuery desc=0x7eff7400c8c0
+    # See comment above for MDC format.
     <source>
       @id mysql-proxy-lua
       @type tail
-      format /\[(?<time>\S+T\S+)\] (?<thread_id>\S+) (?<level>\S+)\s+(?<message>.*)/
+      format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
       time_format %Y-%m-%dT%H:%M:%S.%L
       path /qserv/log/mysql-proxy-lua.log
       pos_file /qserv/log/mysql-proxy-lua.log.pos
