@@ -2,7 +2,7 @@
 
 echo "Starting uninstall of LSST Science Platform (develop-gke)..."
 
-echo "Installing nginx-ingress..."
-helm delete --purge lsp-nginx
+echo "Uninstalling TAP service..."
+helm delete --purge lsp-tap
 
 echo "Finished uninstall of LSST Science Platform (develop-gke)..."
