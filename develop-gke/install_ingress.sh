@@ -1,11 +1,18 @@
 #!/bin/bash -ex
 
-echo "Starting install of the ingress for the LSST Science Platform (develop-gke)..."
+USAGE="Usage: ./install_ingress.sh FULLCHAIN_CERT_FILE PRIVATE_KEY"
+
+CERT_FILE=${1:?$USAGE}
+KEY_FILE=${2:?$USAGE}
+
+echo "Starting install of the ingress for the LSST Science Platform..."
 
 echo "Creating kubernetes secret with TLS certificate..."
-kubectl create secret tls lsp-certificate --namespace lsp-nginx --cert $1 --key $2
+echo "Certificate chain: $CERT_FILE"
+echo "Private key file:  $KEY_FILE"
+kubectl create secret tls tls-certificate --namespace default --cert $CERT_FILE --key $KEY_FILE
 
 echo "Installing nginx-ingress..."
-helm install stable/nginx-ingress --name lsp-nginx --namespace nginx --values nginx-ingress.yaml
+helm install stable/nginx-ingress --name nginx --namespace nginx --values nginx-ingress.yaml
 
-echo "Now you can run the ./public_ip script to get the IP address."
+echo "Now you can run the ./public_ip.sh script to get the IP address."
