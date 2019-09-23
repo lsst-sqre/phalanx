@@ -1,0 +1,18 @@
+# Put the FQDN you want to access nublado at here
+fqdn: ''
+
+# Put in Github oauth information here about your application
+oauth_client_id: ''
+oauth_secret: ''
+
+# Number of different images to show in the spawner
+lab:
+  image:
+    dailies: 0
+    weeklies: 0
+    recommended: 1
+
+# What fileserver to mount in the container
+routes:
+  external:
+    fileserver: "fileserver.fileserver.svc.cluster.local"
