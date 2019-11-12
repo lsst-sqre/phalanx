@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tap
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tap
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: tap
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: cadc-tap
+    repoURL: https://lsst-sqre.github.io/charts/
+    targetRevision: HEAD
+    helm:
+      parameters:
+      - name: 'slack_webhook_url'
+        value: 'abc'
+      - name: 'google_creds'
+        value: 'def'
+  syncPolicy:
+    automated:
+      prune: true
