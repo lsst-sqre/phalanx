@@ -10,6 +10,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tap
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
