@@ -20,7 +20,7 @@ spec:
   project: default
   source:
     path: landing-page
-    repoURL: https://lsst-sqre.github.io/charts/
+    repoURL: https://github.com/lsst-sqre/charts.git
     targetRevision: HEAD
   syncPolicy:
     automated:
