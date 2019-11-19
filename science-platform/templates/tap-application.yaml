@@ -24,10 +24,10 @@ spec:
     targetRevision: HEAD
     helm:
       parameters:
-      - name: 'slack_webhook_url'
-        value: 'abc'
-      - name: 'google_creds'
-        value: 'def'
+      - name: 'vault_secrets.enabled'
+        value: 'True'
+      - name: 'vault_secrets.path'
+        value: 'secret/k8s_operator/gke/tap'
   syncPolicy:
     automated:
       prune: true
