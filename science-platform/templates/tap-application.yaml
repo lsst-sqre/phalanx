@@ -28,6 +28,8 @@ spec:
         value: 'True'
       - name: 'vault_secrets.path'
         value: 'secret/k8s_operator/gke/tap'
+      - name: 'secrets.enabled'
+        value: 'False'
   syncPolicy:
     automated:
       prune: true
