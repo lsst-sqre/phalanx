@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: firefly
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: firefly
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: firefly
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: firefly
+    repoURL: https://github.com/lsst-sqre/charts.git
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
