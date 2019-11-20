@@ -1,0 +1,30 @@
+#global:
+#  image:
+    #repository: lsstdax/argocd
+    #tag: 'exp-0.0.1'
+    #tag: 'exp-0.0.2' - broken
+    #tag: 'exp-no-change'
+    #imagePullPolicy: Always
+
+redis:
+  enabled: true
+
+server:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+    paths:
+    - /argo-cd(/|$)(.*)
+
+  extraArgs:
+    basehref: /argo-cd
+    insecure: true
+
+  config:
+    helm.repositories: |
+      - url: https://lsst-sqre.github.io/charts/
+        name: lsst-sqre
+      - url: https://ricoberger.github.io/helm-charts/
+        name: ricoberger
