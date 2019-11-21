@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tap
+  name: lsst-lsp-int-dax-tap
 spec:
   finalizers:
     - kubernetes
@@ -15,7 +15,7 @@ metadata:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: lsst-lsp-int-dax
+    namespace: lsst-lsp-int-dax-tap
     server: https://kubernetes.default.svc
   project: default
   source:
