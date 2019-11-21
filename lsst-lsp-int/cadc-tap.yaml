@@ -3,6 +3,13 @@ use_mock_qserv: False
 
 host: "lsst-lsp-int.ncsa.illinois.edu"
 
+secrets:
+  enabled: False
+
+vault_secrets:
+  enabled: True
+  path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap'
+
 ingress:
   authenticated_annotations:
     nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
