@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: landing-page
+  name: lsst-lsp-int-nb
 spec:
   finalizers:
     - kubernetes
@@ -9,22 +9,22 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: landing-page
+  name: nublado
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: landing-page
+    namespace: lsst-lsp-int-nb
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: landing-page
+    path: nublado
     repoURL: https://github.com/lsst-sqre/charts.git
     targetRevision: HEAD
     helm:
       valueFiles:
-      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-int/landing-page.yaml
+      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-int/nublado.yaml
   syncPolicy:
     automated:
       prune: true
