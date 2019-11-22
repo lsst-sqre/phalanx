@@ -24,7 +24,7 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/tickets/DM-22180/lsst-lsp-int/cadc-tap.yaml
+      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-int/cadc-tap.yaml
   syncPolicy:
     automated:
       prune: true
