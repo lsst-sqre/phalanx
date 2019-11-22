@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lsst-lsp-int-nb
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nublado
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: lsst-lsp-int-nb
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: nublado
+    repoURL: https://github.com/lsst-sqre/charts.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-int/nublado.yaml
+  syncPolicy:
+    automated:
+      prune: true
