@@ -16,7 +16,10 @@ lab:
     nodejs_max_mem: '6144'
     mb_per_cpu: 3072
     size_range: "6"
-    
+
+hub:
+  persistent_home: False
+ 
 routes:
   soda: '/api/image/soda'
 
@@ -27,17 +30,18 @@ vault_secrets:
   enabled: True
   path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/nublado
 
-ingress:
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:notebook&reissue_token=true
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-Port 443;
-      proxy_set_header X-Forwarded-Path {{ .Values.routes.hub }};
-      auth_request_set $auth_token $upstream_http_x_auth_request_token;
-      proxy_set_header X-Portal-Authorization "Bearer $auth_token";
-      error_page 403 = "https://{{ .Values.fqdn }}/oauth2/start?rd=$request_uri";
-  host: lsst-lsp-int.ncsa.illinois.edu
+proxy:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:notebook&reissue_token=true
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /nb;
+        auth_request_set $auth_token $upstream_http_x_auth_request_token;
+        proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+        error_page 403 = "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+    host: lsst-lsp-int.ncsa.illinois.edu
 
 mountpoints: |
   [
