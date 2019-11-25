@@ -22,6 +22,8 @@ hub:
  
 routes:
   soda: '/api/image/soda'
+  external:
+    firefly: 'https://lsst-demo.ncsa.illinois.edu/firefly'
 
 dask:
   restrict_nodes: 'true'
