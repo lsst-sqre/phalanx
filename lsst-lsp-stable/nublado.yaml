@@ -4,9 +4,6 @@ oauth_provider: 'jwt'
 
 lab:
   restrict_nodes: 'true'
-  image:
-    experimentals: 2
-    dailies: 2
 
   resources:
     cpu_limit: '2.0'
@@ -93,22 +90,16 @@ mountpoints: |
 
 resourcemap: |
   [
-      { "disabled": true,
-        "user": "Username for user with custom resources",
-        "group": "Groupname for group with custom resources",
-        "resources": {
-            "size_index": "integer representing which size container is default: 0 is smallest",
-            "mem_quota": "integer, namespace quota size in MB",
-            "cpu_quota": "integer, namespace quota CPU limit"
-        }
-      },
-      { "group": "lsst_int_lspdev",
-        "resources": {
-            "size_index": 3,
-            "mem_quota": 626688,
-            "cpu_quota": 204
-        }
+    { "disabled": true,
+      "user": "argo configmap override test"
+    },
+    { "group": "lsst_int_lspdev",
+      "resources": {
+          "size_index": 3,
+          "mem_quota": 626688,
+          "cpu_quota": 204
       }
+    }
   ]
 
 signing_certificate: |
