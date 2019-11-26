@@ -1,0 +1,29 @@
+redis:
+  enabled: true
+
+server:
+  ingress:
+    enabled: true
+    hosts:
+      - lsst-lsp-stable.ncsa.illinois.edu
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+      nginx.ingress.kubernetes.io/auth-url:               https://lsst-lsp-stable.ncsa.illinois.edu/auth?capability=exec:admin
+      nginx.ingress.kubernetes.io/auth-sign-in:           https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/sign_in
+      nginx.ingress.kubernetes.io/auth-response-headers:  X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+       error_page 403 = "https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+    paths:
+    - /argo-cd(/|$)(.*)
+
+  extraArgs:
+    basehref: /argo-cd
+    insecure: true
+
+  config:
+    helm.repositories: |
+      - url: https://lsst-sqre.github.io/charts/
+        name: lsst-sqre
+      - url: https://ricoberger.github.io/helm-charts/
+        name: ricoberger

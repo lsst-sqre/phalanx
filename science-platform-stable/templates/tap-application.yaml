@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lsst-lsp-stable-dax-tap
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tap
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: lsst-lsp-stable-dax-tap
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: cadc-tap
+    repoURL: https://github.com/lsst-sqre/charts.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-stable/cadc-tap.yaml
+  syncPolicy:
+    automated:
+      prune: true
