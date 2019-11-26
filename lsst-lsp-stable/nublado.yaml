@@ -90,9 +90,6 @@ mountpoints: |
 
 resourcemap: |
   [
-    { "disabled": true,
-      "user": "argo configmap override test"
-    },
     { "group": "lsst_int_lspdev",
       "resources": {
           "size_index": 3,
