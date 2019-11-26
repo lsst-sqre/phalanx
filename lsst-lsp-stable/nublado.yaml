@@ -110,3 +110,14 @@ resourcemap: |
         }
       }
   ]
+
+signing_certificate: |
+  -----BEGIN PUBLIC KEY-----
+  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxmOImX9n1nHYlu546Htk
+  E1ghUfnXBnIoCZyZ/FocfWh20+Psi6E2CpSwReEE1O1u9njDwrf8pBqdkcXEJu16
+  czsAqsQr62Fm7WusYC+fRSeKq+kPJ5QB/mCAp3FW0/MFpThjeSeLuPTfQj4AQ8zR
+  9IfWL24LdvQBxGiaGaFMQHgah1ZDcNuABP6a/E2D55Z9c3TYp6UVp0jh+K16Fexj
+  CCAqwixLzon3cdcWmuDV3BU7ULJzcdwA2H35XAIhxuQyJbNq+ybmf+ZZW+rWMhPG
+  I79d2OwyjAqpf3SJKiBOpimK+1Vh/ZcKIPBVT+INfoe9XPcKnFV9csmpFXfgR5gP
+  TwIDAQAB
+  -----END PUBLIC KEY-----
