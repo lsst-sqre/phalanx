@@ -1,0 +1,5 @@
+motd_url: https://raw.githubusercontent.com/lsst-dm/lsp-landing-page/master/motd/stable.md
+host: "lsst-lsp-stable.ncsa.illinois.edu"
+image:
+  repository: "mgckind/lsst-lsp-landing"
+  tag: "stable-1.2"
