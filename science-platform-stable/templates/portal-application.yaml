@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lsst-lsp-stable-portal
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portal
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: lsst-lsp-stable-portal
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: firefly
+    repoURL: https://github.com/lsst-sqre/charts.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-stable/portal.yaml
+  syncPolicy:
+    automated:
+      prune: true
