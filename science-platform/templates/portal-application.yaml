@@ -16,9 +16,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: firefly
-    repoURL: https://github.com/lsst-sqre/charts.git
-    targetRevision: HEAD
+    path: services/portal
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: tickets/DM-22518
   syncPolicy:
     automated:
       prune: true

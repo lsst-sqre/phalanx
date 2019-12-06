@@ -19,9 +19,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: landing-page
-    repoURL: https://github.com/lsst-sqre/charts.git
-    targetRevision: HEAD
+    path: services/landing-page
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: tickets/DM-22518
   syncPolicy:
     automated:
       prune: true
