@@ -19,12 +19,12 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: nublado
-    repoURL: https://github.com/lsst-sqre/charts.git
+    path: services/nublado
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
     helm:
       valueFiles:
-      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-int/nublado.yaml
+      - values-int.yaml
   syncPolicy:
     automated:
       prune: true
