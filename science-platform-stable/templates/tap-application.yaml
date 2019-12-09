@@ -19,12 +19,12 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: cadc-tap
-    repoURL: https://github.com/lsst-sqre/charts.git
+    path: services/tap
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
     helm:
       valueFiles:
-      - https://raw.githubusercontent.com/lsst-sqre/lsp-deploy/master/lsst-lsp-stable/cadc-tap.yaml
+      - values-stable.yaml
   syncPolicy:
     automated:
       prune: true

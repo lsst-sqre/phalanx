@@ -1,0 +1,54 @@
+firefly:
+  image:
+    tag: "1.1.1"
+
+  ingress:
+    host: 'lsst-lsp-int.ncsa.illinois.edu'
+    annotations:
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-url: https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:portal
+      nginx.ingress.kubernetes.io/configuration-snippet: | 
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /portal/app;
+        error_page 403 = "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+
+  secrets:
+    enabled: False
+
+  vault_secrets:
+    enabled: True
+    path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/portal'
+
+  max_jvm_size: "23G"
+
+  redis:
+    resources:
+      limits:
+        memory: 20Mi
+
+  nodeSelector:
+    environment: portal-int
+
+  tolerations:
+  - effect: NoSchedule
+    key: dedicated
+    operator: Equal
+    value: portal
+
+  resources:
+    limits:
+      memory: 24Gi
+
+  volumes:
+    firefly_workarea:
+      emptyDir: null
+      hostPath:
+        path: /sui/firefly/workarea
+        type: Directory
+    firefly_config:
+      emptyDir: null
+      hostPath:
+        path: /sui/firefly/config
+        type: Directory

@@ -1,23 +1,23 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: firefly
+  name: portal
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: firefly
+  name: portal
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: firefly
+    namespace: portal
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: firefly
-    repoURL: https://github.com/lsst-sqre/charts.git
+    path: services/portal
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
   syncPolicy:
     automated:
