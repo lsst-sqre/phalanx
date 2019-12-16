@@ -10,7 +10,7 @@ data:
     enabled: false
     #name: 'pvc-lspelk'
     #size: '100Gi'
-  heapSize: "1g"
+  heapSize: "5g"
   resources:
     limits:
       cpu: "2"
@@ -19,8 +19,8 @@ data:
       cpu: "2"
       memory: 7G
 client:
-  replicas: 12
-  heapSize: "2g"
+  replicas: 8
+  heapSize: "6g"
   resources:
     limits:
       cpu: "2"
