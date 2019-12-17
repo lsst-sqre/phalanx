@@ -25,6 +25,3 @@ spec:
     helm:
       valueFiles:
       - values-gke.yaml
-  syncPolicy:
-    automated:
-      prune: true
