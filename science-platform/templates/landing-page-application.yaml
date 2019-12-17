@@ -22,6 +22,3 @@ spec:
     path: services/landing-page
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
-  syncPolicy:
-    automated:
-      prune: true
