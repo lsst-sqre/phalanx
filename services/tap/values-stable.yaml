@@ -1,5 +1,5 @@
 cadc-tap:
-  tag: "1.0"
+  tag: "1.0.2"
   use_mock_qserv: False
   querymonkey_replicas: 1
 
@@ -36,3 +36,6 @@ cadc-tap:
     limits:
       cpu: 2.0
       memory: 4G
+
+  gcs_bucket: 'async-results.lsst.codes'
+  gcs_bucket_url: 'http://async-results.lsst.codes'
