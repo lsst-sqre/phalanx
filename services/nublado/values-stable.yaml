@@ -54,39 +54,33 @@ nublado:
         "options": "mount options, e.g. 'local_lock=all'"
       },
       {
-        "disabled": true,
-        "mountpoint": "/n/lsstdata/offline/teststand",
-        "mode": "ro",
-        "kubernetes-volume": "teststand-lsst-lsp-int"
-      },
-      {
        "mountpoint": "/home",
         "mode": "rw",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/lsst/jhome"
+        "fileserver-export": "/user/staff/jhome"
       },
       {
         "mountpoint": "/datasets",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/lsst/datasets"
+        "fileserver-export": "/user/precursor_data/datasets"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/lsst/project"
+        "fileserver-export": "/user/staff/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/lsst/scratch"
+        "fileserver-export": "/user/staff/scratch"
       },
       {
         "mountpoint": "/lsstdata/offline/teststand",
         "mode": "ro",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/teststand"
+        "fileserver-export": "/offline/teststand"
       }
     ]
 
