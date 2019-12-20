@@ -15,9 +15,12 @@ nublado:
       mb_per_cpu: 3072
       size_range: "6"
 
+    image:
+      cachefile: "/home/jovyan/repo-cache.json"
+
   hub:
     persistent_home: False
-    image: 'lsstsqre/sciplat-hub:0.16.12'
+    image: 'lsstsqre/sciplat-hub:0.16.13'
 
   routes:
     soda: '/api/image/soda'
