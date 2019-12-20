@@ -8,6 +8,7 @@ nublado:
     image:
       experimentals: 2
       dailies: 2
+      cachefile: '/home/jovyan/repo-cache.json'
 
     resources:
       cpu_limit: '2.0'
@@ -20,7 +21,7 @@ nublado:
 
   hub:
     persistent_home: False
-    image: 'lsstsqre/sciplat-hub:0.16.12'
+    image: 'lsstsqre/sciplat-hub:0.16.13'
 
   routes:
     soda: '/api/image/soda'
