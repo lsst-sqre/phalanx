@@ -21,7 +21,7 @@ nublado:
 
   hub:
     persistent_home: False
-    image: 'lsstsqre/sciplat-hub:0.16.13'
+    image: 'lsstsqre/sciplat-hub:0.16.14'
 
   routes:
     soda: '/api/image/soda'
