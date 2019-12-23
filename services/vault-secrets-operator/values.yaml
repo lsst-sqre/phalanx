@@ -1,0 +1,10 @@
+vault-secrets-operator:
+  environmentVars:
+    - envName: VAULT_TOKEN
+      secretName: vault-secrets-operator
+      secretKey: VAULT_TOKEN
+    - envName: VAULT_TOKEN_LEASE_DURATION
+      secretName: vault-secrets-operator
+      secretKey: VAULT_TOKEN_LEASE_DURATION
+  vault:
+    address: "https://vault.lsst.codes"
