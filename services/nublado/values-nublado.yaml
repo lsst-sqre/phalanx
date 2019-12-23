@@ -71,16 +71,3 @@ nublado:
         "fileserver-export": "/exports/scratch"
       }
     ]
-
-  resourcemap: |
-    [
-        { "disabled": true,
-          "user": "Username for user with custom resources",
-          "group": "Groupname for group with custom resources",
-          "resources": {
-              "size_index": "integer representing which size container is default: 0 is smallest",
-              "mem_quota": "integer, namespace quota size in MB",
-              "cpu_quota": "integer, namespace quota CPU limit"
-          }
-        }
-    ]
