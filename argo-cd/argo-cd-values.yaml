@@ -6,6 +6,10 @@
     #tag: 'exp-no-change'
     #imagePullPolicy: Always
 
+global:
+  image:
+    tag: "v1.2.4"
+
 redis:
   enabled: true
 
