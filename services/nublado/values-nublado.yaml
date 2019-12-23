@@ -1,0 +1,73 @@
+nublado:
+  fqdn: nublado.lsst.codes
+
+  oauth_provider: 'github'
+
+  lab:
+    restrict_nodes: 'true'
+    image:
+      experimentals: 2
+      dailies: 2
+      cachefile: '/home/jovyan/repo-cache.json'
+
+    resources:
+      cpu_limit: '2.0'
+      mem_limit: '4G'
+      cpu_guarantee: '0.5'
+      mem_guarantee: '1024M'
+      nodejs_max_mem: '6144'
+      mb_per_cpu: 2048
+      size_range: "6"
+
+  hub:
+    persistent_home: False
+    image: 'lsstsqre/sciplat-hub:latest'
+
+  routes:
+    soda: '/api/image/soda'
+
+  dask:
+    restrict_nodes: 'true'
+
+  vault_secrets:
+    enabled: True
+    path: secret/k8s_operator/gke_nublado/nublado
+
+  proxy:
+    ingress:
+      annotations:
+      host: nublado.lsst.codes
+
+  mountpoints: |
+    [
+      { "disabled": true,
+        "mountpoint": "/example -- if it doesn't start with '/' we add it",
+        "fileserver-host": "omit to use Hub settings",
+        "fileserver-export": "defaults to '/exports<mountpoint>'",
+        "mode": "rw or ro, defaults to 'ro'",
+        "options": "mount options, e.g. 'local_lock=all'"
+      },
+      {
+       "mountpoint": "/home",
+        "mode": "rw",
+        "fileserver-host": "10.128.0.49",
+        "fileserver-export": "/exports/jhome"
+      },
+      {
+        "mountpoint": "/datasets",
+        "fileserver-host": "10.128.0.49",
+        "fileserver-export": "/user/precursor_data/datasets"
+      },
+      {
+        "mountpoint": "/project",
+        "mode": "rw",
+        "fileserver-host": "10.128.0.49",
+        "fileserver-export": "/exports/project"
+      },
+      {
+        "mountpoint": "/scratch",
+        "mode": "rw",
+        "fileserver-host": "10.128.0.49",
+        "fileserver-export": "/exports/scratch"
+      }
+    ]
