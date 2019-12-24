@@ -19,10 +19,6 @@ nublado:
       mb_per_cpu: 2048
       size_range: "6"
 
-  hub:
-    persistent_home: False
-    image: 'lsstsqre/sciplat-hub:latest'
-
   routes:
     soda: '/api/image/soda'
 
@@ -31,7 +27,7 @@ nublado:
 
   vault_secrets:
     enabled: True
-    path: secret/k8s_operator/gke_nublado/nublado
+    path: secret/k8s_operator/nublado.lsst.codes/nublado
 
   proxy:
     ingress:
