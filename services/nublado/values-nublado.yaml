@@ -42,7 +42,7 @@ nublado:
        "mountpoint": "/home",
         "mode": "rw",
         "fileserver-host": "10.128.0.49",
-        "fileserver-export": "/exports/jhome"
+        "fileserver-export": "/exports/home"
       },
       {
         "mountpoint": "/datasets",
