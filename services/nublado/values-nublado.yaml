@@ -29,11 +29,6 @@ nublado:
     enabled: True
     path: secret/k8s_operator/nublado.lsst.codes/nublado
 
-  proxy:
-    ingress:
-      annotations:
-      host: nublado.lsst.codes
-
   mountpoints: |
     [
       { "disabled": true,
