@@ -1,6 +1,10 @@
 redis:
   enabled: true
 
+global:
+  image:
+    tag: "v1.2.4"
+
 server:
   ingress:
     enabled: true
