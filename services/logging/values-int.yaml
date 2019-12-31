@@ -65,8 +65,7 @@ fluentd-elasticsearch:
   elasticsearch:
     host: nordic-bunny-elasticsearch-client
   env:
-    - name: RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR
-      value: "0.9"
+    RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
   tolerations:
     - key: "dedicated"
       operator: "Exists"
