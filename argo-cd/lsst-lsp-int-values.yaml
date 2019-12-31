@@ -27,3 +27,5 @@ server:
         name: lsst-sqre
       - url: https://ricoberger.github.io/helm-charts/
         name: ricoberger
+      - url: https://kiwigrid.github.io/
+        name: kiwigrid
