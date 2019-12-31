@@ -41,7 +41,7 @@ kibana:
 
   files:
     kibana.yml:
-      elasticsearch.url: http://nordic-bunny-elasticsearch-client:9200
+      elasticsearch.url: http://logging-elasticsearch-client:9200
       server.basePath: /logs
       server.rewriteBasePath: true
 
@@ -63,7 +63,7 @@ kibana:
 
 fluentd-elasticsearch:
   elasticsearch:
-    host: nordic-bunny-elasticsearch-client
+    host: logging-elasticsearch-client
   env:
     RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
   tolerations:
