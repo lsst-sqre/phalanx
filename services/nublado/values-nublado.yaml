@@ -4,7 +4,7 @@ nublado:
   oauth_provider: 'github'
 
   hub:
-    image: 'lsstsqre/sciplat-hub:0.16.17'
+    image: 'lsstsqre/sciplat-hub:0.16.18'
 
   lab:
     restrict_nodes: 'true'
