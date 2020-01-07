@@ -20,7 +20,6 @@ nublado:
       mem_guarantee: '1024M'
       nodejs_max_mem: '6144'
       mb_per_cpu: 2048
-      size_range: "6"
 
   routes:
     soda: '/api/image/soda'

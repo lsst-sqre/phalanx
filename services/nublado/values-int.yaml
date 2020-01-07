@@ -17,7 +17,6 @@ nublado:
       mem_guarantee: '512M'
       nodejs_max_mem: '6144'
       mb_per_cpu: 3072
-      size_range: "6"
 
   hub:
     persistent_home: False
