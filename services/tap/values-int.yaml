@@ -1,5 +1,5 @@
 cadc-tap:
-  tag: "1.0.5"
+  tag: "tickets_DEBUG"
   use_mock_qserv: False
   qserv_host: "qserv-master01:4040"
 
