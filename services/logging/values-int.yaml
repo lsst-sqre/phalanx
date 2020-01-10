@@ -73,10 +73,10 @@ fluentd-elasticsearch:
   extraVolumes:
     - name: qservlogs
       hostPath:
-        path: /qserv/log
+        path: /qserv/qserv-prod/log
   extraVolumeMounts:
     - name: qservlogs
-      mountPath: /qserv/log
+      mountPath: /qserv/qserv-prod/log
   configMaps:
     useDefaults:
       containersInputConf: false
@@ -152,8 +152,8 @@ fluentd-elasticsearch:
         @type tail
         format /(?<time>\S*\s+\S*) (?<thread_id>\S+) \[(?<level>\S*)\]\s+(?<message>.*)/
         time_format %Y-%m-%d %k:%M:%S
-        path /qserv/log/mysqld.log
-        pos_file /qserv/log/mysqld.log.pos
+        path /qserv/qserv-prod/log/mysqld.log
+        pos_file /qserv/qserv-prod/log/mysqld.log.pos
         tag "mysqld.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -166,8 +166,8 @@ fluentd-elasticsearch:
         @type tail
         format /(?<time>\S+\s+\S+) \((?<level>\S*)\)\s+(?<message>.*)/
         time_format %Y-%m-%d %H:%M:%S
-        path /qserv/log/mysql-proxy.log
-        pos_file /qserv/log/mysql-proxy.log.pos
+        path /qserv/qserv-prod/log/mysql-proxy.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy.log.pos
         tag "mysql-proxy.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -187,8 +187,8 @@ fluentd-elasticsearch:
         @type tail
         format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
         time_format %Y-%m-%dT%H:%M:%S.%L
-        path /qserv/log/xrootd.log
-        pos_file /qserv/log/xrootd.log.pos
+        path /qserv/qserv-prod/log/xrootd.log
+        pos_file /qserv/qserv-prod/log/xrootd.log.pos
         tag "xrootd.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -202,8 +202,8 @@ fluentd-elasticsearch:
         @type tail
         format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
         time_format %Y-%m-%dT%H:%M:%S.%L
-        path /qserv/log/mysql-proxy-lua.log
-        pos_file /qserv/log/mysql-proxy-lua.log.pos
+        path /qserv/qserv-prod/log/mysql-proxy-lua.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy-lua.log.pos
         tag "mysql-proxy-lua.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
