@@ -1,0 +1,81 @@
+nublado:
+  fqdn: tucson-teststand.lsst.codes
+  debug: 'true'
+  oauth_provider: 'github'
+
+  hub:
+    image: 'lsstsqre/sciplat-hub:latest'
+    persistent_home: False
+
+  lab:
+    restrict_nodes: 'true'
+    image:
+      experimentals: 0
+      dailies: 0
+      weeklies: 3
+      releases: 1
+      cachefile: '/home/jovyan/repo-cache.json'
+
+    resources:
+      cpu_limit: '2.0'
+      mem_limit: '4G'
+      cpu_guarantee: '0.5'
+      mem_guarantee: '1024M'
+      nodejs_max_mem: '6144'
+      mb_per_cpu: 2048
+      repo_name: 'sal-sciplat-lab'
+
+  routes:
+    soda: '/api/image/soda'
+
+  dask:
+    restrict_nodes: 'true'
+    max_workers: 50
+
+  vault_secrets:
+    enabled: True
+    path: secret/k8s_operator/tucson-teststand.lsst.codes/nublado
+
+  proxy:
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /nb;
+      host: tucson-teststand.lsst.codes
+
+
+  mountpoints: |
+    [
+      { "disabled": true,
+        "mountpoint": "/example -- if it doesn't start with '/' we add it",
+        "fileserver-host": "omit to use Hub settings",
+        "fileserver-export": "defaults to '/exports<mountpoint>'",
+        "mode": "rw or ro, defaults to 'ro'",
+        "options": "mount options, e.g. 'local_lock=all'"
+      },
+      {
+       "mountpoint": "/home",
+        "mode": "rw",
+        "fileserver-host": "10.0.100.145",
+        "fileserver-export": "/data/exports-nublado/home"
+      },
+      {
+        "mountpoint": "/datasets",
+        "fileserver-host": "10.0.100.145",
+        "fileserver-export": "/data/exports-nublado/datasets"
+      },
+      {
+        "mountpoint": "/project",
+        "mode": "rw",
+        "fileserver-host": "10.0.100.145",
+        "fileserver-export": "/data/exports-nublado/project"
+      },
+      {
+        "mountpoint": "/scratch",
+        "mode": "rw",
+        "fileserver-host": "10.0.100.145",
+        "fileserver-export": "/data/exports-nublado/scratch"
+      }
+    ]
