@@ -1,0 +1,4 @@
+dependencies:
+- name: jwt-authorizer
+  version: ">=0.0.1"
+  repository: https://lsst-sqre.github.io/charts/
