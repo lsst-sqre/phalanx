@@ -15,6 +15,7 @@ nublado:
       weeklies: 3
       releases: 1
       cachefile: '/home/jovyan/repo-cache.json'
+      repo_name: 'sal-sciplat-lab'
 
     resources:
       cpu_limit: '2.0'
@@ -23,7 +24,6 @@ nublado:
       mem_guarantee: '1024M'
       nodejs_max_mem: '6144'
       mb_per_cpu: 2048
-      repo_name: 'sal-sciplat-lab'
 
   routes:
     soda: '/api/image/soda'
