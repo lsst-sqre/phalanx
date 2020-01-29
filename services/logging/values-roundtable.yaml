@@ -33,7 +33,8 @@ elasticsearch:
 
 kibana:
   image:
-    repository: "amazon/opendistro-for-elasticsearch-kibana"
+    repository: "lsstdax/kibana-no-security"
+    #repository: "amazon/opendistro-for-elasticsearch-kibana"
     tag: "0.8.0"
 
   files:
@@ -43,9 +44,7 @@ kibana:
       server.rewriteBasePath: true
 
   ingress:
-    enabled: true
-    hosts:
-      - "roundtable.lsst.codes/logs"
+    enabled: false
 
 fluentd-elasticsearch:
   elasticsearch:
