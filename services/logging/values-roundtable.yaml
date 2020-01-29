@@ -1,7 +1,7 @@
 elasticsearch:
   image:
     repository: "amazon/opendistro-for-elasticsearch"
-    tag: "0.8.0"
+    tag: "1.1.0"
   master:
     persistence:
       enabled: false
@@ -35,7 +35,7 @@ kibana:
   image:
     repository: "lsstdax/kibana-no-security"
     #repository: "amazon/opendistro-for-elasticsearch-kibana"
-    tag: "0.8.0"
+    tag: "1.1.0"
 
   files:
     kibana.yml:
