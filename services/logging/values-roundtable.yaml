@@ -39,7 +39,7 @@ kibana:
 
   files:
     kibana.yml:
-      elasticsearch.url: http://logging-elasticsearch-client:9200
+      elasticsearch.hosts: http://logging-elasticsearch-client:9200
       server.basePath: /logs
       server.rewriteBasePath: true
 
