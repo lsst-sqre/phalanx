@@ -4,7 +4,11 @@ nublado:
   oauth_provider: 'github'
 
   hub:
-    image: 'lsstsqre/sciplat-hub:exp_0.17.0'
+    image: 'lsstsqre/sciplat-hub:0.18.2'
+
+  wf:
+    no_verify_signature: 'true'
+    no_verify_audience: 'true'
 
   lab:
     restrict_nodes: 'true'
