@@ -1,0 +1,4 @@
+dependencies:
+- name: argo-helm
+  version: 0.6.5
+  repository: https://github.com/argoproj/argo-helm
