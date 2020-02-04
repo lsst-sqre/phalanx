@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argo
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argo
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/wf
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: HEAD
