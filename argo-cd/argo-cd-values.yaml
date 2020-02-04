@@ -32,3 +32,6 @@ server:
         name: lsst-sqre
       - url: https://ricoberger.github.io/helm-charts/
         name: ricoberger
+      - url: https://argoproj.github.io/argo-helm
+        name: argo
+
