@@ -1,5 +1,3 @@
-# templates/init.sh can interactively generate a values file.
-
 secrets:
   enabled: False
   # <generated flask secret>
@@ -25,6 +23,14 @@ vault_secrets:
   # secret/k8s_operator/<host>/jwt_authorizer
   path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/jwt_authorizer"
 
+# Session length/Token expiration (in minutes)
+session_length: 1440
+
+# Existing PVC for redis claim
+# If empty, redis will use emptydir
+redis_claim: "auth-int-volume-claim"
+
+
 #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
 jwks_n: "3ALFUwJelCzi8FmGMOtKzbDj03mhGE_EslZ75_SpCgAeBbow44Wt3E-NqY1QGmadY-pRsl5G7ahtiAZscvijVx-1BfEyOx6HbXBZzDmVpNxELnagw-8OsH2JBJxeHjcbwZ7N-b3guwtHdSHLZmMxyBw_57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9uTxT9TIUseCngIYo64fVdQw0y_o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3OzUgDtpFHI-BUNgVakNgk0B4_G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN3w"
 
@@ -48,6 +54,7 @@ oauth2_proxy:
 
 jwt_authorizer:
   image: "lsstdm/jwt_authorizer:stable"
+  loglevel: DEBUG
 
   # Defining all capabilites applications may need.
   # This feeds into the token downlad page
