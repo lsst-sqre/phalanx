@@ -7,6 +7,10 @@ nublado:
     image: 'lsstsqre/sciplat-hub:latest'
     persistent_home: False
 
+  wf:
+    no_verify_signature: 'true'
+    no_verify_audience: 'true'
+
   lab:
     restrict_nodes: 'true'
     image:

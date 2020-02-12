@@ -20,7 +20,10 @@ nublado:
 
   hub:
     persistent_home: False
-    image: 'lsstsqre/sciplat-hub:0.16.19'
+    image: 'lsstsqre/sciplat-hub:0.18.4'
+
+  wf:
+    no_verify_audience: 'true'
 
   routes:
     soda: '/api/image/soda'
