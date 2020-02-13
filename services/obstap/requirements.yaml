@@ -1,0 +1,4 @@
+dependencies:
+- name: cadc-tap-postgres
+  version: ">=0.1.0"
+  repository: https://lsst-sqre.github.io/charts/
