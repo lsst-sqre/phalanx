@@ -51,9 +51,10 @@ oauth2_proxy:
   login_url: https://cilogon.org/authorize/?skin=LSST
   jwks_url: https://cilogon.org/oauth2/certs
   redeem_url: https://cilogon.org/oauth2/token
+  issuer_key_ids: ["244B235F6B28E34108D101EAC7362C4E"]
 
 jwt_authorizer:
-  image: "lsstdm/jwt_authorizer:stable"
+  image: "lsstdm/jwt_authorizer:latest"
   loglevel: DEBUG
 
   # Defining all capabilites applications may need.
@@ -70,6 +71,7 @@ jwt_authorizer:
     read:workspace: Read project datasets from the file workspace
     read:workspace/user: Read the data in your file workspace
     write:workspace/user: Write data to your file workspace
+
 
   # Mapping of capabilities to groups that are part of the `isMemberOf` claim
   group_mapping:
