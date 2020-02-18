@@ -28,3 +28,5 @@ server:
         name: ricoberger
       - url: https://kiwigrid.github.io/
         name: kiwigrid
+      - url: https://argoproj.github.io/argo-helm
+        name: argo
