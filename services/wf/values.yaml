@@ -1,6 +1,7 @@
 init:
   serviceAccount: "nublado-hub"
 
-images:
-  tag: v2.2.1
+argo:
+  images:
+    tag: v2.2.1
 
