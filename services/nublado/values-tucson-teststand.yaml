@@ -31,6 +31,8 @@ nublado:
 
   routes:
     soda: '/api/image/soda'
+    external:
+      instance: 'https://tucson-teststand.lsst.codes'
 
   dask:
     restrict_nodes: 'true'

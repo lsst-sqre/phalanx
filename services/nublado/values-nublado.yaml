@@ -27,6 +27,8 @@ nublado:
 
   routes:
     soda: '/api/image/soda'
+    external:
+      instance: 'https://nublado.lsst.codes'
 
   dask:
     restrict_nodes: 'true'
