@@ -9,9 +9,6 @@ nublado:
   wf:
     no_verify_signature: 'true'
     no_verify_audience: 'true'
-    argo:
-      images:
-        tag: v2.5.1
 
   lab:
     restrict_nodes: 'true'
