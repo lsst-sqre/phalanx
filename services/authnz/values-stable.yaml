@@ -45,7 +45,7 @@ authnz:
   admin_capability: "exec:admin"
   
   oauth2_proxy:
-    image: "lsstdm/oauth2_proxy:stable"
+    image: "lsstdm/oauth2_proxy:3.2-lsst1"
     # URLs for oauth2_proxy. This can be simpler, but we need all of them so we can have a
     # special one for login_url - to include the LSST skin.
     issuer_url: https://cilogon.org
@@ -55,7 +55,7 @@ authnz:
     issuer_key_ids: ["244B235F6B28E34108D101EAC7362C4E"]
   
   jwt_authorizer:
-    image: "lsstdm/jwt_authorizer:latest"
+    image: "lsstdm/jwt_authorizer:0.1"
     loglevel: DEBUG
   
     # Defining all capabilites applications may need.
