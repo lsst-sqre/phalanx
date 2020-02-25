@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: auth-int
+  name: auth
 spec:
   finalizers:
     - kubernetes
@@ -9,13 +9,13 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tap
+  name: auth
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: auth-int
+    namespace: auth
     server: https://kubernetes.default.svc
   project: default
   source:
