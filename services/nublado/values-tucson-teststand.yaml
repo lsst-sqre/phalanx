@@ -22,10 +22,6 @@ nublado:
       repo_name: 'sal-sciplat-lab'
 
     resources:
-      cpu_limit: '2.0'
-      mem_limit: '4G'
-      cpu_guarantee: '0.5'
-      mem_guarantee: '1024M'
       nodejs_max_mem: '6144'
       mb_per_cpu: 2048
 
