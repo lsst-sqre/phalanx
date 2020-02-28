@@ -11,16 +11,14 @@ nublado:
       cachefile: '/home/jovyan/repo-cache.json'
 
     resources:
-      cpu_limit: '2.0'
-      mem_limit: '3G'
-      cpu_guarantee: '0.5'
-      mem_guarantee: '512M'
       nodejs_max_mem: '6144'
       mb_per_cpu: 3072
+      options_form_sizes: 'tiny,small,medium,large,huge,colossal'
+      size_index: 2
 
   hub:
     persistent_home: False
-    image: 'lsstsqre/sciplat-hub:0.18.5'
+    image: 'lsstsqre/sciplat-hub:0.18.6'
 
   wf:
     no_verify_audience: 'true'
