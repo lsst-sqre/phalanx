@@ -64,7 +64,6 @@ nublado:
         "fileserver-export": "/data/exports-nublado/home"
       },
       {
-        "disabled": true,
         "mountpoint": "/datasets",
         "fileserver-host": "10.0.100.145",
         "fileserver-export": "/data/exports-nublado/datasets"
