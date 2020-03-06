@@ -64,6 +64,7 @@ nublado:
         "fileserver-export": "/home"
       },
       {
+        "disabled": true,
         "mountpoint": "/datasets",
         "fileserver-host": "nfs1.cp.lsst.org",
         "fileserver-export": "/datasets"
