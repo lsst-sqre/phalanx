@@ -61,7 +61,7 @@ nublado:
        "mountpoint": "/home",
         "mode": "rw",
         "fileserver-host": "nfs1.cp.lsst.org",
-        "fileserver-export": "/home"
+        "fileserver-export": "/jhome"
       },
       {
         "disabled": true,
