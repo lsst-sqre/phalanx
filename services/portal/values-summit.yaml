@@ -19,6 +19,3 @@ firefly:
       limits:
         memory: 20Mi
 
-  nodeSelector:
-    environment: portal-summit
-
