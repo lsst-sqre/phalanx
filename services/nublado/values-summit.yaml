@@ -5,7 +5,6 @@ nublado:
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
-    persistent_home: False
 
   wf:
     no_verify_signature: 'true'
@@ -13,6 +12,7 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
+    enable_multus: 'true'
     image:
       experimentals: 0
       dailies: 0
