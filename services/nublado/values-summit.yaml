@@ -80,5 +80,11 @@ nublado:
         "mode": "rw",
         "fileserver-host": "nfs1.cp.lsst.org",
         "fileserver-export": "/scratch"
+      },
+      {
+        "mountpoint": "/.readonly/repo",
+        "mode": "ro",
+        "fileserver-host": "atarchiver.cp.lsst.org",
+        "fileserver-export": "/butler/repo"
       }
     ]
