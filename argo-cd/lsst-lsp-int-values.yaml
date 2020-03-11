@@ -35,3 +35,5 @@ server:
         name: kiwigrid
       - url: https://argoproj.github.io/argo-helm
         name: argo
+      - url: https://lsst-sqre.github.io/cp-helm-charts/
+        name: cp-helm-charts
