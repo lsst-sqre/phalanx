@@ -24,8 +24,8 @@ authnz:
     # secret/k8s_operator/<host>/jwt_authorizer
     path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/jwt_authorizer"
   
-  # Session length/Token expiration (in minutes)
-  session_length: 1440
+  # Session length/Token expiration (in minutes) (30 days)
+  session_length: 43200
   
   # Existing PVC for redis claim
   # If empty, redis will use emptydir
