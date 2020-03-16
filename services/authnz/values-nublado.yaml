@@ -54,7 +54,7 @@ authnz:
     issuer_key_ids: ["244B235F6B28E34108D101EAC7362C4E"]
   
   jwt_authorizer:
-    image: "lsstdm/jwt_authorizer:0.1"
+    image: "lsstdm/jwt_authorizer:0.2.0"
     loglevel: DEBUG
   
     # Defining all capabilites applications may need.
