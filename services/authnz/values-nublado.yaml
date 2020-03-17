@@ -15,7 +15,10 @@ authnz:
     # modulus_urlsafe_b64=$(printf -- "$modulus_hex" | xxd -r -p | $b64 | sed 's/+/-/g;s/\//_/g;s/=//g')
     signing_key: ""  # JWT Signing Key (private key)
   
-  
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+  host: nublado.lsst.codes
+
   vault_secrets:
     enabled: True
     # secret/k8s_operator/<host>/jwt_authorizer
