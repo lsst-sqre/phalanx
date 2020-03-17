@@ -16,8 +16,6 @@ authnz:
     signing_key: ""  # JWT Signing Key (private key)
   
   
-  host: nublado.lsst.codes
-  
   vault_secrets:
     enabled: True
     # secret/k8s_operator/<host>/jwt_authorizer
