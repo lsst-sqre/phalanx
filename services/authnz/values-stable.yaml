@@ -18,6 +18,8 @@ authnz:
   
   # lsst-lsp-<instance>.ncsa.illinois.edu
   host: lsst-lsp-stable.ncsa.illinois.edu
+  ingress:
+    host: lsst-lsp-stable.ncsa.illinois.edu
   
   vault_secrets:
     enabled: True
