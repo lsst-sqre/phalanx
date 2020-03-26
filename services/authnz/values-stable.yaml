@@ -31,7 +31,7 @@ authnz:
   
   # Existing PVC for redis claim
   # If empty, redis will use emptydir
-  redis_claim: ""
+  redis_claim: "auth-redis-volume-claim"
   
   
   #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
