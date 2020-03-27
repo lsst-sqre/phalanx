@@ -19,7 +19,7 @@ nublado:
 
   wf:
     no_verify_audience: 'true'
-    image: 'lsstsqre/wfdispatcher:0.0.9'
+    image: 'lsstsqre/wfdispatcher:exp_0.0.8.fix0'
 
   routes:
     soda: '/api/image/soda'
