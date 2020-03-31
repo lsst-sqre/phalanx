@@ -1,0 +1,27 @@
+firefly:
+  image:
+    tag: "1.1.1"
+
+  ingress:
+    host: 'base-lsp.lsst.codes'
+    annotations:
+      nginx.ingress.kubernetes.io/configuration-snippet: | 
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /portal/app;
+
+  max_jvm_size: "31G"
+
+  resources:
+    limits:
+      memory: 32Gi
+
+  secrets:
+    enabled: True
+
+  redis:
+    resources:
+      limits:
+        memory: 20Mi
+

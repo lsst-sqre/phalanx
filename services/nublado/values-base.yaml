@@ -1,0 +1,90 @@
+nublado:
+  fqdn: base-lsp.lsst.codes
+  debug: 'true'
+  oauth_provider: 'github'
+
+  hub:
+    image: 'lsstsqre/sciplat-hub:latest'
+
+  wf:
+    no_verify_signature: 'true'
+    no_verify_audience: 'true'
+
+  lab:
+    restrict_nodes: 'true'
+    enable_multus: 'true'
+    image:
+      experimentals: 0
+      dailies: 0
+      weeklies: 3
+      releases: 1
+      cachefile: '/home/jovyan/repo-cache.json'
+      repo_name: 'sal-sciplat-lab'
+
+    resources:
+      nodejs_max_mem: '6144'
+      mb_per_cpu: 2048
+
+  routes:
+    soda: '/api/image/soda'
+    external:
+      instance: 'https://base-lsp.lsst.codes'
+
+  dask:
+    restrict_nodes: 'true'
+    max_workers: 50
+
+  vault_secrets:
+    enabled: True
+    path: secret/k8s_operator/base-lsp.lsst.codes/nublado
+
+  proxy:
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /nb;
+      host: base-lsp.lsst.codes
+
+
+  mountpoints: |
+    [
+      { "disabled": true,
+        "mountpoint": "/example -- if it doesn't start with '/' we add it",
+        "fileserver-host": "omit to use Hub settings",
+        "fileserver-export": "defaults to '/exports<mountpoint>'",
+        "mode": "rw or ro, defaults to 'ro'",
+        "options": "mount options, e.g. 'local_lock=all'"
+      },
+      {
+       "mountpoint": "/home",
+        "mode": "rw",
+        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-export": "/jhome"
+      },
+      {
+        "disabled": true,
+        "mountpoint": "/datasets",
+        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-export": "/datasets"
+      },
+      {
+        "mountpoint": "/project",
+        "mode": "rw",
+        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-export": "/project"
+      },
+      {
+        "mountpoint": "/scratch",
+        "mode": "rw",
+        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-export": "/scratch"
+      },
+      {
+        "mountpoint": "/readonly/repo",
+        "mode": "ro",
+        "fileserver-host": "atarchiver.cp.lsst.org",
+        "fileserver-export": "/butler/repo"
+      }
+    ]
