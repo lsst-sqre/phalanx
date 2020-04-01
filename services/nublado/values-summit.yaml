@@ -82,9 +82,16 @@ nublado:
         "fileserver-export": "/scratch"
       },
       {
-        "mountpoint": "/readonly/repo",
+        "mountpoint": "/readonly/auxtel/repo",
         "mode": "ro",
         "fileserver-host": "atarchiver.cp.lsst.org",
+        "fileserver-export": "/butler/repo"
+      },
+      {
+        "disabled": "true",
+        "mountpoint": "/readonly/comcam/repo",
+        "mode": "ro",
+        "fileserver-host": "comcam-arctl01.ls.lsst.org",
         "fileserver-export": "/butler/repo"
       }
     ]
