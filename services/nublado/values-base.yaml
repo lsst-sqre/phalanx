@@ -58,14 +58,13 @@ nublado:
         "options": "mount options, e.g. 'local_lock=all'"
       },
       {
-       "mountpoint": "/home",
+        "mountpoint": "/home",
         "mode": "rw",
         "fileserver-host": "ddn-nfs.ls.lsst.org",
-        "fileserver-export": "/jhome"
+        "fileserver-export": "/lsstdata/user/staff/jhome"
       },
       {
-        "disabled": true,
-        "mountpoint": "/datasets",
+        "mountpoint": "/lsstdata/user/precursor_data/datasets",
         "fileserver-host": "ddn-nfs.ls.lsst.org",
         "fileserver-export": "/datasets"
       },
@@ -73,13 +72,13 @@ nublado:
         "mountpoint": "/project",
         "mode": "rw",
         "fileserver-host": "ddn-nfs.ls.lsst.org",
-        "fileserver-export": "/project"
+        "fileserver-export": "/lsstdata/user/staff/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
         "fileserver-host": "ddn-nfs.ls.lsst.org",
-        "fileserver-export": "/scratch"
+        "fileserver-export": "/lsstdata/user/staff/scratch"
       },
       {
         "mountpoint": "/readonly/auxtel/repo",
@@ -88,7 +87,7 @@ nublado:
         "fileserver-export": "/butler/repo"
       },
       {
-        "disabled": "true",
+        "disabled": true,
         "mountpoint": "/readonly/comcam/repo",
         "mode": "ro",
         "fileserver-host": "comcam-arctl01.ls.lsst.org",
