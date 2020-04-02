@@ -1,5 +1,5 @@
 nublado:
-  fqdn: summit-lsp.lsst.codes
+  fqdn: base-lsp.lsst.codes
   debug: 'true'
   oauth_provider: 'github'
 
@@ -28,7 +28,7 @@ nublado:
   routes:
     soda: '/api/image/soda'
     external:
-      instance: 'https://summit-lsp.lsst.codes'
+      instance: 'https://base-lsp.lsst.codes'
 
   dask:
     restrict_nodes: 'true'
@@ -36,7 +36,7 @@ nublado:
 
   vault_secrets:
     enabled: True
-    path: secret/k8s_operator/summit-lsp.lsst.codes/nublado
+    path: secret/k8s_operator/base-lsp.lsst.codes/nublado
 
   proxy:
     ingress:
@@ -45,7 +45,7 @@ nublado:
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Port 443;
           proxy_set_header X-Forwarded-Path /nb;
-      host: summit-lsp.lsst.codes
+      host: base-lsp.lsst.codes
 
 
   mountpoints: |
@@ -60,25 +60,25 @@ nublado:
       {
        "mountpoint": "/home",
         "mode": "rw",
-        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-host": "ddn-nfs.ls.lsst.org",
         "fileserver-export": "/jhome"
       },
       {
         "disabled": true,
         "mountpoint": "/datasets",
-        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-host": "ddn-nfs.ls.lsst.org",
         "fileserver-export": "/datasets"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
-        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-host": "ddn-nfs.ls.lsst.org",
         "fileserver-export": "/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
-        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-host": "ddn-nfs.ls.lsst.org",
         "fileserver-export": "/scratch"
       },
       {
