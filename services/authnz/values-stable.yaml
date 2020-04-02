@@ -31,7 +31,7 @@ authnz:
   
   # Existing PVC for redis claim
   # If empty, redis will use emptydir
-  redis_claim: ""
+  redis_claim: "auth-redis-volume-claim"
   
   
   #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
@@ -57,7 +57,7 @@ authnz:
     issuer_key_ids: ["244B235F6B28E34108D101EAC7362C4E"]
   
   jwt_authorizer:
-    image: "lsstdm/jwt_authorizer:0.1"
+    image: "lsstdm/jwt_authorizer:0.2.2"
     loglevel: DEBUG
   
     # Defining all capabilites applications may need.
