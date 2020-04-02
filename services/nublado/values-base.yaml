@@ -64,9 +64,10 @@ nublado:
         "fileserver-export": "/lsstdata/user/staff/jhome"
       },
       {
-        "mountpoint": "/lsstdata/user/precursor_data/datasets",
+        "disabled": true,
+        "mountpoint": "/datasets",
         "fileserver-host": "ddn-nfs.ls.lsst.org",
-        "fileserver-export": "/datasets"
+        "fileserver-export": "/lsstdata/user/precursor_data/datasets"
       },
       {
         "mountpoint": "/project",
