@@ -82,6 +82,7 @@ nublado:
         "fileserver-export": "/lsstdata/user/staff/scratch"
       },
       {
+        "disabled": true,
         "mountpoint": "/readonly/auxtel/repo",
         "mode": "ro",
         "fileserver-host": "atarchiver.cp.lsst.org",
