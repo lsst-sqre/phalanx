@@ -108,3 +108,259 @@ nublado:
     I79d2OwyjAqpf3SJKiBOpimK+1Vh/ZcKIPBVT+INfoe9XPcKnFV9csmpFXfgR5gP
     TwIDAQAB
     -----END PUBLIC KEY-----
+
+  jupyterhub_config: |
+# Default values for nublado.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Variables you absolutely need (with examples commented out):
+#fqdn: 'example.com'
+scheme: 'https://'
+
+# GitHub Application settings for OAuth apps
+# Get these from github.com OAuth settings by creating an app
+# Something like these (these don't really exist)
+#oauth_client_id: 'a357c71304f31654c665'
+#oauth_secret: '2eb0f52c3a416e7287287e478599314d451fef2d'
+
+# Set up debugging, set to enable
+debug: 'true'
+
+# OAuth provider to use: 
+# One of "github", "cilogon", or "jwt"
+oauth_provider: 'github'
+
+# Allow and deny lists
+github_organization_whitelist: ''
+github_organization_denylist: ''
+cilogon_group_whitelist: ''
+cilogon_group_denylist: ''
+
+vault_secrets:
+  # Use the vault-secrets-operator to load secrets from vault
+  # instead of creating them from values here.
+  enabled: False
+
+  # Path to load secrets for in the vault.
+  path: ""
+
+hub:
+  uid: 768
+  gid: 768
+  #proxy_auth_token: ''
+  #crypto_key: ''
+  image: 'lsstsqre/sciplat-hub:latest'
+
+  persistent_home: True
+
+# Dask settings
+dask:
+  allow_spawn: 'true'
+  restrict_nodes: ''
+  max_workers: 25
+
+lab:
+  restrict_nodes: ''
+
+  # If you don't want to use the prepuller to scan for images, put in a full
+  # image here.
+  # image_name: 'lsstsqre/sciplat-lab:latest'
+  image_name: ''
+
+  # Configure the scanner to find images to put in the spawner
+  image:
+    repo_host: ''
+    repo_owner: 'lsstsqre'
+    repo_name: 'sciplat-lab'
+    cachefile: '/tmp/repo-cache.json'
+
+    # Number of images of each type to put in the spawner page
+    experimentals: 0
+    dailies: 3
+    weeklies: 2
+    releases: 1
+
+  resources:
+    # Jupyterlab needs more than the default NodeJS stack size if many
+    #  extensions are installed.
+    nodejs_max_mem: '6144'
+    # This is a comma-separated string to be used in an environment variable
+    options_form_sizes: 'tiny,small,medium,large'
+    # This is a zero-based index, so in the default list, 'small' is the
+    #  default size
+    size_index: 1
+    # Each size has twice the capacity of the one below it.
+    # This is the max CPU of the smallest size
+    tiny_cpu_max: '0.5'
+    # Generally 2048 for public cloud and 3072 at NCSA
+    mb_per_cpu: 2048
+    # For CPU and mem, (1 / size_range) is the minimum allocation.
+    #  25% empirically seems to work
+    size_range: 4
+
+  # How long to wait before reaping lab container (in seconds)
+  cull_timeout: 43200
+  # Culling policy: "age" or "idle", colon, "local" or "remote"
+  #  locality is relative to lab container; "remote" asks the hub
+  #  to shut it down, "local" kills the local lab process.
+  cull_policy: 'age:remote'
+
+  repos: 'https://github.com/lsst-sqre/notebook-demo'
+
+  # Set this to turn on the Multus CNI, necessary for bridging to the
+  #  physical network at the summit.
+
+  enable_multus: ''
+  
+
+proxy:
+  max_http_header_size: 16384
+  ingress:
+    host: ''
+    annotations: []
+
+wf:
+  image: 'lsstsqre/wfdispatcher:latest'
+  no_verify_signature: ''
+  no_verify_audience: ''
+  api_addr: '0.0.0.0'
+
+js9:
+  image: 'ericmandel/js9server:latest'
+
+routes:
+  hub: '/nb'
+  firefly: '/portal/app/'
+  js9: '/js9'
+  api: '/api'
+  tap: '/api/tap'
+  soda: '/api/soda'
+  wf: '/wf'
+  
+  external:
+    fileserver: ''
+    firefly: ''
+    js9: ''
+    instance: ''
+    api: ''
+    soda: ''
+    hub: ''
+    wf: ''
+
+prepuller:
+  minute_to_run: 35
+  uid: 769
+  gid: 769
+
+reaper:
+  enabled: false
+  hour_to_run: 02
+  keep_experimentals: 10
+  keep_dailies: 15
+  keep_weeklies: 78
+
+mountpoints: |
+  [
+    {
+      "mountpoint": "/home",
+      "mode": "rw",
+      "fileserver-export": "/home",
+      "fileserver-host": ""
+    },
+    {
+      "mountpoint": "/datasets",
+      "fileserver-export": "/datasets",
+      "fileserver-host": ""
+    },
+    {
+      "mountpoint": "/software",
+      "fileserver-export": "/software",
+      "fileserver-host": ""
+    },
+    {
+      "mountpoint": "/project",
+      "mode": "rw",
+      "fileserver-export": "/project",
+      "fileserver-host": ""
+    },
+    {
+      "mountpoint": "/scratch",
+      "mode": "rw",
+      "fileserver-export": "/scratch",
+      "fileserver-host": ""
+    }
+  ]
+
+resourcemap: |
+  [
+    { "disabled": true,
+      "user": "Username for user with custom resources",
+      "group": "Groupname for group with custom resources",
+      "resources": {
+        "size_index": "integer representing which size container is default: 0 is smallest",
+        "mem_quota": "integer, namespace quota size in MB",
+        "cpu_quota": "integer, namespace quota CPU limit"
+      }
+    }
+  ]
+
+signing_certificate: |
+  -----BEGIN PUBLIC KEY-----
+  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3ALFUwJelCzi8FmGMOtK
+  zbDj03mhGE/EslZ75/SpCgAeBbow44Wt3E+NqY1QGmadY+pRsl5G7ahtiAZscvij
+  Vx+1BfEyOx6HbXBZzDmVpNxELnagw+8OsH2JBJxeHjcbwZ7N+b3guwtHdSHLZmMx
+  yBw/57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9
+  uTxT9TIUseCngIYo64fVdQw0y/o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3Oz
+  UgDtpFHI+BUNgVakNgk0B4/G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN
+  3wIDAQAB
+  -----END PUBLIC KEY-----
+
+jupyterhub_config: |
+    '''Runtime configuration for JupyterHub in the LSST environment.
+    '''
+
+    import jupyterhubutils
+    import logging
+
+    # get_config() only works in the Hub configuration environment
+    c = get_config()
+
+    lc = jupyterhubutils.LSSTConfig()
+    jupyterhubutils.configure_auth_and_spawner(lc)
+    jhu_logger = jupyterhubutils.utils.make_logger(name='jupyterhubutils')
+    if lc.debug:
+        jhu_logger.setLevel(logging.DEBUG)
+        jhu_logger.debug("Enabling 'jupyterhubutils' debug-level logging.")
+        jhu_logger.warning("If there's not a prior debug log something is wrong.")
+
+    # Set up the spawner
+    c.JupyterHub.spawner_class = lc.spawner_class
+
+    # Set up the authenticator
+    c.JupyterHub.authenticator_class = lc.authenticator_class
+
+    # Don't try to cleanup servers on exit - since in general for k8s, we want
+    # the hub to be able to restart without losing user containers
+    c.JupyterHub.cleanup_servers = False
+
+    # Set Session DB URL if we have one
+    db_url = lc.session_db_url
+    if db_url:
+        c.JupyterHub.db_url = db_url
+    # Allow style overrides
+    c.JupyterHub.template_paths = ["/opt/lsst/software/jupyterhub/templates/"]
+
+    # Set Hub networking/routing parameters
+    hub_route = lc.hub_route
+    if hub_route != '/':
+        c.JupyterHub.base_url = lc.hub_route
+
+    # Set the Hub URLs
+    c.JupyterHub.bind_url = lc.bind_url
+    c.JupyterHub.hub_bind_url = lc.hub_bind_url
+    c.JupyterHub.hub_connect_url = lc.hub_connect_url
+
+    # External proxy
+    c.ConfigurableHTTPProxy.should_start = False
+    c.ConfigurableHTTPProxy.api_url = lc.proxy_api_url
