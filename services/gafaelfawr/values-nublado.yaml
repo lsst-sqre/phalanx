@@ -20,3 +20,14 @@ gafaelfawr:
   config:
     github:
       client_id: a19e79298a352f3e5650
+
+    group_mapping:
+      "exec:admin": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "exec:user": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "read:workspace": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "read:workspace/user": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "write:workspace/user": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "exec:portal": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "exec:notebook": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "read:tap": ["lsst-dm-data-management", "lsst-sqre-square"]
+      "read:image": ["lsst-dm-data-management", "lsst-sqre-square"]
