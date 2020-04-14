@@ -46,7 +46,6 @@ nublado:
           proxy_set_header X-Forwarded-Path /nb;
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
-      host: nublado.lsst.codes
 
   mountpoints: |
     [
