@@ -1,7 +1,7 @@
 nublado:
   fqdn: nublado.lsst.codes
 
-  oauth_provider: 'github'
+  oauth_provider: 'jwt'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
@@ -32,6 +32,21 @@ nublado:
   vault_secrets:
     enabled: True
     path: secret/k8s_operator/nublado.lsst.codes/nublado
+
+  proxy:
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: https://nublado.lsst.codes/login
+        nginx.ingress.kubernetes.io/auth-url: https://nublado.lsst.codes/auth?capability=exec:notebook
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /nb;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+      host: nublado.lsst.codes
 
   mountpoints: |
     [

@@ -1,0 +1,22 @@
+gafaelfawr:
+  host: nublado.lsst.codes
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  vault_secrets:
+    path: "secret/k8s_operator/nublado.lsst.codes/jwt_authorizer"
+
+  # Session length/Token expiration (in minutes) (30 days)
+  session_length: 43200
+
+  # CILogon client ID.  Currently not used because we use GitHub instead,
+  # but it's registered, and we may switch to it in the future.
+  oauth2_proxy_client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
+
+  # Use the PR branch that supports GitHub.
+  image: "lsstdm/jwt_authorizer:tickets-DM-23776"
+
+  # Use GitHub authentication.
+  config:
+    github:
+      client_id: a19e79298a352f3e5650
