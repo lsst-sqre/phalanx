@@ -1,0 +1,9 @@
+vault_secrets:
+  enabled: True
+  path: 'secret/k8s_operator/nublado.lsst.codes/postgres'
+
+debug: 'true'
+
+jupyterhub_db:
+  user: 'jovyan'
+  db: 'jupyterhub'
