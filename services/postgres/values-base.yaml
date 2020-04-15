@@ -1,0 +1,7 @@
+postgres:
+  vault_secrets:
+    path: 'secret/k8s_operator/base-lsp.lsst.codes/postgres'
+  debug: 'true'
+  jupyterhub_db:
+    user: 'jovyan'
+    db: 'jupyterhub'
