@@ -1,0 +1,89 @@
+authnz:
+  secrets:
+    enabled: False
+    # <generated flask secret>
+    flask_secret: "" 
+    # <generated cookie secret>
+    oauth2_proxy_cookie_secret: "" 
+    # <cilogon/OIDC secret>
+    oauth2_proxy_client_secret: "" 
+    # Generating a private key, then public key, then getting url-save version of it all
+    # echo "Generating Issuer Keypair... private.pem, public.pem"
+    # openssl genrsa -out private.pem 2048 2> /dev/null
+    # openssl rsa -in private.pem -outform PEM -pubout -out public.pem
+    # modulus_hex=$(openssl rsa -pubin -inform PEM -modulus -noout -in public.pem | sed 's/Modulus=//')
+    # modulus_urlsafe_b64=$(printf -- "$modulus_hex" | xxd -r -p | $b64 | sed 's/+/-/g;s/\//_/g;s/=//g')
+    signing_key: ""  # JWT Signing Key (private key)
+  
+  
+  # lsst-lsp-<instance>.ncsa.illinois.edu
+  host: lsst-lsp-int.ncsa.illinois.edu
+  ingress:
+    host: lsst-lsp-int.ncsa.illinois.edu
+  
+  vault_secrets:
+    enabled: True
+    # secret/k8s_operator/<host>/jwt_authorizer
+    path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/jwt_authorizer"
+  
+  # Session length/Token expiration (in minutes) (30 days)
+  session_length: 43200
+  
+  # Existing PVC for redis claim
+  # If empty, redis will use emptydir
+  redis_claim: "auth-int-volume-claim"
+  
+  
+  #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
+  jwks_n: "3ALFUwJelCzi8FmGMOtKzbDj03mhGE_EslZ75_SpCgAeBbow44Wt3E-NqY1QGmadY-pRsl5G7ahtiAZscvijVx-1BfEyOx6HbXBZzDmVpNxELnagw-8OsH2JBJxeHjcbwZ7N-b3guwtHdSHLZmMxyBw_57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9uTxT9TIUseCngIYo64fVdQw0y_o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3OzUgDtpFHI-BUNgVakNgk0B4_G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN3w"
+  
+  # <client id from cilogon.org or OIDC provider>
+  oauth2_proxy_client_id: "cilogon:/client_id/5d4d96afd3f1acf896a2b5a7a2e94277"
+  
+  # Default capability required for user-based operations (like generating a token)
+  user_capability: "exec:user"
+  
+  # Default capability required for admin-based operations (like revoking a token, possibly)
+  admin_capability: "exec:admin"
+  
+  oauth2_proxy:
+    image: "lsstdm/oauth2_proxy:3.2-lsst1"
+    # URLs for oauth2_proxy. This can be simpler, but we need all of them so we can have a
+    # special one for login_url - to include the LSST skin.
+    issuer_url: https://cilogon.org
+    login_url: https://cilogon.org/authorize/?skin=LSST
+    jwks_url: https://cilogon.org/oauth2/certs
+    redeem_url: https://cilogon.org/oauth2/token
+    issuer_key_ids: ["244B235F6B28E34108D101EAC7362C4E"]
+  
+  jwt_authorizer:
+    image: "lsstdm/jwt_authorizer:0.2.2"
+    loglevel: DEBUG
+  
+    # Defining all capabilites applications may need.
+    # This feeds into the token downlad page
+    known_capabilities:
+      exec:portal: Use the Portal to execute operations. Mostly used from notebook APIs.
+      read:image: Read images from the SODA and other image retrieval interfaces
+      read:image/metadata: Read image metadata from SIA and other image interfaces
+      read:tap: Execute SELECT queries in the TAP interface on project datasets
+      read:tap/efd: Execute SELECT queries in the TAP interface on EFD datasets
+      read:tap/user: Execute SELECT queries in the TAP interface on your data
+      write:tap/user: Upload tables to your database workspace
+      read:tap/history: Read the history of your TAP queries.
+      read:workspace: Read project datasets from the file workspace
+      read:workspace/user: Read the data in your file workspace
+      write:workspace/user: Write data to your file workspace
+  
+  
+    # Mapping of capabilities to groups that are part of the `isMemberOf` claim
+    group_mapping:
+      exec:admin: ["lsst_int_lsp_admin"]
+      exec:user: ["lsst_int_lspdev"]
+      read:workspace: ["lsst_int_lspdev"]
+      read:workspace/user: ["lsst_int_lspdev"]
+      write:workspace/user: ["lsst_int_lspdev"]
+      exec:portal: ["lsst_int_lspdev"]
+      exec:notebook: ["lsst_int_lspdev"]
+      read:tap: ["lsst_int_lspdev"]
+      read:image: ["lsst_int_lspdev"]
