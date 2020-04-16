@@ -1,0 +1,210 @@
+elasticsearch:
+  image:
+    repository: "amazon/opendistro-for-elasticsearch"
+    tag: "0.8.0"
+  master:
+    persistence:
+      enabled: false
+  data:
+    replicas: 6
+    persistence:
+      enabled: false
+      #name: 'pvc-lspelk'
+      #size: '100Gi'
+    heapSize: "5g"
+    resources:
+      limits:
+        cpu: "2"
+        memory: 8G
+      requests:
+        cpu: "2"
+        memory: 7G
+  client:
+    replicas: 8
+    heapSize: "6g"
+    resources:
+      limits:
+        cpu: "2"
+        memory: 8G
+      requests:
+        cpu: "2"
+        memory: 7G
+  cluster:
+    config:
+      opendistro_security.disabled: true
+
+kibana:
+  image:
+    repository: "lsstdax/kibana-no-security"
+    #repository: "amazon/opendistro-for-elasticsearch-kibana"
+    tag: "0.8.0"
+
+  files:
+    kibana.yml:
+      elasticsearch.url: http://logging-elasticsearch-client:9200
+      server.basePath: /logs
+      server.rewriteBasePath: true
+
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+      nginx.ingress.kubernetes.io/auth-url:               https://lsst-nts-k8s.ncsa.illinois.edu/auth?capability=exec:admin
+      nginx.ingress.kubernetes.io/auth-sign-in:           https://lsst-nts-k8s.ncsa.illinois.edu/oauth2/sign_in
+      nginx.ingress.kubernetes.io/auth-response-headers:  X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        error_page 403 = "https://lsst-nts-k8s.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+    hosts:
+      - "lsst-nts-k8s.ncsa.illinois.edu/logs"
+
+fluentd-elasticsearch:
+  elasticsearch:
+    host: logging-elasticsearch-client
+  env:
+    RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
+  tolerations:
+    - key: "dedicated"
+      operator: "Exists"
+      effect: "NoSchedule"
+  extraVolumes:
+    - name: qservlogs
+      hostPath:
+        path: /qserv/qserv-prod/log
+  extraVolumeMounts:
+    - name: qservlogs
+      mountPath: /qserv/qserv-prod/log
+  configMaps:
+    useDefaults:
+      containersInputConf: false
+  extraConfigMaps:
+    kubernetes.input.conf: |-
+      <source>
+        @id fluentd-containers.log
+        @type tail
+        path /var/log/containers/*.log
+        pos_file /var/log/containers.log.pos
+        tag raw.kubernetes.*
+        read_from_head true
+        <parse>
+          @type multi_format
+          <pattern>
+            format json
+            time_key time
+            time_format %Y-%m-%dT%H:%M:%S.%NZ
+          </pattern>
+          <pattern>
+            format /^(?<time>.+) (?<stream>stdout|stderr) [^ ]* (?<log>.*)$/
+            time_format %Y-%m-%dT%H:%M:%S.%N%:z
+          </pattern>
+        </parse>
+      </source>
+      # Detect exceptions in the log output and forward them as one log entry.
+      <match raw.kubernetes.**>
+        @id raw.kubernetes
+        @type detect_exceptions
+        remove_tag_prefix raw
+        message log
+        stream stream
+        multiline_flush_interval 5
+        max_bytes 500000
+        max_lines 1000
+      </match>
+      # Concatenate multi-line logs
+      #<filter **>
+      <filter kubernetes.**>
+        @id filter_concat
+        @type concat
+        key message
+        multiline_end_regexp /\n$/
+        separator ""
+      </filter>
+      # Enriches records with Kubernetes metadata
+      <filter kubernetes.**>
+        @id filter_kubernetes_metadata
+        @type kubernetes_metadata
+      </filter>
+      # Fixes json fields in Elasticsearch
+      <filter kubernetes.**>
+        @id filter_parser
+        @type parser
+        key_name log
+        reserve_data true
+        remove_key_name_field true
+        <parse>
+          @type multi_format
+          <pattern>
+            format json
+          </pattern>
+          <pattern>
+            format none
+          </pattern>
+        </parse>
+      </filter>
+    qserv.conf: |-
+      # Example line:
+      # 2019-04-24 23:05:29 140240301914240 [Note] InnoDB: 5.7.21 started; log sequence number 28871386
+      <source>
+        @id mysqld
+        @type tail
+        format /(?<time>\S*\s+\S*) (?<thread_id>\S+) \[(?<level>\S*)\]\s+(?<message>.*)/
+        time_format %Y-%m-%d %k:%M:%S
+        path /qserv/qserv-prod/log/mysqld.log
+        pos_file /qserv/qserv-prod/log/mysqld.log.pos
+        tag "mysqld.#{ENV['K8S_NODE_NAME']}"
+        read_from_head true
+        emit_unmatched_lines true
+      </source>
+
+      # Example line:
+      # 2019-04-24 22:22:42: (message) Initiating shutdown, requested from signal handler
+      <source>
+        @id mysql-proxy
+        @type tail
+        format /(?<time>\S+\s+\S+) \((?<level>\S*)\)\s+(?<message>.*)/
+        time_format %Y-%m-%d %H:%M:%S
+        path /qserv/qserv-prod/log/mysql-proxy.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy.log.pos
+        tag "mysql-proxy.#{ENV['K8S_NODE_NAME']}"
+        read_from_head true
+        emit_unmatched_lines true
+      </source>
+
+      # Example line:
+      # [2019-09-05T10:40:13.189-0700] {{LWP,4567}{QID,4518#0}} DEBUG wdb.QueryRunner (core/modules/wdb/QueryRunner.cc:338) - _sendbuf wait end
+      # Curly braces include Mapped Diagnostic Context with key/value pairs in curly braces separated by commas.
+      # MDC keys are defined by Qserv and here we handle this set of keys:
+      #   - LWP: thread/light-weight process ID (number)
+      #   - CZID: czar ID (number)
+      #   - TID: temporary query ID (number)
+      #   - QID: query and optional job ID (number or two numbers separated by hash)
+      # Unreadable regexp below handles all these keys and values, all unknown keys are ignored (by "[^}]*" expression)
+      <source>
+        @id xrootd
+        @type tail
+        format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
+        time_format %Y-%m-%dT%H:%M:%S.%L
+        path /qserv/qserv-prod/log/xrootd.log
+        pos_file /qserv/qserv-prod/log/xrootd.log.pos
+        tag "xrootd.#{ENV['K8S_NODE_NAME']}"
+        read_from_head true
+        emit_unmatched_lines true
+      </source>
+
+      # Example line:
+      # [2019-09-05T10:40:13.156-0700] {{CZID,1}{LWP,4728}{QID,4518}} DEBUG qdisp.JobQuery (core/modules/qdisp/JobQuery.cc:57) - JobQuery desc=0x7eff7400c8c0
+      # See comment above for MDC format.
+      <source>
+        @id mysql-proxy-lua
+        @type tail
+        format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
+        time_format %Y-%m-%dT%H:%M:%S.%L
+        path /qserv/qserv-prod/log/mysql-proxy-lua.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy-lua.log.pos
+        tag "mysql-proxy-lua.#{ENV['K8S_NODE_NAME']}"
+        read_from_head true
+        emit_unmatched_lines true
+      </source>
