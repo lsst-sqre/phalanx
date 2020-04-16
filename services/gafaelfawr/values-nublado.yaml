@@ -9,25 +9,14 @@ gafaelfawr:
   # Session length/Token expiration (in minutes) (30 days)
   session_length: 43200
 
-  # CILogon client ID.  Currently not used because we use GitHub instead,
-  # but it's registered, and we may switch to it in the future.
-  oauth2_proxy_client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
-
   # Use the PR branch that supports GitHub.
-  image: "lsstdm/jwt_authorizer:tickets-DM-23776"
+  image: "lsstdm/jwt_authorizer:tickets-DM-23877"
 
-  # Use GitHub authentication.
   config:
-    github:
-      client_id: a19e79298a352f3e5650
+    # Disabled but kept so that the client ID is easily accessible.
+    #github:
+    #  client_id: a19e79298a352f3e5650
 
-    group_mapping:
-      "exec:admin": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "exec:user": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "read:workspace": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "read:workspace/user": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "write:workspace/user": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "exec:portal": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "exec:notebook": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "read:tap": ["lsst-dm-data-management", "lsst-sqre-square"]
-      "read:image": ["lsst-dm-data-management", "lsst-sqre-square"]
+    # Use CILogon authentication.
+    cilogon:
+      client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"

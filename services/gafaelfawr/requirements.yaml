@@ -1,4 +1,4 @@
 dependencies:
-- name: gafaelfawr
-  version: 0.1.7
-  repository: https://lsst-sqre.github.io/charts/
+  - name: gafaelfawr
+    version: 0.2.0
+    repository: https://lsst-sqre.github.io/charts/
