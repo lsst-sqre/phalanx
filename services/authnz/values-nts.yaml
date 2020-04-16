@@ -17,21 +17,21 @@ authnz:
   
   
   # lsst-lsp-<instance>.ncsa.illinois.edu
-  host: lsst-lsp-int.ncsa.illinois.edu
+  host: lsst-nts-k8s.ncsa.illinois.edu
   ingress:
-    host: lsst-lsp-int.ncsa.illinois.edu
+    host: lsst-nts-k8s.ncsa.illinois.edu
   
   vault_secrets:
     enabled: True
     # secret/k8s_operator/<host>/jwt_authorizer
-    path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/jwt_authorizer"
+    path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/jwt_authorizer"
   
   # Session length/Token expiration (in minutes) (30 days)
   session_length: 43200
   
   # Existing PVC for redis claim
   # If empty, redis will use emptydir
-  redis_claim: "auth-int-volume-claim"
+  redis_claim: "auth-nts-volume-claim"
   
   
   #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
