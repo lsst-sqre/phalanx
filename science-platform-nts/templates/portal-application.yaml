@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lsst-lsp-nts-portal
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: portal
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: lsst-lsp-nts-portal
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/portal
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - values-nts.yaml
