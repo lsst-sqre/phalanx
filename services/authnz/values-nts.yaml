@@ -35,7 +35,7 @@ authnz:
   
   
   #  derived from public key of signing key - $(modulus_urlsafe_b64) from above
-  jwks_n: "3ALFUwJelCzi8FmGMOtKzbDj03mhGE_EslZ75_SpCgAeBbow44Wt3E-NqY1QGmadY-pRsl5G7ahtiAZscvijVx-1BfEyOx6HbXBZzDmVpNxELnagw-8OsH2JBJxeHjcbwZ7N-b3guwtHdSHLZmMxyBw_57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9uTxT9TIUseCngIYo64fVdQw0y_o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3OzUgDtpFHI-BUNgVakNgk0B4_G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN3w"
+  jwks_n: "AMr6_S1Y1Vo8GQ5lsJrRgnTdccXLAS-KcZAK0bOuLkm4YmaJkXjfmi-Qua4pmIux56wGavlXwc8wMQWFzufDqQVb80WxBxcY4zNusBDZQUqw0foR7xpFzvU_xTYkyYi7W2gnikvu2ZyQYXxR_xC8BxiYGzoH5sLQKHEfGygBUxEapqa6jDzIhSi0pu2t0p6jr1wKg0-qu3hQneVbdXl-G8F3TwsN1iiCqeLHOSdsiqbUkuHVQgfhR7RsuRA9bwdR6M6wd989gqc2uvGK3Ki997DjI-g590WR3g45d4Tm1CvHArAD2CSXpBWMBN_N_moa-YviL80g8DPAsdWAP1CQduk="
   
   # <client id from cilogon.org or OIDC provider>
   oauth2_proxy_client_id: "cilogon:/client_id/5d4d96afd3f1acf896a2b5a7a2e94277"
