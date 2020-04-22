@@ -27,7 +27,8 @@ opendistro-es:
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
       path: /logs
-      host: lsst-lsp-int.ncsa.illinois.edu
+      hosts: 
+        - lsst-lsp-int.ncsa.illinois.edu
 
 fluentd-elasticsearch:
   elasticsearch:
