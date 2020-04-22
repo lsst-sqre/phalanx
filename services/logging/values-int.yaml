@@ -2,10 +2,12 @@ opendistro-es:
   elasticsearch:
     master:
       replicas: 3
-      storageClassName: standard
+      persistence:
+        enabled: false
     data:
       replicas: 3
-      storageClassName: standard
+      persistence:
+        enabled: false
     client:
       replicas: 2
       ingress:
