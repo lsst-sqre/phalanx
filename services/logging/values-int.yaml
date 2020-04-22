@@ -1,64 +1,31 @@
-elasticsearch:
-  image:
-    repository: "amazon/opendistro-for-elasticsearch"
-    tag: "0.8.0"
-  master:
-    persistence:
-      enabled: false
-  data:
-    replicas: 6
-    persistence:
-      enabled: false
-      # name: 'pvc-lspelk'
-      # size: '100Gi'
-    heapSize: "5g"
-    resources:
-      limits:
-        cpu: "2"
-        memory: 8G
-      requests:
-        cpu: "2"
-        memory: 7G
-  client:
-    replicas: 8
-    heapSize: "6g"
-    resources:
-      limits:
-        cpu: "2"
-        memory: 8G
-      requests:
-        cpu: "2"
-        memory: 7G
-  cluster:
-    config:
-      opendistro_security.disabled: true
+opendistro-es:
+  elasticsearch:
+    master:
+      replicas: 3
+      storageClassName: standard
+    data:
+      replicas: 3
+      storageClassName: standard
+    client:
+      replicas: 2
+      ingress:
+        enabled: false
 
-kibana:
-  image:
-    repository: "lsstdax/kibana-no-security"
-    # repository: "amazon/opendistro-for-elasticsearch-kibana"
-    tag: "0.8.0"
-
-  files:
-    kibana.yml:
-      elasticsearch.url: http://logging-elasticsearch-client:9200
-      server.basePath: /logs
-      server.rewriteBasePath: true
-
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
-    hosts:
-      - "lsst-lsp-int.ncsa.illinois.edu/logs"
+  kibana:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
+      path: /logs
+      host: lsst-lsp-int.ncsa.illinois.edu
 
 fluentd-elasticsearch:
   elasticsearch:
