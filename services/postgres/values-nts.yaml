@@ -6,3 +6,4 @@ postgres:
     user: 'jovyan'
     db: 'jupyterhub'
   postgres_storage_class: 'manual'
+  volume_name: 'postgres-data-volume'
