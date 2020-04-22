@@ -21,7 +21,7 @@ spec:
   source:
     path: services/logging
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: tickets/DM-24542
     helm:
       valueFiles:
       - values-int.yaml
