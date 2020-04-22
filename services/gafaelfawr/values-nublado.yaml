@@ -1,22 +1,21 @@
 gafaelfawr:
   host: nublado.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/nublado.lsst.codes/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.
 
-  vault_secrets:
-    path: "secret/k8s_operator/nublado.lsst.codes/jwt_authorizer"
+  # Use the PR branch that has native OpenID Connect support.
+  image: "lsstsqre/gafaelfawr:tickets-DM-23877"
 
-  # Session length/Token expiration (in minutes) (30 days)
-  session_length: 43200
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minues: 43200  # 30 days
 
-  # Use the PR branch that supports GitHub.
-  image: "lsstdm/jwt_authorizer:tickets-DM-23877"
+  # Disabled but kept so that the client ID is easily accessible.
+  #github:
+  #  client_id: a19e79298a352f3e5650
 
-  config:
-    # Disabled but kept so that the client ID is easily accessible.
-    #github:
-    #  client_id: a19e79298a352f3e5650
-
-    # Use CILogon authentication.
-    cilogon:
-      client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
+    redirect_url: "https://nublado.lsst.codes/oauth2/callback"
