@@ -13,6 +13,7 @@ nublado:
   lab:
     restrict_nodes: 'true'
     enable_multus: 'true'
+    dds_domain: 'base'
     image:
       experimentals: 0
       dailies: 0
