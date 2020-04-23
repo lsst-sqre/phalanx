@@ -16,6 +16,7 @@ opendistro-es:
   kibana:
     config:
       server.basePath: /logs
+      server.ssl.enabled: false
       elasticsearch.hosts: ["https://logging-opendistro-es-client-service:9200"]
       elasticsearch.ssl.verificationMode: none
     ingress:
