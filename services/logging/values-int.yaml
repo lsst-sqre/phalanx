@@ -16,6 +16,7 @@ opendistro-es:
   kibana:
     config:
       server.basePath: /logs
+      elasticsearch.hosts: ["http://logging-opendistro-es-client-service:9200"]
     ingress:
       enabled: true
       annotations:
