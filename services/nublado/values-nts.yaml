@@ -5,6 +5,8 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
+    multus: 'true'
+    dds_domain: 'ncsa'
     image:
       experimentals: 2
       dailies: 2
