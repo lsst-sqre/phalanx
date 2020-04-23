@@ -17,7 +17,7 @@ opendistro-es:
     config:
       server.basePath: /logs
       elasticsearch.hosts: ["https://logging-opendistro-es-client-service:9200"]
-      elasticsearch.ssl.verificationMode: certificate
+      elasticsearch.ssl.verificationMode: none
     ingress:
       enabled: true
       annotations:
