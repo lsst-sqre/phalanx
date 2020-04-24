@@ -13,6 +13,10 @@ nublado:
     image:
       cachefile: "/home/jovyan/repo-cache.json"
 
+  reaper:
+    enabled: True
+    user: 'sqreadmin'
+
   hub:
     persistent_home: False
     image: 'lsstsqre/sciplat-hub:0.18.13'
