@@ -9,7 +9,7 @@ gafaelfawr:
 
   # Session length and token expiration (in minutes).
   issuer:
-    exp_minues: 43200  # 30 days
+    exp_minutes: 43200  # 30 days
 
   # Disabled but kept so that the client ID is easily accessible.
   #github:
