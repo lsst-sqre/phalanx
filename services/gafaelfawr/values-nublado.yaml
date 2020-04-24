@@ -4,9 +4,6 @@ gafaelfawr:
 
   # Do not specify ingress.host because we're using the wildcard virtual host.
 
-  # Use the PR branch that has native OpenID Connect support.
-  image: "lsstsqre/gafaelfawr:tickets-DM-23877"
-
   # Session length and token expiration (in minutes).
   issuer:
     exp_minutes: 43200  # 30 days
