@@ -5,14 +5,15 @@ firefly:
   ingress:
     host: 'lsst-lsp-int.ncsa.illinois.edu'
     annotations:
+      nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-url: https://lsst-lsp-int.ncsa.illinois.edu/auth?capability=exec:portal
+      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:portal"
       nginx.ingress.kubernetes.io/configuration-snippet: | 
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
-        error_page 403 = "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
 
   secrets:
     enabled: False
