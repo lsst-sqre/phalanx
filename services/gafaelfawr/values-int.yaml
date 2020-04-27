@@ -1,0 +1,19 @@
+gafaelfawr:
+  host: lsst-lsp-int.ncsa.illinois.edu
+  ingress:
+    host: lsst-lsp-int.ncsa.illinois.edu
+  vault_secrets_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # PVC for the Redis volume.
+  redis_claim: "auth-int-volume-claim"
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/6ca7b54ac075b65bccb9c885f9ba4a75"
+    redirect_url: "https://nublado.lsst.codes/oauth2/callback"
