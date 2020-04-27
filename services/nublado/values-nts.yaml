@@ -8,8 +8,11 @@ nublado:
     multus: 'true'
     dds_domain: 'ncsa'
     image:
-      experimentals: 2
-      dailies: 2
+      repo_name: 'sal-sciplat-lab'
+      experimentals: 0
+      dailies: 0
+      weeklies: 3
+      releases: 1
       cachefile: '/home/jovyan/repo-cache.json'
 
     resources:
