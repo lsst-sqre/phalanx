@@ -53,11 +53,10 @@ kibana:
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-      nginx.ingress.kubernetes.io/auth-url:               https://lsst-nts-k8s.ncsa.illinois.edu/auth?capability=exec:admin
-      nginx.ingress.kubernetes.io/auth-sign-in:           https://lsst-nts-k8s.ncsa.illinois.edu/oauth2/sign_in
-      nginx.ingress.kubernetes.io/auth-response-headers:  X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        error_page 403 = "https://lsst-nts-k8s.ncsa.illinois.edu/oauth2/start?rd=$request_uri";
+      nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-nts-k8s.ncsa.illinois.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:admin"
     hosts:
       - "lsst-nts-k8s.ncsa.illinois.edu/logs"
 

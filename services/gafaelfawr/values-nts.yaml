@@ -1,0 +1,18 @@
+gafaelfawr:
+  host: lsst-nts-k8s.ncsa.illinois.edu
+  ingress:
+    host: lsst-nts-k8s.ncsa.illinois.edu
+  vault_secrets_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/gafaelfawr"
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # PVC for the Redis volume.
+  redis_claim: "auth-nts-volume-claim"
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/5d4d96afd3f1acf896a2b5a7a2e94277"
