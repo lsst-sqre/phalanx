@@ -37,7 +37,13 @@ opendistro-es:
 
 fluentd-elasticsearch:
   elasticsearch:
-    host: logging-elasticsearch-client
+    host: logging-opendistro-es-client-service
+    scheme: https
+    sslVerify: false
+    auth:
+      enabled: true
+      user: admin
+      password: admin
   env:
     RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
   tolerations:
