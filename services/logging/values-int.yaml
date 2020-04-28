@@ -32,6 +32,7 @@ opendistro-es:
 
   kibana:
     config:
+      server.rewriteBasePath: /logs
       server.basePath: /logs
       server.ssl.enabled: false
       elasticsearch.hosts: ["https://logging-opendistro-es-client-service:9200"]
