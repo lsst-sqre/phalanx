@@ -37,7 +37,7 @@ opendistro-es:
 
 fluentd-elasticsearch:
   elasticsearch:
-    host: logging-opendistro-es-client-service
+    hosts: ["logging-opendistro-es-client-service:9200"]
     scheme: https
     sslVerify: false
     auth:
