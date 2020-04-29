@@ -47,7 +47,7 @@ opendistro-es:
         enabled: false
 
     securityConfig:
-      enabled: true
+      enabled: false
       configSecret: elastic-configsecret
 
   kibana:
