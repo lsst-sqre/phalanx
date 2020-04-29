@@ -111,3 +111,14 @@ nublado:
           }
         }
     ]
+
+  signing_certificate: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3ALFUwJelCzi8FmGMOtK
+    zbDj03mhGE/EslZ75/SpCgAeBbow44Wt3E+NqY1QGmadY+pRsl5G7ahtiAZscvij
+    Vx+1BfEyOx6HbXBZzDmVpNxELnagw+8OsH2JBJxeHjcbwZ7N+b3guwtHdSHLZmMx
+    yBw/57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9
+    uTxT9TIUseCngIYo64fVdQw0y/o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3Oz
+    UgDtpFHI+BUNgVakNgk0B4/G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN
+    3wIDAQAB
+    -----END PUBLIC KEY-----
