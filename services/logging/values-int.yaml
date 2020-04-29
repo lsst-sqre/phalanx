@@ -48,7 +48,7 @@ opendistro-es:
 
     securityConfig:
       enabled: true
-      configSecret: kibana-configsecret
+      configSecret: elastic-configsecret
 
   kibana:
     elasticsearchAccount:
@@ -76,10 +76,6 @@ opendistro-es:
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
       hosts: 
         - lsst-lsp-int.ncsa.illinois.edu/logs
-
-    securityConfig:
-      enabled: true
-      configSecret: kibana-configsecret
 
 fluentd-elasticsearch:
   elasticsearch:
