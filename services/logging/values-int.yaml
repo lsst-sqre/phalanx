@@ -46,6 +46,10 @@ opendistro-es:
       ingress:
         enabled: false
 
+    securityConfig:
+      enabled: true
+      configSecret: kibana-configsecret
+
   kibana:
     elasticsearchAccount:
       secret: elasticsearch-account
