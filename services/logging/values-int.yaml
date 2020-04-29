@@ -74,6 +74,7 @@ opendistro-es:
         - lsst-lsp-int.ncsa.illinois.edu/logs
 
     securityConfig:
+      enabled: true
       configSecret: kibana-configsecret
 
 fluentd-elasticsearch:
