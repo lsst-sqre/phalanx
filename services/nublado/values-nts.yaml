@@ -110,3 +110,14 @@ nublado:
         { "group": "lsst_int_lspdev"
         }
     ]
+
+  signing_certificate: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyvr9LVjVWjwZDmWwmtGC
+    dN1xxcsBL4pxkArRs64uSbhiZomReN+aL5C5rimYi7HnrAZq+VfBzzAxBYXO58Op
+    BVvzRbEHFxjjM26wENlBSrDR+hHvGkXO9T/FNiTJiLtbaCeKS+7ZnJBhfFH/ELwH
+    GJgbOgfmwtAocR8bKAFTERqmprqMPMiFKLSm7a3SnqOvXAqDT6q7eFCd5Vt1eX4b
+    wXdPCw3WKIKp4sc5J2yKptSS4dVCB+FHtGy5ED1vB1HozrB33z2Cpza68YrcqL33
+    sOMj6Dn3RZHeDjl3hObUK8cCsAPYJJekFYwE383+ahr5i+IvzSDwM8Cx1YA/UJB2
+    6QIDAQAB
+    -----END PUBLIC KEY-----
