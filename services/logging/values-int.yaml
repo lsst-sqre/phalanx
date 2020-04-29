@@ -1,3 +1,19 @@
+# Vault secret path for the elasticsearch
+# username and password.
+vault_secret: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/log"
+
+signing_certificate: |
+  -----BEGIN PUBLIC KEY-----
+  MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3ALFUwJelCzi8FmGMOtK
+  zbDj03mhGE/EslZ75/SpCgAeBbow44Wt3E+NqY1QGmadY+pRsl5G7ahtiAZscvij
+  Vx+1BfEyOx6HbXBZzDmVpNxELnagw+8OsH2JBJxeHjcbwZ7N+b3guwtHdSHLZmMx
+  yBw/57OqYwfdAOjswFM4sUCwWo7ZkpGsVxeqQTflqMgJRBDKTtMk2Vjx6fwvP1x9
+  uTxT9TIUseCngIYo64fVdQw0y/o6m0FrLM2N2F3E4KWkbUlTbisKcTWealKuX3Oz
+  UgDtpFHI+BUNgVakNgk0B4/G6mNnz1goZAn3JKZS8bAd5Au9x1O3ZPb9FkNn5xxN
+  3wIDAQAB
+  -----END PUBLIC KEY-----
+
+
 opendistro-es:
   elasticsearch:
     master:
@@ -31,15 +47,17 @@ opendistro-es:
         enabled: false
 
   kibana:
+    elasticsearchAccount:
+      secret: elasticsearch-account
+
     config:
       server.rewriteBasePath: true
       server.basePath: /logs
-      server.ssl.enabled: false
       server.host: 0.0.0.0
       elasticsearch.hosts: ["https://logging-opendistro-es-client-service:9200"]
+      server.ssl.enabled: false
       elasticsearch.ssl.verificationMode: none
-      elasticsearch.username: admin
-      elasticsearch.password: admin
+
     ingress:
       enabled: true
       annotations:
@@ -55,15 +73,23 @@ opendistro-es:
       hosts: 
         - lsst-lsp-int.ncsa.illinois.edu/logs
 
+    securityConfig:
+      configSecret: kibana-configsecret
+
 fluentd-elasticsearch:
   elasticsearch:
     hosts: ["logging-opendistro-es-client-service:9200"]
     scheme: https
     sslVerify: false
-    auth:
-      enabled: true
-      user: admin
-      password: admin
+  secret:
+    # Use this account to push data to elasticsearch.
+    # Uses the same secret that kibana uses.
+    - name: OUTPUT_USER
+      secret_name: elasticsearch-account
+      secret_key: username
+    - name: OUTPUT_PASSWORD
+      secret_name: elasticsearch-account
+      secret_key: password
   env:
     RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
   tolerations:
