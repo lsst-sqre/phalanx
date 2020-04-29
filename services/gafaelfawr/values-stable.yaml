@@ -1,0 +1,19 @@
+gafaelfawr:
+  host: lsst-lsp-stable.ncsa.illinois.edu
+  ingress:
+    host: lsst-lsp-stable.ncsa.illinois.edu
+  vault_secrets_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # PVC for the Redis volume.
+  redis_claim: "auth-redis-volume-claim"
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/7ae419868b97e81644ced9886ffbcec"
+    redirect_url: "https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/callback"

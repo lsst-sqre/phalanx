@@ -17,9 +17,8 @@ cadc-tap:
   ingress:
     authenticated_annotations:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-url: https://lsst-lsp-stable.ncsa.illinois.edu/auth?capability=read:tap&reissue_token=true
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=read:tap&auth_type=basic"
       nginx.ingress.kubernetes.io/configuration-snippet: |
-        error_page 403 = @Basic401; # Basic401 configured in jwt-authorizer ingress rule
         auth_request_set $auth_token $upstream_http_x_auth_request_token;
         proxy_set_header Authorization "Bearer $auth_token";
 
