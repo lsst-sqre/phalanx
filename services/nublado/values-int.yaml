@@ -27,7 +27,6 @@ nublado:
   routes:
     soda: '/api/image/soda'
     external:
-      firefly: 'https://lsst-demo.ncsa.illinois.edu/firefly'
       instance: 'https://lsst-lsp-int.ncsa.illinois.edu'
 
   dask:
