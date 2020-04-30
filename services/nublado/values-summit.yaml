@@ -1,7 +1,7 @@
 nublado:
   fqdn: summit-lsp.lsst.codes
   debug: 'true'
-  oauth_provider: 'github'
+  oauth_provider: 'jwt'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
@@ -42,10 +42,15 @@ nublado:
   proxy:
     ingress:
       annotations:
+        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Port 443;
           proxy_set_header X-Forwarded-Path /nb;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
       host: summit-lsp.lsst.codes
 
 
@@ -96,3 +101,14 @@ nublado:
         "fileserver-export": "/butler/repo"
       }
     ]
+
+  signing_certificate: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAte5sbdD3g2x+TeKn7Zil
+    Ky4/TISap2a6QozyF03JJPuiQguQvFxDc2ILpY6fbd2wKNQHfBs5eKh9ShK7heO2
+    +xMBXRFV2tSDbSNs74repxmUZnUjFw9O7lcjFReT3gm9uvOSpwnrs34cwRsFxO4n
+    G1qqSnA/RwZV85QNpEqxCN/9EcNuoIJHeFWe0xNUcl1IbXjjhHYCnVjHx0cHZGLh
+    P79xMfZNR4jmzKHNtnFyE+885nByLQwdYCAB4H7iYXMwyKf1+UJYMuYfVYOjiWAY
+    cHp1Els9aiHGk9ERSguaOVHJY3NKqCSz3luLFV98QYjG10nepo+HwxaN/U5w60q6
+    jQIDAQAB
+    -----END PUBLIC KEY-----
