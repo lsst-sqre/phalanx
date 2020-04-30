@@ -41,7 +41,6 @@ nublado:
     ingress:
       annotations:
         nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
-        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
