@@ -69,9 +69,10 @@ nublado:
        "mountpoint": "/home",
         "mode": "rw",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/jhome"
+        "fileserver-export": "/jhome"
       },
       {
+        "disabled": true,
         "mountpoint": "/datasets",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
         "fileserver-export": "/user/precursor_data/datasets"
@@ -80,13 +81,13 @@ nublado:
         "mountpoint": "/project",
         "mode": "rw",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/project"
+        "fileserver-export": "/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/scratch"
+        "fileserver-export": "/scratch"
       },
       {
         "mountpoint": "/lsstdata/offline/teststand",
