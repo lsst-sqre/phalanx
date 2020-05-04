@@ -18,4 +18,3 @@ gafaelfawr:
     redirect_url: "https://nublado.lsst.codes/oauth2/callback"
     login_params:
       skin: "LSST"
-      selected_idp: "https://idp.ncsa.illinois.edu/idp/shibboleth"
