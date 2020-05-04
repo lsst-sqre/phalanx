@@ -16,3 +16,6 @@ gafaelfawr:
   cilogon:
     client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
     redirect_url: "https://nublado.lsst.codes/oauth2/callback"
+    login_params:
+      skin: "LSST"
+      selected_idp: "https://idp.ncsa.illinois.edu/idp/shibboleth"
