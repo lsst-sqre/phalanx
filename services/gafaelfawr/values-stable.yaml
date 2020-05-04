@@ -19,3 +19,4 @@ gafaelfawr:
     redirect_url: "https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/callback"
     login_params:
       skin: "LSST"
+      selected_idp: "https://idp.ncsa.illinois.edu/idp/shibboleth"
