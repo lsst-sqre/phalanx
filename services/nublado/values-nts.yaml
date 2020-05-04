@@ -21,6 +21,13 @@ nublado:
       options_form_sizes: 'tiny,small,medium,large,huge,colossal'
       size_index: 2
 
+  reaper:
+    enabled: True
+    user: 'sqreadmin'
+    keep_experimentals: 0
+    keep_dailies: 0
+    keep_weeklies: 78
+
   hub:
     persistent_home: False
     image: 'lsstsqre/sciplat-hub:latest'
@@ -90,10 +97,10 @@ nublado:
         "fileserver-export": "/scratch"
       },
       {
-        "mountpoint": "/lsstdata/offline/teststand",
+        "mountpoint": "/lsstdata/",
         "mode": "ro",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
-        "fileserver-export": "/offline/teststand"
+        "fileserver-export": "/lsstdata"
       }
     ]
 
