@@ -5,7 +5,7 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
-    multus: 'true'
+    enable_multus: 'true'
     dds_domain: 'ncsa'
     image:
       repo_name: 'sal-sciplat-lab'
