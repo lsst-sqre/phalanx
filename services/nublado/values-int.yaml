@@ -49,6 +49,7 @@ nublado:
           proxy_set_header X-Forwarded-Path /nb;
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
       host: lsst-lsp-int.ncsa.illinois.edu
 
   mountpoints: |
