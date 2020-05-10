@@ -5,3 +5,5 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
+  postgres_storage_class: 'fast'
+  volume_name: 'postgres-volume'
