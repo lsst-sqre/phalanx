@@ -14,7 +14,7 @@ gafaelfawr:
 
   # Use CILogon authentication.
   cilogon:
-    client_id: "cilogon:/client_id/12fec51db55c36b208dfbe2dee78065c"
+    client_id: "cilogon:/client_id/4fb3456c6d99009d975450af19bee94"
     redirect_url: "https://bleed.lsst.codes/oauth2/callback"
     login_params:
       skin: "LSST"
