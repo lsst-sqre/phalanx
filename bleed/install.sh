@@ -23,10 +23,14 @@ kubectl create secret generic vault-secrets-operator -n vault-secrets-operator -
 echo "Creating TLS secret..."
 kubectl create secret tls tls-certificate --namespace default --cert $CERT_FILE --key $KEY_FILE --dry-run -o yaml | kubectl apply -f -
 
+echo "Wait for argocd to come up..."
+sleep 60
+
 echo "Login to argocd..."
 kubectl port-forward service/argocd-server -n argocd 8080:443 &
-ARGOCD_PASSWORD=`kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' -n argocd | grep argocd-server`
+# It takes a couple of seconds for kubectl to start forwarding connections.
 sleep 5
+ARGOCD_PASSWORD=`kubectl get pods --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' -n argocd | grep argocd-server`
 argocd login localhost:8080 --insecure --password $ARGOCD_PASSWORD --username admin
 
 echo "Create argocd apps..."
