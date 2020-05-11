@@ -8,7 +8,7 @@ echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
 
 echo "Using helm to install tiller in cluster..."
-helm init --service-account tiller --history-max 200
+helm init --service-account tiller --history-max 200 --wait
 
 echo "Add the argocd helm update..."
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -34,4 +34,4 @@ argocd app create vault-secrets-operator --repo https://github.com/lsst-sqre/lsp
 
 argocd app create nginx-ingress --repo https://kubernetes-charts.storage.googleapis.com --helm-chart nginx-ingress --revision 1.26.1 --dest-namespace nginx-ingress --dest-server https://kubernetes.default.svc --upsert --sync-policy automated --helm-set controller.extraArgs.default-ssl-certificate=default/tls-certificate --helm-set controller.service.omitClusterIP=true,controller.stats.service.omitClusterIP=true,controller.metrics.service.omitClusterIP=true,defaultBackend.service.omitClusterIP=true
 
-argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --sync-policy automated
+argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform-bleed --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --sync-policy automated --revision tickets/DM-24367
