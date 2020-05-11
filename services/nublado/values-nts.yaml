@@ -97,10 +97,10 @@ nublado:
         "fileserver-export": "/scratch"
       },
       {
-        "mountpoint": "/lsstdata",
+        "mountpoint": "/lsstdata/offline/teststand",
         "mode": "ro",
-        "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
-        "fileserver-export": "/lsstdata"
+        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
+        "fileserver-export": "/offline/teststand"
       }
     ]
 
