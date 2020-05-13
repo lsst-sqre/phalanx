@@ -12,7 +12,7 @@ metadata:
   name: portal
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: nublado-portal
@@ -24,4 +24,4 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-      - values-base.yaml
+        - values-base.yaml
