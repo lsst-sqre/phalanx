@@ -9,8 +9,8 @@ elasticsearch:
     replicas: 6
     persistence:
       enabled: false
-      #name: 'pvc-lspelk'
-      #size: '100Gi'
+      # name: 'pvc-lspelk'
+      # size: '100Gi'
     heapSize: "5g"
     resources:
       limits:
@@ -36,7 +36,7 @@ elasticsearch:
 kibana:
   image:
     repository: "lsstdax/kibana-no-security"
-    #repository: "amazon/opendistro-for-elasticsearch-kibana"
+    # repository: "amazon/opendistro-for-elasticsearch-kibana"
     tag: "0.8.0"
 
   files:

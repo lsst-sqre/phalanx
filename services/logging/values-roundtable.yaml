@@ -34,7 +34,7 @@ elasticsearch:
 kibana:
   image:
     repository: "lsstdax/kibana-no-security"
-    #repository: "amazon/opendistro-for-elasticsearch-kibana"
+    # repository: "amazon/opendistro-for-elasticsearch-kibana"
     tag: "1.1.0"
 
   files:
