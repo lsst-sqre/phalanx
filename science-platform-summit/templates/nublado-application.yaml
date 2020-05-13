@@ -25,4 +25,3 @@ spec:
     helm:
       valueFiles:
         - values-summit.yaml
-

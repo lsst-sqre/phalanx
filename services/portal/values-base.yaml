@@ -28,4 +28,3 @@ firefly:
     resources:
       limits:
         memory: 20Mi
-

@@ -34,4 +34,3 @@ server:
         name: ricoberger
       - url: https://argoproj.github.io/argo-helm
         name: argo
-
