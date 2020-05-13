@@ -9,7 +9,7 @@ firefly:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
       nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=exec:portal"
-      nginx.ingress.kubernetes.io/configuration-snippet: | 
+      nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
