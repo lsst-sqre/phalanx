@@ -1,0 +1,25 @@
+gafaelfawr:
+  host: tucson-teststand.lsst.codes
+  ingress:
+    host: tucson-teststand.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr"
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # Use GitHub authentication.
+  github:
+    client_id: 9386e0eea5822feba03d
+
+  # Allow access by GitHub team.
+  group_mapping:
+    "exec:admin": ["lsst-sqre-square"]
+    "exec:user": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "read:workspace": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "read:workspace/user": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "write:workspace/user": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "exec:portal": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "exec:notebook": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "read:tap": ["lsst-sqre-square", "lsst-ts-base-access"]
+    "read:image": ["lsst-sqre-square", "lsst-ts-base-access"]
