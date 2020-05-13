@@ -4,7 +4,10 @@ gafaelfawr:
     host: lsst-lsp-stable.ncsa.illinois.edu
   vault_secrets_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
 
-  # Do not specify ingress.host because we're using the wildcard virtual host.
+  # IP range used by the cluster, used to determine the true client IP for
+  # logging.
+  proxies:
+    - "41.142.182.128/26"
 
   # Session length and token expiration (in minutes).
   issuer:
