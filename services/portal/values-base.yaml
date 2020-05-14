@@ -5,7 +5,7 @@ firefly:
   ingress:
     host: 'base-lsp.lsst.codes'
     annotations:
-      nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+      nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
       nginx.ingress.kubernetes.io/auth-url: "https://base-lsp.lsst.codes/auth?scope=exec:portal"

@@ -42,7 +42,7 @@ nublado:
   proxy:
     ingress:
       annotations:
-        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-method: GET
         nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "https://tucson-teststand.lsst.codes/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
@@ -51,6 +51,7 @@ nublado:
           proxy_set_header X-Forwarded-Path /nb;
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
       host: tucson-teststand.lsst.codes
 
 

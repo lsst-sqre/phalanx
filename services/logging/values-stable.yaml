@@ -53,7 +53,7 @@ kibana:
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-      nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+      nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
