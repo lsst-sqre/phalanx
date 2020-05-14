@@ -5,7 +5,7 @@ nublado:
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
-    persistent_home: False
+    persistent_home: false
 
   wf:
     no_verify_signature: 'true'
@@ -36,7 +36,7 @@ nublado:
     max_workers: 50
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: secret/k8s_operator/tucson-teststand.lsst.codes/nublado
 
   proxy:

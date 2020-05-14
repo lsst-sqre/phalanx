@@ -30,7 +30,7 @@ nublado:
     restrict_nodes: 'true'
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: secret/k8s_operator/nublado.lsst.codes/nublado
 
   proxy:

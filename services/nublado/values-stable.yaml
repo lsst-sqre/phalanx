@@ -14,11 +14,11 @@ nublado:
       cachefile: "/home/jovyan/repo-cache.json"
 
   reaper:
-    enabled: True
+    enabled: true
     user: 'sqreadmin'
 
   hub:
-    persistent_home: False
+    persistent_home: false
     image: 'lsstsqre/sciplat-hub:0.19.9'
 
   wf:
@@ -34,7 +34,7 @@ nublado:
     restrict_nodes: 'true'
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/nublado
 
   proxy:

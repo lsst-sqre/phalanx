@@ -1,6 +1,6 @@
 cadc-tap:
   tag: "1.0.9"
-  use_mock_qserv: False
+  use_mock_qserv: false
   qserv_host: "qserv-master01:4040"
 
   querymonkey_replicas: 1
@@ -8,10 +8,10 @@ cadc-tap:
   host: "lsst-lsp-stable.ncsa.illinois.edu"
 
   secrets:
-    enabled: False
+    enabled: false
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: 'secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/tap'
 
   ingress:

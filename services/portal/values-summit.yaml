@@ -22,7 +22,7 @@ firefly:
       memory: 32Gi
 
   secrets:
-    enabled: True
+    enabled: true
 
   redis:
     resources:
