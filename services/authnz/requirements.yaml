@@ -1,4 +1,0 @@
-dependencies:
-- name: authnz
-  version: "0.1.2"
-  repository: https://lsst-sqre.github.io/charts/
