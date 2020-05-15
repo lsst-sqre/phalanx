@@ -10,7 +10,7 @@ gafaelfawr:
 
   # Use GitHub authentication.
   github:
-    client_id: 9386e0eea5822feba03d
+    client_id: 49533cbd8a8079730dcf
 
   # Allow access by GitHub team.
   group_mapping:
