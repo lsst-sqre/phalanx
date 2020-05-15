@@ -40,7 +40,7 @@ nublado:
   proxy:
     ingress:
       annotations:
-        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-method: GET
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:notebook"
@@ -50,6 +50,7 @@ nublado:
           proxy_set_header X-Forwarded-Path /nb;
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
       host: lsst-lsp-stable.ncsa.illinois.edu
 
   mountpoints: |
