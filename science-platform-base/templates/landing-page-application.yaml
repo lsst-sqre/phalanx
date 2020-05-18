@@ -12,7 +12,7 @@ metadata:
   name: landing-page
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: landing-page
@@ -24,4 +24,4 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-      - values-base.yaml
+        - values-base.yaml

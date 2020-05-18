@@ -3,10 +3,10 @@ cadc-tap-postgres:
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
   secrets:
-    enabled: False
+    enabled: false
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap'
 
   ingress:

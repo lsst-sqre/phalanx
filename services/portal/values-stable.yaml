@@ -16,10 +16,10 @@ firefly:
         proxy_set_header X-Forwarded-Path /portal/app;
 
   secrets:
-    enabled: False
+    enabled: false
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: 'secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/portal'
 
   max_jvm_size: "23G"

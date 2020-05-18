@@ -36,7 +36,7 @@ nublado:
     max_workers: 50
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: secret/k8s_operator/summit-lsp.lsst.codes/nublado
 
   proxy:

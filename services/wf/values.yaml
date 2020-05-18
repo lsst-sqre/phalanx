@@ -4,4 +4,3 @@ init:
 argo:
   images:
     tag: v2.4.3
-

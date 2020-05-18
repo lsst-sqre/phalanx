@@ -9,17 +9,17 @@ firefly:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://lsst-nts-k8s.ncsa.illinois.edu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:portal"
-      nginx.ingress.kubernetes.io/configuration-snippet: | 
+      nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
 
   secrets:
-    enabled: False
+    enabled: false
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: 'secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/portal'
 
   max_jvm_size: "23G"

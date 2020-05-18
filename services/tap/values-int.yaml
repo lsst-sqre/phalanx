@@ -1,15 +1,15 @@
 cadc-tap:
   tag: "1.0.9"
-  use_mock_qserv: False
+  use_mock_qserv: false
   qserv_host: "qserv-master01:4040"
 
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
   secrets:
-    enabled: False
+    enabled: false
 
   vault_secrets:
-    enabled: True
+    enabled: true
     path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap'
 
   ingress:

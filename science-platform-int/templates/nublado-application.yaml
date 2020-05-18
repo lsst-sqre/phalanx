@@ -12,7 +12,7 @@ metadata:
   name: nublado
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: lsst-lsp-int-nb
@@ -24,4 +24,4 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-      - values-int.yaml
+        - values-int.yaml
