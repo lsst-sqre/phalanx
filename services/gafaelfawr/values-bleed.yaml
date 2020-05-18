@@ -9,8 +9,8 @@ gafaelfawr:
     exp_minutes: 43200  # 30 days
 
   # Disabled but kept so that the client ID is easily accessible.
-  #github:
-  #  client_id: a19e79298a352f3e5650
+  # github:
+  #   client_id: a19e79298a352f3e5650
 
   # Use CILogon authentication.
   cilogon:

@@ -12,7 +12,7 @@ metadata:
   name: nublado
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: nublado
@@ -24,5 +24,4 @@ spec:
     targetRevision: tickets/DM-24367
     helm:
       valueFiles:
-      - values-bleed.yaml
-
+        - values-bleed.yaml
