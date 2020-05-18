@@ -8,4 +8,4 @@ postgres:
   postgres_storage_class: 'manual'
   volume_name: 'postgres-data-volume'
   image:
-    tag: '0.0.1'
+    tag: '0.0.2'
