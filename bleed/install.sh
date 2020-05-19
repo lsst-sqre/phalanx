@@ -1,8 +1,9 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh VAULT_TOKEN FULLCHAIN_CERT_FILE PRIVATE_KEY"
-VAULT_TOKEN=${1:?$USAGE}
-CERT_FILE=${2:?$USAGE}
-KEY_FILE=${3:?$USAGE}
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN FULLCHAIN_CERT_FILE PRIVATE_KEY"
+ENVIRONMENT=${1:?$USAGE}
+VAULT_TOKEN=${2:?$USAGE}
+CERT_FILE=${3:?$USAGE}
+KEY_FILE=${4:?$USAGE}
 
 echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
@@ -15,7 +16,7 @@ helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 
 echo "Update / install argocd using helm..."
-helm upgrade --install argocd argo/argo-cd --values argo-cd-values.yaml --namespace argocd --wait
+helm upgrade --install argocd argo/argo-cd --values argo-cd-values.yaml --namespace argocd --wait --timeout 900
 
 echo "Creating vault secret..."
 kubectl create secret generic vault-secrets-operator -n vault-secrets-operator --from-literal=VAULT_TOKEN=$VAULT_TOKEN --from-literal=VAULT_TOKEN_LEASE_DURATION=86400 --dry-run -o yaml | kubectl apply -f -
@@ -39,7 +40,7 @@ argocd app create nginx-ingress --repo https://kubernetes-charts.storage.googlea
 argocd app sync nginx-ingress --port-forward --port-forward-namespace argocd
 
 echo "Creating top level application"
-argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform-bleed --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --revision tickets/DM-24367 --port-forward --port-forward-namespace argocd
+argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --revision tickets/DM-24973 --port-forward --port-forward-namespace argocd --values values-$ENVIRONMENT.yaml
 argocd app sync science-platform --port-forward --port-forward-namespace argocd
 
 echo "Sync science platform apps"
