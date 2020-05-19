@@ -1,4 +1,4 @@
-{{- if .Values.gafaelfawr -}}
+{{- if .Values.gafaelfawr.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,7 +22,7 @@ spec:
   source:
     path: services/gafaelfawr
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.gafaelfawr.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

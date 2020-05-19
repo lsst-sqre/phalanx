@@ -1,10 +1,26 @@
-argo: true
-gafaelfawr: true
-landing_page: true
-nublado: true
-obstap: true
-portal: true
-postgres: true
-tap: true
+argo:
+  enabled: true
+  revision: HEAD
+gafaelfawr:
+  enabled: true
+  revision: HEAD
+landing_page:
+  enabled: true
+  revision: HEAD
+nublado:
+  enabled: true
+  revision: HEAD
+obstap:
+  enabled: true
+  revision: HEAD
+portal:
+  enabled: true
+  revision: HEAD
+postgres:
+  enabled: true
+  revision: HEAD
+tap:
+  enabled: true
+  revision: HEAD
 
-environment: 'gke'
+environment: gke

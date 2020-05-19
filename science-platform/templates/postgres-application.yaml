@@ -1,4 +1,4 @@
-{{- if .Values.postgres -}}
+{{- if .Values.postgres.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -19,7 +19,7 @@ spec:
   source:
     path: services/postgres
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.postgres.revision }}
     helm:
       valueFiles:
       - values-{{ .Values.environment }}.yaml

@@ -1,4 +1,4 @@
-{{- if .Values.nublado -}}
+{{- if .Values.nublado.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,7 +22,7 @@ spec:
   source:
     path: services/nublado
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.nublado.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

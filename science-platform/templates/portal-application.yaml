@@ -1,4 +1,4 @@
-{{- if .Values.portal -}}
+{{- if .Values.portal.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -19,5 +19,5 @@ spec:
   source:
     path: services/portal
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.portal.revision }}
 {{- end -}}
