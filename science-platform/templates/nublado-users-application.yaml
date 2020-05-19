@@ -1,12 +1,4 @@
 {{- if .Values.nublado.enabled -}}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: nublado
-spec:
-  finalizers:
-    - kubernetes
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -16,7 +8,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: nublado
+    namespace: nublado-users
     server: https://kubernetes.default.svc
   project: default
   source:
