@@ -1,0 +1,21 @@
+environment: base
+
+argo:
+  enabled: true
+gafaelfawr:
+  enabled: true
+landing_page:
+  enabled: true
+logging:
+  enabled: false
+nublado:
+  enabled: true
+obstap:
+  enabled: false
+portal:
+  enabled: true
+postgres:
+  enabled: true
+tap:
+  enabled: false
+

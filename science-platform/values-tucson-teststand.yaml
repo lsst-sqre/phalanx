@@ -1,0 +1,18 @@
+environment: tucson-teststand
+
+argo:
+  enabled: false
+gafaelfawr:
+  enabled: true
+landing_page:
+  enabled: true
+nublado:
+  enabled: true
+obstap:
+  enabled: false
+portal:
+  enabled: false
+postgres:
+  enabled: true
+tap:
+  enabled: false

@@ -1,3 +1,5 @@
+environment: bleed
+
 argo:
   enabled: true
   revision: tickets/DM-24973
@@ -7,6 +9,8 @@ gafaelfawr:
 landing_page:
   enabled: true
   revision: tickets/DM-24973
+logging:
+  enabled: false
 nublado:
   enabled: true
   revision: tickets/DM-24973
@@ -22,5 +26,3 @@ postgres:
 tap:
   enabled: true
   revision: tickets/DM-24973
-
-environment: bleed
