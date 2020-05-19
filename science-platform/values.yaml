@@ -1,0 +1,10 @@
+argo: true
+gafaelfawr: true
+landing-page: true
+nublado: true
+obstap: true
+portal: true
+postgres: true
+tap: true
+
+environment: 'gke'

@@ -1,3 +1,4 @@
+{{- if .Values.nublado -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,3 +23,4 @@ spec:
     path: services/nublado-users
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
+{{- endif -}}

@@ -1,3 +1,4 @@
+{{- if .Values.postgres -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,3 +23,4 @@ spec:
     helm:
       valueFiles:
       - values-nublado.yaml
+{{- endif -}}

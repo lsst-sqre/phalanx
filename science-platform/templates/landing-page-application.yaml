@@ -1,3 +1,4 @@
+{{- if .Values.landing-page -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,3 +23,4 @@ spec:
     path: services/landing-page
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
+{{- endif -}}
