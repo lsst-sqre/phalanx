@@ -26,4 +26,4 @@ spec:
     helm:
       valueFiles:
         - values-gke.yaml
-{{- endif -}}
+{{- end -}}

@@ -23,4 +23,4 @@ spec:
     path: services/landing-page
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: HEAD
-{{- endif -}}
+{{- end -}}
