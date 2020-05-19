@@ -1,26 +1,26 @@
 argo:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 gafaelfawr:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 landing_page:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 nublado:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 obstap:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 portal:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 postgres:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 tap:
   enabled: true
-  revision: HEAD
+  revision: tickets/DM-24973
 
 environment: gke
