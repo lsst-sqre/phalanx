@@ -1,4 +1,4 @@
-{{- if .Values.landing-page -}}
+{{- if .Values.landing_page -}}
 apiVersion: v1
 kind: Namespace
 metadata:
