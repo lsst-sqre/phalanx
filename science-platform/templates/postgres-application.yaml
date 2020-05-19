@@ -22,5 +22,5 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-      - values-nublado.yaml
+      - values-{{ .Values.environment }}.yaml
 {{- end -}}

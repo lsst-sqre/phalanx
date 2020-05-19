@@ -1,3 +1,4 @@
+{{- if .Values.obstap -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -24,4 +25,5 @@ spec:
     targetRevision: HEAD
     helm:
       valueFiles:
-        - values-int.yaml
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}
