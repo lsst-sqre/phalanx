@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: lsst-lsp-int-dax-obstap
+  name: obstap
 spec:
   finalizers:
     - kubernetes
@@ -16,7 +16,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: lsst-lsp-int-dax-obstap
+    namespace: obstap
     server: https://kubernetes.default.svc
   project: default
   source:
