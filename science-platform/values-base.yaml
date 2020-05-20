@@ -18,4 +18,3 @@ postgres:
   enabled: true
 tap:
   enabled: false
-
