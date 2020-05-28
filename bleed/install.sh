@@ -37,7 +37,7 @@ argocd app create vault-secrets-operator --repo https://github.com/lsst-sqre/lsp
 argocd app sync vault-secrets-operator --port-forward --port-forward-namespace argocd
 
 echo "Creating top level application"
-argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --revision tickets/DM-24973 --port-forward --port-forward-namespace argocd --values values-$ENVIRONMENT.yaml
+argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --revision HEAD --port-forward --port-forward-namespace argocd --values values-$ENVIRONMENT.yaml
 argocd app sync science-platform --port-forward --port-forward-namespace argocd
 
 echo "Sync science platform apps"
