@@ -36,9 +36,6 @@ echo "Create vault secrets operator..."
 argocd app create vault-secrets-operator --repo https://github.com/lsst-sqre/lsp-deploy.git --path services/vault-secrets-operator --dest-namespace vault-secrets-operator --dest-server https://kubernetes.default.svc --upsert --port-forward --port-forward-namespace argocd
 argocd app sync vault-secrets-operator --port-forward --port-forward-namespace argocd
 
-argocd app create nginx-ingress --repo https://kubernetes-charts.storage.googleapis.com --helm-chart nginx-ingress --revision 1.26.1 --dest-namespace nginx-ingress --dest-server https://kubernetes.default.svc --upsert --helm-set controller.extraArgs.default-ssl-certificate=default/tls-certificate --helm-set controller.service.omitClusterIP=true,controller.stats.service.omitClusterIP=true,controller.metrics.service.omitClusterIP=true,defaultBackend.service.omitClusterIP=true --port-forward --port-forward-namespace argocd
-argocd app sync nginx-ingress --port-forward --port-forward-namespace argocd
-
 echo "Creating top level application"
 argocd app create science-platform --repo https://github.com/lsst-sqre/lsp-deploy.git --path science-platform --dest-namespace default --dest-server https://kubernetes.default.svc --upsert --revision tickets/DM-24973 --port-forward --port-forward-namespace argocd --values values-$ENVIRONMENT.yaml
 argocd app sync science-platform --port-forward --port-forward-namespace argocd
