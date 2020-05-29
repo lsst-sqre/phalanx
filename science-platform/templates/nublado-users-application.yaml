@@ -1,11 +1,4 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: nublado
-spec:
-  finalizers:
-    - kubernetes
----
+{{- if .Values.nublado.enabled -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,10 +8,11 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: nublado
+    namespace: nublado-users
     server: https://kubernetes.default.svc
   project: default
   source:
     path: services/nublado-users
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: HEAD
+    targetRevision: {{ .Values.nublado.revision }}
+{{- end -}}

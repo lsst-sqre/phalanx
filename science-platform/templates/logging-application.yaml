@@ -1,8 +1,8 @@
-{{- if .Values.tap.enabled -}}
+{{- if .Values.logging.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tap
+  name: logging
 spec:
   finalizers:
     - kubernetes
@@ -10,19 +10,19 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tap
+  name: logging
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: tap
+    namespace: logging
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/tap
+    path: services/logging
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.tap.revision }}
+    targetRevision: {{ .Values.logging.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

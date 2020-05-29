@@ -1,5 +1,7 @@
 extends: default
 
+ignore: templates
+
 rules:
   line-length: disable
   document-start: disable

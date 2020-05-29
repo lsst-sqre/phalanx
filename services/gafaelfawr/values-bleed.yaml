@@ -1,0 +1,20 @@
+gafaelfawr:
+  host: bleed.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # Disabled but kept so that the client ID is easily accessible.
+  # github:
+  #   client_id: a19e79298a352f3e5650
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/4fb3456c6d99009d975450af19bee94"
+    redirect_url: "https://bleed.lsst.codes/oauth2/callback"
+    login_params:
+      skin: "LSST"

@@ -1,8 +1,8 @@
-{{- if .Values.tap.enabled -}}
+{{- if .Values.obstap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tap
+  name: obstap
 spec:
   finalizers:
     - kubernetes
@@ -10,19 +10,19 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tap
+  name: obstap
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: tap
+    namespace: obstap
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/tap
+    path: services/obstap
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.tap.revision }}
+    targetRevision: {{ .Values.obstap.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

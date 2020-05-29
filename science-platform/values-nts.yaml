@@ -1,0 +1,20 @@
+environment: nts
+
+argo:
+  enabled: true
+gafaelfawr:
+  enabled: true
+landing_page:
+  enabled: true
+logging:
+  enabled: true
+nublado:
+  enabled: true
+obstap:
+  enabled: false
+portal:
+  enabled: true
+postgres:
+  enabled: true
+tap:
+  enabled: false
