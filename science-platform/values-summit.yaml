@@ -6,6 +6,8 @@ gafaelfawr:
   enabled: true
 landing_page:
   enabled: true
+nginx_ingress:
+  enabled: true
 nublado:
   enabled: true
 obstap:

@@ -47,26 +47,6 @@ argocd login \
   --username admin \
   --password $ARGOCD_PASSWORD
 
-echo "Create ingress..."
-argocd app create nginx-ingress \
-  --repo https://kubernetes-charts.storage.googleapis.com \
-  --helm-chart nginx-ingress \
-  --revision 1.26.1 \
-  --dest-namespace nginx-ingress \
-  --dest-server https://kubernetes.default.svc \
-  --upsert \
-  --helm-set controller.extraArgs.default-ssl-certificate=default/tls-certificate \
-  --helm-set controller.service.omitClusterIP=true \
-  --helm-set controller.stats.service.omitClusterIP=true \
-  --helm-set controller.metrics.service.omitClusterIP=true \
-  --helm-set defaultBackend.service.omitClusterIP=true \
-  --port-forward \
-  --port-forward-namespace argocd
-
-argocd app sync nginx-ingress \
-  --port-forward \
-  --port-forward-namespace argocd
-
 echo "Create vault secrets operator..."
 argocd app create vault-secrets-operator \
   --repo https://github.com/lsst-sqre/lsp-deploy.git \
