@@ -10,6 +10,7 @@ logging:
   enabled: false
 nginx_ingress:
   enabled: true
+  revision: tickets/DM-25185
 nublado:
   enabled: true
 obstap:
