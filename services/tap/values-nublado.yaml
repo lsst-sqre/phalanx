@@ -1,0 +1,13 @@
+cadc-tap:
+  tag: "1.0.4"
+  use_mock_qserv: true
+
+  secrets:
+    enabled: false
+
+  vault_secrets:
+    enabled: true
+    path: 'secret/k8s_operator/nublado.lsst.codes/tap'
+
+  gcs_bucket: 'async-results.lsst.codes'
+  gcs_bucket_url: 'http://async-results.lsst.codes'
