@@ -8,6 +8,8 @@ landing_page:
   enabled: true
 logging:
   enabled: false
+nginx_ingress:
+  enabled: true
 nublado:
   enabled: true
 obstap:

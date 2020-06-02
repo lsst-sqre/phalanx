@@ -1,9 +1,10 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN FULLCHAIN_CERT_FILE PRIVATE_KEY"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN FULLCHAIN_CERT_FILE PRIVATE_KEY [REVISION]"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
 CERT_FILE=${3:?$USAGE}
 KEY_FILE=${4:?$USAGE}
+REVISION=${5:-HEAD}
 
 echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
@@ -47,26 +48,6 @@ argocd login \
   --username admin \
   --password $ARGOCD_PASSWORD
 
-echo "Create ingress..."
-argocd app create nginx-ingress \
-  --repo https://kubernetes-charts.storage.googleapis.com \
-  --helm-chart nginx-ingress \
-  --revision 1.26.1 \
-  --dest-namespace nginx-ingress \
-  --dest-server https://kubernetes.default.svc \
-  --upsert \
-  --helm-set controller.extraArgs.default-ssl-certificate=default/tls-certificate \
-  --helm-set controller.service.omitClusterIP=true \
-  --helm-set controller.stats.service.omitClusterIP=true \
-  --helm-set controller.metrics.service.omitClusterIP=true \
-  --helm-set defaultBackend.service.omitClusterIP=true \
-  --port-forward \
-  --port-forward-namespace argocd
-
-argocd app sync nginx-ingress \
-  --port-forward \
-  --port-forward-namespace argocd
-
 echo "Create vault secrets operator..."
 argocd app create vault-secrets-operator \
   --repo https://github.com/lsst-sqre/lsp-deploy.git \
@@ -87,7 +68,7 @@ argocd app create science-platform \
   --path science-platform --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
   --upsert \
-  --revision HEAD \
+  --revision $REVISION \
   --port-forward \
   --port-forward-namespace argocd \
   --values values-$ENVIRONMENT.yaml
@@ -103,3 +84,4 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
 
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
+echo "Login with username: admin password: $ARGOCD_PASSWORD"

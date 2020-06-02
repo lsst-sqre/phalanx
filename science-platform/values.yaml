@@ -12,6 +12,9 @@ landing_page:
 logging:
   enabled: true
   revision: HEAD
+nginx_ingress:
+  enabled: true
+  revision: HEAD
 nublado:
   enabled: true
   revision: HEAD
