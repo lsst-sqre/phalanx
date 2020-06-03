@@ -14,11 +14,9 @@ nublado:
   enabled: true
 obstap:
   enabled: true
-  revision: tickets/DM-25201
 portal:
   enabled: true
 postgres:
   enabled: true
 tap:
   enabled: true
-  revision: tickets/DM-25201
