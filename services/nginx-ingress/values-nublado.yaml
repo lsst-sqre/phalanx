@@ -1,7 +1,15 @@
 nginx-ingress:
   controller:
-    extraArgs.default-ssl-certificate: default/tls-certificate
-    service.omitClusterIP: true
-    stats.service.omitClusterIP: true
-    metrics.service.omitClusterIP: true
-  defaultBackend.service.omitClusterIP: true
+    extraArgs:
+      default-ssl-certificate: default/tls-certificate
+    service:
+      omitClusterIP: true
+    stats:
+      service:
+        omitClusterIP: true
+    metrics:
+      service:
+        omitClusterIP: true
+  defaultBackend:
+    service:
+      omitClusterIP: true
