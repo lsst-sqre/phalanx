@@ -3,9 +3,8 @@ nginx-ingress:
     extraArgs:
       default-ssl-certificate: default/tls-certificate
     config:
-      entries:
-        compute-full-forwarded-for: "true"
-        use-forwarded-headers: "true"
+      compute-full-forwarded-for: "true"
+      use-forwarded-headers: "true"
     service:
       omitClusterIP: true
     stats:
