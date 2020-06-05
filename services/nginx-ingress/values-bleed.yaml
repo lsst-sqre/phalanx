@@ -7,6 +7,7 @@ nginx-ingress:
       use-forwarded-headers: "true"
     service:
       omitClusterIP: true
+      externalTrafficPolicy: Local
     stats:
       service:
         omitClusterIP: true
