@@ -1,0 +1,5 @@
+gafaelfawr_secrets_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
+environment_url: "https://bleed.lsst.codes"
+
+image:
+  tag: master

@@ -1,0 +1,4 @@
+dependencies:
+- name: mobu
+  version: ">=0.1.0"
+  repository: https://lsst-sqre.github.io/charts/
