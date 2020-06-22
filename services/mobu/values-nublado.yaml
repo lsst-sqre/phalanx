@@ -1,5 +1,6 @@
-gafaelfawr_secrets_path: "secret/k8s_operator/nublado.lsst.codes/gafaelfawr"
-environment_url: "https://nublado.lsst.codes"
+mobu:
+  gafaelfawr_secrets_path: "secret/k8s_operator/nublado.lsst.codes/gafaelfawr"
+  environment_url: "https://nublado.lsst.codes"
 
-image:
-  tag: master
+  image:
+    tag: master
