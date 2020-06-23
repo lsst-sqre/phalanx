@@ -8,7 +8,7 @@ nublado:
     enable_multus: 'true'
     dds_domain: 'ncsa'
     image:
-      repo_name: 'sal-sciplat-lab'
+      repo_name: 'nts-sal-sciplat-lab'
       experimentals: 0
       dailies: 0
       weeklies: 3
