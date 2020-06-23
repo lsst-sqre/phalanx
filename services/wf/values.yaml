@@ -2,5 +2,9 @@ init:
   serviceAccount: "nublado-hub"
 
 argo:
-  images:
-    tag: v2.4.3
+  server:
+    enabled: false
+# Ingress is not yet working correctly.
+#    baseHref: /workflows
+#     ingress:
+#       enabled: true
