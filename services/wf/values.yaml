@@ -4,7 +4,3 @@ init:
 argo:
   server:
     enabled: false
-# Ingress is not yet working correctly.
-#    baseHref: /workflows
-#     ingress:
-#       enabled: true
