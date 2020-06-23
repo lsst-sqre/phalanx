@@ -23,6 +23,9 @@ spec:
     path: services/cert-manager
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
     targetRevision: {{ .Values.cert_manager.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration

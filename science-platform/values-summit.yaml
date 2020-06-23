@@ -1,4 +1,4 @@
-environment: nts
+environment: summit
 
 argo:
   enabled: true
