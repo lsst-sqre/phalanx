@@ -1,0 +1,6 @@
+mobu:
+  gafaelfawr_secrets_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
+  environment_url: "https://lsst-lsp-int.ncsa.illinois.edu"
+
+  image:
+    tag: master
