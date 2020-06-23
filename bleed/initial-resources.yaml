@@ -20,9 +20,4 @@ subjects:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nginx-ingress
----
-apiVersion: v1
-kind: Namespace
-metadata:
   name: vault-secrets-operator
