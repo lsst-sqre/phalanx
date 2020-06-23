@@ -2,6 +2,8 @@ environment: nublado
 
 argo:
   enabled: true
+cert_manager:
+  enabled: true
 gafaelfawr:
   enabled: true
 landing_page:
