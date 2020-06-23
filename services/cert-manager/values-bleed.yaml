@@ -1,2 +1,3 @@
+fqdn: bleed.lsst.codes
 cert-manager:
   installCRDs: true

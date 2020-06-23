@@ -1,0 +1,3 @@
+fqdn: nublado.lsst.codes
+cert-manager:
+  installCRDs: true
