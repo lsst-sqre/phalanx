@@ -12,7 +12,7 @@ logging:
   enabled: true
   revision: tickets/DM-24542
 mobu:
-  enabled: false
+  enabled: true
 nginx_ingress:
   enabled: false
 nublado:
