@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: ClusterIssuer
+metadata:
+  name: cert-manager-letsencrypt-issuer
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: sqre-admin@lists.lsst.org
+    privateKeySecretRef:
+      name: cert-manager-letsencrypt
+    solvers:
+      - http01:
+          ingress:
+            class: nginx

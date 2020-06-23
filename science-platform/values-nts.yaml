@@ -2,6 +2,8 @@ environment: nts
 
 argo:
   enabled: true
+cert_manager:
+  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:

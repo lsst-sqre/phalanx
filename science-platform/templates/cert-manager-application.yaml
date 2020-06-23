@@ -1,0 +1,35 @@
+{{- if .Values.cert_manager.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-manager
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cert-manager
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/cert-manager
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: {{ .Values.cert_manager.revision }}
+  ignoreDifferences:
+    - group: admissionregistration.k8s.io
+      kind: MutatingWebhookConfiguration
+      jsonPointers:
+        - "/webhooks/0/clientConfig/caBundle"
+    - group: admissionregistration.k8s.io
+      kind: ValidatingWebhookConfiguration
+      jsonPointers:
+        - "/webhooks/0/clientConfig/caBundle"
+{{- end -}}
