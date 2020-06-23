@@ -10,7 +10,7 @@ echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
 
 echo "Using helm to install tiller in cluster..."
-helm init --service-account tiller --history-max 200 --wait
+helm init --service-account tiller --history-max 200 --wait --upgrade
 
 echo "Add the argocd helm update..."
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -43,6 +43,7 @@ ARGOCD_PASSWORD=`kubectl get pods \
   --namespace argocd | grep argocd-server`
 
 argocd login \
+  --plaintext \
   --port-forward \
   --port-forward-namespace argocd \
   --username admin \

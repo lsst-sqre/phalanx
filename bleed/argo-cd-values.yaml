@@ -11,8 +11,8 @@ server:
     - /argo-cd(/|$)(.*)
 
   extraArgs:
-    basehref: /argo-cd
-    insecure: true
+    - "--basehref=/argo-cd"
+    - "--insecure=true"
 
   config:
     helm.repositories: |
