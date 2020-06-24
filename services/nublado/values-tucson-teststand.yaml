@@ -67,25 +67,25 @@ nublado:
       {
        "mountpoint": "/home",
         "mode": "rw",
-        "fileserver-host": "10.0.100.145",
-        "fileserver-export": "/data/exports-nublado/home"
+        "fileserver-host": "nfs01.tu.lsst.org",
+        "fileserver-export": "/data/exports-lsp/home"
       },
       {
         "mountpoint": "/datasets",
-        "fileserver-host": "10.0.100.145",
-        "fileserver-export": "/data/exports-nublado/datasets"
+        "fileserver-host": "nfs01.tu.lsst.org",
+        "fileserver-export": "/data/exports-lsp/datasets"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
-        "fileserver-host": "10.0.100.145",
-        "fileserver-export": "/data/exports-nublado/project"
+        "fileserver-host": "nfs01.tu.lsst.org",
+        "fileserver-export": "/data/exports-lsp/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
-        "fileserver-host": "10.0.100.145",
-        "fileserver-export": "/data/exports-nublado/scratch"
+        "fileserver-host": "nfs01.tu.lsst.org",
+        "fileserver-export": "/data/exports-lsp/scratch"
       }
     ]
 
