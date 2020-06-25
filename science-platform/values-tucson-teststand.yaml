@@ -13,7 +13,7 @@ logging:
 mobu:
   enabled: false
 nginx_ingress:
-  enabled: false
+  enabled: true
 nublado:
   enabled: true
 obstap:
