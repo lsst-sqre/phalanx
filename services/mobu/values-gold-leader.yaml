@@ -1,0 +1,6 @@
+mobu:
+  gafaelfawr_secrets_path: "secret/k8s_operator/gold-leader.lsst.codes/gafaelfawr"
+  environment_url: "https://gold-leader.lsst.codes"
+
+  image:
+    tag: master

@@ -1,0 +1,19 @@
+nginx-ingress:
+  controller:
+    extraArgs:
+      default-ssl-certificate: cert-manager/default-certificate
+    config:
+      compute-full-forwarded-for: "true"
+      use-forwarded-headers: "true"
+    service:
+      omitClusterIP: true
+      externalTrafficPolicy: Local
+    stats:
+      service:
+        omitClusterIP: true
+    metrics:
+      service:
+        omitClusterIP: true
+  defaultBackend:
+    service:
+      omitClusterIP: true
