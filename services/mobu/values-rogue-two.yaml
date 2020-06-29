@@ -1,0 +1,6 @@
+mobu:
+  gafaelfawr_secrets_path: "secret/k8s_operator/rogue-two.lsst.codes/gafaelfawr"
+  environment_url: "https://rogue-two.lsst.codes"
+
+  image:
+    tag: master

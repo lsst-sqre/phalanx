@@ -1,0 +1,20 @@
+gafaelfawr:
+  host: red-five.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # Disabled but kept so that the client ID is easily accessible.
+  # github:
+  #   client_id: a19e79298a352f3e5650
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/51ea95a5fac24d5a6f33e658d7d77d2a"
+    redirect_url: "https://red-five.lsst.codes/oauth2/callback"
+    login_params:
+      skin: "LSST"

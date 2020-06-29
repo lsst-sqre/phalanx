@@ -1,0 +1,6 @@
+mobu:
+  gafaelfawr_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
+  environment_url: "https://red-five.lsst.codes"
+
+  image:
+    tag: master

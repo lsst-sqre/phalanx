@@ -1,0 +1,3 @@
+fqdn: rogue-two.lsst.codes
+cert-manager:
+  installCRDs: true

@@ -1,0 +1,3 @@
+fqdn: red-five.lsst.codes
+cert-manager:
+  installCRDs: true
