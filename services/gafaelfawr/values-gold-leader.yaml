@@ -15,6 +15,5 @@ gafaelfawr:
   # Use CILogon authentication.
   cilogon:
     client_id: "cilogon:/client_id/537ab5b211d0ddacb05964e5adf9a4dc"
-    redirect_url: "https://gold-leader.lsst.codes/oauth2/callback"
     login_params:
       skin: "LSST"

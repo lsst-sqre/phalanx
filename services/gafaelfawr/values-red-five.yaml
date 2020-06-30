@@ -15,6 +15,5 @@ gafaelfawr:
   # Use CILogon authentication.
   cilogon:
     client_id: "cilogon:/client_id/51ea95a5fac24d5a6f33e658d7d77d2a"
-    redirect_url: "https://red-five.lsst.codes/oauth2/callback"
     login_params:
       skin: "LSST"
