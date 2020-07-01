@@ -33,7 +33,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Science Platform'
+project = 'Phalanx'
 copyright = '2020, Association of Universities for Research in Astronomy, Inc. (AURA)'
 author = 'LSST SQuaRE'
 
