@@ -2,6 +2,8 @@ apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: cert-manager-letsencrypt-issuer
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
@@ -9,6 +11,17 @@ spec:
     privateKeySecretRef:
       name: cert-manager-letsencrypt
     solvers:
+      {{- if .Values.solver.route53 }}
+      - dns01:
+          cnameStrategy: Follow
+          route53:
+            accessKeyID: {{ .Values.solver.route53.aws-access-key-id }}
+            hostedZoneID: {{ .Values.solver.route53.hosted-zone }}
+            secretAccessKeySecretRef:
+              name: cert-manager-secret
+              key: aws-secret-access-key
+      {{- else }}
       - http01:
           ingress:
             class: nginx
+      {{- end -}}
