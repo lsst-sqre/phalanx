@@ -14,4 +14,5 @@ Operations guide
 .. toctree::
    :maxdepth: 2
 
+   cert-manager/index
    vault-secrets-operator/index
