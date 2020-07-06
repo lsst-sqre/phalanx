@@ -58,37 +58,34 @@ nublado:
         "mountpoint": "/example -- if it doesn't start with '/' we add it",
         "fileserver-host": "omit to use Hub settings",
         "fileserver-export": "defaults to '/exports<mountpoint>'",
+        "hostpath": "if you're doing direct host mounts, e.g. GPFS w/o NFS",
         "mode": "rw or ro, defaults to 'ro'",
         "options": "mount options, e.g. 'local_lock=all'"
       },
       {
        "mountpoint": "/home",
         "mode": "rw",
-        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/jhome"
-      },
-      {
-        "mountpoint": "/datasets",
-        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/user/precursor_data/datasets"
+        "hostpath": "/lsstdata/user/staff/jhome"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
-        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/project"
+        "hostpath": "/lsstdata/user/staff/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
-        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/user/staff/scratch"
+        "hostpath": "/lsstdata/user/staff/scratch"
+      },
+      {
+        "mountpoint": "/datasets",
+        "mode": "ro",
+        "hostpath": "/lsstdata/user/precursor_data/datasets"
       },
       {
         "mountpoint": "/lsstdata/offline/teststand",
         "mode": "ro",
-        "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/offline/teststand"
+        "hostpath": "/lsstdata/offline/teststand"
       }
     ]
 
