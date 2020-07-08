@@ -1,5 +1,6 @@
 mobu:
   gafaelfawr_secrets_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
+  mobu_secrets_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/mobu"
   environment_url: "https://lsst-lsp-int.ncsa.illinois.edu"
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
