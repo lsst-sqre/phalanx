@@ -28,6 +28,8 @@ cadc-tap:
       cpu: 8.0
       memory: 16G
 
+  jvm_max_heap_size: 15G
+
   aux_resources:
     requests:
       cpu: 0.25
