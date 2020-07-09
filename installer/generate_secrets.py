@@ -37,6 +37,12 @@ def generate_nublado_secrets(db_pass):
     "session_db_url": f"postgres://jovyan:{db_pass}@postgres.postgres/jupyterhub",
   }
 
+def generate_mobu_secrets():
+  return {
+    "ALERT_HOOK": input_field("mobu", "ALERT_HOOK",
+      "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
+  }
+
 def generate_gafaelfawr_secrets():
   key = rsa.generate_private_key(
     backend=default_backend(),
@@ -62,6 +68,7 @@ def generate_secrets():
   secrets["postgres"] = generate_postgres_secrets()
   secrets["tap"] = generate_tap_secrets()
   secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
+  secrets["mobu"] = generate_mobu_secrets()
   secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
   return secrets
 
