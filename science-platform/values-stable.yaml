@@ -11,7 +11,7 @@ landing_page:
 logging:
   enabled: true
 mobu:
-  enabled: false
+  enabled: true
 nginx_ingress:
   enabled: false
 nublado:
