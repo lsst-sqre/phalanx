@@ -13,6 +13,7 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
+    enable_multus: 'true'
     dds_domain: 'tucson'
     image:
       experimentals: 0
