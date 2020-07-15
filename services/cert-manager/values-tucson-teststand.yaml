@@ -1,8 +1,8 @@
 solver:
   route53:
-    aws-access-key-id: AKIAQSJOS2SFLUEVXZDB
-    hosted-zone: Z06873202D7WVTZUFOQ42
-    vault-secret-path: "secret/k8s_operator/tucson-teststand.lsst.codes/cert-manager"
+    aws_access_key_id: AKIAQSJOS2SFLUEVXZDB
+    hosted_zone: Z06873202D7WVTZUFOQ42
+    vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/cert-manager"
 fqdn: tucson-teststand.lsst.codes
 cert-manager:
   installCRDs: true
