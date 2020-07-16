@@ -16,6 +16,7 @@ spec:
       - dns01:
           cnameStrategy: Follow
           route53:
+            region: us-east-1
             accessKeyID: {{ .Values.solver.route53.aws_access_key_id }}
             hostedZoneID: {{ .Values.solver.route53.hosted_zone }}
             secretAccessKeySecretRef:
