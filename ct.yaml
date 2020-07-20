@@ -1,0 +1,10 @@
+# Intended to be run after tests/expand-services, which generates the
+# services-expanded directory of charts for every combination of
+# environment and base chart.
+
+chart-dirs:
+  - "science-platform"
+  - "services-expanded"
+check-version-increment: false
+validate-maintainers: false
+validate-chart-schema: false

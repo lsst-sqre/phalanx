@@ -1,1 +1,3 @@
-installer/secrets/*
+/installer/secrets/
+/services/*/charts/
+/services-expanded/
