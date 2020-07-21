@@ -1,10 +1,8 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN FULLCHAIN_CERT_FILE PRIVATE_KEY [REVISION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [REVISION]"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
-CERT_FILE=${3:?$USAGE}
-KEY_FILE=${4:?$USAGE}
-REVISION=${5:-HEAD}
+REVISION=${3:-HEAD}
 
 echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
@@ -28,13 +26,6 @@ kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
   --from-literal=VAULT_TOKEN_LEASE_DURATION=86400 \
-  --dry-run -o yaml | kubectl apply -f -
-
-echo "Creating TLS secret..."
-kubectl create secret tls tls-certificate \
-  --namespace default \
-  --cert $CERT_FILE \
-  --key $KEY_FILE \
   --dry-run -o yaml | kubectl apply -f -
 
 echo "Login to argocd..."
