@@ -66,6 +66,7 @@ def generate_gafaelfawr_secrets():
   return {
     "cilogon-client-secret": input_field("gafaelfawr", "cilogon-client-secret",
                                          "CILogon client secret"),
+    "redis-password": os.urandom(32).hex(),
     "session-secret": Fernet.generate_key().decode(),
     "signing-key": key_bytes.decode(),
   }
