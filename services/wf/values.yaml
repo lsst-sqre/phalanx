@@ -2,6 +2,7 @@ init:
   serviceAccount: "nublado-hub"
 
 argo:
-  containerRuntimeExecutor: "k8sapi"
   server:
     enabled: false
+    config:
+      containerRuntimeExecutor: "k8sapi"
