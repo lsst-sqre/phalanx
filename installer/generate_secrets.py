@@ -43,6 +43,13 @@ def generate_mobu_secrets():
       "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
   }
 
+def generate_cert_manager_secrets():
+  return {
+    "aws-secret-access-key": input_field("cert-manager",
+      "aws-secret-access-key",
+      "AWS secret access key for AKIAQSJOS2SFLUEVXZDB for DNS cert solver.")
+  }
+
 def generate_gafaelfawr_secrets():
   key = rsa.generate_private_key(
     backend=default_backend(),
@@ -70,6 +77,7 @@ def generate_secrets():
   secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
   secrets["mobu"] = generate_mobu_secrets()
   secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
+  secrets["cert-manager"] = generate_cert_manager_secrets()
   return secrets
 
 def generate_files(secrets):
