@@ -24,6 +24,13 @@ def generate_tap_secrets():
       "google_creds.json": b64encode(f.read().encode()).decode()
     }
 
+def generate_log_secrets():
+  return {
+    "username": "admin",
+    "password": "admin",
+    "cookie": secrets.token_urlsafe(32),
+  }
+
 def generate_postgres_secrets():
   return {
     "jupyterhub_password": secrets.token_hex(32),
@@ -74,6 +81,7 @@ def generate_gafaelfawr_secrets():
 def generate_secrets():
   secrets = {}
   secrets["postgres"] = generate_postgres_secrets()
+  secrets["log"] = generate_log_secrets()
   secrets["tap"] = generate_tap_secrets()
   secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
   secrets["mobu"] = generate_mobu_secrets()
