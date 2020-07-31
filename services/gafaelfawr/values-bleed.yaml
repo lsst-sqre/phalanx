@@ -1,8 +1,5 @@
 gafaelfawr:
   host: bleed.lsst.codes
-  image:
-    tag: "tickets-DM-26078"
-    pullPolicy: "Always"
   vault_secrets_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.
