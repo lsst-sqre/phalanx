@@ -71,6 +71,7 @@ def generate_log_secrets():
     "cookie": secrets.token_urlsafe(32),
     "internal_users.yml": yaml.dump(internal_users),
     "logstash-password": logstash[0],
+    "kibana-password": kibana[0],
   }
 
 def generate_postgres_secrets():
