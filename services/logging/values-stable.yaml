@@ -1,68 +1,89 @@
-elasticsearch:
-  image:
-    repository: "amazon/opendistro-for-elasticsearch"
-    tag: "0.8.0"
-  master:
-    persistence:
-      enabled: false
-  data:
-    replicas: 6
-    persistence:
-      enabled: false
-      # name: 'pvc-lspelk'
-      # size: '100Gi'
-    heapSize: "5g"
-    resources:
-      limits:
-        cpu: "2"
-        memory: 8G
-      requests:
-        cpu: "2"
-        memory: 7G
-  client:
-    replicas: 8
-    heapSize: "6g"
-    resources:
-      limits:
-        cpu: "2"
-        memory: 8G
-      requests:
-        cpu: "2"
-        memory: 7G
-  cluster:
+# Vault secret path for the elasticsearch
+# username and password.
+vault_secret: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/log"
+
+opendistro-es:
+  elasticsearch:
+    master:
+      replicas: 3
+      persistence:
+        enabled: false
+    data:
+      replicas: 3
+      javaOpts: "-Xms6g -Xmx6g"
+      resources:
+        limits:
+          cpu: "4"
+          memory: 8G
+        requests:
+          cpu: "4"
+          memory: 8G
+      persistence:
+        enabled: false
+    client:
+      replicas: 4
+      javaOpts: "-Xms6g -Xmx6g"
+      resources:
+        limits:
+          cpu: "4"
+          memory: 8G
+        requests:
+          cpu: "4"
+          memory: 8G
+
+      ingress:
+        enabled: false
+
+    securityConfig:
+      enabled: true
+      configSecret: elastic-configsecret
+      internalUsersSecret: elasticsearch-account
+
+  kibana:
+    elasticsearchAccount:
+      secret: elasticsearch-account
+
     config:
-      opendistro_security.disabled: true
-
-kibana:
-  image:
-    repository: "lsstdax/kibana-no-security"
-    # repository: "amazon/opendistro-for-elasticsearch-kibana"
-    tag: "0.8.0"
-
-  files:
-    kibana.yml:
-      elasticsearch.url: http://logging-elasticsearch-client:9200
-      server.basePath: /logs
       server.rewriteBasePath: true
+      server.basePath: /logs
+      server.host: 0.0.0.0
+      elasticsearch.hosts: ["https://logging-opendistro-es-client-service:9200"]
+      server.ssl.enabled: false
+      elasticsearch.ssl.verificationMode: none
+      opendistro_security.cookie.secure: true
+      opendistro_security.cookie.password: ${COOKIE_PASS}
+      elasticsearch.username: ${ELASTICSEARCH_USERNAME}
+      elasticsearch.password: ${ELASTICSEARCH_PASSWORD}
 
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
-    hosts:
-      - "lsst-lsp-stable.ncsa.illinois.edu/logs"
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
+        nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
+        nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+        nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
+      hosts:
+        - lsst-lsp-stable.ncsa.illinois.edu/logs
 
 fluentd-elasticsearch:
   elasticsearch:
-    host: logging-elasticsearch-client
+    auth:
+      enabled: true
+      user: "logstash"
+      # Get password from the elasticsearch-account secret
+      password: ""
+    hosts: ["logging-opendistro-es-client-service:9200"]
+    scheme: https
+    sslVerify: false
+  secret:
+    - name: OUTPUT_PASSWORD
+      secret_name: elasticsearch-account
+      secret_key: logstash-password
   env:
     RUBY_GC_HEAP_OLDOBJECT_LIMIT_FACTOR: "0.9"
   tolerations:
@@ -72,10 +93,10 @@ fluentd-elasticsearch:
   extraVolumes:
     - name: qservlogs
       hostPath:
-        path: /qserv/log
+        path: /qserv/qserv-prod/log
   extraVolumeMounts:
     - name: qservlogs
-      mountPath: /qserv/log
+      mountPath: /qserv/qserv-prod/log
   configMaps:
     useDefaults:
       containersInputConf: false
@@ -151,8 +172,8 @@ fluentd-elasticsearch:
         @type tail
         format /(?<time>\S*\s+\S*) (?<thread_id>\S+) \[(?<level>\S*)\]\s+(?<message>.*)/
         time_format %Y-%m-%d %k:%M:%S
-        path /qserv/log/mysqld.log
-        pos_file /qserv/log/mysqld.log.pos
+        path /qserv/qserv-prod/log/mysqld.log
+        pos_file /qserv/qserv-prod/log/mysqld.log.pos
         tag "mysqld.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -165,8 +186,8 @@ fluentd-elasticsearch:
         @type tail
         format /(?<time>\S+\s+\S+) \((?<level>\S*)\)\s+(?<message>.*)/
         time_format %Y-%m-%d %H:%M:%S
-        path /qserv/log/mysql-proxy.log
-        pos_file /qserv/log/mysql-proxy.log.pos
+        path /qserv/qserv-prod/log/mysql-proxy.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy.log.pos
         tag "mysql-proxy.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -186,8 +207,8 @@ fluentd-elasticsearch:
         @type tail
         format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
         time_format %Y-%m-%dT%H:%M:%S.%L
-        path /qserv/log/xrootd.log
-        pos_file /qserv/log/xrootd.log.pos
+        path /qserv/qserv-prod/log/xrootd.log
+        pos_file /qserv/qserv-prod/log/xrootd.log.pos
         tag "xrootd.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true
@@ -201,8 +222,8 @@ fluentd-elasticsearch:
         @type tail
         format /\[(?<time>\S+T\S+)\]\s+\{(\{(LWP,(?<thread_id>\d+)|CZID,(?<czar_id>\d*)|TID,(?<query_id_tmp>\d*)|QID,((?<job_id>(?<query_id>\d*)#\d*)|(?<query_id>\d*))|[^}]*)\})+\}\s+(?<level>\S+)\s+(?<logger>\S+)\s+\((?<src_file>\S+)\)\s+-\s+(?<message>.*)/
         time_format %Y-%m-%dT%H:%M:%S.%L
-        path /qserv/log/mysql-proxy-lua.log
-        pos_file /qserv/log/mysql-proxy-lua.log.pos
+        path /qserv/qserv-prod/log/mysql-proxy-lua.log
+        pos_file /qserv/qserv-prod/log/mysql-proxy-lua.log.pos
         tag "mysql-proxy-lua.#{ENV['K8S_NODE_NAME']}"
         read_from_head true
         emit_unmatched_lines true

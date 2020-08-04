@@ -10,26 +10,26 @@ opendistro-es:
         enabled: false
     data:
       replicas: 3
-      javaOpts: "-Xms2g -Xmx2g"
+      javaOpts: "-Xms6g -Xmx6g"
       resources:
         limits:
-          cpu: "2"
-          memory: 4G
+          cpu: "4"
+          memory: 8G
         requests:
-          cpu: "2"
-          memory: 4G
+          cpu: "4"
+          memory: 8G
       persistence:
         enabled: false
     client:
       replicas: 4
-      javaOpts: "-Xms2g -Xmx2g"
+      javaOpts: "-Xms6g -Xmx6g"
       resources:
         limits:
-          cpu: "2"
-          memory: 4G
+          cpu: "4"
+          memory: 8G
         requests:
-          cpu: "2"
-          memory: 4G
+          cpu: "4"
+          memory: 8G
 
       ingress:
         enabled: false
