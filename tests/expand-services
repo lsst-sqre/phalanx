@@ -32,7 +32,9 @@ def get_changed_charts() -> List[str]:
             diff = repo.head.commit.diff("origin/master", paths=[str(path)])
             for change_type in DiffIndex.change_type:
                 if any(diff.iter_change_type(change_type)):
+                    print("Found changed chart", path.name)
                     charts.append(path.name)
+                    break
 
     return charts
 

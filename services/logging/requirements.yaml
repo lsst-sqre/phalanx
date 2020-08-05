@@ -1,10 +1,7 @@
 dependencies:
-- name: elasticsearch
-  version: ">=1.26.2"
-  repository: https://kubernetes-charts.storage.googleapis.com/
-- name: kibana
-  version: ">=3.0.0"
-  repository: https://kubernetes-charts.storage.googleapis.com/
+- name: opendistro-es
+  version: "1.4.0"
+  repository: https://lsst-sqre.github.io/charts/
 - name: fluentd-elasticsearch
-  version: ">=3.0.0"
+  version: "8.0.1"
   repository: https://kiwigrid.github.io

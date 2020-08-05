@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from base64 import b64encode
+import bcrypt
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
@@ -7,6 +8,7 @@ from cryptography.hazmat.primitives import serialization
 import json
 import os
 import secrets
+import yaml
 
 
 def input_field(component, name, description):
@@ -23,6 +25,54 @@ def generate_tap_secrets():
         "slack webhook url for querymonkey"),
       "google_creds.json": b64encode(f.read().encode()).decode()
     }
+
+def generate_log_secrets():
+  def gen_pw_and_hash():
+    pw = secrets.token_hex(16)
+    h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
+    return (pw, h)
+
+  admin = gen_pw_and_hash()
+  kibana = gen_pw_and_hash()
+  logstash = gen_pw_and_hash()
+
+  internal_users = {
+    "_meta": {
+      "type": "internalusers",
+      "config_version": 2,
+    },
+    "admin": {
+      "hash": admin[1],
+      "reserved": True,
+      "backend_roles": ["admin"],
+      "description": "Admin user",
+    },
+    "kibana": {
+      "hash": kibana[1],
+      "backend_roles": ["kibanauser"],
+      "description": "Kibana user",
+    },
+    "logstash": {
+      "hash": logstash[1],
+      "reserved": False,
+      "backend_roles": ["logstash"],
+      "description": "Logstash writing user",
+    },
+  }
+
+  # username / password / cookie is the elasticsearch admin user,
+  # and this key is unfortunately hardcoded by the chart.
+  # fluentd and kibana passwords are also passed through, but these
+  # are tied to the hashes that are present in the internal_users
+  # yaml file, where the bcrypt'd password is stored.
+  return {
+    "username": "admin",
+    "password": admin[0],
+    "cookie": secrets.token_urlsafe(32),
+    "internal_users.yml": yaml.dump(internal_users),
+    "logstash-password": logstash[0],
+    "kibana-password": kibana[0],
+  }
 
 def generate_postgres_secrets():
   return {
@@ -74,6 +124,7 @@ def generate_gafaelfawr_secrets():
 def generate_secrets():
   secrets = {}
   secrets["postgres"] = generate_postgres_secrets()
+  secrets["log"] = generate_log_secrets()
   secrets["tap"] = generate_tap_secrets()
   secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
   secrets["mobu"] = generate_mobu_secrets()

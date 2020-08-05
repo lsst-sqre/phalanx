@@ -1,6 +1,6 @@
 # Vault secret path for the elasticsearch
 # username and password.
-vault_secret: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/log"
+vault_secret: "secret/k8s_operator/red-five.lsst.codes/log"
 
 opendistro-es:
   elasticsearch:
@@ -10,27 +10,10 @@ opendistro-es:
         enabled: false
     data:
       replicas: 3
-      javaOpts: "-Xms6g -Xmx6g"
-      resources:
-        limits:
-          cpu: "4"
-          memory: 8G
-        requests:
-          cpu: "4"
-          memory: 8G
       persistence:
         enabled: false
     client:
       replicas: 4
-      javaOpts: "-Xms6g -Xmx6g"
-      resources:
-        limits:
-          cpu: "4"
-          memory: 8G
-        requests:
-          cpu: "4"
-          memory: 8G
-
       ingress:
         enabled: false
 
@@ -65,10 +48,10 @@ opendistro-es:
         nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
         nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
-        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
-      hosts:
-        - lsst-lsp-int.ncsa.illinois.edu/logs
+        nginx.ingress.kubernetes.io/auth-signin: "https://red-five.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=exec:admin"
+      path:
+        - logs
 
 fluentd-elasticsearch:
   elasticsearch:
@@ -90,13 +73,6 @@ fluentd-elasticsearch:
     - key: "dedicated"
       operator: "Exists"
       effect: "NoSchedule"
-  extraVolumes:
-    - name: qservlogs
-      hostPath:
-        path: /qserv/qserv-prod/log
-  extraVolumeMounts:
-    - name: qservlogs
-      mountPath: /qserv/qserv-prod/log
   configMaps:
     useDefaults:
       containersInputConf: false
