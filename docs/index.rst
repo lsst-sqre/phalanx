@@ -15,6 +15,7 @@ Operations guide
    :maxdepth: 2
 
    argo-cd/index
+   cert-issuer/index
    cert-manager/index
    logging/index
    vault-secrets-operator/index

@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
-  name: cert-manager-letsencrypt-issuer
+  name: cert-issuer-letsencrypt-dns
   annotations:
     argocd.argoproj.io/sync-wave: "1"
 spec:
@@ -11,8 +11,6 @@ spec:
     privateKeySecretRef:
       name: cert-manager-letsencrypt
     solvers:
-      {{- if .Values.solver }}
-      {{- if .Values.solver.route53 }}
       - dns01:
           cnameStrategy: Follow
           route53:
@@ -20,15 +18,5 @@ spec:
             accessKeyID: {{ .Values.solver.route53.aws_access_key_id }}
             hostedZoneID: {{ .Values.solver.route53.hosted_zone }}
             secretAccessKeySecretRef:
-              name: cert-manager-secret
+              name: cert-issuer-secret
               key: aws-secret-access-key
-      {{- else }}
-      - http01:
-          ingress:
-            class: nginx
-      {{- end -}}
-      {{- else }}
-      - http01:
-          ingress:
-            class: nginx
-      {{- end -}}

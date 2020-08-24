@@ -3,8 +3,11 @@ environment: gke
 argo:
   enabled: true
   revision: HEAD
+cert_issuer:
+  enabled: true
+  revision: HEAD
 cert_manager:
-  enabled: false
+  enabled: true
   revision: HEAD
 gafaelfawr:
   enabled: true

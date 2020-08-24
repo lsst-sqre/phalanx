@@ -2,8 +2,10 @@ environment: summit
 
 argo:
   enabled: true
-cert_manager:
+cert_issuer:
   enabled: true
+cert_manager:
+  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:
