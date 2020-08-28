@@ -25,7 +25,7 @@ echo "Creating vault secret..."
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
-  --from-literal=VAULT_TOKEN_LEASE_DURATION=86400 \
+  --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
   --dry-run -o yaml | kubectl apply -f -
 
 echo "Login to argocd..."
