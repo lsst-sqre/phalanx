@@ -3,5 +3,5 @@ dependencies:
   version: "1.4.1"
   repository: https://lsst-sqre.github.io/charts/
 - name: fluentd-elasticsearch
-  version: "8.0.1"
+  version: "9.6.0"
   repository: https://kiwigrid.github.io
