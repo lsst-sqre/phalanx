@@ -15,4 +15,5 @@ Operations guide
    :maxdepth: 2
 
    cert-manager/index
+   logging/index
    vault-secrets-operator/index
