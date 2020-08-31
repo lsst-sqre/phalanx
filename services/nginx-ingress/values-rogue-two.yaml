@@ -1,7 +1,7 @@
 nginx-ingress:
   controller:
     extraArgs:
-      default-ssl-certificate: default/tls-certificate
+      default-ssl-certificate: cert-manager/default-certificate
     config:
       compute-full-forwarded-for: "true"
       large-client-header-buffers: "4 64k"
