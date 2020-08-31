@@ -3,7 +3,7 @@ environment: gold-leader
 argo:
   enabled: true
 cert_manager:
-  enabled: false
+  enabled: true
 gafaelfawr:
   enabled: true
 landing_page:
