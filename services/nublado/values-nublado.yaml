@@ -33,6 +33,9 @@ nublado:
     enabled: true
     path: secret/k8s_operator/nublado.lsst.codes/nublado
 
+  prepuller:
+    minute_to_run: 20
+
   proxy:
     ingress:
       annotations:
