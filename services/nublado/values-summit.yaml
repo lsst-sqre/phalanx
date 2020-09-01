@@ -54,7 +54,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
       host: summit-lsp.lsst.codes
       tls:
-        issuer: cert-issuer-letsencrypt-dns
+        cluster_issuer: cert-issuer-letsencrypt-dns
         secret: nublado-tls-secret
         tls_host: summit-lsp.lsst.codes
 
