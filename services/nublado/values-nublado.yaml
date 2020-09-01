@@ -19,7 +19,7 @@ nublado:
 
     resources:
       nodejs_max_mem: '6144'
-      mb_per_cpu: 2048
+      mb_per_cpu: 3072
 
   routes:
     soda: '/api/image/soda'
