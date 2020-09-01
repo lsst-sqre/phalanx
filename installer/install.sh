@@ -19,7 +19,8 @@ helm upgrade \
   --install argocd argo/argo-cd \
   --values argo-cd-values.yaml \
   --namespace argocd \
-  --wait --timeout 900
+  --wait --timeout 900 \
+  --version 2.6.1
 
 echo "Creating vault secret..."
 kubectl create secret generic vault-secrets-operator \
