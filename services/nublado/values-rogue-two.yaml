@@ -47,6 +47,10 @@ nublado:
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
+      tls:
+        issuer: cert-issuer-letsencrypt-dns
+        secret: nublado-tls-secret
+        tls_host: rogue-two.lsst.codes
 
   mountpoints: |
     [

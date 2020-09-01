@@ -1,3 +1,0 @@
-fqdn: summit-lsp.lsst.codes
-cert-manager:
-  installCRDs: true

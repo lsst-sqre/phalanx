@@ -53,6 +53,10 @@ nublado:
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
       host: summit-lsp.lsst.codes
+      tls:
+        issuer: cert-issuer-letsencrypt-dns
+        secret: nublado-tls-secret
+        tls_host: summit-lsp.lsst.codes
 
 
   mountpoints: |

@@ -1,0 +1,29 @@
+{{- if .Values.cert_issuer.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cert-issuer
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-issuer
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cert-issuer
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/cert-issuer
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: {{ .Values.cert_manager.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}

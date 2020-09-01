@@ -1,3 +1,2 @@
-fqdn: base-lsp.lsst.codes
 cert-manager:
   installCRDs: true
