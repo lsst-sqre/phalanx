@@ -5,3 +5,5 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
+  image:
+    tag: '0.0.2'
