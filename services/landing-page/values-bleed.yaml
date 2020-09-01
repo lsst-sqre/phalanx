@@ -1,4 +1,5 @@
 landing-page:
   motd_url: https://raw.githubusercontent.com/lsst-dm/lsp-landing-page/master/motd/integration.md
+  host: "bleed.lsst.codes"
   image:
     tag: "3.0.1"
