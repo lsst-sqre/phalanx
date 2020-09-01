@@ -14,6 +14,7 @@ Operations guide
 .. toctree::
    :maxdepth: 2
 
+   argo-cd/index
    cert-manager/index
    logging/index
    vault-secrets-operator/index
