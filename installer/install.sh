@@ -1,8 +1,9 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [REVISION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN HOSTNAME [REVISION]"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
-REVISION=${3:-HEAD}
+HOSTNAME=${3:?$USAGE}
+REVISION=${4:-HEAD}
 
 echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
@@ -18,6 +19,7 @@ echo "Update / install argocd using helm..."
 helm upgrade \
   --install argocd argo/argo-cd \
   --values argo-cd-values.yaml \
+  --set server.ingress.hosts="{$HOSTNAME}" \
   --namespace argocd \
   --wait --timeout 900 \
   --version 2.6.1

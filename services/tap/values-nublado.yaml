@@ -2,6 +2,8 @@ cadc-tap:
   tag: "1.0.10"
   use_mock_qserv: true
 
+  host: "nublado.lsst.codes"
+
   secrets:
     enabled: false
 

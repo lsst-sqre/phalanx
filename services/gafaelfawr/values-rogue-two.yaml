@@ -1,5 +1,7 @@
 gafaelfawr:
   host: rogue-two.lsst.codes
+  ingress:
+    host: rogue-two.lsst.codes
   vault_secrets_path: "secret/k8s_operator/rogue-two.lsst.codes/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.

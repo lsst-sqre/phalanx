@@ -3,6 +3,7 @@ firefly:
     tag: "1.1.1"
 
   ingress:
+    host: "rogue-two.lsst.codes"
     annotations:
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
