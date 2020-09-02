@@ -1,12 +1,4 @@
 {{- if .Values.cert_issuer.enabled -}}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: cert-issuer
-spec:
-  finalizers:
-    - kubernetes
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -18,7 +10,7 @@ metadata:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: cert-issuer
+    namespace: cert-manager
     server: https://kubernetes.default.svc
   project: default
   source:
