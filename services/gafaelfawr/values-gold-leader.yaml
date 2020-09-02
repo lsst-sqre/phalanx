@@ -1,5 +1,7 @@
 gafaelfawr:
   host: gold-leader.lsst.codes
+  ingress:
+    host: gold-leader.lsst.codes
   vault_secrets_path: "secret/k8s_operator/gold-leader.lsst.codes/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.

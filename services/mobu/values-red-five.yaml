@@ -2,6 +2,7 @@ mobu:
   gafaelfawr_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/red-five.lsst.codes/mobu"
   environment_url: "https://red-five.lsst.codes"
+  host: "red-five.lsst.codes"
 
   image:
     tag: master

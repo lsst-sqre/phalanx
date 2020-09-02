@@ -1,5 +1,7 @@
 gafaelfawr:
   host: red-five.lsst.codes
+  ingress:
+    host: red-five.lsst.codes
   vault_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.

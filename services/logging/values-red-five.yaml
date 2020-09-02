@@ -50,8 +50,8 @@ opendistro-es:
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
         nginx.ingress.kubernetes.io/auth-signin: "https://red-five.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=exec:admin"
-      path:
-        - logs
+      hosts:
+        - "red-five.lsst.codes/logs"
 
 fluentd-elasticsearch:
   elasticsearch:
