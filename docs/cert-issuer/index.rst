@@ -45,6 +45,8 @@ replacing ``<cluster-name>`` with the FQDN of the cluster, corresponding to the 
 See :doc:`../vault-secrets-operator/index` for more information.
 
 Then, in Route 53, create a CNAME from ``_acme-challenge.<cluster-name>`` to ``_acme-challenge.tls.lsst.codes``.
+The new Route 53 dialog box makes this very confusing to do in the console.
+Select **CNAME** from the lower drop-down menu and then **IP address or other value** from the top drop-down menu, and then you can enter ``_acme-challenge.tls.lsst.codes`` as the CNAME target.
 
 The access key ID in the configuration corresponds to the ``cert-manager-lsst-codes`` service user in AWS.
 The hosted zone is the ``tls.lsst.codes`` hosted zone, where all challenge responses will be created.
