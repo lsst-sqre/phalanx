@@ -2,8 +2,6 @@ apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
   name: cert-issuer-letsencrypt-dns
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
