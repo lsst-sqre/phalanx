@@ -44,9 +44,11 @@ To configure it, add the following to the ``values-*.yaml`` file for an environm
 replacing ``<cluster-name>`` with the FQDN of the cluster, corresponding to the root of the Vault secrets for that cluster.
 See :doc:`../vault-secrets-operator/index` for more information.
 
-This access key ID corresponds to the ``cert-manager-lsst-codes`` service user in AWS.
+Then, in Route 53, create a CNAME from ``_acme-challenge.<cluster-name>`` to ``_acme-challenge.tls.lsst.codes``.
+
+The access key ID in the configuration corresponds to the ``cert-manager-lsst-codes`` service user in AWS.
 The hosted zone is the ``tls.lsst.codes`` hosted zone, where all challenge responses will be created.
-To limit the scope of access in case of a compromise, this AWS service user does not have write access to the full ``lsst.codes`` domain.
+To limit the scope of access in case of a compromise, this AWS service user does not have write access to the full ``lsst.codes`` domain (hence the need for the CNAME).
 This AWS service user can be used for all Science Platform deployments in the ``lsst.codes`` domain.
 It is configured according to the `cert-manager documentation for Route 53 <https://cert-manager.io/docs/configuration/acme/dns01/route53/>`__.
 
