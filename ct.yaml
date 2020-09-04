@@ -6,6 +6,7 @@
 # environment and base chart.
 
 chart-dirs:
+  - "infrastructure"
   - "science-platform"
   - "services-expanded"
 check-version-increment: false

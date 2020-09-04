@@ -1,0 +1,10 @@
+environment: summit
+
+cert_issuer:
+  enabled: true
+cert_manager:
+  enabled: false
+nginx_ingress:
+  enabled: true
+vault_secrets_operator:
+  enabled: true

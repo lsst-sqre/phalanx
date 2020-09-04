@@ -57,6 +57,26 @@ argocd app sync vault-secrets-operator \
   --port-forward \
   --port-forward-namespace argocd
 
+echo "Creating infrastructure application"
+argocd app create infrastructure \
+  --repo https://github.com/lsst-sqre/lsp-deploy.git \
+  --path infrastructure --dest-namespace default \
+  --dest-server https://kubernetes.default.svc \
+  --upsert \
+  --revision $REVISION \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --values values-$ENVIRONMENT.yaml
+
+argocd app sync infrastructure \
+  --port-forward \
+  --port-forward-namespace argocd
+
+echo "Sync infrastructure applications"
+argocd app sync -l "argocd.argoproj.io/instance=infrastructure" \
+  --port-forward \
+  --port-forward-namespace argocd
+
 echo "Creating top level application"
 argocd app create science-platform \
   --repo https://github.com/lsst-sqre/lsp-deploy.git \
@@ -71,17 +91,6 @@ argocd app create science-platform \
 argocd app sync science-platform \
   --port-forward \
   --port-forward-namespace argocd
-
-echo "Syncing critical early applications"
-argocd app sync nginx-ingress \
-  --port-forward \
-  --port-forward-namespace argocd || true
-argocd app sync cert-manager \
-  --port-forward \
-  --port-forward-namespace argocd || true
-argocd app sync cert-issuer \
-  --port-forward \
-  --port-forward-namespace argocd || true
 
 echo "Sync remaining science platform apps"
 argocd app sync -l "argocd.argoproj.io/instance=science-platform" \

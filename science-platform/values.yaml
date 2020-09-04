@@ -3,12 +3,6 @@ environment: gke
 argo:
   enabled: true
   revision: HEAD
-cert_issuer:
-  enabled: true
-  revision: HEAD
-cert_manager:
-  enabled: true
-  revision: HEAD
 gafaelfawr:
   enabled: true
   revision: HEAD
@@ -19,9 +13,6 @@ logging:
   enabled: true
   revision: HEAD
 mobu:
-  enabled: true
-  revision: HEAD
-nginx_ingress:
   enabled: true
   revision: HEAD
 nublado:

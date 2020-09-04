@@ -1,0 +1,14 @@
+environment: gke
+
+cert_issuer:
+  enabled: true
+  revision: HEAD
+cert_manager:
+  enabled: true
+  revision: HEAD
+nginx_ingress:
+  enabled: true
+  revision: HEAD
+vault_secrets_operator:
+  enabled: true
+  revision: HEAD

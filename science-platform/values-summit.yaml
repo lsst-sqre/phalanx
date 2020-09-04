@@ -2,16 +2,14 @@ environment: summit
 
 argo:
   enabled: true
-cert_issuer:
-  enabled: true
-cert_manager:
-  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:
   enabled: true
-nginx_ingress:
-  enabled: true
+logging:
+  enabled: false
+mobu:
+  enabled: false
 nublado:
   enabled: true
 obstap:
