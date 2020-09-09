@@ -1,0 +1,29 @@
+{{- if .Values.kapacitor.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kapacitor
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kapacitor
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: kapacitor
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/kapacitor
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: {{ .Values.kapacitor.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}

@@ -1,0 +1,8 @@
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: influxdb-auth
+  namespace: kapacitor
+spec:
+  path: {{ .Values.vaultSecretsPath }}
+  type: Opaque

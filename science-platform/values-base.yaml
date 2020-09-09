@@ -6,8 +6,14 @@ cert_issuer:
   enabled: true
 cert_manager:
   enabled: false
+chronograf:
+  enabled: false
 gafaelfawr:
   enabled: true
+influxdb:
+  enabled: false
+kapacitor:
+  enabled: false
 landing_page:
   enabled: true
 logging:
@@ -24,6 +30,8 @@ portal:
   enabled: true
 postgres:
   enabled: true
+squash_api:
+  enabled: false
 tap:
   enabled: false
 vault_secrets_operator:

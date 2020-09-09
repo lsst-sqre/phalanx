@@ -1,0 +1,4 @@
+dependencies:
+- name: influxdb
+  version: 4.8.4
+  repository: https://helm.influxdata.com/
