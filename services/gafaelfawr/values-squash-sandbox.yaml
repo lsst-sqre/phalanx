@@ -1,0 +1,21 @@
+gafaelfawr:
+  host: squash-sandbox.lsst.codes
+  ingress:
+    host: squash-sandbox.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/squash-sandbox/gafaelfawr"
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # Whether to support OpenID Connect clients.  If set to true,
+  # oidc-server-secrets must be set in the Gafaelfawr secret.
+  oidc_server:
+    enabled: true
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/232eaabf026dab8b26f9c9770873cb7e"
+    redirect_url: "https://squash-sandbox.lsst.codes/login"
+    login_params:
+      skin: "LSST"
