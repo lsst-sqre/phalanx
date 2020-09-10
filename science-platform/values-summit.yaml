@@ -10,6 +10,10 @@ gafaelfawr:
   enabled: true
 landing_page:
   enabled: true
+logging:
+  enabled: false
+mobu:
+  enabled: false
 nginx_ingress:
   enabled: true
 nublado:
@@ -22,3 +26,5 @@ postgres:
   enabled: true
 tap:
   enabled: false
+vault_secrets_operator:
+  enabled: true

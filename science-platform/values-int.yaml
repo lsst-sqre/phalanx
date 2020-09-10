@@ -26,3 +26,5 @@ postgres:
   enabled: true
 tap:
   enabled: true
+vault_secrets_operator:
+  enabled: true
