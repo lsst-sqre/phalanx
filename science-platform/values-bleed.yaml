@@ -2,6 +2,10 @@ environment: bleed
 
 argo:
   enabled: true
+cert_issuer:
+  enabled: true
+cert_manager:
+  enabled: true
 gafaelfawr:
   enabled: true
 landing_page:
@@ -9,6 +13,8 @@ landing_page:
 logging:
   enabled: false
 mobu:
+  enabled: true
+nginx_ingress:
   enabled: true
 nublado:
   enabled: true
