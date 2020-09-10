@@ -47,4 +47,3 @@ firefly:
       emptyDir: {}
     firefly_config:
       emptyDir: {}
-
