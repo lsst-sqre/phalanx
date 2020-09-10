@@ -2,6 +2,10 @@ environment: nts
 
 argo:
   enabled: true
+cert_issuer:
+  enabled: false
+cert_manager:
+  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:
@@ -9,6 +13,8 @@ landing_page:
 logging:
   enabled: true
 mobu:
+  enabled: false
+nginx_ingress:
   enabled: false
 nublado:
   enabled: true

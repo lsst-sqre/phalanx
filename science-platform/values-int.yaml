@@ -2,6 +2,10 @@ environment: int
 
 argo:
   enabled: true
+cert_issuer:
+  enabled: false
+cert_manager:
+  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:
@@ -10,6 +14,8 @@ logging:
   enabled: true
 mobu:
   enabled: true
+nginx_ingress:
+  enabled: false
 nublado:
   enabled: true
 obstap:
