@@ -40,7 +40,7 @@ firefly:
 
   resources:
     limits:
-      memory: 24Gi
+      memory: 4Gi
 
   volumes:
     firefly_workarea:
