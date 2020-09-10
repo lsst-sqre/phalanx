@@ -44,12 +44,7 @@ firefly:
 
   volumes:
     firefly_workarea:
-      emptyDir: null
-      hostPath:
-        path: /sui/firefly/workarea
-        type: Directory
+      emptyDir: {}
     firefly_config:
-      emptyDir: null
-      hostPath:
-        path: /sui/firefly/config
-        type: Directory
+      emptyDir: {}
+
