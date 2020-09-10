@@ -2,10 +2,6 @@ environment: base
 
 argo:
   enabled: true
-cert_issuer:
-  enabled: true
-cert_manager:
-  enabled: false
 gafaelfawr:
   enabled: true
 landing_page:
@@ -13,8 +9,6 @@ landing_page:
 logging:
   enabled: false
 mobu:
-  enabled: false
-nginx_ingress:
   enabled: false
 nublado:
   enabled: true

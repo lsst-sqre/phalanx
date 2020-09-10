@@ -2,10 +2,6 @@ environment: tucson-teststand
 
 argo:
   enabled: true
-cert_issuer:
-  enabled: true
-cert_manager:
-  enabled: true
 gafaelfawr:
   enabled: true
 landing_page:
@@ -14,8 +10,6 @@ logging:
   enabled: false
 mobu:
   enabled: false
-nginx_ingress:
-  enabled: true
 nublado:
   enabled: true
 obstap:

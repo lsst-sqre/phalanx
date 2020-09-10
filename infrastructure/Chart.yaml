@@ -1,0 +1,4 @@
+apiVersion: v1
+name: infrastructure
+version: 1.0.0
+description: Infrastructure services for the Rubin Science Platform
