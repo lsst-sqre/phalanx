@@ -29,9 +29,6 @@ firefly:
       limits:
         memory: 20Mi
 
-  nodeSelector:
-    environment: portal-nts
-
   tolerations:
   - effect: NoSchedule
     key: dedicated
