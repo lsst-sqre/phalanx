@@ -141,7 +141,8 @@ influxdb:
     annotations:
       kubernetes.io/ingress.class: "nginx"
       cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    path: "/influxdb"
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    path: /influxdb(/|$)(.*)
 
 
   ## Node labels for pod assignment
