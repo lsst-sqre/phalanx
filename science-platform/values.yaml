@@ -39,3 +39,6 @@ postgres:
 tap:
   enabled: true
   revision: HEAD
+vault_secrets_operator:
+  enabled: true
+  revision: HEAD
