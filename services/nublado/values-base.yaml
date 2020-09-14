@@ -104,7 +104,7 @@ nublado:
         "mountpoint": "/readonly/comcam",
         "mode": "ro",
         "fileserver-host": "comcam-arctl01.ls.lsst.org",
-        "fileserver-export": "/export/lsstdata"
+        "fileserver-export": "/lsstdata/base/comcam"
       }
     ]
 
