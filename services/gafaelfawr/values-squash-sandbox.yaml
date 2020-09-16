@@ -12,6 +12,7 @@ gafaelfawr:
     # must be set in the Gafaelfawr secret.
     influxdb:
       enabled: true
+      username: "efdreader"
 
   # Whether to support OpenID Connect clients.  If set to true,
   # oidc-server-secrets must be set in the Gafaelfawr secret.
