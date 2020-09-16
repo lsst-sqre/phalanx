@@ -182,8 +182,8 @@ influxdb:
   config:
     http:
       enabled: true
-      auth_enabled: true
-      max_row_limit: 0
+      auth-enabled: true
+      max-row-limit: 0
 
 
   # Allow executing custom init scripts
