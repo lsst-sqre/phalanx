@@ -135,8 +135,7 @@ influxdb:
 
   ingress:
     enabled: true
-    tls: true
-    secretName: tls-certs
+    tls: false
     hostname: squash-sandbox.lsst.codes
     annotations:
       kubernetes.io/ingress.class: "nginx"
