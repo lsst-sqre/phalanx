@@ -171,6 +171,12 @@ influxdb:
   # - name: INFLUXDB_DB
   #   value: "demo"
 
+  ## The name of a secret in the same kubernetes namespace which contain values
+  ## to be added to the environment.
+  ## This can be used, for example, to set the INFLUXDB_HTTP_SHARED_SECRET
+  ## environment variable.
+  envFromSecret: influxdb-secret
+
   ## Change InfluxDB configuration parameters below:
   ## ref: https://docs.influxdata.com/influxdb/v1.8/administration/config/
   config:
@@ -247,5 +253,5 @@ influxdb:
     #   # endpointUrl: ""
 
 
-## Vault path for the influxdb-auth secret
-vaultSecretsPath: secret/k8s_operator/squash-sandbox/influxdb-auth
+## Vault path for the influxdb secrets
+vaultSecretsPath: secret/k8s_operator/squash-sandbox/
