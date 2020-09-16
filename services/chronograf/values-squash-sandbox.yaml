@@ -72,6 +72,7 @@ chronograf:
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
+    GENERIC_NAME: "CILogon"
     GENERIC_AUTH_URL: https://squash-sandbox.lsst.codes/auth/openid/login
     GENERIC_TOKEN_URL: https://squash-sandbox.lsst.codes/auth/openid/token
     USE_ID_TOKEN: 1
