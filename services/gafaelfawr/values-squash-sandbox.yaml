@@ -8,6 +8,11 @@ gafaelfawr:
   issuer:
     exp_minutes: 43200  # 30 days
 
+    # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
+    # must be set in the Gafaelfawr secret.
+    influxdb:
+      enabled: true
+
   # Whether to support OpenID Connect clients.  If set to true,
   # oidc-server-secrets must be set in the Gafaelfawr secret.
   oidc_server:
