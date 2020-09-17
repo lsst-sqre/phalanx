@@ -1,11 +1,6 @@
 squash-api:
   replicaCount: 1
 
-  image:
-    repository: lsstsqre/squash-restful-api
-    tag: latest
-    pullPolicy: IfNotPresent
-
   cloudSQLImage:
     repository: gcr.io/cloudsql-docker/gce-proxy
     tag: "1.17"
