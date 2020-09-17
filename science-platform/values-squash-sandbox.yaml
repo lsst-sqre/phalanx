@@ -1,4 +1,4 @@
-environment: red-five
+environment: squash-sandbox
 
 argo:
   enabled: true
@@ -7,32 +7,32 @@ cert_issuer:
 cert_manager:
   enabled: true
 chronograf:
-  enabled: false
+  enabled: true
 gafaelfawr:
   enabled: true
 influxdb:
-  enabled: false
-kapacitor:
-  enabled: false
-landing_page:
   enabled: true
+kapacitor:
+  enabled: true
+landing_page:
+  enabled: false
 logging:
   enabled: false
 mobu:
-  enabled: true
+  enabled: false
 nginx_ingress:
   enabled: true
 nublado:
-  enabled: true
-obstap:
-  enabled: true
-portal:
-  enabled: true
-postgres:
-  enabled: true
-squash_api:
   enabled: false
-tap:
+obstap:
+  enabled: false
+portal:
+  enabled: false
+postgres:
+  enabled: false
+squash_api:
   enabled: true
+tap:
+  enabled: false
 vault_secrets_operator:
   enabled: true

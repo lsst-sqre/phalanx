@@ -9,7 +9,16 @@ cert_issuer:
 cert_manager:
   enabled: true
   revision: HEAD
+chronograf:
+  enabled: true
+  revision: HEAD
 gafaelfawr:
+  enabled: true
+  revision: HEAD
+influxdb:
+  enabled: true
+  revision: HEAD
+kapacitor:
   enabled: true
   revision: HEAD
 landing_page:
@@ -34,6 +43,9 @@ portal:
   enabled: true
   revision: HEAD
 postgres:
+  enabled: true
+  revision: HEAD
+squash_api:
   enabled: true
   revision: HEAD
 tap:
