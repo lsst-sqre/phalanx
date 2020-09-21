@@ -22,8 +22,20 @@ nublado:
     image: 'lsstsqre/sciplat-hub:0.32.0'
 
   wf:
-    no_verify_audience: 'true'
     image: 'lsstsqre/wfdispatcher:0.4.0.2'
+    ingress_ui:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-method: GET
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /workflow;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
     image: 'lsstsqre/prepuller:0.8.2'

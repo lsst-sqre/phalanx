@@ -7,8 +7,19 @@ nublado:
     image: 'lsstsqre/sciplat-hub:latest'
 
   wf:
-    no_verify_signature: 'true'
-    no_verify_audience: 'true'
+    ingress_ui:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-method: GET
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://red-five.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /workflow;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   lab:
     restrict_nodes: 'true'
