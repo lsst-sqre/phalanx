@@ -1,6 +1,6 @@
 firefly:
   image:
-    tag: "test-2020922-4"
+    tag: "test-20200922-4"
 
   ingress:
     host: "nublado.lsst.codes"
