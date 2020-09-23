@@ -1,6 +1,6 @@
 firefly:
   image:
-    tag: "test-20200922-4"
+    tag: "test-20200922-6"
 
   ingress:
     host: 'lsst-lsp-int.ncsa.illinois.edu'
