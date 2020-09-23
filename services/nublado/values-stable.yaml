@@ -25,6 +25,9 @@ nublado:
     no_verify_audience: 'true'
     image: 'lsstsqre/wfdispatcher:0.4.0.0'
 
+  prepuller:
+    image: 'lsstsqre/prepuller:0.8.0'
+
   routes:
     soda: '/api/image/soda'
     external:
