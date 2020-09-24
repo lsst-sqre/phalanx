@@ -25,7 +25,7 @@ nublado:
     image: 'lsstsqre/wfdispatcher:0.4.0.2'
 
   prepuller:
-    image: 'lsstsqre/prepuller:0.8.0'
+    image: 'lsstsqre/prepuller:0.8.2'
 
   routes:
     soda: '/api/image/soda'
