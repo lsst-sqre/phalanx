@@ -3,6 +3,7 @@ init:
 
 argo:
   server:
-    enabled: false
+    enabled: true
+    baseHref: "/workflows/"
   controller:
     containerRuntimeExecutor: "k8sapi"
