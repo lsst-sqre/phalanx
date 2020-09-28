@@ -4,7 +4,7 @@ nublado:
   oauth_provider: 'jwt'
 
   hub:
-    image: 'lsstsqre/sciplat-hub:exp_0.32.1'
+    image: 'lsstsqre/sciplat-hub:0.32.1'
 
   lab:
     restrict_nodes: 'true'
