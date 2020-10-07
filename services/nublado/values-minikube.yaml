@@ -76,24 +76,24 @@ nublado:
       {
        "mountpoint": "/home",
         "mode": "rw",
-        "fileserver-host": "10.128.0.49",
+        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
         "fileserver-export": "/exports/home"
       },
       {
         "mountpoint": "/datasets",
-        "fileserver-host": "10.128.0.49",
+        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
         "fileserver-export": "/exports/datasets"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
-        "fileserver-host": "10.128.0.49",
+        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
         "fileserver-export": "/exports/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
-        "fileserver-host": "10.128.0.49",
+        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
         "fileserver-export": "/exports/scratch"
       }
     ]
