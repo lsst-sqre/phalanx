@@ -15,6 +15,6 @@ gafaelfawr:
   # Use CILogon authentication.
   cilogon:
     client_id: "cilogon:/client_id/74e865cd71a3a327096d36081166b739"
-    redirect_url: "https://minikube.lsst.codes:31337/oauth2/callback"
+    redirect_url: "https://minikube.lsst.codes:31337/login"
     login_params:
       skin: "LSST"
