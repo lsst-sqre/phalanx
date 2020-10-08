@@ -73,27 +73,4 @@ nublado:
         "mode": "rw or ro, defaults to 'ro'",
         "options": "mount options, e.g. 'local_lock=all'"
       },
-      {
-       "mountpoint": "/home",
-        "mode": "rw",
-        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
-        "fileserver-export": "/exports/home"
-      },
-      {
-        "mountpoint": "/datasets",
-        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
-        "fileserver-export": "/exports/datasets"
-      },
-      {
-        "mountpoint": "/project",
-        "mode": "rw",
-        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
-        "fileserver-export": "/exports/project"
-      },
-      {
-        "mountpoint": "/scratch",
-        "mode": "rw",
-        "fileserver-host": "fileserver.fileserver.svc.cluster.local",
-        "fileserver-export": "/exports/scratch"
-      }
     ]
