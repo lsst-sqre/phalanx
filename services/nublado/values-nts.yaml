@@ -7,6 +7,8 @@ nublado:
     restrict_nodes: 'true'
     enable_multus: 'true'
     dds_domain: 'ncsa'
+    dds_partition_prefix: 'ncsa'
+    dds_interface: 'net1'
     image:
       repo_name: 'nts-sal-sciplat-lab'
       experimentals: 0

@@ -25,6 +25,8 @@ nublado:
     restrict_nodes: 'true'
     enable_multus: 'true'
     dds_domain: 'base'
+    dds_partition_prefix: 'base'
+    dds_interface: 'net1'
     image:
       experimentals: 0
       dailies: 0
