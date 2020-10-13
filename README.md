@@ -4,7 +4,7 @@ This is the repository to store helper scripts and per-environment
 deployment configuration for the services of the Rubin Science
 Platform.
 
-# Background
+## Background
 
 In order to understand this repository, there's a bit of background
 and layering that needs to be understood.  I will briefly cover each
@@ -48,7 +48,7 @@ https://vault.lsst.codes.  Each environment is seeded with a key that it
 uses to access secrets in the vault and make them available for the services
 to read.
 
-# Repository Layout
+## Repository Layout
 
 While ArgoCD can be used and configured in any number of ways, there is also
 a layer of convention to simplify and add some structure that works for us
@@ -71,7 +71,7 @@ application that specifies which services an environment should use, and
 creates all those services in argocd.  The values files in this directory
 contain the service manifest and other top level configuration.
 
-# How to use this repository
+## How to use this repository
 
 Okay now that we understand the tools used, and the various conventions
 ("The forms MUST be obeyed..."), we can get into how to use this repository
