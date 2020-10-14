@@ -15,10 +15,11 @@ Kubernetes provides a way to coordinate running services on multiple
 nodes.  Kubernetes runs a set of docker containers (https://docker.com/),
 and sets up the networking, storage, and configuration of those containers.
 
-Each different service in the Rubin Science Platform is a bit of code that
-eventually gets built and published into a docker container.  The git
-repositories hosting each service generally build their own docker containers
-when code changes are merged.
+Git repositories for individual services typically have build pipelines
+resulting in new docker container builds when code changes are merged.
+For example, our Jenkins build system builds stack and JupyterLab containers,
+and the lsst-tap-service repository builds the TAP service containers,
+and so on.
 
 Kubernetes generally works by handling Kubernetes resources like pods,
 deployments, and services.  But many of these resources need to be configured
@@ -34,7 +35,7 @@ But Helm doesn't keep track of the application once it is deployed.  That is,
 it won't notice when the configuration changes and apply those changes.
 ArgoCD (https://argoproj.github.io/argo-cd/) fills this need.  ArgoCD watches
 this repository for new git commits and will keep track of those changes,
-either applying them automatically (sync'ing them), or waiting for an operator
+either applying them automatically ("syncing" them), or waiting for an operator
 to press the sync button in the web UI.  ArgoCD is the only layer in this
 stack that has a web UI that can be easily navigated, and it provides many
 useful features, such as deleting resources and resyncing applications.
@@ -77,11 +78,13 @@ Okay now that we understand the tools used, and the various conventions
 ("The forms MUST be obeyed..."), we can get into how to use this repository
 to manage environments and services.
 
-There are already a number of different environments, such as int and
-stable, base, and summit.  There are also a number of teststands used not
-for software testing but hardware testing.  Finally there are software
-test environments.  New environments can be added by generally cargo-culting
-the current test environments and tweaking them as necessary.
+There are already a number of different environments reflecting our many
+different deployments, such as int and stable, base, and summit.
+There are also a number of teststands used not for software testing but
+hardware testing, such as tucson teststand (TTS) and NCSA teststand (NTS).
+Finally there are software test environments.  New environments can be
+added by generally cargo-culting the current test environments and
+tweaking them as necessary.
 
 If you aren't adding a new environment, you might be adding a new service.
 Add a directory with the service name (generally corresponding to the chart
