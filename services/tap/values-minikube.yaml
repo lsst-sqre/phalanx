@@ -1,0 +1,15 @@
+cadc-tap:
+  tag: "1.0.10"
+  use_mock_qserv: true
+
+  host: "minikube.lsst.codes"
+
+  secrets:
+    enabled: false
+
+  vault_secrets:
+    enabled: true
+    path: 'secret/k8s_operator/minikube.lsst.codes/tap'
+
+  gcs_bucket: 'async-results.lsst.codes'
+  gcs_bucket_url: 'http://async-results.lsst.codes'

@@ -1,0 +1,16 @@
+gafaelfawr:
+  host: minikube.lsst.codes
+  ingress:
+    host: minikube.lsst.codes
+  vault_secrets_path: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # Use CILogon authentication.
+  cilogon:
+    client_id: "cilogon:/client_id/74e865cd71a3a327096d36081166b739"
+    redirect_url: "https://minikube.lsst.codes:31337/login"
+    login_params:
+      skin: "LSST"
