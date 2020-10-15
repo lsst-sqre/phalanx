@@ -2,55 +2,37 @@ environment: minikube
 
 argo:
   enabled: true
-  revision: tickets/DM-27044
 cert_issuer:
   enabled: true
-  revision: tickets/DM-27044
 cert_manager:
   enabled: true
-  revision: tickets/DM-27044
 chronograf:
   enabled: false
-  revision: tickets/DM-27044
 gafaelfawr:
   enabled: true
-  revision: tickets/DM-27044
 influxdb:
   enabled: false
-  revision: tickets/DM-27044
 kapacitor:
   enabled: false
-  revision: tickets/DM-27044
 landing_page:
-  revision: tickets/DM-27044
   enabled: true
 logging:
-  revision: tickets/DM-27044
   enabled: false
 mobu:
-  revision: tickets/DM-27044
   enabled: true
 nginx_ingress:
-  revision: tickets/DM-27044
   enabled: true
 nublado:
   enabled: true
-  revision: tickets/DM-27044
 obstap:
   enabled: true
-  revision: tickets/DM-27044
 portal:
   enabled: true
-  revision: tickets/DM-27044
 postgres:
   enabled: true
-  revision: tickets/DM-27044
 squash_api:
   enabled: false
-  revision: tickets/DM-27044
 tap:
   enabled: true
-  revision: tickets/DM-27044
 vault_secrets_operator:
   enabled: true
-  revision: tickets/DM-27044
