@@ -16,6 +16,8 @@ nginx-ingress:
     metrics:
       service:
         omitClusterIP: true
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"
   defaultBackend:
     service:
       omitClusterIP: true
