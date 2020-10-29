@@ -22,6 +22,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   lab:
+    repo_username: 'sqreadmin'
     restrict_nodes: 'true'
     image:
       experimentals: 2

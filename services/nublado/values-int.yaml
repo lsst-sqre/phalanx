@@ -5,6 +5,7 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
+    repo_username: 'sqreadmin'
     image:
       experimentals: 2
       dailies: 2

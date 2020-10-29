@@ -28,6 +28,7 @@ nublado:
     dds_domain: 'tucson'
     dds_partition_prefix: 'tucson'
     dds_interface: 'net1'
+    repo_username: 'sqreadmin'
     image:
       experimentals: 0
       dailies: 0

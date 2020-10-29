@@ -27,6 +27,7 @@ nublado:
     dds_domain: 'base'
     dds_partition_prefix: 'base'
     dds_interface: 'net1'
+    repo_username: 'sqreadmin'
     image:
       experimentals: 0
       dailies: 0

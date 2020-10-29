@@ -27,6 +27,7 @@ nublado:
     dds_domain: 'summit'
     dds_partition_prefix: 'summit'
     dds_interface: 'net1'
+    repo_username: 'sqreadmin'
     image:
       experimentals: 0
       dailies: 0

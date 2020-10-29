@@ -9,6 +9,7 @@ nublado:
     dds_domain: 'ncsa'
     dds_partition_prefix: 'ncsa'
     dds_interface: 'net1'
+    repo_username: 'sqreadmin'
     image:
       repo_name: 'nts-sal-sciplat-lab'
       experimentals: 0
