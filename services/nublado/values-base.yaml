@@ -34,6 +34,7 @@ nublado:
       releases: 1
       cachefile: '/home/jovyan/repo-cache.json'
       repo_name: 'base-sal-sciplat-lab'
+      repo_username: 'sqreadmin'
 
     resources:
       nodejs_max_mem: '6144'
