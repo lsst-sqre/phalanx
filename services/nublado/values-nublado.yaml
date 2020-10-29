@@ -29,9 +29,6 @@ nublado:
     enabled: true
     path: secret/k8s_operator/nublado.lsst.codes/nublado
 
-  prepuller:
-    minute_to_run: 20
-
   wf:
     ingress_ui:
       annotations:
