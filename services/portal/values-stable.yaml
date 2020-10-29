@@ -1,6 +1,7 @@
 firefly:
+  replicaCount: 2
   image:
-    tag: "1.1.1"
+    tag: "rc-2.1.0-2"
 
   ingress:
     host: 'lsst-lsp-stable.ncsa.illinois.edu'
@@ -41,6 +42,10 @@ firefly:
   resources:
     limits:
       memory: 24Gi
+
+  securityContext:
+    runAsUser: 101
+    runAsGroup: 102
 
   volumes:
     firefly_workarea:
