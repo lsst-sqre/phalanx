@@ -47,7 +47,7 @@ firefly:
     runAsUser: 101
     runAsGroup: 102
 
-volumes:
+  volumes:
     firefly_workarea:
       emptyDir: null
       hostPath:
