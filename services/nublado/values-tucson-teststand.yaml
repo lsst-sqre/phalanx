@@ -28,7 +28,6 @@ nublado:
     dds_domain: 'tucson'
     dds_partition_prefix: 'tucson'
     dds_interface: 'net1'
-    repo_username: 'sqreadmin'
     image:
       experimentals: 0
       dailies: 0
@@ -36,6 +35,8 @@ nublado:
       releases: 1
       cachefile: '/home/jovyan/repo-cache.json'
       repo_name: 'tts-sal-sciplat-lab'
+      repo_username: 'sqreadmin'
+
 
     resources:
       nodejs_max_mem: '6144'

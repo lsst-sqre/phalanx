@@ -5,7 +5,6 @@ nublado:
 
   lab:
     restrict_nodes: 'true'
-    repo_username: 'sqreadmin'
 
     resources:
       nodejs_max_mem: '6144'
@@ -13,6 +12,7 @@ nublado:
 
     image:
       cachefile: "/home/jovyan/repo-cache.json"
+      repo_username: 'sqreadmin'
 
   reaper:
     enabled: true

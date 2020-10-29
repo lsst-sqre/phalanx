@@ -27,7 +27,6 @@ nublado:
     dds_domain: 'summit'
     dds_partition_prefix: 'summit'
     dds_interface: 'net1'
-    repo_username: 'sqreadmin'
     image:
       experimentals: 0
       dailies: 0
@@ -35,7 +34,8 @@ nublado:
       releases: 1
       cachefile: '/home/jovyan/repo-cache.json'
       repo_name: 'summit-sal-sciplat-lab'
-
+      repo_username: 'sqreadmin'
+      
     resources:
       nodejs_max_mem: '6144'
       mb_per_cpu: 2048
