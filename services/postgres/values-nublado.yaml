@@ -5,6 +5,3 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
-  exposurelog_db:
-    user: 'exposurelog'
-    db: 'exposurelog'
