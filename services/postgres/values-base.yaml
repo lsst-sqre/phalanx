@@ -8,4 +8,7 @@ postgres:
   lovelog_db:
     user: 'lovelog'
     db: 'lovelog'
+  exposurelog_db:
+    user: 'exposurelog'
+    db: 'exposurelog'
   postgres_storage_class: 'rook-ceph-block'
