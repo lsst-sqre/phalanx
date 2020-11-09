@@ -1,5 +1,3 @@
-environment: gke
-
 argo:
   enabled: true
   revision: HEAD
