@@ -5,5 +5,8 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
+  exposurelog_db:
+    user: 'exposurelog'
+    db: 'exposurelog'
   postgres_storage_class: 'manual'
   volume_name: 'postgres-data-volume'
