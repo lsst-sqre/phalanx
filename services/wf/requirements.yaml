@@ -1,4 +1,4 @@
 dependencies:
 - name: argo
-  version: 0.9.8
+  version: 0.13.2
   repository: https://argoproj.github.io/argo-helm
