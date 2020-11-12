@@ -19,7 +19,7 @@ nublado:
 
   hub:
     persistent_home: false
-    image: 'lsstsqre/sciplat-hub:0.32.2'
+    image: 'lsstsqre/sciplat-hub:0.32.4'
 
   wf:
     image: 'lsstsqre/wfdispatcher:0.4.1.3'
@@ -38,7 +38,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
-    image: 'lsstsqre/prepuller:0.8.4'
+    image: 'lsstsqre/prepuller:0.8.6'
 
   routes:
     soda: '/api/image/soda'
