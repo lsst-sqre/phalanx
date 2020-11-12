@@ -23,7 +23,7 @@ nublado:
     image: 'lsstsqre/sciplat-hub:0.32.2'
 
   wf:
-    image: 'lsstsqre/wfdispatcher:0.4.1.1'
+    image: 'lsstsqre/wfdispatcher:0.4.1.3'
     ingress_ui:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
