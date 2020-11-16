@@ -19,10 +19,10 @@ nublado:
 
   hub:
     persistent_home: false
-    image: 'lsstsqre/sciplat-hub:0.32.4'
+    image: 'lsstsqre/sciplat-hub:0.32.5'
 
   wf:
-    image: 'lsstsqre/wfdispatcher:0.4.1.3'
+    image: 'lsstsqre/wfdispatcher:0.4.1.4'
     ingress_ui:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
