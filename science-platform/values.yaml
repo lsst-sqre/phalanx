@@ -1,6 +1,8 @@
 argo:
   enabled: true
   revision: HEAD
+argo_cd:
+  revision: HEAD
 cert_issuer:
   enabled: true
   revision: HEAD
