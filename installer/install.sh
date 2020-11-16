@@ -22,7 +22,7 @@ helm upgrade \
   --set server.ingress.hosts="{$HOSTNAME}" \
   --namespace argocd \
   --wait --timeout 900 \
-  --version 2.6.1
+  --version 2.9.5
 
 echo "Creating vault secret..."
 kubectl create secret generic vault-secrets-operator \
