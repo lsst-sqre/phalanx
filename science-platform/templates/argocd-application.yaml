@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -11,6 +11,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/argo-cd
+    path: services/argocd
     repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.argo_cd.revision }}
+    targetRevision: {{ .Values.argocd.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
