@@ -1,4 +1,4 @@
-nginx-ingress:
+ingress-nginx:
   controller:
     config:
       compute-full-forwarded-for: "true"
