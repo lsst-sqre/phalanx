@@ -20,3 +20,5 @@ server:
         name: lsst-sqre
       - url: https://ricoberger.github.io/helm-charts/
         name: ricoberger
+      - url: https://kubernetes.github.io/ingress-nginx/
+        name: ingress-nginx
