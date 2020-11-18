@@ -8,14 +8,4 @@ ingress-nginx:
       ssl-redirect: "true"
       use-forwarded-headers: "true"
     service:
-      omitClusterIP: true
       externalTrafficPolicy: Local
-    stats:
-      service:
-        omitClusterIP: true
-    metrics:
-      service:
-        omitClusterIP: true
-  defaultBackend:
-    service:
-      omitClusterIP: true
