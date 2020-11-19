@@ -112,11 +112,10 @@ nublado:
         "fileserver-export": "/butler/repo"
       },
       {
-        "disabled": "true",
-        "mountpoint": "/readonly/comcam/repo",
+        "mountpoint": "/readonly/comcam",
         "mode": "ro",
-        "fileserver-host": "comcam-arctl01.ls.lsst.org",
-        "fileserver-export": "/butler/repo"
+        "fileserver-host": "comcam-arctl01.cp.lsst.org",
+        "fileserver-export": "/lsstdata/base/comcam"
       }
     ]
 
