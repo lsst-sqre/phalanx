@@ -1,4 +1,4 @@
 dependencies:
-- name: postgres
-  version: ">=0.0.1"
+- name: exposurelog
+  version: ">=0.1.0"
   repository: https://lsst-sqre.github.io/charts/
