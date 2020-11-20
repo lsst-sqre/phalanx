@@ -1,0 +1,24 @@
+exposurelog:
+  vault_secrets:
+    path: 'secret/k8s_operator/bleed.lsst.codes/exposurelog'
+  debug: 'true'
+
+  exposurelog_db_secret: postgres
+
+  # URIs for a butler registry 1 (required) and 2 (optional)
+  # Default the first to the unit test registry, but a real deployment needs a real registry.
+  butler_uri_1: /app/tests/data/hsc_raw
+  butler_uri_2: ""
+
+  ingress:
+    enabled: true
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    hosts:
+      - host: bleed.lsst.codes
+        paths: [exposurelog/graphql]
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
