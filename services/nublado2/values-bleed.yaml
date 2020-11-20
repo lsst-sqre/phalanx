@@ -1,0 +1,49 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    hub:
+      image:
+        name: lsstsqre/nublado2
+        tag: "1.0.0"
+
+    singleuser:
+      storage:
+        type: none
+
+    auth:
+      state:
+        cryptoKey: "080c6d0eb8d9f84ef5f0860bea71dba6ab2e1be712c7bc8c2eaf92321c9fd968"
+
+    proxy:
+      secretToken: "3854245f5b48412ee9b7a2c985da6acdc146f80cc4f10eb175f0efa24530399b"
+      service:
+        type: ClusterIP
+
+    ingress:
+      hosts: ["bleed.lsst.codes"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes:31337/login"
+        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
+
+  config:
+    options_form:
+      images_url: "http://cachemachine.cachemachine.svc.cluster.local/cachemachine/jupyter/available"
+      images:
+        - name: Weekly 42
+          image: registry.hub.docker.com/lsstsqre/sciplat-lab:w_2020_42
+      sizes:
+        - name: Tiny
+          cpu: .5
+          ram: 1536M
+        - name: Small
+          cpu: 1
+          ram: 3072M
+        - name: Medium
+          cpu: 2
+          ram: 6144M
+        - name: Large
+          cpu: 4
+          ram: 12288M
+    user_resources: {}

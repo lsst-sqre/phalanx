@@ -1,0 +1,29 @@
+{{- if .Values.cachemachine.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cachemachine
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cachemachine
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cachemachine
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/cachemachine
+    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    targetRevision: {{ .Values.cachemachine.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}
