@@ -1,5 +1,5 @@
 exposurelog:
-  
+
   exposurelog_db_secret: postgres
 
   # URIs for a butler registry 1 (required) and 2 (optional)
