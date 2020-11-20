@@ -20,4 +20,4 @@ exposurelog:
     #    hosts:
     #      - chart-example.local
 
-vault_path: "secret/k8s_operator/bleed.lsst.codes/exposurelog"
+vault_path: "secret/k8s_operator/bleed.lsst.codes/postgres"
