@@ -8,6 +8,8 @@ cert_manager:
   enabled: true
 chronograf:
   enabled: false
+exposurelog:
+  enabled: false
 gafaelfawr:
   enabled: true
 influxdb:

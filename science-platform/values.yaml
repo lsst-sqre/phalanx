@@ -12,6 +12,9 @@ cert_manager:
 chronograf:
   enabled: true
   revision: HEAD
+exposurelog:
+  enabled: false
+  revision: HEAD
 gafaelfawr:
   enabled: true
   revision: HEAD
