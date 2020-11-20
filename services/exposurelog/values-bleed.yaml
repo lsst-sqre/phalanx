@@ -1,0 +1,4 @@
+exposurelog:
+  vault_secrets:
+    path: 'secret/k8s_operator/bleed.lsst.codes/exposurelog'
+  debug: 'true'
