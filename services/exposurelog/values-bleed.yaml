@@ -1,8 +1,5 @@
 exposurelog:
-  vault_secrets:
-    path: 'secret/k8s_operator/bleed.lsst.codes/exposurelog'
-  debug: 'true'
-
+  
   exposurelog_db_secret: postgres
 
   # URIs for a butler registry 1 (required) and 2 (optional)
@@ -17,8 +14,10 @@ exposurelog:
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: bleed.lsst.codes
-        paths: [exposurelog/graphql]
+        paths: [exposurelog]
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+vault_path: "secret/k8s_operator/bleed.lsst.codes/exposurelog"
