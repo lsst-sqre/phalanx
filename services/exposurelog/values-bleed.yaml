@@ -4,7 +4,7 @@ exposurelog:
 
   # URIs for a butler registry 1 (required) and 2 (optional)
   # Default the first to the unit test registry, but a real deployment needs a real registry.
-  butler_uri_1: /app/tests/data/hsc_raw
+  butler_uri_1: /home/appuser/hsc_raw
   butler_uri_2: ""
 
   ingress:
@@ -14,10 +14,10 @@ exposurelog:
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: bleed.lsst.codes
-        paths: ["/"]
+        paths: [exposurelog]
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
 
-vault_path: "secret/k8s_operator/bleed.lsst.codes/postgres"
+vault_path: "secret/k8s_operator/bleed.lsst.codes/exposurelog"
