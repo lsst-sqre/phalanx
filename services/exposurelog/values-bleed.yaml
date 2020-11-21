@@ -14,7 +14,7 @@ exposurelog:
       # kubernetes.io/tls-acme: "true"
     hosts:
       - host: bleed.lsst.codes
-        paths: ["/"]
+        paths: ["/exposurelog"]
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
