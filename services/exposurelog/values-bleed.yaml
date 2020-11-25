@@ -1,9 +1,6 @@
 exposurelog:
 
-  # URIs for a butler registry 1 (required) and 2 (optional)
-  # Default the first to the unit test registry, but a real deployment needs a real registry.
-  butler_uri_1: /home/appuser/hsc_raw
-  butler_uri_2: ""
+  # Use the built-in toy registry, so set neither butler_uri_1 nor butler_uri_2
 
   ingress:
     enabled: true
