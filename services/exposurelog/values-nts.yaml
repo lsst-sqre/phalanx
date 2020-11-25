@@ -1,6 +1,8 @@
 exposurelog:
 
-  # Use the built-in toy registry, so set neither butler_uri_1 nor butler_uri_2
+  hostpath_1: /lsstdata/offline/teststand
+
+  butler_uri_1: /volume_1/NCSA_comcam
 
   ingress:
     enabled: true
@@ -8,11 +10,11 @@ exposurelog:
     #   kubernetes.io/ingress.class: nginx
     #   kubernetes.io/tls-acme: "true"
     hosts:
-      - host: bleed.lsst.codes
+      - host: lsst-nts-k8s.ncsa.illinois.edu
         paths: ["/exposurelog"]
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
 
-vault_path: "secret/k8s_operator/bleed.lsst.codes/postgres"
+vault_path: "secret/k8s_operator/nts.lsst.codes/postgres"
