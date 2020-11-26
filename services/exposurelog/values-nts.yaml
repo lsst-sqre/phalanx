@@ -11,10 +11,11 @@ exposurelog:
     #   kubernetes.io/tls-acme: "true"
     hosts:
       - host: lsst-nts-k8s.ncsa.illinois.edu
-        paths: ["/exposurelog"]
+        paths:
+          - /exposurelog
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
 
-vault_path: "secret/k8s_operator/nts.lsst.codes/postgres"
+vault_path: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/postgres
