@@ -22,6 +22,9 @@ nublado:
     persistent_home: false
     image: 'lsstsqre/sciplat-hub:0.32.5'
 
+  prepuller:
+    schedule: "57 01,07,13,19 * * *"
+
   wf:
     image: 'lsstsqre/wfdispatcher:0.4.1.4'
     ingress_ui:
