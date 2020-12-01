@@ -45,6 +45,9 @@ nublado:
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
+  prepuller:
+    schedule: "27 01,07,13,19 * * *"
+
   proxy:
     ingress:
       annotations:
@@ -98,14 +101,3 @@ nublado:
         "fileserver-export": "/exports/scratch"
       }
     ]
-
-  signing_certificate: |
-    -----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0ViEK+a2lQFSTFlO1jn+
-    ta0NsiHh40uIRKAWvXd8eFJjZYK2DhrH9biLB9AkUtyzvcywpYl+/lquwUQBz04Z
-    NJC5ykR1YBzSKicpVvHF8b3I/NNT/aqyOEEkhG6I1/ZKlz03lyOYyKdzNvEoa4yU
-    A2WUdysSsZYXIIo4jh2M1rfsS+ozcDSwWkY1EyGFWsp2fUkDS4qOTTbhxx/TiERk
-    YqT4NRALhvwJA3zJJZXGd+zGl+4rxTl+Xbx6YVHb27ArcQsGK5Ay2HkOqGDkBEZb
-    gYykuPnl3gj/sS0aoxsc4J1mZoU0Ct4qfqaLahUW9kVwnS3vsH+rppdZ+UnK4Rh6
-    xQIDAQAB
-    -----END PUBLIC KEY-----

@@ -39,6 +39,7 @@ nublado:
 
   prepuller:
     image: 'lsstsqre/prepuller:0.8.6'
+    schedule: "27 01,07,13,19 * * *"
 
   routes:
     soda: '/api/image/soda'
