@@ -1,4 +1,0 @@
-dependencies:
-- name: ingress-nginx
-  version: 3.12.0
-  repository: https://kubernetes.github.io/ingress-nginx
