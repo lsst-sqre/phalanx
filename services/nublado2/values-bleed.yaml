@@ -24,26 +24,5 @@ nublado2:
     ingress:
       hosts: ["bleed.lsst.codes"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes:31337/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
-
-  config:
-    options_form:
-      images_url: "http://cachemachine.cachemachine.svc.cluster.local/cachemachine/jupyter/available"
-      images:
-        - name: Weekly 42
-          image: registry.hub.docker.com/lsstsqre/sciplat-lab:w_2020_42
-      sizes:
-        - name: Tiny
-          cpu: .5
-          ram: 1536M
-        - name: Small
-          cpu: 1
-          ram: 3072M
-        - name: Medium
-          cpu: 2
-          ram: 6144M
-        - name: Large
-          cpu: 4
-          ram: 12288M
-    user_resources: {}
+        nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr:8080/auth?scope=exec:notebook"
