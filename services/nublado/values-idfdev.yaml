@@ -80,24 +80,24 @@ nublado:
       {
        "mountpoint": "/home",
         "mode": "rw",
-        "fileserver-host": "FIXME",
-        "fileserver-export": "/exports/home"
+        "fileserver-host": "10.210.11.194",
+        "fileserver-export": "share1/home"
       },
       {
         "mountpoint": "/datasets",
-        "fileserver-host": "FIXME",
-        "fileserver-export": "/exports/datasets"
+        "fileserver-host": "10.210.11.194",
+        "fileserver-export": "share1/datasets"
       },
       {
         "mountpoint": "/project",
         "mode": "rw",
-        "fileserver-host": "FIXME",
-        "fileserver-export": "/exports/project"
+        "fileserver-host": "10.210.11.194",
+        "fileserver-export": "share1/project"
       },
       {
         "mountpoint": "/scratch",
         "mode": "rw",
-        "fileserver-host": "FIXME",
-        "fileserver-export": "/exports/scratch"
+        "fileserver-host": "10.210.11.194",
+        "fileserver-export": "share1/scratch"
       }
     ]
