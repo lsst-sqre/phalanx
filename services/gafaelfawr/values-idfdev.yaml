@@ -20,32 +20,24 @@ gafaelfawr:
     "exec:user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "read:workspace":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "read:workspace/user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "write:workspace/user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "exec:portal":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "exec:notebook":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "read:tap":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
     "read:image":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
