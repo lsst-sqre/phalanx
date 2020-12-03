@@ -2,7 +2,7 @@ exposurelog:
 
   nfs_path_1: /offline/teststand
 
-  nfs_server: lsst-nfs.ncsa.illinois.edu
+  nfs_server_1: lsst-nfs.ncsa.illinois.edu
 
   butler_uri_1: /volume_1/NCSA_comcam/gen3repo
 
