@@ -80,6 +80,12 @@ def generate_postgres_secrets():
     "root_password": secrets.token_hex(64),
   }
 
+def generate_nublado2_secrets():
+  return {
+    "proxy_token": secrets.token_hex(32),
+    "crypto_key": ";".join([secrets.token_hex(32), secrets.token_hex(32)]),
+  }
+
 def generate_nublado_secrets(db_pass):
   return {
     "configproxy_auth_token": secrets.token_hex(32),
@@ -127,6 +133,7 @@ def generate_secrets():
   secrets["log"] = generate_log_secrets()
   secrets["tap"] = generate_tap_secrets()
   secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
+  secrets["nublado2"] = generate_nublado2_secrets()
   secrets["mobu"] = generate_mobu_secrets()
   secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
   secrets["cert-manager"] = generate_cert_manager_secrets()
