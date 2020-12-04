@@ -10,6 +10,8 @@ chronograf:
   enabled: false
 exposurelog:
   enabled: false
+fs_provisioner:
+  enabled: true
 gafaelfawr:
   enabled: true
 influxdb:

@@ -15,6 +15,9 @@ chronograf:
 exposurelog:
   enabled: false
   revision: HEAD
+fs_provisioner:
+  enabled: false
+  revision: HEAD
 gafaelfawr:
   enabled: false
   revision: HEAD
