@@ -1,59 +1,59 @@
 argo:
-  enabled: true
+  enabled: false
   revision: HEAD
 argocd:
   revision: HEAD
 cert_issuer:
-  enabled: true
+  enabled: false
   revision: HEAD
 cert_manager:
-  enabled: true
+  enabled: false
   revision: HEAD
 chronograf:
-  enabled: true
+  enabled: false
   revision: HEAD
 exposurelog:
   enabled: false
   revision: HEAD
 gafaelfawr:
-  enabled: true
+  enabled: false
   revision: HEAD
 influxdb:
-  enabled: true
+  enabled: false
   revision: HEAD
 kapacitor:
-  enabled: true
+  enabled: false
   revision: HEAD
 landing_page:
-  enabled: true
+  enabled: false
   revision: HEAD
 logging:
-  enabled: true
+  enabled: false
   revision: HEAD
 mobu:
-  enabled: true
+  enabled: false
   revision: HEAD
 nginx_ingress:
-  enabled: true
+  enabled: false
   revision: HEAD
 nublado:
-  enabled: true
+  enabled: false
   revision: HEAD
 obstap:
-  enabled: true
+  enabled: false
   revision: HEAD
 portal:
-  enabled: true
+  enabled: false
   revision: HEAD
 postgres:
-  enabled: true
+  enabled: false
   revision: HEAD
 squash_api:
-  enabled: true
+  enabled: false
   revision: HEAD
 tap:
-  enabled: true
+  enabled: false
   revision: HEAD
 vault_secrets_operator:
-  enabled: true
+  enabled: false
   revision: HEAD
