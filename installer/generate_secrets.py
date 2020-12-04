@@ -127,6 +127,16 @@ def generate_gafaelfawr_secrets():
     "signing-key": key_bytes.decode(),
   }
 
+def generate_cachemachine_secrets():
+  fname = input_field("cachemachine", ".docker/config.json",
+    "file containing docker credentials to pull images")
+
+  with open(fname, 'r') as f:
+    return {
+      ".dockerconfigjson": f.read()
+    }
+
+
 def generate_secrets():
   secrets = {}
   secrets["postgres"] = generate_postgres_secrets()
@@ -137,6 +147,7 @@ def generate_secrets():
   secrets["mobu"] = generate_mobu_secrets()
   secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
   secrets["cert-manager"] = generate_cert_manager_secrets()
+  secrets["cachemachine"] = generate_cachemachine_secrets()
   return secrets
 
 def generate_files(secrets):
