@@ -3,7 +3,7 @@ influxdb:
   ## ref: https://hub.docker.com/r/library/influxdb/tags/
   image:
     repository: "influxdb"
-    tag: "1.8.2-alpine"
+    tag: "1.8.3-alpine"
     pullPolicy: IfNotPresent
 
   ## Customize liveness, readiness and startup probes
