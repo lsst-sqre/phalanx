@@ -1,15 +1,4 @@
 squash-api:
-  replicaCount: 1
-
-  cloudSQLImage:
-    repository: gcr.io/cloudsql-docker/gce-proxy
-    tag: "1.17"
-    pullPolicy: IfNotPresent
-
-  redisImage:
-    repository: redis
-    tag: "6.0"
-    pullPolicy: IfNotPresent
 
   # SQuaSH Cloud SQL instance connection name
   instanceConnectionName: "squash-db-sandbox"
@@ -37,23 +26,6 @@ squash-api:
   # Redis URL
   redisUrl: "redis://squash-sandbox-squash-api-redis.squash-sandbox:6379"
 
-  podSecurityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-
-  securityContext:
-    capabilities:
-      drop:
-      - ALL
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
-
-  service:
-    type: ClusterIP
-    port: 8080
-
   ingress:
     enabled: true
     annotations:
@@ -67,14 +39,6 @@ squash-api:
     - secretName: "tls-certs"
       hosts:
       - squash-sandbox.lsst.codes
-
-  resources: {}
-
-  nodeSelector: {}
-
-  tolerations: []
-
-  affinity: {}
 
 ## Base path for squash-api secrets in Vault
 vaultSecretsBasePath: secret/k8s_operator/squash-sandbox.lsst.codes

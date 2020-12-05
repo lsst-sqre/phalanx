@@ -6,14 +6,6 @@ chronograf:
     tag: 1.8.9
     pullPolicy: IfNotPresent
 
-  ## Specify a service type
-  ## ClusterIP is default
-  ## ref: http://kubernetes.io/docs/user-guide/services/
-  ##
-  service:
-    replicas: 1
-    type: ClusterIP
-
   ## Persist data to a persistent volume
   ##
   persistence:
@@ -28,32 +20,6 @@ chronograf:
     # storageClass: "-"
     accessMode: ReadWriteOnce
     size: 16Gi
-
-  ## Configure resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  ##
-  resources:
-    requests:
-      memory: 256Mi
-      cpu: 0.1
-    limits:
-      memory: 2Gi
-      cpu: 2
-
-  ## Node labels for pod assignment
-  ## ref: https://kubernetes.io/docs/user-guide/node-selection/
-  #
-  nodeSelector: {}
-
-  ## Tolerations for pod assignment
-  ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  ##
-  tolerations: []
-
-  ## Affinity for pod assignment
-  ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ##
-  affinity: {}
 
   ## Configure the ingress object to hook into existing infastructure
   ## ref : http://kubernetes.io/docs/user-guide/ingress/
