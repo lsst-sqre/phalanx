@@ -70,4 +70,4 @@ kapacitor:
     name:
 
 ## Vault path for the influxdb-auth secret
-vaultSecretsPath: secret/k8s_operator/squash-sandbox/influxdb-auth
+vaultSecretsPath: secret/k8s_operator/squash-sandbox.lsst.codes/influxdb-auth

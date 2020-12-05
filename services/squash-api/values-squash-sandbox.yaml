@@ -77,4 +77,4 @@ squash-api:
   affinity: {}
 
 ## Base path for squash-api secrets in Vault
-vaultSecretsBasePath: secret/k8s_operator/squash-sandbox
+vaultSecretsBasePath: secret/k8s_operator/squash-sandbox.lsst.codes

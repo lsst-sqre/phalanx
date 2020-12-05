@@ -253,4 +253,4 @@ influxdb:
 
 
 ## Vault path for the influxdb secrets
-vaultSecretsPath: secret/k8s_operator/squash-sandbox/
+vaultSecretsPath: secret/k8s_operator/squash-sandbox.lsst.codes/

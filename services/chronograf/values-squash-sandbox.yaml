@@ -85,4 +85,4 @@ chronograf:
   envFromSecret: "chronograf-oauth"
 
 ## Vault path for the chronograf-oauth secret
-vaultSecretsPath: secret/k8s_operator/squash-sandbox/chronograf-oauth
+vaultSecretsPath: secret/k8s_operator/squash-sandbox.lsst.codes/chronograf-oauth
