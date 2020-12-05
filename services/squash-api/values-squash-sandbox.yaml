@@ -17,11 +17,8 @@ squash-api:
   # Credentials for the SQuaSH Cloud SQL service account
   cloudSQLInstanceSecret: "cloudsql-instance-credentials"
 
-  # SQuaSH DB credentials
-  squashDBSecret: "squash-db-credentials"
-
-  # Default SQuaSH API credentials
-  squashSecret: "squash-credentials"
+  # SQuaSH API secret name
+  squashAPISecret: "squash-api"
 
   # If "True", job datetime is obtained from the job metadata instead of using
   # current time. Use this option to restore existing jobs to SQuaSH.
@@ -29,9 +26,6 @@ squash-api:
 
   # S3 Bucket to upload verification jobs
   s3BucketName: "squash-sandbox"
-
-  # AWS credentials
-  awsSecret: "squash-aws-credentials"
 
   # InfluxDB URL
   influxUrl: "http://influxdb.influxdb:8086"
