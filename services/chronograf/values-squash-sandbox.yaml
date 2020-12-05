@@ -3,7 +3,7 @@ chronograf:
   ##
   image:
     repository: "chronograf"
-    tag: 1.8.6
+    tag: 1.8.9
     pullPolicy: IfNotPresent
 
   ## Specify a service type
