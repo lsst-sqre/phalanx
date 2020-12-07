@@ -3,53 +3,9 @@ influxdb:
   ## ref: https://hub.docker.com/r/library/influxdb/tags/
   image:
     repository: "influxdb"
-    tag: "1.8.2-alpine"
+    tag: "1.8.3-alpine"
     pullPolicy: IfNotPresent
 
-  ## Customize liveness, readiness and startup probes
-  ## ref: https://docs.influxdata.com/influxdb/v1.7/tools/api/#ping-http-endpoint
-  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-  ##
-  livenessProbe: {}
-  # initialDelaySeconds: 30
-  # timeoutSeconds: 5
-  # scheme: HTTP
-
-  readinessProbe: {}
-  # initialDelaySeconds: 5
-  # timeoutSeconds: 1
-  # scheme: HTTP
-
-  securityContext: {}
-  # runAsUser: 999
-  # runAsGroup: 999
-
-  startupProbe:
-    enabled: false
-    # failureThreshold: 6
-    # periodSeconds: 5
-    # scheme: HTTP
-
-
-  ## Specify a service type
-  ## NodePort is default
-  ## ref: http://kubernetes.io/docs/user-guide/services/
-  ##
-  service:
-    ## Add annotations to service
-    # annotations: {}
-    type: ClusterIP
-    ## Add IP Cluster
-    # clusterIP: ""
-    ## Add external IPs that route to one or more cluster nodes
-    # externalIPs: []
-    ## Specify LoadBalancer IP (only allow on some cloud provider)
-    # loadBalancerIP: ""
-    ## Allow source IPs to access on service (if empty, any access allow)
-    # loadBalancerSourceRanges: []
-
-  ## Persist data to a persistent volume
-  ##
   persistence:
     enabled: true
     ## If true will use an existing PVC instead of creating one
@@ -72,66 +28,9 @@ influxdb:
   ##
   setDefaultUser:
     enabled: true
-
-    ## Image of the container used for job
-    ## Default: appropriate/curl:latest
-    ##
-    image: appropriate/curl:latest
-
-    ## Deadline for job so it does not retry forever.
-    ## Default: activeDeadline: 300
-    ##
-    activeDeadline: 300
-
-
-    ## Specify the number of retries before considering job as failed.
-    ## https://kubernetes.io/docs/concepts/workloads/controllers/jobs-run-to-completion/#pod-backoff-failure-policy
-    ##
-    backoffLimit: 6
-
-    ## Hook delete policy for helm.
-    ## Default: hookDeletePolicy: hook-succeeded
-    ##
-    hookDeletePolicy: hook-succeeded
-
-    ## Restart policy for job
-    ## Default: OnFailure
-    restartPolicy: OnFailure
-
     user:
-      ## The user name
-      ## Default: "admin"
-      # username:
-
-      ## User password
-      ## single quotes must be escaped (\')
-      ## Default: (Randomly generated 10 characters of AlphaNum)
-      # password:
-
-      ## The user name and password are obtained from an existing secret. The expected
-      ## keys are `influxdb-user` and `influxdb-password`.
-      ## If set, the username and password values above are ignored.
       existingSecret: influxdb-auth
-
-      ## User privileges
-      ## Default: "WITH ALL PRIVILEGES"
       privileges: "WITH ALL PRIVILEGES"
-
-  ## Configure resource requests and limits
-  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-  resources: {}
-  #  requests:
-  #    memory: 256Mi
-  #    cpu: 0.1
-  #  limits:
-  #    memory: 16Gi
-  #    cpu: 8
-
-  # Annotations to be added to InfluxDB pods
-  podAnnotations: {}
-
-  # Labels to be added to InfluxDB pods
-  podLabels: {}
 
   ingress:
     enabled: true
@@ -142,33 +41,6 @@ influxdb:
       cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     path: /influxdb(/|$)(.*)
-
-
-  ## Node labels for pod assignment
-  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
-  ##
-  nodeSelector: {}
-
-  ## Affinity for pod assignment
-  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
-  ##
-  affinity: {}
-
-  ## Tolerations for pod assignment
-  ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-  ##
-  tolerations: []
-  # - key: "key"
-  #   operator: "Equal|Exists"
-  #   value: "value"
-  #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
-
-  ## The InfluxDB image uses several environment variables to automatically
-  ## configure certain parts of the server.
-  ## Ref: https://hub.docker.com/_/influxdb/
-  env: {}
-  # - name: INFLUXDB_DB
-  #   value: "demo"
 
   ## The name of a secret in the same kubernetes namespace which contain values
   ## to be added to the environment.
@@ -185,72 +57,5 @@ influxdb:
       max-row-limit: 0
 
 
-  # Allow executing custom init scripts
-  #
-  # If the container finds any files with the extensions .sh or .iql inside of the
-  # /docker-entrypoint-initdb.d folder, it will execute them. The order they are
-  # executed in is determined by the shell. This is usually alphabetical order.
-  initScripts:
-    enabled: false
-    scripts:
-      init.iql: |+
-        CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
-
-  backup:
-    enabled: false
-    ## By default emptyDir is used as a transitory volume before uploading to object store.
-    ## As such, ensure that a sufficient ephemeral storage request is set to prevent node disk filling completely.
-    resources:
-      requests:
-        # memory: 512Mi
-        # cpu: 2
-        ephemeral-storage: "8Gi"
-    # limits:
-    #   memory: 1Gi
-    #   cpu: 4
-    #   ephemeral-storage: "16Gi"
-    ## If backup destination is PVC, or want to use intermediate PVC before uploading to object store.
-    persistence:
-      enabled: false
-      ## If defined, storageClassName: <storageClass>
-      ## If set to "-", storageClassName: "", which disables dynamic provisioning
-      ## If undefined (the default) or set to null, no storageClassName spec is
-      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-      ##   GKE, AWS & OpenStack)
-      ##
-      # storageClass: "-"
-      annotations:
-      accessMode: ReadWriteOnce
-      size: 8Gi
-    schedule: "0 0 * * *"
-    annotations: {}
-    podAnnotations: {}
-
-    ## Google Cloud Storage
-    # gcs:
-    #    serviceAccountSecret: influxdb-backup-key
-    #    serviceAccountSecretKey: key.json
-    #    destination: gs://bucket/influxdb
-
-    ## Azure
-    ## Secret is expected to have connection string stored in `connection-string` field
-    ## Existing container will be used or private one withing storage account will be created.
-    # azure:
-    #   storageAccountSecret: influxdb-backup-azure-key
-    #   destination_container: influxdb-container
-    #   destination_path: ""
-
-    ## Amazon S3 or compatible
-    ## Secret is expected to have AWS (or compatible) credentials stored in `credentials` field.
-    ## Please look at https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html#cli-configure-files-where
-    ## for the credentials format.
-    ## The bucket should already exist.
-    # s3:
-    #   credentialsSecret: aws-credentials-secret
-    #   destination: s3://bucket/path
-    #   ## Optional. Specify if you're using an alternate S3 endpoint.
-    #   # endpointUrl: ""
-
-
 ## Vault path for the influxdb secrets
-vaultSecretsPath: secret/k8s_operator/squash-sandbox/
+vaultSecretsPath: secret/k8s_operator/squash-sandbox.lsst.codes/
