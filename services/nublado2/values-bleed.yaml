@@ -1,0 +1,21 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    hub:
+      image:
+        name: lsstsqre/nublado2
+        tag: "1.0.0"
+
+    singleuser:
+      storage:
+        type: none
+
+    ingress:
+      hosts: ["bleed.lsst.codes"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr:8080/auth?scope=exec:notebook"
+
+  vault_secret_path: "secret/k8s_operator/bleed.lsst.codes/nublado2"

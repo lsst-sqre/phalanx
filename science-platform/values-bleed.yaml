@@ -2,6 +2,8 @@ environment: bleed
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: true
 cert_manager:
@@ -25,6 +27,8 @@ mobu:
 nginx_ingress:
   enabled: true
 nublado:
+  enabled: true
+nublado2:
   enabled: true
 obstap:
   enabled: true

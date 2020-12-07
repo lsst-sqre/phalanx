@@ -1,0 +1,15 @@
+cachemachine:
+  host: "bleed.lsst.codes"
+
+  image:
+    tag: "1.0.0"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: bleed.lsst.codes
+        paths: ["/cachemachine"]
+
+vault_secrets:
+  enabled: true
+  path: "secret/k8s_operator/bleed.lsst.codes/cachemachine"

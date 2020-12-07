@@ -3,6 +3,9 @@ argo:
   revision: HEAD
 argocd:
   revision: HEAD
+cachemachine:
+  enabled: false
+  revision: HEAD
 cert_issuer:
   enabled: false
   revision: HEAD
