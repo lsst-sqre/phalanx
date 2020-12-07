@@ -51,7 +51,8 @@ argocd app create vault-secrets-operator \
   --dest-server https://kubernetes.default.svc \
   --upsert \
   --port-forward \
-  --port-forward-namespace argocd
+  --port-forward-namespace argocd \
+  --values values-$ENVIRONMENT.yaml
 
 argocd app sync vault-secrets-operator \
   --port-forward \
