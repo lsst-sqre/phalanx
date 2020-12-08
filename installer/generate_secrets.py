@@ -188,8 +188,6 @@ def generate_secrets():
     secrets["mobu"] = generate_mobu_secrets()
     secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
     secrets["cert-manager"] = generate_cert_manager_secrets()
-    # cachemachine only has the pull secret
-    secrets["cachemachine"] = secrets["pull-secret"]
 
     return secrets
 
