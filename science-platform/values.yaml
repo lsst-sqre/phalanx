@@ -42,6 +42,9 @@ nginx_ingress:
 nublado:
   enabled: false
   revision: HEAD
+nublado2:
+  enabled: false
+  revision: HEAD
 obstap:
   enabled: false
   revision: HEAD
