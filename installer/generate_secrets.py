@@ -15,21 +15,24 @@ def input_field(component, name, description):
   prompt_string = f"[{component} {name}] ({description}): "
   return input(prompt_string)
 
+
 def generate_tap_secrets():
   fname = input_field("TAP", "google_creds.json",
-    "file containing google service account credentials")
+                      "file containing google service account credentials")
 
   with open(fname, 'r') as f:
     return {
       "slack_webhook_url": input_field("TAP", "slack_webhook_url",
-        "slack webhook url for querymonkey"),
+                                       "slack webhook url for querymonkey"),
       "google_creds.json": b64encode(f.read().encode()).decode()
     }
+
 
 def generate_log_secrets():
   def gen_pw_and_hash():
     pw = secrets.token_hex(16)
-    h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
+    h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(
+      rounds=15)).decode("ascii")
     return (pw, h)
 
   admin = gen_pw_and_hash()
@@ -74,17 +77,20 @@ def generate_log_secrets():
     "kibana-password": kibana[0],
   }
 
+
 def generate_postgres_secrets():
   return {
     "jupyterhub_password": secrets.token_hex(32),
     "root_password": secrets.token_hex(64),
   }
 
+
 def generate_nublado2_secrets():
   return {
     "proxy_token": secrets.token_hex(32),
     "crypto_key": ";".join([secrets.token_hex(32), secrets.token_hex(32)]),
   }
+
 
 def generate_nublado_secrets(db_pass):
   return {
@@ -93,18 +99,21 @@ def generate_nublado_secrets(db_pass):
     "session_db_url": f"postgres://jovyan:{db_pass}@postgres.postgres/jupyterhub",
   }
 
+
 def generate_mobu_secrets():
   return {
     "ALERT_HOOK": input_field("mobu", "ALERT_HOOK",
-      "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
+                              "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
   }
+
 
 def generate_cert_manager_secrets():
   return {
     "aws-secret-access-key": input_field("cert-manager",
-      "aws-secret-access-key",
-      "AWS secret access key for AKIAQSJOS2SFLUEVXZDB for DNS cert solver.")
+                                         "aws-secret-access-key",
+                                         "AWS secret access key for zone for DNS cert solver.")
   }
+
 
 def generate_gafaelfawr_secrets():
   key = rsa.generate_private_key(
@@ -119,17 +128,32 @@ def generate_gafaelfawr_secrets():
     serialization.NoEncryption()
   )
 
-  return {
-    "cilogon-client-secret": input_field("gafaelfawr", "cilogon-client-secret",
-                                         "CILogon client secret"),
+  auth_provider = input_field("gafaelfawr", "authentication provider",
+                              "Auth provider ('cilogon' or 'github')").lower()
+  # maybe really validate this sometime
+  if auth_provider != "github":
+    auth_provider = "cilogon"
+
+  ret_dict = {
     "redis-password": os.urandom(32).hex(),
     "session-secret": Fernet.generate_key().decode(),
     "signing-key": key_bytes.decode(),
   }
 
-def generate_cachemachine_secrets():
-  fname = input_field("cachemachine", ".docker/config.json",
-    "file containing docker credentials to pull images")
+  if auth_provider == "cilogon":
+    ret_dict["cilogon-client-secret"] = input_field("gafaelfawr",
+                                                    "cilogon-client-secret",
+                                                    "CILogon client secret")
+  else:
+    ret_dict["github-client-secret"] = input_field("gafaelfawr",
+                                                   "github-client-secret",
+                                                   "GitHub client secret")
+  return ret_dict
+
+
+def generate_pull_secret():
+  fname = input_field("[global]", ".docker/config.json",
+                      "file containing docker credentials to pull images")
 
   with open(fname, 'r') as f:
     return {
@@ -139,16 +163,21 @@ def generate_cachemachine_secrets():
 
 def generate_secrets():
   secrets = {}
+  secrets["pull-secret"] = generate_pull_secret()
   secrets["postgres"] = generate_postgres_secrets()
   secrets["log"] = generate_log_secrets()
   secrets["tap"] = generate_tap_secrets()
-  secrets["nublado"] = generate_nublado_secrets(secrets["postgres"]["jupyterhub_password"])
+  secrets["nublado"] = generate_nublado_secrets(
+    secrets["postgres"]["jupyterhub_password"])
   secrets["nublado2"] = generate_nublado2_secrets()
   secrets["mobu"] = generate_mobu_secrets()
   secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
   secrets["cert-manager"] = generate_cert_manager_secrets()
-  secrets["cachemachine"] = generate_cachemachine_secrets()
+  # cachemachine only has the pull secret
+  secrets["cachemachine"] = secrets["pull-secret"]
+
   return secrets
+
 
 def generate_files(secrets):
   print("Generating secrets files in secrets/")
@@ -157,6 +186,7 @@ def generate_files(secrets):
   for k, v in secrets.items():
     with open(f"secrets/{k}", "w") as f:
       f.write(json.dumps(v))
+
 
 if __name__ == '__main__':
   generate_files(generate_secrets())
