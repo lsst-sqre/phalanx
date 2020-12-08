@@ -106,17 +106,22 @@ nublado:
         "fileserver-export": "/scratch"
       },
       {
-        "mountpoint": "/readonly/auxtel/repo",
+        "mountpoint": "/readonly/lsstdata/auxTel",
         "mode": "ro",
         "fileserver-host": "atarchiver.cp.lsst.org",
-        "fileserver-export": "/butler/repo"
+        "fileserver-export": "/lsstdata"
       },
       {
-        "disabled": true,
-        "mountpoint": "/readonly/comcam",
+        "mountpoint": "/readonly/lsstdata/comCam",
         "mode": "ro",
         "fileserver-host": "comcam-arctl01.cp.lsst.org",
-        "fileserver-export": "/lsstdata/base/comcam"
+        "fileserver-export": "/lsstdata"
+      },
+      {
+        "mountpoint": "/readonly/lsstdata/other",
+        "mode": "ro",
+        "fileserver-host": "nfs1.cp.lsst.org",
+        "fileserver-export": "/lsstdata"
       }
     ]
 
