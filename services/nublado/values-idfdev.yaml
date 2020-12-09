@@ -1,5 +1,5 @@
 nublado:
-  fqdn: science-platform-dev.lsst.cloud
+  fqdn: data-dev.lsst.cloud
 
   oauth_provider: 'jwt'
 
@@ -21,22 +21,22 @@ nublado:
   routes:
     soda: '/api/image/soda'
     external:
-      instance: 'https://science-platform-dev.lsst.cloud'
+      instance: 'https://data-dev.lsst.cloud'
 
   dask:
     restrict_nodes: 'true'
 
   vault_secrets:
     enabled: true
-    path: secret/k8s_operator/science-platform-dev.lsst.cloud/nublado
+    path: secret/k8s_operator/data-dev.lsst.cloud/nublado
 
   wf:
     ingress_ui:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-        nginx.ingress.kubernetes.io/auth-signin: "https://science-platform-dev.lsst.cloud/login"
-        nginx.ingress.kubernetes.io/auth-url: "https://science-platform-dev.lsst.cloud/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Port 443;
@@ -53,8 +53,8 @@ nublado:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-        nginx.ingress.kubernetes.io/auth-signin: "https://science-platform-dev.lsst.cloud/login"
-        nginx.ingress.kubernetes.io/auth-url: "https://science-platform-dev.lsst.cloud/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Port 443;
@@ -62,11 +62,11 @@ nublado:
           auth_request_set $auth_token $upstream_http_x_auth_request_token;
           proxy_set_header X-Portal-Authorization "Bearer $auth_token";
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
-      host: science-platform-dev.lsst.cloud
+      host: data-dev.lsst.cloud
       tls:
         cluster_issuer: cert-issuer-letsencrypt-dns
         secret: nublado-tls-secret
-        tls_host: science-platform-dev.lsst.cloud
+        tls_host: data-dev.lsst.cloud
 
   mountpoints: |
     [

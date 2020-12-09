@@ -6,7 +6,7 @@ argo-cd:
     ingress:
       enabled: true
       hosts:
-        - "science-platform-dev.lsst.cloud"
+        - "data-dev.lsst.cloud"
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"

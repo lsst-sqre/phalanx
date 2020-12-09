@@ -1,5 +1,5 @@
 landing-page:
   motd_url: https://raw.githubusercontent.com/lsst-dm/lsp-landing-page/master/motd/integration.md
-  host: "science-platform-dev.lsst.cloud"
+  host: "data-dev.lsst.cloud"
   image:
     tag: "3.0.1"

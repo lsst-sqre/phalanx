@@ -2,4 +2,4 @@ solver:
   route53:
     aws_access_key_id: AKIAQSJOS2SFKQBMDRGR
     hosted_zone: Z0567328105IEHEMIXLCO
-    vault_secret_path: "secret/k8s_operator/science-platform-dev.lsst.cloud/cert-manager"
+    vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/cert-manager"
