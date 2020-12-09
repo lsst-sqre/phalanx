@@ -23,9 +23,6 @@ squash-api:
   # InfluxDB credentials
   influxSecret: "influxdb-auth"
 
-  # Redis URL
-  redisUrl: "redis://squash-sandbox-squash-api-redis.squash-sandbox:6379"
-
   ingress:
     enabled: true
     annotations:
