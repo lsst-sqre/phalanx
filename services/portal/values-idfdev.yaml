@@ -3,12 +3,12 @@ firefly:
     tag: "rc-2.1.0-2"
 
   ingress:
-    host: "science-platform-dev.lsst.cloud"
+    host: "data-dev.lsst.cloud"
     annotations:
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://science-platform-dev.lsst.cloud/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://science-platform-dev.lsst.cloud/auth?scope=exec:portal"
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=exec:portal"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;

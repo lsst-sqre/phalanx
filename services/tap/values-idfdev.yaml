@@ -2,14 +2,14 @@ cadc-tap:
   tag: "1.0.15"
   use_mock_qserv: true
 
-  host: "science-platform-dev.lsst.cloud"
+  host: "data-dev.lsst.cloud"
 
   secrets:
     enabled: false
 
   vault_secrets:
     enabled: true
-    path: 'secret/k8s_operator/science-platform-dev.lsst.cloud/tap'
+    path: 'secret/k8s_operator/data-dev.lsst.cloud/tap'
 
   gcs_bucket: 'async-results.lsst.codes'
   gcs_bucket_url: 'http://async-results.lsst.codes'
