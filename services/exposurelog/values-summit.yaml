@@ -1,6 +1,6 @@
 exposurelog:
 
-  nfs_path_1: /readonly/comcam  # Mounted as /volume_1
+  nfs_path_1: /lsstdata/base/comcam  # Mounted as /volume_1
   nfs_server_1: comcam-arctl01.cp.lsst.org
   butler_uri_1: /volume_1/oods/gen3butler/repo
 
