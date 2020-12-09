@@ -15,14 +15,18 @@ echo "Add the argocd helm update..."
 helm repo add argo https://argoproj.github.io/argo-helm
 helm repo update
 
-echo "Update / install argocd using helm..."
+ARGOCD_CHART_VERSION=`grep version \
+  ../services/argocd/requirements.yaml \
+  | tr -d "version: "`
+
+echo "Update / install argocd $ARGOCD_CHART_VERSION using helm..."
 helm upgrade \
   --install argocd argo/argo-cd \
   --values argo-cd-values.yaml \
   --set server.ingress.hosts="{$HOSTNAME}" \
   --namespace argocd \
   --wait --timeout 900 \
-  --version 2.9.5
+  --version $ARGOCD_CHART_VERSION
 
 echo "Creating vault secret..."
 kubectl create secret generic vault-secrets-operator \
