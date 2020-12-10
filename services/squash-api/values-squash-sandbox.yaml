@@ -31,7 +31,7 @@ squash-api:
       cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
     hosts:
     - host: squash-sandbox.lsst.codes
-      paths: ["/squash-api"]
+      paths: ["/"]
     tls:
     - secretName: "tls-certs"
       hosts:
