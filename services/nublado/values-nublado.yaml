@@ -68,6 +68,11 @@ nublado:
         secret: nublado-tls-secret
         tls_host: nublado.lsst.codes
 
+  pull-secret:
+    pull-secret:
+      enabled: true
+      path: secret/k8s_operator/nublado.lsst.codes/pull-secret
+
   mountpoints: |
     [
       { "disabled": true,
