@@ -32,8 +32,6 @@ portal:
   enabled: true
 postgres:
   enabled: true
-pull_secret:
-  enabled: true
 squash_api:
   enabled: false
 tap:
