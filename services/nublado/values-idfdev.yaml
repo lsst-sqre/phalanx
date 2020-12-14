@@ -27,8 +27,9 @@ nublado:
     restrict_nodes: 'true'
 
   vault_secrets:
-    enabled: true
-    path: secret/k8s_operator/data-dev.lsst.cloud/nublado
+    vault_secrets:
+      enabled: true
+      path: secret/k8s_operator/data-dev.lsst.cloud/nublado
 
   wf:
     ingress_ui:
