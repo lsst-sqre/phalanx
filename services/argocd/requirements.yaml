@@ -2,3 +2,6 @@ dependencies:
 - name: argo-cd
   version: 2.10.0
   repository: https://argoproj.github.io/argo-helm
+- name: pull-secret
+  version: 0.1.2
+  repository: https://lsst-sqre.github.io/charts/
