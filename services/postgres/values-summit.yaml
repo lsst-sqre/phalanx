@@ -9,3 +9,7 @@ postgres:
     user: 'exposurelog'
     db: 'exposurelog'
   postgres_storage_class: 'rook-ceph-block'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

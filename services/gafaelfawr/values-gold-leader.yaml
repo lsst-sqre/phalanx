@@ -19,3 +19,7 @@ gafaelfawr:
     client_id: "cilogon:/client_id/537ab5b211d0ddacb05964e5adf9a4dc"
     login_params:
       skin: "LSST"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/gold-leader.lsst.codes/pull-secret

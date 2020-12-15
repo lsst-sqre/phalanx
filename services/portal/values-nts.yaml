@@ -44,3 +44,7 @@ firefly:
       emptyDir: {}
     firefly_config:
       emptyDir: {}
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret

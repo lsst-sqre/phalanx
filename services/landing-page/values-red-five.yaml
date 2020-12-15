@@ -3,3 +3,7 @@ landing-page:
   host: "red-five.lsst.codes"
   image:
     tag: "3.0.1"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/red-five.lsst.codes/pull-secret

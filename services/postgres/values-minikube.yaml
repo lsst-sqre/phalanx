@@ -11,3 +11,7 @@ postgres:
   image:
     tag: '0.0.2'
   postgres_storage_class: 'standard'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/minikube.lsst.codes/pull-secret

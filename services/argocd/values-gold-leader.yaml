@@ -25,3 +25,7 @@ argo-cd:
           name: ricoberger
         - url: https://kubernetes.github.io/ingress-nginx/
           name: ingress-nginx
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/gold-leader.lsst.codes/pull-secret

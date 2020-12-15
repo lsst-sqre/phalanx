@@ -14,3 +14,7 @@ mobu:
       nginx.ingress.kubernetes.io/configuration-snippet: |
         auth_request_set $auth_token $upstream_http_x_auth_request_token;
         proxy_set_header Authorization "Bearer $auth_token";
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret

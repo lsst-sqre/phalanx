@@ -48,3 +48,7 @@ gafaelfawr:
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
       - "lsst-ts-summit-access"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

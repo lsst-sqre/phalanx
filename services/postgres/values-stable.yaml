@@ -9,3 +9,7 @@ postgres:
   volume_name: 'postgres-data-volume'
   image:
     tag: '0.0.3'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret

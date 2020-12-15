@@ -8,3 +8,7 @@ postgres:
   exposurelog_db:
     user: 'exposurelog'
     db: 'exposurelog'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/bleed.lsst.codes/pull-secret

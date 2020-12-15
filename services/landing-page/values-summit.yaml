@@ -3,3 +3,7 @@ landing-page:
   host: "summit-lsp.lsst.codes"
   image:
     tag: "3.0.1"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

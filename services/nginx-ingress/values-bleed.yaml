@@ -11,3 +11,7 @@ ingress-nginx:
       externalTrafficPolicy: Local
     podLabels:
       hub.jupyter.org/network-access-proxy-http: "true"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/bleed.lsst.codes/pull-secret

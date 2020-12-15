@@ -119,3 +119,7 @@ nublado:
     0iuSs3v/JhXrIARtGXYRrJfYfbMgKQv237a3TTo6TadcR+1TOVWvJG13eYNYNOjp
     LwIDAQAB
     -----END PUBLIC KEY-----
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret

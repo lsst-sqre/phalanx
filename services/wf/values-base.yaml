@@ -7,3 +7,7 @@ argo:
     baseHref: "/workflows/"
   controller:
     containerRuntimeExecutor: "k8sapi"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret

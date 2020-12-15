@@ -135,3 +135,7 @@ nublado:
     cHp1Els9aiHGk9ERSguaOVHJY3NKqCSz3luLFV98QYjG10nepo+HwxaN/U5w60q6
     jQIDAQAB
     -----END PUBLIC KEY-----
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret
