@@ -28,3 +28,7 @@ firefly:
     resources:
       limits:
         memory: 20Mi
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rogue-two.lsst.codes/pull-secret

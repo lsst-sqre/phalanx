@@ -98,3 +98,7 @@ nublado:
         "fileserver-export": "/exports/scratch"
       }
     ]
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/gold-leader.lsst.codes/pull-secret

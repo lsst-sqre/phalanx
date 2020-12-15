@@ -12,3 +12,7 @@ ingress-nginx:
       type: NodePort
       nodePorts:
         https: 31337
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/minikube.lsst.codes/pull-secret

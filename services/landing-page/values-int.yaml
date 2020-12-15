@@ -3,3 +3,7 @@ landing-page:
   host: "lsst-lsp-int.ncsa.illinois.edu"
   image:
     tag: "3.0.1"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret

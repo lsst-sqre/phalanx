@@ -3,3 +3,7 @@ landing-page:
   host: "bleed.lsst.codes"
   image:
     tag: "3.0.1"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/bleed.lsst.codes/pull-secret

@@ -19,3 +19,7 @@ exposurelog:
     #      - chart-example.local
 
 vault_path: secret/k8s_operator/summit-lsp.lsst.codes/postgres
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

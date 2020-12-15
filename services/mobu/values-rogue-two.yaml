@@ -6,3 +6,7 @@ mobu:
 
   image:
     tag: master
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rogue-two.lsst.codes/pull-secret

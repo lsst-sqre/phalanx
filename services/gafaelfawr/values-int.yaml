@@ -22,3 +22,7 @@ gafaelfawr:
     redirect_url: "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/callback"
     login_params:
       skin: "LSST"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret

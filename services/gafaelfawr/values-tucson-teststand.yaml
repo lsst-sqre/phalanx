@@ -48,3 +48,7 @@ gafaelfawr:
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
       - "lsst-ts-base-access"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret

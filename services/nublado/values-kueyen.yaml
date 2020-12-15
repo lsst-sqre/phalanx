@@ -132,3 +132,7 @@ nublado:
     s9JZf5xrYISSTv+6rkmugsCBw35G2vfvpDbY22zlrJyDPsul5NBi5O4mMzY8jLTk
     rwIDAQAB
     -----END PUBLIC KEY-----
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/kueyen-lsp.lsst.codes/pull-secret

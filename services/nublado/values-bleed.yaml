@@ -109,3 +109,7 @@ nublado:
     gYykuPnl3gj/sS0aoxsc4J1mZoU0Ct4qfqaLahUW9kVwnS3vsH+rppdZ+UnK4Rh6
     xQIDAQAB
     -----END PUBLIC KEY-----
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/bleed.lsst.codes/pull-secret

@@ -19,3 +19,7 @@ gafaelfawr:
     client_id: "cilogon:/client_id/15352006fec091e45e1425bce7c3c352"
     login_params:
       skin: "LSST"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rogue-two.lsst.codes/pull-secret

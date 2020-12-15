@@ -14,3 +14,7 @@ gafaelfawr:
     redirect_url: "https://minikube.lsst.codes:31337/login"
     login_params:
       skin: "LSST"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/minikube.lsst.codes/pull-secret

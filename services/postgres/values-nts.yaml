@@ -10,3 +10,7 @@ postgres:
     db: 'exposurelog'
   postgres_storage_class: 'manual'
   volume_name: 'postgres-data-volume'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret

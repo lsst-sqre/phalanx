@@ -35,3 +35,7 @@ cadc-tap-postgres:
 
   gcs_bucket: 'async-results.lsst.codes'
   gcs_bucket_url: 'http://async-results.lsst.codes'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret

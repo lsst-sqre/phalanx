@@ -98,3 +98,7 @@ nublado:
         "fileserver-export": "/exports/scratch"
       }
     ]
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rogue-two.lsst.codes/pull-secret
