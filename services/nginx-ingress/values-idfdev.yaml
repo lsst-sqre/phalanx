@@ -9,3 +9,7 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret

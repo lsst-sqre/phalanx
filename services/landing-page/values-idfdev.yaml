@@ -3,3 +3,7 @@ landing-page:
   host: "data-dev.lsst.cloud"
   image:
     tag: "3.0.1"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret

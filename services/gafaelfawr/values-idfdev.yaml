@@ -41,3 +41,7 @@ gafaelfawr:
     "read:image":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
