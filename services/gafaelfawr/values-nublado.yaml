@@ -20,7 +20,3 @@ gafaelfawr:
     redirect_url: "https://nublado.lsst.codes/oauth2/callback"
     login_params:
       skin: "LSST"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/nublado.lsst.codes/pull-secret
