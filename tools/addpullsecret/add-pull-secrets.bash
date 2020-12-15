@@ -40,7 +40,7 @@ envs="${envs} red-five rogue-two stable summit tucson-teststand"
 
 IFS='' read -r -d '' addreq <<'EOF'
 - name: pull-secret
-  version: ">=0.1.2"
+  version: 0.1.2
   repository: https://lsst-sqre.github.io/charts/
 EOF
 
