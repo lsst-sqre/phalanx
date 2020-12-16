@@ -8,10 +8,11 @@ ingress-nginx:
       ssl-redirect: "true"
       use-forwarded-headers: "true"
     service:
-      externalTrafficPolicy: Local
-      type: NodePort
-      nodePorts:
-        https: 31337
+      type: ClusterIP
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
+    admissionWebhooks:
+      enabled: false
 
 pull-secret:
   enabled: true

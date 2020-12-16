@@ -11,7 +11,7 @@ nublado:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes:31337/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           proxy_set_header X-Forwarded-Proto https;
@@ -52,7 +52,7 @@ nublado:
       annotations:
         nginx.ingress.kubernetes.io/auth-request-redirect: $request_uri
         nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
-        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes:31337/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
         nginx.ingress.kubernetes.io/configuration-snippet: |
           proxy_set_header X-Forwarded-Proto https;
