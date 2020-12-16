@@ -17,7 +17,8 @@ helm repo update
 
 ARGOCD_CHART_VERSION=`grep version \
   ../services/argocd/requirements.yaml \
-  | tr -d "version: "`
+  | tr -d "version: " \
+  | head -n 1`
 
 echo "Update / install argocd $ARGOCD_CHART_VERSION using helm..."
 helm upgrade \
