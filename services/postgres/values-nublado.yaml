@@ -5,7 +5,7 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
-  pull-secret: 'pull-secret'
+  pull_secret: 'pull-secret'
 
 pull-secret:
   enabled: true
