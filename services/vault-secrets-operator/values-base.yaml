@@ -12,7 +12,3 @@ vault-secrets-operator:
           key: VAULT_TOKEN_LEASE_DURATION
   vault:
     address: "https://vault.lsst.codes"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret
