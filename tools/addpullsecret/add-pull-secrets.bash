@@ -35,6 +35,11 @@ svcs="${svcs} postgres tap wf"
 envs="base bleed gold-leader idfdev int kueyen minikube nts nublado"
 envs="${envs} red-five rogue-two stable summit tucson-teststand"
 
+# These are the services that we're going to add the pull-secret string to:
+#  Skip cachemachine and nublado2 for now.
+add_pull="tap obstap exposurelog portal gafaelfawr influxdb kapacitor"
+add_pull="${add_pull} landing-page mobu nublado postgres"
+
 # This is what I have run it with so far.
 #envs="nublado"
 
@@ -102,4 +107,22 @@ EOF
     fi
 done
 
+for ap in ${add_pull}; do
+    for e in ${envs}; do
+	svcdir="${topdir}/services/${ap}"
+	efile="${svcdir}/values-${e}.yaml"
+	# We also need to check for pull_secret being defined in the
+	#  top-level app: this is the glue to actually enable it.
+	grep -q '^  pull_secret:' ${efile}
+	rc=$?
+	if [ ${rc} -eq 0 ] ; then
+	    echo 1>&2 "${efile} already has pull_secret."
+	else
+	    # Sorry about the newlines; running on macOS and real BSD sed
+	    sed  -i .bak "1 a \\
+  pull_secret: 'pull-secret'
+" ${efile}
+	fi
+    done
+done
 exit 0
