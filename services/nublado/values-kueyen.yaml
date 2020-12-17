@@ -1,4 +1,5 @@
 nublado:
+  pull_secret: 'pull-secret'
   fqdn: kueyen-lsp.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'

@@ -1,4 +1,5 @@
 firefly:
+  pull_secret: 'pull-secret'
   replicaCount: 2
   image:
     tag: "rc-2.1.0-2"

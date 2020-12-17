@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: red-five.lsst.codes
   ingress:
     host: red-five.lsst.codes
