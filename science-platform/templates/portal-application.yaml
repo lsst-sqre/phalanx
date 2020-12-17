@@ -18,7 +18,7 @@ spec:
   project: default
   source:
     path: services/portal
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.portal.revision }}
     helm:
       valueFiles:

@@ -13,7 +13,7 @@ spec:
   project: default
   source:
     path: services/cert-issuer
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.cert_manager.revision }}
     helm:
       valueFiles:

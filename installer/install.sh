@@ -4,6 +4,7 @@ ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
 HOSTNAME=${3:?$USAGE}
 REVISION=${4:-HEAD}
+GIT_URL=`git config --get remote.origin.url`
 
 echo "Creating initial resources (like RBAC service account for tiller)..."
 kubectl apply -f initial-resources.yaml
@@ -50,7 +51,7 @@ argocd login \
 
 echo "Create vault secrets operator..."
 argocd app create vault-secrets-operator \
-  --repo https://github.com/lsst-sqre/lsp-deploy.git \
+  --repo $GIT_URL \
   --path services/vault-secrets-operator \
   --dest-namespace vault-secrets-operator \
   --dest-server https://kubernetes.default.svc \
@@ -65,13 +66,14 @@ argocd app sync vault-secrets-operator \
 
 echo "Creating top level application"
 argocd app create science-platform \
-  --repo https://github.com/lsst-sqre/lsp-deploy.git \
+  --repo $GIT_URL \
   --path science-platform --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
   --upsert \
   --revision $REVISION \
   --port-forward \
   --port-forward-namespace argocd \
+  --set repoURL=$GIT_URL
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \

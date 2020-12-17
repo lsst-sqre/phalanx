@@ -18,6 +18,6 @@ spec:
   project: default
   source:
     path: services/wf
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.argo.revision }}
 {{- end -}}

@@ -63,3 +63,5 @@ tap:
 vault_secrets_operator:
   enabled: false
   revision: HEAD
+
+repoURL: https://github.com/lsst-sqre/lsp-deploy.git

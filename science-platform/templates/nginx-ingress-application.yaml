@@ -21,7 +21,7 @@ spec:
   project: default
   source:
     path: services/nginx-ingress
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.nginx_ingress.revision }}
     helm:
       valueFiles:
