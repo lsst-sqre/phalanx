@@ -1,4 +1,5 @@
 mobu:
+  pull_secret: 'pull-secret'
   gafaelfawr_secrets_path: "secret/k8s_operator/nublado.lsst.codes/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/nublado.lsst.codes/mobu"
   environment_url: "https://nublado.lsst.codes"
