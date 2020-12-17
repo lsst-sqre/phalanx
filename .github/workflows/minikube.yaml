@@ -1,6 +1,6 @@
 name: Run minikube deployment
 
-on: [push]
+on: [pull_request]
 
 jobs:
   example:
@@ -14,5 +14,12 @@ jobs:
         with:
           minikube version: 'v1.13.1'
           kubernetes version: 'v1.19.2'
-      - name: Interact with the cluster
+      - name: Test interaction with the cluster
         run: kubectl get nodes
+      - name: Download installer dependencies
+        run: |
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.1/argocd-linux-amd64
+          sudo chmod +x /usr/local/bin/argocd
+          sudo apt-get install socat
+      - name: Run installer
+        run: (cd installer && ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
