@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: lsst-lsp-int.ncsa.illinois.edu
   ingress:
     host: lsst-lsp-int.ncsa.illinois.edu
