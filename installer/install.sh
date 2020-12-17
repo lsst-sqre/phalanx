@@ -69,6 +69,10 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
+argocd app sync nginx-ingress \
+  --port-forward \
+  --port-forward-namespace argocd
+
 argocd app sync cert-manager \
   --port-forward \
   --port-forward-namespace argocd
