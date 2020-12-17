@@ -31,11 +31,12 @@ svcs="argocd cert-manager exposurelog gafaelfawr influxdb kapacitor"
 svcs="${svcs} landing-page mobu nginx-ingress nublado obstap portal"
 svcs="${svcs} postgres tap wf"
 
-# We are skipping nublado2 and cachemachine for now.
-
 # This is a list of environments.
 envs="base bleed gold-leader idfdev int kueyen minikube nts nublado"
 envs="${envs} red-five rogue-two stable summit tucson-teststand"
+
+# This is what I have run it with so far.
+#envs="nublado"
 
 IFS='' read -r -d '' addreq <<'EOF'
 - name: pull-secret
@@ -84,18 +85,6 @@ EOF
 	    echo 1>&2 "${efile} already has pull-secret."
 	else
 	    echo -n "${addsec}" >> ${efile}
-	fi
-	# We also need to check for pull-secret being defined in the
-	#  top-level app: this is the glue to actually enable it.
-	grep -q '^  pull_secret:' ${efile} # It will exist by now.
-	rc=$?
-	if [ ${rc} -eq 0 ] ; then
-	    echo 1>&2 "${efile} already has pull_secret."
-	else
-	    # Sorry about the newlines; running on macOS and real BSD sed
-	    sed  -i .bak "1 a \\
-  pull_secret: 'pull-secret'
-" ${efile}
 	fi
     done
     # Add pull-secret to requirements file.
