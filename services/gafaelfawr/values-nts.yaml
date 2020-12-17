@@ -1,5 +1,4 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
   host: lsst-nts-k8s.ncsa.illinois.edu
   ingress:
     host: lsst-nts-k8s.ncsa.illinois.edu

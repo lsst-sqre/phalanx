@@ -1,5 +1,4 @@
 postgres:
-  pull_secret: 'pull-secret'
   vault_secrets:
     path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/postgres'
   debug: 'true'

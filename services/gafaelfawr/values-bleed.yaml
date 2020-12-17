@@ -1,5 +1,4 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
   host: bleed.lsst.codes
   ingress:
     host: bleed.lsst.codes
