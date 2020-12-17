@@ -21,7 +21,7 @@ spec:
   project: default
   source:
     path: services/nublado2
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.nublado2.revision }}
     helm:
       valueFiles:

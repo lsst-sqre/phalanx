@@ -21,7 +21,7 @@ spec:
   project: default
   source:
     path: services/cert-manager
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.cert_manager.revision }}
   ignoreDifferences:
     - group: admissionregistration.k8s.io

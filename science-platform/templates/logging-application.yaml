@@ -21,7 +21,7 @@ spec:
   project: default
   source:
     path: services/logging
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.logging.revision }}
     helm:
       valueFiles:
