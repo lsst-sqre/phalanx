@@ -2,8 +2,12 @@
 USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
-GIT_BRANCH=`git branch --show-current`
 GIT_URL=`git config --get remote.origin.url`
+
+# Github runs in a detached head state, but sets GITHUB_REF,
+# extract the branch from it.  If we're there, use that branch.
+# git branch --show-current will return empty in deatached head.
+GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
 
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
