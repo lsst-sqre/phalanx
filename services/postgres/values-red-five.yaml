@@ -1,4 +1,5 @@
 postgres:
+  pull_secret: 'pull-secret'
   vault_secrets:
     path: 'secret/k8s_operator/red-five.lsst.codes/postgres'
   debug: 'true'

@@ -1,4 +1,5 @@
 cert-manager:
+  pull_secret: 'pull-secret'
   installCRDs: true
   extraArgs:
     - --dns01-recursive-nameservers-only

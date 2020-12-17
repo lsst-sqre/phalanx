@@ -1,4 +1,5 @@
 nublado:
+  pull_secret: 'pull-secret'
   fqdn: base-lsp.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'

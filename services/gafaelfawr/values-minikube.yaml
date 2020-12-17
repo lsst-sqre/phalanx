@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: minikube.lsst.codes
   ingress:
     host: minikube.lsst.codes

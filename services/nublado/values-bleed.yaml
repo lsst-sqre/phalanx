@@ -1,4 +1,5 @@
 nublado:
+  pull_secret: 'pull-secret'
   fqdn: bleed.lsst.codes
 
   oauth_provider: 'jwt'

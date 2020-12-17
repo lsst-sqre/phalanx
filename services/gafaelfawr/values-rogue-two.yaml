@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: rogue-two.lsst.codes
   ingress:
     host: rogue-two.lsst.codes

@@ -1,4 +1,5 @@
 ingress-nginx:
+  pull_secret: 'pull-secret'
   controller:
     config:
       compute-full-forwarded-for: "true"

@@ -1,4 +1,5 @@
 nublado:
+  pull_secret: 'pull-secret'
   fqdn: tucson-teststand.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'

@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: summit-lsp.lsst.codes
   ingress:
     host: summit-lsp.lsst.codes

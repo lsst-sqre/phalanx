@@ -1,4 +1,5 @@
 mobu:
+  pull_secret: 'pull-secret'
   gafaelfawr_secrets_path: "secret/k8s_operator/data-dev.lsst.cloud/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/data-dev.lsst.cloud/mobu"
   environment_url: "https://data-dev.lsst.cloud"
