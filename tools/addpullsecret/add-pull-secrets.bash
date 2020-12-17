@@ -111,6 +111,9 @@ for ap in ${add_pull}; do
     for e in ${envs}; do
 	svcdir="${topdir}/services/${ap}"
 	efile="${svcdir}/values-${e}.yaml"
+	if [ ! -e ${efile} ]; then # Don't add it if it doesn't exist.
+	    continue
+	fi
 	# We also need to check for pull_secret being defined in the
 	#  top-level app: this is the glue to actually enable it.
 	grep -q '^  pull_secret:' ${efile}
