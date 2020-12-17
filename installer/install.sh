@@ -72,6 +72,10 @@ echo "Syncing critical early applications"
 argocd app sync cert-manager \
   --port-forward \
   --port-forward-namespace argocd
+# Wait for the cert-manager's webhook to finish deploying by running
+# kubectl.  argocd's sync doesn't seem to wait for this to finish.
+kubectl -n cert-manager rollout status deploy/cert-manager-webhook
+
 argocd app sync cert-issuer \
   --port-forward \
   --port-forward-namespace argocd
