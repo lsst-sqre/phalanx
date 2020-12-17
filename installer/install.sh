@@ -20,7 +20,7 @@ kubectl create secret generic vault-secrets-operator \
 
 echo "Update / install vault-secrets-operator..."
 # ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
-helm dependency build ../services/vault-secrets-operator
+helm dependency update ../services/vault-secrets-operator
 helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
   --install \
   --values ../services/vault-secrets-operator/values-$ENVIRONMENT.yaml \
@@ -30,7 +30,7 @@ helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
   --wait
 
 echo "Update / install argocd using helm3..."
-helm dependency build ../services/argocd
+helm dependency update ../services/argocd
 helm upgrade argocd ../services/argocd \
   --install \
   --values ../services/argocd/values-$ENVIRONMENT.yaml \
