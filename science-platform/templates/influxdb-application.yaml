@@ -22,7 +22,7 @@ spec:
   source:
     path: services/influxdb
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.influxdb.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

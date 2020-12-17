@@ -13,7 +13,7 @@ spec:
   source:
     path: services/argocd
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.argocd.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

@@ -22,7 +22,7 @@ spec:
   source:
     path: services/nublado2
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.nublado2.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

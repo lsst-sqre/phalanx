@@ -22,7 +22,7 @@ spec:
   source:
     path: services/cert-manager
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.cert_manager.revision }}
+    targetRevision: {{ .Values.revision }}
   ignoreDifferences:
     - group: admissionregistration.k8s.io
       kind: MutatingWebhookConfiguration

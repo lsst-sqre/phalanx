@@ -22,7 +22,7 @@ spec:
   source:
     path: services/landing-page
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.landing_page.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

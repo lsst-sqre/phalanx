@@ -22,7 +22,7 @@ spec:
   source:
     path: services/chronograf
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.chronograf.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

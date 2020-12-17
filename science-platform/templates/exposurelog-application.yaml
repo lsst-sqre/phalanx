@@ -19,7 +19,7 @@ spec:
   source:
     path: services/exposurelog
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.exposurelog.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
       - values-{{ .Values.environment }}.yaml

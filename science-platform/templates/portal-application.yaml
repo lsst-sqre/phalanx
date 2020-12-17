@@ -19,7 +19,7 @@ spec:
   source:
     path: services/portal
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.portal.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml
