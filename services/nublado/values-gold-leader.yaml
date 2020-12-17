@@ -1,5 +1,4 @@
 nublado:
-  pull_secret: 'pull-secret'
   fqdn: gold-leader.lsst.codes
 
   oauth_provider: 'jwt'

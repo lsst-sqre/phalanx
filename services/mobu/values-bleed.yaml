@@ -1,5 +1,4 @@
 mobu:
-  pull_secret: 'pull-secret'
   gafaelfawr_secrets_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/bleed.lsst.codes/mobu"
   environment_url: "https://bleed.lsst.codes"

@@ -1,5 +1,4 @@
 argo-cd:
-  pull_secret: 'pull-secret'
   redis:
     enabled: true
 

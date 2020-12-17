@@ -1,5 +1,4 @@
 firefly:
-  pull_secret: 'pull-secret'
   image:
     tag: "rc-2.1.0-2"
 

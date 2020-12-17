@@ -1,5 +1,4 @@
 nublado:
-  pull_secret: 'pull-secret'
   fqdn: minikube.lsst.codes
 
   oauth_provider: 'jwt'

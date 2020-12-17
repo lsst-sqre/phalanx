@@ -1,5 +1,4 @@
 nublado:
-  pull_secret: 'pull-secret'
   fqdn: rogue-two.lsst.codes
 
   oauth_provider: 'jwt'

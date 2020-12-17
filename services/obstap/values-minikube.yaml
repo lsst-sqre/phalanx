@@ -1,5 +1,4 @@
 cadc-tap-postgres:
-  pull_secret: 'pull-secret'
   tag: "1.0"
   host: "minikube.lsst.codes"
 

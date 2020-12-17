@@ -1,5 +1,4 @@
 init:
-  pull_secret: 'pull-secret'
   serviceAccount: "nublado-hub"
 
 argo:

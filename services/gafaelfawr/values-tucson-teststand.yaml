@@ -1,5 +1,4 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
   host: tucson-teststand.lsst.codes
   ingress:
     host: tucson-teststand.lsst.codes

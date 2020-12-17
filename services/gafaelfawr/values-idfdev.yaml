@@ -1,5 +1,4 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
   host: data-dev.lsst.cloud
   ingress:
     host: data-dev.lsst.cloud

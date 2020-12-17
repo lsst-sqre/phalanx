@@ -1,5 +1,4 @@
 nublado:
-  pull_secret: 'pull-secret'
   fqdn: lsst-lsp-int.ncsa.illinois.edu
 
   oauth_provider: 'jwt'

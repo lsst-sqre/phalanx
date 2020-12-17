@@ -1,5 +1,4 @@
 exposurelog:
-  pull_secret: 'pull-secret'
 
   nfs_path_1: /offline/teststand
 
