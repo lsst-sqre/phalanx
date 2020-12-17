@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: nublado.lsst.codes
   ingress:
     host: nublado.lsst.codes

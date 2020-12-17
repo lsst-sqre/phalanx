@@ -1,4 +1,5 @@
 nublado:
+  pull_secret: 'pull-secret'
   fqdn: nublado.lsst.codes
 
   oauth_provider: 'jwt'

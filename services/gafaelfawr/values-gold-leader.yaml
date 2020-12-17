@@ -1,4 +1,5 @@
 gafaelfawr:
+  pull_secret: 'pull-secret'
   host: gold-leader.lsst.codes
   ingress:
     host: gold-leader.lsst.codes
