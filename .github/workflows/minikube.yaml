@@ -1,10 +1,10 @@
-name: Run minikube deployment
+name: Minikube
 
 on: [pull_request]
 
 jobs:
   example:
-    name: Test minikube deploy
+    name: Test deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -23,3 +23,5 @@ jobs:
           sudo apt-get install socat
       - name: Run installer
         run: (cd installer && ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
+      - name: Get final list of resources
+        run: kubectl get all -A
