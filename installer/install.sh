@@ -1,41 +1,39 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN HOSTNAME [REVISION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [REVISION]"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
-HOSTNAME=${3:?$USAGE}
-REVISION=${4:-HEAD}
+REVISION=${3:-HEAD}
 GIT_URL=`git config --get remote.origin.url`
 
-echo "Creating initial resources (like RBAC service account for tiller)..."
-kubectl apply -f initial-resources.yaml
-
-echo "Using helm to install tiller in cluster..."
-helm init --service-account tiller --history-max 200 --wait --upgrade
-
-echo "Add the argocd helm update..."
-helm repo add argo https://argoproj.github.io/argo-helm
-helm repo update
-
-ARGOCD_CHART_VERSION=`grep version \
-  ../services/argocd/requirements.yaml \
-  | tr -d "version: " \
-  | head -n 1`
-
-echo "Update / install argocd $ARGOCD_CHART_VERSION using helm..."
-helm upgrade \
-  --install argocd argo/argo-cd \
-  --values argo-cd-values.yaml \
-  --set server.ingress.hosts="{$HOSTNAME}" \
-  --namespace argocd \
-  --wait --timeout 900 \
-  --version $ARGOCD_CHART_VERSION
-
-echo "Creating vault secret..."
+echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
+# The namespace may not exist already, but don't error if it does.
+kubectl create ns vault-secrets-operator || true
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
   --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
   --dry-run -o yaml | kubectl apply -f -
+
+echo "Update / install vault-secrets-operator..."
+# ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
+helm dependency build ../services/vault-secrets-operator
+helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
+  --install \
+  --values ../services/vault-secrets-operator/values-$ENVIRONMENT.yaml \
+  --create-namespace \
+  --namespace vault-secrets-operator \
+  --timeout 15m \
+  --wait
+
+echo "Update / install argocd using helm3..."
+helm dependency build ../services/argocd
+helm upgrade argocd ../services/argocd \
+  --install \
+  --values ../services/argocd/values-$ENVIRONMENT.yaml \
+  --create-namespace \
+  --namespace argocd \
+  --timeout 15m \
+  --wait
 
 echo "Login to argocd..."
 ARGOCD_PASSWORD=`kubectl get pods \
@@ -49,21 +47,6 @@ argocd login \
   --username admin \
   --password $ARGOCD_PASSWORD
 
-echo "Create vault secrets operator..."
-argocd app create vault-secrets-operator \
-  --repo $GIT_URL \
-  --path services/vault-secrets-operator \
-  --dest-namespace vault-secrets-operator \
-  --dest-server https://kubernetes.default.svc \
-  --upsert \
-  --port-forward \
-  --port-forward-namespace argocd \
-  --values values-$ENVIRONMENT.yaml
-
-argocd app sync vault-secrets-operator \
-  --port-forward \
-  --port-forward-namespace argocd
-
 echo "Creating top level application"
 argocd app create science-platform \
   --repo $GIT_URL \
@@ -73,7 +56,7 @@ argocd app create science-platform \
   --revision $REVISION \
   --port-forward \
   --port-forward-namespace argocd \
-  --set repoURL=$GIT_URL
+  --helm-set repoURL=$GIT_URL \
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \
