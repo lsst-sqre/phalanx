@@ -1,8 +1,8 @@
 #!/bin/bash -ex
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [REVISION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
 VAULT_TOKEN=${2:?$USAGE}
-REVISION=${3:-HEAD}
+GIT_BRANCH=`git branch --show-current`
 GIT_URL=`git config --get remote.origin.url`
 
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
@@ -53,10 +53,11 @@ argocd app create science-platform \
   --path science-platform --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
   --upsert \
-  --revision $REVISION \
+  --revision $GIT_BRANCH \
   --port-forward \
   --port-forward-namespace argocd \
   --helm-set repoURL=$GIT_URL \
+  --helm-set revision=$GIT_BRANCH \
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \

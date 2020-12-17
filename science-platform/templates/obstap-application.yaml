@@ -22,7 +22,7 @@ spec:
   source:
     path: services/obstap
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.obstap.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

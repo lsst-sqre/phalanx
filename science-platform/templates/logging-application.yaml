@@ -22,7 +22,7 @@ spec:
   source:
     path: services/logging
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.logging.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

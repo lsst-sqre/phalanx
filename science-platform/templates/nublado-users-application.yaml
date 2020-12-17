@@ -14,5 +14,5 @@ spec:
   source:
     path: services/nublado-users
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.nublado.revision }}
+    targetRevision: {{ .Values.revision }}
 {{- end -}}

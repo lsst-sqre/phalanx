@@ -22,7 +22,7 @@ spec:
   source:
     path: services/tap
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.tap.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

@@ -19,5 +19,5 @@ spec:
   source:
     path: services/wf
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.argo.revision }}
+    targetRevision: {{ .Values.revision }}
 {{- end -}}

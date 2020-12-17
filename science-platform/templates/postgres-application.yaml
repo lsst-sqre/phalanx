@@ -19,7 +19,7 @@ spec:
   source:
     path: services/postgres
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.postgres.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
       - values-{{ .Values.environment }}.yaml
