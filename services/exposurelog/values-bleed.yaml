@@ -1,5 +1,4 @@
 exposurelog:
-
   # Use the built-in toy registry, so set neither butler_uri_1 nor butler_uri_2
 
   ingress:
