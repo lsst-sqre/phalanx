@@ -13,6 +13,6 @@ spec:
   project: default
   source:
     path: services/nublado-users
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+    repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.nublado.revision }}
 {{- end -}}
