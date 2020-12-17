@@ -15,7 +15,7 @@ nublado2:
     ingress:
       hosts: ["minikube.lsst.codes"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes:31337/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr:8080/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
+        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"

@@ -10,7 +10,6 @@ data:
         health {
            lameduck 5s
         }
-        rewrite name minikube.lsst.codes nginx-ingress-controller.nginx-ingress.svc.cluster.local
         ready
         kubernetes cluster.local in-addr.arpa ip6.arpa {
            pods insecure
