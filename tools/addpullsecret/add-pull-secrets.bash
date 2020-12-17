@@ -109,6 +109,20 @@ done
 
 for ap in ${add_pull}; do
     for e in ${envs}; do
+	chartname=${ap}
+	case ${ap} in
+	    tap)
+		chartname="cadc-tap"
+		;;
+	    obstap)
+		chartname="cadc-tap-postgres"
+		;;
+	    portal)
+		chartname="firefly"
+		;;
+	    *)
+		;;
+	esac
 	svcdir="${topdir}/services/${ap}"
 	efile="${svcdir}/values-${e}.yaml"
 	if [ ! -e ${efile} ]; then # Don't add it if it doesn't exist.
@@ -123,12 +137,12 @@ for ap in ${add_pull}; do
 	else
 	    # Do we have the first line of the values file equalling the
 	    #  key?  If not, make it so.
-	    head -n 1 ${efile} | grep -q "^${ap}:"
+	    head -n 1 ${efile} | grep -q "^${chartname}:"
 	    rc=$?
 	    # Sorry about the newlines; running on macOS and real BSD sed
 	    if [ ${rc} -ne 0 ]; then
 		sed -i .init "0 a \\
-${ap}:
+${chartname}:
 " ${efile}
 	    fi
 	    sed  -i .bak "1 a \\
