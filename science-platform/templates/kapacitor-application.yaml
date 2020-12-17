@@ -22,7 +22,7 @@ spec:
   source:
     path: services/kapacitor
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.kapacitor.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

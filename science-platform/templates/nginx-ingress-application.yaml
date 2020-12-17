@@ -22,7 +22,7 @@ spec:
   source:
     path: services/nginx-ingress
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.nginx_ingress.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

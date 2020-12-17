@@ -22,7 +22,7 @@ spec:
   source:
     path: services/gafaelfawr
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.gafaelfawr.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

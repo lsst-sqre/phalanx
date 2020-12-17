@@ -14,7 +14,7 @@ spec:
   source:
     path: services/cert-issuer
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.cert_manager.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

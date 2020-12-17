@@ -22,7 +22,7 @@ spec:
   source:
     path: services/squash-api
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.squash_api.revision }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml
