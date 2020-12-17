@@ -118,7 +118,16 @@ for ap in ${add_pull}; do
 	if [ ${rc} -eq 0 ] ; then
 	    echo 1>&2 "${efile} already has pull_secret."
 	else
+	    # Do we have the first line of the values file equalling the
+	    #  key?  If not, make it so.
+	    head -n 1 ${efile} | grep -q "^${ap}:"
+	    rc=$?
 	    # Sorry about the newlines; running on macOS and real BSD sed
+	    if [ ${rc} -ne 0 ]; then
+		sed -i .init "0 a \\
+${ap}:
+" ${efile}
+	    fi
 	    sed  -i .bak "1 a \\
   pull_secret: 'pull-secret'
 " ${efile}
