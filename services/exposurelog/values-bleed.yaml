@@ -1,5 +1,7 @@
 exposurelog:
-  pull_secret: 'pull-secret'
+  pull_secret: pull-secret
+
+  site_id: bleed
   # Use the built-in toy registry, so set neither butler_uri_1 nor butler_uri_2
 
   ingress:
