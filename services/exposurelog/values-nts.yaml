@@ -1,11 +1,10 @@
 exposurelog:
-  pull_secret: 'pull-secret'
+  pull_secret: pull-secret
 
-  nfs_path_1: /offline/teststand
-
+  site_id: nts
+  nfs_path_1: /data/lsstdata  # Mounted as /volume_1
   nfs_server_1: lsst-nfs.ncsa.illinois.edu
-
-  butler_uri_1: /volume_1/NCSA_comcam/gen3repo
+  butler_uri_1: /volume_1/NTS/comcam/oods/gen3-butler/repo
 
   ingress:
     enabled: true
