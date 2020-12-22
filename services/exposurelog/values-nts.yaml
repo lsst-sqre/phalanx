@@ -3,8 +3,8 @@ exposurelog:
 
   site_id: nts
   nfs_path_1: /data/lsstdata  # Mounted as /volume_1
-  nfs_server_1: lsst-nfs.ncsa.illinois.edu
-  butler_uri_1: /volume_1/NTS/comcam/oods/gen3-butler/repo
+  nfs_server_1: lsst-l1-cl-arctl.ncsa.illinois.edu  # The OODS machine
+  butler_uri_1: /volume_1/NTS/comcam/oods/gen3butler/repo
 
   ingress:
     enabled: true
