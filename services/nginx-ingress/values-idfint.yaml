@@ -1,0 +1,15 @@
+ingress-nginx:
+  controller:
+    config:
+      compute-full-forwarded-for: "true"
+      large-client-header-buffers: "4 64k"
+      proxy-body-size: "100m"
+      proxy-buffer-size: "64k"
+      ssl-redirect: "true"
+      use-forwarded-headers: "true"
+    service:
+      externalTrafficPolicy: Local
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret
