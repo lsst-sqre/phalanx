@@ -1,0 +1,40 @@
+environment: idfint
+
+argo:
+  enabled: true
+cert_issuer:
+  enabled: true
+cert_manager:
+  enabled: true
+chronograf:
+  enabled: false
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: true
+influxdb:
+  enabled: false
+kapacitor:
+  enabled: false
+landing_page:
+  enabled: true
+logging:
+  enabled: false
+mobu:
+  enabled: true
+nginx_ingress:
+  enabled: true
+nublado:
+  enabled: true
+obstap:
+  enabled: true
+portal:
+  enabled: true
+postgres:
+  enabled: true
+squash_api:
+  enabled: false
+tap:
+  enabled: true
+vault_secrets_operator:
+  enabled: true
