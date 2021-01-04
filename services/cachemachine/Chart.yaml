@@ -1,3 +1,7 @@
-apiVersion: v1
+apiVersion: v2
 name: cachemachine
 version: 1.0.0
+dependencies:
+- name: cachemachine
+  version: ">=0.1.0"
+  repository: https://lsst-sqre.github.io/charts/

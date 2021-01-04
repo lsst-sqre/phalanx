@@ -1,3 +1,10 @@
-apiVersion: v1
+apiVersion: v2
 name: nublado
 version: 0.0.1
+dependencies:
+- name: nublado
+  version: ">=0.1.0"
+  repository: https://lsst-sqre.github.io/charts/
+- name: pull-secret
+  version: 0.1.2
+  repository: https://lsst-sqre.github.io/charts/
