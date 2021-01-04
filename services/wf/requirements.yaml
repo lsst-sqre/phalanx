@@ -1,7 +1,0 @@
-dependencies:
-- name: argo
-  version: 0.13.11
-  repository: https://argoproj.github.io/argo-helm
-- name: pull-secret
-  version: 0.1.2
-  repository: https://lsst-sqre.github.io/charts/
