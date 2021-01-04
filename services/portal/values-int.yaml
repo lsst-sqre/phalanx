@@ -49,16 +49,8 @@ firefly:
     runAsGroup: 102
 
   volumes:
-    firefly_workarea:
-      emptyDir: null
-      hostPath:
-        path: /sui/firefly/workarea
-        type: Directory
-    firefly_config:
-      emptyDir: null
-      hostPath:
-        path: /sui/firefly/config
-        type: Directory
+    firefly_workarea_hostpath: /sui/firefly/workarea
+    firefly_config_hostpath: /sui/firefly/config
 
 pull-secret:
   enabled: true
