@@ -1,65 +1,45 @@
 argo:
   enabled: false
-  revision: HEAD
-argocd:
-  revision: HEAD
 cachemachine:
   enabled: false
-  revision: HEAD
 cert_issuer:
   enabled: false
-  revision: HEAD
 cert_manager:
   enabled: false
-  revision: HEAD
 chronograf:
   enabled: false
-  revision: HEAD
 exposurelog:
   enabled: false
-  revision: HEAD
 gafaelfawr:
   enabled: false
-  revision: HEAD
 influxdb:
   enabled: false
-  revision: HEAD
 kapacitor:
   enabled: false
-  revision: HEAD
 landing_page:
   enabled: false
-  revision: HEAD
 logging:
   enabled: false
-  revision: HEAD
 mobu:
   enabled: false
-  revision: HEAD
 nginx_ingress:
   enabled: false
-  revision: HEAD
 nublado:
   enabled: false
-  revision: HEAD
 nublado2:
   enabled: false
-  revision: HEAD
 obstap:
   enabled: false
-  revision: HEAD
 portal:
   enabled: false
-  revision: HEAD
 postgres:
   enabled: false
-  revision: HEAD
 squash_api:
   enabled: false
-  revision: HEAD
 tap:
   enabled: false
-  revision: HEAD
 vault_secrets_operator:
   enabled: false
-  revision: HEAD
+
+repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+revision: HEAD

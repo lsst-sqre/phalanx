@@ -18,8 +18,8 @@ spec:
   project: default
   source:
     path: services/postgres
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.postgres.revision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
       - values-{{ .Values.environment }}.yaml

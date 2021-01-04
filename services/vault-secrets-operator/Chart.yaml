@@ -1,3 +1,7 @@
-apiVersion: v1
+apiVersion: v2
 name: vault-secrets-operator
 version: 1.0.0
+dependencies:
+- name: vault-secrets-operator
+  version: 1.10.1
+  repository: https://ricoberger.github.io/helm-charts/

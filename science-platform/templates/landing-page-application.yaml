@@ -21,8 +21,8 @@ spec:
   project: default
   source:
     path: services/landing-page
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.landing_page.revision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

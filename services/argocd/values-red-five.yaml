@@ -25,6 +25,8 @@ argo-cd:
           name: ricoberger
         - url: https://kubernetes.github.io/ingress-nginx/
           name: ingress-nginx
+        - url: https://charts.helm.sh/stable
+          name: stable
 
 pull-secret:
   enabled: true

@@ -21,8 +21,8 @@ spec:
   project: default
   source:
     path: services/tap
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.tap.revision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

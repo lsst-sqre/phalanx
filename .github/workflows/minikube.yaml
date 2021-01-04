@@ -1,0 +1,27 @@
+name: Minikube
+
+on: [pull_request]
+
+jobs:
+  example:
+    name: Test deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.1.0
+        with:
+          minikube version: 'v1.13.1'
+          kubernetes version: 'v1.19.2'
+      - name: Test interaction with the cluster
+        run: kubectl get nodes
+      - name: Download installer dependencies
+        run: |
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.1/argocd-linux-amd64
+          sudo chmod +x /usr/local/bin/argocd
+          sudo apt-get install socat
+      - name: Run installer
+        run: (cd installer && ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
+      - name: Get final list of resources
+        run: kubectl get all -A

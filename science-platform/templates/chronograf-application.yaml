@@ -21,8 +21,8 @@ spec:
   project: default
   source:
     path: services/chronograf
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.chronograf.revision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

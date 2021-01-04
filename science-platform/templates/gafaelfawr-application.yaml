@@ -21,8 +21,8 @@ spec:
   project: default
   source:
     path: services/gafaelfawr
-    repoURL: https://github.com/lsst-sqre/lsp-deploy.git
-    targetRevision: {{ .Values.gafaelfawr.revision }}
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml
