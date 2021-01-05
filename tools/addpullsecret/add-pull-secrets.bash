@@ -28,7 +28,7 @@ fi
 #  For instance, cert-manager and cert-issuer share a namespace; we only
 #  inject a vault secret for pull once per namespace
 svcs="argocd cert-manager exposurelog gafaelfawr influxdb kapacitor"
-svcs="${svcs} landing-page mobu nginx-ingress nublado obstap portal"
+svcs="${svcs} landing-page mobu ingress-nginx nublado obstap portal"
 svcs="${svcs} postgres tap wf"
 
 # This is a list of environments.
@@ -93,9 +93,9 @@ EOF
 	fi
     done
     # Add pull-secret to requirements file.
-    # nginx-ingress has its dependencies right in Chart.yaml
+    # ingress-nginx has its dependencies right in Chart.yaml
     rfile="${svcdir}/requirements.yaml"
-    if [ "${s}" == "nginx-ingress" ]; then
+    if [ "${s}" == "ingress-nginx" ]; then
 	rfile="${svcdir}/Chart.yaml"
     fi
     grep -q "pull-secret" ${rfile} 2>/dev/null

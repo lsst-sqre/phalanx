@@ -1,8 +1,8 @@
-{{- if .Values.nginx_ingress.enabled -}}
+{{- if .Values.ingress_nginx.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nginx-ingress
+  name: ingress-nginx
 spec:
   finalizers:
     - kubernetes
@@ -10,17 +10,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-ingress
+  name: ingress-nginx
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: nginx-ingress
+    namespace: ingress-nginx
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/nginx-ingress
+    path: services/ingress-nginx
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:

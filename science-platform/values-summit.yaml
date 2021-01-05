@@ -22,7 +22,7 @@ logging:
   enabled: false
 mobu:
   enabled: false
-nginx_ingress:
+ingress_nginx:
   enabled: true
 nublado:
   enabled: true

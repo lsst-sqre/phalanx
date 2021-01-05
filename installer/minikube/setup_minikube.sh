@@ -2,7 +2,7 @@
 
 minikube start --driver=virtualbox --cpus=8 --memory=16g --disk-size=100g
 
-# This allows us to point minikube.lsst.codes to the nginx-ingress controller.
+# This allows us to point minikube.lsst.codes to the ingress-nginx controller.
 # This is needed to allow for services inside the cluster to contact each
 # other using the public name minikube.lsst.codes
 kubectl apply -f coredns.yaml
