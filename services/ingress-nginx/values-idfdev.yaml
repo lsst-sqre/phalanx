@@ -9,6 +9,7 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
+      loadBalancerIP: "35.225.112.77"
 
 pull-secret:
   enabled: true
