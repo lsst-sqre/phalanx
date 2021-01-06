@@ -1,7 +1,7 @@
 squash-api:
 
   # SQuaSH Cloud SQL instance connection name
-  instanceConnectionName: "squash-db-sandbox-2"
+  instanceConnectionName: "squash-db-sandbox-3"
 
   # Credentials for the SQuaSH Cloud SQL service account
   cloudSQLInstanceSecret: "cloudsql-instance-credentials"
