@@ -1,0 +1,9 @@
+{{ if .Values.vault_certificate.enabled }}
+apiVersion: ricoberger.de/v1alpha1
+kind: VaultSecret
+metadata:
+  name: ingress-certificate
+spec:
+  path: {{ .Values.vault_certificate.path }}
+  type: kubernetes.io/tls
+{{ end }}

@@ -10,6 +10,9 @@ ingress-nginx:
     service:
       externalTrafficPolicy: Local
 
+vault_certificate:
+  enabled: false
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/nublado.lsst.codes/pull-secret

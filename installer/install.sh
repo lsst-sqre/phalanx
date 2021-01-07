@@ -73,16 +73,20 @@ argocd app sync ingress-nginx \
   --port-forward \
   --port-forward-namespace argocd
 
-argocd app sync cert-manager \
-  --port-forward \
-  --port-forward-namespace argocd
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl.  argocd's sync doesn't seem to wait for this to finish.
-kubectl -n cert-manager rollout status deploy/cert-manager-webhook
+# This is a little tricky on the bash.  If cert-manager isn't used,
+# the argocd command will fail, then we will continue.  If it doesn't
+# fail, wait for it to finish.
+(argocd app sync cert-manager \
+  --port-forward \
+  --port-forward-namespace argocd && \
+kubectl -n cert-manager rollout status deploy/cert-manager-webhook) || true
 
+# Sync cert-issuer, but don't exit if this environment doesn't use it.
 argocd app sync cert-issuer \
   --port-forward \
-  --port-forward-namespace argocd
+  --port-forward-namespace argocd || true
 
 echo "Sync remaining science platform apps"
 argocd app sync -l "argocd.argoproj.io/instance=science-platform" \

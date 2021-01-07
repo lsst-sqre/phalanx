@@ -11,6 +11,9 @@ ingress-nginx:
       externalTrafficPolicy: Local
       loadBalancerIP: "35.225.112.77"
 
+vault_certificate:
+  enabled: false
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
