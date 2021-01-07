@@ -96,6 +96,12 @@ nublado:
         "fileserver-export": "/exports/project"
       },
       {
+        "mountpoint": "/project-filestore",
+        "mode": "rw",
+        "fileserver-host": "10.12.60.138",
+        "fileserver-export": "/exports/project"
+      },
+      {
         "mountpoint": "/scratch",
         "mode": "rw",
         "fileserver-host": "10.128.0.49",
