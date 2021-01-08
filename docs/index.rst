@@ -19,4 +19,5 @@ Operations guide
    cert-manager/index
    logging/index
    rancher-external-ip-webhook/index
+   squash-api/index
    vault-secrets-operator/index
