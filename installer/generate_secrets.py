@@ -175,6 +175,27 @@ def generate_pull_secret():
         return {".dockerconfigjson": f.read()}
 
 
+def generate_ingress_nginx_secrets():
+    key_file = input_field(
+        "ingress-nginx",
+        "cert.key",
+        "Certificate private key filename",
+    )
+
+    cert_file = input_field(
+        "ingress-nginx",
+        "cert.pem",
+        "Certificate public key filename",
+    )
+
+    with open(key_file, "r") as k, \
+         open(cert_file, "r") as c:
+        return {
+            "tls.crt": c.read(),
+            "tls.key": k.read()
+        }
+
+
 def generate_secrets():
     secrets = {}
     secrets["pull-secret"] = generate_pull_secret()
@@ -187,7 +208,13 @@ def generate_secrets():
     secrets["nublado2"] = generate_nublado2_secrets()
     secrets["mobu"] = generate_mobu_secrets()
     secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
-    secrets["cert-manager"] = generate_cert_manager_secrets()
+
+    use_cert_file = input("Use certificate file? (y/n): ")
+
+    if use_cert_file == "y":
+        secrets["ingress-nginx"] = generate_ingress_nginx_secrets()
+    else:
+        secrets["cert-manager"] = generate_cert_manager_secrets()
 
     return secrets
 

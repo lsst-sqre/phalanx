@@ -5,9 +5,9 @@ argo:
 cachemachine:
   enabled: true
 cert_issuer:
-  enabled: true
+  enabled: false
 cert_manager:
-  enabled: true
+  enabled: false
 chronograf:
   enabled: false
 exposurelog:

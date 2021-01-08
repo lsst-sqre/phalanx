@@ -9,3 +9,6 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
+
+vault_certificate:
+  enabled: false
