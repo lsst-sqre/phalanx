@@ -7,7 +7,7 @@ cachemachine:
 cert_issuer:
   enabled: false
 cert_manager:
-  enabled: false
+  enabled: true
 chronograf:
   enabled: false
 exposurelog:
@@ -35,6 +35,8 @@ obstap:
 portal:
   enabled: true
 postgres:
+  enabled: true
+rancher_external_ip_webhook:
   enabled: true
 squash_api:
   enabled: false

@@ -14,6 +14,8 @@ gafaelfawr:
   enabled: false
 influxdb:
   enabled: false
+ingress_nginx:
+  enabled: false
 kapacitor:
   enabled: false
 landing_page:
@@ -21,8 +23,6 @@ landing_page:
 logging:
   enabled: false
 mobu:
-  enabled: false
-ingress_nginx:
   enabled: false
 nublado:
   enabled: false
@@ -33,6 +33,8 @@ obstap:
 portal:
   enabled: false
 postgres:
+  enabled: false
+rancher_external_ip_webhook:
   enabled: false
 squash_api:
   enabled: false
