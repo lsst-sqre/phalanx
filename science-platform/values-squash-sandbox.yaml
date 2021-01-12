@@ -32,6 +32,8 @@ portal:
   enabled: false
 postgres:
   enabled: false
+rancher_external_ip_webhook:
+  enabled: false
 squash_api:
   enabled: true
 tap:

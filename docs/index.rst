@@ -18,4 +18,5 @@ Operations guide
    cert-issuer/index
    cert-manager/index
    logging/index
+   rancher-external-ip-webhook/index
    vault-secrets-operator/index
