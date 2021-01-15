@@ -17,6 +17,8 @@ cert-manager
 The ``cert-manager`` application is an installation of `cert-manager <https://cert-manager.io>`__ from its `Helm chart repository <https://hub.helm.sh/charts/jetstack/cert-manager>`__.
 It creates TLS certificates via `Let's Encrypt <https://letsencrypt.org/>`__ and automatically renews them.
 
+See the :doc:`cert-issuer application <../cert-issuer/index>` for how ``cert-manager`` is used.
+
 This application is only deployed on clusters managed by SQuaRE.
 NCSA clusters use NCSA certificates issued via an internal process.
 IT manages the cert-manager installation on the base and summit Rubin Science Platform clusters.
