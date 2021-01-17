@@ -39,7 +39,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
-    image: 'lsstsqre/prepuller:0.8.6'
+    image: 'lsstsqre/prepuller:0.8.8'
     schedule: "27 01,07,13,19 * * *"
 
   routes:
