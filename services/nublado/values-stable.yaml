@@ -21,7 +21,7 @@ nublado:
 
   hub:
     persistent_home: false
-    image: 'lsstsqre/sciplat-hub:0.32.5'
+    image: 'lsstsqre/sciplat-hub:0.32.6'
 
   wf:
     image: 'lsstsqre/wfdispatcher:0.4.1.4'
@@ -40,7 +40,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
-    image: 'lsstsqre/prepuller:0.8.6'
+    image: 'lsstsqre/prepuller:0.8.8'
     schedule: "57 01,07,13,19 * * *"
 
   routes:
