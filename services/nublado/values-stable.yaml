@@ -21,7 +21,7 @@ nublado:
 
   hub:
     persistent_home: false
-    image: 'lsstsqre/sciplat-hub:0.32.5'
+    image: 'lsstsqre/sciplat-hub:0.32.6'
 
   wf:
     image: 'lsstsqre/wfdispatcher:0.4.1.4'
