@@ -9,11 +9,13 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
-      loadBalancerIP: "140.252.34.101"
+      loadBalancerIP: "139.229.146.150"
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:
   enabled: false
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret
+  path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret

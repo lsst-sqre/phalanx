@@ -5,7 +5,7 @@ argo:
 cert_issuer:
   enabled: true
 cert_manager:
-  enabled: false
+  enabled: true
 chronograf:
   enabled: false
 exposurelog:
@@ -23,7 +23,7 @@ logging:
 mobu:
   enabled: false
 ingress_nginx:
-  enabled: false
+  enabled: true
 nublado:
   enabled: true
 obstap:
