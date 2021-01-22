@@ -15,6 +15,8 @@ ingress-nginx:
       enabled: false
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:
   enabled: true
