@@ -85,6 +85,7 @@ def generate_log_secrets():
 
 def generate_postgres_secrets():
     return {
+        "exposurelog_password": secrets.token_hex(32),
         "jupyterhub_password": secrets.token_hex(32),
         "root_password": secrets.token_hex(64),
     }
