@@ -10,6 +10,8 @@ ingress-nginx:
     service:
       externalTrafficPolicy: Local
       loadBalancerIP: "35.225.112.77"
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:
   enabled: false

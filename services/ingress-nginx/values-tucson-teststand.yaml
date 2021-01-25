@@ -9,6 +9,9 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
+      loadBalancerIP: "140.252.34.101"
+    podLabels:
+      hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:
   enabled: false
