@@ -47,7 +47,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
-    schedule: "27 01,07,13,19 * * *"
+    schedule: "59 23 31 12 *"
 
   proxy:
     ingress:
