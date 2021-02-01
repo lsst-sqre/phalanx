@@ -2,7 +2,7 @@ cachemachine:
   host: "minikube.lsst.codes"
 
   image:
-    tag: "1.0.0"
+    tag: "1.0.1"
 
   ingress:
     enabled: true
@@ -12,4 +12,4 @@ cachemachine:
 
   vault_secrets:
     enabled: true
-    path: "secret/k8s_operator/minikube.lsst.codes/cachemachine"
+    path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
