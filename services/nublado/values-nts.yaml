@@ -5,6 +5,7 @@ nublado:
   oauth_provider: 'jwt'
 
   lab:
+    cull_timeout: 604800
     restrict_nodes: 'true'
     enable_multus: 'true'
     dds_domain: 'ncsa'

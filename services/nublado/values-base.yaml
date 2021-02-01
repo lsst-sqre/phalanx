@@ -23,6 +23,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   lab:
+    cull_timeout: 604800
     restrict_nodes: 'true'
     enable_multus: 'true'
     dds_domain: 'base'
