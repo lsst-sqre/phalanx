@@ -10,6 +10,6 @@ cachemachine:
       - host: bleed.lsst.codes
         paths: ["/cachemachine"]
 
-vault_secrets:
-  enabled: true
-  path: "secret/k8s_operator/bleed.lsst.codes/pull-secret"
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/bleed.lsst.codes/pull-secret"
