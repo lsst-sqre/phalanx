@@ -21,27 +21,35 @@ gafaelfawr:
     "exec:user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "read:workspace":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "read:workspace/user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "write:workspace/user":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "exec:portal":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "exec:notebook":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "read:tap":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
     "read:image":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
+      - "lsst-data-management"
 
 pull-secret:
   enabled: true
