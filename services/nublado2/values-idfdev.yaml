@@ -69,7 +69,7 @@ nublado2:
           SODA_ROUTE: /api/image/soda
           WORKFLOW_ROUTE: /wf
           AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
-          NO_SUDO: true
+          NO_SUDO: "true"
           EXTERNAL_GROUPS: "{{groups}}"
           EXTERNAL_UID: "{{uid}}"
           ACCESS_TOKEN: "{{token}}"
