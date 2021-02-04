@@ -1,5 +1,5 @@
 cadc-tap:
-  tag: "1.0.15"
+  tag: "1.0.16"
   use_mock_qserv: true
 
   secrets:

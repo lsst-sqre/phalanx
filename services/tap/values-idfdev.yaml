@@ -1,6 +1,6 @@
 cadc-tap:
   pull_secret: 'pull-secret'
-  tag: "1.0.15"
+  tag: "1.0.16"
   use_mock_qserv: true
 
   host: "data-dev.lsst.cloud"
