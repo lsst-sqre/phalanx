@@ -16,6 +16,8 @@ nublado2:
       hosts: ["bleed.lsst.codes"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr:8080/auth?scope=exec:notebook"
+
+  config:
+    base_url: "https://bleed.lsst.codes/"
 
   vault_secret_path: "secret/k8s_operator/bleed.lsst.codes/nublado2"

@@ -16,6 +16,8 @@ nublado2:
       hosts: ["data-dev.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr-service.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook"
+
+  config:
+    base_url: "https://data-dev.lsst.cloud/"
 
   vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
