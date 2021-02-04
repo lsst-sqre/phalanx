@@ -4,13 +4,42 @@ nublado2:
       enabled: true
 
     hub:
+      networkPolicy:
+        enabled: false
       image:
         name: lsstsqre/nublado2
-        tag: "1.0.0"
+        tag: "master"
 
     singleuser:
       storage:
         type: none
+        extraVolumes:
+          - name: datasets
+            nfs:
+              path: /share1/datasets
+              server: 10.87.86.26
+          - name: home
+            nfs:
+              path: /share1/home
+              server: 10.87.86.26
+          - name: project
+            nfs:
+              path: /share1/project
+              server: 10.87.86.26
+          - name: scratch
+            nfs:
+              path: /share1/scratch
+              server: 10.87.86.26
+        extraVolumeMounts:
+          - name: datasets
+            mountPath: /datasets
+          - name: home
+            mountPath: /home
+          - name: project
+            mountPath: /project
+          - name: scratch
+            mountPath: /scratch
+
 
     ingress:
       hosts: ["data-dev.lsst.cloud"]
@@ -19,5 +48,30 @@ nublado2:
 
   config:
     base_url: "https://data-dev.lsst.cloud/"
+
+    user_resources:
+      - apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: "n2-{{user}}"
+      - apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: lab-environment
+          namespace: "n2-{{user}}"
+        data:
+          EXTERNAL_INSTANCE_URL: "{{base_url}}"
+          FIREFLY_ROUTE: /portal/app
+          HUB_ROUTE: /n2
+          JS9_ROUTE: /js9
+          API_ROUTE: /api
+          TAP_ROUTE: /api/tap
+          SODA_ROUTE: /api/image/soda
+          WORKFLOW_ROUTE: /wf
+          AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
+          NO_SUDO: true
+          EXTERNAL_GROUPS: "{{groups}}"
+          EXTERNAL_UID: "{{uid}}"
+          ACCESS_TOKEN: "{{token}}"
 
   vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
