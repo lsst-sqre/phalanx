@@ -11,6 +11,7 @@ nublado2:
         tag: "master"
 
     singleuser:
+      uid: 769
       storage:
         type: none
         extraVolumes:
@@ -53,12 +54,12 @@ nublado2:
       - apiVersion: v1
         kind: Namespace
         metadata:
-          name: "n2-{{user}}"
+          name: "nublado2-{{user}}"
       - apiVersion: v1
         kind: ConfigMap
         metadata:
           name: lab-environment
-          namespace: "n2-{{user}}"
+          namespace: "nublado2-{{user}}"
         data:
           EXTERNAL_INSTANCE_URL: "{{base_url}}"
           FIREFLY_ROUTE: /portal/app
@@ -69,7 +70,6 @@ nublado2:
           SODA_ROUTE: /api/image/soda
           WORKFLOW_ROUTE: /wf
           AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
-          NO_SUDO: "true"
           EXTERNAL_GROUPS: "{{groups}}"
           EXTERNAL_UID: "{{uid}}"
           ACCESS_TOKEN: "{{token}}"
