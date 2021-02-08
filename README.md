@@ -4,6 +4,8 @@ This is the repository to store helper scripts and per-environment
 deployment configuration for the services of the Rubin Science
 Platform.
 
+For operational documentation, see [phalanx.lsst.io](https://phalanx.lsst.io/).
+
 ## Background
 
 In order to understand this repository, there's a bit of background

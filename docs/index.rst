@@ -8,6 +8,14 @@ This document contains operational notes of interest to administrators of the Sc
 The Science Platform uses `Argo CD`_ to manage its Kubernetes resources.
 The Argo CD configuration and this documentation are maintained on `GitHub <https://github.com/lsst-sqre/lsp-deploy>`__.
 
+Overview
+========
+
+.. toctree::
+   :maxdepth: 2
+
+   arch/index
+
 Operations guide
 ================
 
