@@ -3,7 +3,7 @@ name: influxdb
 version: 0.1.0
 dependencies:
 - name: influxdb
-  version: 4.8.10
+  version: 4.8.12
   repository: https://helm.influxdata.com/
 - name: pull-secret
   version: 0.1.2
