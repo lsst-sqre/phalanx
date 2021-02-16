@@ -5,6 +5,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
+from datetime import datetime, timezone
 import json
 import os
 import secrets
@@ -197,6 +198,19 @@ def generate_ingress_nginx_secrets():
         }
 
 
+def generate_argocd_secrets():
+    pw = secrets.token_hex(16)
+    h = bcrypt.hashpw(
+        pw.encode("ascii"), bcrypt.gensalt(rounds=15)
+    ).decode("ascii")
+
+    return {
+        "admin.plaintext_password": pw,
+        "admin.password": h,
+        "admin.passwordMtime": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "server.secretkey": secrets.token_hex(16),
+    }
+
 def generate_secrets():
     secrets = {}
     secrets["pull-secret"] = generate_pull_secret()
@@ -209,6 +223,7 @@ def generate_secrets():
     secrets["nublado2"] = generate_nublado2_secrets()
     secrets["mobu"] = generate_mobu_secrets()
     secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
+    secrets["argocd"] = generate_argocd_secrets()
 
     use_cert_file = input("Use certificate file? (y/n): ")
 

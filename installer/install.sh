@@ -40,9 +40,7 @@ helm upgrade argocd ../services/argocd \
   --wait
 
 echo "Login to argocd..."
-ARGOCD_PASSWORD=`kubectl get pods \
-  --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' \
-  --namespace argocd | grep argocd-server`
+ARGOCD_PASSWORD=`kubectl get secret -n argocd argocd-secret -o jsonpath='{.data.admin\.plaintext_password}' | base64 -d`
 
 argocd login \
   --plaintext \
