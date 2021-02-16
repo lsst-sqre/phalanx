@@ -3,9 +3,6 @@ gafaelfawr:
   host: bleed.lsst.codes
   ingress:
     host: bleed.lsst.codes
-  image:
-    tag: "tickets-DM-28845"
-    pullPolicy: "Always"
   vault_secrets_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
 
   # Session length and token expiration (in minutes).
