@@ -1,4 +1,5 @@
 environment: int
+fqdn: lsst-lsp-int.ncsa.illinois.edu
 
 argo:
   enabled: true

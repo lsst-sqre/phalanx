@@ -1,4 +1,5 @@
 environment: squash-sandbox
+fqdn: squash-sandbox.lsst.codes
 
 argo:
   enabled: false

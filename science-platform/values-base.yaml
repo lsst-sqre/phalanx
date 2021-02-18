@@ -1,4 +1,5 @@
 environment: base
+fqdn: base-lsp.lsst.codes
 
 argo:
   enabled: true

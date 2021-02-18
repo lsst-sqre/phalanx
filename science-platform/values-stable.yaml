@@ -1,4 +1,5 @@
 environment: stable
+fqdn: lsst-lsp-stable.ncsa.illinois.edu
 
 argo:
   enabled: true

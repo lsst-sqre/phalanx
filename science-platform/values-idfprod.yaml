@@ -1,4 +1,5 @@
 environment: idfprod
+fqdn: data.lsst.cloud
 
 argo:
   enabled: true

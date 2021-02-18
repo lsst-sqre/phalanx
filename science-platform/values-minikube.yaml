@@ -1,4 +1,5 @@
 environment: minikube
+fqdn: minikube.lsst.codes
 
 argo:
   enabled: true

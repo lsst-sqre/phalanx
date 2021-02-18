@@ -1,4 +1,5 @@
 environment: idfint
+fqdn: data-int.lsst.cloud
 
 argo:
   enabled: true

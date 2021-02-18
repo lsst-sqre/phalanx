@@ -1,4 +1,5 @@
 environment: nts
+fqdn: lsst-nts-k8s.ncsa.illinois.edu
 
 argo:
   enabled: true

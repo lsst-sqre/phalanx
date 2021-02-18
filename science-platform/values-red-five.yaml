@@ -1,4 +1,5 @@
 environment: red-five
+fqdn: red-five.lsst.codes
 
 argo:
   enabled: true

@@ -1,4 +1,5 @@
 environment: tucson-teststand
+fqdn: tucson-teststand.lsst.codes
 
 argo:
   enabled: true

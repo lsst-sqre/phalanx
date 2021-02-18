@@ -1,4 +1,5 @@
 environment: idfdev
+fqdn: data-dev.lsst.cloud
 
 argo:
   enabled: true
