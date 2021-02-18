@@ -17,7 +17,6 @@ gafaelfawr:
   cilogon:
     client_id: "cilogon:/client_id/4fb3456c6d99009d975450af19bee94"
     redirect_url: "https://bleed.lsst.codes/oauth2/callback"
-    test: true
     login_params:
       skin: "LSST"
 
