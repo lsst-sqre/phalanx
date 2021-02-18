@@ -1,4 +1,4 @@
-# lsp-deploy
+# Phalanx
 
 This is the repository to store helper scripts and per-environment
 deployment configuration for the services of the Rubin Science
