@@ -6,7 +6,7 @@ mobu:
   host: "minikube.lsst.codes"
 
   image:
-    tag: master
+    tag: 1.0.5
 
 pull-secret:
   enabled: true

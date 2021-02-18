@@ -6,7 +6,7 @@ mobu:
   host: "lsst-lsp-stable.ncsa.illinois.edu"
 
   image:
-    tag: 1.0.4
+    tag: 1.0.5
 
   ingress:
     annotations:
