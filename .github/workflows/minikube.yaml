@@ -31,6 +31,7 @@ jobs:
           sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v1.8.1/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
+          sudo pip install -r installer/requirements.txt
       - name: Run installer
         run: |
           cd installer
