@@ -116,7 +116,7 @@ html_context = {
     #     {{ github_repo }}/blob/
     #     {{ github_version }}{{ conf_py_path }}{{ pagename }}{{ suffix }}
     'github_user': 'lsst-sqre',
-    'github_repo': 'lsp-deploy',
+    'github_repo': 'phalanx',
     'conf_py_path': 'docs/',
     # TRAVIS_BRANCH is available in CI, but master is a safe default
     'github_version': os.getenv('TRAVIS_BRANCH', default='master') + '/'

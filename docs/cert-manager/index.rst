@@ -6,7 +6,7 @@ cert-manager
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/cert-manager <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/cert-manager>`__
+     - `/services/cert-manager <https://github.com/lsst-sqre/phalanx/tree/master/services/cert-manager>`__
    * - Type
      - Helm_
    * - Namespace
@@ -25,7 +25,7 @@ IT manages the cert-manager installation on the base and summit Rubin Science Pl
 
 Upgrading cert-manager is generally painless.
 The only custom configuration that we use is to tell the Helm chart to install the Custom Resource Definitions.
-Watch for changes that require updating ``ClusterIssuer`` or ``Certificate`` resources; those will require corresponding changes to the resources defined in `/services/cert-issuer <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/cert-issuer>`__.
+Watch for changes that require updating ``ClusterIssuer`` or ``Certificate`` resources; those will require corresponding changes to the resources defined in `/services/cert-issuer <https://github.com/lsst-sqre/phalanx/tree/master/services/cert-issuer>`__.
 
 Normally, it's not necessary to explicitly test cert-manager after a routine upgrade.
 We will notice if the certificates expire, and have monitoring of the important ones.

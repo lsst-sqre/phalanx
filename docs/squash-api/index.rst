@@ -6,7 +6,7 @@ squash-api
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/squash-api <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/squash-api>`__
+     - `/services/squash-api <https://github.com/lsst-sqre/phalanx/tree/master/services/squash-api>`__
    * - Type
      - Helm_
    * - Namespace

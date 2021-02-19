@@ -6,7 +6,7 @@ vault-secrets-operator
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/vault-secrets-operator <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/vault-secrets-operator>`__
+     - `/services/vault-secrets-operator <https://github.com/lsst-sqre/phalanx/tree/master/services/vault-secrets-operator>`__
    * - Type
      - Helm_
    * - Namespace
@@ -15,7 +15,7 @@ vault-secrets-operator
 .. rubric:: Overview
 
 The ``vault-secrets-operator`` application is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other applications.
-It processes ``VaultSecret`` resources defined in the `Science Platform repository <https://github.com/lsst-sqre/lsp-deploy>`__ and creates corresponding Kubernetes ``Secret`` resources.
+It processes ``VaultSecret`` resources defined in the `Science Platform repository <https://github.com/lsst-sqre/phalanx>`__ and creates corresponding Kubernetes ``Secret`` resources.
 
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 
@@ -33,7 +33,7 @@ The Gafaelfawr secret is a good one to use for this purpose since it is only rea
 .. rubric:: Bootstrapping the application
 
 Vault Secrets Operator is the only component of the Science Platform whose secret has to be manually created, so that it can create the secrets for all other applications.
-This will be done automatically by the `install script <https://github.com/lsst-sqre/lsp-deploy/blob/master/install.sh>`__.
+This will be done automatically by the `install script <https://github.com/lsst-sqre/phalanx/blob/master/install.sh>`__.
 
 Its secret will look like this:
 

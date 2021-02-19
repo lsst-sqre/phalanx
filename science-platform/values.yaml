@@ -43,5 +43,5 @@ tap:
 vault_secrets_operator:
   enabled: false
 
-repoURL: https://github.com/lsst-sqre/lsp-deploy.git
+repoURL: https://github.com/lsst-sqre/phalanx.git
 revision: HEAD

@@ -6,7 +6,7 @@ rancher-external-ip-webhook
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/rancher-external-ip-webhook <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/rancher-external-ip-webhook>`__
+     - `/services/rancher-external-ip-webhook <https://github.com/lsst-sqre/phalanx/tree/master/services/rancher-external-ip-webhook>`__
    * - Type
      - Helm_
    * - Namespace
