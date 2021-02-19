@@ -211,6 +211,10 @@ def generate_argocd_secrets():
         "server.secretkey": secrets.token_hex(16),
     }
 
+def put_secret_in_enclave(secrets, component, secret_name):
+    secrets["enclave"][component + "." + secret_name] = secrets[component][secret_name]
+    del secrets[component][secret_name]
+
 def generate_secrets():
     secrets = {}
     secrets["pull-secret"] = generate_pull_secret()
@@ -232,6 +236,7 @@ def generate_secrets():
     else:
         secrets["cert-manager"] = generate_cert_manager_secrets()
 
+    put_secret_in_enclave(secrets, "argocd", "admin.plaintext_password")
     return secrets
 
 
