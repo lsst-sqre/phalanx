@@ -1,5 +1,6 @@
 environment: minikube
 fqdn: minikube.lsst.codes
+vault_path_prefix: secret/k8s_operator/minikube.lsst.codes
 
 argo:
   enabled: true

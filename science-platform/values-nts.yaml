@@ -1,5 +1,6 @@
 environment: nts
 fqdn: lsst-nts-k8s.ncsa.illinois.edu
+vault_path_prefix: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu
 
 argo:
   enabled: true

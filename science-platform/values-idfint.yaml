@@ -1,5 +1,6 @@
 environment: idfint
 fqdn: data-int.lsst.cloud
+vault_path_prefix: secret/k8s_operator/data-int.lsst.cloud
 
 argo:
   enabled: true

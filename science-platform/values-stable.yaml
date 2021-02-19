@@ -1,5 +1,6 @@
 environment: stable
 fqdn: lsst-lsp-stable.ncsa.illinois.edu
+vault_path_prefix: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu
 
 argo:
   enabled: true

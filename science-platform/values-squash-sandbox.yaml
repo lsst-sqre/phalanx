@@ -1,5 +1,6 @@
 environment: squash-sandbox
 fqdn: squash-sandbox.lsst.codes
+vault_path_prefix: secret/k8s_operator/squash-sandbox.lsst.codes
 
 argo:
   enabled: false

@@ -1,5 +1,6 @@
 environment: red-five
 fqdn: red-five.lsst.codes
+vault_path_prefix: secret/k8s_operator/red-five.lsst.codes
 
 argo:
   enabled: true
