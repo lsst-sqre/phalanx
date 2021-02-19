@@ -6,10 +6,10 @@ Overview
 ========
 
 Argo CD manages applications in the Rubin Science Platform through a set of Helm charts.
-Which Helm charts to deploy in a given environment is controlled by the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/lsp-deploy/tree/master/science-platform/>`__.
+Which Helm charts to deploy in a given environment is controlled by the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
 
 For nearly all charts, there are at least two layers of charts.
-The upper layer of charts, the ones installed directly by Argo CD, are found in the `/services <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/>`__ directory.
+The upper layer of charts, the ones installed directly by Argo CD, are found in the `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__ directory.
 These charts usually contain only dependencies and ``values-*.yaml`` files to customize the application for each environment.
 Sometimes they may contain a small set of resources that are very specific to the Science Platform.
 

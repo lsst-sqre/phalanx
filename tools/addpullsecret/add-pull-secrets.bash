@@ -4,7 +4,7 @@
 #  OS X (it's a GPL3 thing)
 
 function usage() {
-    echo 1>&2 "Usage: $0 lsp-deploy-directory"
+    echo 1>&2 "Usage: $0 phalanx-directory"
     exit 1
 }
 

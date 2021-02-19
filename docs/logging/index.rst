@@ -6,7 +6,7 @@ logging
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/cert-manager <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/logging>`__
+     - `/services/cert-manager <https://github.com/lsst-sqre/phalanx/tree/master/services/logging>`__
    * - Type
      - Helm_
    * - Namespace

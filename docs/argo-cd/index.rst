@@ -80,11 +80,11 @@ Instead, follow the upgrade process described below.
    Note the chart version for ``argo/argo-cd``.
 
 #. Upgrade Argo CD using Helm.
-   Check out the `lsp-deploy repository <https://github.com/lsst-sqre/lsp-deploy>`_ first.
+   Check out the `phalanx repository <https://github.com/lsst-sqre/phalanx>`_ first.
 
    .. code-block:: console
 
-      $ cd lsp-deploy/installer
+      $ cd phalanx/installer
       $ helm upgrade --install argocd argo/argo-cd --version $VERSION \
           --values argo-cd-values.yaml --namespace argocd --wait --timeout 900s
 
@@ -151,7 +151,7 @@ You can then recreate the namespace, reinstall Argo CD, and restore the backup.
 .. code-block:: console
 
    $ kubectl create namespace argocd
-   $ cd lsp-deploy/installer
+   $ cd phalanx/installer
    $ helm upgrade --install argocd argo/argo-cd --version $HELM_VERSION \
        --values argo-cd-values.yaml --namespace argocd --wait --timeout 900s
    $ chmod 644 ~/.kube/config
@@ -163,4 +163,4 @@ Replace ``$HELM_VERSION`` with the version of the Helm chart you want to use and
 
 This should hopefully restore Argo CD to a working state.
 If it doesn't, you'll need to reinstall it using the more extended process used by the cluster installer.
-See `installer/install.sh <https://github.com/lsst-sqre/lsp-deploy/blob/master/installer/install.sh>`__ for the commands to run.
+See `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__ for the commands to run.

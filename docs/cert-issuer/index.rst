@@ -6,7 +6,7 @@ cert-issuer
    :widths: 10,40
 
    * - Edit on GitHub
-     - `/services/cert-issuer <https://github.com/lsst-sqre/lsp-deploy/tree/master/services/cert-issuer>`__
+     - `/services/cert-issuer <https://github.com/lsst-sqre/phalanx/tree/master/services/cert-issuer>`__
    * - Type
      - Helm_
    * - Namespace
