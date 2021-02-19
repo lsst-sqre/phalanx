@@ -94,5 +94,5 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
 
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
-echo "For the ArgoCD admin password:
+echo "For the ArgoCD admin password:"
 echo "vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/enclave"
