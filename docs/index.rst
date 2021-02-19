@@ -18,6 +18,7 @@ Overview
    :maxdepth: 2
 
    arch/index
+   bootstrapping
 
 Operations guide
 ================
