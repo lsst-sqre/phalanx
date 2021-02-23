@@ -2,6 +2,8 @@ environment: int
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: false
 cert_manager:
@@ -25,6 +27,8 @@ mobu:
 ingress_nginx:
   enabled: false
 nublado:
+  enabled: true
+nublado2:
   enabled: true
 obstap:
   enabled: true
