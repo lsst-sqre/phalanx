@@ -4,6 +4,8 @@ nublado2:
       enabled: true
 
     hub:
+      db:
+        type: sqlite-memory
       image:
         name: lsstsqre/nublado2
         tag: "master"
