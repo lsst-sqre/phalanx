@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from base64 import b64encode
 import bcrypt
+from collections import defaultdict
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.backends import default_backend
@@ -8,32 +9,42 @@ from cryptography.hazmat.primitives import serialization
 from datetime import datetime, timezone
 import json
 import os
+from pathlib import Path
 import secrets
 import yaml
 
 
-def input_field(component, name, description):
-    prompt_string = f"[{component} {name}] ({description}): "
-    return input(prompt_string)
+def input_field(s, component, name, description):
+    default = s[component].get(name, "")
+    prompt_string = f"[{component} {name}] ({description}): [current: {default}] "
+    input_string = input(prompt_string)
+
+    if input_string:
+        s[component][name] = input_string
 
 
-def generate_tap_secrets():
-    fname = input_field(
-        "TAP",
-        "google_creds.json",
-        "file containing google service account credentials",
-    )
+def input_file(s, component, name, description):
+    current = s.get(component, {}).get(name, "")
+    print(f"[{component} {name}] ({description})")
+    print(f"Current contents:\n{current}")
+    prompt_string = f"New filename with contents (empty to not change): "
+    fname = input(prompt_string)
 
-    with open(fname, "r") as f:
-        return {
-            "slack_webhook_url": input_field(
-                "TAP", "slack_webhook_url", "slack webhook url for querymonkey"
-            ),
-            "google_creds.json": b64encode(f.read().encode()).decode(),
-        }
+    if fname:
+        with open(fname, "r") as f:
+            s[component][name] = f.read()
 
 
-def generate_log_secrets():
+def set_generated_secret(s, component, name, new_value):
+    regenerate = True
+    if regenerate:
+        s[component][name] = new_value
+
+def generate_tap_secrets(s):
+    input_field(s, "tap", "slack_webhook_url", "slack webhook url for querymonkey")
+    input_file(s, "tap", "google_creds.json", "file containing google service account credentials")
+
+def generate_log_secrets(s):
     def gen_pw_and_hash():
         pw = secrets.token_hex(16)
         h = bcrypt.hashpw(
@@ -74,62 +85,46 @@ def generate_log_secrets():
     # fluentd and kibana passwords are also passed through, but these
     # are tied to the hashes that are present in the internal_users
     # yaml file, where the bcrypt'd password is stored.
-    return {
-        "username": "admin",
-        "password": admin[0],
-        "cookie": secrets.token_urlsafe(32),
-        "internal_users.yml": yaml.dump(internal_users),
-        "logstash-password": logstash[0],
-        "kibana-password": kibana[0],
-    }
+    set_generated_secret(s, "log", "username", "admin")
+    set_generated_secret(s, "log", "password", admin[0])
+    set_generated_secret(s, "log", "cookie", secrets.token_urlsafe(32))
+    set_generated_secret(s, "log", "internal_users.yml", yaml.dump(internal_users))
+    set_generated_secret(s, "log", "logstash-password", logstash[0])
+    set_generated_secret(s, "log", "kibana-password", kibana[0])
 
 
-def generate_postgres_secrets():
-    return {
-        "exposurelog_password": secrets.token_hex(32),
-        "jupyterhub_password": secrets.token_hex(32),
-        "root_password": secrets.token_hex(64),
-    }
+def generate_postgres_secrets(s):
+    set_generated_secret(s, "postgres", "exposurelog_password", secrets.token_hex(32))
+    set_generated_secret(s, "postgres", "jupyterhub_password", secrets.token_hex(32))
+    set_generated_secret(s, "postgres", "root_password", secrets.token_hex(64))
 
 
-def generate_nublado2_secrets():
-    return {
-        "proxy_token": secrets.token_hex(32),
-        "crypto_key": ";".join([secrets.token_hex(32), secrets.token_hex(32)]),
-    }
+def generate_nublado2_secrets(s):
+    crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
+    set_generated_secret(s, "nublado2", "crypto_key", crypto_key)
+    set_generated_secret(s, "nublado2", "proxy_token", secrets.token_hex(32))
 
 
-def generate_nublado_secrets(db_pass):
-    return {
-        "configproxy_auth_token": secrets.token_hex(32),
-        "jupyterhub_crypto_key": ";".join(
-            [secrets.token_hex(32), secrets.token_hex(32)]
-        ),
-        "session_db_url": f"postgres://jovyan:{db_pass}@postgres.postgres/jupyterhub",
-    }
+def generate_nublado_secrets(s):
+    crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
+    set_generated_secret(s, "nublado", "jupyterhub_crypto_key", crypto_key)
+    set_generated_secret(s, "nublado", "configproxy_auth_token", secrets.token_hex(32))
+
+    # Pluck the password out of the postgres portion to generate our connect string.
+    db_pass = s["postgres"]["jupyterhub_password"]
+    session_db_url = f"postgres://jovyan:{db_pass}@postgres.postgres/jupyterhub"
+    s["nublado"]["session_db_url"] = session_db_url
 
 
-def generate_mobu_secrets():
-    return {
-        "ALERT_HOOK": input_field(
-            "mobu",
-            "ALERT_HOOK",
-            "Slack webhook for reporting mobu alerts.  Or use None for no alerting.",
-        )
-    }
+def generate_mobu_secrets(s):
+    input_field(s, "mobu", "ALERT_HOOK", "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
 
 
-def generate_cert_manager_secrets():
-    return {
-        "aws-secret-access-key": input_field(
-            "cert-manager",
-            "aws-secret-access-key",
-            "AWS secret access key for zone for DNS cert solver.",
-        )
-    }
+def generate_cert_manager_secrets(s):
+    input_field(s, "cert-manager", "aws-secret-access-key", "AWS secret access key for zone for DNS cert solver.")
 
 
-def generate_gafaelfawr_secrets():
+def generate_gafaelfawr_secrets(s):
     key = rsa.generate_private_key(
         backend=default_backend(), public_exponent=65537, key_size=2048
     )
@@ -140,111 +135,77 @@ def generate_gafaelfawr_secrets():
         serialization.NoEncryption(),
     )
 
-    auth_provider = input_field(
-        "gafaelfawr",
-        "authentication provider",
-        "Auth provider ('cilogon' or 'github')",
-    ).lower()
-    # maybe really validate this sometime
-    if auth_provider != "github":
-        auth_provider = "cilogon"
+    set_generated_secret(s, "gafaelfawr", "redis-password", os.urandom(32).hex())
+    set_generated_secret(s, "gafaelfawr", "session-secret", Fernet.generate_key().decode())
+    set_generated_secret(s, "gafaelfawr", "signing-key", key_bytes.decode())
 
-    ret_dict = {
-        "redis-password": os.urandom(32).hex(),
-        "session-secret": Fernet.generate_key().decode(),
-        "signing-key": key_bytes.decode(),
-    }
-
+    auth_provider = input("Use cilogon or github? ")
     if auth_provider == "cilogon":
-        ret_dict["cilogon-client-secret"] = input_field(
-            "gafaelfawr", "cilogon-client-secret", "CILogon client secret"
-        )
+        input_field(s, "gafaelfawr", "cilogon-client-secret", "CILogon client secret")
+    elif auth_provider == "github":
+        input_field(s, "gafaelfawr", "github-client-secret", "GitHub client secret")
     else:
-        ret_dict["github-client-secret"] = input_field(
-            "gafaelfawr", "github-client-secret", "GitHub client secret"
-        )
-    return ret_dict
+        raise Exception("Invalid auth provider")
 
 
-def generate_pull_secret():
-    fname = input_field(
-        "[global]",
-        ".docker/config.json",
-        "file containing docker credentials to pull images",
-    )
-
-    with open(fname, "r") as f:
-        return {".dockerconfigjson": f.read()}
+def generate_pull_secret(s):
+    input_file(s, "pull-secret", ".dockerconfigjson", ".docker/config.json to pull images")
 
 
-def generate_ingress_nginx_secrets():
-    key_file = input_field(
-        "ingress-nginx",
-        "cert.key",
-        "Certificate private key filename",
-    )
-
-    cert_file = input_field(
-        "ingress-nginx",
-        "cert.pem",
-        "Certificate public key filename",
-    )
-
-    with open(key_file, "r") as k, \
-         open(cert_file, "r") as c:
-        return {
-            "tls.crt": c.read(),
-            "tls.key": k.read()
-        }
+def generate_ingress_nginx_secrets(s):
+    input_file(s, "ingress-nginx", "tls.key", "Certificate private key")
+    input_file(s, "ingress-nginx", "tls.crt", "Certificate chain")
 
 
-def generate_argocd_secrets():
+def generate_argocd_secrets(s):
     pw = secrets.token_hex(16)
     h = bcrypt.hashpw(
         pw.encode("ascii"), bcrypt.gensalt(rounds=15)
     ).decode("ascii")
+    now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-    return {
-        "admin.plaintext_password": pw,
-        "admin.password": h,
-        "admin.passwordMtime": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "server.secretkey": secrets.token_hex(16),
-    }
+    set_generated_secret(s, "argocd", "admin.password", h)
+    set_generated_secret(s, "argocd", "admin.passwordMtime", now_time)
+    set_generated_secret(s, "argocd", "server.secretkey", secrets.token_hex(16))
+    set_generated_secret(s, "enclave", "argocd.admin.plaintext_password", pw)
 
-def put_secret_in_enclave(secrets, component, secret_name):
-    secrets["enclave"][component + "." + secret_name] = secrets[component][secret_name]
-    del secrets[component][secret_name]
+
+def load_current_secrets():
+    s = defaultdict(dict)
+
+    for f in Path('secrets').iterdir():
+        print(f"Loading {f}")
+        component = os.path.basename(f)
+        s[component] = json.loads(f.read_text())
+
+    return s
 
 def generate_secrets():
-    secrets = {}
-    secrets["pull-secret"] = generate_pull_secret()
-    secrets["postgres"] = generate_postgres_secrets()
-    secrets["log"] = generate_log_secrets()
-    secrets["tap"] = generate_tap_secrets()
-    secrets["nublado"] = generate_nublado_secrets(
-        secrets["postgres"]["jupyterhub_password"]
-    )
-    secrets["nublado2"] = generate_nublado2_secrets()
-    secrets["mobu"] = generate_mobu_secrets()
-    secrets["gafaelfawr"] = generate_gafaelfawr_secrets()
-    secrets["argocd"] = generate_argocd_secrets()
+    s = load_current_secrets()
+    generate_pull_secret(s)
+    generate_postgres_secrets(s)
+    generate_log_secrets(s)
+    generate_tap_secrets(s)
+    generate_nublado_secrets(s)
+    generate_nublado2_secrets(s)
+    generate_mobu_secrets(s)
+    generate_gafaelfawr_secrets(s)
+    generate_argocd_secrets(s)
 
     use_cert_file = input("Use certificate file? (y/n): ")
-
     if use_cert_file == "y":
-        secrets["ingress-nginx"] = generate_ingress_nginx_secrets()
+        generate_ingress_nginx_secrets(s)
     else:
-        secrets["cert-manager"] = generate_cert_manager_secrets()
+        generate_cert_manager_secrets(s)
 
-    put_secret_in_enclave(secrets, "argocd", "admin.plaintext_password")
-    return secrets
+    return s
 
 
-def generate_files(secrets):
+def generate_files(s):
     print("Generating secrets files in secrets/")
     os.makedirs("secrets", exist_ok=True)
 
-    for k, v in secrets.items():
+    for k, v in s.items():
         with open(f"secrets/{k}", "w") as f:
             f.write(json.dumps(v))
 
