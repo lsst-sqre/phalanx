@@ -1,0 +1,70 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    hub:
+      image:
+        name: lsstsqre/nublado2
+        tag: "master"
+
+    singleuser:
+      storage:
+        type: none
+        extraVolumes:
+          - name: datasets
+            hostPath:
+              path: /lsstdata/user/precusor_data/datasets
+          - name: home
+            hostPath:
+              path: /lsstdata/user/staff/jhome
+          - name: project
+            hostPath:
+              path: /lsstdata/user/staff/project
+          - name: scratch
+            hostPath:
+              path: /lsstdata/user/staff/scratch
+        extraVolumeMounts:
+          - name: datasets
+            mountPath: /datasets
+          - name: home
+            mountPath: /home
+          - name: project
+            mountPath: /project
+          - name: scratch
+            mountPath: /scratch
+
+
+    ingress:
+      hosts: ["lsst-lsp-int.ncsa.illinois.edu"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
+
+  config:
+    base_url: "https://lsst-lsp-int.ncsa.illinois.edu/"
+
+    user_resources:
+      - apiVersion: v1
+        kind: Namespace
+        metadata:
+          name: "{{user_namespace}}"
+      - apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: lab-environment
+          namespace: "{{user_namespace}}"
+        data:
+          EXTERNAL_INSTANCE_URL: "{{base_url}}"
+          FIREFLY_ROUTE: /portal/app
+          HUB_ROUTE: /n2
+          JS9_ROUTE: /js9
+          API_ROUTE: /api
+          TAP_ROUTE: /api/tap
+          SODA_ROUTE: /api/image/soda
+          WORKFLOW_ROUTE: /wf
+          AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
+          EXTERNAL_GROUPS: "{{external_groups}}"
+          EXTERNAL_UID: "{{uid}}"
+          ACCESS_TOKEN: "{{token}}"
+
+  vault_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/nublado2"
