@@ -170,6 +170,12 @@ def generate_argocd_secrets(s):
     set_generated_secret(s, "enclave", "argocd.admin.plaintext_password", pw)
 
 
+def generate_portal_secrets(s):
+    pw = secrets.token_hex(32)
+
+    set_generated_secret(s, "portal", "ADMIN_PASSWORD", pw)
+
+
 def load_current_secrets():
     s = defaultdict(dict)
 
@@ -191,6 +197,7 @@ def generate_secrets():
     generate_mobu_secrets(s)
     generate_gafaelfawr_secrets(s)
     generate_argocd_secrets(s)
+    generate_portal_secrets(s)
 
     use_cert_file = input("Use certificate file? (y/n): ")
     if use_cert_file == "y":
