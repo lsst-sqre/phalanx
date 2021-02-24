@@ -1,6 +1,6 @@
 name: Minikube
 
-on:
+"on":
   pull_request:
     paths:
       - ".github/**"
