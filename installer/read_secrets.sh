@@ -1,6 +1,6 @@
 #!/bin/bash -x
 
-ENVIRONMENT=${1:?"Usage: get_secrets.sh ENVIRONMENT"}
+ENVIRONMENT=${1:?"Usage: read_secrets.sh ENVIRONMENT"}
 
 mkdir -p secrets
 
