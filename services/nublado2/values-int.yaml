@@ -41,6 +41,7 @@ nublado2:
       hosts: ["lsst-lsp-int.ncsa.illinois.edu"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook"
 
   config:
     options_form:
