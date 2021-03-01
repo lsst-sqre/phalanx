@@ -3,7 +3,7 @@ name: cert-manager
 version: 1.0.0
 dependencies:
 - name: cert-manager
-  version: v1.1.0
+  version: v1.2.0
   repository: https://charts.jetstack.io
 - name: pull-secret
   version: 0.1.2
