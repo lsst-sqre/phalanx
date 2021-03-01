@@ -43,9 +43,10 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
 
   config:
-    images:
-      - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
-        name: Recommended
+    options_form:
+      images:
+        - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+          name: Recommended
 
     base_url: "https://lsst-lsp-int.ncsa.illinois.edu/"
 
