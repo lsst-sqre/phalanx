@@ -11,6 +11,7 @@ nublado2:
         tag: "tickets-DM-28950"
 
     singleuser:
+      cmd: "/opt/lsst/software/jupyterlab/provisionator.bash"
       storage:
         type: none
         extraVolumes:
