@@ -5,9 +5,6 @@ mobu:
   environment_url: "https://lsst-lsp-stable.ncsa.illinois.edu"
   host: "lsst-lsp-stable.ncsa.illinois.edu"
 
-  image:
-    tag: 1.0.5
-
   ingress:
     annotations:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
