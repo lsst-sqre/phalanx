@@ -14,6 +14,8 @@ nublado:
     image:
       cachefile: "/home/jovyan/repo-cache.json"
 
+    cull_timeout: 90000
+
   reaper:
     enabled: true
     user: 'sqreadmin'
