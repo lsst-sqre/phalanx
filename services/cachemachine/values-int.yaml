@@ -1,9 +1,6 @@
 cachemachine:
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
-  image:
-    tag: "1.0.4"
-
   ingress:
     enabled: true
     hosts:

@@ -1,9 +1,6 @@
 cachemachine:
   host: "bleed.lsst.codes"
 
-  image:
-    tag: "1.0.4"
-
   ingress:
     enabled: true
     hosts:

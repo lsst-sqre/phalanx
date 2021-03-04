@@ -1,9 +1,6 @@
 cachemachine:
   host: "data-dev.lsst.cloud"
 
-  image:
-    tag: "1.0.4"
-
   ingress:
     enabled: true
     hosts:

@@ -5,9 +5,6 @@ mobu:
   environment_url: "https://minikube.lsst.codes"
   host: "minikube.lsst.codes"
 
-  image:
-    tag: 1.0.5
-
 pull-secret:
   enabled: true
   path: secret/k8s_operator/minikube.lsst.codes/pull-secret
