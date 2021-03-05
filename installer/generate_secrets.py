@@ -167,7 +167,7 @@ def generate_argocd_secrets(s, regen):
     set_generated_secret(s, "argocd", "admin.password", h, regen)
     set_generated_secret(s, "argocd", "admin.passwordMtime", now_time, regen)
     set_generated_secret(s, "argocd", "server.secretkey", secrets.token_hex(16), regen)
-    set_generated_secret(s, "enclave", "argocd.admin.plaintext_password", pw, regen)
+    set_generated_secret(s, "installer", "argocd.admin.plaintext_password", pw, regen)
 
 
 def generate_portal_secrets(s, regen):

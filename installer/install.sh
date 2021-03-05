@@ -4,7 +4,7 @@ ENVIRONMENT=${1:?$USAGE}
 export VAULT_TOKEN=${2:?$USAGE}
 export VAULT_ADDR=https://vault.lsst.codes
 VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
-ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/enclave`
+ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
 # Github runs in a detached head state, but sets GITHUB_REF,
@@ -95,4 +95,4 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
 echo "For the ArgoCD admin password:"
-echo "vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/enclave"
+echo "vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer"
