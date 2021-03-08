@@ -17,7 +17,7 @@ nublado2:
         extraVolumes:
           - name: datasets
             hostPath:
-              path: /lsstdata/user/precusor_data/datasets
+              path: /lsstdata/user/precursor_data/datasets
           - name: home
             hostPath:
               path: /lsstdata/user/staff/jhome
