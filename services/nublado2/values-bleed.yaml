@@ -18,6 +18,6 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-signin: "https://bleed.lsst.codes/login"
 
   config:
-    base_url: "https://bleed.lsst.codes/"
+    base_url: "https://bleed.lsst.codes"
 
   vault_secret_path: "secret/k8s_operator/bleed.lsst.codes/nublado2"

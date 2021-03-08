@@ -17,7 +17,7 @@ nublado2:
         extraVolumes:
           - name: datasets
             hostPath:
-              path: /lsstdata/user/precusor_data/datasets
+              path: /lsstdata/user/precursor_data/datasets
           - name: home
             hostPath:
               path: /lsstdata/user/staff/jhome
@@ -55,7 +55,7 @@ nublado2:
         - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
           name: Recommended
 
-    base_url: "https://lsst-lsp-int.ncsa.illinois.edu/"
+    base_url: "https://lsst-lsp-int.ncsa.illinois.edu"
 
     user_resources:
       - apiVersion: v1
