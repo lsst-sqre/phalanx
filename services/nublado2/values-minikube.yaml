@@ -18,6 +18,6 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
 
   config:
-    base_url: "https://minikube.lsst.codes/"
+    base_url: "https://minikube.lsst.codes"
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"

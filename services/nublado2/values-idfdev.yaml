@@ -45,7 +45,7 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
 
   config:
-    base_url: "https://data-dev.lsst.cloud/"
+    base_url: "https://data-dev.lsst.cloud"
 
     user_resources:
       - apiVersion: v1
