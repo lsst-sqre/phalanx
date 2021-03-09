@@ -139,10 +139,11 @@ def generate_gafaelfawr_secrets(s, regen):
     set_generated_secret(s, "gafaelfawr", "session-secret", Fernet.generate_key().decode(), regen)
     set_generated_secret(s, "gafaelfawr", "signing-key", key_bytes.decode(), regen)
 
-    auth_provider = input("Use cilogon or github? ")
-    if auth_provider == "cilogon":
+    input_field(s, "gafaelfawr", "auth_type", "Use cilogon or github?")
+    auth_type = s["gafaelfawr"]["auth_type"]
+    if auth_type == "cilogon":
         input_field(s, "gafaelfawr", "cilogon-client-secret", "CILogon client secret")
-    elif auth_provider == "github":
+    elif auth_type == "github":
         input_field(s, "gafaelfawr", "github-client-secret", "GitHub client secret")
     else:
         raise Exception("Invalid auth provider")
@@ -199,11 +200,14 @@ def generate_secrets(regen):
     generate_argocd_secrets(s, regen)
     generate_portal_secrets(s, regen)
 
-    use_cert_file = input("Use certificate file? (y/n): ")
-    if use_cert_file == "y":
+    input_field(s, "cert-manager", "enabled", "Use cert-manager? (y/n):")
+    use_cert_manager = s["cert-manager"]["enabled"]
+    if use_cert_manager == "y":
+        generate_cert_manager_secrets(s, regen)
+    elif use_cert_manager == "n":
         generate_ingress_nginx_secrets(s, regen)
     else:
-        generate_cert_manager_secrets(s, regen)
+        raise Exception("Invalid cert manager enabled")
 
     return s
 
