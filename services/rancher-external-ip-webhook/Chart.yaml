@@ -3,7 +3,7 @@ name: rancher-external-ip-webhook
 version: 1.0.0
 dependencies:
   - name: rancher-external-ip-webhook
-    version: 0.1.600
+    version: 0.1.601
     repository: https://charts.rancher.io/
   - name: pull-secret
     version: ">=0.1.2"
