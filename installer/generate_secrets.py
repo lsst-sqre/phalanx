@@ -159,7 +159,8 @@ def generate_ingress_nginx_secrets(s, regen):
 
 
 def generate_argocd_secrets(s, regen):
-    pw = secrets.token_hex(16)
+    input_field(s, "installer", "argocd.admin.plaintext_password", "Admin password for ArgoCD?")
+    pw = s["installer"]["argocd.admin.plaintext_password"]
     h = bcrypt.hashpw(
         pw.encode("ascii"), bcrypt.gensalt(rounds=15)
     ).decode("ascii")
@@ -168,7 +169,6 @@ def generate_argocd_secrets(s, regen):
     set_generated_secret(s, "argocd", "admin.password", h, regen)
     set_generated_secret(s, "argocd", "admin.passwordMtime", now_time, regen)
     set_generated_secret(s, "argocd", "server.secretkey", secrets.token_hex(16), regen)
-    set_generated_secret(s, "installer", "argocd.admin.plaintext_password", pw, regen)
 
 
 def generate_portal_secrets(s, regen):
