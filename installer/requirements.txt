@@ -2,3 +2,4 @@ bcrypt
 cryptography
 pyyaml
 yq
+1password
