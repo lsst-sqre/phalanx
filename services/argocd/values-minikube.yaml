@@ -28,9 +28,9 @@ argo-cd:
         - url: https://charts.helm.sh/stable
           name: stable
 
-    configs:
-      secret:
-        createSecret: false
+  configs:
+    secret:
+      createSecret: false
 
 vault_secret:
   enabled: true
