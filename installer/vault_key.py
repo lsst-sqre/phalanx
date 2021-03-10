@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import pprint
 
 from onepassword import OnePassword
@@ -9,7 +10,7 @@ from onepassword import OnePassword
 class VaultKeyRetriever:
     def __init__(self):
         self.op = OnePassword()
-        vault_keys_doc = self.op.get_item(uuid="dg5afgiadsffeklfr6jykqymeu")
+        vault_keys_doc = self.op.get_item(uuid=os.environ["VAULT_DOC_UUID"])
         vault_keys_json = vault_keys_doc["details"]["notesPlain"]
         self.vault_keys = json.loads(vault_keys_json)
 

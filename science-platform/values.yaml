@@ -47,3 +47,4 @@ vault_secrets_operator:
 
 repoURL: https://github.com/lsst-sqre/phalanx.git
 revision: HEAD
+onepassword_uuid: "dg5afgiadsffeklfr6jykqymeu"
