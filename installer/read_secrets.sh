@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash -e
 
 ENVIRONMENT=${1:?"Usage: read_secrets.sh ENVIRONMENT"}
 

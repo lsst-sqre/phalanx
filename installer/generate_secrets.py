@@ -266,7 +266,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
 
             if self.environment in environments:
                 self.op_secrets[key] = secret_value
-            elif not environments and self.op_secrets.get(key, None) == None:
+            elif not environments and key not in self.op_secrets:
                 self.op_secrets[key] = secret_value
 
     def input_field(self, component, name, description):
