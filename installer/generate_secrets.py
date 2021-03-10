@@ -14,10 +14,13 @@ from pathlib import Path
 import secrets
 import yaml
 
+from onepassword import OnePassword
+
 
 class SecretGenerator:
-    def __init__(self, regenerate):
-        self.secrets = {}
+    def __init__(self, environment, regenerate):
+        self.secrets = defaultdict(dict)
+        self.environment = environment
         self.regenerate = regenerate
 
     def generate(self):
@@ -42,10 +45,11 @@ class SecretGenerator:
             raise Exception("Invalid cert manager enabled")
 
     def load(self):
-        for f in Path('secrets').iterdir():
-            print(f"Loading {f}")
-            component = os.path.basename(f)
-            self.secrets[component] = json.loads(f.read_text())
+        if Path("secrets").is_dir():
+            for f in Path("secrets").iterdir():
+                print(f"Loading {f}")
+                component = os.path.basename(f)
+                self.secrets[component] = json.loads(f.read_text())
 
     def save(self):
         os.makedirs("secrets", exist_ok=True)
@@ -62,7 +66,6 @@ class SecretGenerator:
         if input_string:
             self.secrets[component][name] = input_string
 
-
     def input_file(self, component, name, description):
         current = self.secrets.get(component, {}).get(name, "")
         print(f"[{component} {name}] ({description})")
@@ -74,21 +77,26 @@ class SecretGenerator:
             with open(fname, "r") as f:
                 self.secrets[component][name] = f.read()
 
-
     def _set_generated(self, component, name, new_value):
         if self.regenerate:
             self.secrets[component][name] = new_value
 
     def _tap(self):
-        self.input_field("tap", "slack_webhook_url", "slack webhook url for querymonkey")
-        self.input_file("tap", "google_creds.json", "file containing google service account credentials")
+        self.input_field(
+            "tap", "slack_webhook_url", "slack webhook url for querymonkey"
+        )
+        self.input_file(
+            "tap",
+            "google_creds.json",
+            "file containing google service account credentials",
+        )
 
     def _log(self):
         def gen_pw_and_hash():
             pw = secrets.token_hex(16)
-            h = bcrypt.hashpw(
-                pw.encode("ascii"), bcrypt.gensalt(rounds=15)
-            ).decode("ascii")
+            h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode(
+                "ascii"
+            )
             return (pw, h)
 
         admin = gen_pw_and_hash()
@@ -131,18 +139,15 @@ class SecretGenerator:
         self._set_generated("log", "logstash-password", logstash[0])
         self._set_generated("log", "kibana-password", kibana[0])
 
-
     def _postgres(self):
         self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
 
-
     def _nublado2(self):
         crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
         self._set_generated("nublado2", "crypto_key", crypto_key)
         self._set_generated("nublado2", "proxy_token", secrets.token_hex(32))
-
 
     def _nublado(self):
         crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
@@ -154,14 +159,19 @@ class SecretGenerator:
         session_db_url = f"postgres://jovyan:{db_pass}@postgres.postgres/jupyterhub"
         self.secrets["nublado"]["session_db_url"] = session_db_url
 
-
     def _mobu(self):
-        self.input_field("mobu", "ALERT_HOOK", "Slack webhook for reporting mobu alerts.  Or use None for no alerting.")
-
+        self.input_field(
+            "mobu",
+            "ALERT_HOOK",
+            "Slack webhook for reporting mobu alerts.  Or use None for no alerting.",
+        )
 
     def _cert_manager(self):
-        self.input_field("cert-manager", "aws-secret-access-key", "AWS secret access key for zone for DNS cert solver.")
-
+        self.input_field(
+            "cert-manager",
+            "aws-secret-access-key",
+            "AWS secret access key for zone for DNS cert solver.",
+        )
 
     def _gafaelfawr(self):
         key = rsa.generate_private_key(
@@ -175,52 +185,113 @@ class SecretGenerator:
         )
 
         self._set_generated("gafaelfawr", "redis-password", os.urandom(32).hex())
-        self._set_generated("gafaelfawr", "session-secret", Fernet.generate_key().decode())
+        self._set_generated(
+            "gafaelfawr", "session-secret", Fernet.generate_key().decode()
+        )
         self._set_generated("gafaelfawr", "signing-key", key_bytes.decode())
 
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
         if auth_type == "cilogon":
-            self.input_field("gafaelfawr", "cilogon-client-secret", "CILogon client secret")
+            self.input_field(
+                "gafaelfawr", "cilogon-client-secret", "CILogon client secret"
+            )
         elif auth_type == "github":
-            self.input_field("gafaelfawr", "github-client-secret", "GitHub client secret")
+            self.input_field(
+                "gafaelfawr", "github-client-secret", "GitHub client secret"
+            )
         else:
             raise Exception("Invalid auth provider")
 
-
     def _pull_secret(self):
-        self.input_file("pull-secret", ".dockerconfigjson", ".docker/config.json to pull images")
-
+        self.input_file(
+            "pull-secret", ".dockerconfigjson", ".docker/config.json to pull images"
+        )
 
     def _ingress_nginx(self):
         self.input_file("ingress-nginx", "tls.key", "Certificate private key")
         self.input_file("ingress-nginx", "tls.crt", "Certificate chain")
 
-
     def _argocd(self):
-        self.input_field("installer", "argocd.admin.plaintext_password", "Admin password for ArgoCD?")
+        self.input_field(
+            "installer", "argocd.admin.plaintext_password", "Admin password for ArgoCD?"
+        )
         pw = self.secrets["installer"]["argocd.admin.plaintext_password"]
-        h = bcrypt.hashpw(
-            pw.encode("ascii"), bcrypt.gensalt(rounds=15)
-        ).decode("ascii")
+        h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
         now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
         self._set_generated("argocd", "admin.password", h)
         self._set_generated("argocd", "admin.passwordMtime", now_time)
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
 
-
     def _portal(self):
         pw = secrets.token_hex(32)
         self._set_generated("portal", "ADMIN_PASSWORD", pw)
 
 
+class OnePasswordSecretGenerator(SecretGenerator):
+    def __init__(self, environment, regenerate):
+        super().__init__(environment, regenerate)
+        self.op_secrets = {}
+        self.op = OnePassword()
+        self.parse_vault()
+
+    def parse_vault(self):
+        items = self.op.list_items("RSP-Vault")
+
+        for i in items:
+            key = None
+            environments = []
+            doc = self.op.get_item(uuid=i["uuid"])
+
+            for section in doc["details"]["sections"]:
+                for field in section["fields"]:
+                    if field["t"] == "generate_secrets_key":
+                        if key is None:
+                            key = field["v"]
+                        else:
+                            raise Exception("Found two generate_secrets_keys for {key}")
+                    elif field["t"] == "environment":
+                        environments.append(field["v"])
+
+            # The type of secret is either a note or a password login.
+            # First, check the notes.
+            secret_value = doc["details"]["notesPlain"]
+
+            # If we don't find anything, pull the password from a login item.
+            if not secret_value:
+                for f in doc["details"]["fields"]:
+                    if f["designation"] == "password":
+                        secret_value = f["value"]
+
+            if self.environment in environments:
+                self.op_secrets[key] = secret_value
+            elif not environments and self.op_secrets.get(key, None) == None:
+                self.op_secrets[key] = secret_value
+
+    def input_field(self, component, name, description):
+        key = f"{component} {name}"
+        if key not in self.op_secrets:
+            raise Exception(f"Did not find entry in 1Password for {key}")
+
+        self.secrets[component][name] = self.op_secrets[key]
+
+    def input_file(self, component, name, description):
+        return self.input_field(component, name, description)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate_secrets")
-    parser.add_argument('--regenerate', default=False, action='store_true')
+    parser.add_argument("--op", default=False, action="store_true", help="Load secrets from 1Password")
+    parser.add_argument("--regenerate", default=False, action="store_true", help="Regenerate random secrets")
+    parser.add_argument("environment", help="Environment to generate")
     args = parser.parse_args()
 
-    sg = SecretGenerator(args.regenerate)
+    if args.op:
+        sg = OnePasswordSecretGenerator(args.environment, args.regenerate)
+    else:
+        sg = SecretGenerator(args.environment, args.regenerate)
+
     sg.load()
     sg.generate()
     sg.save()
