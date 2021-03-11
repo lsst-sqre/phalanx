@@ -11,26 +11,29 @@ argo-cd:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
       paths:
-        - /argo-cd
+        - /argo-cd(/|$)(.*)
 
     extraArgs:
       - "--basehref=/argo-cd"
       - "--insecure=true"
 
     config:
+      url: https://data-dev.lsst.cloud/argo-cd
       dex.config: |
-        # Auth using Google.
-        # See https://dexidp.io/docs/connectors/google/
-        - type: google
-          id: google
-          name: Google
-          config:
-            clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
-            clientSecret: $dex.google.clientSecret
-            hostedDomains:
-              - lsst.cloud
-            groups:
-              - gcp-science-platform-gke-cluster-admins@lsst.cloud
+        connectors:
+          # Auth using Google.
+          # See https://dexidp.io/docs/connectors/google/
+          - type: google
+            id: google
+            name: Google
+            config:
+              clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
+              clientSecret: $dex.google.clientSecret
+              hostedDomains:
+                - lsst.cloud
+              groups:
+                - gcp-science-platform-gke-cluster-admins@lsst.cloud
+              redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
@@ -50,6 +53,7 @@ argo-cd:
         g, jsick@lsst.cloud, role:admin
         g, krughoff@lsst.cloud, role:admin
         g, rra@lsst.cloud, role:admin
+      scopes: "[email]"
 
 pull-secret:
   enabled: true
