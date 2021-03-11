@@ -24,6 +24,8 @@ logging:
   enabled: false
 mobu:
   enabled: false
+moneypenny:
+  enabled: false
 nublado:
   enabled: false
 nublado2:

@@ -1,6 +1,7 @@
 nublado:
   pull_secret: 'pull-secret'
   fqdn: data-dev.lsst.cloud
+  gafaelfawr_secrets_path: 'secret/k8s_operator/data-dev.lsst.cloud/gafaelfawr'
 
   oauth_provider: 'jwt'
 
@@ -8,6 +9,8 @@ nublado:
     image: 'lsstsqre/sciplat-hub:latest'
 
   lab:
+    no_sudo: 'true'
+    enable_moneypenny: 'true'
     restrict_nodes: 'true'
     image:
       experimentals: 2
