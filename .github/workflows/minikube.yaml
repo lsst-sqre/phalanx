@@ -1,6 +1,15 @@
 name: Minikube
 
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - "installer/**"
+      - "science-platform/**"
+      - "!science-platform/values-*.yaml"
+      - "science-platform/values-minikube.yaml"
+      - "services/**"
+      - "!services/*/values-*.yaml"
+      - "services/*/values-minikube.yaml"
 
 jobs:
   example:
@@ -22,6 +31,8 @@ jobs:
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
       - name: Run installer
-        run: (cd installer && ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
+        run: |
+          cd installer
+          ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
       - name: Get final list of resources
         run: kubectl get all -A
