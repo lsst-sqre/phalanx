@@ -42,7 +42,7 @@ class SecretGenerator:
         elif use_cert_manager == "n":
             self._ingress_nginx()
         else:
-            raise Exception("Invalid cert manager enabled")
+            raise Exception(f"Invalid cert manager enabled value {use_cert_manager}")
 
     def load(self):
         if Path("secrets").is_dir():
@@ -201,7 +201,7 @@ class SecretGenerator:
                 "gafaelfawr", "github-client-secret", "GitHub client secret"
             )
         else:
-            raise Exception("Invalid auth provider")
+            raise Exception(f"Invalid auth provider {auth_type}")
 
     def _pull_secret(self):
         self.input_file(
