@@ -1,0 +1,7 @@
+apiVersion: v2
+name: moneypenny
+version: 0.1.0
+dependencies:
+- name: moneypenny
+  version: '>=0.0.1'
+  repository: https://lsst-sqre.github.io/charts/

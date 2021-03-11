@@ -1,0 +1,41 @@
+moneypenny:
+  host: "data-dev.lsst.cloud"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: data-dev.lsst.cloud
+        paths: ["/moneypenny"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        auth_request_set $auth_token $upstream_http_x_auth_request_token;
+        proxy_set_header Authorization "Bearer $auth_token";
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+
+  orders: |
+    commission:
+      - name: initcommission
+        image: lsstsqre/inituserhome
+        securityContext:
+          runAsUser: 0
+          runAsNonRootUser: false
+        volumeMounts:
+        - mountPath: /homedirs
+          name: homedirs
+    retire:
+      - name: farthing
+        image: lsstsqre/farthing
+        securityContext:
+          runAsUser: 1000
+          runAsNonRootUser: true
+          allowPrivilegeEscalation: false
+    volumes:
+      - name: homedirs
+        nfs:
+          server: 10.87.86.26
+          path: /share1/home
