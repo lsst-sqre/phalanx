@@ -3,6 +3,7 @@ nublado:
   fqdn: kueyen-lsp.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'
+  gafaelfawr_secrets_path: 'secret/k8s_operator/kueyen-lsp.lsst.codes/gafaelfawr'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'

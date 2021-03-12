@@ -25,7 +25,7 @@ mobu:
 ingress_nginx:
   enabled: true
 moneypenny:
-  enabled: false
+  enabled: true
 nublado:
   enabled: true
 obstap:

@@ -3,6 +3,7 @@ nublado:
   fqdn: red-five.lsst.codes
 
   oauth_provider: 'jwt'
+  gafaelfawr_secrets_path: 'secret/k8s_operator/red-five.lsst.codes/gafaelfawr'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'

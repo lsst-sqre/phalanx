@@ -1,0 +1,14 @@
+moneypenny:
+  host: "lsst-nts-k8s.ncsa.illinois.edu"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: lsst-nts-k8s.ncsa.illinois.edu
+        paths: ["/moneypenny"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:admin"
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"

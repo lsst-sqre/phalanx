@@ -3,6 +3,7 @@ nublado:
   fqdn: tucson-teststand.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'
+  gafaelfawr_secrets_path: 'secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
