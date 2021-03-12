@@ -28,6 +28,14 @@ argo-cd:
         - url: https://charts.helm.sh/stable
           name: stable
 
+  configs:
+    secret:
+      createSecret: false
+
+vault_secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/argocd
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret

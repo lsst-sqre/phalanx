@@ -28,6 +28,14 @@ argo-cd:
         - url: https://charts.helm.sh/stable
           name: stable
 
+  configs:
+    secret:
+      createSecret: false
+
+vault_secret:
+  enabled: true
+  path: secret/k8s_operator/red-five.lsst.codes/argocd
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/red-five.lsst.codes/pull-secret

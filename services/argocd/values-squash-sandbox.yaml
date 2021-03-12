@@ -27,3 +27,6 @@ argo-cd:
           name: ingress-nginx
         - url: https://charts.helm.sh/stable
           name: stable
+
+vault_secret:
+  enabled: false
