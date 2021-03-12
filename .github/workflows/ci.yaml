@@ -39,8 +39,8 @@ jobs:
       - name: Expand modified charts
         run: tests/expand-services
 
-      - name: Run chart-testing (lint)
-        id: lint
+      - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.0.1
-        with:
-          command: lint
+
+      - name: Run chart-testing (lint)
+        run: ct lint --all --config ct.yaml
