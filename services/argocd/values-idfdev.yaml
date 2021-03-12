@@ -28,11 +28,9 @@ argo-cd:
             name: Google
             config:
               clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
-              clientSecret: $dex.google.clientSecret
+              clientSecret: $dex.clientSecret
               hostedDomains:
                 - lsst.cloud
-              groups:
-                - gcp-science-platform-gke-cluster-admins@lsst.cloud
               redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/

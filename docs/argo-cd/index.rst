@@ -47,3 +47,4 @@ Instead, follow the upgrade process described below.
 .. toctree::
 
    upgrading
+   authentication
