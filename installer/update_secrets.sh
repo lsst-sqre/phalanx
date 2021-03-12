@@ -5,6 +5,9 @@ export VAULT_DOC_UUID=`yq -r .onepassword_uuid ../science-platform/values.yaml`
 export VAULT_ADDR=https://vault.lsst.codes
 export VAULT_TOKEN=`./vault_key.py $ENVIRONMENT write`
 
+echo "Clear out any existing secrets"
+rm -rf secrets
+
 echo "Reading current secrets from vault"
 ./read_secrets.sh $ENVIRONMENT
 
