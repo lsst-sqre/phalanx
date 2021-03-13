@@ -39,11 +39,11 @@ nublado2:
             mountPath: /scratch
 
     ingress:
-      hosts: ["data-dev.lsst.cloud"]
+      hosts: ["data-int.lsst.cloud"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
 
   config:
-    base_url: "https://data-dev.lsst.cloud"
+    base_url: "https://data-int.lsst.cloud"
 
-  vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
+  vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"
