@@ -2,6 +2,8 @@ environment: idfprod
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: true
 cert_manager:
@@ -27,6 +29,8 @@ moneypenny:
 ingress_nginx:
   enabled: true
 nublado:
+  enabled: true
+nublado2:
   enabled: true
 obstap:
   enabled: true
