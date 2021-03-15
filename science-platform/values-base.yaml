@@ -23,7 +23,7 @@ logging:
 mobu:
   enabled: false
 moneypenny:
-  enabled: false
+  enabled: true
 ingress_nginx:
   enabled: true
 nublado:

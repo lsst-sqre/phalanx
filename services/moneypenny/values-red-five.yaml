@@ -1,0 +1,14 @@
+moneypenny:
+  host: "red-five.lsst.codes"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: red-five.lsst.codes
+        paths: ["/moneypenny"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=exec:admin"
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/red-five.lsst.codes/pull-secret"

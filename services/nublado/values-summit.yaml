@@ -3,7 +3,7 @@ nublado:
   fqdn: summit-lsp.lsst.codes
   debug: 'true'
   oauth_provider: 'jwt'
-
+  gafaelfawr_secrets_path: 'secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr'
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
 

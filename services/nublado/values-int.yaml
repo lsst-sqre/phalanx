@@ -3,6 +3,7 @@ nublado:
   fqdn: lsst-lsp-int.ncsa.illinois.edu
 
   oauth_provider: 'jwt'
+  gafaelfawr_secrets_path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr'
 
   lab:
     restrict_nodes: 'true'

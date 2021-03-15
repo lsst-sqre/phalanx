@@ -3,6 +3,7 @@ nublado:
   fqdn: data.lsst.cloud
 
   oauth_provider: 'jwt'
+  gafaelfawr_secrets_path: 'secret/k8s_operator/data.lsst.cloud/gafaelfawr'
 
   hub:
     image: 'lsstsqre/sciplat-hub:latest'
