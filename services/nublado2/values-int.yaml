@@ -6,9 +6,6 @@ nublado2:
     hub:
       db:
         type: sqlite-memory
-      image:
-        name: lsstsqre/nublado2
-        tag: "tickets-DM-28950"
 
     singleuser:
       cmd: "/opt/lsst/software/jupyterlab/provisionator.bash"

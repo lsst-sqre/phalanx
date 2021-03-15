@@ -3,6 +3,7 @@ name: Minikube
 on:
   pull_request:
     paths:
+      - ".github/**"
       - "installer/**"
       - "science-platform/**"
       - "!science-platform/values-*.yaml"
@@ -33,6 +34,6 @@ jobs:
       - name: Run installer
         run: |
           cd installer
-          ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }})
+          ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }}
       - name: Get final list of resources
         run: kubectl get all -A

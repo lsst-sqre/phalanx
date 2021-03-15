@@ -3,11 +3,6 @@ nublado2:
     debug:
       enabled: true
 
-    hub:
-      image:
-        name: lsstsqre/nublado2
-        tag: "1.0.0"
-
     singleuser:
       storage:
         type: none
