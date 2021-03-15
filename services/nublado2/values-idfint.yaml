@@ -15,19 +15,19 @@ nublado2:
           - name: datasets
             nfs:
               path: /share1/datasets
-              server: 10.87.86.26
+              server: 10.22.240.130
           - name: home
             nfs:
               path: /share1/home
-              server: 10.87.86.26
+              server: 10.22.240.130
           - name: project
             nfs:
               path: /share1/project
-              server: 10.87.86.26
+              server: 10.22.240.130
           - name: scratch
             nfs:
               path: /share1/scratch
-              server: 10.87.86.26
+              server: 10.22.240.130
         extraVolumeMounts:
           - name: datasets
             mountPath: /datasets
@@ -39,11 +39,11 @@ nublado2:
             mountPath: /scratch
 
     ingress:
-      hosts: ["data-dev.lsst.cloud"]
+      hosts: ["data-int.lsst.cloud"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
 
   config:
-    base_url: "https://data-dev.lsst.cloud"
+    base_url: "https://data-int.lsst.cloud"
 
-  vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
+  vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"
