@@ -42,3 +42,4 @@ nublado2:
     base_url: "https://data.lsst.cloud"
 
   vault_secret_path: "secret/k8s_operator/data.lsst.cloud/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
