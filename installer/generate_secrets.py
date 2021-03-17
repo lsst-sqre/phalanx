@@ -239,6 +239,12 @@ class SecretGenerator:
             self._set("argocd", "admin.password", h)
             self._set("argocd", "admin.passwordMtime", now_time)
 
+        self.input_field(
+            "argocd",
+            "dex.clientSecret",
+            "OAuth client secret for ArgoCD (either GitHub or Google)?"
+        )
+
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
 
     def _portal(self):
