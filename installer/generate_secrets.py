@@ -77,9 +77,20 @@ class SecretGenerator:
             with open(fname, "r") as f:
                 self.secrets[component][name] = f.read()
 
+    def _get_current(self, component, name):
+        if component not in self.secrets:
+            return None
+        if name not in self.secrets[component]:
+            return None
+
+        return self.secrets[component][name]
+
+    def _set(self, component, name, new_value):
+        self.secrets[component][name] = new_value
+
     def _set_generated(self, component, name, new_value):
         if self.regenerate:
-            self.secrets[component][name] = new_value
+            self._set(component, name, new_value)
 
     def _tap(self):
         self.input_field(
@@ -213,15 +224,20 @@ class SecretGenerator:
         self.input_file("ingress-nginx", "tls.crt", "Certificate chain")
 
     def _argocd(self):
+        current_pw = self._get_current("installer", "argocd.admin.plaintext_password")
+
         self.input_field(
             "installer", "argocd.admin.plaintext_password", "Admin password for ArgoCD?"
         )
-        pw = self.secrets["installer"]["argocd.admin.plaintext_password"]
-        h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
-        now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        new_pw = self.secrets["installer"]["argocd.admin.plaintext_password"]
 
-        self._set_generated("argocd", "admin.password", h)
-        self._set_generated("argocd", "admin.passwordMtime", now_time)
+        if current_pw != new_pw or self.regenerate:
+            h = bcrypt.hashpw(new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
+            now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+            self._set("argocd", "admin.password", h)
+            self._set("argocd", "admin.passwordMtime", now_time)
+
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
 
     def _portal(self):
