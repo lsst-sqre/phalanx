@@ -78,9 +78,7 @@ class SecretGenerator:
                 self.secrets[component][name] = f.read()
 
     def _get_current(self, component, name):
-        if component not in self.secrets:
-            return None
-        if name not in self.secrets[component]:
+        if not self._exists(component, name):
             return None
 
         return self.secrets[component][name]
@@ -88,8 +86,11 @@ class SecretGenerator:
     def _set(self, component, name, new_value):
         self.secrets[component][name] = new_value
 
+    def _exists(self, component, name):
+        return (component in self.secrets and name in self.secrets[component])
+
     def _set_generated(self, component, name, new_value):
-        if self.regenerate:
+        if not self._exists(component, name) or self.regenerate:
             self._set(component, name, new_value)
 
     def _tap(self):
