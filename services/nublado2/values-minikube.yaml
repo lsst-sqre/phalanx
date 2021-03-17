@@ -16,3 +16,4 @@ nublado2:
     base_url: "https://minikube.lsst.codes"
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
