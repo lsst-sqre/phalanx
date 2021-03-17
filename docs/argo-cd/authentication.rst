@@ -52,6 +52,17 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 #. Click on create.
    This will pop up a dialog with the client ID and secret for the newly-created OAuth client.
 
+#. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD Google OAuth - data-int.lsst.cloud" (replacing the last part with the FQDN of the environment).
+   In this secret, put the client ID in the username field.
+   Put the secret in the password field.
+   Create a field labeled ``generate_secrets_key`` with value ``argocd dex.clientSecret``.
+   Create a field labeled ``environment`` with value ``data-int.lsst.cloud`` (replace with the FQDN of the environment).
+   Save this 1Password secret.
+
+#. If the environment already exists, get a Vault write token for the environment (or the Vault admin token) and set the ``dex.clientSecret`` key in the ``argocd`` secret in the Vault path for that environment (something like ``secret/k8s_operator/data-int.lsst.cloud``, replacing the last part with the FQDN of the environment).
+   This will add the value to the Argo CD secret once vault-secrets-operator notices the change.
+   You can delete ``argocd-secret`` to immediately recreate it to speed up the propagation.
+
 #. In the Phalanx repository, under ``services/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
    In ``argo-cd.server.config``, at the same level as ``helm.repositories``, add the following, modifying the URLs and ``hostedDomains`` for the environment and changing the ``clientID`` to the value from the pop-up:
 
@@ -91,8 +102,78 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 
    Change the list of users to the email addresses of the users who should have admin access to this environment.
 
-#. Using ``kubectl``, edit ``secret/argocd-secret`` in the ``argocd`` namespace and add a key named ``dex.clientSecret`` whose contents is the base64-encoded client secret from the GCP console dialog pop-up.
-   Be sure when base64-encoding that value to not include a trailing newline.
+#. Create a PR with the above changes, merge it, and then sync Argo CD.
+   Ensure that both the ``argocd-server`` and ``argocd-dex-server`` deployments are restarted (in case the Argo CD Helm chart doesn't ensure this).
+
+#. Go to the ``/argo-cd`` route on the environment.
+   Log out if you're logged in with the admin password.
+   You should see a login in with Google option appear.
+   Click on it and you should be able to authenticate with Google.
+   Anyone in the same hosted domain can authenticate, but if you aren't one of the listed users, you should not see any applications.
+
+Configuring GitHub SSO
+======================
+
+To set up Google SSO authentication to Argo CD in a new cluster, take the following steps:
+
+#. From the GitHub page of the organization in which you want to create the OAuth application (such as https://github.com/lsst-sqre), go to Settings → Developer Settings → OAuth Apps.
+
+#. Click New OAuth App.
+
+#. Enter the following information (adjust for the environment):
+   - Application name: RSP Argo CD (NCSA int)
+   - Homepage URL: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd
+   - Authorization callback URL: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd/api/dex/callback
+
+#. Click "Register Application".
+
+#. Click "Generate a new client secret".
+
+#. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD GitHub OAuth - lsst-lsp-int.ncsa.illinois.edu" (replacing the last part with the FQDN of the environment).
+   In this secret, put the client ID in the username field.
+   Put the client secret in the password field.
+   Create a field labeled ``generate_secrets_key`` with value ``argocd dex.clientSecret``.
+   Create a field labeled ``environment`` with value ``lsst-lsp-int.ncsa.illinois.edu`` (replace with the FQDN of the environment).
+   Save this 1Password secret.
+
+#. If the environment already exists, get a Vault write token for the environment (or the Vault admin token) and set the ``dex.clientSecret`` key in the ``argocd`` secret in the Vault path for that environment (something like ``secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu``, replacing the last part with the FQDN of the environment).
+   Be sure to use ``vault kv patch`` to add the key to the existing secret.
+   This will add the value to the Argo CD secret once vault-secrets-operator notices the change.
+   You can delete ``argocd-secret`` to immediately recreate it to speed up the propagation.
+
+#. In the Phalanx repository, under ``services/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
+   In ``argo-cd.server.config``, at the same level as ``helm.repositories``, add the following, modifying the URL for the environment and changing the ``clientID`` to the value from GitHub:
+
+   .. code-block:: yaml
+
+      url: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd
+      dex.config: |
+        connectors:
+          # Auth using GitHub.
+          # See https://dexidp.io/docs/connectors/github/
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: <client-id>
+              # Reference to key in argo-secret Kubernetes resource
+              clientSecret: $dex.clientSecret
+              orgs:
+                - name: lsst-sqre
+
+   The value for ``clientSecret`` should literally be ``$dex.clientSecret``, which tells Argo CD to get it from the Argo CD configuration secret.
+   Adjust the ``orgs`` list if needed to allow access to different GitHub organizations.
+
+#. In the same file, add a new ``argo-cd.server.rbacConfig`` key as follows:
+
+   .. code-block:: yaml
+
+      rbacConfig:
+        policy.csv: |
+          g, lsst-sqre:square, role:admin
+
+   Add lines for additional GitHub teams as needed for that environment.
+   Be aware that this uses the human-readable name of the team (with capital letters and spaces if applicable), not the slug.
 
 #. Create a PR with the above changes, merge it, and then sync Argo CD.
    Ensure that both the ``argocd-server`` and ``argocd-dex-server`` deployments are restarted (in case the Argo CD Helm chart doesn't ensure this).
