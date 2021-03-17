@@ -1,4 +1,6 @@
 environment: idfdev
+fqdn: data-dev.lsst.cloud
+vault_path_prefix: secret/k8s_operator/data-dev.lsst.codes
 
 argo:
   enabled: true

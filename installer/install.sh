@@ -1,9 +1,12 @@
-#!/bin/bash -ex
+#!/bin/bash -e
 USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
-VAULT_TOKEN=${2:?$USAGE}
-GIT_URL=`git config --get remote.origin.url`
+export VAULT_TOKEN=${2:?$USAGE}
+export VAULT_ADDR=https://vault.lsst.codes
+VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
+ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
+GIT_URL=`git config --get remote.origin.url`
 # Github runs in a detached head state, but sets GITHUB_REF,
 # extract the branch from it.  If we're there, use that branch.
 # git branch --show-current will return empty in deatached head.
@@ -40,10 +43,6 @@ helm upgrade argocd ../services/argocd \
   --wait
 
 echo "Login to argocd..."
-ARGOCD_PASSWORD=`kubectl get pods \
-  --template '{{range .items}}{{.metadata.name}}{{"\n"}}{{end}}' \
-  --namespace argocd | grep argocd-server`
-
 argocd login \
   --plaintext \
   --port-forward \
@@ -95,4 +94,5 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
 
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
-echo "Login with username: admin password: $ARGOCD_PASSWORD"
+echo "For the ArgoCD admin password:"
+echo "vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer"

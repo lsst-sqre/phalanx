@@ -28,6 +28,14 @@ argo-cd:
         - url: https://charts.helm.sh/stable
           name: stable
 
+  configs:
+    secret:
+      createSecret: false
+
+vault_secret:
+  enabled: true
+  path: secret/k8s_operator/minikube.lsst.codes/argocd
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/minikube.lsst.codes/pull-secret

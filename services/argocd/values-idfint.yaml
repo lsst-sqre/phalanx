@@ -53,6 +53,14 @@ argo-cd:
         g, rra@lsst.cloud, role:admin
       scopes: "[email]"
 
+  configs:
+    secret:
+      createSecret: false
+
+vault_secret:
+  enabled: true
+  path: secret/k8s_operator/data-int.lsst.codes/argocd
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/data-int.lsst.cloud/pull-secret
