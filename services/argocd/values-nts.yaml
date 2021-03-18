@@ -18,6 +18,20 @@ argo-cd:
       - "--insecure=true"
 
     config:
+      url: https://lsst-argocd-nts-efd.ncsa.illinois.edu/argo-cd
+      dex.config: |
+        connectors:
+          # Auth using GitHub.
+          # See https://dexidp.io/docs/connectors/github/
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: fbd5b6ad221c4c12de9a
+              # Reference to key in argo-secret Kubernetes resource
+              clientSecret: $dex.clientSecret
+              orgs:
+                - name: lsst-sqre
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
@@ -27,6 +41,10 @@ argo-cd:
           name: ingress-nginx
         - url: https://charts.helm.sh/stable
           name: stable
+
+    rbacConfig:
+      policy.csv: |
+        g, lsst-sqre:square, role:admin
 
   configs:
     secret:
