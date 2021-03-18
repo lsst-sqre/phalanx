@@ -29,6 +29,7 @@ Operations guide
    argo-cd/index
    cert-issuer/index
    cert-manager/index
+   ingress-nginx/index
    logging/index
    rancher-external-ip-webhook/index
    squash-api/index
