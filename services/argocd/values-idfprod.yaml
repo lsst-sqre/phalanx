@@ -34,7 +34,7 @@ argo-cd:
 
 vault_secret:
   enabled: true
-  path: secret/k8s_operator/data.lsst.codes/argocd
+  path: secret/k8s_operator/data.lsst.cloud/argocd
 
 pull-secret:
   enabled: true
