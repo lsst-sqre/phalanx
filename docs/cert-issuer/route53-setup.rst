@@ -13,13 +13,17 @@ Therefore, we use a strategy documented in the `cert-manager documentation for R
 To do this for a new zone, do the following.
 In these instructions, the new zone is shown as ``new.zone``.
 In practice this will be a zone like ``lsst.codes`` or ``lsst.cloud``.
+This must be a public domain served from normal Internet domain servers.
+It cannot be a private domain present only in Route 53.
 
 #. Create a new hosted zone named ``tls.new.zone`` in Route 53.
    Make a note of its zone ID.
 
 #. Add the NS glue record for ``tls.new.zone`` to ``new.zone`` in Route 53.
+   See `the Amazon documentation <https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/dns-routing-traffic-for-subdomains.html#dns-routing-traffic-for-subdomains-creating-records>`__ for more details.
 
 #. Create a new IAM user named ``cert-manager-new-zone``.
+   (Don't forget to replace ``new-zone`` with the name of your zone.)
    Attach an inline IAM policy for that user that gives it access to the new ``tls.new.zone`` hosted zone.
 
    .. code-block:: json
