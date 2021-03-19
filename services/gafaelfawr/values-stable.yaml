@@ -1,31 +1,38 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
-  host: lsst-lsp-stable.ncsa.illinois.edu
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    host: lsst-lsp-stable.ncsa.illinois.edu
-  vault_secrets_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
+  vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
 
   # Use an existing, manually-managed PVC for Redis.
   redis:
     persistence:
       volumeClaimName: "auth-redis-volume-claim"
 
-  # IP range used by the cluster, used to determine the true client IP for
-  # logging.
-  proxies:
-    - "41.142.182.128/26"
+  config:
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
 
-  # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+    # IP range used by the cluster, used to determine the true client IP for
+    # logging.
+    proxies:
+      - "41.142.182.128/26"
 
-  # Use CILogon authentication.
-  cilogon:
-    client_id: "cilogon:/client_id/7ae419868b97e81644ced9886ffbcec"
-    redirect_url: "https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/callback"
-    login_params:
-      skin: "LSST"
+    # Use CILogon authentication.
+    cilogon:
+      clientId: "cilogon:/client_id/7ae419868b97e81644ced9886ffbcec"
+      redirectUrl: "https://lsst-lsp-stable.ncsa.illinois.edu/oauth2/callback"
+      loginParams:
+        skin: "LSST"
+
+    # Use NCSA groups to determine token scopes.
+    groupMapping:
+      "exec:admin": ["lsst_int_lsp_admin"]
+      "exec:notebook": ["lsst_int_lspdev"]
+      "exec:portal": ["lsst_int_lspdev"]
+      "exec:user": ["lsst_int_lspdev"]
+      "read:tap": ["lsst_int_lspdev"]
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
+  path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
