@@ -4,6 +4,11 @@ gafaelfawr:
     host: squash-sandbox.lsst.codes
   vault_secrets_path: "secret/k8s_operator/squash-sandbox/gafaelfawr"
 
+  # Reset token storage on every Redis restart.
+  redis:
+    persistence:
+      enabled: false
+
   # Session length and token expiration (in minutes).
   issuer:
     exp_minutes: 43200  # 30 days

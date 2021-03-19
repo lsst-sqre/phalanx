@@ -5,7 +5,10 @@ gafaelfawr:
     host: red-five.lsst.codes
   vault_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
 
-  # Do not specify ingress.host because we're using the wildcard virtual host.
+  # Reset token storage on every Redis restart.
+  redis:
+    persistence:
+      enabled: false
 
   # Session length and token expiration (in minutes).
   issuer:

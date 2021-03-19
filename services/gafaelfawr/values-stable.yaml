@@ -5,6 +5,11 @@ gafaelfawr:
     host: lsst-lsp-stable.ncsa.illinois.edu
   vault_secrets_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
 
+  # Use an existing, manually-managed PVC for Redis.
+  redis:
+    persistence:
+      volumeClaimName: "auth-redis-volume-claim"
+
   # IP range used by the cluster, used to determine the true client IP for
   # logging.
   proxies:
@@ -13,9 +18,6 @@ gafaelfawr:
   # Session length and token expiration (in minutes).
   issuer:
     exp_minutes: 43200  # 30 days
-
-  # PVC for the Redis volume.
-  redis_claim: "auth-redis-volume-claim"
 
   # Use CILogon authentication.
   cilogon:

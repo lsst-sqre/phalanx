@@ -5,6 +5,12 @@ gafaelfawr:
     host: summit-lsp.lsst.codes
   vault_secrets_path: "secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr"
 
+  # Reset token storage on every Redis restart for now.  This should change to
+  # use persistent volumes once we can coordinate that.
+  redis:
+    persistence:
+      enabled: false
+
   # Session length and token expiration (in minutes).
   issuer:
     exp_minutes: 43200  # 30 days
