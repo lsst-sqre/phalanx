@@ -28,15 +28,19 @@ nublado2:
           - name: passwd
             configMap:
               defaultMode: 420
+              name: passwd
           - name: group
             configMap:
               defaultMode: 420
+              name: group
           - name: shadow
             configMap:
               defaultMode: 384
+              name: shadow
           - name: gshadow
             configMap:
               defaultMode: 384
+              name: gshadow
         extraVolumeMounts:
           - name: tmp
             mountPath: /tmp
