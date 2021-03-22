@@ -7,6 +7,8 @@ nublado2:
       storage:
         type: none
         extraVolumes:
+          - name: tmp
+            emptyDir: {}
           - name: datasets
             nfs:
               path: /share1/datasets
@@ -24,6 +26,8 @@ nublado2:
               path: /share1/scratch
               server: 10.87.86.26
         extraVolumeMounts:
+          - name: tmp
+            mountPath: /tmp
           - name: datasets
             mountPath: /datasets
           - name: home
