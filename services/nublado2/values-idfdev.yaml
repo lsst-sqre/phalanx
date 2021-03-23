@@ -2,7 +2,7 @@ nublado2:
   jupyterhub:
     hub:
       image:
-        tag: "ajt-dev"
+        tag: "1.0.2"
 
     debug:
       enabled: true
@@ -80,8 +80,6 @@ nublado2:
 
   config:
     base_url: "https://data-dev.lsst.cloud"
-    no_sudo: "TRUE"
-    pod_uid: null
 
   vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
   gafaelfawr_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/gafaelfawr"
