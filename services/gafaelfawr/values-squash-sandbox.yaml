@@ -1,27 +1,39 @@
 gafaelfawr:
-  host: squash-sandbox.lsst.codes
   ingress:
-    host: squash-sandbox.lsst.codes
-  vault_secrets_path: "secret/k8s_operator/squash-sandbox/gafaelfawr"
+    host: "squash-sandbox.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/squash-sandbox/gafaelfawr"
 
-  # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  # Reset token storage on every Redis restart.
+  redis:
+    persistence:
+      enabled: false
+
+  config:
+    host: "squash-sandbox.lsst.codes"
 
     # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
     # must be set in the Gafaelfawr secret.
-    influxdb:
+    issuer:
+      influxdb:
+        enabled: true
+        username: "efdreader"
+
+    # Whether to support OpenID Connect clients.  If set to true,
+    # oidc-server-secrets must be set in the Gafaelfawr secret.
+    oidcServer:
       enabled: true
-      username: "efdreader"
 
-  # Whether to support OpenID Connect clients.  If set to true,
-  # oidc-server-secrets must be set in the Gafaelfawr secret.
-  oidc_server:
-    enabled: true
+    # Use CILogon authentication.
+    cilogon:
+      clientId: "cilogon:/client_id/232eaabf026dab8b26f9c9770873cb7e"
+      redirectUrl: "https://squash-sandbox.lsst.codes/login"
+      loginParams:
+        skin: "LSST"
 
-  # Use CILogon authentication.
-  cilogon:
-    client_id: "cilogon:/client_id/232eaabf026dab8b26f9c9770873cb7e"
-    redirect_url: "https://squash-sandbox.lsst.codes/login"
-    login_params:
-      skin: "LSST"
+    # Use NCSA groups to determine token scopes.
+    groupMapping:
+      "exec:admin": ["lsst_int_lsp_admin"]
+      "exec:notebook": ["lsst_int_lspdev"]
+      "exec:portal": ["lsst_int_lspdev"]
+      "exec:user": ["lsst_int_lspdev"]
+      "read:tap": ["lsst_int_lspdev"]
