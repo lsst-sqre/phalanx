@@ -1,26 +1,36 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
-  host: red-five.lsst.codes
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    host: red-five.lsst.codes
-  vault_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
+    host: "red-five.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
 
-  # Do not specify ingress.host because we're using the wildcard virtual host.
+  # Reset token storage on every Redis restart.
+  redis:
+    persistence:
+      enabled: false
 
-  # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  config:
+    host: "red-five.lsst.codes"
 
-  # Disabled but kept so that the client ID is easily accessible.
-  # github:
-  #   client_id: a19e79298a352f3e5650
+    # Disabled but kept so that the client ID is easily accessible.
+    # github:
+    #   clientId: "a19e79298a352f3e5650"
 
-  # Use CILogon authentication.
-  cilogon:
-    client_id: "cilogon:/client_id/51ea95a5fac24d5a6f33e658d7d77d2a"
-    login_params:
-      skin: "LSST"
+    # Use CILogon authentication.
+    cilogon:
+      clientId: "cilogon:/client_id/51ea95a5fac24d5a6f33e658d7d77d2a"
+      loginParams:
+        skin: "LSST"
+
+    # Use NCSA groups to determine token scopes.
+    groupMapping:
+      "exec:admin": ["lsst_int_lsp_admin"]
+      "exec:notebook": ["lsst_int_lspdev"]
+      "exec:portal": ["lsst_int_lspdev"]
+      "exec:user": ["lsst_int_lspdev"]
+      "read:tap": ["lsst_int_lspdev"]
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/red-five.lsst.codes/pull-secret
+  path: "secret/k8s_operator/red-five.lsst.codes/pull-secret"

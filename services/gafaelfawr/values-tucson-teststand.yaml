@@ -1,55 +1,44 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
-  host: tucson-teststand.lsst.codes
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    host: tucson-teststand.lsst.codes
-  vault_secrets_path: "secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr"
+    host: "tucson-teststand.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr"
 
-  # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  # Reset token storage on every Redis restart for now.  This should change to
+  # use persistent volumes once we can coordinate that.
+  redis:
+    persistence:
+      enabled: false
 
-  # Use GitHub authentication.
-  github:
-    client_id: 49533cbd8a8079730dcf
+  config:
+    host: "tucson-teststand.lsst.codes"
 
-  # Allow access by GitHub team.
-  group_mapping:
-    "exec:admin":
-      - "lsst-sqre-square"
-    "exec:user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "read:workspace":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "read:workspace/user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "write:workspace/user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
-    "read:image":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-base-access"
+    # Use GitHub authentication.
+    github:
+      clientId: "49533cbd8a8079730dcf"
+
+    # Allow access by GitHub team.
+    group_mapping:
+      "exec:admin":
+        - "lsst-sqre-square"
+      "exec:notebook":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-base-access"
+      "exec:portal":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-base-access"
+      "exec:user":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-base-access"
+      "read:tap":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-base-access"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret
+  path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"

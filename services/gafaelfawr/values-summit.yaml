@@ -1,55 +1,44 @@
 gafaelfawr:
-  pull_secret: 'pull-secret'
-  host: summit-lsp.lsst.codes
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    host: summit-lsp.lsst.codes
-  vault_secrets_path: "secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr"
+    host: "summit-lsp.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr"
 
-  # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  # Reset token storage on every Redis restart for now.  This should change to
+  # use persistent volumes once we can coordinate that.
+  redis:
+    persistence:
+      enabled: false
 
-  # Use GitHub authentication.
-  github:
-    client_id: 220d64cbf46f9d2b7873
+  config:
+    host: "summit-lsp.lsst.codes"
 
-  # Allow access by GitHub team.
-  group_mapping:
-    "exec:admin":
-      - "lsst-sqre-square"
-    "exec:user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "read:workspace":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "read:workspace/user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "write:workspace/user":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-    "read:image":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
+    # Use GitHub authentication.
+    github:
+      clientId: "220d64cbf46f9d2b7873"
+
+    # Allow access by GitHub team.
+    groupMapping:
+      "exec:admin":
+        - "lsst-sqre-square"
+      "exec:notebook":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-summit-access"
+      "exec:portal":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-summit-access"
+      "exec:user":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-summit-access"
+      "read:tap":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+        - "lsst-ts-summit-access"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret
+  path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
