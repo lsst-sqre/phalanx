@@ -14,6 +14,10 @@ nublado2:
         extraVolumes:
           - name: tmp
             emptyDir: {}
+          - name: lab-environment
+            configMap:
+              defaultMode: 420
+              name: lab-environment
           - name: datasets
             hostPath:
               path: /lsstdata/user/precursor_data/datasets
@@ -48,6 +52,8 @@ nublado2:
         extraVolumeMounts:
           - name: tmp
             mountPath: /tmp
+          - name: lab-environment
+            mountPath: /opt/lsst/software/jupyterlab/environment
           - name: datasets
             mountPath: /datasets
           - name: home
@@ -88,6 +94,7 @@ nublado2:
           name: Recommended
 
     base_url: "https://lsst-lsp-int.ncsa.illinois.edu"
+    auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
 
     user_resources:
       - apiVersion: v1

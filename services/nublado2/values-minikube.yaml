@@ -8,6 +8,10 @@ nublado2:
         extraVolumes:
           - name: tmp
             emptyDir: {}
+          - name: lab-environment
+            configMap:
+              defaultMode: 420
+              name: lab-environment
           - name: passwd
             configMap:
               defaultMode: 420
@@ -25,6 +29,8 @@ nublado2:
               defaultMode: 384
               name: gshadow
         extraVolumeMounts:
+          - name: lab-environment
+            mountPath: /opt/lsst/software/jupyterlab/environment
           - name: tmp
             mountPath: /tmp
           - name: passwd
@@ -51,6 +57,7 @@ nublado2:
 
   config:
     base_url: "https://minikube.lsst.codes"
+    auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"
   gafaelfawr_secret_path: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
