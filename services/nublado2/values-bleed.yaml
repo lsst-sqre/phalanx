@@ -9,6 +9,10 @@ nublado2:
         extravolumes:
           - name: tmp
             emptyDir: {}
+          - name: lab-environment
+            configMap:
+              defaultMode: 420
+              name: lab-environment
           - name: passwd
             configMap:
               defaultMode: 420
@@ -28,6 +32,8 @@ nublado2:
         extraVolumeMounts:
           - name: tmp
             mountPath: /tmp
+          - name: lab-environment
+            mountPath: /opt/lsst/software/jupyterlab/environment
           - name: passwd
             mountPath: /etc/passwd
             readOnly: true
@@ -53,6 +59,7 @@ nublado2:
 
   config:
     base_url: "https://bleed.lsst.codes"
+    auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
 
   vault_secret_path: "secret/k8s_operator/bleed.lsst.codes/nublado2"
   gafaelfawr_secret_path: "secret/k8s_operator/bleed.lsst.codes/gafaelfawr"
