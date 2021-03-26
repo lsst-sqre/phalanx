@@ -103,6 +103,11 @@ nublado:
         "mountpoint": "/lsstdata/offline/teststand",
         "mode": "ro",
         "hostpath": "/lsstdata/offline/teststand"
+      },
+      {
+        "mountpoint": "/lsstdata/offline/instrument",
+        "mode": "ro",
+        "hostpath": "/lsstdata/offline/instrument"
       }
     ]
 
