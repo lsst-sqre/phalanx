@@ -118,6 +118,11 @@ nublado:
         "mode": "ro",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
         "fileserver-export": "/offline/teststand"
+      },
+      {
+        "mountpoint": "/lsstdata/offline/instrument",
+        "mode": "ro",
+        "hostpath": "/lsstdata/offline/instrument"
       }
     ]
 
