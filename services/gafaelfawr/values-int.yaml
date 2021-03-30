@@ -23,6 +23,7 @@ gafaelfawr:
     cilogon:
       clientId: "cilogon:/client_id/6ca7b54ac075b65bccb9c885f9ba4a75"
       redirectUrl: "https://lsst-lsp-int.ncsa.illinois.edu/oauth2/callback"
+      test: true
       loginParams:
         skin: "LSST"
 
