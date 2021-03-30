@@ -112,6 +112,11 @@ nublado:
         "mountpoint": "/lsstdata/offline/instrument",
         "mode": "ro",
         "hostpath": "/lsstdata/offline/instrument"
+      },
+      {
+        "mountpoint": "/repo",
+        "mode": "rw",
+        "hostpath": "/repo"
       }
     ]
 
