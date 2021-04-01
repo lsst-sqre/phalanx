@@ -1,0 +1,11 @@
+squareone:
+  ingress:
+    host: "red-five.lsst.codes"
+  imagePullSecrets:
+    - name: "pull-secret"
+  config:
+    siteName: "Rubin Science Platform @ red-five"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/red-five.lsst.codes/pull-secret

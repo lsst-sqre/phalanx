@@ -1,0 +1,12 @@
+squareone:
+  ingress:
+    host: "data-int.lsst.cloud"
+  imagePullSecrets:
+    - name: "pull-secret"
+  config:
+    siteName: "Rubin Science Platform @ data-int"
+
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret
