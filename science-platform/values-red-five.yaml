@@ -38,6 +38,8 @@ postgres:
   enabled: true
 rancher_external_ip_webhook:
   enabled: true
+squareone:
+  enabled: false
 squash_api:
   enabled: false
 tap:

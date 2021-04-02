@@ -1,0 +1,11 @@
+squareone:
+  ingress:
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
+  imagePullSecrets:
+    - name: "pull-secret"
+  config:
+    siteName: "Rubin Science Platform @ lsp-stable"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
