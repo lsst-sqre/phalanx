@@ -22,7 +22,6 @@ gafaelfawr:
     # Use CILogon authentication.
     cilogon:
       clientId: "cilogon:/client_id/5d4d96afd3f1acf896a2b5a7a2e94277"
-      redirectUrl: "https://lsst-nts-k8s.ncsa.illinois.edu/login"
       loginParams:
         skin: "LSST"
 
