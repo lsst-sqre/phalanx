@@ -2,6 +2,9 @@ nublado2:
   jupyterhub:
     debug:
       enabled: true
+    hub:
+      image:
+        tag: "1.0.4"
 
     singleuser:
       storage:
