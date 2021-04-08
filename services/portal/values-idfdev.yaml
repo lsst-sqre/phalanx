@@ -1,7 +1,7 @@
 firefly:
   pull_secret: 'pull-secret'
   image:
-    tag: "rc-2.1.0-2"
+    tag: "2.1.1-3"
 
   ingress:
     host: "data-dev.lsst.cloud"
