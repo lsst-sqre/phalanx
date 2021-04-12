@@ -12,3 +12,19 @@ moneypenny:
   vault_secrets:
     enabled: true
     path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
+
+  orders: |
+    commission:
+      - name: farthing
+        image: lsstsqre/farthing
+        securityContext:
+          runAsUser: 1000
+          runAsNonRootUser: true
+          allowPrivilegeEscalation: false
+    retire:
+      - name: farthing
+        image: lsstsqre/farthing
+        securityContext:
+          runAsUser: 1000
+          runAsNonRootUser: true
+          allowPrivilegeEscalation: false
