@@ -120,7 +120,7 @@ nublado:
         "fileserver-export": "/repo"
       },
       {
-        "mountpoint": "/data/lsstdata/NTS",
+        "mountpoint": "/data/lsstdata/nts",
         "mode": "ro",
         "fileserver-host": "lsst-l1-cl-arctl.ncsa.illinois.edu",
         "fileserver-export": "/data/lsstdata/NTS"
