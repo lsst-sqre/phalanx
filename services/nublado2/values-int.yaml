@@ -88,10 +88,9 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook"
 
   config:
-    options_form:
-      images:
-        - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
-          name: Recommended
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+        name: Recommended
 
     base_url: "https://lsst-lsp-int.ncsa.illinois.edu"
     auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
