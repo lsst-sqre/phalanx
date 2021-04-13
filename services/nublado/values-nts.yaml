@@ -129,7 +129,8 @@ nublado:
         "mountpoint": "/repo",
         "mode": "ro",
         "fileserver-host": "lsst-nfs.ncsa.illinois.edu",
-        "fileserver-export": "/user/repo"
+        "fileserver-export": "/user/repo",
+        "disabled": true
       }
     ]
 
