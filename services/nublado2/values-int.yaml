@@ -7,80 +7,6 @@ nublado2:
       db:
         type: sqlite-memory
 
-    singleuser:
-      cmd: "/opt/lsst/software/jupyterlab/provisionator.bash"
-      storage:
-        type: none
-        extraVolumes:
-          - name: tmp
-            emptyDir: {}
-          - name: lab-environment
-            configMap:
-              defaultMode: 420
-              name: lab-environment
-          - name: datasets
-            hostPath:
-              path: /lsstdata/user/precursor_data/datasets
-          - name: home
-            hostPath:
-              path: /lsstdata/user/staff/jhome
-          - name: project
-            hostPath:
-              path: /lsstdata/user/staff/project
-          - name: scratch
-            hostPath:
-              path: /lsstdata/user/staff/scratch
-          - name: dask
-            configMap:
-              name: dask
-          - name: passwd
-            configMap:
-              defaultMode: 420
-              name: passwd
-          - name: group
-            configMap:
-              defaultMode: 420
-              name: group
-          - name: shadow
-            configMap:
-              defaultMode: 384
-              name: shadow
-          - name: gshadow
-            configMap:
-              defaultMode: 384
-              name: gshadow
-        extraVolumeMounts:
-          - name: tmp
-            mountPath: /tmp
-          - name: lab-environment
-            mountPath: /opt/lsst/software/jupyterlab/environment
-          - name: datasets
-            mountPath: /datasets
-          - name: home
-            mountPath: /home
-          - name: project
-            mountPath: /project
-          - name: scratch
-            mountPath: /scratch
-          - name: dask
-            mountPath: /etc/dask
-          - name: passwd
-            mountPath: /etc/passwd
-            readOnly: true
-            subPath: passwd
-          - name: group
-            mountPath: /etc/group
-            readOnly: true
-            subPath: group
-          - name: shadow
-            mountPath: /etc/shadow
-            readOnly: true
-            subPath: shadow
-          - name: gshadow
-            mountPath: /etc/gshadow
-            readOnly: true
-            subPath: gshadow
-
     ingress:
       hosts: ["lsst-lsp-int.ncsa.illinois.edu"]
       annotations:
@@ -88,217 +14,32 @@ nublado2:
         nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook"
 
   config:
-    options_form:
-      images:
-        - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
-          name: Recommended
-
     base_url: "https://lsst-lsp-int.ncsa.illinois.edu"
-    auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
-
-    user_resources:
-      - apiVersion: v1
-        kind: Namespace
-        metadata:
-          name: "{{user_namespace}}"
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: lab-environment
-          namespace: "{{user_namespace}}"
-        data:
-          EXTERNAL_INSTANCE_URL: "{{base_url}}"
-          FIREFLY_ROUTE: /portal/app
-          HUB_ROUTE: /n2
-          JS9_ROUTE: /js9
-          API_ROUTE: /api
-          TAP_ROUTE: /api/tap
-          SODA_ROUTE: /api/image/soda
-          WORKFLOW_ROUTE: /wf
-          AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
-          EXTERNAL_GROUPS: "{{external_groups}}"
-          EXTERNAL_UID: "{{uid}}"
-          ACCESS_TOKEN: "{{token}}"
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: group
-          namespace: "{{ user_namespace }}"
-        data:
-          group: |
-            root:x:0:
-            bin:x:1:
-            daemon:x:2:
-            sys:x:3:
-            adm:x:4:
-            tty:x:5:
-            disk:x:6:
-            lp:x:7:
-            mem:x:8:
-            kmem:x:9:
-            wheel:x:10:
-            cdrom:x:11:
-            mail:x:12:
-            man:x:15:
-            dialout:x:18:
-            floppy:x:19:
-            games:x:20:
-            tape:x:33:
-            video:x:39:
-            ftp:x:50:
-            lock:x:54:
-            audio:x:63:
-            nobody:x:99:
-            users:x:100:
-            utmp:x:22:
-            utempter:x:35:
-            input:x:999:
-            systemd-journal:x:190:
-            systemd-network:x:192:
-            dbus:x:81:
-            ssh_keys:x:998:
-            lsst_lcl:x:1000:{{ user }}
-            tss:x:59:
-            cgred:x:997:
-            screen:x:84:
-            jovyan:x:768:{{ user }}
-            provisionator:x:769:
-            {{user}}:x:{{uid}}:{% for group in groups %}
-            {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: gshadow
-          namespace: "{{ user_namespace }}"
-        data:
-          gshadow: |
-            root:!::
-            bin:!::
-            daemon:!::
-            sys:!::
-            adm:!::
-            tty:!::
-            disk:!::
-            lp:!::
-            mem:!::
-            kmem:!::
-            wheel:!::
-            cdrom:!::
-            mail:!::
-            man:!::
-            dialout:!::
-            floppy:!::
-            games:!::
-            tape:!::
-            video:!::
-            ftp:!::
-            lock:!::
-            audio:!::
-            nobody:!::
-            users:!::
-            utmp:!::
-            utempter:!::
-            input:!::
-            systemd-journal:!::
-            systemd-network:!::
-            dbus:!::
-            ssh_keys:!::
-            lsst_lcl:!::{{ user }}
-            tss:!::
-            cgred:!::
-            screen:!::
-            jovyan:!::{{ user }}
-            provisionator:!::
-            {{ user }}:!::{% for g in groups %}
-            {{ g.name }}:!::{{ user }}{% endfor %}
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: passwd
-          namespace: "{{ user_namespace }}"
-        data:
-          passwd: |
-            root:x:0:0:root:/root:/bin/bash
-            bin:x:1:1:bin:/bin:/sbin/nologin
-            daemon:x:2:2:daemon:/sbin:/sbin/nologin
-            adm:x:3:4:adm:/var/adm:/sbin/nologin
-            lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-            sync:x:5:0:sync:/sbin:/bin/sync
-            shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-            halt:x:7:0:halt:/sbin:/sbin/halt
-            mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-            operator:x:11:0:operator:/root:/sbin/nologin
-            games:x:12:100:games:/usr/games:/sbin/nologin
-            ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
-            nobody:x:99:99:Nobody:/:/sbin/nologin
-            systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
-            dbus:x:81:81:System message bus:/:/sbin/nologin
-            lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
-            tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-            provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-            {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: shadow
-          namespace: "{{ user_namespace }}"
-        data:
-          shadow: |
-            root:*:18000:0:99999:7:::
-            bin:*:18000:0:99999:7:::
-            daemon:*:18000:0:99999:7:::
-            adm:*:18000:0:99999:7:::
-            lp:*:18000:0:99999:7:::
-            sync:*:18000:0:99999:7:::
-            shutdown:*:18000:0:99999:7:::
-            halt:*:18000:0:99999:7:::
-            mail:*:18000:0:99999:7:::
-            operator:*:18000:0:99999:7:::
-            games:*:18000:0:99999:7:::
-            ftp:*:18000:0:99999:7:::
-            nobody:*:18000:0:99999:7:::
-            systemd-network:*:18000:0:99999:7:::
-            dbus:*:18000:0:99999:7:::
-            lsst_lcl:*:18000:0:99999:7:::
-            tss:*:18000:0:99999:7:::
-            provisionator:*:18000:0:99999:7:::
-            {{user}}:*:18000:0:99999:7:::
-      - apiVersion: v1
-        kind: ConfigMap
-        metadata:
-          name: dask
-          namespace: "{{ user_namespace }}"
-        data:
-          dask_worker.yml: |
-            {{ dask_yaml | indent(4) }}
-      - apiVersion: v1
-        kind: ServiceAccount
-        metadata:
-          name: "{{ user }}-serviceaccount"
-          namespace: "{{ user_namespace }}"
-      - apiVersion: rbac.authorization.k8s.io/v1
-        kind: Role
-        metadata:
-          name: "{{ user }}-role"
-          namespace: "{{ user_namespace }}"
-        rules:
-          - apiGroups: [""]
-            resources: ["pods"]
-            verbs: ["create", "get", "delete", "list"]
-      - apiVersion: rbac.authorization.k8s.io/v1
-        kind: RoleBinding
-        metadata:
-          name: "{{ user }}-rolebinding"
-          namespace: "{{ user_namespace }}"
-        roleRef:
-          apiGroup: rbac.authorization.k8s.io
-          kind: Role
-          name: "{{ user }}-role"
-        subjects:
-          - kind: ServiceAccount
-            name: "{{ user }}-serviceaccount"
-            namespace: "{{ user_namespace }}"
-
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+        name: Recommended
+    volumes:
+      - name: datasets
+        hostPath:
+          path: /lsstdata/user/precursor_data/datasets
+      - name: home
+        hostPath:
+          path: /lsstdata/user/staff/jhome
+      - name: project
+        hostPath:
+          path: /lsstdata/user/staff/project
+      - name: scratch
+        hostPath:
+          path: /lsstdata/user/staff/scratch
+    volume_mounts:
+      - name: datasets
+        mountPath: /datasets
+      - name: home
+        mountPath: /home
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/nublado2"
   gafaelfawr_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"

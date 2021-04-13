@@ -3,78 +3,6 @@ nublado2:
     debug:
       enabled: true
 
-    singleuser:
-      storage:
-        type: none
-        extraVolumes:
-          - name: tmp
-            emptyDir: {}
-          - name: lab-environment
-            configMap:
-              defaultMode: 420
-              name: lab-environment
-          - name: passwd
-            configMap:
-              defaultMode: 420
-              name: passwd
-          - name: group
-            configMap:
-              defaultMode: 420
-              name: group
-          - name: shadow
-            configMap:
-              defaultMode: 384
-              name: shadow
-          - name: gshadow
-            configMap:
-              defaultMode: 384
-              name: gshadow
-          - name: datasets
-            nfs:
-              path: /share1/datasets
-              server: 10.13.105.122
-          - name: home
-            nfs:
-              path: /share1/home
-              server: 10.13.105.122
-          - name: project
-            nfs:
-              path: /share1/project
-              server: 10.13.105.122
-          - name: scratch
-            nfs:
-              path: /share1/scratch
-              server: 10.13.105.122
-        extraVolumeMounts:
-          - name: datasets
-            mountPath: /datasets
-          - name: home
-            mountPath: /home
-          - name: project
-            mountPath: /project
-          - name: scratch
-            mountPath: /scratch
-          - name: tmp
-            mountPath: /tmp
-          - name: lab-environment
-            mountPath: /opt/lsst/software/jupyterlab/environment
-          - name: passwd
-            mountPath: /etc/passwd
-            readOnly: true
-            subPath: passwd
-          - name: group
-            mountPath: /etc/group
-            readOnly: true
-            subPath: group
-          - name: shadow
-            mountPath: /etc/shadow
-            readOnly: true
-            subPath: shadow
-          - name: gshadow
-            mountPath: /etc/gshadow
-            readOnly: true
-            subPath: gshadow
-
     ingress:
       hosts: ["data.lsst.cloud"]
       annotations:
@@ -82,7 +10,32 @@ nublado2:
 
   config:
     base_url: "https://data.lsst.cloud"
-    auto_repo_urls: "https://github.com/lsst-sqre/notebook-demo"
+    volumes:
+      - name: datasets
+        nfs:
+          path: /share1/datasets
+          server: 10.13.105.122
+      - name: home
+        nfs:
+          path: /share1/home
+          server: 10.13.105.122
+      - name: project
+        nfs:
+          path: /share1/project
+          server: 10.13.105.122
+      - name: scratch
+        nfs:
+          path: /share1/scratch
+          server: 10.13.105.122
+    volume_mounts:
+      - name: datasets
+        mountPath: /datasets
+      - name: home
+        mountPath: /home
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/data.lsst.cloud/nublado2"
   gafaelfawr_secret_path: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
