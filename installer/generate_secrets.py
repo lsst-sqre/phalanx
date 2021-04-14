@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-from base64 import b64encode
+import base64
 import bcrypt
 from collections import defaultdict
 from cryptography.fernet import Fernet
@@ -76,6 +76,12 @@ class SecretGenerator:
         if fname:
             with open(fname, "r") as f:
                 self.secrets[component][name] = f.read()
+
+    @staticmethod
+    def _generate_gafaelfawr_token() -> str:
+        key = base64.urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+        secret = base64.urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+        return f"gt-{key}.{secret}"
 
     def _get_current(self, component, name):
         if not self._exists(component, name):
@@ -196,11 +202,15 @@ class SecretGenerator:
             serialization.NoEncryption(),
         )
 
+        self._set_generated(
+            "gafaelfawr", "bootstrap-token", self._generate_gafaelfawr_token()
+        )
         self._set_generated("gafaelfawr", "redis-password", os.urandom(32).hex())
         self._set_generated(
             "gafaelfawr", "session-secret", Fernet.generate_key().decode()
         )
         self._set_generated("gafaelfawr", "signing-key", key_bytes.decode())
+        self.input_field("gafaelfawr", "database-password", "Database password")
 
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
