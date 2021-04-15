@@ -7,7 +7,7 @@ moneypenny:
       - host: data-dev.lsst.cloud
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.cloud/auth?scope=admin:provision"
 
   vault_secrets:
     enabled: true
