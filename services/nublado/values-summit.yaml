@@ -125,24 +125,28 @@ nublado:
         "fileserver-export": "/lsstdata"
       },
       {
+        "disabled": true,
         "mountpoint": "/repo/LATISS",
         "mode": "rw",
         "fileserver-host": "atarchiver.cp.lsst.org",
         "fileserver-export": "/data/repo/LATISS"
       },
       {
+        "disabled": true,
         "mountpoint": "/data/lsstdata/base/auxtel",
         "mode": "ro",
         "fileserver-host": "atarchiver.cp.lsst.org",
         "fileserver-export": "/data/lsstdata/base/auxtel"
       },
       {
+        "disabled": true,
         "mountpoint": "/repo/LSSTComCam",
         "mode": "rw",
         "fileserver-host": "comcam-arctl01.cp.lsst.org",
         "fileserver-export": "/data/repo/LSSTComCam"
       },
       {
+        "disabled": true,
         "mountpoint": "/data/lsstdata/base/comcam",
         "mode": "ro",
         "fileserver-host": "comcam-arctl01.cp.lsst.org",
