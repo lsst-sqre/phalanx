@@ -50,8 +50,6 @@ gafaelfawr:
 
   cloudsql:
     enabled: true
-    image:
-      tag: "1.21.0-buster"
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "gafaelfawr@science-platform-dev-7696.iam.gserviceaccount.com"
 
