@@ -8,6 +8,9 @@ nublado2:
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
 
+    hub:
+      baseUrl: '/nb'
+
   config:
     base_url: "https://data-int.lsst.cloud"
     volumes:
