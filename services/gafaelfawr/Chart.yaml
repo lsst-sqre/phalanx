@@ -3,7 +3,7 @@ name: gafaelfawr
 version: 1.0.0
 dependencies:
   - name: gafaelfawr
-    version: 3.0.2
+    version: 3.0.3
     repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
