@@ -16,6 +16,7 @@ gafaelfawr:
       storageClass: "standard-rwo"
 
   config:
+    loglevel: "DEBUG"
     host: "data-dev.lsst.cloud"
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
