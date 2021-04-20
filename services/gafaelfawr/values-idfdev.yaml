@@ -8,6 +8,7 @@ gafaelfawr:
   # Temporarily point data-dev at the pre-release version of Gafaelfawr 2.0.
   image:
     tag: "tickets-DM-28120"
+    pullPolicy: "Always"
 
   # Use the CSI storage class so that we can use snapshots.
   redis:
