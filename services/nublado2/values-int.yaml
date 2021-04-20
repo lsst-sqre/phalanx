@@ -4,6 +4,7 @@ nublado2:
       enabled: true
 
     hub:
+      baseUrl: '/nb'
       db:
         type: sqlite-memory
 
