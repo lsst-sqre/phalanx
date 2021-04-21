@@ -7,7 +7,7 @@ moneypenny:
       - host: lsst-lsp-int.ncsa.illinois.edu
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=admin:provision"
 
   vault_secrets:
     enabled: true
