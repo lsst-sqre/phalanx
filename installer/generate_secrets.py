@@ -159,6 +159,7 @@ class SecretGenerator:
 
     def _postgres(self):
         self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
+        self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
 
@@ -210,7 +211,17 @@ class SecretGenerator:
             "gafaelfawr", "session-secret", Fernet.generate_key().decode()
         )
         self._set_generated("gafaelfawr", "signing-key", key_bytes.decode())
-        self.input_field("gafaelfawr", "database-password", "Database password")
+
+        self.input_field("gafaelfawr", "cloudsql", "Use CloudSQL? (y/n):")
+        use_cloudsql = self.secrets["gafaelfawr"]["cloudsql"]
+        if use_cloudsql == "y":
+            self.input_field("gafaelfawr", "database-password", "Database password")
+        elif use_cloudsql == "n":
+            # Pluck the password out of the postgres portion.
+            db_pass = self.secrets["postgres"]["gafaelfawr_password"]
+            self._set("gafaelfawr", "database-password", db_pass)
+        else:
+            raise Exception(f"Invalid gafaelfawr cloudsql value {use_cloudsql}")
 
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
