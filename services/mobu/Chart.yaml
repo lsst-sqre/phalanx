@@ -2,9 +2,9 @@ apiVersion: v2
 name: mobu
 version: 1.0.0
 dependencies:
-- name: mobu
-  version: ">=0.1.9"
-  repository: https://lsst-sqre.github.io/charts/
-- name: pull-secret
-  version: 0.1.2
-  repository: https://lsst-sqre.github.io/charts/
+  - name: mobu
+    version: ">=0.2.0"
+    repository: https://lsst-sqre.github.io/charts/
+  - name: pull-secret
+    version: 0.1.2
+    repository: https://lsst-sqre.github.io/charts/

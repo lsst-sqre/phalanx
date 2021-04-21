@@ -5,6 +5,11 @@ gafaelfawr:
     host: "minikube.lsst.codes"
   vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
 
+  # Temporarily point minikube at the pre-release version of Gafaelfawr 2.0.
+  image:
+    tag: "tickets-DM-28120"
+    pullPolicy: "Always"
+
   # Reset token storage on every Redis restart.
   redis:
     persistence:
@@ -12,6 +17,7 @@ gafaelfawr:
 
   config:
     host: "minikube.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Use CILogon authentication.
     cilogon:
@@ -27,6 +33,28 @@ gafaelfawr:
       "exec:portal": ["lsst_int_lspdev"]
       "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "mobu"
+        service: "mobu"
+        scopes:
+          - "admin:token"
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true

@@ -6,6 +6,11 @@ gafaelfawr:
     externalAuthUrl: true
   vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
 
+  # Temporarily point minikube at the pre-release version of Gafaelfawr 2.0.
+  image:
+    tag: "tickets-DM-28120"
+    pullPolicy: "Always"
+
   # Use an existing, manually-managed PVC for Redis.
   redis:
     persistence:
@@ -13,6 +18,7 @@ gafaelfawr:
 
   config:
     host: "lsst-lsp-int.ncsa.illinois.edu"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # IP range used by the cluster, used to determine the true client IP for
     # logging.
@@ -34,6 +40,28 @@ gafaelfawr:
       "exec:portal": ["lsst_int_lspdev"]
       "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "mobu"
+        service: "mobu"
+        scopes:
+          - "admin:token"
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true

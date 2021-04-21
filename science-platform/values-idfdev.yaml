@@ -1,7 +1,6 @@
 environment: idfdev
 fqdn: data-dev.lsst.cloud
 vault_path_prefix: secret/k8s_operator/data-dev.lsst.codes
-revision: "tickets/DM-28120"
 
 argo:
   enabled: true
