@@ -23,7 +23,11 @@ firefly:
       memory: 32Gi
 
   secrets:
+    enabled: false
+
+  vault_secrets:
     enabled: true
+    path: secret/k8s_operator/summit-lsp.lsst.codes/portal
 
   redis:
     resources:
