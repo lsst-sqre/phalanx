@@ -4,6 +4,13 @@ landing-page:
   host: "data-dev.lsst.cloud"
   image:
     tag: "3.0.1"
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+    tls:
+      - secretName: landing-page-tls
+        hosts:
+          - "data-dev.lsst.cloud"
 
 pull-secret:
   enabled: true
