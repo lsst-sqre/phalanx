@@ -87,6 +87,16 @@ argocd app sync cert-issuer \
   --port-forward \
   --port-forward-namespace argocd || true
 
+# Sync postgres, since it may be required by Gafaelfawr.
+argocd app sync postgres \
+  --port-forward \
+  --port-forward-namespace argocd
+
+# Sync Gafaelfawr, since it will create secrets used by other apps.
+argocd app sync gafaelfawr \
+  --port-forward \
+  --port-forward-namespace argocd
+
 echo "Sync remaining science platform apps"
 argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
   --port-forward \
