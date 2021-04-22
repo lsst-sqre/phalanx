@@ -1,6 +1,4 @@
 squareone:
-  image:
-    tag: 0.1.3
   ingress:
     host: "minikube.lsst.codes"
   imagePullSecrets:

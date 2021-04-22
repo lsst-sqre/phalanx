@@ -1,6 +1,12 @@
 squareone:
   ingress:
     host: "data-dev.lsst.cloud"
+    annotations:
+      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+    tls:
+      - secretName: squareone-tls
+        hosts:
+          - "data-dev.lsst.cloud"
   imagePullSecrets:
     - name: "pull-secret"
   config:
