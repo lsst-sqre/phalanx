@@ -43,12 +43,12 @@ gafaelfawr:
 
     initialAdmins:
       - "afausti"
-      - "athornton"
+      - "athornto"
       - "cbanek"
       - "frossie"
-      - "jonathansick"
+      - "jsick"
+      - "krughoff"
       - "rra"
-      - "simonkrughoff"
 
   tokens:
     secrets:
