@@ -35,10 +35,10 @@ gafaelfawr:
 
     # Use NCSA groups to determine token scopes.
     groupMapping:
+      "admin:provision": ["lsst_int_lsp_admin"]
       "exec:admin": ["lsst_int_lsp_admin"]
       "exec:notebook": ["lsst_int_lspdev"]
       "exec:portal": ["lsst_int_lspdev"]
-      "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
 
     initialAdmins:
