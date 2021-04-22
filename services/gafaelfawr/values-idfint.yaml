@@ -25,6 +25,8 @@ gafaelfawr:
 
     # Allow access by GitHub team.
     groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
