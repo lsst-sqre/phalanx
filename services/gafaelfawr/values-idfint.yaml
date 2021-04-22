@@ -16,6 +16,7 @@ gafaelfawr:
       storageClass: "standard-rwo"
 
   config:
+    loglevel: "DEBUG"
     host: "data-int.lsst.cloud"
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
@@ -30,9 +31,6 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
       "exec:portal":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-      "exec:user":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
       "read:tap":
