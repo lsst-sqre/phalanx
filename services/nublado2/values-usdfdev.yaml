@@ -1,0 +1,40 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    ingress:
+      hosts: ["rubin-data-dev.slac.stanford.edu"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+
+    hub:
+      baseUrl: '/nb'
+
+  config:
+    base_url: "https://rubin-data-dev.slac.stanford.edu"
+    volumes:
+      - name: datasets
+        hostPath:
+          path: /share1/datasets
+      - name: home
+        hostPath:
+          path: /share1/home
+      - name: project
+        hostPath:
+          path: /share1/project
+      - name: scratch
+        hostPath:
+          path: /share1/scratch
+    volume_mounts:
+      - name: datasets
+        mountPath: /datasets
+      - name: home
+        mountPath: /home
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
+
+  vault_secret_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr"
