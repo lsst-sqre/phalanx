@@ -36,5 +36,5 @@ nublado2:
       - name: scratch
         mountPath: /scratch
 
-  vault_secret_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+  vault_secret_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/nublado2"
+  gafaelfawr_secret_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
