@@ -5,11 +5,6 @@ gafaelfawr:
     host: "minikube.lsst.codes"
   vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
 
-  # Temporarily point minikube at the pre-release version of Gafaelfawr 2.0.
-  image:
-    tag: "tickets-DM-28120"
-    pullPolicy: "Always"
-
   # Reset token storage on every Redis restart.
   redis:
     persistence:
