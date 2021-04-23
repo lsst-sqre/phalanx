@@ -21,7 +21,7 @@ influxdb:
 kapacitor:
   enabled: false
 landing_page:
-  enabled: true
+  enabled: false
 logging:
   enabled: false
 mobu:
@@ -43,7 +43,7 @@ postgres:
 rancher_external_ip_webhook:
   enabled: true
 squareone:
-  enabled: false
+  enabled: true
 squash_api:
   enabled: false
 tap:
