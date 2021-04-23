@@ -1,0 +1,53 @@
+environment: usdfdev
+fqdn: rubin-data-dev.slac.stanford.edu
+vault_path_prefix: secret/rubin/rubin-data-dev.slac.stanford.edu
+revision: "tickets/DM-28120"
+
+argo:
+  enabled: true
+cachemachine:
+  enabled: true
+cert_issuer:
+  enabled: false
+cert_manager:
+  enabled: false
+chronograf:
+  enabled: false
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: false
+influxdb:
+  enabled: false
+kapacitor:
+  enabled: false
+landing_page:
+  enabled: true
+logging:
+  enabled: false
+mobu:
+  enabled: true
+moneypenny:
+  enabled: true
+ingress_nginx:
+  enabled: false
+nublado:
+  enabled: false
+nublado2:
+  enabled: true
+obstap:
+  enabled: true
+portal:
+  enabled: true
+postgres:
+  enabled: true
+rancher_external_ip_webhook:
+  enabled: false
+squareone:
+  enabled: false
+squash_api:
+  enabled: false
+tap:
+  enabled: false
+vault_secrets_operator:
+  enabled: true
