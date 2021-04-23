@@ -6,11 +6,6 @@ gafaelfawr:
     externalAuthUrl: true
   vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
 
-  # Temporarily point minikube at the pre-release version of Gafaelfawr 2.0.
-  image:
-    tag: "tickets-DM-28120"
-    pullPolicy: "Always"
-
   # Use an existing, manually-managed PVC for Redis.
   redis:
     persistence:
