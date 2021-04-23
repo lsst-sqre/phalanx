@@ -9,6 +9,9 @@ postgres:
   exposurelog_db:
     user: 'exposurelog'
     db: 'exposurelog'
+  gafaelfawr_db:
+    user: 'gafaelfawr'
+    db: 'gafaelfawr'
   postgres_storage_class: 'rook-ceph-block'
 
 pull-secret:

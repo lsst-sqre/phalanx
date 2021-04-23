@@ -13,6 +13,7 @@ gafaelfawr:
 
   config:
     host: "summit-lsp.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Use GitHub authentication.
     github:
@@ -20,6 +21,8 @@ gafaelfawr:
 
     # Allow access by GitHub team.
     groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
@@ -30,14 +33,27 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-summit-access"
-      "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-summit-access"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-summit-access"
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true

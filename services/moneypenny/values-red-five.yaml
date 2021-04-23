@@ -7,7 +7,7 @@ moneypenny:
       - host: red-five.lsst.codes
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://red-five.lsst.codes/auth?scope=admin:provision"
 
   vault_secrets:
     enabled: true

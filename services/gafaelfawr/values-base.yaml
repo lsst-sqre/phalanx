@@ -13,12 +13,15 @@ gafaelfawr:
 
   config:
     host: "base-lsp.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     github:
       clientId: "ec88b9b897f302b620d1"
 
     # Allow access by GitHub team.
     groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
@@ -29,14 +32,27 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-base-access"
-      "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-base-access"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-base-access"
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true

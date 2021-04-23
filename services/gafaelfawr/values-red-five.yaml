@@ -12,6 +12,7 @@ gafaelfawr:
 
   config:
     host: "red-five.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Disabled but kept so that the client ID is easily accessible.
     # github:
@@ -25,11 +26,33 @@ gafaelfawr:
 
     # Use NCSA groups to determine token scopes.
     groupMapping:
+      "admin:provision": ["lsst_int_lsp_admin"]
       "exec:admin": ["lsst_int_lsp_admin"]
       "exec:notebook": ["lsst_int_lspdev"]
       "exec:portal": ["lsst_int_lspdev"]
-      "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
+
+    initialAdmins:
+      - "afausti"
+      - "athornto"
+      - "cbanek"
+      - "frossie"
+      - "jsick"
+      - "krughoff"
+      - "rra"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "mobu"
+        service: "mobu"
+        scopes:
+          - "admin:token"
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true

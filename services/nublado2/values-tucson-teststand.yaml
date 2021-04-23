@@ -1,0 +1,45 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    ingress:
+      hosts: ["tucson-teststand.lsst.cloud"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
+
+    hub:
+      baseUrl: '/nb'
+
+  config:
+    base_url: "https://tucson-teststand.lsst.cloud"
+    volumes:
+      - name: home
+        nfs:
+          path: /data/exports-lsp/home
+          server: nfs01.tu.lsst.org
+      - name: datasets
+        nfs:
+          path: /data/exports-lsp/datasets
+          server: nfs01.tu.lsst.org
+      - name: project
+        nfs:
+          path: /data/exports-lsp/project
+          server: nfs01.tu.lsst.org
+      - name: scratch
+        nfs:
+          path: /data/exports-lsp/scratch
+          server: nfs01.tu.lsst.org
+    volume_mounts:
+      - name: home
+        mountPath: /home
+      - name: datasets
+        mountPath: /datasets
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
+
+  vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.cloud/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/tucson-teststand.lsst.cloud/gafaelfawr"
