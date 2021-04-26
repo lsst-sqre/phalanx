@@ -12,12 +12,15 @@ gafaelfawr:
 
   config:
     host: "data.lsst.cloud"
+    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
     github:
       clientId: "65b6333a066375091548"
 
     # Allow access by GitHub team.
     groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
@@ -28,14 +31,37 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-data-management"
-      "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-data-management"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-data-management"
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+    serviceAccount: "gafaelfawr@science-platform-stable-6994.iam.gserviceaccount.com"
+
+  tokens:
+    secrets:
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "mobu"
+        service: "mobu"
+        scopes:
+          - "admin:token"
+      - secretName: "gafaelfawr-token"
+        secretNamespace: "nublado2"
+        service: "nublado2"
+        scopes:
+          - "admin:provision"
 
 pull-secret:
   enabled: true
