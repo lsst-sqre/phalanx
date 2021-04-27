@@ -14,6 +14,7 @@ nublado2:
 
   config:
     base_url: "https://data-dev.lsst.cloud"
+    butler_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/butler-secret"
     volumes:
       - name: datasets
         nfs:
