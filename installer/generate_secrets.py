@@ -9,6 +9,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from datetime import datetime, timezone
 import json
+import logging
 import os
 from pathlib import Path
 import secrets
@@ -286,9 +287,16 @@ class OnePasswordSecretGenerator(SecretGenerator):
         for i in items:
             key = None
             environments = []
-            doc = self.op.get_item(uuid=i["uuid"])
+            uuid = i["uuid"]
+            doc = self.op.get_item(uuid=uuid)
+
+            logging.debug(f"Looking at {uuid}")
+            logging.debug(f"{doc}")
 
             for section in doc["details"]["sections"]:
+                if "fields" not in section:
+                    continue
+
                 for field in section["fields"]:
                     if field["t"] == "generate_secrets_key":
                         if key is None:
@@ -297,6 +305,11 @@ class OnePasswordSecretGenerator(SecretGenerator):
                             raise Exception("Found two generate_secrets_keys for {key}")
                     elif field["t"] == "environment":
                         environments.append(field["v"])
+
+            # If we don't find a generate_secrets_key somewhere, then we shouldn't
+            # bother with this document in the vault.
+            if not key:
+                continue
 
             # The type of secret is either a note or a password login.
             # First, check the notes.
@@ -327,9 +340,15 @@ class OnePasswordSecretGenerator(SecretGenerator):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate_secrets")
     parser.add_argument("--op", default=False, action="store_true", help="Load secrets from 1Password")
+    parser.add_argument("--verbose", default=False, action="store_true", help="Verbose logging")
     parser.add_argument("--regenerate", default=False, action="store_true", help="Regenerate random secrets")
     parser.add_argument("environment", help="Environment to generate")
     args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig()
 
     if args.op:
         sg = OnePasswordSecretGenerator(args.environment, args.regenerate)
