@@ -26,6 +26,7 @@ class SecretGenerator:
 
     def generate(self):
         self._pull_secret()
+        self._butler_secret()
         self._postgres()
         self._log()
         self._tap()
@@ -241,6 +242,17 @@ class SecretGenerator:
         self.input_file(
             "pull-secret", ".dockerconfigjson", ".docker/config.json to pull images"
         )
+
+    def _butler_secret(self):
+        self.input_file(
+            "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
+            )
+        self.input_file(
+            "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
+            )
+        self.input_file(
+            "butler-secret", "butler-hmac-idf-creds.json", "Butler credentials (HMAC JSON format)"
+            )
 
     def _ingress_nginx(self):
         self.input_file("ingress-nginx", "tls.key", "Certificate private key")
