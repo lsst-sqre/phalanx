@@ -3,7 +3,6 @@ gafaelfawr:
     - name: "pull-secret"
   ingress:
     host: "lsst-lsp-stable.ncsa.illinois.edu"
-    externalAuthUrl: true
   vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/gafaelfawr"
 
   # Use an existing, manually-managed PVC for Redis.

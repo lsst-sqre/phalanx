@@ -5,13 +5,16 @@ gafaelfawr:
     host: "data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/gafaelfawr"
 
+  # Enable the frontend NetworkPolicy.
+  networkPolicy:
+    enabled: true
+
   # Use the CSI storage class so that we can use snapshots.
   redis:
     persistence:
       storageClass: "standard-rwo"
 
   config:
-    loglevel: "DEBUG"
     host: "data-int.lsst.cloud"
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
