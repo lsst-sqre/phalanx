@@ -1,6 +1,5 @@
 cadc-tap:
   pull_secret: 'pull-secret'
-  tag: "1.0.16"
   use_mock_qserv: false
   qserv_host: "10.140.1.211:4040"
 
