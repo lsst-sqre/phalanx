@@ -1,6 +1,12 @@
 squareone:
   ingress:
     host: "tucson-teststand.lsst.codes"
+    annotations:
+      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+    tls:
+      - secretName: squareone-tls
+        hosts:
+          - "tucson-teststand.lsst.cloud"
   imagePullSecrets:
     - name: "pull-secret"
   config:

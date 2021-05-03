@@ -6,6 +6,10 @@ mobu:
   environment_url: "https://data-dev.lsst.cloud"
   host: "data-dev.lsst.cloud"
 
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local/auth?scope=exec:admin&auth_type=basic"
+
 pull-secret:
   enabled: true
   path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
