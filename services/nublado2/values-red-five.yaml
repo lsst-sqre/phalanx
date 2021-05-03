@@ -11,6 +11,7 @@ nublado2:
 
   config:
     base_url: "https://red-five.lsst.codes"
+    data_repo_bucket: ""
     volumes:
       - name: home
         nfs:

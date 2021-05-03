@@ -14,6 +14,7 @@ nublado2:
 
   config:
     base_url: "https://summit-lsp.lsst.cloud"
+    data_repo_bucket: ""
     volumes:
       - name: home
         nfs:
