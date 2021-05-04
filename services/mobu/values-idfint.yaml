@@ -8,7 +8,7 @@ mobu:
 
   ingress:
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local/auth?scope=exec:admin&auth_type=basic"
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin&auth_type=basic"
 
 pull-secret:
   enabled: true
