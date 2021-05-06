@@ -1,9 +1,10 @@
-#!/bin/bash -e
+#!/bin/bash -xe
 USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
-export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_ADDR=https://vault.lsst.codes
-VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
+#export VAULT_TOKEN=${2:?$USAGE}
+export VAULT_ADDR=${VAULT_ADDR:-https://vault.lsst.codes}
+#VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
+VAULT_PATH_PREFIX=$(cat ../science-platform/values-usdfdev.yaml | grep vault_path_prefix | awk '{print $2}')
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
@@ -15,12 +16,18 @@ GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
 kubectl create ns vault-secrets-operator || true
+#kubectl create secret generic vault-secrets-operator \
+#  --namespace vault-secrets-operator \
+#  --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
+#  --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
+#  --dry-run -o yaml | kubectl apply -f -
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
-  --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
-  --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
-  --dry-run -o yaml | kubectl apply -f -
-
+  --from-literal=VAULT_ROLE_ID=$(vault read --format=json auth/approle/role/rubin-data-dev.slac.stanford.edu/role-id | jq -M .data.role_id  | sed 's/"//g') \
+  --from-literal=VAULT_SECRET_ID=$(vault write -f --format=json auth/approle/role/rubin-data-dev.slac.stanford.edu/secret-id | jq .data.secret_id | sed 's/"//g') \
+  --from-literal=VAULT_TOKEN_MAX_TTL=600 \
+  --dry-run=client -o yaml | kubectl apply -f -
+  
 echo "Update / install vault-secrets-operator..."
 # ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
 helm dependency update ../services/vault-secrets-operator
