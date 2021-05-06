@@ -17,6 +17,16 @@ nublado2:
   config:
     base_url: "https://lsst-lsp-stable.ncsa.illinois.edu"
     butler_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/butler-secret"
+    sizes:
+      - name: Small
+        cpu: 1
+        ram: 3072M
+      - name: Medium
+        cpu: 2
+        ram: 6144M
+      - name: Large
+        cpu: 4
+        ram: 12288M
     volumes:
       - name: datasets
         hostPath:
