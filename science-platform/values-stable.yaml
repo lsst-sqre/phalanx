@@ -4,6 +4,8 @@ vault_path_prefix: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: false
 cert_manager:

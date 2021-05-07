@@ -23,10 +23,10 @@ nublado:
 
   hub:
     persistent_home: false
-    image: 'lsstsqre/sciplat-hub:0.35.4'
+    image: 'lsstsqre/sciplat-hub:0.38.0'
 
   wf:
-    image: 'lsstsqre/wfdispatcher:0.4.4-pre3'
+    image: 'lsstsqre/wfdispatcher:0.4.4-pre6'
     ingress_ui:
       annotations:
         nginx.ingress.kubernetes.io/auth-method: GET
@@ -42,7 +42,7 @@ nublado:
           error_page 403 = "/auth/forbidden?scope=exec:notebook";
 
   prepuller:
-    image: 'lsstsqre/prepuller:0.9.4'
+    image: 'lsstsqre/prepuller:0.10.1'
     schedule: "57 01,07,13,19 * * *"
 
   routes:
