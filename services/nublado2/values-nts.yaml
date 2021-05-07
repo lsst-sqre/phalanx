@@ -27,8 +27,11 @@ nublado2:
     base_url: "https://lsst-nts-k8s.ncsa.illinois.edu"
     butler_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/butler-secret"
     pinned_images:
-      - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+      - image_url: registry.hub.docker.com/lsstsqre/nts-sal-sciplat-lab:recommended
         name: Recommended
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: ncsa
     volumes:
       - name: datasets
         nfs:

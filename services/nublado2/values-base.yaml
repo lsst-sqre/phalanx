@@ -24,6 +24,12 @@ nublado2:
   config:
     base_url: "https://base-lsp.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/butler-secret"
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: base
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/base-sal-sciplat-lab:recommended
+        name: Recommended
     volumes:
       - name: home
         nfs:
