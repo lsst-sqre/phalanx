@@ -24,6 +24,12 @@ nublado2:
   config:
     base_url: "https://summit-lsp.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/butler-secret"
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: summit
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/summit-sal-sciplat-lab:recommended
+        name: Recommended
     volumes:
       - name: home
         nfs:

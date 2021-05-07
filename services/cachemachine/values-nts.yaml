@@ -1,0 +1,30 @@
+cachemachine:
+  host: "lsst-nts-k8s-ncsa.illinois.edu"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: lsst-nts-k8s-ncsa.illinois.edu
+        paths: ["/cachemachine"]
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/lsst-nts-k8s-ncsa.illinois.edu/pull-secret"
+
+  autostart:
+    jupyter: |
+      {
+        "name": "jupyter",
+        "labels": {},
+        "repomen": [
+          {
+            "type": "RubinRepoMan",
+            "registry_url": "registry.hub.docker.com",
+            "repo": "lsstsqre/nts-sal-sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 1,
+            "num_weeklies": 3,
+            "num_dailies": 0
+          }
+        ]
+      }

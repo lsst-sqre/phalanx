@@ -24,6 +24,12 @@ nublado2:
   config:
     base_url: "https://tucson-teststand.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: tucson
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/tts-sal-sciplat-lab:recommended
+        name: Recommended
     volumes:
       - name: home
         nfs:
