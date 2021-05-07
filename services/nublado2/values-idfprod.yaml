@@ -15,6 +15,10 @@ nublado2:
   config:
     base_url: "https://data.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data.lsst.cloud/butler-secret"
+    lab_environment:
+      PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+      AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
+      S3_ENDPOINT_URL: "https://storage.googleapis.com"
     volumes:
       - name: datasets
         nfs:
