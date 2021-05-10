@@ -1,5 +1,7 @@
-solver:
-  route53:
-    aws_access_key_id: AKIAQSJOS2SFLUEVXZDB
-    hosted_zone: Z06873202D7WVTZUFOQ42
-    vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/cert-manager"
+cert-issuer:
+  config:
+    email: "sqre-admin@lists.lsst.org"
+    route53:
+      awsAccessKeyId: "AKIAQSJOS2SFLUEVXZDB"
+      hostedZone: "Z06873202D7WVTZUFOQ42"
+    vaultSecretPath: "secret/k8s_operator/summit-lsp.lsst.codes/cert-manager"
