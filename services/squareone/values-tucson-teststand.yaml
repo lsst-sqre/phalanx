@@ -6,7 +6,7 @@ squareone:
     tls:
       - secretName: squareone-tls
         hosts:
-          - "tucson-teststand.lsst.cloud"
+          - "tucson-teststand.lsst.codes"
   imagePullSecrets:
     - name: "pull-secret"
   config:
