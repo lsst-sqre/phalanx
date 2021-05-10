@@ -27,9 +27,6 @@ nublado2:
     lab_environment:
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: tucson
-    pinned_images:
-      - image_url: registry.hub.docker.com/lsstsqre/tts-sal-sciplat-lab:recommended
-        name: Recommended
     volumes:
       - name: home
         nfs:
