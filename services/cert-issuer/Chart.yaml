@@ -3,5 +3,5 @@ name: cert-issuer
 version: 1.0.0
 dependencies:
   - name: cert-issuer
-    version: 0.1.0
+    version: 0.1.1
     repository: https://lsst-sqre.github.io/charts/
