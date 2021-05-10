@@ -4,6 +4,8 @@ vault_path_prefix: secret/k8s_operator/base-lsp.lsst.codes
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: true
 cert_manager:
