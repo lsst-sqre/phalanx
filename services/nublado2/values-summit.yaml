@@ -4,9 +4,9 @@ nublado2:
       enabled: true
 
     ingress:
-      hosts: ["summit-lsp.lsst.cloud"]
+      hosts: ["summit-lsp.lsst.codes"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
 
     hub:
@@ -22,7 +22,7 @@ nublado2:
             privileged: true
 
   config:
-    base_url: "https://summit-lsp.lsst.cloud"
+    base_url: "https://summit-lsp.lsst.codes"
     butler_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/butler-secret"
     lab_environment:
       LSST_DDS_INTERFACE: net1
@@ -100,5 +100,5 @@ nublado2:
         mountPath: /data/lsstdata/base/comcam
         readOnly: true
 
-  vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.cloud/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/summit-lsp.lsst.cloud/gafaelfawr"
+  vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr"
