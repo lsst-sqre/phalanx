@@ -4,9 +4,9 @@ nublado2:
       enabled: true
 
     ingress:
-      hosts: ["tucson-teststand.lsst.cloud"]
+      hosts: ["tucson-teststand.lsst.codes"]
       annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.cloud/login"
+        nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
 
     hub:
@@ -22,7 +22,7 @@ nublado2:
             privileged: true
 
   config:
-    base_url: "https://tucson-teststand.lsst.cloud"
+    base_url: "https://tucson-teststand.lsst.codes"
     butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
     lab_environment:
       LSST_DDS_INTERFACE: net1
@@ -54,5 +54,5 @@ nublado2:
       - name: scratch
         mountPath: /scratch
 
-  vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.cloud/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/tucson-teststand.lsst.cloud/gafaelfawr"
+  vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
+  gafaelfawr_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr"
