@@ -1,0 +1,30 @@
+cachemachine:
+  host: "tucson-teststand.lsst.codes"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: tucson-teststand.lsst.codes
+        paths: ["/cachemachine"]
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
+
+  autostart:
+    jupyter: |
+      {
+        "name": "jupyter",
+        "labels": {},
+        "repomen": [
+          {
+            "type": "RubinRepoMan",
+            "registry_url": "registry.hub.docker.com",
+            "repo": "lsstsqre/tts-sal-sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 1,
+            "num_weeklies": 3,
+            "num_dailies": 0
+          }
+        ]
+      }

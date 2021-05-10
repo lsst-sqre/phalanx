@@ -12,9 +12,21 @@ nublado2:
     hub:
       baseUrl: '/nb'
 
+    singleuser:
+      extraAnnotations:
+        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+      initContainers:
+        - name: "multus-init"
+          image: "lsstit/ddsnet4u:latest"
+          securityContext:
+            privileged: true
+
   config:
     base_url: "https://base-lsp.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/butler-secret"
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: base
     volumes:
       - name: home
         nfs:
