@@ -6,7 +6,7 @@ squareone:
     tls:
       - secretName: squareone-tls
         hosts:
-          - "summit-lsp.lsst.cloud"
+          - "summit-lsp.lsst.codes"
   imagePullSecrets:
     - name: "pull-secret"
   config:
