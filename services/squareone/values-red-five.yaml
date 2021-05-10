@@ -6,7 +6,7 @@ squareone:
     tls:
       - secretName: squareone-tls
         hosts:
-          - "red-five.lsst.cloud"
+          - "red-five.lsst.codes"
   imagePullSecrets:
     - name: "pull-secret"
   config:
