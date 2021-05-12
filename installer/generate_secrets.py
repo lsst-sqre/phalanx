@@ -170,6 +170,9 @@ class SecretGenerator:
         self._set_generated("nublado2", "crypto_key", crypto_key)
         self._set_generated("nublado2", "proxy_token", secrets.token_hex(32))
 
+        # Pluck the password out of the postgres portion.
+        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"]["jupyterhub_password"]
+
     def _nublado(self):
         crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
         self._set_generated("nublado", "jupyterhub_crypto_key", crypto_key)
