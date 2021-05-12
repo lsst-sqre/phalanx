@@ -1,13 +1,11 @@
 #!/bin/bash -ex
 ./update_secrets.sh minikube.lsst.codes
-./update_secrets.sh nublado.lsst.codes
 ./update_secrets.sh lsst-lsp-int.ncsa.illinois.edu
 ./update_secrets.sh lsst-lsp-stable.ncsa.illinois.edu
 ./update_secrets.sh lsst-nts-k8s.ncsa.illinois.edu
 ./update_secrets.sh base-lsp.lsst.codes
 ./update_secrets.sh summit-lsp.lsst.codes
 ./update_secrets.sh tucson-teststand.lsst.codes
-./update_secrets.sh bleed.lsst.codes
 ./update_secrets.sh red-five.lsst.codes
 ./update_secrets.sh data.lsst.cloud
 ./update_secrets.sh data-int.lsst.cloud
