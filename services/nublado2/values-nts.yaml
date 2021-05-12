@@ -67,8 +67,6 @@ nublado2:
           server: lsst-nfs.ncsa.illinois.edu
           readOnly: true
     volume_mounts:
-      - name: datasets
-        mountPath: /datasets
       - name: home
         mountPath: /home
       - name: project
