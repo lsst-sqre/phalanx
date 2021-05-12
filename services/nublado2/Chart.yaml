@@ -3,5 +3,5 @@ name: nublado2
 version: 1.0.0
 dependencies:
   - name: nublado2
-    version: 0.2.3
+    version: 0.2.4
     repository: https://lsst-sqre.github.io/charts/
