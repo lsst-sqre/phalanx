@@ -30,14 +30,10 @@ nublado2:
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: ncsa
     volumes:
-      - name: datasets
-        nfs:
-          path: /user/precursor_data/datasets
-          server: lsst-l1-cl-arctl.ncsa.illinois.edu
       - name: home
         nfs:
           path: /jhome
-          server: lsst-l1-cl-arctl.ncsa.illinois.edu"
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
       - name: project
         nfs:
           path: /project
