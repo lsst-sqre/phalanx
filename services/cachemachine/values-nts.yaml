@@ -1,10 +1,10 @@
 cachemachine:
-  host: "lsst-nts-k8s-ncsa.illinois.edu"
+  host: "lsst-nts-k8s.ncsa.illinois.edu"
 
   ingress:
     enabled: true
     hosts:
-      - host: lsst-nts-k8s-ncsa.illinois.edu
+      - host: lsst-nts-k8s.ncsa.illinois.edu
         paths: ["/cachemachine"]
 
   vault_secrets:
