@@ -41,7 +41,7 @@ portal:
 postgres:
   enabled: true
 rancher_external_ip_webhook:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash_api:
