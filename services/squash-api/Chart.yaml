@@ -3,5 +3,5 @@ name: squash-api
 version: 0.1.0
 dependencies:
 - name: squash-api
-  version: 0.1.4
+  version: 0.1.5
   repository: https://lsst-sqre.github.io/charts/
