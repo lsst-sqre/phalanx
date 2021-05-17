@@ -29,14 +29,17 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-summit-access"
+        - "rubin-summit-rsp-access"
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-summit-access"
+        - "rubin-summit-rsp-access"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-summit-access"
+        - "rubin-summit-rsp-access"
 
     initialAdmins:
       - "afausti"

@@ -31,14 +31,20 @@ gafaelfawr:
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-data-management"
+        - "lsst-ops"
+        - "rubin-dp0-delegates"
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-data-management"
+        - "lsst-ops"
+        - "rubin-dp0-delegates"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-data-management"
+        - "lsst-ops"
+        - "rubin-dp0-delegates"
 
     initialAdmins:
       - "afausti"
