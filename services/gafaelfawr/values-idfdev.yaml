@@ -51,19 +51,6 @@ gafaelfawr:
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "gafaelfawr@science-platform-dev-7696.iam.gserviceaccount.com"
 
-  tokens:
-    secrets:
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "mobu"
-        service: "mobu"
-        scopes:
-          - "admin:token"
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "nublado2"
-        service: "nublado2"
-        scopes:
-          - "admin:provision"
-
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"

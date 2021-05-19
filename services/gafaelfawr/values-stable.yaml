@@ -43,19 +43,6 @@ gafaelfawr:
       - "krughoff"
       - "rra"
 
-  tokens:
-    secrets:
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "mobu"
-        service: "mobu"
-        scopes:
-          - "admin:token"
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "nublado2"
-        service: "nublado2"
-        scopes:
-          - "admin:provision"
-
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"

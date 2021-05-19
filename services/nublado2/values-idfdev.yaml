@@ -47,4 +47,3 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/gafaelfawr"
