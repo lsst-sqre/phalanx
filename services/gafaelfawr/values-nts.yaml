@@ -42,14 +42,6 @@ gafaelfawr:
       - "krughoff"
       - "rra"
 
-  tokens:
-    secrets:
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "nublado2"
-        service: "nublado2"
-        scopes:
-          - "admin:provision"
-
 pull-secret:
   enabled: true
   path: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret

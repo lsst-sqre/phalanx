@@ -50,14 +50,6 @@ gafaelfawr:
       - "rra"
       - "simonkrughoff"
 
-  tokens:
-    secrets:
-      - secretName: "gafaelfawr-token"
-        secretNamespace: "nublado2"
-        service: "nublado2"
-        scopes:
-          - "admin:provision"
-
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"

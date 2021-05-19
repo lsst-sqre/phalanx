@@ -89,4 +89,3 @@ nublado2:
         readOnly: true
 
   vault_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/gafaelfawr"

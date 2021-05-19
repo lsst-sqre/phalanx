@@ -40,4 +40,3 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/red-five.lsst.codes/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"

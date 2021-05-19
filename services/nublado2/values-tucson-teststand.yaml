@@ -55,4 +55,3 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/gafaelfawr"
