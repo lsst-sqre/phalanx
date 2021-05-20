@@ -3,9 +3,6 @@ nublado2:
     debug:
       enabled: true
 
-    hub:
-      baseUrl: '/nb'
-
     ingress:
       hosts: ["lsst-lsp-stable.ncsa.illinois.edu"]
       annotations:
