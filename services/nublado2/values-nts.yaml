@@ -5,8 +5,6 @@ nublado2:
 
     hub:
       baseUrl: '/nb'
-      db:
-        type: sqlite-memory
 
     ingress:
       hosts: ["lsst-nts-k8s.ncsa.illinois.edu"]
