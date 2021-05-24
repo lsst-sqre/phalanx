@@ -30,10 +30,10 @@ nublado:
     dds_partition_prefix: 'summit'
     dds_interface: 'net1'
     image:
-      experimentals: 0
+      experimentals: 3
       dailies: 0
       weeklies: 3
-      releases: 1
+      releases: 0
       cachefile: '/home/jovyan/repo-cache.json'
       repo_name: 'summit-sal-sciplat-lab'
     resources:
