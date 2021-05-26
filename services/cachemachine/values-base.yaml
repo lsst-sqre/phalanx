@@ -15,7 +15,9 @@ cachemachine:
     jupyter: |
       {
         "name": "jupyter",
-        "labels": {},
+        "labels": {
+            "jupyterlab": "ok"
+        },
         "repomen": [
           {
             "type": "RubinRepoMan",
