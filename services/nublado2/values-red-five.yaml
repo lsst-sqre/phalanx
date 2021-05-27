@@ -7,7 +7,6 @@ nublado2:
       hosts: ["red-five.lsst.codes"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://red-five.lsst.codes/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
 
   config:
     base_url: "https://red-five.lsst.codes"

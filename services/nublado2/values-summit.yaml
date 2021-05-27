@@ -7,10 +7,6 @@ nublado2:
       hosts: ["summit-lsp.lsst.codes"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
-
-    hub:
-      baseUrl: '/nb'
 
     singleuser:
       extraAnnotations:

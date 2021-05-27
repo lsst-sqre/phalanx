@@ -7,10 +7,6 @@ nublado2:
       hosts: ["data-int.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
-        nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
-
-    hub:
-      baseUrl: '/nb'
 
   config:
     base_url: "https://data-int.lsst.cloud"
