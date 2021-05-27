@@ -1,7 +1,7 @@
 cadc-tap:
   pull_secret: 'pull-secret'
   use_mock_qserv: false
-  qserv_host: "lsst-qserv-master03:4040"
+  qserv_host: "lsst-qserv-master01:4040"
 
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
