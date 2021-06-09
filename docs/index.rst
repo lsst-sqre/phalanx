@@ -18,7 +18,6 @@ Overview
    :maxdepth: 2
 
    arch/index
-   bootstrapping
 
 Operations guide
 ================
@@ -26,11 +25,4 @@ Operations guide
 .. toctree::
    :maxdepth: 2
 
-   argo-cd/index
-   cert-issuer/index
-   cert-manager/index
-   ingress-nginx/index
-   logging/index
-   rancher-external-ip-webhook/index
-   squash-api/index
-   vault-secrets-operator/index
+   ops/index

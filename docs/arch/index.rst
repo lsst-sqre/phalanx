@@ -27,7 +27,7 @@ The version of each chart is set to ``1.0.0`` because ``version`` is a required 
 Reverting to a previous configuration in this layer of charts is done via a manual revert in Argo CD or by reverting a change in the GitHub repository, not by pointing Argo CD to an older chart.
 
 The second layer of charts that are declared as dependencies are normal, published Helm charts that follow normal Helm semantic versioning conventions.
-In the case of the lsst-sqre/charts repository, this is enforced by CI.
+In the case of the ``lsst-sqre/charts`` repository, this is enforced by CI.
 We can then constrain the version of the chart Argo CD will deploy by changing the ``dependencies`` configuration in the top-level chart.
 
 Best practice is for a release of a chart to deploy the latest version of the corresponding application, so that upgrading the chart also implies upgrading the application.
@@ -42,50 +42,3 @@ However, for services still under development, we sometimes use a floating depen
 There is currently no mechanism to deploy different versions of a chart in different environments.
 We will probably need a mechanism to do this eventually, and have considered possible implementation strategies, but have not yet started on this work.
 In the meantime, we disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment.
-
-.. _hostnames:
-
-Hostnames and TLS
-=================
-
-The Science Platform is designed to run under a single hostname.
-All ingresses for all applications use different routes on the same external hostname.
-That hostname, in turn, is served by an NGINX proxy web server, configured via the ``ingress-nginx`` Helm chart (normally installed with the Science Platform).
-An NGINX ingress controller is required since its ``auth_request`` mechanism is used for authentication.
-
-The external hostname must have a valid TLS certificate that is trusted by the stock configuration of standard CentOS, Debian, and Alpine containers.
-There are supported two mechanisms to configure that TLS certificate:
-
-#. Purchase a commercial certificate and configure it as the ingress-nginx default certificate.
-   Do not add TLS configuration to any of the application ingresses.
-   For more information, see :doc:`../ingress-nginx/certificates`.
-   With this approach, the certificate will have to be manually renewed and replaced once per year.
-
-#. Configure Let's Encrypt to obtain a certificate via the DNS solver.
-   Once this is configured, TLS will be handled automatically without further human intervention.
-   However, this approach is far more complex to set up and has some significant prerequisites.
-   For more information, see :doc:`../cert-issuer/bootstrapping`.
-
-To use the second approach, you must have the following:
-
-* An :abbr:`AWS (Amazon Web Services)` account in which you can create two Route 53 hosted domains.
-  You must use this domain for the hostname of the Science Platform installation.
-* The ability to delegate to that Route 53 hosted domain from some public DNS domain.
-  This means either registering a domain via Amazon, registering a domain elsewhere and pointing it to Amazon's Route 53 DNS servers, or creating a subdomain of an existing public domain by adding ``NS`` records to that domain for a subdomain hosted on Route 53.
-
-If neither of those requirements sound familiar, you almost certainly want to use the first option and purchase a commercial certificate.
-
-Ingress structure
------------------
-
-Because all application ingresses share the same external hostname, the way the ingress configuration is structured is somewhat unusual.
-
-Nearly all of the services create an ingress without adding TLS configuration.
-Instead, they all use the same hostname, without a TLS stanza.
-The Nublado proxy ingress is the one designated ingress that has a TLS configuration and requests creation of certificates.
-Because each ingress uses the same hostname, the NGINX ingress will merge all of those ingresses into one virtual host and will set up TLS if TLS is defined on any of them.
-
-Were TLS defined on more than one ingress, only one of those TLS configurations would be used, but which one is chosen is somewhat random.
-Therefore, we designate a single application to hold the configuration to avoid any confusion from unused configurations.
-
-In the future, we are likely to move the TLS configuration to the landing page application instead of the Nublado proxy.
