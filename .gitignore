@@ -1,3 +1,4 @@
 /installer/secrets/
 /services/*/charts/
 /services-expanded/
+.DS_Store

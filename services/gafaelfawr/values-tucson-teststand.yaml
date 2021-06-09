@@ -20,7 +20,7 @@ gafaelfawr:
       clientId: "49533cbd8a8079730dcf"
 
     # Allow access by GitHub team.
-    group_mapping:
+    groupMapping:
       "admin:provision":
         - "lsst-sqre-square"
       "exec:admin":
