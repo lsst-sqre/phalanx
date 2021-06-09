@@ -22,11 +22,17 @@ cachemachine:
           {
             "type": "RubinRepoMan",
             "registry_url": "registry.hub.docker.com",
-            "repo": "lsstsqre/summit-sal-sciplat-lab",
+            "repo": "lsstts/sal-sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 0,
             "num_weeklies": 3,
-            "num_dailies": 0
+            "num_dailies": 2,
+            "cycle": 20,
+            "alias_tags": [
+                "latest",
+                "latest_daily",
+                "latest_weekly"
+            ]
           }
         ]
       }
