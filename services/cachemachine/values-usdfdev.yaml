@@ -1,0 +1,30 @@
+cachemachine:
+  host: "rubin-data-dev.slac.stanford.edu"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: rubin-data-dev.slac.stanford.edu
+        paths: ["/cachemachine"]
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret"
+
+  autostart:
+    jupyter: |
+      {
+        "name": "jupyter",
+        "labels": {},
+        "repomen": [
+          {
+            "type": "RubinRepoMan",
+            "registry_url": "registry.hub.docker.com",
+            "repo": "lsstsqre/sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 1,
+            "num_weeklies": 2,
+            "num_dailies": 3
+          }
+        ]
+      }
