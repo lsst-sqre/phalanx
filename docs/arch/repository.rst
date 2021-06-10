@@ -1,16 +1,37 @@
-############
-Architecture
-############
+####################
+Repository structure
+####################
 
-Overview
-========
+Layout
+======
+
+While ArgoCD can be used and configured in any number of ways, there is also a layer of convention to simplify and add some structure that works for us to deploy the science platform services.
+
+First, there is the `installer directory <https://github.com/lsst-sqre/phalanx/tree/master/installer>`__.
+This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
+The arguments to this are the name of the environment, the FQDN, and the read key for Vault (see :ref:`secrets` for more details on Vault).
+This installer script is the entrypoint for setting up a new environment.
+It can also be run on an existing environment to update it.
+
+Next, there is the `services directory <https://github.com/lsst-sqre/phalanx/tree/master/services>`__.
+Each sub-directory in services is one application installed in (at least some environments of) the Rubin Science Platform.
+This directory contains Helm values files for each of the environments that use that application.
+It also specifies which Helm chart is used to deploy that service.
+Each of the values files are named ``values-<environment>.yaml``.
+
+Finally, there is the `science-platform directory <https://github.com/lsst-sqre/phalanx/tree/master/science-platform>`__.
+This contains an Argo CD parent application that specifies which applications an environment should use and creates those applications in Argo CD.
+The values files in this directory contain the service manifest and other top level configuration.
+
+Charts
+======
 
 Argo CD manages applications in the Rubin Science Platform through a set of Helm charts.
-Which Helm charts to deploy in a given environment is controlled by the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
+Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
 
 For nearly all charts, there are at least two layers of charts.
 The upper layer of charts, the ones installed directly by Argo CD, are found in the `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__ directory.
-These charts usually contain only dependencies and ``values-*.yaml`` files to customize the application for each environment.
+These charts usually contain only dependencies and ``values-<environment>.yaml`` files to customize the application for each environment.
 Sometimes they may contain a small set of resources that are very specific to the Science Platform.
 
 The real work of deploying an application is done by the next layer of charts, which are declared as dependencies (via the ``dependencies`` key in ``Chart.yaml``) of the top layer of charts.
@@ -18,8 +39,8 @@ By convention, the top-level chart has the same name as the underlying chart tha
 This second layer of charts may be external third-party Helm charts provided by other projects, or may be Helm charts maintained by Rubin Observatory.
 In the latter case, these charts are maintained in the `lsst-sqre/charts GitHub repository <https://github.com/lsst-sqre/charts/>`__.
 
-Versioning
-==========
+Chart versioning
+================
 
 The top level of charts defined in the ``/services`` directory are used only by Argo CD and are never published as Helm charts.
 Their versions are therefore irrelevant.

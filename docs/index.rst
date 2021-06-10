@@ -21,7 +21,9 @@ Intended audience: Anyone who is administering an installation of the Rubin Scie
 .. toctree::
    :maxdepth: 2
 
-   arch/index
+   introduction
+   arch/repository
+   arch/secrets
 
 Application maintenance guide
 =============================
@@ -31,7 +33,9 @@ Intended audience: Maintainers of applications deployed on the Rubin Science Pla
 .. toctree::
    :maxdepth: 2
 
+   app-guide/sync-argo-cd
    app-guide/upgrade
+   app-guide/add-application
 
 Operations guide
 ================
