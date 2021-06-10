@@ -1,3 +1,5 @@
+.. _vault-secrets-operator:
+
 ######################
 vault-secrets-operator
 ######################
