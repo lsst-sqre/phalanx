@@ -1,0 +1,110 @@
+nublado:
+  pull_secret: 'pull-secret'
+  fqdn: rubin-data-dev.slac.stanford.edu
+  gafaelfawr_secrets_path: 'secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr'
+
+  oauth_provider: 'jwt'
+
+  hub:
+    image: 'lsstsqre/sciplat-hub:latest'
+
+  lab:
+    no_sudo: 'true'
+    enable_moneypenny: 'true'
+    restrict_nodes: 'true'
+    image:
+      experimentals: 2
+      dailies: 2
+      cachefile: '/home/jovyan/repo-cache.json'
+
+    resources:
+      nodejs_max_mem: '6144'
+      mb_per_cpu: 3072
+
+  routes:
+    soda: '/api/image/soda'
+    external:
+      instance: 'https://rubin-data-dev.slac.stanford.edu'
+
+  dask:
+    restrict_nodes: 'true'
+
+  vault_secrets:
+    enabled: true
+    path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/nublado
+
+  wf:
+    ingress_ui:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-method: GET
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /workflow;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
+
+  prepuller:
+    schedule: "59 23 31 12 *"
+
+  proxy:
+    ingress:
+      annotations:
+        nginx.ingress.kubernetes.io/auth-method: GET
+        nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Token
+        nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/configuration-snippet: |
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Port 443;
+          proxy_set_header X-Forwarded-Path /nb;
+          auth_request_set $auth_token $upstream_http_x_auth_request_token;
+          proxy_set_header X-Portal-Authorization "Bearer $auth_token";
+          error_page 403 = "/auth/forbidden?scope=exec:notebook";
+      host: rubin-data-dev.slac.stanford.edu
+      tls:
+        cluster_issuer: cert-issuer-letsencrypt-dns
+        secret: nublado-tls-secret
+        tls_host: rubin-data-dev.slac.stanford.edu
+
+  mountpoints: |
+    [
+      { "disabled": true,
+        "mountpoint": "/example -- if it doesn't start with '/' we add it",
+        "fileserver-host": "omit to use Hub settings",
+        "fileserver-export": "defaults to '/exports<mountpoint>'",
+        "mode": "rw or ro, defaults to 'ro'",
+        "options": "mount options, e.g. 'local_lock=all'"
+      },
+      {
+       "mountpoint": "/home",
+        "mode": "rw",
+        "fileserver-host": "10.87.86.26",
+        "fileserver-export": "/share1/home"
+      },
+      {
+        "mountpoint": "/datasets",
+        "fileserver-host": "10.87.86.26",
+        "fileserver-export": "/share1/datasets"
+      },
+      {
+        "mountpoint": "/project",
+        "mode": "rw",
+        "fileserver-host": "10.87.86.26",
+        "fileserver-export": "/share1/project"
+      },
+      {
+        "mountpoint": "/scratch",
+        "mode": "rw",
+        "fileserver-host": "10.87.86.26",
+        "fileserver-export": "/share1/scratch"
+      }
+    ]
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret

@@ -1,0 +1,11 @@
+squareone:
+  ingress:
+    host: "rubin-data-dev.slac.stanford.edu"
+  imagePullSecrets:
+    - name: "pull-secret"
+  config:
+    siteName: "Rubin Science Platform @ USDF"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret

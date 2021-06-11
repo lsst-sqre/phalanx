@@ -1,0 +1,11 @@
+rancher-external-ip-webhook:
+  certificates:
+    certManager:
+      version: 1.0.0
+  image:
+    pullSecrets:
+      - pull-secret
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
