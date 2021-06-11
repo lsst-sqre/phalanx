@@ -1,0 +1,38 @@
+gafaelfawr:
+  imagePullSecrets:
+    - name: "pull-secret"
+  ingress:
+    host: "rubin-data-dev.slac.stanford.edu"
+  vaultSecretsPath: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+
+  # Use the CSI storage class so that we can use snapshots.
+  redis:
+    persistence:
+      storageClass: "standard-rwo"
+
+  config:
+    host: "rubin-data-dev.slac.stanford.edu"
+
+    github:
+      clientId: "f46555b3f4c524e764ac"
+
+    # Allow access by GitHub team.
+    groupMapping:
+      "exec:admin":
+        - "lsst-sqre-square"
+      "exec:notebook":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+      "exec:portal":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+      "exec:user":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+      "read:tap":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret"

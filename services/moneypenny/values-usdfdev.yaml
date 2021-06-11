@@ -1,0 +1,37 @@
+moneypenny:
+  host: "rubin-data-dev.slac.stanford.edu"
+
+  ingress:
+    enabled: true
+    hosts:
+      - host: rubin-data-dev.slac.stanford.edu
+        paths: ["/moneypenny"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:admin"
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret"
+
+  orders: |
+    commission:
+      - name: initcommission
+        image: lsstsqre/inituserhome
+        securityContext:
+          runAsUser: 0
+          runAsNonRootUser: false
+        volumeMounts:
+        - mountPath: /homedirs
+          name: homedirs
+    retire:
+      - name: farthing
+        image: lsstsqre/farthing
+        securityContext:
+          runAsUser: 1000
+          runAsNonRootUser: true
+          allowPrivilegeEscalation: false
+    volumes:
+      - name: homedirs
+        nfs:
+          server: 10.87.86.26
+          path: /share1/home
