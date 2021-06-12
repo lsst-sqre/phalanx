@@ -1,7 +1,7 @@
 postgres:
   pull_secret: 'pull-secret'
   vault_secrets:
-    path: 'secret/k8s_operator/rubin-data-dev.slac.stanford.edu/postgres'
+    path: 'secret/rubin/rubin-data-dev.slac.stanford.edu/postgres'
   debug: 'true'
   jupyterhub_db:
     user: 'jovyan'
@@ -9,4 +9,4 @@ postgres:
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret

@@ -1,10 +1,10 @@
 mobu:
   pull_secret: 'pull-secret'
-  gafaelfawr_secrets_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr"
-  mobu_secrets_path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/mobu"
+  gafaelfawr_secrets_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+  mobu_secrets_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/mobu"
   environment_url: "https://rubin-data-dev.slac.stanford.edu"
   host: "rubin-data-dev.slac.stanford.edu"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret

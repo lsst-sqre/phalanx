@@ -9,7 +9,7 @@ cachemachine:
 
   vault_secrets:
     enabled: true
-    path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret"
+    path: "secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret"
 
   autostart:
     jupyter: |

@@ -1,7 +1,7 @@
 nublado:
   pull_secret: 'pull-secret'
   fqdn: rubin-data-dev.slac.stanford.edu
-  gafaelfawr_secrets_path: 'secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr'
+  gafaelfawr_secrets_path: 'secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr'
 
   oauth_provider: 'jwt'
 
@@ -31,7 +31,7 @@ nublado:
 
   vault_secrets:
     enabled: true
-    path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/nublado
+    path: secret/rubin/rubin-data-dev.slac.stanford.edu/nublado
 
   wf:
     ingress_ui:
@@ -107,4 +107,4 @@ nublado:
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret

@@ -27,7 +27,7 @@ firefly:
 
   vault_secrets:
     enabled: true
-    path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/portal
+    path: secret/rubin/rubin-data-dev.slac.stanford.edu/portal
 
   redis:
     resources:
@@ -36,4 +36,4 @@ firefly:
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
