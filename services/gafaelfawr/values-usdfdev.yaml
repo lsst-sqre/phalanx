@@ -3,7 +3,7 @@ gafaelfawr:
     - name: "pull-secret"
   ingress:
     host: "rubin-data-dev.slac.stanford.edu"
-  vaultSecretsPath: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+  vaultSecretsPath: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
 
   # Use the CSI storage class so that we can use snapshots.
   redis:
@@ -35,4 +35,4 @@ gafaelfawr:
 
 pull-secret:
   enabled: true
-  path: "secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret"
+  path: "secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret"

@@ -8,4 +8,4 @@ rancher-external-ip-webhook:
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret

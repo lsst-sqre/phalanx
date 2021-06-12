@@ -6,4 +6,4 @@ cert-manager:
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
+  path: secret/rubin/data-dev.lsst.cloud/pull-secret
