@@ -1,0 +1,13 @@
+init:
+  serviceAccount: "nublado-hub"
+
+argo:
+  server:
+    enabled: true
+    baseHref: "/workflows/"
+  controller:
+    containerRuntimeExecutor: "k8sapi"
+
+pull-secret:
+  enabled: true
+  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
