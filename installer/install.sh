@@ -1,8 +1,9 @@
 #!/bin/bash -xe
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_ROLE_ID_PATH VAULT_SECRET_ID"
 ENVIRONMENT=${1:?$USAGE}
 #export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_SECRET_ID=${2:?$USAGE}
+export VAULT_ROLE_ID_PATH=${2:?$VAULT_ROLE_ID_PATH}
+export VAULT_SECRET_ID=${3:?$USAGE}
 echo "VAULT_SECRET_ID=${VAULT_SECRET_ID}"
 export VAULT_ADDR=${VAULT_ADDR:-https://vault.lsst.codes}
 #VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
@@ -25,7 +26,7 @@ kubectl create ns vault-secrets-operator || true
 #  --dry-run -o yaml | kubectl apply -f -
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
-  --from-literal=VAULT_ROLE_ID=$(vault read --format=json auth/approle/role/rubin-data-dev.slac.stanford.edu/role-id | jq -M .data.role_id  | sed 's/"//g') \
+  --from-literal=VAULT_ROLE_ID=$(vault read --format=json ${VAULT_ROLE_ID_PATH} | jq -M .data.role_id  | sed 's/"//g') \
   --from-literal=VAULT_SECRET_ID=${VAULT_SECRET_ID} \
   --from-literal=VAULT_TOKEN_MAX_TTL=600 \
   --dry-run=client -o yaml | kubectl apply -f -
