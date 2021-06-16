@@ -2,6 +2,8 @@
 USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
 #export VAULT_TOKEN=${2:?$USAGE}
+export VAULT_SECRET_ID=${2:?$USAGE}
+echo "VAULT_SECRET_ID=${VAULT_SECRET_ID}"
 export VAULT_ADDR=${VAULT_ADDR:-https://vault.lsst.codes}
 #VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
 VAULT_PATH_PREFIX=$(cat ../science-platform/values-usdfdev.yaml | grep vault_path_prefix | awk '{print $2}')
@@ -24,7 +26,7 @@ kubectl create ns vault-secrets-operator || true
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_ROLE_ID=$(vault read --format=json auth/approle/role/rubin-data-dev.slac.stanford.edu/role-id | jq -M .data.role_id  | sed 's/"//g') \
-  --from-literal=VAULT_SECRET_ID=$(vault write -f --format=json auth/approle/role/rubin-data-dev.slac.stanford.edu/secret-id | jq .data.secret_id | sed 's/"//g') \
+  --from-literal=VAULT_SECRET_ID=${VAULT_SECRET_ID} \
   --from-literal=VAULT_TOKEN_MAX_TTL=600 \
   --dry-run=client -o yaml | kubectl apply -f -
   
@@ -75,9 +77,9 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-argocd app sync ingress-nginx \
-  --port-forward \
-  --port-forward-namespace argocd
+#argocd app sync ingress-nginx \
+#  --port-forward \
+#  --port-forward-namespace argocd
 
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl.  argocd's sync doesn't seem to wait for this to finish.
