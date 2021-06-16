@@ -1,9 +1,12 @@
 mobu:
   pull_secret: 'pull-secret'
-  gafaelfawr_secrets_path: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/data.lsst.cloud/mobu"
   environment_url: "https://data.lsst.cloud"
   host: "data.lsst.cloud"
+
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin&auth_type=basic"
 
 pull-secret:
   enabled: true

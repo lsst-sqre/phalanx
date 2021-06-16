@@ -1,9 +1,12 @@
 mobu:
   pull_secret: 'pull-secret'
-  gafaelfawr_secrets_path: "secret/k8s_operator/red-five.lsst.codes/gafaelfawr"
   mobu_secrets_path: "secret/k8s_operator/red-five.lsst.codes/mobu"
   environment_url: "https://red-five.lsst.codes"
   host: "red-five.lsst.codes"
+
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin&auth_type=basic"
 
 pull-secret:
   enabled: true

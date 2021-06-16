@@ -4,6 +4,8 @@ vault_path_prefix: secret/k8s_operator/base-lsp.lsst.codes
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: true
 cert_manager:
@@ -11,15 +13,13 @@ cert_manager:
 chronograf:
   enabled: false
 exposurelog:
-  enabled: false
+  enabled: true
 gafaelfawr:
   enabled: true
 influxdb:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: true
 logging:
   enabled: false
 mobu:
@@ -28,7 +28,7 @@ moneypenny:
   enabled: true
 ingress_nginx:
   enabled: true
-nublado:
+nublado2:
   enabled: true
 obstap:
   enabled: false
@@ -37,9 +37,9 @@ portal:
 postgres:
   enabled: true
 rancher_external_ip_webhook:
-  enabled: false
+  enabled: true
 squareone:
-  enabled: false
+  enabled: true
 squash_api:
   enabled: false
 tap:

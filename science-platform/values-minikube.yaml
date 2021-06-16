@@ -20,8 +20,6 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: false
 logging:
   enabled: false
 mobu:
@@ -29,8 +27,6 @@ mobu:
 moneypenny:
   enabled: true
 ingress_nginx:
-  enabled: true
-nublado:
   enabled: true
 nublado2:
   enabled: true

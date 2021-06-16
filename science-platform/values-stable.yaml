@@ -4,6 +4,8 @@ vault_path_prefix: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu
 
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: false
 cert_manager:
@@ -18,8 +20,6 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: true
 logging:
   enabled: true
 mobu:
@@ -28,7 +28,7 @@ moneypenny:
   enabled: true
 ingress_nginx:
   enabled: false
-nublado:
+nublado2:
   enabled: true
 obstap:
   enabled: true
@@ -39,7 +39,7 @@ postgres:
 rancher_external_ip_webhook:
   enabled: false
 squareone:
-  enabled: false
+  enabled: true
 squash_api:
   enabled: false
 tap:

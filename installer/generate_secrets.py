@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-from base64 import b64encode
+import base64
 import bcrypt
 from collections import defaultdict
 from cryptography.fernet import Fernet
@@ -9,6 +9,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from datetime import datetime, timezone
 import json
+import logging
 import os
 from pathlib import Path
 import secrets
@@ -25,6 +26,7 @@ class SecretGenerator:
 
     def generate(self):
         self._pull_secret()
+        self._butler_secret()
         self._postgres()
         self._log()
         self._tap()
@@ -76,6 +78,12 @@ class SecretGenerator:
         if fname:
             with open(fname, "r") as f:
                 self.secrets[component][name] = f.read()
+
+    @staticmethod
+    def _generate_gafaelfawr_token() -> str:
+        key = base64.urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+        secret = base64.urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+        return f"gt-{key}.{secret}"
 
     def _get_current(self, component, name):
         if not self._exists(component, name):
@@ -153,6 +161,7 @@ class SecretGenerator:
 
     def _postgres(self):
         self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
+        self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
 
@@ -160,6 +169,9 @@ class SecretGenerator:
         crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
         self._set_generated("nublado2", "crypto_key", crypto_key)
         self._set_generated("nublado2", "proxy_token", secrets.token_hex(32))
+
+        # Pluck the password out of the postgres portion.
+        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"]["jupyterhub_password"]
 
     def _nublado(self):
         crypto_key = ";".join([secrets.token_hex(32), secrets.token_hex(32)])
@@ -196,11 +208,25 @@ class SecretGenerator:
             serialization.NoEncryption(),
         )
 
+        self._set_generated(
+            "gafaelfawr", "bootstrap-token", self._generate_gafaelfawr_token()
+        )
         self._set_generated("gafaelfawr", "redis-password", os.urandom(32).hex())
         self._set_generated(
             "gafaelfawr", "session-secret", Fernet.generate_key().decode()
         )
         self._set_generated("gafaelfawr", "signing-key", key_bytes.decode())
+
+        self.input_field("gafaelfawr", "cloudsql", "Use CloudSQL? (y/n):")
+        use_cloudsql = self.secrets["gafaelfawr"]["cloudsql"]
+        if use_cloudsql == "y":
+            self.input_field("gafaelfawr", "database-password", "Database password")
+        elif use_cloudsql == "n":
+            # Pluck the password out of the postgres portion.
+            db_pass = self.secrets["postgres"]["gafaelfawr_password"]
+            self._set("gafaelfawr", "database-password", db_pass)
+        else:
+            raise Exception(f"Invalid gafaelfawr cloudsql value {use_cloudsql}")
 
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
@@ -219,6 +245,14 @@ class SecretGenerator:
         self.input_file(
             "pull-secret", ".dockerconfigjson", ".docker/config.json to pull images"
         )
+
+    def _butler_secret(self):
+        self.input_file(
+            "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
+            )
+        self.input_file(
+            "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
+            )
 
     def _ingress_nginx(self):
         self.input_file("ingress-nginx", "tls.key", "Certificate private key")
@@ -265,9 +299,16 @@ class OnePasswordSecretGenerator(SecretGenerator):
         for i in items:
             key = None
             environments = []
-            doc = self.op.get_item(uuid=i["uuid"])
+            uuid = i["uuid"]
+            doc = self.op.get_item(uuid=uuid)
+
+            logging.debug(f"Looking at {uuid}")
+            logging.debug(f"{doc}")
 
             for section in doc["details"]["sections"]:
+                if "fields" not in section:
+                    continue
+
                 for field in section["fields"]:
                     if field["t"] == "generate_secrets_key":
                         if key is None:
@@ -276,6 +317,11 @@ class OnePasswordSecretGenerator(SecretGenerator):
                             raise Exception("Found two generate_secrets_keys for {key}")
                     elif field["t"] == "environment":
                         environments.append(field["v"])
+
+            # If we don't find a generate_secrets_key somewhere, then we shouldn't
+            # bother with this document in the vault.
+            if not key:
+                continue
 
             # The type of secret is either a note or a password login.
             # First, check the notes.
@@ -306,9 +352,15 @@ class OnePasswordSecretGenerator(SecretGenerator):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate_secrets")
     parser.add_argument("--op", default=False, action="store_true", help="Load secrets from 1Password")
+    parser.add_argument("--verbose", default=False, action="store_true", help="Verbose logging")
     parser.add_argument("--regenerate", default=False, action="store_true", help="Regenerate random secrets")
     parser.add_argument("environment", help="Environment to generate")
     args = parser.parse_args()
+
+    if args.verbose:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig()
 
     if args.op:
         sg = OnePasswordSecretGenerator(args.environment, args.regenerate)

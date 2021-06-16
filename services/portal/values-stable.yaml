@@ -1,16 +1,14 @@
 firefly:
   pull_secret: 'pull-secret'
   replicaCount: 2
-  image:
-    tag: "rc-2.1.0-2"
 
   ingress:
     host: 'lsst-lsp-stable.ncsa.illinois.edu'
     annotations:
       nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Name,X-Auth-Request-Email,X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:portal"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;

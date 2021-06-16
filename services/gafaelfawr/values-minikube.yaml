@@ -12,6 +12,7 @@ gafaelfawr:
 
   config:
     host: "minikube.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Use CILogon authentication.
     cilogon:
@@ -27,6 +28,15 @@ gafaelfawr:
       "exec:portal": ["lsst_int_lspdev"]
       "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
 
 pull-secret:
   enabled: true

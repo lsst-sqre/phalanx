@@ -11,6 +11,7 @@ ingress-nginx:
       externalTrafficPolicy: Local
       loadBalancerIP: "139.229.160.150"
     podLabels:
+      gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:

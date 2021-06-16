@@ -1,0 +1,40 @@
+cachemachine:
+  host: "lsst-nts-k8s.ncsa.illinois.edu"
+
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "http://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:admin"
+    hosts:
+      - host: lsst-nts-k8s.ncsa.illinois.edu
+        paths: ["/cachemachine"]
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
+
+  autostart:
+    jupyter: |
+      {
+        "name": "jupyter",
+        "labels": {
+            "jupyterlab": "ok"
+        },
+        "repomen": [
+          {
+            "type": "RubinRepoMan",
+            "registry_url": "registry.hub.docker.com",
+            "repo": "lsstts/sal-sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 0,
+            "num_weeklies": 3,
+            "num_dailies": 2,
+            "cycle": 20,
+            "alias_tags": [
+                "latest",
+                "latest_daily",
+                "latest_weekly"
+            ]
+          }
+        ]
+      }

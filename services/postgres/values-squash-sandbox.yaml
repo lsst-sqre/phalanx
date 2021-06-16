@@ -1,0 +1,12 @@
+postgres:
+  pull_secret: 'pull-secret'
+  vault_secrets:
+    path: 'secret/k8s_operator/squash-sandbox.lsst.codes/postgres'
+  debug: 'true'
+  gafaelfawr_db:
+    user: 'gafaelfawr'
+    db: 'gafaelfawr'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/squash-sandbox.lsst.codes/pull-secret

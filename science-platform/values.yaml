@@ -18,15 +18,11 @@ ingress_nginx:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: false
 logging:
   enabled: false
 mobu:
   enabled: false
 moneypenny:
-  enabled: false
-nublado:
   enabled: false
 nublado2:
   enabled: false
