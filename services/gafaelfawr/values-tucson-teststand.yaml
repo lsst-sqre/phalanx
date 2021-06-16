@@ -13,31 +13,42 @@ gafaelfawr:
 
   config:
     host: "tucson-teststand.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Use GitHub authentication.
     github:
       clientId: "49533cbd8a8079730dcf"
 
     # Allow access by GitHub team.
-    group_mapping:
+    groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-base-access"
+        - "rubin-summit-rsp-access"
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-base-access"
-      "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-base-access"
+        - "rubin-summit-rsp-access"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
         - "lsst-ts-base-access"
+        - "rubin-summit-rsp-access"
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
 
 pull-secret:
   enabled: true

@@ -1,0 +1,34 @@
+cachemachine:
+  host: "lsst-lsp-stable.ncsa.illinois.edu"
+
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
+    hosts:
+      - host: lsst-lsp-stable.ncsa.illinois.edu
+        paths: ["/cachemachine"]
+
+  vault_secrets:
+    enabled: true
+    path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
+
+  autostart:
+    jupyter: |
+      {
+        "name": "jupyter",
+        "labels": {
+            "jupyterlab": "ok"
+        },
+        "repomen": [
+          {
+            "type": "RubinRepoMan",
+            "registry_url": "registry.hub.docker.com",
+            "repo": "lsstsqre/sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 1,
+            "num_weeklies": 2,
+            "num_dailies": 3
+          }
+        ]
+      }

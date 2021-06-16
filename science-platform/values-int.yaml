@@ -20,8 +20,6 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: true
 logging:
   enabled: true
 mobu:
@@ -29,8 +27,6 @@ mobu:
 moneypenny:
   enabled: true
 ingress_nginx:
-  enabled: false
-nublado:
   enabled: false
 nublado2:
   enabled: true
@@ -43,7 +39,7 @@ postgres:
 rancher_external_ip_webhook:
   enabled: false
 squareone:
-  enabled: false
+  enabled: true
 squash_api:
   enabled: false
 tap:

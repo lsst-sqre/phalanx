@@ -7,7 +7,7 @@ moneypenny:
       - host: summit-lsp.lsst.codes
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=admin:provision"
 
   vault_secrets:
     enabled: true

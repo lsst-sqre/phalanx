@@ -1,0 +1,86 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: true
+
+    ingress:
+      hosts: ["lsst-nts-k8s.ncsa.illinois.edu"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-nts-k8s.ncsa.illinois.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:notebook&notebook=true"
+
+    singleuser:
+      extraAnnotations:
+        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+      initContainers:
+        - name: "multus-init"
+          image: "lsstit/ddsnet4u:latest"
+          securityContext:
+            privileged: true
+
+  config:
+    base_url: "https://lsst-nts-k8s.ncsa.illinois.edu"
+    butler_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/butler-secret"
+    lab_environment:
+      LSST_DDS_INTERFACE: net1
+      LSST_DDS_PARTITION_PREFIX: ncsa
+    volumes:
+      - name: home
+        nfs:
+          path: /jhome
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
+      - name: project
+        nfs:
+          path: /project
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
+      - name: scratch
+        nfs:
+          path: /scratch
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
+      - name: repo
+        nfs:
+          path: /repo
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
+      - name: nts
+        nfs:
+          path: /data/lsstdata/NTS
+          server: lsst-l1-cl-arctl.ncsa.illinois.edu
+          readOnly: true
+      - name: teststand
+        nfs:
+          path: /offline/teststand
+          server: lsst-nfs.ncsa.illinois.edu
+          readOnly: true
+      - name: instrument
+        nfs:
+          path: /offline/instrument
+          server: lsst-nfs.ncsa.illinois.edu
+          readOnly: true
+      - name: readonly-repo
+        nfs:
+          path: /user/repo
+          server: lsst-nfs.ncsa.illinois.edu
+          readOnly: true
+    volume_mounts:
+      - name: home
+        mountPath: /home
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
+      - name: repo
+        mountPath: /repo
+      - name: nts
+        mountPath: /data/lsstdata/NTS
+        readOnly: true
+      - name: teststand
+        mountPath: /lsstdata/offline/teststand
+        readOnly: true
+      - name: instrument
+        mountPath: /lsstdata/offline/instrument
+        readOnly: true
+      - name: readonly-repo
+        mountPath: /readonly/repo
+        readOnly: true
+
+  vault_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/nublado2"

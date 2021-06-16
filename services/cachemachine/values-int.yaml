@@ -3,6 +3,8 @@ cachemachine:
 
   ingress:
     enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
     hosts:
       - host: lsst-lsp-int.ncsa.illinois.edu
         paths: ["/cachemachine"]
@@ -15,7 +17,9 @@ cachemachine:
     jupyter: |
       {
         "name": "jupyter",
-        "labels": {},
+        "labels": {
+            "jupyterlab": "ok"
+        },
         "repomen": [
           {
             "type": "RubinRepoMan",

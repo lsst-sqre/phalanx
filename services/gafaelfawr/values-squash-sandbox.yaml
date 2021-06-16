@@ -10,6 +10,7 @@ gafaelfawr:
 
   config:
     host: "squash-sandbox.lsst.codes"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
     # must be set in the Gafaelfawr secret.
@@ -32,8 +33,17 @@ gafaelfawr:
 
     # Use NCSA groups to determine token scopes.
     groupMapping:
+      "admin:provision": ["lsst_int_lsp_admin"]
       "exec:admin": ["lsst_int_lsp_admin"]
       "exec:notebook": ["lsst_int_lspdev"]
       "exec:portal": ["lsst_int_lspdev"]
-      "exec:user": ["lsst_int_lspdev"]
       "read:tap": ["lsst_int_lspdev"]
+
+    initialAdmins:
+      - "afausti"
+      - "athornto"
+      - "cbanek"
+      - "frossie"
+      - "jsick"
+      - "krughoff"
+      - "rra"

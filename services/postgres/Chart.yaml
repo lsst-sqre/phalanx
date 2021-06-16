@@ -1,9 +1,9 @@
 apiVersion: v2
 name: postgres
-version: 0.0.1
+version: 1.0.0
 dependencies:
 - name: postgres
-  version: ">=0.0.1"
+  version: ">=0.1.0"
   repository: https://lsst-sqre.github.io/charts/
 - name: pull-secret
   version: 0.1.2

@@ -5,6 +5,10 @@ gafaelfawr:
     host: "data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/gafaelfawr"
 
+  # Enable the frontend NetworkPolicy.
+  networkPolicy:
+    enabled: true
+
   # Use the CSI storage class so that we can use snapshots.
   redis:
     persistence:
@@ -12,12 +16,15 @@ gafaelfawr:
 
   config:
     host: "data-int.lsst.cloud"
+    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
     github:
       clientId: "0c4cc7eaffc0f89b9ace"
 
     # Allow access by GitHub team.
     groupMapping:
+      "admin:provision":
+        - "lsst-sqre-square"
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
@@ -26,12 +33,23 @@ gafaelfawr:
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
-      "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+
+    initialAdmins:
+      - "afausti"
+      - "athornton"
+      - "cbanek"
+      - "frossie"
+      - "jonathansick"
+      - "rra"
+      - "simonkrughoff"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+    serviceAccount: "gafaelfawr@science-platform-int-dc5d.iam.gserviceaccount.com"
 
 pull-secret:
   enabled: true

@@ -3,19 +3,15 @@ nublado2:
     debug:
       enabled: true
 
-    hub:
-      baseUrl: '/nb'
-      db:
-        type: sqlite-memory
-
     ingress:
       hosts: ["lsst-lsp-int.ncsa.illinois.edu"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
-        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook"
+        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:notebook&notebook=true"
 
   config:
     base_url: "https://lsst-lsp-int.ncsa.illinois.edu"
+    butler_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/butler-secret"
     pinned_images:
       - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
         name: Recommended
@@ -43,4 +39,3 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/nublado2"
-  gafaelfawr_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/gafaelfawr"
