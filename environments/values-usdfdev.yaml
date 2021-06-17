@@ -16,7 +16,7 @@ chronograf:
 exposurelog:
   enabled: false
 gafaelfawr:
-  enabled: false
+  enabled: true
 influxdb:
   enabled: false
 kapacitor:
@@ -48,6 +48,6 @@ squareone:
 squash_api:
   enabled: false
 tap:
-  enabled: false
+  enabled: true
 vault_secrets_operator:
   enabled: true
