@@ -1,0 +1,15 @@
+semaphore:
+  image:
+    tag: tickets-DM-30725
+  ingress:
+    enabled: true
+    hosts:
+      - host: "data-dev.lsst.codes"
+        paths:
+          - "/semaphore"
+  imagePullSecrets:
+    - name: "pull-secret"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
