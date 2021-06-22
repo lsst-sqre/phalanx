@@ -12,9 +12,10 @@ gafaelfawr:
 
   config:
     host: "rubin-data-dev.slac.stanford.edu"
+    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
     github:
-      clientId: "f46555b3f4c524e764ac"
+      clientId: "a39d4b6c7871e4a4bb1f"
 
     # Allow access by GitHub team.
     groupMapping:
