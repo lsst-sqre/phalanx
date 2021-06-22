@@ -2,7 +2,7 @@ firefly:
   pull_secret: 'pull-secret'
 
   image:
-    tag: "dm-29533"
+    tag: "suit-232-5"
 
   ingress:
     host: "data-int.lsst.cloud"
