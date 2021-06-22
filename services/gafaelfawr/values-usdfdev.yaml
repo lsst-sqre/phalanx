@@ -12,7 +12,7 @@ gafaelfawr:
 
   config:
     host: "rubin-data-dev.slac.stanford.edu"
-    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+    databaseUrl: "postgresql://gafaelfawr@postgres.gafaelfawr-postgres--prod/gafaelfawr"
 
     github:
       clientId: "a39d4b6c7871e4a4bb1f"
@@ -24,15 +24,24 @@ gafaelfawr:
       "exec:notebook":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "exec:user":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
+
+    initialAdmins:
+      - "yee379"
+      - "pjpascual"
+      - "brianv0"
 
 pull-secret:
   enabled: true

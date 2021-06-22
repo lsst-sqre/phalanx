@@ -44,10 +44,10 @@ postgres:
 rancher_external_ip_webhook:
   enabled: false
 squareone:
-  enabled: false
+  enabled: true
 squash_api:
   enabled: false
 tap:
   enabled: true
 vault_secrets_operator:
-  enabled: true
+  enabled: false
