@@ -1,6 +1,9 @@
 firefly:
   pull_secret: 'pull-secret'
 
+  image:
+    tag: "dm-29533-2"
+
   ingress:
     host: "data.lsst.cloud"
     annotations:
