@@ -1,4 +1,7 @@
 squareone:
+  image:
+    pullPolicy: Always
+    tag: tickets-DM-30839
   ingress:
     host: "data-dev.lsst.cloud"
     annotations:
