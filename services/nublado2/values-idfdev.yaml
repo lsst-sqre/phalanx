@@ -16,6 +16,10 @@ nublado2:
       AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
     volumes:
+      - name: home
+        nfs:
+          path: /share1/home
+          server: 10.87.86.26
       - name: project
         nfs:
           path: /share1/project
