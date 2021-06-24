@@ -15,6 +15,8 @@ nublado2:
       PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
       AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
+      # technical debt: for needed for DP0 because deployment branch is not parametrized
+      AUTO_REPO_URLS: https://github.com/SimonKrughoff/notebook-demo
     volumes:
       - name: home
         nfs:
