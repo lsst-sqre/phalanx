@@ -20,23 +20,15 @@ gafaelfawr:
     # Allow access by GitHub team.
     groupMapping:
       "exec:admin":
-        - "lsst-sqre-square"
+        - "slaclab-rsp-admins"
       "exec:notebook":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "everyone"
+        - "slaclab-everyone"
       "exec:portal":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "everyone"
+        - "slaclab-everyone"
       "exec:user":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "everyone"
+        - "slaclab-everyone"
       "read:tap":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "everyone"
+        - "slaclab-everyone"
 
     initialAdmins:
       - "yee379"
