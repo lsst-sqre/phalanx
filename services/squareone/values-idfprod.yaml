@@ -1,4 +1,5 @@
 squareone:
+  replicaCount: 3
   ingress:
     host: "data.lsst.cloud"
     annotations:
