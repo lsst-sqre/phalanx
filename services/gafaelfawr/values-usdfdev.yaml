@@ -31,9 +31,11 @@ gafaelfawr:
       "exec:user":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
 
     initialAdmins:
       - "yee379"
