@@ -28,6 +28,7 @@ gafaelfawr:
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "exec:user":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
