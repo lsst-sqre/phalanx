@@ -1,0 +1,7 @@
+tap-schema:
+  pull_secret: 'pull-secret'
+  image: lsstsqre/tap-schema-idfint
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret

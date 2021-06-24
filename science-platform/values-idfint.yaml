@@ -44,5 +44,7 @@ squash_api:
   enabled: false
 tap:
   enabled: true
+tap_schema:
+  enabled: true
 vault_secrets_operator:
   enabled: true
