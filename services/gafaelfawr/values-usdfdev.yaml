@@ -24,6 +24,7 @@ gafaelfawr:
       "exec:notebook":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+        - "everyone"
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
