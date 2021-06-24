@@ -17,16 +17,16 @@ nublado2:
     volumes:
       - name: datasets
         hostPath:
-          path: /share1/datasets
+          path: /data
       - name: home
         hostPath:
-          path: /share1/home
+          path: /tmp
       - name: project
         hostPath:
-          path: /share1/project
+          path: /tmp 
       - name: scratch
         hostPath:
-          path: /share1/scratch
+          path: /tmp
     volume_mounts:
       - name: datasets
         mountPath: /datasets
