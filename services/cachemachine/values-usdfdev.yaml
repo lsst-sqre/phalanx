@@ -6,6 +6,9 @@ cachemachine:
     hosts:
       - host: rubin-data-dev.slac.stanford.edu
         paths: ["/cachemachine"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:admin"
 
   vault_secrets:
     enabled: true
