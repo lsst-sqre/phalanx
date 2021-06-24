@@ -7,6 +7,7 @@ nublado2:
       hosts: ["rubin-data-dev.slac.stanford.edu"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:notebook&notebook=true"
 
     hub:
       baseUrl: '/nb'
