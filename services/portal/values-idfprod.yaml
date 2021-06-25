@@ -1,5 +1,6 @@
 firefly:
   pull_secret: 'pull-secret'
+  replicaCount: 4
 
   image:
     tag: "dm-29533-2"
@@ -21,7 +22,7 @@ firefly:
 
   resources:
     limits:
-      memory: 8Gi
+      memory: 24Gi
 
   secrets:
     enabled: false
