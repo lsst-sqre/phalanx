@@ -21,6 +21,24 @@ cadc-tap:
         auth_request_set $auth_token $upstream_http_x_auth_request_token;
         proxy_set_header Authorization "Bearer $auth_token";
 
+  resources:
+    requests:
+      cpu: 2.0
+      memory: 2G
+    limits:
+      cpu: 8.0
+      memory: 16G
+
+  jvm_max_heap_size: 15G
+
+  aux_resources:
+    requests:
+      cpu: 0.25
+      memory: 1G
+    limits:
+      cpu: 2.0
+      memory: 4G
+
   gcs_bucket: 'async-results.lsst.codes'
   gcs_bucket_url: 'http://async-results.lsst.codes'
 
