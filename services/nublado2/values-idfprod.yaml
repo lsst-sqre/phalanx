@@ -2,6 +2,10 @@ nublado2:
   jupyterhub:
     debug:
       enabled: true
+    resources:
+      requests:
+        cpu: "1"
+        memory: 3Gi
 
     ingress:
       hosts: ["data.lsst.cloud"]
