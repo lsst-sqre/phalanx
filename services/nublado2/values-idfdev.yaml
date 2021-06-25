@@ -1,5 +1,12 @@
 nublado2:
   jupyterhub:
+    hub:
+      image:
+        tag: ajt-dev
+      resources:
+        requests:
+          cpu: "1"
+          memory: 3Gi
     debug:
       enabled: true
 
