@@ -17,6 +17,7 @@ firefly:
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
+        proxy_read_timeout 300s;
 
   max_jvm_size: "7G"
 
