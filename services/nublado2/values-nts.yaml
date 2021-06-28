@@ -1,8 +1,5 @@
 nublado2:
   jupyterhub:
-    debug:
-      enabled: true
-
     ingress:
       hosts: ["lsst-nts-k8s.ncsa.illinois.edu"]
       annotations:

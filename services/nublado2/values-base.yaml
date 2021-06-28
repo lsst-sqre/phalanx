@@ -1,8 +1,5 @@
 nublado2:
   jupyterhub:
-    debug:
-      enabled: true
-
     ingress:
       hosts: ["base-lsp.lsst.codes"]
       annotations:

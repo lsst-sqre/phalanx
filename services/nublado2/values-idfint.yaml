@@ -1,7 +1,5 @@
 nublado2:
   jupyterhub:
-    debug:
-      enabled: true
     hub:
       resources:
         requests:

@@ -5,9 +5,6 @@ nublado2:
         requests:
           cpu: 300m
           memory: 512Mi
-    debug:
-      enabled: true
-
     ingress:
       hosts: ["data-dev.lsst.cloud"]
       annotations:
