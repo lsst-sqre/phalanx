@@ -1,5 +1,10 @@
 nublado2:
   jupyterhub:
+    hub:
+      resources:
+        requests:
+          cpu: 300m
+          memory: 512Mi
     debug:
       enabled: true
 
