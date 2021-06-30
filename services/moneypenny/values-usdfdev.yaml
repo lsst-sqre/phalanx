@@ -7,7 +7,7 @@ moneypenny:
       - host: rubin-data-dev.slac.stanford.edu
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
 
   vault_secrets:
     enabled: true
