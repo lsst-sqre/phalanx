@@ -14,6 +14,7 @@ nublado2:
 
   config:
     base_url: "https://rubin-data-dev.slac.stanford.edu"
+    butler_secret_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/butler-secret"
     volumes:
       - name: datasets
         hostPath:
