@@ -3,7 +3,7 @@ firefly:
   replicaCount: 4
 
   image:
-    tag: "dm-29533-2"
+    tag: "suit-233-7-dev"
 
   ingress:
     host: "data.lsst.cloud"
