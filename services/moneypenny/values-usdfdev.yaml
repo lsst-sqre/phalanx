@@ -32,6 +32,5 @@ moneypenny:
           allowPrivilegeEscalation: false
     volumes:
       - name: homedirs
-        nfs:
-          server: 10.87.86.26
-          path: /share1/home
+        local:
+          path: /home
