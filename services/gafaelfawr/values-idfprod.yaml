@@ -29,22 +29,22 @@ gafaelfawr:
         - "lsst-sqre-square"
       "exec:notebook":
         - "lsst-sqre-square"
-        - "lsst-sqre-friends"
         - "lsst-data-management"
         - "lsst-ops"
         - "rubin-dp0-delegates"
+        - "rubin-dp0-friends"
       "exec:portal":
         - "lsst-sqre-square"
-        - "lsst-sqre-friends"
         - "lsst-data-management"
         - "lsst-ops"
         - "rubin-dp0-delegates"
+        - "rubin-dp0-friends"
       "read:tap":
         - "lsst-sqre-square"
-        - "lsst-sqre-friends"
         - "lsst-data-management"
         - "lsst-ops"
         - "rubin-dp0-delegates"
+        - "rubin-dp0-friends"
 
     initialAdmins:
       - "afausti"
