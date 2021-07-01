@@ -5,6 +5,11 @@ gafaelfawr:
     host: "data.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
 
+  # Use a test build that should fix the GitHub teams pagination issue.
+  image:
+    pulPolicy: "Always"
+    tag: "tickets-DM-30971"
+
   # Enable the frontend NetworkPolicy.
   networkPolicy:
     enabled: true
@@ -15,6 +20,7 @@ gafaelfawr:
       storageClass: "standard-rwo"
 
   config:
+    loglevel: "DEBUG"
     host: "data.lsst.cloud"
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
