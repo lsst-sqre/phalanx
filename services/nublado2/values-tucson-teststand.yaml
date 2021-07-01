@@ -21,6 +21,8 @@ nublado2:
     base_url: "https://tucson-teststand.lsst.codes"
     butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/notebook-demo"
+      AUTO_REPO_BRANCH: "prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: tucson
     volumes:
