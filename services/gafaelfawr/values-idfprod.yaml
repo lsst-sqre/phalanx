@@ -5,6 +5,11 @@ gafaelfawr:
     host: "data.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
 
+  # Use a hot-fix branch to test the Unicode name workaround.
+  image:
+    pullPolicy: "Always"
+    tag: "tickets-DM-31056"
+
   # Enable the frontend NetworkPolicy.
   networkPolicy:
     enabled: true
