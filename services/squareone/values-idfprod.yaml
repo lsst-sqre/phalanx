@@ -12,6 +12,8 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform"
+    # broadcastMarkdown: |
+    #   Write a markdown-formatted broadcast notification.
 
 pull-secret:
   enabled: true
