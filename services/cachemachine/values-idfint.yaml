@@ -23,8 +23,13 @@ cachemachine:
             "repo": "lsstsqre/sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 1,
-            "num_weeklies": 4,
+            "num_weeklies": 2,
             "num_dailies": 3
+          },
+          {
+            "type": "SimpleRepoMan",
+            "image_url": "lsstsqre/sciplat-lab:w_2021_25",
+            "name": "Weekly 2021_25"
           }
         ]
       }
