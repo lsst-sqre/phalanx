@@ -28,8 +28,10 @@ cachemachine:
           },
           {
             "type": "SimpleRepoMan",
-            "image_url": "lsstsqre/sciplat-lab:w_2021_25",
-            "name": "Weekly 2021_25"
+            "images": [
+              "image_url": "lsstsqre/sciplat-lab:w_2021_25",
+              "name": "Weekly 2021_25"
+            ]
           }
         ]
       }
