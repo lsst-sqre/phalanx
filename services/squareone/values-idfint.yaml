@@ -11,8 +11,8 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform @ data-int"
-    broadcastMarkdown: |
-       RSP Patch Thursday **today** 3pm-5pm Pacific ([*what is Patch Thursday?*](https://www.lsst.io))
+    # broadcastMarkdown: |
+    #    Patch Thursday **today** 3pm-5pm Pacific / 22:00-00:00 UT [(*what is RSP Patch Thursday?)*](https://www.lsst.io)
 
 pull-secret:
   enabled: true
