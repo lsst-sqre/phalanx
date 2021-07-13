@@ -1,6 +1,7 @@
 tap-schema:
   pull_secret: 'pull-secret'
   image: lsstsqre/tap-schema-int
+  tag: 1.0.3
 
 pull-secret:
   enabled: true
