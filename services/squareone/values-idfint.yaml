@@ -11,8 +11,8 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform @ data-int"
-    # broadcastMarkdown: |
-    #   Write a markdown-formatted broadcast notification.
+    broadcastMarkdown: |
+       RSP Patch Thursday **today** 3pm-5pm Pacific ([*what is Patch Thursday?*](https://www.lsst.io))
 
 pull-secret:
   enabled: true
