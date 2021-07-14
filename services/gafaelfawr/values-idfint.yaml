@@ -5,11 +5,6 @@ gafaelfawr:
     host: "data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/gafaelfawr"
 
-  # Use a hot-fix branch to test the Unicode name workaround.
-  image:
-    pullPolicy: "Always"
-    tag: "tickets-DM-31056"
-
   # Enable the frontend NetworkPolicy.
   networkPolicy:
     enabled: true
@@ -52,6 +47,11 @@ gafaelfawr:
       - "jonathansick"
       - "rra"
       - "simonkrughoff"
+
+    errorFooter: |
+      To report problems or ask for help, please open an issue in the
+      <a href="https://github.com/rubin-dp0/Support/issues">GitHub
+      rubin-dp0/Support project</a>.
 
   cloudsql:
     enabled: true
