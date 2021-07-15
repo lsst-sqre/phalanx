@@ -2,9 +2,6 @@ firefly:
   pull_secret: 'pull-secret'
   replicaCount: 4
 
-  image:
-    tag: "suit-233-7-dev"
-
   ingress:
     host: "data.lsst.cloud"
     annotations:
