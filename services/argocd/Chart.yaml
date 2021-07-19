@@ -3,7 +3,7 @@ name: argo-cd
 version: 1.0.0
 dependencies:
 - name: argo-cd
-  version: 3.8.1
+  version: 3.9.0
   repository: https://argoproj.github.io/argo-helm
 - name: pull-secret
   version: 0.1.2
