@@ -1,0 +1,13 @@
+semaphore:
+  ingress:
+    enabled: true
+    hosts:
+      - host: "tucson-teststand.lsst.codes"
+        paths:
+          - "/semaphore"
+  imagePullSecrets:
+    - name: "pull-secret"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret

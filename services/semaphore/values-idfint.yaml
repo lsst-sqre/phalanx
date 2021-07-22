@@ -1,0 +1,13 @@
+semaphore:
+  ingress:
+    enabled: true
+    hosts:
+      - host: "data-int.lsst.cloud"
+        paths:
+          - "/semaphore"
+  imagePullSecrets:
+    - name: "pull-secret"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret

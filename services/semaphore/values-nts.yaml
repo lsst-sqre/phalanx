@@ -1,0 +1,13 @@
+semaphore:
+  ingress:
+    enabled: true
+    hosts:
+      - host: "lsst-nts-k8s.ncsa.illinois.edu"
+        paths:
+          - "/semaphore"
+  imagePullSecrets:
+    - name: "pull-secret"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret
