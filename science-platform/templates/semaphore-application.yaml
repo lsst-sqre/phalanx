@@ -20,7 +20,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/squareone
+    path: services/semaphore
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:
