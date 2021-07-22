@@ -39,7 +39,7 @@ postgres:
 rancher_external_ip_webhook:
   enabled: true
 semaphore:
-  enabled: false
+  enabled: true
 squareone:
   enabled: true
 squash_api:
