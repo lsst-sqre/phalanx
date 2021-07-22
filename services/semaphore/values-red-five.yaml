@@ -5,6 +5,7 @@ semaphore:
       - host: "red-five.lsst.codes"
         paths:
           - path: "/semaphore"
+            pathType: Prefix
   imagePullSecrets:
     - name: "pull-secret"
 

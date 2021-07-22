@@ -5,6 +5,7 @@ semaphore:
       - host: "lsst-lsp-stable.ncsa.illinois.edu"
         paths:
           - path: "/semaphore"
+            pathType: Prefix
   imagePullSecrets:
     - name: "pull-secret"
 

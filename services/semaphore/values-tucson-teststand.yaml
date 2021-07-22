@@ -5,6 +5,7 @@ semaphore:
       - host: "tucson-teststand.lsst.codes"
         paths:
           - path: "/semaphore"
+            pathType: Prefix
   imagePullSecrets:
     - name: "pull-secret"
 

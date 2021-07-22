@@ -5,6 +5,7 @@ semaphore:
       - host: "minikube.lsst.codes"
         paths:
           - path: "/semaphore"
+            pathType: Prefix
   imagePullSecrets:
     - name: "pull-secret"
 
