@@ -1,6 +1,8 @@
 semaphore:
   ingress:
     enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
     hosts:
       - host: "lsst-nts-k8s.ncsa.illinois.edu"
         paths:
