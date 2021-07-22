@@ -1,6 +1,4 @@
 semaphore:
-  image:
-    tag: tickets-DM-30725
   ingress:
     enabled: true
     hosts:
