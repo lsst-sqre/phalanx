@@ -4,7 +4,7 @@ semaphore:
     hosts:
       - host: "lsst-lsp-int.ncsa.illinois.edu"
         paths:
-          - "/semaphore"
+          - path: "/semaphore"
   imagePullSecrets:
     - name: "pull-secret"
 

@@ -4,7 +4,7 @@ semaphore:
     hosts:
       - host: "data.lsst.cloud"
         paths:
-          - "/semaphore"
+          - path: "/semaphore"
   imagePullSecrets:
     - name: "pull-secret"
 
