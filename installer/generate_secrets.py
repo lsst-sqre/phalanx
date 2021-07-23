@@ -362,6 +362,10 @@ class OnePasswordSecretGenerator(SecretGenerator):
             # If we don't find a generate_secrets_key somewhere, then we shouldn't
             # bother with this document in the vault.
             if not key:
+                logging.debug(
+                    f"Skipping because of no generate_secrets_key, %s",
+                    uuid
+                )
                 continue
 
             # The type of secret is either a note or a password login.
@@ -374,10 +378,16 @@ class OnePasswordSecretGenerator(SecretGenerator):
                     if f["designation"] == "password":
                         secret_value = f["value"]
 
+            logging.debug("Environments are %s for %s", environments, uuid)
+
             if self.environment in environments:
                 self.op_secrets[key] = secret_value
+                logging.debug("Storing %s (matching environment)", uuid)
             elif not environments and key not in self.op_secrets:
                 self.op_secrets[key] = secret_value
+                logging.debug("Storing %s (applicable to all envs)", uuid)
+            else:
+                logging.debug("Ignoring %s", uuid)
 
     def input_field(self, component, name, description):
         """Query for a secret's value from 1Password (`op_secrets` attribute).
