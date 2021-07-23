@@ -32,11 +32,15 @@ svcs="${svcs} landing-page mobu ingress-nginx nublado obstap portal"
 svcs="${svcs} postgres tap wf"
 
 # This is a list of environments.
-envs="base bleed gold-leader idfdev int kueyen minikube nts nublado"
+envs="base bleed gold-leader idfdev idfint idfprod int kueyen minikube nts"
 envs="${envs} red-five rogue-two stable summit tucson-teststand"
 
 # These are the services that we're going to add the pull-secret string to:
 #  Skip cachemachine and nublado2 for now.
+#
+# Cachemachine, it's called "cachemachine-secret" rather than "pull-secret",
+#  and counterintuitively, nublado2 doesn't need it--the pods it spawns do,
+#  and it handles that in the nublado2 resource template yaml.
 add_pull="tap obstap exposurelog portal gafaelfawr influxdb kapacitor"
 add_pull="${add_pull} landing-page mobu nublado postgres"
 
