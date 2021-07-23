@@ -15,6 +15,7 @@ nublado2:
   config:
     base_url: "https://data-int.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"
+    pull_secret_path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"
     lab_environment:
       PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
       AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
