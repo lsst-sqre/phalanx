@@ -1,13 +1,13 @@
 mobu:
-  pull_secret: 'pull-secret'
-  mobu_secrets_path: "secret/k8s_operator/data.lsst.cloud/mobu"
-  environment_url: "https://data.lsst.cloud"
-  host: "data.lsst.cloud"
+  imagePullSecrets:
+    - name: "pull-secret"
 
   ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin&auth_type=basic"
+    host: "data.lsst.cloud"
+
+  environmentUrl: "https://data.lsst.cloud"
+  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/mobu"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/data.lsst.cloud/pull-secret
+  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"

@@ -1,13 +1,29 @@
 mobu:
-  pull_secret: 'pull-secret'
-  mobu_secrets_path: "secret/k8s_operator/data-dev.lsst.cloud/mobu"
-  environment_url: "https://data-dev.lsst.cloud"
-  host: "data-dev.lsst.cloud"
+  imagePullSecrets:
+    - name: "pull-secret"
 
   ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin&auth_type=basic"
+    host: "data-dev.lsst.cloud"
+
+  environmentUrl: "https://data-dev.lsst.cloud"
+  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/mobu"
+
+  autostart:
+    - name: "python"
+      count: 1
+      user_spec:
+        username_prefix: "systemtest"
+        uid_start: 60000
+      scopes: ["exec:notebook"]
+      business: "JupyterPythonLoop"
+      options:
+        jupyter_options_form:
+          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
+          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
+          image_dropdown: "use_image_from_dropdown"
+          size: "Small"
+      restart: True
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
+  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
