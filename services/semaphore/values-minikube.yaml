@@ -10,6 +10,7 @@ semaphore:
             pathType: Prefix
   imagePullSecrets:
     - name: "pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/semaphore"
 
 pull-secret:
   enabled: true
