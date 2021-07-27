@@ -1,4 +1,9 @@
 semaphore:
+  image:
+    pullPolicy: Always
+  config:
+    github_app_id: "127943"
+    enable_github_app: "True"
   ingress:
     enabled: true
     annotations:
