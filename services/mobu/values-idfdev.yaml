@@ -11,9 +11,9 @@ mobu:
   autostart:
     - name: "python"
       count: 1
-      user_spec:
-        username_prefix: "systemtest"
-        uid_start: 60000
+      users:
+        username: "systemtest01"
+        uidnumber: 74768
       scopes: ["exec:notebook"]
       business: "JupyterPythonLoop"
       options:

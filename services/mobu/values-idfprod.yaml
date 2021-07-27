@@ -12,8 +12,8 @@ mobu:
     - name: "system-test"
       count: 1
       users:
-        username_prefix: "systemtest01"
-        uid_start: 74768
+        username: "systemtest01"
+        uidnumber: 74768
       scopes: ["exec:notebook"]
       business: "JupyterPythonLoop"
       options:
