@@ -10,6 +10,39 @@ mobu:
   environmentUrl: "https://lsst-lsp-int.ncsa.illinois.edu"
   vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/mobu"
 
+  autostart:
+    - name: "login"
+      count: 1
+      users:
+        - username: "lsptestuser01"
+          uidnumber: 60181
+      scopes: ["exec:notebook"]
+      business: "JupyterLoginLoop"
+      options:
+        jupyter_options_form:
+          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
+          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
+          image_dropdown: "use_image_from_dropdown"
+          size: "Small"
+      restart: True
+    - name: "robo-simon"
+      count: 1
+      users:
+        - username: "lsptestuser05"
+          uidnumber: 60185
+      scopes: ["exec:notebook", "exec:portal", "read:tap"]
+      business: "NotebookRunner"
+      options:
+        jupyter_options_form:
+          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
+          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
+          image_dropdown: "use_image_from_dropdown"
+          size: "Small"
+        repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
+        repo_branch: "robo-simon"
+        settle_time: 45
+      restart: True
+
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"

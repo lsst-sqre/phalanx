@@ -8,6 +8,24 @@ mobu:
   environmentUrl: "https://data.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/mobu"
 
+  autostart:
+    - name: "system-test"
+      count: 1
+      users:
+        username_prefix: "systemtest01"
+        uid_start: 74768
+      scopes: ["exec:notebook"]
+      business: "JupyterPythonLoop"
+      options:
+        jupyter_options_form:
+          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
+          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
+          image_dropdown: "use_image_from_dropdown"
+          size: "Small"
+        repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
+        repo_branch: "IDF-prod"
+      restart: True
+
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
