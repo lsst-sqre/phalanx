@@ -15,15 +15,13 @@ mobu:
         - username: "systemtest01"
           uidnumber: 74768
       scopes: ["exec:notebook"]
-      business: "NotebookRunner"
+      business: "JupyterPythonRunner"
       options:
         jupyter_options_form:
           image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
           image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
           image_dropdown: "use_image_from_dropdown"
           size: "Small"
-        repo_url: "https://github.com/athornton/system-test.git"
-        repo_branch: "prod"
       restart: True
 
 pull-secret:

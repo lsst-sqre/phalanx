@@ -14,7 +14,7 @@ mobu:
       users:
         - username: "systemtest01"
           uidnumber: 74768
-      scopes: ["exec:notebook"]
+      scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
         jupyter_options_form:
