@@ -15,7 +15,7 @@ mobu:
         - username: "systemtest01"
           uidnumber: 74768
       scopes: ["exec:notebook"]
-      business: "JupyterPythonRunner"
+      business: "JupyterPythonLoop"
       options:
         jupyter_options_form:
           image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
