@@ -24,6 +24,7 @@ mobu:
           size: "Small"
         repo_url: "https://github.com/athornton/system-test.git"
         repo_branch: "prod"
+        execution_idle_time: 10
       restart: True
 
 pull-secret:
