@@ -22,6 +22,8 @@ mobu:
           image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
           image_dropdown: "use_image_from_dropdown"
           size: "Small"
+        repo_url: "https://github.com/athornton/system-test.git"
+        repo_branch: "prod"
       restart: True
 
 pull-secret:
