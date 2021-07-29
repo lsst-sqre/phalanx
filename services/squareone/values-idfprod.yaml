@@ -12,9 +12,9 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform"
-    # broadcastMarkdown: >
-    #   Patch Thursday **today** 3pm-5pm Pacific / 22:00-00:00 UT
-    #   [(*what is RSP Patch Thursday?)*](https://community.lsst.org/t/what-is-rsp-patch-thursday/5647)
+    broadcastMarkdown: >
+      Patch Thursday **today** 3pm-5pm Pacific / 22:00-00:00 UT
+      [(*what is RSP Patch Thursday?)*](https://community.lsst.org/t/what-is-rsp-patch-thursday/5647)
 
 pull-secret:
   enabled: true
