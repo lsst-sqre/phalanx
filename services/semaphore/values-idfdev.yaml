@@ -4,6 +4,7 @@ semaphore:
   config:
     github_app_id: "127943"
     enable_github_app: "True"
+    phalanx_env: "idfdev"
   ingress:
     enabled: true
     annotations:

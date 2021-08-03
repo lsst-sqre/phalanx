@@ -1,4 +1,6 @@
 semaphore:
+  config:
+    phalanx_env: "int"
   ingress:
     enabled: true
     annotations:

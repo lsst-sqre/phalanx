@@ -1,4 +1,6 @@
 semaphore:
+  config:
+    phalanx_env: "minikube"
   ingress:
     enabled: true
     annotations:
