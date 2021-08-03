@@ -1,4 +1,6 @@
 semaphore:
+  config:
+    phalanx_env: "red-five"
   ingress:
     enabled: true
     annotations:
