@@ -33,7 +33,7 @@ nublado2:
 obstap:
   enabled: false
 portal:
-  enabled: false
+  enabled: true
 postgres:
   enabled: true
 rancher_external_ip_webhook:
