@@ -5,7 +5,7 @@ semaphore:
     github_app_id: "127943"
     enable_github_app: "True"
     phalanx_env: "idfdev"
-    log_level: "debug"
+    log_level: "DEBUG"
   ingress:
     enabled: true
     annotations:
