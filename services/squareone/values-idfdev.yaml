@@ -11,8 +11,7 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform @ data-dev"
-    broadcastMarkdown: |
-      This is a broadcast notification.
+    semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
 
 pull-secret:
   enabled: true
