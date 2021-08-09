@@ -3,8 +3,8 @@ firefly:
   replicaCount: 4
 
   volumes:
-    firefly_workarea_nfs:
-      path: /share1/home/firefly/workarea
+    firefly_shared_workarea_nfs:
+      path: /share1/home/firefly/shared-workarea
       server: 10.22.240.130
     firefly_config_nfs:
       path: /share1/home/firefly/config

@@ -47,7 +47,7 @@ firefly:
     runAsGroup: 102
 
   volumes:
-    firefly_workarea_hostpath: /sui/firefly/workarea
+    firefly_shared_workarea_hostpath: /sui/firefly/workarea
     firefly_config_hostpath: /sui/firefly/config
 
 pull-secret:
