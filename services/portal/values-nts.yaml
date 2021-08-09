@@ -39,7 +39,7 @@ firefly:
       memory: 4Gi
 
   volumes:
-    firefly_workarea:
+    firefly_shared_workarea:
       emptyDir: {}
     firefly_config:
       emptyDir: {}
