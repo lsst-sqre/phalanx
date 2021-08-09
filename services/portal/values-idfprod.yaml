@@ -6,6 +6,9 @@ firefly:
     firefly_workarea_nfs:
       path: /share1/home/firefly/workarea
       server: 10.13.105.122
+    firefly_shared_workarea_nfs:
+      path: /share1/home/firefly/shared-workarea
+      server: 10.13.105.122
     firefly_config_nfs:
       path: /share1/home/firefly/config
       server: 10.13.105.122
