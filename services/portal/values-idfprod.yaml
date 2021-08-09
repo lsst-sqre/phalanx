@@ -2,6 +2,10 @@ firefly:
   pull_secret: 'pull-secret'
   replicaCount: 4
 
+  volumes:
+    firefly_workarea_hostpath: /home/firefly/workarea
+    firefly_config_hostpath: /home/firefly/config
+
   ingress:
     host: "data.lsst.cloud"
     annotations:
