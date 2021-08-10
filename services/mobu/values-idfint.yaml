@@ -10,10 +10,18 @@ mobu:
 
   autostart:
     - name: "system-test"
-      count: 1
+      count: 5
       users:
         - username: "systemtest01"
           uidnumber: 74768
+        - username: "systemtest02"
+          uidnumber: 74769
+        - username: "systemtest03"
+          uidnumber: 74770
+        - username: "systemtest04"
+          uidnumber: 74771
+        - username: "systemtest05"
+          uidnumber: 74772
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
