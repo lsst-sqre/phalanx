@@ -11,6 +11,7 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform @ data-int"
+    semaphoreUrl: "https://data-int.lsst.cloud/semaphore"
 
 pull-secret:
   enabled: true
