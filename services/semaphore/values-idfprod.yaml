@@ -1,6 +1,8 @@
 semaphore:
   config:
     phalanx_env: "idfprod"
+    github_app_id: "131502"
+    enable_github_app: "True"
   ingress:
     enabled: true
     annotations:
