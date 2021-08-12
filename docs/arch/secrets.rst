@@ -48,3 +48,5 @@ If ``environment`` is missing, that 1Password object provides a default for the 
 These 1Password objects are used by the `generate_secrets.py script <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ as part of the installation process to retrieve the persistent secrets.
 Ephemeral secrets that can be reset when the environment is reinstalled are generated during the installation process.
 `update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__ uses the ``onepassword_uuid`` setting in `/science-platform/values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values.yaml>`__ to locate the appropriate 1Password vault.
+
+For a step-by-step guide, see :doc:`/app-guide/add-a-onepassword-secret`.
