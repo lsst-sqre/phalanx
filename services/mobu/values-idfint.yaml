@@ -2,6 +2,10 @@ mobu:
   imagePullSecrets:
     - name: "pull-secret"
 
+  image:
+    pullPolicy: Always
+    tag: "tickets-DM-31454"
+
   ingress:
     host: "data-int.lsst.cloud"
 
@@ -33,6 +37,14 @@ mobu:
         repo_url: "https://github.com/athornton/system-test.git"
         repo_branch: "prod"
         execution_idle_time: 10
+      restart: True
+    - name: "tap"
+      count: 1
+      users:
+        - username: "systemtest06"
+          uidnumber: 74773
+      scopes: ["read:tap"]
+      business: "TAPQueryRunner"
       restart: True
 
 pull-secret:
