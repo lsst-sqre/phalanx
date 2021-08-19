@@ -2,10 +2,6 @@ mobu:
   imagePullSecrets:
     - name: "pull-secret"
 
-  image:
-    pullPolicy: Always
-    tag: "tickets-DM-31406"
-
   ingress:
     host: "data.lsst.cloud"
 
