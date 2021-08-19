@@ -30,7 +30,7 @@ mobu:
           image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
           image_dropdown: "use_image_from_dropdown"
           size: "Small"
-        repo_url: "https://github.com/athornton/system-test.git"
+        repo_url: "https://github.com/SimonKrughoff/system-test.git"
         repo_branch: "prod"
         execution_idle_time: 10
       restart: True
