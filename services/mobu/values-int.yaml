@@ -2,6 +2,10 @@ mobu:
   imagePullSecrets:
     - name: "pull-secret"
 
+  image:
+    pullPolicy: Always
+    tag: "tickets-DM-31454"
+
   ingress:
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
@@ -27,6 +31,14 @@ mobu:
         repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
         repo_branch: "robo-simon"
         max_executions: 1
+      restart: True
+    - name: "tap"
+      count: 1
+      users:
+        - username: "lsptestuser02"
+          uidnumber: 60182
+      scopes: ["read:tap"]
+      business: "TAPQueryRunner"
       restart: True
 
 pull-secret:
