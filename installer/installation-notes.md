@@ -93,3 +93,21 @@ the endpoint to the A record).
 Now all you should need to do is wait until everything comes up and
 cachemachine finishes pulling its prepulled images; you can watch the
 progress either through kubectl or argocd.
+
+# Runtime Considerations
+
+## Database surgery
+
+Sometimes JupyterHub and its session database will get into a state
+where it's very confused about the state of a user.  Usually it suffices
+to:
+
+  * Remove the user's namespace, if extant
+  
+  * Remove the user from that database.  Do this with:
+  
+    pod=$(kubectl get pods -n postgres | grep postgres | awk '{print $1}')
+    kubectl exec -it -n postgres ${pod} -- /bin/bash -l	
+    postgres-b8b6cdfb7-5nbjs:/# psql -U jovyan jupyterhub
+    delete from users where name='<user-to-remove>'
+	
