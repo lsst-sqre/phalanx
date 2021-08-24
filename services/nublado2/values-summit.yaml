@@ -17,7 +17,10 @@ nublado2:
   config:
     base_url: "https://summit-lsp.lsst.codes"
     butler_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/butler-secret"
+    pull_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/notebook-demo"
+      AUTO_REPO_BRANCH: "prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: summit
     volumes:

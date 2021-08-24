@@ -18,7 +18,10 @@ nublado2:
   config:
     base_url: "https://lsst-nts-k8s.ncsa.illinois.edu"
     butler_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/butler-secret"
+    pull_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/notebook-demo"
+      AUTO_REPO_BRANCH: "prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: ncsa
     volumes:

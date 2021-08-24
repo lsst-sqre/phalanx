@@ -1,10 +1,10 @@
 cadc-tap:
+  tag: "parser-improvements"
   pull_secret: 'pull-secret'
   use_mock_qserv: false
   qserv_host: "10.136.1.211:4040"
 
   host: "data-int.lsst.cloud"
-  tap_schema_address: "tap-schema-db.tap-schema.svc.cluster.local:3306"
 
   secrets:
     enabled: false

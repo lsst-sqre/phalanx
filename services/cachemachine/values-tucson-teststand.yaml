@@ -1,15 +1,12 @@
 cachemachine:
-  host: "tucson-teststand.lsst.codes"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
-    hosts:
-      - host: tucson-teststand.lsst.codes
-        paths: ["/cachemachine"]
+    host: "tucson-teststand.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
 
   autostart:
     jupyter: |
@@ -25,7 +22,7 @@ cachemachine:
             "num_releases": 1,
             "num_weeklies": 3,
             "num_dailies": 2,
-            "cycle": 20,
+            "cycle": 21,
             "alias_tags": [
                 "latest",
                 "latest_daily",

@@ -68,34 +68,48 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-argocd app sync ingress-nginx \
-  --port-forward \
-  --port-forward-namespace argocd
+if [ $(yq -r .ingress_nginx.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing ingress-nginx..."
+  argocd app sync ingress-nginx \
+    --port-forward \
+    --port-forward-namespace argocd
+fi
 
 # Wait for the cert-manager's webhook to finish deploying by running
-# kubectl.  argocd's sync doesn't seem to wait for this to finish.
-# This is a little tricky on the bash.  If cert-manager isn't used,
-# the argocd command will fail, then we will continue.  If it doesn't
-# fail, wait for it to finish.
-(argocd app sync cert-manager \
-  --port-forward \
-  --port-forward-namespace argocd && \
-kubectl -n cert-manager rollout status deploy/cert-manager-webhook) || true
+# kubectl, argocd's sync doesn't seem to wait for this to finish.
+if [ $(yq -r .cert_manager.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing cert-manager..."
+  argocd app sync cert-manager \
+    --port-forward \
+    --port-forward-namespace argocd && \
+    kubectl -n cert-manager rollout status deploy/cert-manager-webhook
+fi
 
-# Sync cert-issuer, but don't exit if this environment doesn't use it.
-argocd app sync cert-issuer \
-  --port-forward \
-  --port-forward-namespace argocd || true
+if [ $(yq -r .cert_issuer.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing cert-issuer..."
+  argocd app sync cert-issuer \
+    --port-forward \
+    --port-forward-namespace argocd
+fi
 
-# Sync postgres, since it may be required by Gafaelfawr.
-argocd app sync postgres \
-  --port-forward \
-  --port-forward-namespace argocd
+if [ $(yq -r .postgres.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing postgres..."
+  argocd app sync postgres \
+    --port-forward \
+    --port-forward-namespace argocd
+fi
 
-# Sync Gafaelfawr, since it will create secrets used by other apps.
-argocd app sync gafaelfawr \
-  --port-forward \
-  --port-forward-namespace argocd
+if [ $(yq -r .gafaelfawr.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing gafaelfawr..."
+  argocd app sync gafaelfawr \
+    --port-forward \
+    --port-forward-namespace argocd
+fi
 
 echo "Sync remaining science platform apps"
 argocd app sync -l "argocd.argoproj.io/instance=science-platform" \

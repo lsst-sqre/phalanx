@@ -1,13 +1,42 @@
 mobu:
-  pull_secret: 'pull-secret'
-  mobu_secrets_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/mobu"
-  environment_url: "https://lsst-lsp-stable.ncsa.illinois.edu"
-  host: "lsst-lsp-stable.ncsa.illinois.edu"
+  imagePullSecrets:
+    - name: "pull-secret"
 
   ingress:
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin&auth_type=basic"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
+
+  environmentUrl: "https://lsst-lsp-stable.ncsa.illinois.edu"
+  vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/mobu"
+
+  autostart:
+    - name: "firefighter"
+      count: 5
+      users:
+        - username: "lsptestuser01"
+          uidnumber: 60181
+        - username: "lsptestuser02"
+          uidnumber: 60182
+        - username: "lsptestuser03"
+          uidnumber: 60183
+        - username: "lsptestuser04"
+          uidnumber: 60184
+        - username: "lsptestuser05"
+          uidnumber: 60185
+      scopes: ["exec:notebook", "exec:portal", "read:tap"]
+      business: "NotebookRunner"
+      options:
+        jupyter_options_form:
+          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
+          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
+          image_dropdown: "use_image_from_dropdown"
+          size: "Large"
+        repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
+        repo_branch: "robo-simon"
+        max_executions: 1
+      restart: true
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
+  path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"

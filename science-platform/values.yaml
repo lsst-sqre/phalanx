@@ -34,6 +34,8 @@ postgres:
   enabled: false
 rancher_external_ip_webhook:
   enabled: false
+semaphore:
+  enabled: false
 squareone:
   enabled: false
 squash_api:

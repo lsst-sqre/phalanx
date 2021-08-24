@@ -7,7 +7,7 @@ nublado2:
 
     singleuser:
       extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+        k8s.v1.cni.cncf.io/networks: "kube-system/auxtel-dds, kube-system/comcam-dds, kube-system/misc-dds"
       initContainers:
         - name: "multus-init"
           image: "lsstit/ddsnet4u:latest"
@@ -17,26 +17,29 @@ nublado2:
   config:
     base_url: "https://tucson-teststand.lsst.codes"
     butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
+    pull_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/notebook-demo"
+      AUTO_REPO_BRANCH: "prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: tucson
     volumes:
       - name: home
         nfs:
-          path: /data/exports-lsp/home
-          server: nfs01.tu.lsst.org
-      - name: datasets
-        nfs:
-          path: /data/exports-lsp/datasets
-          server: nfs01.tu.lsst.org
+          path: /jhome
+          server: nfs-jhome.tu.lsst.org
       - name: project
         nfs:
-          path: /data/exports-lsp/project
-          server: nfs01.tu.lsst.org
+          path: /project
+          server: nfs-project.tu.lsst.org
       - name: scratch
         nfs:
-          path: /data/exports-lsp/scratch
-          server: nfs01.tu.lsst.org
+          path: /scratch
+          server: nfs-scratch.tu.lsst.org
+      - name: datasets
+        nfs:
+          path: /lsstdata
+          server: nfs-lsstdata.tu.lsst.org
     volume_mounts:
       - name: home
         mountPath: /home

@@ -1,17 +1,14 @@
 cachemachine:
-  host: "lsst-nts-k8s.ncsa.illinois.edu"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
+    host: "lsst-nts-k8s.ncsa.illinois.edu"
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "http://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:admin"
-    hosts:
-      - host: lsst-nts-k8s.ncsa.illinois.edu
-        paths: ["/cachemachine"]
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
 
   autostart:
     jupyter: |

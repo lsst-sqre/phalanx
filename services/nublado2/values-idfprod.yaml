@@ -13,12 +13,14 @@ nublado2:
   config:
     base_url: "https://data.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data.lsst.cloud/butler-secret"
+    pull_secret_path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
     lab_environment:
       PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
       AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
       # technical debt: for needed for DP0 because deployment branch is not parametrized
-      AUTO_REPO_URLS: https://github.com/SimonKrughoff/notebook-demo
+      AUTO_REPO_URLS: https://github.com/SimonKrughoff/system-test,https://github.com/rubin-dp0/tutorial-notebooks
+      AUTO_REPO_BRANCH: prod
     volumes:
       - name: home
         nfs:

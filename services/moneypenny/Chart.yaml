@@ -3,5 +3,5 @@ name: moneypenny
 version: 0.1.0
 dependencies:
 - name: moneypenny
-  version: '0.0.3'
+  version: '0.0.4'
   repository: https://lsst-sqre.github.io/charts/

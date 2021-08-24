@@ -33,5 +33,5 @@ moneypenny:
     volumes:
       - name: homedirs
         nfs:
-          server: nfs01.tu.lsst.org
-          path: /data/exports-lsp/home
+          server: nfs-jhome.tu.lsst.org
+          path: /jhome
