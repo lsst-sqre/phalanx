@@ -111,3 +111,25 @@ to:
     postgres-b8b6cdfb7-5nbjs:/# psql -U jovyan jupyterhub
     delete from users where name='<user-to-remove>'
 	
+In some cases you may also need to remove the user from the spawner
+table.  `select * from spawners` and find the pod with the user's name
+in it, and then delete that row.
+
+## Image pruning
+
+If the list of cached images on nodes gets excessively long (we've only
+seen this at NCSA, where there is lots of disk for images and the nodes
+have been around forever), K8s may stop updating its list of cached
+images.  This will manifest as the spawner options form being devoid of
+prepulled images.
+
+For each node, perform the following:
+
+  * `docker image prune -f` and `docker builder prune -f`
+  
+  * Remove all the experimental, all but the last 15 daily, and all but
+    the last 78 weekly images.  Remember that a lexigraphic sort will
+    put images of a particular type in order, so a combination of
+    `sort`, `awk`, `tr`, `wc`, `xargs` and some shell arithmetic will do
+    the trick.  This will take a very long time.
+
