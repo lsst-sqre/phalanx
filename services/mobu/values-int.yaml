@@ -32,14 +32,6 @@ mobu:
         repo_branch: "robo-simon"
         max_executions: 1
       restart: True
-    - name: "tap"
-      count: 1
-      users:
-        - username: "lsptestuser02"
-          uidnumber: 60182
-      scopes: ["read:tap"]
-      business: "TAPQueryRunner"
-      restart: True
 
 pull-secret:
   enabled: true

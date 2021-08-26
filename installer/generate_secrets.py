@@ -102,9 +102,6 @@ class SecretGenerator:
             self._set(component, name, new_value)
 
     def _tap(self):
-        self.input_field(
-            "tap", "slack_webhook_url", "slack webhook url for querymonkey"
-        )
         self.input_file(
             "tap",
             "google_creds.json",

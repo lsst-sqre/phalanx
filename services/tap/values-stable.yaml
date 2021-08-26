@@ -3,8 +3,6 @@ cadc-tap:
   use_mock_qserv: false
   qserv_host: "lsst-qserv-master03:4040"
 
-  querymonkey_replicas: 1
-
   host: "lsst-lsp-stable.ncsa.illinois.edu"
 
   secrets:
