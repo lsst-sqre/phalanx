@@ -2,10 +2,6 @@ mobu:
   imagePullSecrets:
     - name: "pull-secret"
 
-  image:
-    pullPolicy: Always
-    tag: "tickets-DM-31454"
-
   ingress:
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
