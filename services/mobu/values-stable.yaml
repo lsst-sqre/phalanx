@@ -27,11 +27,6 @@ mobu:
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
-        jupyter_options_form:
-          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
-          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
-          image_dropdown: "use_image_from_dropdown"
-          size: "Large"
         repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
         repo_branch: "robo-simon"
         max_executions: 1

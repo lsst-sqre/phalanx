@@ -9,30 +9,30 @@ mobu:
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/mobu"
 
   autostart:
-    - name: "system-test"
-      count: 5
+    - name: "firefighter"
+      count: 1
       users:
         - username: "systemtest01"
           uidnumber: 74768
-        - username: "systemtest02"
-          uidnumber: 74769
-        - username: "systemtest03"
-          uidnumber: 74770
-        - username: "systemtest04"
-          uidnumber: 74771
-        - username: "systemtest05"
-          uidnumber: 74772
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
-        jupyter_options_form:
-          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
-          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
-          image_dropdown: "use_image_from_dropdown"
-          size: "Small"
         repo_url: "https://github.com/SimonKrughoff/system-test.git"
         repo_branch: "prod"
-        execution_idle_time: 10
+        max_executions: 1
+      restart: True
+    - name: "weekly"
+      count: 1
+      users:
+        - username: "systemtest02"
+          uidnumber: 74769
+      scopes: ["exec:notebook", "exec:portal", "read:tap"]
+      business: "NotebookRunner"
+      options:
+        jupyter:
+          image_class: "latest-weekly"
+        repo_url: "https://github.com/SimonKrughoff/system-test.git"
+        repo_branch: "prod"
       restart: True
 
 pull-secret:
