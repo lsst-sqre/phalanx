@@ -1,0 +1,57 @@
+environment: roe
+fqdn: rsp.lsst.ac.uk
+vault_path_prefix: secret/k8s_operator/roe
+
+
+argo:
+  enabled: true
+cachemachine:
+  enabled: true
+cert_issuer:
+  enabled: true
+cert_manager:
+  enabled: true
+chronograf:
+  enabled: false
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: true
+influxdb:
+  enabled: false
+kapacitor:
+  enabled: false
+landing_page:
+  enabled: false
+logging:
+  enabled: false
+mobu:
+  enabled: true
+moneypenny:
+  enabled: true
+ingress_nginx:
+  enabled: true
+nublado:
+  enabled: false
+nublado2:
+  enabled: true
+obstap:
+  enabled: true
+portal:
+  enabled: true
+postgres:
+  enabled: true
+rancher_external_ip_webhook:
+  enabled: true
+semaphore:
+  enabled: true
+squareone:
+  enabled: true
+squash_api:
+  enabled: false
+tap:
+  enabled: true
+tap_schema:
+  enabled: true
+vault_secrets_operator:
+  enabled: true

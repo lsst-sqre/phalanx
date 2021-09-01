@@ -1,0 +1,22 @@
+semaphore:
+  config:
+    phalanx_env: "roe"
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+      - host: "rsp.lsst.ac.uk"
+        paths:
+          - path: "/semaphore"
+            pathType: Prefix
+  imagePullSecrets:
+    - name: "pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/roe/semaphore"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/roe/pull-secret
+
+
+
