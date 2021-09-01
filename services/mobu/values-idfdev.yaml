@@ -16,6 +16,9 @@ mobu:
           uidnumber: 74768
       scopes: ["exec:notebook"]
       business: "JupyterPythonLoop"
+      options:
+        jupyter:
+          image_size: "Small"
       restart: True
 
 pull-secret:
