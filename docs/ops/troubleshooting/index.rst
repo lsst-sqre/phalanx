@@ -12,6 +12,7 @@ Sometimes things break, and we are assembling the most common failure scenarios,
 .. toctree::
    :maxdepth: 2
 
-   ../ops/nublado2/database
-   ../ops/postgres/pvc
-   ../ops/cachemachine/pruning
+   ../nublado2/database
+   ../postgres/pvc
+   ../cachemachine/pruning
+   ../gafaelfawr/debugging

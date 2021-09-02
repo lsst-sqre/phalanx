@@ -1,5 +1,5 @@
 ##########################
-Recreating Postgres PV/PVC
+Recreating postgres PV/PVC
 ##########################
 
 If you get into a state where the cluster has completely crashed,

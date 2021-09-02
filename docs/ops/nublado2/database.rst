@@ -1,5 +1,5 @@
 ################
-Database Surgery
+Database surgery
 ################
 
 Sometimes JupyterHub and its session database will get into a state
