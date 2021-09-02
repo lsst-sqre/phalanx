@@ -36,6 +36,7 @@ Intended audience: Maintainers of applications deployed on the Rubin Science Pla
    app-guide/sync-argo-cd
    app-guide/upgrade
    app-guide/add-application
+   app-guide/add-a-onepassword-secret
 
 Operations guide
 ================
