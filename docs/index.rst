@@ -26,6 +26,9 @@ Overview
 For service maintainers
 =======================
 
+General maintenance
+-------------------
+
 .. toctree::
    :maxdepth: 2
 
@@ -33,6 +36,14 @@ For service maintainers
    app-guide/add-application
    app-guide/sync-argo-cd
    app-guide/upgrade
+
+Specific tasks
+--------------
+
+.. toctree::
+   :maxdepth: 2
+
+   app-guide/update-tap-schema
 
 For science platform administrators
 ===================================
