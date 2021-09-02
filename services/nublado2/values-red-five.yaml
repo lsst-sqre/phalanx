@@ -13,8 +13,9 @@ nublado2:
     butler_secret_path: "secret/k8s_operator/red-five.lsst.codes/butler-secret"
     pull_secret_path: "secret/k8s_operator/red-five.lsst.codes/pull-secret"
     lab_environment:
-      AUTO_REPO_URLS: "https://github.com/lsst-sqre/notebook-demo"
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
       AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
     volumes:
       - name: home
         nfs:
