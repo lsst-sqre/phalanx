@@ -8,22 +8,42 @@ Checklist
 =========
 
 #. Fork the `phalanx repository <https://github.com/lsst-sqre/phalanx>`__ if this work is separate from the SQuaRE-managed environments.
-#. We presume that you are using `Vault <https://www.vaultproject.io/>`__ coupled with `Vault Secrets Operator <https://github.com/ricoberger/vault-secrets-operator>`__ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).  We strongly recommend using the LSST Vault Utilites to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
-#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/tree/master/installer/requirements.txt>`__.  If you are not using 1password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.  In any event, note the write key for your Vault enclave.
+
+#. We presume that you are using `Vault <https://www.vaultproject.io/>`__ coupled with `Vault Secrets Operator <https://github.com/ricoberger/vault-secrets-operator>`__ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
+   We strongly recommend using the LSST Vault Utilites to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
+
+#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/tree/master/installer/requirements.txt>`__.
+   If you are not using 1password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
+   In any event, note the write key for your Vault enclave.
+
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
    Edit it to change the environment name at the top to match ``<environment>`` and choose which services to enable or disable.
+
 #. Decide on your approach to TLS certificates.
    See :ref:`hostnames` for more details.
-#. Do what DNS setup you can.  If you already know the IP address where your instance will reside, create the DNS records (A or possibly CNAME) for that instance.  If you are using a cloud provider or something like minikube where the IP address is not yet known, then you will need to create that record once the top-level ingress is created and has an external IP address.
-    Note that the first time you set up the RSP for a given domain (note: *not* hostname, but *domain*, so if you were setting up ``dev.my-rsp.net`` and ``prod.my-rsp.net``, ``dev`` first, you would only need to do this when you created ``dev``), if you are using Let's Encrypt for certificate management (which we highly recommend), you will need to create glue records to enable Let's Encrypt to manage TLS for the domain.  See :doc:`cert-issuer/route53-setup` for more details.
+
+#. Do what DNS setup you can.
+   If you already know the IP address where your instance will reside, create the DNS records (A or possibly CNAME) for that instance.
+   If you are using a cloud provider or something like minikube where the IP address is not yet known, then you will need to create that record once the top-level ingress is created and has an external IP address.
+
+    The first time you set up the RSP for a given domain (note: *not* hostname, but *domain*, so if you were setting up ``dev.my-rsp.net`` and ``prod.my-rsp.net``, ``dev`` first, you would only need to do this when you created ``dev``), if you are using Let's Encrypt for certificate management (which we highly recommend), you will need to create glue records to enable Let's Encrypt to manage TLS for the domain.
+   See :doc:`cert-issuer/route53-setup` for more details.
+
 #. For each enabled service, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
    Customization will vary from service to service, but the most common change required is to set the fully-qualified domain name of the environment to the one that will be used for your new deployment.
    This will be needed in ingress hostnames, NGINX authentication annotations, and the paths to Vault secrets (the part after ``k8s_operator`` should be the same fully-qualified domain name).
    A few more items of particular interest:
-   #. Moneypenny and Nublado2 both need to know where the NFS server that provides user home space is, and Nublado2 requires additional persistent storage space as well.  Ensure that the correct definitions are in place in both of those configurations.
-   #. If the Firefly portal has a replicaCount greater than one, it is imperative that ``firefly_shared_workdir`` be set and that it reside on an underlying filesystem that supports shared multiple-write.  At GKE, this is currently Filestore (therefore NFS), and at NCSA, it is currently a hostPath mount to underlying GPFS.  Currently the provisioning of this underlying backing store is manual, so make sure you either have created it, or gotten a system administrator with appropriate permissions for your site to do so.  The default UID for Firefly is 91, although it is tunable in the deployment if need be.
-   #. For T&S sites that require instrument control, make sure you have any Multus network definitions you need in the nublado2 values.  This will look something like:::
+   #. Moneypenny and Nublado2 both need to know where the NFS server that provides user home space is, and Nublado2 requires additional persistent storage space as well.
+      Ensure that the correct definitions are in place in both of those configurations.
+   #. If the Firefly portal has a replicaCount greater than one, it is imperative that ``firefly_shared_workdir`` be set and that it reside on an underlying filesystem that supports shared multiple-write.
+      At GKE, this is currently Filestore (therefore NFS), and at NCSA, it is currently a hostPath mount to underlying GPFS.
+      Currently the provisioning of this underlying backing store is manual, so make sure you either have created it, or gotten a system administrator with appropriate permissions for your site to do so.
+      The default UID for Firefly is 91, although it is tunable in the deployment if need be.
+   #. For T&S sites that require instrument control, make sure you have any Multus network definitions you need in the nublado2 values.
+      This will look something like:
+
+      .. code-block:: yaml
 
           singleuser:
             extraAnnotations:
@@ -34,10 +54,16 @@ Checklist
                 securityContext:
                   privileged: true
 
-      Specifically, the Multus network names are given as an annotation string, where the networks are separated by commas, and experimentally it appears that the interfaces will appear in the order specified.  The ``initContainers`` entry should simply be inserted verbatim: it creates a privileged container that bridges user pods to the specified networks before releasing control to the user's Lab.
-#. Generate the secrets for the new environment with `/installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/tree/master/installer/generate_secrets.py>`__ and store them in Vault with `/installer/push_secrets.sh <https://github.com/lsst-sqre/phalanx/tree/master/installer/push_secrets.sh>`__.  This is where you will need the write key for the Vault enclave.
+      Specifically, the Multus network names are given as an annotation string, where the networks are separated by commas, and experimentally it appears that the interfaces will appear in the order specified.
+      The ``initContainers`` entry should simply be inserted verbatim: it creates a privileged container that bridges user pods to the specified networks before releasing control to the user's Lab.
+
+#. Generate the secrets for the new environment with `/installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/tree/master/installer/generate_secrets.py>`__ and store them in Vault with `/installer/push_secrets.sh <https://github.com/lsst-sqre/phalanx/tree/master/installer/push_secrets.sh>`__.
+   This is where you will need the write key for the Vault enclave.
+
 #. Run the installer script at `/installer/install.sh <https://github.co/lsst-sqre/phalanx/tree/master/installer/install.sh>`__.
-   If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).  For installations that are intended to be long-lived, it is worth capturing the IP address at this point and modifying your configuration to use it statically should you ever need to reinstall the instance.
+
+   If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
+   For installations that are intended to be long-lived, it is worth capturing the IP address at this point and modifying your configuration to use it statically should you ever need to reinstall the instance.
 
 .. _hostnames:
 

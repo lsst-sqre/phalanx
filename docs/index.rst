@@ -16,8 +16,6 @@ Phalanx is how we ensure that all of our services work together as a unit.
 Overview
 ========
 
-Intended audience: Anyone who is administering an installation of the Rubin Science Platform or maintaining an application deployed on it.
-
 .. toctree::
    :maxdepth: 2
 
@@ -25,23 +23,19 @@ Intended audience: Anyone who is administering an installation of the Rubin Scie
    arch/repository
    arch/secrets
 
-Application maintenance guide
-=============================
-
-Intended audience: Maintainers of applications deployed on the Rubin Science Platform.
+For service maintainers
+=======================
 
 .. toctree::
    :maxdepth: 2
 
+   app-guide/add-a-onepassword-secret
+   app-guide/add-application
    app-guide/sync-argo-cd
    app-guide/upgrade
-   app-guide/add-application
-   app-guide/add-a-onepassword-secret
 
-Operations guide
-================
-
-Intended audience: Administrators of an installation of the Rubin Science Platform.
+For science platform administrators
+===================================
 
 Applications
 ------------
