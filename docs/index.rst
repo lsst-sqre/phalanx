@@ -76,4 +76,4 @@ Troubleshooting
 .. toctree::
    :maxdepth: 2
 
-   troubleshooting/index
+   ops/troubleshooting/index

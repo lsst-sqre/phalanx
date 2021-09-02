@@ -1,6 +1,6 @@
-#########
-Debugging
-#########
+###############################
+Debugging authentication issues
+###############################
 
 If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access a service such as the Notebook or Portal Aspects, a good initial debugging step is to look at the contents of the user's token.
 Have the user go to ``/auth/analyze``, which will provide a JSON dump of their authentication information.
