@@ -253,5 +253,4 @@ nublado2:
           hard:
             limits.cpu: "8"
             limits.memory: 24Gi
-
   vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"
