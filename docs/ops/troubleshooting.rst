@@ -16,7 +16,7 @@ If the pod is already running, it gets I/O errors from its database, hangs, or o
 If the backing store is corrupt or has been deleted or otherwise is disrupted, sometimes the ``PersistentVolume`` will become unavailable, but the ``PersistentVolumeClaim`` will hang on to it and keep trying to futilely mount it.
 When this happens, you may need to recreate the persistent volume.
 
-**Solution:** :doc:`../postgres/recreate-pvc`
+**Solution:** :doc:`postgres/recreate-pvc`
 
 Spawner menu missing images, cachemachine stuck pulling the same image
 ======================================================================
@@ -35,7 +35,7 @@ The most common cause of this problem is a Kubernetes limitation.
 By default, the Kubernetes list node API only returns the "first" (which usually means oldest) 50 cached images.
 If more than 50 images are cached, images may go missing from that list even though they are cached, leading cachemachine to think they aren't cached and omitting them from the spawner menu.
 
-**Solution:** :doc:`../cachemachine/pruning`
+**Solution:** :doc:`cachemachine/pruning`
 
 If this doesn't work, another possibility is that there is a node that cachemachine thinks is available for JupyterLab images but which is not eligible for its ``DaemonSet``.
 This would be a bug in cachemachine, which should ignore cordoned nodes, but it's possible there is a new iteration of node state or a new rule for where ``DaemonSets`` are allowed to run that it does not know about.
@@ -49,7 +49,7 @@ Spawning a notebook fails with a pending error
 In this case, JupyterHub may not recover without assistance.
 You may need to delete the record for the affected user, and also make sure the user's lab namespace (visible in Argo CD under the ``nublado-users`` application) has been deleted.
 
-**Solution:** :doc:`../nublado2/database`
+**Solution:** :doc:`nublado2/database`
 
 User gets permission denied from services
 =========================================
@@ -64,4 +64,4 @@ The most likely cause of this problem is that the user is not a member of a grou
 Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to a service.
 If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other services.
 
-**Solution:** :doc:`../gafaelfawr/debugging`
+**Solution:** :doc:`gafaelfawr/debugging`
