@@ -39,6 +39,8 @@ By convention, the top-level chart has the same name as the underlying chart tha
 This second layer of charts may be external third-party Helm charts provided by other projects, or may be Helm charts maintained by Rubin Observatory.
 In the latter case, these charts are maintained in the `lsst-sqre/charts GitHub repository <https://github.com/lsst-sqre/charts/>`__.
 
+.. _chart-versioning:
+
 Chart versioning
 ================
 

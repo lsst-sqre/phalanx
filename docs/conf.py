@@ -87,6 +87,7 @@ intersphinx_mapping = {
 rst_epilog = """
 .. _Helm: https://helm.sh
 .. _Argo CD: https://argoproj.github.io/argo-cd/
+.. _semantic versioning: https://semver.org/
 """
 
 # -- Options for linkcheck builder ----------------------------------------

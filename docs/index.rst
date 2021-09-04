@@ -32,8 +32,10 @@ General maintenance
 .. toctree::
    :maxdepth: 2
 
+   app-guide/create-service
    app-guide/add-a-onepassword-secret
    app-guide/add-application
+   app-guide/add-external-chart
    app-guide/sync-argo-cd
    app-guide/upgrade
 
