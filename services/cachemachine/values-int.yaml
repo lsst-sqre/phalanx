@@ -22,7 +22,7 @@ cachemachine:
             "type": "RubinRepoMan",
             "registry_url": "registry.hub.docker.com",
             "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "recommended",
+            "recommended_tag": "w_2021_33",
             "num_releases": 1,
             "num_weeklies": 2,
             "num_dailies": 3
