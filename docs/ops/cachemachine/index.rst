@@ -25,3 +25,4 @@ A simple Argo CD sync is sufficient.
 .. toctree::
 
    pruning
+   updating_recommended

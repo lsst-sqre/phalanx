@@ -15,4 +15,5 @@ Sometimes things break, and we are assembling the most common failure scenarios,
    ../nublado2/database
    ../postgres/pvc
    ../cachemachine/pruning
+   ../cachemachine/updating_recommended
    ../gafaelfawr/debugging
