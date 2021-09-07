@@ -18,7 +18,7 @@ cachemachine:
             "type": "RubinRepoMan",
             "registry_url": "registry.hub.docker.com",
             "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "w_2021_33",
+            "recommended_tag": "recommended",
             "num_releases": 1,
             "num_weeklies": 2,
             "num_dailies": 3
@@ -27,8 +27,8 @@ cachemachine:
             "type": "SimpleRepoMan",
             "images": [
               {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_25",
-                "name": "Weekly 2021_25"
+                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33",
+                "name": "Weekly 2021_33"
               }
             ]
           }
