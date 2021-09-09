@@ -7,7 +7,7 @@ The image marked "recommended" is guaranteed by SQuaRE to be compatible with oth
 Because this process requires quite a bit of checking and sign-off from multiple stakeholders, it is possible that approving a new version for "recommended" may take more than the two weeks (for most deployments) it takes for a weekly image to roll off the default list of images to pull.
 This can cause the RSP JupyterHub options form to display empty parentheses rather than the correct target version when a user requests a lab container.
 
-This document explains how to circumvent that display bug by changing cachemachine's ``values.html`` for the appropriate instance when moving the "recommended" tag.
+This document explains how to circumvent that display bug by changing cachemachine's ``values-<instance>.yaml`` for the appropriate instance when moving the "recommended" tag.
 
 Tagging a new container version
 --------------------------------
@@ -42,7 +42,7 @@ If a new node has come online after the recommended weekly has rolled out of the
 
 Fortunately, this is easy to fix.
 
-In cachemachine's ``values.yaml`` file for the affected environment, go towards the bottom and look in ``repomen``.
+In cachemachine's ``values-<instance>.yaml`` file for the affected environment, go towards the bottom and look in ``repomen``.
 The first entry will always be of type ``RubinRepoMan``, and will contain the definitions of how many daily, weekly, and release images to prepull.
 
 There are currently only four environments in which we care about keeping the "recommended" target pre-pulled:
