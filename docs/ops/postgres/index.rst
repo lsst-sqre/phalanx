@@ -37,5 +37,5 @@ A simple Argo CD sync is sufficient.
 
 .. toctree::
 
-   pvc
+   recreate-pvc
 

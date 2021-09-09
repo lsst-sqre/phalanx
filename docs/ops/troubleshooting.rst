@@ -40,6 +40,16 @@ If more than 50 images are cached, images may go missing from that list even tho
 If this doesn't work, another possibility is that there is a node that cachemachine thinks is available for JupyterLab images but which is not eligible for its ``DaemonSet``.
 This would be a bug in cachemachine, which should ignore cordoned nodes, but it's possible there is a new iteration of node state or a new rule for where ``DaemonSets`` are allowed to run that it does not know about.
 
+Spawner menu shows empty parentheses after recommended rather than image tag
+============================================================================
+
+**Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the "recommended" image is followed by empty parentheses rather than by a description of which image "recommended" refers to.
+
+**Cause:** Cachemachine is responsible for generating the menu used for spawning new JupyterLab instances, as above.
+If a new node has been introduced after the target image for "recommended" has rolled out of the prepull list, then that node will have "recommended" but will not have pulled it under its target tag (e.g. ``w_2021_33``) and therefore cachemachine will not know that the two are the same image.
+
+**Solution**: :doc:`cachemachine/updating_recommended`
+
 Spawning a notebook fails with a pending error
 ==============================================
 
@@ -56,7 +66,7 @@ User gets permission denied from services
 
 **Symptoms:** A user is able to authenticate to the Rubin Science Platform (prompted by going to the first authenticated URL, such as the Notebook Aspect spawner page), but then gets permission denied from other services.
 
-**Causes:** Authentication and authorization to the Rubin Science Platform is done via a service called Gafaelfawr (see :doc:`../gafaelfawr`).
+**Causes:** Authentication and authorization to the Rubin Science Platform is done via a service called Gafaelfawr (see :doc:`./gafaelfawr/index`).
 After the user authenticates, Gafaelfawr asks their authentication provider for the user's group memberships and then translates that to a list of scopes.
 The mapping of group memberships to scopes is defined in the ``values.yaml`` file for Gafaelfawr for the relevant environment, in the ``gafaelfawr.config.groupMapping`` configuration option.
 
