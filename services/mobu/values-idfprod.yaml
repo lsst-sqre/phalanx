@@ -25,7 +25,7 @@ mobu:
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
-        repo_url: "https://github.com/SimonKrughoff/system-test.git"
+        repo_url: "https://github.com/lsst-sqre/system-test.git"
         repo_branch: "prod"
         max_executions: 1
       restart: true
@@ -42,7 +42,7 @@ mobu:
           image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
           image_dropdown: "use_image_from_dropdown"
           size: "Small"
-        repo_url: "https://github.com/SimonKrughoff/system-test.git"
+        repo_url: "https://github.com/lsst-sqre/system-test.git"
         repo_branch: "prod"
         idle_time: 900
         delete_lab: false

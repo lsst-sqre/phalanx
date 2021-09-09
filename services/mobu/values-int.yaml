@@ -19,8 +19,8 @@ mobu:
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
-        repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
-        repo_branch: "robo-simon"
+        repo_url: "https://github.com/lsst-sqre/system-test.git"
+        repo_branch: "NCSA-prod"
         max_executions: 1
       restart: True
 
