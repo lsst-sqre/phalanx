@@ -251,6 +251,6 @@ nublado2:
           namespace: "{{ user_namespace }}"
         spec:
           hard:
-            limits.cpu: "8"
-            limits.memory: 24Gi
+            limits.cpu: "9"
+            limits.memory: 27Gi
   vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"
