@@ -26,8 +26,8 @@ Overview
 For service maintainers
 =======================
 
-General maintenance
--------------------
+General development and operations
+----------------------------------
 
 .. toctree::
    :maxdepth: 2

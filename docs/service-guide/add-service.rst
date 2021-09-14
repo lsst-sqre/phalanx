@@ -2,7 +2,7 @@
 Add a new service to Phalanx
 ############################
 
-Once you have a chart and a Docker image, you need to integrate your service into Phalanx.
+Once you have a chart and a Docker image (see :doc:`create-service`) and you have added your static service secrets to 1Password (see :doc:`add-a-onepassword-secret`), you need to integrate your service into Phalanx.
 This is done by creating an Argo CD application that manages your service.
 This consists of an ``Application`` resource that's used by Argo CD and a small wrapper chart in the `Phalanx repository <https://github.com/lsst-sqre/phalanx>`__ that holds the ``values-*.yaml`` files to configure your service for each environment in which it's deployed.
 

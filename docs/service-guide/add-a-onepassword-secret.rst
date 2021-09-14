@@ -9,7 +9,8 @@ This page provides steps for adding a service secret through 1Password.
 
 .. note::
 
-   For internal services, secrets should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
+   Dynamic secrets that don't have to be coordinated with external resources and only have to be consistent for a given installation of the Science Platform should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
+   Those secrets are not stored in 1Password since it's fine for them to change on each installation of the Science Platform.
 
 Part 1. Open the 1Password vault
 ================================
@@ -89,7 +90,8 @@ To sync multiple environments at once:
 Next steps: connecting Vault to Kubernetes with VaultSecret
 ===========================================================
 
-Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your services deployment (typically in its Helm chart).
+Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your services deployment (typically in its Helm_ chart).
+See :doc:`create-service` for more details about creating a Helm chart for a service.
 
 A conventional ``VaultSecret`` Helm template looks like this (update ``myapp`` with your service's name):
 
