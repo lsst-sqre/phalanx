@@ -1,6 +1,6 @@
-################################
-Add a new application to Phalanx
-################################
+############################
+Add a new service to Phalanx
+############################
 
 Once you have a chart and a Docker image, you need to integrate your service into Phalanx.
 This is done by creating an Argo CD application that manages your service.
@@ -9,7 +9,7 @@ This consists of an ``Application`` resource that's used by Argo CD and a small 
 Add the wrapper chart
 =====================
 
-#. Create a directory in `/services <https://github.com/lsst-sqre/phalanx/tree/master/services>`__ named for the application (which should almost always be the same as the name of its chart).
+#. Create a directory in `/services <https://github.com/lsst-sqre/phalanx/tree/master/services>`__ named for the service (which should almost always be the same as the name of its chart).
 
 #. Create a ``Chart.yaml`` file in that directory for the wrapper chart.
    This should look something like this:
@@ -126,7 +126,7 @@ Add the Argo CD application
    replacing every instance of ``<service>`` with the name of your service.
    This creates the namespace and Argo CD application for your service.
 
-#. Finally, edit each of the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__ and add a stanza for your application.
+#. Finally, edit each of the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__ and add a stanza for your service.
    The stanza in ``values.yaml`` should always say:
 
    .. code-block:: yaml

@@ -3,7 +3,7 @@ Science Platform operations
 ###########################
 
 The Rubin Science Platform is described in `LDM-542 <https://ldm-542.lsst.io/>`__.
-This document contains operational notes of interest to administrators of the Science Platform and maintainers of applications deployed via the Science Platform, but not of interest to users.
+This document contains operational notes of interest to administrators of the Science Platform and maintainers of services deployed via the Science Platform, but not of interest to users.
 
 For user documentation of the Notebook Aspect of the Rubin Science Platform, see `nb.lsst.io <https://nb.lsst.io/>`__.
 
@@ -32,12 +32,12 @@ General maintenance
 .. toctree::
    :maxdepth: 2
 
-   app-guide/create-service
-   app-guide/add-a-onepassword-secret
-   app-guide/add-application
-   app-guide/add-external-chart
-   app-guide/sync-argo-cd
-   app-guide/upgrade
+   service-guide/create-service
+   service-guide/add-a-onepassword-secret
+   service-guide/add-service
+   service-guide/add-external-chart
+   service-guide/sync-argo-cd
+   service-guide/upgrade
 
 Specific tasks
 --------------
@@ -45,13 +45,13 @@ Specific tasks
 .. toctree::
    :maxdepth: 2
 
-   app-guide/update-tap-schema
+   service-guide/update-tap-schema
 
 For science platform administrators
 ===================================
 
-Applications
-------------
+Services
+--------
 
 .. toctree::
    :maxdepth: 2

@@ -14,7 +14,7 @@ nublado2
 
 .. rubric:: Overview
 
-The ``nublado2`` application is an installation of JupyterHub from its `Helm chart <https://github.com/lsst-sqre/charts/tree/master/charts/nublado2>`__.
+The ``nublado2`` service is an installation of JupyterHub from its `Helm chart <https://github.com/lsst-sqre/charts/tree/master/charts/nublado2>`__.
 
 Upgrading ``nublado2`` is generally painless.
 A simple Argo CD sync is sufficient.

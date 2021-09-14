@@ -2,10 +2,10 @@
 Add a secret with 1Password and VaultSecret
 ###########################################
 
-Static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes ``Secret`` resources via :ref:`vault-secrets-operator`.
+Static secrets for services are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes ``Secret`` resources via :ref:`vault-secrets-operator`.
 Such secrets are things for external cloud services where we don't automatically provision accounts and password.
 When we manually create such a secret, we store it in 1Password.
-This page provides steps for adding an application secret through 1Password.
+This page provides steps for adding a service secret through 1Password.
 
 .. note::
 
@@ -89,7 +89,7 @@ To sync multiple environments at once:
 Next steps: connecting Vault to Kubernetes with VaultSecret
 ===========================================================
 
-Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your applications deployment (typically in its Helm chart).
+Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your services deployment (typically in its Helm chart).
 
 A conventional ``VaultSecret`` Helm template looks like this (update ``myapp`` with your service's name):
 

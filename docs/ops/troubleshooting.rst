@@ -9,10 +9,10 @@ Sometimes things break, and we are assembling the most common failure scenarios,
 PostgreSQL cannot mount its persistent volume
 =============================================
 
-**Symptoms:** When restarted, the ``postgres`` application pod fails to start because it cannot mount its persistent volume.
+**Symptoms:** When restarted, the ``postgres`` service pod fails to start because it cannot mount its persistent volume.
 If the pod is already running, it gets I/O errors from its database, hangs, or otherwise shows signs of storage problems.
 
-**Cause:** The ``postgres`` application requests a ``PersistentVolume`` via a ``PersistentVolumeClaim``.
+**Cause:** The ``postgres`` deployment requests a ``PersistentVolume`` via a ``PersistentVolumeClaim``.
 If the backing store is corrupt or has been deleted or otherwise is disrupted, sometimes the ``PersistentVolume`` will become unavailable, but the ``PersistentVolumeClaim`` will hang on to it and keep trying to futilely mount it.
 When this happens, you may need to recreate the persistent volume.
 

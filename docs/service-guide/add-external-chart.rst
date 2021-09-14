@@ -7,7 +7,7 @@ Sometimes, rather than deploying a new service we wrote ourselves (see :doc:`cre
 If the service has an existing published Helm chart (and most major open source services do, albeit sometimes not from the upstream service maintainers), we should use that Helm chart.
 Below are details on how to do that.
 
-This guide is somewhat general since every external application will be different in new and exciting ways.
+This guide is somewhat general since every external service will be different in new and exciting ways.
 Expect to spend a lot of time reading the upstream Helm chart documentation and iterating on configuration approaches when adding an external Helm chart.
 
 Potential problems
@@ -44,7 +44,7 @@ You may also need to add additional resources not created by the upstream Helm c
 (See :doc:`add-a-onepassword-secret` for more about secrets.)
 
 If the required configuration for the chart is simple enough, you can reference the chart directly from Phalanx and put its configuration in the per-environment Phalanx ``values-*.yaml`` files.
-In this case, you can skip ahead to :doc:`add-application`, although still read the information below on what settings you may need to configure.
+In this case, you can skip ahead to :doc:`add-service`, although still read the information below on what settings you may need to configure.
 
 If configuring the chart is sufficiently complex, if you want to provide additional Kubernetes resources that are not part of the upstream chart, or if there is substantial configuration that should be shared between all Rubin Science Platform environments, you may want to create a wrapper chart.
 This is a chart that lives in the `charts repository <https://github.com/lsst-sqre/charts/>`__ and includes the upstream chart as a subchart.
@@ -68,4 +68,4 @@ If it is not, you will need to add a stanza like:
 
 to that configuration key for the ``values-*.yaml`` file for every environment in Phalanx that will deploy this service.
 (The example above is for the ``ingress-nginx`` chart; the URL and name will obviously vary.)
-Do that as a pull request, probably as part of your pull request to add your Argo CD application (see :doc:`add-application`).
+Do that as a pull request, probably as part of your pull request to add your Argo CD application (see :doc:`add-service`).

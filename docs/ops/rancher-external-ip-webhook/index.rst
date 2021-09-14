@@ -14,13 +14,13 @@ rancher-external-ip-webhook
 
 .. rubric:: Overview
 
-The ``rancher-external-ip-webhook`` application is a validating webhook that protects against CVE-2020-8554 in Kubernetes.
+The ``rancher-external-ip-webhook`` service is a validating webhook that protects against CVE-2020-8554 in Kubernetes.
 It needs to be deployed on any Kubernetes cluster where untrusted users may be able to spawn pods with control over the pod configuration.
 
 Kubernetes allows anyone with pod creation permissions to claim an IP address via externalIP configuration.
 If they do this, Kubernetes will route all traffic for that IP address to that pod, even if the IP would otherwise be routed to the Internet.
 This allows a malicious pod to claim addresses like 8.8.8.8 and run a rogue DNS server, or intercept other traffic from other pods.
-This application defeats this attack by adding a validating webhook that rejects any pod that specifies an external IP address.
+This service defeats this attack by adding a validating webhook that rejects any pod that specifies an external IP address.
 (We use ingresses instead.)
 
 Kubernetes provides the `validating webhook <https://github.com/kubernetes-sigs/externalip-webhook>`__, and the Rancher project provides a `Helm chart <https://github.com/rancher/externalip-webhook/tree/master/chart>`__ to install it.
@@ -28,7 +28,7 @@ The Helm chart requires ``cert-manager`` to generate a self-signed certificate (
 
 .. rubric:: Testing
 
-The following commands can be used to test whether this application is performing as expected:
+The following commands can be used to test whether this service is performing as expected:
 
 .. code-block:: console
 
