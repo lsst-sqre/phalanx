@@ -56,7 +56,7 @@ Add the wrapper chart
 
    under the section for your chart.
    If you are using an external chart, see its documentation for how to configure pull secrets.
-   Configuring a pull secret is important to avoid running into Docker pull rate limits.
+   Configuring a pull secret is important to avoid running into Docker pull rate limits, which could otherwise prevent a pod from starting.
 
    **All configuration for your chart must be under a key named for your chart.**
    For example, for a service named ``example``, a typical configuration may look like:

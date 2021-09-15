@@ -24,7 +24,7 @@ Any Python service destined for the RSP should regularly update its dependencies
 If your service follows the code layout of the FastAPI service template, using `neophile <https://neophile.lsst.io/>`__ to automatically create PRs to update your dependencies is strongly recommended.
 To add your service to the list of repositories that neophile updates, submit a PR to add the repository owner and name to `neophile's configuration <https://github.com/lsst-sqre/roundtable/blob/master/deployments/neophile/values.yaml>`__.
 
-Each release of your service should be tagged.
+Each release of your service must be tagged.
 The tag should use `semantic versioning`_ (for example, ``1.3.2``).
 Creating a GitHub release for the tag is optional but recommended, and we recommend setting the title of the release to the name of the tag.
 If you are using the FastAPI template, tagging in this fashion is required since it triggers the GitHub Actions workflow to build and publish a Docker image with a tag matching the release version.
@@ -33,7 +33,8 @@ Create the Docker image
 =======================
 
 The Docker image can be stored in any container registry that is usable by Kubernetes, but for Rubin-developed services, we normally use DockerHub.
-(We may switch to the Google Container Registry later, but for now DockerHub is used for all images
+(We may switch to the Google Container Registry later, but for now DockerHub is used for all images.)
+If your image must be stored in a private container registery, the credentials for that registry must be added to the pull secret.
 
 If you use the FastAPI service template, a ``Dockerfile`` will be created as part of the new repository template, and GitHub Actions will be set up in the new repository to build and push new Docker images for tagged releases.
 To enable this workflow, you must create two secrets in your new GitHub repository, ``DOCKER_USERNAME`` and ``DOCKER_TOKEN``.
