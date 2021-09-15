@@ -1,8 +1,12 @@
+import os
+
 from diagrams import Cluster, Diagram, Edge
 from diagrams.gcp.compute import KubernetesEngine
 from diagrams.gcp.database import Datastore, Memorystore, SQL
 from diagrams.gcp.network import LoadBalancing
 from diagrams.onprem.client import User
+
+os.chdir(os.path.dirname(__file__))
 
 with Diagram(
         "Portal to TAP",

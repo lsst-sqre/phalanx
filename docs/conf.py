@@ -85,8 +85,9 @@ intersphinx_mapping = {
 }
 
 rst_epilog = """
-.. _Helm: https://helm.sh
 .. _Argo CD: https://argoproj.github.io/argo-cd/
+.. _Helm: https://helm.sh
+.. _IVOA: https://ivoa.net/documents/
 .. _semantic versioning: https://semver.org/
 """
 
