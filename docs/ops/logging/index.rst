@@ -15,7 +15,7 @@ logging
 .. rubric:: Overview
 
 The ``logging`` app deploys Open Distro for Elasticsearch to gather, store, and visualize logs from a Kubernetes cluster.
-This is somewhat heavy-weight, so we only run this application on the larger clusters at NCSA, not on the smaller clusters in GKE.
+This is somewhat heavy-weight, so we only run this service on the larger clusters at NCSA, not on the smaller clusters in GKE.
 
 The logging app is built primarily around the ``opendistro-es`` chart maintained in https://github.com/lsst-sqre/charts.
 This chart provides Elasticsearch_ and Kibana_ services.
@@ -31,7 +31,7 @@ The ``admin`` password is stored in the SQuaRE 1Password vault under the key "lo
 
 This chart is a stop-gap so that we have some logging in those clusters.
 We have done the bare minimum of configuration required to get Elasticsearch and Kibana up and running.
-The application uses a demo configuration, self-signed certificates, and as little tuning as possible.
+The service uses a demo configuration, self-signed certificates, and as little tuning as possible.
 The hope is that it can be retired in the future in favor of a logging system provided by the Data Facility.
 If not, we will need to take the time to properly configure it before it is production-ready.
 

@@ -3,7 +3,7 @@ Science Platform operations
 ###########################
 
 The Rubin Science Platform is described in `LDM-542 <https://ldm-542.lsst.io/>`__.
-This document contains operational notes of interest to administrators of the Science Platform and maintainers of applications deployed via the Science Platform, but not of interest to users.
+This document contains operational notes of interest to administrators of the Science Platform and maintainers of services deployed via the Science Platform, but not of interest to users.
 
 For user documentation of the Notebook Aspect of the Rubin Science Platform, see `nb.lsst.io <https://nb.lsst.io/>`__.
 
@@ -16,8 +16,6 @@ Phalanx is how we ensure that all of our services work together as a unit.
 Overview
 ========
 
-Intended audience: Anyone who is administering an installation of the Rubin Science Platform or maintaining an application deployed on it.
-
 .. toctree::
    :maxdepth: 2
 
@@ -25,26 +23,35 @@ Intended audience: Anyone who is administering an installation of the Rubin Scie
    arch/repository
    arch/secrets
 
-Application maintenance guide
-=============================
+For service maintainers
+=======================
 
-Intended audience: Maintainers of applications deployed on the Rubin Science Platform.
+General development and operations
+----------------------------------
 
 .. toctree::
    :maxdepth: 2
 
-   app-guide/sync-argo-cd
-   app-guide/upgrade
-   app-guide/add-application
-   app-guide/add-a-onepassword-secret
+   service-guide/create-service
+   service-guide/add-a-onepassword-secret
+   service-guide/add-service
+   service-guide/add-external-chart
+   service-guide/sync-argo-cd
+   service-guide/upgrade
 
-Operations guide
-================
+Specific tasks
+--------------
 
-Intended audience: Administrators of an installation of the Rubin Science Platform.
+.. toctree::
+   :maxdepth: 2
 
-Applications
-------------
+   service-guide/update-tap-schema
+
+For science platform administrators
+===================================
+
+Services
+--------
 
 .. toctree::
    :maxdepth: 2
@@ -76,4 +83,4 @@ Troubleshooting
 .. toctree::
    :maxdepth: 2
 
-   ops/troubleshooting/index
+   ops/troubleshooting

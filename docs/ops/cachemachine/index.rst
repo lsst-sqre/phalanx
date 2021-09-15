@@ -14,8 +14,7 @@ cachemachine
 
 .. rubric:: Overview
 
-The ``cachemachine`` application is an installation of the RSP's
-image-prepulling service from its `Helm chart <https://github.com/lsst-sqre/charts/tree/master/charts/cachemachine>`__.
+The ``cachemachine`` service is an installation of the RSP's image-prepulling service from its `Helm chart <https://github.com/lsst-sqre/charts/tree/master/charts/cachemachine>`__.
 
 Upgrading ``cachemachine`` is generally painless.
 A simple Argo CD sync is sufficient.
@@ -25,4 +24,4 @@ A simple Argo CD sync is sufficient.
 .. toctree::
 
    pruning
-   updating_recommended
+   updating-recommended
