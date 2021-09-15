@@ -74,7 +74,7 @@ Commit your changes to a git branch, and then create a GitHub pull request to ``
 Request that someone review the PR, and then merge it.
 
 Then synchronize cachemachine (using Argo CD) in the correct environment.
-It is not generally required to wait for a maintenance window to do this, since cachemachine is not directly user-facing.
+It is not generally required to wait for a maintenance window to do this, since making this change is low-risk.
 The cachemachine deployment will automatically restart, and that will kick off any required pulls.
 Since these pulls will just be pulling "recommended" under a different name, the image will almost certainly already be cached, and therefore the pull will be near-instant.
 Each pod that starts from the pulled image simply sleeps for one minute and then terminates.
