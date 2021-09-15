@@ -212,9 +212,16 @@ nublado2:
           name: "{{ user }}-role"
           namespace: "{{ user_namespace }}"
         rules:
+        # cf https://kubernetes.dask.org/en/latest/kubecluster.html
           - apiGroups: [""]
-            resources: ["pods"]
-            verbs: ["create", "get", "delete", "list"]
+            resources: ["pods", "services"]
+            verbs: ["create", "delete", "get", "list", "watch"]
+          - apiGroups: [""]
+            resources: ["pods/log"]
+            verbs: ["get","list"]
+          - apiGroups: ["policy"]
+            resources: ["poddisruptionbudgets"]
+            verbs: ["create", "delete", "get", "list", "watch"]        
       - apiVersion: rbac.authorization.k8s.io/v1
         kind: RoleBinding
         metadata:
