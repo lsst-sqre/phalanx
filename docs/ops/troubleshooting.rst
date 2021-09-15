@@ -48,7 +48,7 @@ Spawner menu shows empty parentheses after recommended rather than image tag
 **Cause:** Cachemachine is responsible for generating the menu used for spawning new JupyterLab instances, as above.
 If a new node has been introduced after the target image for "recommended" has rolled out of the prepull list, then that node will have "recommended" but will not have pulled it under its target tag (e.g. ``w_2021_33``) and therefore cachemachine will not know that the two are the same image.
 
-**Solution**: :doc:`cachemachine/updating_recommended`
+**Solution**: :doc:`cachemachine/updating-recommended`
 
 Spawning a notebook fails with a pending error
 ==============================================
