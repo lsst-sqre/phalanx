@@ -22,7 +22,7 @@ mobu:
         repo_url: "https://github.com/lsst-sqre/system-test.git"
         repo_branch: "NCSA-prod"
         max_executions: 1
-      restart: True
+      restart: true
 
 pull-secret:
   enabled: true

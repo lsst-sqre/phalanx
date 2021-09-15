@@ -19,7 +19,7 @@ mobu:
       options:
         jupyter:
           image_size: "Small"
-      restart: True
+      restart: true
 
 pull-secret:
   enabled: true
