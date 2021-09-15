@@ -8,6 +8,7 @@ PAPER         =
 BUILDDIR      = _build
 
 # Internal variables.
+IMAGES          = _static/notebook-tap.png _static/portal-tap.png
 PAPEROPT_a4     = -D latex_paper_size=a4
 PAPEROPT_letter = -D latex_paper_size=letter
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
@@ -25,14 +26,20 @@ help:
 clean:
 	rm -rf $(BUILDDIR)/*
 
+_static/notebook-tap.png:
+	python _static/notebook-tap.py
+
+_static/portal-tap.png:
+	python _static/portal-tap.py
+
 .PHONY: html
-html:
+html: $(IMAGES)
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
 
 .PHONY: linkcheck
-linkcheck:
+linkcheck: $(IMAGES)
 	$(SPHINXBUILD) -b linkcheck $(ALLSPHINXOPTS) $(BUILDDIR)/linkcheck
 	@echo
 	@echo "Link check complete; look for any errors in the above output " \
