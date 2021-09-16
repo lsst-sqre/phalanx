@@ -17,7 +17,7 @@ cachemachine:
           {
             "type": "RubinRepoMan",
             "registry_url": "registry.hub.docker.com",
-            "repo": "lsstts/sal-sciplat-lab",
+            "repo": "ts-dockerhub.lsst.org/sal-sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 1,
             "num_weeklies": 3,
