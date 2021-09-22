@@ -60,6 +60,7 @@ Services
    ops/cachemachine/index
    ops/cert-issuer/index
    ops/cert-manager/index
+   ops/filestore/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index
    ops/logging/index
