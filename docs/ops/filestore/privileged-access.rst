@@ -68,5 +68,5 @@ privileged pod:
 
     ::
 
-        tar cvpfz /tmp/foo-local.tgz /home/foo/.local.20210804223021
+        tar cvpfz /tmp/foo-local.tgz /mnt/home/foo/.local.20210804223021
 
