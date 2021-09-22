@@ -60,7 +60,6 @@ Services
    ops/cachemachine/index
    ops/cert-issuer/index
    ops/cert-manager/index
-   ops/filestore/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index
    ops/logging/index
@@ -78,6 +77,14 @@ Bootstrapping
    :maxdepth: 2
 
    ops/bootstrapping
+
+Infrastructure
+--------------
+
+.. toctree::
+  :maxdepth: 2
+
+  ops/infrastructure/filestore/index
 
 Troubleshooting
 ---------------

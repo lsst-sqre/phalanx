@@ -88,5 +88,5 @@ unprivileged user.  If you need to do something that spans users or
 should create root-owned files, you will need some way of accessing the
 filestore-presented filesystem with privilege.
 
-**Solution:** :doc:`filestore/privileged-access`
+**Solution:** :doc:`infrastructure/filestore/privileged-access`
 
