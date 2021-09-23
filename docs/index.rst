@@ -78,6 +78,14 @@ Bootstrapping
 
    ops/bootstrapping
 
+Infrastructure
+--------------
+
+.. toctree::
+  :maxdepth: 2
+
+  ops/infrastructure/filestore/index
+
 Troubleshooting
 ---------------
 

@@ -75,3 +75,18 @@ Gafaelfawr will prevent the user from logging in at all if they are not a member
 If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other services.
 
 **Solution:** :doc:`gafaelfawr/debugging`
+
+You need privileged access to the filestore
+===========================================
+
+**Symptoms:** You need to do something like copy data from one instance
+to another, or to get a report of per-user usage on the filestore, or
+create a new non-world-writeable section under the filestore.
+
+**Causes:** The RSP intentionally only lets you access a pod as an
+unprivileged user.  If you need to do something that spans users or
+should create root-owned files, you will need some way of accessing the
+filestore-presented filesystem with privilege.
+
+**Solution:** :doc:`infrastructure/filestore/privileged-access`
+
