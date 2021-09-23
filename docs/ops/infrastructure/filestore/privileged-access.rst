@@ -24,19 +24,19 @@ multiple filestores are presented within the container.
     spec:
       containers:
       - name: main
-	image: ubuntu:latest
-	args: [ "tail", "-f", "/dev/null" ]
-	volumeMounts:
-	- mountPath: /mnt
-	  name: share
+        image: ubuntu:latest
+        args: [ "tail", "-f", "/dev/null" ]
+        volumeMounts:
+        - mountPath: /mnt
+          name: share
       volumes:
       - name: share
-	nfs:
-	  path: /share1
-	  server: 10.13.105.122
-	  # 10.87.86.26 is IDF dev
-	  # 10.22.240.130 is IDF int
-	  # 10.13.105.122 is IDF prod
+        nfs:
+          path: /share1
+          server: 10.13.105.122
+          # 10.87.86.26 is IDF dev
+          # 10.22.240.130 is IDF int
+          # 10.13.105.122 is IDF prod
 
 In order to spin up this pod, do the following:
 
@@ -55,18 +55,14 @@ privileged pod:
 
 **Examples:**
 
-  * Get usage data by username, sorted by usage, largest at the bottom:
-
-    ::
+  * Get usage data by username, sorted by usage, largest at the bottom::
     
         du -s -BM /mnt/home/* \
         | sed -e 's/\s\+/,/' \
         | sed -e 's|/mnt/home/||' \
         | sort -nr
 
-  * Make archival copy of user ``foo``'s previous ``.local`` for analysis.
-
-    ::
+  * Make archival copy of user ``foo``'s previous ``.local`` for analysis::
 
         tar cvpfz /tmp/foo-local.tgz /mnt/home/foo/.local.20210804223021
 
