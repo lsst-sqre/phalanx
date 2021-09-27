@@ -21,6 +21,11 @@ nublado2:
       AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
       AUTO_REPO_BRANCH: prod
       AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
+      PANDA_AUTH_VO: Rubin
+      PANDA_URL_SSL: https://pandaserver-doma.cern.ch:25443/server/panda
+      PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
+      IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
+      PANDA_CONFIG_ROOT: ~/
     volumes:
       - name: home
         nfs:
