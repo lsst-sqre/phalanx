@@ -14,11 +14,6 @@ nublado2:
       AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
       AUTO_REPO_BRANCH: "NCSA-prod"
       AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@NCSA-prod"
-      PANDA_AUTH_VO: Rubin
-      PANDA_URL_SSL: https://pandaserver-doma.cern.ch:25443/server/panda
-      PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
-      IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
-      PANDA_CONFIG_ROOT: ~/
     volumes:
       - name: datasets
         hostPath:
