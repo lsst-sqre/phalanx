@@ -211,7 +211,7 @@ nublado2:
     - apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: idds_config
+        name: idds-config
         namespace: "{{ user_namespace }}"
       data:
         idds_cfg.client.template: |
