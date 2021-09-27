@@ -9,7 +9,6 @@ nublado2:
       hosts: ["data.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data.lsst.cloud/login"
-
   config:
     base_url: "https://data.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data.lsst.cloud/butler-secret"
@@ -199,6 +198,32 @@ nublado2:
         data:
           dask_worker.yml: |
             {{ dask_yaml | indent(6) }}
+      # When we break out the resources we should make this per-instance
+      #  configurable.
+      - apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: idds-config
+          namespace: "{{ user_namespace }}"
+        data:
+          idds_cfg.client.template: |
+            # Licensed under the Apache License, Version 2.0 (the "License");
+            # You may not use this file except in compliance with the License.
+            # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+            #
+            # Authors:
+            # - Wen Guan, <wen.guan@cern.ch>, 2020
+            [common]
+            # if logdir is configured, idds will write to idds.log in this directory.
+            # else idds will go to stdout/stderr.
+            # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
+            # logdir = /var/log/idds
+            loglevel = INFO
+            [rest]
+            host = https://iddsserver.cern.ch:443/idds
+            #url_prefix = /idds
+            #cacher_dir = /tmp
+            cacher_dir = /data/idds
       - apiVersion: v1
         kind: ServiceAccount
         metadata:
