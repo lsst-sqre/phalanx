@@ -4,9 +4,7 @@ cachemachine:
 
   ingress:
     enabled: true
-    hosts:
-      - host: rsp.lsst.ac.uk
-        paths: ["/cachemachine"]
+    host: "rsp.lsst.ac.uk"
 
   vaultSecretsPath: "secret/k8s_operator/roe/pull-secret"
 
