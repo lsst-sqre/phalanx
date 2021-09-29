@@ -1,5 +1,10 @@
 nublado2:
   jupyterhub:
+    # Otherwise the iptables init container runs, and has no resource
+    #  limits, so the user pod crashes when it meets our quota.
+    singleuser:
+      cloudMetadata:
+        blockWithIptables: false
     hub:
       resources:
         requests:
@@ -9,6 +14,7 @@ nublado2:
       hosts: ["data-int.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
+      pathSuffix: "*"
   config:
     base_url: "https://data-int.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"
@@ -21,12 +27,12 @@ nublado2:
       AUTO_REPO_BRANCH: prod
       AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
       PANDA_AUTH: oidc
-      PANDA_VERIFY_HOST: off
+      PANDA_VERIFY_HOST: "off"
       PANDA_AUTH_VO: Rubin
       PANDA_URL_SSL: https://pandaserver-doma.cern.ch:25443/server/panda
       PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
       IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
-      PANDA_CONFIG_ROOT: ~/
+      PANDA_CONFIG_ROOT: "~"
     volumes:
       - name: home
         nfs:
@@ -213,7 +219,7 @@ nublado2:
           name: idds-config
           namespace: "{{ user_namespace }}"
         data:
-          idds_cfg.client.template: |
+          idds.cfg.client.template: |
             # Licensed under the Apache License, Version 2.0 (the "License");
             # You may not use this file except in compliance with the License.
             # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -290,6 +296,7 @@ nublado2:
           namespace: "{{ user_namespace }}"
         spec:
           hard:
-            limits.cpu: "9"
+            limits.cpu: 9
             limits.memory: 27Gi
+
   vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"

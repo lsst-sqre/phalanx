@@ -1,5 +1,7 @@
 nublado2:
   jupyterhub:
+    # Otherwise the iptables init container runs, and has no resource
+    #  limits, so the user pod crashes when it meets our quota.
     hub:
       resources:
         requests:
@@ -283,7 +285,7 @@ nublado2:
           namespace: "{{ user_namespace }}"
         spec:
           hard:
-            limits.cpu: "9"
+            limits.cpu: 9
             limits.memory: 27Gi
 
   vault_secret_path: "secret/k8s_operator/data.lsst.cloud/nublado2"
