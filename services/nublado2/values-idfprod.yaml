@@ -5,13 +5,6 @@ nublado2:
         requests:
           cpu: "1"
           memory: 3Gi
-    scheduling:
-      userScheduler:
-        pdb:
-          enabled: false
-      userPlaceholder:
-        pdb:
-          enabled: false
     ingress:
       hosts: ["data.lsst.cloud"]
       annotations:
