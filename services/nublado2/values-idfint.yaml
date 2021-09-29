@@ -1,10 +1,5 @@
 nublado2:
   jupyterhub:
-    # Otherwise the iptables init container runs, and has no resource
-    #  limits, so the user pod crashes when it meets our quota.
-    singleuser:
-      cloudMetadata:
-        blockWithIptables: false
     hub:
       resources:
         requests:
@@ -14,7 +9,6 @@ nublado2:
       hosts: ["data-int.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
-      pathSuffix: "*"
   config:
     base_url: "https://data-int.lsst.cloud"
     butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"

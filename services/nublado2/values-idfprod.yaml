@@ -1,7 +1,5 @@
 nublado2:
   jupyterhub:
-    # Otherwise the iptables init container runs, and has no resource
-    #  limits, so the user pod crashes when it meets our quota.
     hub:
       resources:
         requests:
