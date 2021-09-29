@@ -26,6 +26,8 @@ moneypenny:
   enabled: false
 ingress_nginx:
   enabled: true
+noteburst:
+  enabled: false
 nublado2:
   enabled: false
 obstap:
