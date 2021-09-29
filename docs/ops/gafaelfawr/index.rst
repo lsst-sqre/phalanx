@@ -1,5 +1,5 @@
 ##########
-gafaelfawr
+Gafaelfawr
 ##########
 
 .. list-table::

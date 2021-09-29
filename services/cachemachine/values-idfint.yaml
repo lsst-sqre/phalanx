@@ -27,8 +27,8 @@ cachemachine:
             "type": "SimpleRepoMan",
             "images": [
               {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_25",
-                "name": "Weekly 2021_25"
+                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33",
+                "name": "Weekly 2021_33"
               }
             ]
           }

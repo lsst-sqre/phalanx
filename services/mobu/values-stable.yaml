@@ -27,23 +27,10 @@ mobu:
       scopes: ["exec:notebook", "exec:portal", "read:tap"]
       business: "NotebookRunner"
       options:
-        jupyter_options_form:
-          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
-          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
-          image_dropdown: "use_image_from_dropdown"
-          size: "Large"
-        repo_url: "https://github.com/lsst-sqre/notebook-demo.git"
-        repo_branch: "robo-simon"
+        repo_url: "https://github.com/lsst-sqre/system-test.git"
+        repo_branch: "NCSA-prod"
         max_executions: 1
       restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "lsptestuser06"
-          uidnumber: 60186
-      scopes: ["read:tap"]
-      business: "TAPQueryRunner"
-      restart: True
 
 pull-secret:
   enabled: true

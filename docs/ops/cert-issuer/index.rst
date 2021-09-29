@@ -14,7 +14,7 @@ cert-issuer
 
 .. rubric:: Overview
 
-The ``cert-issuer`` application creates a cluster issuer for the use of the Rubin Science Platform.
+The ``cert-issuer`` service creates a cluster issuer for the use of the Rubin Science Platform.
 It depends on `cert-manager <https://cert-manager.io>`__.
 The issuer is named ``cert-issuer-letsencrypt-dns``.
 
@@ -33,8 +33,7 @@ To configure an ingress to use certificates issued by it, add a ``tls`` configur
    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
 
 This should be done on one and only one ingress for a deployment using ``cert-issuer``.
-Currently, this is done on the proxy ingress of the ``nublado`` application.
-In the future, it will probably move to the ``landing-page`` application.
+The RSP conventionally uses the ``landing-page`` service.
 
 .. rubric:: Guides
 

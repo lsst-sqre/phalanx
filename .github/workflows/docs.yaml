@@ -1,6 +1,9 @@
 name: Docs
 
 "on":
+  pull_request:
+    paths:
+      - "docs/**"
   push:
     paths:
       - "docs/**"
@@ -23,15 +26,26 @@ jobs:
           python -m pip install -r docs/requirements.txt
           python -m pip install "ltd-conveyor<2.0.0"
 
+      - name: Install graphviz
+        run: sudo apt-get install graphviz
+
       - name: Build
         run: |
           cd docs
           make html
 
+      # Only attempt documentation uploads for long-lived branches, tagged
+      # releases, and pull requests from ticket branches.  This avoids version
+      # clutter in the docs and failures when a PR doesn't have access to
+      # secrets.  This will still trigger on pull requests from untrusted
+      # repositories whose branch names match our tickets/* branch convention,
+      # but in this case the build will fail with an error since the secret
+      # won't be set.
       - name: Upload
-        if: ${{ github.event_name == 'push' }}
         env:
           LTD_PASSWORD: ${{ secrets.LTD_PASSWORD }}
           LTD_USERNAME: ${{ secrets.LTD_USERNAME }}
-        run: |
-          ltd upload --gh --dir docs/_build/html --product phalanx
+        run: ltd upload --gh --product phalanx --dir docs/_build/html
+        if: >-
+          github.event_name != 'pull_request'
+          || startsWith(github.head_ref, 'tickets/')
