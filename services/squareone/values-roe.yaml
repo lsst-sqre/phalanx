@@ -11,7 +11,7 @@ squareone:
     - name: "pull-secret"
   config:
     siteName: "Rubin Science Platform"
-    semaphoreUrl: "https://roe/semaphore"
+    semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
 
 pull-secret:
   enabled: true

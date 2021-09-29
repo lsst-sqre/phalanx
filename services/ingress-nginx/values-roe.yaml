@@ -19,9 +19,6 @@ ingress-nginx:
                 - key: node-role.kubernetes.io/etcd
                   operator: Exists
 
-    
-    extraArgs:
-      default-ssl-certificate: ingress-nginx/ingress-certificate
     podLabels:
       hub.jupyter.org/network-access-proxy-http: "true"
 

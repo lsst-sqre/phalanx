@@ -10,6 +10,7 @@ cachemachine:
 
   vaultSecretsPath: "secret/k8s_operator/roe/pull-secret"
 
+
   autostart:
     jupyter: |
       {
@@ -24,15 +25,6 @@ cachemachine:
             "num_releases": 1,
             "num_weeklies": 2,
             "num_dailies": 3
-          },
-          {
-            "type": "SimpleRepoMan",
-            "images": [
-              {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_25",
-                "name": "Weekly 2021_25"
-              }
-            ]
           }
         ]
       }

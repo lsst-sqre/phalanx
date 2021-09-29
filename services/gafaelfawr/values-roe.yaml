@@ -41,10 +41,6 @@ gafaelfawr:
     initialAdmins:
       - "stvoutsin"
 
-    errorFooter: |
-      To report problems or ask for help, please open an issue in the
-      <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-      rubin-dp0/Support project</a>.
 
 pull-secret:
   enabled: true

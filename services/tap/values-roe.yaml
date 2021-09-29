@@ -11,9 +11,6 @@ cadc-tap:
     enabled: true
     path: 'secret/k8s_operator/roe/tap'
 
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
-
   ingress:
     authenticated_annotations:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
@@ -21,8 +18,6 @@ cadc-tap:
       nginx.ingress.kubernetes.io/configuration-snippet: |
         auth_request_set $auth_token $upstream_http_x_auth_request_token;
         proxy_set_header Authorization "Bearer $auth_token";
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
 
 pull-secret:
   enabled: true
