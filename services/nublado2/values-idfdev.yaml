@@ -9,7 +9,6 @@ nublado2:
       hosts: ["data-dev.lsst.cloud"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
-      pathSuffix: "*"
 
   config:
     base_url: "https://data-dev.lsst.cloud"
