@@ -24,6 +24,8 @@ mobu:
   enabled: false
 moneypenny:
   enabled: false
+noteburst:
+  enabled: false
 nublado2:
   enabled: false
 obstap:
