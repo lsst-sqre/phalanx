@@ -1,12 +1,6 @@
 squareone:
   ingress:
     host: "rsp.lsst.ac.uk"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "rsp.lsst.ac.uk"
   imagePullSecrets:
     - name: "pull-secret"
   config:
@@ -16,4 +10,3 @@ squareone:
 pull-secret:
   enabled: true
   path: secret/k8s_operator/roe/pull-secret
-
