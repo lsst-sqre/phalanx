@@ -22,8 +22,6 @@ firefly:
     enabled: true
     path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/portal'
 
-  max_jvm_size: "23G"
-
   redis:
     resources:
       limits:
