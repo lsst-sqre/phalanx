@@ -16,7 +16,8 @@ firefly:
 
   resources:
     limits:
-      memory: 8Gi
+      cpu: 0.3
+      memory: 2Gi
 
   secrets:
     enabled: false
