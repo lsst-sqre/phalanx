@@ -2,7 +2,9 @@
 Recreating the gafaelfawr token
 ###############################
 
-If Gafaelfawr has restarted and its ``redis`` service's persistent storage has been lost, pods that rely on having a token from ``gafaelfawr`` will no longer be able to authenticate.
+If Gafaelfawr has restarted and its ``redis`` service's storage has been
+lost, services that rely on having a token from ``gafaelfawr`` to allow
+them access to other services will no longer be able to authenticate.
 
 This is seen in the ``nublado2`` namespace; when it happens the ``gafaelfawr-token`` no longer allows access to Moneypenny and user pod spawning fails.
 

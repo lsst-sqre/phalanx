@@ -79,14 +79,19 @@ If they are a member of at least one group, they'll be able to log in but may ge
 You need privileged access to the filestore
 ===========================================
 
-**Symptoms:** You need to do something like copy data from one instance
-to another, or to get a report of per-user usage on the filestore, or
-create a new non-world-writeable section under the filestore.
+**Symptoms:** You need to do something like copy data from one instance to another, or to get a report of per-user usage on the filestore, or create a new non-world-writeable section under the filestore.
 
-**Causes:** The RSP intentionally only lets you access a pod as an
-unprivileged user.  If you need to do something that spans users or
-should create root-owned files, you will need some way of accessing the
-filestore-presented filesystem with privilege.
+**Causes:** The RSP intentionally only lets you access a pod as an unprivileged user.
+If you need to do something that spans users or should create root-owned files, you will need some way of accessing the filestore-presented filesystem with privilege.
 
 **Solution:** :doc:`infrastructure/filestore/privileged-access`
+
+User pods don't spawn, reporting "permission denied" from Moneypenny
+====================================================================
+
+**Symptoms:** A user pod fails to spawn, and the error message says that Moneypenny did not have permission to execute.
+
+**Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.  This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
+
+**Solution:** :doc:`gafaelfawr/recreate-token`
 
