@@ -14,8 +14,6 @@ firefly:
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
 
-  max_jvm_size: "7G"
-
   resources:
     limits:
       memory: 8Gi
