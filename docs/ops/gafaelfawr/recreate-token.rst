@@ -10,8 +10,6 @@ This is seen in the ``nublado2`` namespace; when it happens the ``gafaelfawr-tok
 
 To correct the issue:
 
-#. delete the ``gafaelfawr-token`` secret from the ``nublado2`` namespace.
-
 #. Force a restart of the ``gafaelfawr-tokens`` deployment in the ``gafaelfawr`` namespace.  This will recreate the secret in ``nublado2``.
 
 #. Force a restart of the ``hub`` deployment in ``nublado2``.  This will restart the hub with the new, correct token.
