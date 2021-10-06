@@ -61,7 +61,7 @@ mobu:
           image_dropdown: "use_image_from_dropdown"
           size: "Large"
         repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-        repo_branch: "prod"
+        repo_branch: "tickets/PREOPS-723"
         max_executions: 1
         working_directory: "notebooks/tutorial-notebooks"
       restart: true
