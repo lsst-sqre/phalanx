@@ -38,6 +38,7 @@ General development and operations
    service-guide/add-external-chart
    service-guide/sync-argo-cd
    service-guide/upgrade
+   service-guide/chart-changes
 
 Specific tasks
 --------------

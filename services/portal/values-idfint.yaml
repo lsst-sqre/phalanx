@@ -6,9 +6,6 @@ firefly:
     firefly_shared_workarea_nfs:
       path: /share1/home/firefly/shared-workarea
       server: 10.22.240.130
-    firefly_config_nfs:
-      path: /share1/home/firefly/config
-      server: 10.22.240.130
 
   ingress:
     host: "data-int.lsst.cloud"
@@ -24,8 +21,6 @@ firefly:
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
-
-  max_jvm_size: "29G"
 
   resources:
     limits:

@@ -1,6 +1,6 @@
-####################
-Upgrading an service
-####################
+###################
+Upgrading a service
+###################
 
 #. Release a new version of the service by pushing an image with the new version tag to Docker Hub (or whatever Docker repository is used).
 
