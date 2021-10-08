@@ -1,4 +1,3 @@
-
 mobu:
   imagePullSecrets:
     - name: "pull-secret"
@@ -39,4 +38,3 @@ mobu:
 pull-secret:
   enabled: true
   path: "secret/k8s_operator/roe/pull-secret"
-

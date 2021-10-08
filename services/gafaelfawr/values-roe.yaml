@@ -8,8 +8,8 @@ gafaelfawr:
   redis:
     persistence:
       enabled: false
-      
- 
+
+
   config:
     loglevel: "DEBUG"
     host: "rsp.lsst.ac.uk"
