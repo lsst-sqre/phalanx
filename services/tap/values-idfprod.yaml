@@ -1,5 +1,4 @@
 cadc-tap:
-  tag: "parser-improvements"
   pull_secret: 'pull-secret'
   use_mock_qserv: false
   qserv_host: "10.140.1.211:4040"
