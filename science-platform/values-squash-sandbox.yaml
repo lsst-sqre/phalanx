@@ -44,6 +44,8 @@ squareone:
   enabled: false
 squash_api:
   enabled: true
+strimzi:
+  enabled: false
 tap:
   enabled: false
 tap_schema:

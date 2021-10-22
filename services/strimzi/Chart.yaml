@@ -1,0 +1,10 @@
+apiVersion: v2
+name: strimzi
+description: Strimzi Kafka Operator, https://strimzi.io
+type: application
+version: 0.1.0
+appVersion: "0.26.0"
+dependencies:
+  - name: strimzi-kafka-operator
+    version: "0.26.0"
+    repository: https://strimzi.io/charts/
