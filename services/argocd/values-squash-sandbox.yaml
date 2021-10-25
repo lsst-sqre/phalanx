@@ -27,7 +27,7 @@ argo-cd:
           name: ingress-nginx
         - url: https://charts.helm.sh/stable
           name: stable
-        - url: https://strimzi.io/stable
+        - url: https://strimzi.io/charts/
           name: strimzi
 
 vault_secret:
