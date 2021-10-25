@@ -1,6 +1,7 @@
 noteburst:
   image:
     pullPolicy: Always
+    tag: tickets-DM-31910
   ingress:
     enabled: true
     annotations:
