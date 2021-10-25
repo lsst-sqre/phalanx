@@ -13,6 +13,8 @@ noteburst:
   imagePullSecrets:
     - name: "pull-secret"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/noteburst"
+  config:
+    environment_url: "https://data-dev.lsst.cloud"
 
 pull-secret:
   enabled: true
