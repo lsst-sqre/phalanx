@@ -1,0 +1,3 @@
+strimzi-kafka-operator:
+  watchNamespaces:
+    - "alert-stream"
