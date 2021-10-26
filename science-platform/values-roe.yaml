@@ -13,6 +13,8 @@ cert_manager:
   enabled: true
 chronograf:
   enabled: false
+datalinker:
+  enabled: false
 exposurelog:
   enabled: false
 gafaelfawr:
