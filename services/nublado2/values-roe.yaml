@@ -1,0 +1,43 @@
+nublado2:
+  jupyterhub:
+    ingress:
+      hosts: ["rsp.lsst.ac.uk"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://rsp.lsst.ac.uk/login"
+        nginx.ingress.kubernetes.io/auth-url: "https://rsp.lsst.ac.uk/auth?scope=exec:notebook&notebook=true"
+
+  config:
+    base_url: "https://rsp.lsst.ac.uk"
+    butler_secret_path: "secret/k8s_operator/roe/butler-secret"
+    pull_secret_path: "secret/k8s_operator/roe/pull-secret"
+    lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+      AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    pinned_images:
+      - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+        name: Recommended
+    volumes:
+      - name: datasets
+        hostPath:
+          path: /lsstdata/user/precursor_data/datasets
+      - name: home
+        hostPath:
+          path: /lsstdata/user/staff/jhome
+      - name: project
+        hostPath:
+          path: /lsstdata/user/staff/project
+      - name: scratch
+        hostPath:
+          path: /lsstdata/user/staff/scratch
+    volume_mounts:
+      - name: datasets
+        mountPath: /datasets
+      - name: home
+        mountPath: /home
+      - name: project
+        mountPath: /project
+      - name: scratch
+        mountPath: /scratch
+
+  vault_secret_path: "secret/k8s_operator/roe/nublado2"

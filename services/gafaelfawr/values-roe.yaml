@@ -1,0 +1,47 @@
+gafaelfawr:
+  imagePullSecrets:
+    - name: "pull-secret"
+  ingress:
+    host: "rsp.lsst.ac.uk"
+  vaultSecretsPath: "secret/k8s_operator/roe/gafaelfawr"
+
+  redis:
+    persistence:
+      enabled: false
+
+
+  config:
+    loglevel: "DEBUG"
+    host: "rsp.lsst.ac.uk"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+    github:
+      clientId: "10172b4db1b67ee31620"
+
+    # Allow access by GitHub team.
+    groupMapping:
+      "exec:admin":
+        - "lsp-uk-dev"
+      "exec:notebook":
+        - "lsp-uk-dev"
+      "read:workspace":
+        - "lsp-uk-dev"
+      "read:workspace/user":
+        - "lsp-uk-dev"
+      "write:workspace/user":
+        - "lsp-uk-dev"
+      "exec:portal":
+        - "lsp-uk-dev"
+      "exec:user":
+        - "lsp-uk-dev"
+      "read:tap":
+        - "lsp-uk-dev"
+      "read:image":
+        - "lsp-uk-dev"
+
+    initialAdmins:
+      - "stvoutsin"
+
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/roe/pull-secret

@@ -1,0 +1,24 @@
+cadc-tap:
+  pull_secret: 'pull-secret'
+  use_mock_qserv: true
+
+  host: "rsp.lsst.ac.uk"
+
+  secrets:
+    enabled: false
+
+  vault_secrets:
+    enabled: true
+    path: 'secret/k8s_operator/roe/tap'
+
+  ingress:
+    authenticated_annotations:
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-url: "https://rsp.lsst.ac.uk/auth?scope=read:tap&auth_type=basic&delegate_to=tap"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        auth_request_set $auth_token $upstream_http_x_auth_request_token;
+        proxy_set_header Authorization "Bearer $auth_token";
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/roe/pull-secret

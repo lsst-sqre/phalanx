@@ -1,0 +1,7 @@
+cert-issuer:
+  config:
+    email: "rsp@roe.ac.uk"
+    route53:
+      awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
+      hostedZone: "Z0567328105IEHEMIXLCO"
+    vaultSecretPath: "secret/k8s_operator/roe/cert-manager"
