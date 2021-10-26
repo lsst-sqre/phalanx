@@ -1,6 +1,7 @@
 noteburst:
   image:
     pullPolicy: Always
+    tag: tickets-DM-31910
   ingress:
     enabled: true
     annotations:
@@ -13,6 +14,8 @@ noteburst:
   imagePullSecrets:
     - name: "pull-secret"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/noteburst"
+  config:
+    environment_url: "https://data-dev.lsst.cloud"
 
 pull-secret:
   enabled: true
