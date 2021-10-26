@@ -1,4 +1,7 @@
 noteburst:
+  image:
+    pullPolicy: Always
+    tag: tickets-DM-31910
   ingress:
     enabled: true
     annotations:
@@ -11,6 +14,8 @@ noteburst:
   imagePullSecrets:
     - name: "pull-secret"
   vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/noteburst"
+  config:
+    environment_url: "https://minikube.lsst.cloud"
 
 pull-secret:
   enabled: true
