@@ -2,6 +2,8 @@ environment: summit
 fqdn: summit-lsp.lsst.codes
 vault_path_prefix: secret/k8s_operator/summit-lsp.lsst.codes
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: true
 cachemachine:

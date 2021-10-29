@@ -1,0 +1,7 @@
+apiVersion: v2
+name: alert-stream-broker
+version: 1.0.0
+dependencies:
+  - name: alert-stream-broker
+    version: 1.0.0
+    repository: https://lsst-sqre.github.io/charts/
