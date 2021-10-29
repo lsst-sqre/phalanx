@@ -32,6 +32,8 @@ nublado2:
   enabled: false
 obstap:
   enabled: false
+plot_navigator:
+  enabled: false
 portal:
   enabled: false
 postgres:
