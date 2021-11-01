@@ -59,4 +59,4 @@ tap_schema:
 vault_secrets_operator:
   enabled: true
 vo_cutouts:
-  enabled: true
+  enabled: false

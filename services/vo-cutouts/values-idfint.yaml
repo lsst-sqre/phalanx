@@ -2,15 +2,15 @@ vo-cutouts:
   imagePullSecrets:
     - name: "pull-secret"
   ingress:
-    host: "data-dev.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/vo-cutouts"
+    host: "data-int.lsst.cloud"
+  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/vo-cutouts"
 
   # Enable the frontend NetworkPolicy.
   networkPolicy:
     enabled: true
 
   config:
-    butlerRepository: ""
+    butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
 
   cloudsql:
@@ -20,4 +20,4 @@ vo-cutouts:
 
 pull-secret:
   enabled: true
-  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+  path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"
