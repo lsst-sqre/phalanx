@@ -11,6 +11,7 @@ vo-cutouts:
 
   config:
     butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
+    butlerCollection: "2.2i/runs/DP0.1"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
 
   cloudsql:
