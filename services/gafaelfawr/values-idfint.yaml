@@ -29,13 +29,15 @@ gafaelfawr:
       "exec:admin":
         - "lsst-sqre-square"
       "exec:notebook":
+        - "lsst-ops-panda"
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
-        - "lsst-ops-panda"
       "exec:portal":
+        - "lsst-ops-panda"
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
       "read:tap":
+        - "lsst-ops-panda"
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
 
