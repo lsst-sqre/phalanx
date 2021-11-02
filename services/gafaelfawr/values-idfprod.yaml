@@ -40,6 +40,12 @@ gafaelfawr:
         - "lsst-ops"
         - "rubin-dp0-delegates"
         - "rubin-dp0-friends"
+      "read:image":
+        - "lsst-sqre-square"
+        - "lsst-data-management"
+        - "lsst-ops"
+        - "rubin-dp0-delegates"
+        - "rubin-dp0-friends"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-data-management"
