@@ -16,8 +16,8 @@ vo-cutouts:
 
   cloudsql:
     enabled: true
-    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
-    serviceAccount: "vo-cutouts@science-platform-dev-7696.iam.gserviceaccount.com"
+    instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+    serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"
 
 pull-secret:
   enabled: true

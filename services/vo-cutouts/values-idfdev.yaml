@@ -1,0 +1,28 @@
+vo-cutouts:
+  imagePullSecrets:
+    - name: "pull-secret"
+  ingress:
+    host: "data-dev.lsst.cloud"
+  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/vo-cutouts"
+
+  # Enable the frontend NetworkPolicy.
+  networkPolicy:
+    enabled: true
+
+  config:
+    # There is currently no working Butler in data-dev, so this configuration
+    # won't work.  Leaving it here anyway since it has the correct
+    # configuration otherwise should we later get a Butler for that
+    # environment.
+    butlerRepository: "TBD"
+    butlerCollection: "TBD"
+    databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "vo-cutouts@science-platform-dev-7696.iam.gserviceaccount.com"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
