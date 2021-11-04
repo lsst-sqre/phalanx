@@ -217,6 +217,9 @@ class SecretGenerator:
             "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
             )
         self.input_file(
+            "butler-secret", "butler-gcs-idf-creds.json", "Google credentials for butler"
+            )
+        self.input_file(
             "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
             )
 
@@ -267,6 +270,8 @@ class SecretGenerator:
 
         aws = self.secrets["butler-secret"]["aws-credentials.ini"]
         self._set("vo-cutouts", "aws-credentials", aws)
+        google = self.secrets["butler-secret"]["butler-gcs-idf-creds.json"]
+        self._set("vo-cutouts", "google-credentials", google)
         postgres = self.secrets["butler-secret"]["postgres-credentials.txt"]
         self._set("vo-cutouts", "postgres-credentials", postgres)
 
