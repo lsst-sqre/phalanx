@@ -47,6 +47,7 @@ Specific tasks
    :maxdepth: 2
 
    service-guide/update-tap-schema
+   service-guide/mobu-manage-flocks
 
 For science platform administrators
 ===================================
