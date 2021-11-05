@@ -6,6 +6,8 @@ alert_stream_broker:
   enabled: false
 argo:
   enabled: true
+cachemachine:
+  enabled: true
 cert_issuer:
   enabled: true
 cert_manager:
@@ -21,8 +23,6 @@ gafaelfawr:
 influxdb:
   enabled: false
 kapacitor:
-  enabled: false
-logging:
   enabled: false
 mobu:
   enabled: true

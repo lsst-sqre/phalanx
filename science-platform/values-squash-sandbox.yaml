@@ -6,6 +6,8 @@ alert_stream_broker:
   enabled: false
 argo:
   enabled: false
+cachemachine:
+  enabled: false
 cert_issuer:
   enabled: true
 cert_manager:
@@ -22,8 +24,6 @@ influxdb:
   enabled: true
 kapacitor:
   enabled: true
-logging:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:

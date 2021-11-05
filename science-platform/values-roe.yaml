@@ -2,7 +2,6 @@ environment: roe
 fqdn: rsp.lsst.ac.uk
 vault_path_prefix: secret/k8s_operator/roe
 
-
 alert_stream_broker:
   enabled: false
 argo:
@@ -25,14 +24,14 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: false
 mobu:
   enabled: true
 moneypenny:
   enabled: true
 ingress_nginx:
   enabled: true
+noteburst:
+  enabled: false
 nublado2:
   enabled: true
 obstap:
