@@ -23,7 +23,7 @@ The procedure is as follows:
 .. code-block:: sh
 
    docker pull registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33  # or whatever tag
-   docker tag registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33 registry.hub.docker.com/lsstsqre:recommended
+   docker tag registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33 registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
    docker login  # This may require interaction, depending on how you've set up your docker credentials
    docker push registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
 
