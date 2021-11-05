@@ -2,6 +2,8 @@ environment: red-five
 fqdn: red-five.lsst.codes
 vault_path_prefix: secret/k8s_operator/red-five.lsst.codes
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: true
 cert_issuer:

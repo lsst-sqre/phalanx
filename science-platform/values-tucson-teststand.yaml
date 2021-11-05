@@ -2,6 +2,8 @@ environment: tucson-teststand
 fqdn: tucson-teststand.lsst.codes
 vault_path_prefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: true
 cachemachine:

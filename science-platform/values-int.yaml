@@ -2,6 +2,8 @@ environment: int
 fqdn: lsst-lsp-int.ncsa.illinois.edu
 vault_path_prefix: secret/k8s_operator/lsst-lsp-int.lsst.codes
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: true
 cachemachine:

@@ -2,6 +2,8 @@ environment: nts
 fqdn: lsst-nts-k8s.ncsa.illinois.edu
 vault_path_prefix: secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: true
 cachemachine:

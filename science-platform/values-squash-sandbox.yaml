@@ -2,6 +2,8 @@ environment: squash-sandbox
 fqdn: squash-sandbox.lsst.codes
 vault_path_prefix: secret/k8s_operator/squash-sandbox.lsst.codes
 
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: false
 cert_issuer:

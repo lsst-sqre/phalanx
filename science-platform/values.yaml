@@ -1,3 +1,5 @@
+alert_stream_broker:
+  enabled: false
 argo:
   enabled: false
 cachemachine:
