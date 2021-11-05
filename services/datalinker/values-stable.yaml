@@ -1,0 +1,8 @@
+datalinker:
+  ingress:
+    enabled: true
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
