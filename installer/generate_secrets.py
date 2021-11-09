@@ -45,7 +45,6 @@ class SecretGenerator:
         self._pull_secret()
         self._butler_secret()
         self._postgres()
-        self._log()
         self._tap()
         self._nublado2()
         self._mobu()
@@ -132,54 +131,6 @@ class SecretGenerator:
             "google_creds.json",
             "file containing google service account credentials",
         )
-
-    def _log(self):
-        def gen_pw_and_hash():
-            pw = secrets.token_hex(16)
-            h = bcrypt.hashpw(pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode(
-                "ascii"
-            )
-            return (pw, h)
-
-        admin = gen_pw_and_hash()
-        kibana = gen_pw_and_hash()
-        logstash = gen_pw_and_hash()
-
-        internal_users = {
-            "_meta": {
-                "type": "internalusers",
-                "config_version": 2,
-            },
-            "admin": {
-                "hash": admin[1],
-                "reserved": True,
-                "backend_roles": ["admin"],
-                "description": "Admin user",
-            },
-            "kibana": {
-                "hash": kibana[1],
-                "backend_roles": ["kibanauser"],
-                "description": "Kibana user",
-            },
-            "logstash": {
-                "hash": logstash[1],
-                "reserved": False,
-                "backend_roles": ["logstash"],
-                "description": "Logstash writing user",
-            },
-        }
-
-        # username / password / cookie is the elasticsearch admin user,
-        # and this key is unfortunately hardcoded by the chart.
-        # fluentd and kibana passwords are also passed through, but these
-        # are tied to the hashes that are present in the internal_users
-        # yaml file, where the bcrypt'd password is stored.
-        self._set_generated("log", "username", "admin")
-        self._set_generated("log", "password", admin[0])
-        self._set_generated("log", "cookie", secrets.token_urlsafe(32))
-        self._set_generated("log", "internal_users.yml", yaml.dump(internal_users))
-        self._set_generated("log", "logstash-password", logstash[0])
-        self._set_generated("log", "kibana-password", kibana[0])
 
     def _postgres(self):
         self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))

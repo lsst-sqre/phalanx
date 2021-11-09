@@ -24,8 +24,6 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: true
 mobu:
   enabled: true
 moneypenny:

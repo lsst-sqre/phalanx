@@ -22,8 +22,6 @@ ingress_nginx:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:

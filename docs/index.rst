@@ -64,7 +64,6 @@ Services
    ops/cert-manager/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index
-   ops/logging/index
    ops/nublado2/index
    ops/postgres/index
    ops/rancher-external-ip-webhook/index
