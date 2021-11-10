@@ -50,6 +50,8 @@ squash_api:
   enabled: false
 strimzi:
   enabled: true
+strimzi_registry_operator:
+  enabled: true
 tap:
   enabled: true
 tap_schema:

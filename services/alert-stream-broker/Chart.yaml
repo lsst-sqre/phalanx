@@ -5,3 +5,11 @@ dependencies:
   - name: alert-stream-broker
     version: 1.0.1
     repository: https://lsst-sqre.github.io/charts/
+
+  # The schema registry is bundled together in the same application as the
+  # Kafka broker because Strimzi Registry Operator expects everything (the
+  # broker, its secrets, its users, and the StrimziSchemaRegistry custom
+  # resource) to be in the same namespace.
+  - name: alert-stream-schema-registry
+    version: 1.0.0
+    repository: https://lsst-sqre.github.io/charts/
