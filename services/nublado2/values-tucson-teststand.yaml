@@ -41,6 +41,24 @@ nublado2:
         nfs:
           path: /lsstdata
           server: nfs-lsstdata.tu.lsst.org
+      - name: auxtel-butler
+        nfs:
+          path: /repo/LATISS
+          server: auxtel-archiver.tu.lsst.org
+      - name: auxtel-oods
+        nfs:
+          path: /lsstdata/TTS/auxtel
+          server: auxtel-archiver.tu.lsst.org
+          readOnly: true
+      - name: comcam-butler
+        nfs:
+          path: /repo/LSSTComCam
+          server: comcam-archiver.tu.lsst.org
+      - name: comcam-oods
+        nfs:
+          path: /lsstdata/TTS/comcam
+          server: comcam-archiver.tu.lsst.org
+          readOnly: true
     volume_mounts:
       - name: home
         mountPath: /home
@@ -50,5 +68,15 @@ nublado2:
         mountPath: /project
       - name: scratch
         mountPath: /scratch
+      - name: auxtel-butler
+        mountPath: /repo/LATISS
+      - name: auxtel-oods
+        mountPath: /data/lsstdata/TTS/auxtel
+        readOnly: true
+      - name: comcam-butler
+        mountPath: /repo/LSSTComCam
+      - name: comcam-oods
+        mountPath: /data/lsstdata/TTS/comcam
+        readOnly: true
 
   vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
