@@ -1,1 +1,2 @@
-# This file intentionally blank - no customization needed
+alert-stream-schema-registry:
+  hostname: "alert-schemas-int.lsst.cloud"
