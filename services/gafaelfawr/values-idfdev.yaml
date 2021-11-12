@@ -33,6 +33,9 @@ gafaelfawr:
       "exec:portal":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
+      "read:image":
+        - "lsst-sqre-square"
+        - "lsst-sqre-friends"
       "read:tap":
         - "lsst-sqre-square"
         - "lsst-sqre-friends"

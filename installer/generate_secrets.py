@@ -51,6 +51,7 @@ class SecretGenerator:
         self._gafaelfawr()
         self._argocd()
         self._portal()
+        self._vo_cutouts()
 
         self.input_field("cert-manager", "enabled", "Use cert-manager? (y/n):")
         use_cert_manager = self.secrets["cert-manager"]["enabled"]
@@ -137,6 +138,7 @@ class SecretGenerator:
         self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
+        self._set_generated("postgres", "vo-cutouts_password", secrets.token_hex(32))
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
@@ -215,6 +217,9 @@ class SecretGenerator:
             "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
             )
         self.input_file(
+            "butler-secret", "butler-gcs-idf-creds.json", "Google credentials for butler"
+            )
+        self.input_file(
             "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
             )
 
@@ -248,6 +253,27 @@ class SecretGenerator:
     def _portal(self):
         pw = secrets.token_hex(32)
         self._set_generated("portal", "ADMIN_PASSWORD", pw)
+
+    def _vo_cutouts(self):
+        self._set_generated("vo-cutouts", "redis-password", os.urandom(32).hex())
+
+        self.input_field("vo-cutouts", "cloudsql", "Use CloudSQL? (y/n):")
+        use_cloudsql = self.secrets["vo-cutouts"]["cloudsql"]
+        if use_cloudsql == "y":
+            self.input_field("vo-cutouts", "database-password", "Database password")
+        elif use_cloudsql == "n":
+            # Pluck the password out of the postgres portion.
+            db_pass = self.secrets["postgres"]["vo_cutouts_password"]
+            self._set("vo-cutouts", "database-password", db_pass)
+        else:
+            raise Exception(f"Invalid vo-cutouts cloudsql value {use_cloudsql}")
+
+        aws = self.secrets["butler-secret"]["aws-credentials.ini"]
+        self._set("vo-cutouts", "aws-credentials", aws)
+        google = self.secrets["butler-secret"]["butler-gcs-idf-creds.json"]
+        self._set("vo-cutouts", "google-credentials", google)
+        postgres = self.secrets["butler-secret"]["postgres-credentials.txt"]
+        self._set("vo-cutouts", "postgres-credentials", postgres)
 
 
 class OnePasswordSecretGenerator(SecretGenerator):

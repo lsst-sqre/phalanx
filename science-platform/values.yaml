@@ -54,6 +54,8 @@ tap_schema:
   enabled: false
 vault_secrets_operator:
   enabled: false
+vo_cutouts:
+  enabled: false
 
 repoURL: https://github.com/lsst-sqre/phalanx.git
 revision: HEAD
