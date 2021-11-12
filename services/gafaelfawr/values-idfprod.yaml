@@ -1,4 +1,6 @@
 gafaelfawr:
+  replicaCount: 2
+
   imagePullSecrets:
     - name: "pull-secret"
   ingress:
