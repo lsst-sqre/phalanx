@@ -1,2 +1,5 @@
 alert-stream-schema-registry:
   hostname: "alert-schemas-int.lsst.cloud"
+
+alert-stream-simulator:
+  clusterPort: 9092 # internal TLS listener

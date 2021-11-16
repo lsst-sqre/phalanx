@@ -13,3 +13,12 @@ dependencies:
   - name: alert-stream-schema-registry
     version: 1.0.0
     repository: https://lsst-sqre.github.io/charts/
+
+  # alert-stream-simulator is bundled together with the broker too for a
+  # similar reason: the Strimzi EntityOperator can only watch a single
+  # namespace, so all of the Secrets associated with KafkaUsers are in this
+  # namespace - and the alert-stream-simulator needs those credentials to
+  # connect.
+  - name: alert-stream-simulator
+    version: 1.0.0
+    repository: https://lsst-sqre.github.io/charts/
