@@ -1,0 +1,26 @@
+{{- if .Values.plot_navigator.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: plot-navigator
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: plot-navigator
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: plot-navigator
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/plot-navigator
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      valueFiles:
+      - values-{{ .Values.environment }}.yaml
+{{- end -}}

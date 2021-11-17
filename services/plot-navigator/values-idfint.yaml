@@ -1,0 +1,10 @@
+plot-navigator:
+  hostname: "data-int.lsst.cloud"
+  basePath: "/plot-navigator"
+  ingress:
+    host: "data-int.lsst.cloud"
+    path: "/plot-navigator"
+    annotations:
+      nginx.ingress.kubernetes.io/auth-method: GET
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-int.lsst.cloud/auth?scope=exec:portal&delegate_to=plotnavigator"
