@@ -1,6 +1,8 @@
 plot-navigator:
   hostname: "data-int.lsst.cloud"
   basePath: "/plot-navigator"
+  butler_uri: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
+  butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"
   ingress:
     host: "data-int.lsst.cloud"
     path: "/plot-navigator"
