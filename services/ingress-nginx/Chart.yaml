@@ -3,7 +3,7 @@ name: ingress-nginx
 version: 1.0.0
 dependencies:
 - name: ingress-nginx
-  version: 3.39.0
+  version: 3.40.0
   repository: https://kubernetes.github.io/ingress-nginx
 - name: pull-secret
   version: ">=0.1.2"
