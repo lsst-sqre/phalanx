@@ -20,5 +20,5 @@ dependencies:
   # namespace - and the alert-stream-simulator needs those credentials to
   # connect.
   - name: alert-stream-simulator
-    version: 1.2.0
+    version: 1.3.0
     repository: https://lsst-sqre.github.io/charts/
