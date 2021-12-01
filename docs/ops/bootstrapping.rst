@@ -4,13 +4,22 @@ Bootstrapping a new deployment
 
 This is (somewhat incomplete) documentation on how to add a new Rubin Science Platform environment.
 
+Requirements
+============
+
+* The installer assumes Git 2.22 or later.
+
+* We presume that you are using `Vault <https://www.vaultproject.io/>`__ coupled with `Vault Secrets Operator <https://github.com/ricoberger/vault-secrets-operator>`__ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
+  We strongly recommend using the `LSST Vault Utilites <https://github.com/lsst-sqre/lsstvaultutils/>`__ to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
+
+* Rubin Science Platform applications expect the public hostname of the Science Platform to have a TLS certificate that can be verified using standard CA roots.
+  Using a self-signed certificate or an institutional CA that is not in the normal list of CAs shipped with Docker base images will probably not work.
+  See :ref:`hostnames` for more information.
+
 Checklist
 =========
 
 #. Fork the `phalanx repository <https://github.com/lsst-sqre/phalanx>`__ if this work is separate from the SQuaRE-managed environments.
-
-#. We presume that you are using `Vault <https://www.vaultproject.io/>`__ coupled with `Vault Secrets Operator <https://github.com/ricoberger/vault-secrets-operator>`__ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
-   We strongly recommend using the LSST Vault Utilites to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
 
 #. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/tree/master/installer/requirements.txt>`__.
    If you are not using 1password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
