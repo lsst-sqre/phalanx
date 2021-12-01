@@ -11,7 +11,7 @@ dependencies:
   # broker, its secrets, its users, and the StrimziSchemaRegistry custom
   # resource) to be in the same namespace.
   - name: alert-stream-schema-registry
-    version: 1.0.0
+    version: 2.0.0
     repository: https://lsst-sqre.github.io/charts/
 
   # alert-stream-simulator is bundled together with the broker too for a
