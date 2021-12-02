@@ -17,11 +17,11 @@ Recovery may require manually clearing the user's entry in the session database 
       pod=$(kubectl get pods -n postgres | grep postgres | awk '{print $1}')
       kubectl exec -it -n postgres ${pod} -- psql -U jovyan jupyterhub
 	
-    and then, at the PostgreSQL prompt, run:
+   and then, at the PostgreSQL prompt, run:
 
-    .. code-block:: sql
+   .. code-block:: sql
 
-       delete from users where name='<user-to-remove>'
+      delete from users where name='<user-to-remove>'
 
 In some cases you may also need to remove the user from the spawner table.
 To do this, run ``select * from spawners`` and find the pod with the user's name in it, and then delete that row.
