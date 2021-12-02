@@ -1,3 +1,13 @@
+alert-stream-broker:
+  kafka:
+    # Addresses based on the state as of 2021-12-02; these were assigned by
+    # Google and now we're pinning them.
+    bootstrapIP: 35.188.169.31
+    brokerIPs:
+      - 35.239.64.164
+      - 34.122.165.155
+      - 35.238.120.127
+
 alert-stream-schema-registry:
   hostname: "alert-schemas-int.lsst.cloud"
 
