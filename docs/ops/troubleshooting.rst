@@ -46,9 +46,10 @@ Spawner menu shows empty parentheses after recommended rather than image tag
 **Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the "recommended" image is followed by empty parentheses rather than by a description of which image "recommended" refers to.
 
 **Cause:** Cachemachine is responsible for generating the menu used for spawning new JupyterLab instances, as above.
-If a new node has been introduced after the target image for "recommended" has rolled out of the prepull list, then that node will have "recommended" but will not have pulled it under its target tag (e.g. ``w_2021_33``) and therefore cachemachine will not know that the two are the same image.
+In order for it to know which image corresponds to the ``recommended`` tag, it has to also pull that image under its specific tag name so that it sees that tag and ``recommended`` have the same hash.
+However, it only pulls a certain number of recent weeklies (generally three), so if the weekly tagged with ``recommended`` is older than that, it won't know which weekly it corresponds to and won't be able to fill in those details.
 
-**Solution**: :doc:`cachemachine/updating-recommended`
+**Solution**: :ref:`prepull-recommended`
 
 Spawning a notebook fails with a pending error
 ==============================================
@@ -91,7 +92,7 @@ User pods don't spawn, reporting "permission denied" from Moneypenny
 
 **Symptoms:** A user pod fails to spawn, and the error message says that Moneypenny did not have permission to execute.
 
-**Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.  This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
+**Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.
+This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
 
 **Solution:** :doc:`gafaelfawr/recreate-token`
-

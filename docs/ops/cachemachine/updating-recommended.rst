@@ -30,6 +30,8 @@ The procedure is as follows:
 The DockerHub ``sqreadmin`` user could be used for this; however, when the process is not automated (it currently is not), using personal credentials is acceptible.
 The ``sqreadmin`` DockerHub credentials are within the SQuaRE 1Password credential store.
 
+.. _prepull-recommended:
+
 Updating Phalanx to ensure the "recommended" target is pre-pulled
 -----------------------------------------------------------------
 
