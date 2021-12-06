@@ -3,7 +3,7 @@ name: alert-stream-broker
 version: "2"
 dependencies:
   - name: alert-stream-broker
-    version: 2.0.0
+    version: 2.1.0
     repository: https://lsst-sqre.github.io/charts/
 
   # The schema registry is bundled together in the same application as the
