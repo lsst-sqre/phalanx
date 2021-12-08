@@ -15,8 +15,53 @@ alert-stream-broker:
           host: alert-stream-int-broker-2.lsst.cloud
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/alert-stream-broker"
 
+  users:
+    # A user for development purposes by the Rubin team, with access to all
+    # topics in readonly mode.
+    - username: "rubin-devel-idfint"
+      readonlyTopics: ["*"]
+      groups: ["rubin-devel-idfint"]
+
+    # A user used by the Rubin team but with similar access to the community
+    # broker users.
+    - username: "rubin-communitybroker-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["rubin-communitybroker-idfint"]
+
+    # The actual community broker users
+    - username: "alerce-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["alerce-idfint"]
+
+    - username: "ampel-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["ampel-idfint"]
+
+    - username: "antares-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["antares-idfint"]
+
+    - username: "babamul-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["babamul-idfint"]
+
+    - username: "fink-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["fink-idfint"]
+
+    - username: "lasair-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["lasair-idfint"]
+
+    - username: "pittgoogle-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["pittgoogle-idfint"]
+
 alert-stream-schema-registry:
   hostname: "alert-schemas-int.lsst.cloud"
+  schemaTopic: "registry-schemas"
 
 alert-stream-simulator:
   clusterPort: 9092 # internal TLS listener
+  replayTopicName: "alerts-simulated"
+  staticTopicName: "alerts-static"
