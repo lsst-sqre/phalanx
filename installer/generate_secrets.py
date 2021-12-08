@@ -382,31 +382,23 @@ class OnePasswordSecretGenerator(SecretGenerator):
 
         This method first runs `SecretGenerator.generate`, and then
         automatically generates secrets for any additional components
-        that were identified in 1Password, but do not have a file in the
-        secrets directory yet.
+        that were identified in 1Password.
+
+        If a secret appears already, it is overridden with the value in
+        1Password.
         """
         super().generate()
 
-        components_in_op = set([k.split()[0] for k in self.op_secrets.keys()])
-        existing_components = set(self.secrets.keys())
-        # Add components that may not be present in every environment,
-        # but nonetheless might be 1Password secrets (see conditional
-        # in SecretGenerator.generate)
-        existing_components.update({"ingress-nginx", "cert-manager"})
+        for composite_key, secret_value in self.op_secrets.items():
+            item_component, item_name = composite_key.split()
+            # Special case for components that may not be present in every
+            # environment, but nonetheless might be 1Password secrets (see
+            # conditional in SecretGenerator.generate)
+            if item_component in {"ingress-nginx", "cert-manager"}:
+                continue
 
-        new_components = components_in_op - existing_components
-        logging.debug("New components: %s", new_components)
-        for component_name in new_components:
-            self._generate_new_op_component(component_name)
-
-    def _generate_new_op_component(self, component_name):
-        """Generate an entry in the `secrets` attribute for a new component
-        found in 1Password.
-        """
-        for secret_key in self.op_secrets.keys():
-            item_component, item_name = secret_key.split()
-            if item_component == component_name:
-                self.input_field(component_name, item_name, "")
+            logging.debug("Updating component: %s/%s", item_component, item_name)
+            self.secrets[item_component][item_name] = secret_value
 
 
 if __name__ == "__main__":
