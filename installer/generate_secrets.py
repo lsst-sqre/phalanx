@@ -398,7 +398,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
                 continue
 
             logging.debug("Updating component: %s/%s", item_component, item_name)
-            self.secrets[item_component][item_name] = secret_value
+            self.input_field(item_component, item_name, "")
 
 
 if __name__ == "__main__":
