@@ -18,6 +18,12 @@ ingress-nginx:
     podLabels:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/port: "10254"
+          prometheus.io/scrape: "true"
 
 vault_certificate:
   enabled: true
