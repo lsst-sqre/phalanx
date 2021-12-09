@@ -46,6 +46,8 @@ rancher_external_ip_webhook:
   enabled: true
 semaphore:
   enabled: true
+sherlock:
+  enabled: true
 squareone:
   enabled: true
 squash_api:

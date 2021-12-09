@@ -1,0 +1,3 @@
+sherlock:
+  ingress:
+    host: "lsst-lsp-stable.ncsa.illinois.edu"
