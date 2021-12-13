@@ -14,9 +14,6 @@ alert-stream-broker:
         - ip: 35.238.120.127
           host: alert-stream-int-broker-2.lsst.cloud
     storage:
-      # "Temporarily" increased on 2021-12-13 because disks are full. Need to
-      # raise the limit to get Kafka to be able to start so we can debug
-      # further.
       size: 1500Gi
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/alert-stream-broker"
 
