@@ -19,14 +19,14 @@ kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
   --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
-  --dry-run -o yaml | kubectl apply -f -
+  --dry-run=client -o yaml | kubectl apply -f -
 
 echo "Set up docker pull secret for vault-secrets-operator..."
 vault kv get --field=.dockerconfigjson $VAULT_PATH_PREFIX/pull-secret > docker-creds
 kubectl create secret generic pull-secret -n vault-secrets-operator \
     --from-file=.dockerconfigjson=docker-creds \
     --type=kubernetes.io/dockerconfigjson \
-    --dry-run -o yaml | kubectl apply -f -
+    --dry-run=client -o yaml | kubectl apply -f -
 
 
 echo "Update / install vault-secrets-operator..."
