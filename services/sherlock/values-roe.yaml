@@ -1,0 +1,3 @@
+sherlock:
+  ingress:
+    host: "rsp.lsst.ac.uk"

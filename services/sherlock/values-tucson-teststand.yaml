@@ -1,0 +1,3 @@
+sherlock:
+  ingress:
+    host: "tucson-teststand.lsst.codes"
