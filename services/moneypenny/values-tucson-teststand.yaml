@@ -1,19 +1,10 @@
 moneypenny:
-  host: "tucson-teststand.lsst.codes"
-
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    enabled: true
-    hosts:
-      - host: tucson-teststand.lsst.codes
-        paths: ["/moneypenny"]
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://tucson-teststand.lsst.codes/auth?scope=admin:provision"
+    host: "tucson-teststand.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
-
-  orders: |
+  orders:
     commission:
       - name: initcommission
         image: lsstsqre/inituserhome
@@ -21,17 +12,14 @@ moneypenny:
           runAsUser: 0
           runAsNonRootUser: false
         volumeMounts:
-        - mountPath: /homedirs
-          name: homedirs
-    retire:
-      - name: farthing
-        image: lsstsqre/farthing
-        securityContext:
-          runAsUser: 1000
-          runAsNonRootUser: true
-          allowPrivilegeEscalation: false
+          - mountPath: /homedirs
+            name: homedirs
     volumes:
       - name: homedirs
         nfs:
           server: nfs-jhome.tu.lsst.org
           path: /jhome
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"

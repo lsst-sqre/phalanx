@@ -1,14 +1,9 @@
 moneypenny:
-  host: "minikube.lsst.codes"
-
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    enabled: true
-    hosts:
-      - host: minikube.lsst.codes
-        paths: ["/moneypenny"]
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://minikube.lsst.codes/auth?scope=admin:provision"
+    host: "minikube.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
