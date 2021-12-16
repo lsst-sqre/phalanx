@@ -85,9 +85,7 @@ alert-stream-simulator:
 
 alert-database:
   ingester:
-    image:
-      repository: lsstdm/alert_database_ingester
-      tag: v2.0.0
+    logLevel: debug
 
     schemaRegistryURL: https://alert-schemas-int.lsst.cloud
 
