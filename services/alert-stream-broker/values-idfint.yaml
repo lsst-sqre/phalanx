@@ -79,3 +79,17 @@ alert-stream-simulator:
   staticTopicName: "alerts-static"
   image:
     tag: v1.2.1
+
+alert-database:
+  ingester:
+    schemaRegistryURL: https://alert-schemas-int.lsst.cloud
+
+    gcp:
+      serviceAccountName: alert-database-writer
+      projectID: science-platform-int-dc5d
+
+  storage:
+    gcp:
+      project: science-platform-int-dc5d
+      alertBucket: rubin-alertdb-int-us-central1-packets
+      schemaBucket: rubin-alertdb-int-us-central1-schemas
