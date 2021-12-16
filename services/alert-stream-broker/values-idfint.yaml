@@ -1,4 +1,7 @@
 alert-stream-broker:
+  cluster:
+    name: "alert-broker"
+
   kafka:
     # Addresses based on the state as of 2021-12-02; these were assigned by
     # Google and now we're pinning them.
@@ -87,6 +90,11 @@ alert-database:
       tag: v2.0.0
 
     schemaRegistryURL: https://alert-schemas-int.lsst.cloud
+
+    kafka:
+      cluster: alert-broker
+      port: 9092
+      topic: alerts-simulated
 
     gcp:
       serviceAccountName: alert-database-writer
