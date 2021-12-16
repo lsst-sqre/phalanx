@@ -97,7 +97,7 @@ alert-database:
       topic: alerts-simulated
 
     gcp:
-      serviceAccountName: alert-database-writer
+      serviceAccountName: alertdb-writer
       projectID: science-platform-int-dc5d
 
   storage:
