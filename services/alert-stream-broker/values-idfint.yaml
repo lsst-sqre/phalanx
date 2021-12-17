@@ -88,7 +88,7 @@ alert-database:
     image:
       tag: v2.0.2
 
-    logLevel: debug
+    logLevel: verbose
 
     schemaRegistryURL: https://alert-schemas-int.lsst.cloud
 
