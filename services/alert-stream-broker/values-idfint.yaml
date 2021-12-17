@@ -92,6 +92,8 @@ alert-database:
 
     schemaRegistryURL: https://alert-schemas-int.lsst.cloud
 
+    serviceAccountName: alert-database-writer
+
     kafka:
       cluster: alert-broker
       port: 9092
