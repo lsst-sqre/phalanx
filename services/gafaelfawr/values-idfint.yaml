@@ -44,9 +44,6 @@ gafaelfawr:
         - "lsst-ops-panda"
         - "lsst-sqre-square"
         - "lsst-sqre-friends"
-      "read:alertdb":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
 
     initialAdmins:
       - "afausti"

@@ -111,7 +111,7 @@ alert-database:
   ingress:
     enabled: true
     host: "data-int.lsst.cloud"
-    gafaelfawrAuthQuery: "scope=read:alertdb"
+    gafaelfawrAuthQuery: "scope=read:image"
 
   storage:
     gcp:
