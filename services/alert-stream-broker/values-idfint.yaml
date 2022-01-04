@@ -103,6 +103,16 @@ alert-database:
       serviceAccountName: alertdb-writer
       projectID: science-platform-int-dc5d
 
+  server:
+    gcp:
+      serviceAccountName: alertdb-reader
+      projectID: science-platform-int-dc5d
+
+  ingress:
+    enabled: true
+    host: "data-int.lsst.cloud"
+    gafaelfawrAuthQuery: "scope=read:alertdb"
+
   storage:
     gcp:
       project: science-platform-int-dc5d
