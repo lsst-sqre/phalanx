@@ -104,6 +104,8 @@ alert-database:
       projectID: science-platform-int-dc5d
 
   server:
+    serviceAccountName: alert-database-reader
+
     gcp:
       serviceAccountName: alertdb-reader
       projectID: science-platform-int-dc5d
