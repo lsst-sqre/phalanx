@@ -3,7 +3,7 @@ name: noteburst
 version: 1.0.0
 dependencies:
   - name: noteburst
-    version: "0.1.2"
+    version: 0.1.3
     repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
