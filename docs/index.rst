@@ -37,6 +37,7 @@ General development and operations
    service-guide/update-a-onepassword-secret
    service-guide/add-service
    service-guide/add-external-chart
+   service-guide/local-development
    service-guide/sync-argo-cd
    service-guide/upgrade
    service-guide/chart-changes
