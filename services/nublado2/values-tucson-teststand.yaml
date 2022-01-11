@@ -7,7 +7,7 @@ nublado2:
 
     singleuser:
       extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/auxtel-dds, kube-system/comcam-dds, kube-system/misc-dds"
+        k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
       initContainers:
         - name: "multus-init"
           image: "lsstit/ddsnet4u:latest"
