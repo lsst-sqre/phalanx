@@ -30,7 +30,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: 3.9
 
       - name: Install test dependencies
         run: pip install -r tests/requirements.txt
@@ -77,7 +77,7 @@ jobs:
         uses: manusa/actions-setup-minikube@v2.4.3
         with:
           minikube version: 'v1.24.0'
-          kubernetes version: 'v1.21.5'
+          kubernetes version: 'v1.22.5'
 
       - name: Test interaction with the cluster
         if: steps.filter.outputs.minikube == 'true'
