@@ -29,7 +29,7 @@ fi
 #  inject a vault secret for pull once per namespace
 svcs="argocd cert-manager exposurelog gafaelfawr influxdb kapacitor"
 svcs="${svcs} landing-page mobu ingress-nginx nublado obstap portal"
-svcs="${svcs} postgres tap wf"
+svcs="${svcs} postgres tap"
 
 # This is a list of environments.
 envs="base bleed gold-leader idfdev idfint idfprod int kueyen minikube nts"
