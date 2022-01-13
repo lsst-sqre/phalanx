@@ -67,7 +67,6 @@ Services
    ops/ingress-nginx/index
    ops/nublado2/index
    ops/postgres/index
-   ops/rancher-external-ip-webhook/index
    ops/squash-api/index
    ops/tap/index
    ops/vault-secrets-operator/index
