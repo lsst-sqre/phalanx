@@ -1,5 +1,6 @@
-# Should match the cluster name used by the alert-stream-broker
-clusterName: alert-broker
+strimzi-registry-operator:
+  # Should match the cluster name used by the alert-stream-broker
+  clusterName: alert-broker
 
-# Should match the namespace where the alert-broker cluster runs
-watchNamespace: alert-stream-broker
+  # Should match the namespace where the alert-broker cluster runs
+  watchNamespace: alert-stream-broker
