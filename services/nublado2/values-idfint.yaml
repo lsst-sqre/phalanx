@@ -27,6 +27,19 @@ nublado2:
       PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
       IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
       PANDA_CONFIG_ROOT: "~"
+    sizes:
+      - name: Small
+        cpu: 1
+        ram: 3072M
+      - name: Medium
+        cpu: 2
+        ram: 6144M
+      - name: Large
+        cpu: 4
+        ram: 12288M
+      - name: Huge
+        cpu: 8
+        ram: 24576M
     volumes:
       - name: home
         nfs:
