@@ -55,3 +55,7 @@ nublado2:
         mountPath: /repo
 
   vault_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"

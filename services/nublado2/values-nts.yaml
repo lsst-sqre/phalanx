@@ -85,3 +85,7 @@ nublado2:
         readOnly: true
 
   vault_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"

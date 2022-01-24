@@ -44,3 +44,7 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/red-five.lsst.codes/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/red-five.lsst.codes/pull-secret"

@@ -80,3 +80,7 @@ nublado2:
         readOnly: true
 
   vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
