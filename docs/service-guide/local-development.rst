@@ -62,6 +62,17 @@ Install the Python dependencies (using a virtual environment is ideal):
 
   pip install -r requirements.txt
 
+Lastly, set the environment variables for Vault access:
+
+.. code-block:: sh
+
+   export VAULT_ADDR="https://vault.lsst.codes"
+   export VAULT_TOKEN="<read key for minikube>"
+
+The Vault read key for minikube is accessible from the ``vault_keys_json`` item in the LSST IT/RSP-Vault 1Password Vault.
+The key itself is under the ``k8s_operator/minikube.lsst.codes`` → ``read`` → ``id`` field.
+If you do not have Vault access, ask SQuaRE for the minikube Vault read key.
+See also :doc:`../arch/secrets`.
 
 Enable essential services
 -------------------------
@@ -78,12 +89,12 @@ Commit and push ``values-minikube.yaml`` to your Phalanx development branch so t
 Run the installer
 ------------------
 
-Finally, run the installer for the minikube environment (ask SQuaRE for the minikube Vault read key, see also :doc:`../arch/secrets`).
+Finally, run the installer for the minikube environment.
 
 
 .. code-block:: sh
 
-  ./install.sh minikube <vault read key>
+  ./install.sh minikube $VAULT_TOKEN
 
 
 Access the Argo CD UI
