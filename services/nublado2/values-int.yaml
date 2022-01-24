@@ -41,3 +41,7 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"

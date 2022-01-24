@@ -22,3 +22,7 @@ nublado2:
         mountPath: /home
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"

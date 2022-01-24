@@ -307,3 +307,7 @@ nublado2:
             limits.memory: 27Gi
 
   vault_secret_path: "secret/k8s_operator/data-int.lsst.cloud/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"

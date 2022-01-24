@@ -41,3 +41,7 @@ nublado2:
         mountPath: /scratch
 
   vault_secret_path: "secret/k8s_operator/roe/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/roe/pull-secret"
