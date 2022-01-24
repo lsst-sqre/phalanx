@@ -75,16 +75,29 @@ If you do not have Vault access, ask SQuaRE for the minikube Vault read key.
 See also :doc:`../arch/secrets`.
 
 Enable essential services
--------------------------
 
-Edit the `minikube environment <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`__ file and change the field ``enabled`` to enable or disable each service.
+Set up a Phalanx branch for your local minikube deployment
+----------------------------------------------------------
 
-IMPORTANT: ``ingress-nginx`` must be **disabled** since we are already using the minikube addon to deploy the NGINX Ingress Controller.
+The ``install.sh`` uses the locally checked out branch of your Phalanx repository clone.
 
-In addition to your own service, we recommend enabling at least ``vault-secrets-operator`` (to retrieve secrets from Vault) and  ``gafaelfawr`` (for authentication).
+To conserve resources, you may want to deploy a subset of Phalanx services in your local minikube cluster.
+You can do this by editing the `/science-platform/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`_ file.
+Set any service you do not want to deploy to ``enabled: false``.
 
-Commit and push ``values-minikube.yaml`` to your Phalanx development branch so that the installer can pick up your changes.
+Commit any changes with Git into a development branch of the Phalanx repository.
+**You must also push this development branch to the GitHub origin,** https://github.com/lsst-sqre/phalanx.git.
+The ``install.sh`` script uses your locally-checked out branch of Phalanx, but also requires that the branch be accessible from GitHub.
 
+**Services that must be disabled for local Minikube:**
+
+- ``ingress-nginx`` (conflicts with the minikube addon of Nginx Ingress Controller)
+
+**Minimal set of services that should be enabled:**
+
+- ``vault_secrets_operator`` (for Vault secrets)
+- ``gafaelfawr`` (for authentication)
+- ``postgreql`` (for gafaelfawr)
 
 Run the installer
 ------------------
