@@ -3,10 +3,9 @@ Set up a local development environment with minikube
 ####################################################
 
 Using `minikube <https://minikube.sigs.k8s.io/docs/>`__ you can quickly set up a local Kubernetes cluster to help you adding a service to Phalanx (see :doc:`add-service`).
-There are multiple ways to start a minikube cluster.
-Here we document the steps to start minikube on macOS (amd64 or arm64) using the `docker driver <https://minikube.sigs.k8s.io/docs/drivers/docker/>`__.
+This page shows you how to run a Minikube cluster on macOS (amd64 or arm64) using the `docker driver <https://minikube.sigs.k8s.io/docs/drivers/docker/>`__.
 
-You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory.
+You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory on your local machine.
 If not, you can enable only the essential services to develop with minikube.
 
 
