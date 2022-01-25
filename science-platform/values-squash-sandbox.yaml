@@ -36,6 +36,8 @@ portal:
   enabled: false
 postgres:
   enabled: true
+sasquatch:
+  enabled: false
 semaphore:
   enabled: false
 squareone:

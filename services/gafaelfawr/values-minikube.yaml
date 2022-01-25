@@ -14,6 +14,10 @@ gafaelfawr:
     host: "minikube.lsst.codes"
     databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
+    # Support OpenID Connect clients like Chronograf.
+    oidcServer:
+      enabled: true
+
     # Use CILogon authentication.
     cilogon:
       clientId: "cilogon:/client_id/74e865cd71a3a327096d36081166b739"

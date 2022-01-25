@@ -1,0 +1,10 @@
+apiVersion: v2
+name: sasquatch
+version: 1.0.0
+dependencies:
+  - name: sasquatch
+    version: 0.1.13
+    repository: https://lsst-sqre.github.io/charts/
+  - name: pull-secret
+    version: 0.1.2
+    repository: https://lsst-sqre.github.io/charts/
