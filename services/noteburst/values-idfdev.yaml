@@ -16,6 +16,11 @@ noteburst:
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/noteburst"
   config:
     environment_url: "https://data-dev.lsst.cloud"
+    worker:
+      workerCount: 1
+      identities:
+        - uuid: 90000
+          username: "noteburst90000"
 
 pull-secret:
   enabled: true
