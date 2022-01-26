@@ -15,7 +15,7 @@ noteburst:
     - name: "pull-secret"
   vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/noteburst"
   config:
-    environment_url: "https://minikube.lsst.cloud"
+    environmentUrl: "https://minikube.lsst.cloud"
     worker:
       workerCount: 1
       identities:
