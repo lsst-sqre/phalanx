@@ -100,6 +100,7 @@ class SecretGenerator:
         prompt_string = f"New filename with contents (empty to not change): "
         fname = input(prompt_string)
 
+        print(f"{self.secrets[component]}")
         if fname:
             with open(fname, "r") as f:
                 self.secrets[component][name] = f.read()
@@ -138,7 +139,7 @@ class SecretGenerator:
         self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
-        self._set_generated("postgres", "vo-cutouts_password", secrets.token_hex(32))
+        self._set_generated("postgres", "vo_cutouts_password", secrets.token_hex(32))
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
@@ -268,12 +269,15 @@ class SecretGenerator:
         else:
             raise Exception(f"Invalid vo-cutouts cloudsql value {use_cloudsql}")
 
-        aws = self.secrets["butler-secret"]["aws-credentials.ini"]
-        self._set("vo-cutouts", "aws-credentials", aws)
-        google = self.secrets["butler-secret"]["butler-gcs-idf-creds.json"]
-        self._set("vo-cutouts", "google-credentials", google)
-        postgres = self.secrets["butler-secret"]["postgres-credentials.txt"]
-        self._set("vo-cutouts", "postgres-credentials", postgres)
+        try:
+          aws = self.secrets["butler-secret"]["aws-credentials.ini"]
+          self._set("vo-cutouts", "aws-credentials", aws)
+          google = self.secrets["butler-secret"]["butler-gcs-idf-creds.json"]
+          self._set("vo-cutouts", "google-credentials", google)
+          postgres = self.secrets["butler-secret"]["postgres-credentials.txt"]
+          self._set("vo-cutouts", "postgres-credentials", postgres)
+        except:
+          pass
 
 
 class OnePasswordSecretGenerator(SecretGenerator):
