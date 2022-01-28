@@ -5,10 +5,6 @@ vo-cutouts:
     host: "data-dev.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/vo-cutouts"
 
-  # Enable the frontend NetworkPolicy.
-  networkPolicy:
-    enabled: true
-
   config:
     # There is currently no working Butler in data-dev, so this configuration
     # won't work.  Leaving it here anyway since it has the correct
