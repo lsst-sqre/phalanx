@@ -1,4 +1,6 @@
 cadc-tap:
+  fullnameOverride: "cadc-tap"
+
   imagePullSecrets:
     - name: "pull-secret"
   ingress:
