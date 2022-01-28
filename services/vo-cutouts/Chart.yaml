@@ -3,7 +3,7 @@ name: vo-cutouts
 version: 1.0.0
 dependencies:
   - name: vo-cutouts
-    version: 0.1.5
+    version: 0.1.6
     repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
