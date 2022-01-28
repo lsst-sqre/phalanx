@@ -1,0 +1,3 @@
+sherlock:
+  ingress:
+    host: "data.lsst.cloud"

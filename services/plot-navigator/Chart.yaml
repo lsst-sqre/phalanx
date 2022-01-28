@@ -1,0 +1,7 @@
+apiVersion: v2
+name: plot-navigator
+version: 1.0.0
+dependencies:
+- name: plot-navigator
+  version: "=1.5.8"
+  repository: https://lsst-sqre.github.io/charts/

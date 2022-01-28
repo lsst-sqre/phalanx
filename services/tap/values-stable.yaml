@@ -3,10 +3,7 @@ cadc-tap:
   use_mock_qserv: false
   qserv_host: "lsst-qserv-master03:4040"
 
-  querymonkey_replicas: 1
-
   host: "lsst-lsp-stable.ncsa.illinois.edu"
-  tap_schema_address: "tap-schema-db.tap-schema.svc.cluster.local:3306"
 
   secrets:
     enabled: false
@@ -29,9 +26,9 @@ cadc-tap:
       memory: 2G
     limits:
       cpu: 8.0
-      memory: 16G
+      memory: 32G
 
-  jvm_max_heap_size: 15G
+  jvm_max_heap_size: 31G
 
   aux_resources:
     requests:

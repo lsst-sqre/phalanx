@@ -1,4 +1,4 @@
-argo:
+alert_stream_broker:
   enabled: false
 cachemachine:
   enabled: false
@@ -7,6 +7,8 @@ cert_issuer:
 cert_manager:
   enabled: false
 chronograf:
+  enabled: false
+datalinker:
   enabled: false
 exposurelog:
   enabled: false
@@ -18,31 +20,41 @@ ingress_nginx:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:
+  enabled: false
+noteburst:
   enabled: false
 nublado2:
   enabled: false
 obstap:
   enabled: false
+plot_navigator:
+  enabled: false
 portal:
   enabled: false
 postgres:
   enabled: false
-rancher_external_ip_webhook:
+semaphore:
+  enabled: false
+sherlock:
   enabled: false
 squareone:
   enabled: false
 squash_api:
+  enabled: false
+strimzi:
+  enabled: false
+strimzi_registry_operator:
   enabled: false
 tap:
   enabled: false
 tap_schema:
   enabled: false
 vault_secrets_operator:
+  enabled: false
+vo_cutouts:
   enabled: false
 
 repoURL: https://github.com/lsst-sqre/phalanx.git

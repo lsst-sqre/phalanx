@@ -4,7 +4,6 @@ cadc-tap:
   qserv_host: "lsst-qserv-master03:4040"
 
   host: "lsst-lsp-int.ncsa.illinois.edu"
-  tap_schema_address: "tap-schema-db.tap-schema.svc.cluster.local:3306"
 
   secrets:
     enabled: false

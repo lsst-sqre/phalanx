@@ -2,15 +2,18 @@ nublado2:
   jupyterhub:
     debug:
       enabled: true
-
     ingress:
       hosts: ["minikube.lsst.codes"]
       annotations:
         nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
-
   config:
     base_url: "https://minikube.lsst.codes"
     butler_secret_path: "secret/k8s_operator/minikube.lsst.codes/butler-secret"
+    pull_secret_path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
+    lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+      AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
     volumes:
       - name: home
         emptyDir: {}
@@ -19,3 +22,7 @@ nublado2:
         mountPath: /home
 
   vault_secret_path: "secret/k8s_operator/minikube.lsst.codes/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"

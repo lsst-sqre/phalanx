@@ -1,15 +1,12 @@
 cachemachine:
-  host: "minikube.lsst.codes"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
-    hosts:
-      - host: minikube.lsst.codes
-        paths: ["/cachemachine"]
+    host: "minikube.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
 
   autostart:
     jupyter: |

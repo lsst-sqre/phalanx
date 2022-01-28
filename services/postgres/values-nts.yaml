@@ -12,7 +12,7 @@ postgres:
   gafaelfawr_db:
     user: 'gafaelfawr'
     db: 'gafaelfawr'
-  postgres_storage_class: 'manual'
+  postgres_storage_class: ''
   volume_name: 'postgres-data-volume'
 
 pull-secret:

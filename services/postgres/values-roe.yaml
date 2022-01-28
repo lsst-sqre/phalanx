@@ -1,0 +1,18 @@
+postgres:
+  pull_secret: 'pull-secret'
+  vault_secrets:
+    path: 'secret/k8s_operator/roe/postgres'
+  debug: 'true'
+  jupyterhub_db:
+    user: 'jovyan'
+    db: 'jupyterhub'
+  gafaelfawr_db:
+    user: 'gafaelfawr'
+    db: 'gafaelfawr'
+  image:
+    tag: '0.0.5'
+  postgres_storage_class: 'standard'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/roe/pull-secret

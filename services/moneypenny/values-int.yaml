@@ -1,30 +1,11 @@
 moneypenny:
-  host: "lsst-lsp-int.ncsa.illinois.edu"
-
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    enabled: true
-    hosts:
-      - host: lsst-lsp-int.ncsa.illinois.edu
-        paths: ["/moneypenny"]
+    host: "lsst-lsp-int.ncsa.illinois.edu"
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=admin:provision"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"
-
-  orders: |
-    commission:
-      - name: farthing
-        image: lsstsqre/farthing
-        securityContext:
-          runAsUser: 1000
-          runAsNonRootUser: true
-          allowPrivilegeEscalation: false
-    retire:
-      - name: farthing
-        image: lsstsqre/farthing
-        securityContext:
-          runAsUser: 1000
-          runAsNonRootUser: true
-          allowPrivilegeEscalation: false
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"

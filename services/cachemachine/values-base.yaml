@@ -1,15 +1,12 @@
 cachemachine:
-  host: "base-lsp.lsst.codes"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
-    hosts:
-      - host: base-lsp.lsst.codes
-        paths: ["/cachemachine"]
+    host: "base-lsp.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
 
   autostart:
     jupyter: |

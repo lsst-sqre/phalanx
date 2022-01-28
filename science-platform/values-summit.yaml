@@ -2,8 +2,8 @@ environment: summit
 fqdn: summit-lsp.lsst.codes
 vault_path_prefix: secret/k8s_operator/summit-lsp.lsst.codes
 
-argo:
-  enabled: true
+alert_stream_broker:
+  enabled: false
 cachemachine:
   enabled: true
 cert_issuer:
@@ -11,6 +11,8 @@ cert_issuer:
 cert_manager:
   enabled: true
 chronograf:
+  enabled: false
+datalinker:
   enabled: false
 exposurelog:
   enabled: true
@@ -20,27 +22,33 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:
   enabled: true
 ingress_nginx:
   enabled: true
+noteburst:
+  enabled: false
 nublado2:
   enabled: true
 obstap:
+  enabled: false
+plot_navigator:
   enabled: false
 portal:
   enabled: true
 postgres:
   enabled: true
-rancher_external_ip_webhook:
+semaphore:
   enabled: false
 squareone:
   enabled: true
 squash_api:
+  enabled: false
+strimzi:
+  enabled: false
+strimzi_registry_operator:
   enabled: false
 tap:
   enabled: false
@@ -48,3 +56,5 @@ tap_schema:
   enabled: false
 vault_secrets_operator:
   enabled: true
+vo_cutouts:
+  enabled: false

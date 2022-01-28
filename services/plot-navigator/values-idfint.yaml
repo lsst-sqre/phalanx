@@ -1,0 +1,16 @@
+plot-navigator:
+  hostname: "data-int.lsst.cloud"
+  basePath: "/plot-navigator"
+  butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"
+  environment:
+    BUTLER_URI: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
+    PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
+    AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
+    S3_ENDPOINT_URL: "https://storage.googleapis.com"
+  ingress:
+    host: "data-int.lsst.cloud"
+    path: "/plot-navigator"
+    annotations:
+      nginx.ingress.kubernetes.io/auth-method: GET
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-int.lsst.cloud/auth?scope=exec:portal&delegate_to=plotnavigator"

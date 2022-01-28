@@ -2,14 +2,16 @@ firefly:
   pull_secret: 'pull-secret'
   replicaCount: 4
 
-  image:
-    tag: "suit-233-7-dev"
+  volumes:
+    firefly_shared_workarea_nfs:
+      path: /share1/home/firefly/shared-workarea
+      server: 10.13.105.122
 
   ingress:
     host: "data.lsst.cloud"
     annotations:
       nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Name,X-Auth-Request-Email,X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://data.lsst.cloud/login"
       nginx.ingress.kubernetes.io/auth-url: "https://data.lsst.cloud/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
@@ -20,11 +22,9 @@ firefly:
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
 
-  max_jvm_size: "7G"
-
   resources:
     limits:
-      memory: 24Gi
+      memory: 30Gi
 
   secrets:
     enabled: false

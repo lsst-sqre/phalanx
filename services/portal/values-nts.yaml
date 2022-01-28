@@ -7,7 +7,7 @@ firefly:
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://lsst-nts-k8s.ncsa.illinois.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:portal"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;
@@ -20,8 +20,6 @@ firefly:
   vault_secrets:
     enabled: true
     path: 'secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/portal'
-
-  max_jvm_size: "23G"
 
   redis:
     resources:
@@ -36,10 +34,10 @@ firefly:
 
   resources:
     limits:
-      memory: 4Gi
+      memory: 24Gi
 
   volumes:
-    firefly_workarea:
+    firefly_shared_workarea:
       emptyDir: {}
     firefly_config:
       emptyDir: {}

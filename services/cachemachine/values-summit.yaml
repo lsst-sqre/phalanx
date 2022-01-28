@@ -1,15 +1,12 @@
 cachemachine:
-  host: "summit-lsp.lsst.codes"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
-    hosts:
-      - host: summit-lsp.lsst.codes
-        paths: ["/cachemachine"]
+    host: "summit-lsp.lsst.codes"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
 
   autostart:
     jupyter: |
@@ -27,7 +24,7 @@ cachemachine:
             "num_releases": 0,
             "num_weeklies": 3,
             "num_dailies": 2,
-            "cycle": 21,
+            "cycle": 23,
             "alias_tags": [
                 "latest",
                 "latest_daily",

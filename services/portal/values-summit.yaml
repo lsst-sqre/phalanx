@@ -7,14 +7,12 @@ firefly:
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=exec:portal"
+      nginx.ingress.kubernetes.io/auth-url: "https://summit-lsp.lsst.codes/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header X-Forwarded-Port 443;
         proxy_set_header X-Forwarded-Path /portal/app;
-
-  max_jvm_size: "31G"
 
   resources:
     limits:

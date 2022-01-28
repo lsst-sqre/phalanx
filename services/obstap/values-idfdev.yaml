@@ -1,6 +1,6 @@
 cadc-tap-postgres:
   pull_secret: 'pull-secret'
-  tag: "1.0"
+  tag: "1.1"
   host: "data-dev.lsst.cloud"
 
   secrets:

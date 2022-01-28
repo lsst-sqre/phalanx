@@ -1,4 +1,5 @@
 /installer/secrets/
+/installer/docker-creds
 /services/*/charts/
 /services-expanded/
 .DS_Store
