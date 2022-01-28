@@ -1,8 +1,5 @@
 nublado2:
   jupyterhub:
-    debug:
-      enabled: true
-
     ingress:
       hosts: ["tucson-teststand.lsst.codes"]
       annotations:
@@ -10,7 +7,7 @@ nublado2:
 
     singleuser:
       extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+        k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
       initContainers:
         - name: "multus-init"
           image: "lsstit/ddsnet4u:latest"
@@ -20,26 +17,48 @@ nublado2:
   config:
     base_url: "https://tucson-teststand.lsst.codes"
     butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
+    pull_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+      AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: tucson
     volumes:
       - name: home
         nfs:
-          path: /data/exports-lsp/home
-          server: nfs01.tu.lsst.org
-      - name: datasets
-        nfs:
-          path: /data/exports-lsp/datasets
-          server: nfs01.tu.lsst.org
+          path: /jhome
+          server: nfs-jhome.tu.lsst.org
       - name: project
         nfs:
-          path: /data/exports-lsp/project
-          server: nfs01.tu.lsst.org
+          path: /project
+          server: nfs-project.tu.lsst.org
       - name: scratch
         nfs:
-          path: /data/exports-lsp/scratch
-          server: nfs01.tu.lsst.org
+          path: /scratch
+          server: nfs-scratch.tu.lsst.org
+      - name: datasets
+        nfs:
+          path: /lsstdata
+          server: nfs-lsstdata.tu.lsst.org
+      - name: auxtel-butler
+        nfs:
+          path: /repo/LATISS
+          server: auxtel-archiver.tu.lsst.org
+      - name: auxtel-oods
+        nfs:
+          path: /lsstdata/TTS/auxtel
+          server: auxtel-archiver.tu.lsst.org
+          readOnly: true
+      - name: comcam-butler
+        nfs:
+          path: /repo/LSSTComCam
+          server: comcam-archiver.tu.lsst.org
+      - name: comcam-oods
+        nfs:
+          path: /lsstdata/TTS/comcam
+          server: comcam-archiver.tu.lsst.org
+          readOnly: true
     volume_mounts:
       - name: home
         mountPath: /home
@@ -49,5 +68,19 @@ nublado2:
         mountPath: /project
       - name: scratch
         mountPath: /scratch
+      - name: auxtel-butler
+        mountPath: /repo/LATISS
+      - name: auxtel-oods
+        mountPath: /data/lsstdata/TTS/auxtel
+        readOnly: true
+      - name: comcam-butler
+        mountPath: /repo/LSSTComCam
+      - name: comcam-oods
+        mountPath: /data/lsstdata/TTS/comcam
+        readOnly: true
 
   vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"

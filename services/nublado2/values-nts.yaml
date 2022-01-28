@@ -1,8 +1,5 @@
 nublado2:
   jupyterhub:
-    debug:
-      enabled: true
-
     ingress:
       hosts: ["lsst-nts-k8s.ncsa.illinois.edu"]
       annotations:
@@ -21,7 +18,11 @@ nublado2:
   config:
     base_url: "https://lsst-nts-k8s.ncsa.illinois.edu"
     butler_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/butler-secret"
+    pull_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
     lab_environment:
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+      AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: ncsa
     volumes:
@@ -84,3 +85,7 @@ nublado2:
         readOnly: true
 
   vault_secret_path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"

@@ -1,0 +1,29 @@
+{{- if .Values.vo_cutouts.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vo-cutouts
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vo-cutouts
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: vo-cutouts
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/vo-cutouts
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}

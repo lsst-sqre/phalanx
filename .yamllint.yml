@@ -8,3 +8,6 @@ rules:
   indentation:
     spaces: consistent
     indent-sequences: consistent
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: true

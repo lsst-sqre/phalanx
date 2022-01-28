@@ -2,7 +2,9 @@ environment: squash-sandbox
 fqdn: squash-sandbox.lsst.codes
 vault_path_prefix: secret/k8s_operator/squash-sandbox.lsst.codes
 
-argo:
+alert_stream_broker:
+  enabled: false
+cachemachine:
   enabled: false
 cert_issuer:
   enabled: true
@@ -10,6 +12,8 @@ cert_manager:
   enabled: true
 chronograf:
   enabled: true
+datalinker:
+  enabled: false
 exposurelog:
   enabled: false
 gafaelfawr:
@@ -18,31 +22,39 @@ influxdb:
   enabled: true
 kapacitor:
   enabled: true
-logging:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:
   enabled: false
 ingress_nginx:
   enabled: true
+noteburst:
+  enabled: false
 nublado2:
   enabled: false
 obstap:
+  enabled: false
+plot_navigator:
   enabled: false
 portal:
   enabled: false
 postgres:
   enabled: true
-rancher_external_ip_webhook:
-  enabled: true
+semaphore:
+  enabled: false
 squareone:
   enabled: false
 squash_api:
   enabled: true
+strimzi:
+  enabled: false
+strimzi_registry_operator:
+  enabled: false
 tap:
   enabled: false
 tap_schema:
   enabled: false
 vault_secrets_operator:
   enabled: true
+vo_cutouts:
+  enabled: false

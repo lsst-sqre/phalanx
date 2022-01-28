@@ -1,17 +1,14 @@
 cachemachine:
-  host: "lsst-nts-k8s.ncsa.illinois.edu"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
 
   ingress:
     enabled: true
+    host: "lsst-nts-k8s.ncsa.illinois.edu"
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "http://lsst-nts-k8s.ncsa.illinois.edu/auth?scope=exec:admin"
-    hosts:
-      - host: lsst-nts-k8s.ncsa.illinois.edu
-        paths: ["/cachemachine"]
 
-  vault_secrets:
-    enabled: true
-    path: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
+  vaultSecretsPath: "secret/k8s_operator/lsst-nts-k8s.ncsa.illinois.edu/pull-secret"
 
   autostart:
     jupyter: |
@@ -23,13 +20,13 @@ cachemachine:
         "repomen": [
           {
             "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstts/sal-sciplat-lab",
+            "registry_url": "ts-dockerhub.lsst.org",
+            "repo": "sal-sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 0,
             "num_weeklies": 3,
             "num_dailies": 2,
-            "cycle": 21,
+            "cycle": 24,
             "alias_tags": [
                 "latest",
                 "latest_daily",

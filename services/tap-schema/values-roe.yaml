@@ -1,0 +1,7 @@
+tap-schema:
+  pull_secret: 'pull-secret'
+  image: lsstsqre/tap-schema-mock
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/roe/pull-secret

@@ -1,9 +1,9 @@
 environment: idfdev
 fqdn: data-dev.lsst.cloud
-vault_path_prefix: secret/k8s_operator/data-dev.lsst.codes
+vault_path_prefix: secret/k8s_operator/data-dev.lsst.cloud
 
-argo:
-  enabled: true
+alert_stream_broker:
+  enabled: false
 cachemachine:
   enabled: true
 cert_issuer:
@@ -12,6 +12,8 @@ cert_manager:
   enabled: true
 chronograf:
   enabled: false
+datalinker:
+  enabled: true
 exposurelog:
   enabled: false
 gafaelfawr:
@@ -20,27 +22,35 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-logging:
-  enabled: false
 mobu:
   enabled: true
 moneypenny:
   enabled: true
 ingress_nginx:
   enabled: true
+noteburst:
+  enabled: true
 nublado2:
   enabled: true
 obstap:
   enabled: true
+plot_navigator:
+  enabled: false
 portal:
   enabled: true
 postgres:
   enabled: true
-rancher_external_ip_webhook:
+semaphore:
+  enabled: true
+sherlock:
   enabled: true
 squareone:
   enabled: true
 squash_api:
+  enabled: false
+strimzi:
+  enabled: false
+strimzi_registry_operator:
   enabled: false
 tap:
   enabled: true
@@ -48,3 +58,5 @@ tap_schema:
   enabled: true
 vault_secrets_operator:
   enabled: true
+vo_cutouts:
+  enabled: false

@@ -1,0 +1,3 @@
+sherlock:
+  ingress:
+    host: "summit-lsp.lsst.codes"

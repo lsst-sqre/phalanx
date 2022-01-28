@@ -1,9 +1,0 @@
-init:
-  serviceAccount: "nublado-hub"
-
-argo:
-  server:
-    enabled: true
-    baseHref: "/workflows/"
-  controller:
-    containerRuntimeExecutor: "k8sapi"
