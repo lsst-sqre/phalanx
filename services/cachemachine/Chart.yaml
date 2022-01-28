@@ -3,5 +3,5 @@ name: cachemachine
 version: 1.0.0
 dependencies:
   - name: cachemachine
-    version: 1.2.0
+    version: 1.2.1
     repository: https://lsst-sqre.github.io/charts/
