@@ -3,8 +3,6 @@ moneypenny:
     - name: "pull-secret"
   ingress:
     host: "data-int.lsst.cloud"
-  networkPolicy:
-    enabled: true
 
   orders:
     commission:

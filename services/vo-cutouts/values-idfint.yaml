@@ -5,10 +5,6 @@ vo-cutouts:
     host: "data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/vo-cutouts"
 
-  # Enable the frontend NetworkPolicy.
-  networkPolicy:
-    enabled: true
-
   config:
     butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
     butlerCollection: "2.2i/runs/DP0.1"
