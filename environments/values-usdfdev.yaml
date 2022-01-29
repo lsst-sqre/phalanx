@@ -1,10 +1,12 @@
 environment: usdfdev
 fqdn: rubin-data-dev.slac.stanford.edu
-vault_path_prefix: secret/rubin/rubin-data-dev.slac.stanford.edu
-revision: "tickets/DM-28120"
+vault_path_prefix: secret/rubin/usdf-staffrsp-dev
+#revision: "tickets/DM-28120"
 
 argo:
   enabled: true
+alert_stream_broker:
+  enabled: false
 cachemachine:
   enabled: true
 cert_issuer:
@@ -12,6 +14,8 @@ cert_issuer:
 cert_manager:
   enabled: false
 chronograf:
+  enabled: false
+alert_stream_broker:
   enabled: false
 exposurelog:
   enabled: false
@@ -21,15 +25,17 @@ influxdb:
   enabled: false
 kapacitor:
   enabled: false
-landing_page:
-  enabled: true
-logging:
-  enabled: false
+#landing_page:
+#  enabled: true
+#logging:
+#  enabled: false
 mobu:
   enabled: true
 moneypenny:
   enabled: true
 ingress_nginx:
+  enabled: false
+alert_stream_broker:
   enabled: false
 nublado:
   enabled: false
@@ -37,17 +43,27 @@ nublado2:
   enabled: true
 obstap:
   enabled: true
+alert_stream_broker:
+  enabled: false
 portal:
   enabled: true
 postgres:
   enabled: true
-rancher_external_ip_webhook:
-  enabled: false
+#rancher_external_ip_webhook:
+#  enabled: false
+semaphore:
+  enabled: true
 squareone:
   enabled: true
-squash_api:
+strimzi:
   enabled: false
+strimzi_registry_operator:
+  enabled: false
+#squash_api:
+#  enabled: false
 tap:
   enabled: true
 vault_secrets_operator:
+  enabled: false
+vo_cutouts:
   enabled: false
