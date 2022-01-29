@@ -95,6 +95,7 @@ if [ $(yq -r .ingress_nginx.enabled ../science-platform/values-$ENVIRONMENT.yaml
 then
   echo "Syncing ingress-nginx..."
   argocd app sync ingress-nginx \
+    --plaintext \
     --port-forward \
     --port-forward-namespace argocd
 fi
@@ -105,6 +106,7 @@ if [ $(yq -r .cert_manager.enabled ../science-platform/values-$ENVIRONMENT.yaml)
 then
   echo "Syncing cert-manager..."
   argocd app sync cert-manager \
+    --plaintext \
     --port-forward \
     --port-forward-namespace argocd && \
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
@@ -114,6 +116,7 @@ if [ $(yq -r .cert_issuer.enabled ../science-platform/values-$ENVIRONMENT.yaml) 
 then
   echo "Syncing cert-issuer..."
   argocd app sync cert-issuer \
+    --plaintext \
     --port-forward \
     --port-forward-namespace argocd
 fi
@@ -122,6 +125,7 @@ if [ $(yq -r .postgres.enabled ../science-platform/values-$ENVIRONMENT.yaml) == 
 then
   echo "Syncing postgres..."
   argocd app sync postgres \
+    --plaintext \
     --port-forward \
     --port-forward-namespace argocd
 fi
@@ -130,12 +134,14 @@ if [ $(yq -r .gafaelfawr.enabled ../science-platform/values-$ENVIRONMENT.yaml) =
 then
   echo "Syncing gafaelfawr..."
   argocd app sync gafaelfawr \
+    --plaintext \
     --port-forward \
     --port-forward-namespace argocd
 fi
 
 echo "Sync remaining science platform apps"
 argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
+  --plaintext \
   --port-forward \
   --port-forward-namespace argocd
 
