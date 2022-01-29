@@ -12,6 +12,7 @@ VAULT_PATH_PREFIX=$(cat ../science-platform/values-usdfdev.yaml | grep vault_pat
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
+HTTP_URL=$( echo "$GIT_URL" | sed s%git@%https://% | sed s%github.com:%github.com/% ).git
 # Github runs in a detached head state, but sets GITHUB_REF,
 # extract the branch from it.  If we're there, use that branch.
 # git branch --show-current will return empty in deatached head.
@@ -27,7 +28,7 @@ kubectl create ns vault-secrets-operator || true
 #  --dry-run -o yaml | kubectl apply -f -
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
-  --from-literal=VAULT_ROLE_ID=$(vault read --format=json ${VAULT_ROLE_ID_PATH} | jq -M .data.role_id  | sed 's/"//g') \
+  --from-literal=VAULT_ROLE_ID=$(vault read --format=json ${VAULT_ROLE_ID_PATH}/role-id | jq -M .data.role_id  | sed 's/"//g') \
   --from-literal=VAULT_SECRET_ID=${VAULT_SECRET_ID} \
   --from-literal=VAULT_TOKEN_MAX_TTL=600 \
   --dry-run=client -o yaml | kubectl apply -f -
@@ -71,7 +72,7 @@ argocd login \
 
 echo "Creating top level application"
 argocd app create science-platform \
-  --repo $GIT_URL \
+  --repo $HTTP_URL \
   --path science-platform --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
   --upsert \
