@@ -18,10 +18,10 @@ gafaelfawr:
     loglevel: "DEBUG"
 
     host: "rubin-data-dev.slac.stanford.edu"
-    databaseUrl: "postgresql://gafaelfawr@postgres.gafaelfawr-postgres--prod/gafaelfawr"
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
     github:
-      clientId: "a39d4b6c7871e4a4bb1f"
+      clientId: "cb128d0275989031e135"
 
     # Allow access by GitHub team.
     groupMapping:

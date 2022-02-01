@@ -1,9 +1,13 @@
 mobu:
-  pull_secret: 'pull-secret'
-  gafaelfawr_secrets_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
-  mobu_secrets_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/mobu"
-  environment_url: "https://rubin-data-dev.slac.stanford.edu"
-  host: "rubin-data-dev.slac.stanford.edu"
+
+  imagePullSecrets:
+    - name: "pull-secret"
+
+  ingress:
+    host: "rubin-data-dev.slac.stanford.edu"
+
+  environmentUrl: "https://rubin-data-dev.slac.stanford.edu"
+  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/mobu"
 
 pull-secret:
   enabled: true

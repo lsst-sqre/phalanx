@@ -1,14 +1,8 @@
 cachemachine:
-  host: "rubin-data-dev.slac.stanford.edu"
 
   ingress:
     enabled: true
-    hosts:
-      - host: rubin-data-dev.slac.stanford.edu
-        paths: ["/cachemachine"]
-    annotations:
-      nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:admin"
+    host: rubin-data-dev.slac.stanford.edu
 
   imagePullSecrets:
     - name: "cachemachine-secret"
@@ -23,21 +17,12 @@ cachemachine:
         "repomen": [
           {
             "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
+            "registry_url": "docker-registry.slac.stanford.edu",
             "repo": "lsstsqre/sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 1,
             "num_weeklies": 2,
             "num_dailies": 3
-          },
-          {
-            "type": "SimpleRepoMan",
-            "images": [
-              {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_49",
-                "name": "Weekly 2021_49"
-              }
-            ]
           }
         ]
       }

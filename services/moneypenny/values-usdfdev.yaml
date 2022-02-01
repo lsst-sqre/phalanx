@@ -1,15 +1,15 @@
 moneypenny:
-  host: "rubin-data-dev.slac.stanford.edu"
+
+  imagePullSecrets:
+    - name: "pull-secret"
 
   ingress:
     enabled: true
-    hosts:
-      - host: rubin-data-dev.slac.stanford.edu
-        paths: ["/moneypenny"]
+    host: "rubin-data-dev.slac.stanford.edu"
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
 
-  orders: |
+  orders: 
     commission:
       - name: initcommission
         image: lsstsqre/inituserhome
@@ -26,4 +26,4 @@ moneypenny:
 
 pull-secret:
   enabled: true
-  path: "secret/usdf-staffrsp-dev/pull-secret"
+  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
