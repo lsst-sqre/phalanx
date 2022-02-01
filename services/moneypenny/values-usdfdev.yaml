@@ -9,10 +9,6 @@ moneypenny:
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret"
-
   orders: |
     commission:
       - name: initcommission
@@ -23,14 +19,11 @@ moneypenny:
         volumeMounts:
         - mountPath: /homedirs
           name: homedirs
-    retire:
-      - name: farthing
-        image: lsstsqre/farthing
-        securityContext:
-          runAsUser: 1000
-          runAsNonRootUser: true
-          allowPrivilegeEscalation: false
     volumes:
       - name: homedirs
         local:
           path: /home
+
+pull-secret:
+  enabled: true
+  path: "secret/usdf-staffrsp-dev/pull-secret"

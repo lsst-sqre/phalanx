@@ -7,4 +7,4 @@ mobu:
 
 pull-secret:
   enabled: true
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/usdf-staffrsp-dev/pull-secret
