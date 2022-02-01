@@ -1,9 +1,12 @@
 gafaelfawr:
+
+  replicaCount: 2
+
   imagePullSecrets:
     - name: "pull-secret"
   ingress:
     host: "rubin-data-dev.slac.stanford.edu"
-  vaultSecretsPath: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/gafaelfawr"
 
   # Use the CSI storage class so that we can use snapshots.
   redis:
@@ -11,6 +14,9 @@ gafaelfawr:
       storageClass: "standard-rwo"
 
   config:
+
+    loglevel: "DEBUG"
+
     host: "rubin-data-dev.slac.stanford.edu"
     databaseUrl: "postgresql://gafaelfawr@postgres.gafaelfawr-postgres--prod/gafaelfawr"
 
@@ -33,8 +39,15 @@ gafaelfawr:
     initialAdmins:
       - "yee379"
       - "pjpascual"
-      - "brianv0"
+
+    errorFooter: |
+      To report problems or ask for help, please open an issue in the
+      <a href="https://github.com/rubin-dp0/Support/issues">GitHub
+      rubin-dp0/Support project</a>.
+
+  cloudsql:
+    enabled: false
 
 pull-secret:
   enabled: true
-  path: "secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret"
+  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"

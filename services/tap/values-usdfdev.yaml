@@ -1,6 +1,5 @@
 cadc-tap:
   pull_secret: 'pull-secret'
-  tag: "1.0.16"
   use_mock_qserv: true
 
   host: "rubin-data-dev.slac.stanford.edu"
@@ -10,11 +9,37 @@ cadc-tap:
 
   vault_secrets:
     enabled: true
-    path: 'secret/rubin/rubin-data-dev.slac.stanford.edu/tap'
+    path: 'secret/rubin/usdf-staffrsp-dev/tap'
+
+  ingress:
+    authenticated_annotations:
+      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=read:tap&auth_type=basic&delegate_to=tap"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        auth_request_set $auth_token $upstream_http_x_auth_request_token;
+        proxy_set_header Authorization "Bearer $auth_token";
+
+  resources:
+    requests:
+      cpu: 2.0
+      memory: 2G
+    limits:
+      cpu: 8.0
+      memory: 32G
+
+  jvm_max_heap_size: 31G
+
+  aux_resources:
+    requests:
+      cpu: 0.25
+      memory: 1G
+    limits:
+      cpu: 2.0
+      memory: 4G
 
   gcs_bucket: 'async-results.lsst.codes'
   gcs_bucket_url: 'http://async-results.lsst.codes'
 
 pull-secret:
   enabled: true
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/usdf-staffrsp-dev/pull-secret

@@ -8,11 +8,11 @@ cadc-tap-postgres:
 
   vault_secrets:
     enabled: true
-    path: 'secret/rubin/rubin-data-dev.slac.stanford.edu/tap'
+    path: 'secret/rubin/rubin/usdf-staffrsp-dev/tap'
 
   gcs_bucket: 'async-results.lsst.codes'
   gcs_bucket_url: 'http://async-results.lsst.codes'
 
 pull-secret:
   enabled: true
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
+  path: secret/rubin/rubin/usdf-staffrsp-dev/pull-secret

@@ -10,9 +10,10 @@ cachemachine:
       nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:admin"
 
-  vault_secrets:
-    enabled: true
-    path: "secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret"
+  imagePullSecrets:
+    - name: "cachemachine-secret"
+
+  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/pull-secret"
 
   autostart:
     jupyter: |
@@ -28,6 +29,15 @@ cachemachine:
             "num_releases": 1,
             "num_weeklies": 2,
             "num_dailies": 3
+          },
+          {
+            "type": "SimpleRepoMan",
+            "images": [
+              {
+                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_49",
+                "name": "Weekly 2021_49"
+              }
+            ]
           }
         ]
       }
