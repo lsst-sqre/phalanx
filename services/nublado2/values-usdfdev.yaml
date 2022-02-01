@@ -103,8 +103,8 @@ nublado2:
           type: kubernetes.io/dockerconfigjson
 
 
-  vault_secret_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/nublado2"
-  # gafaelfawr_secret_path: "secret/rubin/rubin-data-dev.slac.stanford.edu/gafaelfawr"
+  vault_secret_path: "secret/rubin/usdf-staffrsp-dev/nublado2"
+  # gafaelfawr_secret_path: "secret/rubin/usdf-staffrsp-dev/gafaelfawr"
 
 pull-secret:
   enabled: true
