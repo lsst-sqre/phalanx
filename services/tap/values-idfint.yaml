@@ -9,7 +9,7 @@ cadc-tap:
 
   config:
     gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "https://async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
 
   qserv:
     host: "10.136.1.211:4040"

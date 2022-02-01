@@ -17,7 +17,7 @@ cadc-tap:
 
   config:
     gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "https://async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
     jvmMaxHeapSize: "15G"
 
   qserv:
