@@ -67,3 +67,5 @@ vault_secrets_operator:
   enabled: false
 vo_cutouts:
   enabled: false
+
+repoURL: https://github.com/slaclab/phalanx.git
