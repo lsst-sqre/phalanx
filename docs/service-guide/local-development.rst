@@ -8,6 +8,10 @@ This page shows you how to run a Minikube cluster on macOS (amd64 or arm64) usin
 You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory on your local machine.
 If not, you can enable only the essential services to develop with minikube.
 
+.. note::
+
+   This procedure may not create a fully-operational auth system since the ingress is different from the production system.
+   As well, this procedure does not create a TLS certificate.
 
 Start minikube
 ==============
