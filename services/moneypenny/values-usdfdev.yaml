@@ -24,4 +24,4 @@ moneypenny:
 
 pull-secret:
   enabled: true
-  path: "secret/usdf-staffrsp-dev/pull-secret"
+  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
