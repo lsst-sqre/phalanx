@@ -20,8 +20,16 @@ gafaelfawr:
     host: "rubin-data-dev.slac.stanford.edu"
     databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-    github:
-      clientId: "cb128d0275989031e135"
+    #github:
+    #  clientId: "cb128d0275989031e135"
+    oidc:
+      clientId: rubin-usdf-staffrsp-dev
+      audience: "https://dex-dev.slac.stanford.edu/aud"
+      loginUrl: "https://dex-dev.slac.stanford.edu/login"
+      tokenUrl: "https://dex-dev.slac.stanford.edu/token"
+      issuer: "https://dex-dev.slac.stanford.edu"
+      scopes: []
+
 
     # Allow access by GitHub team.
     groupMapping:
