@@ -28,7 +28,11 @@ gafaelfawr:
       loginUrl: "https://dex-dev.slac.stanford.edu/login"
       tokenUrl: "https://dex-dev.slac.stanford.edu/token"
       issuer: "https://dex-dev.slac.stanford.edu"
-      scopes: []
+      scopes:
+      - "openid"
+      - "email"
+      - "groups"
+      - "profile"
 
 
     # Allow access by GitHub team.
