@@ -24,11 +24,10 @@ gafaelfawr:
     #  clientId: "cb128d0275989031e135"
     oidc:
       clientId: rubin-usdf-staffrsp-dev
-      audience: "https://dex-dev.slac.stanford.edu/aud"
+      audience: "rubin-usdf-staffrsp-dev"
       loginUrl: "https://dex-dev.slac.stanford.edu/auth"
       tokenUrl: "https://dex-dev.slac.stanford.edu/token"
       issuer: "https://dex-dev.slac.stanford.edu"
-      redirectUrl: "https://rubin-data-dev.slac.stanford.edu/login"
       scopes:
       - "openid"
       - "email"
