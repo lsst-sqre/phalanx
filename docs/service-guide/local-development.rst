@@ -3,12 +3,15 @@ Set up a local development environment with minikube
 ####################################################
 
 Using `minikube <https://minikube.sigs.k8s.io/docs/>`__ you can quickly set up a local Kubernetes cluster to help you adding a service to Phalanx (see :doc:`add-service`).
-There are multiple ways to start a minikube cluster.
-Here we document the steps to start minikube on macOS (amd64 or arm64) using the `docker driver <https://minikube.sigs.k8s.io/docs/drivers/docker/>`__.
+This page shows you how to run a Minikube cluster on macOS (amd64 or arm64) using the `docker driver <https://minikube.sigs.k8s.io/docs/drivers/docker/>`__.
 
-You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory.
+You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory on your local machine.
 If not, you can enable only the essential services to develop with minikube.
 
+.. note::
+
+   This procedure may not create a fully-operational auth system since the ingress is different from the production system.
+   As well, this procedure does not create a TLS certificate.
 
 Start minikube
 ==============
@@ -62,28 +65,52 @@ Install the Python dependencies (using a virtual environment is ideal):
 
   pip install -r requirements.txt
 
+Lastly, set the environment variables for Vault access:
+
+.. code-block:: sh
+
+   export VAULT_ADDR="https://vault.lsst.codes"
+   export VAULT_TOKEN="<read key for minikube>"
+
+The Vault read key for minikube is accessible from the ``vault_keys_json`` item in the LSST IT/RSP-Vault 1Password Vault.
+The key itself is under the ``k8s_operator/minikube.lsst.codes`` → ``read`` → ``id`` field.
+If you do not have Vault access, ask SQuaRE for the minikube Vault read key.
+See also :doc:`../arch/secrets`.
 
 Enable essential services
--------------------------
 
-Edit the `minikube environment <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`__ file and change the field ``enabled`` to enable or disable each service.
+Set up a Phalanx branch for your local minikube deployment
+----------------------------------------------------------
 
-IMPORTANT: ``ingress-nginx`` must be **disabled** since we are already using the minikube addon to deploy the NGINX Ingress Controller.
+The ``install.sh`` uses the locally checked out branch of your Phalanx repository clone.
 
-In addition to your own service, we recommend enabling at least ``vault-secrets-operator`` (to retrieve secrets from Vault) and  ``gafaelfawr`` (for authentication).
+To conserve resources, you may want to deploy a subset of Phalanx services in your local minikube cluster.
+You can do this by editing the `/science-platform/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`_ file.
+Set any service you do not want to deploy to ``enabled: false``.
 
-Commit and push ``values-minikube.yaml`` to your Phalanx development branch so that the installer can pick up your changes.
+Commit any changes with Git into a development branch of the Phalanx repository.
+**You must also push this development branch to the GitHub origin,** https://github.com/lsst-sqre/phalanx.git.
+The ``install.sh`` script uses your locally-checked out branch of Phalanx, but also requires that the branch be accessible from GitHub.
 
+**Services that must be disabled for local Minikube:**
+
+- ``ingress-nginx`` (conflicts with the minikube addon of Nginx Ingress Controller)
+
+**Minimal set of services that should be enabled:**
+
+- ``vault_secrets_operator`` (for Vault secrets)
+- ``gafaelfawr`` (for authentication)
+- ``postgreql`` (for gafaelfawr)
 
 Run the installer
 ------------------
 
-Finally, run the installer for the minikube environment (ask SQuaRE for the minikube Vault read key, see also :doc:`../arch/secrets`).
+Finally, run the installer for the minikube environment.
 
 
 .. code-block:: sh
 
-  ./install.sh minikube <vault read key>
+  ./install.sh minikube $VAULT_TOKEN
 
 
 Access the Argo CD UI

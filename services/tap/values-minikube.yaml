@@ -1,27 +1,16 @@
 cadc-tap:
-  pull_secret: 'pull-secret'
-  use_mock_qserv: true
+  fullnameOverride: "cadc-tap"
 
-  host: "minikube.lsst.codes"
-
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/minikube.lsst.codes/tap'
-
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    authenticated_annotations:
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-url: "https://minikube.lsst.codes/auth?scope=read:tap&auth_type=basic&delegate_to=tap"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        auth_request_set $auth_token $upstream_http_x_auth_request_token;
-        proxy_set_header Authorization "Bearer $auth_token";
+    host: "minikube.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/tap"
 
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
+  config:
+    gcsBucket: "async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
+  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
