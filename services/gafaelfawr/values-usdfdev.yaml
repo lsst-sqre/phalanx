@@ -28,6 +28,7 @@ gafaelfawr:
       loginUrl: "https://dex-dev.slac.stanford.edu/login"
       tokenUrl: "https://dex-dev.slac.stanford.edu/token"
       issuer: "https://dex-dev.slac.stanford.edu"
+      redirect_url: "https://rubin-data-dev.slac.stanford.edu"
       scopes:
       - "openid"
       - "email"
