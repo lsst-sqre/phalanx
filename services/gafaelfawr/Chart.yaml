@@ -1,0 +1,10 @@
+apiVersion: v2
+name: gafaelfawr
+version: 1.0.0
+dependencies:
+  - name: gafaelfawr
+    version: 4.5.4
+    repository: https://lsst-sqre.github.io/charts/
+  - name: pull-secret
+    version: 0.1.2
+    repository: https://lsst-sqre.github.io/charts/
