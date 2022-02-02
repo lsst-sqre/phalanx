@@ -34,6 +34,9 @@ gafaelfawr:
       - "groups"
       - "profile"
 
+    ldap:
+      url: ldaps://ldap-unix.slac.stanford.edu:636
+      baseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
 
     # Allow access by GitHub team.
     groupMapping:
