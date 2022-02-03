@@ -14,6 +14,10 @@ gafaelfawr:
     host: "data-dev.lsst.cloud"
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
+    # Support OpenID Connect clients like Chronograf.
+    oidcServer:
+      enabled: true
+
     github:
       clientId: "f46555b3f4c524e764ac"
 

@@ -37,7 +37,7 @@ portal:
 postgres:
   enabled: true
 sasquatch:
-  enabled: false
+  enabled: true
 semaphore:
   enabled: true
 sherlock:
