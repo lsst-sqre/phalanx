@@ -1,8 +1,0 @@
-apiVersion: ricoberger.de/v1alpha1
-kind: VaultSecret
-metadata:
-  name: chronograf-oauth
-  namespace: chronograf
-spec:
-  path: {{ .Values.vaultSecretsPath }}
-  type: Opaque
