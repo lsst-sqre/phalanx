@@ -1,8 +1,0 @@
-apiVersion: ricoberger.de/v1alpha1
-kind: VaultSecret
-metadata:
-  name: influxdb-auth
-  namespace: influxdb
-spec:
-  path: {{ .Values.vaultSecretsPath }}/influxdb-auth
-  type: Opaque

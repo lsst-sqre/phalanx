@@ -10,17 +10,11 @@ cert_issuer:
   enabled: true
 cert_manager:
   enabled: true
-chronograf:
-  enabled: true
 datalinker:
   enabled: false
 exposurelog:
   enabled: false
 gafaelfawr:
-  enabled: true
-influxdb:
-  enabled: true
-kapacitor:
   enabled: true
 mobu:
   enabled: false

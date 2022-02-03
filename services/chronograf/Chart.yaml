@@ -1,7 +1,0 @@
-apiVersion: v2
-name: chronograf
-version: 0.1.0
-dependencies:
-- name: chronograf
-  version: 1.2.1
-  repository: https://helm.influxdata.com/
