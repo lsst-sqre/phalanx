@@ -5,14 +5,18 @@ vo-cutouts:
     host: "data-dev.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/vo-cutouts"
 
+  image:
+    pullPolicy: "Always"
+    tag: "tickets-DM-33513"
+
   config:
     # There is currently no working Butler in data-dev, so this configuration
     # won't work.  Leaving it here anyway since it has the correct
     # configuration otherwise should we later get a Butler for that
     # environment.
     butlerRepository: "TBD"
-    butlerCollection: "TBD"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
+    gcsBucketUrl: "s3://rubin-cutouts-dev-us-central1-output/"
 
   cloudsql:
     enabled: true
