@@ -12,7 +12,7 @@ vo-cutouts:
   config:
     butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
-    gcsBucketUrl: "s3://rubin-cutouts-dev-us-central1-output/"
+    gcsBucketUrl: "s3://rubin-cutouts-int-us-central1-output/"
 
   cloudsql:
     enabled: true
