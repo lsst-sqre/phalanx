@@ -16,7 +16,7 @@ cachemachine:
         "repomen": [
           {
             "type": "RubinRepoMan",
-            "registry_url": "us-central1-docker.pkg.dev"
+            "registry_url": "us-central1-docker.pkg.dev",
             "repo": "rubin-shared-services-71ec/sciplat/sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 1,
