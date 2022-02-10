@@ -2,9 +2,23 @@ apiVersion: v2
 name: sasquatch
 version: 1.0.0
 dependencies:
-  - name: sasquatch
-    version: 0.1.13
+  - name: "strimzi-kafka"
+    version: "0.1.1"
+  - name: strimzi-registry-operator
+    version: 1.2.0
     repository: https://lsst-sqre.github.io/charts/
+  - name: influxdb
+    version: 4.10.6
+    repository: https://helm.influxdata.com/
+  - name: kafka-connect-manager
+    version: 0.9.9
+    repository: https://lsst-sqre.github.io/charts/
+  - name: chronograf
+    version: 1.2.3
+    repository: https://helm.influxdata.com/
+  - name: kapacitor
+    version: 1.4.3
+    repository: https://helm.influxdata.com/
   - name: pull-secret
     version: 0.1.2
     repository: https://lsst-sqre.github.io/charts/

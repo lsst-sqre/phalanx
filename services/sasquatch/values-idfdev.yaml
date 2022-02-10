@@ -1,41 +1,27 @@
-sasquatch:
-  strimzi-kafka: {}
+strimzi-kafka: {}
 
-  influxdb:
-    ingress:
-      enabled: true
-      tls: false
-      hostname: data-dev.lsst.cloud
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-        nginx.ingress.kubernetes.io/rewrite-target: /$2
-      path: /influxdb(/|$)(.*)
+influxdb:
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
 
-  chronograf:
-    ingress:
-      enabled: true
-      tls: false
-      hostname: data-dev.lsst.cloud
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-      path: /chronograf(/|$)
+chronograf:
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
 
-    env:
-      HOST_PAGE_DISABLED: true
-      BASE_PATH: /chronograf
-      GENERIC_NAME: "CILogon"
-      GENERIC_AUTH_URL: https://data-dev.lsst.cloud/auth/openid/login
-      GENERIC_TOKEN_URL: https://data-dev.lsst.cloud/auth/openid/token
-      USE_ID_TOKEN: 1
-      JWKS_URL: https://data-dev.lsst.cloud/.well-known/jwks.json
-      GENERIC_API_URL: https://data-dev.lsst.cloud/auth/userinfo
-      GENERIC_SCOPES: openid
-      PUBLIC_URL: https://data-dev.lsst.cloud/
-      CUSTOM_AUTO_REFRESH: "1s=1000"
-      STATUS_FEED_URL: "https://lsst-sqre.github.io/argocd-efd/apps/chronograf/feeds/idfdev.json"
+  env:
+    GENERIC_NAME: "CILogon"
+    GENERIC_AUTH_URL: https://data-dev.lsst.cloud/auth/openid/login
+    GENERIC_TOKEN_URL: https://data-dev.lsst.cloud/auth/openid/token
+    USE_ID_TOKEN: 1
+    JWKS_URL: https://data-dev.lsst.cloud/.well-known/jwks.json
+    GENERIC_API_URL: https://data-dev.lsst.cloud/auth/userinfo
+    GENERIC_SCOPES: openid
+    PUBLIC_URL: https://data-dev.lsst.cloud/
+    STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
 
-
-  vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud/sasquatch
+vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud
 
 pull-secret:
   enabled: true
