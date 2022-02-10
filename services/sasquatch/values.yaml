@@ -120,9 +120,3 @@ kapacitor:
 # -- Path to the Vault secrets (`secret/k8s_operator/<host>/sasquatch`)
 # @default -- None, must be set
 vaultSecretsPath: ""
-
-# -- Path to the pull-secret secret
-# @default -- None, must be set
-pull-secret:
-  enabled: false
-  path: ""

@@ -22,7 +22,3 @@ chronograf:
     STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/minikube.json"
 
 vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret

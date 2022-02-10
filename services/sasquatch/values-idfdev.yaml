@@ -22,7 +22,3 @@ chronograf:
     STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
 
 vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
