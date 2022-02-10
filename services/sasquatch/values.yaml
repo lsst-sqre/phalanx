@@ -50,29 +50,7 @@ influxdb:
       init.iql: |+
         CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
 
-kafka-connect-manager:
-  # -- InfluxDB Sink connector configuration
-  influxdbSink:
-    influxdb-sink:
-      name: influxdb-sink
-      enabled: true
-      connectInfluxUrl: "http://sasquatch.influxdb:8086"
-      connectInfluxDb: "efd"
-      influxSecret: sasquatch
-      tasksMax: 1
-      topicRegex: "lsst.sal.*"
-      autoUpdate: true
-      checkInterval: "15000"
-      timestamp: private_efdStamp
-      connectInfluxErrorPolicy: NOOP
-      connectInfluxMaxRetries: "10"
-      connectInfluxRetryInterval: "60000"
-      connectProgressEnabled: false
-  env:
-    # -- Kafka broker URL.
-    kafkaBrokerUrl: "sasquatch-kafka-bootstrap.sasquatch:9092"
-    # -- Kafka connnect URL.
-    kafkaConnectUrl: "http://sasquatch-connect-api.sasquatch:8083"
+kafka-connect-manager: {}
 
 chronograf:
   # -- Chronograf image tag

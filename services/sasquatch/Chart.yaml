@@ -11,8 +11,7 @@ dependencies:
     version: 4.10.6
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
-    version: 0.9.9
-    repository: https://lsst-sqre.github.io/charts/
+    version: 1.0.0
   - name: chronograf
     version: 1.2.3
     repository: https://helm.influxdata.com/

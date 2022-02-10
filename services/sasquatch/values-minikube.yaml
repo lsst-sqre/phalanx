@@ -5,6 +5,11 @@ influxdb:
     enabled: true
     hostname: minikube.lsst.codes
 
+kafka-connect-manager:
+  influxdbSink:
+    influxdb-sink:
+      enabled: true
+
 chronograf:
   ingress:
     enabled: true
