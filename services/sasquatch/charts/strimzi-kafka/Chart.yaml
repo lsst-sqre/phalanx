@@ -1,9 +1,4 @@
 apiVersion: v2
 name: strimzi-kafka
-version: 0.1.1
-description: A Helm chart to deploy Strimzi Kafka components for Sasquatch
-maintainers:
-  - name: afausti
-    email: afausti@lsst.org
-type: application
-appVersion: "0.1.0"
+version: 1.0.0
+description: A sub chart to deploy Strimzi Kafka components for Sasquatch.

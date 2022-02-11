@@ -1,9 +1,10 @@
 apiVersion: v2
 name: sasquatch
 version: 1.0.0
+description: SQuaRE telemetry data service.
 dependencies:
   - name: "strimzi-kafka"
-    version: "0.1.1"
+    version: 1.0.0
   - name: strimzi-registry-operator
     version: 1.2.0
     repository: https://lsst-sqre.github.io/charts/

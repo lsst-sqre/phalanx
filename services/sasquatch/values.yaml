@@ -1,5 +1,4 @@
 # Default values for Sasquatch.
-
 strimzi-kafka: {}
 
 strimzi-registry-operator:
@@ -26,7 +25,8 @@ influxdb:
       kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     path: /influxdb(/|$)(.*)
-  # -- InfluxDB configuration parameters, see https://docs.influxdata.com/influxdb/v1.8/administration/config/.
+  # -- InfluxDB configuration parameters.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
       cache_max_memory_size: 0
@@ -64,17 +64,17 @@ chronograf:
   # -- Chronograf ingress.
   # @default -- disabled
   ingress:
-      enabled: false
-      tls: false
-      hostname: ""
-      annotations:
-        kubernetes.io/ingress.class: "nginx"
-      path: /chronograf(/|$)
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    path: /chronograf(/|$)
   # -- Chronograf environment variables.
   env:
-      HOST_PAGE_DISABLED: true
-      BASE_PATH: /chronograf
-      CUSTOM_AUTO_REFRESH: "1s=1000"
+    HOST_PAGE_DISABLED: true
+    BASE_PATH: /chronograf
+    CUSTOM_AUTO_REFRESH: "1s=1000"
   # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
   envFromSecret: "sasquatch"
 
