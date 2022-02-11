@@ -4,7 +4,10 @@ exposurelog:
   pull_secret: pull-secret
 
   site_id: test
-  butler_uri_1: hsc_raw
+  # Use the test butler registries.
+  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
+  butler_uri_1: LSSTCam
+  butler_uri_2: LATISS
 
   ingress:
     enabled: true
