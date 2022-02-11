@@ -13,7 +13,7 @@ cert_manager:
 datalinker:
   enabled: false
 exposurelog:
-  enabled: false
+  enabled: true
 gafaelfawr:
   enabled: true
 mobu:
@@ -21,6 +21,8 @@ mobu:
 moneypenny:
   enabled: true
 ingress_nginx:
+  enabled: true
+narrativelog:
   enabled: true
 noteburst:
   enabled: false

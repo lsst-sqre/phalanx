@@ -1,13 +1,7 @@
-# WARNING: this is a "playground" deployment
-# using exposurelog's built-in test butler registries.
-exposurelog:
+narrativelog:
   pull_secret: pull-secret
 
-  site_id: test
-  # Use the test butler registries.
-  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
-  butler_uri_1: LSSTCam
-  butler_uri_2: LATISS
+  site_id: base
 
   ingress:
     enabled: true
@@ -17,7 +11,7 @@ exposurelog:
     hosts:
       - host: base-lsp.lsst.codes
         paths:
-          - /exposurelog
+          - /narrativelog
     tls: []
     #  - secretName: chart-example-tls
     #    hosts:

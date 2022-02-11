@@ -13,7 +13,6 @@ import logging
 import os
 from pathlib import Path
 import secrets
-import yaml
 
 from onepassword import OnePassword
 
@@ -97,7 +96,7 @@ class SecretGenerator:
         current = self.secrets.get(component, {}).get(name, "")
         print(f"[{component} {name}] ({description})")
         print(f"Current contents:\n{current}")
-        prompt_string = f"New filename with contents (empty to not change): "
+        prompt_string = "New filename with contents (empty to not change): "
         fname = input(prompt_string)
 
         if fname:
@@ -137,6 +136,7 @@ class SecretGenerator:
         self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
         self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
+        self._set_generated("postgres", "narrativelog_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
         self._set_generated("postgres", "vo-cutouts_password", secrets.token_hex(32))
 
@@ -215,13 +215,13 @@ class SecretGenerator:
     def _butler_secret(self):
         self.input_file(
             "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
-            )
+        )
         self.input_file(
             "butler-secret", "butler-gcs-idf-creds.json", "Google credentials for butler"
-            )
+        )
         self.input_file(
             "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
-            )
+        )
 
     def _ingress_nginx(self):
         self.input_file("ingress-nginx", "tls.key", "Certificate private key")
@@ -327,11 +327,11 @@ class OnePasswordSecretGenerator(SecretGenerator):
                     elif field["t"] == "environment":
                         environments.append(field["v"])
 
-            # If we don't find a generate_secrets_key somewhere, then we shouldn't
-            # bother with this document in the vault.
+            # If we don't find a generate_secrets_key somewhere,
+            # then we shouldn't bother with this document in the vault.
             if not key:
                 logging.debug(
-                    f"Skipping because of no generate_secrets_key, %s",
+                    "Skipping because of no generate_secrets_key, %s",
                     uuid
                 )
                 continue

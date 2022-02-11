@@ -18,6 +18,8 @@ mobu:
   enabled: false
 moneypenny:
   enabled: false
+narrativelog:
+  enabled: false
 noteburst:
   enabled: false
 nublado2:

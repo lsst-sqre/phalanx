@@ -28,8 +28,8 @@ fi
 #  For instance, cert-manager and cert-issuer share a namespace; we only
 #  inject a vault secret for pull once per namespace
 svcs="argocd cert-manager exposurelog gafaelfawr influxdb kapacitor"
-svcs="${svcs} landing-page mobu ingress-nginx nublado obstap portal"
-svcs="${svcs} postgres tap"
+svcs="${svcs} landing-page mobu ingress-nginx narrativelog nublado obstap"
+svcs="${svcs} portal postgres tap"
 
 # This is a list of environments.
 envs="base bleed gold-leader idfdev idfint idfprod int kueyen minikube nts"
@@ -42,7 +42,7 @@ envs="${envs} red-five rogue-two stable summit tucson-teststand"
 #  and counterintuitively, nublado2 doesn't need it--the pods it spawns do,
 #  and it handles that in the nublado2 resource template yaml.
 add_pull="tap obstap exposurelog portal gafaelfawr influxdb kapacitor"
-add_pull="${add_pull} landing-page mobu nublado postgres"
+add_pull="${add_pull} landing-page mobu narrativelog nublado postgres"
 
 # This is what I have run it with so far.
 #envs="nublado"
