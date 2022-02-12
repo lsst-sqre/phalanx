@@ -119,7 +119,7 @@ class SecretGenerator:
         self.secrets[component][name] = new_value
 
     def _exists(self, component, name):
-        return (component in self.secrets and name in self.secrets[component])
+        return component in self.secrets and name in self.secrets[component]
 
     def _set_generated(self, component, name, new_value):
         if not self._exists(component, name) or self.regenerate:
@@ -147,7 +147,9 @@ class SecretGenerator:
         self._set_generated("nublado2", "cryptkeeper_key", secrets.token_hex(32))
 
         # Pluck the password out of the postgres portion.
-        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"]["jupyterhub_password"]
+        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"][
+            "jupyterhub_password"
+        ]
 
     def _mobu(self):
         self.input_field(
@@ -217,10 +219,14 @@ class SecretGenerator:
             "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
         )
         self.input_file(
-            "butler-secret", "butler-gcs-idf-creds.json", "Google credentials for butler"
+            "butler-secret",
+            "butler-gcs-idf-creds.json",
+            "Google credentials for butler",
         )
         self.input_file(
-            "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
+            "butler-secret",
+            "postgres-credentials.txt",
+            "Postgres credentials for butler",
         )
 
     def _ingress_nginx(self):
@@ -236,7 +242,9 @@ class SecretGenerator:
         new_pw = self.secrets["installer"]["argocd.admin.plaintext_password"]
 
         if current_pw != new_pw or self.regenerate:
-            h = bcrypt.hashpw(new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
+            h = bcrypt.hashpw(new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode(
+                "ascii"
+            )
             now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
             self._set("argocd", "admin.password", h)
@@ -245,7 +253,7 @@ class SecretGenerator:
         self.input_field(
             "argocd",
             "dex.clientSecret",
-            "OAuth client secret for ArgoCD (either GitHub or Google)?"
+            "OAuth client secret for ArgoCD (either GitHub or Google)?",
         )
 
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
@@ -330,10 +338,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
             # If we don't find a generate_secrets_key somewhere,
             # then we shouldn't bother with this document in the vault.
             if not key:
-                logging.debug(
-                    "Skipping because of no generate_secrets_key, %s",
-                    uuid
-                )
+                logging.debug("Skipping because of no generate_secrets_key, %s", uuid)
                 continue
 
             # The type of secret is either a note or a password login.
@@ -403,9 +408,18 @@ class OnePasswordSecretGenerator(SecretGenerator):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate_secrets")
-    parser.add_argument("--op", default=False, action="store_true", help="Load secrets from 1Password")
-    parser.add_argument("--verbose", default=False, action="store_true", help="Verbose logging")
-    parser.add_argument("--regenerate", default=False, action="store_true", help="Regenerate random secrets")
+    parser.add_argument(
+        "--op", default=False, action="store_true", help="Load secrets from 1Password"
+    )
+    parser.add_argument(
+        "--verbose", default=False, action="store_true", help="Verbose logging"
+    )
+    parser.add_argument(
+        "--regenerate",
+        default=False,
+        action="store_true",
+        help="Regenerate random secrets",
+    )
     parser.add_argument("environment", help="Environment to generate")
     args = parser.parse_args()
 

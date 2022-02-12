@@ -21,9 +21,13 @@ class VaultKeyRetriever:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="fetch the vault key for an environment")
+    parser = argparse.ArgumentParser(
+        description="fetch the vault key for an environment"
+    )
     parser.add_argument("environment", help="Environment name to retrieve key for")
-    parser.add_argument("key_type", choices=["read", "write"], help="Which key to retrieve")
+    parser.add_argument(
+        "key_type", choices=["read", "write"], help="Which key to retrieve"
+    )
     args = parser.parse_args()
 
     vkr = VaultKeyRetriever()

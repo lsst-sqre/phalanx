@@ -9,10 +9,10 @@ from diagrams.onprem.client import User
 os.chdir(os.path.dirname(__file__))
 
 with Diagram(
-        "Portal to TAP",
-        show=False,
-        filename="portal-tap",
-        outformat="png",
+    "Portal to TAP",
+    show=False,
+    filename="portal-tap",
+    outformat="png",
 ):
     user = User("End User")
 
