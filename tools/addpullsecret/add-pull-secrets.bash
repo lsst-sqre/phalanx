@@ -32,7 +32,7 @@ svcs="${svcs} landing-page mobu ingress-nginx nublado obstap portal"
 svcs="${svcs} postgres tap"
 
 # This is a list of environments.
-envs="base bleed gold-leader idfdev idfint idfprod int kueyen minikube nts"
+envs="base bleed gold-leader idfdev idfint idfprod int kueyen minikube"
 envs="${envs} red-five rogue-two stable summit tucson-teststand"
 
 # These are the services that we're going to add the pull-secret string to:

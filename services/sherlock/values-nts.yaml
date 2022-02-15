@@ -1,3 +1,0 @@
-sherlock:
-  ingress:
-    host: "lsst-nts-k8s.ncsa.illinois.edu"

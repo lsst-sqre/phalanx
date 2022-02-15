@@ -17,7 +17,6 @@ When deploying an update, it should normally follow this sequence (skipping envi
 * data-int.lsst.cloud
 * lsst-lsp-int.ncsa.illinois.edu
 * tucson-teststand.lsst.codes
-* lsst-nts-k8s.ncsa.illinois.edu
 * data.lsst.cloud
 * lsst-lsp-stable.ncsa.illinois.edu
 * base-lsp.lsst.codes

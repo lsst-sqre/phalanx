@@ -30,7 +30,6 @@ NCSA:
 Telescope and Site:
 
 * `tucson-teststand.lsst.codes <https://tucson-teststand.lsst.codes/argo-cd>`__ (tucson-teststand)
-* `lsst-nts-k8s.ncsa.illinois.edu <https://lsst-argocd-nts-efd.ncsa.illinois.edu/argo-cd>`__ (nts)
 * `base-lsp.lsst.codes <https://base-lsp.lsst.codes/argo-cd>`__ (base)
 * `summit-lsp.lsst.codes <https://summit-lsp.lsst.codes/argo-cd>`__ (summit)
 
