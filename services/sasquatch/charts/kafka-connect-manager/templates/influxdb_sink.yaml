@@ -17,17 +17,27 @@ spec:
         app: kafka-connect-manager
         app.kubernetes.io/instance: {{ $.Release.Name }}
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
       - name:  kafkaconnect
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
         image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
         imagePullPolicy:  {{ $.Values.image.pullPolicy }}
         command:
-        - kafkaconnect
-        - create
-        - influxdb-sink
-        {{- if .autoUpdate }}
-        - --auto-update
-        {{- end }}
+          - kafkaconnect
+          - create
+          - influxdb-sink
+          {{- if .autoUpdate }}
+          - --auto-update
+          {{- end }}
         env:
           - name: KAFKA_CONNECT_NAME
             value: {{ .name | quote }}
