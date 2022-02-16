@@ -3,5 +3,5 @@ name: sherlock
 version: 1.0.0
 dependencies:
   - name: sherlock
-    version: 0.1.4
+    version: 0.1.5
     repository: https://lsst-sqre.github.io/charts/
