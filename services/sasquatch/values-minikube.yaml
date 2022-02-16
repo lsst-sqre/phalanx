@@ -16,7 +16,7 @@ chronograf:
     hostname: minikube.lsst.codes
 
   env:
-    GENERIC_NAME: "CILogon"
+    GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://minikube.lsst.codes/auth/openid/login
     GENERIC_TOKEN_URL: https://minikube.lsst.codes/auth/openid/token
     USE_ID_TOKEN: 1
