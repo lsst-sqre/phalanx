@@ -2,6 +2,7 @@ narrativelog:
   imagePullSecrets:
     - name: pull-secret
   ingress:
+    enabled: true
     host: summit-lsp.lsst.codes
 
   site_id: summit
