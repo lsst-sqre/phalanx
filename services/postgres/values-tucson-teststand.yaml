@@ -6,6 +6,9 @@ postgres:
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
+  narrativelog_db:
+    user: 'narrativelog'
+    db: 'narrativelog'
   exposurelog_db:
     user: 'exposurelog'
     db: 'exposurelog'
