@@ -40,6 +40,8 @@ sasquatch:
   enabled: false
 semaphore:
   enabled: true
+sherlock:
+  enabled: true
 squareone:
   enabled: true
 squash_api:
