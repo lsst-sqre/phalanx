@@ -21,7 +21,6 @@ A sub chart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.influxdb-sink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
 | influxdbSink.influxdb-sink.enabled | bool | `false` | Whether this connector instance is deployed. |
 | influxdbSink.influxdb-sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
-| influxdbSink.influxdb-sink.influxSecret | string | `"sasquatch"` | Name of the kubernetes secret with InfluxDB credentials. |
 | influxdbSink.influxdb-sink.name | string | `"influxdb-sink"` | Name of the connector instance to create. |
 | influxdbSink.influxdb-sink.tasksMax | int | `1` | Number of KafkaConnect tasks. |
 | influxdbSink.influxdb-sink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified `sys_time()` the current timestamp. |
@@ -29,9 +28,7 @@ A sub chart to deploy the Kafka connectors used by Sasquatch.
 | jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table. |
 | jdbcSink.autoEvolve | string | `"false"` | Whether to automatically add columns in the table schema. |
 | jdbcSink.batchSize | string | `"3000"` | Specifies how many records to attempt to batch together for insertion into the destination table. |
-| jdbcSink.connectionPassword | string | `""` | Database connection password. |
 | jdbcSink.connectionUrl | string | `"jdbc:postgresql://localhost:5432/mydb"` | Database connection URL. |
-| jdbcSink.connectionUser | string | `""` | Database connection username. |
 | jdbcSink.dbTimezone | string | `"UTC"` | Name of the JDBC timezone that should be used in the connector when inserting time-based values. |
 | jdbcSink.enabled | bool | `false` | Whether the JDBC Sink connector is deployed. |
 | jdbcSink.insertMode | string | `"insert"` | The insertion mode to use. Supported modes are: `insert`, `upsert` and `update`. |
@@ -51,7 +48,6 @@ A sub chart to deploy the Kafka connectors used by Sasquatch.
 | mirrorMaker2.targetClusterBootstrapServers | string | `"localhost:31090"` | Destination Kafka cluster. |
 | mirrorMaker2.tasksMax | int | `1` | Number of Kafka Connect tasks. |
 | mirrorMaker2.topicRegex | string | `".*"` | Regex for selecting topics. Comma-separated lists are also supported. |
-| s3Sink.awsSecret | string | `"aws-secret"` | Name of the Kubernetes secret with the `aws_access_key_id` and `aws_secret_access_key` keys. |
 | s3Sink.behaviorOnNullValues | string | `"fail"` | How to handle records with a null value (for example, Kafka tombstone records). Valid options are ignore and fail. |
 | s3Sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | s3Sink.enabled | bool | `false` | Whether the Amazon S3 Sink connector is deployed. |

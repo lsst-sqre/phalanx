@@ -16,8 +16,6 @@ influxdbSink:
     connectInfluxUrl: "http://sasquatch.influxdb:8086"
     # -- InfluxDB database to write to.
     connectInfluxDb: "efd"
-    # -- Name of the kubernetes secret with InfluxDB credentials.
-    influxSecret: sasquatch
     # -- Number of KafkaConnect tasks.
     tasksMax: 1
     # -- Regex to select topics from Kafka.
@@ -65,8 +63,6 @@ s3Sink:
   behaviorOnNullValues: "fail"
   # -- Top level directory to store the data ingested from Kafka.
   topicsDir: "topics"
-  # -- Name of the Kubernetes secret with the `aws_access_key_id` and `aws_secret_access_key` keys.
-  awsSecret: "aws-secret"
   # -- Number of records written to store before invoking file commits.
   flushSize: "1000"
   # -- The time interval in milliseconds to invoke file commits. Set to 10 minutes by default.
@@ -128,10 +124,6 @@ jdbcSink:
   name: "postgres-sink"
   # -- Database connection URL.
   connectionUrl: "jdbc:postgresql://localhost:5432/mydb"
-  # -- Database connection username.
-  connectionUser: ""
-  # -- Database connection password.
-  connectionPassword: ""
   # -- Regex for selecting topics.
   topicRegex: ".*"
   # -- Number of Kafka Connect tasks.

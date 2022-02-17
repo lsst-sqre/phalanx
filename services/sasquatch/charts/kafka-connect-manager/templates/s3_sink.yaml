@@ -68,21 +68,21 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy:  {{ .Values.image.pullPolicy }}
         command:
-        - kafkaconnect
-        - create
-        - s3-sink
-        - --show-status
-        - /etc/s3-sink/s3-sink-config.json
+          - kafkaconnect
+          - create
+          - s3-sink
+          - --show-status
+          - /etc/s3-sink/s3-sink-config.json
         env:
           - name: AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.s3Sink.awsSecret | quote }}
+                name: sasquatch
                 key: aws_access_key_id
           - name: AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.s3Sink.awsSecret | quote }}
+                name: sasquatch
                 key: aws_secret_access_key
           - name: KAFKA_BROKER_URL
             value: {{ .Values.env.kafkaBrokerUrl | quote }}

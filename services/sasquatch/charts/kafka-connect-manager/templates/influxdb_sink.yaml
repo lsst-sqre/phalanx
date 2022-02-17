@@ -48,12 +48,12 @@ spec:
           - name: KAFKA_CONNECT_INFLUXDB_USERNAME
             valueFrom:
               secretKeyRef:
-                name: {{ .influxSecret | quote }}
+                name: sasquatch
                 key: influxdb-user
           - name: KAFKA_CONNECT_INFLUXDB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .influxSecret | quote }}
+                name: sasquatch
                 key: influxdb-password
           - name: KAFKA_CONNECT_TASKS_MAX
             value: {{ .tasksMax | quote }}

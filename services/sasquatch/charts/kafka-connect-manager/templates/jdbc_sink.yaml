@@ -63,6 +63,16 @@ spec:
           - --show-status
           - /etc/jdbc-sink/jdbc-sink-config.json
         env:
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: pguser
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: pgpassword
           - name: KAFKA_BROKER_URL
             value: {{ .Values.env.kafkaBrokerUrl | quote }}
           - name: KAFKA_CONNECT_URL
