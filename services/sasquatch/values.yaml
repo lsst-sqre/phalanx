@@ -1,6 +1,8 @@
 # Default values for Sasquatch.
+# -- Override strimzi-kafka configuration.
 strimzi-kafka: {}
 
+# -- strimzi-registry-operator configuration.
 strimzi-registry-operator:
   clusterName: sasquatch
   watchNamespace: sasquatch
@@ -15,7 +17,7 @@ influxdb:
     enabled: true
     user:
       existingSecret: sasquatch
-  # -- InfluxDB ingress.
+  # -- InfluxDB ingress configuration.
   # @default -- disabled
   ingress:
     enabled: false
@@ -25,7 +27,7 @@ influxdb:
       kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: /$2
     path: /influxdb(/|$)(.*)
-  # -- InfluxDB configuration parameters.
+  # -- Override InfluxDB configuration.
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
@@ -43,25 +45,26 @@ influxdb:
       log_queries_after: "15s"
     continuous_queries:
       enabled: false
-  # -- Custom initialization scripts
+  # -- InfluxDB Custom initialization scripts.
   initScripts:
     enabled: true
     scripts:
       init.iql: |+
         CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
 
+# -- Override strimzi-kafka configuration.
 kafka-connect-manager: {}
 
 chronograf:
-  # -- Chronograf image tag
+  # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"
     tag: 1.9.3
-  # -- Persist Chronograf data
+  # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
     size: 16Gi
-  # -- Chronograf ingress.
+  # -- Chronograf ingress configuration.
   # @default -- disabled
   ingress:
     enabled: false
@@ -79,22 +82,22 @@ chronograf:
   envFromSecret: "sasquatch"
 
 kapacitor:
-  # -- Kapacitor image tag
+  # -- Kapacitor image tag.
   image:
     repository: kapacitor
     tag: 1.6.3
-  # -- Persist Kapacitor data
+  # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
     size: 16Gi
-  # -- InfluxDB connection URL
+  # -- InfluxDB connection URL.
   influxURL: http://sasquatch.influxdb:8086
   # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
   existingSecret: sasquatch
-  # -- Kapacitor environment variables
+  # -- Kapacitor environment variables.
   envVars:
     KAPACITOR_SLACK_ENABLED: true
 
-# -- Path to the Vault secrets (`secret/k8s_operator/<host>/sasquatch`)
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
 # @default -- None, must be set
 vaultSecretsPath: ""
