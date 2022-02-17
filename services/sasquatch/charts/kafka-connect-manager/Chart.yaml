@@ -1,0 +1,4 @@
+apiVersion: v2
+name: kafka-connect-manager
+version: 1.0.0
+description: A sub chart to deploy the Kafka connectors used by Sasquatch.

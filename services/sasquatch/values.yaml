@@ -1,0 +1,103 @@
+# Default values for Sasquatch.
+# -- Override strimzi-kafka configuration.
+strimzi-kafka: {}
+
+# -- strimzi-registry-operator configuration.
+strimzi-registry-operator:
+  clusterName: sasquatch
+  watchNamespace: sasquatch
+  operatorNamespace: sasquatch
+
+influxdb:
+  # -- InfluxDB image tag.
+  image:
+    tag: "1.8.10"
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: sasquatch
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    path: /influxdb(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache_max_memory_size: 0
+      wal_fsync_delay: "100ms"
+      trace_logging_enabled: true
+    http:
+      enabled: true
+      auth_enabled: true
+      max_row_limit: 0
+    coordinator:
+      write_timeout: "60s"
+      max_concurrent_queries: 10
+      query_timeout: "900s"
+      log_queries_after: "15s"
+    continuous_queries:
+      enabled: false
+  # -- InfluxDB Custom initialization scripts.
+  initScripts:
+    enabled: true
+    scripts:
+      init.iql: |+
+        CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+
+# -- Override strimzi-kafka configuration.
+kafka-connect-manager: {}
+
+chronograf:
+  # -- Chronograf image tag.
+  image:
+    repository: "quay.io/influxdb/chronograf"
+    tag: 1.9.3
+  # -- Chronograf data persistence configuration.
+  persistence:
+    enabled: true
+    size: 16Gi
+  # -- Chronograf ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    path: /chronograf(/|$)
+  # -- Chronograf environment variables.
+  env:
+    HOST_PAGE_DISABLED: true
+    BASE_PATH: /chronograf
+    CUSTOM_AUTO_REFRESH: "1s=1000"
+  # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
+  envFromSecret: "sasquatch"
+
+kapacitor:
+  # -- Kapacitor image tag.
+  image:
+    repository: kapacitor
+    tag: 1.6.3
+  # -- Chronograf data persistence configuration.
+  persistence:
+    enabled: true
+    size: 16Gi
+  # -- InfluxDB connection URL.
+  influxURL: http://sasquatch.influxdb:8086
+  # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
+  existingSecret: sasquatch
+  # -- Kapacitor environment variables.
+  envVars:
+    KAPACITOR_SLACK_ENABLED: true
+
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
+# @default -- None, must be set
+vaultSecretsPath: ""

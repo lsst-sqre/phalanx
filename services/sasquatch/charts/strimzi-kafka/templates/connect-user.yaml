@@ -1,0 +1,23 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-connect
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: {{ .Values.cluster.name }}-connect
+        operation: Read
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All

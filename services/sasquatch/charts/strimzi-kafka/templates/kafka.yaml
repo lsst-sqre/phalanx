@@ -1,0 +1,64 @@
+# Based on the kafka-persistent.yaml example from the Strimzi documentation
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: {{ .Values.cluster.name }}
+spec:
+  kafka:
+    version: {{ .Values.kafka.version | quote }}
+    replicas: {{ .Values.kafka.replicas }}
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls # Used by the schema registry; it has a fixed name it expects
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: tls
+    authorization:
+      type: simple
+{{- if .Values.superusers }}
+      superUsers:
+{{- range .Values.superusers }}
+        - {{ . }}
+{{- end }}
+{{- end }}
+
+    config:
+      offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
+      transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
+      transaction.state.log.min.isr: {{ .Values.kafka.replicas }}
+      default.replication.factor: {{ .Values.kafka.replicas }}
+      min.insync.replicas: {{ .Values.kafka.replicas }}
+      {{- range $key, $value := .Values.kafka.config }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+    storage:
+      type: jbod
+      volumes:
+        # Note that storage is configured per replica. If there are 3 replicas,
+        # and 2 volumes in this array, each replica will get 2
+        # PersistentVolumeClaims for the configured size, for a total of 6
+        # volumes.
+      - id: 0
+        type: persistent-claim
+        size: {{ .Values.kafka.storage.size }}
+        {{- if .Values.kafka.storage.storageClassName }}
+        class: {{ .Values.kafka.storage.storageClassName }}
+        {{- end}}
+        deleteClaim: false
+  zookeeper:
+    replicas: {{ .Values.zookeeper.replicas }}
+    storage:
+      # Note that storage is configured per replica. If there are 3 replicas,
+      # each will get its own PersistentVolumeClaim for the configured size.
+      type: persistent-claim
+      size: {{ .Values.zookeeper.storage.size }}
+      class: {{ .Values.zookeeper.storage.storageClassName }}
+      deleteClaim: false
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

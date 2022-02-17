@@ -1,0 +1,98 @@
+{{- if .Values.s3Sink.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-{{ .Values.s3Sink.name }}
+data:
+  s3-sink-config.json: |+
+    {
+      "connector.class": "io.confluent.connect.s3.S3SinkConnector",
+      "flush.size": {{ .Values.s3Sink.flushSize | quote }},
+      "format.class": "io.confluent.connect.s3.format.parquet.ParquetFormat",
+      "locale": {{ .Values.s3Sink.locale | quote }},
+      "name": {{ .Values.s3Sink.name | quote }},
+      "parquet.codec": "snappy",
+      "partition.duration.ms": {{ .Values.s3Sink.partitionDurationMs | quote }},
+      "partitioner.class": "io.confluent.connect.storage.partitioner.TimeBasedPartitioner",
+      "path.format": {{ .Values.s3Sink.pathFormat | quote }},
+      "rotate.interval.ms": {{ .Values.s3Sink.rotateIntervalMs | quote }},
+      "s3.bucket.name": {{ .Values.s3Sink.s3BucketName | quote }},
+      "s3.region": {{ .Values.s3Sink.s3Region | quote }},
+      "s3.schema.compatibility": {{ .Values.s3Sink.s3SchemaCompatibility | quote }},
+      "s3.part.retries": {{ .Values.s3Sink.s3PartRetries }},
+      "s3.part.size": {{ .Values.s3Sink.s3PartSize }},
+      "s3.retry.backoff.ms": {{ .Values.s3Sink.s3RetryBackoffMs}},
+      "behavior.on.null.values": {{ .Values.s3Sink.behaviorOnNullValues | quote }},
+      "schema.cache.config": {{ .Values.s3Sink.schemaCacheConfig }},
+      "storage.class": "io.confluent.connect.s3.storage.S3Storage",
+      "store.url": {{ .Values.s3Sink.storeUrl | quote }},
+      "tasks.max": {{ .Values.s3Sink.tasksMax }},
+      "timestamp.extractor": {{ .Values.s3Sink.timestampExtractor | quote }},
+      "timestamp.field": {{ .Values.s3Sink.timestampField | quote }},
+      "timezone": {{ .Values.s3Sink.timezone  | quote }},
+      "topics.regex": {{ .Values.s3Sink.topicsRegex | quote }},
+      "topics.dir": {{ .Values.s3Sink.topicsDir | quote }}
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-{{ .Values.s3Sink.name }}
+  labels:
+    app: kafka-connect-manager
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-connect-manager
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka-connect-manager
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: kafkaconnect
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy:  {{ .Values.image.pullPolicy }}
+        command:
+          - kafkaconnect
+          - create
+          - s3-sink
+          - --show-status
+          - /etc/s3-sink/s3-sink-config.json
+        env:
+          - name: AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: aws_access_key_id
+          - name: AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: aws_secret_access_key
+          - name: KAFKA_BROKER_URL
+            value: {{ .Values.env.kafkaBrokerUrl | quote }}
+          - name: KAFKA_CONNECT_URL
+            value: {{ .Values.env.kafkaConnectUrl | quote }}
+        volumeMounts:
+        - name: s3-sink
+          mountPath: /etc/s3-sink
+      volumes:
+      - name: s3-sink
+        configMap:
+          name: {{ .Values.s3Sink.name }}
+{{- end }}

@@ -1,0 +1,152 @@
+# Default values for kafka-connect-manager.
+# See also https://kafka-connect-manager.lsst.io
+image:
+  repository: lsstsqre/kafkaconnect
+  tag: 0.9.3
+  pullPolicy: Always
+
+influxdbSink:
+  # Repeat this block to create multiple instances of this connector.
+  influxdb-sink:
+    # -- Name of the connector instance to create.
+    name: influxdb-sink
+    # -- Whether this connector instance is deployed.
+    enabled: false
+    # -- InfluxDB URL, can be internal to the cluster.
+    connectInfluxUrl: "http://sasquatch.influxdb:8086"
+    # -- InfluxDB database to write to.
+    connectInfluxDb: "efd"
+    # -- Number of KafkaConnect tasks.
+    tasksMax: 1
+    # -- Regex to select topics from Kafka.
+    topicRegex: "lsst.sal.*"
+    # -- If autoUpdate is enabled, check for new kafka topics.
+    autoUpdate: true
+    # -- The interval, in milliseconds, to check for new topics and update the connector.
+    checkInterval: "15000"
+    # -- Regex to exclude topics from the list of selected topics from Kafka.
+    excludedTopicRegex: ""
+    # -- Timestamp field to be used as the InfluxDB time, if not specified `sys_time()` the current timestamp.
+    timestamp: private_efdStamp
+    # -- Error policy.
+    connectInfluxErrorPolicy: THROW
+    # -- The maximum number of times a message is retried.
+    connectInfluxMaxRetries: "10"
+    # -- The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`.
+    connectInfluxRetryInterval: "60000"
+    # -- Enables the output for how many records have been processed.
+    connectProgressEnabled: false
+
+# The s3Sink connector assumes Parquet format with Snappy compression
+# and a time based partitioner.
+s3Sink:
+  # -- Whether the Amazon S3 Sink connector is deployed.
+  enabled: false
+  # -- Name of the connector to create.
+  name: s3-sink
+  # -- s3 bucket name. The bucket must already exist at the s3 provider.
+  s3BucketName: ""
+  # -- s3 region
+  s3Region: "us-east-1"
+  # -- s3 schema compatibility
+  s3SchemaCompatibility: "NONE"
+  # -- Maximum number of retry attempts for failed requests. Zero means no retries.
+  s3PartRetries: 3
+  # -- The Part Size in S3 Multi-part Uploads. Valid Values: [5242880,…,2147483647]
+  s3PartSize: 5242880
+  # -- How long to wait in milliseconds before attempting the first retry of a failed S3 request.
+  s3RetryBackoffMs: 200
+  # -- The size of the schema cache used in the Avro converter.
+  schemaCacheConfig: 5000
+  # -- How to handle records with a null value (for example, Kafka tombstone records).
+  # Valid options are ignore and fail.
+  behaviorOnNullValues: "fail"
+  # -- Top level directory to store the data ingested from Kafka.
+  topicsDir: "topics"
+  # -- Number of records written to store before invoking file commits.
+  flushSize: "1000"
+  # -- The time interval in milliseconds to invoke file commits. Set to 10 minutes by default.
+  rotateIntervalMs: "600000"
+  # -- The duration of a partition in milliseconds, used by TimeBasedPartitioner.
+  # Default is 1h for an hourly based partitioner.
+  partitionDurationMs: "3600000"
+  # -- Pattern used to format the path in the S3 object name.
+  pathFormat: "'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"
+  # -- Number of Kafka Connect tasks.
+  tasksMax: 1
+  # -- Regex to select topics from Kafka.
+  topicsRegex: ".*"
+  # -- The interval, in milliseconds, to check for new topics and update the connector.
+  checkInterval: "15000"
+  # -- Regex to exclude topics from the list of selected topics from Kafka.
+  excludedTopicRegex: ""
+  # -- The locale to use when partitioning with TimeBasedPartitioner.
+  locale: "en-US"
+  # -- The timezone to use when partitioning with TimeBasedPartitioner.
+  timezone: "UTC"
+  # -- The extractor determines how to obtain a timestamp from each record.
+  timestampExtractor: "Record"
+  # -- The record field to be used as timestamp by the timestamp extractor.
+  # Only applies if timestampExtractor is set to RecordField.
+  timestampField: ""
+  # -- The object storage connection URL, for non-AWS s3 providers.
+  storeUrl: ""
+
+mirrorMaker2:
+  # -- Whether the MirrorMaker 2 connectors (heartbeat, checkpoint and mirror-source) are deployed.
+  enabled: false
+  # -- Name od the connector to create.
+  name: "replicator"
+  # -- Source Kafka cluster.
+  sourceClusterBootstrapServers: "localhost:31090"
+  # -- Alias for the source cluster. The remote topic name is prefixed by this value.
+  # Use an empty string to preserve the name of the source topic in the destination cluster.
+  sourceClusterAlias: "src"
+  # -- Separator used to format the remote topic name.
+  # Use an empty string if sourceClusterAlias is empty.
+  replicationPolicySeparator: "."
+  # -- Destination Kafka cluster.
+  targetClusterBootstrapServers: "localhost:31090"
+  # -- Name of the destination cluster.
+  targetClusterAlias: "destn"
+  # -- Regex for selecting topics.
+  # Comma-separated lists are also supported.
+  topicRegex: ".*"
+  # -- Number of Kafka Connect tasks.
+  tasksMax: 1
+  # -- Whether to monitor source cluster ACLs for changes.
+  syncTopicAclsEnabled: false
+
+jdbcSink:
+  # -- Whether the JDBC Sink connector is deployed.
+  enabled: false
+  # -- Name of the connector to create.
+  name: "postgres-sink"
+  # -- Database connection URL.
+  connectionUrl: "jdbc:postgresql://localhost:5432/mydb"
+  # -- Regex for selecting topics.
+  topicRegex: ".*"
+  # -- Number of Kafka Connect tasks.
+  tasksMax: "10"
+  # -- A format string for the destination table name.
+  tableNameFormat: "${topic}"
+  # -- Whether to automatically create the destination table.
+  autoCreate: "true"
+  # -- Whether to automatically add columns in the table schema.
+  autoEvolve: "false"
+  # -- Specifies how many records to attempt to batch together for insertion into the destination table.
+  batchSize: "3000"
+  # -- The insertion mode to use. Supported modes are: `insert`, `upsert` and `update`.
+  insertMode: "insert"
+  # -- The maximum number of times to retry on errors before failing the task.
+  maxRetries: "10"
+  # -- The time in milliseconds to wait following an error before a retry attempt is made.
+  retryBackoffMs: "3000"
+  # -- Name of the JDBC timezone that should be used in the connector when inserting time-based values.
+  dbTimezone: "UTC"
+
+env:
+  # -- Kafka broker URL.
+  kafkaBrokerUrl: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- Kafka connnect URL.
+  kafkaConnectUrl: "http://sasquatch-connect-api.sasquatch:8083"
