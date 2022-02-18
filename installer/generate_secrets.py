@@ -139,6 +139,7 @@ class SecretGenerator:
         self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
         self._set_generated("postgres", "vo-cutouts_password", secrets.token_hex(32))
+        self._set_generated("postgres", "narrativelog_password", secrets.token_hex(32))
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)

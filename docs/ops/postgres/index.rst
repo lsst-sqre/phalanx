@@ -36,4 +36,4 @@ A simple Argo CD sync is sufficient.
 .. toctree::
 
    recreate-pvc
-
+   add-database
