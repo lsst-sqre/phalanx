@@ -2,8 +2,8 @@ vo-cutouts:
   imagePullSecrets:
     - name: "pull-secret"
   ingress:
-    host: "data-int.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/vo-cutouts"
+    host: "data.lsst.cloud"
+  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/vo-cutouts"
 
   image:
     pullPolicy: "Always"
@@ -12,12 +12,12 @@ vo-cutouts:
   config:
     butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
-    gcsBucketUrl: "s3://rubin-cutouts-int-us-central1-output/"
+    gcsBucketUrl: "s3://rubin-cutouts-stable-us-central1-output/"
 
   cloudsql:
     enabled: true
-    instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
-    serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"
+    instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+    serviceAccount: "vo-cutouts@science-platform-stable-6994.iam.gserviceaccount.com"
 
   cutoutWorker:
     pullPolicy: "Always"
