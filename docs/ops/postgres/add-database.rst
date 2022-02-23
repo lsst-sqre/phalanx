@@ -102,18 +102,9 @@ just your new password.
   the instance you're working with from ``vault_keys.json``.
 * Set up your environment: ``export VAULT_ADDR=vault.lsst.codes ; export
   VAULT_FORMAT=json ; export VAULT_TOKEN=<retrieved-token>``
-* Run ``vault kv get secret/k8s_operator/<instance>/postgres >
-  pg_secret.json`` to retrieve the current secret to a local file.
-* Edit ``pg_secret.json`` (throw away the entire file except for the
-  contents of ``data.data``: those contents become the new top-level
-  object).
-* Create a new password; I generally use ``openssl rand -hex 32`` to
-  generate a suitable string.
-* Add the new password to ``pg_secret.json``
-* Run ``vault kv put secret/k8s_operator/<instance>/postgres
-  @pg_secret.json`` to insert the secret into Vault.
-* ``rm pg_secret.json`` so you don't leave the passwords hanging around
-  your machine.
+* Run ``vault kv patch secret/k8s_operator/<instance>/postgres
+  <database-name>_password=$(openssl rand -hex 32)`` to generate and
+  store a new random password.
 * Delete the ``postgres`` secret from the ``postgres`` namespace to
   force Vault Secrets Operator to recreate it.
 * Repeat for each environment where you need the new database.
