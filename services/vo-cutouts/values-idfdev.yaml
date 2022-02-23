@@ -7,7 +7,7 @@ vo-cutouts:
 
   image:
     pullPolicy: "Always"
-    tag: "tickets-DM-33513"
+    tag: "tickets-DM-33604"
 
   config:
     # There is currently no working Butler in data-dev, so this configuration
@@ -22,6 +22,10 @@ vo-cutouts:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "vo-cutouts@science-platform-dev-7696.iam.gserviceaccount.com"
+
+  cutoutWorker:
+    pullPolicy: "Always"
+    tag: "tickets-DM-33604"
 
 pull-secret:
   enabled: true
