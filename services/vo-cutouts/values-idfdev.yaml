@@ -24,8 +24,9 @@ vo-cutouts:
     serviceAccount: "vo-cutouts@science-platform-dev-7696.iam.gserviceaccount.com"
 
   cutoutWorker:
-    pullPolicy: "Always"
-    tag: "tickets-DM-33604"
+    image:
+      pullPolicy: "Always"
+      tag: "tickets-DM-33604"
 
 pull-secret:
   enabled: true

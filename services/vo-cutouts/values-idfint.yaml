@@ -20,8 +20,9 @@ vo-cutouts:
     serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"
 
   cutoutWorker:
-    pullPolicy: "Always"
-    tag: "tickets-DM-33604"
+    image:
+      pullPolicy: "Always"
+      tag: "tickets-DM-33604"
 
 pull-secret:
   enabled: true
