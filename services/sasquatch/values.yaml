@@ -99,6 +99,7 @@ kapacitor:
     KAPACITOR_SLACK_ENABLED: true
 
 telegraf:
+  # -- Allow network access to JupyterHub pod.
   podLabels:
     hub.jupyter.org/network-access-hub: "true"
   env:
@@ -114,7 +115,9 @@ telegraf:
   config:
     # -- Telegraf processor plugins.
     processors: {}
-    # -- Telegraf input plugins. Must be set.
+    # -- Telegraf input plugins.
+    # Collect JupyterHub Prometheus metrics by dedault.
+    # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
     inputs:
       - prometheus:
           urls:
