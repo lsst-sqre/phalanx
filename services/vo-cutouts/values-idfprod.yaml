@@ -5,10 +5,6 @@ vo-cutouts:
     host: "data.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/vo-cutouts"
 
-  image:
-    pullPolicy: "Always"
-    tag: "tickets-DM-33604"
-
   config:
     butlerRepository: "s3://butler-us-central1-dp01"
     databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
@@ -18,11 +14,6 @@ vo-cutouts:
     enabled: true
     instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
     serviceAccount: "vo-cutouts@science-platform-stable-6994.iam.gserviceaccount.com"
-
-  cutoutWorker:
-    image:
-      pullPolicy: "Always"
-      tag: "tickets-DM-33604"
 
 pull-secret:
   enabled: true

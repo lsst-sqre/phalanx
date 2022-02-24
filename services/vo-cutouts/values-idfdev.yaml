@@ -5,10 +5,6 @@ vo-cutouts:
     host: "data-dev.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/vo-cutouts"
 
-  image:
-    pullPolicy: "Always"
-    tag: "tickets-DM-33604"
-
   config:
     # There is currently no working Butler in data-dev, so this configuration
     # won't work.  Leaving it here anyway since it has the correct
@@ -22,11 +18,6 @@ vo-cutouts:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "vo-cutouts@science-platform-dev-7696.iam.gserviceaccount.com"
-
-  cutoutWorker:
-    image:
-      pullPolicy: "Always"
-      tag: "tickets-DM-33604"
 
 pull-secret:
   enabled: true
