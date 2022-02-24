@@ -15,23 +15,20 @@ cachemachine:
         "labels": {},
         "repomen": [
           {
+            "type": "RubinRepoMan",
+            "registry_url": "us-central1-docker.pkg.dev",
+            "repo": "rubin-shared-services-7e1c/sciplat/sciplat-lab",
+            "recommended_tag": "recommended",
+            "num_releases": 1,
+            "num_weeklies": 2,
+            "num_dailies": 3
+          },
+          {
             "type": "SimpleRepoMan",
             "images": [
               {
-                "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:exp_w_2022_06_pdf",
-                "name": "Experimental Weekly 2022_06 (PDF)"
-              },
-              {
-                "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:exp_w_2022_06_tickets-DM-33448",
-                "name": "Experimental Weekly 2022_06 (tickets/DM-33448)"
-              },
-              {
-                "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:exp_w_2022_05_shallowclone",
-                "name": "Experimental Weekly 2022_05 (shallowclone)"
-              },
-              {
-                "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:exp_w_2022_04_mamba",
-                "name": "Experimental Weekly 2022_04 (mamba)"
+                "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2021_49",
+                "name": "Weekly 2021_49"
               }
             ]
           }
