@@ -3,7 +3,7 @@ name: nublado2
 version: 1.0.0
 dependencies:
   - name: nublado2
-    version: 0.7.0
+    version: 0.8.1
     repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
