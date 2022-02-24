@@ -23,6 +23,7 @@ chronograf:
     JWKS_URL: https://data-dev.lsst.cloud/.well-known/jwks.json
     GENERIC_API_URL: https://data-dev.lsst.cloud/auth/userinfo
     GENERIC_SCOPES: openid
+    GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
 
