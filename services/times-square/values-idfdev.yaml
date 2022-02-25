@@ -1,0 +1,15 @@
+times-square:
+  image:
+    tag: tickets-DM-33627
+  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/times-square"
+  config:
+    environmentUrl: "https://data-dev.lsst.cloud"
+    databaseUrl: "postgresql://times-square@localhost/times-square"
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+    serviceAccount: "times-square@science-platform-dev-7696.iam.gserviceaccount.com"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
