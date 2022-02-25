@@ -50,6 +50,8 @@ tap:
   enabled: false
 tap_schema:
   enabled: false
+times_square:
+  enabled: false
 vault_secrets_operator:
   enabled: false
 vo_cutouts:
