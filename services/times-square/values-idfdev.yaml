@@ -1,6 +1,10 @@
 times-square:
   image:
     tag: tickets-DM-33627
+  ingress:
+    host: "data-dev.lsst.cloud"
+  imagePullSecrets:
+    - name: "pull-secret"
   vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/times-square"
   config:
     environmentUrl: "https://data-dev.lsst.cloud"
