@@ -5,6 +5,7 @@ mobu:
   ingress:
     host: "data.lsst.cloud"
 
+  cachemachineImagePolicy: "desired"
   environmentUrl: "https://data.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/mobu"
 
