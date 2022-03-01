@@ -99,6 +99,8 @@ kapacitor:
     KAPACITOR_SLACK_ENABLED: true
 
 telegraf:
+  podLabels:
+    hub.jupyter.org/network-access-hub: "true"
   env:
     # -- Telegraf password.
     - name: TELEGRAF_PASSWORD
