@@ -3,7 +3,7 @@ fqdn: data-int.lsst.cloud
 vault_path_prefix: secret/k8s_operator/data-int.lsst.cloud
 
 alert_stream_broker:
-  enabled: true
+  enabled: false
 cachemachine:
   enabled: true
 cert_issuer:
