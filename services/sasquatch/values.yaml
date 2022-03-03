@@ -36,6 +36,7 @@ influxdb:
       trace_logging_enabled: true
     http:
       enabled: true
+      flux_enabled: true
       auth_enabled: true
       max_row_limit: 0
     coordinator:
