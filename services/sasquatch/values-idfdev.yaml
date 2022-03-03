@@ -4,6 +4,9 @@ influxdb:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
+  config:
+    http:
+      flux-enabled: true
 
 kafka-connect-manager:
   influxdbSink:
