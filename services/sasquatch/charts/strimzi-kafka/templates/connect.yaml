@@ -6,7 +6,7 @@ metadata:
     # Use Connect REST API to configure connectors
     strimzi.io/use-connector-resources: "false"
 spec:
-  version: {{ .Values.kafka.version | quote }}
+  image:  {{ .Values.connect.image | quote }}
   replicas: {{ .Values.connect.replicas }}
   bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
   tls:
