@@ -23,7 +23,7 @@ SQuaRE telemetry data service.
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.9.3"}` | Chronograf image tag. |
 | chronograf.ingress | object | disabled | Chronograf ingress configuration. |
 | chronograf.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
-| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log_queries_after":"15s","max_concurrent_queries":10,"query_timeout":"900s","write_timeout":"60s"},"data":{"cache_max_memory_size":0,"trace_logging_enabled":true,"wal_fsync_delay":"100ms"},"http":{"auth_enabled":true,"enabled":true,"max_row_limit":0}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":10,"query-timeout":"900s","write-timeout":"60s"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
 | influxdb.initScripts | object | `{"enabled":true,"scripts":{"init.iql":"CREATE DATABASE \"telegraf\" WITH DURATION 30d REPLICATION 1 NAME \"rp_30d\"\n\n"}}` | InfluxDB Custom initialization scripts. |
