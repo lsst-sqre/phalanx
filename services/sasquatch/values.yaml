@@ -31,19 +31,19 @@ influxdb:
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
-      cache_max_memory_size: 0
-      wal_fsync_delay: "100ms"
-      trace_logging_enabled: true
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
     http:
       enabled: true
       flux-enabled: true
-      auth_enabled: true
-      max_row_limit: 0
+      auth-enabled: true
+      max-row-limit: 0
     coordinator:
-      write_timeout: "60s"
-      max_concurrent_queries: 10
-      query_timeout: "900s"
-      log_queries_after: "15s"
+      write-timeout: "60s"
+      max-concurrent-queries: 10
+      query-timeout: "900s"
+      log-queries-after: "15s"
     continuous_queries:
       enabled: false
   # -- InfluxDB Custom initialization scripts.
