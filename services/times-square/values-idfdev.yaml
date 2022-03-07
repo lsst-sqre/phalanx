@@ -17,3 +17,8 @@ times-square:
 pull-secret:
   enabled: true
   path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
+times-square-ui:
+  image:
+    tag: tickets-dm-33930
+  ingress:
+    host: "data-dev.lsst.cloud"
