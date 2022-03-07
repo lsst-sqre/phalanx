@@ -5,6 +5,6 @@ dependencies:
   - name: times-square
     version: 0.1.8
     repository: https://lsst-sqre.github.io/charts/
-  - name: pull-secret
-    version: 0.1.2
+  - name: times-square-ui
+    version: 0.1.0-alpha.1
     repository: https://lsst-sqre.github.io/charts/
