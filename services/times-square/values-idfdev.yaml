@@ -18,3 +18,4 @@ times-square-ui:
     tag: tickets-dm-33930
   ingress:
     host: "data-dev.lsst.cloud"
+    path: "/ts-ui"
