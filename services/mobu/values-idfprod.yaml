@@ -66,6 +66,14 @@ mobu:
         max_executions: 1
         working_directory: "notebooks/tutorial-notebooks"
       restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "systemtest08"
+          uidnumber: 74775
+      scopes: ["read:tap"]
+      business: "TAPQueryRunner"
+      restart: true
 
 pull-secret:
   enabled: true

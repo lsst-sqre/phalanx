@@ -5,11 +5,6 @@ mobu:
   ingress:
     host: "data-int.lsst.cloud"
 
-  image:
-    repository: "ghcr.io/lsst-sqre/mobu"
-    pullPolicy: "Always"
-    tag: "tickets-DM-33813"
-
   cachemachineImagePolicy: "desired"
   environmentUrl: "https://data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/mobu"
