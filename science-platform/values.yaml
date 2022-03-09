@@ -34,6 +34,8 @@ postgres:
   enabled: false
 sasquatch:
   enabled: false
+telegraf:
+  enabled: false
 semaphore:
   enabled: false
 sherlock:
