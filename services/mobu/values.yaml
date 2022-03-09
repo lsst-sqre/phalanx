@@ -1,0 +1,80 @@
+# Default values for mobu.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Autostart specification. Must be a list of mobu flock specifications.
+# Each flock listed will be automatically started when mobu is started.
+autostart: []
+
+# -- Cachemachine image policy.  Must be one of `desired` or
+# `available`.  Determines whether cachemachine reports the images it
+# has or the ones it wants.  Should be `desired` in environments with
+# image streaming enabled (e.g. IDF).
+cachemachineImagePolicy: "available"
+
+# -- Base URL used to find other services in the environment such as Nublado
+# and TAP
+# @default -- None, must be set
+environmentUrl: ""
+
+# -- Path to the Vault secret containing the Slack alert hook
+# @default -- None, must be set
+vaultSecretsPath: ""
+
+image:
+  # -- mobu image to use
+  repository: "ghcr.io/lsst-sqre/mobu"
+
+  # -- Pull policy for the mobu image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of mobu image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+service:
+  # -- Type of service to create
+  type: "ClusterIP"
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Whether to create an ingress
+  enabled: true
+
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=exec:admin"
+
+  # -- Hostname for the ingress
+  # @default -- None, must be set if the ingress is enabled
+  host: ""
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Configures TLS for the ingress if needed. If multiple ingresses share
+  # the same hostname, only one of them needs a TLS configuration.
+  tls: []
+
+# -- Resource limits and requests for the mobu frontend pod
+resources: {}
+
+# -- Annotations for the mobu frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the mobu frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the mobu frontend pod
+tolerations: []
+
+# -- Affinity rules for the mobu frontend pod
+affinity: {}

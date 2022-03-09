@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "mobu.fullname" . }}
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "mobu.selectorLabels" . | nindent 6 }}
+  serviceName: "mobu"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "mobu.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: "ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "ALERT_HOOK"
+            {{- if .Values.autostart }}
+            - name: "AUTOSTART"
+              value: "/etc/mobu/autostart.yaml"
+            {{- end }}
+            - name: "CACHEMACHINE_IMAGE_POLICY"
+              value: {{ .Values.cachemachineImagePolicy }}
+            - name: "ENVIRONMENT_URL"
+              value: {{ .Values.environmentUrl }}
+            - name: "GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-gafaelfawr-token
+                  key: "token"
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/mobu/flocks"
+              port: "http"
+            timeoutSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.autostart }}
+            - name: "autostart"
+              mountPath: "/etc/mobu"
+              readOnly: true
+            {{- end }}
+            - name: "tmp"
+              mountPath: "/tmp"
+      volumes:
+        {{- if .Values.autostart }}
+        - name: "autostart"
+          configMap:
+            name: {{ include "mobu.fullname" . }}-autostart
+        {{- end }}
+        - name: "tmp"
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

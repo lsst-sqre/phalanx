@@ -1,48 +1,47 @@
-mobu:
-  imagePullSecrets:
-    - name: "pull-secret"
+imagePullSecrets:
+  - name: "pull-secret"
 
-  ingress:
-    host: "data-int.lsst.cloud"
+ingress:
+  host: "data-int.lsst.cloud"
 
-  cachemachineImagePolicy: "desired"
-  environmentUrl: "https://data-int.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/mobu"
+cachemachineImagePolicy: "desired"
+environmentUrl: "https://data-int.lsst.cloud"
+vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/mobu"
 
-  autostart:
-    - name: "firefighter"
-      count: 1
-      users:
-        - username: "systemtest01"
-          uidnumber: 74768
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        repo_url: "https://github.com/SimonKrughoff/system-test.git"
-        repo_branch: "prod"
-        max_executions: 1
-      restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "systemtest02"
-          uidnumber: 74769
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        jupyter:
-          image_class: "latest-weekly"
-        repo_url: "https://github.com/lsst-sqre/system-test.git"
-        repo_branch: "prod"
-      restart: true
-    - name: "tap"
-      count: 1
-      users:
-        - username: "systemtest03"
-          uidnumber: 74770
-      scopes: ["read:tap"]
-      business: "TAPQueryRunner"
-      restart: true
+autostart:
+  - name: "firefighter"
+    count: 1
+    users:
+      - username: "systemtest01"
+        uidnumber: 74768
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/SimonKrughoff/system-test.git"
+      repo_branch: "prod"
+      max_executions: 1
+    restart: true
+  - name: "weekly"
+    count: 1
+    users:
+      - username: "systemtest02"
+        uidnumber: 74769
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      jupyter:
+        image_class: "latest-weekly"
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+    restart: true
+  - name: "tap"
+    count: 1
+    users:
+      - username: "systemtest03"
+        uidnumber: 74770
+    scopes: ["read:tap"]
+    business: "TAPQueryRunner"
+    restart: true
 
 pull-secret:
   enabled: true
