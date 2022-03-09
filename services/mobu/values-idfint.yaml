@@ -5,6 +5,11 @@ mobu:
   ingress:
     host: "data-int.lsst.cloud"
 
+  image:
+    repository: "ghcr.io/lsst-sqre/mobu"
+    pullPolicy: "Always"
+    tag: "tickets-DM-33813"
+
   cachemachineImagePolicy: "desired"
   environmentUrl: "https://data-int.lsst.cloud"
   vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/mobu"
@@ -34,6 +39,14 @@ mobu:
           image_class: "latest-weekly"
         repo_url: "https://github.com/lsst-sqre/system-test.git"
         repo_branch: "prod"
+      restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "systemtest03"
+          uidnumber: 74770
+      scopes: ["read:tap"]
+      business: "TAPQueryRunner"
       restart: true
 
 pull-secret:
