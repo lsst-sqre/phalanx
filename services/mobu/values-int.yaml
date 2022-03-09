@@ -1,13 +1,10 @@
-imagePullSecrets:
-  - name: "pull-secret"
-
 ingress:
   annotations:
     nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
   host: "lsst-lsp-int.ncsa.illinois.edu"
 
 environmentUrl: "https://lsst-lsp-int.ncsa.illinois.edu"
-vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/mobu"
+vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu"
 
 autostart:
   - name: "firefighter"
@@ -22,7 +19,3 @@ autostart:
       repo_branch: "NCSA-prod"
       max_executions: 1
     restart: true
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"

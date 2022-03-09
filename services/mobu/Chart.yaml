@@ -3,7 +3,3 @@ name: mobu
 version: 1.0.0
 description: Generate system load by pretending to be a random scientist
 home: https://github.com/lsst-sqre/mobu
-dependencies:
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/

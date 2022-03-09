@@ -1,11 +1,8 @@
-imagePullSecrets:
-  - name: "pull-secret"
-
 ingress:
   host: "rsp.lsst.ac.uk"
 
 environmentUrl: "https://rsp.lsst.ac.uk"
-vaultSecretsPath: "secret/k8s_operator/roe/mobu"
+vaultSecretsPath: "secret/k8s_operator/roe"
 
 autostart:
   - name: "firefighter"
@@ -33,7 +30,3 @@ autostart:
       repo_url: "https://github.com/lsst-sqre/system-test.git"
       repo_branch: "prod"
     restart: true
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/roe/pull-secret"

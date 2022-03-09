@@ -19,10 +19,8 @@ spec:
       labels:
         {{- include "mobu.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
