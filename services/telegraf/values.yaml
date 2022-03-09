@@ -1,0 +1,43 @@
+telegraf:
+  # -- Allow network access to JupyterHub pod.
+  podLabels:
+    hub.jupyter.org/network-access-hub: "true"
+  env:
+    # -- Telegraf password.
+    - name: TELEGRAF_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: telegraf
+          key: telegraf-password
+  service:
+    # -- Telegraf service.
+    enabled: false
+  config:
+    global_tags:
+      # -- Cluster name -- should be same as FQDN of RSP endpoint
+      # @default -- None, must be set
+      cluster: ""
+    # -- Telegraf processor plugins.
+    processors: {}
+    # -- Telegraf input plugins.
+    # Collect JupyterHub Prometheus metrics by dedault.
+    # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
+    inputs:
+      - prometheus:
+          urls:
+            - http://hub.nublado2:8081/nb/hub/metrics
+          # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
+          metric_version: 2
+    # -- Telegraf default output destination.
+    outputs:
+      - influxdb:
+          urls:
+            # Eventually change for Roundtable
+            - "https://data-dev.lst.cloud/influxdb"
+          database: "telegraf"
+          username: "telegraf"
+          password: "$TELEGRAF_PASSWORD"
+
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
+# @default -- None, must be set
+vaultSecretsPath: ""
