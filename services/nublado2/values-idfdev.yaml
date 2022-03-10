@@ -3,8 +3,8 @@ nublado2:
     hub:
       resources:
         requests:
-          cpu: 300m
-          memory: 512Mi
+          cpu: "2"
+          memory: 3Gi
     ingress:
       hosts: ["data-dev.lsst.cloud"]
       annotations:
