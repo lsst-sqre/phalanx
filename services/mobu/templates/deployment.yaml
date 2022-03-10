@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: {{ include "mobu.fullname" . }}
   labels:
@@ -9,7 +9,8 @@ spec:
   selector:
     matchLabels:
       {{- include "mobu.selectorLabels" . | nindent 6 }}
-  serviceName: "mobu"
+  strategy:
+    type: "Recreate"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
