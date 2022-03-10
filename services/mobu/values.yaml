@@ -1,0 +1,75 @@
+# Default values for mobu.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Autostart specification. Must be a list of mobu flock specifications.
+# Each flock listed will be automatically started when mobu is started.
+autostart: []
+
+# -- Cachemachine image policy.  Must be one of `desired` or
+# `available`.  Determines whether cachemachine reports the images it
+# has or the ones it wants.  Should be `desired` in environments with
+# image streaming enabled (e.g. IDF).
+cachemachineImagePolicy: "available"
+
+image:
+  # -- mobu image to use
+  repository: "ghcr.io/lsst-sqre/mobu"
+
+  # -- Pull policy for the mobu image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of mobu image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+service:
+  # -- Type of service to create
+  type: "ClusterIP"
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=exec:admin"
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+# -- Resource limits and requests for the mobu frontend pod
+resources: {}
+
+# -- Annotations for the mobu frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the mobu frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the mobu frontend pod
+tolerations: []
+
+# -- Affinity rules for the mobu frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+globals:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

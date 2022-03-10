@@ -1,0 +1,11 @@
+{{- if .Values.autostart -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mobu.fullname" . }}-autostart
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+data:
+  autostart.yaml: |
+    {{- toYaml .Values.autostart | nindent 4 }}
+{{- end }}
