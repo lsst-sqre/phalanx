@@ -33,7 +33,7 @@ telegraf:
       - influxdb:
           urls:
             # Eventually change for Roundtable
-            - "https://data-dev.lst.cloud/influxdb"
+            - "https://data-dev.lst.cloud/influxdb2"
           database: "telegraf"
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
