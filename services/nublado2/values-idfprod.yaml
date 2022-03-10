@@ -3,7 +3,7 @@ nublado2:
     hub:
       resources:
         requests:
-          cpu: "1"
+          cpu: "2"
           memory: 3Gi
     ingress:
       hosts: ["data.lsst.cloud"]
