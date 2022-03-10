@@ -19,23 +19,9 @@ spec:
       labels:
         {{- include "mobu.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           env:
             - name: "ALERT_HOOK"
               valueFrom:
@@ -49,12 +35,14 @@ spec:
             - name: "CACHEMACHINE_IMAGE_POLICY"
               value: {{ .Values.cachemachineImagePolicy }}
             - name: "ENVIRONMENT_URL"
-              value: {{ .Values.environmentUrl }}
+              value: {{ .Values.globals.baseUrl }}
             - name: "GAFAELFAWR_TOKEN"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
               containerPort: 8080
@@ -64,8 +52,16 @@ spec:
               path: "/mobu/flocks"
               port: "http"
             timeoutSeconds: 10
+          {{- with .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
           volumeMounts:
             {{- if .Values.autostart }}
             - name: "autostart"
@@ -74,6 +70,12 @@ spec:
             {{- end }}
             - name: "tmp"
               mountPath: "/tmp"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       volumes:
         {{- if .Values.autostart }}
         - name: "autostart"

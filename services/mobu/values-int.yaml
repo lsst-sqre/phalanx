@@ -1,11 +1,3 @@
-ingress:
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
-  host: "lsst-lsp-int.ncsa.illinois.edu"
-
-environmentUrl: "https://lsst-lsp-int.ncsa.illinois.edu"
-vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu"
-
 autostart:
   - name: "firefighter"
     count: 1

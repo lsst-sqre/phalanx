@@ -1,5 +1,0 @@
-ingress:
-  host: "red-five.lsst.codes"
-
-environmentUrl: "https://red-five.lsst.codes"
-vaultSecretsPath: "secret/k8s_operator/red-five.lsst.codes"

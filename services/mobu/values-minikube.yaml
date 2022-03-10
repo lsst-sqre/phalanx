@@ -1,5 +1,0 @@
-ingress:
-  host: "minikube.lsst.codes"
-
-environmentUrl: "https://minikube.lsst.codes"
-vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes"

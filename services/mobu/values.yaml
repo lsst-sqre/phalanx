@@ -16,15 +16,6 @@ autostart: []
 # image streaming enabled (e.g. IDF).
 cachemachineImagePolicy: "available"
 
-# -- Base URL used to find other services in the environment such as Nublado
-# and TAP
-# @default -- None, must be set
-environmentUrl: ""
-
-# -- Path to the Vault secret containing the Slack alert hook
-# @default -- None, must be set
-vaultSecretsPath: ""
-
 image:
   # -- mobu image to use
   repository: "ghcr.io/lsst-sqre/mobu"
@@ -47,22 +38,11 @@ service:
   port: 80
 
 ingress:
-  # -- Whether to create an ingress
-  enabled: true
-
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=exec:admin"
 
-  # -- Hostname for the ingress
-  # @default -- None, must be set if the ingress is enabled
-  host: ""
-
   # -- Additional annotations to add to the ingress
   annotations: {}
-
-  # -- Configures TLS for the ingress if needed. If multiple ingresses share
-  # the same hostname, only one of them needs a TLS configuration.
-  tls: []
 
 # -- Resource limits and requests for the mobu frontend pod
 resources: {}
@@ -78,3 +58,18 @@ tolerations: []
 
 # -- Affinity rules for the mobu frontend pod
 affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+globals:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

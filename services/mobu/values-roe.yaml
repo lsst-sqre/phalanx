@@ -1,9 +1,3 @@
-ingress:
-  host: "rsp.lsst.ac.uk"
-
-environmentUrl: "https://rsp.lsst.ac.uk"
-vaultSecretsPath: "secret/k8s_operator/roe"
-
 autostart:
   - name: "firefighter"
     count: 1
