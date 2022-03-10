@@ -2,5 +2,19 @@ telegraf:
   config:
     global_tags:
       cluster: data-dev.lsst.cloud
-
+    outputs:
+      # ARGH Helm and YAML lists not merging.
+      - influxdb_v2:
+          urls:
+            - "https://data-dev-monitoring.lsst.cloud/"
+          bucket: "telegraf"
+          token: "$INFLUX_TOKEN"
+          organization: "lizard"
+          # Should be less silly, I guess.
+    inputs:
+      - prometheus:
+          urls:
+            - "https://data-dev.lsst.cloud/nb/hub/metrics"
+          metric_version: 2
+        
 vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud

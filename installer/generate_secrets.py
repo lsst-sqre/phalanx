@@ -52,6 +52,8 @@ class SecretGenerator:
         self._argocd()
         self._portal()
         self._vo_cutouts()
+        self._influxdb2()
+        self._telegraf()
 
         self.input_field("cert-manager", "enabled", "Use cert-manager? (y/n):")
         use_cert_manager = self.secrets["cert-manager"]["enabled"]
@@ -250,6 +252,17 @@ class SecretGenerator:
         )
 
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
+
+    def _influxdb2(self):
+        set._set_generated("influxdb2", "admin-password",
+                           secrets.token_hex(16))
+        set._set_generated("influxdb2", "admin-token", secrets.token_hex(16))
+
+    def _telegraf(self):
+        # Note that this will be *wrong* but will give us the correct
+        # structure, anyway.  Whoever is administering the central InfluxDB2
+        # should make a token for each telegraf satellite.
+        self._set_generated("telegraf", "influx-token", secrets.token_hex(16))
 
     def _portal(self):
         pw = secrets.token_hex(32)

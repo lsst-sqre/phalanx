@@ -2,5 +2,13 @@ telegraf:
   config:
     global_tags:
       cluster: minikube.lsst.codes
+    outputs:
+      - influxdb_v2:
+          urls:
+            - "https://data-dev-monitoring.lsst.cloud/"
+          bucket: "telegraf"
+          token: "$INFLUX_TOKEN"
+          organization: "lizard"
+          # Should be less silly, I guess.
 
 vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes

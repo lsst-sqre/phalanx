@@ -1,48 +1,33 @@
 influxdb2:
-  # -- InfluxDB image tag.
-  image:
-    tag: "2.0.9"
-  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
-  setDefaultUser:
-    enabled: true
-    user:
-      existingSecret: influxdb2
-  # -- InfluxDB ingress configuration.
-  # @default -- disabled
+  # -- InfluxDB2 admin user; uses admin-password/admin-token keys from
+  # secret.
+  adminUser:
+    # Too silly?
+    organization: "lizard"
+    bucket: "telegraf"
+    retention_policy: "30d"
+    existingSecret: influxdb2
+  # -- InfluxDB2 ingress configuration.
   ingress:
+    # @default -- False
     enabled: false
-    tls: false
+    tls: true
+    secretName: influxdb2-tls
+    # InfluxDB2 can't run behind a routed path--it must be on the root.
+    # @default -- None, must be set, must not be the same as RSP ingress.
     hostname: ""
+    # Note that this requires a CNAME
+    # from: _acme_challenge.<hostname>.<domain>
+    # to: _acme_challenge.tls.<domain>
+    # cf https://phalanx.lsst.io/ops/cert-issuer/bootstrapping.html
+    ingressClassName: nginx
     annotations:
       kubernetes.io/ingress.class: "nginx"
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
-    path: /influxdb2(/|$)(.*)
-  # -- Override InfluxDB configuration.
-  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
-  config:
-    data:
-      cache-max-memory-size: 0
-      wal-fsync-delay: "100ms"
-      trace-logging-enabled: true
-    http:
-      enabled: true
-      flux-enabled: true
-      auth-enabled: true
-      max-row-limit: 0
-    coordinator:
-      write-timeout: "60s"
-      max-concurrent-queries: 10
-      query-timeout: "900s"
-      log-queries-after: "15s"
-    continuous_queries:
-      enabled: false
-  # -- InfluxDB Custom initialization scripts.
-  initScripts:
-    enabled: true
-    scripts:
-      init.iql: |+
-        CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+    path: /
+    pathType: Prefix
 
-# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/influxdb2`)
 # @default -- None, must be set
 vaultSecretsPath: ""
