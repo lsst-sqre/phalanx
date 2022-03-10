@@ -1,0 +1,29 @@
+{{- if .Values.influxdb2.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: influxdb2
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: influxdb2
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: influxdb2
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/influxdb2
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}

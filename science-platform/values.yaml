@@ -12,6 +12,8 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: false
+influxdb2:
+  enabled: false
 ingress_nginx:
   enabled: false
 mobu:

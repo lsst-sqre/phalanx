@@ -1,0 +1,48 @@
+influxdb2:
+  # -- InfluxDB image tag.
+  image:
+    tag: "2.0.9"
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: influxdb2
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    path: /influxdb2(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
+    http:
+      enabled: true
+      flux-enabled: true
+      auth-enabled: true
+      max-row-limit: 0
+    coordinator:
+      write-timeout: "60s"
+      max-concurrent-queries: 10
+      query-timeout: "900s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+  # -- InfluxDB Custom initialization scripts.
+  initScripts:
+    enabled: true
+    scripts:
+      init.iql: |+
+        CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
+# @default -- None, must be set
+vaultSecretsPath: ""

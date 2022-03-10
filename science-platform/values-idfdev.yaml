@@ -16,6 +16,8 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: true
+influxdb2:
+  enabled: true
 mobu:
   enabled: true
 moneypenny:

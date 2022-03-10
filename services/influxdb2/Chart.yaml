@@ -1,0 +1,8 @@
+apiVersion: v2
+name: influxdb2
+version: 1.0.0
+description: SQuaRE packaging of InfluxDB2 time-series database
+dependencies:
+  - name: influxdb2
+    version: 2.0.9
+    repository: https://helm.influxdata.com/
