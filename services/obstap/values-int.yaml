@@ -1,42 +1,42 @@
 cadc-tap-postgres:
-  pull_secret: 'pull-secret'
-  tag: "1.1"
-  host: "lsst-lsp-int.ncsa.illinois.edu"
+  fullnameOverride: "obstap"
 
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap'
-
+  imagePullSecrets:
+    - name: "pull-secret"
   ingress:
-    authenticated_annotations:
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=read:tap&auth_type=basic"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        auth_request_set $auth_token $upstream_http_x_auth_request_token;
-        proxy_set_header Authorization "Bearer $auth_token";
+    host: "lsst-lsp-int.ncsa.illinois.edu"
+  vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap"
 
   resources:
     requests:
       cpu: 2.0
-      memory: 2G
+      memory: "2G"
     limits:
       cpu: 8.0
-      memory: 16G
+      memory: "16G"
 
-  aux_resources:
-    requests:
-      cpu: 0.25
-      memory: 1G
-    limits:
-      cpu: 2.0
-      memory: 4G
+  db:
+    resources:
+      requests:
+        cpu: 0.25
+        memory: "1G"
+      limits:
+        cpu: 2.0
+        memory: "4G"
 
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
+  uws:
+    resources:
+      requests:
+        cpu: 0.25
+        memory: "1G"
+      limits:
+        cpu: 2.0
+        memory: "4G"
+
+  config:
+    gcsBucket: "async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret
+  path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"
