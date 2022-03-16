@@ -1,4 +1,0 @@
-strimzi-kafka-operator:
-  watchNamespaces:
-    - "alert-stream-broker"
-  logLevel: "INFO"
