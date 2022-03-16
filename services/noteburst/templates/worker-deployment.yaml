@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "noteburst.fullname" . }}-worker
+  labels:
+    {{- include "noteburst.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.config.worker.workerCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "noteburst.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/worker-configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "noteburst.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "noteburst.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["arq"]
+          args: ["noteburst.worker.main.WorkerSettings"]
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "noteburst.fullname" . }}-worker
+          env:
+            - name: "NOTEBURST_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}-gafaelfawr-token
+                  key: "token"
+            - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
+              value: "/etc/noteburst/identities.yaml"
+          volumeMounts:
+            - name: "identities"
+              mountPath: "/etc/noteburst"
+              readOnly: true
+      volumes:
+        - name: "identities"
+          configMap:
+            name: {{ include "noteburst.fullname" . }}-worker-identities
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
