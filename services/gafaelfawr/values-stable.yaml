@@ -21,6 +21,10 @@ gafaelfawr:
     proxies:
       - "41.142.182.128/26"
 
+    # Support OpenID Connect clients like Chronograf.
+    oidcServer:
+      enabled: true
+
     # Use CILogon authentication.
     cilogon:
       clientId: "cilogon:/client_id/7ae419868b97e81644ced9886ffbcec"
