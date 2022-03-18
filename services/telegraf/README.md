@@ -6,17 +6,17 @@ SQuaRE telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.14 |
+| https://helm.influxdata.com/ | telegraf | 1.8.17 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | telegraf.config.global_tags.cluster | string | `""` |  |
-| telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["http://hub.nublado2:8081/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by dedault. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
-| telegraf.config.outputs | list | `[{"influxdb":{"database":"telegraf","password":"$TELEGRAF_PASSWORD","urls":["https://data-dev.lst.cloud/influxdb"],"username":"telegraf"}}]` | Telegraf default output destination. |
+| telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["https://${telegraf.config.global_tags.cluster}/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by default. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
+| telegraf.config.outputs | list | `[{"influxdb_v2":{"bucket":"telegraf","organization":"lizard","token":"$INFLUX_TOKEN","urls":["https://roundtable-monitoring.lsst.cloud"]}}]` | Telegraf default output destination. |
 | telegraf.config.processors | object | `{}` | Telegraf processor plugins. |
-| telegraf.env[0] | object | `{"name":"TELEGRAF_PASSWORD","valueFrom":{"secretKeyRef":{"key":"telegraf-password","name":"telegraf"}}}` | Telegraf password. |
+| telegraf.env[0] | object | `{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"influx-token","name":"telegraf"}}}` | Token to communicate with Influx |
 | telegraf.podLabels | object | `{"hub.jupyter.org/network-access-hub":"true"}` | Allow network access to JupyterHub pod. |
 | telegraf.service.enabled | bool | `false` | Telegraf service. |
 | vaultSecretsPath | string | None, must be set | Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`) |
