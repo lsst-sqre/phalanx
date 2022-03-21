@@ -1,5 +1,9 @@
 exposurelog:
-  pull_secret: pull-secret
+  imagePullSecrets:
+    - name: pull-secret
+  ingress:
+    enabled: true
+    host: summit-lsp.lsst.codes
 
   site_id: summit
   nfs_path_1: /repo/LSSTComCam  # Mounted as /volume_1
@@ -9,20 +13,6 @@ exposurelog:
   nfs_path_2: /repo/LATISS  # Mounted as /volume_2
   nfs_server_2: atarchiver.cp.lsst.org
   butler_uri_2: /volume_2
-
-  ingress:
-    enabled: true
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: summit-lsp.lsst.codes
-        paths:
-          - /exposurelog
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
 
 vault_path: secret/k8s_operator/summit-lsp.lsst.codes/postgres
 
