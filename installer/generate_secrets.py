@@ -258,6 +258,7 @@ class SecretGenerator:
             "influx-token",
             "Token for communicating with monitoring InfluxDB2 instance",
         )
+        self._set("telegraf", "org-id", "square")
 
     def _portal(self):
         pw = secrets.token_hex(32)
