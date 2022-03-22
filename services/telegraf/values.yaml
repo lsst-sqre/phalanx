@@ -32,11 +32,10 @@ telegraf:
     outputs:
       - influxdb_v2:
           urls:
-            - "https://roundtable-monitoring.lsst.cloud"
-          bucket: "telegraf"
+            - "https://monitoring.lsst.codes"
+          bucket: "monitoring"
           token: "$INFLUX_TOKEN"
-          organization: "lizard"
-          # Should be less silly, I guess.
+          organization: "square"
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
 # @default -- None, must be set

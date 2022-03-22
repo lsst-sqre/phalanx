@@ -2,13 +2,11 @@ telegraf:
   config:
     global_tags:
       cluster: minikube.lsst.codes
-    outputs:
-      - influxdb_v2:
+    inputs:
+      - prometheus:
+          # Must specify metric_version too, because YAML lists don't merge
           urls:
-            - "https://data-dev-monitoring.lsst.cloud/"
-          bucket: "telegraf"
-          token: "$INFLUX_TOKEN"
-          organization: "lizard"
-          # Should be less silly, I guess.
+            - "https://minikube.lsst.codes/nb/hub/metrics"
+          metric_version: 2
 
 vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes
