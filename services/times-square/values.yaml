@@ -1,0 +1,33 @@
+times-square:
+
+  fullnameOverride: times-square
+
+  image:
+    tag: "tickets-DM-34030"
+
+    pullPolicy: "IfNotPresent"
+
+times-square-ui:
+
+  fullnameOverride: times-square-ui
+
+  image:
+    tag: "tickets-DM-34030"
+
+    pullPolicy: "IfNotPresent"
+
+# Global parameters will be set by parameters injected via the Argo CD
+# Application resource and should not be set in the individual environment
+# values files.
+globals:
+  # -- Base URL for the environment
+  # @default -- Set by times-square Argo CD Application
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by times-square Argo CD Application
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by times-square Argo CD Application
+  vaultSecretsPathPrefix: ""

@@ -1,0 +1,91 @@
+# Default values for times-square-ui.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the times-square-ui deployment
+  repository: ghcr.io/lsst-sqre/times-square-ui
+
+  # -- Pull policy for the times-square-ui image
+  pullPolicy: Always
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for the times-square-ui deployment pod
+podAnnotations: {}
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 8080
+
+ingress:
+  # -- Create an ingress resource
+  enabled: true
+
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=exec:notebook&auth_type=basic"
+
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path type for the ingress rule
+  pathType: ImplementationSpecific
+
+  # -- URL path to dispatch to the times-square-ui deployment pod
+  path: "/times-square"
+
+# -- Resource limits and requests for the times-square-ui deployment pod
+resources: {}
+
+autoscaling:
+  # -- Enable autoscaling of times-square-ui deployment
+  enabled: false
+
+  # -- Minimum number of times-square-ui deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of times-square-ui deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of times-square-ui deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Node selection rules for the times-square-ui deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the times-square-ui deployment pod
+tolerations: []
+
+# -- Affinity rules for the times-square-ui deployment pod
+affinity: {}
+
+# Configurations for the times-square-ui application
+config:
+  # -- Name, used in the HTML header
+  siteName: "Times Square"
+
+  # -- Description, used in HTML metadata
+  siteDescription: "Times Square hosts Jupyter Notebooks that are rendered on the fly on the Rubin Science Platform."
+
+  # -- Semaphore API URL path (default is no Semaphore integration)
+  semaphorePath: null
+
+  # -- Times Square API URL path
+  timesSquareApiPath: "/times-square/api"
