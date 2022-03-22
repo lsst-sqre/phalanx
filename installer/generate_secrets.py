@@ -52,6 +52,7 @@ class SecretGenerator:
         self._argocd()
         self._portal()
         self._vo_cutouts()
+        self._telegraf()
 
         self.input_field("cert-manager", "enabled", "Use cert-manager? (y/n):")
         use_cert_manager = self.secrets["cert-manager"]["enabled"]
@@ -250,6 +251,14 @@ class SecretGenerator:
         )
 
         self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
+
+    def _telegraf(self):
+        self.input_field(
+            "telegraf",
+            "influx-token",
+            "Token for communicating with monitoring InfluxDB2 instance",
+        )
+        self._set("telegraf", "org-id", "square")
 
     def _portal(self):
         pw = secrets.token_hex(32)

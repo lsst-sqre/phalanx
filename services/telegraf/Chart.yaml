@@ -1,0 +1,8 @@
+apiVersion: v2
+name: telegraf
+version: 1.0.0
+description: SQuaRE telemetry collection service
+dependencies:
+  - name: telegraf
+    version: 1.8.17
+    repository: https://helm.influxdata.com/
