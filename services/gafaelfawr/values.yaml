@@ -133,14 +133,14 @@ config:
     # @default -- `43200` (30 days)
     expMinutes: 43200
 
-    influxdb:
-      # -- Whether to issue tokens for InfluxDB. If set to true,
-      # `influxdb-secret` must be set in the Gafaelfawr secret.
-      enabled: false
+  influxdb:
+    # -- Whether to issue tokens for InfluxDB. If set to true,
+    # `influxdb-secret` must be set in the Gafaelfawr secret.
+    enabled: false
 
-      # -- If set, force all InfluxDB tokens to have that username instead of
-      # the authenticated identity of the user requesting a token
-      username: ""
+    # -- If set, force all InfluxDB tokens to have that username instead of
+    # the authenticated identity of the user requesting a token
+    username: ""
 
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,

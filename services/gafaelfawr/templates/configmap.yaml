@@ -29,12 +29,14 @@ data:
       aud: "https://{{ .Values.globals.host }}"
       key_file: "/etc/gafaelfawr/secrets/signing-key"
       exp_minutes: {{ .Values.config.issuer.expMinutes }}
-      {{- if .Values.config.issuer.influxdb.enabled }}
-      influxdb_secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
+
+    {{- if .Values.config.influxdb.enabled }}
+    influxdb:
+      secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
       {{- if .Values.config.issuer.influxdb.username }}
-      influxdb_username: {{ .Values.config.issuer.influxdb.username | quote }}
+      username: {{ .Values.config.issuer.influxdb.username | quote }}
       {{- end }}
-      {{- end }}
+    {{- end }}
 
     {{- if .Values.config.github.clientId }}
 
