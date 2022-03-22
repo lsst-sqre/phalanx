@@ -3,7 +3,7 @@ name: times-square
 version: 1.0.0
 dependencies:
   - name: times-square
-    version: 0.1.8
+    version: 0.1.9
     repository: https://lsst-sqre.github.io/charts/
   - name: times-square-ui
     version: 0.1.0-alpha.2
