@@ -1,0 +1,140 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-config
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+data:
+  gafaelfawr.yaml: |
+    realm: {{ required "globals.host must be set" .Values.globals.host | quote }}
+    loglevel: {{ .Values.config.loglevel | quote }}
+    session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
+    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
+    redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    {{- if .Values.config.proxies }}
+    proxies:
+      {{- range $netblock := .Values.config.proxies }}
+      - {{ $netblock | quote }}
+      {{- end }}
+    {{- end }}
+    after_logout_url: {{ required "globals.baseUrl must be set" .Values.globals.baseUrl }}
+    {{- if .Values.config.errorFooter }}
+    error_footer: {{ .Values.config.errorFooter | quote }}
+    {{- end }}
+
+    issuer:
+      iss: "https://{{ .Values.globals.host }}"
+      key_id: "reissuer"
+      aud: "https://{{ .Values.globals.host }}"
+      key_file: "/etc/gafaelfawr/secrets/signing-key"
+      exp_minutes: {{ .Values.config.issuer.expMinutes }}
+      {{- if .Values.config.issuer.influxdb.enabled }}
+      influxdb_secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
+      {{- if .Values.config.issuer.influxdb.username }}
+      influxdb_username: {{ .Values.config.issuer.influxdb.username | quote }}
+      {{- end }}
+      {{- end }}
+
+    {{- if .Values.config.github.clientId }}
+
+    github:
+      client_id: {{ .Values.config.github.clientId | quote }}
+      client_secret_file: "/etc/gafaelfawr/secrets/github-client-secret"
+
+    {{- else if .Values.config.cilogon.clientId }}
+
+    oidc:
+      client_id: {{ .Values.config.cilogon.clientId | quote }}
+      client_secret_file: "/etc/gafaelfawr/secrets/cilogon-client-secret"
+      {{- if .Values.config.cilogon.test }}
+      login_url: "https://test.cilogon.org/authorize"
+      token_url: "https://test.cilogon.org/oauth2/token"
+      issuer: "https://test.cilogon.org"
+      {{- else }}
+      login_url: "https://cilogon.org/authorize"
+      token_url: "https://cilogon.org/oauth2/token"
+      issuer: "https://cilogon.org"
+      {{- end }}
+      {{- if .Values.config.cilogon.loginParams }}
+      login_params:
+        {{- range $key, $value := .Values.config.cilogon.loginParams }}
+        {{ $key }}: {{ $value | quote }}
+        {{- end }}
+      {{- end }}
+      {{- if .Values.config.cilogon.redirectUrl }}
+      redirect_url: {{ .Values.config.cilogon.redirectUrl | quote }}
+      {{- else }}
+      redirect_url: "{{ .Values.globals.baseUrl }}/login"
+      {{- end }}
+      scopes:
+        - "email"
+        - "org.cilogon.userinfo"
+      audience: {{ .Values.config.cilogon.clientId | quote }}
+      key_ids:
+        - "244B235F6B28E34108D101EAC7362C4E"
+
+    {{- else if .Values.config.oidc.clientId }}
+
+    oidc:
+      client_id: {{ .Values.config.oidc.clientId | quote }}
+      client_secret_file: "/etc/gafaelfawr/secrets/oidc-client-secret"
+      {{- if .Values.config.oidc.audience }}
+      audience: {{ .Values.config.oidc.audience | quote }}
+      {{- else }}
+      audience: {{ .Values.config.oidc.clientId | quote }}
+      {{- end }}
+      login_url: {{ required "config.oidc.loginUrl must be set" .Values.config.oidc.loginUrl | quote }}
+      token_url: {{ required "config.oidc.tokenUrl must be set" .Values.config.oidc.tokenUrl | quote }}
+      issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
+      {{- if .Values.config.oidc.redirectUrl }}
+      redirect_url: {{ .Values.config.oidc.redirectUrl | quote }}
+      {{- else }}
+      redirect_url: "{{ .Values.globals.baseUrl }}/login"
+      {{- end }}
+      scopes:
+        {{- with .Values.config.oidc.scopes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.config.oidc.loginParams }}
+      login_params:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+    {{- end }}
+
+    {{- if .Values.config.ldap.url }}
+    ldap:
+      url: {{ .Values.config.ldap.url | quote }}
+      base_dn: {{ required "config.ldap.baseDn must be set" .Values.config.ldap.baseDn | quote }}
+      group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
+      group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
+      {{- if .Values.config.uidBaseDn }}
+      uid_base_dn: {{ .Values.config.uidBaseDn | quote }}
+      uid_attr: {{ .Values.config.uidAttr | quote }}
+      {{- end }}
+    {{- end }}
+
+    {{- if .Values.config.oidcServer.enabled }}
+    oidc_server_secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
+    {{- end }}
+
+    known_scopes:
+      {{- range $key, $value := .Values.config.knownScopes }}
+      {{ $key | quote }}: {{ $value | quote }}
+      {{- end }}
+
+    group_mapping:
+      {{- range $key, $value := .Values.config.groupMapping }}
+      {{ $key | quote }}:
+        {{- range $group := $value }}
+        - {{ $group | quote }}
+        {{- end }}
+      {{- end }}
+
+    {{- if .Values.config.initialAdmins }}
+    initial_admins:
+      {{- range $admin := .Values.config.initialAdmins }}
+      - {{ $admin | quote }}
+      {{- end }}
+    {{- end }}

@@ -1,47 +1,35 @@
-gafaelfawr:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "minikube.lsst.codes"
-  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/gafaelfawr"
+# Reset token storage on every Redis restart.
+redis:
+  persistence:
+    enabled: false
 
-  # Reset token storage on every Redis restart.
-  redis:
-    persistence:
-      enabled: false
+config:
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-  config:
-    host: "minikube.lsst.codes"
-    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
 
-    # Support OpenID Connect clients like Chronograf.
-    oidcServer:
-      enabled: true
+  # Use CILogon authentication.
+  cilogon:
+    clientId: "cilogon:/client_id/74e865cd71a3a327096d36081166b739"
+    redirectUrl: "https://minikube.lsst.codes/login"
+    loginParams:
+      skin: "LSST"
 
-    # Use CILogon authentication.
-    cilogon:
-      clientId: "cilogon:/client_id/74e865cd71a3a327096d36081166b739"
-      redirectUrl: "https://minikube.lsst.codes/login"
-      loginParams:
-        skin: "LSST"
+  # Use NCSA groups to determine token scopes.
+  groupMapping:
+    "exec:admin": ["lsst_int_lsp_admin"]
+    "exec:notebook": ["lsst_int_lspdev"]
+    "exec:portal": ["lsst_int_lspdev"]
+    "exec:user": ["lsst_int_lspdev"]
+    "read:tap": ["lsst_int_lspdev"]
 
-    # Use NCSA groups to determine token scopes.
-    groupMapping:
-      "exec:admin": ["lsst_int_lsp_admin"]
-      "exec:notebook": ["lsst_int_lspdev"]
-      "exec:portal": ["lsst_int_lspdev"]
-      "exec:user": ["lsst_int_lspdev"]
-      "read:tap": ["lsst_int_lspdev"]
-
-    initialAdmins:
-      - "afausti"
-      - "athornton"
-      - "cbanek"
-      - "frossie"
-      - "jonathansick"
-      - "rra"
-      - "simonkrughoff"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"

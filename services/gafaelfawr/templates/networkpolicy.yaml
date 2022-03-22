@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    # This policy controls inbound access to the frontend component.
+    matchLabels:
+      {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "frontend"
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow inbound access to the frontend from pods (in any namespace)
+    # labeled gafaelfawr.lsst.io/ingress: true.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 8080

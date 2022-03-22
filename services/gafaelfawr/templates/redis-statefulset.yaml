@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-redis
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "redis"
+  serviceName: "redis"
+  template:
+    metadata:
+      {{- with .Values.redis.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "redis"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "redis"
+          args:
+            - "redis-server"
+            - "--appendonly"
+            - "yes"
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
+          env:
+            - name: "REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gafaelfawr.fullname" . }}-secret
+                  key: "redis-password"
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy | quote }}
+          livenessProbe:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - "redis-cli -h $(hostname) incr health:counter"
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          ports:
+            - containerPort: 6379
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: "100m"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: {{ template "gafaelfawr.fullname" . }}-redis-data
+              mountPath: "/data"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        fsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+      {{- if (not .Values.redis.persistence.enabled) }}
+      volumes:
+        - name: {{ template "gafaelfawr.fullname" . }}-redis-data
+          emptyDir: {}
+      {{- else if .Values.redis.persistence.volumeClaimName }}
+      volumes:
+        - name: {{ template "gafaelfawr.fullname" . }}-redis-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.redis.persistence.volumeClaimName | quote }}
+      {{- end }}
+      {{- with .Values.redis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if (and .Values.redis.persistence.enabled (not .Values.redis.persistence.volumeClaimName)) }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "gafaelfawr.fullname" . }}-redis-data
+      spec:
+        accessModes:
+          - {{ .Values.redis.persistence.accessMode | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.redis.persistence.size | quote }}
+        {{- if .Values.redis.persistence.storageClass }}
+        storageClassName: {{ .Values.redis.persistence.storageClass | quote }}
+        {{- end }}
+  {{- end }}
