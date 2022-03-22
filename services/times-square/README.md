@@ -7,13 +7,20 @@ See the embedded Helm sub-charts for additional configuration docs:
 - [`times-square` (API)](charts/times-square)
 - [`times-square-ui` (Next.js / React front-end)](charts/times-square-ui)
 
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+|  | times-square |  |
+|  | times-square-ui |  |
+
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| globals.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |
-| globals.host | string | Set by times-square Argo CD Application | Host name for ingress |
-| globals.vaultSecretsPathPrefix | string | Set by times-square Argo CD Application | Base path for Vault secrets |
+| global.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |
+| global.host | string | Set by times-square Argo CD Application | Host name for ingress |
+| global.vaultSecretsPathPrefix | string | Set by times-square Argo CD Application | Base path for Vault secrets |
 | times-square-ui.fullnameOverride | string | `"times-square-ui"` |  |
 | times-square-ui.image.pullPolicy | string | `"IfNotPresent"` |  |
 | times-square-ui.image.tag | string | `"tickets-DM-34030"` |  |

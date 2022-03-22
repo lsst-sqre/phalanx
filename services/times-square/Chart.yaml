@@ -9,3 +9,9 @@ description: |
   - [`times-square` (API)](charts/times-square)
   - [`times-square-ui` (Next.js / React front-end)](charts/times-square-ui)
 type: application
+
+dependencies:
+  - name: times-square
+    version: 1.0.0
+  - name: times-square-ui
+    version: 1.0.0
