@@ -1,75 +1,62 @@
-gafaelfawr:
-  replicaCount: 2
+replicaCount: 2
 
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/gafaelfawr"
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
 
-  # Use the CSI storage class so that we can use snapshots.
-  redis:
-    persistence:
-      storageClass: "standard-rwo"
+config:
+  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
-  config:
-    loglevel: "DEBUG"
-    host: "data.lsst.cloud"
-    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+  github:
+    clientId: "65b6333a066375091548"
 
-    github:
-      clientId: "65b6333a066375091548"
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - "lsst-sqre-square"
+    "exec:admin":
+      - "lsst-sqre-square"
+    "exec:notebook":
+      - "lsst-sqre-square"
+      - "lsst-data-management"
+      - "lsst-ops"
+      - "rubin-dp0-delegates"
+      - "rubin-dp0-friends"
+    "exec:portal":
+      - "lsst-sqre-square"
+      - "lsst-data-management"
+      - "lsst-ops"
+      - "rubin-dp0-delegates"
+      - "rubin-dp0-friends"
+    "read:image":
+      - "lsst-sqre-square"
+      - "lsst-data-management"
+      - "lsst-ops"
+      - "rubin-dp0-delegates"
+      - "rubin-dp0-friends"
+    "read:tap":
+      - "lsst-sqre-square"
+      - "lsst-data-management"
+      - "lsst-ops"
+      - "rubin-dp0-delegates"
+      - "rubin-dp0-friends"
 
-    # Allow access by GitHub team.
-    groupMapping:
-      "admin:provision":
-        - "lsst-sqre-square"
-      "exec:admin":
-        - "lsst-sqre-square"
-      "exec:notebook":
-        - "lsst-sqre-square"
-        - "lsst-data-management"
-        - "lsst-ops"
-        - "rubin-dp0-delegates"
-        - "rubin-dp0-friends"
-      "exec:portal":
-        - "lsst-sqre-square"
-        - "lsst-data-management"
-        - "lsst-ops"
-        - "rubin-dp0-delegates"
-        - "rubin-dp0-friends"
-      "read:image":
-        - "lsst-sqre-square"
-        - "lsst-data-management"
-        - "lsst-ops"
-        - "rubin-dp0-delegates"
-        - "rubin-dp0-friends"
-      "read:tap":
-        - "lsst-sqre-square"
-        - "lsst-data-management"
-        - "lsst-ops"
-        - "rubin-dp0-delegates"
-        - "rubin-dp0-friends"
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"
 
-    initialAdmins:
-      - "afausti"
-      - "athornton"
-      - "cbanek"
-      - "frossie"
-      - "jonathansick"
-      - "rra"
-      - "simonkrughoff"
+  errorFooter: |
+    To report problems or ask for help, please open an issue in the
+    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
+    rubin-dp0/Support project</a>.
 
-    errorFooter: |
-      To report problems or ask for help, please open an issue in the
-      <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-      rubin-dp0/Support project</a>.
-
-  cloudsql:
-    enabled: true
-    instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
-    serviceAccount: "gafaelfawr@science-platform-stable-6994.iam.gserviceaccount.com"
-
-pull-secret:
+cloudsql:
   enabled: true
-  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
+  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+  serviceAccount: "gafaelfawr@science-platform-stable-6994.iam.gserviceaccount.com"

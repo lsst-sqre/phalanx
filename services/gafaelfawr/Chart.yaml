@@ -1,10 +1,6 @@
 apiVersion: v2
 name: gafaelfawr
 version: 1.0.0
-dependencies:
-  - name: gafaelfawr
-    version: 4.6.1
-    repository: https://lsst-sqre.github.io/charts/
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
+description: Science Platform authentication and authorization system
+home: https://gafaelfawr.lsst.io/
+appVersion: 3.6.0

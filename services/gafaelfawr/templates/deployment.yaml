@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "frontend"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "frontend"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ include "gafaelfawr.fullname" . }}
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+        {{- end }}
+        - name: "gafaelfawr"
+          env:
+            - name: "GAFAELFAWR_BOOTSTRAP_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gafaelfawr.fullname" . }}-secret
+                  key: "bootstrap-token"
+            - name: "GAFAELFAWR_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "gafaelfawr.fullname" . }}-secret
+                  key: "database-password"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - containerPort: 8080
+              name: "http"
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/gafaelfawr"
+              readOnly: true
+            - name: "secret"
+              mountPath: "/etc/gafaelfawr/secrets"
+              readOnly: true
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "config"
+          configMap:
+            name: {{ template "gafaelfawr.fullname" . }}-config
+        - name: "secret"
+          secret:
+            secretName: {{ template "gafaelfawr.fullname" . }}-secret
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

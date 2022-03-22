@@ -1,64 +1,52 @@
-gafaelfawr:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data-dev.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/gafaelfawr"
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
 
-  # Use the CSI storage class so that we can use snapshots.
-  redis:
-    persistence:
-      storageClass: "standard-rwo"
+config:
+  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
-  config:
-    host: "data-dev.lsst.cloud"
-    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
-
-    # Support OpenID Connect clients like Chronograf.
-    oidcServer:
-      enabled: true
-
-    github:
-      clientId: "f46555b3f4c524e764ac"
-
-    # Allow access by GitHub team.
-    groupMapping:
-      "admin:provision":
-        - "lsst-sqre-square"
-      "exec:admin":
-        - "lsst-sqre-square"
-      "exec:notebook":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-      "exec:portal":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-      "read:image":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-      "read:tap":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-
-    initialAdmins:
-      - "afausti"
-      - "athornton"
-      - "cbanek"
-      - "frossie"
-      - "jonathansick"
-      - "rra"
-      - "simonkrughoff"
-
-    errorFooter: |
-      To report problems or ask for help, please open an issue in the
-      <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-      rubin-dp0/Support project</a>.
-
-  cloudsql:
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
     enabled: true
-    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
-    serviceAccount: "gafaelfawr@science-platform-dev-7696.iam.gserviceaccount.com"
 
-pull-secret:
+  github:
+    clientId: "f46555b3f4c524e764ac"
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - "lsst-sqre-square"
+    "exec:admin":
+      - "lsst-sqre-square"
+    "exec:notebook":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+    "exec:portal":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+    "read:image":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+    "read:tap":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"
+
+  errorFooter: |
+    To report problems or ask for help, please open an issue in the
+    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
+    rubin-dp0/Support project</a>.
+
+cloudsql:
   enabled: true
-  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+  instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+  serviceAccount: "gafaelfawr@science-platform-dev-7696.iam.gserviceaccount.com"
