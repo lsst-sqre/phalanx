@@ -9,9 +9,9 @@ data:
     siteName: {{ .Values.config.siteName | quote }}
     siteDescription: |
       {{ .Values.config.siteDescription }}
-    baseUrl: "{{ .Values.globals.baseUrl }}{{ .Values.ingress.path }}"
-    timesSquareApiUrl: "{{ .Values.globals.baseUrl }}{{ .Values.config.timesSquareApiPath }}"
+    baseUrl: "{{ .Values.global.baseUrl }}{{ .Values.ingress.path }}"
+    timesSquareApiUrl: "{{ .Values.global.baseUrl }}{{ .Values.config.timesSquareApiPath }}"
     {{- if .Values.config.semaphoreUrl }}
-    semaphoreUrl: "{{ .Values.globals.baseUrl }}{{ .Values.config.semaphorePath }}"
+    semaphoreUrl: "{{ .Values.global.baseUrl }}{{ .Values.config.semaphorePath }}"
       {{ .Values.config.semaphoreUrl }}
     {{- end}}

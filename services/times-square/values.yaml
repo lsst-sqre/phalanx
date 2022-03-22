@@ -19,7 +19,7 @@ times-square-ui:
 # Global parameters will be set by parameters injected via the Argo CD
 # Application resource and should not be set in the individual environment
 # values files.
-globals:
+global:
   # -- Base URL for the environment
   # @default -- Set by times-square Argo CD Application
   baseUrl: ""
