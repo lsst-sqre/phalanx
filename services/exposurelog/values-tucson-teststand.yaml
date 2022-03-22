@@ -5,7 +5,7 @@ exposurelog:
     - name: pull-secret
   ingress:
     enabled: true
-    host: rsp.lsst.ac.uk
+    host: tucson-teststand.lsst.codes
 
   site_id: test
   # Use the test butler registries.
@@ -13,8 +13,8 @@ exposurelog:
   butler_uri_1: LSSTCam
   butler_uri_2: LATISS
 
-vault_path: secret/k8s_operator/roe/postgres
+vault_path: secret/k8s_operator/tucson-teststand.lsst.codes/postgres
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/roe/pull-secret
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret

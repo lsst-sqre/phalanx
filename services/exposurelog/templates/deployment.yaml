@@ -1,0 +1,110 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "exposurelog.fullname" . }}
+  labels:
+    {{- include "exposurelog.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "exposurelog.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "exposurelog.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /exposurelog
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /exposurelog
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: BUTLER_URI_1
+              value: {{ .Values.butler_uri_1 | quote }}
+            - name: BUTLER_URI_2
+              value: {{ .Values.butler_uri_2 | quote }}
+            - name: EXPOSURELOG_DB_USER
+              value: exposurelog
+            - name: EXPOSURELOG_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres
+                  key: exposurelog_password
+            - name: EXPOSURELOG_DB_HOST
+              value: postgres.postgres
+            - name: EXPOSURELOG_DB_PORT
+              value: "5432"
+            - name: EXPOSURELOG_DB_DATABSE
+              value: exposurelog
+            - name: SITE_ID
+              value: {{ .Values.site_id | quote }}
+          volumeMounts:
+            {{- if .Values.nfs_path_1 }}
+            - mountPath: /volume_1
+              name: volume1
+            {{- end }}
+            {{- if .Values.nfs_path_2 }}
+            - mountPath: /volume_2
+              name: volume2
+            {{- end }}
+      volumes:
+        {{- if .Values.nfs_path_1 }}
+        - name: volume1
+          nfs:
+            path: {{ .Values.nfs_path_1 }}
+            readOnly: true
+            server: {{ .Values.nfs_server_1 }} 
+        {{- end }}
+        {{- if .Values.nfs_path_2 }}
+        - name: volume2
+          nfs:
+            path: {{ .Values.nfs_path_2 }}
+            readOnly: true
+            server: {{ .Values.nfs_server_2 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
