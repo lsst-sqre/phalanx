@@ -19,3 +19,6 @@ dependencies:
   - name: kapacitor
     version: 1.4.4
     repository: https://helm.influxdata.com/
+  - name: telegraf
+    version: 1.8.14
+    repository: https://helm.influxdata.com/
