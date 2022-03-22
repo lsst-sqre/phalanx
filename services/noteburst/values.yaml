@@ -4,7 +4,7 @@
 #
 # Global parameters will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.
-globals:
+global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
