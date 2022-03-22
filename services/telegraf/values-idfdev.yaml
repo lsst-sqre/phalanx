@@ -8,5 +8,5 @@ telegraf:
           urls:
             - "https://data-dev.lsst.cloud/nb/hub/metrics"
           metric_version: 2
-        
+
 vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud
