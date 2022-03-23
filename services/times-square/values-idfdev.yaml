@@ -1,12 +1,8 @@
 times-square:
   image:
-    repository: ghcr.io/lsst-sqre/times-square
-    tag: tickets-DM-33627
-  ingress:
-    host: "data-dev.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/times-square"
+    tag: "tickets-DM-34030"
+    pullPolicy: Always
   config:
-    environmentUrl: "https://data-dev.lsst.cloud"
     databaseUrl: "postgresql://times-square@localhost/times-square"
   cloudsql:
     enabled: true
@@ -14,8 +10,6 @@ times-square:
     serviceAccount: "times-square@science-platform-dev-7696.iam.gserviceaccount.com"
 
 times-square-ui:
-  fullnameOverride: times-square-ui
   image:
-    tag: tickets-dm-33930
-  ingress:
-    host: "data-dev.lsst.cloud"
+    tag: "tickets-dm-34030"
+    pullPolicy: Always

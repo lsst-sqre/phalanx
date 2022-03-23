@@ -1,0 +1,18 @@
+apiVersion: v2
+description: The front-end for Times Square, a parameterized notebook web viewer for the Rubin Science Platform
+name: times-square-ui
+type: application
+sources:
+  - https://github.com/lsst-sqre/times-square-ui
+maintainers:
+  - name: jonathansick
+    url: https://github.com/jonathansick
+
+# The chart version. This is not used in practice since the Helm chart is
+# not published.
+version: 1.0.0
+
+# The app's version corresponding to the image tag.
+# Use times-square-ui.image.tag to manage this from the top-level values
+# instead.
+appVersion: "1.0.0"
