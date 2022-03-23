@@ -47,6 +47,10 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
+  # -- Session length and token expiration (in minutes)
+  # @default -- `43200` (30 days)
+  tokenLifetimeMinutes: 43200
+
   # -- List of netblocks used for internal Kubernetes IP addresses, used to
   # determine the true client IP for logging
   # @default -- [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`]
@@ -127,11 +131,6 @@ config:
     # -- Attribute containing the user's UID number (only used if uidBaseDn is
     # set)
     uidAttr: "uidNumber"
-
-  issuer:
-    # -- Session length and token expiration (in minutes)
-    # @default -- `43200` (30 days)
-    expMinutes: 43200
 
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,

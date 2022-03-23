@@ -12,6 +12,7 @@ data:
     database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
     {{- if .Values.config.proxies }}
     proxies:
       {{- range $netblock := .Values.config.proxies }}
@@ -28,7 +29,6 @@ data:
       key_id: "reissuer"
       aud: "https://{{ .Values.globals.host }}"
       key_file: "/etc/gafaelfawr/secrets/signing-key"
-      exp_minutes: {{ .Values.config.issuer.expMinutes }}
 
     {{- if .Values.config.influxdb.enabled }}
     influxdb:
