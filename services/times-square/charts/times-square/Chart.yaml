@@ -19,4 +19,4 @@ appVersion: "1.0.0"
 dependencies:
   - name: redis
     version: 16.0.1
-    repository: https://charts.bitnami.c
+    repository: https://charts.bitnami.com
