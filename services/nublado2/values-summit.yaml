@@ -40,12 +40,12 @@ nublado2:
       - name: auxtel
         nfs:
           path: /lsstdata
-          server: atarchiver.cp.lsst.org
+          server: auxtel-archiver.cp.lsst.org
           readOnly: true
       - name: comcam
         nfs:
           path: /lsstdata
-          server: comcam-arctl01.cp.lsst.org
+          server: comcam-archiver.cp.lsst.org
           readOnly: true
       - name: other
         nfs:
@@ -55,20 +55,20 @@ nublado2:
       - name: latiss
         nfs:
           path: /repo/LATISS
-          server: atarchiver.cp.lsst.org
+          server: auxtel-atarchiver.cp.lsst.org
       - name: base-auxtel
         nfs:
           path: /lsstdata/base/auxtel
-          server: atarchiver.cp.lsst.org
+          server: auxtel-atarchiver.cp.lsst.org
           readOnly: true
       - name: lsstcomcam
         nfs:
           path: /repo/LSSTComCam
-          server: comcam-arctl01.cp.lsst.org
+          server: comcam-archiver.cp.lsst.org
       - name: base-comcam
         nfs:
           path: /lsstdata/base/comcam
-          server: comcam-arctl01.cp.lsst.org
+          server: comcam-archiver.cp.lsst.org
           readOnly: true
     volume_mounts:
       - name: home
