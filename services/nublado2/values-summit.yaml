@@ -55,11 +55,11 @@ nublado2:
       - name: latiss
         nfs:
           path: /repo/LATISS
-          server: auxtel-atarchiver.cp.lsst.org
+          server: auxtel-archiver.cp.lsst.org
       - name: base-auxtel
         nfs:
           path: /lsstdata/base/auxtel
-          server: auxtel-atarchiver.cp.lsst.org
+          server: auxtel-archiver.cp.lsst.org
           readOnly: true
       - name: lsstcomcam
         nfs:
