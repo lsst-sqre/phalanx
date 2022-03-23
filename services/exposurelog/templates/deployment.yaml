@@ -74,13 +74,15 @@ spec:
               value: {{ .Values.site_id | quote }}
           volumeMounts:
             {{- if .Values.nfs_path_1 }}
-            - mountPath: /volume_1
-              name: volume1
+            - name: volume1
+              mountPath: /volume_1
             {{- end }}
             {{- if .Values.nfs_path_2 }}
-            - mountPath: /volume_2
-              name: volume2
+            - name: volume2
+              mountPath: /volume_2
             {{- end }}
+            - name: tmp
+              mountPath: /tmp
       volumes:
         {{- if .Values.nfs_path_1 }}
         - name: volume1
@@ -96,6 +98,8 @@ spec:
             readOnly: true
             server: {{ .Values.nfs_server_2 }}
         {{- end }}
+        - name: tmp
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
