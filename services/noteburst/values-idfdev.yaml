@@ -4,6 +4,7 @@
 #   tag: tickets-DM-33025
 
 config:
+  logLevel: "DEBUG"
   worker:
     workerCount: 1
     identities:
