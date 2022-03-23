@@ -2,11 +2,5 @@ telegraf:
   config:
     global_tags:
       cluster: data-dev.lsst.cloud
-    inputs:
-      - prometheus:
-          # Must specify metric_version too, because YAML lists don't merge
-          urls:
-            - "https://data-dev.lsst.cloud/nb/hub/metrics"
-          metric_version: 2
 
 vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud

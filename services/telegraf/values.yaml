@@ -13,6 +13,8 @@ telegraf:
     # -- Telegraf service.
     enabled: false
   config:
+    agent:
+      omit_hostname: true
     global_tags:
       # -- Cluster name -- should be same as FQDN of RSP endpoint
       # @default -- None, must be set
@@ -25,9 +27,11 @@ telegraf:
     inputs:
       - prometheus:
           urls:
-            - https://${telegraf.config.global_tags.cluster}/nb/hub/metrics
+            - http://hub.nublado2:8081/metrics
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
+      - syslog:
+          server: "tcp://:6514"
     # -- Telegraf default output destination.
     outputs:
       - influxdb_v2:

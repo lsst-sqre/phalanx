@@ -1,0 +1,6 @@
+telegraf:
+  config:
+    global_tags:
+      cluster: base-lsp.lsst.codes
+
+vaultSecretsPath: secret/k8s_operator/base-lsp.lsst.codes
