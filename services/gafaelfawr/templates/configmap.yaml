@@ -24,12 +24,6 @@ data:
     error_footer: {{ .Values.config.errorFooter | quote }}
     {{- end }}
 
-    issuer:
-      iss: "https://{{ .Values.globals.host }}"
-      key_id: "reissuer"
-      aud: "https://{{ .Values.globals.host }}"
-      key_file: "/etc/gafaelfawr/secrets/signing-key"
-
     {{- if .Values.config.influxdb.enabled }}
     influxdb:
       secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
@@ -116,7 +110,12 @@ data:
     {{- end }}
 
     {{- if .Values.config.oidcServer.enabled }}
-    oidc_server_secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
+    oidc_server:
+      iss: "https://{{ .Values.globals.host }}"
+      key_id: "gafaelfawr"
+      aud: "https://{{ .Values.globals.host }}"
+      key_file: "/etc/gafaelfawr/secrets/signing-key"
+      secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}
 
     known_scopes:
