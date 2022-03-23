@@ -8,5 +8,5 @@ config:
   worker:
     workerCount: 1
     identities:
-      - uuid: 90000
+      - uid: 90000
         username: "noteburst90000"
