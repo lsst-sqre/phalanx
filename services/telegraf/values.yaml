@@ -27,7 +27,7 @@ telegraf:
     inputs:
       - prometheus:
           urls:
-            - http://hub.nublado:8081/metrics
+            - http://hub.nublado2:8081/metrics
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
       - syslog:
