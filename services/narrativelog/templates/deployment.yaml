@@ -67,7 +67,7 @@ spec:
             - name: NARRATIVELOG_DB_DATABSE
               value: narrativelog
             - name: SITE_ID
-              value: {{ .Values.site_id | quote }}
+              value: {{ .Values.config.site_id | quote }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

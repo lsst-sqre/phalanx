@@ -1,11 +1,9 @@
-narrativelog:
-  imagePullSecrets:
-    - name: pull-secret
-  ingress:
-    enabled: true
-    host: base-lsp.lsst.codes
-
+config:
   site_id: base
+
+ingress:
+  enabled: true
+  host: base-lsp.lsst.codes
 
 vault_path: secret/k8s_operator/base-lsp.lsst.codes/postgres
 
