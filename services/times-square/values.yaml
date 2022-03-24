@@ -1,21 +1,3 @@
-times-square:
-
-  fullnameOverride: times-square
-
-  image:
-    tag: "tickets-DM-34030"
-
-    pullPolicy: "IfNotPresent"
-
-times-square-ui:
-
-  fullnameOverride: times-square-ui
-
-  image:
-    tag: "tickets-DM-34030"
-
-    pullPolicy: "IfNotPresent"
-
 # Global parameters will be set by parameters injected via the Argo CD
 # Application resource and should not be set in the individual environment
 # values files.
@@ -31,3 +13,32 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by times-square Argo CD Application
   vaultSecretsPathPrefix: ""
+
+times-square:
+
+  fullnameOverride: times-square
+
+  image:
+    tag: "tickets-DM-34030"
+
+    pullPolicy: "IfNotPresent"
+
+  config:
+    # -- Redis URL
+    # @default -- Points to embedded Redis
+    redisUrl: "redis://times-square-redis-master:6379/0"
+
+times-square-ui:
+
+  fullnameOverride: times-square-ui
+
+  image:
+    tag: "tickets-DM-34030"
+
+    pullPolicy: "IfNotPresent"
+
+redis:
+  fullnameOverride: times-square-redis
+
+  auth:
+    enabled: false

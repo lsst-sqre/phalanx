@@ -11,4 +11,4 @@ data:
   TS_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
   TS_PATH_PREFIX: {{ .Values.ingress.path }}
   TS_DATABASE_URL: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
-  TS_REDIS_URL: "redis://{{ include "times-square.fullname" . }}-redis-master.{{ .Release.Namespace }}:6379/0"
+  TS_REDIS_URL: {{ required "config.redisUrl must be set" .Values.config.redusUrl | quote }}

@@ -15,9 +15,3 @@ version: 1.0.0
 # Use times-square.image.tag to manage this from the top-level values
 # instead.
 appVersion: "1.0.0"
-
-# Additional charts that this chart uses
-dependencies:
-  - name: redis
-    version: 16.0.1
-    repository: https://charts.bitnami.com/bitnami

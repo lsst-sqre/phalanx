@@ -15,3 +15,6 @@ dependencies:
     version: 1.0.0
   - name: times-square-ui
     version: 1.0.0
+  - name: redis
+    version: 16.0.1
+    repository: https://charts.bitnami.com/bitnami
