@@ -110,6 +110,10 @@ config:
   # @default -- None, must be set
   databaseUrl: ""
 
+  # -- URL for the Redis cache
+  # @default -- None, must be set
+  redisUrl: ""
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
   # on Google Cloud
