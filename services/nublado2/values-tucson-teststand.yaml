@@ -22,6 +22,7 @@ nublado2:
       AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
       AUTO_REPO_BRANCH: "prod"
       AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+      DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
       LSST_DDS_INTERFACE: net1
       LSST_DDS_PARTITION_PREFIX: tucson
     volumes:
