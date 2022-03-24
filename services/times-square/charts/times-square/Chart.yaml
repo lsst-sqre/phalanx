@@ -1,3 +1,4 @@
+apiVersion: v2
 description: A parameterized notebook web viewer for the Rubin Science Platform.
 name: times-square
 type: application
