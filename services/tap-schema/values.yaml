@@ -8,7 +8,7 @@ fullnameOverride: ""
 
 image:
   # -- tap-schema image to use
-  repository: "lsstdax/tap-schema-mock"
+  repository: "lsstsqre/tap-schema-mock"
 
   # -- Pull policy for the tap-schema image
   pullPolicy: "IfNotPresent"
