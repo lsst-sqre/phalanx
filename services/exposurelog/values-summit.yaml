@@ -1,18 +1,16 @@
-exposurelog:
-  imagePullSecrets:
-    - name: pull-secret
-  ingress:
-    enabled: true
-    host: summit-lsp.lsst.codes
-
+config:
   site_id: summit
   nfs_path_1: /repo/LSSTComCam  # Mounted as /volume_1
-  nfs_server_1: comcam-arctl01.cp.lsst.org
+  nfs_server_1: comcam-archiver.cp.lsst.org
   butler_uri_1: /volume_1
 
   nfs_path_2: /repo/LATISS  # Mounted as /volume_2
-  nfs_server_2: atarchiver.cp.lsst.org
+  nfs_server_2: auxtel-archiver.cp.lsst.org
   butler_uri_2: /volume_2
+
+ingress:
+  enabled: true
+  host: summit-lsp.lsst.codes
 
 vault_path: secret/k8s_operator/summit-lsp.lsst.codes/postgres
 

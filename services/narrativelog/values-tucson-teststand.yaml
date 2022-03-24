@@ -1,11 +1,9 @@
-narrativelog:
-  imagePullSecrets:
-    - name: pull-secret
-  ingress:
-    enabled: true
-    host: tucson-teststand.lsst.codes
-
+config:
   site_id: tucson
+
+ingress:
+  enabled: true
+  host: tucson-teststand.lsst.codes
 
 vault_path: secret/k8s_operator/tucson-teststand.lsst.codes/postgres
 
