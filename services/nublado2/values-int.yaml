@@ -14,6 +14,7 @@ nublado2:
       AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
       AUTO_REPO_BRANCH: "NCSA-prod"
       AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@NCSA-prod"
+      DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
     pinned_images:
       - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
         name: Recommended
