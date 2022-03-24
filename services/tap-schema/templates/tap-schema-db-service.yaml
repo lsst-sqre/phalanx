@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "tap-schema.fullname" . }}-db
+  labels:
+    {{- include "tap-schema.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - protocol: "TCP"
+      port: 3306
+      targetPort: 3306
+  selector:
+    {{- include "tap-schema.selectorLabels" . | nindent 4 }}
