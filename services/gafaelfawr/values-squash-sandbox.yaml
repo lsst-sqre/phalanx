@@ -8,10 +8,9 @@ config:
 
   # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
   # must be set in the Gafaelfawr secret.
-  issuer:
-    influxdb:
-      enabled: true
-      username: "efdreader"
+  influxdb:
+    enabled: true
+    username: "efdreader"
 
   # Whether to support OpenID Connect clients.  If set to true,
   # oidc-server-secrets must be set in the Gafaelfawr secret.

@@ -21,10 +21,9 @@ Science Platform authentication and authorization system
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (inside a <p> tag). |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. Tokens from an OpenID Connect provider such as CILogon that include groups in an `isMemberOf` claim will be granted scopes based on this mapping. |
+| config.influxdb.enabled | bool | `false` | Whether to issue tokens for InfluxDB. If set to true, `influxdb-secret` must be set in the Gafaelfawr secret. |
+| config.influxdb.username | string | `""` | If set, force all InfluxDB tokens to have that username instead of the authenticated identity of the user requesting a token |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
-| config.issuer.expMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
-| config.issuer.influxdb.enabled | bool | `false` | Whether to issue tokens for InfluxDB. If set to true, `influxdb-secret` must be set in the Gafaelfawr secret. |
-| config.issuer.influxdb.username | string | `""` | If set, force all InfluxDB tokens to have that username instead of the authenticated identity of the user requesting a token |
 | config.knownScopes | object | See the `values.yaml` file | Names and descriptions of all scopes in use. This is used to populate the new token creation page. Only scopes listed here will be options when creating a new token. |
 | config.ldap.baseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
@@ -42,6 +41,7 @@ Science Platform authentication and authorization system
 | config.oidc.tokenUrl | string | None, must be set | URL from which to retrieve the token for the user |
 | config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients. If set to true, `oidc-server-secrets` must be set in the Gafaelfawr secret. |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
+| config.tokenLifetimeMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | globals.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | globals.host | string | Set by Argo CD | Host name for ingress |
@@ -49,7 +49,6 @@ Science Platform authentication and authorization system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"lsstsqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
-| ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |

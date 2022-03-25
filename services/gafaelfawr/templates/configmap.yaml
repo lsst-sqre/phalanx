@@ -12,6 +12,7 @@ data:
     database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
     {{- if .Values.config.proxies }}
     proxies:
       {{- range $netblock := .Values.config.proxies }}
@@ -23,18 +24,13 @@ data:
     error_footer: {{ .Values.config.errorFooter | quote }}
     {{- end }}
 
-    issuer:
-      iss: "https://{{ .Values.globals.host }}"
-      key_id: "reissuer"
-      aud: "https://{{ .Values.globals.host }}"
-      key_file: "/etc/gafaelfawr/secrets/signing-key"
-      exp_minutes: {{ .Values.config.issuer.expMinutes }}
-      {{- if .Values.config.issuer.influxdb.enabled }}
-      influxdb_secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
+    {{- if .Values.config.influxdb.enabled }}
+    influxdb:
+      secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
       {{- if .Values.config.issuer.influxdb.username }}
-      influxdb_username: {{ .Values.config.issuer.influxdb.username | quote }}
+      username: {{ .Values.config.issuer.influxdb.username | quote }}
       {{- end }}
-      {{- end }}
+    {{- end }}
 
     {{- if .Values.config.github.clientId }}
 
@@ -71,8 +67,6 @@ data:
         - "email"
         - "org.cilogon.userinfo"
       audience: {{ .Values.config.cilogon.clientId | quote }}
-      key_ids:
-        - "244B235F6B28E34108D101EAC7362C4E"
 
     {{- else if .Values.config.oidc.clientId }}
 
@@ -116,7 +110,12 @@ data:
     {{- end }}
 
     {{- if .Values.config.oidcServer.enabled }}
-    oidc_server_secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
+    oidc_server:
+      iss: "https://{{ .Values.globals.host }}"
+      key_id: "gafaelfawr"
+      aud: "https://{{ .Values.globals.host }}"
+      key_file: "/etc/gafaelfawr/secrets/signing-key"
+      secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}
 
     known_scopes:

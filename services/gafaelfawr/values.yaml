@@ -20,10 +20,6 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
-ingress:
-  # -- Additional annotations to add to the ingress
-  annotations: {}
-
 # -- Resource limits and requests for the Gafaelfawr frontend pod
 resources: {}
 
@@ -46,6 +42,10 @@ config:
 
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
+
+  # -- Session length and token expiration (in minutes)
+  # @default -- `43200` (30 days)
+  tokenLifetimeMinutes: 43200
 
   # -- List of netblocks used for internal Kubernetes IP addresses, used to
   # determine the true client IP for logging
@@ -128,19 +128,14 @@ config:
     # set)
     uidAttr: "uidNumber"
 
-  issuer:
-    # -- Session length and token expiration (in minutes)
-    # @default -- `43200` (30 days)
-    expMinutes: 43200
+  influxdb:
+    # -- Whether to issue tokens for InfluxDB. If set to true,
+    # `influxdb-secret` must be set in the Gafaelfawr secret.
+    enabled: false
 
-    influxdb:
-      # -- Whether to issue tokens for InfluxDB. If set to true,
-      # `influxdb-secret` must be set in the Gafaelfawr secret.
-      enabled: false
-
-      # -- If set, force all InfluxDB tokens to have that username instead of
-      # the authenticated identity of the user requesting a token
-      username: ""
+    # -- If set, force all InfluxDB tokens to have that username instead of
+    # the authenticated identity of the user requesting a token
+    username: ""
 
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
