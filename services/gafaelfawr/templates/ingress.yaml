@@ -3,9 +3,6 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
   name: {{ template "gafaelfawr.fullname" . }}
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}

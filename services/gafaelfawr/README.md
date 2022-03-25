@@ -49,7 +49,6 @@ Science Platform authentication and authorization system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"lsstsqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
-| ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |

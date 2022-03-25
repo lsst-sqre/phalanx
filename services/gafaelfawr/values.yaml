@@ -20,10 +20,6 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
-ingress:
-  # -- Additional annotations to add to the ingress
-  annotations: {}
-
 # -- Resource limits and requests for the Gafaelfawr frontend pod
 resources: {}
 
