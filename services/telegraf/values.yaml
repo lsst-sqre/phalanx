@@ -19,19 +19,21 @@ telegraf:
       # -- Cluster name -- should be same as FQDN of RSP endpoint
       # @default -- None, must be set
       cluster: ""
-    # -- Telegraf processor plugins.
-    processors: {}
-    # -- Telegraf input plugins.
     # Collect JupyterHub Prometheus metrics by default.
     # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
     inputs:
       - prometheus:
           urls:
             - http://hub.nublado2:8081/metrics
+            - http://cert-manager.cert-manager:9402/metrics
+            - http://argocd-application-controller-metrics.argocd:8082/metrics
+            - http://argocd-notifications-controller-metrics.argocd:9001/metrics
+            - http://argocd-redis-metrics.argocd:9121/metrics
+            - http://argocd-repo-server-metrics.argocd:8084/metrics
+            - http://argocd-server-metrics.argocd:8083/metrics
+            - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
-      - syslog:
-          server: "tcp://:6514"
     # -- Telegraf default output destination.
     outputs:
       - influxdb_v2:
@@ -40,6 +42,32 @@ telegraf:
           bucket: "monitoring"
           token: "$INFLUX_TOKEN"
           organization: "square"
+  tplVersion: 2
+
+# telegraf-ds:
+#   env:
+#     # -- Token to communicate with Influx
+#     - name: INFLUX_TOKEN
+#       valueFrom:
+#         secretKeyRef:
+#           name: telegraf
+#           key: influx-token
+#   config:
+#     global_tags:
+#       # -- Cluster name -- should be same as FQDN of RSP endpoint
+#       # @default -- None, must be set
+#       cluster: ""
+#       # -- Set for differentiation of Telegraf service from
+#       # Telegraf-daemonset
+#       daemonset: "true"
+#     processors: {}
+#     outputs:
+#       - influxdb_v2:
+#           urls:
+#             - "https://monitoring.lsst.codes"
+#           bucket: "monitoring"
+#           token: "$INFLUX_TOKEN"
+#           organization: "square"
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
 # @default -- None, must be set
