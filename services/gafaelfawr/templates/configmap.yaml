@@ -111,9 +111,9 @@ data:
 
     {{- if .Values.config.oidcServer.enabled }}
     oidc_server:
-      iss: "https://{{ .Values.globals.host }}"
+      issuer: "https://{{ .Values.globals.host }}"
       key_id: "gafaelfawr"
-      aud: "https://{{ .Values.globals.host }}"
+      audience: "https://{{ .Values.globals.host }}"
       key_file: "/etc/gafaelfawr/secrets/signing-key"
       secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}
