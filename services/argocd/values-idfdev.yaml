@@ -49,6 +49,7 @@ argo-cd:
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
         g, christine@lsst.cloud, role:admin
+        g, dspeck@lsst.cloud, role:admin
         g, frossie@lsst.cloud, role:admin
         g, jsick@lsst.cloud, role:admin
         g, krughoff@lsst.cloud, role:admin

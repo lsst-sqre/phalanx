@@ -1,3 +1,5 @@
 sherlock:
   ingress:
     host: "data.lsst.cloud"
+
+  publish_url: "https://status.lsst.codes/api/data"

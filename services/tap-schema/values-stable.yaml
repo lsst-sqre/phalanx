@@ -1,7 +1,2 @@
-tap-schema:
-  pull_secret: 'pull-secret'
-  image: lsstsqre/tap-schema-stable
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
+image:
+  repository: "lsstsqre/tap-schema-stable"
