@@ -1,6 +1,6 @@
-telegraf:
+telegraf-ds:
   config:
     global_tags:
       cluster: data-dev.lsst.cloud
-
+  
 vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud

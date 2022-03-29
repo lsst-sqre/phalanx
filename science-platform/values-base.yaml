@@ -54,6 +54,8 @@ tap_schema:
   enabled: false
 telegraf:
   enabled: true
+telegraf-ds:
+  enabled: true
 times_square:
   enabled: false
 vault_secrets_operator:
