@@ -17,11 +17,13 @@ config:
       - "lsst-sqre-square"
     "exec:notebook":
       - "lsst-ops-panda"
+      - "lsst-ops"
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
     "exec:portal":
       - "lsst-ops-panda"
       - "lsst-sqre-square"
+      - "lsst-ops"
       - "lsst-sqre-friends"
     "read:alertdb":
       - "lsst-sqre-square"
@@ -29,10 +31,12 @@ config:
     "read:image":
       - "lsst-ops-panda"
       - "lsst-sqre-square"
+      - "lsst-ops"
       - "lsst-sqre-friends"
     "read:tap":
       - "lsst-ops-panda"
       - "lsst-sqre-square"
+      - "lsst-ops"
       - "lsst-sqre-friends"
 
   initialAdmins:
