@@ -22,7 +22,7 @@ cachemachine:
             "num_releases": 1,
             "num_weeklies": 3,
             "num_dailies": 2,
-            "cycle": 24,
+            "cycle": 25,
             "alias_tags": [
                 "latest",
                 "latest_daily",
