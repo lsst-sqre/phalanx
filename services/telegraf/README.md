@@ -12,13 +12,22 @@ SQuaRE telemetry collection service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| telegraf.config.agent.omit_hostname | bool | `true` |  |
 | telegraf.config.global_tags.cluster | string | `""` |  |
-| telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["https://${telegraf.config.global_tags.cluster}/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by default. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
-| telegraf.config.outputs | list | `[{"influxdb_v2":{"bucket":"telegraf","organization":"lizard","token":"$INFLUX_TOKEN","urls":["https://roundtable-monitoring.lsst.cloud"]}}]` | Telegraf default output destination. |
-| telegraf.config.processors | object | `{}` | Telegraf processor plugins. |
+| telegraf.config.inputs[0].prometheus.metric_version | int | `2` |  |
+| telegraf.config.inputs[0].prometheus.urls[0] | string | `"http://hub.nublado2:8081/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[1] | string | `"http://cert-manager.cert-manager:9402/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[2] | string | `"http://argocd-application-controller-metrics.argocd:8082/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[3] | string | `"http://argocd-notifications-controller-metrics.argocd:9001/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[4] | string | `"http://argocd-redis-metrics.argocd:9121/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[5] | string | `"http://argocd-repo-server-metrics.argocd:8084/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[6] | string | `"http://argocd-server-metrics.argocd:8083/metrics"` |  |
+| telegraf.config.inputs[0].prometheus.urls[7] | string | `"http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"` |  |
+| telegraf.config.outputs | list | `[{"influxdb_v2":{"bucket":"monitoring","organization":"square","token":"$INFLUX_TOKEN","urls":["https://monitoring.lsst.codes"]}}]` | Telegraf default output destination. |
 | telegraf.env[0] | object | `{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"influx-token","name":"telegraf"}}}` | Token to communicate with Influx |
 | telegraf.podLabels | object | `{"hub.jupyter.org/network-access-hub":"true"}` | Allow network access to JupyterHub pod. |
 | telegraf.service.enabled | bool | `false` | Telegraf service. |
+| telegraf.tplVersion | int | `2` |  |
 | vaultSecretsPath | string | None, must be set | Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`) |
 
 ----------------------------------------------

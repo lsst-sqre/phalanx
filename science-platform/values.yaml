@@ -36,6 +36,8 @@ sasquatch:
   enabled: false
 telegraf:
   enabled: false
+telegraf-ds:
+  enabled: false
 semaphore:
   enabled: false
 sherlock:

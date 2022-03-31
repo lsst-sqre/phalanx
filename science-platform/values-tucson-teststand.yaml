@@ -55,6 +55,8 @@ tap_schema:
 # EFD already provides telegraf namespace.  Gotta work that out.
 telegraf:
   enabled: false
+telegraf-ds:
+  enabled: false
 times_square:
   enabled: false
 vault_secrets_operator:

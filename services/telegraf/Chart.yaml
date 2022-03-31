@@ -1,6 +1,6 @@
 apiVersion: v2
 name: telegraf
-version: 1.0.0
+version: 1.0.1
 description: SQuaRE telemetry collection service
 dependencies:
   - name: telegraf
