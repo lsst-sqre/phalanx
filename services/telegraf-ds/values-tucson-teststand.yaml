@@ -1,0 +1,6 @@
+telegraf-ds:
+  config:
+    global_tags:
+      cluster: tucson-teststand.lsst.codes
+
+vaultSecretsPath: secret/k8s_operator/tucson-teststand.lsst.codes

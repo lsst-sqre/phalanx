@@ -1,0 +1,6 @@
+telegraf-ds:
+  config:
+    global_tags:
+      cluster: minikube.lsst.codes
+
+vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes

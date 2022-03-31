@@ -1,0 +1,6 @@
+telegraf-ds:
+  config:
+    global_tags:
+      cluster: lsst-lsp-stable.ncsa.illinois.edu
+
+vaultSecretsPath: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu

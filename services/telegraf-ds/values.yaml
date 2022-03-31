@@ -1,0 +1,31 @@
+telegraf-ds:
+  env:
+    # -- Token to communicate with Influx
+    - name: INFLUX_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: telegraf
+          key: influx-token
+  config:
+    global_tags:
+      # -- Cluster name -- should be same as FQDN of RSP endpoint
+      # @default -- None, must be set
+      cluster: ""
+      # -- Set for differentiation of Telegraf service from
+      # Telegraf-daemonset
+      telegraf_daemonset: "true"
+    agent:
+      hostname: "telegraf-$HOSTIP"
+    outputs:
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "monitoring"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+    docker_endpoint: ""
+
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
+# shared with telegraf (non-DaemonSet)
+# @default -- None, must be set
+vaultSecretsPath: ""
