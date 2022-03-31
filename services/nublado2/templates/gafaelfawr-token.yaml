@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: "gafaelfawr-token"
+  labels:
+    {{- include "nublado2.labels" . | nindent 4 }}
+spec:
+  service: "nublado2"
+  scopes:
+    - "admin:provision"
