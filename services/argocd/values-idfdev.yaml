@@ -7,6 +7,9 @@ argo-cd:
   controller:
     metrics:
       enabled: true
+      applicationLabels:
+        enabled: true
+        labels: ["name", "instance"]
 
   repoServer:
     metrics:
