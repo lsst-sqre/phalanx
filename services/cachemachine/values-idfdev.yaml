@@ -2,6 +2,11 @@ cachemachine:
   imagePullSecrets:
     - name: "cachemachine-secret"
 
+  image:
+    repository: lsstsqre/cachemachine
+    pullPolicy: IfNotPresent
+    tag: tickets-DM-33755
+
   ingress:
     enabled: true
     host: "data-dev.lsst.cloud"
@@ -15,9 +20,12 @@ cachemachine:
         "labels": {},
         "repomen": [
           {
-            "type": "RubinRepoMan",
+            "type": "RubinRepoGar",
             "registry_url": "us-central1-docker.pkg.dev",
             "repo": "rubin-shared-services-71ec/sciplat/sciplat-lab",
+            "gar_repository": "sciplat",
+            "project_id": "rubin-shared-services-71ec",
+            "location": "us-central1",
             "recommended_tag": "recommended",
             "num_releases": 1,
             "num_weeklies": 2,
