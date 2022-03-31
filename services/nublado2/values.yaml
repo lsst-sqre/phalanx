@@ -228,6 +228,9 @@ config:
     IMAGE_DIGEST: "{{ options.image_info.digest }}"
     IMAGE_DESCRIPTION: "{{ options.image_info.display_name }}"
     RESET_USER_ENV: "{{ options.reset_user_env }}"
+    # We need to set CLEAR_DOTLOCAL until all images that didn't know
+    # about RESET_USER_ENV have aged out (late 2022)
+    CLEAR_DOTLOCAL: "{{ options.reset_user_env }}"
     DEBUG: "{{ options.debug }}"
 
   # -- Templates for the user resources to create for each lab spawn. This is
