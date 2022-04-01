@@ -20,9 +20,187 @@ telegraf-ds:
       - influxdb_v2:
           urls:
             - "https://monitoring.lsst.codes"
-          bucket: "monitoring"
+          bucket: "k8s_argocd"
           token: "$INFLUX_TOKEN"
           organization: "square"
+          tagpass:
+            - namespace: "argocd"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_cachemachine"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "cachemachine"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_certmanager"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "cert-manager"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_datalinker"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "datalinker"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_gafaelfawr"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "gafaelfawr"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_ingressnginx"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "ingress-nginx"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_mobu"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "mobu"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_moneypenny"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "moneypenny"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_noteburst"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "noteburst"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_obstap"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "obstap"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_portal"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "portal"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_postgres"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "postgres"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_sasquatch"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "sasquatch"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_semaphore"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "semaphore"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_sherlock"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "sherlock"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_squareone"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "squareone"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_strimzi"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "strimzi"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_tap"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "tap"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_tapschema"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "tap-schema"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_telegraf"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "telegraf"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_telegrafds"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "telegraf-ds"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_timessquare"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "times-square"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "k8s_vaultsecretsoperator"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - namespace: "vault-secrets-operator"
     docker_endpoint: ""
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
