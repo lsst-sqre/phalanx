@@ -14,7 +14,7 @@ dependencies:
   - name: kafka-connect-manager
     version: 1.0.0
   - name: chronograf
-    version: 1.2.3
+    version: 1.2.5
     repository: https://helm.influxdata.com/
   - name: kapacitor
     version: 1.4.4
