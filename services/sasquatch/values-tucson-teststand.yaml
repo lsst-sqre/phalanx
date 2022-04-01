@@ -1,0 +1,43 @@
+strimzi-kafka:
+  kafka:
+    storage:
+      storageClassName: rook-ceph-block
+  zookeeper:
+    storage:
+      storageClassName: rook-ceph-block
+
+influxdb:
+  persistence:
+    storageClass: rook-ceph-block
+  ingress:
+    enabled: true
+    hostname: tucson-teststand.lsst.codes
+
+kafka-connect-manager:
+  influxdbSink:
+    influxdb-sink:
+      enabled: true
+
+chronograf:
+  persistence:
+    storageClass: rook-ceph-block
+  ingress:
+    enabled: true
+    hostname: tucson-teststand.lsst.codes
+  env:
+    GENERIC_NAME: "OIDC"
+    GENERIC_AUTH_URL: https://tucson-teststand.lsst.codes/auth/openid/login
+    GENERIC_TOKEN_URL: https://tucson-teststand.lsst.codes/auth/openid/token
+    USE_ID_TOKEN: 1
+    JWKS_URL: https://tucson-teststand.lsst.codes/.well-known/jwks.json
+    GENERIC_API_URL: https://tucson-teststand.lsst.codes/auth/userinfo
+    GENERIC_SCOPES: openid
+    GENERIC_API_KEY: sub
+    PUBLIC_URL: https://tucson-teststand.lsst.codes
+    STATUS_FEED_URL: https://lsst-sqre.github.io/sasquatch/feeds/tucson-teststand.json
+
+kapacitor:
+  persistence:
+    storageClass: rook-ceph-block
+
+vaultSecretsPath: secret/k8s_operator/tucson-teststand.lsst.codes
