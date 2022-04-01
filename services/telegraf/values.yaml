@@ -19,19 +19,36 @@ telegraf:
       # -- Cluster name -- should be same as FQDN of RSP endpoint
       # @default -- None, must be set
       cluster: ""
-    # Collect JupyterHub Prometheus metrics by default.
-    # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
     inputs:
       - prometheus:
+      # Collect JupyterHub Prometheus metrics by default.
+      # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
           urls:
             - http://hub.nublado2:8081/metrics
+          tags:
+            - prometheus_app: "hub"
+          metric_version: 2
+      - prometheus:
+          urls:
             - http://cert-manager.cert-manager:9402/metrics
+          tags:
+            - prometheus_app: "certmanager"
+          metric_version: 2
+      - prometheus:
+          urls:
             - http://argocd-application-controller-metrics.argocd:8082/metrics
             - http://argocd-notifications-controller-metrics.argocd:9001/metrics
             - http://argocd-redis-metrics.argocd:9121/metrics
             - http://argocd-repo-server-metrics.argocd:8084/metrics
             - http://argocd-server-metrics.argocd:8083/metrics
+          tags:
+            - prometheus_app: "argocd"
+          metric_version: 2
+      - prometheus:
+          urls:
             - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
+          tags:
+            - prometheus_app: "ingressnginx"
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
     # -- Telegraf default output destination.
@@ -39,9 +56,35 @@ telegraf:
       - influxdb_v2:
           urls:
             - "https://monitoring.lsst.codes"
-          bucket: "monitoring"
+          bucket: "prometheus_argocd"
           token: "$INFLUX_TOKEN"
           organization: "square"
+          tagpass:
+            - prometheus_app: "argocd"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "prometheus_hub"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - prometheus_app: "hub"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "prometheus_certmanager"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - prometheus_app: "certmanager"
+      - influxdb_v2:
+          urls:
+            - "https://monitoring.lsst.codes"
+          bucket: "prometheus_ingressnginx"
+          token: "$INFLUX_TOKEN"
+          organization: "square"
+          tagpass:
+            - prometheus_app: "ingressnginx"
   tplVersion: 2
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
