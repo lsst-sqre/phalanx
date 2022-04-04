@@ -27,8 +27,7 @@ jupyterhub:
     baseUrl: "/nb"
     # Note: this has to match up with the kubernetes secret created by the
     # vault secret, and since you can't put templating in a values file, I'm
-    # just setting the name here, as well as in vault_secret_name, which
-    # should match.
+    # just setting the name here.
     existingSecret: "nublado2-secret"
     extraConfig:
       nublado.py: |
@@ -474,7 +473,6 @@ config:
         type: kubernetes.io/dockerconfigjson
 
 # Note: See note above about existingSecret.
-vault_secret_name: "nublado2-secret"
 vault_secret_path: ""
 
 # Built-in network policy doesn't quite work (Labs can't talk to Hub,
