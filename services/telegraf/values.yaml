@@ -26,13 +26,13 @@ telegraf:
           urls:
             - http://hub.nublado2:8081/metrics
           tags:
-            - prometheus_app: "hub"
+            prometheus_app: "hub"
           metric_version: 2
       - prometheus:
           urls:
             - http://cert-manager.cert-manager:9402/metrics
           tags:
-            - prometheus_app: "certmanager"
+            prometheus_app: "certmanager"
           metric_version: 2
       - prometheus:
           urls:
@@ -42,13 +42,13 @@ telegraf:
             - http://argocd-repo-server-metrics.argocd:8084/metrics
             - http://argocd-server-metrics.argocd:8083/metrics
           tags:
-            - prometheus_app: "argocd"
+            prometheus_app: "argocd"
           metric_version: 2
       - prometheus:
           urls:
             - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
           tags:
-            - prometheus_app: "ingressnginx"
+            prometheus_app: "ingressnginx"
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
     # -- Telegraf default output destination.
@@ -60,7 +60,7 @@ telegraf:
           token: "$INFLUX_TOKEN"
           organization: "square"
           tagpass:
-            - prometheus_app: "argocd"
+            prometheus_app: "argocd"
       - influxdb_v2:
           urls:
             - "https://monitoring.lsst.codes"
@@ -68,7 +68,7 @@ telegraf:
           token: "$INFLUX_TOKEN"
           organization: "square"
           tagpass:
-            - prometheus_app: "hub"
+            prometheus_app: "hub"
       - influxdb_v2:
           urls:
             - "https://monitoring.lsst.codes"
@@ -76,7 +76,7 @@ telegraf:
           token: "$INFLUX_TOKEN"
           organization: "square"
           tagpass:
-            - prometheus_app: "certmanager"
+            prometheus_app: "certmanager"
       - influxdb_v2:
           urls:
             - "https://monitoring.lsst.codes"
@@ -84,7 +84,7 @@ telegraf:
           token: "$INFLUX_TOKEN"
           organization: "square"
           tagpass:
-            - prometheus_app: "ingressnginx"
+            prometheus_app: "ingressnginx"
   tplVersion: 2
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
