@@ -1,51 +1,50 @@
-nublado2:
-  jupyterhub:
-    ingress:
-      hosts: ["base-lsp.lsst.codes"]
-      annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
+jupyterhub:
+  ingress:
+    hosts: ["base-lsp.lsst.codes"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
 
-    singleuser:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
-      initContainers:
-        - name: "multus-init"
-          image: "lsstit/ddsnet4u:latest"
-          securityContext:
-            privileged: true
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+    initContainers:
+      - name: "multus-init"
+        image: "lsstit/ddsnet4u:latest"
+        securityContext:
+          privileged: true
 
-  config:
-    base_url: "https://base-lsp.lsst.codes"
-    butler_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/butler-secret"
-    pull_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
-    lab_environment:
-      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
-      AUTO_REPO_BRANCH: "prod"
-      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-      LSST_DDS_INTERFACE: net1
-      LSST_DDS_PARTITION_PREFIX: base
-    volumes:
-      - name: home
-        nfs:
-          path: /lsstdata/user/staff/jhome
-          server: ddn-nfs.ls.lsst.org
-      - name: project
-        nfs:
-          path: /lsstdata/user/staff/project
-          server: ddn-nfs.ls.lsst.org
-      - name: scratch
-        nfs:
-          path: /lsstdata/user/staff/scratch
-          server: ddn-nfs.ls.lsst.org
-    volume_mounts:
-      - name: home
-        mountPath: /home
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
+config:
+  base_url: "https://base-lsp.lsst.codes"
+  butler_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/butler-secret"
+  pull_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    LSST_DDS_INTERFACE: net1
+    LSST_DDS_PARTITION_PREFIX: base
+  volumes:
+    - name: home
+      nfs:
+        path: /lsstdata/user/staff/jhome
+        server: ddn-nfs.ls.lsst.org
+    - name: project
+      nfs:
+        path: /lsstdata/user/staff/project
+        server: ddn-nfs.ls.lsst.org
+    - name: scratch
+      nfs:
+        path: /lsstdata/user/staff/scratch
+        server: ddn-nfs.ls.lsst.org
+  volume_mounts:
+    - name: home
+      mountPath: /home
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
 
-  vault_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/nublado2"
+vault_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/nublado2"
 
 pull-secret:
   enabled: true
