@@ -1,17 +1,4 @@
-portal:
-  imagePullSecrets:
-    - name: "pull-secret"
-
-  ingress:
-    host: "minikube.lsst.codes"
-
-  resources:
-    limits:
-      cpu: 0.3
-      memory: "2Gi"
-
-  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/portal"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
+resources:
+  limits:
+    cpu: 0.3
+    memory: "2Gi"
