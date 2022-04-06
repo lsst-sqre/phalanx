@@ -43,6 +43,7 @@ telegraf:
           - watch
       - nonResourceURLs:
           - "/metrics"
+          - "/stats"
         verbs:
           - get
   service:
@@ -116,10 +117,13 @@ telegraf:
             prometheus_app: "ingressnginx"
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
-#      - kubernetes:
-#          bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-#          insecure_skip_verify = true
-#          url = "https://kubernetes.default.svc"
+      - kubernetes:
+          bearer_token: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+          insecure_skip_verify: true
+          url: "https://kubernetes.default.svc"
+          # We only care about the applications; GKE does a good job
+          # with the overall cluster.
+          namepass: ["kubernetes_pod_container"]
     # -- Telegraf default output destination.
     outputs:
       - influxdb_v2:
@@ -154,6 +158,16 @@ telegraf:
           organization: "square"
           tagpass:
             prometheus_app: ["ingressnginx"]
+      # Kubernetes: split by namespace
+      - influxdb_v2:
+          token: "$INFLUX_TOKEN"
+          urls:
+            - "https://monitoring.lsst.codes"
+          organization: "square"
+          bucket: "k8s_argocd"
+          namepass: ["kubernetes_pod_container"]
+          tagpass:
+            namespace: ["argocd"]
   tplVersion: 2
 
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
