@@ -35,14 +35,43 @@ telegraf:
             prometheus_app: "certmanager"
           metric_version: 2
       - prometheus:
-          urls:
-            - http://argocd-application-controller-metrics.argocd:8082/metrics
-            - http://argocd-notifications-controller-metrics.argocd:9001/metrics
-            - http://argocd-redis-metrics.argocd:9121/metrics
-            - http://argocd-repo-server-metrics.argocd:8084/metrics
-            - http://argocd-server-metrics.argocd:8083/metrics
+      # Get all the ArgoCD measurements, and put them into an "argocd" bucket
+      # but override the measurement names so each category gets its own
+      # measurements
+          name_override: "application_controller"
+          metric_version: 2
           tags:
             prometheus_app: "argocd"
+          urls:
+            - http://argocd-application-controller-metrics.argocd:8082/metrics
+      - prometheus:
+          name_override: "notifications_controller"
+          metric_version: 2
+          tags:
+            prometheus_app: "argocd"
+          urls:
+            - http://argocd-notifications-controller-metrics.argocd:9001/metrics
+      - prometheus:
+          name_override: "redis"
+          metric_version: 2
+          tags:
+            prometheus_app: "argocd"
+          urls:
+            - http://argocd-redis-metrics.argocd:9121/metrics
+      - prometheus:
+          name_override: "repo_server"
+          metric_version: 2
+          tags:
+            prometheus_app: "argocd"
+          urls:
+            - http://argocd-repo-server-metrics.argocd:8084/metrics
+      - prometheus:
+          name_override: "server"
+          metric_version: 2
+          tags:
+            prometheus_app: "argocd"
+          urls:
+            - http://argocd-server-metrics.argocd:8083/metrics
           metric_version: 2
       - prometheus:
           urls:
