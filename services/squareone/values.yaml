@@ -35,17 +35,6 @@ serviceAccount:
 # -- Annotations for squareone pods
 podAnnotations: {}
 
-podSecurityContext:
-  runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
-
-securityContext:
-  capabilities:
-    drop:
-    - "all"
-  readOnlyRootFilesystem: true
-
 service:
   # -- Type of service to create
   type: ClusterIP

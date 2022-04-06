@@ -40,13 +40,8 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | nameOverride | string | `""` | Overrides the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for squareone pods |
-| podSecurityContext.runAsGroup | int | `1000` |  |
-| podSecurityContext.runAsNonRoot | bool | `true` |  |
-| podSecurityContext.runAsUser | int | `1000` |  |
 | replicaCount | int | `1` | Number of squareone pods to run in the deployment. |
 | resources | object | `{}` |  |
-| securityContext.capabilities.drop[0] | string | `"all"` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
