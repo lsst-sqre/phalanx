@@ -49,7 +49,6 @@ ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
-  host: "chart-example.local"
   tls: []
 
 resources: {}
@@ -89,3 +88,18 @@ config:
   # -- URL to the Semaphore (user notifications) API service.
   # @default null disables the Semaphore integration
   semaphoreUrl: null
+
+# Global parameters are set by parameters injected by the Argo CD Application
+# and should not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD Application
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD Application
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD Application
+  vaultSecretsPathPrefix: ""

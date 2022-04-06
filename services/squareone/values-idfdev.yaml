@@ -2,7 +2,6 @@ image:
   pullPolicy: Always
 
 ingress:
-  host: "data-dev.lsst.cloud"
   annotations:
     cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
   tls:

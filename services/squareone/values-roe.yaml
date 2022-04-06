@@ -1,5 +1,3 @@
-ingress:
-  host: "rsp.lsst.ac.uk"
 imagePullSecrets:
   - name: "pull-secret"
 config:

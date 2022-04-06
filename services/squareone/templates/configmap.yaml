@@ -7,7 +7,7 @@ metadata:
 data:
   squareone.config.yaml: |
     siteName: {{ .Values.config.siteName | quote }}
-    baseUrl: https://{{ .Values.ingress.host | default "example.com" }}
+    baseUrl: {{ .Values.global.baseUrl | quote }}
     siteDescription: |
       {{ .Values.config.siteDescription }}
     {{- if .Values.config.semaphoreUrl }}

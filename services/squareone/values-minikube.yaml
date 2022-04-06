@@ -1,5 +1,3 @@
-ingress:
-  host: "minikube.lsst.codes"
 imagePullSecrets:
   - name: "pull-secret"
 config:

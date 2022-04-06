@@ -1,5 +1,4 @@
 ingress:
-  host: "summit-lsp.lsst.codes"
   annotations:
     cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
   tls:

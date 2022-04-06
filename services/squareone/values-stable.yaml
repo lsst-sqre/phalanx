@@ -1,5 +1,3 @@
-ingress:
-  host: "lsst-lsp-stable.ncsa.illinois.edu"
 imagePullSecrets:
   - name: "pull-secret"
 config:

@@ -1,5 +1,4 @@
 ingress:
-  host: "data-int.lsst.cloud"
   annotations:
     cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
   tls:
