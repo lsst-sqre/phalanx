@@ -1,16 +1,15 @@
-squareone:
-  ingress:
-    host: "red-five.lsst.codes"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "red-five.lsst.codes"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ red-five"
+ingress:
+  host: "red-five.lsst.codes"
+  annotations:
+    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+  tls:
+    - secretName: squareone-tls
+      hosts:
+        - "red-five.lsst.codes"
+imagePullSecrets:
+  - name: "pull-secret"
+config:
+  siteName: "Rubin Science Platform @ red-five"
 
 pull-secret:
   enabled: true

@@ -1,0 +1,102 @@
+# Default values for squareone.
+
+# -- Number of squareone pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Squareone Docker image repository
+  repository: lsstsqre/squareone
+
+  # -- Image pull policy (tip: use Always for development)
+  pullPolicy: IfNotPresent
+
+  # -- Overrides the image tag.
+  # @default -- Chart's appVersion
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Overrides the base name for resources
+nameOverride: ""
+
+# -- Overrides the full name for resources (includes the release name)
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+  # -- Annotations to add to the service account
+  annotations: {}
+  # -- The name of the service account to use.
+  # @default -- Generated using the fullname template
+  name: ""
+
+# -- Annotations for squareone pods
+podAnnotations: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - "all"
+  readOnlyRootFilesystem: true
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Enable ingress
+  enabled: true
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  host: "chart-example.local"
+  tls: []
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Squareone app configuration
+config:
+  # -- Name of the site, used in the title and meta tags.
+  siteName: "Rubin Science Platform"
+
+  # -- Site description, used in meta tags
+  siteDescription: |
+    Access Rubin Observatory Legacy Survey of Space and Time data.
+
+  # -- URL to the Semaphore (user notifications) API service.
+  # @default null disables the Semaphore integration
+  semaphoreUrl: null

@@ -1,11 +1,10 @@
-squareone:
-  ingress:
-    host: "rsp.lsst.ac.uk"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform"
-    semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
+ingress:
+  host: "rsp.lsst.ac.uk"
+imagePullSecrets:
+  - name: "pull-secret"
+config:
+  siteName: "Rubin Science Platform"
+  semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
 
 pull-secret:
   enabled: true
