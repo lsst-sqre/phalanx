@@ -116,6 +116,10 @@ telegraf:
             prometheus_app: "ingressnginx"
           # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
           metric_version: 2
+#      - kubernetes:
+#          bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+#          insecure_skip_verify = true
+#          url = "https://kubernetes.default.svc"
     # -- Telegraf default output destination.
     outputs:
       - influxdb_v2:
