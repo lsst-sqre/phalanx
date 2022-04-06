@@ -1,10 +1,6 @@
 apiVersion: v2
 name: portal
 version: 1.0.0
-dependencies:
-  - name: portal
-    version: 0.4.1
-    repository: https://lsst-sqre.github.io/charts/
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
+description: "Rubin Science Platform portal aspect"
+home: "https://github.com/lsst/suit"
+appVersion: "suit-233-7-dev"

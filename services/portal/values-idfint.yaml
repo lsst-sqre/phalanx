@@ -1,24 +1,11 @@
-portal:
-  replicaCount: 4
+replicaCount: 4
 
-  imagePullSecrets:
-    - name: "pull-secret"
+config:
+  volumes:
+    workareaNfs:
+      path: "/share1/home/firefly/shared-workarea"
+      server: "10.22.240.130"
 
-  config:
-    volumes:
-      workareaNfs:
-        path: "/share1/home/firefly/shared-workarea"
-        server: "10.22.240.130"
-
-  ingress:
-    host: "data-int.lsst.cloud"
-
-  resources:
-    limits:
-      memory: "30Gi"
-
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/portal"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"
+resources:
+  limits:
+    memory: "30Gi"
