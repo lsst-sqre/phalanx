@@ -20,16 +20,7 @@ spec:
         {{- end }}
       labels:
         {{- include "squareone.selectorLabels" . | nindent 8 }}
-    automountServiceAccountToken: false
     spec:
-      {{- with .Values.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -62,6 +53,19 @@ spec:
               mountPath: "/etc/squareone"
             - name: "next-image-cache"
               mountPath: "/app/.next/cache/images"
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "config"
+          configMap:
+            name: {{ include "squareone.fullname" . }}
+        - name: "next-image-cache"
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -74,9 +78,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: "config"
-          configMap:
-            name: {{ include "squareone.fullname" . }}
-        - name: "next-image-cache"
-          emptyDir: {}

@@ -14,9 +14,6 @@ image:
   # @default -- Chart's appVersion
   tag: ""
 
-# -- Secret names to use for all Docker pulls
-imagePullSecrets: []
-
 # -- Overrides the base name for resources
 nameOverride: ""
 
