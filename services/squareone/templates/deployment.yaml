@@ -20,12 +20,12 @@ spec:
         {{- end }}
       labels:
         {{- include "squareone.selectorLabels" . | nindent 8 }}
+    automountServiceAccountToken: false
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "squareone.serviceAccountName" . }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

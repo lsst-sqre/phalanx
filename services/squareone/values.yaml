@@ -23,15 +23,6 @@ nameOverride: ""
 # -- Overrides the full name for resources (includes the release name)
 fullnameOverride: ""
 
-serviceAccount:
-  # -- Specifies whether a service account should be created
-  create: true
-  # -- Annotations to add to the service account
-  annotations: {}
-  # -- The name of the service account to use.
-  # @default -- Generated using the fullname template
-  name: ""
-
 # -- Annotations for squareone pods
 podAnnotations: {}
 

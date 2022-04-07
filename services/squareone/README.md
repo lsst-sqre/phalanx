@@ -46,9 +46,6 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | resources | object | `{}` |  |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
-| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| serviceAccount.create | bool | `true` | Specifies whether a service account should be created |
-| serviceAccount.name | string | Generated using the fullname template | The name of the service account to use. |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------
