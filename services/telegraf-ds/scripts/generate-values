@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+
+# Run this with no arguments.  It will generate the values files in the
+# directory above the one where this script lives.
+#
+# This is handy because, as long as we're specifying the Telegraf TOML
+# directly, which we have to do because telegraf-ds hasn't been updated to
+# template version 2, we can't do the input and output splitting we want to
+# do.
+
+import glob
+import json
+import logging
+import os
+import re
+import sys
+import yaml
+
+from os.path import basename
+from pathlib import Path
+from typing import Any, Dict, Set, Tuple
+
+class TelegrafDSValuesWriter(object):
+    """
+    The TelegrafDSValuesWriter uses its knowledge of where it lives (the
+    scripts directory in the telegraf-ds service) to parse the science-platform
+    configurations to determine for which environments it should create files,
+    and then to generate the files to write.
+    """
+    def __init__(self, *args, **kwargs) -> None:
+        logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
+        self.log = logging.getLogger()
+        self.template_re = re.compile('(\{\{.*?\}\})')
+        self.instances: Dict[str,Any] = {}
+        self.applications: Tuple(str) = tuple()
+        self.config: Dict[str,str] = {}
+        self.namespaces: Dict[str,Set[str]] = {}
+
+    def load_config(self) -> None:
+        """Populate our instance attributes with data from our yaml."""
+        self.instances = self.find_instances()
+        self.applications = self.find_applications()
+        self.namespaces = self.find_app_namespaces()
+
+    def _get_science_platform_path(self) -> str:
+        """Convenience method to extract the science-platform root directory.
+        """
+        me = Path.resolve(Path(sys.argv[0]))
+        # ./..[telegraf-ds]/..[services]/science-platform
+        sp_path = str(me.parents[3]) + "/science-platform"
+        return sp_path
+        
+    def find_instances(self) -> Dict[str,Any]:
+        """Read the science-platform config to determine which instances
+        there are."""
+        val_path = self._get_science_platform_path()
+        val_files = glob.glob(val_path + "/values-*yaml")
+        inst_settings = dict()
+        for v in val_files:
+            iname = v.split('-')[-1][:-5]
+            with open(v) as f:
+                inst_settings[iname] = yaml.safe_load(f)
+        return inst_settings
+
+    def find_applications(self) -> Tuple[str]:
+        """Find all the defined applications from science-platform config."""
+        val_path = self._get_science_platform_path()
+        val_file = val_path + "/values.yaml"
+        applications = tuple()
+        with open(val_file) as f:
+            apps=yaml.safe_load(f)
+        for app in apps:
+            # Skip the fields that are not apps
+            if app in ("repoURL", "revision", "onepassword_uuid"):
+                continue
+            applications += (app,)
+        return applications
+
+    def find_app_namespaces(self) -> Dict[str,Set[str]]:
+        """From our list of applications, parse the application YAML for each
+        to determine whether it has namespaces, and create that mapping.
+        """
+        apps = self.applications
+        ns = {}
+        for app in apps:
+            ns[app] = self.parse_app_template(app)
+        return ns
+            
+    def parse_app_template(self, app:str) -> Set[str]:
+        """Read the application definition to extract its namespace(s) if any.
+        """
+        # In general, if there's a namespace defined for the app, there's
+        # only one and it's the app name with _ replaced by -, so all this
+        # is kind of superfluous.
+        val_path = self._get_science_platform_path()
+        namespaces = set()
+        if app == "vault_secrets_operator":
+            # The namespace is precreated so the read secret can be
+            # preinstalled.
+            namespaces.add("vault-secrets-operator")
+            return namespaces
+        dashapp = app.replace('_', '-')
+        app_file = f"{val_path}/templates/{dashapp}-application.yaml"
+        detemplated_contents = self.strip_templates(app_file)
+        app_docs=yaml.safe_load_all(detemplated_contents)
+        for doc in app_docs:
+            kind = doc.get("kind","")
+            if kind != "Namespace":
+                continue
+            ns = doc["metadata"]["name"]
+            namespaces.add(ns)
+        return namespaces
+
+    def strip_templates(self, app_file:str) -> str:
+        """The YAML is actually Helm-templated yaml.  For what we're doing,
+        just stripping all the templates out works fine.
+        """
+        contents = ""
+        with open(app_file) as f:
+            while True:
+                inp_l = f.readline()
+                if not inp_l:
+                    break
+                outp_l = re.sub(self.template_re,'', inp_l)
+                contents += outp_l
+        return contents
+
+    def build_telegraf_override_conf(self, instance: str) -> str:
+        """For each instance, generate the (literal) contents for
+        telegraf.conf"""
+        endpoint=self.instances.get(instance,{}).get("fqdn","no_endpoint")
+        tc  =  "  override_config:\n"
+        tc +=  "    toml: |+\n"
+        tc +=  "      [ global_tags ]\n"
+        tc += f"        cluster = \"{endpoint}\"\n"
+        tc += """      [ agent ]
+        hostname = "telegraf-$HOSTIP"
+      [[inputs.kubernetes]]
+        url = "https://$HOSTIP:10250"
+        bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        insecure_skip_verify = true
+        namepass = ["kubernetes_pod_container"]
+        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+"""
+        tc += self.build_outputs(instance)
+        return tc
+
+    def build_outputs(self, instance: str) -> str:
+        """For each instance, generate the list of outputs for each metric.
+        """
+        outp = ""
+        i_obj = self.instances.get(instance, {})
+        for app in self.applications:
+            if not i_obj.get(app,{}).get("enabled",False):
+                continue
+            namespace_set = self.namespaces.get(app, None)
+            if not namespace_set:
+                continue
+            for namespace in namespace_set:
+                outp +='''      [[outputs.influxdb_v2]]
+            urls = ["https://monitoring.lsst.codes"]
+            token = "$INFLUX_TOKEN"
+            organization = "square"
+'''
+                bucket = namespace.replace("-", "_")
+                outp += f"        bucket = \"k8s_{bucket}\"\n"
+                outp += "        [outputs.influxdb_v2.tagpass]\n"
+                outp += f"          namespace = [\"{namespace}\"]\n"
+        return outp
+
+    def build_yaml(self) -> None:
+        self.config["generic"] = self.build_generic_yaml()
+        for instance in self.instances:
+            self.config[instance]=self.build_instance_yaml(instance)
+
+    def build_generic_yaml(self) -> None:
+        cf='''# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
+# shared with telegraf (non-DaemonSet)
+# @default -- None, must be set
+vaultSecretsPath: ""
+telegraf-ds:
+  env:
+    # -- Token to communicate with Influx
+    - name: INFLUX_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: telegraf
+          key: influx-token
+'''
+        cf += self.build_telegraf_override_conf("generic")
+        return cf
+
+    def build_instance_yaml(self, instance:str) -> str:
+        secrets_path=self.instances[instance].get("fqdn","")
+        cf = f"vaultSecretsPath: \"{secrets_path}\"\n"
+        cf = "telegraf-ds:\n"
+        cf += self.build_telegraf_override_conf(instance)
+        return cf
+
+    def write_yaml(self) -> None:
+        me = Path.resolve(Path(sys.argv[0]))
+        val_path = str(me.parents[1])
+        for instance in self.config:
+            if instance == "generic":
+                val_file = f"{val_path}/values.yaml"
+            else:
+                env_name = self.instances[instance]["environment"]
+                val_file = f"{val_path}/values-{env_name}.yaml"
+            with open(val_file,"w") as f:
+                f.write(self.config[instance])
+
+def main() -> None:
+    gen = TelegrafDSValuesWriter()
+    gen.load_config()
+    gen.build_yaml()
+    gen.write_yaml()
+
+if __name__ == "__main__":
+    main()

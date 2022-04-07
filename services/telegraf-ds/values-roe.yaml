@@ -2,7 +2,7 @@ telegraf-ds:
   override_config:
     toml: |+
       [ global_tags ]
-        cluster = "data.lsst.cloud"
+        cluster = "rsp.lsst.ac.uk"
       [ agent ]
         hostname = "telegraf-$HOSTIP"
       [[inputs.kubernetes]]
@@ -25,13 +25,6 @@ telegraf-ds:
         bucket = "k8s_cert_manager"
         [outputs.influxdb_v2.tagpass]
           namespace = ["cert-manager"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_datalinker"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["datalinker"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
@@ -71,13 +64,6 @@ telegraf-ds:
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_obstap"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["obstap"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
         bucket = "k8s_portal"
         [outputs.influxdb_v2.tagpass]
           namespace = ["portal"]
@@ -88,20 +74,6 @@ telegraf-ds:
         bucket = "k8s_postgres"
         [outputs.influxdb_v2.tagpass]
           namespace = ["postgres"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_semaphore"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["semaphore"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_sherlock"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["sherlock"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
@@ -144,10 +116,3 @@ telegraf-ds:
         bucket = "k8s_vault_secrets_operator"
         [outputs.influxdb_v2.tagpass]
           namespace = ["vault-secrets-operator"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_vo_cutouts"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["vo-cutouts"]

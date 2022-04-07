@@ -2,7 +2,7 @@ telegraf-ds:
   override_config:
     toml: |+
       [ global_tags ]
-        cluster = "data.lsst.cloud"
+        cluster = "red-five.lsst.codes"
       [ agent ]
         hostname = "telegraf-$HOSTIP"
       [[inputs.kubernetes]]
@@ -92,20 +92,6 @@ telegraf-ds:
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_semaphore"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["semaphore"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_sherlock"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["sherlock"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
         bucket = "k8s_squareone"
         [outputs.influxdb_v2.tagpass]
           namespace = ["squareone"]
@@ -144,10 +130,3 @@ telegraf-ds:
         bucket = "k8s_vault_secrets_operator"
         [outputs.influxdb_v2.tagpass]
           namespace = ["vault-secrets-operator"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_vo_cutouts"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["vo-cutouts"]

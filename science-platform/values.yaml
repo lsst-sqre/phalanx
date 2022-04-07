@@ -32,10 +32,6 @@ postgres:
   enabled: false
 sasquatch:
   enabled: false
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
 semaphore:
   enabled: false
 sherlock:
@@ -51,6 +47,10 @@ strimzi_registry_operator:
 tap:
   enabled: false
 tap_schema:
+  enabled: false
+telegraf:
+  enabled: false
+telegraf-ds:
   enabled: false
 times_square:
   enabled: false
