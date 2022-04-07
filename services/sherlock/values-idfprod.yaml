@@ -3,4 +3,4 @@ sherlock:
     host: "data.lsst.cloud"
 
   publish_url: "https://status.lsst.codes/api/data"
-  vaultSecretsPath: "secret/k8s_operator/data.lsst.codes/sherlock"
+  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/sherlock"
