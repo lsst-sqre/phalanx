@@ -3,3 +3,4 @@ sherlock:
     host: "data-int.lsst.cloud"
 
   publish_url: "https://status.lsst.codes/api/data-int"
+  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.codes/sherlock"
