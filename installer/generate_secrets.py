@@ -231,6 +231,12 @@ class SecretGenerator:
             self.input_field(
                 "gafaelfawr", "github-client-secret", "GitHub client secret"
             )
+        elif auth_type == "oidc":
+            self.input_field(
+                "gafaelfawr",
+                "oidc-client-secret",
+                "OpenID Connect client secret",
+            )
         else:
             raise Exception(f"Invalid auth provider {auth_type}")
 
