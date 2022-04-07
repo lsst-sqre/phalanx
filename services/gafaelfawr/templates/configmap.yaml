@@ -101,8 +101,15 @@ data:
     ldap:
       url: {{ .Values.config.ldap.url | quote }}
       base_dn: {{ required "config.ldap.baseDn must be set" .Values.config.ldap.baseDn | quote }}
+      {{- if .Values.config.ldap.userDn }}
+      user_dn: {{ .Values.config.ldap.userDn | quote }}
+      {{- end }}
       group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
       group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
+      {{- if .Values.config.ldap.usernameBaseDn }}
+      username_base_dn: {{ .Values.config.ldap.usernameBaseDn | quote }}
+      username_search_attr: {{ .Values.config.ldap.usernameSearchAttr | quote }}
+      {{- end }}
       {{- if .Values.config.ldap.uidBaseDn }}
       uid_base_dn: {{ .Values.config.ldap.uidBaseDn | quote }}
       uid_attr: {{ .Values.config.ldap.uidAttr | quote }}

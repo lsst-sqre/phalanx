@@ -3,4 +3,4 @@ name: gafaelfawr
 version: 1.0.0
 description: Science Platform authentication and authorization system
 home: https://gafaelfawr.lsst.io/
-appVersion: 4.0.0
+appVersion: 4.1.0

@@ -113,12 +113,25 @@ config:
     # @default -- None, must be set
     baseDn: ""
 
+    # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
+    # set in the Gafaelfawr secret
+    # @default -- Use anonymous binds
+    userDn: ""
+
     # -- Object class containing group information
     groupObjectClass: "posixGroup"
 
     # -- Member attribute of the object class. Values must match the username
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
+
+    # -- Base DN for the LDAP search to find a user's username
+    # @default -- Get the username from the upstream authentication provider
+    usernameBaseDn: ""
+
+    # -- Attribute matching the `sub` claim of a token to find the record
+    # containing the username
+    usernameSearchAttr: "voPersonSoRID"
 
     # -- Base DN for the LDAP search to find a user's UID number
     # @default -- Get the UID number from the upstream authentication provider

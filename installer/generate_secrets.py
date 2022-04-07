@@ -227,6 +227,11 @@ class SecretGenerator:
             self.input_field(
                 "gafaelfawr", "cilogon-client-secret", "CILogon client secret"
             )
+            use_ldap = self.secrets["gafaelfawr"]["ldap"]
+            if use_ldap == "y":
+                self.input_field(
+                    "gafaelfawr", "ldap-secret", "LDAP simple bind password"
+                )
         elif auth_type == "github":
             self.input_field(
                 "gafaelfawr", "github-client-secret", "GitHub client secret"
@@ -237,6 +242,10 @@ class SecretGenerator:
                 "oidc-client-secret",
                 "OpenID Connect client secret",
             )
+            if use_ldap == "y":
+                self.input_field(
+                    "gafaelfawr", "ldap-secret", "LDAP simple bind password"
+                )
         else:
             raise Exception(f"Invalid auth provider {auth_type}")
 
