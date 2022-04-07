@@ -1,6 +1,6 @@
 # squareone
 
-![AppVersion: 0.4.0](https://img.shields.io/badge/AppVersion-0.4.0-informational?style=flat-square)
+![AppVersion: 0.5.0](https://img.shields.io/badge/AppVersion-0.5.0-informational?style=flat-square)
 
 Squareone is the homepage UI for the Rubin Science Platform.
 
@@ -33,7 +33,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | global.host | string | Set by Argo CD Application | Host name for ingress |
 | global.vaultSecretsPathPrefix | string | Set by Argo CD Application | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy (tip: use Always for development) |
-| image.repository | string | `"lsstsqre/squareone"` | Squareone Docker image repository |
+| image.repository | string | `"ghcr.io/lsst-sqre/squareone"` | Squareone Docker image repository |
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `true` | Enable ingress |

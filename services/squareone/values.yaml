@@ -5,7 +5,7 @@ replicaCount: 1
 
 image:
   # -- Squareone Docker image repository
-  repository: lsstsqre/squareone
+  repository: ghcr.io/lsst-sqre/squareone
 
   # -- Image pull policy (tip: use Always for development)
   pullPolicy: IfNotPresent
