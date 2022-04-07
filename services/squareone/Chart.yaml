@@ -1,10 +1,18 @@
 apiVersion: v2
 name: squareone
 version: 1.0.0
+description: Squareone is the homepage UI for the Rubin Science Platform.
+home: https://squareone.lsst.io/
+sources:
+  - https://github.com/lsst-sqre/squareone
+maintainers:
+  - name: jonathansick
+    url: https://github.com/jonathansick
+
+# The default version tag of the squareone docker image
+appVersion: "0.5.0"
+
 dependencies:
-  - name: squareone
-    version: 0.4.1
-    repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
     repository: https://lsst-sqre.github.io/charts/

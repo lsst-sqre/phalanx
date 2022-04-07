@@ -1,16 +1,5 @@
-squareone:
-  ingress:
-    host: "tucson-teststand.lsst.codes"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "tucson-teststand.lsst.codes"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ Tucson"
+config:
+  siteName: "Rubin Science Platform @ Tucson"
 
 pull-secret:
   enabled: true
