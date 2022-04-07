@@ -43,8 +43,6 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | podAnnotations | object | `{}` | Annotations for squareone pods |
 | replicaCount | int | `1` | Number of squareone pods to run in the deployment. |
 | resources | object | `{}` |  |
-| service.port | int | `80` | Port of the service to create and map to the ingress |
-| service.type | string | `"ClusterIP"` | Type of service to create |
 | tolerations | list | `[]` |  |
 
 ----------------------------------------------

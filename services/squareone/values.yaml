@@ -23,13 +23,6 @@ fullnameOverride: ""
 # -- Annotations for squareone pods
 podAnnotations: {}
 
-service:
-  # -- Type of service to create
-  type: ClusterIP
-
-  # -- Port of the service to create and map to the ingress
-  port: 80
-
 ingress:
   # -- Enable ingress
   enabled: true
