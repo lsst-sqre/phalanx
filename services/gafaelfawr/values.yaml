@@ -11,7 +11,7 @@ replicaCount: 1
 
 image:
   # -- Gafaelfawr image to use
-  repository: "lsstsqre/gafaelfawr"
+  repository: "ghcr.io/lsst-sqre/gafaelfawr"
 
   # -- Pull policy for the Gafaelfawr image
   pullPolicy: "IfNotPresent"
