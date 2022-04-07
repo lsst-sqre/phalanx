@@ -1,7 +1,5 @@
-imagePullSecrets:
-  - name: "pull-secret"
-config:
-  siteName: "Rubin Science Platform @ lsp-stable"
+ingress:
+  tls: false
 
 pull-secret:
   enabled: true

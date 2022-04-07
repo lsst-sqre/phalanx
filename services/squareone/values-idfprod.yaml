@@ -1,13 +1,4 @@
 replicaCount: 3
-ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-  tls:
-    - secretName: squareone-tls
-      hosts:
-        - "data.lsst.cloud"
-imagePullSecrets:
-  - name: "pull-secret"
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://data.lsst.cloud/semaphore"

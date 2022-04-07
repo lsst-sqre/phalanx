@@ -8,19 +8,18 @@ metadata:
     {{- include "squareone.labels" . | nindent 4 }}
   annotations:
     kubernetes.io/ingress.class: nginx
+    {{- if .Values.ingress.tls }}
+    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
+    {{- end }}
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:
-    {{- range .Values.ingress.tls }}
     - hosts:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      secretName: {{ .secretName }}
-    {{- end }}
+        - {{ required "global.host must be set" .Values.global.host | quote }}
+      secretName: squareone-tls
   {{- end }}
   rules:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}

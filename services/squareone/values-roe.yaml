@@ -1,8 +1,9 @@
-imagePullSecrets:
-  - name: "pull-secret"
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
+
+ingress:
+  tls: false
 
 pull-secret:
   enabled: true

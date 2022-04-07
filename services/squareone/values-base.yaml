@@ -1,12 +1,3 @@
-ingress:
-  annotations:
-    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-  tls:
-    - secretName: squareone-tls
-      hosts:
-        - "base-lsp.lsst.codes"
-imagePullSecrets:
-  - name: "pull-secret"
 config:
   siteName: "Rubin Science Platform @ Base"
 

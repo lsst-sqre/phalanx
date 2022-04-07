@@ -30,7 +30,9 @@ ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
-  tls: []
+  # -- Enable Let's Encrypt TLS management in this chart. This should be false
+  # if TLS is managed elsewhere, such as in an ingress-nginx app.
+  tls: true
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
