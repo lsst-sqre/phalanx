@@ -103,9 +103,9 @@ data:
       base_dn: {{ required "config.ldap.baseDn must be set" .Values.config.ldap.baseDn | quote }}
       group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
       group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
-      {{- if .Values.config.uidBaseDn }}
-      uid_base_dn: {{ .Values.config.uidBaseDn | quote }}
-      uid_attr: {{ .Values.config.uidAttr | quote }}
+      {{- if .Values.config.ldap.uidBaseDn }}
+      uid_base_dn: {{ .Values.config.ldap.uidBaseDn | quote }}
+      uid_attr: {{ .Values.config.ldap.uidAttr | quote }}
       {{- end }}
     {{- end }}
 
