@@ -8,3 +8,4 @@
 ./update_secrets.sh data.lsst.cloud
 ./update_secrets.sh data-int.lsst.cloud
 ./update_secrets.sh data-dev.lsst.cloud
+./update_secrets.sh roe
