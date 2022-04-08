@@ -13,6 +13,6 @@ telegraf:
   podLabels:
     hub.jupyter.org/network-access-hub: 'true'
   service:
-    enabled: 'false'
+    enabled: false
   tplVersion: 2
 vaultSecretsPath: ''
