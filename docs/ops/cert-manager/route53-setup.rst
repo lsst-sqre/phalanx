@@ -1,8 +1,8 @@
-###################################
-Setting up Route 53 for cert-issuer
-###################################
+####################################
+Setting up Route 53 for cert-manager
+####################################
 
-Each domain under which ``cert-issuer`` needs to issue certificates must be configured in AWS.
+Each domain under which ``cert-manager`` needs to issue certificates must be configured in AWS.
 This involves creating a new hosted zone for the DNS challenges for that domain, creating an AWS service user with an appropriate IAM policy, and creating an access key for that user which will be used by ``cert-manager``.
 
 Normally, DNS challenges work by writing a text record to the ``_acme-challenge.<hostname>`` record for the hostname for which one is obtaining a certificate.

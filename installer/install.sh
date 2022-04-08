@@ -95,14 +95,6 @@ then
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
 fi
 
-if [ $(yq -r .cert_issuer.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
-then
-  echo "Syncing cert-issuer..."
-  argocd app sync cert-issuer \
-    --port-forward \
-    --port-forward-namespace argocd
-fi
-
 if [ $(yq -r .postgres.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
 then
   echo "Syncing postgres..."

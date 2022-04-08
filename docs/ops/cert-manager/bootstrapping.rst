@@ -1,15 +1,15 @@
-#########################
-Bootstrapping cert-issuer
-#########################
+##########################
+Bootstrapping cert-manager
+##########################
 
-The issuer defined in the ``cert-issuer`` service uses the DNS solver.
+The issuer defined in the ``cert-manager`` service uses the DNS solver.
 The advantage of the DNS solver is that it works behind firewalls and can provision certificates for environments not exposed to the Internet, such as the Tucson teststand.
 The DNS solver uses an AWS service user with write access to Route 53 to answer Let's Encrypt challenges.
 
-In order to use ``cert-issuer``, you must be hosting the DNS for the external hostname of the Science Platform installation in AWS Route 53.
+In order to use ``cert-manager``, you must be hosting the DNS for the external hostname of the Science Platform installation in AWS Route 53.
 See :ref:`hostnames` for more information.
 
-First, ensure that ``cert-issuer`` is set up for the domain in which the cluster will be hosted.
+First, ensure that ``cert-manager`` is set up for the domain in which the cluster will be hosted.
 If this is a new domain, follow the instructions in :doc:`route53-setup`.
 
 Then, in Route 53, create a CNAME from ``_acme-challenge.<cluster-name>`` to ``_acme-challenge.tls.<domain>`` where ``<domain>`` is the domain in which the cluster is located (such as ``lsst.codes`` or ``lsst.cloud``).
@@ -23,13 +23,10 @@ Add the following to the ``values-*.yaml`` file for an environment:
 
 .. code-block:: yaml
 
-   solver:
+   config:
      route53:
-       aws-access-key-id: <access-key>
-       hosted-zone: <hosted-zone>
-       vault-secret-path: "secret/k8s_operator/<cluster-name>/cert-manager"
-
-replacing ``<cluster-name>`` with the FQDN of the cluster, corresponding to the root of the Vault secrets for that cluster (see :doc:`../vault-secrets-operator/index`).
+       awsAccessKeyId: "<access-key>"
+       hostedZone: "<hosted-zone>"
 
 ``<access-key>`` and ``<hosted-zone>`` must correspond to the domain under which the cluster is hosted.
 The values for the two most common Rubin Science Platform domains are:
@@ -37,11 +34,11 @@ The values for the two most common Rubin Science Platform domains are:
 .. code-block:: yaml
 
    lsst.codes:
-     aws-access-key-id: AKIAQSJOS2SFLUEVXZDB
-     hosted-zone: Z06873202D7WVTZUFOQ42
+     awsAccessKeyId: "AKIAQSJOS2SFLUEVXZDB"
+     hostedZone: "Z06873202D7WVTZUFOQ42"
    lsst.cloud:
-     aws-access-key-id: AKIAQSJOS2SFKQBMDRGR
-     hosted-zone: Z0567328105IEHEMIXLCO
+     awsAccessKeyId: "AKIAQSJOS2SFKQBMDRGR"
+     hostedZone: "Z0567328105IEHEMIXLCO"
 
 This key ID is for an AWS service user that has write access to the ``tls`` subdomain of the domain in which the cluster is hosted, and therefore can answer challenges.
 
@@ -51,8 +48,8 @@ The Vault secret should look something like this:
 .. code-block:: yaml
 
    data:
-     aws-access-key-id: <access-key>
-     aws-secret-access-key: <secret>
+     aws-access-key-id: "<access-key>"
+     aws-secret-access-key: "<secret>"
 
 The secrets for the SQuaRE-maintained Rubin Science Platform domains are stored in 1Password (search for ``cert-manager-lsst-codes`` or ``cert-manager-lsst-cloud``).
 If this cluster is in the same domain as another, working cluster, you can copy the secret from that cluster into the appropriate path for the new cluster.
