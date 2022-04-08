@@ -43,9 +43,9 @@ Science Platform authentication and authorization system
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.tokenLifetimeMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| globals.baseUrl | string | Set by Argo CD | Base URL for the environment |
-| globals.host | string | Set by Argo CD | Host name for ingress |
-| globals.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"lsstsqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |

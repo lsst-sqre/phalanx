@@ -25,7 +25,7 @@ spec:
     targetRevision: {{ .Values.revision | quote }}
     helm:
       parameters:
-        - name: "globals.vaultSecretsPath"
+        - name: "global.vaultSecretsPath"
           value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
         - "values.yaml"

@@ -15,9 +15,9 @@ Rubin Science Platform portal aspect
 | config.volumes.workareaHostPath | string | Use an `emptyDir` | hostPath to mount as a shared work area.  Set either this or `workareaNfs`, not both. |
 | config.volumes.workareaNfs | object | Use an `emptyDir` | NFS information for a shared work area.  If set, must have keys for path and server.  Set either this or `workareaHostPath`, not both. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| globals.baseUrl | string | Set by Argo CD | Base URL for the environment |
-| globals.host | string | Set by Argo CD | Host name for ingress |
-| globals.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Portal image |
 | image.repository | string | `"ipac/suit"` | Portal image to use |
 | image.tag | string | The appVersion of the chart | Tag of Portal image to use |
