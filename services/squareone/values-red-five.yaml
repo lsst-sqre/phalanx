@@ -1,6 +1,0 @@
-config:
-  siteName: "Rubin Science Platform @ red-five"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/red-five.lsst.codes/pull-secret
