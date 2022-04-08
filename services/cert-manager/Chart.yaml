@@ -1,10 +1,8 @@
 apiVersion: v2
 name: cert-manager
 version: 1.0.0
+description: "Let's Encrypt certificate management"
 dependencies:
-- name: cert-manager
-  version: v1.7.2
-  repository: https://charts.jetstack.io
-- name: pull-secret
-  version: 0.1.2
-  repository: https://lsst-sqre.github.io/charts/
+  - name: cert-manager
+    version: v1.7.2
+    repository: https://charts.jetstack.io
