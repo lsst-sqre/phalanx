@@ -20,35 +20,69 @@ from os.path import basename
 from pathlib import Path
 from typing import Any, Dict, Set, Tuple
 
-class TelegrafDSValuesWriter(object):
+LOGLEVEL = {"CRITICAL": 50,
+            "ERROR": 40,
+            "WARNING": 30,
+            "INFO": 20,
+            "DEBUG": 10,
+            "NOTSET": 0
+            }
+
+class PhalanxConfigGenerator(object):
     """
-    The TelegrafDSValuesWriter uses its knowledge of where it lives (the
-    scripts directory in the telegraf-ds service) to parse the science-platform
-    configurations to determine for which environments it should create files,
-    and then to generate the files to write.
+    The PhalanxConfigGenerator parses the science-platform configurations
+    to determine what services run in which environments.  It should then be
+    subclassed for particular applications to generate configuration files to
+    write.
+
+    A subclass (corresponding to a particular Phalanx application) must do the
+    following: set self.output_path (generally,
+    self.phalanx_root + "/services/<application_name>") and provide
+    an implementation of the build_config() method to generate configuration
+    for each instance of the application.
     """
     def __init__(self, *args, **kwargs) -> None:
-        logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
+        loglevel_str=kwargs.get("loglevel","warning")
+        self.debug=kwargs.get("debug",False)
+        if self.debug:
+            loglevel_str="debug"
+        loglevel_str=loglevel_str.upper()
+        loglevel=LOGLEVEL.get(loglevel_str, 30)
+        logging.basicConfig(encoding='utf-8',level=loglevel)
         self.log = logging.getLogger()
         self.template_re = re.compile('(\{\{.*?\}\})')
         self.instances: Dict[str,Any] = {}
         self.applications: Tuple(str) = tuple()
         self.config: Dict[str,str] = {}
         self.namespaces: Dict[str,Set[str]] = {}
-
-    def load_config(self) -> None:
-        """Populate our instance attributes with data from our yaml."""
-        self.instances = self.find_instances()
-        self.applications = self.find_applications()
-        self.namespaces = self.find_app_namespaces()
+        self.phalanx_root: str = kwargs.get("phalanx_root","")
+        if not self.phalanx_root:
+            try:
+                me = Path.resolve(Path(__file__))
+                # gen_config/gen_config
+                self.phalanx_root = str(me.parents[2])
+            except NameError:
+                me = Path.resolve(Path(sys.argv[0]))
+                # gen_config
+                self.phalanx_root = str(me.parents[1])
+        self.dry_run: bool = kwargs.get("dry_run", False)
+        self.load_phalanx()
+        self.log.debug(f"Phalanx root: {self.phalanx_root}")
+        self.log.debug(f"Applications: {self.applications}")
 
     def _get_science_platform_path(self) -> str:
         """Convenience method to extract the science-platform root directory.
         """
         me = Path.resolve(Path(sys.argv[0]))
         # ./..[telegraf-ds]/..[services]/science-platform
-        sp_path = str(me.parents[3]) + "/science-platform"
+        sp_path = self.phalanx_root + "/science-platform"
         return sp_path
+
+    def load_phalanx(self) -> None:
+        """Populate our instance attributes with data from our yaml."""
+        self.instances = self.find_instances()
+        self.applications = self.find_applications()
+        self.namespaces = self.find_app_namespaces()
         
     def find_instances(self) -> Dict[str,Any]:
         """Read the science-platform config to determine which instances
@@ -112,8 +146,8 @@ class TelegrafDSValuesWriter(object):
         return namespaces
 
     def strip_templates(self, app_file:str) -> str:
-        """The YAML is actually Helm-templated yaml.  For what we're doing,
-        just stripping all the templates out works fine.
+        """The config "YAML" is actually Helm-templated yaml.  For our
+        purposes, just stripping all the templates out works fine.
         """
         contents = ""
         with open(app_file) as f:
@@ -125,95 +159,36 @@ class TelegrafDSValuesWriter(object):
                 contents += outp_l
         return contents
 
-    def build_telegraf_override_conf(self, instance: str) -> str:
-        """For each instance, generate the (literal) contents for
-        telegraf.conf"""
-        endpoint=self.instances.get(instance,{}).get("fqdn","no_endpoint")
-        tc  =  "  override_config:\n"
-        tc +=  "    toml: |+\n"
-        tc +=  "      [ global_tags ]\n"
-        tc += f"        cluster = \"{endpoint}\"\n"
-        tc += """      [ agent ]
-        hostname = "telegraf-$HOSTIP"
-      [[inputs.kubernetes]]
-        url = "https://$HOSTIP:10250"
-        bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        insecure_skip_verify = true
-        namepass = ["kubernetes_pod_container"]
-        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
-"""
-        tc += self.build_outputs(instance)
-        return tc
-
-    def build_outputs(self, instance: str) -> str:
-        """For each instance, generate the list of outputs for each metric.
+    def build_config(self) -> None:
+        """This must be defined in a subclass to build the configuration for
+        the particular service.  The configuration should be stored in
+        self.config, as a dict whose key is a string representing the
+        instance name, and whose value is a string holding the yaml for
+        that instance's config.  Use "generic" for the top-level values.yaml.
         """
-        outp = ""
-        i_obj = self.instances.get(instance, {})
-        for app in self.applications:
-            if not i_obj.get(app,{}).get("enabled",False):
-                continue
-            namespace_set = self.namespaces.get(app, None)
-            if not namespace_set:
-                continue
-            for namespace in namespace_set:
-                outp +='''      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-'''
-                bucket = namespace.replace("-", "_")
-                outp += f"        bucket = \"k8s_{bucket}\"\n"
-                outp += "        [outputs.influxdb_v2.tagpass]\n"
-                outp += f"          namespace = [\"{namespace}\"]\n"
-        return outp
+        raise NotImplementedError()
 
-    def build_yaml(self) -> None:
-        self.config["generic"] = self.build_generic_yaml()
-        for instance in self.instances:
-            self.config[instance]=self.build_instance_yaml(instance)
-
-    def build_generic_yaml(self) -> None:
-        cf='''# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
-# shared with telegraf (non-DaemonSet)
-# @default -- None, must be set
-vaultSecretsPath: ""
-telegraf-ds:
-  env:
-    # -- Token to communicate with Influx
-    - name: INFLUX_TOKEN
-      valueFrom:
-        secretKeyRef:
-          name: telegraf
-          key: influx-token
-'''
-        cf += self.build_telegraf_override_conf("generic")
-        return cf
-
-    def build_instance_yaml(self, instance:str) -> str:
-        secrets_path=self.instances[instance].get("fqdn","")
-        cf = f"vaultSecretsPath: \"{secrets_path}\"\n"
-        cf += "telegraf-ds:\n"
-        cf += self.build_telegraf_override_conf(instance)
-        return cf
-
-    def write_yaml(self) -> None:
-        me = Path.resolve(Path(sys.argv[0]))
-        val_path = str(me.parents[1])
+    def write_config(self) -> None:
+        """Write the configuration files, unless self.dry_run is set, in which
+        case, just print their contents to stdout."""
+        if self.dry_run:
+            val_path = "DRY-RUN"
+        else:
+            if not self.output_path:
+                raise RuntimeError(
+                    "self.output_path must be defined in order to write config")
+            val_path = self.output_path
         for instance in self.config:
             if instance == "generic":
                 val_file = f"{val_path}/values.yaml"
             else:
                 env_name = self.instances[instance]["environment"]
                 val_file = f"{val_path}/values-{env_name}.yaml"
-            with open(val_file,"w") as f:
-                f.write(self.config[instance])
-
-def main() -> None:
-    gen = TelegrafDSValuesWriter()
-    gen.load_config()
-    gen.build_yaml()
-    gen.write_yaml()
-
-if __name__ == "__main__":
-    main()
+            if self.dry_run:
+                print(f"---- begin {val_file} ----")
+                print(self.config[instance])
+                print(f"------ end {val_file} ----")
+            else:
+                with open(val_file,"w") as f:
+                    f.write(self.config[instance])
+    

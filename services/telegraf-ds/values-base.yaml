@@ -16,97 +16,97 @@ telegraf-ds:
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_cachemachine"
+        bucket = "cachemachine"
         [outputs.influxdb_v2.tagpass]
           namespace = ["cachemachine"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_cert_manager"
+        bucket = "cert_manager"
         [outputs.influxdb_v2.tagpass]
           namespace = ["cert-manager"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_exposurelog"
+        bucket = "exposurelog"
         [outputs.influxdb_v2.tagpass]
           namespace = ["exposurelog"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_gafaelfawr"
+        bucket = "gafaelfawr"
         [outputs.influxdb_v2.tagpass]
           namespace = ["gafaelfawr"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_ingress_nginx"
+        bucket = "ingress_nginx"
         [outputs.influxdb_v2.tagpass]
           namespace = ["ingress-nginx"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_moneypenny"
+        bucket = "moneypenny"
         [outputs.influxdb_v2.tagpass]
           namespace = ["moneypenny"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_narrativelog"
+        bucket = "narrativelog"
         [outputs.influxdb_v2.tagpass]
           namespace = ["narrativelog"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_nublado2"
+        bucket = "nublado2"
         [outputs.influxdb_v2.tagpass]
           namespace = ["nublado2"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_portal"
+        bucket = "portal"
         [outputs.influxdb_v2.tagpass]
           namespace = ["portal"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_postgres"
+        bucket = "postgres"
         [outputs.influxdb_v2.tagpass]
           namespace = ["postgres"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_squareone"
+        bucket = "squareone"
         [outputs.influxdb_v2.tagpass]
           namespace = ["squareone"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_telegraf"
+        bucket = "telegraf"
         [outputs.influxdb_v2.tagpass]
           namespace = ["telegraf"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_telegraf_ds"
+        bucket = "telegraf_ds"
         [outputs.influxdb_v2.tagpass]
           namespace = ["telegraf-ds"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"
             organization = "square"
-        bucket = "k8s_vault_secrets_operator"
+        bucket = "vault_secrets_operator"
         [outputs.influxdb_v2.tagpass]
           namespace = ["vault-secrets-operator"]
