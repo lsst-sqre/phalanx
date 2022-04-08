@@ -109,7 +109,6 @@ telegraf:
             prometheus_app: "argocd"
           urls:
             - http://argocd-server-metrics.argocd:8083/metrics
-          metric_version: 2
       - prometheus:
           urls:
             - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
