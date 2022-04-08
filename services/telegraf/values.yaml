@@ -1,7 +1,7 @@
 telegraf:
   config:
     agent:
-      omit_hostname: 'true'
+      omit_hostname: true
     global_tags:
       cluster: ''
   env:
