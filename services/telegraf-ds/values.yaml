@@ -12,9 +12,9 @@ telegraf-ds:
           key: influx-token
   override_config:
     toml: |+
-      [ global_tags ]
+      [global_tags]
         cluster = "no_endpoint"
-      [ agent ]
+      [agent]
         hostname = "telegraf-$HOSTIP"
       [[inputs.kubernetes]]
         url = "https://$HOSTIP:10250"

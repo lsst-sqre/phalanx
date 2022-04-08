@@ -189,6 +189,11 @@ class PhalanxConfigGenerator(object):
                 print(self.config[instance])
                 print(f"------ end {val_file} ----")
             else:
-                with open(val_file,"w") as f:
-                    f.write(self.config[instance])
-    
+                # Don't write if there's no config to write
+                if self.config[instance]:
+                    with open(val_file,"w") as f:
+                        f.write(self.config[instance])
+
+    def run(self) -> None:
+        self.build_config()
+        self.write_config()

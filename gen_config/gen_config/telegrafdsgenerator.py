@@ -32,7 +32,10 @@ telegraf-ds:
         return cf
 
     def build_instance_yaml(self, instance:str) -> str:
-        secrets_path=self.instances[instance].get("fqdn","")
+        inst_obj = self.instances.get(instance, {})
+        if not inst_obj.get("telegraf-ds",{}).get("enabled",""):
+            return ""
+        secrets_path=self.instances[instance].get("vault_path_prefix","")
         cf = f"vaultSecretsPath: \"{secrets_path}\"\n"
         cf += "telegraf-ds:\n"
         cf += self.build_telegraf_override_conf(instance)
@@ -44,9 +47,9 @@ telegraf-ds:
         endpoint=self.instances.get(instance,{}).get("fqdn","no_endpoint")
         tc  =   "  override_config:\n"
         tc +=   "    toml: |+\n"
-        tc +=   "      [ global_tags ]\n"
+        tc +=   "      [global_tags]\n"
         tc +=  f"        cluster = \"{endpoint}\"\n"
-        tc += """      [ agent ]
+        tc += """      [agent]
         hostname = "telegraf-$HOSTIP"
       [[inputs.kubernetes]]
         url = "https://$HOSTIP:10250"
@@ -72,9 +75,9 @@ telegraf-ds:
                 continue
             for namespace in namespace_set:
                 outp +='''      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
 '''
                 bucket = namespace.replace("-", "_")
                 outp += f"        bucket = \"{bucket}\"\n"

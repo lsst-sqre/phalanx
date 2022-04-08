@@ -2,5 +2,22 @@ telegraf:
   config:
     global_tags:
       cluster: base-lsp.lsst.codes
-
+    inputs:
+    - prometheus:
+        metric_version: 2
+        name_override: prometheus_hub
+        tags:
+          prometheus_app: nublado2
+        urls:
+        - http://hub.nublado2:8081/metrics
+    outputs:
+    - influxdb_v2:
+        bucket: nublado2
+        organization: square
+        tagpass:
+          prometheus_app:
+          - nublado2
+        token: $INFLUX_TOKEN
+        urls:
+        - https://monitoring.lsst.codes
 vaultSecretsPath: secret/k8s_operator/base-lsp.lsst.codes
