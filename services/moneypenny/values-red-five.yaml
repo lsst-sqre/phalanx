@@ -1,9 +1,0 @@
-moneypenny:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "red-five.lsst.codes"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/red-five.lsst.codes/pull-secret"
