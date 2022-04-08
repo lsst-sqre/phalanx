@@ -6,7 +6,7 @@ metadata:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 data:
   gafaelfawr.yaml: |
-    realm: {{ required "globals.host must be set" .Values.globals.host | quote }}
+    realm: {{ required "global.host must be set" .Values.global.host | quote }}
     loglevel: {{ .Values.config.loglevel | quote }}
     session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
     database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
@@ -19,7 +19,7 @@ data:
       - {{ $netblock | quote }}
       {{- end }}
     {{- end }}
-    after_logout_url: {{ required "globals.baseUrl must be set" .Values.globals.baseUrl }}
+    after_logout_url: {{ required "global.baseUrl must be set" .Values.global.baseUrl }}
     {{- if .Values.config.errorFooter }}
     error_footer: {{ .Values.config.errorFooter | quote }}
     {{- end }}
@@ -61,7 +61,7 @@ data:
       {{- if .Values.config.cilogon.redirectUrl }}
       redirect_url: {{ .Values.config.cilogon.redirectUrl | quote }}
       {{- else }}
-      redirect_url: "{{ .Values.globals.baseUrl }}/login"
+      redirect_url: "{{ .Values.global.baseUrl }}/login"
       {{- end }}
       scopes:
         - "email"
@@ -84,7 +84,7 @@ data:
       {{- if .Values.config.oidc.redirectUrl }}
       redirect_url: {{ .Values.config.oidc.redirectUrl | quote }}
       {{- else }}
-      redirect_url: "{{ .Values.globals.baseUrl }}/login"
+      redirect_url: "{{ .Values.global.baseUrl }}/login"
       {{- end }}
       scopes:
         {{- with .Values.config.oidc.scopes }}
@@ -111,9 +111,9 @@ data:
 
     {{- if .Values.config.oidcServer.enabled }}
     oidc_server:
-      issuer: "https://{{ .Values.globals.host }}"
+      issuer: "https://{{ .Values.global.host }}"
       key_id: "gafaelfawr"
-      audience: "https://{{ .Values.globals.host }}"
+      audience: "https://{{ .Values.global.host }}"
       key_file: "/etc/gafaelfawr/secrets/signing-key"
       secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}

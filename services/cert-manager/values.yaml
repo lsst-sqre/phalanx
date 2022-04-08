@@ -1,5 +1,39 @@
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+config:
+  # -- Whether to create a Let's Encrypt DNS-based cluster issuer
+  createIssuer: true
+
+  # -- Contact email address registered with Let's Encrypt
+  # @default -- sqre-admin
+  email: "sqre-admin@lists.lsst.org"
+
+  # Currently, DNS with Route 53 is the only supported solver mechanism
+  route53:
+    # -- AWS access key ID for Route 53 (must match `aws-secret-access-key` in
+    # Vault secret referenced by `config.vaultSecretPath`)
+    # @default -- None, must be set if `createIssuer` is true
+    awsAccessKeyId: ""
+
+    # -- Route 53 hosted zone in which to create challenge records
+    # @default -- None, must be set if `createIssuer` is true
+    hostedZone: ""
+
+# -- Configuration for upstream cert-manager chart
+# @default -- Install CRDs, force use of Google and Cloudfront DNS servers
 cert-manager:
   installCRDs: true
   extraArgs:
-    - --dns01-recursive-nameservers-only
-    - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
+    - "--dns01-recursive-nameservers-only"
+    - "--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

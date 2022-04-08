@@ -8,7 +8,7 @@ metadata:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
   rules:
-    - host: {{ required "globals.host must be set" .Values.globals.host | quote }}
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
           - path: "/auth"

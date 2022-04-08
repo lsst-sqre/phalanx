@@ -2,34 +2,41 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: cert-manager
+  name: "cert-manager"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
-  namespace: argocd
+  name: "cert-manager"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: cert-manager
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "cert-manager"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: services/cert-manager
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    path: "services/cert-manager"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
+    helm:
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
   ignoreDifferences:
-    - group: admissionregistration.k8s.io
-      kind: MutatingWebhookConfiguration
+    - group: "admissionregistration.k8s.io"
+      kind: "MutatingWebhookConfiguration"
       jsonPointers:
         - "/webhooks/0/clientConfig/caBundle"
-    - group: admissionregistration.k8s.io
-      kind: ValidatingWebhookConfiguration
+    - group: "admissionregistration.k8s.io"
+      kind: "ValidatingWebhookConfiguration"
       jsonPointers:
         - "/webhooks/0/clientConfig/caBundle"
 {{- end -}}
