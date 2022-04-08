@@ -1,3 +1,4 @@
+vaultSecretsPath: "data-dev.lsst.cloud"
 telegraf-ds:
   override_config:
     toml: |+

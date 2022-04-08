@@ -1,3 +1,4 @@
+vaultSecretsPath: "base-lsp.lsst.codes"
 telegraf-ds:
   override_config:
     toml: |+

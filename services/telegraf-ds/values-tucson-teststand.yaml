@@ -1,3 +1,4 @@
+vaultSecretsPath: "tucson-teststand.lsst.codes"
 telegraf-ds:
   override_config:
     toml: |+

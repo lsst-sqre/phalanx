@@ -1,3 +1,4 @@
+vaultSecretsPath: "summit-lsp.lsst.codes"
 telegraf-ds:
   override_config:
     toml: |+
@@ -95,20 +96,6 @@ telegraf-ds:
         bucket = "k8s_squareone"
         [outputs.influxdb_v2.tagpass]
           namespace = ["squareone"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_telegraf"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["telegraf"]
-      [[outputs.influxdb_v2]]
-            urls = ["https://monitoring.lsst.codes"]
-            token = "$INFLUX_TOKEN"
-            organization = "square"
-        bucket = "k8s_telegraf_ds"
-        [outputs.influxdb_v2.tagpass]
-          namespace = ["telegraf-ds"]
       [[outputs.influxdb_v2]]
             urls = ["https://monitoring.lsst.codes"]
             token = "$INFLUX_TOKEN"

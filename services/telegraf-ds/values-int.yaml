@@ -1,3 +1,4 @@
+vaultSecretsPath: "lsst-lsp-int.ncsa.illinois.edu"
 telegraf-ds:
   override_config:
     toml: |+
