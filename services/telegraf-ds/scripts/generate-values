@@ -193,7 +193,7 @@ telegraf-ds:
     def build_instance_yaml(self, instance:str) -> str:
         secrets_path=self.instances[instance].get("fqdn","")
         cf = f"vaultSecretsPath: \"{secrets_path}\"\n"
-        cf = "telegraf-ds:\n"
+        cf += "telegraf-ds:\n"
         cf += self.build_telegraf_override_conf(instance)
         return cf
 
