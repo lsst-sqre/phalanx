@@ -2,7 +2,7 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: {{ include "cert-manager.fullname" . }}-letsencrypt-dns
+  name: "letsencrypt-dns"
   labels:
     {{- include "cert-manager.labels" . | nindent 4 }}
 spec:

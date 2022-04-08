@@ -62,7 +62,6 @@ Services
 
    ops/argo-cd/index
    ops/cachemachine/index
-   ops/cert-issuer/index
    ops/cert-manager/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index

@@ -6,8 +6,6 @@ alert_stream_broker:
   enabled: false
 cachemachine:
   enabled: true
-cert_issuer:
-  enabled: true
 cert_manager:
   enabled: true
 datalinker:
