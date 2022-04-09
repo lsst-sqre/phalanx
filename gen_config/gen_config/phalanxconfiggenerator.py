@@ -94,6 +94,9 @@ class PhalanxConfigGenerator(object):
             iname = v.split('-')[-1][:-5]
             with open(v) as f:
                 inst_settings[iname] = yaml.safe_load(f)
+        # ArgoCD is not specified but implicitly present everywhere.
+        for inst in inst_settings:
+            inst_settings[inst]["argocd"] = { "enabled": True }
         return inst_settings
 
     def find_applications(self) -> Tuple[str]:
@@ -101,6 +104,8 @@ class PhalanxConfigGenerator(object):
         val_path = self._get_science_platform_path()
         val_file = val_path + "/values.yaml"
         applications = tuple()
+        # ArgoCD is implicitly present everwhere
+        applications += ("argocd",)
         with open(val_file) as f:
             apps=yaml.safe_load(f)
         for app in apps:
@@ -132,6 +137,10 @@ class PhalanxConfigGenerator(object):
             # The namespace is precreated so the read secret can be
             # preinstalled.
             namespaces.add("vault-secrets-operator")
+            return namespaces
+        if app == "argocd":
+            # Implicitly present at all deployments, not specified.
+            namespaces.add("argocd")
             return namespaces
         dashapp = app.replace('_', '-')
         app_file = f"{val_path}/templates/{dashapp}-application.yaml"

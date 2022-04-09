@@ -16,6 +16,13 @@ telegraf-ds:
         urls = ["https://monitoring.lsst.codes"]
         token = "$INFLUX_TOKEN"
         organization = "square"
+        bucket = "argocd"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["argocd"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
         bucket = "cachemachine"
         [outputs.influxdb_v2.tagpass]
           namespace = ["cachemachine"]
