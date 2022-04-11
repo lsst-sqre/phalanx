@@ -96,6 +96,7 @@ jobs:
           sudo pip install -r installer/requirements.txt
 
       - name: Run installer
+        timeout-minutes: 30
         if: steps.filter.outputs.minikube == 'true'
         run: |
           cd installer

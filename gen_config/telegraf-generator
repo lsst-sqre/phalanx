@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+from gen_config.cli_args import cli_args
+from gen_config.telegrafgenerator import TelegrafGenerator
+from gen_config.telegrafdsgenerator import TelegrafDSGenerator
+
+def main() -> None:
+    args = cli_args()
+    TelegrafDSGenerator(debug=args.debug,
+                        dry_run=args.dry_run,
+                        loglevel=args.loglevel,
+                        phalanx_root=args.phalanx_root).run()
+    TelegrafGenerator(debug=args.debug,
+                      dry_run=args.dry_run,
+                      loglevel=args.loglevel,
+                      phalanx_root=args.phalanx_root).run()
+
+
+if __name__ == "__main__":
+    main()
