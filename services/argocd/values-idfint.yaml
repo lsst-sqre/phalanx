@@ -18,7 +18,7 @@ argo-cd:
   notifications:
     metrics:
       enabled: true
-      
+
   server:
     metrics:
       enabled: true
