@@ -9,35 +9,35 @@ telegraf:
         tags:
           prometheus_app: argocd
         urls:
-        - http://argocd-application-controller.argocd.svc:8082/metrics
+        - http://argocd-application-controller-metrics.argocd.svc:8082/metrics
     - prometheus:
         metric_version: 2
         name_override: prometheus_notifications_controller
         tags:
           prometheus_app: argocd
         urls:
-        - http://argocd-notifications-controller.argocd.svc:9001/metrics
+        - http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics
     - prometheus:
         metric_version: 2
         name_override: prometheus_redis
         tags:
           prometheus_app: argocd
         urls:
-        - http://argocd-redis.argocd.svc:9121/metrics
+        - http://argocd-redis-metrics.argocd.svc:9121/metrics
     - prometheus:
         metric_version: 2
         name_override: prometheus_repo_server
         tags:
           prometheus_app: argocd
         urls:
-        - http://argocd-repo-server.argocd.svc:8084/metrics
+        - http://argocd-repo-server-metrics.argocd.svc:8084/metrics
     - prometheus:
         metric_version: 2
         name_override: prometheus_server
         tags:
           prometheus_app: argocd
         urls:
-        - http://argocd-server.argocd.svc:8083/metrics
+        - http://argocd-server-metrics.argocd.svc:8083/metrics
     - prometheus:
         metric_version: 2
         name_override: prometheus_hub
