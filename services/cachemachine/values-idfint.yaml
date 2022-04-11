@@ -15,12 +15,9 @@ cachemachine:
         "labels": {},
         "repomen": [
           {
-            "type": "RubinRepoGar",
+            "type": "RubinRepoMan",
             "registry_url": "us-central1-docker.pkg.dev",
-            "gar_repository": "sciplat",
-            "gar_image": "sciplat-lab",
-            "project_id": "rubin-shared-services-71ec",
-            "location": "us-central1",
+            "repo": "rubin-shared-services-71ec/sciplat/sciplat-lab",
             "recommended_tag": "recommended",
             "num_releases": 1,
             "num_weeklies": 2,
