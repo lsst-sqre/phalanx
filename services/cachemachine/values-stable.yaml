@@ -1,40 +1,36 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "lsst-lsp-stable.ncsa.illinois.edu"
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
 
-  ingress:
-    enabled: true
-    host: "lsst-lsp-stable.ncsa.illinois.edu"
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
+vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
 
-  vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
-
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {
-            "jupyterlab": "ok"
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {
+          "jupyterlab": "ok"
+      },
+      "repomen": [
+        {
+          "type": "RubinRepoMan",
+          "registry_url": "registry.hub.docker.com",
+          "repo": "lsstsqre/sciplat-lab",
+          "recommended_tag": "recommended",
+          "num_releases": 1,
+          "num_weeklies": 2,
+          "num_dailies": 3
         },
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 1,
-            "num_weeklies": 2,
-            "num_dailies": 3
-          },
-          {
-            "type": "SimpleRepoMan",
-            "images": [
-              {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_49",
-                "name": "Weekly 2021_49"
-              }
-            ]
-          }
-        ]
-      }
+        {
+          "type": "SimpleRepoMan",
+          "images": [
+            {
+              "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_49",
+              "name": "Weekly 2021_49"
+            }
+          ]
+        }
+      ]
+    }

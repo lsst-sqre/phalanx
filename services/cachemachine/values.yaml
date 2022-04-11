@@ -1,0 +1,82 @@
+# Default values for cachemachine.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+image:
+  # -- cachemachine image to use
+  repository: lsstsqre/cachemachine
+
+  # -- Pull policy for the cachemachine image
+  pullPolicy: IfNotPresent
+
+  # -- Tag of cachemachine image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets:
+  - name: "cachemachine-secret"
+serviceAccount:
+  # -- Name of the service account to use
+  # @default -- Name based on the fullname template
+  name: ""
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+service:
+  # -- Type of service to create
+  type: "ClusterIP"
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Whether to create an ingress
+  enabled: true
+
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=exec:admin"
+
+  # -- Hostname for the ingress
+  # @default -- None, must be set if the ingress is enabled
+  host: ""
+
+  # -- Additional annotations to add for endpoints that are authenticated.
+  annotations: {}
+
+  # -- Additional annotations to add for endpoints that allow anonymous
+  # access, such as `/*/available`.
+  anonymousAnnotations: {}
+
+  # -- Configures TLS for the ingress if needed. If multiple ingresses share
+  # the same hostname, only one of them needs a TLS configuration.
+  tls: []
+
+# -- Resource limits and requests for the cachemachine frontend pod
+resources: {}
+
+# -- Annotations for the cachemachine frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the cachemachine frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the cachemachine frontend pod
+tolerations: []
+
+# -- Affinity rules for the cachemachine frontend pod
+affinity: {}
+
+# -- Path to the Vault secret containing the Docker credentials
+# @default -- None, must be set
+vaultSecretsPath: ""
+
+# -- Autostart configuration. Each key is the name of a class of images to
+# pull, and the value is the JSON specification for which and how many images
+# to pull.
+autostart: {}
