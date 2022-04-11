@@ -109,8 +109,7 @@ class PhalanxConfigGenerator(object):
         with open(val_file) as f:
             apps=yaml.safe_load(f)
         for app in apps:
-            # Skip the fields that are not apps
-            if app in ("repoURL", "revision", "onepassword_uuid"):
+            if "enabled" not in apps[app]:
                 continue
             applications += (app,)
         return applications
