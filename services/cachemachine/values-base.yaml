@@ -1,35 +1,31 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "base-lsp.lsst.codes"
 
-  ingress:
-    enabled: true
-    host: "base-lsp.lsst.codes"
+vaultSecretsPath: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
 
-  vaultSecretsPath: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"
-
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {
-            "jupyterlab": "ok"
-        },
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstts/sal-sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 0,
-            "num_weeklies": 3,
-            "num_dailies": 2,
-            "cycle": 20,
-            "alias_tags": [
-                "latest",
-                "latest_daily",
-                "latest_weekly"
-            ]
-          }
-        ]
-      }
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {
+          "jupyterlab": "ok"
+      },
+      "repomen": [
+        {
+          "type": "RubinRepoMan",
+          "registry_url": "registry.hub.docker.com",
+          "repo": "lsstts/sal-sciplat-lab",
+          "recommended_tag": "recommended",
+          "num_releases": 0,
+          "num_weeklies": 3,
+          "num_dailies": 2,
+          "cycle": 20,
+          "alias_tags": [
+              "latest",
+              "latest_daily",
+              "latest_weekly"
+          ]
+        }
+      ]
+    }

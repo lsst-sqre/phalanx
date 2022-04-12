@@ -1,27 +1,23 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "minikube.lsst.codes"
 
-  ingress:
-    enabled: true
-    host: "minikube.lsst.codes"
+vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
 
-  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/pull-secret"
-
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {},
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 0,
-            "num_weeklies": 0,
-            "num_dailies": 0
-          }
-        ]
-      }
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {},
+      "repomen": [
+        {
+          "type": "RubinRepoMan",
+          "registry_url": "registry.hub.docker.com",
+          "repo": "lsstsqre/sciplat-lab",
+          "recommended_tag": "recommended",
+          "num_releases": 0,
+          "num_weeklies": 0,
+          "num_dailies": 0
+        }
+      ]
+    }

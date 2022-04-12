@@ -1,28 +1,24 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "rsp.lsst.ac.uk"
 
-  ingress:
-    enabled: true
-    host: "rsp.lsst.ac.uk"
-
-  vaultSecretsPath: "secret/k8s_operator/roe/pull-secret"
+vaultSecretsPath: "secret/k8s_operator/roe/pull-secret"
 
 
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {},
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 1,
-            "num_weeklies": 2,
-            "num_dailies": 3
-          }
-        ]
-      }
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {},
+      "repomen": [
+        {
+          "type": "RubinRepoMan",
+          "registry_url": "registry.hub.docker.com",
+          "repo": "lsstsqre/sciplat-lab",
+          "recommended_tag": "recommended",
+          "num_releases": 1,
+          "num_weeklies": 2,
+          "num_dailies": 3
+        }
+      ]
+    }
