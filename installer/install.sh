@@ -34,6 +34,7 @@ echo "Update / install vault-secrets-operator..."
 helm dependency update ../services/vault-secrets-operator
 helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
   --install \
+  --values ../services/vault-secrets-operator/values.yaml \
   --values ../services/vault-secrets-operator/values-$ENVIRONMENT.yaml \
   --create-namespace \
   --namespace vault-secrets-operator \
@@ -44,6 +45,7 @@ echo "Update / install argocd using helm3..."
 helm dependency update ../services/argocd
 helm upgrade argocd ../services/argocd \
   --install \
+  --values ../services/argocd/values.yaml \
   --values ../services/argocd/values-$ENVIRONMENT.yaml \
   --create-namespace \
   --namespace argocd \
@@ -69,6 +71,7 @@ argocd app create science-platform \
   --port-forward-namespace argocd \
   --helm-set repoURL=$GIT_URL \
   --helm-set revision=$GIT_BRANCH \
+  --values values.yaml \
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \

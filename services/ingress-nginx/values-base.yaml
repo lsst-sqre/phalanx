@@ -1,24 +1,8 @@
 ingress-nginx:
   controller:
-    config:
-      compute-full-forwarded-for: "true"
-      large-client-header-buffers: "4 64k"
-      proxy-body-size: "100m"
-      proxy-buffer-size: "64k"
-      ssl-redirect: "true"
-      use-forwarded-headers: "true"
     service:
-      externalTrafficPolicy: Local
       loadBalancerIP: "139.229.146.150"
-    podLabels:
-      gafaelfawr.lsst.io/ingress: "true"
-      hub.jupyter.org/network-access-proxy-http: "true"
-    metrics:
-      enabled: true
-
-vault_certificate:
-  enabled: false
+      externalTrafficPolicy: Local
 
 pull-secret:
-  enabled: true
   path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret
