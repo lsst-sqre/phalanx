@@ -49,7 +49,7 @@ telegraf:
         metric_version: 2
         name_override: prometheus_controller
         tags:
-          prometheus_app: ingress-nginx
+          prometheus_app: ingress_nginx
         urls:
         - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
     outputs:
@@ -112,7 +112,7 @@ telegraf:
         organization: square
         tagpass:
           prometheus_app:
-          - ingress-nginx
+          - ingress_nginx
         token: $INFLUX_TOKEN
         urls:
         - https://monitoring.lsst.codes
