@@ -1,18 +1,5 @@
-semaphore:
-  config:
-    phalanx_env: "summit"
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "summit-lsp.lsst.codes"
-        paths:
-          - path: "/semaphore"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes/semaphore"
+config:
+  phalanx_env: "summit"
 
 pull-secret:
   enabled: true
