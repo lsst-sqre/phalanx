@@ -4,6 +4,11 @@ ingress:
 
 vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
 
+serviceAccount:
+  annotations: {
+    iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-dev-7696.iam.gserviceaccount.com
+  }
+
 autostart:
   jupyter: |
     {
