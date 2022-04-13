@@ -82,7 +82,8 @@ class TelegrafGenerator(PhalanxConfigGenerator):
                 },
                }
         for app in prometheus_config:
-            if not inst_obj.get(app,{}).get("enabled",False):
+            if not inst_obj.get(app.replace('-','_'),
+                                {}).get("enabled",False):
                 continue
             # The app is enabled, so we should monitor it.
             for service in prometheus_config[app]:
