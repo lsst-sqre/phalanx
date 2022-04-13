@@ -1,3 +1,11 @@
 sherlock:
   ingress:
     host: "tucson-teststand.lsst.codes"
+
+  resources:
+    requests:
+      cpu: 2.0
+      memory: "2G"
+    limits:
+      cpu: 4.0
+      memory: "4G"
