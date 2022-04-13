@@ -19,7 +19,6 @@ argo-cd:
     metrics:
       enabled: true
 
-
   server:
     metrics:
       enabled: true
