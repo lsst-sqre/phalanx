@@ -1,6 +1,6 @@
 # semaphore
 
-![AppVersion: tickets-DM-34344](https://img.shields.io/badge/AppVersion-tickets--DM--34344-informational?style=flat-square)
+![AppVersion: 0.3.0](https://img.shields.io/badge/AppVersion-0.3.0-informational?style=flat-square)
 
 Semaphore is the user notification and messaging service for the Rubin Science Platform.
 
@@ -37,7 +37,6 @@ Semaphore is the user notification and messaging service for the Rubin Science P
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/semaphore"` | Semaphore image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
-| imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `true` | Enable ingress |
 | ingress.path | string | `"/semaphore"` | URL path prefix where the Semaphore API is hosted |
