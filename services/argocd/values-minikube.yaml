@@ -2,11 +2,28 @@ argo-cd:
   controller:
     args:
       repoServerTimeoutSeconds: "180"
+    metrics:
+      enabled: true
+      applicationLabels:
+        enabled: true
+        labels: ["name", "instance"]
 
   redis:
     enabled: true
+    metrics:
+      enabled: true
+
+  repoServer:
+    metrics:
+      enabled: true
+
+  notifications:
+    metrics:
+      enabled: true
 
   server:
+    metrics:
+      enabled: true
     ingress:
       enabled: true
       hosts:

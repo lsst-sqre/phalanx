@@ -45,6 +45,13 @@ telegraf:
           prometheus_app: nublado2
         urls:
         - http://hub.nublado2:8081/metrics
+    - prometheus:
+        metric_version: 2
+        name_override: prometheus_controller
+        tags:
+          prometheus_app: ingress_nginx
+        urls:
+        - http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics
     outputs:
     - influxdb_v2:
         bucket: argocd
@@ -97,6 +104,15 @@ telegraf:
         tagpass:
           prometheus_app:
           - nublado2
+        token: $INFLUX_TOKEN
+        urls:
+        - https://monitoring.lsst.codes
+    - influxdb_v2:
+        bucket: ingress_nginx
+        organization: square
+        tagpass:
+          prometheus_app:
+          - ingress_nginx
         token: $INFLUX_TOKEN
         urls:
         - https://monitoring.lsst.codes

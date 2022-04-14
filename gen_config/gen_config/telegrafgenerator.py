@@ -82,7 +82,8 @@ class TelegrafGenerator(PhalanxConfigGenerator):
                 },
                }
         for app in prometheus_config:
-            if not inst_obj.get(app,{}).get("enabled",False):
+            if not inst_obj.get(app.replace('-','_'),
+                                {}).get("enabled",False):
                 continue
             # The app is enabled, so we should monitor it.
             for service in prometheus_config[app]:
@@ -102,7 +103,7 @@ class TelegrafGenerator(PhalanxConfigGenerator):
                     prometheus_config[app][service],
                 ],
                 "tags": {
-                    "prometheus_app": app,
+                    "prometheus_app": app.replace("-","_"),
                 },
                 "name_override": f"prometheus_{service}",
                 "metric_version": 2,
@@ -121,7 +122,7 @@ class TelegrafGenerator(PhalanxConfigGenerator):
                 "organization": "square",
                 "tagpass": {
                     "prometheus_app": [
-                        app,
+                        app.replace("-","_"),
                     ],
                 },
             },

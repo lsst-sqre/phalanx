@@ -1,23 +1,10 @@
-semaphore:
-  image:
-    pullPolicy: Always
-  config:
-    github_app_id: "127943"
-    enable_github_app: "True"
-    phalanx_env: "idfdev"
-    log_level: "DEBUG"
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "data-dev.lsst.cloud"
-        paths:
-          - path: "/semaphore"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/semaphore"
+image:
+  pullPolicy: Always
+config:
+  github_app_id: "127943"
+  enable_github_app: "True"
+  phalanx_env: "idfdev"
+  log_level: "DEBUG"
 
 pull-secret:
   enabled: true
