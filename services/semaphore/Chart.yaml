@@ -1,10 +1,16 @@
 apiVersion: v2
 name: semaphore
 version: 1.0.0
+appVersion: "0.3.0"
+type: application
+description: Semaphore is the user notification and messaging service for the Rubin Science Platform.
+sources:
+  - https://github.com/lsst-sqre/semaphore
+maintainers:
+  - name: jonathansick
+    url: https://github.com/jonathansick
+
 dependencies:
-  - name: semaphore
-    version: 0.2.2
-    repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2
     repository: https://lsst-sqre.github.io/charts/
