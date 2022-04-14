@@ -14,5 +14,5 @@ maintainers:
 # Additional charts that this chart uses
 dependencies:
   - name: redis
-    version: 16.5.3
+    version: 16.8.5
     repository: https://charts.bitnami.com/bitnami
