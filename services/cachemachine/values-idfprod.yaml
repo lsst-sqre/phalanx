@@ -4,6 +4,11 @@ ingress:
 
 vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/pull-secret"
 
+serviceAccount:
+  annotations: {
+    iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-stable-6994.iam.gserviceaccount.com
+  }
+
 autostart:
   jupyter: |
     {
@@ -11,9 +16,12 @@ autostart:
       "labels": {},
       "repomen": [
         {
-          "type": "RubinRepoMan",
+          "type": "RubinRepoGar",
           "registry_url": "us-central1-docker.pkg.dev",
-          "repo": "rubin-shared-services-71ec/sciplat/sciplat-lab",
+          "gar_repository": "sciplat",
+          "gar_image": "sciplat-lab",
+          "project_id": "rubin-shared-services-71ec",
+          "location": "us-central1",
           "recommended_tag": "recommended",
           "num_releases": 1,
           "num_weeklies": 2,
