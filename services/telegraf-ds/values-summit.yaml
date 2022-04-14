@@ -1,0 +1,126 @@
+vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes"
+telegraf-ds:
+  override_config:
+    toml: |+
+      [global_tags]
+        cluster = "summit-lsp.lsst.codes"
+      [agent]
+        hostname = "telegraf-$HOSTIP"
+      [[inputs.kubernetes]]
+        url = "https://$HOSTIP:10250"
+        bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        insecure_skip_verify = true
+        namepass = ["kubernetes_pod_container"]
+        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "argocd"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["argocd"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "cachemachine"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["cachemachine"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "cert_manager"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["cert-manager"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "exposurelog"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["exposurelog"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "gafaelfawr"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["gafaelfawr"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "ingress_nginx"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["ingress-nginx"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "moneypenny"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["moneypenny"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "narrativelog"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["narrativelog"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "nublado2"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["nublado2"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "portal"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["portal"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "postgres"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["postgres"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "sherlock"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["sherlock"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "squareone"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["squareone"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "telegraf"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["telegraf"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "telegraf_ds"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["telegraf-ds"]
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = "vault_secrets_operator"
+        [outputs.influxdb_v2.tagpass]
+          namespace = ["vault-secrets-operator"]

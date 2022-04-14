@@ -1,7 +1,7 @@
 telegraf:
   config:
     global_tags:
-      cluster: base-lsp.lsst.codes
+      cluster: summit-lsp.lsst.codes
     inputs:
     - prometheus:
         metric_version: 2
@@ -116,4 +116,4 @@ telegraf:
         token: $INFLUX_TOKEN
         urls:
         - https://monitoring.lsst.codes
-vaultSecretsPath: secret/k8s_operator/base-lsp.lsst.codes
+vaultSecretsPath: secret/k8s_operator/summit-lsp.lsst.codes
