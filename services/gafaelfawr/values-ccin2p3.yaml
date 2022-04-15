@@ -1,0 +1,55 @@
+gafaelfawr:
+
+  pull_secret: 'pull-secret'
+  ingress:
+    host: data-dev.lsst.eu
+  vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
+
+  redis:
+    persistence:
+      enabled: false
+
+  config:
+    host: data-dev.lsst.eu
+
+  # Do not specify ingress.host because we're using the wildcard virtual host.
+
+  # Session length and token expiration (in minutes).
+    issuer:
+      exp_minutes: 43200  # 30 days
+
+    github:
+      clientId: ae314e45a6af43ea910a
+
+  # Allow access by GitHub team.
+    groupMapping:
+      "exec:admin":
+        - "in2p3-dp0-admin"
+      "exec:user":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "read:workspace":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "read:workspace/user":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "write:workspace/user":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "exec:portal":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "exec:notebook":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "read:tap":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+      "read:image":
+        - "in2p3-dp0-admin"
+        - "in2p3-dp0-user"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsp-cc/pull-secret
