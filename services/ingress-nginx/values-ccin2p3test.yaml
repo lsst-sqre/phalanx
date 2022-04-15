@@ -1,14 +1,34 @@
+# ingress-nginx:
+#   controller:
+#     nodeSelector:
+#       kubernetes.io/hostname: "ccqserv202"
+
+#     tolerations:
+#     - key: "dedicated"
+#       operator: "Equal"
+#       value: "qserv"
+#       effect: "NoSchedule"
+    
+#     config:
+#       compute-full-forwarded-for: "true"
+#       large-client-header-buffers: "4 64k"
+#       proxy-body-size: "100m"
+#       proxy-buffer-size: "64k"
+#       ssl-redirect: "true"
+#       use-forwarded-headers: "true"
+#     service:
+#       externalTrafficPolicy: Local
+#       externalIPs:
+#         - 134.158.237.2
+#       type: NodePort
+#     admissionWebhooks:
+#       enabled: false
+#     extraArgs:
+#       default-ssl-certificate: ingress-nginx/ingress-certificate
+#     podLabels:
+#       hub.jupyter.org/network-access-proxy-http: "true"
 ingress-nginx:
   controller:
-    nodeSelector:
-      kubernetes.io/hostname: "ccqserv202"
-
-    tolerations:
-    - key: "dedicated"
-      operator: "Equal"
-      value: "qserv"
-      effect: "NoSchedule"
-    
     config:
       compute-full-forwarded-for: "true"
       large-client-header-buffers: "4 64k"
@@ -17,17 +37,23 @@ ingress-nginx:
       ssl-redirect: "true"
       use-forwarded-headers: "true"
     service:
-      externalTrafficPolicy: Local
-      externalIPs:
-        - 134.158.237.2
-      type: NodePort
+      type: ClusterIP
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
     admissionWebhooks:
       enabled: false
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
     podLabels:
+      gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
-
+    metrics:
+      enabled: true
+      service:
+        annotations:
+          prometheus.io/port: "10254"
+          prometheus.io/scrape: "true"
+          
 vault_certificate:
   enabled: true
   path: secret/k8s_operator/rsp-cc/ingress-nginx

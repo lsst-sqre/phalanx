@@ -1,8 +1,8 @@
 cadc-tap:
   pull_secret: 'pull-secret'
-  tag: "1.0.16"
-  use_mock_qserv: false
-  qserv_host: "ccqserv201.in2p3.fr:30040"
+  #tag: "1.0.16"
+  #use_mock_qserv: false
+  #qserv_host: "ccqserv201.in2p3.fr:30040"
 
   host: "minikube.lsst.codes"
 
