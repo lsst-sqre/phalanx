@@ -6,11 +6,13 @@ export VAULT_ADDR=https://vault.lsst.codes
 VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
-GIT_URL=`git config --get remote.origin.url`
+#GIT_URL=`git config --get remote.origin.url`
+GIT_URL="https://github.com/gabrimaine/phalanx.git"
 # Github runs in a detached head state, but sets GITHUB_REF,
 # extract the branch from it.  If we're there, use that branch.
 # git branch --show-current will return empty in deatached head.
-GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
+#GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
+GIT_BRANCH=ccin2p3
 
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
@@ -19,14 +21,14 @@ kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
   --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
-  --dry-run=client -o yaml | kubectl apply -f -
+  --dry-run -o yaml | kubectl apply -f -
 
 echo "Set up docker pull secret for vault-secrets-operator..."
 vault kv get --field=.dockerconfigjson $VAULT_PATH_PREFIX/pull-secret > docker-creds
 kubectl create secret generic pull-secret -n vault-secrets-operator \
     --from-file=.dockerconfigjson=docker-creds \
     --type=kubernetes.io/dockerconfigjson \
-    --dry-run=client -o yaml | kubectl apply -f -
+    --dry-run -o yaml | kubectl apply -f -
 
 
 echo "Update / install vault-secrets-operator..."
@@ -51,17 +53,17 @@ helm upgrade argocd ../services/argocd \
   --wait
 
 echo "Login to argocd..."
-argocd login \
-  --plaintext \
-  --port-forward \
-  --port-forward-namespace argocd \
-  --username admin \
-  --password $ARGOCD_PASSWORD
+#argocd login --insecure --grpc-web 10.110.57.13 \
+#  --plaintext \
+#  --port-forward \
+#  --port-forward-namespace argocd \
+#  --username admin \
+#  --password $ARGOCD_PASSWORD
 
 echo "Creating top level application"
 argocd app create science-platform \
   --repo $GIT_URL \
-  --path science-platform --dest-namespace default \
+  --path science-platform --dest-namespace rsp-dev \
   --dest-server https://kubernetes.default.svc \
   --upsert \
   --revision $GIT_BRANCH \
@@ -93,6 +95,14 @@ then
     --port-forward \
     --port-forward-namespace argocd && \
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
+fi
+
+if [ $(yq -r .cert_issuer.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
+then
+  echo "Syncing cert-issuer..."
+  argocd app sync cert-issuer \
+    --port-forward \
+    --port-forward-namespace argocd
 fi
 
 if [ $(yq -r .postgres.enabled ../science-platform/values-$ENVIRONMENT.yaml) == "true" ];
