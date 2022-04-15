@@ -1,0 +1,16 @@
+postgres:
+  pull_secret: 'pull-secret'
+  vault_secrets:
+    path: 'secret/k8s_operator/rsp-cc/postgres'
+  debug: 'true'
+  jupyterhub_db:
+    user: 'jovyan'
+    db: 'jupyterhub'
+  postgres_storage_class: 'rsp-local-storage'
+  volume_name: 'postgres-data-rsp-ccqserv219'
+  image:
+    tag: '0.0.3'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsp-cc/pull-secret

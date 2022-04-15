@@ -1,0 +1,46 @@
+environment: ccin2p3dev
+fqdn: data-dev.lsst.eu
+vault_path_prefix: secret/k8s_operator/rsp-cc
+
+argo:
+  enabled: true
+cert_issuer:
+  enabled: false
+cert_manager:
+  enabled: false
+chronograf:
+  enabled: false
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: true
+influxdb:
+  enabled: false
+kapacitor:
+  enabled: false
+landing_page:
+  enabled: true
+logging:
+  enabled: false
+mobu:
+  enabled: false
+moneypenny:
+  enabled: true
+ingress_nginx:
+  enabled: true
+nublado:
+  enabled: true
+obstap:
+  enabled: false
+portal:
+  enabled: true
+postgres:
+  enabled: true
+rancher_external_ip_webhook:
+  enabled: false
+squash_api:
+  enabled: false
+tap:
+  enabled: true
+vault_secrets_operator:
+  enabled: true
