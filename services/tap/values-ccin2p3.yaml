@@ -1,0 +1,21 @@
+cadc-tap:
+  pull_secret: 'pull-secret'
+  tag: "1.0.16"
+  use_mock_qserv: false
+  qserv_host: "ccqserv201.in2p3.fr:30040"
+
+  host: "data-dev.lsst.eu"
+
+  secrets:
+    enabled: false
+
+  vault_secrets:
+    enabled: true
+    path: 'secret/k8s_operator/rsp-cc/tap'
+
+#  gcs_bucket: 'async-results.lsst.codes'
+#  gcs_bucket_url: 'http://async-results.lsst.codes'
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsp-cc/pull-secret
