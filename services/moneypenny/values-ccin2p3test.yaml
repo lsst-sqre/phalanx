@@ -1,13 +1,13 @@
 moneypenny:
-  host: "data-dev.lsst.eu"
+  host: "minikube.lsst.codes"
 
   ingress:
     enabled: true
     hosts:
-      - host: data-dev.lsst.eu
+      - host: minikube.lsst.codes
         paths: ["/moneypenny"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:admin"
+      nginx.ingress.kubernetes.io/auth-url: "https://minikube.lsst.codes/auth?scope=exec:admin"
 
   vault_secrets:
     enabled: true

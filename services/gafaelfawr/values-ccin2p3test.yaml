@@ -2,7 +2,7 @@ gafaelfawr:
 
   pull_secret: 'pull-secret'
   ingress:
-    host: data-dev.lsst.eu
+    host: minikube.lsst.codes
   vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
 
   redis:
@@ -10,7 +10,7 @@ gafaelfawr:
       enabled: false
 
   config:
-    host: data-dev.lsst.eu
+    host: minikube.lsst.codes
 
   # Do not specify ingress.host because we're using the wildcard virtual host.
 

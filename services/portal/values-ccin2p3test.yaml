@@ -5,12 +5,12 @@ firefly:
     tag: "2.1.1-3"
 
   ingress:
-    host: 'data-dev.lsst.eu'
+    host: 'minikube.lsst.codes'
     annotations:
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:portal"
+      nginx.ingress.kubernetes.io/auth-signin: "https://minikube.lsst.codes/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://minikube.lsst.codes/auth?scope=exec:portal"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;
         proxy_set_header X-Forwarded-Proto https;

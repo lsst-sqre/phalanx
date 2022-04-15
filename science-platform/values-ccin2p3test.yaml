@@ -1,5 +1,5 @@
-environment: ccin2p3dev
-fqdn: data-dev.lsst.eu
+environment: ccin2p3test
+fqdn: minikube.lsst.codes
 vault_path_prefix: secret/k8s_operator/rsp-cc
 
 argo:

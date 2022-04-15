@@ -5,7 +5,7 @@ argo-cd:
     ingress:
       enabled: true
       hosts:
-        - "data-dev.lsst.eu"
+        - "minikube.lsst.codes"
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
@@ -17,7 +17,7 @@ argo-cd:
       - "--insecure=true"
 
     config:
-      url: https://data-dev.lsst.eu/argo-cd
+      url: https://minikube.lsst.codes/argo-cd
       dex.config: |
         connectors:
           # Auth using GitHub.

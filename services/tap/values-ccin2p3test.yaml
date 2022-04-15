@@ -4,7 +4,7 @@ cadc-tap:
   use_mock_qserv: false
   qserv_host: "ccqserv201.in2p3.fr:30040"
 
-  host: "data-dev.lsst.eu"
+  host: "minikube.lsst.codes"
 
   secrets:
     enabled: false
