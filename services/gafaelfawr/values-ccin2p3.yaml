@@ -24,31 +24,31 @@ gafaelfawr:
   # Allow access by GitHub team.
     groupMapping:
       "exec:admin":
-        - "in2p3-dp0-admin"
+        - "rubin-lsst-admin"
       "exec:user":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "read:workspace":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "read:workspace/user":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "write:workspace/user":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "exec:portal":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "exec:notebook":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "read:tap":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
       "read:image":
-        - "in2p3-dp0-admin"
-        - "in2p3-dp0-user"
+        - "rubin-lsst-admin"
+        - "rubin-lsst-user"
 
 pull-secret:
   enabled: true

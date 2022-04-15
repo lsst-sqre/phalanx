@@ -30,7 +30,7 @@ argo-cd:
               # Reference to key in argo-secret Kubernetes resource
               clientSecret: $dex.clientSecret
               orgs:
-                - name: in2p3-dp0
+                - name: rubin-lsst
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
@@ -49,7 +49,7 @@ argo-cd:
 
     rbacConfig:
       policy.csv: |
-        g, in2p3-dp0:admin, role:admin
+        g, rubin-lsst:admin, role:admin
 
   configs:
     secret:
