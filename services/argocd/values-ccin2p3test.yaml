@@ -1,4 +1,12 @@
-argo-cd:
+argo-cdi:
+  controller:
+    args:
+      repoServerTimeoutSeconds: "180"
+    metrics:
+      enabled: true
+      applicationLabels:
+        enabled: true
+        labels: ["name", "instance"]
   redis:
     enabled: true
 
