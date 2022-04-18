@@ -52,6 +52,7 @@ jobs:
   minikube:
     name: Test deploy
     runs-on: ubuntu-latest
+    needs: [helm]
 
     steps:
       - name: Checkout
