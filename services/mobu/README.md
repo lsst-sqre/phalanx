@@ -16,15 +16,12 @@ Generate system load by pretending to be a random scientist
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mobu image |
 | image.repository | string | `"ghcr.io/lsst-sqre/mobu"` | mobu image to use |
 | image.tag | string | The appVersion of the chart | Tag of mobu image to use |
-| imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |
 | resources | object | `{}` | Resource limits and requests for the mobu frontend pod |
-| service.port | int | `80` | Port of the service to create and map to the ingress |
-| service.type | string | `"ClusterIP"` | Type of service to create |
 | tolerations | list | `[]` | Tolerations for the mobu frontend pod |
 
 ----------------------------------------------
