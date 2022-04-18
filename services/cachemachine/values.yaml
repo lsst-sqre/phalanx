@@ -19,7 +19,7 @@ image:
 
 # -- Secret names to use for all Docker pulls
 imagePullSecrets:
-  - name: "cachemachine-secret"
+  - name: "pull-secret"
 serviceAccount:
   # -- Name of the service account to use
   # @default -- Name based on the fullname template

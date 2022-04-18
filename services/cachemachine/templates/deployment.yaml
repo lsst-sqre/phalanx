@@ -40,7 +40,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           env:
             - name: DOCKER_SECRET_NAME
-              value: {{ template "cachemachine.fullname" . }}-secret
+              value: pull-secret
           ports:
             - name: "http"
               containerPort: 8080
@@ -65,7 +65,7 @@ spec:
       volumes:
         - name: docker-creds
           secret:
-            secretName: {{ template "cachemachine.fullname" . }}-secret
+            secretName: pull-secret
         - name: autostart
           configMap:
             name: {{ include "cachemachine.fullname" . }}-autostart

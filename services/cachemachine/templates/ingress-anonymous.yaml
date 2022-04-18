@@ -13,7 +13,7 @@ metadata:
     {{- include "cachemachine.labels" . | nindent 4 }}
 spec:
   rules:
-    - host: {{ required "ingress.host must be set" .Values.ingress.host | quote }}
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
           - path: "/cachemachine/.*/available"
