@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ template "vo-cutouts.fullname" . }}-redis
+  labels:
+    {{- include "vo-cutouts.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "vo-cutouts.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "redis"
+  serviceName: "redis"
+  template:
+    metadata:
+      {{- with .Values.redis.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "vo-cutouts.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "redis"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "redis"
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy | quote }}
+          args:
+            - "redis-server"
+            - "--appendonly"
+            - "yes"
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
+          env:
+            - name: "REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  key: "redis-password"
+          livenessProbe:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - "redis-cli -h $(hostname) incr health:counter"
+            initialDelaySeconds: 15
+            periodSeconds: 30
+          ports:
+            - containerPort: 6379
+          resources:
+            limits:
+              cpu: "1"
+            requests:
+              cpu: "100m"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: {{ template "vo-cutouts.fullname" . }}-redis-data
+              mountPath: "/data"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        fsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+      {{- if (not .Values.redis.persistence.enabled) }}
+      volumes:
+        - name: {{ template "vo-cutouts.fullname" . }}-redis-data
+          emptyDir: {}
+      {{- else if .Values.redis.persistence.volumeClaimName }}
+      volumes:
+        - name: {{ template "vo-cutouts.fullname" . }}-redis-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.redis.persistence.volumeClaimName | quote }}
+      {{- end }}
+      {{- with .Values.redis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if (and .Values.redis.persistence.enabled (not .Values.redis.persistence.volumeClaimName)) }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ template "vo-cutouts.fullname" . }}-redis-data
+      spec:
+        accessModes:
+          - {{ .Values.redis.persistence.accessMode | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.redis.persistence.size | quote }}
+        {{- if .Values.redis.persistence.storageClass }}
+        storageClassName: {{ .Values.redis.persistence.storageClass | quote }}
+        {{- end }}
+  {{- end }}

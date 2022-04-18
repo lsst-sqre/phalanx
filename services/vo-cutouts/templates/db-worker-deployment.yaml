@@ -1,0 +1,107 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "vo-cutouts.fullname" . }}-db-worker
+  labels:
+    {{- include "vo-cutouts.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.databaseWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "vo-cutouts.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "db-worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.databaseWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "vo-cutouts.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "db-worker"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ include "vo-cutouts.fullname" . }}
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+        {{- end }}
+        - name: "db-worker"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command:
+            - "dramatiq"
+            - "vocutouts.actors"
+            - "-Q"
+            - "uws"
+            - "-p"
+            - "1"
+          env:
+            - name: "CUTOUT_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  key: "database-password"
+            - name: "CUTOUT_REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  key: "redis-password"
+          envFrom:
+            - configMapRef:
+                name: {{ template "vo-cutouts.fullname" . }}-config
+          {{- with .Values.databaseWorker.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        # Dramatiq enables its Prometheus middleware by default, which
+        # requires writable /tmp.
+        - name: "tmp"
+          emptyDir: {}
+      {{- with .Values.databaseWorker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.databaseWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.databaseWorker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

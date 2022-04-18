@@ -1,0 +1,203 @@
+# Default values for vo-cutouts.
+
+# -- Number of web frontend pods to start
+replicaCount: 1
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+image:
+  # -- vo-cutouts image to use
+  repository: "lsstsqre/vo-cutouts"
+
+  # -- Pull policy for the vo-cutouts image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of vo-cutouts image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+ingress:
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=read:image"
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+# -- Resource limits and requests for the vo-cutouts frontend pod
+resources: {}
+
+# -- Annotations for the vo-cutouts frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the vo-cutouts frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the vo-cutouts frontend pod
+tolerations: []
+
+# -- Affinity rules for the vo-cutouts frontend pod
+affinity: {}
+
+config:
+  # -- Choose from the text form of Python logging levels
+  loglevel: "INFO"
+
+  # -- Configuration for the Butler repository to use
+  # @default -- None, must be set
+  butlerRepository: ""
+
+  # -- URL for the PostgreSQL database
+  # @default -- None, must be set
+  databaseUrl: ""
+
+  # -- URL for the GCS bucket into which to store cutouts (must start with
+  # `s3`)
+  # @default -- None, must be set
+  gcsBucketUrl: ""
+
+  # -- Timeout for a single cutout job in seconds
+  # @default -- 600 (10 minutes)
+  timeout: 600
+
+  # -- Lifetime of job results in seconds (quote so that Helm doesn't turn it
+  # into a floating point number)
+  # @default -- 2592000 (30 days)
+  lifetime: "2592000"
+
+  # -- Timeout for results from a sync cutout in seconds
+  # @default -- 60 (1 minute)
+  syncTimeout: 60
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.30.0"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `vo-cutouts`
+  # Kubernetes service accounts and has the `cloudsql.client` role, access
+  # to the GCS bucket, and ability to sign URLs as itself
+  # @default -- None, must be set
+  serviceAccount: ""
+
+cutoutWorker:
+  # -- Number of cutout worker pods to start
+  replicaCount: 2
+
+  image:
+    # -- Stack image to use for cutouts
+    repository: "lsstsqre/vo-cutouts-worker"
+
+    # -- Tag of vo-cutouts worker image to use
+    # @default -- The appVersion of the chart
+    tag: ""
+
+    # -- Pull policy for cutout workers
+    pullPolicy: "IfNotPresent"
+
+  # -- Resource limits and requests for the cutout worker pod
+  resources: {}
+
+  # -- Annotations for the cutout worker pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the cutout worker pod
+  nodeSelector: {}
+
+  # -- Tolerations for the cutout worker pod
+  tolerations: []
+
+  # -- Affinity rules for the cutout worker pod
+  affinity: {}
+
+databaseWorker:
+  # -- Number of database worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the database worker pod
+  resources: {}
+
+  # -- Annotations for the database worker pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the database worker pod
+  nodeSelector: {}
+
+  # -- Tolerations for the database worker pod
+  tolerations: []
+
+  # -- Affinity rules for the database worker pod
+  affinity: {}
+
+redis:
+  image:
+    # -- Redis image to use
+    repository: "redis"
+
+    # -- Redis image tag to use
+    tag: "6.2.6"
+
+    # -- Pull policy for the Redis image
+    pullPolicy: "IfNotPresent"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "100Mi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
