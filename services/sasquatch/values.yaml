@@ -134,7 +134,6 @@ telegraf:
           database: "telegraf"
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
-
 csc:
   # -- Whether the test csc is deployed.
   enabled: false
@@ -209,7 +208,3 @@ kafka-producers:
         Test
   # -- Namespace where the Test CSC is deployed.
   namespace: sasquatch
-
-# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
-# @default -- None, must be set
-vaultSecretsPath: ""
