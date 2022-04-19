@@ -34,4 +34,4 @@ spec:
               service:
                 name: {{ template "cadc-tap-postgres.fullname" . }}
                 port:
-                  number: 8080
+                  number: 80

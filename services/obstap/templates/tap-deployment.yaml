@@ -20,10 +20,8 @@ spec:
         {{- include "cadc-tap-postgres.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "server"
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: "pull-secret"
       automountServiceAccountToken: false
       containers:
         - name: "tap-server"

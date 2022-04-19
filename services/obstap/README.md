@@ -21,7 +21,7 @@ CADC TAP PostgresSQL service, used for ObsTAP
 | db.podAnnotations | object | `{}` | Annotations for the databse pod |
 | db.resources | object | `{}` | Resource limits and requests for the database pod |
 | db.tolerations | list | `[]` | Tolerations for the database pod |
-| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| fullnameOverride | string | `"obstap"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
 | image.repository | string | `"lsstdax/tap-postgres-server"` | tap-postgres image to use |
 | image.tag | string | The appVersion of the chart | Tag of tap image to use |

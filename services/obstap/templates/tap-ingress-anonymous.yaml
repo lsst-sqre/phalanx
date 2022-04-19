@@ -28,18 +28,18 @@ spec:
               service:
                 name: {{ template "cadc-tap-postgres.fullname" . }}
                 port:
-                  number: 8080
+                  number: 80
           - path: "/api/obstap/(capabilities)"
             pathType: "ImplementationSpecific"
             backend:
               service:
                 name: {{ template "cadc-tap-postgres.fullname" . }}
                 port:
-                  number: 8080
+                  number: 80
           - path: "/api/obstap/(swagger-ui.*)"
             pathType: "ImplementationSpecific"
             backend:
               service:
                 name: {{ template "cadc-tap-postgres.fullname" . }}
                 port:
-                  number: 8080
+                  number: 80
