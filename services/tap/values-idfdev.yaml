@@ -1,16 +1,3 @@
-cadc-tap:
-  fullnameOverride: "cadc-tap"
-
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data-dev.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/tap"
-
-  config:
-    gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "http://async-results.lsst.codes"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+config:
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "http://async-results.lsst.codes"
