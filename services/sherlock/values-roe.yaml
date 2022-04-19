@@ -1,11 +1,7 @@
-sherlock:
-  ingress:
-    host: "rsp.lsst.ac.uk"
-
-  resources:
-    requests:
-      cpu: 2.0
-      memory: "2G"
-    limits:
-      cpu: 4.0
-      memory: "4G"
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 4.0
+    memory: "4G"
