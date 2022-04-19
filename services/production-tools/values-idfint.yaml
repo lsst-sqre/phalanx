@@ -10,4 +10,4 @@ production-tools:
   ingress:
     host: "data-int.lsst.cloud"
     path: "/production-tools"
-    gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=productiontools" 
+    gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=productiontools"
