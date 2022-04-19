@@ -1,0 +1,18 @@
+# Default values for fileserver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Set to non-empty to enable debugging output
+debug: ''
+
+image:
+  repository: 'lsstsqre/lsp-postgres'
+  tag: 'latest'
+
+# The volume can generally be very small
+postgres_volume_size: '1Gi'
+# Set to appropriate value for your deployment: at GKE, 'fast', on Rubin
+# Observatory Rancher, 'rook-ceph-block', at NCSA, 'manual',
+# elsewhere 'standard' ...
+postgres_storage_class: 'standard'
+volume_name: ''

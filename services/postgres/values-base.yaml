@@ -1,25 +1,16 @@
-postgres:
-  pull_secret: 'pull-secret'
-  vault_secrets:
-    path: 'secret/k8s_operator/base-lsp.lsst.codes/postgres'
-  debug: 'true'
-  jupyterhub_db:
-    user: 'jovyan'
-    db: 'jupyterhub'
-  lovelog_db:
-    user: 'lovelog'
-    db: 'lovelog'
-  exposurelog_db:
-    user: 'exposurelog'
-    db: 'exposurelog'
-  gafaelfawr_db:
-    user: 'gafaelfawr'
-    db: 'gafaelfawr'
-  narrativelog_db:
-    user: 'narrativelog'
-    db: 'narrativelog'
-  postgres_storage_class: 'rook-ceph-block'
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret
+jupyterhub_db:
+  user: 'jovyan'
+  db: 'jupyterhub'
+lovelog_db:
+  user: 'lovelog'
+  db: 'lovelog'
+exposurelog_db:
+  user: 'exposurelog'
+  db: 'exposurelog'
+gafaelfawr_db:
+  user: 'gafaelfawr'
+  db: 'gafaelfawr'
+narrativelog_db:
+  user: 'narrativelog'
+  db: 'narrativelog'
+postgres_storage_class: 'rook-ceph-block'

@@ -1,0 +1,16 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ template "postgres.fullname" . }}-physpvc
+spec:
+  accessModes:
+    - "ReadWriteOnce"
+  resources:
+    requests:
+      storage: {{.Values.postgres_volume_size}}
+  storageClassName: {{.Values.postgres_storage_class}}
+{{ if .Values.volume_name }}
+  volumeName: {{ .Values.volume_name }}
+{{ end }}
+
+

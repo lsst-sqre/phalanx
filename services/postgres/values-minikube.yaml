@@ -1,24 +1,14 @@
-postgres:
-  pull_secret: 'pull-secret'
-  vault_secrets:
-    path: 'secret/k8s_operator/minikube.lsst.codes/postgres'
-  debug: 'true'
-  jupyterhub_db:
-    user: 'jovyan'
-    db: 'jupyterhub'
-  exposurelog_db:
-    user: 'exposurelog'
-    db: 'exposurelog'
-  gafaelfawr_db:
-    user: 'gafaelfawr'
-    db: 'gafaelfawr'
-  narrativelog_db:
-    user: 'narrativelog'
-    db: 'narrativelog'
-  image:
-    tag: '0.0.2'
-  postgres_storage_class: 'standard'
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
+debug: 'true'
+jupyterhub_db:
+  user: 'jovyan'
+  db: 'jupyterhub'
+exposurelog_db:
+  user: 'exposurelog'
+  db: 'exposurelog'
+gafaelfawr_db:
+  user: 'gafaelfawr'
+  db: 'gafaelfawr'
+narrativelog_db:
+  user: 'narrativelog'
+  db: 'narrativelog'
+postgres_storage_class: 'standard'
