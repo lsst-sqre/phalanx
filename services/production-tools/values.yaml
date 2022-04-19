@@ -1,0 +1,87 @@
+# Default values for production-tools.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the production-tools deployment
+  repository: lsstdm/production_tools
+
+  # -- Pull policy for the production-tools image
+  pullPolicy: Always
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for the production-tools deployment pod
+podAnnotations: {}
+
+# Path to the vault secret.
+butler_secret_path: ""
+
+# Environment variables passed to container
+environment: {}
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 8080
+
+ingress:
+  # -- Create an ingress resource
+  enabled: true
+
+  # -- Hostname of the deployment to run behind
+  host: ""
+
+  # -- Gafaelfawr Auth Query string (default, unauthenticated)
+  # gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
+  gafaelfawrAuthQuery: ""
+
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path type for the ingress rule
+  pathType: ImplementationSpecific
+
+  # -- URL path to dispatch to the production-tools deployment pod
+  path: "/production-tools"
+
+# -- Resource limits and requests for the production-tools deployment pod
+resources: {}
+
+autoscaling:
+  # -- Enable autoscaling of production-tools deployment
+  enabled: false
+
+  # -- Minimum number of production-tools deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of production-tools deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of production-tools deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Node selection rules for the production-tools deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the production-tools deployment pod
+tolerations: []
+
+# -- Affinity rules for the production-tools deployment pod
+affinity: {}

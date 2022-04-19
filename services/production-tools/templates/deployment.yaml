@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "production-tools.fullname" . }}
+  labels:
+    {{- include "production-tools.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "production-tools.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "production-tools.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        # butler-secrets-raw is the secrets we get from vault
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: "butler-secret"
+        # butler-secrets are the copied and chmoded versions
+        - name: "butler-secrets"
+          emptyDir: {}
+        - name: "cache-dir"
+          emptyDir: {}
+      # Have to fix permissions on the pgpass file.
+      # init container pattern borrowed from vo-cutouts.
+      initContainers:
+        - name: fix-secret-permissions
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: Always
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              cp -RL /home/worker/secrets-raw/* /home/worker/.lsst/
+              chown worker:worker /home/worker/.lsst/*
+              chmod 0400 /home/worker/.lsst/*
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/home/worker/.lsst/"
+            - name: "butler-secrets-raw"
+              mountPath: "/home/worker/secrets-raw/"
+              readOnly: true
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: butler-secrets
+              mountPath: "/home/worker/.lsst/"
+            - name: "cache-dir"
+              mountPath: "/home/worker/cache"
+          env:
+            - name: "LOG_CACHE_DIR"
+              value: "/home/worker/cache"
+{{- range $key, $value := .Values.environment }}
+            - name: {{ $key | quote }}
+              value: {{ $value | quote }}
+{{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
