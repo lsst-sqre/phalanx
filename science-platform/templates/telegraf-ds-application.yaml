@@ -32,6 +32,6 @@ spec:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
-        - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - values.yaml
+        - values-{{ .Values.environment }}.yaml
 {{- end -}}
