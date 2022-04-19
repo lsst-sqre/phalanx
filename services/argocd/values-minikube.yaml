@@ -2,42 +2,10 @@ argo-cd:
   controller:
     args:
       repoServerTimeoutSeconds: "180"
-    metrics:
-      enabled: true
-      applicationLabels:
-        enabled: true
-        labels: ["name", "instance"]
-
-  redis:
-    enabled: true
-    metrics:
-      enabled: true
-
-  repoServer:
-    metrics:
-      enabled: true
-
-  notifications:
-    metrics:
-      enabled: true
-
   server:
-    metrics:
-      enabled: true
     ingress:
-      enabled: true
       hosts:
         - "minikube.lsst.codes"
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
-      paths:
-        - /argo-cd(/|$)(.*)
-
-    extraArgs:
-      - "--basehref=/argo-cd"
-      - "--insecure=true"
-
     config:
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
@@ -50,15 +18,3 @@ argo-cd:
           name: stable
         - url: https://strimzi.io/charts/
           name: strimzi
-
-  configs:
-    secret:
-      createSecret: false
-
-vault_secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/argocd
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
