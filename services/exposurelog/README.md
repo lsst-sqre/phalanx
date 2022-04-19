@@ -24,6 +24,7 @@ Exposure log service
 | image.pullPolicy | string | `"Always"` |  |
 | image.repository | string | `"lsstsqre/exposurelog"` |  |
 | image.tag | string | `""` |  |
+| ingress.gafaelfawrAuthQuery | string | `""` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |

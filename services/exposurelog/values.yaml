@@ -12,6 +12,10 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+ingress:
+  # Allow specification of auth scope
+  gafaelfawrAuthQuery: ""
+
 # Application-specific configuration
 config:
   # NFS path to butler registry 1 and/or 2.

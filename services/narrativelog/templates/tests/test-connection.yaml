@@ -11,5 +11,5 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "narrativelog.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "narrativelog.fullname" . }}:8080']
   restartPolicy: Never
