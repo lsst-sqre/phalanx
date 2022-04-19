@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: strimzi-registry-operator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: strimzi-registry-operator
+  template:
+    metadata:
+      labels:
+        app: strimzi-registry-operator
+    spec:
+      serviceAccountName: strimzi-registry-operator
+      containers:
+        - name: operator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Always
+          env:
+          - name: SSR_CLUSTER_NAME
+            value: "{{ .Values.clusterName }}"
+          - name: SSR_NAMESPACE
+            value: "{{ .Values.watchNamespace }}"
+          command: ["kopf"]
+          args: ["run",  "--standalone",  "-m",  "strimziregistryoperator.handlers",  "--namespace",  "{{ .Values.watchNamespace }}",  "--verbose"]
