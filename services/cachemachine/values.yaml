@@ -26,23 +26,9 @@ serviceAccount:
   # -- Annotations to add to the service account
   annotations: {}
 
-service:
-  # -- Type of service to create
-  type: "ClusterIP"
-
-  # -- Port of the service to create and map to the ingress
-  port: 80
-
 ingress:
-  # -- Whether to create an ingress
-  enabled: true
-
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=exec:admin"
-
-  # -- Hostname for the ingress
-  # @default -- None, must be set if the ingress is enabled
-  host: ""
 
   # -- Additional annotations to add for endpoints that are authenticated.
   annotations: {}

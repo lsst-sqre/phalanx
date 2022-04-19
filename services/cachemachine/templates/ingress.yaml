@@ -26,7 +26,7 @@ spec:
               service:
                 name: {{ template "cachemachine.fullname" . }}
                 port:
-                  number: {{ .Values.service.port }}
+                  number: 80
   {{- if .Values.ingress.tls }}
   tls:
     {{- range .Values.ingress.tls }}
