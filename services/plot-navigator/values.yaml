@@ -1,0 +1,11 @@
+image:
+  repository: lsstdm/pipetask-plot-navigator
+  tag: ""
+
+# Environment variables to be passed to panel.
+# e.g. butler configuration and auth params.
+environment: {}
+
+ingress:
+  gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=plotnavigator"
+  annotations: {}
