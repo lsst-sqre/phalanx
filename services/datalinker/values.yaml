@@ -1,0 +1,81 @@
+# Default values for datalinker.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the datalinker deployment
+  repository: lsstsqre/datalinker
+
+  # -- Pull policy for the datalinker image
+  pullPolicy: Always
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: 
+  - name: "pull-secret"
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for the datalinker deployment pod
+podAnnotations: {}
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 8080
+
+ingress:
+  # -- Create an ingress resource
+  enabled: true
+
+  # -- Hostname of the deployment to run behind
+  host: ""
+
+  # -- Gafaelfawr auth query string (default, unauthenticated)
+  gafaelfawrAuthQuery: ""
+
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path type for the ingress rule
+  pathType: ImplementationSpecific
+
+  # -- URL path to dispatch to the datalinker deployment pod
+  path: "/api/datalink"
+
+# -- Resource limits and requests for the datalinker deployment pod
+resources: {}
+
+autoscaling:
+  # -- Enable autoscaling of datalinker deployment
+  enabled: false
+
+  # -- Minimum number of datalinker deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of datalinker deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of datalinker deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Node selection rules for the datalinker deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the datalinker deployment pod
+tolerations: []
+
+# -- Affinity rules for the datalinker deployment pod
+affinity: {}

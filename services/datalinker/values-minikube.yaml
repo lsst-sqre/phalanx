@@ -1,8 +1,1 @@
-datalinker:
-  ingress:
-    enabled: true
-    host: "minikube.lsst.cloud"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
+# minikube

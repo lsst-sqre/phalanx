@@ -1,8 +1,1 @@
-datalinker:
-  ingress:
-    enabled: true
-    host: "data.lsst.cloud"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data.lsst.cloud/pull-secret
+# idfprod
