@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "cadc-tap-postgres.fullname" . }}
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "cadc-tap-postgres.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "server"
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true.
+    - from:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 8080

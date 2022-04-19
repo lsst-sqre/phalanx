@@ -1,42 +1,29 @@
-cadc-tap-postgres:
-  fullnameOverride: "obstap"
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 8.0
+    memory: "16G"
 
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "lsst-lsp-int.ncsa.illinois.edu"
-  vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/tap"
-
+db:
   resources:
     requests:
-      cpu: 2.0
-      memory: "2G"
+      cpu: 0.25
+      memory: "1G"
     limits:
-      cpu: 8.0
-      memory: "16G"
+      cpu: 2.0
+      memory: "4G"
 
-  db:
-    resources:
-      requests:
-        cpu: 0.25
-        memory: "1G"
-      limits:
-        cpu: 2.0
-        memory: "4G"
+uws:
+  resources:
+    requests:
+      cpu: 0.25
+      memory: "1G"
+    limits:
+      cpu: 2.0
+      memory: "4G"
 
-  uws:
-    resources:
-      requests:
-        cpu: 0.25
-        memory: "1G"
-      limits:
-        cpu: 2.0
-        memory: "4G"
-
-  config:
-    gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "http://async-results.lsst.codes"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"
+config:
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "http://async-results.lsst.codes"
