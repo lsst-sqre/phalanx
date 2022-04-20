@@ -21,8 +21,6 @@ spec:
       labels:
         {{- include "semaphore.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       serviceAccountName: {{ include "semaphore.serviceAccountName" . }}
       securityContext:
         runAsNonRoot: true

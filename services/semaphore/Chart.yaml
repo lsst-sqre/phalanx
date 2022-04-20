@@ -9,8 +9,3 @@ sources:
 maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
-
-dependencies:
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
