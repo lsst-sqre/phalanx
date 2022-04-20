@@ -27,6 +27,9 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
   ignoreDifferences:
     - group: ""
       kind: "Secret"

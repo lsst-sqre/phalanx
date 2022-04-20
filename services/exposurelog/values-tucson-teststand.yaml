@@ -6,4 +6,3 @@ config:
   # Note: exposurelog's Dockerfile copies the test repos to the top of the container
   butler_uri_1: LSSTCam
   butler_uri_2: LATISS
-
