@@ -134,6 +134,77 @@ telegraf:
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
 
+csc:
+  image:
+    # -- The Docker registry name of the container image to use for the CSC
+    repository: ts-dockerhub.lsst.org/test
+    # -- The tag of the container image to use for the CSC
+    tag: c0025
+    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
+    nexus3: nexus3-docker
+  # -- Enviroment variables to run the Test CSC.
+  env:
+    LSST_DDS_PARTITION_PREFIX: test
+    LSST_SITE: test
+    OSPL_INFOFILE: /tmp/ospl-info-test.log
+    OSPL_ERRORFILE: /tmp/ospl-error-test.log
+    # -- Use a single process configuration for DDS OpenSplice.
+    OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
+  # -- Wether to use an external configuration for DDS OpenSplice.
+  useExternalConfig: false
+  # -- DDS OpenSplice version.
+  osplVersion: V6.10.4
+  # -- Namespace where the Test CSC is deployed.
+  namespace: sasquatch
+
+kafka-producers:
+  image:
+    # -- The Docker registry name of the container image to use for the producers.
+    repository: ts-dockerhub.lsst.org/salkafka
+    # -- The tag of the container image to use for the producers.
+    tag: c0025
+    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
+    nexus3: nexus3-docker
+  env:
+    # -- The LSST_DDS_PARTITION_PREFIX name applied to all producer containers.
+    lsstDdsPartitionPrefix: test
+    # -- The URI for the Sasquatch Kafka broker.
+    brokerIp: sasquatch-kafka-bootstrap.sasquatch
+    # -- The port for the Sasquatch Kafka listener.
+    brokerPort: 9092
+    # -- The Sasquatch Schema Registry URL.
+    registryAddr: http://sasquatch-schema-registry.sasquatch:8081
+    # -- The topic replication factor (should be the same as the number of Kafka broker in Sasquatch)
+    replication: 3
+    # -- Logging level for the Kafka producers
+    logLevel: 20
+    extras:
+      # -- Use a single process configuration for DDS OpenSplice.
+      OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
+      LSST_DDS_RESPONSIVENESS_TIMEOUT: 15s
+      OSPL_INFOFILE: /tmp/ospl-info-kafka-producers.log
+      OSPL_ERRORFILE: /tmp/ospl-error-kafka-producers.log
+  # -- Wether to use an external configuration for DDS OpenSplice.
+  useExternalConfig: false
+  # -- DDS OpenSplice version.
+  osplVersion: V6.10.4
+  startupProbe:
+    # -- Whether to use the startup probe
+    use: true
+    # -- The number of times the startup probe is allowed to fail before failing the probe
+    failureThreshold: 15
+    # -- The initial delay in seconds before the first check is made
+    initialDelay: 20
+    # -- The time in seconds between subsequent checks
+    period: 10
+  # -- List of producers and CSCs to get DDS samples from.
+  producers:
+    test:
+      cscs: >-
+        Test
+  # -- Namespace where the Test CSC is deployed.
+  namespace: sasquatch
+
 # -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
 # @default -- None, must be set
 vaultSecretsPath: ""
