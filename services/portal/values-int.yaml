@@ -18,6 +18,9 @@ resources:
   limits:
     memory: "24Gi"
 
+image:
+  tag: "suit-2022.1"
+
 securityContext:
   runAsUser: 101
   runAsGroup: 102

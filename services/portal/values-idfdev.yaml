@@ -2,4 +2,4 @@ resources:
   limits:
     memory: "8Gi"
 image:
-  tag: "suit-2.4.0"
+  tag: "suit-2022.1"
