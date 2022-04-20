@@ -9,3 +9,6 @@ config:
 resources:
   limits:
     memory: "30Gi"
+
+image:
+  tag: "suit-2.4.0"
