@@ -479,3 +479,11 @@ vault_secret_path: ""
 # even with port 8081 explicitly enabled), so let's use our own for now.
 network_policy:
   enabled: true
+
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

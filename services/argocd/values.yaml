@@ -50,3 +50,10 @@ argo-cd:
   configs:
     secret:
       createSecret: false
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

@@ -208,3 +208,9 @@ kafka-producers:
         Test
   # -- Namespace where the Test CSC is deployed.
   namespace: sasquatch
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
