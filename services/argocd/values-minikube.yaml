@@ -12,8 +12,6 @@ argo-cd:
     enabled: true
     metrics:
       enabled: true
-      image:
-        repository: "bitnami/redis-exporter"
 
   repoServer:
     metrics:
