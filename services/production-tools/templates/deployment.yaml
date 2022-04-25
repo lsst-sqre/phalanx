@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "production-tools.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "production-tools.selectorLabels" . | nindent 6 }}
@@ -21,10 +19,8 @@ spec:
         {{- include "production-tools.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -58,9 +54,9 @@ spec:
             runAsGroup: 0
           volumeMounts:
             - name: "butler-secrets"
-              mountPath: "/home/worker/.lsst/"
+              mountPath: "/home/worker/.lsst"
             - name: "butler-secrets-raw"
-              mountPath: "/home/worker/secrets-raw/"
+              mountPath: "/home/worker/secrets-raw"
               readOnly: true
       containers:
         - name: {{ .Chart.Name }}
@@ -76,10 +72,6 @@ spec:
             - name: http
               containerPort: 8080
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
           readinessProbe:
             httpGet:
               path: /
@@ -94,6 +86,12 @@ spec:
           env:
             - name: "LOG_CACHE_DIR"
               value: "/home/worker/cache"
+            - name: "PGPASSFILE"
+              value: "/home/worker/.lsst/postgres-credentials.txt"
+            - name: "AWS_SHARED_CREDENTIALS_FILE"
+              value: "/home/worker/.lsst/aws-credentials.ini"
+            - name: "S3_ENDPOINT_URL"
+              value: "https://storage.googleapis.com"
 {{- range $key, $value := .Values.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}

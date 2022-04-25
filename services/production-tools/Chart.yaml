@@ -2,5 +2,6 @@ apiVersion: v2
 name: production-tools
 version: 1.0.0
 dependencies:
+description: A collection of utility pages for monitoring data processing.
 home: "https://github.com/lsst-sqre/production-tools"
 appVersion: 0.0.4

@@ -10,13 +10,10 @@ image:
   repository: lsstdm/production_tools
 
   # -- Pull policy for the production-tools image
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
-
-# -- Secret names to use for all Docker pulls
-imagePullSecrets: []
 
 # -- Override the base name for resources
 nameOverride: ""
@@ -27,55 +24,21 @@ fullnameOverride: ""
 # -- Annotations for the production-tools deployment pod
 podAnnotations: {}
 
-# Path to the vault secret.
-butler_secret_path: ""
-
 # Environment variables passed to container
 environment: {}
 
-service:
-  # -- Type of service to create
-  type: ClusterIP
-
-  # -- Port of the service to create and map to the ingress
-  port: 8080
-
 ingress:
-  # -- Create an ingress resource
-  enabled: true
-
-  # -- Hostname of the deployment to run behind
-  host: ""
-
   # -- Gafaelfawr Auth Query string (default, unauthenticated)
-  # gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
-  gafaelfawrAuthQuery: ""
+  gafaelfawrAuthQuery: "scope=exec:portal"
 
   # -- Additional annotations for the ingress rule
   annotations: {}
 
   # -- Path type for the ingress rule
-  pathType: ImplementationSpecific
-
-  # -- URL path to dispatch to the production-tools deployment pod
-  path: "/production-tools"
+  pathType: Prefix
 
 # -- Resource limits and requests for the production-tools deployment pod
 resources: {}
-
-autoscaling:
-  # -- Enable autoscaling of production-tools deployment
-  enabled: false
-
-  # -- Minimum number of production-tools deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of production-tools deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of production-tools deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 # -- Node selection rules for the production-tools deployment pod
 nodeSelector: {}
@@ -85,3 +48,18 @@ tolerations: []
 
 # -- Affinity rules for the production-tools deployment pod
 affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
