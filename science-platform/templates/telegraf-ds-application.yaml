@@ -27,6 +27,10 @@ spec:
       parameters:
         - name: "global.enabled_services"
           value: {{ include "enabled_services" . | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
         - values.yaml
         - values-{{ .Values.environment }}.yaml
