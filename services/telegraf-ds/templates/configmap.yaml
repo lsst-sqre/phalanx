@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-generated-config
+data:
+  telegraf-generated.conf: |+
+      [global_tags]
+        cluster = {{- .Values.global.host | quote }}
+      [agent]
+        hostname = "telegraf-$HOSTIP"
+
+      [[inputs.kubernetes]]
+        url = "https://$HOSTIP:10250"
+        bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+        insecure_skip_verify = true
+        namepass = ["kubernetes_pod_container"]
+        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+  {{ range $app := splitList "@" .Values.global.enabled_services }}
+    {{- $bucket := replace "-" "_" $app }}
+    {{- $namespace := replace "_" "-" $app }}
+      [[outputs.influxdb_v2]]
+        urls = ["https://monitoring.lsst.codes"]
+        token = "$INFLUX_TOKEN"
+        organization = "square"
+        bucket = {{ $bucket | quote }}
+        [outputs.influxdb_v2.tagpass]
+          namespace = [{{ $namespace | quote }}]
+  {{ end }}
