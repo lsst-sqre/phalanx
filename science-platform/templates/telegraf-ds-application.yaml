@@ -24,6 +24,9 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:
+      parameters:
+        - name: "global.enabled_services"
+          value: {{ include "enabled_services" . | quote }}
       valueFiles:
         - values.yaml
         - values-{{ .Values.environment }}.yaml
