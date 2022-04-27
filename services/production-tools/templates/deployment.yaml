@@ -46,12 +46,12 @@ spec:
             - "-c"
             - |
               cp -RL /home/worker/secrets-raw/* /home/worker/.lsst/
-              chown worker:worker /home/worker/.lsst/*
               chmod 0400 /home/worker/.lsst/*
           securityContext:
-            runAsNonRoot: false
-            runAsUser: 0
-            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/home/worker/.lsst"
