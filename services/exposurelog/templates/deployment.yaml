@@ -89,7 +89,7 @@ spec:
           nfs:
             path: {{ .Values.config.nfs_path_1 }}
             readOnly: true
-            server: {{ .Values.config.nfs_server_1 }} 
+            server: {{ .Values.config.nfs_server_1 }}
         {{- end }}
         {{- if .Values.config.nfs_path_2 }}
         - name: volume2
