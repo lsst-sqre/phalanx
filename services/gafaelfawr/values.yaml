@@ -71,6 +71,13 @@ config:
     loginParams:
       skin: "LSST"
 
+  firestore:
+    # -- If set, assign UIDs and GIDs using Google Firestore in the given
+    # project.  Cloud SQL must be enabled and the Cloud SQL service account
+    # must have read/write access to that Firestore instance.
+    # @default -- Firestore support is disabled
+    project: ""
+
   github:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
     # or `config.oidc.clientId` must be set.

@@ -23,6 +23,7 @@ Science Platform authentication and authorization system
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (inside a <p> tag). |
+| config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project.  Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. Tokens from an OpenID Connect provider such as CILogon that include groups in an `isMemberOf` claim will be granted scopes based on this mapping. |
 | config.influxdb.enabled | bool | `false` | Whether to issue tokens for InfluxDB. If set to true, `influxdb-secret` must be set in the Gafaelfawr secret. |
@@ -35,6 +36,9 @@ Science Platform authentication and authorization system
 | config.ldap.uidAttr | string | `"uidNumber"` | Attribute containing the user's UID number (only used if uidBaseDn is set) |
 | config.ldap.uidBaseDn | string | Get the UID number from the upstream authentication provider | Base DN for the LDAP search to find a user's UID number |
 | config.ldap.url | string | Do not use LDAP | LDAP server URL from which to retrieve user group information |
+| config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr secret |
+| config.ldap.usernameBaseDn | string | Get the username from the upstream authentication provider | Base DN for the LDAP search to find a user's username |
+| config.ldap.usernameSearchAttr | string | `"voPersonSoRID"` | Attribute matching the `sub` claim of a token to find the record containing the username |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
@@ -51,7 +55,7 @@ Science Platform authentication and authorization system
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
-| image.repository | string | `"lsstsqre/gafaelfawr"` | Gafaelfawr image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |

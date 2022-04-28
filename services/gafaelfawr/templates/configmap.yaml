@@ -97,6 +97,11 @@ data:
 
     {{- end }}
 
+    {{- if .Values.config.firestore.project }}
+    firestore:
+      project: {{ .Values.config.firestore.project | quote }}
+    {{- end }}
+
     {{- if .Values.config.ldap.url }}
     ldap:
       url: {{ .Values.config.ldap.url | quote }}
