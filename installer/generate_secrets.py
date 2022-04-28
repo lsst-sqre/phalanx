@@ -1,20 +1,19 @@
 #!/usr/bin/env python3
 import argparse
 import base64
-import bcrypt
-from collections import defaultdict
-from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives.asymmetric import rsa
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from datetime import datetime, timezone
 import json
 import logging
 import os
-from pathlib import Path
 import secrets
-import yaml
+from collections import defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
 
+import bcrypt
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from onepassword import OnePassword
 
 
@@ -62,7 +61,9 @@ class SecretGenerator:
         elif use_cert_manager == "n":
             self._ingress_nginx()
         else:
-            raise Exception(f"Invalid cert manager enabled value {use_cert_manager}")
+            raise Exception(
+                f"Invalid cert manager enabled value {use_cert_manager}"
+            )
 
     def load(self):
         """Load the secrets files for each RSP component from the
@@ -89,7 +90,9 @@ class SecretGenerator:
 
     def input_field(self, component, name, description):
         default = self.secrets[component].get(name, "")
-        prompt_string = f"[{component} {name}] ({description}): [current: {default}] "
+        prompt_string = (
+            f"[{component} {name}] ({description}): [current: {default}] "
+        )
         input_string = input(prompt_string)
 
         if input_string:
@@ -99,7 +102,7 @@ class SecretGenerator:
         current = self.secrets.get(component, {}).get(name, "")
         print(f"[{component} {name}] ({description})")
         print(f"Current contents:\n{current}")
-        prompt_string = f"New filename with contents (empty to not change): "
+        prompt_string = "New filename with contents (empty to not change): "
         fname = input(prompt_string)
 
         if fname:
@@ -122,7 +125,7 @@ class SecretGenerator:
         self.secrets[component][name] = new_value
 
     def _exists(self, component, name):
-        return (component in self.secrets and name in self.secrets[component])
+        return component in self.secrets and name in self.secrets[component]
 
     def _set_generated(self, component, name, new_value):
         if not self._exists(component, name) or self.regenerate:
@@ -136,27 +139,42 @@ class SecretGenerator:
         )
 
     def _postgres(self):
-        self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
-        self._set_generated("postgres", "gafaelfawr_password", secrets.token_hex(32))
-        self._set_generated("postgres", "jupyterhub_password", secrets.token_hex(32))
+        self._set_generated(
+            "postgres", "exposurelog_password", secrets.token_hex(32)
+        )
+        self._set_generated(
+            "postgres", "gafaelfawr_password", secrets.token_hex(32)
+        )
+        self._set_generated(
+            "postgres", "jupyterhub_password", secrets.token_hex(32)
+        )
         self._set_generated("postgres", "root_password", secrets.token_hex(64))
-        self._set_generated("postgres", "vo_cutouts_password", secrets.token_hex(32))
-        self._set_generated("postgres", "narrativelog_password", secrets.token_hex(32))
+        self._set_generated(
+            "postgres", "vo_cutouts_password", secrets.token_hex(32)
+        )
+        self._set_generated(
+            "postgres", "narrativelog_password", secrets.token_hex(32)
+        )
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
         self._set_generated("nublado2", "crypto_key", crypto_key)
         self._set_generated("nublado2", "proxy_token", secrets.token_hex(32))
-        self._set_generated("nublado2", "cryptkeeper_key", secrets.token_hex(32))
+        self._set_generated(
+            "nublado2", "cryptkeeper_key", secrets.token_hex(32)
+        )
 
         # Pluck the password out of the postgres portion.
-        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"]["jupyterhub_password"]
+        self.secrets["nublado2"]["hub_db_password"] = self.secrets["postgres"][
+            "jupyterhub_password"
+        ]
 
     def _mobu(self):
         self.input_field(
             "mobu",
             "ALERT_HOOK",
-            "Slack webhook for reporting mobu alerts.  Or use None for no alerting.",
+            "Slack webhook for reporting mobu alerts. "
+            "Or use None for no alerting.",
         )
 
     def _cert_manager(self):
@@ -180,7 +198,9 @@ class SecretGenerator:
         self._set_generated(
             "gafaelfawr", "bootstrap-token", self._generate_gafaelfawr_token()
         )
-        self._set_generated("gafaelfawr", "redis-password", os.urandom(32).hex())
+        self._set_generated(
+            "gafaelfawr", "redis-password", os.urandom(32).hex()
+        )
         self._set_generated(
             "gafaelfawr", "session-secret", Fernet.generate_key().decode()
         )
@@ -189,13 +209,17 @@ class SecretGenerator:
         self.input_field("gafaelfawr", "cloudsql", "Use CloudSQL? (y/n):")
         use_cloudsql = self.secrets["gafaelfawr"]["cloudsql"]
         if use_cloudsql == "y":
-            self.input_field("gafaelfawr", "database-password", "Database password")
+            self.input_field(
+                "gafaelfawr", "database-password", "Database password"
+            )
         elif use_cloudsql == "n":
             # Pluck the password out of the postgres portion.
             db_pass = self.secrets["postgres"]["gafaelfawr_password"]
             self._set("gafaelfawr", "database-password", db_pass)
         else:
-            raise Exception(f"Invalid gafaelfawr cloudsql value {use_cloudsql}")
+            raise Exception(
+                f"Invalid gafaelfawr cloudsql value {use_cloudsql}"
+            )
 
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
@@ -212,35 +236,51 @@ class SecretGenerator:
 
     def _pull_secret(self):
         self.input_file(
-            "pull-secret", ".dockerconfigjson", ".docker/config.json to pull images"
+            "pull-secret",
+            ".dockerconfigjson",
+            ".docker/config.json to pull images",
         )
 
     def _butler_secret(self):
         self.input_file(
-            "butler-secret", "aws-credentials.ini", "AWS credentials for butler"
-            )
+            "butler-secret",
+            "aws-credentials.ini",
+            "AWS credentials for butler",
+        )
         self.input_file(
-            "butler-secret", "butler-gcs-idf-creds.json", "Google credentials for butler"
-            )
+            "butler-secret",
+            "butler-gcs-idf-creds.json",
+            "Google credentials for butler",
+        )
         self.input_file(
-            "butler-secret", "postgres-credentials.txt", "Postgres credentials for butler"
-            )
+            "butler-secret",
+            "postgres-credentials.txt",
+            "Postgres credentials for butler",
+        )
 
     def _ingress_nginx(self):
         self.input_file("ingress-nginx", "tls.key", "Certificate private key")
         self.input_file("ingress-nginx", "tls.crt", "Certificate chain")
 
     def _argocd(self):
-        current_pw = self._get_current("installer", "argocd.admin.plaintext_password")
+        current_pw = self._get_current(
+            "installer", "argocd.admin.plaintext_password"
+        )
 
         self.input_field(
-            "installer", "argocd.admin.plaintext_password", "Admin password for ArgoCD?"
+            "installer",
+            "argocd.admin.plaintext_password",
+            "Admin password for ArgoCD?",
         )
         new_pw = self.secrets["installer"]["argocd.admin.plaintext_password"]
 
         if current_pw != new_pw or self.regenerate:
-            h = bcrypt.hashpw(new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)).decode("ascii")
-            now_time = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            h = bcrypt.hashpw(
+                new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)
+            ).decode("ascii")
+            now_time = datetime.now(timezone.utc).strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
 
             self._set("argocd", "admin.password", h)
             self._set("argocd", "admin.passwordMtime", now_time)
@@ -248,10 +288,12 @@ class SecretGenerator:
         self.input_field(
             "argocd",
             "dex.clientSecret",
-            "OAuth client secret for ArgoCD (either GitHub or Google)?"
+            "OAuth client secret for ArgoCD (either GitHub or Google)?",
         )
 
-        self._set_generated("argocd", "server.secretkey", secrets.token_hex(16))
+        self._set_generated(
+            "argocd", "server.secretkey", secrets.token_hex(16)
+        )
 
     def _telegraf(self):
         self.input_field(
@@ -266,18 +308,24 @@ class SecretGenerator:
         self._set_generated("portal", "ADMIN_PASSWORD", pw)
 
     def _vo_cutouts(self):
-        self._set_generated("vo-cutouts", "redis-password", os.urandom(32).hex())
+        self._set_generated(
+            "vo-cutouts", "redis-password", os.urandom(32).hex()
+        )
 
         self.input_field("vo-cutouts", "cloudsql", "Use CloudSQL? (y/n):")
         use_cloudsql = self.secrets["vo-cutouts"]["cloudsql"]
         if use_cloudsql == "y":
-            self.input_field("vo-cutouts", "database-password", "Database password")
+            self.input_field(
+                "vo-cutouts", "database-password", "Database password"
+            )
         elif use_cloudsql == "n":
             # Pluck the password out of the postgres portion.
             db_pass = self.secrets["postgres"]["vo_cutouts_password"]
             self._set("vo-cutouts", "database-password", db_pass)
         else:
-            raise Exception(f"Invalid vo-cutouts cloudsql value {use_cloudsql}")
+            raise Exception(
+                f"Invalid vo-cutouts cloudsql value {use_cloudsql}"
+            )
 
         aws = self.secrets["butler-secret"]["aws-credentials.ini"]
         self._set("vo-cutouts", "aws-credentials", aws)
@@ -339,16 +387,17 @@ class OnePasswordSecretGenerator(SecretGenerator):
                         if key is None:
                             key = field["v"]
                         else:
-                            raise Exception("Found two generate_secrets_keys for {key}")
+                            raise Exception(
+                                "Found two generate_secrets_keys for {key}"
+                            )
                     elif field["t"] == "environment":
                         environments.append(field["v"])
 
-            # If we don't find a generate_secrets_key somewhere, then we shouldn't
-            # bother with this document in the vault.
+            # If we don't find a generate_secrets_key somewhere, then we
+            # shouldn't bother with this document in the vault.
             if not key:
                 logging.debug(
-                    f"Skipping because of no generate_secrets_key, %s",
-                    uuid
+                    "Skipping because of no generate_secrets_key, %s", uuid
                 )
                 continue
 
@@ -413,15 +462,29 @@ class OnePasswordSecretGenerator(SecretGenerator):
             if item_component in {"ingress-nginx", "cert-manager"}:
                 continue
 
-            logging.debug("Updating component: %s/%s", item_component, item_name)
+            logging.debug(
+                "Updating component: %s/%s", item_component, item_name
+            )
             self.input_field(item_component, item_name, "")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="generate_secrets")
-    parser.add_argument("--op", default=False, action="store_true", help="Load secrets from 1Password")
-    parser.add_argument("--verbose", default=False, action="store_true", help="Verbose logging")
-    parser.add_argument("--regenerate", default=False, action="store_true", help="Regenerate random secrets")
+    parser.add_argument(
+        "--op",
+        default=False,
+        action="store_true",
+        help="Load secrets from 1Password",
+    )
+    parser.add_argument(
+        "--verbose", default=False, action="store_true", help="Verbose logging"
+    )
+    parser.add_argument(
+        "--regenerate",
+        default=False,
+        action="store_true",
+        help="Regenerate random secrets",
+    )
     parser.add_argument("environment", help="Environment to generate")
     args = parser.parse_args()
 
