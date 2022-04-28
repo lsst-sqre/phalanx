@@ -3,3 +3,12 @@ repos:
     rev: v4.2.0
     hooks:
       - id: trailing-whitespace
+
+  - repo: https://github.com/norwoodj/helm-docs
+    rev: v1.2.0
+    hooks:
+      - id: helm-docs
+        args:
+          - "--chart-search-root=."
+          # The `./` makes it relative to the chart-search-root set above
+          - "--template-files=./helm-docs.md.gotmpl"
