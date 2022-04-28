@@ -1,5 +1,3 @@
 resources:
   limits:
     memory: "8Gi"
-image:
-  tag: "suit-2022.1"

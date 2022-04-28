@@ -9,5 +9,3 @@ config:
 resources:
   limits:
     memory: "30Gi"
-image:
-  tag: "suit-2022.1"

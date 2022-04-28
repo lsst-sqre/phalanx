@@ -3,4 +3,4 @@ name: portal
 version: 1.0.0
 description: "Rubin Science Platform portal aspect"
 home: "https://github.com/lsst/suit"
-appVersion: "suit-233-7-dev"
+appVersion: "suit-2022.1"
