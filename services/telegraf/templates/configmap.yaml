@@ -40,7 +40,7 @@ data:
       urls = [
         {{ $endpoint | quote }}
       ]
-      [inputs.prometheus.tags]  
+      [inputs.prometheus.tags]
         prometheus_app = {{ $app_name | quote }}
         {{- end }}
       {{- end }}
@@ -51,14 +51,14 @@ data:
       {{- if has $app_name $enabled_apps }}
         {{- range $component, $endpoint := $defn }}
 
-    [[outputs.influxdb_v2]]    
+    [[outputs.influxdb_v2]]
       bucket = {{ $app_name | quote }}
       organization = "square"
       token = "$INFLUX_TOKEN"
       urls = [
         "https://monitoring.lsst.codes"
       ]
-      [outputs.influxdb_v2.tagpass]  
+      [outputs.influxdb_v2.tagpass]
         prometheus_app = [
           {{ $app_name | quote }}
         ]

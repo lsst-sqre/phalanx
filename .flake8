@@ -1,0 +1,5 @@
+[flake8]
+max-line-length = 79
+# E203: whitespace before :, flake8 disagrees with PEP-8
+# W503: line break after binary operator, flake8 disagrees with PEP-8
+ignore = E203, W503

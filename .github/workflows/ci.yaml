@@ -6,17 +6,22 @@ name: CI
       - "master"
 
 jobs:
-  yamllint:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: yaml-lint
-        uses: ibiqlik/action-yamllint@master
+      - name: Install helm-docs
+        run: brew install norwoodj/tap/helm-docs
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          config_file: ".yamllint.yml"
+          python-version: "3.10"
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v2.0.3
 
   helm:
     runs-on: ubuntu-latest
