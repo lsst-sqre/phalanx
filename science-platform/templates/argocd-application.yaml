@@ -15,9 +15,5 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:
-      parameters:
-        - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
-        - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - values-{{ .Values.environment }}.yaml

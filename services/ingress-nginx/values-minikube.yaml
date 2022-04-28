@@ -1,6 +1,7 @@
 ingress-nginx:
   controller:
     service:
+      externalTrafficPolicy: null
       type: ClusterIP
     hostNetwork: true
     dnsPolicy: ClusterFirstWithHostNet

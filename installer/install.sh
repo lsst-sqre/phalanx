@@ -45,7 +45,6 @@ echo "Update / install argocd using helm3..."
 helm dependency update ../services/argocd
 helm upgrade argocd ../services/argocd \
   --install \
-  --values ../services/argocd/values.yaml \
   --values ../services/argocd/values-$ENVIRONMENT.yaml \
   --create-namespace \
   --namespace argocd \
