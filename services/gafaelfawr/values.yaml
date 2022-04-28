@@ -64,6 +64,10 @@ config:
     # @default -- `/login` at the value of config.host
     redirectUrl: ""
 
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
+
     # -- Whether to use the test instance of CILogon
     test: false
 
@@ -102,6 +106,10 @@ config:
     # -- URL from which to retrieve the token for the user
     # @default -- None, must be set
     tokenUrl: ""
+
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
 
     # -- Issuer for the JWT token
     # @default -- None, must be set

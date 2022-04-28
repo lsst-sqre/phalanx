@@ -1,4 +1,4 @@
-![AppVersion: 4.0.0](https://img.shields.io/badge/AppVersion-4.0.0-informational?style=flat-square)
+![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
 
 # gafaelfawr
 
@@ -18,6 +18,7 @@ Science Platform authentication and authorization system
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `gafaelfawr` and `gafaelfawr-tokens` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
+| config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
 | config.cilogon.redirectUrl | string | `/login` at the value of config.host | Return URL given to CILogon (must match the CILogon configuration) |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
@@ -42,6 +43,7 @@ Science Platform authentication and authorization system
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
+| config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.oidc.issuer | string | None, must be set | Issuer for the JWT token |
 | config.oidc.loginParams | object | `{}` | Additional parameters to add to the login request |
 | config.oidc.loginUrl | string | None, must be set | URL to which to redirect the user for authorization |

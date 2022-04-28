@@ -50,6 +50,9 @@ data:
       {{- else }}
       login_url: "https://cilogon.org/authorize"
       token_url: "https://cilogon.org/oauth2/token"
+      {{- if .Values.config.cilogon.enrollmentUrl }}
+      enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
+      {{- end }}
       issuer: "https://cilogon.org"
       {{- end }}
       {{- if .Values.config.cilogon.loginParams }}
@@ -80,6 +83,9 @@ data:
       {{- end }}
       login_url: {{ required "config.oidc.loginUrl must be set" .Values.config.oidc.loginUrl | quote }}
       token_url: {{ required "config.oidc.tokenUrl must be set" .Values.config.oidc.tokenUrl | quote }}
+      {{- if .Values.config.cilogon.enrollmentUrl }}
+      enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
+      {{- end }}
       issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
       {{- if .Values.config.oidc.redirectUrl }}
       redirect_url: {{ .Values.config.oidc.redirectUrl | quote }}
