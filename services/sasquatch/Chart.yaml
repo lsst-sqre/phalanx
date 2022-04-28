@@ -9,7 +9,7 @@ dependencies:
     version: 1.2.0
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
-    version: 4.10.7
+    version: 4.11.0
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
     version: 1.0.0
