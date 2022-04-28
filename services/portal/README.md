@@ -1,4 +1,4 @@
-![AppVersion: suit-233-7-dev](https://img.shields.io/badge/AppVersion-suit--233--7--dev-informational?style=flat-square)
+![AppVersion: suit-2022.1](https://img.shields.io/badge/AppVersion-suit--2022.1-informational?style=flat-square)
 
 # portal
 
