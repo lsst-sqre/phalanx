@@ -4,6 +4,13 @@ repos:
     hooks:
       - id: trailing-whitespace
 
+  - repo: https://github.com/adrienverge/yamllint.git
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+        args:
+          - "-c=.yamllint.yml"
+
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.2.0
     hooks:
