@@ -9,7 +9,9 @@ data:
     realm: {{ required "global.host must be set" .Values.global.host | quote }}
     loglevel: {{ .Values.config.loglevel | quote }}
     session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
+    bootstrap_token_file: "/etc/gafaelfawr/secrets/bootstrap-token"
     database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    database_password_file: "/etc/gafaelfawr/secrets/database-password"
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
     token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
@@ -114,6 +116,7 @@ data:
       base_dn: {{ required "config.ldap.baseDn must be set" .Values.config.ldap.baseDn | quote }}
       {{- if .Values.config.ldap.userDn }}
       user_dn: {{ .Values.config.ldap.userDn | quote }}
+      password_file: "/etc/gafaelfawr/secrets/ldap-password"
       {{- end }}
       group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
       group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
