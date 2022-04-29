@@ -1,9 +1,10 @@
 apiVersion: v2
 name: sasquatch
 version: 1.0.0
-description: SQuaRE telemetry data service.
+description: Rubin Observatory's telemetry service.
+appVersion: 0.1.0
 dependencies:
-  - name: "strimzi-kafka"
+  - name: strimzi-kafka
     version: 1.0.0
   - name: strimzi-registry-operator
     version: 1.2.0
