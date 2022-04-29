@@ -69,8 +69,6 @@ spec:
             - name: "secret"
               mountPath: "/etc/gafaelfawr/secrets"
               readOnly: true
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
