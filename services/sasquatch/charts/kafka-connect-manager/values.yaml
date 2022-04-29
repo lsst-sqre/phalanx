@@ -3,7 +3,7 @@
 image:
   repository: lsstsqre/kafkaconnect
   tag: 0.9.3
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
 influxdbSink:
   # Repeat this block to create multiple instances of this connector.

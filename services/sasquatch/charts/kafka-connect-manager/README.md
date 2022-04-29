@@ -1,8 +1,8 @@
-
+![AppVersion: 0.9.3](https://img.shields.io/badge/AppVersion-0.9.3-informational?style=flat-square)
 
 # kafka-connect-manager
 
-A sub chart to deploy the Kafka connectors used by Sasquatch.
+A subchart to deploy the Kafka connectors used by Sasquatch.
 
 ## Values
 
@@ -10,7 +10,7 @@ A sub chart to deploy the Kafka connectors used by Sasquatch.
 |-----|------|---------|-------------|
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
 | image.tag | string | `"0.9.3"` |  |
 | influxdbSink.influxdb-sink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
