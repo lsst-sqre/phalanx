@@ -40,4 +40,10 @@ kapacitor:
   persistence:
     storageClass: rook-ceph-block
 
+csc:
+  enabled: true
+
+kafka-producers:
+  enabled: true
+
 vaultSecretsPath: secret/k8s_operator/tucson-teststand.lsst.codes

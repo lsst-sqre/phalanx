@@ -135,6 +135,8 @@ telegraf:
           password: "$TELEGRAF_PASSWORD"
 
 csc:
+  # -- Whether the test csc is deployed.
+  enabled: false
   image:
     # -- The Docker registry name of the container image to use for the CSC
     repository: ts-dockerhub.lsst.org/test
@@ -158,6 +160,8 @@ csc:
   namespace: sasquatch
 
 kafka-producers:
+  # -- Whether the kafka-producer for the test csc is deployed.
+  enabled: false
   image:
     # -- The Docker registry name of the container image to use for the producers.
     repository: ts-dockerhub.lsst.org/salkafka
