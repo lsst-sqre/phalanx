@@ -6,6 +6,10 @@ Science Platform authentication and authorization system
 
 **Homepage:** <https://gafaelfawr.lsst.io/>
 
+## Source Code
+
+* <https://github.com/lsst-sqre/gafaelfawr>
+
 ## Values
 
 | Key | Type | Default | Description |
