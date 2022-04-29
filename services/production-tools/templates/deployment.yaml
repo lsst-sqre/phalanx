@@ -20,7 +20,7 @@ spec:
     spec:
       automountServiceAccountToken: false
       imagePullSecrets:
-        - "pull-secret"
+        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -34,6 +34,8 @@ spec:
         - name: "butler-secrets"
           emptyDir: {}
         - name: "cache-dir"
+          emptyDir: {}
+        - name: "tmp"
           emptyDir: {}
       # Have to fix permissions on the pgpass file.
       # init container pattern borrowed from vo-cutouts.
@@ -74,7 +76,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /
+              path: /production-tools
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -83,6 +85,8 @@ spec:
               mountPath: "/home/worker/.lsst/"
             - name: "cache-dir"
               mountPath: "/home/worker/cache"
+            - name: "tmp"
+              mountPath: "/tmp"
           env:
             - name: "LOG_CACHE_DIR"
               value: "/home/worker/cache"
@@ -92,6 +96,8 @@ spec:
               value: "/home/worker/.lsst/aws-credentials.ini"
             - name: "S3_ENDPOINT_URL"
               value: "https://storage.googleapis.com"
+            - name: "SCRIPT_NAME"
+              value: "/production-tools"
 {{- range $key, $value := .Values.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
