@@ -1,8 +1,8 @@
 .. _pre-commit-howto:
 
-##########################################################
-Setting up pre-commit and linting and helm-docs generation
-##########################################################
+######################################################
+Setting up pre-commit linting and helm-docs generation
+######################################################
 
 The Phalanx repository uses `pre-commit`_ to lint source files and generate Helm chart documentation with `helm-docs`_.
 If you're contributing to Phalanx, you should enable pre-commit locally to ensure your work is clean and Helm chart docs are up to date.
