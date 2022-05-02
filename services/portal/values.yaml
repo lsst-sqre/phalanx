@@ -87,7 +87,7 @@ redis:
     repository: "redis"
 
     # -- Redis image tag to use
-    tag: "6.2.6"
+    tag: "6.2.7"
 
     # -- Pull policy for the Redis image
     pullPolicy: "IfNotPresent"
