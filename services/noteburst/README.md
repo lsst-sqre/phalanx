@@ -14,7 +14,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | 16.8.7 |
+| https://charts.bitnami.com/bitnami | redis | 16.8.9 |
 
 ## Values
 
