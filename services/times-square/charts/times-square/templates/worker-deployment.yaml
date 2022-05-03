@@ -64,10 +64,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["arq"]
           args: ["timessquare.worker.main.WorkerSettings"]
-          ports:
-            - name: http
-              containerPort: 8080
-              protocol: TCP
           livenessProbe:
             exec:
               command:
