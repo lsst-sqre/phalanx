@@ -1,15 +1,12 @@
 times-square:
   image:
-    tag: "tickets-DM-34030"
+    tag: "tickets-DM-34458"
     pullPolicy: Always
   config:
     databaseUrl: "postgresql://times-square@localhost/times-square"
+    github_app_id: "196798"
+    enable_github_app: "True"
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
     serviceAccount: "times-square@science-platform-dev-7696.iam.gserviceaccount.com"
-
-times-square-ui:
-  image:
-    tag: "tickets-dm-34030"
-    pullPolicy: Always
