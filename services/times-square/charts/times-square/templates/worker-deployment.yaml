@@ -69,13 +69,13 @@ spec:
               containerPort: 8080
               protocol: TCP
           livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+            exec:
+              command:
+                - "arq"
+                - "--check"
+                - "timessquare.worker.main.WorkerSettings"
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
