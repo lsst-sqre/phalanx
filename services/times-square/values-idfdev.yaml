@@ -4,8 +4,8 @@ times-square:
     pullPolicy: Always
   config:
     databaseUrl: "postgresql://times-square@localhost/times-square"
-    github_app_id: "196798"
-    enable_github_app: "True"
+    githubAppId: "196798"
+    enableGitHubApp: "True"
     redisCacheUrl: "redis://times-square-redis-master:6379/0"
     redisQueueUrl: "redis://times-square-redis-master:6379/1"
   cloudsql:
