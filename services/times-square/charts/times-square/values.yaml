@@ -120,7 +120,7 @@ config:
 
   # -- URL for Redis arq queue database
   # @default -- None, must be set
-  queueRedisUrl: ""
+  redisQueueUrl: ""
 
   # -- GitHub application ID
   githubAppId: ""
