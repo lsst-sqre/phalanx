@@ -36,6 +36,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["arq"]
           args: ["noteburst.worker.main.WorkerSettings"]
+          livenessProbe:
+            exec:
+              command:
+                - "arq"
+                - "--check"
+                - "noteburst.worker.main.WorkerSettings"
+            initialDelaySeconds: 5
+            periodSeconds: 5
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
