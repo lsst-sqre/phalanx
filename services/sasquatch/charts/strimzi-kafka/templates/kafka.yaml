@@ -8,11 +8,17 @@ spec:
     version: {{ .Values.kafka.version | quote }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:
+      # plain listener without tls encryption and with scram-sha-512 authentication
+      # used by clients inside the Kubernetes cluster
       - name: plain
         port: 9092
         type: internal
         tls: false
-      - name: tls # Used by the schema registry; it has a fixed name it expects
+        authentication:
+          type: scram-sha-512
+      # tls listener with tls encryption and mutual tls authentication
+      # used by the schema registry and kafka connect clients
+      - name: tls
         port: 9093
         type: internal
         tls: true
