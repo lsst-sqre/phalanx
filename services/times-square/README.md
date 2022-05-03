@@ -28,8 +28,9 @@ See the embedded Helm sub-charts for additional configuration docs:
 | redis.fullnameOverride | string | `"times-square-redis"` |  |
 | times-square-ui.fullnameOverride | string | `"times-square-ui"` |  |
 | times-square-ui.image.pullPolicy | string | `"IfNotPresent"` |  |
-| times-square-ui.image.tag | string | `"tickets-DM-34030"` |  |
-| times-square.config.redisUrl | string | Points to embedded Redis | Redis URL |
+| times-square-ui.image.tag | string | `"0.2.0"` |  |
+| times-square.config.queueRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| times-square.config.redisUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | times-square.fullnameOverride | string | `"times-square"` |  |
 | times-square.image.pullPolicy | string | `"IfNotPresent"` |  |
-| times-square.image.tag | string | `"tickets-DM-34030"` |  |
+| times-square.image.tag | string | `"tickets-DM-34458"` |  |

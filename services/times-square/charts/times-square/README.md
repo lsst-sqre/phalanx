@@ -24,12 +24,15 @@ A parameterized notebook web viewer for the Rubin Science Platform.
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
+| config.enableGitHubApp | string | `"False"` | Toggle to enable the GitHub App functionality |
+| config.githubAppId | string | `""` | GitHub application ID |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
-| config.redisUrl | string | None, must be set | URL for the Redis cache |
+| config.queueRedisUrl | string | None, must be set | URL for Redis arq queue database |
+| config.redisCacheUrl | string | None, must be set | URL for Redis html / noteburst job cache database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| image.pullPolicy | string | `"Always"` | Pull policy for the times-square image |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the times-square image |
 | image.repository | string | `"ghcr.io/lsst-sqre/times-square"` | Image to use in the times-square deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
@@ -42,7 +45,8 @@ A parameterized notebook web viewer for the Rubin Science Platform.
 | nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |
 | redis.auth.enabled | bool | `false` |  |
-| replicaCount | int | `1` | Number of web deployment pods to start |
+| replicaCount.api | int | `1` | Number of API deployment pods to start |
+| replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the times-square deployment pod |
 | service.port | int | `8080` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |

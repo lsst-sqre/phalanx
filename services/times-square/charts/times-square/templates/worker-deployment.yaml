@@ -1,12 +1,12 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "times-square.fullname" . }}
+  name: {{ include "times-square.fullname" . }}-worker
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount.api }}
+  replicas: {{ .Values.replicaCount.worker }}
   {{- end }}
   selector:
     matchLabels:
@@ -90,11 +90,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_DATABASE_PASSWORD"
-            - name: "TS_GITHUB_WEBHOOK_SECRET"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "times-square.fullname" . }}-secret
-                  key: "TS_GITHUB_WEBHOOK_SECRET"
             - name: "TS_GITHUB_WEBHOOK_SECRET"
               valueFrom:
                 secretKeyRef:
