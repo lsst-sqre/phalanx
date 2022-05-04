@@ -53,6 +53,8 @@ Science Platform authentication and authorization system
 | config.oidc.loginUrl | string | None, must be set | URL to which to redirect the user for authorization |
 | config.oidc.scopes | list | `["openid"]` | Scopes to request from the OpenID Connect provider |
 | config.oidc.tokenUrl | string | None, must be set | URL from which to retrieve the token for the user |
+| config.oidc.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP) |
+| config.oidc.usernameClaim | string | `"sub"` | Claim from which to get the username (only used if not retrieved from LDAP) |
 | config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients. If set to true, `oidc-server-secrets` must be set in the Gafaelfawr secret. |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.tokenLifetimeMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
