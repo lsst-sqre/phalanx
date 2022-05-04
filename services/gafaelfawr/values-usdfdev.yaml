@@ -37,6 +37,7 @@ config:
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
     baseDn: dc=slac,dc=stanford,dc=edu
+    uidBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
     uidAttr: uidNumber
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
