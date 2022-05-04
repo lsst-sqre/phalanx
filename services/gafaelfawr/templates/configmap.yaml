@@ -102,6 +102,12 @@ data:
       login_params:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.config.oidc.usernameClaim }}
+      username_claim: {{ .Values.config.oidc.usernameClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.oidc.uidClaim }}
+      uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
+      {{- end }}
 
     {{- end }}
 
