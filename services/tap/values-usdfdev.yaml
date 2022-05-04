@@ -1,6 +1,5 @@
 cadc-tap:
 
-  host: "rubin-data-dev.slac.stanford.edu"
 
   imagePullSecrets:
     - name: "pull-secret"
@@ -8,6 +7,7 @@ cadc-tap:
   vaultSecretsPath: 'secret/rubin/usdf-staffrsp-dev/tap'
 
   ingress:
+    host: "rubin-data-dev.slac.stanford.edu"
     authenticated_annotations:
       nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
       nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=read:tap&auth_type=basic&delegate_to=tap"
