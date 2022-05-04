@@ -8,12 +8,12 @@ replicaCount: 2
 #global:
 #  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/gafaelfawr"
 
-# Use the CSI storage class so that we can use snapshots.
-redis:
-  persistence:
-    storageClass: "wekafs--sdf-k8s01"
-
 config:
+
+  # Use the CSI storage class so that we can use snapshots.
+  redis:
+    persistence:
+      storageClass: "wekafs--sdf-k8s01"
 
   loglevel: "INFO"
 
