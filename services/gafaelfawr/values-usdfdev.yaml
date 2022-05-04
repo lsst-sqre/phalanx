@@ -72,6 +72,7 @@ config:
       - rubin_users-z
       - rubin_admin_datasets
       - rubin_admin_repos
+      - "unix-admin"
     "exec:portal":
       - "lsst"
       - "sf"
@@ -104,6 +105,7 @@ config:
       - rubin_users-z
       - rubin_admin_datasets
       - rubin_admin_repos
+      - "unix-admin"
     "exec:user":
       - "lsst"
       - "sf"
@@ -136,6 +138,7 @@ config:
       - rubin_users-z
       - rubin_admin_datasets
       - rubin_admin_repos
+      - "unix-admin"
     "read:tap":
       - "lsst"
       - "sf"
@@ -168,6 +171,7 @@ config:
       - rubin_users-z
       - rubin_admin_datasets
       - rubin_admin_repos
+      - "unix-admin"
 
   initialAdmins:
     - "ytl"
