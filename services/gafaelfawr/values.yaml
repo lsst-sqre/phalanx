@@ -119,6 +119,16 @@ config:
     scopes:
       - "openid"
 
+    # -- Claim from which to get the username (only used if not retrieved from
+    # LDAP)
+    # @default -- `"sub"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
+
   ldap:
     # -- LDAP server URL from which to retrieve user group information
     # @default -- Do not use LDAP
