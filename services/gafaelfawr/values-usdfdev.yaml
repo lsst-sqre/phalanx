@@ -12,7 +12,6 @@ config:
   host: "rubin-data-dev.slac.stanford.edu"
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-  username_claim: "name"
 
   oidc:
     clientId: rubin-usdf-staffrsp-dev
@@ -25,9 +24,12 @@ config:
     - "email"
     - "groups"
     - "profile"
+    usernameClaim: "name"
 
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
+    #usernameBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
+    usernameSearchAttr: uid
     baseDn: dc=slac,dc=stanford,dc=edu
     uidBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
     uidAttr: uidNumber
