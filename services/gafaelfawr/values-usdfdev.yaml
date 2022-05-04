@@ -37,9 +37,9 @@ config:
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
     baseDn: dc=slac,dc=stanford,dc=edu
-    uidNumberAttr: uidNumber
+    uidAttr: uidNumber
     groupObjectClass: posixGroup
-    groupMember: memberUid
+    groupMemberAttr: memberUid
 
   # Allow access by GitHub team.
   groupMapping:
