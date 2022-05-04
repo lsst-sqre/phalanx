@@ -1,4 +1,5 @@
 postgres:
+  postgres_storage_class: 'wekafs--sdf-k8s01'
   pull_secret: 'pull-secret'
   vault_secrets:
     path: 'secret/rubin/usdf-staffrsp-dev/postgres'
