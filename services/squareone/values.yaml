@@ -1,0 +1,88 @@
+# Default values for squareone.
+
+# -- Number of squareone pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Squareone Docker image repository
+  repository: ghcr.io/lsst-sqre/squareone
+
+  # -- Image pull policy (tip: use Always for development)
+  pullPolicy: IfNotPresent
+
+  # -- Overrides the image tag.
+  # @default -- Chart's appVersion
+  tag: ""
+
+# -- Overrides the base name for resources
+nameOverride: ""
+
+# -- Overrides the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for squareone pods
+podAnnotations: {}
+
+ingress:
+  # -- Enable ingress
+  enabled: true
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Enable Let's Encrypt TLS management in this chart. This should be false
+  # if TLS is managed elsewhere, such as in an ingress-nginx app.
+  tls: true
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Squareone app configuration
+config:
+  # -- Name of the site, used in the title and meta tags.
+  siteName: "Rubin Science Platform"
+
+  # -- Site description, used in meta tags
+  siteDescription: |
+    Access Rubin Observatory Legacy Survey of Space and Time data.
+
+  # -- URL to the Semaphore (user notifications) API service.
+  # @default null disables the Semaphore integration
+  semaphoreUrl: null
+
+# Global parameters are set by parameters injected by the Argo CD Application
+# and should not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD Application
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD Application
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD Application
+  vaultSecretsPathPrefix: ""

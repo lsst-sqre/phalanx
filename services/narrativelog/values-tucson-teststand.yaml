@@ -1,0 +1,12 @@
+config:
+  site_id: tucson
+
+ingress:
+  enabled: true
+  host: tucson-teststand.lsst.codes
+
+vault_path: secret/k8s_operator/tucson-teststand.lsst.codes/postgres
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret

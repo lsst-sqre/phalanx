@@ -1,17 +1,9 @@
-squareone:
-  ingress:
-    host: "data-dev.lsst.cloud"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "data-dev.lsst.cloud"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ data-dev"
-    semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
+image:
+  pullPolicy: Always
+
+config:
+  siteName: "Rubin Science Platform @ data-dev"
+  semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
 
 pull-secret:
   enabled: true

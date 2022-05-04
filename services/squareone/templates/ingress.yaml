@@ -1,0 +1,35 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "squareone.fullname" . -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "squareone.labels" . | nindent 4 }}
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    {{- if .Values.ingress.tls }}
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ required "global.host must be set" .Values.global.host | quote }}
+      secretName: squareone-tls
+  {{- end }}
+  rules:
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ $fullName }}
+                port:
+                  number: 80
+  {{- end }}

@@ -1,0 +1,27 @@
+{{- if .Values.network_policy.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: hub
+  labels:
+    {{- include "nublado2.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app: jupyterhub
+      component: hub
+      release: {{ .Release.Name }}
+  policyTypes:
+    - Ingress
+
+  ingress:
+    # allowed pods (hub.jupyter.org/network-access-hub) --> hub
+    - ports:
+        - port: http
+        - port: 8081
+      from:
+        - podSelector:
+            matchLabels:
+              hub.jupyter.org/network-access-hub: "true"
+          namespaceSelector: {}
+{{- end }}

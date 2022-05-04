@@ -1,0 +1,214 @@
+# Default values for Sasquatch.
+# -- Override strimzi-kafka configuration.
+strimzi-kafka: {}
+
+# -- strimzi-registry-operator configuration.
+strimzi-registry-operator:
+  clusterName: sasquatch
+  watchNamespace: sasquatch
+  operatorNamespace: sasquatch
+
+influxdb:
+  # -- InfluxDB image tag.
+  image:
+    tag: "1.8.10"
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: sasquatch
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    path: /influxdb(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
+    http:
+      enabled: true
+      flux-enabled: true
+      auth-enabled: true
+      max-row-limit: 0
+    coordinator:
+      write-timeout: "60s"
+      max-concurrent-queries: 10
+      query-timeout: "900s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+  # -- InfluxDB Custom initialization scripts.
+  initScripts:
+    enabled: true
+    scripts:
+      init.iql: |+
+        CREATE DATABASE "telegraf" WITH DURATION 30d REPLICATION 1 NAME "rp_30d"
+
+# -- Override strimzi-kafka configuration.
+kafka-connect-manager: {}
+
+chronograf:
+  # -- Chronograf image tag.
+  image:
+    repository: "quay.io/influxdb/chronograf"
+    tag: 1.9.4
+  # -- Chronograf data persistence configuration.
+  persistence:
+    enabled: true
+    size: 16Gi
+  # -- Chronograf ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+    path: /chronograf(/|$)
+  # -- Chronograf environment variables.
+  env:
+    HOST_PAGE_DISABLED: true
+    BASE_PATH: /chronograf
+    CUSTOM_AUTO_REFRESH: "1s=1000"
+  # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
+  envFromSecret: "sasquatch"
+
+kapacitor:
+  # -- Kapacitor image tag.
+  image:
+    repository: kapacitor
+    tag: 1.6.4
+  # -- Chronograf data persistence configuration.
+  persistence:
+    enabled: true
+    size: 16Gi
+  # -- InfluxDB connection URL.
+  influxURL: http://sasquatch.influxdb:8086
+  # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
+  existingSecret: sasquatch
+  # -- Kapacitor environment variables.
+  envVars:
+    KAPACITOR_SLACK_ENABLED: true
+
+telegraf:
+  # -- Allow network access to JupyterHub pod.
+  podLabels:
+    hub.jupyter.org/network-access-hub: "true"
+  env:
+    # -- Telegraf password.
+    - name: TELEGRAF_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: telegraf-password
+  service:
+    # -- Telegraf service.
+    enabled: false
+  config:
+    # -- Telegraf processor plugins.
+    processors: {}
+    # -- Telegraf input plugins.
+    # Collect JupyterHub Prometheus metrics by dedault.
+    # See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html
+    inputs:
+      - prometheus:
+          urls:
+            - http://hub.nublado2:8081/nb/hub/metrics
+          # See https://docs.influxdata.com/influxdb/v2.1/reference/prometheus-metrics/
+          metric_version: 2
+    # -- Telegraf default output destination.
+    outputs:
+      - influxdb:
+          urls:
+            - "http://sasquatch-influxdb.sasquatch:8086"
+          database: "telegraf"
+          username: "telegraf"
+          password: "$TELEGRAF_PASSWORD"
+
+csc:
+  # -- Whether the test csc is deployed.
+  enabled: false
+  image:
+    # -- The Docker registry name of the container image to use for the CSC
+    repository: ts-dockerhub.lsst.org/test
+    # -- The tag of the container image to use for the CSC
+    tag: c0025
+    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
+    nexus3: nexus3-docker
+  # -- Enviroment variables to run the Test CSC.
+  env:
+    LSST_DDS_PARTITION_PREFIX: test
+    LSST_SITE: test
+    OSPL_INFOFILE: /tmp/ospl-info-test.log
+    OSPL_ERRORFILE: /tmp/ospl-error-test.log
+    # -- Use a single process configuration for DDS OpenSplice.
+    OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
+  # -- Wether to use an external configuration for DDS OpenSplice.
+  useExternalConfig: false
+  # -- DDS OpenSplice version.
+  osplVersion: V6.10.4
+  # -- Namespace where the Test CSC is deployed.
+  namespace: sasquatch
+
+kafka-producers:
+  # -- Whether the kafka-producer for the test csc is deployed.
+  enabled: false
+  image:
+    # -- The Docker registry name of the container image to use for the producers.
+    repository: ts-dockerhub.lsst.org/salkafka
+    # -- The tag of the container image to use for the producers.
+    tag: c0025
+    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
+    nexus3: nexus3-docker
+  env:
+    # -- The LSST_DDS_PARTITION_PREFIX name applied to all producer containers.
+    lsstDdsPartitionPrefix: test
+    # -- The URI for the Sasquatch Kafka broker.
+    brokerIp: sasquatch-kafka-bootstrap.sasquatch
+    # -- The port for the Sasquatch Kafka listener.
+    brokerPort: 9092
+    # -- The Sasquatch Schema Registry URL.
+    registryAddr: http://sasquatch-schema-registry.sasquatch:8081
+    # -- The topic replication factor (should be the same as the number of Kafka broker in Sasquatch)
+    replication: 3
+    # -- Logging level for the Kafka producers
+    logLevel: 20
+    extras:
+      # -- Use a single process configuration for DDS OpenSplice.
+      OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
+      LSST_DDS_RESPONSIVENESS_TIMEOUT: 15s
+      OSPL_INFOFILE: /tmp/ospl-info-kafka-producers.log
+      OSPL_ERRORFILE: /tmp/ospl-error-kafka-producers.log
+  # -- Wether to use an external configuration for DDS OpenSplice.
+  useExternalConfig: false
+  # -- DDS OpenSplice version.
+  osplVersion: V6.10.4
+  startupProbe:
+    # -- Whether to use the startup probe
+    use: true
+    # -- The number of times the startup probe is allowed to fail before failing the probe
+    failureThreshold: 15
+    # -- The initial delay in seconds before the first check is made
+    initialDelay: 20
+    # -- The time in seconds between subsequent checks
+    period: 10
+  # -- List of producers and CSCs to get DDS samples from.
+  producers:
+    test:
+      cscs: >-
+        Test
+  # -- Namespace where the Test CSC is deployed.
+  namespace: sasquatch
+
+# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
+# @default -- None, must be set
+vaultSecretsPath: ""

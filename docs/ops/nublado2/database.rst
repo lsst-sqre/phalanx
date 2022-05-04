@@ -8,15 +8,15 @@ The typical symptom of this is that spawns for that user fail with an error sayi
 Recovery may require manually clearing the user's entry in the session database as follows:
 
 #. Remove the user's lab namespace, if it exists.
-  
+
 #. Remove the user from the session database.
    Connect to the database with:
-  
+
    .. code-block:: shell
 
       pod=$(kubectl get pods -n postgres | grep postgres | awk '{print $1}')
       kubectl exec -it -n postgres ${pod} -- psql -U jovyan jupyterhub
-	
+
    and then, at the PostgreSQL prompt, run:
 
    .. code-block:: sql

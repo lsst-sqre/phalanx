@@ -1,15 +1,12 @@
 cadc-tap-postgres:
-  pull_secret: 'pull-secret'
-  tag: "1.1"
-  host: "rsp.lsst.ac.uk"
+  fullnameOverride: "obstap"
 
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/roe/tap'
+  imagePullSecrets:
+    - name: "pull-secret"
+  ingress:
+    host: "rsp.lsst.ac.uk"
+  vaultSecretsPath: "secret/k8s_operator/roe/tap"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/roe/pull-secret
+  path: "secret/k8s_operator/roe/pull-secret"

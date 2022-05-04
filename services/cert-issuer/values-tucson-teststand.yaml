@@ -1,7 +1,0 @@
-cert-issuer:
-  config:
-    email: "sqre-admin@lists.lsst.org"
-    route53:
-      awsAccessKeyId: "AKIAQSJOS2SFLUEVXZDB"
-      hostedZone: "Z06873202D7WVTZUFOQ42"
-    vaultSecretPath: "secret/k8s_operator/tucson-teststand.lsst.codes/cert-manager"

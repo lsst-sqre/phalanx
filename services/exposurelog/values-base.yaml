@@ -1,24 +1,15 @@
-# WARNING: this is a "playground" deployment
-# using exposurelog's built-in toy butler registry.
-exposurelog:
-  pull_secret: pull-secret
-
+config:
+  # WARNING: this is a "playground" deployment
+  # using exposurelog's built-in test butler registries.
   site_id: test
-  butler_uri_1: hsc_raw
+  # Use the test butler registries.
+  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
+  butler_uri_1: LSSTCam
+  butler_uri_2: LATISS
 
-  ingress:
-    enabled: true
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: base-lsp.lsst.codes
-        paths:
-          - /exposurelog
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+ingress:
+  enabled: true
+  host: base-lsp.lsst.codes
 
 vault_path: secret/k8s_operator/base-lsp.lsst.codes/postgres
 

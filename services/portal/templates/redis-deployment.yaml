@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "portal.fullname" . }}-redis
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "portal.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "redis"
+  template:
+    metadata:
+      {{- with .Values.redis.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "portal.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "redis"
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: "redis"
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy | quote }}
+          args:
+            - "redis-server"
+            - "--requirepass"
+            - "$(REDIS_PASSWORD)"
+          env:
+            - name: "REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "portal.fullname" . }}-secret
+                  key: "ADMIN_PASSWORD"
+          ports:
+            - containerPort: 6379
+          {{- with .Values.redis.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "data"
+              mountPath: "/data"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        fsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+        runAsGroup: 999
+      volumes:
+        - name: "data"
+          emptyDir: {}
+      {{- with .Values.redis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.redis.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

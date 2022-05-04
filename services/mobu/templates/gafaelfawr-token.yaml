@@ -1,0 +1,11 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "mobu.fullname" . }}-gafaelfawr-token
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+spec:
+  service: "mobu"
+  scopes:
+    - "admin:token"
+    - "exec:admin"

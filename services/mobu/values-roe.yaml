@@ -1,40 +1,26 @@
-mobu:
-  imagePullSecrets:
-    - name: "pull-secret"
-
-  ingress:
-    host: "rsp.lsst.ac.uk"
-
-  environmentUrl: "https://rsp.lsst.ac.uk"
-  vaultSecretsPath: "secret/k8s_operator/roe/mobu"
-
-  autostart:
-    - name: "firefighter"
-      count: 1
-      users:
-        - username: "systemtest01"
-          uidnumber: 74768
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        repo_url: "https://github.com/SimonKrughoff/system-test.git"
-        repo_branch: "prod"
-        max_executions: 1
-      restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "systemtest02"
-          uidnumber: 74769
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        jupyter:
-          image_class: "latest-weekly"
-        repo_url: "https://github.com/lsst-sqre/system-test.git"
-        repo_branch: "prod"
-      restart: true
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/roe/pull-secret"
+autostart:
+  - name: "firefighter"
+    count: 1
+    users:
+      - username: "systemtest01"
+        uidnumber: 74768
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/SimonKrughoff/system-test.git"
+      repo_branch: "prod"
+      max_executions: 1
+    restart: true
+  - name: "weekly"
+    count: 1
+    users:
+      - username: "systemtest02"
+        uidnumber: 74769
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      jupyter:
+        image_class: "latest-weekly"
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+    restart: true

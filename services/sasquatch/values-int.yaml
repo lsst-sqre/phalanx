@@ -1,0 +1,43 @@
+strimzi-kafka:
+  kafka:
+    storage:
+      storageClassName: local-path
+  zookeeper:
+    storage:
+      storageClassName: local-path
+
+influxdb:
+  persistence:
+    storageClass: local-path
+  ingress:
+    enabled: true
+    hostname: lsst-lsp-int.ncsa.illinois.edu
+
+kafka-connect-manager:
+  influxdbSink:
+    influxdb-sink:
+      enabled: true
+
+chronograf:
+  persistence:
+    storageClass: local-path
+  ingress:
+    enabled: true
+    hostname: lsst-lsp-int.ncsa.illinois.edu
+  env:
+    GENERIC_NAME: "OIDC"
+    GENERIC_AUTH_URL: https://lsst-lsp-int.ncsa.illinois.edu/auth/openid/login
+    GENERIC_TOKEN_URL: https://lsst-lsp-int.ncsa.illinois.edu/auth/openid/token
+    USE_ID_TOKEN: 1
+    JWKS_URL: https://lsst-lsp-int.ncsa.illinois.edu/.well-known/jwks.json
+    GENERIC_API_URL: https://lsst-lsp-int.ncsa.illinois.edu/auth/userinfo
+    GENERIC_SCOPES: openid
+    GENERIC_API_KEY: sub
+    PUBLIC_URL: https://lsst-lsp-int.ncsa.illinois.edu
+    STATUS_FEED_URL: https://lsst-sqre.github.io/sasquatch/feeds/int.json
+
+kapacitor:
+  persistence:
+    storageClass: local-path
+
+vaultSecretsPath: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu

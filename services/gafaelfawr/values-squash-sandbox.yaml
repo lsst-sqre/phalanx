@@ -1,49 +1,42 @@
-gafaelfawr:
-  ingress:
-    host: "squash-sandbox.lsst.codes"
-  vaultSecretsPath: "secret/k8s_operator/squash-sandbox/gafaelfawr"
+# Reset token storage on every Redis restart.
+redis:
+  persistence:
+    enabled: false
 
-  # Reset token storage on every Redis restart.
-  redis:
-    persistence:
-      enabled: false
+config:
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-  config:
-    host: "squash-sandbox.lsst.codes"
-    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
+  # must be set in the Gafaelfawr secret.
+  influxdb:
+    enabled: true
+    username: "efdreader"
 
-    # Whether to issue tokens for InfluxDB.  If set to true, influxdb-secret
-    # must be set in the Gafaelfawr secret.
-    issuer:
-      influxdb:
-        enabled: true
-        username: "efdreader"
+  # Whether to support OpenID Connect clients.  If set to true,
+  # oidc-server-secrets must be set in the Gafaelfawr secret.
+  oidcServer:
+    enabled: true
 
-    # Whether to support OpenID Connect clients.  If set to true,
-    # oidc-server-secrets must be set in the Gafaelfawr secret.
-    oidcServer:
-      enabled: true
+  # Use CILogon authentication.
+  cilogon:
+    clientId: "cilogon:/client_id/232eaabf026dab8b26f9c9770873cb7e"
+    redirectUrl: "https://squash-sandbox.lsst.codes/login"
+    loginParams:
+      skin: "LSST"
 
-    # Use CILogon authentication.
-    cilogon:
-      clientId: "cilogon:/client_id/232eaabf026dab8b26f9c9770873cb7e"
-      redirectUrl: "https://squash-sandbox.lsst.codes/login"
-      loginParams:
-        skin: "LSST"
+  # Use NCSA groups to determine token scopes.
+  groupMapping:
+    "admin:provision": ["lsst_int_lsp_admin"]
+    "exec:admin": ["lsst_int_lsp_admin"]
+    "exec:notebook": ["lsst_int_lspdev"]
+    "exec:portal": ["lsst_int_lspdev"]
+    "read:tap": ["lsst_int_lspdev"]
 
-    # Use NCSA groups to determine token scopes.
-    groupMapping:
-      "admin:provision": ["lsst_int_lsp_admin"]
-      "exec:admin": ["lsst_int_lsp_admin"]
-      "exec:notebook": ["lsst_int_lspdev"]
-      "exec:portal": ["lsst_int_lspdev"]
-      "read:tap": ["lsst_int_lspdev"]
-
-    initialAdmins:
-      - "afausti"
-      - "athornto"
-      - "cbanek"
-      - "frossie"
-      - "jsick"
-      - "krughoff"
-      - "rra"
+  initialAdmins:
+    - "afausti"
+    - "athornto"
+    - "cbanek"
+    - "frossie"
+    - "jsick"
+    - "krughoff"
+    - "rra"

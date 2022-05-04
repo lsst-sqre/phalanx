@@ -1,103 +1,103 @@
-nublado2:
-  jupyterhub:
-    ingress:
-      hosts: ["summit-lsp.lsst.codes"]
-      annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
+jupyterhub:
+  ingress:
+    hosts: ["summit-lsp.lsst.codes"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
 
-    singleuser:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
-      initContainers:
-        - name: "multus-init"
-          image: "lsstit/ddsnet4u:latest"
-          securityContext:
-            privileged: true
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+    initContainers:
+      - name: "multus-init"
+        image: "lsstit/ddsnet4u:latest"
+        securityContext:
+          privileged: true
 
-  config:
-    base_url: "https://summit-lsp.lsst.codes"
-    butler_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/butler-secret"
-    pull_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
-    lab_environment:
-      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
-      AUTO_REPO_BRANCH: "prod"
-      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-      LSST_DDS_INTERFACE: net1
-      LSST_DDS_PARTITION_PREFIX: summit
-    volumes:
-      - name: home
-        nfs:
-          path: /jhome
-          server: nfs1.cp.lsst.org
-      - name: project
-        nfs:
-          path: /project
-          server: nfs1.cp.lsst.org
-      - name: scratch
-        nfs:
-          path: /scratch
-          server: nfs1.cp.lsst.org
-      - name: auxtel
-        nfs:
-          path: /lsstdata
-          server: atarchiver.cp.lsst.org
-          readOnly: true
-      - name: comcam
-        nfs:
-          path: /lsstdata
-          server: comcam-arctl01.cp.lsst.org
-          readOnly: true
-      - name: other
-        nfs:
-          path: /lsstdata
-          server: nfs1.cp.lsst.org
-          readOnly: true
-      - name: latiss
-        nfs:
-          path: /repo/LATISS
-          server: atarchiver.cp.lsst.org
-      - name: base-auxtel
-        nfs:
-          path: /lsstdata/base/auxtel
-          server: atarchiver.cp.lsst.org
-          readOnly: true
-      - name: lsstcomcam
-        nfs:
-          path: /repo/LSSTComCam
-          server: comcam-arctl01.cp.lsst.org
-      - name: base-comcam
-        nfs:
-          path: /lsstdata/base/comcam
-          server: comcam-arctl01.cp.lsst.org
-          readOnly: true
-    volume_mounts:
-      - name: home
-        mountPath: /home
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
-      - name: auxtel
-        mountPath: /readonly/lsstdata/auxtel
+config:
+  base_url: "https://summit-lsp.lsst.codes"
+  butler_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/butler-secret"
+  pull_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+    LSST_DDS_INTERFACE: net1
+    LSST_DDS_PARTITION_PREFIX: summit
+  volumes:
+    - name: home
+      nfs:
+        path: /jhome
+        server: nfs1.cp.lsst.org
+    - name: project
+      nfs:
+        path: /project
+        server: nfs1.cp.lsst.org
+    - name: scratch
+      nfs:
+        path: /scratch
+        server: nfs1.cp.lsst.org
+    - name: auxtel
+      nfs:
+        path: /lsstdata
+        server: auxtel-archiver.cp.lsst.org
         readOnly: true
-      - name: comcam
-        mountPath: /readonly/lsstdata/comcam
+    - name: comcam
+      nfs:
+        path: /lsstdata
+        server: comcam-archiver.cp.lsst.org
         readOnly: true
-      - name: other
-        mountPath: /readonly/lsstdata/other
+    - name: other
+      nfs:
+        path: /lsstdata
+        server: nfs1.cp.lsst.org
         readOnly: true
-      - name: latiss
-        mountPath: /repo/LATISS
-      - name: base-auxtel
-        mountPath: /data/lsstdata/base/auxtel
+    - name: latiss
+      nfs:
+        path: /repo/LATISS
+        server: auxtel-archiver.cp.lsst.org
+    - name: base-auxtel
+      nfs:
+        path: /lsstdata/base/auxtel
+        server: auxtel-archiver.cp.lsst.org
         readOnly: true
-      - name: lsstcomcam
-        mountPath: /repo/LSSTComCam
-      - name: base-comcam
-        mountPath: /data/lsstdata/base/comcam
+    - name: lsstcomcam
+      nfs:
+        path: /repo/LSSTComCam
+        server: comcam-archiver.cp.lsst.org
+    - name: base-comcam
+      nfs:
+        path: /lsstdata/base/comcam
+        server: comcam-archiver.cp.lsst.org
         readOnly: true
+  volume_mounts:
+    - name: home
+      mountPath: /home
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
+    - name: auxtel
+      mountPath: /readonly/lsstdata/auxtel
+      readOnly: true
+    - name: comcam
+      mountPath: /readonly/lsstdata/comcam
+      readOnly: true
+    - name: other
+      mountPath: /readonly/lsstdata/other
+      readOnly: true
+    - name: latiss
+      mountPath: /repo/LATISS
+    - name: base-auxtel
+      mountPath: /data/lsstdata/base/auxtel
+      readOnly: true
+    - name: lsstcomcam
+      mountPath: /repo/LSSTComCam
+    - name: base-comcam
+      mountPath: /data/lsstdata/base/comcam
+      readOnly: true
 
-  vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/nublado2"
+vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/nublado2"
 
 pull-secret:
   enabled: true

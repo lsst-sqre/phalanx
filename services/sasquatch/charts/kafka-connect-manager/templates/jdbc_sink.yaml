@@ -1,0 +1,87 @@
+{{ if .Values.jdbcSink.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-{{ .Values.jdbcSink.name }}
+data:
+  jdbc-sink-config.json: |+
+    {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "name": {{ .Values.jdbcSink.name | quote }},
+      "connection.url": {{ .Values.jdbcSink.connectionUrl | quote }},
+      "connection.user": {{ .Values.jdbcSink.connectionUser | quote }},
+      "connection.password": {{ .Values.jdbcSink.connectionPassword | quote }},
+      "topics.regex": {{ .Values.jdbcSink.topicRegex | quote }},
+      "tasks.max": {{ .Values.jdbcSink.tasksMax | quote }},
+      "table.name.format": {{ .Values.jdbcSink.tableNameFormat | quote }},
+      "auto.create": {{ .Values.jdbcSink.autoCreate | quote }},
+      "auto.evolve": {{ .Values.jdbcSink.autoEvolve | quote }},
+      "batch.size": {{ .Values.jdbcSink.batchSize | quote }},
+      "insert.mode": {{ .Values.jdbcSink.insertMode | quote }},
+      "max.retries": {{ .Values.jdbcSink.maxRetries | quote }},
+      "retry.backoff.ms": {{ .Values.jdbcSink.retryBackoffMs | quote }},
+      "db.timezone": {{ .Values.jdbcSink.dbTimezone | quote }}
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-{{ .Values.jdbcSink.name }}
+  labels:
+    app: kafka-connect-manager
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-connect-manager
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka-connect-manager
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: kafkaconnect
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+          - kafkaconnect
+          - create
+          - jdbc-sink
+          - --show-status
+          - /etc/jdbc-sink/jdbc-sink-config.json
+        env:
+          - name: PGUSER
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: pguser
+          - name: PGPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: pgpassword
+          - name: KAFKA_BROKER_URL
+            value: {{ .Values.env.kafkaBrokerUrl | quote }}
+          - name: KAFKA_CONNECT_URL
+            value: {{ .Values.env.kafkaConnectUrl | quote }}
+        volumeMounts:
+        - name: jdbc-sink
+          mountPath: /etc/jdbc-sink
+      volumes:
+      - name: jdbc-sink
+        configMap:
+          name: {{ .Values.jdbcSink.name }}
+{{ end }}

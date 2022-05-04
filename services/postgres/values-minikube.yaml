@@ -12,6 +12,9 @@ postgres:
   gafaelfawr_db:
     user: 'gafaelfawr'
     db: 'gafaelfawr'
+  narrativelog_db:
+    user: 'narrativelog'
+    db: 'narrativelog'
   image:
     tag: '0.0.2'
   postgres_storage_class: 'standard'

@@ -1,24 +1,16 @@
-exposurelog:
-  pull_secret: pull-secret
-
+config:
   site_id: summit
-  nfs_path_1: /lsstdata/base/comcam  # Mounted as /volume_1
-  nfs_server_1: comcam-arctl01.cp.lsst.org
-  butler_uri_1: /volume_1/oods/gen3butler/repo
+  nfs_path_1: /repo/LSSTComCam  # Mounted as /volume_1
+  nfs_server_1: comcam-archiver.cp.lsst.org
+  butler_uri_1: /volume_1
 
-  ingress:
-    enabled: true
-    annotations: {}
-    #   kubernetes.io/ingress.class: nginx
-    #   kubernetes.io/tls-acme: "true"
-    hosts:
-      - host: summit-lsp.lsst.codes
-        paths:
-          - /exposurelog
-    tls: []
-    #  - secretName: chart-example-tls
-    #    hosts:
-    #      - chart-example.local
+  nfs_path_2: /repo/LATISS  # Mounted as /volume_2
+  nfs_server_2: auxtel-archiver.cp.lsst.org
+  butler_uri_2: /volume_2
+
+ingress:
+  enabled: true
+  host: summit-lsp.lsst.codes
 
 vault_path: secret/k8s_operator/summit-lsp.lsst.codes/postgres
 

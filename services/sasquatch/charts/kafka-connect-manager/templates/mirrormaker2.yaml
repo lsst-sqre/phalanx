@@ -1,0 +1,100 @@
+{{ if .Values.mirrorMaker2.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-{{ .Values.mirrorMaker2.name }}
+data:
+  heartbeat-config.json: |+
+    {
+      "connector.class": "org.apache.kafka.connect.mirror.MirrorHeartbeatConnector",
+      "name": "{{ .Values.mirrorMaker2.name }}-heartbeat",
+      "source.cluster.alias": {{ .Values.mirrorMaker2.sourceClusterAlias | quote }},
+      "replication.policy.separator": {{ .Values.mirrorMaker2.replicationPolicySeparator | quote }},
+      "source.cluster.bootstrap.servers": {{ .Values.mirrorMaker2.sourceClusterBootstrapServers | quote }},
+      "target.cluster.alias": {{ .Values.mirrorMaker2.targetClusterAlias | quote }},
+      "topics": {{ .Values.mirrorMaker2.topicRegex | quote }}
+    }
+  checkpoint-config.json: |+
+    {
+      "connector.class": "org.apache.kafka.connect.mirror.MirrorCheckpointConnector",
+      "name": "{{ .Values.mirrorMaker2.name }}-checkpoint",
+      "source.cluster.alias": {{ .Values.mirrorMaker2.sourceClusterAlias | quote }},
+      "replication.policy.separator": {{ .Values.mirrorMaker2.replicationPolicySeparator | quote }},
+      "source.cluster.bootstrap.servers": {{ .Values.mirrorMaker2.sourceClusterBootstrapServers | quote }},
+      "target.cluster.alias": {{ .Values.mirrorMaker2.targetClusterAlias | quote }},
+      "target.cluster.bootstrap.servers": {{ .Values.mirrorMaker2.targetClusterBootstrapServers | quote }},
+      "topics": {{ .Values.mirrorMaker2.topicRegex | quote }}
+    }
+  mirror-source-config.json: |+
+    {
+      "connector.class": "org.apache.kafka.connect.mirror.MirrorSourceConnector",
+      "name": "{{ .Values.mirrorMaker2.name }}-mirror-source",
+      "source.cluster.alias": {{ .Values.mirrorMaker2.sourceClusterAlias | quote }},
+      "replication.policy.separator": {{ .Values.mirrorMaker2.replicationPolicySeparator | quote }},
+      "source.cluster.bootstrap.servers": {{ .Values.mirrorMaker2.sourceClusterBootstrapServers | quote }},
+      "target.cluster.alias": {{ .Values.mirrorMaker2.targetClusterAlias | quote }},
+      "target.cluster.bootstrap.servers": {{ .Values.mirrorMaker2.targetClusterBootstrapServers | quote }},
+      "tasks.max": {{ .Values.mirrorMaker2.tasksMax | quote }},
+      "topics": {{ .Values.mirrorMaker2.topicRegex | quote }},
+      "sync.topic.acls.enabled": {{ .Values.mirrorMaker2.syncTopicAclsEnabled | quote }},
+      "key.converter": "org.apache.kafka.connect.converters.ByteArrayConverter",
+      "value.converter": "org.apache.kafka.connect.converters.ByteArrayConverter"
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-{{ .Values.mirrorMaker2.name }}
+  labels:
+    app: kafka-connect-manager
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-connect-manager
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka-connect-manager
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name: {{ include "kafka-connect-manager.name" . }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+          - kafkaconnect
+          - create
+          - mirrormaker2
+          - --heartbeat
+          - /etc/mirrormaker2/heartbeat-config.json
+          - --checkpoint
+          - /etc/mirrormaker2/checkpoint-config.json
+          - --mirror-source
+          - /etc/mirrormaker2/mirror-source-config.json
+          - --show-status
+        env:
+          - name: KAFKA_BROKER_URL
+            value: {{ .Values.env.kafkaBrokerUrl | quote }}
+          - name: KAFKA_CONNECT_URL
+            value: {{ .Values.env.kafkaConnectUrl | quote }}
+        volumeMounts:
+        - name: mirrormaker2
+          mountPath: /etc/mirrormaker2
+      volumes:
+      - name: mirrormaker2
+        configMap:
+          name: {{ .Values.mirrorMaker2.name }}
+{{ end }}

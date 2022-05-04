@@ -1,0 +1,30 @@
+strimzi-kafka: {}
+
+influxdb:
+  ingress:
+    enabled: true
+    hostname: minikube.lsst.codes
+
+kafka-connect-manager:
+  influxdbSink:
+    influxdb-sink:
+      enabled: true
+
+chronograf:
+  ingress:
+    enabled: true
+    hostname: minikube.lsst.codes
+
+  env:
+    GENERIC_NAME: "OIDC"
+    GENERIC_AUTH_URL: https://minikube.lsst.codes/auth/openid/login
+    GENERIC_TOKEN_URL: https://minikube.lsst.codes/auth/openid/token
+    USE_ID_TOKEN: 1
+    JWKS_URL: https://minikube.lsst.codes/.well-known/jwks.json
+    GENERIC_API_URL: https://minikube.lsst.codes/auth/userinfo
+    GENERIC_SCOPES: openid
+    GENERIC_API_KEY: sub
+    PUBLIC_URL: https://minikube.lsst.codes
+    STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/minikube.json"
+
+vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes

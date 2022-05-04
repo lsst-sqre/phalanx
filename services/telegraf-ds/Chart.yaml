@@ -1,0 +1,8 @@
+apiVersion: v2
+name: telegraf-ds
+version: 1.0.0
+description: SQuaRE DaemonSet (K8s) telemetry collection service
+dependencies:
+  - name: telegraf-ds
+    version: 1.0.34
+    repository: https://helm.influxdata.com/

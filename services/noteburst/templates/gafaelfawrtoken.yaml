@@ -1,0 +1,11 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "noteburst.fullname" . }}-gafaelfawr-token
+  labels:
+    {{- include "noteburst.labels" . | nindent 4 }}
+spec:
+  service: "noteburst"
+  scopes:
+    - "admin:token"
+    - "exec:admin"

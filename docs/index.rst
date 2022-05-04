@@ -32,6 +32,7 @@ General development and operations
 .. toctree::
    :maxdepth: 2
 
+   service-guide/linting-and-helm-docs
    service-guide/create-service
    service-guide/add-a-onepassword-secret
    service-guide/update-a-onepassword-secret
@@ -62,7 +63,6 @@ Services
 
    ops/argo-cd/index
    ops/cachemachine/index
-   ops/cert-issuer/index
    ops/cert-manager/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index

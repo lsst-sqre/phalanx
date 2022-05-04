@@ -2,25 +2,33 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: portal
+  name: "portal"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: portal
-  namespace: argocd
+  name: "portal"
+  namespace: "argocd"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: portal
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "portal"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: services/portal
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    path: "services/portal"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
     helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}

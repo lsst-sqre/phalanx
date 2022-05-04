@@ -56,7 +56,7 @@ privileged pod:
 **Examples:**
 
   * Get usage data by username, sorted by usage, largest at the bottom::
-    
+
         du -s -BM /mnt/home/* \
         | sed -e 's/\s\+/,/' \
         | sed -e 's|/mnt/home/||' \

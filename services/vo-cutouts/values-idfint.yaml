@@ -1,20 +1,9 @@
-vo-cutouts:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data-int.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/vo-cutouts"
+config:
+  butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
+  databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
+  gcsBucketUrl: "s3://rubin-cutouts-int-us-central1-output/"
 
-  config:
-    butlerRepository: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
-    butlerCollection: "2.2i/runs/DP0.1"
-    databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
-
-  cloudsql:
-    enabled: true
-    instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
-    serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"
-
-pull-secret:
+cloudsql:
   enabled: true
-  path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"
+  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+  serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"

@@ -1,10 +1,8 @@
-squareone:
-  ingress:
-    host: "minikube.lsst.codes"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ minikube"
+config:
+  siteName: "Rubin Science Platform @ minikube"
+
+ingress:
+  tls: false
 
 pull-secret:
   enabled: true

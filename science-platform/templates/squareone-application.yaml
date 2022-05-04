@@ -2,28 +2,36 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: squareone
+  name: "squareone"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: squareone
-  namespace: argocd
+  name: "squareone"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: squareone
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "squareone"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: services/squareone
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    path: "services/squareone"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
     helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPathPrefix"
+          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}

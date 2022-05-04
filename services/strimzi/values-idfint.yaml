@@ -1,1 +1,4 @@
-# This file intentionally blank - no customization needed
+strimzi-kafka-operator:
+  watchNamespaces:
+    - "alert-stream-broker"
+  logLevel: "INFO"

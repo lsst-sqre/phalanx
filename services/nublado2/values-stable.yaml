@@ -1,60 +1,60 @@
-nublado2:
-  jupyterhub:
-    ingress:
-      hosts: ["lsst-lsp-stable.ncsa.illinois.edu"]
-      annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
-        nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:notebook&notebook=true"
+jupyterhub:
+  ingress:
+    hosts: ["lsst-lsp-stable.ncsa.illinois.edu"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-stable.ncsa.illinois.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:notebook&notebook=true"
 
-  config:
-    base_url: "https://lsst-lsp-stable.ncsa.illinois.edu"
-    butler_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/butler-secret"
-    pull_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
-    lab_environment:
-      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
-      AUTO_REPO_BRANCH: "NCSA-prod"
-      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@NCSA-prod"
-    volumes:
-      - name: datasets
-        hostPath:
-          path: /lsstdata/user/precursor_data/datasets
-      - name: home
-        hostPath:
-          path: /lsstdata/user/staff/jhome
-      - name: project
-        hostPath:
-          path: /lsstdata/user/staff/project
-      - name: scratch
-        hostPath:
-          path: /lsstdata/user/staff/scratch
-      - name: teststand
-        hostPath:
-          path: /lsstdata/offline/teststand
-      - name: instrument
-        hostPath:
-          path: /lsstdata/offline/instrument
-      - name: repo
-        hostPath:
-          path: /repo
-    volume_mounts:
-      - name: datasets
-        mountPath: /datasets
-      - name: home
-        mountPath: /home
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
-      - name: teststand
-        mountPath: /lsstdata/offline/teststand
-        readOnly: true
-      - name: instrument
-        mountPath: /lsstdata/offline/instrument
-        readOnly: true
-      - name: repo
-        mountPath: /repo
+config:
+  base_url: "https://lsst-lsp-stable.ncsa.illinois.edu"
+  butler_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/butler-secret"
+  pull_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "NCSA-prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@NCSA-prod"
+    DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+  volumes:
+    - name: datasets
+      hostPath:
+        path: /lsstdata/user/precursor_data/datasets
+    - name: home
+      hostPath:
+        path: /lsstdata/user/staff/jhome
+    - name: project
+      hostPath:
+        path: /lsstdata/user/staff/project
+    - name: scratch
+      hostPath:
+        path: /lsstdata/user/staff/scratch
+    - name: teststand
+      hostPath:
+        path: /lsstdata/offline/teststand
+    - name: instrument
+      hostPath:
+        path: /lsstdata/offline/instrument
+    - name: repo
+      hostPath:
+        path: /repo
+  volume_mounts:
+    - name: datasets
+      mountPath: /datasets
+    - name: home
+      mountPath: /home
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
+    - name: teststand
+      mountPath: /lsstdata/offline/teststand
+      readOnly: true
+    - name: instrument
+      mountPath: /lsstdata/offline/instrument
+      readOnly: true
+    - name: repo
+      mountPath: /repo
 
-  vault_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/nublado2"
+vault_secret_path: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/nublado2"
 
 pull-secret:
   enabled: true

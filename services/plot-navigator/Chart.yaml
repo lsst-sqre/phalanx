@@ -3,5 +3,5 @@ name: plot-navigator
 version: 1.0.0
 dependencies:
 - name: plot-navigator
-  version: "=1.5.8"
+  version: "=1.6.1"
   repository: https://lsst-sqre.github.io/charts/

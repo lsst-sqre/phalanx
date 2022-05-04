@@ -1,48 +1,56 @@
-nublado2:
-  jupyterhub:
-    hub:
-      resources:
-        requests:
-          cpu: 300m
-          memory: 512Mi
-    ingress:
-      hosts: ["data-dev.lsst.cloud"]
-      annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+jupyterhub:
+  hub:
+    resources:
+      requests:
+        cpu: "2"
+        memory: 3Gi
+  ingress:
+    hosts: ["data-dev.lsst.cloud"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
 
-  config:
-    base_url: "https://data-dev.lsst.cloud"
-    butler_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/butler-secret"
-    pull_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
-    lab_environment:
-      PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
-      AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
-      S3_ENDPOINT_URL: "https://storage.googleapis.com"
-      AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
-      AUTO_REPO_BRANCH: prod
-      AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
-    volumes:
-      - name: home
-        nfs:
-          path: /share1/home
-          server: 10.87.86.26
-      - name: project
-        nfs:
-          path: /share1/project
-          server: 10.87.86.26
-      - name: scratch
-        nfs:
-          path: /share1/scratch
-          server: 10.87.86.26
-    volume_mounts:
-      - name: home
-        mountPath: /home
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
+config:
+  base_url: "https://data-dev.lsst.cloud"
+  butler_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/butler-secret"
+  pull_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+  cachemachine_image_policy: "desired"
+  lab_environment:
+    PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+    AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
+    S3_ENDPOINT_URL: "https://storage.googleapis.com"
+    GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json"
+    DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
+    AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
+    AUTO_REPO_BRANCH: prod
+    AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
+    NO_ACTIVITY_TIMEOUT: "300"
+    CULL_KERNEL_IDLE_TIMEOUT: "300"
+    CULL_KERNEL_CONNECTED: "True"
+    CULL_KERNEL_INTERVAL: "60"
+    CULL_TERMINAL_INACTIVE_TIMEOUT: "300"
+    CULL_TERMINAL_INTERVAL: "60"
+  volumes:
+    - name: home
+      nfs:
+        path: /share1/home
+        server: 10.87.86.26
+    - name: project
+      nfs:
+        path: /share1/project
+        server: 10.87.86.26
+    - name: scratch
+      nfs:
+        path: /share1/scratch
+        server: 10.87.86.26
+  volume_mounts:
+    - name: home
+      mountPath: /home
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
 
-  vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
+vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
 
 pull-secret:
   enabled: true

@@ -1,36 +1,40 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "data.lsst.cloud"
 
-  ingress:
-    enabled: true
-    host: "data.lsst.cloud"
+vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/pull-secret"
 
-  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/pull-secret"
+serviceAccount:
+  annotations: {
+    iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-stable-6994.iam.gserviceaccount.com
+  }
 
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {},
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "registry.hub.docker.com",
-            "repo": "lsstsqre/sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 1,
-            "num_weeklies": 2,
-            "num_dailies": 3
-          },
-          {
-            "type": "SimpleRepoMan",
-            "images": [
-              {
-                "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_49",
-                "name": "Weekly 2021_49"
-              }
-            ]
-          }
-        ]
-      }
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {},
+      "repomen": [
+        {
+          "type": "RubinRepoGar",
+          "registry_url": "us-central1-docker.pkg.dev",
+          "gar_repository": "sciplat",
+          "gar_image": "sciplat-lab",
+          "project_id": "rubin-shared-services-71ec",
+          "location": "us-central1",
+          "recommended_tag": "recommended",
+          "num_releases": 1,
+          "num_weeklies": 2,
+          "num_dailies": 3
+        },
+        {
+          "type": "SimpleRepoMan",
+          "images": [
+            {
+              "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2022_12",
+              "name": "Weekly 2022_12"
+            }
+          ]
+        }
+      ]
+    }

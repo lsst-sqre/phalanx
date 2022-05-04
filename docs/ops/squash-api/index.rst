@@ -22,7 +22,6 @@ You can learn more about SQuaSH in SQR-009_.
 Currently, the ``squash-api`` is deployed using the ``squash-sandbox`` and ``squash-prod`` environments along with other services:
 
 - argo-cd
-- cert-issuer
 - cert-manager
 - chronograf
 - gafaelfawr

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "noteburst.fullname" . }}
+  labels:
+    {{- include "noteburst.labels" . | nindent 4 }}
+data:
+  SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  NOTEBURST_PATH_PREFIX: {{ .Values.ingress.path | quote }}
+  NOTEBURST_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}/0"

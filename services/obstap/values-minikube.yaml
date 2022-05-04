@@ -1,18 +1,16 @@
 cadc-tap-postgres:
-  pull_secret: 'pull-secret'
-  tag: "1.1"
-  host: "minikube.lsst.codes"
+  fullnameOverride: "obstap"
 
-  secrets:
-    enabled: false
+  imagePullSecret:
+    - name: "pull-secret"
+  ingress:
+    host: "minikube.lsst.codes"
+  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/tap"
 
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/minikube.lsst.codes/tap'
-
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
+  config:
+    gcsBucket: "async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
 
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
+  path: "secret/k8s_operator/minikube.lsst.codes/pull-secret"

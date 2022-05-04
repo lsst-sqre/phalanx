@@ -1,43 +1,11 @@
-firefly:
-  pull_secret: 'pull-secret'
-  replicaCount: 4
+replicaCount: 4
 
+config:
   volumes:
-    firefly_shared_workarea_nfs:
-      path: /share1/home/firefly/shared-workarea
-      server: 10.22.240.130
+    workareaNfs:
+      path: "/share1/home/firefly/shared-workarea"
+      server: "10.22.240.130"
 
-  ingress:
-    host: "data-int.lsst.cloud"
-    annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://data-int.lsst.cloud/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header X-Original-URI $request_uri;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-Port 443;
-        proxy_set_header X-Forwarded-Path /portal/app;
-
-  resources:
-    limits:
-      memory: 30Gi
-
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: secret/k8s_operator/data-int.lsst.cloud/portal
-
-  redis:
-    resources:
-      limits:
-        memory: 20Mi
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret
+resources:
+  limits:
+    memory: "30Gi"

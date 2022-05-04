@@ -1,6 +1,7 @@
 /installer/secrets/
 /installer/docker-creds
-/services/*/charts/
+/services/*/charts/*.tgz
 /services-expanded/
 .DS_Store
 **/Chart.lock
+__pycache__/

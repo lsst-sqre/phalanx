@@ -1,71 +1,57 @@
-mobu:
-  imagePullSecrets:
-    - name: "pull-secret"
+cachemachineImagePolicy: "desired"
 
-  ingress:
-    host: "data.lsst.cloud"
-
-  environmentUrl: "https://data.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/mobu"
-
-  autostart:
-    - name: "firefighter"
-      count: 5
-      users:
-        - username: "systemtest01"
-          uidnumber: 74768
-        - username: "systemtest02"
-          uidnumber: 74769
-        - username: "systemtest03"
-          uidnumber: 74770
-        - username: "systemtest04"
-          uidnumber: 74771
-        - username: "systemtest05"
-          uidnumber: 74772
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        repo_url: "https://github.com/lsst-sqre/system-test.git"
-        repo_branch: "prod"
-        max_executions: 1
-      restart: true
-    - name: "quickbeam"
-      count: 1
-      users:
-        - username: "systemtest06"
-          uidnumber: 74773
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        jupyter_options_form:
-          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
-          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
-          image_dropdown: "use_image_from_dropdown"
-          size: "Small"
-        repo_url: "https://github.com/lsst-sqre/system-test.git"
-        repo_branch: "prod"
-        idle_time: 900
-        delete_lab: false
-      restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "systemtest07"
-          uidnumber: 74774
-      scopes: ["exec:notebook", "exec:portal", "read:tap"]
-      business: "NotebookRunner"
-      options:
-        jupyter_options_form:
-          image: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended"
-          image_list: "registry.hub.docker.com/lsstsqre/sciplat-lab:recommended|Recommended|"
-          image_dropdown: "use_image_from_dropdown"
-          size: "Large"
-        repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-        repo_branch: "prod"
-        max_executions: 1
-        working_directory: "notebooks/tutorial-notebooks"
-      restart: true
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
+autostart:
+  - name: "firefighter"
+    count: 5
+    users:
+      - username: "systemtest01"
+        uidnumber: 74768
+      - username: "systemtest02"
+        uidnumber: 74769
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest04"
+        uidnumber: 74771
+      - username: "systemtest05"
+        uidnumber: 74772
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+      max_executions: 1
+    restart: true
+  - name: "quickbeam"
+    count: 1
+    users:
+      - username: "systemtest06"
+        uidnumber: 74773
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+      idle_time: 900
+      delete_lab: false
+    restart: true
+  - name: "tutorial"
+    count: 1
+    users:
+      - username: "systemtest07"
+        uidnumber: 74774
+    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
+      repo_branch: "prod"
+      max_executions: 1
+      working_directory: "notebooks/tutorial-notebooks"
+    restart: true
+  - name: "tap"
+    count: 1
+    users:
+      - username: "systemtest08"
+        uidnumber: 74775
+    scopes: ["read:tap"]
+    business: "TAPQueryRunner"
+    restart: true

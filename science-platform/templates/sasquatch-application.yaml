@@ -1,0 +1,30 @@
+{{- if .Values.sasquatch.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sasquatch
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sasquatch
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: sasquatch
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/sasquatch
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      valueFiles:
+        - values.yaml
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}

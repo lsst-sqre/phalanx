@@ -1,0 +1,82 @@
+{{- range .Values.influxdbSink }}
+{{- with . }}
+{{- if .enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sasquatch-{{ .name }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-connect-manager
+      app.kubernetes.io/instance: {{ $.Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: kafka-connect-manager
+        app.kubernetes.io/instance: {{ $.Release.Name }}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+      - name:  kafkaconnect
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - "all"
+          readOnlyRootFilesystem: true
+        image: {{ $.Values.image.repository }}:{{ $.Values.image.tag }}
+        imagePullPolicy:  {{ $.Values.image.pullPolicy }}
+        command:
+          - kafkaconnect
+          - create
+          - influxdb-sink
+          {{- if .autoUpdate }}
+          - --auto-update
+          {{- end }}
+        env:
+          - name: KAFKA_CONNECT_NAME
+            value: {{ .name | quote }}
+          - name: KAFKA_CONNECT_INFLUXDB_URL
+            value: {{ .connectInfluxUrl | quote }}
+          - name: KAFKA_CONNECT_DATABASE
+            value: {{ .connectInfluxDb | quote }}
+          - name: KAFKA_CONNECT_INFLUXDB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: influxdb-user
+          - name: KAFKA_CONNECT_INFLUXDB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: influxdb-password
+          - name: KAFKA_CONNECT_TASKS_MAX
+            value: {{ .tasksMax | quote }}
+          - name: KAFKA_CONNECT_TOPIC_REGEX
+            value: {{ .topicRegex | quote }}
+          - name: KAFKA_CONNECT_CHECK_INTERVAL
+            value: {{ .checkInterval | quote  }}
+          - name: KAFKA_CONNECT_EXCLUDED_TOPIC_REGEX
+            value: {{ .excludedTopicRegex | quote }}
+          - name: KAFKA_CONNECT_INFLUXDB_TIMESTAMP
+            value: {{ .timestamp | quote }}
+          - name: KAFKA_CONNECT_ERROR_POLICY
+            value: {{ .connectInfluxErrorPolicy | quote }}
+          - name: KAFKA_CONNECT_MAX_RETRIES
+            value: {{ .connectInfluxMaxRetries | quote }}
+          - name: KAFKA_CONNECT_RETRY_INTERVAL
+            value: {{ .connectInfluxRetryInterval | quote }}
+          - name: KAFKA_CONNECT_PROGRESS_ENABLED
+            value: {{ .connectProgressEnabled | quote }}
+          - name: KAFKA_BROKER_URL
+            value: {{ $.Values.env.kafkaBrokerUrl | quote }}
+          - name: KAFKA_CONNECT_URL
+            value: {{ $.Values.env.kafkaConnectUrl | quote }}
+{{- end }}
+{{- end }}
+{{- end }}

@@ -1,0 +1,18 @@
+config:
+  # WARNING: this is a "playground" deployment
+  # using exposurelog's built-in test butler registries.
+  site_id: test
+  # Use the test butler registries.
+  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
+  butler_uri_1: LSSTCam
+  butler_uri_2: LATISS
+
+ingress:
+  enabled: true
+  host: tucson-teststand.lsst.codes
+
+vault_path: secret/k8s_operator/tucson-teststand.lsst.codes/postgres
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret
