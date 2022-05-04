@@ -1,7 +1,8 @@
 apiVersion: v2
 name: cachemachine
 version: 1.0.0
-dependencies:
-  - name: cachemachine
-    version: 1.2.2
-    repository: https://lsst-sqre.github.io/charts/
+appVersion: 1.2.0
+description: Service to prepull Docker images for the Science Platform
+maintainers:
+  - name: cbanek
+  - name: athornton

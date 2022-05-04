@@ -1,0 +1,9 @@
+config:
+  butlerRepository: "s3://butler-us-central1-dp01"
+  databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
+  gcsBucketUrl: "s3://rubin-cutouts-stable-us-central1-output/"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+  serviceAccount: "vo-cutouts@science-platform-stable-6994.iam.gserviceaccount.com"

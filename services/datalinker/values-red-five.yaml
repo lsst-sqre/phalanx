@@ -1,8 +1,0 @@
-datalinker:
-  ingress:
-    enabled: true
-    host: "red-five.lsst.codes"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/red-five.lsst.codes/pull-secret

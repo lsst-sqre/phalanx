@@ -1,8 +1,27 @@
 argo-cd:
   redis:
     enabled: true
+    metrics:
+      enabled: true
+
+  controller:
+    metrics:
+      enabled: true
+      applicationLabels:
+        enabled: true
+        labels: ["name", "instance"]
+
+  repoServer:
+    metrics:
+      enabled: true
+
+  notifications:
+    metrics:
+      enabled: true
 
   server:
+    metrics:
+      enabled: true
     ingress:
       enabled: true
       hosts:
@@ -49,10 +68,14 @@ argo-cd:
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
         g, christine@lsst.cloud, role:admin
+        g, dspeck@lsst.cloud, role:admin
         g, frossie@lsst.cloud, role:admin
         g, jsick@lsst.cloud, role:admin
         g, krughoff@lsst.cloud, role:admin
         g, rra@lsst.cloud, role:admin
+        g, gpdf@lsst.cloud, role:admin
+        g, loi@lsst.cloud, role:admin
+        g, roby@lsst.cloud, role:admin
       scopes: "[email]"
 
   configs:

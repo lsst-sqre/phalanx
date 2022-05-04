@@ -1,0 +1,37 @@
+{{- if .Values.times_square.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "times-square"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "times-square"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "times-square"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "services/times-square"
+    repoURL: {{ .Values.repoURL |quote }}
+    targetRevision: {{ .Values.revision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPathPrefix"
+          value: {{ .Values.vault_path_prefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

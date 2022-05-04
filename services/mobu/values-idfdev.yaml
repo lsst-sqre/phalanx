@@ -1,26 +1,14 @@
-mobu:
-  imagePullSecrets:
-    - name: "pull-secret"
+cachemachineImagePolicy: "desired"
 
-  ingress:
-    host: "data-dev.lsst.cloud"
-
-  environmentUrl: "https://data-dev.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/mobu"
-
-  autostart:
-    - name: "python"
-      count: 1
-      users:
-        - username: "systemtest01"
-          uidnumber: 74768
-      scopes: ["exec:notebook"]
-      business: "JupyterPythonLoop"
-      options:
-        jupyter:
-          image_size: "Small"
-      restart: true
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"
+autostart:
+  - name: "python"
+    count: 1
+    users:
+      - username: "systemtest01"
+        uidnumber: 74768
+    scopes: ["exec:notebook"]
+    business: "JupyterPythonLoop"
+    options:
+      jupyter:
+        image_size: "Small"
+    restart: true

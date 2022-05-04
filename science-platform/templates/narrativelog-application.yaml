@@ -1,0 +1,27 @@
+{{- if .Values.narrativelog.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: narrativelog
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: narrativelog
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: narrativelog
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: services/narrativelog
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      valueFiles:
+      - values.yaml
+      - values-{{ .Values.environment }}.yaml
+{{- end -}}

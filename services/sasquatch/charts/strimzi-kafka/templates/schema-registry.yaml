@@ -1,0 +1,6 @@
+apiVersion: roundtable.lsst.codes/v1beta1
+kind: StrimziSchemaRegistry
+metadata:
+  name: {{ .Values.cluster.name }}-schema-registry
+spec:
+  listener: tls

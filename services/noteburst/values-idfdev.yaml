@@ -1,27 +1,12 @@
-noteburst:
-  image:
-    pullPolicy: Always
-    tag: tickets-DM-33025
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "data-dev.lsst.cloud"
-        paths:
-          - path: "/noteburst"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/noteburst"
-  config:
-    environmentUrl: "https://data-dev.lsst.cloud"
-    worker:
-      workerCount: 1
-      identities:
-        - uuid: 90000
-          username: "noteburst90000"
+# Uncomment image to enable development builds
+# image:
+#   pullPolicy: Always
+#   tag: tickets-DM-33025
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
+config:
+  logLevel: "DEBUG"
+  worker:
+    workerCount: 1
+    identities:
+      - uid: 90000
+        username: "noteburst90000"

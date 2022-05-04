@@ -1,0 +1,116 @@
+# Default values for noteburst.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#
+# Global parameters will be set by parameters injected by Argo CD and should
+# not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPathPrefix: ""
+
+# -- Number of API pods to run
+replicaCount: 1
+
+image:
+  # -- Noteburst image repository
+  repository: ghcr.io/lsst-sqre/noteburst
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Tag of the image
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+  # The name of the service account to use.
+  # @default -- Generated using the fullname template
+  name: ""
+
+# -- Annotations for API and worker pods
+podAnnotations: {}
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Enable ingress
+  enabled: true
+
+  # -- Gafaelfawr auth query string
+  gafaelfawrAuthQuery: "scope=exec:admin&auth_type=basic"
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Path prefix where noteburst is hosted
+  path: "/noteburst"
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config:
+  # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  logLevel: "INFO"
+
+  worker:
+    # -- Science Platform user identities that workers can acquire. Each item
+    # is an object with username and uuid keys
+    identities: []
+
+    # -- Number of workers to run
+    workerCount: 1
+
+redis:
+  auth:
+    enabled: false

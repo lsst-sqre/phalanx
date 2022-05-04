@@ -6,27 +6,21 @@ alert_stream_broker:
   enabled: false
 cachemachine:
   enabled: true
-cert_issuer:
-  enabled: true
 cert_manager:
   enabled: true
-chronograf:
-  enabled: false
 datalinker:
   enabled: false
 exposurelog:
   enabled: true
 gafaelfawr:
   enabled: true
-influxdb:
-  enabled: false
-kapacitor:
-  enabled: false
 mobu:
   enabled: false
 moneypenny:
   enabled: true
 ingress_nginx:
+  enabled: true
+narrativelog:
   enabled: true
 noteburst:
   enabled: false
@@ -40,6 +34,10 @@ portal:
   enabled: true
 postgres:
   enabled: true
+sasquatch:
+  enabled: false
+production_tools:
+  enabled: false
 semaphore:
   enabled: false
 squareone:
@@ -53,6 +51,12 @@ strimzi_registry_operator:
 tap:
   enabled: false
 tap_schema:
+  enabled: false
+telegraf:
+  enabled: true
+telegraf-ds:
+  enabled: true
+times_square:
   enabled: false
 vault_secrets_operator:
   enabled: true

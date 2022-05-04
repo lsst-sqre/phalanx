@@ -2,28 +2,41 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: nublado2
+  name: "nublado2"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nublado2
-  namespace: argocd
+  name: "nublado2"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: nublado2
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "nublado2"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: services/nublado2
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    path: "services/nublado2"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+  ignoreDifferences:
+    - group: ""
+      kind: "Secret"
+      jsonPointers:
+        - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
+        - "/data/hub.config.CryptKeeper.keys"
+        - "/data/hub.config.JupyterHub.cookie_secret"
+    - group: "apps"
+      kind: "Deployment"
+      jsonPointers:
+        - "/spec/template/metadata/annotations/checksum~1secret"
+        - "/spec/template/metadata/annotations/checksum~1auth-token"
 {{- end -}}

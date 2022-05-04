@@ -1,0 +1,28 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ template "nublado2.fullname" . }}-hub
+rules:
+- apiGroups: [""]
+  resources: ["pods","events", "namespaces", "serviceaccounts", "services",
+  "persistentvolumeclaims", "persistentvolumes", "resourcequotas",
+  "configmaps", "pods/log", "pods/exec"]
+  verbs: ["get", "list", "create", "watch", "delete", "update", "patch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "delete"]
+- apiGroups: ["policy"]
+  resources: ["poddisruptionbudgets"]
+  verbs: ["create", "delete", "get", "list", "watch"]
+- apiGroups: ["rbac.authorization.k8s.io"]
+  resources: ["roles", "rolebindings"]
+  verbs: ["get", "list", "create", "delete"]
+- apiGroups: ["argoproj.io"]
+  resources: ["workflows", "workflows/finalizers"]
+  verbs: ["get", "list", "create", "watch", "delete", "update", "patch"]
+- apiGroups: ["argoproj.io"]
+  resources: ["workflowtemplates", "workflowtemplates/finalizers"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["ricoberger.de"]
+  resources: ["vaultsecrets"]
+  verbs: ["get", "create", "delete", "list"]

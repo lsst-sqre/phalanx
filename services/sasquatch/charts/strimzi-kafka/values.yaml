@@ -1,0 +1,47 @@
+# Default values for kafka used in Sasquatch.
+cluster:
+  # -- Name used for the Kafka cluster, and used by Strimzi for many annotations.
+  name: sasquatch
+
+kafka:
+  # -- Version of Kafka to deploy.
+  version: "3.0.0"
+  # -- Number of Kafka broker replicas to run.
+  replicas: 3
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka brokers.
+    size: 100Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: ""
+  # -- Configuration overrides for the Kafka server.
+  config:
+    # -- Number of minutes for a consumer group's offsets to be retained.
+    offsets.retention.minutes: 10080
+    # -- Number of days for a topic's data to be retained.
+    log.retention.hours: 168
+    # -- Maximum retained number of bytes for a topic's data.
+    log.retention.bytes: "644245094400"
+
+zookeeper:
+  # -- Number of Zookeeper replicas to run.
+  replicas: 3
+  storage:
+    # -- Size of the backing storage disk for each of the Zookeeper instances.
+    size: 100Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: ""
+
+connect:
+  # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
+  image: lsstsqre/strimzi-0.27.1-kafka-3.0.0:master
+  # -- Number of Kafka Connect replicas to run.
+  replicas: 1
+
+registry:
+  # -- Name of the topic used by the Schema Registry
+  schemaTopic: registry-schemas
+
+# -- A list of usernames for users who should have global admin permissions.
+# These users will be created, along with their credentials.
+superusers:
+  - kafka-admin

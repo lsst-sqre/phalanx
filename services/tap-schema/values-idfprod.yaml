@@ -1,7 +1,2 @@
-tap-schema:
-  pull_secret: 'pull-secret'
-  image: lsstsqre/tap-schema-idfprod
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data.lsst.cloud/pull-secret
+image:
+  repository: "lsstsqre/tap-schema-idfprod"

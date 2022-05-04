@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "portal.fullname" . }}
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "portal.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "firefly"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "portal.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "firefly"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "firefly"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "MANAGER"
+              value: "TRUE"
+            - name: "ADMIN_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "portal.fullname" . }}-secret
+                  key: "ADMIN_PASSWORD"
+            - name: "REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "portal.fullname" . }}-secret
+                  key: "ADMIN_PASSWORD"
+            - name: "FIREFLY_OPTS"
+              value: "-Dredis.host={{ include "portal.fullname" . }}-redis -Dsso.req.auth.hosts={{ .Values.global.host }}"
+            - name: "SERVER_CONFIG_DIR"
+              value: "/firefly/config"
+            - name: "CLEANUP_INTERVAL"
+              value: "{{ .Values.config.cleanupInterval }}"
+            - name: VISUALIZE_FITS_SEARCH_PATH
+              value: "{{ .Values.config.visualizeFitsSearchPath }}"
+            - name: DEBUG
+              value: "{{ .Values.config.debug }}"
+          ports:
+            - containerPort: 8080
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: "/firefly/shared-workarea"
+              name: "firefly-shared-workarea"
+            - mountPath: "/firefly/config"
+              name: "firefly-config"
+              readOnly: true
+      imagePullSecrets:
+        - name: "pull-secret"
+      {{- with .Values.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "firefly-shared-workarea"
+          {{- if .Values.config.volumes.workareaHostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.workareaHostPath | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.workareaNfs }}
+          nfs:
+            path: {{ .Values.config.volumes.workareaNfs.path | quote }}
+            server: {{ .Values.config.volumes.workareaNfs.server | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: "firefly-config"
+          {{- if .Values.config.volumes.configHostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.configHostPath | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.configNfs }}
+          nfs:
+            path: {{ .Values.config.volumes.configNfs.path | quote }}
+            server: {{ .Values.config.volumes.configNfs.server | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

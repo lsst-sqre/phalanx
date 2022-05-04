@@ -1,33 +1,29 @@
-cachemachine:
-  imagePullSecrets:
-    - name: "cachemachine-secret"
+ingress:
+  enabled: true
+  host: "tucson-teststand.lsst.codes"
 
-  ingress:
-    enabled: true
-    host: "tucson-teststand.lsst.codes"
+vaultSecretsPath: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
 
-  vaultSecretsPath: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
-
-  autostart:
-    jupyter: |
-      {
-        "name": "jupyter",
-        "labels": {},
-        "repomen": [
-          {
-            "type": "RubinRepoMan",
-            "registry_url": "ts-dockerhub.lsst.org",
-            "repo": "sal-sciplat-lab",
-            "recommended_tag": "recommended",
-            "num_releases": 1,
-            "num_weeklies": 3,
-            "num_dailies": 2,
-            "cycle": 24,
-            "alias_tags": [
-                "latest",
-                "latest_daily",
-                "latest_weekly"
-            ]
-          }
-        ]
-      }
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {},
+      "repomen": [
+        {
+          "type": "RubinRepoMan",
+          "registry_url": "ts-dockerhub.lsst.org",
+          "repo": "sal-sciplat-lab",
+          "recommended_tag": "recommended_c0025",
+          "num_releases": 1,
+          "num_weeklies": 3,
+          "num_dailies": 2,
+          "cycle": 25,
+          "alias_tags": [
+              "latest",
+              "latest_daily",
+              "latest_weekly"
+          ]
+        }
+      ]
+    }

@@ -1,20 +1,7 @@
-semaphore:
-  config:
-    phalanx_env: "idfint"
-    github_app_id: "131457"
-    enable_github_app: "True"
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "data-int.lsst.cloud"
-        paths:
-          - path: "/semaphore"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/semaphore"
+config:
+  phalanx_env: "idfint"
+  github_app_id: "131457"
+  enable_github_app: "True"
 
 pull-secret:
   enabled: true

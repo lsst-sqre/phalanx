@@ -1,27 +1,6 @@
-noteburst:
-  image:
-    pullPolicy: Always
-    tag: tickets-DM-33025
-  ingress:
-    enabled: true
-    annotations:
-      kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "minikube.lsst.codes"
-        paths:
-          - path: "/noteburst"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/k8s_operator/minikube.lsst.codes/noteburst"
-  config:
-    environmentUrl: "https://minikube.lsst.cloud"
-    worker:
-      workerCount: 1
-      identities:
-        - uuid: 90000
-          username: "noteburst90000"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/minikube.lsst.codes/pull-secret
+config:
+  worker:
+    workerCount: 1
+    identities:
+      - uid: 90000
+        username: "noteburst90000"

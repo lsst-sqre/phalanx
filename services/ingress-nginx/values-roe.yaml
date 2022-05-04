@@ -7,6 +7,8 @@ ingress-nginx:
       proxy-buffer-size: "64k"
       ssl-redirect: "true"
       use-forwarded-headers: "true"
+    metrics:
+      enabled: true
     service:
       type: ClusterIP
     dnsPolicy: ClusterFirstWithHostNet

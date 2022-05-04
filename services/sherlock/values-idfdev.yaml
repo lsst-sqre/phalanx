@@ -1,3 +1,14 @@
 sherlock:
   ingress:
     host: "data-dev.lsst.cloud"
+
+  resources:
+    requests:
+      cpu: 2.0
+      memory: "2G"
+    limits:
+      cpu: 4.0
+      memory: "4G"
+
+  publish_url: "https://status.lsst.codes/api/data-dev"
+  vaultSecretsPath: "secret/k8s_operator/data-dev.lsst.cloud/sherlock"

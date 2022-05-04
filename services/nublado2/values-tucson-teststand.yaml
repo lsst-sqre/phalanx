@@ -1,85 +1,85 @@
-nublado2:
-  jupyterhub:
-    ingress:
-      hosts: ["tucson-teststand.lsst.codes"]
-      annotations:
-        nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
+jupyterhub:
+  ingress:
+    hosts: ["tucson-teststand.lsst.codes"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
 
-    singleuser:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
-      initContainers:
-        - name: "multus-init"
-          image: "lsstit/ddsnet4u:latest"
-          securityContext:
-            privileged: true
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
+    initContainers:
+      - name: "multus-init"
+        image: "lsstit/ddsnet4u:latest"
+        securityContext:
+          privileged: true
 
-  config:
-    base_url: "https://tucson-teststand.lsst.codes"
-    butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
-    pull_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
-    lab_environment:
-      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
-      AUTO_REPO_BRANCH: "prod"
-      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-      LSST_DDS_INTERFACE: net1
-      LSST_DDS_PARTITION_PREFIX: tucson
-    volumes:
-      - name: home
-        nfs:
-          path: /jhome
-          server: nfs-jhome.tu.lsst.org
-      - name: project
-        nfs:
-          path: /project
-          server: nfs-project.tu.lsst.org
-      - name: scratch
-        nfs:
-          path: /scratch
-          server: nfs-scratch.tu.lsst.org
-      - name: datasets
-        nfs:
-          path: /lsstdata
-          server: nfs-lsstdata.tu.lsst.org
-      - name: auxtel-butler
-        nfs:
-          path: /repo/LATISS
-          server: auxtel-archiver.tu.lsst.org
-      - name: auxtel-oods
-        nfs:
-          path: /lsstdata/TTS/auxtel
-          server: auxtel-archiver.tu.lsst.org
-          readOnly: true
-      - name: comcam-butler
-        nfs:
-          path: /repo/LSSTComCam
-          server: comcam-archiver.tu.lsst.org
-      - name: comcam-oods
-        nfs:
-          path: /lsstdata/TTS/comcam
-          server: comcam-archiver.tu.lsst.org
-          readOnly: true
-    volume_mounts:
-      - name: home
-        mountPath: /home
-      - name: datasets
-        mountPath: /datasets
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
-      - name: auxtel-butler
-        mountPath: /repo/LATISS
-      - name: auxtel-oods
-        mountPath: /data/lsstdata/TTS/auxtel
+config:
+  base_url: "https://tucson-teststand.lsst.codes"
+  butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
+  pull_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+    LSST_DDS_INTERFACE: net1
+    LSST_DDS_PARTITION_PREFIX: tucson
+  volumes:
+    - name: home
+      nfs:
+        path: /jhome
+        server: nfs-jhome.tu.lsst.org
+    - name: project
+      nfs:
+        path: /project
+        server: nfs-project.tu.lsst.org
+    - name: scratch
+      nfs:
+        path: /scratch
+        server: nfs-scratch.tu.lsst.org
+    - name: datasets
+      nfs:
+        path: /lsstdata
+        server: nfs-lsstdata.tu.lsst.org
+    - name: auxtel-butler
+      nfs:
+        path: /repo/LATISS
+        server: auxtel-archiver.tu.lsst.org
+    - name: auxtel-oods
+      nfs:
+        path: /lsstdata/TTS/auxtel
+        server: auxtel-archiver.tu.lsst.org
         readOnly: true
-      - name: comcam-butler
-        mountPath: /repo/LSSTComCam
-      - name: comcam-oods
-        mountPath: /data/lsstdata/TTS/comcam
+    - name: comcam-butler
+      nfs:
+        path: /repo/LSSTComCam
+        server: comcam-archiver.tu.lsst.org
+    - name: comcam-oods
+      nfs:
+        path: /lsstdata/TTS/comcam
+        server: comcam-archiver.tu.lsst.org
         readOnly: true
+  volume_mounts:
+    - name: home
+      mountPath: /home
+    - name: datasets
+      mountPath: /datasets
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
+    - name: auxtel-butler
+      mountPath: /repo/LATISS
+    - name: auxtel-oods
+      mountPath: /data/lsstdata/TTS/auxtel
+      readOnly: true
+    - name: comcam-butler
+      mountPath: /repo/LSSTComCam
+    - name: comcam-oods
+      mountPath: /data/lsstdata/TTS/comcam
+      readOnly: true
 
-  vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
+vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
 
 pull-secret:
   enabled: true

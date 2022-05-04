@@ -1,0 +1,24 @@
+{{- if .Values.config.createIssuer -}}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: "letsencrypt-dns"
+  labels:
+    {{- include "cert-manager.labels" . | nindent 4 }}
+spec:
+  acme:
+    email: {{ required "config.email must be set" .Values.config.email | quote }}
+    server: "https://acme-v02.api.letsencrypt.org/directory"
+    privateKeySecretRef:
+      name: {{ include "cert-manager.fullname" . }}-letsencrypt
+    solvers:
+      - dns01:
+          cnameStrategy: "Follow"
+          route53:
+            region: "us-east-1"
+            accessKeyID: {{ required "config.route53.awsAccessKeyId must be set" .Values.config.route53.awsAccessKeyId | quote }}
+            hostedZoneID: {{ required "config.route53.hostedZone must be set" .Values.config.route53.hostedZone | quote }}
+            secretAccessKeySecretRef:
+              name: {{ include "cert-manager.fullname" . }}
+              key: "aws-secret-access-key"
+{{- end }}

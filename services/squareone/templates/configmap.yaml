@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "squareone.fullname" . }}
+  labels:
+    {{- include "squareone.labels" . | nindent 4 }}
+data:
+  squareone.config.yaml: |
+    siteName: {{ .Values.config.siteName | quote }}
+    baseUrl: {{ .Values.global.baseUrl | quote }}
+    siteDescription: {{ .Values.config.siteDescription | quote }}
+    {{- if .Values.config.semaphoreUrl }}
+    semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
+    {{- end}}

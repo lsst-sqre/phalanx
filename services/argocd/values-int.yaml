@@ -1,8 +1,26 @@
 argo-cd:
   redis:
     enabled: true
+    metrics:
+      enabled: true
 
+  controller:
+    metrics:
+      enabled: true
+      applicationLabels:
+        enabled: true
+        labels: ["name", "instance"]
+
+  repoServer:
+    metrics:
+      enabled: true
+
+  notifications:
+    metrics:
+      enabled: true
   server:
+    metrics:
+      enabled: true
     ingress:
       enabled: true
       hosts:

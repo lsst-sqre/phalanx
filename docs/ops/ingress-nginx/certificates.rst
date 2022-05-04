@@ -6,7 +6,7 @@ The entire Science Platform uses the same external hostname and relies on NGINX 
 As discussed in :ref:`hostnames`, TLS for the Science Platform can be configured with either a default certificate in ``ingress-nginx`` or through Let's Encrypt with the DNS solver.
 
 If an installation is using Let's Encrypt with the DNS solver, no further configuration of the NGINX ingresss is required.
-See :doc:`../cert-issuer/bootstrapping` for setup information.
+See :doc:`../cert-manager/bootstrapping` for setup information.
 
 When using a commercial certificate, that certificate should be configured in the ``values-*.yaml`` for ``ingress-nginx`` for that environment.
 Specifically, add the following under ``ingress-nginx.controller``:

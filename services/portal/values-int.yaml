@@ -1,53 +1,26 @@
-firefly:
-  pull_secret: 'pull-secret'
-  replicaCount: 2
+replicaCount: 2
 
-  ingress:
-    host: 'lsst-lsp-int.ncsa.illinois.edu'
-    annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://lsst-lsp-int.ncsa.illinois.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header X-Original-URI $request_uri;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-Port 443;
-        proxy_set_header X-Forwarded-Path /portal/app;
-
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/portal'
-
-  redis:
-    resources:
-      limits:
-        memory: 20Mi
-
-  nodeSelector:
-    environment: portal-int
-
-  tolerations:
-  - effect: NoSchedule
-    key: dedicated
-    operator: Equal
-    value: portal
-
-  resources:
-    limits:
-      memory: 24Gi
-
-  securityContext:
-    runAsUser: 101
-    runAsGroup: 102
-
+config:
   volumes:
-    firefly_shared_workarea_hostpath: /sui/firefly/workarea
-    firefly_config_hostpath: /sui/firefly/config
+    workareaHostPath: "/sui/firefly/workarea"
+    configHostPath: "/sui/firefly/config"
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret
+nodeSelector:
+  environment: "portal-int"
+
+tolerations:
+  - effect: "NoSchedule"
+    key: "dedicated"
+    operator: "Equal"
+    value: "portal"
+
+resources:
+  limits:
+    memory: "24Gi"
+
+image:
+  tag: "suit-2022.1"
+
+securityContext:
+  runAsUser: 101
+  runAsGroup: 102

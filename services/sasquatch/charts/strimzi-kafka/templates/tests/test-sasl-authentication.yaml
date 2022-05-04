@@ -1,0 +1,77 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: sasquatch-test
+  labels:
+    strimzi.io/cluster: sasquatch
+spec:
+  authentication:
+    type: scram-sha-512
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: sasquatch-test
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: sasquatch-test
+  labels:
+      strimzi.io/cluster: sasquatch
+spec:
+  replicas: 3
+  partitions: 12
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: sasquatch
+  name: sasquatch-test-producer
+  annotations:
+    "helm.sh/hook": test
+spec:
+  backoffLimit: 0
+  completions: 1
+  parallelism: 1
+  template:
+    metadata:
+      labels:
+        app: sasquatch
+        job-name: sasquatch-test-producer
+      name: sasquatch-test-producer
+      namespace: sasquatch
+    spec:
+      containers:
+        - env:
+            - name: BOOTSTRAP_SERVERS
+              value: sasquatch-kafka-bootstrap.sasquatch:9092
+            - name: DELAY_MS
+              value: "1000"
+            - name: TOPIC
+              value: sasquatch-test
+            - name: MESSAGE_COUNT
+              value: "100"
+            - name: MESSAGE
+              value: Hello-world
+            - name: PRODUCER_ACKS
+              value: all
+            - name: LOG_LEVEL
+              value: DEBUG
+            # Set here the password created by Strimzi for the
+            # sasquatch-test user, see the sasquatch-test secret.
+            - name: ADDITIONAL_CONFIG
+              value: |
+                sasl.mechanism=SCRAM-SHA-512
+                security.protocol=SASL_PLAINTEXT
+                sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="sasquatch-test" password="";
+          image: quay.io/strimzi-test-clients/test-client-kafka-producer:latest-kafka-3.0.0
+          imagePullPolicy: IfNotPresent
+          name: kafka-producer-client
+      restartPolicy: "Never"

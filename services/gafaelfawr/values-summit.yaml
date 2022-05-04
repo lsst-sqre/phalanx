@@ -1,55 +1,43 @@
-gafaelfawr:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "summit-lsp.lsst.codes"
-  vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes/gafaelfawr"
+# Reset token storage on every Redis restart for now.  This should change to
+# use persistent volumes once we can coordinate that.
+redis:
+  persistence:
+    enabled: false
 
-  # Reset token storage on every Redis restart for now.  This should change to
-  # use persistent volumes once we can coordinate that.
-  redis:
-    persistence:
-      enabled: false
+config:
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-  config:
-    host: "summit-lsp.lsst.codes"
-    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  # Use GitHub authentication.
+  github:
+    clientId: "220d64cbf46f9d2b7873"
 
-    # Use GitHub authentication.
-    github:
-      clientId: "220d64cbf46f9d2b7873"
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - "lsst-sqre-square"
+    "exec:admin":
+      - "lsst-sqre-square"
+    "exec:notebook":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-summit-access"
+      - "rubin-summit-rsp-access"
+    "exec:portal":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-summit-access"
+      - "rubin-summit-rsp-access"
+    "read:tap":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-summit-access"
+      - "rubin-summit-rsp-access"
 
-    # Allow access by GitHub team.
-    groupMapping:
-      "admin:provision":
-        - "lsst-sqre-square"
-      "exec:admin":
-        - "lsst-sqre-square"
-      "exec:notebook":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-summit-access"
-        - "rubin-summit-rsp-access"
-      "exec:portal":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-summit-access"
-        - "rubin-summit-rsp-access"
-      "read:tap":
-        - "lsst-sqre-square"
-        - "lsst-sqre-friends"
-        - "lsst-ts-summit-access"
-        - "rubin-summit-rsp-access"
-
-    initialAdmins:
-      - "afausti"
-      - "athornton"
-      - "cbanek"
-      - "frossie"
-      - "jonathansick"
-      - "rra"
-      - "simonkrughoff"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"

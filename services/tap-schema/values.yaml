@@ -1,0 +1,48 @@
+# Default values for tap-schema.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+image:
+  # -- tap-schema image to use
+  repository: "lsstsqre/tap-schema-mock"
+
+  # -- Pull policy for the tap-schema image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of tap-schema image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Resource limits and requests for the MySQL pod
+resources: {}
+
+# -- Annotations for the MySQL pod
+podAnnotations: {}
+
+# -- Node selector rules for the MySQL pod
+nodeSelector: {}
+
+# -- Tolerations for the MySQL pod
+tolerations: []
+
+# -- Affinity rules for the MySQL pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

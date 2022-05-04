@@ -1,0 +1,481 @@
+# Default values for nublado2.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+jupyterhub:
+  hub:
+    authenticatePrometheus: false
+    image:
+      name: lsstsqre/nublado2
+      tag: "2.1.0"
+    config:
+      Authenticator:
+        enable_auth_state: true
+      JupyterHub:
+        authenticator_class: nublado2.auth.GafaelfawrAuthenticator
+      ServerApp:
+        shutdown_no_activity_timeout: 604800  # one week
+    db:
+      # Password comes from the nublado2-secret.
+      type: "postgres"
+      password: "true"
+      url: "postgresql://jovyan@postgres.postgres/jupyterhub"
+    containerSecurityContext:
+      runAsUser: 768
+      runAsGroup: 768
+      allowPrivilegeEscalation: false
+    baseUrl: "/nb"
+    # Note: this has to match up with the kubernetes secret created by the
+    # vault secret, and since you can't put templating in a values file, I'm
+    # just setting the name here.
+    existingSecret: "nublado2-secret"
+    extraConfig:
+      nublado.py: |
+        import nublado2.hub_config
+        nublado2.hub_config.HubConfig().configure(c)
+    extraVolumes:
+      - name: nublado-config
+        configMap:
+          name: nublado-config
+      - name: nublado-gafaelfawr
+        secret:
+          secretName: gafaelfawr-token
+    extraVolumeMounts:
+      - name: nublado-config
+        mountPath: /etc/jupyterhub/nublado_config.yaml
+        subPath: nublado_config.yaml
+      - name: nublado-gafaelfawr
+        mountPath: /etc/keys/gafaelfawr-token
+        subPath: token
+    # We still have to use our own, enabled at the top level, which is
+    #  similar but not identical.  This one still doesn't work, even if
+    #  you explicitly enable port 8081 so the labs can talk to the Hub.
+    networkPolicy:
+      enabled: false
+    loadRoles:
+      self:
+        scopes: ['admin:servers!user', 'read:metrics']
+      server:
+        scopes: ['inherit']  # Let server use API like user
+
+  prePuller:
+    continuous:
+      enabled: false
+    hook:
+      enabled: false
+
+  singleuser:
+    cloudMetadata:
+      blockWithIptables: false
+    cmd: "/opt/lsst/software/jupyterlab/runlab.sh"
+    defaultUrl: "/lab"
+    extraAnnotations:
+      argocd.argoproj.io/compare-options: 'IgnoreExtraneous'
+      argocd.argoproj.io/sync-options: 'Prune=false'
+    extraLabels:
+      hub.jupyter.org/network-access-hub: 'true'
+      argocd.argoproj.io/instance: 'nublado-users'
+    storage:
+      extraVolumes:
+        - name: dask
+          configMap:
+            name: dask
+        - name: idds-config
+          configMap:
+            name: idds-config
+        - name: tmp
+          emptyDir: {}
+        - name: butler-secret
+          secret:
+            secretName: butler-secret
+        - name: lab-environment
+          configMap:
+            defaultMode: 420
+            name: lab-environment
+        - name: passwd
+          configMap:
+            defaultMode: 420
+            name: passwd
+        - name: group
+          configMap:
+            defaultMode: 420
+            name: group
+        - name: shadow
+          configMap:
+            defaultMode: 384
+            name: shadow
+        - name: gshadow
+          configMap:
+            defaultMode: 384
+            name: gshadow
+      extraVolumeMounts:
+        - name: dask
+          mountPath: /etc/dask
+        - name: idds-config
+          mountPath: /opt/lsst/software/jupyterlab/panda
+        - name: tmp
+          mountPath: /tmp
+        - name: butler-secret
+          mountPath: /opt/lsst/software/jupyterlab/butler-secret
+        - name: lab-environment
+          mountPath: /opt/lsst/software/jupyterlab/environment
+        - name: passwd
+          mountPath: /etc/passwd
+          readOnly: true
+          subPath: passwd
+        - name: group
+          mountPath: /etc/group
+          readOnly: true
+          subPath: group
+        - name: shadow
+          mountPath: /etc/shadow
+          readOnly: true
+          subPath: shadow
+        - name: gshadow
+          mountPath: /etc/gshadow
+          readOnly: true
+          subPath: gshadow
+      type: none
+
+  proxy:
+    service:
+      type: ClusterIP
+    chp:
+      networkPolicy:
+        interNamespaceAccessLabels: accept
+      # This currently causes Minikube deployment in GH-actions to fail.
+      # We want it sometime but it's not critical; it will help with
+      # scale-down
+      # pdb:
+      #   enabled: true
+      #   minAvailable: 1
+
+  # Any instantiation of this chart must also set ingress.hosts and add
+  # the nginx.ingress.kubernetes.io/auth-signin annotation pointing to the
+  # appropriate fully-qualified URLs for the Gafaelfawr /login route.
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/auth-method: GET
+      nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        error_page 403 = "/auth/forbidden?scope=exec:notebook";
+    pathSuffix: "*"
+
+  cull:
+    enabled: true
+    timeout: 2592000  # 30 days -- shorten later
+    every: 600  # Check every ten minutes
+    users: true  # log out user when we cull
+    removeNamedServers: true  # Post-stop hook may already do this
+    maxAge: 5184000  # 60 days -- shorten later
+
+  imagePullSecrets:
+    - name: pull-secret
+
+  scheduling:
+    userScheduler:
+      enabled: false
+    userPlaceholder:
+      enabled: false
+
+config:
+  # base_url must be set in each instantiation of this chart to the URL of
+  # the primary ingress.  It's used to construct API requests to the
+  # authentication service (which should go through the ingress).
+  base_url: ""
+  # butler_secret_path must be set here, because it's passed through to
+  # the lab rather than being part of the Hub configuration
+  butler_secret_path: ""
+  # same with pull_secret_path; it specifies resource in the lab namespace
+  pull_secret_path: ""
+  pinned_images: []
+  # One of "available" or "desired"
+  cachemachine_image_policy: "available"
+  sizes:
+    - name: Small
+      cpu: 1
+      ram: 3072M
+    - name: Medium
+      cpu: 2
+      ram: 6144M
+    - name: Large
+      cpu: 4
+      ram: 12288M
+  volumes: []
+  volume_mounts: []
+
+  # -- Environment variables to set in spawned lab containers. Each value will
+  # be expanded using Jinja 2 templating.
+  # @default -- See `values.yaml`
+  lab_environment:
+    EXTERNAL_INSTANCE_URL: "{{ base_url }}"
+    FIREFLY_ROUTE: /portal/app
+    HUB_ROUTE: "{{ nublado_base_url }}"
+    JS9_ROUTE: /js9
+    API_ROUTE: /api
+    TAP_ROUTE: /api/tap
+    SODA_ROUTE: /api/image/soda
+    WORKFLOW_ROUTE: /wf
+    AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
+    NO_SUDO: "TRUE"
+    EXTERNAL_GROUPS: "{{ external_groups }}"
+    EXTERNAL_UID: "{{ uid }}"
+    ACCESS_TOKEN: "{{ token }}"
+    IMAGE_DIGEST: "{{ options.image_info.digest }}"
+    IMAGE_DESCRIPTION: "{{ options.image_info.display_name }}"
+    RESET_USER_ENV: "{{ options.reset_user_env }}"
+    # We need to set CLEAR_DOTLOCAL until all images that didn't know
+    # about RESET_USER_ENV have aged out (late 2022)
+    CLEAR_DOTLOCAL: "{{ options.reset_user_env }}"
+    DEBUG: "{{ options.debug }}"
+
+  # -- Templates for the user resources to create for each lab spawn. This is
+  # a string that can be templated and then loaded as YAML to generate a list
+  # of Kubernetes objects to create.
+  # @default -- See `values.yaml`
+  user_resources_template: |
+    - apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ user_namespace }}"
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: group
+        namespace: "{{ user_namespace }}"
+      data:
+        group: |
+          root:x:0:
+          bin:x:1:
+          daemon:x:2:
+          sys:x:3:
+          adm:x:4:
+          tty:x:5:
+          disk:x:6:
+          lp:x:7:
+          mem:x:8:
+          kmem:x:9:
+          wheel:x:10:
+          cdrom:x:11:
+          mail:x:12:
+          man:x:15:
+          dialout:x:18:
+          floppy:x:19:
+          games:x:20:
+          tape:x:33:
+          video:x:39:
+          ftp:x:50:
+          lock:x:54:
+          audio:x:63:
+          nobody:x:99:
+          users:x:100:
+          utmp:x:22:
+          utempter:x:35:
+          input:x:999:
+          systemd-journal:x:190:
+          systemd-network:x:192:
+          dbus:x:81:
+          ssh_keys:x:998:
+          lsst_lcl:x:1000:{{ user }}
+          tss:x:59:
+          cgred:x:997:
+          screen:x:84:
+          jovyan:x:768:{{ user }}
+          provisionator:x:769:
+          {{user}}:x:{{uid}}:{% for group in groups %}
+          {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: gshadow
+        namespace: "{{ user_namespace }}"
+      data:
+        gshadow: |
+          root:!::
+          bin:!::
+          daemon:!::
+          sys:!::
+          adm:!::
+          tty:!::
+          disk:!::
+          lp:!::
+          mem:!::
+          kmem:!::
+          wheel:!::
+          cdrom:!::
+          mail:!::
+          man:!::
+          dialout:!::
+          floppy:!::
+          games:!::
+          tape:!::
+          video:!::
+          ftp:!::
+          lock:!::
+          audio:!::
+          nobody:!::
+          users:!::
+          utmp:!::
+          utempter:!::
+          input:!::
+          systemd-journal:!::
+          systemd-network:!::
+          dbus:!::
+          ssh_keys:!::
+          lsst_lcl:!::{{ user }}
+          tss:!::
+          cgred:!::
+          screen:!::
+          jovyan:!::{{ user }}
+          provisionator:!::
+          {{ user }}:!::{% for g in groups %}
+          {{ g.name }}:!::{{ user }}{% endfor %}
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: passwd
+        namespace: "{{ user_namespace }}"
+      data:
+        passwd: |
+          root:x:0:0:root:/root:/bin/bash
+          bin:x:1:1:bin:/bin:/sbin/nologin
+          daemon:x:2:2:daemon:/sbin:/sbin/nologin
+          adm:x:3:4:adm:/var/adm:/sbin/nologin
+          lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+          sync:x:5:0:sync:/sbin:/bin/sync
+          shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+          halt:x:7:0:halt:/sbin:/sbin/halt
+          mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+          operator:x:11:0:operator:/root:/sbin/nologin
+          games:x:12:100:games:/usr/games:/sbin/nologin
+          ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+          nobody:x:99:99:Nobody:/:/sbin/nologin
+          systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+          dbus:x:81:81:System message bus:/:/sbin/nologin
+          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
+          tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+          provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: shadow
+        namespace: "{{ user_namespace }}"
+      data:
+        shadow: |
+          root:*:18000:0:99999:7:::
+          bin:*:18000:0:99999:7:::
+          daemon:*:18000:0:99999:7:::
+          adm:*:18000:0:99999:7:::
+          lp:*:18000:0:99999:7:::
+          sync:*:18000:0:99999:7:::
+          shutdown:*:18000:0:99999:7:::
+          halt:*:18000:0:99999:7:::
+          mail:*:18000:0:99999:7:::
+          operator:*:18000:0:99999:7:::
+          games:*:18000:0:99999:7:::
+          ftp:*:18000:0:99999:7:::
+          nobody:*:18000:0:99999:7:::
+          systemd-network:*:18000:0:99999:7:::
+          dbus:*:18000:0:99999:7:::
+          lsst_lcl:*:18000:0:99999:7:::
+          tss:*:18000:0:99999:7:::
+          provisionator:*:18000:0:99999:7:::
+          {{user}}:*:18000:0:99999:7:::
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: dask
+        namespace: "{{ user_namespace }}"
+      data:
+        dask_worker.yml: |
+          {{ dask_yaml | indent(6) }}
+    # When we break out the resources we should make this per-instance
+    #  configurable.
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: idds-config
+        namespace: "{{ user_namespace }}"
+      data:
+        idds_cfg.client.template: |
+          # Licensed under the Apache License, Version 2.0 (the "License");
+          # You may not use this file except in compliance with the License.
+          # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+          #
+          # Authors:
+          # - Wen Guan, <wen.guan@cern.ch>, 2020
+          [common]
+          # if logdir is configured, idds will write to idds.log in this directory.
+          # else idds will go to stdout/stderr.
+          # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
+          # logdir = /var/log/idds
+          loglevel = INFO
+          [rest]
+          host = https://iddsserver.cern.ch:443/idds
+          #url_prefix = /idds
+          #cacher_dir = /tmp
+          cacher_dir = /data/idds
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: "{{ user }}-serviceaccount"
+        namespace: "{{ user_namespace }}"
+      imagePullSecrets:
+      - name: pull-secret
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: "{{ user }}-role"
+        namespace: "{{ user_namespace }}"
+      rules:
+      # cf https://kubernetes.dask.org/en/latest/kubecluster.html
+        - apiGroups: [""]
+          resources: ["pods", "services"]
+          verbs: ["create", "delete", "get", "list", "watch"]
+        - apiGroups: [""]
+          resources: ["pods/log"]
+          verbs: ["get","list"]
+        - apiGroups: ["policy"]
+          resources: ["poddisruptionbudgets"]
+          verbs: ["create", "delete", "get", "list", "watch"]
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: "{{ user }}-rolebinding"
+        namespace: "{{ user_namespace }}"
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Role
+        name: "{{ user }}-role"
+      subjects:
+        - kind: ServiceAccount
+          name: "{{ user }}-serviceaccount"
+          namespace: "{{ user_namespace }}"
+    - apiVersion: ricoberger.de/v1alpha1
+      kind: VaultSecret
+      metadata:
+        name: butler-secret
+        namespace: "{{ user_namespace }}"
+      spec:
+        path: "{{ butler_secret_path }}"
+        type: Opaque
+    - apiVersion: ricoberger.de/v1alpha1
+      kind: VaultSecret
+      metadata:
+        name: pull-secret
+        namespace: "{{ user_namespace }}"
+      spec:
+        path: "{{ pull_secret_path }}"
+        type: kubernetes.io/dockerconfigjson
+
+# Note: See note above about existingSecret.
+vault_secret_path: ""
+
+# Built-in network policy doesn't quite work (Labs can't talk to Hub,
+# even with port 8081 explicitly enabled), so let's use our own for now.
+network_policy:
+  enabled: true

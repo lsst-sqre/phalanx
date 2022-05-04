@@ -3,7 +3,7 @@ name: tap
 version: 1.0.0
 dependencies:
   - name: cadc-tap
-    version: 1.0.5
+    version: 1.0.6
     repository: https://lsst-sqre.github.io/charts/
   - name: pull-secret
     version: 0.1.2

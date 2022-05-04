@@ -1,18 +1,7 @@
-squareone:
-  replicaCount: 3
-  ingress:
-    host: "data.lsst.cloud"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "data.lsst.cloud"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform"
-    semaphoreUrl: "https://data.lsst.cloud/semaphore"
+replicaCount: 3
+config:
+  siteName: "Rubin Science Platform"
+  semaphoreUrl: "https://data.lsst.cloud/semaphore"
 
 pull-secret:
   enabled: true

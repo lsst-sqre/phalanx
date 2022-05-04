@@ -1,0 +1,11 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "times-square.fullname" . }}-gafaelfawr-token
+  labels:
+    {{- include "times-square.labels" . | nindent 4 }}
+spec:
+  service: "times-square"
+  scopes:
+    - "admin:token"
+    - "exec:admin"

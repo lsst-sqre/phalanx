@@ -1,16 +1,5 @@
-squareone:
-  ingress:
-    host: "summit-lsp.lsst.codes"
-    annotations:
-      cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-    tls:
-      - secretName: squareone-tls
-        hosts:
-          - "summit-lsp.lsst.codes"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ Summit"
+config:
+  siteName: "Rubin Science Platform @ Summit"
 
 pull-secret:
   enabled: true
