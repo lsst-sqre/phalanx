@@ -29,7 +29,7 @@ config:
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
     usernameBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
-    username_search_attr: uid
+    usernameSearchAttr: uid
     baseDn: dc=slac,dc=stanford,dc=edu
     uidBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
     uidAttr: uidNumber
