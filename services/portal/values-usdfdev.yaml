@@ -1,38 +1,15 @@
-firefly:
-  pull_secret: 'pull-secret'
-  replicaCount: 2
+ingress:
+  host: "rubin-data-dev.slac.stanford.edu"
+  annotations:
+    nginx.ingress.kubernetes.io/auth-method: GET
+    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
+    nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
+    nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-Original-URI $request_uri;
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-Port 443;
+      proxy_set_header X-Forwarded-Path /portal/app;
 
-  ingress:
-    host: "rubin-data-dev.slac.stanford.edu"
-    annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header X-Original-URI $request_uri;
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-Port 443;
-        proxy_set_header X-Forwarded-Path /portal/app;
-
-  resources:
-    limits:
-      memory: 30Gi
-
-  secrets:
-    enabled: false
-
-  vault_secrets:
-    enabled: true
-    path: secret/rubin/usdf-staffrsp-dev/portal
-
-  redis:
-    resources:
-      limits:
-        memory: 20Mi
-
-pull-secret:
-  enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret

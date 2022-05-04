@@ -1,12 +1,4 @@
-replicaCount: 2
-
-#imagePullSecrets:
-#  - name: "pull-secret"
-#ingress:
-#  host: "rubin-data-dev.slac.stanford.edu"
-
-#global:
-#  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/gafaelfawr"
+replicaCount: 1
 
 config:
 
@@ -15,7 +7,7 @@ config:
     persistence:
       storageClass: "wekafs--sdf-k8s01"
 
-  loglevel: "INFO"
+  loglevel: "DEBUG"
 
   host: "rubin-data-dev.slac.stanford.edu"
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
@@ -37,9 +29,10 @@ config:
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
     baseDn: dc=slac,dc=stanford,dc=edu
-    uidNumberAttr: uidNumber
+    uidBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
+    uidAttr: uidNumber
     groupObjectClass: posixGroup
-    groupMember: memberUid
+    groupMemberAttr: memberUid
 
   # Allow access by GitHub team.
   groupMapping:
