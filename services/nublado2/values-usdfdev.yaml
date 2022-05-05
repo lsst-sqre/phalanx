@@ -94,11 +94,9 @@ config:
           systemd-network:x:192:
           dbus:x:81:
           ssh_keys:x:998:
-          lsst_lcl:x:1000:{{ user }}
           tss:x:59:
           cgred:x:997:
           screen:x:84:
-          jovyan:x:768:{{ user }}
           provisionator:x:769:
           {{user}}:x:{{uid}}:{% for group in groups %}
           {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
