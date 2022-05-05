@@ -170,7 +170,7 @@ config:
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user[0] }}/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
