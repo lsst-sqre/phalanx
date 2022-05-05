@@ -300,6 +300,8 @@ config:
       kind: PersistentVolumeClaim
       metadata:
         name: sdf-group-rubin-scratch
+      spec:
+        storageClassName: sdf-group-rubin-scratch
         accessModes:
           - ReadWriteMany
         resources:
@@ -309,6 +311,8 @@ config:
       kind: PersistentVolumeClaim
       metadata:
         name: sdf-group-rubin-datasets
+      spec:
+        storageClassName: sdf-group-rubin-datasets
         accessModes:
           - ReadWriteMany
         resources:
