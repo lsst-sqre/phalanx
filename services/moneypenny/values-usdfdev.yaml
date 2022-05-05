@@ -9,8 +9,9 @@ moneypenny:
     annotations:
       nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
 
-#  orders: 
-#    commission:
+  orders: 
+    commission: []
+    retire: []
 #      - name: initcommission
 #        image: lsstsqre/inituserhome
 #        securityContext:
