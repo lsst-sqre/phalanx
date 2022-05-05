@@ -138,11 +138,9 @@ config:
           systemd-network:!::
           dbus:!::
           ssh_keys:!::
-          lsst_lcl:!::{{ user }}
           tss:!::
           cgred:!::
           screen:!::
-          jovyan:!::{{ user }}
           provisionator:!::
           {{ user }}:!::{% for g in groups %}
           {{ g.name }}:!::{{ user }}{% endfor %}
