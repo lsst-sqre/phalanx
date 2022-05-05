@@ -1,5 +1,3 @@
-
-
 # cert-manager
 
 Let's Encrypt certificate management

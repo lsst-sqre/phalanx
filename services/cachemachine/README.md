@@ -1,5 +1,3 @@
-![AppVersion: 1.2.0](https://img.shields.io/badge/AppVersion-1.2.0-informational?style=flat-square)
-
 # cachemachine
 
 Service to prepull Docker images for the Science Platform

@@ -1,5 +1,3 @@
-
-
 # alert-stream-broker
 
 ## Requirements

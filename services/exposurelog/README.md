@@ -1,5 +1,3 @@
-![AppVersion: 0.9.2](https://img.shields.io/badge/AppVersion-0.9.2-informational?style=flat-square)
-
 # exposurelog
 
 Exposure log service

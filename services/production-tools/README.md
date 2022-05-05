@@ -1,5 +1,3 @@
-![AppVersion: 0.0.9](https://img.shields.io/badge/AppVersion-0.0.9-informational?style=flat-square)
-
 # production-tools
 
 A collection of utility pages for monitoring data processing.

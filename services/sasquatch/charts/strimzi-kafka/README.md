@@ -1,5 +1,3 @@
-![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square)
-
 # strimzi-kafka
 
 A subchart to deploy Strimzi Kafka components for Sasquatch.

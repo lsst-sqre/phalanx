@@ -1,5 +1,3 @@
-![AppVersion: 1.0.0](https://img.shields.io/badge/AppVersion-1.0.0-informational?style=flat-square)
-
 # times-square-ui
 
 The front-end for Times Square, a parameterized notebook web viewer for the Rubin Science Platform

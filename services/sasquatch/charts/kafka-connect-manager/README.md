@@ -1,5 +1,3 @@
-![AppVersion: 0.9.3](https://img.shields.io/badge/AppVersion-0.9.3-informational?style=flat-square)
-
 # kafka-connect-manager
 
 A subchart to deploy the Kafka connectors used by Sasquatch.

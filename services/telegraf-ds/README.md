@@ -1,5 +1,3 @@
-
-
 # telegraf-ds
 
 SQuaRE DaemonSet (K8s) telemetry collection service
