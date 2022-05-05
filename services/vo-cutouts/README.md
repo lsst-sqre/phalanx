@@ -1,5 +1,3 @@
-![AppVersion: 0.3.0](https://img.shields.io/badge/AppVersion-0.3.0-informational?style=flat-square)
-
 # vo-cutouts
 
 Image cutout service complying with IVOA SODA

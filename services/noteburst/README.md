@@ -1,5 +1,3 @@
-![AppVersion: 0.2.0](https://img.shields.io/badge/AppVersion-0.2.0-informational?style=flat-square)
-
 # noteburst
 
 Noteburst is a notebook execution service for the Rubin Science Platform.

@@ -1,5 +1,3 @@
-![AppVersion: 4.1.0](https://img.shields.io/badge/AppVersion-4.1.0-informational?style=flat-square)
-
 # gafaelfawr
 
 Science Platform authentication and authorization system

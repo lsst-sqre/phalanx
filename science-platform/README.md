@@ -1,5 +1,3 @@
-
-
 # science-platform
 
 ## Values

@@ -1,5 +1,3 @@
-
-
 # telegraf
 
 SQuaRE telemetry collection service

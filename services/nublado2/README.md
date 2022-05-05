@@ -1,5 +1,3 @@
-![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
-
 # nublado2
 
 Nublado2 JupyterHub installation

@@ -1,5 +1,3 @@
-
-
 # times-square
 
 A parameterized notebook web viewer for the Rubin Science Platform.

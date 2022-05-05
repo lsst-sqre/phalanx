@@ -1,5 +1,3 @@
-![AppVersion: suit-2022.1](https://img.shields.io/badge/AppVersion-suit--2022.1-informational?style=flat-square)
-
 # portal
 
 Rubin Science Platform portal aspect

@@ -1,5 +1,3 @@
-![AppVersion: 4.2.0](https://img.shields.io/badge/AppVersion-4.2.0-informational?style=flat-square)
-
 # mobu
 
 Generate system load by pretending to be a random scientist

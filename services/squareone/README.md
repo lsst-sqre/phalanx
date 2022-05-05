@@ -1,5 +1,3 @@
-![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
-
 # squareone
 
 Squareone is the homepage UI for the Rubin Science Platform.
