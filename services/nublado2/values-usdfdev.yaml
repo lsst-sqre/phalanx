@@ -29,8 +29,8 @@ config:
     no_proxy: hub.nublado2,.slac.stanford.edu
   volumes:
     - name: datasets
-      hostPath:
-        path: /data
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin-datasets
     - name: home
       hostPath:
         path: /tmp
@@ -38,8 +38,8 @@ config:
       hostPath:
         path: /tmp 
     - name: scratch
-      hostPath:
-        path: /tmp
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin-scratch
   volume_mounts:
     - name: datasets
       mountPath: /datasets
@@ -296,9 +296,26 @@ config:
         hard:
           limits.cpu: 9
           limits.memory: 27Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-group-rubin-scratch
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-group-rubin-datasets
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
 
 vault_secret_path: "secret/rubin/usdf-staffrsp-dev/nublado2"
-# gafaelfawr_secret_path: "secret/rubin/usdf-staffrsp-dev/gafaelfawr"
 
 pull-secret:
   enabled: true
