@@ -8,6 +8,10 @@ data:
         cluster = {{- .Values.global.host | quote }}
       [agent]
         hostname = "telegraf-$HOSTIP"
+        interval = "60s"
+        flush_interval = "60s"
+        metric_batch_size = 10000
+        metric_buffer_limit = 100000
 
       [[inputs.kubernetes]]
         url = "https://$HOSTIP:10250"
