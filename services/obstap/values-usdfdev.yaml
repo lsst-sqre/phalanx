@@ -1,17 +1,15 @@
 cadc-tap-postgres:
-  pull_secret: 'pull-secret'
-  tag: "1.0"
-  host: "rubin-data-dev.slac.stanford.edu"
+  fullnameOverride: "obstap"
 
-  secrets:
-    enabled: false
+  imagePullSecrets:
+    - name: "pull-secret"
+  ingress:
+    host: "rubin-data-dev.slac.stanford.edu"
+  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/tap"
 
-  vault_secrets:
-    enabled: true
-    path: 'secret/rubin/usdf-staffrsp-dev/tap'
-
-  gcs_bucket: 'async-results.lsst.codes'
-  gcs_bucket_url: 'http://async-results.lsst.codes'
+  config:
+    gcsBucket: "async-results.lsst.codes"
+    gcsBucketUrl: "http://async-results.lsst.codes"
 
 pull-secret:
   enabled: true

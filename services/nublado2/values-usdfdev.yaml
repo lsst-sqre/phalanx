@@ -64,11 +64,11 @@ config:
       persistentVolumeClaim:
         claimName: sdf-group-rubin-datasets
     - name: home
-      hostPath:
-        path: /tmp
+      persistentVolumeClaim:
+        claimName: sdf-home
     - name: project
-      hostPath:
-        path: /tmp 
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
     - name: scratch
       persistentVolumeClaim:
         claimName: sdf-group-rubin-scratch
@@ -76,7 +76,9 @@ config:
     - name: datasets
       mountPath: /datasets
     - name: home
-      mountPath: /home
+      #mountPath: "/home/{{user}}"
+      mountPath: /home/
+      #subPath: "{{user[0]}}/{{user}}"
     - name: project
       mountPath: /project
     - name: scratch
@@ -199,10 +201,9 @@ config:
           nobody:x:99:99:Nobody:/:/sbin/nologin
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
-          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user[0] }}/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -344,6 +345,30 @@ config:
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-group-rubin-datasets
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-group-rubin
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: sdf-group-rubin
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-home
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: sdf-home
         accessModes:
           - ReadWriteMany
         resources:
