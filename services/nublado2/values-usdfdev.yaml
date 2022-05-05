@@ -44,7 +44,7 @@ config:
     - name: datasets
       mountPath: /datasets
     - name: home
-      mountPath: /home/{{user}}
+      mountPath: "/home/{{user}}"
       subPath: "{{user[0]}}/{{user}}"
     - name: project
       mountPath: /project
