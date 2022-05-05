@@ -1,4 +1,4 @@
-replicaCount: 1
+replicaCount: 2
 
 config:
 
@@ -42,6 +42,7 @@ config:
       - "unix-admin"
     "exec:notebook":
       - "lsst"
+      - lsst-ccs
       - "sf"
       - rubin_users
       - rubin_users-a
@@ -75,6 +76,7 @@ config:
       - "unix-admin"
     "exec:portal":
       - "lsst"
+      - lsst-ccs
       - "sf"
       - rubin_users
       - rubin_users-a
@@ -108,6 +110,7 @@ config:
       - "unix-admin"
     "exec:user":
       - "lsst"
+      - lsst-ccs
       - "sf"
       - rubin_users
       - rubin_users-a
@@ -141,6 +144,7 @@ config:
       - "unix-admin"
     "read:tap":
       - "lsst"
+      - lsst-ccs
       - "sf"
       - rubin_users
       - rubin_users-a
