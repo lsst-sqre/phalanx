@@ -300,6 +300,7 @@ config:
       kind: PersistentVolumeClaim
       metadata:
         name: sdf-group-rubin-scratch
+        namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-group-rubin-scratch
         accessModes:
@@ -311,6 +312,7 @@ config:
       kind: PersistentVolumeClaim
       metadata:
         name: sdf-group-rubin-datasets
+        namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-group-rubin-datasets
         accessModes:
