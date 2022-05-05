@@ -6,8 +6,8 @@ moneypenny:
   ingress:
     enabled: true
     host: "rubin-data-dev.slac.stanford.edu"
-    #annotations:
-    #  nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
 
 #  orders: 
 #    commission:
