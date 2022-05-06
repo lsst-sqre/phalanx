@@ -40,6 +40,9 @@ config:
     - name: scratch
       persistentVolumeClaim:
         claimName: sdf-group-rubin-scratch
+    - name: sdf-group-lsst
+      persistentVolumeClaim:
+        claimName: sdf-group-lsst
   volume_mounts:
     - name: datasets
       mountPath: /datasets
@@ -51,6 +54,8 @@ config:
       mountPath: /project
     - name: scratch
       mountPath: /scratch
+    - name: sdf-group-lsst
+      mountPath: /sdf/group/lsst
 
   # Workaround to impose resource quotas at IDF
   user_resources_template: |
@@ -336,6 +341,18 @@ config:
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-home
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-group-lsst
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: sdf-group-lsst
         accessModes:
           - ReadWriteMany
         resources:
