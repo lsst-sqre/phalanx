@@ -19,7 +19,7 @@ times-square:
   fullnameOverride: times-square
 
   image:
-    tag: "tickets-DM-34458"
+    tag: "0.4.0b1"
 
     pullPolicy: "IfNotPresent"
 

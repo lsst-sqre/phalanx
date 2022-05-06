@@ -31,4 +31,4 @@ See the embedded Helm sub-charts for additional configuration docs:
 | times-square.config.redisUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | times-square.fullnameOverride | string | `"times-square"` |  |
 | times-square.image.pullPolicy | string | `"IfNotPresent"` |  |
-| times-square.image.tag | string | `"tickets-DM-34458"` |  |
+| times-square.image.tag | string | `"0.4.0b1"` |  |

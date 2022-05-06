@@ -1,7 +1,7 @@
 times-square:
-  image:
-    tag: "tickets-DM-34458"
-    pullPolicy: Always
+  # image:
+  #   tag: "tickets-DM-34458"
+  #   pullPolicy: Always
   config:
     logLevel: "DEBUG"
     databaseUrl: "postgresql://times-square@localhost/times-square"
