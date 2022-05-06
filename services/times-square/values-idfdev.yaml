@@ -1,11 +1,14 @@
 times-square:
-  image:
-    tag: "tickets-DM-34458"
-    pullPolicy: Always
+  # image:
+  #   tag: "tickets-DM-34458"
+  #   pullPolicy: Always
   config:
+    logLevel: "DEBUG"
     databaseUrl: "postgresql://times-square@localhost/times-square"
-    github_app_id: "196798"
-    enable_github_app: "True"
+    githubAppId: "196798"
+    enableGitHubApp: "True"
+    redisCacheUrl: "redis://times-square-redis-master:6379/0"
+    redisQueueUrl: "redis://times-square-redis-master:6379/1"
   cloudsql:
     enabled: true
     instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"

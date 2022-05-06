@@ -27,8 +27,8 @@ A parameterized notebook web viewer for the Rubin Science Platform.
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
-| config.queueRedisUrl | string | None, must be set | URL for Redis arq queue database |
 | config.redisCacheUrl | string | None, must be set | URL for Redis html / noteburst job cache database |
+| config.redisQueueUrl | string | None, must be set | URL for Redis arq queue database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the times-square image |
 | image.repository | string | `"ghcr.io/lsst-sqre/times-square"` | Image to use in the times-square deployment |
