@@ -13,7 +13,7 @@ See the embedded Helm sub-charts for additional configuration docs:
 |------------|------|---------|
 |  | times-square | 1.0.0 |
 |  | times-square-ui | 1.0.0 |
-| https://charts.bitnami.com/bitnami | redis | 16.8.9 |
+| https://charts.bitnami.com/bitnami | redis | 16.9.1 |
 
 ## Values
 
