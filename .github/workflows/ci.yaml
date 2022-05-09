@@ -80,7 +80,7 @@ jobs:
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: manusa/actions-setup-minikube@v2.4.3
+        uses: manusa/actions-setup-minikube@v2.5.0
         with:
           minikube version: 'v1.25.2'
           kubernetes version: 'v1.22.8'
