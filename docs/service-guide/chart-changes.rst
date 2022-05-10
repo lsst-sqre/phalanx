@@ -11,7 +11,7 @@ If the charts changes are low-risk--perhaps they just add new objects or setting
 
 This section, however, is about the times when it's risky to do that.
 
-The bad news is, you can't do this via ArgoCD.  The good news is, it's pretty easy to do anyway, but you do need ``kubectl`` access to whatever cluster you're working on.  Ideally this is a local ``minikube`` cluster, but if you're, say, using an Apple Silicon Mac, or you need access to real data, maybe you're doing it in ``data-dev`` or ``data-int``.  
+The bad news is, you can't do this via ArgoCD.  The good news is, it's pretty easy to do anyway, but you do need ``kubectl`` access to whatever cluster you're working on.  Ideally this is a local ``minikube`` cluster, but if you're, say, using an Apple Silicon Mac, or you need access to real data, maybe you're doing it in ``data-dev`` or ``data-int``.
 
 #. Make your changes to both charts and phalanx.
 

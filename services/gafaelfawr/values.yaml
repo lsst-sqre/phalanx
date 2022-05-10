@@ -11,7 +11,7 @@ replicaCount: 1
 
 image:
   # -- Gafaelfawr image to use
-  repository: "lsstsqre/gafaelfawr"
+  repository: "ghcr.io/lsst-sqre/gafaelfawr"
 
   # -- Pull policy for the Gafaelfawr image
   pullPolicy: "IfNotPresent"
@@ -64,12 +64,23 @@ config:
     # @default -- `/login` at the value of config.host
     redirectUrl: ""
 
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
+
     # -- Whether to use the test instance of CILogon
     test: false
 
     # -- Additional parameters to add
     loginParams:
       skin: "LSST"
+
+  firestore:
+    # -- If set, assign UIDs and GIDs using Google Firestore in the given
+    # project.  Cloud SQL must be enabled and the Cloud SQL service account
+    # must have read/write access to that Firestore instance.
+    # @default -- Firestore support is disabled
+    project: ""
 
   github:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
@@ -96,6 +107,10 @@ config:
     # @default -- None, must be set
     tokenUrl: ""
 
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
+
     # -- Issuer for the JWT token
     # @default -- None, must be set
     issuer: ""
@@ -103,6 +118,16 @@ config:
     # -- Scopes to request from the OpenID Connect provider
     scopes:
       - "openid"
+
+    # -- Claim from which to get the username (only used if not retrieved from
+    # LDAP)
+    # @default -- `"sub"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
@@ -113,12 +138,25 @@ config:
     # @default -- None, must be set
     baseDn: ""
 
+    # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
+    # set in the Gafaelfawr secret
+    # @default -- Use anonymous binds
+    userDn: ""
+
     # -- Object class containing group information
     groupObjectClass: "posixGroup"
 
     # -- Member attribute of the object class. Values must match the username
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
+
+    # -- Base DN for the LDAP search to find a user's username
+    # @default -- Get the username from the upstream authentication provider
+    usernameBaseDn: ""
+
+    # -- Attribute matching the `sub` claim of a token to find the record
+    # containing the username
+    usernameSearchAttr: "voPersonSoRID"
 
     # -- Base DN for the LDAP search to find a user's UID number
     # @default -- Get the UID number from the upstream authentication provider
@@ -188,7 +226,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.29.0"
+    tag: "1.30.1"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -223,7 +261,7 @@ redis:
     repository: "redis"
 
     # -- Redis image tag to use
-    tag: "6.2.6"
+    tag: "6.2.7"
 
     # -- Pull policy for the Redis image
     pullPolicy: "IfNotPresent"

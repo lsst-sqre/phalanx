@@ -2,15 +2,19 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Number of web deployment pods to start
-replicaCount: 1
+replicaCount:
+  # -- Number of API deployment pods to start
+  api: 1
+
+  # -- Number of worker deployment pods to start
+  worker: 1
 
 image:
   # -- Image to use in the times-square deployment
   repository: ghcr.io/lsst-sqre/times-square
 
   # -- Pull policy for the times-square image
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
 
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
@@ -110,9 +114,19 @@ config:
   # @default -- None, must be set
   databaseUrl: ""
 
-  # -- URL for the Redis cache
+  # -- URL for Redis html / noteburst job cache database
   # @default -- None, must be set
-  redisUrl: ""
+  redisCacheUrl: ""
+
+  # -- URL for Redis arq queue database
+  # @default -- None, must be set
+  redisQueueUrl: ""
+
+  # -- GitHub application ID
+  githubAppId: ""
+
+  # -- Toggle to enable the GitHub App functionality
+  enableGitHubApp: "False"
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
@@ -124,7 +138,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.29.0"
+    tag: "1.30.1"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

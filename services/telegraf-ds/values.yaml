@@ -1,24 +1,44 @@
-# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/telegraf`)
-# shared with telegraf (non-DaemonSet)
-# @default -- None, must be set
-vaultSecretsPath: ""
 telegraf-ds:
+  args:
+  - "--config"
+  - "/etc/telegraf-generated/telegraf-generated.conf"
   env:
     # -- Token to communicate with Influx
-    - name: INFLUX_TOKEN
-      valueFrom:
-        secretKeyRef:
-          name: telegraf
-          key: influx-token
+  - name: INFLUX_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: telegraf
+        key: influx-token
+  rbac:
+    create: true
+
+  serviceAccount:
+    name: telegraf-ds
+
+  # Set to effectively empty and just use generated config instead.
   override_config:
     toml: |+
-      [global_tags]
-        cluster = "no_endpoint"
       [agent]
-        hostname = "telegraf-$HOSTIP"
-      [[inputs.kubernetes]]
-        url = "https://$HOSTIP:10250"
-        bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
-        insecure_skip_verify = true
-        namepass = ["kubernetes_pod_container"]
-        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+        logfile=""
+  volumes:
+  - name: telegraf-generated-config
+    configMap:
+      name: "telegraf-generated-config"
+  mountPoints:
+  - name: telegraf-generated-config
+    mountPath: /etc/telegraf-generated
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- services enabled in this RSP instance
+  # @default -- Set by Argo CD
+  enabled_services: ""
+
+  # -- Host name for instance identification
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

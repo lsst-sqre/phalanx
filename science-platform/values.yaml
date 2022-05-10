@@ -32,6 +32,8 @@ postgres:
   enabled: false
 sasquatch:
   enabled: false
+production_tools:
+  enabled: false
 semaphore:
   enabled: false
 sherlock:

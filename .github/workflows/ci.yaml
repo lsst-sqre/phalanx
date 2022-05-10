@@ -6,17 +6,22 @@ name: CI
       - "master"
 
 jobs:
-  yamllint:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: yaml-lint
-        uses: ibiqlik/action-yamllint@master
+      - name: Install helm-docs
+        run: brew install norwoodj/tap/helm-docs
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
         with:
-          config_file: ".yamllint.yml"
+          python-version: "3.10"
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v2.0.3
 
   helm:
     runs-on: ubuntu-latest
@@ -52,6 +57,7 @@ jobs:
   minikube:
     name: Test deploy
     runs-on: ubuntu-latest
+    needs: [helm]
 
     steps:
       - name: Checkout
@@ -74,10 +80,10 @@ jobs:
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: manusa/actions-setup-minikube@v2.4.3
+        uses: manusa/actions-setup-minikube@v2.6.0
         with:
-          minikube version: 'v1.24.0'
-          kubernetes version: 'v1.22.5'
+          minikube version: 'v1.25.2'
+          kubernetes version: 'v1.22.8'
 
       - name: Test interaction with the cluster
         if: steps.filter.outputs.minikube == 'true'
@@ -86,11 +92,11 @@ jobs:
       - name: Download installer dependencies
         if: steps.filter.outputs.minikube == 'true'
         run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.9.1/vault_1.9.1_linux_amd64.zip
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.9.4/vault_1.9.4_linux_amd64.zip
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.1.7/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.3.3/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
           sudo pip install -r installer/requirements.txt

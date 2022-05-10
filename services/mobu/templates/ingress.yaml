@@ -26,4 +26,4 @@ spec:
               service:
                 name: {{ template "mobu.fullname" . }}
                 port:
-                  number: {{ .Values.service.port }}
+                  number: 8080

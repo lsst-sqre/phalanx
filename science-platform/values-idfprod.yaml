@@ -36,6 +36,8 @@ postgres:
   enabled: true
 sasquatch:
   enabled: false
+production_tools:
+  enabled: false
 semaphore:
   enabled: true
 sherlock:
@@ -53,9 +55,9 @@ tap:
 tap_schema:
   enabled: true
 telegraf:
-  enabled: false
+  enabled: true
 telegraf-ds:
-  enabled: false
+  enabled: true
 times_square:
   enabled: false
 vault_secrets_operator:

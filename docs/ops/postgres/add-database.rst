@@ -67,7 +67,7 @@ Postgres users already look like that, so copying an existing line
 and changing the name to reflect your service is usually correct:
 
    .. code-block:: python
-    
+
       self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
 
 Make the Phalanx ``services/postgres/Chart.yaml`` entry depend on the

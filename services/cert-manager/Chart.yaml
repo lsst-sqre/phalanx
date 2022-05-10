@@ -4,5 +4,5 @@ version: 1.0.0
 description: "Let's Encrypt certificate management"
 dependencies:
   - name: cert-manager
-    version: v1.7.2
+    version: v1.8.0
     repository: https://charts.jetstack.io

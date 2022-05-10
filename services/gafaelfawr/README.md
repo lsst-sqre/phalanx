@@ -2,6 +2,12 @@
 
 Science Platform authentication and authorization system
 
+**Homepage:** <https://gafaelfawr.lsst.io/>
+
+## Source Code
+
+* <https://github.com/lsst-sqre/gafaelfawr>
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -10,15 +16,17 @@ Science Platform authentication and authorization system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.29.0"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.30.1"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `gafaelfawr` and `gafaelfawr-tokens` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
+| config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
 | config.cilogon.redirectUrl | string | `/login` at the value of config.host | Return URL given to CILogon (must match the CILogon configuration) |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (inside a <p> tag). |
+| config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project.  Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. Tokens from an OpenID Connect provider such as CILogon that include groups in an `isMemberOf` claim will be granted scopes based on this mapping. |
 | config.influxdb.enabled | bool | `false` | Whether to issue tokens for InfluxDB. If set to true, `influxdb-secret` must be set in the Gafaelfawr secret. |
@@ -31,14 +39,20 @@ Science Platform authentication and authorization system
 | config.ldap.uidAttr | string | `"uidNumber"` | Attribute containing the user's UID number (only used if uidBaseDn is set) |
 | config.ldap.uidBaseDn | string | Get the UID number from the upstream authentication provider | Base DN for the LDAP search to find a user's UID number |
 | config.ldap.url | string | Do not use LDAP | LDAP server URL from which to retrieve user group information |
+| config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr secret |
+| config.ldap.usernameBaseDn | string | Get the username from the upstream authentication provider | Base DN for the LDAP search to find a user's username |
+| config.ldap.usernameSearchAttr | string | `"voPersonSoRID"` | Attribute matching the `sub` claim of a token to find the record containing the username |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
+| config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.oidc.issuer | string | None, must be set | Issuer for the JWT token |
 | config.oidc.loginParams | object | `{}` | Additional parameters to add to the login request |
 | config.oidc.loginUrl | string | None, must be set | URL to which to redirect the user for authorization |
 | config.oidc.scopes | list | `["openid"]` | Scopes to request from the OpenID Connect provider |
 | config.oidc.tokenUrl | string | None, must be set | URL from which to retrieve the token for the user |
+| config.oidc.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP) |
+| config.oidc.usernameClaim | string | `"sub"` | Claim from which to get the username (only used if not retrieved from LDAP) |
 | config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients. If set to true, `oidc-server-secrets` must be set in the Gafaelfawr secret. |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.tokenLifetimeMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
@@ -47,7 +61,7 @@ Science Platform authentication and authorization system
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
-| image.repository | string | `"lsstsqre/gafaelfawr"` | Gafaelfawr image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
@@ -55,7 +69,7 @@ Science Platform authentication and authorization system
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
 | redis.image.repository | string | `"redis"` | Redis image to use |
-| redis.image.tag | string | `"6.2.6"` | Redis image tag to use |
+| redis.image.tag | string | `"6.2.7"` | Redis image tag to use |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
@@ -72,6 +86,3 @@ Science Platform authentication and authorization system
 | tokens.resources | object | `{}` | Resource limits and requests for the Gafaelfawr token management pod |
 | tokens.tolerations | list | `[]` | Tolerations for the token management pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
-
-----------------------------------------------
-Autogenerated from chart metadata using [helm-docs v1.5.0](https://github.com/norwoodj/helm-docs/releases/v1.5.0)

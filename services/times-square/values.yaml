@@ -19,21 +19,25 @@ times-square:
   fullnameOverride: times-square
 
   image:
-    tag: "tickets-DM-34030"
+    tag: "0.4.0b1"
 
     pullPolicy: "IfNotPresent"
 
   config:
-    # -- Redis URL
+    # -- URL for Redis html / noteburst job cache database
     # @default -- Points to embedded Redis
     redisUrl: "redis://times-square-redis-master:6379/0"
+
+    # -- URL for Redis arq queue database
+    # @default -- Points to embedded Redis
+    queueRedisUrl: "redis://times-square-redis-master:6379/1"
 
 times-square-ui:
 
   fullnameOverride: times-square-ui
 
   image:
-    tag: "tickets-DM-34030"
+    tag: "0.2.0"
 
     pullPolicy: "IfNotPresent"
 

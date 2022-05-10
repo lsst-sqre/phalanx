@@ -11,4 +11,7 @@ data:
   TS_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
   TS_PATH_PREFIX: {{ .Values.ingress.path }}
   TS_DATABASE_URL: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
-  TS_REDIS_URL: {{ required "config.redisUrl must be set" .Values.config.redisUrl | quote }}
+  TS_REDIS_URL: {{ required "config.redisCacheUrl must be set" .Values.config.redisCacheUrl | quote }}
+  TS_REDIS_QUEUE_URL: {{ required "config.redisQueueUrl must be set" .Values.config.redisQueueUrl | quote }}
+  TS_ENABLE_GITHUB_APP: {{ .Values.config.enableGitHubApp | quote }}
+  TS_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}

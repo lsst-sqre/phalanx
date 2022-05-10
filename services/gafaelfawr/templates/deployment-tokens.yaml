@@ -44,12 +44,6 @@ spec:
           command:
             - "gafaelfawr"
             - "kubernetes-controller"
-          env:
-            - name: "GAFAELFAWR_DATABASE_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "gafaelfawr.fullname" . }}-secret
-                  key: "database-password"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
@@ -69,8 +63,6 @@ spec:
             - name: "secret"
               mountPath: "/etc/gafaelfawr/secrets"
               readOnly: true
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

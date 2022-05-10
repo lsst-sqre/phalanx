@@ -1,0 +1,123 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "vo-cutouts.fullname" . }}-worker
+  labels:
+    {{- include "vo-cutouts.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.databaseWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "vo-cutouts.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.databaseWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "vo-cutouts.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "worker"
+    spec:
+      automountServiceAccountToken: false
+
+      # Butler uses a pgpass file to authenticate to its database, and
+      # PostgreSQL unfortunately requires its pgpass file be owned by the
+      # current user and mode 0600, but Kubernetes has no way of controlling
+      # the ownership of a mounted secret.  We therefore use a privileged init
+      # container to copy the secrets into a shared emptyDir and change their
+      # ownership and permissions.
+      initContainers:
+        - name: "fix-secret-permissions"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              cp -RL /etc/vo-cutouts/secrets-raw/* /etc/vo-cutouts/secrets
+              chmod 0400 /etc/vo-cutouts/secrets/*
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/etc/vo-cutouts/secrets"
+            - name: "secrets-raw"
+              mountPath: "/etc/vo-cutouts/secrets-raw"
+              readOnly: true
+      containers:
+        - name: "worker"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          image: "{{ .Values.cutoutWorker.image.repository }}:{{ .Values.cutoutWorker.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.cutoutWorker.image.pullPolicy | quote }}
+          env:
+            # The following are used by Butler to retrieve its configuration
+            # and authenticate to its database.
+            - name: "AWS_SHARED_CREDENTIALS_FILE"
+              value: "/etc/vo-cutouts/secrets/aws-credentials"
+            - name: "PGPASSFILE"
+              value: "/etc/vo-cutouts/secrets/postgres-credentials"
+            - name: "S3_ENDPOINT_URL"
+              value: "https://storage.googleapis.com"
+
+            # Authentication to the Redis queue for Dramatiq.
+            - name: "CUTOUT_REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  key: "redis-password"
+
+            # URL of the bucket into which to store the cutouts.
+            - name: "CUTOUT_STORAGE_URL"
+              value: {{ required "config.gcsBucketUrl must be set" .Values.config.gcsBucketUrl | quote }}
+
+            # Temporary directory into which to stage cutouts before uploading.
+            - name: "CUTOUT_TMPDIR"
+              value: "/tmp/cutouts"
+          envFrom:
+            - configMapRef:
+                name: {{ template "vo-cutouts.fullname" . }}-config
+          {{- with .Values.cutoutWorker.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/etc/vo-cutouts/secrets"
+            - name: "tmp"
+              mountPath: "/tmp"
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "secrets"
+          emptyDir: {}
+        - name: "secrets-raw"
+          secret:
+            secretName: {{ template "vo-cutouts.fullname" . }}-secret
+        - name: "tmp"
+          emptyDir: {}
+      {{- with .Values.cutoutWorker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cutoutWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cutoutWorker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

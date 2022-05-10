@@ -1,0 +1,105 @@
+# Default values for semaphore.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of Semaphore pods to run
+replicaCount: 1
+
+image:
+  # -- Semaphore image repository
+  repository: ghcr.io/lsst-sqre/semaphore
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Tag of the image
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created.
+  create: false
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+  # The name of the service account to use.
+  # @default -- Generated using the fullname template
+  name: ""
+
+# -- Annotations for pods
+podAnnotations: {}
+
+ingress:
+  # -- Enable ingress
+  enabled: true
+
+  # -- URL path prefix where the Semaphore API is hosted
+  path: "/semaphore"
+
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Semaphore app configurations.
+config:
+  # -- Name of the service, and path where the external API is hosted.
+  name: "semaphore"
+  # -- Name of the Phalanx environment where the application is installed
+  # TODO can this be set by a global?
+  phalanx_env: ""
+  # Run profile: "production" or "development"
+  profile: "production"
+  # Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  log_level: "INFO"
+  # -- Logger name
+  logger_name: "semaphore"
+  # -- GitHub application ID
+  github_app_id: ""
+  # -- Toggle to enable the GitHub App functionality
+  enable_github_app: "False"
+
+# Global parameters will be set by parameters injected by Argo CD and should
+# not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD Application
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD Application
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD Application
+  vaultSecretsPathPrefix: ""
