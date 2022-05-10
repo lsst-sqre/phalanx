@@ -11,6 +11,7 @@ gafaelfawr:
 
   config:
     host: data-dev.lsst.eu
+    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
 
   # Do not specify ingress.host because we're using the wildcard virtual host.
 
