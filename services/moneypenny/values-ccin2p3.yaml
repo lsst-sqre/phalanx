@@ -3,11 +3,11 @@ moneypenny:
 
   ingress:
     enabled: true
-    hosts:
-      - host: data-dev.lsst.eu
-        paths: ["/moneypenny"]
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:admin"
+    host: "data-dev.lsst.eu"
+     # - host: data-dev.lsst.eu
+     #   paths: ["/moneypenny"]
+    #annotations:
+    #  nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:admin"
 
   vault_secrets:
     enabled: true
