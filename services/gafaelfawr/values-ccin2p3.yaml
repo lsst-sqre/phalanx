@@ -50,6 +50,8 @@ config:
     "read:image":
       - "rubin-lsst-admin"
       - "rubin-lsst-user"
+  initialAdmins:
+    - "gabrimaine"
 
 pull-secret:
   enabled: true
