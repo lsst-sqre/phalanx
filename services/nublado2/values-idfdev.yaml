@@ -4,10 +4,24 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
+    ServerApp:
+      shutdown_no_activity_timeout: 60
+
   ingress:
     hosts: ["data-dev.lsst.cloud"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.cloud/login"
+
+cull:
+  enabled: true
+  users: false # was set to true
+  removeNamedServers: true
+  timeout: 300
+  every: 60
+  maxAge: 3600
+
+debug:
+  enabled: true
 
 config:
   base_url: "https://data-dev.lsst.cloud"
