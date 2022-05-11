@@ -22,21 +22,7 @@ spec:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: "/api/obstap/(availability)"
-            pathType: "ImplementationSpecific"
-            backend:
-              service:
-                name: {{ template "cadc-tap-postgres.fullname" . }}
-                port:
-                  number: 80
-          - path: "/api/obstap/(capabilities)"
-            pathType: "ImplementationSpecific"
-            backend:
-              service:
-                name: {{ template "cadc-tap-postgres.fullname" . }}
-                port:
-                  number: 80
-          - path: "/api/obstap/(swagger-ui.*)"
+          - path: "/api/obstap/(availability|capabilities|swagger-ui.*)"
             pathType: "ImplementationSpecific"
             backend:
               service:

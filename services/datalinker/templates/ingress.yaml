@@ -22,7 +22,7 @@ spec:
       http:
         paths:
           - path: "/api/datalink"
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: {{ $fullName }}

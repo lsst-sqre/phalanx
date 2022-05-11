@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 appVersion: "1.1"
 description: CADC TAP PostgresSQL service, used for ObsTAP
 home: https://github.com/lsst-sqre/tap-postgres

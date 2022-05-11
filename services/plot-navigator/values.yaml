@@ -1,13 +1,15 @@
 image:
+  # -- plot-navigator image to use
   repository: lsstdm/pipetask-plot-navigator
   tag: ""
 
-# Environment variables to be passed to panel.
-# e.g. butler configuration and auth params.
+# -- Environment variables (e.g. butler configuration/auth parms) for panel
 environment: {}
 
 ingress:
+  # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=plotnavigator"
+  # -- Additional annotations to add to the ingress
   annotations: {}
 
 # The following will be set by parameters injected by Argo CD and should not
