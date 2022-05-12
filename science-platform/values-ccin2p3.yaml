@@ -28,7 +28,7 @@ moneypenny:
   enabled: true
 ingress_nginx:
   enabled: true
-nublado:
+nublado2:
   enabled: true
 obstap:
   enabled: false
