@@ -40,8 +40,8 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: "PUBLISH_URL"
-              value: {{ .Values.publish_url }}
-            {{- if .Values.publish_url }}
+              value: {{ .Values.publishUrl }}
+            {{- if .Values.publishUrl }}
             - name: "PUBLISH_KEY"
               valueFrom:
                 secretKeyRef:

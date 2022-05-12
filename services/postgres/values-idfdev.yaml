@@ -1,5 +1,5 @@
-postgres_storage_class: 'fast'
-debug: 'true'
+postgresStorageClass: "fast"
+debug: "true"
 jupyterhub_db:
-  user: 'jovyan'
-  db: 'jupyterhub'
+  user: "jovyan"
+  db: "jupyterhub"

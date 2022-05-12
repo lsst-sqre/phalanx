@@ -5,4 +5,4 @@ resources:
   limits:
     cpu: 4.0
     memory: "4G"
-publish_url: "https://status.lsst.codes/api/data"
+publishUrl: "https://status.lsst.codes/api/data"

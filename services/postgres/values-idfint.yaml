@@ -1,4 +1,4 @@
-postgres_storage_class: 'fast'
+postgresStorageClass: "fast"
 jupyterhub_db:
-  user: 'jovyan'
-  db: 'jupyterhub'
+  user: "jovyan"
+  db: "jupyterhub"

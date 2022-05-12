@@ -2,20 +2,26 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Set to non-empty to enable debugging output
-debug: ''
+# -- Set to non-empty to enable debugging output
+debug: ""
 
 image:
-  repository: 'lsstsqre/lsp-postgres'
-  tag: 'latest'
+  # -- postgres image to use
+  repository: "lsstsqre/lsp-postgres"
+  # -- Tag of postgres image to use
+  # @default -- The appVersion of the chart
+  tag: ""
 
-# The volume can generally be very small
-postgres_volume_size: '1Gi'
-# Set to appropriate value for your deployment: at GKE, 'fast', on Rubin
-# Observatory Rancher, 'rook-ceph-block', at NCSA, 'manual',
-# elsewhere 'standard' ...
-postgres_storage_class: 'standard'
-volume_name: ''
+# -- Volume size for postgres.  It can generally be very small
+postgresVolumeSize: "1Gi"
+# -- Storage class for postgres volume.
+# Set to appropriate value for your deployment: at GKE, "fast", on Rubin
+# Observatory Rancher, "rook-ceph-block", at NCSA, "manual",
+# elsewhere "standard" ...
+postgresStorageClass: "standard"
+# -- Volume name for postgres, if you use an existing volume that isn't
+# automatically created from the PVC by the storage driver (e.g. NCSA)
+volumeName: ""
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

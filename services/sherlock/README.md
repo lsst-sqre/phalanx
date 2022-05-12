@@ -24,7 +24,7 @@ A Helm chart for Kubernetes
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the sherlock deployment pod |
 | podAnnotations | object | `{}` | Annotations for the sherlock deployment pod |
-| publish_url | string | `""` | URL to push status to via HTTP PUTs. |
+| publishUrl | string | `""` | URL to push status to via HTTP PUTs. |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the sherlock deployment pod |
 | serviceAccount.name | string | `""` |  |

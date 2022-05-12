@@ -3,21 +3,21 @@ kind: Deployment
 metadata:
   name: {{ template "postgres.fullname" . }}
   labels:
-    app: {{ template "postgres.fullname" . }}
+    {{- include "postgres.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: {{ template "postgres.fullname" . }}
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        name: {{ template "postgres.fullname" . }}
+      {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
       containers:
         - name: {{ template "postgres.fullname" . }}
           imagePullPolicy: "Always"
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
           - name: postgres
             containerPort: 5432

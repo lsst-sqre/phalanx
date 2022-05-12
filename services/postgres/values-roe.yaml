@@ -1,9 +1,9 @@
 jupyterhub_db:
-  user: 'jovyan'
-  db: 'jupyterhub'
+  user: "jovyan"
+  db: "jupyterhub"
 gafaelfawr_db:
-  user: 'gafaelfawr'
-  db: 'gafaelfawr'
+  user: "gafaelfawr"
+  db: "gafaelfawr"
 image:
-  tag: '0.0.5'
-postgres_storage_class: 'standard'
+  tag: "0.0.5"
+postgresStorageClass: "standard"

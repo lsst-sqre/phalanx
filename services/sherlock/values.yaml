@@ -64,7 +64,7 @@ serviceAccount:
   name: ""
 
 # -- URL to push status to via HTTP PUTs.
-publish_url: ""
+publishUrl: ""
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

@@ -8,12 +8,12 @@ Postgres RDBMS for LSP
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| debug | string | `""` |  |
+| debug | string | `""` | Set to non-empty to enable debugging output |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.repository | string | `"lsstsqre/lsp-postgres"` |  |
-| image.tag | string | `"latest"` |  |
-| postgres_storage_class | string | `"standard"` |  |
-| postgres_volume_size | string | `"1Gi"` |  |
-| volume_name | string | `""` |  |
+| image.repository | string | `"lsstsqre/lsp-postgres"` | postgres image to use |
+| image.tag | string | The appVersion of the chart | Tag of postgres image to use |
+| postgresStorageClass | string | `"standard"` | Storage class for postgres volume. Set to appropriate value for your deployment: at GKE, "fast", on Rubin Observatory Rancher, "rook-ceph-block", at NCSA, "manual", elsewhere "standard" ... |
+| postgresVolumeSize | string | `"1Gi"` | Volume size for postgres.  It can generally be very small |
+| volumeName | string | `""` | Volume name for postgres, if you use an existing volume that isn't automatically created from the PVC by the storage driver (e.g. NCSA) |
