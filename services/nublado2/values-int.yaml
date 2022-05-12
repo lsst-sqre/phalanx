@@ -1,4 +1,7 @@
 jupyterhub:
+  hub:
+    image:
+      tag: "2.3.0"
   ingress:
     hosts: ["lsst-lsp-int.ncsa.illinois.edu"]
     annotations:
