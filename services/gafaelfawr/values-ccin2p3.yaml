@@ -23,33 +23,22 @@ config:
     clientId: ae314e45a6af43ea910a
 
 # Allow access by GitHub team.
+  # Allow access by GitHub team.
   groupMapping:
+    "admin:provision":
+      - "rubin-in2p3-admin"
     "exec:admin":
-      - "rubin-lsst-admin"
-    "exec:user":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
-    "read:workspace":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
-    "read:workspace/user":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
-    "write:workspace/user":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
-    "exec:portal":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
+      - "rubin-in2p3-admin"
     "exec:notebook":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+    "exec:portal":
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
     "read:tap":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
-    "read:image":
-      - "rubin-lsst-admin"
-      - "rubin-lsst-user"
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+
   initialAdmins:
     - "gabrimaine"
 
