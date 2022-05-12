@@ -4,8 +4,9 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
-    ServerApp:
-      shutdown_no_activity_timeout: 60
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 60
 
   ingress:
     hosts: ["data-dev.lsst.cloud"]
