@@ -1,4 +1,4 @@
-replicaCount: 2
+#replicaCount: 2
 
 pull_secret: 'pull-secret'
 ingress:
