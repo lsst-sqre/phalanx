@@ -14,7 +14,7 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n410.hd8ae7348 |
+| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n474.h8d0a7616 |
 | https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
 
 ## Values
