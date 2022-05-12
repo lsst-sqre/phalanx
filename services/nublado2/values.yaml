@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.1.0"
+      tag: "2.3.0"
     config:
       Authenticator:
         enable_auth_state: true
