@@ -92,7 +92,7 @@ kapacitor:
     enabled: true
     size: 16Gi
   # -- InfluxDB connection URL.
-  influxURL: http://sasquatch.influxdb:8086
+  influxURL: http://sasquatch-influxdb.sasquatch:8086
   # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
   existingSecret: sasquatch
   # -- Kapacitor environment variables.
