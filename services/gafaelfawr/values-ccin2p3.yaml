@@ -1,9 +1,9 @@
 replicaCount: 2
 
-pull_secret: 'pull-secret'
-ingress:
-  host: data-dev.lsst.eu
-vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
+# pull_secret: 'pull-secret'
+# ingress:
+#   host: data-dev.lsst.eu
+# vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
 
 redis:
   persistence:
