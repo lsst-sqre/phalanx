@@ -1,4 +1,5 @@
 # Default values for Sasquatch.
+
 # -- Override strimzi-kafka configuration.
 strimzi-kafka: {}
 
