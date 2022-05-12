@@ -1,4 +1,4 @@
-#replicaCount: 2
+replicaCount: 2
 
 pull_secret: 'pull-secret'
 ingress:
@@ -11,7 +11,7 @@ redis:
 
 config:
   host:  data-dev.lsst.eu
-  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+  databaseUrl: "postgresql://gafaelfawr@postgres/gafaelfawr"
 
 # Do not specify ingress.host because we're using the wildcard virtual host.
 
