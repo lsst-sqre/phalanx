@@ -62,6 +62,8 @@ argo-cd:
           name: stable
         - url: https://strimzi.io/charts/
           name: strimzi
+      resource.compareoptions: |
+        ignoreAggregatedRoles: true
 
     rbacConfig:
       policy.csv: |
