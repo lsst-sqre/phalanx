@@ -2,12 +2,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 # -- Number of web deployment pods to start
 replicaCount: 1
 
@@ -21,15 +15,40 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
 
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 8080
+
 ingress:
+  # -- Create an ingress resource
+  enabled: true
+
   # -- Gafaelfawr auth query string (default, unauthenticated)
   gafaelfawrAuthQuery: ""
 
   # -- Additional annotations for the ingress rule
   annotations: {}
+
+  # -- Path type for the ingress rule
+  pathType: ImplementationSpecific
+
+  # -- URL path to dispatch to the datalinker deployment pod
+  path: "/api/datalink"
+
+  # -- Ingress class
+  className: nginx
 
 # -- Resource limits and requests for the datalinker deployment pod
 resources: {}

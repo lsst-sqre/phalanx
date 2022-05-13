@@ -22,11 +22,12 @@ spec:
     spec:
       automountServiceAccountToken: false
       imagePullSecrets:
-        - name: pull-secret
+        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+        fsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -37,6 +38,15 @@ spec:
             readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            # The following are used by Butler to retrieve its configuration
+            # and authenticate to its database.
+            - name: "AWS_SHARED_CREDENTIALS_FILE"
+              value: "/tmp/secrets/aws-credentials.ini"
+            - name: "PGPASSFILE"
+              value: "/tmp/secrets/postgres-credentials.txt"
+            - name: "S3_ENDPOINT_URL"
+              value: "https://storage.googleapis.com"
           ports:
             - name: http
               containerPort: 8080
@@ -51,6 +61,11 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: "butler-secret"
+              mountPath: "/etc/butler/secrets"
+            - name: "tmp"
+              mountPath: "/tmp"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -63,3 +78,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: "butler-secret"
+          secret:
+            secretName: {{ template "datalinker.fullname" . }}-butler-secret
+        - name: "tmp"
+          emptyDir: {}
