@@ -52,3 +52,12 @@ argo-cd:
   configs:
     secret:
       createSecret: false
+
+vault_secret:
+  enabled: true
+  path: ""
+
+
+pull-secret:
+  enabled: true
+  path: ""
