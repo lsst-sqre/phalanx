@@ -8,12 +8,6 @@ Squareone is the homepage UI for the Rubin Science Platform.
 
 * <https://github.com/lsst-sqre/squareone>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -30,7 +24,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
 | global.host | string | Set by Argo CD Application | Host name for ingress |
-| global.vaultSecretsPathPrefix | string | Set by Argo CD Application | Base path for Vault secrets |
+| global.vaultSecretsPath | string | Set by Argo CD Application | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy (tip: use Always for development) |
 | image.repository | string | `"ghcr.io/lsst-sqre/squareone"` | Squareone Docker image repository |
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
