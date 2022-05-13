@@ -134,7 +134,6 @@ telegraf:
           database: "telegraf"
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
-
 csc:
   # -- Whether the test csc is deployed.
   enabled: false
@@ -209,7 +208,9 @@ kafka-producers:
         Test
   # -- Namespace where the Test CSC is deployed.
   namespace: sasquatch
-
-# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
-# @default -- None, must be set
-vaultSecretsPath: ""
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

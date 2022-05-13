@@ -39,5 +39,3 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: local-path
-
-vaultSecretsPath: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu

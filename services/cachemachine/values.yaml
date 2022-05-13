@@ -18,8 +18,6 @@ image:
   tag: ""
 
 # -- Secret names to use for all Docker pulls
-imagePullSecrets:
-  - name: "cachemachine-secret"
 serviceAccount:
   # -- Name of the service account to use
   # @default -- Name based on the fullname template
@@ -28,23 +26,9 @@ serviceAccount:
   # -- Annotations to add to the service account
   annotations: {}
 
-service:
-  # -- Type of service to create
-  type: "ClusterIP"
-
-  # -- Port of the service to create and map to the ingress
-  port: 80
-
 ingress:
-  # -- Whether to create an ingress
-  enabled: true
-
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=exec:admin"
-
-  # -- Hostname for the ingress
-  # @default -- None, must be set if the ingress is enabled
-  host: ""
 
   # -- Additional annotations to add for endpoints that are authenticated.
   annotations: {}
@@ -72,11 +56,22 @@ tolerations: []
 # -- Affinity rules for the cachemachine frontend pod
 affinity: {}
 
-# -- Path to the Vault secret containing the Docker credentials
-# @default -- None, must be set
-vaultSecretsPath: ""
-
 # -- Autostart configuration. Each key is the name of a class of images to
 # pull, and the value is the JSON specification for which and how many images
 # to pull.
 autostart: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

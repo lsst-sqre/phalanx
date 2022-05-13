@@ -1,3 +1,0 @@
-sherlock:
-  ingress:
-    host: "minikube.lsst.codes"

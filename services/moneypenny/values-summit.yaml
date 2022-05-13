@@ -1,25 +1,15 @@
-moneypenny:
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "summit-lsp.lsst.codes"
-
-  orders:
-    commission:
-      - name: initcommission
-        image: lsstsqre/inituserhome
-        securityContext:
-          runAsUser: 0
-          runAsNonRootUser: false
-        volumeMounts:
-          - mountPath: /homedirs
-            name: homedirs
-    volumes:
-      - name: homedirs
-        nfs:
-          server: nfs1.cp.lsst.org
-          path: /jhome
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
+orders:
+  commission:
+    - name: initcommission
+      image: lsstsqre/inituserhome
+      securityContext:
+        runAsUser: 0
+        runAsNonRootUser: false
+      volumeMounts:
+        - mountPath: /homedirs
+          name: homedirs
+  volumes:
+    - name: homedirs
+      nfs:
+        server: nfs1.cp.lsst.org
+        path: /jhome

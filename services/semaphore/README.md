@@ -6,12 +6,6 @@ Semaphore is the user notification and messaging service for the Rubin Science P
 
 * <https://github.com/lsst-sqre/semaphore>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
-
 ## Values
 
 | Key | Type | Default | Description |

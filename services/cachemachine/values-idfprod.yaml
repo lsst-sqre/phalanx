@@ -1,9 +1,3 @@
-ingress:
-  enabled: true
-  host: "data.lsst.cloud"
-
-vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/pull-secret"
-
 serviceAccount:
   annotations: {
     iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-stable-6994.iam.gserviceaccount.com

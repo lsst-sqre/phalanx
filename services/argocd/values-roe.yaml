@@ -37,6 +37,7 @@ argo-cd:
       - "--insecure=true"
 
     config:
+      url: https://rsp.lsst.ac.uk/argo-cd
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
