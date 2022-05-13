@@ -1,9 +1,0 @@
-{{- if eq .Values.postgres_storage_class "fast" }}
-kind: StorageClass
-apiVersion: storage.k8s.io/v1
-metadata:
-  name: fast
-provisioner: kubernetes.io/gce-pd
-parameters:
-  type: pd-ssd
-{{- end }}

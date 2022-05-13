@@ -5,7 +5,8 @@ metadata:
   labels: {{- include "postgres.labels" . | nindent 4 }}
 spec:
   ports:
-    - name: postgres
+    - targetPort: "postgres"
+      protocol: "TCP"
       port: 5432
   selector:
-    name: {{ template "postgres.fullname" . }}
+    {{- include "postgres.selectorLabels" . | nindent 4 }}

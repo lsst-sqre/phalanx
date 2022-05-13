@@ -15,9 +15,10 @@ image:
 # -- Volume size for postgres.  It can generally be very small
 postgresVolumeSize: "1Gi"
 # -- Storage class for postgres volume.
-# Set to appropriate value for your deployment: at GKE, "fast", on Rubin
-# Observatory Rancher, "rook-ceph-block", at NCSA, "manual",
-# elsewhere "standard" ...
+# Set to appropriate value for your deployment: at GKE, "standard"
+# (if you want SSD, "premium-rwo", but if you want a good database maybe
+# it's better to use a cloud database?), on Rubin Observatory Rancher,
+# "rook-ceph-block", at NCSA, "manual", elsewhere probably "standard" ...
 postgresStorageClass: "standard"
 # -- Volume name for postgres, if you use an existing volume that isn't
 # automatically created from the PVC by the storage driver (e.g. NCSA)
