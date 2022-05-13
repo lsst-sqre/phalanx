@@ -26,7 +26,3 @@ argo-cd:
 vault_secret:
   enabled: true
   path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/argocd
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret
