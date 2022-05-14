@@ -1,3 +1,5 @@
+## Argo CD configuration
+## https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 argo-cd:
   redis:
     enabled: true
