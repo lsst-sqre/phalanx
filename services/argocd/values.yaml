@@ -24,6 +24,9 @@ argo-cd:
       enabled: true
     ingress:
       enabled: true
+      # -- Injected by ArgoCD; do not set in the individual environment files
+      # @default -- Set by Argo CD
+      host: []
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
@@ -35,6 +38,9 @@ argo-cd:
       - "--insecure=true"
 
     config:
+      # -- Injected by ArgoCD; do not set in the individual environment files
+      # @default -- Set by Argo CD
+      url: ""
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
@@ -56,3 +62,9 @@ argo-cd:
 vault_secret:
   enabled: true
   path: ""
+# The following will be set by a parameter injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

@@ -15,6 +15,14 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:
+      parameters:
+        - name: "argocd.server.ingress.host"
+          # It's a list.
+          value: {{- printf "{%s}" .Values.fqdn -}}
+        - name: "argocd.server.config.url"
+          value: "https://{{ .Values.fqdn }}/argo-cd"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
         - values.yaml
         - values-{{ .Values.environment }}.yaml
