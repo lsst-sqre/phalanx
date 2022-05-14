@@ -1,4 +1,5 @@
-# Variables for Vault Secrets Operator
+## Variables for Vault Secrets Operator
+## https://github.com/ricoberger/vault-secrets-operator/blob/master/charts/README.md
 vault-secrets-operator:
   environmentVars:
     # -- environment variable where the Vault read token is kept
