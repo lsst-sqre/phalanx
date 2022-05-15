@@ -1,3 +1,5 @@
+## Ingress configuration
+## https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
     config:
@@ -16,4 +18,7 @@ ingress-nginx:
       enabled: true
 
 vault_certificate:
+  # -- Whether to store ingress TLS certificate via
+  # vault-secrets-operator.  Typically "squareone" owns it instead in an
+  # RSP.
   enabled: false

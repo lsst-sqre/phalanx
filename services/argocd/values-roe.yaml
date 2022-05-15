@@ -10,10 +10,6 @@ argo-cd:
     secret:
       createSecret: true
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/roe/pull-secret
-
 vault_secret:
   enabled: true
   path: secret/k8s_operator/roe/argocd
