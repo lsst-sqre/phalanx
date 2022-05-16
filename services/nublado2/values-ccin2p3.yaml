@@ -1,16 +1,17 @@
 jupyterhub:
   debug:
-    enabled: false
+    enabled: true
 
   hub:
-    base_url: "/nb2"
+    resources:
+      requests:
+        cpu: "2"
+        memory: 3Gi
 
   singleuser:
     storage:
       type: none
 
-  lab:
-    enable_moneypenny: 'true'
 
   ingress:
     hosts: ["data-dev.lsst.eu"]
