@@ -13,8 +13,8 @@ jupyterhub:
         enable_auth_state: true
       JupyterHub:
         authenticator_class: nublado2.auth.GafaelfawrAuthenticator
-      #ServerApp:
-      #  shutdown_no_activity_timeout: 604800  # one week
+      ServerApp:
+        shutdown_no_activity_timeout: 120  # one week
     db:
       # Password comes from the nublado2-secret.
       type: "postgres"
