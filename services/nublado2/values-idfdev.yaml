@@ -24,32 +24,6 @@ jupyterhub:
   debug:
     enabled: true
 
-  singleuser:
-    extraFiles:
-      # jupyter_notebook_config reference: https://jupyter-notebook.readthedocs.io/en/stable/config.html
-      jupyter_notebook_config.json:
-        mountPath: /etc/jupyter/jupyter_notebook_config.json
-        data:
-          TerminalManager:
-            cull_inactive_timeout: 30
-            cull_interval: 60
-          MappingKernelManager:
-            # cull_idle_timeout: timeout (in seconds) after which an idle kernel is
-            # considered ready to be culled
-            cull_idle_timeout: 30 # default: 0
-
-            # cull_interval: the interval (in seconds) on which to check for idle
-            # kernels exceeding the cull timeout value
-            cull_interval: 60 # default: 300
-
-            # cull_connected: whether to consider culling kernels which have one
-            # or more connections
-            cull_connected: true # default: false
-
-            # cull_busy: whether to consider culling kernels which are currently
-            # busy running some code
-            cull_busy: false # default: false
-
 config:
   base_url: "https://data-dev.lsst.cloud"
   butler_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/butler-secret"
