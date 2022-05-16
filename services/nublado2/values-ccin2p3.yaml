@@ -1,0 +1,40 @@
+nublado2:
+  jupyterhub:
+    debug:
+      enabled: false
+
+    hub:
+      base_url: "/nb2"
+
+    singleuser:
+      storage:
+        type: none
+
+    lab:
+      enable_moneypenny: 'true'
+ 
+    ingress:
+      hosts: ["data-dev.lsst.eu"]
+      annotations:
+        nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
+
+  config:
+    base_url: "https://data-dev.lsst.eu/"
+    butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
+
+    volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: postgres-physpvc
+      - name: home
+        persistentVolumeClaim:
+          claimName: nublado-hub-physpvc
+
+    volume_mounts:
+      - name: data
+        mountPath: /data
+      - name: home
+        mountPath: /home
+
+  vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
+  gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfawr"
