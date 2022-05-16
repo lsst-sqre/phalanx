@@ -1,16 +1,15 @@
 jupyterhub:
-  debug:
-    enabled: true
+  # debug:
+  #   enabled: true
+  # hub:
+  #   resources:
+  #     requests:
+  #       cpu: "2"
+  #       memory: 3Gi
 
-  hub:
-    resources:
-      requests:
-        cpu: "2"
-        memory: 3Gi
-
-  singleuser:
-    storage:
-      type: none
+  # singleuser:
+  #   storage:
+  #     type: none
 
 
   ingress:
@@ -38,7 +37,7 @@ config:
       mountPath: /home
 
 vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
-gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
+#gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
 
 
 pull-secret:
