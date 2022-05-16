@@ -24,6 +24,10 @@ jupyterhub:
   debug:
     enabled: true
 
+  singleuser:
+    extraEnv:
+      JUPYTERHUB_SINGLEUSER_APP: "jupyter_server.serverapp.ServerApp"
+
 config:
   base_url: "https://data-dev.lsst.cloud"
   butler_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/butler-secret"
