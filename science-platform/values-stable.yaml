@@ -14,12 +14,14 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: true
+hips:
+  enabled: false
+ingress_nginx:
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
   enabled: true
-ingress_nginx:
-  enabled: false
 narrativelog:
   enabled: false
 noteburst:
