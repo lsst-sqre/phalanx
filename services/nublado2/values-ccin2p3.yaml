@@ -40,7 +40,7 @@ config:
         mountPath: /home
 
 vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
-gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
+gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfawr"
 
 
 pull-secret:
