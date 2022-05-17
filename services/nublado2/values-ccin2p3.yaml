@@ -45,4 +45,4 @@ gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
 
 pull-secret:
   enabled: true
-  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
+  path: "secret/k8s_operator/rsp-cc/pull-secret"
