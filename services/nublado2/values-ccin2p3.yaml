@@ -1,15 +1,15 @@
 jupyterhub:
   # debug:
   #   enabled: true
-  # hub:
-  #   resources:
-  #     requests:
-  #       cpu: "2"
-  #       memory: 3Gi
+  hub:
+    resources:
+      requests:
+        cpu: "2"
+        memory: 3Gi
 
-  # singleuser:
-  #   storage:
-  #     type: none
+  singleuser:
+    storage:
+      type: none
 
 
   ingress:
@@ -23,21 +23,24 @@ config:
   pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
 
   volumes:
-    - name: data
-      persistentVolumeClaim:
-        claimName: postgres-physpvc
-    - name: home
-      persistentVolumeClaim:
-        claimName: nublado-hub-physpvc
+    hostPath:
+      - name: data
+        hostPath:
+          path: /data/rsp/nublado2
+          type: Directory
+      - name: home
+        hostPath:
+          path: /data/rsp/home
+          type: Directory
 
   volume_mounts:
-    - name: data
-      mountPath: /data
-    - name: home
-      mountPath: /home
+      - name: data
+        mountPath: /data
+      - name: home
+        mountPath: /home
 
 vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
-#gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
+gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfaw"
 
 
 pull-secret:
