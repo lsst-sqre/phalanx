@@ -2,7 +2,7 @@ postgres:
   pull_secret: 'pull-secret'
   vault_secrets:
     path: 'secret/k8s_operator/rsp-cc/postgres'
-    debug: 'true'
+  debug: 'true'
   jupyterhub_db:
     user: 'jovyan'
     db: 'jupyterhub'
