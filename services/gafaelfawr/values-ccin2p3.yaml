@@ -11,7 +11,7 @@ redis:
 
 config:
   host:  data-dev.lsst.eu
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres.svc.local/gafaelfawr"
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
 # Do not specify ingress.host because we're using the wildcard virtual host.
 
