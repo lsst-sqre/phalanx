@@ -71,8 +71,6 @@ spec:
             {{- end }}
             - name: "tmp"
               mountPath: "/tmp"
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

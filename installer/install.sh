@@ -36,6 +36,7 @@ echo "Update / install vault-secrets-operator..."
 helm dependency update ../services/vault-secrets-operator
 helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
   --install \
+  --values ../services/vault-secrets-operator/values.yaml \
   --values ../services/vault-secrets-operator/values-$ENVIRONMENT.yaml \
   --create-namespace \
   --namespace vault-secrets-operator \

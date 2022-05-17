@@ -12,3 +12,6 @@ data:
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}
+    {{- if .Values.config.timesSquareUrl }}
+    timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
+    {{- end}}

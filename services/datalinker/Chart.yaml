@@ -1,10 +1,8 @@
 apiVersion: v2
+appVersion: 1.0.0
+description: A Helm chart for Kubernetes
 name: datalinker
-version: 1.0.0
-dependencies:
-  - name: datalinker
-    version: 0.1.6
-    repository: https://lsst-sqre.github.io/charts/
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
+type: application
+version: 0.1.8
+maintainers:
+  - name: cbanek

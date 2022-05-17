@@ -2,19 +2,14 @@ apiVersion: v2
 name: times-square
 version: 1.0.0
 description: |
-  A parameterized notebook web viewer for the Rubin Science Platform.
-
-  See the embedded Helm sub-charts for additional configuration docs:
-
-  - [`times-square` (API)](charts/times-square)
-  - [`times-square-ui` (Next.js / React front-end)](charts/times-square-ui)
+  An API service for managing and rendering parameterized Jupyter notebooks.
+home: https://github.com/lsst-sqre/times-square
 type: application
 
+# The default version tag of the times-square docker image
+appVersion: 0.4.0b1
+
 dependencies:
-  - name: times-square
-    version: 1.0.0
-  - name: times-square-ui
-    version: 1.0.0
   - name: redis
-    version: 16.9.1
+    version: 16.9.5
     repository: https://charts.bitnami.com/bitnami

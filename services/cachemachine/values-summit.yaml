@@ -1,9 +1,3 @@
-ingress:
-  enabled: true
-  host: "summit-lsp.lsst.codes"
-
-vaultSecretsPath: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"
-
 autostart:
   jupyter: |
     {

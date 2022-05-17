@@ -10,9 +10,4 @@ maintainers:
     url: https://github.com/jonathansick
 
 # The default version tag of the squareone docker image
-appVersion: "0.6.0"
-
-dependencies:
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
+appVersion: "0.7.0b1"

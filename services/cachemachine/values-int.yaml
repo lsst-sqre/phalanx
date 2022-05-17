@@ -1,11 +1,3 @@
-ingress:
-  enabled: true
-  host: "lsst-lsp-int.ncsa.illinois.edu"
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-int.ncsa.illinois.edu/auth?scope=exec:admin"
-
-vaultSecretsPath: "secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret"
-
 autostart:
   jupyter: |
     {

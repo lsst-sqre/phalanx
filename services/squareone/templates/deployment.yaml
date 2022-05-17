@@ -54,8 +54,6 @@ spec:
             - name: "next-image-cache"
               mountPath: "/app/.next/cache/images"
       automountServiceAccountToken: false
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

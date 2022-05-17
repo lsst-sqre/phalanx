@@ -34,6 +34,7 @@ Rubin Observatory's telemetry service.
 | csc.namespace | string | `"sasquatch"` | Namespace where the Test CSC is deployed. |
 | csc.osplVersion | string | `"V6.10.4"` | DDS OpenSplice version. |
 | csc.useExternalConfig | bool | `false` | Wether to use an external configuration for DDS OpenSplice. |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":10,"query-timeout":"900s","write-timeout":"60s"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
@@ -65,7 +66,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.4"}` | Kapacitor image tag. |
-| kapacitor.influxURL | string | `"http://sasquatch.influxdb:8086"` | InfluxDB connection URL. |
+| kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
 | kapacitor.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","operatorNamespace":"sasquatch","watchNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
@@ -75,4 +76,3 @@ Rubin Observatory's telemetry service.
 | telegraf.env[0] | object | `{"name":"TELEGRAF_PASSWORD","valueFrom":{"secretKeyRef":{"key":"telegraf-password","name":"sasquatch"}}}` | Telegraf password. |
 | telegraf.podLabels | object | `{"hub.jupyter.org/network-access-hub":"true"}` | Allow network access to JupyterHub pod. |
 | telegraf.service.enabled | bool | `false` | Telegraf service. |
-| vaultSecretsPath | string | None, must be set | Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`) |

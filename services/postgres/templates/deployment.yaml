@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "postgres.fullname" . }}
+  labels:
+    {{- include "postgres.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "postgres.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ template "postgres.fullname" . }}
+          imagePullPolicy: "Always"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          ports:
+          - name: postgres
+            containerPort: 5432
+          volumeMounts:
+            - name: storage
+              mountPath: /var/lib/postgresql
+          env:
+          - name: DEBUG
+            value: '{{ .Values.debug }}'
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "postgres.fullname" . }}
+                key: root_password
+          {{- with .Values.jupyterhub_db }}
+          - name: VRO_DB_JUPYTERHUB_USER
+            value: {{ .user }}
+          - name: VRO_DB_JUPYTERHUB_DB
+            value: {{ .db }}
+          - name: VRO_DB_JUPYTERHUB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: jupyterhub_password
+          {{- end }}
+          {{- with .Values.lovelog_db }}
+          - name: VRO_DB_LOVELOG_USER
+            value: {{ .user }}
+          - name: VRO_DB_LOVELOG_DB
+            value: {{ .db }}
+          - name: VRO_DB_LOVELOG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: lovelog_password
+          {{- end }}
+          {{- with .Values.narrativelog_db }}
+          - name: VRO_DB_NARRATIVELOG_USER
+            value: {{ .user }}
+          - name: VRO_DB_NARRATIVELOG_DB
+            value: {{ .db }}
+          - name: VRO_DB_NARRATIVELOG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: narrativelog_password
+          {{- end }}
+          {{- with .Values.exposurelog_db }}
+          - name: VRO_DB_EXPOSURELOG_USER
+            value: {{ .user }}
+          - name: VRO_DB_EXPOSURELOG_DB
+            value: {{ .db }}
+          - name: VRO_DB_EXPOSURELOG_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: exposurelog_password
+          {{- end }}
+          {{- with .Values.gafaelfawr_db }}
+          - name: VRO_DB_GAFAELFAWR_USER
+            value: {{ .user }}
+          - name: VRO_DB_GAFAELFAWR_DB
+            value: {{ .db }}
+          - name: VRO_DB_GAFAELFAWR_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres
+                key: gafaelfawr_password
+          {{- end }}
+      imagePullSecrets:
+      - name: "pull-secret"
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: {{ template "postgres.fullname" . }}-physpvc

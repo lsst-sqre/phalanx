@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.1.0"
+      tag: "2.3.0"
     config:
       Authenticator:
         enable_auth_state: true
@@ -479,3 +479,11 @@ vault_secret_path: ""
 # even with port 8081 explicitly enabled), so let's use our own for now.
 network_policy:
   enabled: true
+
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

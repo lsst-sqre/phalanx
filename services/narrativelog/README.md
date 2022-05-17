@@ -6,25 +6,28 @@ Narrative log service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` |  |
-| autoscaling.enabled | bool | `false` |  |
-| autoscaling.maxReplicas | int | `100` |  |
-| autoscaling.minReplicas | int | `1` |  |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| config.site_id | string | `""` |  |
-| fullnameOverride | string | `""` |  |
-| image.pullPolicy | string | `"Always"` |  |
-| image.repository | string | `"lsstsqre/narrativelog"` |  |
-| image.tag | string | `""` |  |
-| imagePullSecrets[0].name | string | `"pull-secret"` |  |
-| ingress.enabled | bool | `false` |  |
-| nameOverride | string | `""` |  |
-| nodeSelector | object | `{}` |  |
-| podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
-| replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
-| service.port | int | `8080` |  |
-| service.type | string | `"ClusterIP"` |  |
-| tolerations | list | `[]` |  |
+| affinity | object | `{}` | Affinity rules for the narrativelog pod |
+| autoscaling | object | `{"enabled":false,"maxReplicas":100,"minReplicas":1,"targetCPUUtilizationPercentage":80,"targetMemoryUtilizationPercentage":80}` | Narrativelog autoscaling settings |
+| autoscaling.enabled | bool | false | enable narrativelog autoscaling |
+| autoscaling.maxReplicas | int | `100` | maximum number of narrativelog replicas |
+| autoscaling.minReplicas | int | `1` | minimum number of narrativelog replicas |
+| autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization for narrativelog pod autoscale calculations |
+| autoscaling.targetMemoryUtilizationPercentage | int | `80` | Target memory utilization for narrativelog pod autoscale calculations |
+| config | object | `{"site_id":""}` | Application-specific configuration |
+| config.site_id | string | `""` | Site ID; a non-empty string of up to 16 characters. This should be different for each non-sandbox deployment. Sandboxes should use `test`. |
+| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| image.pullPolicy | string | `"Always"` | Pull policy for the narrativelog image |
+| image.repository | string | `"lsstsqre/narrativelog"` | narrativelog image to use |
+| image.tag | string | The appVersion of the chart | Tag of exposure image to use |
+| ingress.gafaelfawrAuthQuery | string | `""` | Gafaelfawr auth query string |
+| nameOverride | string | `""` | Override the base name for resources |
+| nodeSelector | object | `{}` | Node selector rules for the narrativelog pod |
+| podAnnotations | object | `{}` | Annotations for the narrativelog pod |
+| podSecurityContext | object | `{}` | Security context for the narrativelog pod |
+| replicaCount | int | `1` | Number of narrativelog replicas to run |
+| resources | object | `{}` | Resource limits and requests for the narrativelog pod |
+| securityContext | object | `{}` | Security context for the narrativelog deployment |
+| tolerations | list | `[]` | Tolerations for the narrativelog pod |

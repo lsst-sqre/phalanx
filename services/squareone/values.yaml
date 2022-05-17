@@ -72,6 +72,10 @@ config:
   # @default null disables the Semaphore integration
   semaphoreUrl: null
 
+  # -- URL to the Times Square (parameterized notebooks) API service.
+  # @default null disables the Times Square integration
+  timesSquareUrl: null
+
 # Global parameters are set by parameters injected by the Argo CD Application
 # and should not be set in the individual environment values files.
 global:
@@ -85,4 +89,4 @@ global:
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD Application
-  vaultSecretsPathPrefix: ""
+  vaultSecretsPath: ""

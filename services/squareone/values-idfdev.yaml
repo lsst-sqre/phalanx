@@ -1,9 +1,11 @@
 image:
   pullPolicy: Always
+  # tag: tickets-DM-34723
 
 config:
   siteName: "Rubin Science Platform @ data-dev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
+  timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
 
 pull-secret:
   enabled: true

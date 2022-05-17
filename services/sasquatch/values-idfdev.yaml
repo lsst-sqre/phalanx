@@ -26,5 +26,3 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
-
-vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud

@@ -14,8 +14,7 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n410.hd8ae7348 |
-| https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
+| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n474.h8d0a7616 |
 
 ## Values
 
@@ -39,6 +38,7 @@ Kubernetes: `>=1.20.0-0`
 | config.user_resources_template | string | See `values.yaml` | Templates for the user resources to create for each lab spawn. This is a string that can be templated and then loaded as YAML to generate a list of Kubernetes objects to create. |
 | config.volume_mounts | list | `[]` |  |
 | config.volumes | list | `[]` |  |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | jupyterhub.cull.enabled | bool | `true` |  |
 | jupyterhub.cull.every | int | `600` |  |
 | jupyterhub.cull.maxAge | int | `5184000` |  |
@@ -69,7 +69,7 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"lsstsqre/nublado2"` |  |
-| jupyterhub.hub.image.tag | string | `"2.1.0"` |  |
+| jupyterhub.hub.image.tag | string | `"2.3.0"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
