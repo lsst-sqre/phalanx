@@ -1,7 +1,6 @@
-# Uncomment image to enable development builds
-# image:
-#   pullPolicy: Always
-#   tag: tickets-DM-33025
+image:
+  pullPolicy: Always
+  # tag: tickets-DM-33025
 
 config:
   logLevel: "DEBUG"
