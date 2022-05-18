@@ -3,15 +3,6 @@ argo-cd:
     ingress:
       hosts:
         - "data-dev.lsst.eu"
-      # annotations:
-      #   kubernetes.io/ingress.class: nginx
-      #   nginx.ingress.kubernetes.io/rewrite-target: "/$2"
-      # paths:
-      #   - /argo-cd(/|$)(.*)
-
-    # extraArgs:
-    #   - "--basehref=/argo-cd"
-    #   - "--insecure=true"
     config:
       url: https://data-dev.lsst.eu/argo-cd
       dex.config: |
@@ -54,7 +45,3 @@ argo-cd:
 vault_secret:
   enabled: true
   path: secret/k8s_operator/rsp-cc/argocd
-
-# pull-secret:
-#   enabled: true
-#   path: secret/k8s_operator/rsp-cc/pull-secret
