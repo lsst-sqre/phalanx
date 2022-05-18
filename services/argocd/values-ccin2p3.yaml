@@ -18,29 +18,29 @@ argo-cd:
               clientSecret: $dex.clientSecret
               orgs:
                 - name: rubin-lsst
-      helm.repositories: |
-        - url: https://lsst-sqre.github.io/charts/
-          name: lsst-sqre
-        - url: https://ricoberger.github.io/helm-charts/
-          name: ricoberger
-        - url: https://kubernetes.github.io/ingress-nginx/
-          name: ingress-nginx
-        - url: https://charts.helm.sh/stable
-          name: stable
-      resource.customizations: |
-        networking.k8s.io/Ingress:
-          health.lua: |
-           hs = {}
-           hs.status = "Healthy"
-           return hs 
+      # helm.repositories: |
+      #   - url: https://lsst-sqre.github.io/charts/
+      #     name: lsst-sqre
+      #   - url: https://ricoberger.github.io/helm-charts/
+      #     name: ricoberger
+      #   - url: https://kubernetes.github.io/ingress-nginx/
+      #     name: ingress-nginx
+      #   - url: https://charts.helm.sh/stable
+      #     name: stable
+      # resource.customizations: |
+      #   networking.k8s.io/Ingress:
+      #     health.lua: |
+      #      hs = {}
+      #      hs.status = "Healthy"
+      #      return hs 
 
     rbacConfig:
       policy.csv: |
         g, rubin-lsst:admin, role:admin
 
-  configs:
-    secret:
-      createSecret: true
+  # configs:
+  #   secret:
+  #     createSecret: true
 
 vault_secret:
   enabled: true
