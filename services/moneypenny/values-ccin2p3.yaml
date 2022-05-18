@@ -3,7 +3,7 @@ moneypenny:
 
   ingress:
     enabled: true
-    host: "data-dev.lsst.eu"
+    hosts: 
       - host: data-dev.lsst.eu
         paths: ["/moneypenny"]
     annotations:
