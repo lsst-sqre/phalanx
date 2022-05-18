@@ -7,11 +7,9 @@ jupyterhub:
         cpu: "2"
         memory: 3Gi
 
-  singleuser:
-    storage:
-      type: none
-
-
+  # singleuser:
+  #   storage:
+  #     type: none
   ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
@@ -32,7 +30,7 @@ config:
       - name: home
         hostPath:
           path: /data/rsp/home
-          type: Directory
+          type: Directory 
 
   volume_mounts:
       - name: data
