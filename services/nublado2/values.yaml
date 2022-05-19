@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.3.0"
+      tag: "2.3.1"
     config:
       Authenticator:
         enable_auth_state: true
@@ -194,6 +194,9 @@ config:
   pinned_images: []
   # One of "available" or "desired"
   cachemachine_image_policy: "available"
+  # Superfluous, because our LogoutHandler enforces this, but nice to
+  # make explicit.
+  shutdown_on_logout: true
   sizes:
     - name: Small
       cpu: 1

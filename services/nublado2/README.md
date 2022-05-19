@@ -26,6 +26,7 @@ Kubernetes: `>=1.20.0-0`
 | config.lab_environment | object | See `values.yaml` | Environment variables to set in spawned lab containers. Each value will be expanded using Jinja 2 templating. |
 | config.pinned_images | list | `[]` |  |
 | config.pull_secret_path | string | `""` |  |
+| config.shutdown_on_logout | bool | `true` |  |
 | config.sizes[0].cpu | int | `1` |  |
 | config.sizes[0].name | string | `"Small"` |  |
 | config.sizes[0].ram | string | `"3072M"` |  |
@@ -69,7 +70,7 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"lsstsqre/nublado2"` |  |
-| jupyterhub.hub.image.tag | string | `"2.3.0"` |  |
+| jupyterhub.hub.image.tag | string | `"2.3.1"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
