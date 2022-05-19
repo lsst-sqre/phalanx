@@ -15,7 +15,7 @@ spec:
         {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        name: pull-secret
+        - name: "pull-secret"
       volumes:
         # butler-secrets-raw is the secrets we get from vault
         - name: "butler-secrets-raw"
