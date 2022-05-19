@@ -25,7 +25,7 @@ narrativelog:
 noteburst:
   enabled: false
 nublado2:
-  enabled: false
+  enabled: true
 obstap:
   enabled: true
 plot_navigator:
