@@ -6,15 +6,11 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
-
-  # singleuser:
-  #   storage:
-  #     type: none
   ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
+      #nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
 
 config:
   base_url: "https://data-dev.lsst.eu/"
