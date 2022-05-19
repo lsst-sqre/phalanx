@@ -25,13 +25,13 @@ ingress-nginx:
       enabled: false
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
-    podLabels:
-      hub.jupyter.org/network-access-proxy-http: "true"
+    # podLabels:
+    #   hub.jupyter.org/network-access-proxy-http: "true"
 
 vault_certificate:
   enabled: true
   path: secret/k8s_operator/rsp-cc/ingress-nginx
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/rsp-cc/pull-secret
+# pull-secret:
+#   enabled: true
+#   path: secret/k8s_operator/rsp-cc/pull-secret
