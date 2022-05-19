@@ -20,25 +20,17 @@ Kubernetes: `>=1.20.0-0`
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config.base_url | string | `""` |  |
-| config.butler_secret_path | string | `""` |  |
-| config.cachemachine_image_policy | string | `"available"` |  |
+| config.base_url | string | `""` | base_url must be set in each instantiation of this chart to the URL of the primary ingress.  It's used to construct API requests to the authentication service (which should go through the ingress). |
+| config.butler_secret_path | string | `""` | butler_secret_path must be set here, because it's passed through to the lab rather than being part of the Hub configuration. |
+| config.cachemachine_image_policy | string | `"available"` | Cachemachine image policy: "available" or "desired".  Use "desired" at instances with streaming image support. |
 | config.lab_environment | object | See `values.yaml` | Environment variables to set in spawned lab containers. Each value will be expanded using Jinja 2 templating. |
-| config.pinned_images | list | `[]` |  |
-| config.pull_secret_path | string | `""` |  |
-| config.shutdown_on_logout | bool | `true` |  |
-| config.sizes[0].cpu | int | `1` |  |
-| config.sizes[0].name | string | `"Small"` |  |
-| config.sizes[0].ram | string | `"3072M"` |  |
-| config.sizes[1].cpu | int | `2` |  |
-| config.sizes[1].name | string | `"Medium"` |  |
-| config.sizes[1].ram | string | `"6144M"` |  |
-| config.sizes[2].cpu | int | `4` |  |
-| config.sizes[2].name | string | `"Large"` |  |
-| config.sizes[2].ram | string | `"12288M"` |  |
+| config.pinned_images | list | `[]` | images to pin to spawner menu |
+| config.pull_secret_path | string | `""` | pull_secret_path must also be set here; it specifies resources in the lab namespace |
+| config.shutdown_on_logout | bool | `true` | shut down user pods on logout.  Superfluous, because our LogoutHandler enforces this in any event, but nice to make explicit. |
+| config.sizes | list | `[{"cpu":1,"name":"Small","ram":"3072M"},{"cpu":2,"name":"Medium","ram":"6144M"},{"cpu":4,"name":"Large","ram":"12288M"}]` | definitions of Lab sizes available in a given instance |
 | config.user_resources_template | string | See `values.yaml` | Templates for the user resources to create for each lab spawn. This is a string that can be templated and then loaded as YAML to generate a list of Kubernetes objects to create. |
-| config.volume_mounts | list | `[]` |  |
-| config.volumes | list | `[]` |  |
+| config.volume_mounts | list | `[]` | Where to mount volumes for a particular instance |
+| config.volumes | list | `[]` | Volumes to use for a particular instance |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | jupyterhub.cull.enabled | bool | `true` |  |
 | jupyterhub.cull.every | int | `600` |  |
