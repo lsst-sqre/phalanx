@@ -1,0 +1,7 @@
+config:
+  gcsProject: "bogus"
+  gcsBucket: "bogus"
+  serviceAccount: "bogus"
+
+image:
+  tag: "tickets-DM-34802"
