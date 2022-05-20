@@ -19,25 +19,26 @@ You will first set the necessary environment variables:
 * ``VAULT_TOKEN`` must be set to the appropriate write token for the RSP
   instance.
 
-Then you will construct the updated secret in a file; for purposes of
-this example, let's call it ``pull-secret.json``.  It should look like
-this::
+Then you will construct the updated secret.  Just create a legal JSON
+object.  The trick is, this value must be represented to Vault as a
+*string*.  The easiest way to do this is:
 
-  { ".dockerconfigjson": "{\"auths\": {\"ghcr.io\": {\"auth\": \"base64string\", \"password\": \"cleartexttoken\",\"username\": \"token\"},\"index.docker.io\": {\"auth\":\"base64string\",\"password\":\"cleartextpassword\",\"username\":\"sqrereadonly\"}}}}
+#. Ensure the secret doesn't, itself, have any single quotes in it.  If
+   it does, replace each single quote with ``'\''``
+#. Copy the secret you've created into your paste buffer
+#. Type ``vault kv patch secret/k8s_operator/<environment>/pull-secret
+   .dockerconfigjson='``  (*nota bene*: that ends with a single quote)
+#. Paste the secret into the command line
+#. Type ``'`` and press Enter.
 
-In short: the value is a *string* (not a JSON object) with all keys and
-values quoted with backslash-escaped double quotes.
-
-Once you have this file created, run:
-
-``vault kv put secret/k8s_operator/<environment>/pull-secret @pull-secret.json``
+That will avoid the pain and hassle of multiple layers of quoting in
+JSON objects, by handing the secret value as a (possibly multi-line)
+string literal to Vault.
 
 Then restart the ``vault-secrets-operator`` deployment and watch the pod
 logs to make sure that pull-secret was correctly updated.
 
-If you mess up, remember than you can pull earlier versions of the
-secret with ``vault kv get secret <path> -version <version>``; if you
-set ``VAULT_FORMAT`` to ``json`` then you can just delete two (why two?
-No idea) layers of ``data`` keys when you do this to create a new JSON
-file you can then ``vault kv put`` back to restore the secret to the
-original value.
+If you mess up, remember that our vault secrets are versioned, and you
+can pull earlier versions of the secret with ``vault kv get secret
+<path> -version <version>``; this (and the above technique) should let
+you get back to a less-broken state.
