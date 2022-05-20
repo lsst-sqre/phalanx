@@ -36,6 +36,7 @@ General development and operations
    service-guide/create-service
    service-guide/add-a-onepassword-secret
    service-guide/update-a-onepassword-secret
+   service-guide/update-pull-secret
    service-guide/add-service
    service-guide/add-external-chart
    service-guide/local-development
