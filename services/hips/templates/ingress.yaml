@@ -20,7 +20,7 @@ spec:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: "/hips"
+          - path: {{ .Values.ingress.path | quote }}
             pathType: "Prefix"
             backend:
               service:

@@ -22,6 +22,7 @@ A Helm chart for Kubernetes
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
+| ingress.path | string | `"/api/hips"` | Path at which to serve the service |
 | nodeSelector | object | `{}` | Node selection rules for the hips deployment pod |
 | podAnnotations | object | `{}` | Annotations for the hips deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |

@@ -33,6 +33,9 @@ ingress:
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=read:image"
 
+  # -- Path at which to serve the service
+  path: "/api/hips"
+
   # -- Additional annotations for the ingress rule
   annotations: {}
 
