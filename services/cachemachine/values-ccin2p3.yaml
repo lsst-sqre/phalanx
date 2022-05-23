@@ -4,7 +4,7 @@ cachemachine:
 
   ingress:
     enabled: true
-    host: data-dev.lsst.eu
+    host: "data-dev.lsst.eu"
 
   vaultSecretsPath: "secret/k8s_operator/rsp-cc/pull-secret"
 
@@ -16,7 +16,7 @@ autostart:
       "repomen": [
         {
           "type": "RubinRepoMan",
-          "registry_url": "registry.hub.docker.com",
+          "registry_url": " ",
           "repo": "lsstsqre/sciplat-lab",
           "recommended_tag": "recommended",
           "num_releases": 1,
