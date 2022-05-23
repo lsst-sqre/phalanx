@@ -9,7 +9,7 @@ Rubin Observatory's telemetry service.
 |  | kafka-connect-manager | 1.0.0 |
 |  | strimzi-kafka | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
-| https://helm.influxdata.com/ | influxdb | 4.11.0 |
+| https://helm.influxdata.com/ | influxdb | 4.12.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://helm.influxdata.com/ | telegraf | 1.8.18 |
 | https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 1.2.0 |
