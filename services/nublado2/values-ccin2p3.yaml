@@ -1,6 +1,9 @@
 jupyterhub:
   debug:
     enabled: true
+  singleuser:
+    storage:
+    type: none
   hub:
     resources:
       requests:
