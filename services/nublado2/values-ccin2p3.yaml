@@ -1,14 +1,15 @@
 jupyterhub:
   debug:
     enabled: true
-  singleuser:
-    storage:
-    type: none
+
   hub:
     resources:
       requests:
         cpu: "2"
         memory: 3Gi
+  
+  lab:
+    enable_moneypenny: 'true'
   ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
