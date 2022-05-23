@@ -18,16 +18,22 @@ config:
   base_url: "https://data-dev.lsst.eu"
   butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
   pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
-
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+  pinned_images:
+    - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+      name: Recommended
   volumes:
     - name: data
       hostPath:
         path: /data/rsp/nublado2
-        type: Directory
+        # type: Directory
     - name: home
       hostPath:
         path: /data/rsp/home
-        type: Directory 
+        # type: Directory 
 
   volume_mounts:
       - name: data
