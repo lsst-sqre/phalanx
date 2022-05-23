@@ -6,7 +6,7 @@ SQuaRE DaemonSet (K8s) telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf-ds | 1.0.34 |
+| https://helm.influxdata.com/ | telegraf-ds | 1.1.0 |
 
 ## Values
 
