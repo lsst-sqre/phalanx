@@ -14,7 +14,7 @@ jupyterhub:
 
 
 config:
-  base_url: "https://data-dev.lsst.eu/"
+  base_url: "https://data-dev.lsst.eu"
   butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
   pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
 
