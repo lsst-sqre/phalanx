@@ -7,10 +7,7 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
-  
-  lab:
-    enable_moneypenny: 'true'
-  ingress:
+s  ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
@@ -23,15 +20,14 @@ config:
   pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
 
   volumes:
-    hostPath:
-      - name: data
-        hostPath:
-          path: /data/rsp/nublado2
-          type: Directory
-      - name: home
-        hostPath:
-          path: /data/rsp/home
-          type: Directory 
+    - name: data
+      hostPath:
+        path: /data/rsp/nublado2
+        type: Directory
+    - name: home
+      hostPath:
+        path: /data/rsp/home
+        type: Directory 
 
   volume_mounts:
       - name: data
