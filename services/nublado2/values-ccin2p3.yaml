@@ -11,9 +11,7 @@ jupyterhub:
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
-  singleuser:
-    storage:
-      type: none
+
 
 config:
   base_url: "https://data-dev.lsst.eu/"
