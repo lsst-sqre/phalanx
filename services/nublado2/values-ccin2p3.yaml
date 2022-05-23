@@ -7,7 +7,7 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
-s  ingress:
+  ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
