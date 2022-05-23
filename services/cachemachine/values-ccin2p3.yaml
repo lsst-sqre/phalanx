@@ -9,7 +9,7 @@ cachemachine:
   vaultSecretsPath: "secret/k8s_operator/rsp-cc/pull-secret"
 
 autostart:
-  jupyter:
+  jupyter: |
     {
       "name": "jupyter",
       "labels": {},
