@@ -4,6 +4,21 @@ jupyterhub:
       requests:
         cpu: "2"
         memory: 3Gi
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 300
+
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 60
+    every: 60
+    maxAge: 3600
+
+  debug:
+    enabled: true
+
   ingress:
     hosts: ["data-dev.lsst.cloud"]
     annotations:
