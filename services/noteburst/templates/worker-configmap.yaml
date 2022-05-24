@@ -9,3 +9,4 @@ data:
   NOTEBURST_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
   NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}/0"
   NOTEBURST_WORKER_LOCK_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}/1"
+  NOTEBURST_WORKER_JOB_TIMEOUT: {{ .Values.config.worker.jobTimeout | quote }}

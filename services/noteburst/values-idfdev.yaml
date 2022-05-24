@@ -1,7 +1,6 @@
-# Uncomment image to enable development builds
-# image:
-#   pullPolicy: Always
-#   tag: tickets-DM-33025
+image:
+  pullPolicy: Always
+  # tag: tickets-DM-33025
 
 config:
   logLevel: "DEBUG"
@@ -10,3 +9,13 @@ config:
     identities:
       - uid: 90000
         username: "noteburst90000"
+      - uid: 90001
+        username: "noteburst90001"
+      - uid: 90002
+        username: "noteburst90002"
+      - uid: 90003
+        username: "noteburst90003"
+      - uid: 90004
+        username: "noteburst90004"
+      - uid: 90005
+        username: "noteburst90005"
