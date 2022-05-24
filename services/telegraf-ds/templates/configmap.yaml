@@ -19,6 +19,15 @@ data:
         insecure_skip_verify = true
         namepass = ["kubernetes_pod_container"]
         fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+
+      [[inputs.kube_inventory]]
+        url = "https://kubernetes.default.svc"
+        bearer_token = "/run/secrets/kubernetes.io/serviceaccount/token"
+        # Only worry about pods
+        resource_exclude = [ "daemonsets", "deployments", "endpoints", "ingress", "nodes", "persistentvolumes", "persistentvolumeclaims", "services", "statefulsets" ]
+        resource_include = [ "pods" ]
+        insecure_skip_verify = true
+        namespace = ""
   {{ range $app := splitList "@" .Values.global.enabled_services }}
     {{- $bucket := replace "-" "_" $app }}
     {{- $namespace := replace "_" "-" $app }}
