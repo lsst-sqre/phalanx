@@ -111,6 +111,9 @@ config:
     # -- Number of workers to run
     workerCount: 1
 
+    # -- The default notebook execution timeout, in seconds.
+    jobTimeout: 300
+
 redis:
   auth:
     enabled: false
