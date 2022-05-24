@@ -1,2 +1,2 @@
 image:
-  repository: "lsstsqre/tap-schema-mock"
+  repository: "rubin-in2p3/qserv-ingest-schema"
