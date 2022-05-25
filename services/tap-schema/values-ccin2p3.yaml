@@ -1,1 +1,2 @@
-image: lsstsqre/tap-schema-mock
+image:
+   repository: "lsstsqre/tap-schema-mock"
