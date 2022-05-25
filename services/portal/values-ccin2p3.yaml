@@ -1,38 +1,6 @@
-pull_secret: 'pull-secret'
 replicaCount: 2
-
-
-ingress:
-  host: 'data-dev.lsst.eu'
-  annotations:
-    nginx.ingress.kubernetes.io/auth-method: GET
-    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-    nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
-    nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:portal"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Original-URI $request_uri;
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-Port 443;
-      proxy_set_header X-Forwarded-Path /portal/app;
-
-secrets:
-  enabled: true
-
-vault_secrets:
-  enabled: true
-  path: 'secret/k8s_operator/rsp-cc/portal'
-
-max_jvm_size: "23G"
-
-redis:
-  resources:
-    limits:
-      memory: 20Mi
 
 resources:
   limits:
-    memory: 24Gi
+    memory: "24Gi"
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/rsp-cc/pull-secret
