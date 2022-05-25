@@ -38,6 +38,8 @@ config:
     "read:tap":
       - "rubin-in2p3-admin"
       - "rubin-in2p3-user"
+      - "rubin-in2p3"
+      - "rubin-in2p3-delegates"
 
   initialAdmins:
     - "gabrimaine"
