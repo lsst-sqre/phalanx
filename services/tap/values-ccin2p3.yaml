@@ -1,27 +1,16 @@
-cadc-tap:
+config:
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "http://async-results.lsst.codes"
+  jvmMaxHeapSize: "31G"
 
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data-dev.lsst.eu"
-  vaultSecretsPath: "secret/k8s_operator/rsp-cc/tap"
-
-  config:
-    gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "http://async-results.lsst.codes"
-    jvmMaxHeapSize: "31G"
-  qserv:
-    host: "ccqserv201.in2p3.fr:30040"
-    mock:
-      enabled: false
-
-  secrets:
+qserv:
+  host: "ccqserv201.in2p3.fr:30040"
+  mock:
     enabled: false
 
-  vault_secrets:
-    enabled: true
-    path: 'secret/k8s_operator/rsp-cc/tap'
+# secrets:
+#   enabled: false
 
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/rsp-cc/pull-secret
+# vault_secrets:
+#   enabled: true
+#   path: 'secret/k8s_operator/rsp-cc/tap'
