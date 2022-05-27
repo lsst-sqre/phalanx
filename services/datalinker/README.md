@@ -13,6 +13,7 @@ A Helm chart for Kubernetes
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of datalinker deployment pods |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the datalinker image |

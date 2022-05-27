@@ -83,6 +83,10 @@ global:
   # @default -- Set by Argo CD
   baseUrl: ""
 
+  # -- URI to the Butler configuration of available repositories
+  # @default -- Set by Argo CD
+  butlerRepositoryIndex: ""
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""

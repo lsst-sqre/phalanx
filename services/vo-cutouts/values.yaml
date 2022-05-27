@@ -46,10 +46,6 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
-  # -- Configuration for the Butler repository to use
-  # @default -- None, must be set
-  butlerRepository: ""
-
   # -- URL for the PostgreSQL database
   # @default -- None, must be set
   databaseUrl: ""
@@ -193,6 +189,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
+
+  # -- URI to the Butler configuration of available repositories
+  # @default -- Set by Argo CD
+  butlerRepositoryIndex: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

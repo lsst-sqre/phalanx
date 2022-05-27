@@ -15,7 +15,6 @@ Image cutout service complying with IVOA SODA
 | cloudsql.image.tag | string | `"1.30.1"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to the GCS bucket, and ability to sign URLs as itself |
-| config.butlerRepository | string | None, must be set | Configuration for the Butler repository to use |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
 | config.gcsBucketUrl | string | None, must be set | URL for the GCS bucket into which to store cutouts (must start with `s3`) |
 | config.lifetime | string | 2592000 (30 days) | Lifetime of job results in seconds (quote so that Helm doesn't turn it into a floating point number) |
@@ -39,6 +38,7 @@ Image cutout service complying with IVOA SODA
 | databaseWorker.tolerations | list | `[]` | Tolerations for the database worker pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the vo-cutouts image |

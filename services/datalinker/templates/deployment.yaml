@@ -43,6 +43,8 @@ spec:
             # and authenticate to its database.
             - name: "AWS_SHARED_CREDENTIALS_FILE"
               value: "/tmp/secrets/aws-credentials.ini"
+            - name: "DAF_BUTLER_REPOSITORY_INDEX"
+              value: {{ .Values.global.butlerRepositoryIndex | quote }}
             - name: "PGPASSFILE"
               value: "/tmp/secrets/postgres-credentials.txt"
             - name: "S3_ENDPOINT_URL"
