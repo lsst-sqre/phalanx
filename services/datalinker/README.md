@@ -1,6 +1,6 @@
 # datalinker
 
-A Helm chart for Kubernetes
+IVOA datalink service for Rubin Science Platform
 
 ## Values
 
