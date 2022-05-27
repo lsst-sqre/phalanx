@@ -1,0 +1,78 @@
+# Default values for Kafdrop
+
+# -- Number of kafdrop pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Kafdrop Docker image repository.
+  repository: obsidiandynamics/kafdrop
+  # -- Image pull policy.
+  pullPolicy: IfNotPresent
+  # -- Kafdrop image version.
+  tag: 3.30.0
+
+kafka:
+  # -- Bootstrap list of Kafka host/port pairs
+  broker: "sasquatch-kafka-bootstrap.sasquatch:9092"
+
+jvm:
+  # -- JVM options.
+  opts: ""
+
+# -- The hostname to report for the RMI registry (used for JMX).
+# @default -- Defaults to localhost.
+host: localhost
+
+jmx:
+  # -- Port to use for JMX. If unspecified, JMX will not be exposed.
+  # @default -- Defaults to 8686
+  port: 8686
+
+server:
+  # -- The context path to serve requests on (must end with a /).
+  # @default -- Defaults to /.
+  servlet:
+    contextPath: /kafdrop
+  # -- The web server port to listen on.
+  # @default -- Defaults to 9000.
+  port: 9000
+
+# -- The endpoint of Schema Registry
+schemaregistry: "sasquatch-schema-registry.sasquatch:8081"
+
+# -- Existing k8s secrect use to set kafdrop environment variables.
+# Set SCHEMAREGISTRY_AUTH for basic auth credentials in the form username:password
+existingSecret: ""
+
+# -- Command line arguments to Kafdrop.
+cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+
+service:
+  # -- Service annotations
+  annotations: {}
+  # -- Service port
+  port: 9000
+
+ingress:
+  # -- Enable Ingress. This should be true to create an ingress rule for the application.
+  enabled: false
+  # -- Ingress annotations.
+  annotations: {}
+  # -- Ingress hostname.
+  hostname: ""
+  # -- Ingress path.
+  path: /kafdrop
+
+resources: {}
+
+# -- Node selector configuration.
+nodeSelector: {}
+
+# -- Tolerations configuration.
+tolerations: []
+
+# -- Affinity configuration.
+affinity: {}
+
+# -- Pod annotations.
+podAnnotations: {}

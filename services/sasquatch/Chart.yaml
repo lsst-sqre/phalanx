@@ -31,3 +31,5 @@ dependencies:
     version: 0.10.1
     repository: https://lsst-ts.github.io/charts/
     condition: kafka-producers.enabled
+  - name: kafdrop
+    version: 1.0.0

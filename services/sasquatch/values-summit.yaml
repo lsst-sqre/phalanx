@@ -19,6 +19,11 @@ kafka-connect-manager:
     influxdb-sink:
       enabled: true
 
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: summit-lsp.lsst.codes
+
 chronograf:
   persistence:
     storageClass: rook-ceph-block
