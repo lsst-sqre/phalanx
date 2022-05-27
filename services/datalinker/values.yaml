@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the datalinker deployment
-  repository: lsstsqre/datalinker
+  repository: "ghcr.io/lsst-sqre/datalinker"
 
   # -- Pull policy for the datalinker image
   pullPolicy: Always
