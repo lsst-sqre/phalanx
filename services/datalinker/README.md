@@ -1,6 +1,6 @@
 # datalinker
 
-A Helm chart for Kubernetes
+IVOA datalink service for Rubin Science Platform
 
 ## Values
 
@@ -17,7 +17,7 @@ A Helm chart for Kubernetes
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the datalinker image |
-| image.repository | string | `"lsstsqre/datalinker"` | Image to use in the datalinker deployment |
+| image.repository | string | `"ghcr.io/lsst-sqre/datalinker"` | Image to use in the datalinker deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | ingress.className | string | `"nginx"` | Ingress class |

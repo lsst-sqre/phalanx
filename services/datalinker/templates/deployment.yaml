@@ -39,6 +39,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
+            - name: "DATALINKER_CUTOUT_SYNC_URL"
+              value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
             # The following are used by Butler to retrieve its configuration
             # and authenticate to its database.
             - name: "AWS_SHARED_CREDENTIALS_FILE"

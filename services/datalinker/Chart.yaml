@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 1.1.0
-description: A Helm chart for Kubernetes
+appVersion: 1.2.0
+description: IVOA datalink service for Rubin Science Platform
 name: datalinker
 type: application
-version: 0.1.9
+version: 1.0.0
 maintainers:
   - name: cbanek
