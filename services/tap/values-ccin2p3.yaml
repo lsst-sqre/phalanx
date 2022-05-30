@@ -1,6 +1,6 @@
 config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
+  # gcsBucket: "async-results.lsst.codes"
+  # gcsBucketUrl: "http://async-results.lsst.codes"
   jvmMaxHeapSize: "31G"
 
 qserv:
