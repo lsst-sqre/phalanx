@@ -2,7 +2,9 @@
 
 Image cutout service complying with IVOA SODA
 
-**Homepage:** <https://github.com/lsst-sqre/vo-cutouts>
+## Source Code
+
+* <https://github.com/lsst-sqre/vo-cutouts>
 
 ## Values
 
