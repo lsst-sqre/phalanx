@@ -31,8 +31,8 @@ config:
     uidClaim: 'uid_number'
     isMemberOf: 'groups'
 
-  oidcServer: 
-    enabled: true
+  # oidcServer: 
+  #   enabled: true
 # Allow access by GitHub team.
   # Allow access by GitHub team.
   groupMapping:
