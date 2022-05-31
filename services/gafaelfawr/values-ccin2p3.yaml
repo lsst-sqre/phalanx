@@ -26,7 +26,7 @@ config:
     clientId: "lsst_rsp"
     loginUrl: https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth
     tokenUrl: https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token
-    issuer: https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/ 
+    issuer: https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/
     usernameClaim: "preferred_username"
     uidClaim: 'uid_number'
     isMemberOf: 'groups'
