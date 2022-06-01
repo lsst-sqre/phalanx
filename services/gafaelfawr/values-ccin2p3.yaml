@@ -10,6 +10,7 @@ redis:
     enabled: false
 
 config:
+  loglevel: "DEBUG"
   host:  data-dev.lsst.eu
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
