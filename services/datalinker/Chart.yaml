@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 1.2.0
+appVersion: 1.2.1
 description: IVOA datalink service for Rubin Science Platform
 name: datalinker
 type: application
