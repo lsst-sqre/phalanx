@@ -97,8 +97,6 @@ spec:
               mountPath: "/etc/vo-cutouts/secrets"
             - name: "tmp"
               mountPath: "/tmp"
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
