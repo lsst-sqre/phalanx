@@ -7,7 +7,7 @@ jupyterhub:
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
-  
+
   cull:
     enabled: true
     users: false
@@ -15,7 +15,7 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
-        
+
   ingress:
     hosts: ["data.lsst.cloud"]
     annotations:
