@@ -26,6 +26,7 @@ autostart:
           "images": [
             {
               "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2022_22",
+              "name": "Weekly 2022_22"
             }
           ]
         }
