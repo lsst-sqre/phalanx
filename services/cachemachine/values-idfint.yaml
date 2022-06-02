@@ -16,7 +16,7 @@ autostart:
           "gar_image": "sciplat-lab",
           "project_id": "rubin-shared-services-71ec",
           "location": "us-central1",
-          "recommended_tag": "recommended_int",
+          "recommended_tag": "recommended",
           "num_releases": 1,
           "num_weeklies": 2,
           "num_dailies": 3
@@ -26,8 +26,6 @@ autostart:
           "images": [
             {
               "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2022_22",
-              "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2022_12",
-              "name": "Weekly 2022_12"
             }
           ]
         }
