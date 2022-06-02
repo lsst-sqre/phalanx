@@ -131,7 +131,7 @@ config:
 
     # -- Claim from which get the list of groups
     # @default -- `"isMemberOf"`
-    isMemberOf: "isMemberOf"
+    isMemberOf: ""
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
