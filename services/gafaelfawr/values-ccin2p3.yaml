@@ -1,3 +1,7 @@
+image:
+  # -- Gafaelfawr image to use
+  repository: "docker.io/gabrimaine/gafaelfawr"
+
 replicaCount: 2
 
 pull_secret: 'pull-secret'
