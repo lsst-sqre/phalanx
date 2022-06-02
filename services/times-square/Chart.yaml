@@ -7,7 +7,7 @@ home: https://github.com/lsst-sqre/times-square
 type: application
 
 # The default version tag of the times-square docker image
-appVersion: "tickets-DM-34823"
+appVersion: "tickets-DM-35057"
 
 dependencies:
   - name: redis
