@@ -20,7 +20,6 @@ HiPS web server backed by Google Cloud Storage
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
-| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hips image |
 | image.repository | string | `"ghcr.io/lsst-sqre/crawlspace"` | Image to use in the hips deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
