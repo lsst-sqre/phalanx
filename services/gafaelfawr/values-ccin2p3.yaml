@@ -42,15 +42,15 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "/lsst"
+      - "lsst"
     "exec:admin":
-      - "/lsst"
+      - "lsst"
     "exec:notebook":
-      - "/lsst"
+      - "lsst"
     "exec:portal":
-      - "/lsst"
+      - "lsst"
     "read:tap":
-      - "/lsst"
+      - "lsst"
 
 # # Allow access by GitHub team.
 #   # Allow access by GitHub team.
