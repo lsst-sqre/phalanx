@@ -6,13 +6,13 @@ jupyterhub:
         memory: 3Gi
     config:
       ServerApp:
-        shutdown_no_activity_timeout: 5184000
+        shutdown_no_activity_timeout: 432000
 
   cull:
     enabled: true
     users: false
     removeNamedServers: false
-    timeout: 5184000
+    timeout: 432000
     every: 300
     maxAge: 2160000
 
@@ -41,11 +41,11 @@ config:
     PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
     IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
     PANDA_CONFIG_ROOT: "~"
-    NO_ACTIVITY_TIMEOUT: "5184000"
-    CULL_KERNEL_IDLE_TIMEOUT: "5184000"
+    NO_ACTIVITY_TIMEOUT: "432000"
+    CULL_KERNEL_IDLE_TIMEOUT: "432000"
     CULL_KERNEL_CONNECTED: "True"
     CULL_KERNEL_INTERVAL: "300"
-    CULL_TERMINAL_INACTIVE_TIMEOUT: "5184000"
+    CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
     CULL_TERMINAL_INTERVAL: "300"
   sizes:
     - name: Small
