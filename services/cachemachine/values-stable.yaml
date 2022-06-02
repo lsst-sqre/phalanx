@@ -19,8 +19,8 @@ autostart:
           "type": "SimpleRepoMan",
           "images": [
             {
-              "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2022_12",
-              "name": "Weekly 2022_12"
+              "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2022_22",
+              "name": "Weekly 2022_22"
             }
           ]
         }
