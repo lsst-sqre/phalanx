@@ -11,7 +11,7 @@ fullnameOverride: ""
 
 image:
   # -- vo-cutouts image to use
-  repository: "lsstsqre/vo-cutouts"
+  repository: "ghcr.io/lsst-sqre/vo-cutouts"
 
   # -- Pull policy for the vo-cutouts image
   pullPolicy: "IfNotPresent"
@@ -98,7 +98,7 @@ cutoutWorker:
 
   image:
     # -- Stack image to use for cutouts
-    repository: "lsstsqre/vo-cutouts-worker"
+    repository: "ghcr.io/lsst-sqre/vo-cutouts-worker"
 
     # -- Tag of vo-cutouts worker image to use
     # @default -- The appVersion of the chart

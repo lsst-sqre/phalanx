@@ -62,8 +62,6 @@ spec:
           volumeMounts:
             - name: {{ template "vo-cutouts.fullname" . }}-redis-data
               mountPath: "/data"
-      imagePullSecrets:
-        - name: "pull-secret"
       securityContext:
         fsGroup: 999
         runAsNonRoot: true

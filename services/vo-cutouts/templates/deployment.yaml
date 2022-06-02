@@ -87,8 +87,6 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
-      imagePullSecrets:
-        - name: "pull-secret"
       volumes:
         # Dramatiq enables its Prometheus middleware by default, which
         # requires writable /tmp.

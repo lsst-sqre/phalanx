@@ -25,7 +25,7 @@ Image cutout service complying with IVOA SODA
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
 | cutoutWorker.affinity | object | `{}` | Affinity rules for the cutout worker pod |
 | cutoutWorker.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for cutout workers |
-| cutoutWorker.image.repository | string | `"lsstsqre/vo-cutouts-worker"` | Stack image to use for cutouts |
+| cutoutWorker.image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts-worker"` | Stack image to use for cutouts |
 | cutoutWorker.image.tag | string | The appVersion of the chart | Tag of vo-cutouts worker image to use |
 | cutoutWorker.nodeSelector | object | `{}` | Node selection rules for the cutout worker pod |
 | cutoutWorker.podAnnotations | object | `{}` | Annotations for the cutout worker pod |
@@ -44,7 +44,7 @@ Image cutout service complying with IVOA SODA
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the vo-cutouts image |
-| image.repository | string | `"lsstsqre/vo-cutouts"` | vo-cutouts image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts"` | vo-cutouts image to use |
 | image.tag | string | The appVersion of the chart | Tag of vo-cutouts image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
