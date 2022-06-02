@@ -16,9 +16,6 @@ jupyterhub:
     every: 60
     maxAge: 3600
 
-  debug:
-    enabled: true
-
   ingress:
     hosts: ["data-dev.lsst.cloud"]
     annotations:
