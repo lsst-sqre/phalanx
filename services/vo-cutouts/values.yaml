@@ -11,7 +11,7 @@ fullnameOverride: ""
 
 image:
   # -- vo-cutouts image to use
-  repository: "lsstsqre/vo-cutouts"
+  repository: "ghcr.io/lsst-sqre/vo-cutouts"
 
   # -- Pull policy for the vo-cutouts image
   pullPolicy: "IfNotPresent"
@@ -45,10 +45,6 @@ affinity: {}
 config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
-
-  # -- Configuration for the Butler repository to use
-  # @default -- None, must be set
-  butlerRepository: ""
 
   # -- URL for the PostgreSQL database
   # @default -- None, must be set
@@ -102,7 +98,7 @@ cutoutWorker:
 
   image:
     # -- Stack image to use for cutouts
-    repository: "lsstsqre/vo-cutouts-worker"
+    repository: "ghcr.io/lsst-sqre/vo-cutouts-worker"
 
     # -- Tag of vo-cutouts worker image to use
     # @default -- The appVersion of the chart
@@ -193,6 +189,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
+
+  # -- URI to the Butler configuration of available repositories
+  # @default -- Set by Argo CD
+  butlerRepositoryIndex: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

@@ -2,5 +2,6 @@ apiVersion: v2
 name: vo-cutouts
 version: 1.0.0
 description: "Image cutout service complying with IVOA SODA"
-home: "https://github.com/lsst-sqre/vo-cutouts"
-appVersion: 0.3.0
+sources:
+  - "https://github.com/lsst-sqre/vo-cutouts"
+appVersion: 0.4.1

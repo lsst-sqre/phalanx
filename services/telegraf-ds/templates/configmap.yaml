@@ -8,8 +8,9 @@ data:
         cluster = {{- .Values.global.host | quote }}
       [agent]
         hostname = "telegraf-$HOSTIP"
-        interval = "60s"
-        flush_interval = "60s"
+        interval = "120s"
+        flush_interval = "120s"
+        collection_jitter = "10s"
         metric_batch_size = 10000
         metric_buffer_limit = 100000
 

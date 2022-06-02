@@ -1,6 +1,10 @@
 # hips
 
-A Helm chart for Kubernetes
+HiPS web server backed by Google Cloud Storage
+
+## Source Code
+
+* <https://github.com/lsst-sqre/crawlspace>
 
 ## Values
 

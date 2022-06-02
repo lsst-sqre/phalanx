@@ -1,6 +1,7 @@
 apiVersion: v2
-appVersion: 0.1.0
-description: A Helm chart for Kubernetes
 name: hips
-type: application
-version: 0.1.0
+version: 1.0.0
+description: HiPS web server backed by Google Cloud Storage
+sources:
+  - https://github.com/lsst-sqre/crawlspace
+appVersion: 0.1.0

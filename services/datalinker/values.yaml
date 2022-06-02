@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the datalinker deployment
-  repository: lsstsqre/datalinker
+  repository: "ghcr.io/lsst-sqre/datalinker"
 
   # -- Pull policy for the datalinker image
   pullPolicy: Always
@@ -82,6 +82,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
+
+  # -- URI to the Butler configuration of available repositories
+  # @default -- Set by Argo CD
+  butlerRepositoryIndex: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
