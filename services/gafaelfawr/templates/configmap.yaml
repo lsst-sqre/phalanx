@@ -108,9 +108,7 @@ data:
       {{- if .Values.config.oidc.uidClaim }}
       uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
       {{- end }}
-      {{- if .Values.config.oidc.isMemberOf }}
-      isMemberOf: {{ .Values.config.oidc.isMemberOf | quote }}
-      {{- end }}
+
 
     {{- end }}
 
