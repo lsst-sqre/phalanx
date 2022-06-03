@@ -14,6 +14,7 @@ Postgres RDBMS for LSP
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the postgres image |
 | image.repository | string | `"lsstsqre/lsp-postgres"` | postgres image to use |
 | image.tag | string | The appVersion of the chart | Tag of postgres image to use |
 | postgresStorageClass | string | `"standard"` | Storage class for postgres volume.  Set to appropriate value for your deployment: at GKE, "standard" (if you want SSD, "premium-rwo", but if you want a good database maybe it's better to use a cloud database?), on Rubin Observatory Rancher, "rook-ceph-block", at NCSA, "manual", elsewhere probably "standard" |

@@ -9,6 +9,9 @@ image:
   # -- postgres image to use
   repository: "lsstsqre/lsp-postgres"
 
+  # -- Pull policy for the postgres image
+  pullPolicy: "IfNotPresent"
+
   # -- Tag of postgres image to use
   # @default -- The appVersion of the chart
   tag: ""
