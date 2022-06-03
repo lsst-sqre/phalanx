@@ -1,6 +1,7 @@
 apiVersion: v2
 name: postgres
 version: 1.0.0
-appVersion: "0.0.5"
 description: Postgres RDBMS for LSP
-home: https://hub.docker.com/r/lsstsqre/lsp-postgres
+sources:
+  - https://github.com/lsst-sqre/rsp-postgres
+appVersion: 0.0.5
