@@ -9,7 +9,7 @@ cachemachine:
 cert_manager:
   enabled: false
 datalinker:
-  enabled: true
+  enabled: false
 exposurelog:
   enabled: false
 gafaelfawr:
@@ -19,7 +19,7 @@ hips:
 ingress_nginx:
   enabled: false
 mobu:
-  enabled: true
+  enabled: false
 moneypenny:
   enabled: true
 narrativelog:
@@ -43,7 +43,7 @@ production_tools:
 semaphore:
   enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash_api:
