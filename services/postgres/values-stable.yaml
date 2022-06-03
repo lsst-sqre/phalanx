@@ -6,5 +6,3 @@ gafaelfawr_db:
   db: "gafaelfawr"
 postgresStorageClass: "manual"
 volumeName: "postgres-data-volume"
-image:
-  tag: "0.0.3"
