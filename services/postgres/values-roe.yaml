@@ -4,6 +4,4 @@ jupyterhub_db:
 gafaelfawr_db:
   user: "gafaelfawr"
   db: "gafaelfawr"
-image:
-  tag: "0.0.5"
 postgresStorageClass: "standard"
