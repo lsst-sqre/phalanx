@@ -8,7 +8,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | 16.10.1 |
+| https://charts.bitnami.com/bitnami | redis | 16.11.2 |
 
 ## Values
 
