@@ -33,13 +33,16 @@ Science Platform authentication and authorization system
 | config.influxdb.username | string | `""` | If set, force all InfluxDB tokens to have that username instead of the authenticated identity of the user requesting a token |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
 | config.knownScopes | object | See the `values.yaml` file | Names and descriptions of all scopes in use. This is used to populate the new token creation page. Only scopes listed here will be options when creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/). |
-| config.ldap.baseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
+| config.ldap.emailAttr | string | `"mail"` | Attribute containing the user's email address |
+| config.ldap.groupBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
 | config.ldap.groupObjectClass | string | `"posixGroup"` | Object class containing group information |
-| config.ldap.uidAttr | string | `"uidNumber"` | Attribute containing the user's UID number (only used if uidBaseDn is set) |
-| config.ldap.uidBaseDn | string | Get the UID number from the upstream authentication provider | Base DN for the LDAP search to find a user's UID number |
+| config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
+| config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
 | config.ldap.url | string | Do not use LDAP | LDAP server URL from which to retrieve user group information |
+| config.ldap.userBaseDn | string | Get user metadata from the upstream authentication provider | Base DN for the LDAP search to find a user's entry |
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr secret |
+| config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.ldap.usernameBaseDn | string | Get the username from the upstream authentication provider | Base DN for the LDAP search to find a user's username |
 | config.ldap.usernameSearchAttr | string | `"voPersonSoRID"` | Attribute matching the `sub` claim of a token to find the record containing the username |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
