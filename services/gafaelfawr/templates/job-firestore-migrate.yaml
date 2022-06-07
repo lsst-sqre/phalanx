@@ -1,0 +1,75 @@
+{{- if .Values.config.firestore.migrate.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-firestore-migrate
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: "post-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation,hook-succeeded"
+spec:
+  template:
+    metadata:
+      name: {{ template "gafaelfawr.fullname" . }}-firestore-migrate
+      labels:
+        {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "firestore-migrate"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+        {{- end }}
+        - name: "migrate"
+          command:
+            - "gafaelfawr"
+            - "fix-home-ownership"
+            - "/homedirs"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          securityContext:
+            capabilities:
+              add:
+                - "CHOWN"
+                - "DAC_READ_SEARCH"
+            readOnlyRootFilesystem: true
+            runAsUser: 0
+            runAsGroup: 0
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/gafaelfawr"
+              readOnly: true
+            - name: "homedirs"
+              mountPath: "/homedirs"
+            - name: "secret"
+              mountPath: "/etc/gafaelfawr/secrets"
+              readOnly: true
+      restartPolicy: "Never"
+      volumes:
+        - name: "config"
+          configMap:
+            name: {{ template "gafaelfawr.fullname" . }}-config
+        - name: "homedirs"
+          nfs:
+            server: {{ .Values.config.firestore.migrate.nfs.server | quote }}
+            path: {{ .Values.config.firestore.migrate.nfs.path | quote }}
+        - name: "secret"
+          secret:
+            secretName: {{ template "gafaelfawr.fullname" . }}-secret
+{{- end }}
