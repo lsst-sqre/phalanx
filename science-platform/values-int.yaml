@@ -36,9 +36,9 @@ portal:
   enabled: true
 postgres:
   enabled: true
-sasquatch:
-  enabled: false
 production_tools:
+  enabled: false
+sasquatch:
   enabled: false
 semaphore:
   enabled: false
@@ -49,7 +49,7 @@ squareone:
 squash_api:
   enabled: false
 strimzi:
-  enabled: true
+  enabled: false
 strimzi_registry_operator:
   enabled: false
 tap:
@@ -57,9 +57,9 @@ tap:
 tap_schema:
   enabled: true
 telegraf:
-  enabled: true
+  enabled: false
 telegraf-ds:
-  enabled: true
+  enabled: false
 times_square:
   enabled: false
 vault_secrets_operator:
