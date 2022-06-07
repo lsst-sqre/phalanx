@@ -1,5 +1,5 @@
 image:
-  tag: "tickets-DM-34335"
+  tag: "tickets-DM-34613"
 
 # Use the CSI storage class so that we can use snapshots.
 redis:
@@ -13,8 +13,18 @@ config:
   oidcServer:
     enabled: true
 
-  github:
-    clientId: "f46555b3f4c524e764ac"
+  cilogon:
+    clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
+    enrollmentUrl: "https://registry-test.lsst.codes/registry/co_petitions/start/coef:6"
+    test: true
+
+  firestore:
+    project: "rsp-firestore-dev-31c4"
+    migrate:
+      enabled: true
+      nfs:
+        server: "10.87.86.26"
+        path: "/share1/home"
 
   # Allow access by GitHub team.
   groupMapping:
