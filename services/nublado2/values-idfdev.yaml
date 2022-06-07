@@ -6,15 +6,15 @@ jupyterhub:
         memory: 3Gi
     config:
       ServerApp:
-        shutdown_no_activity_timeout: 300
+        shutdown_no_activity_timeout: 432000
 
   cull:
     enabled: true
     users: false
     removeNamedServers: false
-    timeout: 60
-    every: 60
-    maxAge: 3600
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
 
   ingress:
     hosts: ["data-dev.lsst.cloud"]
