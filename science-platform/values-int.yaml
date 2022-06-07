@@ -9,7 +9,7 @@ cachemachine:
 cert_manager:
   enabled: false
 datalinker:
-  enabled: true
+  enabled: false
 exposurelog:
   enabled: false
 gafaelfawr:
@@ -19,7 +19,7 @@ hips:
 ingress_nginx:
   enabled: false
 mobu:
-  enabled: true
+  enabled: false
 moneypenny:
   enabled: true
 narrativelog:
@@ -36,20 +36,20 @@ portal:
   enabled: true
 postgres:
   enabled: true
-sasquatch:
-  enabled: false
 production_tools:
+  enabled: false
+sasquatch:
   enabled: false
 semaphore:
   enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash_api:
   enabled: false
 strimzi:
-  enabled: true
+  enabled: false
 strimzi_registry_operator:
   enabled: false
 tap:
@@ -57,9 +57,9 @@ tap:
 tap_schema:
   enabled: true
 telegraf:
-  enabled: true
+  enabled: false
 telegraf-ds:
-  enabled: true
+  enabled: false
 times_square:
   enabled: false
 vault_secrets_operator:
