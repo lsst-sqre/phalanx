@@ -26,6 +26,12 @@ config:
         server: "10.87.86.26"
         path: "/share1/home"
 
+  ldap:
+    url: "ldaps://ldap-test.cilogon.org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
