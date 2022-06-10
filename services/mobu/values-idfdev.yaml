@@ -1,11 +1,13 @@
+image:
+  tag: "tickets-DM-34613"
+
 cachemachineImagePolicy: "desired"
 
 autostart:
   - name: "python"
     count: 1
     users:
-      - username: "systemtest01"
-        uidnumber: 74768
+      - username: "bot-mobu-user"
     scopes: ["exec:notebook"]
     business: "JupyterPythonLoop"
     options:
