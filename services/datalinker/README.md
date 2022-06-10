@@ -2,6 +2,10 @@
 
 IVOA datalink service for Rubin Science Platform
 
+## Source Code
+
+* <https://github.com/lsst-sqre/datalinker>
+
 ## Values
 
 | Key | Type | Default | Description |
