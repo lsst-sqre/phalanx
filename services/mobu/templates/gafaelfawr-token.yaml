@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "mobu.labels" . | nindent 4 }}
 spec:
-  service: "mobu"
+  service: "bot-mobu"
   scopes:
     - "admin:token"
     - "exec:admin"

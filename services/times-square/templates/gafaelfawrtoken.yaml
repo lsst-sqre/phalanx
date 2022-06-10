@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
 spec:
-  service: "times-square"
+  service: "bot-times-square"
   scopes:
     - "admin:token"
     - "exec:admin"
