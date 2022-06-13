@@ -4,9 +4,6 @@ resources:
   limits:
     memory: "2Gi"
 
-image:
-  tag: "suit-2022.3"
-
 config:
   volumes:
     workareaNfs:
