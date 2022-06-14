@@ -22,7 +22,7 @@ image:
 
 ingress:
   # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
+  gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:image,read:tap"
 
   # -- Additional annotations to add to the ingress
   annotations: {}
