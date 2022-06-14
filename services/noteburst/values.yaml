@@ -115,7 +115,7 @@ config:
     jobTimeout: 300
 
     # -- Worker token lifetime, in seconds.
-    tokenLifetime: 2419200
+    tokenLifetime: "2419200"
 
     # -- Nublado2 worker account's token scopes as a comma-separated list.
     tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
