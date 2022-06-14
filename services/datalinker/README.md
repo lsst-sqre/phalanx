@@ -24,11 +24,8 @@ IVOA datalink service for Rubin Science Platform
 | image.repository | string | `"ghcr.io/lsst-sqre/datalinker"` | Image to use in the datalinker deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.className | string | `"nginx"` | Ingress class |
-| ingress.enabled | bool | `true` | Create an ingress resource |
 | ingress.gafaelfawrAuthQuery | string | `""` | Gafaelfawr auth query string (default, unauthenticated) |
 | ingress.path | string | `"/api/datalink"` | URL path to dispatch to the datalinker deployment pod |
-| ingress.pathType | string | `"ImplementationSpecific"` | Path type for the ingress rule |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the datalinker deployment pod |
 | podAnnotations | object | `{}` | Annotations for the datalinker deployment pod |

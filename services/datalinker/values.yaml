@@ -21,9 +21,6 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
-# -- Annotations for the datalinker deployment pod
-podAnnotations: {}
-
 service:
   # -- Type of service to create
   type: ClusterIP
@@ -32,26 +29,14 @@ service:
   port: 8080
 
 ingress:
-  # -- Create an ingress resource
-  enabled: true
-
   # -- Gafaelfawr auth query string (default, unauthenticated)
   gafaelfawrAuthQuery: ""
 
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-  # -- Path type for the ingress rule
-  pathType: ImplementationSpecific
-
   # -- URL path to dispatch to the datalinker deployment pod
   path: "/api/datalink"
-
-  # -- Ingress class
-  className: nginx
-
-# -- Resource limits and requests for the datalinker deployment pod
-resources: {}
 
 autoscaling:
   # -- Enable autoscaling of datalinker deployment
@@ -66,6 +51,12 @@ autoscaling:
   # -- Target CPU utilization of datalinker deployment pods
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the datalinker deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the datalinker deployment pod
+resources: {}
 
 # -- Node selection rules for the datalinker deployment pod
 nodeSelector: {}
