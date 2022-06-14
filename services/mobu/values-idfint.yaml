@@ -6,7 +6,7 @@ autostart:
     users:
       - username: "systemtest01"
         uidnumber: 74768
-    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
     options:
       repo_url: "https://github.com/SimonKrughoff/system-test.git"
@@ -18,7 +18,7 @@ autostart:
     users:
       - username: "systemtest02"
         uidnumber: 74769
-    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
     options:
       jupyter:
