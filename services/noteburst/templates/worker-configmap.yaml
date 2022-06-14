@@ -13,3 +13,4 @@ data:
   NOTEBURST_WORKER_TOKEN_LIFETIME: {{ .Values.config.worker.tokenLifetime | quote }}
   NOTEBURST_WORKER_IMAGE_SELECTOR: {{ .Values.config.worker.imageSelector | quote  }}
   NOTEBURST_WORKER_IMAGE_REFERENCE: {{ .Values.config.worker.imageReference | quote  }}
+  NOTEBURST_WORKER_TOKEN_SCOPES: {{ .Values.config.worker.tokenScopes | quote }}
