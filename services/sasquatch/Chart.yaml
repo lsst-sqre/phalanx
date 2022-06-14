@@ -7,7 +7,7 @@ dependencies:
   - name: strimzi-kafka
     version: 1.0.0
   - name: strimzi-registry-operator
-    version: 1.2.0
+    version: 1.2.1
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
     version: 4.12.0
