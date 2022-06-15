@@ -70,8 +70,8 @@ spec:
                 - "arq"
                 - "--check"
                 - "timessquare.worker.main.WorkerSettings"
-            initialDelaySeconds: 5
-            periodSeconds: 5
+            initialDelaySeconds: 360
+            periodSeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
