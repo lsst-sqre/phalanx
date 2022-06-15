@@ -1,7 +1,7 @@
 apiVersion: v2
 name: datalinker
 version: 1.0.0
-description: IVOA datalink service for Rubin Science Platform
+description: IVOA DataLink service for Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/datalinker
-appVersion: 1.2.2
+appVersion: 1.3.0

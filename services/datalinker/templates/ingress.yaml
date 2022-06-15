@@ -6,8 +6,8 @@ metadata:
     {{- include "datalinker.labels" . | nindent 4 }}
   annotations:
     {{- if .Values.ingress.gafaelfawrAuthQuery }}
-    nginx.ingress.kubernetes.io/auth-method: GET
-    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Auth-Request-Token
+    nginx.ingress.kubernetes.io/auth-method: "GET"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User"
     nginx.ingress.kubernetes.io/auth-signin: "{{ .Values.global.baseUrl }}/login"
     nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAuthQuery }}"
     {{- end }}
@@ -26,4 +26,4 @@ spec:
               service:
                 name: {{ include "datalinker.fullname" . }}
                 port:
-                  number: {{ .Values.service.port }}
+                  number: 8080
