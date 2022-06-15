@@ -40,6 +40,10 @@ spec:
                   key: "ADMIN_PASSWORD"
             - name: "FIREFLY_OPTS"
               value: "-Dredis.host={{ include "portal.fullname" . }}-redis -Dsso.req.auth.hosts={{ .Values.global.host }}"
+            - name: "PROPS_redis__host"
+              value: {{ include "portal.fullname" . }}-redis
+            - name: "PROPS_sso__req__auth__hosts"
+              value: {{ .Values.global.host | quote }}
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"
             - name: "CLEANUP_INTERVAL"
