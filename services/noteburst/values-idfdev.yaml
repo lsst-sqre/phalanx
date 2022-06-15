@@ -8,14 +8,14 @@ config:
     workerCount: 1
     identities:
       - uid: 90000
-        username: "noteburst90000"
+        username: "bot-noteburst90000"
       - uid: 90001
-        username: "noteburst90001"
+        username: "bot-noteburst90001"
       - uid: 90002
-        username: "noteburst90002"
+        username: "bot-noteburst90002"
       - uid: 90003
-        username: "noteburst90003"
+        username: "bot-noteburst90003"
       - uid: 90004
-        username: "noteburst90004"
+        username: "bot-noteburst90004"
       - uid: 90005
-        username: "noteburst90005"
+        username: "bot-noteburst90005"
