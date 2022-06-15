@@ -126,6 +126,9 @@ config:
     # -- Nublado image reference, applicable when imageSelector is "reference"
     imageReference: ""
 
+    # -- Worker keep alive mode: "normal", "fast", "disabled"
+    keepAlive: "normal"
+
 redis:
   auth:
     enabled: false
