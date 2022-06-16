@@ -27,7 +27,7 @@ autostart:
       repo_branch: "prod"
     restart: true
   - name: "tap"
-    count: 15
+    count: 30
     users:
       - username: "systemtest01"
         uidnumber: 74768
@@ -59,6 +59,36 @@ autostart:
         uidnumber: 74781
       - username: "systemtest15"
         uidnumber: 74782
+      - username: "systemtest16"
+        uidnumber: 74783
+      - username: "systemtest17"
+        uidnumber: 74784
+      - username: "systemtest18"
+        uidnumber: 74785
+      - username: "systemtest19"
+        uidnumber: 74786
+      - username: "systemtest20"
+        uidnumber: 74787
+      - username: "systemtest21"
+        uidnumber: 74788
+      - username: "systemtest22"
+        uidnumber: 74789
+      - username: "systemtest23"
+        uidnumber: 74790
+      - username: "systemtest24"
+        uidnumber: 74791
+      - username: "systemtest25"
+        uidnumber: 74792
+      - username: "systemtest26"
+        uidnumber: 74793
+      - username: "systemtest27"
+        uidnumber: 74794
+      - username: "systemtest28"
+        uidnumber: 74795
+      - username: "systemtest29"
+        uidnumber: 74796
+      - username: "systemtest30"
+        uidnumber: 74797
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
     restart: true
