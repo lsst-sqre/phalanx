@@ -13,6 +13,11 @@ influxdb:
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
+  # -- InfluxDB persistence.
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 1Ti
   # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
   setDefaultUser:
     enabled: true
@@ -65,7 +70,7 @@ chronograf:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- Chronograf ingress configuration.
   # @default -- disabled
   ingress:
@@ -91,7 +96,7 @@ kapacitor:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- InfluxDB connection URL.
   influxURL: http://sasquatch-influxdb.sasquatch:8086
   # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.

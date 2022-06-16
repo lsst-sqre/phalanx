@@ -24,7 +24,7 @@ Rubin Observatory's telemetry service.
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.9.4"}` | Chronograf image tag. |
 | chronograf.ingress | object | disabled | Chronograf ingress configuration. |
-| chronograf.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
+| chronograf.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | csc.enabled | bool | `false` | Whether the test csc is deployed. |
 | csc.env | object | `{"LSST_DDS_PARTITION_PREFIX":"test","LSST_SITE":"test","OSPL_ERRORFILE":"/tmp/ospl-error-test.log","OSPL_INFOFILE":"/tmp/ospl-info-test.log","OSPL_URI":"file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml"}` | Enviroment variables to run the Test CSC. |
 | csc.env.OSPL_URI | string | `"file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml"` | Use a single process configuration for DDS OpenSplice. |
@@ -39,6 +39,7 @@ Rubin Observatory's telemetry service.
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
 | influxdb.initScripts | object | `{"enabled":true,"scripts":{"init.iql":"CREATE DATABASE \"telegraf\" WITH DURATION 30d REPLICATION 1 NAME \"rp_30d\"\n\n"}}` | InfluxDB Custom initialization scripts. |
+| influxdb.persistence | object | `{"accessMode":"ReadWriteOnce","enabled":true,"size":"1Ti"}` | InfluxDB persistence. |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | kafka-connect-manager | object | `{}` | Override strimzi-kafka configuration. |
 | kafka-producers.enabled | bool | `false` | Whether the kafka-producer for the test csc is deployed. |
@@ -67,7 +68,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.4"}` | Kapacitor image tag. |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
-| kapacitor.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
+| kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","operatorNamespace":"sasquatch","watchNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["http://hub.nublado2:8081/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by dedault. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
