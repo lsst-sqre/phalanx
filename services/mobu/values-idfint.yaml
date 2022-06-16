@@ -27,8 +27,20 @@ autostart:
       repo_branch: "prod"
     restart: true
   - name: "tap"
-    count: 5
+    count: 11
     users:
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest03"
+        uidnumber: 74770
       - username: "systemtest03"
         uidnumber: 74770
       - username: "systemtest03"
