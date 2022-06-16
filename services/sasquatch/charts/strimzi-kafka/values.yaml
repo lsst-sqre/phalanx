@@ -10,17 +10,17 @@ kafka:
   replicas: 3
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers.
-    size: 100Gi
+    size: 500Gi
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
   # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
-    offsets.retention.minutes: 10080
+    offsets.retention.minutes: 1440
     # -- Number of days for a topic's data to be retained.
-    log.retention.hours: 168
+    log.retention.hours: 24
     # -- Maximum retained number of bytes for a topic's data.
-    log.retention.bytes: "644245094400"
+    log.retention.bytes: "429496729600"
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.
