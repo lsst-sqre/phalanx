@@ -65,6 +65,16 @@ spec:
               readOnly: true
             - name: "tmp"
               mountPath: "/tmp"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /tap/availability
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
       volumes:
         - name: "google-creds"
           secret:
