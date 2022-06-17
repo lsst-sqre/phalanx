@@ -12,9 +12,9 @@ metadata:
     nginx.ingress.kubernetes.io/configuration-snippet: |
       auth_request_set $auth_token $upstream_http_x_auth_request_token;
       proxy_set_header Authorization "Bearer $auth_token";
-    nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
     nginx.ingress.kubernetes.io/rewrite-target: "/tap/$2"
     nginx.ingress.kubernetes.io/proxy-redirect-from: "http://$host/tap/"
     nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/tap/"
