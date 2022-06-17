@@ -6,6 +6,8 @@ resources:
     cpu: 8.0
     memory: "32G"
 
+replicaCount: 2
+
 config:
   gcsBucket: "async-results.lsst.codes"
   gcsBucketUrl: "http://async-results.lsst.codes"
