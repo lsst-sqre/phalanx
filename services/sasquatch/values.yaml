@@ -48,7 +48,7 @@ influxdb:
     coordinator:
       write-timeout: "60s"
       max-concurrent-queries: 10
-      query-timeout: "900s"
+      query-timeout: "0s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
