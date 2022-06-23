@@ -5,6 +5,8 @@ config:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
       server: "10.22.240.130"
+image:
+  tag: "suit-2022.3"
 
 resources:
   limits:
