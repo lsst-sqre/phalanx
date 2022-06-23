@@ -52,6 +52,8 @@ influxdb:
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
+    logging:
+      level: "debug"
   # -- InfluxDB Custom initialization scripts.
   initScripts:
     enabled: true
