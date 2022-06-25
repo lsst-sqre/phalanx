@@ -46,7 +46,7 @@ influxdb:
       auth-enabled: true
       max-row-limit: 0
     coordinator:
-      write-timeout: "60s"
+      write-timeout: "1h"
       max-concurrent-queries: 0
       query-timeout: "0s"
       log-queries-after: "15s"
