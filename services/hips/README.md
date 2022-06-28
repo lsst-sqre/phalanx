@@ -17,6 +17,7 @@ HiPS web server backed by Google Cloud Storage
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of hips deployment pods |
 | config.gcsBucket | string | None, must be set | Name of Google Cloud Storage bucket holding the HiPS files |
 | config.gcsProject | string | None, must be set | Google Cloud project in which the underlying storage is located |
+| config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `hips` Kubernetes service account and has access to the storage bucket |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
