@@ -27,6 +27,8 @@ spec:
               value: {{ required "config.gcsProject must be set" .Values.config.gcsProject | quote }}
             - name: "CRAWLSPACE_BUCKET"
               value: {{ required "config.gcsBucket must be set" .Values.config.gcsBucket | quote }}
+            - name: "SAFIR_LOG_LEVEL"
+              value: {{ .Values.config.logLevel | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

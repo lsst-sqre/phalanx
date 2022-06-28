@@ -14,6 +14,9 @@ config:
   # @default -- None, must be set
   gcsBucket: ""
 
+  # -- Choose from the text form of Python logging levels
+  logLevel: "INFO"
+
   # -- The Google service account that has an IAM binding to the `hips`
   # Kubernetes service account and has access to the storage bucket
   # @default -- None, must be set
