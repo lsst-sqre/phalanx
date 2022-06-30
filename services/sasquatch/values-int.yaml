@@ -18,6 +18,11 @@ kafka-connect-manager:
     influxdb-sink:
       enabled: true
 
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: lsst-lsp-int.ncsa.illinois.edu
+
 chronograf:
   persistence:
     storageClass: local-path

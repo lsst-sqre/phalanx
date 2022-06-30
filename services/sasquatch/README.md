@@ -6,6 +6,7 @@ Rubin Observatory's telemetry service.
 
 | Repository | Name | Version |
 |------------|------|---------|
+|  | kafdrop | 1.0.0 |
 |  | kafka-connect-manager | 1.0.0 |
 |  | strimzi-kafka | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
