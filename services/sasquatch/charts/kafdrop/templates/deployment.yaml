@@ -54,6 +54,13 @@ spec:
             value: {{ .Values.cmdArgs | quote }}
           - name: SCHEMAREGISTRY_CONNECT
             value: {{ .Values.schemaregistry | quote }}
+          - name: KAFKA_PROPERTIES_FILE
+            value: "/tmp/kafka.properties"
+          - name: KAFKA_PROPERTIES
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: kafdrop-kafka-properties
           ports:
             - name: http
               containerPort: {{ .Values.server.port }}
