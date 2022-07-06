@@ -5,7 +5,7 @@ resources:
     memory: "2Gi"
 
 image:
-  tag: "suit-2022.3"
+  tag: "suit-2022.4"
 
 config:
   hipsUrl: "https://irsa.ipac.caltech.edu/data/hips/CDS/DSS2/color/"
