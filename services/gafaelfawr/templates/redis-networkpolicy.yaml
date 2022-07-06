@@ -20,10 +20,6 @@ spec:
         - podSelector:
             matchLabels:
               {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
-              app.kubernetes.io/component: "firestore-migrate"
-        - podSelector:
-            matchLabels:
-              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
               app.kubernetes.io/component: "frontend"
         - podSelector:
             matchLabels:

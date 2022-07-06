@@ -20,11 +20,6 @@ config:
 
   firestore:
     project: "rsp-firestore-dev-31c4"
-    migrate:
-      enabled: true
-      nfs:
-        server: "10.87.86.26"
-        path: "/share1/home"
 
   ldap:
     url: "ldaps://ldap-test.cilogon.org"
