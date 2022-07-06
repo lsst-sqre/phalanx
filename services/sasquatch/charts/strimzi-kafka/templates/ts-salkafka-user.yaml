@@ -12,8 +12,8 @@ spec:
     acls:
       - resource:
           type: topic
-          name: "lsst.sal.*"
-          patternType: literal
+          name: "lsst.sal"
+          patternType: prefix
         type: allow
         host: "*"
         operation: All
