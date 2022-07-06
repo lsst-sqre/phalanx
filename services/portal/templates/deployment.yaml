@@ -44,6 +44,22 @@ spec:
               value: {{ include "portal.fullname" . }}-redis
             - name: "PROPS_sso__req__auth__hosts"
               value: {{ .Values.global.host | quote }}
+            - name: "PROPS_FIREFLY_OPTIONS"
+              value: >-
+                $'{ 
+                   "coverage":  {"hipsSourceURL" : "ivo://CDS/P/2MASS/color"},  
+                   "tap" : { 
+                      "additional": { 
+                          "services": [ { 
+                               "label": "LSST RSP", 
+                               "value": "https://data-dev.lsst.cloud/api/tap", 
+                               "hipsUrl": "https://irsa.ipac.caltech.edu/data/hips/CDS/DSS2/color/", 
+                               "centerWP": "62;-37;EQ_J2000", 
+                               "fovDeg": 10  
+                          } ] 
+                       } 
+                    }  
+                }'
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"
             - name: "CLEANUP_INTERVAL"
