@@ -44,8 +44,9 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
+
 csc:
-  enabled: true
+  enabled: false
 
 kafka-producers:
-  enabled: true
+  enabled: false
