@@ -8,6 +8,7 @@ image:
   tag: "suit-2022.3"
 
 config:
+  hipsUrl: "https://irsa.ipac.caltech.edu/data/hips/CDS/DSS2/color/"
   volumes:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
