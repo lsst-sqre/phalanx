@@ -7,13 +7,18 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: ts-salkafka-password
   authorization:
     type: simple
     acls:
       - resource:
           type: topic
-          name: "lsst.sal.*"
-          patternType: literal
+          name: "lsst.sal"
+          patternType: prefix
         type: allow
         host: "*"
         operation: All
