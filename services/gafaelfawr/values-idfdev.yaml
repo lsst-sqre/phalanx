@@ -27,39 +27,28 @@ config:
     groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
 
-  # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - "g_science-platform-idf-dev"
     "exec:admin":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "read:image":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
 
   initialAdmins:
     - "afausti"
-    - "athornton"
+    - "adam"
     - "cbanek"
     - "frossie"
-    - "jonathansick"
+    - "jsick"
     - "rra"
-    - "simonkrughoff"
-
-  errorFooter: |
-    To report problems or ask for help, please open an issue in the
-    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-    rubin-dp0/Support project</a>.
+    - "simon.krughoff"
 
 cloudsql:
   enabled: true
