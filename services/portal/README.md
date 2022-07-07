@@ -25,6 +25,7 @@ Rubin Science Platform portal aspect
 | image.repository | string | `"ipac/suit"` | Portal image to use |
 | image.tag | string | The appVersion of the chart | Tag of Portal image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
+| ingress.gafaelfawrAdminAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string for the admin API |
 | ingress.gafaelfawrAuthQuery | string | `"scope=exec:portal&delegate_to=portal&delegate_scope=read:image,read:tap"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Portal pod |
