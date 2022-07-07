@@ -13,7 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "0m"
     nginx.ingress.kubernetes.io/proxy-buffer-size: "24k"
     nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
-    nginx.ingress.kubernetes.io/rewrite-target: "/suit$1$2"
+    nginx.ingress.kubernetes.io/rewrite-target: "/suit/admin$1$2"
     nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
     nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
     nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
