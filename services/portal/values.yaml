@@ -57,6 +57,10 @@ config:
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
 
+  # -- URL for default HiPS service
+  # @default -- `/api/hips/images/color_gri` in the local Science Platform
+  hipsUrl: ""
+
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"
 
