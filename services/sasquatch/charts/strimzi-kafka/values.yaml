@@ -5,7 +5,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: "3.0.0"
+  version: "3.1.1"
   # -- Number of Kafka broker replicas to run.
   replicas: 3
   storage:
@@ -33,7 +33,7 @@ zookeeper:
 
 connect:
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: lsstsqre/strimzi-0.27.1-kafka-3.0.0:master
+  image: lsstsqre/strimzi-0.29.0-kafka-3.1.1:master
   # -- Number of Kafka Connect replicas to run.
   replicas: 1
 
