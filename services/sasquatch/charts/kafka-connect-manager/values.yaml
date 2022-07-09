@@ -2,8 +2,8 @@
 # See also https://kafka-connect-manager.lsst.io
 image:
   repository: lsstsqre/kafkaconnect
-  tag: tickets-DM-35506
-  pullPolicy: Always
+  tag: 1.0.0
+  pullPolicy: IfNotPresent
 
 influxdbSink:
   # Repeat this block to create multiple instances of this connector.

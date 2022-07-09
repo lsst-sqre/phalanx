@@ -9,9 +9,9 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
-| image.pullPolicy | string | `"Always"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
-| image.tag | string | `"tickets-DM-35506"` |  |
+| image.tag | string | `"1.0.0"` |  |
 | influxdbSink.influxdb-sink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.influxdb-sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.influxdb-sink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
