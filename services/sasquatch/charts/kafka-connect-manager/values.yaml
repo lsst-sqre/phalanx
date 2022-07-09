@@ -2,7 +2,7 @@
 # See also https://kafka-connect-manager.lsst.io
 image:
   repository: lsstsqre/kafkaconnect
-  tag: 0.9.3
+  tag: tickets-DM-35506
   pullPolicy: IfNotPresent
 
 influxdbSink:
