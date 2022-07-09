@@ -28,7 +28,7 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
 | resources | object | `{}` |  |
-| schemaregistry | string | `"sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
+| schemaregistry | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
 | server.port | int | Defaults to 9000. | The web server port to listen on. |
 | server.servlet | object | Defaults to /. | The context path to serve requests on (must end with a /). |
 | service.annotations | object | `{}` | Service annotations |
