@@ -8,6 +8,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 |-----|------|---------|-------------|
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
+| env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
 | image.tag | string | `"tickets-DM-35506"` |  |

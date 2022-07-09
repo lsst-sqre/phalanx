@@ -150,3 +150,5 @@ env:
   kafkaBrokerUrl: "sasquatch-kafka-bootstrap.sasquatch:9092"
   # -- Kafka connnect URL.
   kafkaConnectUrl: "http://sasquatch-connect-api.sasquatch:8083"
+  # -- Username for SASL authentication.
+  kafkaUsername: "kafka-connect-manager"
