@@ -18,7 +18,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.influxdb-sink.connectInfluxErrorPolicy | string | `"THROW"` | Error policy. |
 | influxdbSink.influxdb-sink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
 | influxdbSink.influxdb-sink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
-| influxdbSink.influxdb-sink.connectInfluxUrl | string | `"http://sasquatch.influxdb:8086"` | InfluxDB URL, can be internal to the cluster. |
+| influxdbSink.influxdb-sink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL, can be internal to the cluster. |
 | influxdbSink.influxdb-sink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
 | influxdbSink.influxdb-sink.enabled | bool | `false` | Whether this connector instance is deployed. |
 | influxdbSink.influxdb-sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |

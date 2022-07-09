@@ -13,7 +13,7 @@ influxdbSink:
     # -- Whether this connector instance is deployed.
     enabled: false
     # -- InfluxDB URL, can be internal to the cluster.
-    connectInfluxUrl: "http://sasquatch.influxdb:8086"
+    connectInfluxUrl: "http://sasquatch-influxdb.sasquatch:8086"
     # -- InfluxDB database to write to.
     connectInfluxDb: "efd"
     # -- Number of KafkaConnect tasks.
