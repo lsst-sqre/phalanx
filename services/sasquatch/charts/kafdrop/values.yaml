@@ -38,7 +38,7 @@ server:
   port: 9000
 
 # -- The endpoint of Schema Registry
-schemaregistry: "sasquatch-schema-registry.sasquatch:8081"
+schemaregistry: "http://sasquatch-schema-registry.sasquatch:8081"
 
 # -- Existing k8s secrect use to set kafdrop environment variables.
 # Set SCHEMAREGISTRY_AUTH for basic auth credentials in the form username:password

@@ -15,6 +15,11 @@ spec:
           name: {{ .Values.cluster.name }}-connect
         operation: Read
       - resource:
+          type: group
+          name: connect-influxdb-sink
+          patternType: literal
+        operation: All
+      - resource:
           type: topic
           name: "*"
           patternType: literal
