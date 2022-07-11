@@ -22,6 +22,7 @@ config:
       - "lsst-sqre-square"
     "exec:admin":
       - "lsst-sqre-square"
+      - "lsst-sqre-friends"
     "exec:notebook":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"

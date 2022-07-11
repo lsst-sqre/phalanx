@@ -8,16 +8,17 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 |-----|------|---------|-------------|
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
+| env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
-| image.tag | string | `"0.9.3"` |  |
+| image.tag | string | `"1.0.0"` |  |
 | influxdbSink.influxdb-sink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.influxdb-sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.influxdb-sink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
 | influxdbSink.influxdb-sink.connectInfluxErrorPolicy | string | `"THROW"` | Error policy. |
 | influxdbSink.influxdb-sink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
 | influxdbSink.influxdb-sink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
-| influxdbSink.influxdb-sink.connectInfluxUrl | string | `"http://sasquatch.influxdb:8086"` | InfluxDB URL, can be internal to the cluster. |
+| influxdbSink.influxdb-sink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL, can be internal to the cluster. |
 | influxdbSink.influxdb-sink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
 | influxdbSink.influxdb-sink.enabled | bool | `false` | Whether this connector instance is deployed. |
 | influxdbSink.influxdb-sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |

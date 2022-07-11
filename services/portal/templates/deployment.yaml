@@ -33,6 +33,10 @@ spec:
                 secretKeyRef:
                   name: {{ include "portal.fullname" . }}-secret
                   key: "ADMIN_PASSWORD"
+            {{- if .Values.ingress.gafaelfawrAdminAuthQuery }}
+            - name: "USE_ADMIN_AUTH"
+              value: "false"
+            {{- end }}
             - name: "REDIS_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -44,6 +48,34 @@ spec:
               value: {{ include "portal.fullname" . }}-redis
             - name: "PROPS_sso__req__auth__hosts"
               value: {{ .Values.global.host | quote }}
+            - name: "PROPS_lsst__hips__masterUrl"
+              value: https://irsa.ipac.caltech.edu/data/hips/list
+            - name: "PROPS_FIREFLY_OPTIONS"
+              value: >-
+                $'{
+                   "coverage":  {
+                      {{- if .Values.config.hipsUrl }}
+                      "hipsSourceURL" : "{{ .Values.config.hipsUrl }}",
+                      {{- else }}
+                      "hipsSourceURL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri/",
+                      {{- end }}
+                   },
+                   "tap" : {
+                      "additional": {
+                          "services": [ {
+                               "label": "LSST RSP",
+                               "value": "{{ .Values.global.baseUrl }}/api/tap",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri/",
+                               {{- end }}
+                               "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                          } ]
+                       }
+                    }
+                }'
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"
             - name: "CLEANUP_INTERVAL"

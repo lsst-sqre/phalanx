@@ -24,6 +24,9 @@ ingress:
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:image,read:tap"
 
+  # -- Gafaelfawr auth query string for the admin API
+  gafaelfawrAdminAuthQuery: "scope=exec:admin"
+
   # -- Additional annotations to add to the ingress
   annotations: {}
 
@@ -56,6 +59,10 @@ config:
 
   # -- How long results should be retained before being deleted
   cleanupInterval: "36h"
+
+  # -- URL for default HiPS service
+  # @default -- `/api/hips/images/color_gri` in the local Science Platform
+  hipsUrl: ""
 
   # -- Search path for FITS files
   visualizeFitsSearchPath: "/datasets"

@@ -9,6 +9,7 @@ kafka-connect-manager:
   influxdbSink:
     influxdb-sink:
       enabled: true
+      tasksMax: 10
 
 kafdrop:
   ingress:

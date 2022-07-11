@@ -2,7 +2,7 @@
 # See also https://kafka-connect-manager.lsst.io
 image:
   repository: lsstsqre/kafkaconnect
-  tag: 0.9.3
+  tag: 1.0.0
   pullPolicy: IfNotPresent
 
 influxdbSink:
@@ -13,7 +13,7 @@ influxdbSink:
     # -- Whether this connector instance is deployed.
     enabled: false
     # -- InfluxDB URL, can be internal to the cluster.
-    connectInfluxUrl: "http://sasquatch.influxdb:8086"
+    connectInfluxUrl: "http://sasquatch-influxdb.sasquatch:8086"
     # -- InfluxDB database to write to.
     connectInfluxDb: "efd"
     # -- Number of KafkaConnect tasks.
@@ -150,3 +150,5 @@ env:
   kafkaBrokerUrl: "sasquatch-kafka-bootstrap.sasquatch:9092"
   # -- Kafka connnect URL.
   kafkaConnectUrl: "http://sasquatch-connect-api.sasquatch:8083"
+  # -- Username for SASL authentication.
+  kafkaUsername: "kafka-connect-manager"
