@@ -11,12 +11,28 @@ influxdb:
     storageClass: rook-ceph-block
   ingress:
     enabled: true
-    hostname: tucson-teststand.lsst.codes
+    tls: true
+    secretName: tls-certs
+    hostname: influxdb-tucson-teststand-efd.lsst.codes
+    annotations:
+      kubernetes.io/ingress.class: "nginx"
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
+      nginx.ingress.kubernetes.io/rewrite-target: /
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /;
+    path: /
+
 
 kafka-connect-manager:
   influxdbSink:
     influxdb-sink:
       enabled: true
+      connectInfluxErrorPolicy: NOOP
+      tasksMax: 10
 
 kafdrop:
   ingress:
@@ -39,7 +55,7 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://tucson-teststand.lsst.codes
-    STATUS_FEED_URL: https://lsst-sqre.github.io/sasquatch/feeds/tucson-teststand.json
+    STATUS_FEED_URL: https://lsst-sqre.github.io/argocd-efd/apps/chronograf/feeds/tucson-teststand.json
 
 kapacitor:
   persistence:
