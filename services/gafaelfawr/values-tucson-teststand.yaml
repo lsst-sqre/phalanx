@@ -2,7 +2,7 @@
 # use persistent volumes once we can coordinate that.
 redis:
   persistence:
-    enabled: false
+    storageClass: "rook-ceph-block"
 
 config:
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
