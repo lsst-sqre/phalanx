@@ -26,3 +26,9 @@ spec:
         type: allow
         host: "*"
         operation: All
+  quotas:
+    producerByteRate: 1073741824
+    consumerByteRate: 1073741824
+    requestPercentage: 90
+    controllerMutationRate: 1000
+
