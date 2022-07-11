@@ -4,6 +4,10 @@ telegraf:
     processors: []
     inputs: []
     outputs: []
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 900m
   args:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"
