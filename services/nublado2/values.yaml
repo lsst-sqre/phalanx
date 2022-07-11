@@ -8,6 +8,10 @@ jupyterhub:
     image:
       name: lsstsqre/nublado2
       tag: "2.3.1"
+    resources:
+      limits:
+        cpu: 900m
+        memory: 1Gi  # Should support about 200 users
     config:
       Authenticator:
         enable_auth_state: true

@@ -1,9 +1,5 @@
 jupyterhub:
   hub:
-    resources:
-      requests:
-        cpu: "2"
-        memory: 3Gi
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000

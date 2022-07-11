@@ -67,6 +67,8 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` |  |
+| jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
+| jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
 | jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
 | jupyterhub.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-method" | string | `"GET"` |  |
