@@ -55,7 +55,7 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://tucson-teststand.lsst.codes
-    STATUS_FEED_URL: https://lsst-sqre.github.io/sasquatch/feeds/tucson-teststand.json
+    STATUS_FEED_URL: https://lsst-sqre.github.io/argocd-efd/apps/chronograf/feeds/tucson-teststand.json
 
 kapacitor:
   persistence:
