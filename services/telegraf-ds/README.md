@@ -22,6 +22,8 @@ SQuaRE DaemonSet (K8s) telemetry collection service
 | telegraf-ds.mountPoints[0].name | string | `"telegraf-generated-config"` |  |
 | telegraf-ds.override_config.toml | string | `"[agent]\n  logfile=\"\"\n"` |  |
 | telegraf-ds.rbac.create | bool | `true` |  |
+| telegraf-ds.resources.limits.cpu | string | `"900m"` |  |
+| telegraf-ds.resources.limits.memory | string | `"512Mi"` |  |
 | telegraf-ds.serviceAccount.name | string | `"telegraf-ds"` |  |
 | telegraf-ds.volumes[0].configMap.name | string | `"telegraf-generated-config"` |  |
 | telegraf-ds.volumes[0].name | string | `"telegraf-generated-config"` |  |
