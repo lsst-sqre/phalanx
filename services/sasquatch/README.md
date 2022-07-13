@@ -40,7 +40,8 @@ Rubin Observatory's telemetry service.
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
 | influxdb.initScripts | object | `{"enabled":true,"scripts":{"init.iql":"CREATE DATABASE \"telegraf\" WITH DURATION 30d REPLICATION 1 NAME \"rp_30d\"\n\n"}}` | InfluxDB Custom initialization scripts. |
-| influxdb.persistence | object | `{"accessMode":"ReadWriteOnce","enabled":true,"size":"1Ti"}` | InfluxDB persistence. |
+| influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
+| influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | kafka-connect-manager | object | `{}` | Override strimzi-kafka configuration. |
 | kafka-producers.enabled | bool | `false` | Whether the kafka-producer for the test csc is deployed. |
