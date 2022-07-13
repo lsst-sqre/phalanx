@@ -13,10 +13,12 @@ influxdb:
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
-  # -- InfluxDB persistence.
   persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
     enabled: true
-    accessMode: ReadWriteOnce
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
     size: 1Ti
   # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
   setDefaultUser:
