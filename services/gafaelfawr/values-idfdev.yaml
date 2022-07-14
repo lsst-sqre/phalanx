@@ -17,6 +17,7 @@ config:
     clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
     enrollmentUrl: "https://registry-test.lsst.codes/registry/co_petitions/start/coef:6"
     test: true
+    usernameClaim: "username"
 
   firestore:
     project: "rsp-firestore-dev-31c4"
@@ -25,7 +26,10 @@ config:
     url: "ldaps://ldap-test.cilogon.org"
     userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
     groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    groupObjectClass: "eduMember"
+    groupMemberAttr: "hasMember"
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userSearchAttr: "voPersonApplicationUID"
 
   groupMapping:
     "admin:provision":

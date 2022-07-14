@@ -72,6 +72,12 @@ data:
         - "email"
         - "org.cilogon.userinfo"
       audience: {{ .Values.config.cilogon.clientId | quote }}
+      {{- if .Values.config.cilogon.usernameClaim }}
+      username_claim: {{ .Values.config.oidc.usernameClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.cilogon.uidClaim }}
+      uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
+      {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
 
@@ -129,7 +135,9 @@ data:
       {{- if .Values.config.ldap.userBaseDn }}
       user_base_dn: {{ .Values.config.ldap.userBaseDn | quote }}
       user_search_attr: {{ .Values.config.ldap.userSearchAttr | quote }}
+      {{- if .Values.config.ldap.uidAttr }}
       uid_attr: {{ .Values.config.ldap.uidAttr | quote }}
+      {{- end }}
       name_attr: {{ .Values.config.ldap.nameAttr | quote }}
       email_attr: {{ .Values.config.ldap.emailAttr | quote }}
       {{- end }}
