@@ -182,7 +182,7 @@ config:
 
   # -- Names and descriptions of all scopes in use. This is used to populate
   # the new token creation page. Only scopes listed here will be options when
-  # creating a new token.
+  # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
   # @default -- See the `values.yaml` file
   knownScopes:
     "admin:token": >-
@@ -204,9 +204,8 @@ config:
     "user:token": >-
       Can create and modify user tokens
 
-  # -- Defines a mapping of scopes to groups that provide that scope. Tokens
-  # from an OpenID Connect provider such as CILogon that include groups in an
-  # `isMemberOf` claim will be granted scopes based on this mapping.
+  # -- Defines a mapping of scopes to groups that provide that scope. See
+  # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
 
   # -- Usernames to add as administrators when initializing a new database.
