@@ -75,6 +75,15 @@ config:
     loginParams:
       skin: "LSST"
 
+    # -- Claim from which to get the username
+    # @default -- `"uid"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
+
   firestore:
     # -- If set, assign UIDs and GIDs using Google Firestore in the given
     # project.  Cloud SQL must be enabled and the Cloud SQL service account
@@ -119,13 +128,12 @@ config:
     scopes:
       - "openid"
 
-    # -- Claim from which to get the username (only used if not retrieved from
-    # LDAP)
+    # -- Claim from which to get the username
     # @default -- `"sub"`
     usernameClaim: ""
 
     # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP)
+    # from LDAP or Firestore)
     # @default -- `"uidNumber"`
     uidClaim: ""
 
