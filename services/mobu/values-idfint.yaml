@@ -27,10 +27,128 @@ autostart:
       repo_branch: "prod"
     restart: true
   - name: "tap"
-    count: 1
+    count: 60
     users:
       - username: "systemtest01"
         uidnumber: 74768
+      - username: "systemtest02"
+        uidnumber: 74769
+      - username: "systemtest03"
+        uidnumber: 74770
+      - username: "systemtest04"
+        uidnumber: 74771
+      - username: "systemtest05"
+        uidnumber: 74772
+      - username: "systemtest06"
+        uidnumber: 74773
+      - username: "systemtest07"
+        uidnumber: 74774
+      - username: "systemtest08"
+        uidnumber: 74775
+      - username: "systemtest09"
+        uidnumber: 74776
+      - username: "systemtest10"
+        uidnumber: 74777
+      - username: "systemtest11"
+        uidnumber: 74778
+      - username: "systemtest12"
+        uidnumber: 74779
+      - username: "systemtest13"
+        uidnumber: 74780
+      - username: "systemtest14"
+        uidnumber: 74781
+      - username: "systemtest15"
+        uidnumber: 74782
+      - username: "systemtest16"
+        uidnumber: 74783
+      - username: "systemtest17"
+        uidnumber: 74784
+      - username: "systemtest18"
+        uidnumber: 74785
+      - username: "systemtest19"
+        uidnumber: 74786
+      - username: "systemtest20"
+        uidnumber: 74787
+      - username: "systemtest21"
+        uidnumber: 74788
+      - username: "systemtest22"
+        uidnumber: 74789
+      - username: "systemtest23"
+        uidnumber: 74790
+      - username: "systemtest24"
+        uidnumber: 74791
+      - username: "systemtest25"
+        uidnumber: 74792
+      - username: "systemtest26"
+        uidnumber: 74793
+      - username: "systemtest27"
+        uidnumber: 74794
+      - username: "systemtest28"
+        uidnumber: 74795
+      - username: "systemtest29"
+        uidnumber: 74796
+      - username: "systemtest30"
+        uidnumber: 74797
+      - username: "systemtest31"
+        uidnumber: 74798
+      - username: "systemtest32"
+        uidnumber: 74799
+      - username: "systemtest33"
+        uidnumber: 74800
+      - username: "systemtest34"
+        uidnumber: 74801
+      - username: "systemtest35"
+        uidnumber: 74802
+      - username: "systemtest36"
+        uidnumber: 74803
+      - username: "systemtest37"
+        uidnumber: 74804
+      - username: "systemtest38"
+        uidnumber: 74805
+      - username: "systemtest39"
+        uidnumber: 74806
+      - username: "systemtest40"
+        uidnumber: 74807
+      - username: "systemtest41"
+        uidnumber: 74808
+      - username: "systemtest42"
+        uidnumber: 74809
+      - username: "systemtest43"
+        uidnumber: 74810
+      - username: "systemtest44"
+        uidnumber: 74811
+      - username: "systemtest45"
+        uidnumber: 74812
+      - username: "systemtest46"
+        uidnumber: 74813
+      - username: "systemtest47"
+        uidnumber: 74814
+      - username: "systemtest48"
+        uidnumber: 74815
+      - username: "systemtest49"
+        uidnumber: 74816
+      - username: "systemtest50"
+        uidnumber: 74817
+      - username: "systemtest51"
+        uidnumber: 74818
+      - username: "systemtest52"
+        uidnumber: 74819
+      - username: "systemtest53"
+        uidnumber: 74820
+      - username: "systemtest54"
+        uidnumber: 74821
+      - username: "systemtest55"
+        uidnumber: 74822
+      - username: "systemtest56"
+        uidnumber: 74823
+      - username: "systemtest57"
+        uidnumber: 74824
+      - username: "systemtest58"
+        uidnumber: 74825
+      - username: "systemtest59"
+        uidnumber: 74826
+      - username: "systemtest60"
+        uidnumber: 74827
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
     restart: true
