@@ -1,5 +1,5 @@
 image:
-  tag: "tickets-DM-34335"
+  tag: "tickets-DM-34613"
 
 # Reset token storage on every Redis restart.
 redis:

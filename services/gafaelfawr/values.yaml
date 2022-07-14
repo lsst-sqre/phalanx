@@ -134,14 +134,14 @@ config:
     # @default -- Do not use LDAP
     url: ""
 
-    # -- Base DN for the LDAP search to find a user's groups
-    # @default -- None, must be set
-    baseDn: ""
-
     # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
     # set in the Gafaelfawr secret
     # @default -- Use anonymous binds
     userDn: ""
+
+    # -- Base DN for the LDAP search to find a user's groups
+    # @default -- None, must be set
+    groupBaseDn: ""
 
     # -- Object class containing group information
     groupObjectClass: "posixGroup"
@@ -150,6 +150,24 @@ config:
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
 
+    # -- Base DN for the LDAP search to find a user's entry
+    # @default -- Get user metadata from the upstream authentication provider
+    userBaseDn: ""
+
+    # -- Search attribute containing the user's username
+    userSearchAttr: "uid"
+
+    # -- Attribute containing the user's UID number (set to `uidNumber` for
+    # most LDAP servers)
+    # @default -- Get UID from upstream authentication provider
+    uidAttr: ""
+
+    # -- Attribute containing the user's full name
+    nameAttr: "displayName"
+
+    # -- Attribute containing the user's email address
+    emailAttr: "mail"
+
     # -- Base DN for the LDAP search to find a user's username
     # @default -- Get the username from the upstream authentication provider
     usernameBaseDn: ""
@@ -157,14 +175,6 @@ config:
     # -- Attribute matching the `sub` claim of a token to find the record
     # containing the username
     usernameSearchAttr: "voPersonSoRID"
-
-    # -- Base DN for the LDAP search to find a user's UID number
-    # @default -- Get the UID number from the upstream authentication provider
-    uidBaseDn: ""
-
-    # -- Attribute containing the user's UID number (only used if uidBaseDn is
-    # set)
-    uidAttr: "uidNumber"
 
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,

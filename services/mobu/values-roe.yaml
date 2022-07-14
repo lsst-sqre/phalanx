@@ -2,7 +2,7 @@ autostart:
   - name: "firefighter"
     count: 1
     users:
-      - username: "systemtest01"
+      - username: "bot-mobu-recommended"
         uidnumber: 74768
     scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
@@ -14,7 +14,7 @@ autostart:
   - name: "weekly"
     count: 1
     users:
-      - username: "systemtest02"
+      - username: "bot-mobu-weekly"
         uidnumber: 74769
     scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
