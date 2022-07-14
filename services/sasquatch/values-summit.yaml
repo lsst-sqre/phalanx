@@ -40,7 +40,7 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://summit-lsp.lsst.codes
-    STATUS_FEED_URL: https://lsst-sqre.github.io/sasquatch/feeds/summit.json
+    STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/summit.json
 
 kapacitor:
   persistence:

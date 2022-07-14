@@ -31,4 +31,4 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
-    STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
+    STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
