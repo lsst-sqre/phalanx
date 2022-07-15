@@ -20,6 +20,7 @@ argo-cd:
                 - name: lsst-sqre
     rbacConfig:
       policy.csv: |
+        g, lsst-sqre:friends, role:admin
         g, lsst-sqre:square, role:admin
 
 vault_secret:
