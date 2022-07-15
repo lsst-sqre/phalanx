@@ -52,10 +52,10 @@ data:
       {{- else }}
       login_url: "https://cilogon.org/authorize"
       token_url: "https://cilogon.org/oauth2/token"
+      issuer: "https://cilogon.org"
+      {{- end }}
       {{- if .Values.config.cilogon.enrollmentUrl }}
       enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
-      {{- end }}
-      issuer: "https://cilogon.org"
       {{- end }}
       {{- if .Values.config.cilogon.loginParams }}
       login_params:
