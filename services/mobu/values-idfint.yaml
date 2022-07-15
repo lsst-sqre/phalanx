@@ -35,7 +35,7 @@ autostart:
       repo_branch: "prod"
     restart: true
   - name: "tap"
-    count: 60
+    count: 120
     user_spec:
       - username_prefix: "bot-mobu-tap"
         uid_start: 74770
