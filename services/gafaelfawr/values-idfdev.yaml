@@ -8,6 +8,7 @@ redis:
 
 config:
   databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+  loglevel: "DEBUG"
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
@@ -52,7 +53,7 @@ config:
     - "frossie"
     - "jsick"
     - "rra"
-    - "simon.krughoff"
+    - "simonkrughoff"
 
 cloudsql:
   enabled: true

@@ -73,10 +73,10 @@ data:
         - "org.cilogon.userinfo"
       audience: {{ .Values.config.cilogon.clientId | quote }}
       {{- if .Values.config.cilogon.usernameClaim }}
-      username_claim: {{ .Values.config.oidc.usernameClaim | quote }}
+      username_claim: {{ .Values.config.cilogon.usernameClaim | quote }}
       {{- end }}
       {{- if .Values.config.cilogon.uidClaim }}
-      uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
+      uid_claim: {{ .Values.config.cilogon.uidClaim | quote }}
       {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
