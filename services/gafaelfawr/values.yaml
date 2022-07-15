@@ -176,14 +176,6 @@ config:
     # -- Attribute containing the user's email address
     emailAttr: "mail"
 
-    # -- Base DN for the LDAP search to find a user's username
-    # @default -- Get the username from the upstream authentication provider
-    usernameBaseDn: ""
-
-    # -- Attribute matching the `sub` claim of a token to find the record
-    # containing the username
-    usernameSearchAttr: "voPersonSoRID"
-
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,
     # `influxdb-secret` must be set in the Gafaelfawr secret.

@@ -141,10 +141,6 @@ data:
       name_attr: {{ .Values.config.ldap.nameAttr | quote }}
       email_attr: {{ .Values.config.ldap.emailAttr | quote }}
       {{- end }}
-      {{- if .Values.config.ldap.usernameBaseDn }}
-      username_base_dn: {{ .Values.config.ldap.usernameBaseDn | quote }}
-      username_search_attr: {{ .Values.config.ldap.usernameSearchAttr | quote }}
-      {{- end }}
     {{- end }}
 
     {{- if .Values.config.oidcServer.enabled }}
