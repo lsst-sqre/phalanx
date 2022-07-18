@@ -4,8 +4,7 @@ autostart:
   - name: "python"
     count: 1
     users:
-      - username: "systemtest01"
-        uidnumber: 74768
+      - username: "bot-mobu-user"
     scopes: ["exec:notebook"]
     business: "JupyterPythonLoop"
     options:

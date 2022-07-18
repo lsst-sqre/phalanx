@@ -222,6 +222,11 @@ class SecretGenerator:
                 f"Invalid gafaelfawr cloudsql value {use_cloudsql}"
             )
 
+        self.input_field("gafaelfawr", "ldap", "Use LDAP? (y/n):")
+        use_ldap = self.secrets["gaelfawr"]["ldap"]
+        if use_ldap == "y":
+            self.input_field("gafaelfawr", "ldap-password", "LDAP password")
+
         self.input_field("gafaelfawr", "auth_type", "Use cilogon or github?")
         auth_type = self.secrets["gafaelfawr"]["auth_type"]
         if auth_type == "cilogon":

@@ -1,5 +1,3 @@
-![AppVersion: 1.1.7](https://img.shields.io/badge/AppVersion-1.1.7-informational?style=flat-square)
-
 # tap-schema
 
 The TAP_SCHEMA database

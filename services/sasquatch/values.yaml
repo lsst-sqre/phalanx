@@ -1,4 +1,5 @@
 # Default values for Sasquatch.
+
 # -- Override strimzi-kafka configuration.
 strimzi-kafka: {}
 
@@ -12,6 +13,13 @@ influxdb:
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
+    size: 1Ti
   # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
   setDefaultUser:
     enabled: true
@@ -40,12 +48,14 @@ influxdb:
       auth-enabled: true
       max-row-limit: 0
     coordinator:
-      write-timeout: "60s"
-      max-concurrent-queries: 10
-      query-timeout: "900s"
+      write-timeout: "1h"
+      max-concurrent-queries: 0
+      query-timeout: "0s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
+    logging:
+      level: "debug"
   # -- InfluxDB Custom initialization scripts.
   initScripts:
     enabled: true
@@ -64,7 +74,7 @@ chronograf:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- Chronograf ingress configuration.
   # @default -- disabled
   ingress:
@@ -90,9 +100,9 @@ kapacitor:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- InfluxDB connection URL.
-  influxURL: http://sasquatch.influxdb:8086
+  influxURL: http://sasquatch-influxdb.sasquatch:8086
   # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
   existingSecret: sasquatch
   # -- Kapacitor environment variables.
@@ -133,7 +143,6 @@ telegraf:
           database: "telegraf"
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
-
 csc:
   # -- Whether the test csc is deployed.
   enabled: false
@@ -208,7 +217,9 @@ kafka-producers:
         Test
   # -- Namespace where the Test CSC is deployed.
   namespace: sasquatch
-
-# -- Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`)
-# @default -- None, must be set
-vaultSecretsPath: ""
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

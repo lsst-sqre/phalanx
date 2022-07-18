@@ -1,7 +1,6 @@
 apiVersion: v2
+appVersion: 0.1.8
+description: A Helm chart for Kubernetes
 name: sherlock
-version: 1.0.0
-dependencies:
-  - name: sherlock
-    version: 0.1.13
-    repository: https://lsst-sqre.github.io/charts/
+type: application
+version: 0.1.13

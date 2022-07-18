@@ -7,13 +7,3 @@ config:
   nfs_path_2: /repo/LATISS  # Mounted as /volume_2
   nfs_server_2: auxtel-archiver.cp.lsst.org
   butler_uri_2: /volume_2
-
-ingress:
-  enabled: true
-  host: summit-lsp.lsst.codes
-
-vault_path: secret/k8s_operator/summit-lsp.lsst.codes/postgres
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

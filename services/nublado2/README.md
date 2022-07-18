@@ -1,5 +1,3 @@
-![AppVersion: 2.1.0](https://img.shields.io/badge/AppVersion-2.1.0-informational?style=flat-square)
-
 # nublado2
 
 Nublado2 JupyterHub installation
@@ -16,31 +14,24 @@ Kubernetes: `>=1.20.0-0`
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n410.hd8ae7348 |
-| https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
+| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 1.1.3-n474.h8d0a7616 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config.base_url | string | `""` |  |
-| config.butler_secret_path | string | `""` |  |
-| config.cachemachine_image_policy | string | `"available"` |  |
+| config.base_url | string | `""` | base_url must be set in each instantiation of this chart to the URL of the primary ingress.  It's used to construct API requests to the authentication service (which should go through the ingress). |
+| config.butler_secret_path | string | `""` | butler_secret_path must be set here, because it's passed through to the lab rather than being part of the Hub configuration. |
+| config.cachemachine_image_policy | string | `"available"` | Cachemachine image policy: "available" or "desired".  Use "desired" at instances with streaming image support. |
 | config.lab_environment | object | See `values.yaml` | Environment variables to set in spawned lab containers. Each value will be expanded using Jinja 2 templating. |
-| config.pinned_images | list | `[]` |  |
-| config.pull_secret_path | string | `""` |  |
-| config.sizes[0].cpu | int | `1` |  |
-| config.sizes[0].name | string | `"Small"` |  |
-| config.sizes[0].ram | string | `"3072M"` |  |
-| config.sizes[1].cpu | int | `2` |  |
-| config.sizes[1].name | string | `"Medium"` |  |
-| config.sizes[1].ram | string | `"6144M"` |  |
-| config.sizes[2].cpu | int | `4` |  |
-| config.sizes[2].name | string | `"Large"` |  |
-| config.sizes[2].ram | string | `"12288M"` |  |
+| config.pinned_images | list | `[]` | images to pin to spawner menu |
+| config.pull_secret_path | string | `""` | pull_secret_path must also be set here; it specifies resources in the lab namespace |
+| config.shutdown_on_logout | bool | `true` | shut down user pods on logout.  Superfluous, because our LogoutHandler enforces this in any event, but nice to make explicit. |
+| config.sizes | list | `[{"cpu":1,"name":"Small","ram":"3072M"},{"cpu":2,"name":"Medium","ram":"6144M"},{"cpu":4,"name":"Large","ram":"12288M"}]` | definitions of Lab sizes available in a given instance |
 | config.user_resources_template | string | See `values.yaml` | Templates for the user resources to create for each lab spawn. This is a string that can be templated and then loaded as YAML to generate a list of Kubernetes objects to create. |
-| config.volume_mounts | list | `[]` |  |
-| config.volumes | list | `[]` |  |
+| config.volume_mounts | list | `[]` | Where to mount volumes for a particular instance |
+| config.volumes | list | `[]` | Volumes to use for a particular instance |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | jupyterhub.cull.enabled | bool | `true` |  |
 | jupyterhub.cull.every | int | `600` |  |
 | jupyterhub.cull.maxAge | int | `5184000` |  |
@@ -71,11 +62,13 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"lsstsqre/nublado2"` |  |
-| jupyterhub.hub.image.tag | string | `"2.1.0"` |  |
+| jupyterhub.hub.image.tag | string | `"2.3.1"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` |  |
+| jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
+| jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
 | jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
 | jupyterhub.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-method" | string | `"GET"` |  |

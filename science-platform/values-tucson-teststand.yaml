@@ -14,11 +14,13 @@ exposurelog:
   enabled: true
 gafaelfawr:
   enabled: true
+hips:
+  enabled: false
+ingress_nginx:
+  enabled: true
 mobu:
   enabled: false
 moneypenny:
-  enabled: true
-ingress_nginx:
   enabled: true
 narrativelog:
   enabled: true
@@ -52,11 +54,10 @@ tap:
   enabled: false
 tap_schema:
   enabled: false
-# EFD already provides telegraf namespace.  Gotta work that out.
 telegraf:
-  enabled: false
+  enabled: true
 telegraf-ds:
-  enabled: false
+  enabled: true
 times_square:
   enabled: false
 vault_secrets_operator:

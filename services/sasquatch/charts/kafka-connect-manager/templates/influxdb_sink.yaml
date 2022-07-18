@@ -77,6 +77,13 @@ spec:
             value: {{ $.Values.env.kafkaBrokerUrl | quote }}
           - name: KAFKA_CONNECT_URL
             value: {{ $.Values.env.kafkaConnectUrl | quote }}
+          - name: KAFKA_USERNAME
+            value: {{ $.Values.env.kafkaUsername | quote }}
+          - name: KAFKA_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: sasquatch
+                key: kafka-connect-manager-password
 {{- end }}
 {{- end }}
 {{- end }}

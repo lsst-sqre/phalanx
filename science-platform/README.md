@@ -1,5 +1,3 @@
-
-
 # science-platform
 
 ## Values
@@ -12,6 +10,7 @@
 | datalinker.enabled | bool | `false` |  |
 | exposurelog.enabled | bool | `false` |  |
 | gafaelfawr.enabled | bool | `false` |  |
+| hips.enabled | bool | `false` |  |
 | ingress_nginx.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |

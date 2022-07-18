@@ -11,6 +11,10 @@ telegraf-ds:
         key: influx-token
   rbac:
     create: true
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 900m
 
   serviceAccount:
     name: telegraf-ds

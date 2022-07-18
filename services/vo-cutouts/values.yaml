@@ -11,7 +11,7 @@ fullnameOverride: ""
 
 image:
   # -- vo-cutouts image to use
-  repository: "lsstsqre/vo-cutouts"
+  repository: "ghcr.io/lsst-sqre/vo-cutouts"
 
   # -- Pull policy for the vo-cutouts image
   pullPolicy: "IfNotPresent"
@@ -46,10 +46,6 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
-  # -- Configuration for the Butler repository to use
-  # @default -- None, must be set
-  butlerRepository: ""
-
   # -- URL for the PostgreSQL database
   # @default -- None, must be set
   databaseUrl: ""
@@ -82,7 +78,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.30.0"
+    tag: "1.31.1"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -102,7 +98,7 @@ cutoutWorker:
 
   image:
     # -- Stack image to use for cutouts
-    repository: "lsstsqre/vo-cutouts-worker"
+    repository: "ghcr.io/lsst-sqre/vo-cutouts-worker"
 
     # -- Tag of vo-cutouts worker image to use
     # @default -- The appVersion of the chart
@@ -151,7 +147,7 @@ redis:
     repository: "redis"
 
     # -- Redis image tag to use
-    tag: "6.2.7"
+    tag: "7.0.3"
 
     # -- Pull policy for the Redis image
     pullPolicy: "IfNotPresent"
@@ -193,6 +189,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
+
+  # -- URI to the Butler configuration of available repositories
+  # @default -- Set by Argo CD
+  butlerRepositoryIndex: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

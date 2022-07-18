@@ -1,39 +1,28 @@
-cadc-tap:
-  fullnameOverride: "cadc-tap"
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 8.0
+    memory: "32G"
 
-  imagePullSecrets:
-    - name: "pull-secret"
-  ingress:
-    host: "data.lsst.cloud"
-  vaultSecretsPath: "secret/k8s_operator/data.lsst.cloud/tap"
+replicaCount: 2
 
+config:
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "http://async-results.lsst.codes"
+  jvmMaxHeapSize: "31G"
+
+qserv:
+  host: "10.140.1.211:4040"
+  mock:
+    enabled: false
+
+uws:
   resources:
     requests:
-      cpu: 2.0
-      memory: "2G"
+      cpu: 0.25
+      memory: "1G"
     limits:
-      cpu: 8.0
-      memory: "32G"
-
-  config:
-    gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "http://async-results.lsst.codes"
-    jvmMaxHeapSize: "31G"
-
-  qserv:
-    host: "10.140.1.211:4040"
-    mock:
-      enabled: false
-
-  uws:
-    resources:
-      requests:
-        cpu: 0.25
-        memory: "1G"
-      limits:
-        cpu: 2.0
-        memory: "4G"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
+      cpu: 2.0
+      memory: "4G"

@@ -9,6 +9,12 @@ kafka-connect-manager:
   influxdbSink:
     influxdb-sink:
       enabled: true
+      tasksMax: 10
+
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
 
 chronograf:
   ingress:
@@ -25,6 +31,4 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
-    STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
-
-vaultSecretsPath: secret/k8s_operator/data-dev.lsst.cloud
+    STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json

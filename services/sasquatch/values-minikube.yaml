@@ -10,6 +10,11 @@ kafka-connect-manager:
     influxdb-sink:
       enabled: true
 
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: minikube.lsst.codes
+
 chronograf:
   ingress:
     enabled: true
@@ -26,5 +31,3 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://minikube.lsst.codes
     STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/minikube.json"
-
-vaultSecretsPath: secret/k8s_operator/minikube.lsst.codes

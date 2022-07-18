@@ -1,10 +1,5 @@
 apiVersion: v2
+appVersion: "1.0.0"
+description: User provisioning actions for the Science Platform
 name: moneypenny
-version: 1.0.0
-dependencies:
-  - name: moneypenny
-    version: 1.0.2
-    repository: https://lsst-sqre.github.io/charts/
-  - name: pull-secret
-    version: 0.1.2
-    repository: https://lsst-sqre.github.io/charts/
+version: 1.0.2

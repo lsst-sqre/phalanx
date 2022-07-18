@@ -7,10 +7,10 @@ dependencies:
   - name: strimzi-kafka
     version: 1.0.0
   - name: strimzi-registry-operator
-    version: 1.2.0
+    version: 1.2.1
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
-    version: 4.11.0
+    version: 4.12.0
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
     version: 1.0.0
@@ -31,3 +31,5 @@ dependencies:
     version: 0.10.1
     repository: https://lsst-ts.github.io/charts/
     condition: kafka-producers.enabled
+  - name: kafdrop
+    version: 1.0.0

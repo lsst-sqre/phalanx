@@ -1,6 +1,3 @@
-image:
-  tag: "tickets-DM-34335"
-
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -8,46 +5,52 @@ redis:
 
 config:
   databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+  loglevel: "DEBUG"
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
 
-  github:
-    clientId: "f46555b3f4c524e764ac"
+  cilogon:
+    clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
+    enrollmentUrl: "https://registry-test.lsst.codes/registry/co_petitions/start/coef:6"
+    test: true
+    usernameClaim: "username"
 
-  # Allow access by GitHub team.
+  firestore:
+    project: "rsp-firestore-dev-31c4"
+
+  ldap:
+    url: "ldaps://ldap-test.cilogon.org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    groupObjectClass: "eduMember"
+    groupMemberAttr: "hasMember"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userSearchAttr: "voPersonApplicationUID"
+
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - "g_science-platform-idf-dev"
     "exec:admin":
-      - "lsst-sqre-square"
+      - "g_science-platform-idf-dev"
     "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "read:image":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
     "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_science-platform-idf-dev"
 
   initialAdmins:
     - "afausti"
-    - "athornton"
+    - "adam"
     - "cbanek"
     - "frossie"
-    - "jonathansick"
+    - "jsick"
     - "rra"
     - "simonkrughoff"
-
-  errorFooter: |
-    To report problems or ask for help, please open an issue in the
-    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-    rubin-dp0/Support project</a>.
 
 cloudsql:
   enabled: true

@@ -1,5 +1,3 @@
-![AppVersion: 0.1.0](https://img.shields.io/badge/AppVersion-0.1.0-informational?style=flat-square)
-
 # sasquatch
 
 Rubin Observatory's telemetry service.
@@ -8,13 +6,14 @@ Rubin Observatory's telemetry service.
 
 | Repository | Name | Version |
 |------------|------|---------|
+|  | kafdrop | 1.0.0 |
 |  | kafka-connect-manager | 1.0.0 |
 |  | strimzi-kafka | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
-| https://helm.influxdata.com/ | influxdb | 4.11.0 |
+| https://helm.influxdata.com/ | influxdb | 4.12.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://helm.influxdata.com/ | telegraf | 1.8.18 |
-| https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 1.2.0 |
+| https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 1.2.1 |
 | https://lsst-ts.github.io/charts/ | csc | 0.9.2 |
 | https://lsst-ts.github.io/charts/ | kafka-producers | 0.10.1 |
 
@@ -26,7 +25,7 @@ Rubin Observatory's telemetry service.
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.9.4"}` | Chronograf image tag. |
 | chronograf.ingress | object | disabled | Chronograf ingress configuration. |
-| chronograf.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
+| chronograf.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | csc.enabled | bool | `false` | Whether the test csc is deployed. |
 | csc.env | object | `{"LSST_DDS_PARTITION_PREFIX":"test","LSST_SITE":"test","OSPL_ERRORFILE":"/tmp/ospl-error-test.log","OSPL_INFOFILE":"/tmp/ospl-info-test.log","OSPL_URI":"file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml"}` | Enviroment variables to run the Test CSC. |
 | csc.env.OSPL_URI | string | `"file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml"` | Use a single process configuration for DDS OpenSplice. |
@@ -36,10 +35,13 @@ Rubin Observatory's telemetry service.
 | csc.namespace | string | `"sasquatch"` | Namespace where the Test CSC is deployed. |
 | csc.osplVersion | string | `"V6.10.4"` | DDS OpenSplice version. |
 | csc.useExternalConfig | bool | `false` | Wether to use an external configuration for DDS OpenSplice. |
-| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":10,"query-timeout":"900s","write-timeout":"60s"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
 | influxdb.initScripts | object | `{"enabled":true,"scripts":{"init.iql":"CREATE DATABASE \"telegraf\" WITH DURATION 30d REPLICATION 1 NAME \"rp_30d\"\n\n"}}` | InfluxDB Custom initialization scripts. |
+| influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
+| influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | kafka-connect-manager | object | `{}` | Override strimzi-kafka configuration. |
 | kafka-producers.enabled | bool | `false` | Whether the kafka-producer for the test csc is deployed. |
@@ -67,8 +69,8 @@ Rubin Observatory's telemetry service.
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.4"}` | Kapacitor image tag. |
-| kapacitor.influxURL | string | `"http://sasquatch.influxdb:8086"` | InfluxDB connection URL. |
-| kapacitor.persistence | object | `{"enabled":true,"size":"16Gi"}` | Chronograf data persistence configuration. |
+| kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
+| kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","operatorNamespace":"sasquatch","watchNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["http://hub.nublado2:8081/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by dedault. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
@@ -77,4 +79,3 @@ Rubin Observatory's telemetry service.
 | telegraf.env[0] | object | `{"name":"TELEGRAF_PASSWORD","valueFrom":{"secretKeyRef":{"key":"telegraf-password","name":"sasquatch"}}}` | Telegraf password. |
 | telegraf.podLabels | object | `{"hub.jupyter.org/network-access-hub":"true"}` | Allow network access to JupyterHub pod. |
 | telegraf.service.enabled | bool | `false` | Telegraf service. |
-| vaultSecretsPath | string | None, must be set | Path to the Vault secrets (`secret/k8s_operator/<hostname>/sasquatch`) |

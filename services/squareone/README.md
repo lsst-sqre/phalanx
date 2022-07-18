@@ -1,5 +1,3 @@
-![AppVersion: 0.6.0](https://img.shields.io/badge/AppVersion-0.6.0-informational?style=flat-square)
-
 # squareone
 
 Squareone is the homepage UI for the Rubin Science Platform.
@@ -9,12 +7,6 @@ Squareone is the homepage UI for the Rubin Science Platform.
 ## Source Code
 
 * <https://github.com/lsst-sqre/squareone>
-
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://lsst-sqre.github.io/charts/ | pull-secret | 0.1.2 |
 
 ## Values
 
@@ -28,6 +20,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.semaphoreUrl | string | `nil` | URL to the Semaphore (user notifications) API service. @default null disables the Semaphore integration |
 | config.siteDescription | string | `"Access Rubin Observatory Legacy Survey of Space and Time data.\n"` | Site description, used in meta tags |
 | config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
+| config.timesSquareUrl | string | `nil` | URL to the Times Square (parameterized notebooks) API service. @default null disables the Times Square integration |
 | fullnameOverride | string | `""` | Overrides the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD Application | Base URL for the environment |
 | global.host | string | Set by Argo CD Application | Host name for ingress |

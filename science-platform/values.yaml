@@ -10,6 +10,8 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: false
+hips:
+  enabled: false
 ingress_nginx:
   enabled: false
 mobu:

@@ -1,11 +1,3 @@
-ingress:
-  enabled: true
-  host: "lsst-lsp-stable.ncsa.illinois.edu"
-  annotations:
-    nginx.ingress.kubernetes.io/auth-url: "https://lsst-lsp-stable.ncsa.illinois.edu/auth?scope=exec:admin"
-
-vaultSecretsPath: "secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret"
-
 autostart:
   jupyter: |
     {
@@ -27,8 +19,8 @@ autostart:
           "type": "SimpleRepoMan",
           "images": [
             {
-              "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2022_12",
-              "name": "Weekly 2022_12"
+              "image_url": "registry.hub.docker.com/lsstsqre/sciplat-lab:w_2022_22",
+              "name": "Weekly 2022_22"
             }
           ]
         }

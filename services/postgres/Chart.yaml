@@ -1,10 +1,7 @@
 apiVersion: v2
 name: postgres
 version: 1.0.0
-dependencies:
-- name: postgres
-  version: ">=0.1.1"
-  repository: https://lsst-sqre.github.io/charts/
-- name: pull-secret
-  version: 0.1.2
-  repository: https://lsst-sqre.github.io/charts/
+description: Postgres RDBMS for LSP
+sources:
+  - https://github.com/lsst-sqre/rsp-postgres
+appVersion: 0.0.5

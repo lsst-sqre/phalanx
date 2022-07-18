@@ -4,9 +4,13 @@ autostart:
   - name: "firefighter"
     count: 1
     users:
-      - username: "systemtest01"
+      - username: "bot-mobu-recommended"
         uidnumber: 74768
-    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
     business: "NotebookRunner"
     options:
       repo_url: "https://github.com/SimonKrughoff/system-test.git"
@@ -16,9 +20,13 @@ autostart:
   - name: "weekly"
     count: 1
     users:
-      - username: "systemtest02"
+      - username: "bot-mobu-weekly"
         uidnumber: 74769
-    scopes: ["exec:notebook", "exec:portal", "read:tap"]
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
     business: "NotebookRunner"
     options:
       jupyter:
@@ -27,10 +35,10 @@ autostart:
       repo_branch: "prod"
     restart: true
   - name: "tap"
-    count: 1
-    users:
-      - username: "systemtest03"
-        uidnumber: 74770
+    count: 120
+    user_spec:
+      username_prefix: "bot-mobu-tap"
+      uid_start: 74770
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
     restart: true

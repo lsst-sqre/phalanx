@@ -18,6 +18,11 @@ kafka-connect-manager:
     influxdb-sink:
       enabled: true
 
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: lsst-lsp-stable.ncsa.illinois.edu
+
 chronograf:
   persistence:
     storageClass: local-path
@@ -39,5 +44,3 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: local-path
-
-vaultSecretsPath: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu
