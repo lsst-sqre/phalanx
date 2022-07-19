@@ -17,7 +17,7 @@ exposurelog:
 gafaelfawr:
   enabled: true
 hips:
-  enabled: true
+  enabled: false
 ingress_nginx:
   enabled: false
 mobu:
