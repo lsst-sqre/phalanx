@@ -1,0 +1,6 @@
+config:
+  phalanx_env: "usdfprod"
+ 
+pull-secret:
+  enabled: true
+  path: secret/rubin/usdf-rsp/pull-secret

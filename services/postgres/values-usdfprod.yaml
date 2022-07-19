@@ -1,0 +1,9 @@
+
+jupyterhub_db:
+  user: 'jovyan'
+  db: 'jupyterhub'
+gafaelfawr_db:
+  user: 'gafaelfawr'
+  db: 'gafaelfawr'
+
+postgresStorageClass: 'wekafs--sdf-k8s01'

@@ -1,0 +1,70 @@
+environment: usdfprod
+fqdn: usdf-rsp.slac.stanford.edu
+vault_path_prefix: secret/rubin/usdf-rsp
+# butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+repoURL: https://github.com/slaclab/phalanx.git
+
+alert_stream_broker:
+  enabled: false
+cachemachine:
+  enabled: true
+cert_manager:
+  enabled: false
+datalinker:
+  enabled: true
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: true
+hips:
+  enabled: false
+ingress_nginx:
+  enabled: false
+mobu:
+  enabled: true
+moneypenny:
+  enabled: true
+narrativelog:
+  enabled: false
+noteburst:
+  enabled: false
+nublado2:
+  enabled: true
+obstap:
+  enabled: false
+plot_navigator:
+  enabled: false
+portal:
+  enabled: true
+postgres:
+  enabled: true
+sasquatch:
+  enabled: false
+production_tools:
+  enabled: false
+semaphore:
+  enabled: true
+sherlock:
+  enabled: true
+squareone:
+  enabled: true
+squash_api:
+  enabled: false
+strimzi:
+  enabled: false
+strimzi_registry_operator:
+  enabled: false
+tap:
+  enabled: true
+tap_schema:
+  enabled: true
+telegraf:
+  enabled: true
+telegraf-ds:
+  enabled: true
+times_square:
+  enabled: false
+vault_secrets_operator:
+  enabled: true
+vo_cutouts:
+  enabled: true
