@@ -1,0 +1,107 @@
+argo-cd:
+  redis:
+    enabled: true
+
+  server:
+    ingress:
+      enabled: true
+      hosts:
+        - "usdf-rsp.slac.stanford.edu"
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+      paths:
+        - /argo-cd(/|$)(.*)
+
+    extraArgs:
+      - "--basehref=/argo-cd"
+      - "--insecure=true"
+
+    env:
+      - name: HTTP_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: HTTPS_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: NO_PROXY
+        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+
+    config:
+      url: https://usdf-rsp.slac.stanford.edu/argo-cd
+      oidc.config: |
+        name: SLAC 
+        issuer: https://dex.slac.stanford.edu/
+        clientID: $oidc.clientId
+        clientSecret: $oidc.clientSecret
+        # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
+        requestedScopes: ["openid", "profile", "email", "groups"]
+        # Optional set of OIDC claims to request on the ID token.
+        requestedIDTokenClaims: {"groups": {"essential": true}}
+
+      #dex.config: |
+      #  connectors:
+      #    # Auth using Google.
+      #    # See https://dexidp.io/docs/connectors/google/
+      #    - type: google
+      #      id: google
+      #      name: Google
+      #      config:
+      #        clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
+      #        clientSecret: $dex.clientSecret
+      #        hostedDomains:
+      #          - lsst.cloud
+      #        redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
+      helm.repositories: |
+        - url: https://lsst-sqre.github.io/charts/
+          name: lsst-sqre
+        #- url: https://ricoberger.github.io/helm-charts/
+        #  name: ricoberger
+        #- url: https://kubernetes.github.io/ingress-nginx/
+        #  name: ingress-nginx
+        - url: https://charts.helm.sh/stable
+          name: stable
+
+  repoServer:
+
+    env:
+      - name: HTTP_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: HTTPS_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: NO_PROXY
+        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+
+  controller:
+
+    env:
+      - name: HTTP_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: HTTPS_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: NO_PROXY
+        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+
+    rbacConfig:
+      policy.csv: |
+        g, adam@lsst.cloud, role:admin
+        g, afausti@lsst.cloud, role:admin
+        g, christine@lsst.cloud, role:admin
+        g, frossie@lsst.cloud, role:admin
+        g, jsick@lsst.cloud, role:admin
+        g, krughoff@lsst.cloud, role:admin
+        g, rra@lsst.cloud, role:admin
+        g, ytl@slac.stanford.edu, role:admin
+      scopes: "[email]"
+
+  configs:
+    secret:
+      createSecret: false
+
+vault_secret:
+  enabled: true
+  path: secret/rubin/usdf-rsp/argocd
+
+
+pull-secret:
+  enabled: true
+  path: secret/rubin/usdf-rsp/pull-secret
+

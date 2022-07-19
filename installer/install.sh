@@ -8,7 +8,7 @@ export VAULT_SECRET_ID=${3:?$USAGE}
 echo "VAULT_SECRET_ID=${VAULT_SECRET_ID}"
 export VAULT_ADDR=${VAULT_ADDR:-https://vault.lsst.codes}
 #VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-$ENVIRONMENT.yaml`
-VAULT_PATH_PREFIX=$(cat ../science-platform/values-usdfdev.yaml | grep vault_path_prefix | awk '{print $2}')
+VAULT_PATH_PREFIX=$(cat ../science-platform/values-$ENVIRONMENT.yaml | grep vault_path_prefix | awk '{print $2}')
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
@@ -16,7 +16,7 @@ HTTP_URL=$( echo "$GIT_URL" | sed s%git@%https://% | sed s%github.com:%github.co
 # Github runs in a detached head state, but sets GITHUB_REF,
 # extract the branch from it.  If we're there, use that branch.
 # git branch --show-current will return empty in deatached head.
-GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
+GIT_BRANCH=${GITHUB_HEAD_REF:-`git rev-parse --abbrev-ref HEAD`}
 
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
