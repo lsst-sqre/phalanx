@@ -93,7 +93,7 @@ User pods don't spawn, reporting "permission denied" from Moneypenny
 **Symptoms:** A user pod fails to spawn, and the error message says that Moneypenny did not have permission to execute.
 
 **Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.
-This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
+This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of July 2022), or because that storage had been lost.
 
 **Solution:** :doc:`gafaelfawr/recreate-token`
 

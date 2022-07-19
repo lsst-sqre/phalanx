@@ -27,6 +27,7 @@ Gafaelfawr supports authentication via either OpenID Connect (generally through 
    debugging
    storage
    recreate-token
+   github-organizations
 
 .. seealso::
 
