@@ -96,3 +96,17 @@ User pods don't spawn, reporting "permission denied" from Moneypenny
 This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
 
 **Solution:** :doc:`gafaelfawr/recreate-token`
+
+Login fails with "bad verification code" error
+==============================================
+
+**Symptoms:** When attempting to authenticate to a Science Platform deployment using GitHub, the user gets the error message ``Authentication provider failed: bad_verification_code: The code passed is incorrect or expired.``
+
+**Cause:** GitHub login failed after the OAuth 2.0 interaction with GitHub was successfully completed, and then the user reloaded the failed login page (or reloaded the page while Gafaelfawr was attempting to complete the authentication).
+This error is normal and expected if one reloads a GitHub login error page or interrupts the GitHub login.
+It itself doesn't represent a problem, and is probably a red herring distracting from whatever real problem there is.
+Most likely, there is some failure on the Gafaelfawr side after GitHub authentication that's preventing the authentication from completing or making it take a long time, and the user ran out of patience and reloaded the page (which will never work).
+
+**Solution:** Don't reload the login page.
+Find the underlying problem and troubleshoot it.
+For example, if Gafaelfawr Redis storage is unavailable, Gafaelfawr may time out or fail to store the user's token after completing GitHub authentication.
