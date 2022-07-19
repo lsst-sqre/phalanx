@@ -1,11 +1,10 @@
 jupyterhub:
-  debug:
-    enabled: true
+
   hub:
-    resources:
-      requests:
-        cpu: "1"
-        memory: 3Gi
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 432000
+
   cull:
     enabled: true
     users: false
@@ -13,6 +12,7 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
+    
   ingress:
     hosts: ["usdf-rsp.slac.stanford.edu"]
     annotations:
@@ -22,6 +22,7 @@ config:
   base_url: "https://usdf-rsp.slac.stanford.edu"
   butler_secret_path: "secret/rubin/usdf-rsp/butler-secret"
   pull_secret_path: "secret/rubin/usdf-rsp/pull-secret"
+  cachemachine_image_policy: "desired"
 
   lab_environment:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
@@ -373,8 +374,8 @@ config:
           requests:
             storage: 1Gi
 
-vault_secret_path: "secret/rubin/usdf-staffrsp-dev/nublado2"
+vault_secret_path: "secret/rubin/usdf-rsp/nublado2"
 
 pull-secret:
   enabled: true
-  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
+  path: "secret/rubin/usdf-rsp/pull-secret"
