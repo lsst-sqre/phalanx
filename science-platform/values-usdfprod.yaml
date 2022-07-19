@@ -1,5 +1,5 @@
 environment: usdfprod
-fqdn: usdf-rsp
+fqdn: usdf-rsp.slac.stanford.edu
 vault_path_prefix: secret/rubin/usdf-rsp
 # butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 repoURL: https://github.com/slaclab/phalanx.git
