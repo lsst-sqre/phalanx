@@ -17,6 +17,7 @@ jupyterhub:
     hosts: ["usdf-rsp.slac.stanford.edu"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://usdf-rsp.slac.stanford.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://usdf-rsp.slac.stanford.edu/auth?scope=exec:notebook&notebook=true"
 
 config:
   base_url: "https://usdf-rsp.slac.stanford.edu"
