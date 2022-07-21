@@ -44,7 +44,7 @@ autostart:
     restart: true
     options:
       tap_sync: true
-      tap_query_directory: "dp0.2"
+      tap_query_set: "dp0.2"
   - name: "async-tap-medium"
     count: 50
     user_spec:
@@ -55,7 +55,7 @@ autostart:
     restart: true
     options:
       tap_sync: false
-      tap_query_directory: "dp0.2-med-scans"
+      tap_query_set: "dp0.2-med-scans"
   - name: "async-tap-long"
     count: 50
     user_spec:
@@ -66,4 +66,4 @@ autostart:
     restart: true
     options:
       tap_sync: false
-      tap_query_directory: "dp0.2-long-scans"
+      tap_query_set: "dp0.2-long-scans"
