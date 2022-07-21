@@ -51,6 +51,10 @@ spec:
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
+            - name: AWS_SECRET_ACCESS_KEY 
+              value: "/etc/creds/AWS_SECRET_ACCESS_KEY"
+            - name: AWS_ACCESS_KEY_ID
+              value: "/etc/creds/AWS_ACCESS_KEY_ID"   
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
           ports:

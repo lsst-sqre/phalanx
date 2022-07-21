@@ -1,6 +1,6 @@
 config:
-  # gcsBucket: "async-results.lsst.codes"
-  # gcsBucketUrl: "http://async-results.lsst.codes"
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "https://cccephs3.in2p3.fr:8080"
   jvmMaxHeapSize: "31G"
 
 qserv:
@@ -10,7 +10,7 @@ qserv:
 image:
   # -- tap image to use
   repository: "gabrimaine/lsst-tap-service"
-    
+  tag: "1.2.1-CC"
 # secrets:
 #   enabled: false
 
