@@ -52,9 +52,15 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
             - name: AWS_SECRET_ACCESS_KEY 
-              value: {{% .Secrets.AWS_SECRET_ACCESS_KEY %}}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_SECRET_ACCESS_KEY"
             - name: AWS_ACCESS_KEY_ID
-              value: {{% .Secrets.AWS_ACCESS_KEY_ID %}}   
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_ACCESS_KEY_ID"
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
           ports:
