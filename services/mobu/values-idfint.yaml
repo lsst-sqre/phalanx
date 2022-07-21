@@ -43,9 +43,9 @@ autostart:
     business: "TAPQueryRunner"
     restart: true
     options:
-      tap_sync: false
+      tap_sync: true
       tap_query_directory: "dp0.2"
-  - name: "aync-tap-medium"
+  - name: "async-tap-medium"
     count: 50
     user_spec:
       username_prefix: "async-mobu-tap"
@@ -56,7 +56,7 @@ autostart:
     options:
       tap_sync: false
       tap_query_directory: "dp0.2-med-scans"
-  - name: "aync-tap-long"
+  - name: "async-tap-long"
     count: 50
     user_spec:
       username_prefix: "async-mobu-tap"
