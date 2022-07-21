@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  tag: "suit-2022.4"
+  tag: "suit-2022.5"
 
 config:
   volumes:
