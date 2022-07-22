@@ -110,3 +110,16 @@ Most likely, there is some failure on the Gafaelfawr side after GitHub authentic
 **Solution:** Don't reload the login page.
 Find the underlying problem and troubleshoot it.
 For example, if Gafaelfawr Redis storage is unavailable, Gafaelfawr may time out or fail to store the user's token after completing GitHub authentication.
+
+User keeps logging in through the wrong identity provider
+=========================================================
+
+**Symptoms**: When attempting to use a different identity provider for authentication, such as when linking a different identity to the same account, the CILogon screen to select an identity provider doesn't appear.
+Instead, the user is automatically sent to the last identity provider they used.
+
+**Cause:** The CILogon identity provider selection screen supports remembering your selection, in which case it's stored in a browser cookie or local storage and you are not prompted again.
+Even when you want to be prompted.
+
+**Solution:** Have the user go to `https://cilogin.org/me <https://cilogon.org/me>`__ and choose "Delete ALL".
+This will clear their remembered selection.
+They can they retry whatever operation they were attempting.
