@@ -93,6 +93,33 @@ User pods don't spawn, reporting "permission denied" from Moneypenny
 **Symptoms:** A user pod fails to spawn, and the error message says that Moneypenny did not have permission to execute.
 
 **Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.
-This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of October 2021), or because that storage had been lost.
+This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of July 2022), or because that storage had been lost.
 
 **Solution:** :doc:`gafaelfawr/recreate-token`
+
+Login fails with "bad verification code" error
+==============================================
+
+**Symptoms:** When attempting to authenticate to a Science Platform deployment using GitHub, the user gets the error message ``Authentication provider failed: bad_verification_code: The code passed is incorrect or expired.``
+
+**Cause:** GitHub login failed after the OAuth 2.0 interaction with GitHub was successfully completed, and then the user reloaded the failed login page (or reloaded the page while Gafaelfawr was attempting to complete the authentication).
+This error is normal and expected if one reloads a GitHub login error page or interrupts the GitHub login.
+It itself doesn't represent a problem, and is probably a red herring distracting from whatever real problem there is.
+Most likely, there is some failure on the Gafaelfawr side after GitHub authentication that's preventing the authentication from completing or making it take a long time, and the user ran out of patience and reloaded the page (which will never work).
+
+**Solution:** Don't reload the login page.
+Find the underlying problem and troubleshoot it.
+For example, if Gafaelfawr Redis storage is unavailable, Gafaelfawr may time out or fail to store the user's token after completing GitHub authentication.
+
+User keeps logging in through the wrong identity provider
+=========================================================
+
+**Symptoms**: When attempting to use a different identity provider for authentication, such as when linking a different identity to the same account, the CILogon screen to select an identity provider doesn't appear.
+Instead, the user is automatically sent to the last identity provider they used.
+
+**Cause:** The CILogon identity provider selection screen supports remembering your selection, in which case it's stored in a browser cookie or local storage and you are not prompted again.
+Even when you want to be prompted.
+
+**Solution:** Have the user go to `https://cilogin.org/me <https://cilogon.org/me>`__ and choose "Delete ALL".
+This will clear their remembered selection.
+They can they retry whatever operation they were attempting.
