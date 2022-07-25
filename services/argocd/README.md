@@ -4,7 +4,7 @@
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 4.9.14 |
+| https://argoproj.github.io/argo-helm | argo-cd | 4.10.0 |
 
 ## Values
 
