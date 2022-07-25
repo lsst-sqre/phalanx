@@ -4,6 +4,9 @@ influxdb:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
+  persistence:
+    enabled: true
+    size: 15Ti
 
 kafka-connect-manager:
   influxdbSink:
