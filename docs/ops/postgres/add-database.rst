@@ -26,13 +26,14 @@ identical and should reflect the service that will consume the database,
 e.g. ``gafaelfawr`` or ``exposurelog``.  We will use ``exposurelog`` as
 the model for the remainder of this document.
 
-==================================
-Add the database to the deployment
-==================================
+==========================
+Add the database to charts
+==========================
 
-Go to the ``services/postgres/templates`` directory from the Phalanx
-root, and edit ``deployment.yaml`` to add the new database/password
-entry.  You should copy an existing entry, and it should look like this:
+First, create the entries in ``charts``.  Go to the
+``charts/postgres/templates`` directory, and edit ``deployment.yaml`` to
+add the new database/password entry.  You should copy an existing
+entry, and it should look like this:
 
    .. code-block:: yaml
 
@@ -48,14 +49,17 @@ entry.  You should copy an existing entry, and it should look like this:
             key: exposurelog_password
       {{- end }}
 
-=====================================
-Add the database to Phalanx installer
-=====================================
+Once you've done that, make sure you increment the chart version number in
+``charts/postgres/Chart.yaml``.
 
-Next add a password entry to Phalanx's installer, so the next time a new
-cluster is deployed or an extant cluster is redeployed, the password
-will be created.  This belongs in ``installer/generate_secrets.py`` in
-the ``_postgres()`` method.
+===========================
+Add the database to phalanx
+===========================
+
+Next, tackle ``phalanx``.  First, add the password entry to Phalanx's
+installer, so the next time a new cluster is deployed or an extant
+cluster is redeployed, the password will be created.  This belongs in
+``installer/generate_secrets.py`` in the ``_postgres()`` method.
 
 Typically we use passwords that are ASCII representations of random
 32-byte hexadecimal sequences.  The passwords for all the non-root
@@ -65,6 +69,9 @@ and changing the name to reflect your service is usually correct:
    .. code-block:: python
 
       self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
+
+Make the Phalanx ``services/postgres/Chart.yaml`` entry depend on the
+new chart version you earlier created.
 
 Finally, go edit the postgres ``values-<env>.yaml`` files and add
 a section for your new database with appropriate ``user`` and ``db``
@@ -107,13 +114,9 @@ Restart with new values
 =======================
 
 Now it's finally time to synchronize Postgres in each environment.
-There is no new application version, so all you should need to do is
-resynchronize the deployment from ArgoCD.
 
-This will cause a brief service interruption in the cluster, as the
-existing deployment is recreated with additional environment variables
-and PostgreSQL restarts, so bear that and your cluster's maintenance
-window policy in mind.
+This will cause a brief service interruption in the cluster, so bear
+that and your cluster's maintenance window policy in mind.
 
 Much of the time, the restart of the ``postgres`` deployment gets stuck
 and the old Pod will not terminate and allow the new one to run.  If

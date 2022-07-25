@@ -42,6 +42,7 @@ General development and operations
    service-guide/local-development
    service-guide/sync-argo-cd
    service-guide/upgrade
+   service-guide/chart-changes
 
 Specific tasks
 --------------
