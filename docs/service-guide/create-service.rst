@@ -5,7 +5,7 @@ Create a new service
 This documentation is intended for service administrators who are writing a new service in Python.
 If the goal is to instead deploy a third-party service with its own Helm chart in the Rubin Science Platform, see :doc:`add-external-chart`.
 
-To be deployed in the Rubin Science Platform, a service must come in the form of one or more Docker images and a Helm chart (or Kustomize configuration, although no one currently uses that approach) that deploys those images in Kubernetes.
+To be deployed in the Rubin Science Platform, a service must come in the form of one or more Docker images and a Helm chart (or Kustomize configuration, although no service currently uses that approach) that deploys those images in Kubernetes.
 
 After you have finished the steps here, go to :doc:`add-service`.
 
@@ -51,7 +51,7 @@ Create the Helm chart
 To deploy your service in the Rubin Science Platform, it must have either a Helm chart or a Kustomize configuration.
 Currently, all services use Helm charts.
 Kustomize is theoretically supported but there are no examples of how to make it work with multiple environments.
-Using a Helm chart is recommended unless you are strongly motivated to work out the problems with using Kustomize and write new documentation.
+Using a Helm chart is recommended unless you are strongly motivated to work out the problems with using Kustomize and then document the newly-developed process.
 
 Unfortunately, unlike for the service itself, we do not (yet) have a template for the Helm chart.
 However, Helm itself has a starter template that is not awful.
@@ -77,6 +77,7 @@ You will need to make at least the following changes to the default Helm chart t
 
   For user-facing services you will want a scope other than ``exec:admin``.
   See `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/>`__, specifically `protecting a service <https://gafaelfawr.lsst.io/applications.html#protecting-a-service>`__ for more information.
+- If your service exposes Prometheus endpoints, you will want to configure these in the `telegraf service's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/master/services/telegraf/values.yaml#L36>`__.
 
 Documentation
 -------------
