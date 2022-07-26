@@ -56,8 +56,10 @@ spec:
                    "coverage":  {
                       {{- if .Values.config.hipsUrl }}
                       "hipsSourceURL" : "{{ .Values.config.hipsUrl }}",
+                      "hipsSource360URL" : "{{ .Values.config.hipsUrl }}"
                       {{- else }}
-                      "hipsSourceURL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri/",
+                      "hipsSourceURL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                      "hipsSource360URL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
                       {{- end }}
                    },
                    "tap" : {
@@ -68,7 +70,7 @@ spec:
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
                                {{- else }}
-                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri/",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
                                {{- end }}
                                "centerWP": "62;-37;EQ_J2000",
                                "fovDeg": 10
