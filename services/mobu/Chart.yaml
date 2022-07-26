@@ -3,4 +3,4 @@ name: mobu
 version: 1.0.0
 description: Generate system load by pretending to be a random scientist
 home: https://github.com/lsst-sqre/mobu
-appVersion: 4.4.3
+appVersion: 4.4.4
