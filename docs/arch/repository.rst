@@ -59,6 +59,8 @@ In general, we pin the version of the chart to deploy in the ``dependencies`` me
 This ensures deterministic cluster configuration and avoids inadvertently upgrading services.
 However, for services still under development, we sometimes use a floating dependency to reduce the number of pull requests required when iterating, and then switch to a pinned version once the service is stable.
 
-There is currently no general mechanism to deploy different versions of a chart in different environments, as appVersion is set in ``Chart.yaml``.
-We will probably need a mechanism to do this eventually, and have considered possible implementation strategies, but have not yet started on this work.
-In the meantime, we disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment.
+There is currently no generic mechanism to deploy different versions of a chart in different environments, as appVersion is set in ``Chart.yaml``.
+
+That does not mean that rolling out a new version is all-or-nothing: you have a couple of different options for testing new versions.  The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use ArgoCD to deploy the application from the branch, rather than ``master``, ``main``, or ``HEAD`` (as the case may be).  This will cause the application resource in the ``science-platform`` app to show as out of sync, which is indeed correct, and a helpful reminder that you may be running from a branch when you forget and subsequently rediscover that fact weeks later.
+Additionally, many charts allow specification of a tag (usually some variable like ``image.tag`` in a values file), so that is a possibility as well.  If your chart doesn't have a way to control what image tag you're deploying from, consider adding the capability.
+In any event, for RSP instances, we (as a matter of policy) disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment, and updates are deployed to production environments (barring extraordinary circumstances) during our specified maintenance windows.
