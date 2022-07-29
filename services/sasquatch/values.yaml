@@ -6,7 +6,7 @@ strimzi-kafka: {}
 # -- strimzi-registry-operator configuration.
 strimzi-registry-operator:
   clusterName: sasquatch
-  watchNamespace: sasquatch
+  clusterNamespace: sasquatch
   operatorNamespace: sasquatch
 
 influxdb:

@@ -4,3 +4,4 @@ metadata:
   name: {{ .Values.cluster.name }}-schema-registry
 spec:
   listener: tls
+  compatibilityLevel: none
