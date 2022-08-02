@@ -2,3 +2,4 @@ environment:
   BUTLER_URI: "s3://butler-us-central1-panda-dev/dc2/butler-external.yaml"
   LOG_BUCKET: "drp-us-central1-logging"
   LOG_PREFIX: "Panda-RubinLog"
+  WEB_CONCURRENCY: "4"
