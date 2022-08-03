@@ -34,36 +34,14 @@ autostart:
       repo_url: "https://github.com/lsst-sqre/system-test.git"
       repo_branch: "prod"
     restart: true
-  - name: "sync-tap"
-    count: 20
-    user_spec:
-      username_prefix: "sync-mobu-tap"
-      uid_start: 74770
+  - name: "tap"
+    count: 1
+    users:
+      - username: "bot-mobu-tap"
+        uidnumber: 74775
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
     restart: true
     options:
       tap_sync: true
       tap_query_set: "dp0.2"
-  - name: "async-tap-medium"
-    count: 50
-    user_spec:
-      username_prefix: "async-mobu-tap"
-      uid_start: 74800
-    scopes: ["read:tap"]
-    business: "TAPQueryRunner"
-    restart: true
-    options:
-      tap_sync: false
-      tap_query_set: "dp0.2-med-scans"
-  - name: "async-tap-long"
-    count: 50
-    user_spec:
-      username_prefix: "async-mobu-tap"
-      uid_start: 75000
-    scopes: ["read:tap"]
-    business: "TAPQueryRunner"
-    restart: true
-    options:
-      tap_sync: false
-      tap_query_set: "dp0.2-long-scans"
