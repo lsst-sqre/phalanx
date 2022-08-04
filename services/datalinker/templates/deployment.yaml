@@ -41,6 +41,13 @@ spec:
           env:
             - name: "DATALINKER_CUTOUT_SYNC_URL"
               value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
+            - name: "DATALINKER_HIPS_BASE_URL"
+              value: "{{ .Values.global.baseUrl }}/api/hips"
+            - name: "DATALINKER_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "datalinker.fullname" . }}-gafaelfawr-token
+                  key: "token"
             # The following are used by Butler to retrieve its configuration
             # and authenticate to its database.
             - name: "AWS_SHARED_CREDENTIALS_FILE"

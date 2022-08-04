@@ -1,0 +1,10 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: {{ include "datalinker.fullname" . }}-gafaelfawr-token
+  labels:
+    {{- include "datalinker.labels" . | nindent 4 }}
+spec:
+  service: "bot-datalinker"
+  scopes:
+    - "read:image"
