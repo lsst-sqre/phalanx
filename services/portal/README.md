@@ -33,7 +33,7 @@ Rubin Science Platform portal aspect
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
 | redis.image.repository | string | `"redis"` | Redis image to use |
-| redis.image.tag | string | `"7.0.3"` | Redis image tag to use |
+| redis.image.tag | string | `"7.0.4"` | Redis image tag to use |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | `{"limits":{"memory":"20Mi"}}` | Resource limits and requests |
