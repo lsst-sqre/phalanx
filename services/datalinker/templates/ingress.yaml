@@ -20,8 +20,15 @@ spec:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.path }}
+          - path: "/api/datalink"
             pathType: "Prefix"
+            backend:
+              service:
+                name: {{ include "datalinker.fullname" . }}
+                port:
+                  number: 8080
+          - path: "/api/hips/list"
+            pathType: "Exact"
             backend:
               service:
                 name: {{ include "datalinker.fullname" . }}

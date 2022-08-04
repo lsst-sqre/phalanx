@@ -25,7 +25,6 @@ IVOA DataLink service for Rubin Science Platform
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
-| ingress.path | string | `"/api/datalink"` | URL path to dispatch to the datalinker deployment pod |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the datalinker deployment pod |
 | podAnnotations | object | `{}` | Annotations for the datalinker deployment pod |
