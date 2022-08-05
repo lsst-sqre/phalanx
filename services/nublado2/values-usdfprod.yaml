@@ -56,9 +56,9 @@ config:
     - name: fs-ddn-sdf-group-rubin
       persistentVolumeClaim:
         claimName: fs-ddn-sdf-group-rubin
-    - name: fs-nfs
-      persistentVolumeClaim:
-        claimName: fs-nfs
+#    - name: fs-nfs
+#      persistentVolumeClaim:
+#        claimName: fs-nfs
 #    - name: sdf-scratch
 #      persistentVolumeClaim:
 #        claimName: sdf-scratch
@@ -371,18 +371,6 @@ config:
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-home
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: fs-nfs
-        namespace: "{{ user_namespace }}"
-      spec:
-        storageClassName: fs-nfs
         accessModes:
           - ReadWriteMany
         resources:
