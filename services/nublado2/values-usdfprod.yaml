@@ -91,8 +91,8 @@ config:
     - name: fs-ddn-sdf-group-rubin 
       mountPath: /instrument
       subPath: lsstdata/offline/instrument
-    - name: fs-nfs
-      mountPath: /fs/nfs
+#    - name: fs-nfs
+#      mountPath: /fs/nfs
     - name: fs-ddn-sdf-group-rubin
       mountPath: /fs/ddn/sdf/group/rubin
     #- name: sdf-group-lsst
