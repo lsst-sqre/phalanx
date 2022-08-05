@@ -85,12 +85,12 @@ config:
       mountPath: /sdf/data/rubin
 #    - name: sdf-scratch
 #      mountPath: /scratch
-    - name: fs-ddn-sdf-group-rubin
-      mountPath: /teststand
-      subPath: lsstdata/offline/teststand
-    - name: fs-ddn-sdf-group-rubin 
-      mountPath: /instrument
-      subPath: lsstdata/offline/instrument
+#    - name: fs-ddn-sdf-group-rubin
+#      mountPath: /teststand
+#      subPath: lsstdata/offline/teststand
+#    - name: fs-ddn-sdf-group-rubin 
+#      mountPath: /instrument
+#      subPath: lsstdata/offline/instrument
 #    - name: fs-nfs
 #      mountPath: /fs/nfs
     - name: fs-ddn-sdf-group-rubin
