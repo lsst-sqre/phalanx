@@ -59,9 +59,9 @@ config:
 #    - name: fs-nfs
 #      persistentVolumeClaim:
 #        claimName: fs-nfs
-#    - name: sdf-scratch
-#      persistentVolumeClaim:
-#        claimName: sdf-scratch
+    - name: sdf-scratch
+      persistentVolumeClaim:
+        claimName: sdf-scratch
     #- name: sdf-group-lsst
     #  persistentVolumeClaim:
     #    claimName: sdf-group-lsst
@@ -81,8 +81,8 @@ config:
       mountPath: /sdf/group/rubin
     - name: sdf-data-rubin
       mountPath: /sdf/data/rubin
-#    - name: sdf-scratch
-#      mountPath: /scratch
+    - name: sdf-scratch
+      mountPath: /scratch
 #    - name: fs-ddn-sdf-group-rubin
 #      mountPath: /teststand
 #      subPath: lsstdata/offline/teststand
