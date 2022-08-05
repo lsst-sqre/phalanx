@@ -25,9 +25,6 @@ ingress:
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: "scope=read:image"
 
-  # -- URL path to dispatch to the datalinker deployment pod
-  path: "/api/datalink"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
 

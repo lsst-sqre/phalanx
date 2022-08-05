@@ -9,7 +9,6 @@ metadata:
     {{- if .Values.ingress.gafaelfawrAuthQuery }}
     nginx.ingress.kubernetes.io/auth-method: "GET"
     nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User"
-    nginx.ingress.kubernetes.io/auth-signin: "{{ .Values.global.baseUrl }}/login"
     nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAuthQuery }}"
     {{- end }}
     {{- with .Values.ingress.annotations }}
