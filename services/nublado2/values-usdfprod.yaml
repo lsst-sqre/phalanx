@@ -59,9 +59,9 @@ config:
     - name: fs-nfs
       persistentVolumeClaim:
         claimName: fs-nfs
-    - name: sdf-scratch
-      persistentVolumeClaim:
-        claimName: sdf-scratch
+#    - name: sdf-scratch
+#      persistentVolumeClaim:
+#        claimName: sdf-scratch
     #- name: sdf-group-lsst
     #  persistentVolumeClaim:
     #    claimName: sdf-group-lsst
@@ -70,23 +70,25 @@ config:
       mountPath: "/home/{{ user }}"
       #mountPath: "/home/{{user}}"
       subPath: "{{user[0]}}/{{user}}"
-    - name: sdf-group-rubin
-      mountPath: /datasets
-      subPath: datasets
+#    - name: sdf-group-rubin
+#      mountPath: /datasets
+#      subPath: datasets
     - name: sdf-group-rubin
       mountPath: /repo
       subPath: repo
     - name: sdf-group-rubin
-      mountPath: /pproject
-      subPath: project
+      mountPath: /project
+      subPath: g
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
     - name: sdf-data-rubin
       mountPath: /sdf/data/rubin
-    - name: sdf-scratch
-      mountPath: /scratch
-    - name: sdf-group-rubin
+#    - name: sdf-scratch
+#      mountPath: /scratch
+    - name: fs-ddn-sdf-group-rubin
       mountPath: /teststand
       subPath: lsstdata/offline/teststand
-    - name: instrument
+    - name: fs-ddn-sdf-group-rubin 
       mountPath: /instrument
       subPath: lsstdata/offline/instrument
     - name: fs-nfs
@@ -338,18 +340,18 @@ config:
         hard:
           limits.cpu: 9
           limits.memory: 27Gi
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: sdf-scratch
-        namespace: "{{ user_namespace }}"
-      spec:
-        storageClassName: sdf-scratch
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
+#    - apiVersion: v1
+#      kind: PersistentVolumeClaim
+#      metadata:
+#        name: sdf-scratch
+#        namespace: "{{ user_namespace }}"
+#      spec:
+#        storageClassName: sdf-scratch
+#        accessModes:
+#          - ReadWriteMany
+#        resources:
+#          requests:
+#            storage: 1Gi
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
