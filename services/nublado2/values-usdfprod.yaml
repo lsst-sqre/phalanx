@@ -340,18 +340,6 @@ config:
         hard:
           limits.cpu: 9
           limits.memory: 27Gi
-#    - apiVersion: v1
-#      kind: PersistentVolumeClaim
-#      metadata:
-#        name: sdf-scratch
-#        namespace: "{{ user_namespace }}"
-#      spec:
-#        storageClassName: sdf-scratch
-#        accessModes:
-#          - ReadWriteMany
-#        resources:
-#          requests:
-#            storage: 1Gi
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
