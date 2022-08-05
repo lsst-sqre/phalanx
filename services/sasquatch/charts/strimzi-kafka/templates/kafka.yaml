@@ -40,7 +40,6 @@ spec:
         - {{ . }}
 {{- end }}
 {{- end }}
-
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
