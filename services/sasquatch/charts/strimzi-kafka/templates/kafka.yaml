@@ -5,6 +5,12 @@ metadata:
   name: {{ .Values.cluster.name }}
 spec:
   kafka:
+    template:
+      persistentVolumeClaim:
+        metadata:
+          annotations:
+            argocd.argoproj.io/compare-options: IgnoreExtraneous
+            argocd.argoproj.io/sync-options: Prune=false
     version: {{ .Values.kafka.version | quote }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:
@@ -40,7 +46,6 @@ spec:
         - {{ . }}
 {{- end }}
 {{- end }}
-
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
@@ -65,6 +70,12 @@ spec:
         {{- end}}
         deleteClaim: false
   zookeeper:
+    template:
+      persistentVolumeClaim:
+        metadata:
+          annotations:
+            argocd.argoproj.io/compare-options: IgnoreExtraneous
+            argocd.argoproj.io/sync-options: Prune=false
     replicas: {{ .Values.zookeeper.replicas }}
     storage:
       # Note that storage is configured per replica. If there are 3 replicas,
