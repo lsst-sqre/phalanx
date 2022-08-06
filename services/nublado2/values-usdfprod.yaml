@@ -18,6 +18,10 @@ jupyterhub:
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://usdf-rsp.slac.stanford.edu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://usdf-rsp.slac.stanford.edu/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "20s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
 config:
   base_url: "https://usdf-rsp.slac.stanford.edu"
