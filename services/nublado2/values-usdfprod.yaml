@@ -145,7 +145,7 @@ config:
           cgred:x:997:
           screen:x:84:
           provisionator:x:769:
-          {{user}}:x:{{uid}}:{% for group in groups %}
+          rubin_users:x:4085:{% for group in groups %}
           {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -189,7 +189,7 @@ config:
           cgred:!::
           screen:!::
           provisionator:!::
-          {{ user }}:!::{% for g in groups %}
+          rubin_users:!::{% for g in groups %}
           {{ g.name }}:!::{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -215,7 +215,7 @@ config:
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user[0] }}/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:4085:rubin_users:/home/{{ user[0] }}/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
