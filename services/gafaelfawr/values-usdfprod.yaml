@@ -37,11 +37,11 @@ config:
       - "rubinmgr"
       - "unix-admin" 
     "exec:admin":
+      - "rubinmgr"
       - "unix-admin"
     "exec:notebook":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_admin_datasets
       - rubin_admin_repos
