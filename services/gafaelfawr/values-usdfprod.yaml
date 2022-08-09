@@ -33,7 +33,7 @@ config:
 
   # Allow access by GitHub team.
   groupMapping:
-    "admin:users":
+    "admin:token":
       - "rubinmgr"
       - "unix-admin" 
     "exec:admin":
