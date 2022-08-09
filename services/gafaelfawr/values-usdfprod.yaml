@@ -33,12 +33,15 @@ config:
 
   # Allow access by GitHub team.
   groupMapping:
+    "admin:token":
+      - "rubinmgr"
+      - "unix-admin" 
     "exec:admin":
+      - "rubinmgr"
       - "unix-admin"
     "exec:notebook":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -72,7 +75,6 @@ config:
     "exec:portal":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -106,7 +108,6 @@ config:
     "exec:user":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -140,7 +141,6 @@ config:
     "read:tap":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -174,7 +174,7 @@ config:
 
   initialAdmins:
     - "afausti"
-    - "athornton"
+    - "athor"
     - "cbanek"
     - "frossie"
     - "jonathansick"
