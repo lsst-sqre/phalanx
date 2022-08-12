@@ -1,6 +1,6 @@
 # datalinker
 
-IVOA DataLink service for Rubin Science Platform
+Service and data discovery for Rubin Science Platform
 
 ## Source Code
 
