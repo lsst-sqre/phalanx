@@ -4,7 +4,7 @@
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://kubernetes.github.io/ingress-nginx | ingress-nginx | 4.2.0 |
+| https://kubernetes.github.io/ingress-nginx | ingress-nginx | 4.2.1 |
 
 ## Values
 
