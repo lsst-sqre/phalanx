@@ -97,8 +97,8 @@ config:
 #      mountPath: /fs/nfs
     - name: fs-ddn-sdf-group-rubin
       mountPath: /fs/ddn/sdf/group/rubin
-    #- name: sdf-group-lsst
-    #  mountPath: /sdf/group/lsst
+    - name: fs-ddn-sdf-group-lsst
+      mountPath: /fs/ddn/sdf/group/lsst
 
 
   # Workaround to impose resource quotas at IDF
@@ -385,6 +385,18 @@ config:
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: fs-ddn-sdf-group-rubin
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: fs-ddn-sdf-group-lsst
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: fs-ddn-sdf-group-lsst
         accessModes:
           - ReadWriteMany
         resources:
