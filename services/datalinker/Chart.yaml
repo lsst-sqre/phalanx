@@ -4,4 +4,4 @@ version: 1.0.0
 description: Service and data discovery for Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/datalinker
-appVersion: 1.4.1
+appVersion: 1.4.2
