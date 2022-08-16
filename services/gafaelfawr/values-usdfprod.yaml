@@ -8,6 +8,9 @@ redis:
 config:
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
+  oidcServer:
+    enabled: true
+
   oidc:
     clientId: rubin-usdf-rsp
     audience: "rubin-usdf-rsp"
