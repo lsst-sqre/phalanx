@@ -1,13 +1,11 @@
 apiVersion: v2
 name: nublado2
-version: 1.1.0
-appVersion: "2.3.0"
-description: Nublado2 JupyterHub installation
+version: 1.0.0
+description: JupyterHub for the Rubin Science Platform
 home: https://github.com/lsst-sqre/nublado2
-maintainers:
-  - name: cbanek
 sources:
   - https://github.com/lsst-sqre/nublado2
+appVersion: "2.4.0"
 # Match the jupyterhub Helm chart for kubeVersion
 kubeVersion: ">=1.20.0-0"
 dependencies:
