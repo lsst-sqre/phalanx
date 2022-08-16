@@ -66,9 +66,9 @@ config:
     - name: sdf-scratch
       persistentVolumeClaim:
         claimName: sdf-scratch
-    #- name: sdf-group-lsst
-    #  persistentVolumeClaim:
-    #    claimName: sdf-group-lsst
+    - name: fs-ddn-sdf-group-lsst
+      persistentVolumeClaim:
+        claimName: fs-ddn-sdf-group-lsst
   volume_mounts:
     - name: home
       mountPath: "/home/"
@@ -414,18 +414,6 @@ config:
         resources:
           requests:
             storage: 1Gi
-#    - apiVersion: v1
-#      kind: PersistentVolumeClaim
-#      metadata:
-#        name: sdf-group-lsst
-#        namespace: "{{ user_namespace }}"
-#      spec:
-#        storageClassName: sdf-group-lsst
-#        accessModes:
-#          - ReadWriteMany
-#        resources:
-#          requests:
-#            storage: 1Gi
 
 vault_secret_path: "secret/rubin/usdf-rsp/nublado2"
 
