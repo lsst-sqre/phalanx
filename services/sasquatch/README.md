@@ -13,7 +13,7 @@ Rubin Observatory's telemetry service.
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://helm.influxdata.com/ | telegraf | 1.8.18 |
-| https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.0.0 |
+| https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.1.0 |
 | https://lsst-ts.github.io/charts/ | csc | 0.9.2 |
 | https://lsst-ts.github.io/charts/ | kafka-producers | 0.10.1 |
 
