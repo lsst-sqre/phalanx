@@ -165,16 +165,25 @@ config:
     # -- Search attribute containing the user's username
     userSearchAttr: "uid"
 
-    # -- Attribute containing the user's UID number (set to `uidNumber` for
-    # most LDAP servers)
-    # @default -- Get UID from upstream authentication provider
-    uidAttr: ""
-
     # -- Attribute containing the user's full name
     nameAttr: "displayName"
 
     # -- Attribute containing the user's email address
     emailAttr: "mail"
+
+    # -- Attribute containing the user's UID number (set to `uidNumber` for
+    # most LDAP servers)
+    # @default -- Get UID from upstream authentication provider
+    uidAttr: ""
+
+    # -- Attribute containing the user's primary GID (set to `gidNumber` for
+    # most LDAP servers)
+    # @default -- Use GID of user private group
+    gidAttr: ""
+
+    # -- Whether to synthesize a user private group for each user with a GID
+    # equal to their UID
+    addUserGroup: false
 
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,
