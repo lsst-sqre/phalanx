@@ -96,7 +96,6 @@ Gafaelfawr
 
 When creating the Gafaelfawr configuration for a new environment, in addition to choosing between OpenID Connect authentication and GitHub authentication, you will need to define a group mapping.
 This specifies which scopes a user will receive based on which groups they are a member of in the upstream identity system.
-The current default expects the NCSA groups, which will not be accurate unless you're using CILogon with NCSA LDAP as an attribute source.
 
 The most important scopes to configure are:
 
@@ -152,7 +151,6 @@ If the Portal Aspect is configured with a ``replicaCount`` greater than one (rec
 This is **not** supported by most Kubernetes persistent volume backends.
 
 At GKE, we use Filestore via NFS.
-At NCSA, we use a ``hostPath`` mount of an underlying GPFS volume.
 
 Currently the provisioning of this underlying backing store is manual, so make sure you either have created it or gotten a system administrator with appropriate permissions for your site to do so.
 
