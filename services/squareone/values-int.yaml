@@ -1,9 +1,0 @@
-config:
-  siteName: "Rubin Science Platform @ lsp-int"
-
-ingress:
-  tls: false
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu/pull-secret

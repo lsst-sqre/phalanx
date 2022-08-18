@@ -2,7 +2,7 @@
 Image pruning
 #############
 
-If the list of cached images on nodes gets excessively long (we've only seen this at NCSA, where there is lots of disk for images and the nodes have been around forever), K8s may stop updating its list of cached images.  This will manifest as the spawner options form being devoid of prepulled images.
+If the list of cached images on nodes gets excessively long, K8s may stop updating its list of cached images.  This will manifest as the spawner options form being devoid of prepulled images.
 
 This is a function of Kubernetes, by default, `only showing 50 images on a node <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/>`__.  You can work around this, if you control the Kubernetes installation, with ``--node-status-max-images`` set to ``-1`` on the kubelet command line, or by setting ``nodeStatusMaxImages`` to ``-1`` in the kubelet configuration file.
 
