@@ -43,6 +43,10 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
   tokenLifetimeMinutes: 43200

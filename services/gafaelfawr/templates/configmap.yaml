@@ -14,6 +14,9 @@ data:
     database_password_file: "/etc/gafaelfawr/secrets/database-password"
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    {{- if .Values.config.slackAlerts }}
+    slack_webhook_file: "/etc/gafaelfawr/secrets/slack-webhook"
+    {{- end }}
     token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
     {{- if .Values.config.proxies }}
     proxies:
