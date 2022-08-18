@@ -60,9 +60,3 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
-
-csc:
-  enabled: false
-
-kafka-producers:
-  enabled: false
