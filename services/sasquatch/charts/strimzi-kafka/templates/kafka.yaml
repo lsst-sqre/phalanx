@@ -35,9 +35,37 @@ spec:
       - name: external
         port: 9094
         type: loadbalancer
-        tls: true
+        tls: {{ .Values.kafka.externalListener.tls.enabled }}
         authentication:
           type: scram-sha-512
+        configuration:
+          bootstrap:
+            {{- if .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
+            loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.loadBalancerIP }}
+            {{- end }}
+            {{- if .Values.kafka.externalListener.bootstrap.annotations }}
+            annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
+            {{- end }}
+          {{- if .Values.kafka.externalListener.brokers }}
+          brokers:
+            {{- range $idx, $broker := .Values.kafka.externalListener.brokers }}
+            - broker: {{ $idx }}
+              loadBalancerIP: {{ $broker.loadBalancerIP }}
+              advertisedHost: {{ $broker.host }}
+              advertisedPort: 9094
+              annotations:
+                {{- range $key, $value  := $broker.annotations }}
+                {{ $key }}: {{ $value }}
+                {{- end}}
+            {{- end }}
+          {{- end }}
+          {{- if and (.Values.kafka.externalListener.tls.enabled) (.Values.kafka.externalListener.bootstrap.host) }}
+          brokerCertChainAndKey:
+            secretName: {{ .Values.cluster.name }}-external-tls
+            certificate: tls.crt
+            key: tls.key
+          {{- end }}
+
     authorization:
       type: simple
 {{- if .Values.superusers }}
