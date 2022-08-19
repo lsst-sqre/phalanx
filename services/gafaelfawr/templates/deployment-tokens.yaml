@@ -46,9 +46,9 @@ spec:
             - "kubernetes-controller"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          {{- with .Values.resources }}
+          {{- with .Values.tokens.resources }}
           resources:
-            {{- toYaml .Values.tokens.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
           securityContext:
             allowPrivilegeEscalation: false

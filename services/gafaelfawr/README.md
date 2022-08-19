@@ -16,7 +16,7 @@ Science Platform authentication and authorization system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.31.2"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.31.2-alpine"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `gafaelfawr` and `gafaelfawr-tokens` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
@@ -68,6 +68,11 @@ Science Platform authentication and authorization system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
+| maintenance.affinity | object | `{}` | Affinity rules for the Gafaelfawr maintenance pod |
+| maintenance.nodeSelector | object | `{}` | Node selection rules for the Gafaelfawr maintenance pod |
+| maintenance.podAnnotations | object | `{}` | Annotations for the Gafaelfawr maintenance pod |
+| maintenance.resources | object | `{}` | Resource limits and requests for the Gafaelfawr maintenance pod |
+| maintenance.tolerations | list | `[]` | Tolerations for the Gafaelfawr maintenance pod |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |

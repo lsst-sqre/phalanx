@@ -24,6 +24,10 @@ spec:
         - podSelector:
             matchLabels:
               {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "maintenance"
+        - podSelector:
+            matchLabels:
+              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
               app.kubernetes.io/component: "tokens"
       ports:
         - protocol: "TCP"

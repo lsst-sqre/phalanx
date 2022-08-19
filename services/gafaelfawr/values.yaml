@@ -244,7 +244,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.31.2"
+    tag: "1.31.2-alpine"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -256,6 +256,22 @@ cloudsql:
   # and `gafaelfawr-tokens` Kubernetes service accounts and has the
   # `cloudsql.client` role
   serviceAccount: ""
+
+maintenance:
+  # -- Resource limits and requests for the Gafaelfawr maintenance pod
+  resources: {}
+
+  # -- Annotations for the Gafaelfawr maintenance pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Gafaelfawr maintenance pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Gafaelfawr maintenance pod
+  tolerations: []
+
+  # -- Affinity rules for the Gafaelfawr maintenance pod
+  affinity: {}
 
 tokens:
   # -- Resource limits and requests for the Gafaelfawr token management pod
