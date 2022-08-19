@@ -28,6 +28,7 @@ config:
     groupMemberAttr: "hasMember"
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
     userSearchAttr: "voPersonApplicationUID"
+    addUserGroup: true
 
   groupMapping:
     "admin:provision":
