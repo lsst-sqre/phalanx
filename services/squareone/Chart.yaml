@@ -10,4 +10,4 @@ maintainers:
     url: https://github.com/jonathansick
 
 # The default version tag of the squareone docker image
-appVersion: "tickets-DM-35816"
+appVersion: "0.8.0"
