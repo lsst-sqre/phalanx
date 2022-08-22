@@ -6,7 +6,7 @@ SQuaRE telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.19 |
+| https://helm.influxdata.com/ | telegraf | 1.8.20 |
 
 ## Values
 
