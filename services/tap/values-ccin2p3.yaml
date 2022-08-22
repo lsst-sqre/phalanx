@@ -10,7 +10,7 @@ qserv:
 image:
   # -- tap image to use
   repository: "gabrimaine/lsst-tap-service"
-  tag: "1.2.1-CC"
+  tag: "1.2.1-CC2"
 # secrets:
 #   enabled: false
 
