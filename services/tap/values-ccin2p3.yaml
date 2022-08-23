@@ -1,7 +1,7 @@
 config:
   gcsBucket: "async-results.lsst.codes"
   gcsBucketUrl: "https://cccephs3.in2p3.fr:8080"
-  gcsType: "S3"
+  gcsBucketType: "S3"
   jvmMaxHeapSize: "31G"
 
 qserv:
