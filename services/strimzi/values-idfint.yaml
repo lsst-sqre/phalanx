@@ -5,5 +5,5 @@ strimzi-kafka-operator:
     requests:
       memory: "512Mi"
   watchNamespaces:
-    - "alert-stream-broker"
-  logLevel: "INFO"
+    - "sasquatch"
+  logLevel: "DEBUG"
