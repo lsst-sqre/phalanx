@@ -10,8 +10,6 @@ The TAP_SCHEMA database
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the MySQL pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
-| global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap-schema image |
 | image.repository | string | `"lsstsqre/tap-schema-mock"` | tap-schema image to use |

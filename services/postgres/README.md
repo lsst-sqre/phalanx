@@ -11,8 +11,6 @@ Postgres RDBMS for LSP
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | debug | string | `""` | Set to non-empty to enable debugging output |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
-| global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the postgres image |
 | image.repository | string | `"lsstsqre/lsp-postgres"` | postgres image to use |

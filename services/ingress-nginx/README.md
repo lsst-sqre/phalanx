@@ -10,6 +10,7 @@
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress-nginx.controller.config.compute-full-forwarded-for | string | `"true"` |  |
 | ingress-nginx.controller.config.large-client-header-buffers | string | `"4 64k"` |  |
 | ingress-nginx.controller.config.proxy-body-size | string | `"100m"` |  |
@@ -20,4 +21,4 @@
 | ingress-nginx.controller.podLabels."gafaelfawr.lsst.io/ingress" | string | `"true"` |  |
 | ingress-nginx.controller.podLabels."hub.jupyter.org/network-access-proxy-http" | string | `"true"` |  |
 | ingress-nginx.controller.service.externalTrafficPolicy | string | `"Local"` |  |
-| vault_certificate.enabled | bool | `false` | Whether to store ingress TLS certificate via vault-secrets-operator.  Typically "squareone" owns it instead in an RSP. |
+| vaultCertificate.enabled | bool | `false` | Whether to store ingress TLS certificate via vault-secrets-operator.  Typically "squareone" owns it instead in an RSP. |
