@@ -160,12 +160,12 @@ jupyterhub:
   ingress:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
       nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         error_page 403 = "/auth/forbidden?scope=exec:notebook";
+    ingressClassName: "nginx"
     pathSuffix: "*"
 
   cull:

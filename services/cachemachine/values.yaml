@@ -37,10 +37,6 @@ ingress:
   # access, such as `/*/available`.
   anonymousAnnotations: {}
 
-  # -- Configures TLS for the ingress if needed. If multiple ingresses share
-  # the same hostname, only one of them needs a TLS configuration.
-  tls: []
-
 # -- Resource limits and requests for the cachemachine frontend pod
 resources: {}
 
