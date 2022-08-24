@@ -1,13 +1,8 @@
-squareone:
-  replicaCount: 1
-  ingress:
-    host: "rubin-data-dev.slac.stanford.edu"
-  imagePullSecrets:
-    - name: "pull-secret"
-  config:
-    siteName: "Rubin Science Platform @ USDF"
-    semaphoreUrl: "https://rubin-data-dev.slac.stanford.edu/semaphore"
+replicaCount: 3
+config:
+  siteName: "Rubin Science Platform"
+  semaphoreUrl: "https://usdf-rsp-dev.slac.stanford.edu/semaphore"
 
 pull-secret:
   enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret
+  path: secret/rubin/usdf-rsp-dev/pull-secret

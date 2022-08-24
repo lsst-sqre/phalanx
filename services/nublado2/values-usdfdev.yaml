@@ -1,21 +1,33 @@
 jupyterhub:
-  debug:
-    enabled: true
+
   hub:
-    resources:
-      requests:
-        cpu: "1"
-        memory: 3Gi
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 432000
+
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
+    
   ingress:
-    hosts: ["rubin-data-dev.slac.stanford.edu"]
+    hosts: ["usdf-rsp-dev.slac.stanford.edu"]
     annotations:
-      nginx.ingress.kubernetes.io/auth-signin: "https://rubin-data-dev.slac.stanford.edu/login"
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/auth-signin: "https://usdf-rsp-dev.slac.stanford.edu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://usdf-rsp-dev.slac.stanford.edu/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "20s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
 config:
-  base_url: "https://rubin-data-dev.slac.stanford.edu"
-  butler_secret_path: "secret/rubin/usdf-staffrsp-dev/butler-secret"
-  pull_secret_path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
+  base_url: "https://usdf-rsp-dev.slac.stanford.edu"
+  butler_secret_path: "secret/rubin/usdf-rsp-dev/butler-secret"
+  pull_secret_path: "secret/rubin/usdf-rsp-dev/pull-secret"
+  cachemachine_image_policy: "desired"
 
 <<<<<<< HEAD
     lab_environment:
@@ -52,46 +64,83 @@ config:
   lab_environment:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
+    DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
     S3_ENDPOINT_URL: "https://storage.googleapis.com"
-    AUTO_REPO_URLS: ""   #https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
-    AUTO_REPO_BRANCH: "" #prod
-    AUTO_REPO_SPECS: ""  #https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
-    http_proxy: http://squid.slac.stanford.edu:3128
-    https_proxy: http://squid.slac.stanford.edu:3128
-    no_proxy: hub.nublado2,.slac.stanford.edu
+    AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
+    AUTO_REPO_BRANCH: prod
+    AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
+    NO_ACTIVITY_TIMEOUT: "432000"
+    CULL_KERNEL_IDLE_TIMEOUT: "432000"
+    CULL_KERNEL_CONNECTED: "True"
+    CULL_KERNEL_INTERVAL: "300"
+    CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+    CULL_TERMINAL_INTERVAL: "300"
+    http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+    https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+    no_proxy: hub.nublado2,.sdf.slac.stanford.edu,.slac.stanford.edu
+
   volumes:
-    - name: datasets
-      persistentVolumeClaim:
-        claimName: sdf-group-rubin-datasets
     - name: home
       persistentVolumeClaim:
         claimName: sdf-home
-    - name: project
+    - name: sdf-group-rubin
       persistentVolumeClaim:
         claimName: sdf-group-rubin
-    - name: scratch
+    - name: sdf-data-rubin
       persistentVolumeClaim:
-        claimName: sdf-group-rubin-scratch
-    - name: sdf-group-lsst
+        claimName: sdf-data-rubin
+    - name: fs-ddn-sdf-group-rubin
       persistentVolumeClaim:
-        claimName: sdf-group-lsst
+        claimName: fs-ddn-sdf-group-rubin
+    - name: fs-nfs
+      persistentVolumeClaim:
+        claimName: fs-nfs
+    - name: sdf-scratch
+      persistentVolumeClaim:
+        claimName: sdf-scratch
+    - name: fs-ddn-sdf-group-lsst
+      persistentVolumeClaim:
+        claimName: fs-ddn-sdf-group-lsst
   volume_mounts:
-    - name: datasets
-      mountPath: /datasets
     - name: home
-      #mountPath: "/home/{{user}}"
-      mountPath: /home/
-      #subPath: "{{user[0]}}/{{user}}"
-    - name: project
+      mountPath: "/home/"
+#    - name: sdf-group-rubin
+#      mountPath: /datasets
+#      subPath: datasets
+    - name: sdf-group-rubin
+      mountPath: /repo
+      subPath: repo
+    - name: sdf-group-rubin
       mountPath: /project
-    - name: scratch
+      subPath: g
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+    - name: sdf-scratch
       mountPath: /scratch
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> c46dc451 (fix: remove indents)
 =======
     - name: sdf-group-lsst
       mountPath: /sdf/group/lsst
 >>>>>>> b4d1d328 (feat: add sdf-group-lsst storage)
+=======
+#    - name: fs-ddn-sdf-group-rubin
+#      mountPath: /teststand
+#      subPath: lsstdata/offline/teststand
+#    - name: fs-ddn-sdf-group-rubin 
+#      mountPath: /instrument
+#      subPath: lsstdata/offline/instrument
+    - name: fs-nfs
+      mountPath: /fs/nfs
+    - name: fs-ddn-sdf-group-rubin
+      mountPath: /fs/ddn/sdf/group/rubin
+    - name: fs-ddn-sdf-group-lsst
+      mountPath: /fs/ddn/sdf/group/lsst
+
+>>>>>>> 4d2d4196 (feat: usdfdev initial import)
 
   # Workaround to impose resource quotas at IDF
   user_resources_template: |
@@ -141,7 +190,7 @@ config:
           cgred:x:997:
           screen:x:84:
           provisionator:x:769:
-          {{user}}:x:{{uid}}:{% for group in groups %}
+          rubin_users:x:4085:{% for group in groups %}
           {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -185,7 +234,7 @@ config:
           cgred:!::
           screen:!::
           provisionator:!::
-          {{ user }}:!::{% for g in groups %}
+          rubin_users:!::{% for g in groups %}
           {{ g.name }}:!::{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -211,7 +260,7 @@ config:
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user[0] }}/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:4085:rubin_users:/home/{{ user[0] }}/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -337,34 +386,22 @@ config:
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: sdf-group-rubin-scratch
-        namespace: "{{ user_namespace }}"
-      spec:
-        storageClassName: sdf-group-rubin-scratch
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: sdf-group-rubin-datasets
-        namespace: "{{ user_namespace }}"
-      spec:
-        storageClassName: sdf-group-rubin-datasets
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
         name: sdf-group-rubin
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-group-rubin
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-data-rubin
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: sdf-data-rubin
         accessModes:
           - ReadWriteMany
         resources:
@@ -385,18 +422,54 @@ config:
     - apiVersion: v1
       kind: PersistentVolumeClaim
       metadata:
-        name: sdf-group-lsst
+        name: fs-ddn-sdf-group-rubin
         namespace: "{{ user_namespace }}"
       spec:
-        storageClassName: sdf-group-lsst
+        storageClassName: fs-ddn-sdf-group-rubin
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: fs-ddn-sdf-group-lsst
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: fs-ddn-sdf-group-lsst
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: sdf-scratch
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: sdf-scratch
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: fs-nfs
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: fs-nfs
         accessModes:
           - ReadWriteMany
         resources:
           requests:
             storage: 1Gi
 
-vault_secret_path: "secret/rubin/usdf-staffrsp-dev/nublado2"
+vault_secret_path: "secret/rubin/usdf-rsp-dev/nublado2"
 
 pull-secret:
   enabled: true
-  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
+  path: "secret/rubin/usdf-rsp-dev/pull-secret"

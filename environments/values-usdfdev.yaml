@@ -1,69 +1,74 @@
 environment: usdfdev
-fqdn: rubin-data-dev.slac.stanford.edu
-vault_path_prefix: secret/rubin/usdf-staffrsp-dev
-#revision: "tickets/DM-28120"
+fqdn: usdf-rsp-dev.slac.stanford.edu
+vault_path_prefix: secret/rubin/usdf-rsp-dev
+# butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+repoURL: https://github.com/slaclab/phalanx.git
 
-argo:
-  enabled: true
 alert_stream_broker:
   enabled: false
 cachemachine:
   enabled: true
-cert_issuer:
-  enabled: false
 cert_manager:
   enabled: false
-chronograf:
-  enabled: false
-alert_stream_broker:
-  enabled: false
+datalinker:
+  enabled: true
 exposurelog:
   enabled: false
 gafaelfawr:
   enabled: true
-influxdb:
+hips:
   enabled: false
-kapacitor:
+ingress_nginx:
   enabled: false
-#landing_page:
-#  enabled: true
-#logging:
-#  enabled: false
 mobu:
   enabled: true
 moneypenny:
   enabled: true
-ingress_nginx:
+narrativelog:
   enabled: false
-alert_stream_broker:
-  enabled: false
-nublado:
+noteburst:
   enabled: false
 nublado2:
   enabled: true
 obstap:
-  enabled: true
-alert_stream_broker:
+  enabled: false
+plot_navigator:
   enabled: false
 portal:
   enabled: true
 postgres:
   enabled: true
-#rancher_external_ip_webhook:
-#  enabled: false
+sasquatch:
+  enabled: true
+production_tools:
+  enabled: false
 semaphore:
+  enabled: true
+sherlock:
   enabled: true
 squareone:
   enabled: true
-strimzi:
+squash_api:
   enabled: false
+strimzi:
+  enabled: true
 strimzi_registry_operator:
   enabled: false
-#squash_api:
-#  enabled: false
 tap:
   enabled: true
+tap_schema:
+  enabled: true
+telegraf:
+  enabled: true
+telegraf-ds:
+  enabled: true
+times_square:
+  enabled: false
 vault_secrets_operator:
-  enabled: false
+  enabled: true
 vo_cutouts:
+<<<<<<< HEAD:environments/values-usdfdev.yaml
   enabled: false
+=======
+  enabled: true
+>>>>>>> 4d2d4196 (feat: usdfdev initial import):science-platform/values-usdfdev.yaml

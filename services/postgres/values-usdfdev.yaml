@@ -1,16 +1,9 @@
-postgres:
-  postgres_storage_class: 'wekafs--sdf-k8s01'
-  pull_secret: 'pull-secret'
-  vault_secrets:
-    path: 'secret/rubin/usdf-staffrsp-dev/postgres'
-  debug: 'true'
-  jupyterhub_db:
-    user: 'jovyan'
-    db: 'jupyterhub'
-  gafaelfawr_db:
-    user: 'gafaelfawr'
-    db: 'gafaelfawr'
 
-pull-secret:
-  enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret
+jupyterhub_db:
+  user: 'jovyan'
+  db: 'jupyterhub'
+gafaelfawr_db:
+  user: 'gafaelfawr'
+  db: 'gafaelfawr'
+
+postgresStorageClass: 'wekafs--sdf-k8s01'

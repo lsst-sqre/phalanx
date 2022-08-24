@@ -1,21 +1,19 @@
 replicaCount: 2
 
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"
+
 config:
-
-  # Use the CSI storage class so that we can use snapshots.
-  redis:
-    persistence:
-      storageClass: "wekafs--sdf-k8s01"
-
-  loglevel: "DEBUG"
-
-  host: "rubin-data-dev.slac.stanford.edu"
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
+  oidcServer:
+    enabled: true
 
   oidc:
-    clientId: rubin-usdf-staffrsp-dev
-    audience: "rubin-usdf-staffrsp-dev"
+    clientId: rubin-usdf-rsp-dev
+    audience: "rubin-usdf-rsp-dev"
     loginUrl: "https://dex.slac.stanford.edu/auth"
     tokenUrl: "https://dex.slac.stanford.edu/token"
     issuer: "https://dex.slac.stanford.edu"
@@ -28,22 +26,25 @@ config:
 
   ldap:
     url: ldaps://ldap-unix.slac.stanford.edu:636
-    #usernameBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
-    usernameSearchAttr: uid
-    baseDn: dc=slac,dc=stanford,dc=edu
-    uidBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
-    uidAttr: uidNumber
+    groupBaseDn: ou=Group,dc=slac,dc=stanford,dc=edu
     groupObjectClass: posixGroup
-    groupMemberAttr: memberUid
+    groupMemberAttr: memberUid    
+    userBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
+    userSearchAttr: uid
+    uidAttr: uidNumber
+
 
   # Allow access by GitHub team.
   groupMapping:
+    "admin:token":
+      - "rubinmgr"
+      - "unix-admin" 
     "exec:admin":
+      - "rubinmgr"
       - "unix-admin"
     "exec:notebook":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -77,7 +78,6 @@ config:
     "exec:portal":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -111,7 +111,6 @@ config:
     "exec:user":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -145,7 +144,6 @@ config:
     "read:tap":
       - "lsst"
       - lsst-ccs
-      - "sf"
       - rubin_users
       - rubin_users-a
       - rubin_users-b
@@ -178,6 +176,13 @@ config:
       - "unix-admin"
 
   initialAdmins:
+    - "afausti"
+    - "athor"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"
     - "ytl"
     - "ppascual"
 
