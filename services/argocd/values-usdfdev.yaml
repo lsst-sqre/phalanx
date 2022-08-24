@@ -6,7 +6,7 @@ argo-cd:
     ingress:
       enabled: true
       hosts:
-        - "rubin-data-dev.slac.stanford.edu"
+        - "usdf-rsp-dev.slac.stanford.edu"
       annotations:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
@@ -26,10 +26,10 @@ argo-cd:
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
     config:
-      url: https://rubin-data-dev.slac.stanford.edu/argo-cd
+      url: https://usdf-rsp-dev.slac.stanford.edu/argo-cd
       oidc.config: |
         name: SLAC 
-        issuer: https://dex-dev.slac.stanford.edu/
+        issuer: https://dex.slac.stanford.edu/
         clientID: $oidc.clientId
         clientSecret: $oidc.clientSecret
         # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
@@ -64,9 +64,9 @@ argo-cd:
 
     env:
       - name: HTTP_PROXY
-        value: http://squid.slac.stanford.edu:3128
+        value: http://sdfproxy.sdf.slac.stanford.edu:3128
       - name: HTTPS_PROXY
-        value: http://squid.slac.stanford.edu:3128
+        value: http://sdfproxy.sdf.slac.stanford.edu:3128
       - name: NO_PROXY
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
@@ -74,9 +74,9 @@ argo-cd:
 
     env:
       - name: HTTP_PROXY
-        value: http://squid.slac.stanford.edu:3128
+        value: http://sdfproxy.sdf.slac.stanford.edu:3128
       - name: HTTPS_PROXY
-        value: http://squid.slac.stanford.edu:3128
+        value: http://sdfproxy.sdf.slac.stanford.edu:3128
       - name: NO_PROXY
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
@@ -98,10 +98,10 @@ argo-cd:
 
 vault_secret:
   enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/argocd
+  path: secret/rubin/usdf-rsp-dev/argocd
 
 
 pull-secret:
   enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret
+  path: secret/rubin/usdf-rsp-dev/pull-secret
 
