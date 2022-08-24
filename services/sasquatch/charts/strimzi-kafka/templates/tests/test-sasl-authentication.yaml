@@ -7,6 +7,11 @@ metadata:
 spec:
   authentication:
     type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: sasquatch-test-password
   authorization:
     type: simple
     acls:
@@ -64,13 +69,11 @@ spec:
               value: all
             - name: LOG_LEVEL
               value: DEBUG
-            # Set here the password created by Strimzi for the
-            # sasquatch-test user, see the sasquatch-test secret.
             - name: ADDITIONAL_CONFIG
-              value: |
-                sasl.mechanism=SCRAM-SHA-512
-                security.protocol=SASL_PLAINTEXT
-                sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required username="sasquatch-test" password="";
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: sasquatch-test-kafka-properties
           image: quay.io/strimzi-test-clients/test-client-kafka-producer:latest-kafka-3.0.0
           imagePullPolicy: IfNotPresent
           name: kafka-producer-client

@@ -6,6 +6,7 @@ redis:
 config:
   databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
   loglevel: "DEBUG"
+  slackAlerts: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
@@ -28,6 +29,7 @@ config:
     groupMemberAttr: "hasMember"
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
     userSearchAttr: "voPersonApplicationUID"
+    addUserGroup: true
 
   groupMapping:
     "admin:provision":

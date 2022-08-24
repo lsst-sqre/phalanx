@@ -47,12 +47,10 @@ Fortunately, this is easy to fix.
 In cachemachine's ``values-<instance>.yaml`` file for the affected environment, go towards the bottom and look in ``repomen``.
 The first entry will always be of type ``RubinRepoMan``, and will contain the definitions of how many daily, weekly, and release images to prepull.
 
-There are currently only four environments in which we care about keeping the "recommended" target pre-pulled:
+There are currently only two environments in which we care about keeping the "recommended" target pre-pulled:
 
 #. IDF Production (``data.lsst.cloud``)
 #. IDF Integration (``data-int.lsst.cloud``)
-#. NCSA Stable (``lsst-lsp-stable.ncsa.illinois.edu``)
-#. NCSA Integration (``lsst-lsp-int.ncsa.illinois.edu``)
 
 Beneath the ``RubinRepoMan`` entry, you should find an entry that looks like:
 

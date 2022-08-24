@@ -121,22 +121,22 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 #. Click New OAuth App.
 
 #. Enter the following information (adjust for the environment):
-   - Application name: RSP Argo CD (NCSA int)
-   - Homepage URL: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd
-   - Authorization callback URL: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd/api/dex/callback
+   - Application name: RSP Argo CD (IDF-int)
+   - Homepage URL: https://data-int.lsst.cloud/argo-cd
+   - Authorization callback URL: https://data-int.lsst.cloud/argo-cd/api/dex/callback
 
 #. Click "Register Application".
 
 #. Click "Generate a new client secret".
 
-#. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD GitHub OAuth - lsst-lsp-int.ncsa.illinois.edu" (replacing the last part with the FQDN of the environment).
+#. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD GitHub OAuth - data-int.lsst.cloud" (replacing the last part with the FQDN of the environment).
    In this secret, put the client ID in the username field.
    Put the client secret in the password field.
    Create a field labeled ``generate_secrets_key`` with value ``argocd dex.clientSecret``.
-   Create a field labeled ``environment`` with value ``lsst-lsp-int.ncsa.illinois.edu`` (replace with the FQDN of the environment).
+   Create a field labeled ``environment`` with value ``data-int.lsst.cloud`` (replace with the FQDN of the environment).
    Save this 1Password secret.
 
-#. If the environment already exists, get a Vault write token for the environment (or the Vault admin token) and set the ``dex.clientSecret`` key in the ``argocd`` secret in the Vault path for that environment (something like ``secret/k8s_operator/lsst-lsp-int.ncsa.illinois.edu``, replacing the last part with the FQDN of the environment).
+#. If the environment already exists, get a Vault write token for the environment (or the Vault admin token) and set the ``dex.clientSecret`` key in the ``argocd`` secret in the Vault path for that environment (something like ``secret/k8s_operator/data-int.lsst.cloud``, replacing the last part with the FQDN of the environment).
    Be sure to use ``vault kv patch`` to add the key to the existing secret.
    This will add the value to the Argo CD secret once vault-secrets-operator notices the change.
    You can delete ``argocd-secret`` to immediately recreate it to speed up the propagation.
@@ -146,7 +146,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 
    .. code-block:: yaml
 
-      url: https://lsst-lsp-int.ncsa.illinois.edu/argo-cd
+      url: https://data-int.lsst.cloud/argo-cd
       dex.config: |
         connectors:
           # Auth using GitHub.

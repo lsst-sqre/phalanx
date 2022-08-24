@@ -44,7 +44,7 @@ jobs:
         run: tests/expand-services
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.2.1
+        uses: helm/chart-testing-action@v2.3.0
 
       - name: Run chart-testing (lint)
         run: ct lint --all --config ct.yaml
@@ -80,7 +80,7 @@ jobs:
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: manusa/actions-setup-minikube@v2.6.1
+        uses: manusa/actions-setup-minikube@v2.7.0
         with:
           minikube version: 'v1.25.2'
           kubernetes version: 'v1.22.8'

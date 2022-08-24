@@ -1,7 +1,5 @@
 #!/bin/bash -ex
 ./update_secrets.sh minikube.lsst.codes
-./update_secrets.sh lsst-lsp-int.ncsa.illinois.edu
-./update_secrets.sh lsst-lsp-stable.ncsa.illinois.edu
 ./update_secrets.sh base-lsp.lsst.codes
 ./update_secrets.sh summit-lsp.lsst.codes
 ./update_secrets.sh tucson-teststand.lsst.codes

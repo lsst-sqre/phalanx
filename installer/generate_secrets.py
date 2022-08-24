@@ -42,6 +42,7 @@ class SecretGenerator:
         `regenerate` attribute is `True`.
         """
         self._pull_secret()
+        self._rsp_alerts()
         self._butler_secret()
         self._postgres()
         self._tap()
@@ -255,6 +256,10 @@ class SecretGenerator:
         else:
             raise Exception(f"Invalid auth provider {auth_type}")
 
+        slack_webhook = self.secrets["rsp-alerts"]["slack-webhook"]
+        if slack_webhook:
+            self._set("gafaelfawr", "slack-webhook", slack_webhook)
+
     def _pull_secret(self):
         self.input_file(
             "pull-secret",
@@ -362,6 +367,12 @@ class SecretGenerator:
         """This secret is for sherlock to push status to status.lsst.codes."""
         publish_key = secrets.token_hex(32)
         self._set_generated("sherlock", "publish_key", publish_key)
+
+    def _rsp_alerts(self):
+        """Shared secrets for alerting."""
+        self.input_field(
+            "rsp-alerts", "slack-webhook", "Slack webhook for alerts"
+        )
 
 
 class OnePasswordSecretGenerator(SecretGenerator):

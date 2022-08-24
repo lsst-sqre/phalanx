@@ -43,6 +43,10 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
   tokenLifetimeMinutes: 43200
@@ -165,16 +169,25 @@ config:
     # -- Search attribute containing the user's username
     userSearchAttr: "uid"
 
-    # -- Attribute containing the user's UID number (set to `uidNumber` for
-    # most LDAP servers)
-    # @default -- Get UID from upstream authentication provider
-    uidAttr: ""
-
     # -- Attribute containing the user's full name
     nameAttr: "displayName"
 
     # -- Attribute containing the user's email address
     emailAttr: "mail"
+
+    # -- Attribute containing the user's UID number (set to `uidNumber` for
+    # most LDAP servers)
+    # @default -- Get UID from upstream authentication provider
+    uidAttr: ""
+
+    # -- Attribute containing the user's primary GID (set to `gidNumber` for
+    # most LDAP servers)
+    # @default -- Use GID of user private group
+    gidAttr: ""
+
+    # -- Whether to synthesize a user private group for each user with a GID
+    # equal to their UID
+    addUserGroup: false
 
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,
@@ -235,7 +248,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.31.1"
+    tag: "1.31.2-alpine"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -247,6 +260,22 @@ cloudsql:
   # and `gafaelfawr-tokens` Kubernetes service accounts and has the
   # `cloudsql.client` role
   serviceAccount: ""
+
+maintenance:
+  # -- Resource limits and requests for the Gafaelfawr maintenance pod
+  resources: {}
+
+  # -- Annotations for the Gafaelfawr maintenance pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Gafaelfawr maintenance pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Gafaelfawr maintenance pod
+  tolerations: []
+
+  # -- Affinity rules for the Gafaelfawr maintenance pod
+  affinity: {}
 
 tokens:
   # -- Resource limits and requests for the Gafaelfawr token management pod

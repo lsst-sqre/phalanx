@@ -1,6 +1,0 @@
-config:
-  phalanx_env: "stable"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/lsst-lsp-stable.ncsa.illinois.edu/pull-secret

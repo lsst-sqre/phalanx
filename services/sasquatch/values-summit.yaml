@@ -9,7 +9,7 @@ strimzi-kafka:
 influxdb:
   persistence:
     storageClass: rook-ceph-block
-    size: 15Ti
+    size: 5Ti
   ingress:
     enabled: true
     hostname: summit-lsp.lsst.codes
@@ -45,9 +45,3 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
-
-csc:
-  enabled: false
-
-kafka-producers:
-  enabled: false

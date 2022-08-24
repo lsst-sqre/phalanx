@@ -18,7 +18,7 @@ The ``cert-manager`` service is an installation of `cert-manager <https://cert-m
 It creates TLS certificates via `Let's Encrypt <https://letsencrypt.org/>`__ and automatically renews them.
 
 This service is only deployed on clusters managed by SQuaRE.
-NCSA clusters use NCSA certificates issued via an internal process.
+If a site uses some other process to manage its certificates, it is the responsibility of that site's administrative team to acquire and deploy those certificates.
 
 ``cert-manager`` creates a cluster issuer that uses the DNS solver and Route 53 for DNS by default.
 Set ``config.createIssuer`` to ``false`` for environments where cert-manager should be installed but not use a Route 53 cluster issuer.

@@ -14,6 +14,9 @@ data:
     database_password_file: "/etc/gafaelfawr/secrets/database-password"
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    {{- if .Values.config.slackAlerts }}
+    slack_webhook_file: "/etc/gafaelfawr/secrets/slack-webhook"
+    {{- end }}
     token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
     {{- if .Values.config.proxies }}
     proxies:
@@ -135,11 +138,17 @@ data:
       {{- if .Values.config.ldap.userBaseDn }}
       user_base_dn: {{ .Values.config.ldap.userBaseDn | quote }}
       user_search_attr: {{ .Values.config.ldap.userSearchAttr | quote }}
+      name_attr: {{ .Values.config.ldap.nameAttr | quote }}
+      email_attr: {{ .Values.config.ldap.emailAttr | quote }}
       {{- if .Values.config.ldap.uidAttr }}
       uid_attr: {{ .Values.config.ldap.uidAttr | quote }}
       {{- end }}
-      name_attr: {{ .Values.config.ldap.nameAttr | quote }}
-      email_attr: {{ .Values.config.ldap.emailAttr | quote }}
+      {{- if .Values.config.ldap.gidAttr }}
+      gid_attr: {{ .Values.config.ldap.gidAttr | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.config.ldap.addUserGroup }}
+      add_user_group: true
       {{- end }}
     {{- end }}
 

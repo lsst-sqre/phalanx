@@ -4,6 +4,7 @@ autostart:
     users:
       - username: "bot-mobu-recommended"
         uidnumber: 74768
+        gidnumber: 74768
     scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
     options:
@@ -16,6 +17,7 @@ autostart:
     users:
       - username: "bot-mobu-weekly"
         uidnumber: 74769
+        gidnumber: 74769
     scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
     business: "NotebookRunner"
     options:
