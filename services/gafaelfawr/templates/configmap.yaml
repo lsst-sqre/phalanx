@@ -1,16 +1,13 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-config
-  labels:
-    {{- include "gafaelfawr.labels" . | nindent 4 }}
-data:
-  gafaelfawr.yaml: |
+{{/* Generate two versions of the ConfigMap, one using the sidecar proxy
+     and the other using the separate Cloud SQL Proxy service. The second
+     will be used for CronJobs and other lower-load services, avoiding the
+     difficulty with coordinating stopping the Cloud SQL Proxy sidecar when
+     a CronJob ends. */}}
+{{- define "gafaelfawr.configMap" }}
     realm: {{ required "global.host must be set" .Values.global.host | quote }}
     loglevel: {{ .Values.config.loglevel | quote }}
     session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
     bootstrap_token_file: "/etc/gafaelfawr/secrets/bootstrap-token"
-    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     database_password_file: "/etc/gafaelfawr/secrets/database-password"
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
@@ -180,3 +177,33 @@ data:
       - {{ $admin | quote }}
       {{- end }}
     {{- end }}
+{{- end }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-config
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+data:
+  gafaelfawr.yaml: |
+    {{- if .Values.cloudsql.enabled }}
+    database_url: "postgresql://gafaelfawr@cloud-sql-proxy/gafaelfawr"
+    {{- else }}
+    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    {{- end }}
+    {{- template "gafaelfawr.configMap" . }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-config-sidecar
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+data:
+  gafaelfawr.yaml: |
+    {{- if .Values.cloudsql.enabled }}
+    database_url: "postgresql://gafaelfawr@localhost/gafaelfawr"
+    {{- else }}
+    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    {{- end }}
+    {{- template "gafaelfawr.configMap" . }}

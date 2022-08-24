@@ -7,13 +7,12 @@ redis:
 config:
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
+  github:
+    clientId: "220d64cbf46f9d2b7873"
+
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
-
-  # Use GitHub authentication.
-  github:
-    clientId: "220d64cbf46f9d2b7873"
 
   # Allow access by GitHub team.
   groupMapping:
