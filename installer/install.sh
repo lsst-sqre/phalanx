@@ -41,11 +41,13 @@ helm upgrade vault-secrets-operator ../services/vault-secrets-operator \
   --timeout 15m \
   --wait
 
-echo "Update / install argocd using helm3..."
+echo "Update / install argocd using helm..."
 helm dependency update ../services/argocd
 helm upgrade argocd ../services/argocd \
   --install \
+  --values ../services/argocd/values.yaml \
   --values ../services/argocd/values-$ENVIRONMENT.yaml \
+  --set global.vaultSecretsPath="$VAULT_PATH_PREFIX" \
   --create-namespace \
   --namespace argocd \
   --timeout 15m \
