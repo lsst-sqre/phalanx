@@ -3,8 +3,9 @@ argo-cd:
     ingress:
       hosts:
         - "data-int.lsst.cloud"
+
     config:
-      url: https://data-int.lsst.cloud/argo-cd
+      url: "https://data-int.lsst.cloud/argo-cd"
       dex.config: |
         connectors:
           # Auth using Google.
@@ -35,7 +36,3 @@ argo-cd:
         g, roby@lsst.cloud, role:admin
         g, fritzm@lsst.cloud, role:admin
       scopes: "[email]"
-
-vault_secret:
-  enabled: true
-  path: secret/k8s_operator/data-int.lsst.cloud/argocd

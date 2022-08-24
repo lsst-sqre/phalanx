@@ -3,8 +3,9 @@ argo-cd:
     ingress:
       hosts:
         - "tucson-teststand.lsst.codes"
+
     config:
-      url: https://tucson-teststand.lsst.codes/argo-cd
+      url: "https://tucson-teststand.lsst.codes/argo-cd"
       dex.config: |
         connectors:
           # Auth using GitHub.
@@ -22,7 +23,3 @@ argo-cd:
       policy.csv: |
         g, lsst-sqre:friends, role:admin
         g, lsst-sqre:square, role:admin
-
-vault_secret:
-  enabled: true
-  path: secret/k8s_operator/tucson-teststand.lsst.codes/argocd
