@@ -4,15 +4,15 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: ""
+        loadBalancerIP: "35.188.187.82"
         host: sasquatch-int-kafka-bootstrap.lsst.cloud
 
       brokers:
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.171.69.125"
           host: sasquatch-int-kafka-0.lsst.cloud
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.72.50.204"
           host: sasquatch-int-kafka-1.lsst.cloud
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.173.225.150"
           host: sasquatch-int-kafka-2.lsst.cloud
 
 influxdb:
