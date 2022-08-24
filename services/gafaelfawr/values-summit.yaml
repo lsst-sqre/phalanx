@@ -31,6 +31,11 @@ config:
       - "lsst-sqre-friends"
       - "lsst-ts-summit-access"
       - "rubin-summit-rsp-access"
+    "read:image":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-summit-access"
+      - "rubin-summit-rsp-access"
     "read:tap":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
