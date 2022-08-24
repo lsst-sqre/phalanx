@@ -62,6 +62,9 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
+  # -- Class name that should serve this ingress
+  className: "nginx"
+
   # -- Path type for the ingress rule
   pathType: ImplementationSpecific
 

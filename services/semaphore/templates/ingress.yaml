@@ -6,11 +6,11 @@ metadata:
   labels:
     {{- include "semaphore.labels" . | nindent 4 }}
   annotations:
-    kubernetes.io/ingress.class: nginx
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
+  ingressClassName: "nginx"
   rules:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
