@@ -2,11 +2,11 @@ jupyterhub:
   debug:
     enabled: true
 
-  hub:
-    resources:
-      requests:
-        cpu: "2"
-        memory: 3Gi
+  # hub:
+  #   resources:
+  #     requests:
+  #       cpu: "2"
+  #       memory: 3Gi
   ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
