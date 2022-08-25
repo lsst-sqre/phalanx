@@ -28,9 +28,9 @@ ingress-nginx:
     # podLabels:
     #   hub.jupyter.org/network-access-proxy-http: "true"
 
-vault_certificate:
+vaultCertificate:
   enabled: true
-  path: secret/k8s_operator/rsp-cc/ingress-nginx
+  #path: secret/k8s_operator/rsp-cc/ingress-nginx
 
 
 # pull-secret:
