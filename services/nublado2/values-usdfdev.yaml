@@ -414,6 +414,18 @@ config:
         resources:
           requests:
             storage: 1Gi
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        name: fs-nfs
+        namespace: "{{ user_namespace }}"
+      spec:
+        storageClassName: fs-nfs
+        accessModes:
+          - ReadWriteMany
+        resources:
+          requests:
+            storage: 1Gi
 
 vault_secret_path: "secret/rubin/usdf-rsp-dev/nublado2"
 
