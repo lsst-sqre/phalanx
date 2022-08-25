@@ -6,8 +6,6 @@ redis:
     storageClass: "standard-rwo"
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
-
   github:
     clientId: "65b6333a066375091548"
 
