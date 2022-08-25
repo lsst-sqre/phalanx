@@ -1,7 +1,7 @@
 apiVersion: v2
 name: noteburst
 version: 1.0.0
-appVersion: 0.2.0
+appVersion: "0.5.0"
 description: Noteburst is a notebook execution service for the Rubin Science Platform.
 type: application
 home: https://noteburst.lsst.io/
@@ -14,5 +14,5 @@ maintainers:
 # Additional charts that this chart uses
 dependencies:
   - name: redis
-    version: 16.9.5
+    version: 17.1.0
     repository: https://charts.bitnami.com/bitnami

@@ -7,7 +7,11 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.3.0"
+      tag: "2.4.0"
+    resources:
+      limits:
+        cpu: 900m
+        memory: 1Gi  # Should support about 200 users
     config:
       Authenticator:
         enable_auth_state: true
@@ -156,12 +160,12 @@ jupyterhub:
   ingress:
     enabled: true
     annotations:
-      kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/auth-method: GET
       nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
       nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         error_page 403 = "/auth/forbidden?scope=exec:notebook";
+    ingressClassName: "nginx"
     pathSuffix: "*"
 
   cull:
@@ -182,18 +186,25 @@ jupyterhub:
       enabled: false
 
 config:
-  # base_url must be set in each instantiation of this chart to the URL of
+  # -- base_url must be set in each instantiation of this chart to the URL of
   # the primary ingress.  It's used to construct API requests to the
   # authentication service (which should go through the ingress).
   base_url: ""
-  # butler_secret_path must be set here, because it's passed through to
-  # the lab rather than being part of the Hub configuration
+  # -- butler_secret_path must be set here, because it's passed through to
+  # the lab rather than being part of the Hub configuration.
   butler_secret_path: ""
-  # same with pull_secret_path; it specifies resource in the lab namespace
+  # -- pull_secret_path must also be set here; it specifies resources in
+  # the lab namespace
   pull_secret_path: ""
+  # -- images to pin to spawner menu
   pinned_images: []
-  # One of "available" or "desired"
+  # -- Cachemachine image policy: "available" or "desired".  Use
+  # "desired" at instances with streaming image support.
   cachemachine_image_policy: "available"
+  # -- shut down user pods on logout.  Superfluous, because our
+  # LogoutHandler enforces this in any event, but nice to make explicit.
+  shutdown_on_logout: true
+  # -- definitions of Lab sizes available in a given instance
   sizes:
     - name: Small
       cpu: 1
@@ -204,7 +215,9 @@ config:
     - name: Large
       cpu: 4
       ram: 12288M
+  # -- Volumes to use for a particular instance
   volumes: []
+  # -- Where to mount volumes for a particular instance
   volume_mounts: []
 
   # -- Environment variables to set in spawned lab containers. Each value will

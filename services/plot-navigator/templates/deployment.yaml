@@ -15,7 +15,7 @@ spec:
         {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        name: pull-secret
+        - name: "pull-secret"
       volumes:
         # butler-secrets-raw is the secrets we get from vault
         - name: "butler-secrets-raw"
@@ -62,4 +62,4 @@ spec:
         command:
           - /bin/bash
           - -c
-          - panel serve dashboard_gen3.py --port 8080 --prefix {{ .Values.basePath }} --allow-websocket-origin {{ .Values.hostname }} --static-dirs assets=./assets
+          - panel serve dashboard_gen3.py --port 8080 --prefix /plot-navigator --allow-websocket-origin {{ .Values.global.host }} --static-dirs assets=./assets

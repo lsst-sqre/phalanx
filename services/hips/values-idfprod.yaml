@@ -1,0 +1,6 @@
+replicaCount: 4
+
+config:
+  gcsProject: "data-curation-prod-fbdb"
+  gcsBucket: "static-us-central1-dp02-hips"
+  serviceAccount: "crawlspace-hips@science-platform-stable-6994.iam.gserviceaccount.com"

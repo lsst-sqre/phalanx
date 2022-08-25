@@ -4,7 +4,7 @@
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 4.5.12 |
+| https://argoproj.github.io/argo-helm | argo-cd | 4.10.5 |
 
 ## Values
 
@@ -23,10 +23,10 @@
 | argo-cd.server.config."resource.compareoptions" | string | `"ignoreAggregatedRoles: true\n"` |  |
 | argo-cd.server.extraArgs[0] | string | `"--basehref=/argo-cd"` |  |
 | argo-cd.server.extraArgs[1] | string | `"--insecure=true"` |  |
-| argo-cd.server.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | argo-cd.server.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
 | argo-cd.server.ingress.enabled | bool | `true` |  |
+| argo-cd.server.ingress.ingressClassName | string | `"nginx"` |  |
+| argo-cd.server.ingress.pathType | string | `"ImplementationSpecific"` |  |
 | argo-cd.server.ingress.paths[0] | string | `"/argo-cd(/|$)(.*)"` |  |
 | argo-cd.server.metrics.enabled | bool | `true` |  |
-| vault_secret.enabled | bool | `true` |  |
-| vault_secret.path | string | `""` |  |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

@@ -1,4 +1,19 @@
-strimzi-kafka: {}
+strimzi-kafka:
+  kafka:
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        loadBalancerIP: "34.173.210.129"
+        host: sasquatch-dev-kafka-bootstrap.lsst.cloud
+
+      brokers:
+        - loadBalancerIP: "34.173.20.18"
+          host: sasquatch-dev-kafka-0.lsst.cloud
+        - loadBalancerIP: "34.69.251.153"
+          host: sasquatch-dev-kafka-1.lsst.cloud
+        - loadBalancerIP: "35.184.86.132"
+          host: sasquatch-dev-kafka-2.lsst.cloud
 
 influxdb:
   ingress:
@@ -9,6 +24,12 @@ kafka-connect-manager:
   influxdbSink:
     influxdb-sink:
       enabled: true
+      tasksMax: 10
+
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
 
 chronograf:
   ingress:
@@ -25,4 +46,4 @@ chronograf:
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
-    STATUS_FEED_URL: "https://lsst-sqre.github.io/sasquatch/feeds/idfdev.json"
+    STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json

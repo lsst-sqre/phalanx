@@ -22,11 +22,6 @@ IDF:
 * `data-int.lsst.cloud <https://data-int.lsst.cloud/argo-cd>`__ (idfint)
 * `data.lsst.cloud <https://data.lsst.cloud/argo-cd>`__ (idfprod)
 
-NCSA:
-
-* `lsst-lsp-int.ncsa.illinois.edu <https://lsst-lsp-int.ncsa.illinois.edu/argo-cd>`__ (int)
-* `lsst-lsp-stable.ncsa.illinois.edu <https://lsst-lsp-stable.ncsa.illinois.edu/argo-cd>`__ (stable)
-
 Telescope and Site:
 
 * `tucson-teststand.lsst.codes <https://tucson-teststand.lsst.codes/argo-cd>`__ (tucson-teststand)

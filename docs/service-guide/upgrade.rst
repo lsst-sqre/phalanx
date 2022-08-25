@@ -2,16 +2,12 @@
 Upgrading a service
 ###################
 
-#. Release a new version of the service by pushing an image with the new version tag to Docker Hub (or whatever Docker repository is used).
+#. Release a new version of the service by pushing an image with the new version tag to whichever Docker repository is used.  For more recent applications, this image should be built and pushed as a GitHub action upon release of a new version.
 
-#. Update the chart in the `charts repository <https://github.com/lsst-sqre/charts>`__ to install the current version.
-   For charts using the recommended pattern of determining the default Docker tag via the ``appVersion`` chart metadata, this only requires updating ``appVersion`` in ``Chart.yaml``.
-   Some charts cannot (or do not) do this, in which case the version has to be changed elsewhere, normally in ``values.yaml``.
-   Also update the ``version`` of the chart in ``Chart.yaml`` (which follows `semantic versioning`_).
-   When this PR is merged, a new chart will automatically be published.
+#. There are multiple possibilities that depend on the sort of application you have.
+    - If it is a first-party application such as ``cachemachine``, with its chart directly in Phalanx, then it should use the recommended pattern of determining the default Docker tag via the ``appVersion`` chart metadata.  This will only require updating ``appVersion`` in ``Chart.yaml``.
+    - If, like ``cert-manager``, it's a third-party application with some extra resources glued in, and you are updating to a newer version of the third-party Helm chart, you will need to update the ``version`` in the dependency.
+    - If it is a complex application such as ``sasquatch`` that bundles first- and third-party applications, you may need to do both, or indeed descend into the ``charts`` directory and update the ``appVersion`` of the subcharts therein.  Tricky cases such as these may require some study before deciding on the best course of action.
 
-#. Update the chart version in the Phalanx ``Chart.yaml`` file for the appropriate service under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services>`__.
-   If the chart is not pinned (if, in other words, it uses a version range constraint instead of a specific version), no Phalanx change is required.
-
-This will tell Argo CD that the change is pending, but no changes are applied automatically.
+Once you have updated the service, Argo CD will that the change is pending, but no changes will be applied automatically.
 To apply the changes in a given environment, see :doc:`sync-argo-cd`.

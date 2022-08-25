@@ -19,7 +19,9 @@ Requirements
 Checklist
 =========
 
-#. Fork the `phalanx repository <https://github.com/lsst-sqre/phalanx>`__ if this work is separate from the SQuaRE-managed environments.
+#. Fork the `phalanx repository
+   <https://github.com/lsst-sqre/phalanx>`__ if this work is separate
+   from the SQuaRE-managed environments.
 
 #. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/tree/master/installer/requirements.txt>`__.
    If you are not using 1password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
@@ -27,7 +29,7 @@ Checklist
 
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
-   Edit it to change the environment name at the top to match ``<environment>`` and choose which services to enable or disable.
+   Edit it so that ``environment``, ``fqdn``, and ``vault_path_prefix`` at the top match your new environment.  Choose which services to enable or leave disabled.
 
 #. Decide on your approach to TLS certificates.
    See :ref:`hostnames` for more details.
@@ -40,8 +42,7 @@ Checklist
    See :doc:`cert-manager/route53-setup` for more details.
 
 #. For each enabled service, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
-   Customization will vary from service to service, but the most common change required is to set the fully-qualified domain name of the environment to the one that will be used for your new deployment.
-   This will be needed in ingress hostnames, NGINX authentication annotations, and the paths to Vault secrets (the part after ``k8s_operator`` should be the same fully-qualified domain name).
+   Customization will vary from service to service.
 
    See :ref:`service-notes` for more details on special considerations for individual services.
 
@@ -95,7 +96,6 @@ Gafaelfawr
 
 When creating the Gafaelfawr configuration for a new environment, in addition to choosing between OpenID Connect authentication and GitHub authentication, you will need to define a group mapping.
 This specifies which scopes a user will receive based on which groups they are a member of in the upstream identity system.
-The current default expects the NCSA groups, which will not be accurate unless you're using CILogon with NCSA LDAP as an attribute source.
 
 The most important scopes to configure are:
 
@@ -151,7 +151,6 @@ If the Portal Aspect is configured with a ``replicaCount`` greater than one (rec
 This is **not** supported by most Kubernetes persistent volume backends.
 
 At GKE, we use Filestore via NFS.
-At NCSA, we use a ``hostPath`` mount of an underlying GPFS volume.
 
 Currently the provisioning of this underlying backing store is manual, so make sure you either have created it or gotten a system administrator with appropriate permissions for your site to do so.
 

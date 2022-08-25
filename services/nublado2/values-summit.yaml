@@ -24,6 +24,7 @@ config:
     DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
     LSST_DDS_INTERFACE: net1
     LSST_DDS_PARTITION_PREFIX: summit
+    LSST_SITE: summit
   volumes:
     - name: home
       nfs:

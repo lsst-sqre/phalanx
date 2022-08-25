@@ -10,13 +10,13 @@
 | datalinker.enabled | bool | `false` |  |
 | exposurelog.enabled | bool | `false` |  |
 | gafaelfawr.enabled | bool | `false` |  |
+| hips.enabled | bool | `false` |  |
 | ingress_nginx.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |
 | narrativelog.enabled | bool | `false` |  |
 | noteburst.enabled | bool | `false` |  |
 | nublado2.enabled | bool | `false` |  |
-| obstap.enabled | bool | `false` |  |
 | onepassword_uuid | string | `"dg5afgiadsffeklfr6jykqymeu"` |  |
 | plot_navigator.enabled | bool | `false` |  |
 | portal.enabled | bool | `false` |  |

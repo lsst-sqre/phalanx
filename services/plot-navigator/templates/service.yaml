@@ -6,7 +6,7 @@ metadata:
     {{- include "plot-navigator.labels" . | nindent 4 }}
 spec:
   selector:
-    app: plot-navigator
+    {{- include "plot-navigator.selectorLabels" . | nindent 4 }}
   ports:
   - port: 80
     protocol: TCP

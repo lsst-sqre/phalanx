@@ -11,6 +11,7 @@ Rubin Science Platform portal aspect
 | affinity | object | `{}` | Affinity rules for the Portal pod |
 | config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
+| config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS service |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
 | config.volumes.configHostPath | string | Use an `emptyDir` | hostPath to mount as configuration.  Set either this of `configNfs`, not both. |
 | config.volumes.configNfs | object | Use an `emptyDir` | NFS information for a configuration.  If set, must have keys for path and server, Set either this of `configHostPath`, not both. |
@@ -24,14 +25,15 @@ Rubin Science Platform portal aspect
 | image.repository | string | `"ipac/suit"` | Portal image to use |
 | image.tag | string | The appVersion of the chart | Tag of Portal image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"` | Gafaelfawr auth query string |
+| ingress.gafaelfawrAdminAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string for the admin API |
+| ingress.gafaelfawrAuthQuery | string | `"scope=exec:portal&delegate_to=portal&delegate_scope=read:image,read:tap"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Portal pod |
 | podAnnotations | object | `{}` | Annotations for the Portal pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
 | redis.image.repository | string | `"redis"` | Redis image to use |
-| redis.image.tag | string | `"6.2.7"` | Redis image tag to use |
+| redis.image.tag | string | `"7.0.4"` | Redis image tag to use |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | `{"limits":{"memory":"20Mi"}}` | Resource limits and requests |

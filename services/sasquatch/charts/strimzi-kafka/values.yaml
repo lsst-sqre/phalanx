@@ -5,22 +5,56 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: "3.0.0"
+  version: "3.1.1"
   # -- Number of Kafka broker replicas to run.
   replicas: 3
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers.
-    size: 100Gi
+    size: 500Gi
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
   # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
-    offsets.retention.minutes: 10080
+    offsets.retention.minutes: 1440
     # -- Number of days for a topic's data to be retained.
-    log.retention.hours: 168
+    log.retention.hours: 24
     # -- Maximum retained number of bytes for a topic's data.
-    log.retention.bytes: "644245094400"
+    log.retention.bytes: "429496729600"
+
+  externalListener:
+    tls:
+      # -- Whether TLS encryption is enabled.
+      enabled: false
+      # -- Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker.
+      certIssuerName: "letsencrypt-dns"
+
+    bootstrap:
+      # -- The loadbalancer is requested with the IP address specified in this field.
+      # This feature depends on whether the underlying cloud provider supports specifying the loadBalancerIP when a load balancer is created.
+      # This field is ignored if the cloud provider does not support the feature.
+      # Once the IP address is provisioned this option make it possible to pin the IP address.
+      # We can request the same IP next time it is provisioned. This is important because
+      # it lets us configure a DNS record, associating a hostname with that pinned IP address.
+      loadBalancerIP: ""
+      # -- Name used for TLS hostname verification.
+      host: ""
+      # -- Annotations that will be added to the Ingress, Route, or Service resource.
+      annotations: {}
+
+    # -- Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification.
+    # The format is a list of maps.
+    brokers: []
+    # For example:
+    # brokers:
+    #   - loadBalancerIP: "192.168.1.1"
+    #     host: broker-0.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
+    #   - loadBalancerIP: "192.168.1.2"
+    #     host: broker-1.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.
@@ -33,7 +67,7 @@ zookeeper:
 
 connect:
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: lsstsqre/strimzi-0.27.1-kafka-3.0.0:master
+  image: lsstsqre/strimzi-0.29.0-kafka-3.1.1:1.0.0
   # -- Number of Kafka Connect replicas to run.
   replicas: 1
 

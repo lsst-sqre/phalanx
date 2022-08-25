@@ -5,7 +5,7 @@ Updating a secret stored in 1Password and VaultSecret
 Secrets that are stored in 1Password are synchronized into Vault using the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
 Once they are in Vault, they are accessible to the Vault Secrets Operator, which responds to creation of any ``VaultSecret`` resources in Kubernetes by grabbing the current value of the secret data in Vault.
 
-The Vault Secrets Operator reconciles any changes as well by comparing Vault's state with that of any ``VaultSecret``s every 60 seconds.
+The Vault Secrets Operator reconciles any changes as well by comparing Vault's state with that of any ``VaultSecret`` resources every 60 seconds.
 This reconciliation process can also take a bit of time; the net result is that you can expect changes to be reflected after a few minutes.
 
 .. note::

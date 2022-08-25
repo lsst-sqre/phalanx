@@ -10,5 +10,5 @@ ingress-nginx:
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
 
-vault_certificate:
+vaultCertificate:
   enabled: true

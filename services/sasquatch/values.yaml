@@ -6,13 +6,20 @@ strimzi-kafka: {}
 # -- strimzi-registry-operator configuration.
 strimzi-registry-operator:
   clusterName: sasquatch
-  watchNamespace: sasquatch
+  clusterNamespace: sasquatch
   operatorNamespace: sasquatch
 
 influxdb:
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
+    size: 1Ti
   # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
   setDefaultUser:
     enabled: true
@@ -25,8 +32,8 @@ influxdb:
     tls: false
     hostname: ""
     annotations:
-      kubernetes.io/ingress.class: "nginx"
       nginx.ingress.kubernetes.io/rewrite-target: /$2
+    className: "nginx"
     path: /influxdb(/|$)(.*)
   # -- Override InfluxDB configuration.
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
@@ -41,12 +48,14 @@ influxdb:
       auth-enabled: true
       max-row-limit: 0
     coordinator:
-      write-timeout: "60s"
-      max-concurrent-queries: 10
-      query-timeout: "900s"
+      write-timeout: "1h"
+      max-concurrent-queries: 0
+      query-timeout: "0s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
+    logging:
+      level: "debug"
   # -- InfluxDB Custom initialization scripts.
   initScripts:
     enabled: true
@@ -65,15 +74,14 @@ chronograf:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- Chronograf ingress configuration.
   # @default -- disabled
   ingress:
     enabled: false
     tls: false
     hostname: ""
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
+    className: "nginx"
     path: /chronograf(/|$)
   # -- Chronograf environment variables.
   env:
@@ -91,7 +99,7 @@ kapacitor:
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
-    size: 16Gi
+    size: 100Gi
   # -- InfluxDB connection URL.
   influxURL: http://sasquatch-influxdb.sasquatch:8086
   # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
@@ -134,82 +142,7 @@ telegraf:
           database: "telegraf"
           username: "telegraf"
           password: "$TELEGRAF_PASSWORD"
-csc:
-  # -- Whether the test csc is deployed.
-  enabled: false
-  image:
-    # -- The Docker registry name of the container image to use for the CSC
-    repository: ts-dockerhub.lsst.org/test
-    # -- The tag of the container image to use for the CSC
-    tag: c0025
-    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
-    nexus3: nexus3-docker
-  # -- Enviroment variables to run the Test CSC.
-  env:
-    LSST_DDS_PARTITION_PREFIX: test
-    LSST_SITE: test
-    OSPL_INFOFILE: /tmp/ospl-info-test.log
-    OSPL_ERRORFILE: /tmp/ospl-error-test.log
-    # -- Use a single process configuration for DDS OpenSplice.
-    OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
-  # -- Wether to use an external configuration for DDS OpenSplice.
-  useExternalConfig: false
-  # -- DDS OpenSplice version.
-  osplVersion: V6.10.4
-  # -- Namespace where the Test CSC is deployed.
-  namespace: sasquatch
 
-kafka-producers:
-  # -- Whether the kafka-producer for the test csc is deployed.
-  enabled: false
-  image:
-    # -- The Docker registry name of the container image to use for the producers.
-    repository: ts-dockerhub.lsst.org/salkafka
-    # -- The tag of the container image to use for the producers.
-    tag: c0025
-    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled.
-    nexus3: nexus3-docker
-  env:
-    # -- The LSST_DDS_PARTITION_PREFIX name applied to all producer containers.
-    lsstDdsPartitionPrefix: test
-    # -- The URI for the Sasquatch Kafka broker.
-    brokerIp: sasquatch-kafka-bootstrap.sasquatch
-    # -- The port for the Sasquatch Kafka listener.
-    brokerPort: 9092
-    # -- The Sasquatch Schema Registry URL.
-    registryAddr: http://sasquatch-schema-registry.sasquatch:8081
-    # -- The topic replication factor (should be the same as the number of Kafka broker in Sasquatch)
-    replication: 3
-    # -- Logging level for the Kafka producers
-    logLevel: 20
-    extras:
-      # -- Use a single process configuration for DDS OpenSplice.
-      OSPL_URI: file:///opt/lsst/software/stack/miniconda/lib/python3.8/config/ospl-std.xml
-      LSST_DDS_RESPONSIVENESS_TIMEOUT: 15s
-      OSPL_INFOFILE: /tmp/ospl-info-kafka-producers.log
-      OSPL_ERRORFILE: /tmp/ospl-error-kafka-producers.log
-  # -- Wether to use an external configuration for DDS OpenSplice.
-  useExternalConfig: false
-  # -- DDS OpenSplice version.
-  osplVersion: V6.10.4
-  startupProbe:
-    # -- Whether to use the startup probe
-    use: true
-    # -- The number of times the startup probe is allowed to fail before failing the probe
-    failureThreshold: 15
-    # -- The initial delay in seconds before the first check is made
-    initialDelay: 20
-    # -- The time in seconds between subsequent checks
-    period: 10
-  # -- List of producers and CSCs to get DDS samples from.
-  producers:
-    test:
-      cscs: >-
-        Test
-  # -- Namespace where the Test CSC is deployed.
-  namespace: sasquatch
-# The following will be set by parameters injected by Argo CD and should not
-# be set in the individual environment values files.
 global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD

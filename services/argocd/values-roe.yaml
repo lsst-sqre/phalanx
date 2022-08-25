@@ -5,11 +5,8 @@ argo-cd:
         - "rsp.lsst.ac.uk"
 
     config:
-      url: https://rsp.lsst.ac.uk/argo-cd
+      url: "https://rsp.lsst.ac.uk/argo-cd"
+
   configs:
     secret:
       createSecret: true
-
-vault_secret:
-  enabled: true
-  path: secret/k8s_operator/roe/argocd

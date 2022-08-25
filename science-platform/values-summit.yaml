@@ -14,11 +14,13 @@ exposurelog:
   enabled: true
 gafaelfawr:
   enabled: true
+hips:
+  enabled: false
+ingress_nginx:
+  enabled: true
 mobu:
   enabled: false
 moneypenny:
-  enabled: true
-ingress_nginx:
   enabled: true
 narrativelog:
   enabled: true
@@ -26,8 +28,6 @@ noteburst:
   enabled: false
 nublado2:
   enabled: true
-obstap:
-  enabled: false
 plot_navigator:
   enabled: false
 portal:
@@ -35,7 +35,7 @@ portal:
 postgres:
   enabled: true
 sasquatch:
-  enabled: false
+  enabled: true
 production_tools:
   enabled: false
 semaphore:
@@ -47,7 +47,7 @@ squareone:
 squash_api:
   enabled: false
 strimzi:
-  enabled: false
+  enabled: true
 strimzi_registry_operator:
   enabled: false
 tap:

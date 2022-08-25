@@ -1,20 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd
-  namespace: argocd
+  name: "argocd"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: argocd
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "argocd"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: services/argocd
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    path: "services/argocd"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
     helm:
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
-        - values.yaml
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"

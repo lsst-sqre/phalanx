@@ -43,6 +43,10 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
   tokenLifetimeMinutes: 43200
@@ -74,6 +78,15 @@ config:
     # -- Additional parameters to add
     loginParams:
       skin: "LSST"
+
+    # -- Claim from which to get the username
+    # @default -- `"uid"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
 
   firestore:
     # -- If set, assign UIDs and GIDs using Google Firestore in the given
@@ -119,13 +132,12 @@ config:
     scopes:
       - "openid"
 
-    # -- Claim from which to get the username (only used if not retrieved from
-    # LDAP)
+    # -- Claim from which to get the username
     # @default -- `"sub"`
     usernameClaim: ""
 
     # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP)
+    # from LDAP or Firestore)
     # @default -- `"uidNumber"`
     uidClaim: ""
 
@@ -135,14 +147,14 @@ config:
     # @default -- Do not use LDAP
     url: ""
 
-    # -- Base DN for the LDAP search to find a user's groups
-    # @default -- None, must be set
-    baseDn: ""
-
     # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
     # set in the Gafaelfawr secret
     # @default -- Use anonymous binds
     userDn: ""
+
+    # -- Base DN for the LDAP search to find a user's groups
+    # @default -- None, must be set
+    groupBaseDn: ""
 
     # -- Object class containing group information
     groupObjectClass: "posixGroup"
@@ -151,21 +163,32 @@ config:
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
 
-    # -- Base DN for the LDAP search to find a user's username
-    # @default -- Get the username from the upstream authentication provider
-    usernameBaseDn: ""
+    # -- Base DN for the LDAP search to find a user's entry
+    # @default -- Get user metadata from the upstream authentication provider
+    userBaseDn: ""
 
-    # -- Attribute matching the `sub` claim of a token to find the record
-    # containing the username
-    usernameSearchAttr: "voPersonSoRID"
+    # -- Search attribute containing the user's username
+    userSearchAttr: "uid"
 
-    # -- Base DN for the LDAP search to find a user's UID number
-    # @default -- Get the UID number from the upstream authentication provider
-    uidBaseDn: ""
+    # -- Attribute containing the user's full name
+    nameAttr: "displayName"
 
-    # -- Attribute containing the user's UID number (only used if uidBaseDn is
-    # set)
-    uidAttr: "uidNumber"
+    # -- Attribute containing the user's email address
+    emailAttr: "mail"
+
+    # -- Attribute containing the user's UID number (set to `uidNumber` for
+    # most LDAP servers)
+    # @default -- Get UID from upstream authentication provider
+    uidAttr: ""
+
+    # -- Attribute containing the user's primary GID (set to `gidNumber` for
+    # most LDAP servers)
+    # @default -- Use GID of user private group
+    gidAttr: ""
+
+    # -- Whether to synthesize a user private group for each user with a GID
+    # equal to their UID
+    addUserGroup: false
 
   influxdb:
     # -- Whether to issue tokens for InfluxDB. If set to true,
@@ -183,7 +206,7 @@ config:
 
   # -- Names and descriptions of all scopes in use. This is used to populate
   # the new token creation page. Only scopes listed here will be options when
-  # creating a new token.
+  # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
   # @default -- See the `values.yaml` file
   knownScopes:
     "admin:token": >-
@@ -205,9 +228,8 @@ config:
     "user:token": >-
       Can create and modify user tokens
 
-  # -- Defines a mapping of scopes to groups that provide that scope. Tokens
-  # from an OpenID Connect provider such as CILogon that include groups in an
-  # `isMemberOf` claim will be granted scopes based on this mapping.
+  # -- Defines a mapping of scopes to groups that provide that scope. See
+  # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
 
   # -- Usernames to add as administrators when initializing a new database.
@@ -227,7 +249,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.30.1"
+    tag: "1.31.2-alpine"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -239,6 +261,22 @@ cloudsql:
   # and `gafaelfawr-tokens` Kubernetes service accounts and has the
   # `cloudsql.client` role
   serviceAccount: ""
+
+maintenance:
+  # -- Resource limits and requests for the Gafaelfawr maintenance pod
+  resources: {}
+
+  # -- Annotations for the Gafaelfawr maintenance pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Gafaelfawr maintenance pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Gafaelfawr maintenance pod
+  tolerations: []
+
+  # -- Affinity rules for the Gafaelfawr maintenance pod
+  affinity: {}
 
 tokens:
   # -- Resource limits and requests for the Gafaelfawr token management pod
@@ -262,7 +300,7 @@ redis:
     repository: "redis"
 
     # -- Redis image tag to use
-    tag: "6.2.7"
+    tag: "7.0.4"
 
     # -- Pull policy for the Redis image
     pullPolicy: "IfNotPresent"

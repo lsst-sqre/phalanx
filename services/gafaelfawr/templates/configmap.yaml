@@ -14,6 +14,9 @@ data:
     database_password_file: "/etc/gafaelfawr/secrets/database-password"
     redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
+    {{- if .Values.config.slackAlerts }}
+    slack_webhook_file: "/etc/gafaelfawr/secrets/slack-webhook"
+    {{- end }}
     token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
     {{- if .Values.config.proxies }}
     proxies:
@@ -52,10 +55,10 @@ data:
       {{- else }}
       login_url: "https://cilogon.org/authorize"
       token_url: "https://cilogon.org/oauth2/token"
+      issuer: "https://cilogon.org"
+      {{- end }}
       {{- if .Values.config.cilogon.enrollmentUrl }}
       enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
-      {{- end }}
-      issuer: "https://cilogon.org"
       {{- end }}
       {{- if .Values.config.cilogon.loginParams }}
       login_params:
@@ -72,6 +75,12 @@ data:
         - "email"
         - "org.cilogon.userinfo"
       audience: {{ .Values.config.cilogon.clientId | quote }}
+      {{- if .Values.config.cilogon.usernameClaim }}
+      username_claim: {{ .Values.config.cilogon.usernameClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.cilogon.uidClaim }}
+      uid_claim: {{ .Values.config.cilogon.uidClaim | quote }}
+      {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
 
@@ -85,8 +94,8 @@ data:
       {{- end }}
       login_url: {{ required "config.oidc.loginUrl must be set" .Values.config.oidc.loginUrl | quote }}
       token_url: {{ required "config.oidc.tokenUrl must be set" .Values.config.oidc.tokenUrl | quote }}
-      {{- if .Values.config.cilogon.enrollmentUrl }}
-      enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
+      {{- if .Values.config.oidc.enrollmentUrl }}
+      enrollment_url: {{ .Values.config.oidc.enrollmentUrl | quote }}
       {{- end }}
       issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
       {{- if .Values.config.oidc.redirectUrl }}
@@ -120,20 +129,27 @@ data:
     {{- if .Values.config.ldap.url }}
     ldap:
       url: {{ .Values.config.ldap.url | quote }}
-      base_dn: {{ required "config.ldap.baseDn must be set" .Values.config.ldap.baseDn | quote }}
+      group_base_dn: {{ required "config.ldap.groupBaseDn must be set" .Values.config.ldap.groupBaseDn | quote }}
       {{- if .Values.config.ldap.userDn }}
       user_dn: {{ .Values.config.ldap.userDn | quote }}
       password_file: "/etc/gafaelfawr/secrets/ldap-password"
       {{- end }}
       group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
       group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
-      {{- if .Values.config.ldap.usernameBaseDn }}
-      username_base_dn: {{ .Values.config.ldap.usernameBaseDn | quote }}
-      username_search_attr: {{ .Values.config.ldap.usernameSearchAttr | quote }}
-      {{- end }}
-      {{- if .Values.config.ldap.uidBaseDn }}
-      uid_base_dn: {{ .Values.config.ldap.uidBaseDn | quote }}
+      {{- if .Values.config.ldap.userBaseDn }}
+      user_base_dn: {{ .Values.config.ldap.userBaseDn | quote }}
+      user_search_attr: {{ .Values.config.ldap.userSearchAttr | quote }}
+      name_attr: {{ .Values.config.ldap.nameAttr | quote }}
+      email_attr: {{ .Values.config.ldap.emailAttr | quote }}
+      {{- if .Values.config.ldap.uidAttr }}
       uid_attr: {{ .Values.config.ldap.uidAttr | quote }}
+      {{- end }}
+      {{- if .Values.config.ldap.gidAttr }}
+      gid_attr: {{ .Values.config.ldap.gidAttr | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.config.ldap.addUserGroup }}
+      add_user_group: true
       {{- end }}
     {{- end }}
 

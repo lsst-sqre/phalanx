@@ -6,7 +6,7 @@ SQuaRE telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.18 |
+| https://helm.influxdata.com/ | telegraf | 1.8.20 |
 
 ## Values
 
@@ -28,6 +28,8 @@ SQuaRE telemetry collection service
 | telegraf.mountPoints[0].name | string | `"telegraf-generated-config"` |  |
 | telegraf.podLabels."hub.jupyter.org/network-access-hub" | string | `"true"` |  |
 | telegraf.rbac.clusterWide | bool | `true` |  |
+| telegraf.resources.limits.cpu | string | `"900m"` |  |
+| telegraf.resources.limits.memory | string | `"512Mi"` |  |
 | telegraf.service.enabled | bool | `false` |  |
 | telegraf.tplVersion | int | `2` |  |
 | telegraf.volumes[0].configMap.name | string | `"telegraf-generated-config"` |  |

@@ -4,5 +4,5 @@ version: 1.0.1
 description: SQuaRE telemetry collection service
 dependencies:
   - name: telegraf
-    version: 1.8.18
+    version: 1.8.20
     repository: https://helm.influxdata.com/

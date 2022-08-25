@@ -36,12 +36,12 @@ General development and operations
    service-guide/create-service
    service-guide/add-a-onepassword-secret
    service-guide/update-a-onepassword-secret
+   service-guide/update-pull-secret
    service-guide/add-service
    service-guide/add-external-chart
    service-guide/local-development
    service-guide/sync-argo-cd
    service-guide/upgrade
-   service-guide/chart-changes
 
 Specific tasks
 --------------
@@ -66,6 +66,7 @@ Services
    ops/cert-manager/index
    ops/gafaelfawr/index
    ops/ingress-nginx/index
+   ops/mobu/index
    ops/nublado2/index
    ops/postgres/index
    ops/squash-api/index

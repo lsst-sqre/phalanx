@@ -13,10 +13,6 @@ global:
   # @default -- Set by Argo CD
   host: ""
 
-  # -- Base path for Vault secrets
-  # @default -- Set by Argo CD
-  vaultSecretsPathPrefix: ""
-
 # -- Number of API pods to run
 replicaCount: 1
 
@@ -110,6 +106,24 @@ config:
 
     # -- Number of workers to run
     workerCount: 1
+
+    # -- The default notebook execution timeout, in seconds.
+    jobTimeout: 300
+
+    # -- Worker token lifetime, in seconds.
+    tokenLifetime: "2419200"
+
+    # -- Nublado2 worker account's token scopes as a comma-separated list.
+    tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
+
+    # -- Nublado image stream to select: "recommended", "weekly" or "reference"
+    imageSelector: "weekly"
+
+    # -- Nublado image reference, applicable when imageSelector is "reference"
+    imageReference: ""
+
+    # -- Worker keep alive mode: "normal", "fast", "disabled"
+    keepAlive: "normal"
 
 redis:
   auth:

@@ -21,7 +21,7 @@ spec:
         {{- include "exposurelog.selectorLabels" . | nindent 8 }}
     spec:
       imagePullSecrets:
-        name: pull-secret
+        - name: "pull-secret"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

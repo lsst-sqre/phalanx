@@ -5,6 +5,6 @@ metadata:
   labels:
     {{- include "nublado2.labels" . | nindent 4 }}
 spec:
-  service: "nublado2"
+  service: "bot-nublado2"
   scopes:
     - "admin:provision"

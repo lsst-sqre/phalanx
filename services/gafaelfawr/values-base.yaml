@@ -2,7 +2,7 @@
 # use persistent volumes once we can coordinate that.
 redis:
   persistence:
-    enabled: false
+    storageClass: "rook-ceph-block"
 
 config:
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
@@ -22,6 +22,11 @@ config:
       - "lsst-ts-base-access"
       - "rubin-summit-rsp-access"
     "exec:portal":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-base-access"
+      - "rubin-summit-rsp-access"
+    "read:image":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
       - "lsst-ts-base-access"

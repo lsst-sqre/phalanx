@@ -1,11 +1,11 @@
 replicaCount: 2
 
-resources:
-  limits:
-    memory: "2Gi"
-
 config:
   volumes:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
       server: "10.87.86.26"
+
+resources:
+  limits:
+    memory: "2Gi"
