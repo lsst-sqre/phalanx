@@ -1,6 +1,8 @@
 config:
   siteName: "Rubin Science Platform @ CC-IN2P3"
-  
+
+ingress:
+  tls: false 
   
 pull-secret:
   enabled: true
