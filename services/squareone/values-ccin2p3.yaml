@@ -1,12 +1,7 @@
-ingress:
-  host: "data-dev.lsst.eu"
-  annotations:
-    cert-manager.io/cluster-issuer: cert-issuer-letsencrypt-dns
-  tls:
-    - secretName: squareone-tls
-      hosts:
-        - "data-dev.lsst.eu"
-imagePullSecrets:
-  - name: "pull-secret"
 config:
   siteName: "Rubin Science Platform @ CC-IN2P3"
+  
+  
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsp-cc/pull-secret 
