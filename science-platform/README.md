@@ -17,7 +17,6 @@
 | narrativelog.enabled | bool | `false` |  |
 | noteburst.enabled | bool | `false` |  |
 | nublado2.enabled | bool | `false` |  |
-| obstap.enabled | bool | `false` |  |
 | onepassword_uuid | string | `"dg5afgiadsffeklfr6jykqymeu"` |  |
 | plot_navigator.enabled | bool | `false` |  |
 | portal.enabled | bool | `false` |  |
