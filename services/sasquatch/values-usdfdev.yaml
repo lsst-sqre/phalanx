@@ -14,6 +14,19 @@ kafka-connect-manager:
       enabled: true
       tasksMax: 10
 
+kafka:
+  externalListener:
+    bootstrap:
+      annotations:
+        metallb.universe.tf/address-pool: sdf-dmz
+    brokers:
+    - annotations:
+        metallb.universe.tf/address-pool: sdf-dmz
+    - annotations:
+        metallb.universe.tf/address-pool: sdf-dmz
+    - annotations:
+        metallb.universe.tf/address-pool: sdf-dmz
+
 kafdrop:
   ingress:
     enabled: true
