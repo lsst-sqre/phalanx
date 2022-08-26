@@ -26,8 +26,6 @@ noteburst:
   enabled: false
 nublado2:
   enabled: true
-obstap:
-  enabled: true
 plot_navigator:
   enabled: false
 portal:
