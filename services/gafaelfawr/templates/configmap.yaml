@@ -118,6 +118,7 @@ data:
       uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
       {{- end }}
 
+
     {{- end }}
 
     {{- if .Values.config.firestore.project }}

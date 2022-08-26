@@ -1,0 +1,85 @@
+# image:
+#   # -- Gafaelfawr image to use
+#   repository: "docker.io/gabrimaine/gafaelfawr"
+
+replicaCount: 2
+
+pull_secret: 'pull-secret'
+ingress:
+  host: data-dev.lsst.eu
+vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
+
+redis:
+  persistence:
+    enabled: false
+
+config:
+  loglevel: "DEBUG"
+  host:  data-dev.lsst.eu
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+# Do not specify ingress.host because we're using the wildcard virtual host.
+
+# Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  github:
+    clientId: ae314e45a6af43ea910a
+
+#   oidc:
+#     clientId: "lsst_rsp"
+#     loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
+#     tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
+#     issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
+#     usernameClaim: "preferred_username"
+#     uidClaim: 'uid_number'
+#     isMemberOf: 'groups'
+
+#   # oidcServer: 
+#   #   enabled: true
+# # Allow access by GitHub team.
+#   # Allow access by GitHub team.
+#   groupMapping:
+#     "admin:provision":
+#       - "/lsst"
+#     "exec:admin":
+#       - "/lsst"
+#     "exec:notebook":
+#       - "/lsst"
+#     "exec:portal":
+#       - "/lsst"
+#     "read:tap":
+#       - "/lsst"
+
+# Allow access by GitHub team.
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - "rubin-in2p3-admin"
+    "exec:admin":
+      - "rubin-in2p3-admin"
+    "exec:notebook":
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+    "exec:portal":
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+    "read:tap":
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+      - "rubin-in2p3"
+      - "rubin-in2p3-delegates"
+    "read:image":
+      - "rubin-in2p3-admin"
+      - "rubin-in2p3-user"
+      - "rubin-in2p3"
+      - "rubin-in2p3-delegates"
+      
+  initialAdmins:
+     # - "mainetti"
+    - "gabrimaine"
+
+pull-secret:
+  enabled: true
+  path: secret/k8s_operator/rsp-cc/pull-secret
