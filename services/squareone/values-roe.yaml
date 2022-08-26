@@ -4,7 +4,3 @@ config:
 
 ingress:
   tls: false
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/roe/pull-secret
