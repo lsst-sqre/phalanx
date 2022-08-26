@@ -1,13 +1,4 @@
-# image:
-#   # -- Gafaelfawr image to use
-#   repository: "docker.io/gabrimaine/gafaelfawr"
-
 replicaCount: 2
-
-pull_secret: 'pull-secret'
-ingress:
-  host: data-dev.lsst.eu
-vaultSecretsPath: "secret/k8s_operator/rsp-cc/gafaelfawr"
 
 redis:
   persistence:
@@ -15,12 +6,9 @@ redis:
 
 config:
   loglevel: "DEBUG"
-  host: data-dev.lsst.eu
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
-# Do not specify ingress.host because we're using the wildcard virtual host.
-
-# Session length and token expiration (in minutes).
+  # Session length and token expiration (in minutes).
   issuer:
     exp_minutes: 43200  # 30 days
 
@@ -38,21 +26,7 @@ config:
 
 #   # oidcServer:
 #   #   enabled: true
-# # Allow access by GitHub team.
-#   # Allow access by GitHub team.
-#   groupMapping:
-#     "admin:provision":
-#       - "/lsst"
-#     "exec:admin":
-#       - "/lsst"
-#     "exec:notebook":
-#       - "/lsst"
-#     "exec:portal":
-#       - "/lsst"
-#     "read:tap":
-#       - "/lsst"
 
-# Allow access by GitHub team.
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
@@ -77,5 +51,5 @@ config:
       - "rubin-in2p3-delegates"
 
   initialAdmins:
-     # - "mainetti"
+    # - "mainetti"
     - "gabrimaine"
