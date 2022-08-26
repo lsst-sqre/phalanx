@@ -79,3 +79,13 @@ registry:
 # These users will be created, along with their credentials.
 superusers:
   - kafka-admin
+
+mirrormaker2:
+  # -- Enable replication in the target (passive) cluster.
+  enabled: false
+  source:
+    # -- Source (active) cluster bootstrap server.
+    bootstrapServer: ""
+  target:
+    # -- Target (passive) cluster boostrap server.
+    bootstrapServer: ""
