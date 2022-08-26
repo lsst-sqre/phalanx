@@ -141,7 +141,6 @@ config:
     # @default -- `"uidNumber"`
     uidClaim: ""
 
-
   ldap:
     # -- LDAP server URL from which to retrieve user group information
     # @default -- Do not use LDAP
