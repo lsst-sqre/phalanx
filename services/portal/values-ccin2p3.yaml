@@ -3,4 +3,3 @@ replicaCount: 2
 resources:
   limits:
     memory: "24Gi"
-

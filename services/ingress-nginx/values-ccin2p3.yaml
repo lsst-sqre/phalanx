@@ -4,11 +4,11 @@ ingress-nginx:
       kubernetes.io/hostname: "ccqserv202"
 
     tolerations:
-    - key: "dedicated"
-      operator: "Equal"
-      value: "qserv"
-      effect: "NoSchedule"
-    
+      - key: "dedicated"
+        operator: "Equal"
+        value: "qserv"
+        effect: "NoSchedule"
+
     config:
       compute-full-forwarded-for: "true"
       large-client-header-buffers: "4 64k"

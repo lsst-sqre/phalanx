@@ -15,7 +15,7 @@ redis:
 
 config:
   loglevel: "DEBUG"
-  host:  data-dev.lsst.eu
+  host: data-dev.lsst.eu
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
 # Do not specify ingress.host because we're using the wildcard virtual host.
@@ -36,7 +36,7 @@ config:
 #     uidClaim: 'uid_number'
 #     isMemberOf: 'groups'
 
-#   # oidcServer: 
+#   # oidcServer:
 #   #   enabled: true
 # # Allow access by GitHub team.
 #   # Allow access by GitHub team.
@@ -75,7 +75,7 @@ config:
       - "rubin-in2p3-user"
       - "rubin-in2p3"
       - "rubin-in2p3-delegates"
-      
+
   initialAdmins:
      # - "mainetti"
     - "gabrimaine"

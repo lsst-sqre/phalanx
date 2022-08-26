@@ -32,7 +32,7 @@ argo-cd:
       #     health.lua: |
       #      hs = {}
       #      hs.status = "Healthy"
-      #      return hs 
+      #      return hs
 
     rbacConfig:
       policy.csv: |

@@ -2,8 +2,8 @@ config:
   siteName: "Rubin Science Platform @ CC-IN2P3"
 
 ingress:
-  tls: false 
-  
+  tls: false
+
 pull-secret:
   enabled: true
-  path: secret/k8s_operator/rsp-cc/pull-secret 
+  path: secret/k8s_operator/rsp-cc/pull-secret
