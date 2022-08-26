@@ -54,6 +54,7 @@ spec:
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
+            {{- if eq .Values.config.gcsBucketType "AWS" }}
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
@@ -64,6 +65,7 @@ spec:
                 secretKeyRef:
                   name: {{ template "cadc-tap.fullname" . }}-secret
                   key: "AWS_ACCESS_KEY_ID"
+            {{- end }}
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
           ports:
