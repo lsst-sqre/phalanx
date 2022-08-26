@@ -20,8 +20,6 @@ spec:
         {{- include "cadc-tap.labels" . | nindent 8 }}
         app.kubernetes.io/component: "uws-db"
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       automountServiceAccountToken: false
       containers:
         - name: "postgresql"

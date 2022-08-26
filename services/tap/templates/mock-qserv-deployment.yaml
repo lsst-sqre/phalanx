@@ -21,8 +21,6 @@ spec:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "mock-qserv"
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       automountServiceAccountToken: false
       containers:
         - name: "mock-qserv"
