@@ -47,3 +47,10 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
+
+mirrormaker2:
+  enabled: true
+  source:
+    bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
+  target:
+    bootstrapServer: sasquatch-int-kafka-bootstrap.lsst.cloud:9094
