@@ -17,14 +17,21 @@ kafka-connect-manager:
 kafka:
   externalListener:
     bootstrap:
+      loadBalancerIP: ""
       annotations:
         metallb.universe.tf/address-pool: sdf-dmz
     brokers:
-    - annotations:
+    - loadBalancerIP: ""
+      host: ""
+      annotations:
         metallb.universe.tf/address-pool: sdf-dmz
-    - annotations:
+    - loadBalancerIP: ""
+      host: ""
+      annotations:
         metallb.universe.tf/address-pool: sdf-dmz
-    - annotations:
+    - loadBalancerIP: ""
+      host: ""
+      annotations:
         metallb.universe.tf/address-pool: sdf-dmz
 
 kafdrop:
