@@ -1,6 +1,6 @@
 # cadc-tap
 
-A Helm chart for the CADC TAP service
+VO TAP service for the Rubin Science Platform
 
 **Homepage:** <https://github.com/lsst-sqre/lsst-tap-service>
 
