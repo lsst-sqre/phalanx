@@ -1,6 +1,6 @@
 # cadc-tap
 
-A Helm chart for the CADC TAP service
+VO TAP service for the Rubin Science Platform
 
 **Homepage:** <https://github.com/lsst-sqre/lsst-tap-service>
 
@@ -21,7 +21,7 @@ A Helm chart for the CADC TAP service
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
-| image.repository | string | `"lsstdax/lsst-tap-service"` | tap image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | tap image to use |
 | image.tag | string | The appVersion of the chart | Tag of tap image to use |
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to use for endpoints that allow anonymous access, such as `/capabilities` and `/availability` |
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
@@ -33,7 +33,7 @@ A Helm chart for the CADC TAP service
 | qserv.mock.affinity | object | `{}` | Affinity rules for the mock QServ pod |
 | qserv.mock.enabled | bool | `true` | Spin up a container to pretend to be QServ. |
 | qserv.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock QServ image |
-| qserv.mock.image.repository | string | `"lsstdax/mock-qserv"` | Mock QServ image to use |
+| qserv.mock.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-mock-qserv"` | Mock QServ image to use |
 | qserv.mock.image.tag | string | The appVersion of the chart | Tag of mock QServ image to use |
 | qserv.mock.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
 | qserv.mock.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
@@ -44,7 +44,7 @@ A Helm chart for the CADC TAP service
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
-| uws.image.repository | string | `"lsstdax/uws-db"` | UWS database image to use |
+| uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
 | uws.image.tag | string | The appVersion of the chart | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
