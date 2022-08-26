@@ -107,7 +107,7 @@ config:
 
     # -- Audience for the JWT token
     # @default -- Value of `config.oidc.clientId`
-    audience: ""
+    audience: ""  
 
     # -- URL to which to redirect the user for authorization
     # @default -- None, must be set
@@ -140,6 +140,7 @@ config:
     # from LDAP or Firestore)
     # @default -- `"uidNumber"`
     uidClaim: ""
+
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
