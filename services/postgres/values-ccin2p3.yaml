@@ -7,5 +7,3 @@ gafaelfawr_db:
 
 postgres_storage_class: 'rsp-local-storage'
 volume_name: 'postgres-data-rsp-ccqserv219'
-image:
-  tag: '0.0.5'
