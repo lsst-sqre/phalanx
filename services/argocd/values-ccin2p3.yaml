@@ -41,7 +41,3 @@ argo-cd:
   # configs:
   #   secret:
   #     createSecret: true
-
-vault_secret:
-  enabled: true
-  path: secret/k8s_operator/rsp-cc/argocd

@@ -30,9 +30,3 @@ ingress-nginx:
 
 vaultCertificate:
   enabled: true
-  #path: secret/k8s_operator/rsp-cc/ingress-nginx
-
-
-# pull-secret:
-#   enabled: true
-#   path: secret/k8s_operator/rsp-cc/pull-secret

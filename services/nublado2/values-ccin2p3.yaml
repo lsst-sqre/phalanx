@@ -13,7 +13,6 @@ jupyterhub:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
 
-
 config:
   base_url: "https://data-dev.lsst.eu"
   butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
@@ -42,8 +41,6 @@ config:
       mountPath: /home
 
 vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
-gafaelfawr_secrets_path: "secret/k8s_operator/rsp-cc/gafaelfawr"
-
 
 pull-secret:
   enabled: true

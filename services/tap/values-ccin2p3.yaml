@@ -12,9 +12,3 @@ image:
   # -- tap image to use
   repository: "gabrimaine/lsst-tap-service"
   tag: "1.2.1-CC2"
-# secrets:
-#   enabled: false
-
-# vault_secrets:
-#   enabled: true
-#   path: 'secret/k8s_operator/rsp-cc/tap'
