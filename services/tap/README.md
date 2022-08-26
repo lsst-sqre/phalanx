@@ -13,7 +13,7 @@ A Helm chart for the CADC TAP service
 | config.gafaelfawrHost | string | Value of `ingress.host` | Gafaelfawr hostname to get user information from a token |
 | config.gcsBucket | string | None, must be set | Name of GCS bucket in which to store results |
 | config.gcsBucketUrl | string | None, must be set | Base URL for results stored in GCS bucket |
-| config.gcsBucketType | string | None, must be set | Bucket type: GCS or S3|
+| config.gcsBucketType | string | `"GCS"` | Bucket type: GCS or S3|
 | config.jvmMaxHeapSize | string | `"4G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
 | config.tapSchemaAddress | string | `"tap-schema-db.tap-schema.svc.cluster.local:3306"` | Address to a MySQL database containing TAP schema data |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |

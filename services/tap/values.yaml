@@ -73,6 +73,10 @@ config:
   # @default -- None, must be set
   gcsBucketUrl: ""
 
+  # -- GCS bucket type (GCS or S3)
+  # @default -- GCS
+  gcsBucketUrl: "GCS"
+
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.
