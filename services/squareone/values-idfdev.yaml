@@ -6,7 +6,3 @@ config:
   siteName: "Rubin Science Platform @ data-dev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
