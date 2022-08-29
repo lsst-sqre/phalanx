@@ -95,7 +95,7 @@ kapacitor:
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
-    tag: 1.6.4
+    tag: 1.6.5
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true

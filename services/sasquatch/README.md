@@ -35,7 +35,7 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager | object | `{}` | Override strimzi-kafka configuration. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
-| kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.4"}` | Kapacitor image tag. |
+| kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.5"}` | Kapacitor image tag. |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
 | kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
