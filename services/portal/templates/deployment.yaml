@@ -73,8 +73,23 @@ spec:
                                "centerWP": "62;-37;EQ_J2000",
                                "fovDeg": 10
                           } ]
-                       }
-                    }
+                      }
+                   },
+                   "hips": {
+                      "defHipsSources": {"source": "lsst", "label": "Rubin Featured"},
+                      "adhocMocSource": {
+                          "sources": [
+                              "temp://lsst/dp02_dc2/hips/images/color_gri",
+                              "temp://lsst/dp02_dc2/hips/images/band_u",
+                              "temp://lsst/dp02_dc2/hips/images/band_g",
+                              "temp://lsst/dp02_dc2/hips/images/band_r",
+                              "temp://lsst/dp02_dc2/hips/images/band_i",
+                              "temp://lsst/dp02_dc2/hips/images/band_z",
+                              "temp://lsst/dp02_dc2/hips/images/band_y"
+                          ],
+                          "label": "Rubin Featured MOC"
+                      }
+                   }
                 }'
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"
