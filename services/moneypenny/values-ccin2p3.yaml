@@ -6,7 +6,7 @@ orders:
         runAsUser: 0
         runAsNonRootUser: false
       volumeMounts:
-        - mountPath: /data/rsp/home
+        - mountPath: /home
           name: home
   volumes:
     - name: home
