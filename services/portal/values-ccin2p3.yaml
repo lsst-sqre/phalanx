@@ -3,3 +3,5 @@ replicaCount: 2
 resources:
   limits:
     memory: "24Gi"
+
+hipsUrl: "http://alasky.cds.unistra.fr/2MASS/Color"
