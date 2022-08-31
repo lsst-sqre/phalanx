@@ -5,4 +5,4 @@ resources:
     memory: "24Gi"
 
 config:
-  hipsUrl: "http://alasky.cds.unistra.fr/DSS/DSSColor"
+  hipsUrl: "http://alasky.cds.unistra.fr/2MASS/Color"
