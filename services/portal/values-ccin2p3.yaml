@@ -4,4 +4,5 @@ resources:
   limits:
     memory: "24Gi"
 
-hipsUrl: "http://alasky.cds.unistra.fr/2MASS/Color"
+config:
+  hipsUrl: "http://alasky.cds.unistra.fr/2MASS/Color"
