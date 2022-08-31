@@ -52,7 +52,7 @@ spec:
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
-            {{- if eq .Values.config.gcsBucketType "AWS" }}
+            {{- if eq .Values.config.gcsBucketType "S3" }}
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
