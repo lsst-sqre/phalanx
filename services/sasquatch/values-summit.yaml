@@ -2,6 +2,19 @@ strimzi-kafka:
   kafka:
     storage:
       storageClassName: rook-ceph-block
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        loadBalancerIP: "139.229.160.152"
+        host: sasquatch-summit-kafka-bootstrap.lsst.codes
+      brokers:
+        - loadBalancerIP: "139.229.160.154"
+          host: sasquatch-summit-kafka-0.lsst.codes
+        - loadBalancerIP: "139.229.160.153"
+          host: sasquatch-summit-kafka-1.lsst.codes
+        - loadBalancerIP: "139.229.160.155"
+          host: sasquatch-summit-kafka-2.lsst.codes
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
