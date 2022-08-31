@@ -18,8 +18,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
-    target:
-      bootstrapServer: sasquatch-int-kafka-bootstrap.lsst.cloud:9094
+      topicsPattern: "registry-schemas, lsst.sal.*"
 
 influxdb:
   ingress:

@@ -53,7 +53,7 @@ spec:
         operation: Read
       - resource:
           type: group
-          name: connect-influxdb-sink
+          name: "*"
           patternType: literal
         operation: All
       - resource:

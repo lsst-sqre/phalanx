@@ -24,8 +24,8 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.version | string | `"3.1.1"` | Version of Kafka to deploy. |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
-| mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster bootstrap server. |
-| mirrormaker2.target.bootstrapServer | string | `""` | Target (passive) cluster boostrap server. |
+| mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster to replicate from. |
+| mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern. |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
