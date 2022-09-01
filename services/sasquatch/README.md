@@ -38,6 +38,10 @@ Rubin Observatory's telemetry service.
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.5"}` | Kapacitor image tag. |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
 | kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
+| kapacitor.resources.limits.cpu | int | `4` |  |
+| kapacitor.resources.limits.memory | string | `"16Gi"` |  |
+| kapacitor.resources.requests.cpu | int | `1` |  |
+| kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["http://hub.nublado2:8081/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by dedault. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |

@@ -107,6 +107,13 @@ kapacitor:
   # -- Kapacitor environment variables.
   envVars:
     KAPACITOR_SLACK_ENABLED: true
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 16Gi
+      cpu: 4
 
 telegraf:
   # -- Allow network access to JupyterHub pod.
