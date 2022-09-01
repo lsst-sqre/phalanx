@@ -1,4 +1,4 @@
-orders: |
+orders:
   commission:
     - name: initcommission
       image: lsstsqre/inituserhome
@@ -6,10 +6,10 @@ orders: |
         runAsUser: 0
         runAsNonRootUser: false
       volumeMounts:
-        - mountPath: /home
-          name: home
+        - mountPath: /homedirs
+          name: homedirs
   volumes:
-    - name: home
+    - name: homedirs
       hostPath:
         path: /data/rsp/home
         type: Directory
