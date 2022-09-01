@@ -14,25 +14,26 @@ kafka-connect-manager:
       enabled: true
       tasksMax: 10
 
-kafka:
-  externalListener:
-    bootstrap:
-      loadBalancerIP: ""
-      annotations:
-        metallb.universe.tf/address-pool: sdf-dmz
-    brokers:
-    - loadBalancerIP: ""
-      host: ""
-      annotations:
-        metallb.universe.tf/address-pool: sdf-dmz
-    - loadBalancerIP: ""
-      host: ""
-      annotations:
-        metallb.universe.tf/address-pool: sdf-dmz
-    - loadBalancerIP: ""
-      host: ""
-      annotations:
-        metallb.universe.tf/address-pool: sdf-dmz
+strimzi-kafka:
+  kafka:
+    externalListener:
+      bootstrap:
+        loadBalancerIP: ""
+        annotations:
+          metallb.universe.tf/address-pool: sdf-dmz
+      brokers:
+      - loadBalancerIP: ""
+        host: ""
+        annotations:
+          metallb.universe.tf/address-pool: sdf-dmz
+      - loadBalancerIP: ""
+        host: ""
+        annotations:
+          metallb.universe.tf/address-pool: sdf-dmz
+      - loadBalancerIP: ""
+        host: ""
+        annotations:
+          metallb.universe.tf/address-pool: sdf-dmz
 
 kafdrop:
   ingress:
