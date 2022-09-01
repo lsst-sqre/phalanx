@@ -2,7 +2,7 @@
 
 The TAP_SCHEMA database
 
-**Homepage:** <https://github.com/lsst-sqre/lsst-tap-service>
+**Homepage:** <https://github.com/lsst/sdm_schemas>
 
 ## Values
 

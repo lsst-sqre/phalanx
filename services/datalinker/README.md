@@ -15,6 +15,7 @@ Service and data discovery for Rubin Science Platform
 | autoscaling.maxReplicas | int | `100` | Maximum number of datalinker deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of datalinker deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of datalinker deployment pods |
+| config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |
