@@ -42,6 +42,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+config:
+  # -- URL containing TAP schema metadata used to construct queries
+  tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
 
