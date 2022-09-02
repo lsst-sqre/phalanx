@@ -8,7 +8,6 @@ serviceAccount:
   }
 
 cloudsql:
-  enabled: true
   nameSuffix: "butler-int" 
   ipAddressType: "PUBLIC"
   instanceConnectionName: "science-platform-int-dc5d:us-central1:butler-registry-int-72f9812d"
