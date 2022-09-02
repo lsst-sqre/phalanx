@@ -78,6 +78,12 @@
       {{- if .Values.config.cilogon.uidClaim }}
       uid_claim: {{ .Values.config.cilogon.uidClaim | quote }}
       {{- end }}
+      {{- if .Values.config.cilogon.gidClaim }}
+      gid_claim: {{ .Values.config.cilogon.gidClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.cilogon.groupsClaim }}
+      groups_claim: {{ .Values.config.cilogon.groupsClaim | quote }}
+      {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
 
@@ -113,6 +119,12 @@
       {{- end }}
       {{- if .Values.config.oidc.uidClaim }}
       uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.oidc.gidClaim }}
+      gid_claim: {{ .Values.config.oidc.gidClaim | quote }}
+      {{- end }}
+      {{- if .Values.config.oidc.groupsClaim }}
+      groups_claim: {{ .Values.config.oidc.groupsClaim | quote }}
       {{- end }}
 
     {{- end }}
