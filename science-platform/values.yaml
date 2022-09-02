@@ -38,6 +38,8 @@ semaphore:
   enabled: false
 sherlock:
   enabled: false
+sqlproxy_butler_int:
+  enabled: false
 squareone:
   enabled: false
 squash_api:
