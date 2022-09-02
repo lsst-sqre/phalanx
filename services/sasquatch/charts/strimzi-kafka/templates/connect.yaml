@@ -34,6 +34,16 @@ spec:
     value.converter: io.confluent.connect.avro.AvroConverter
     value.converter.schemas.enable: true
     value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+resources:
+  requests:
+    cpu: "2"
+    memory: 4Gi
+  limits:
+    cpu: "8"
+    memory: 24Gi
+jvmOptions:
+    "-Xmx": "8g"
+    "-Xms": "8g"
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
