@@ -46,6 +46,8 @@ squareone:
   enabled: true
 squash_api:
   enabled: false
+sqlproxy_butler_int:
+  enabled: true
 strimzi:
   enabled: true
 strimzi_registry_operator:
