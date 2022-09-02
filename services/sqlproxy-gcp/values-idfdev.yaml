@@ -18,7 +18,7 @@ image:
   repository: gcr.io/cloudsql-docker/gce-proxy
   tag: 1.28.0
 
-resources: 
+resources:
   requests:
     cpu: "1"
     memory: "2Gi"
