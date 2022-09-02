@@ -280,19 +280,25 @@ cloudsql:
   affinity: {}
 
 maintenance:
-  # -- Resource limits and requests for the Gafaelfawr maintenance pod
+  # -- Cron schedule string for Gafaelfawr data consistency audit (in UTC)
+  auditSchedule: "30 3 * * *"
+
+  # -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
+  maintenanceSchedule: "5 * * * *"
+
+  # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
   resources: {}
 
-  # -- Annotations for the Gafaelfawr maintenance pod
+  # -- Annotations for Gafaelfawr maintenance and audit pods
   podAnnotations: {}
 
-  # -- Node selection rules for the Gafaelfawr maintenance pod
+  # -- Node selection rules for Gafaelfawr maintenance and audit pods
   nodeSelector: {}
 
-  # -- Tolerations for the Gafaelfawr maintenance pod
+  # -- Tolerations for Gafaelfawr maintenance and audit pods
   tolerations: []
 
-  # -- Affinity rules for the Gafaelfawr maintenance pod
+  # -- Affinity rules for Gafaelfawr maintenance and audit pods
   affinity: {}
 
 tokens:

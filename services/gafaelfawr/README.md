@@ -74,11 +74,13 @@ Science Platform authentication and authorization system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
-| maintenance.affinity | object | `{}` | Affinity rules for the Gafaelfawr maintenance pod |
-| maintenance.nodeSelector | object | `{}` | Node selection rules for the Gafaelfawr maintenance pod |
-| maintenance.podAnnotations | object | `{}` | Annotations for the Gafaelfawr maintenance pod |
-| maintenance.resources | object | `{}` | Resource limits and requests for the Gafaelfawr maintenance pod |
-| maintenance.tolerations | list | `[]` | Tolerations for the Gafaelfawr maintenance pod |
+| maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
+| maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
+| maintenance.maintenanceSchedule | string | `"5 * * * *"` | Cron schedule string for Gafaelfawr periodic maintenance (in UTC) |
+| maintenance.nodeSelector | object | `{}` | Node selection rules for Gafaelfawr maintenance and audit pods |
+| maintenance.podAnnotations | object | `{}` | Annotations for Gafaelfawr maintenance and audit pods |
+| maintenance.resources | object | `{}` | Resource limits and requests for Gafaelfawr maintenance and audit pods |
+| maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
