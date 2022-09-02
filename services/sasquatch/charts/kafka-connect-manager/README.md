@@ -12,20 +12,20 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
 | image.tag | string | `"1.0.0"` |  |
-| influxdbSink.influxdb-sink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
-| influxdbSink.influxdb-sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
-| influxdbSink.influxdb-sink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
-| influxdbSink.influxdb-sink.connectInfluxErrorPolicy | string | `"THROW"` | Error policy. |
-| influxdbSink.influxdb-sink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
-| influxdbSink.influxdb-sink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
-| influxdbSink.influxdb-sink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL, can be internal to the cluster. |
-| influxdbSink.influxdb-sink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| influxdbSink.influxdb-sink.enabled | bool | `false` | Whether this connector instance is deployed. |
-| influxdbSink.influxdb-sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
-| influxdbSink.influxdb-sink.name | string | `"influxdb-sink"` | Name of the connector instance to create. |
-| influxdbSink.influxdb-sink.tasksMax | int | `10` | Number of KafkaConnect tasks. |
-| influxdbSink.influxdb-sink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified `sys_time()` the current timestamp. |
-| influxdbSink.influxdb-sink.topicRegex | string | `"lsst.sal.*"` | Regex to select topics from Kafka. |
+| influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
+| influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
+| influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
+| influxdbSink.connectInfluxErrorPolicy | string | `"NOOP"` | Error policy, see connector documetation for details. |
+| influxdbSink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
+| influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
+| influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
+| influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
+| influxdbSink.connectors | object | `{"test":{"enabled":false,"topicsRegex":".*Test"}}` | Connector instances to deploy. |
+| influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
+| influxdbSink.connectors.test.topicsRegex | string | `".*Test"` | Regex to select topics from Kafka. |
+| influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
+| influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
+| influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
 | jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table. |
 | jdbcSink.autoEvolve | string | `"false"` | Whether to automatically add columns in the table schema. |
 | jdbcSink.batchSize | string | `"3000"` | Specifies how many records to attempt to batch together for insertion into the destination table. |
