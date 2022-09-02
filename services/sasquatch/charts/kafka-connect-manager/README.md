@@ -23,7 +23,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.influxdb-sink.enabled | bool | `false` | Whether this connector instance is deployed. |
 | influxdbSink.influxdb-sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | influxdbSink.influxdb-sink.name | string | `"influxdb-sink"` | Name of the connector instance to create. |
-| influxdbSink.influxdb-sink.tasksMax | int | `1` | Number of KafkaConnect tasks. |
+| influxdbSink.influxdb-sink.tasksMax | int | `10` | Number of KafkaConnect tasks. |
 | influxdbSink.influxdb-sink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified `sys_time()` the current timestamp. |
 | influxdbSink.influxdb-sink.topicRegex | string | `"lsst.sal.*"` | Regex to select topics from Kafka. |
 | jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table. |

@@ -17,7 +17,7 @@ influxdbSink:
     # -- InfluxDB database to write to.
     connectInfluxDb: "efd"
     # -- Number of KafkaConnect tasks.
-    tasksMax: 1
+    tasksMax: 10
     # -- Regex to select topics from Kafka.
     topicRegex: "lsst.sal.*"
     # -- If autoUpdate is enabled, check for new kafka topics.
