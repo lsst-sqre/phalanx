@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.4.1"
+      tag: "2.5.0"
     resources:
       limits:
         cpu: 900m
@@ -297,8 +297,7 @@ config:
           cgred:x:997:
           screen:x:84:
           jovyan:x:768:{{ user }}
-          provisionator:x:769:
-          {{user}}:x:{{uid}}:{% for group in groups %}
+          provisionator:x:769:{% for group in groups %}
           {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -343,8 +342,7 @@ config:
           cgred:!::
           screen:!::
           jovyan:!::{{ user }}
-          provisionator:!::
-          {{ user }}:!::{% for g in groups %}
+          provisionator:!::{% for g in groups %}
           {{ g.name }}:!::{{ user }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
@@ -371,7 +369,7 @@ config:
           lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
