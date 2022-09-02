@@ -4,7 +4,7 @@ nameOverride: sqlproxy-butler-int
 
 serviceAccount:
   annotations: {
-    iam.gke.io/gcp-service-account:  sqlproxy-butler-int@science-platform-dev-7696.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: sqlproxy-butler-int@science-platform-dev-7696.iam.gserviceaccount.com
   }
 
 cloudsql:
@@ -20,5 +20,5 @@ image:
 
 resources: 
   requests:
-     cpu: "1"
-     memory: "2Gi"
+    cpu: "1"
+    memory: "2Gi"
