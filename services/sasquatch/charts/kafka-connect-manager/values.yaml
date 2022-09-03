@@ -91,31 +91,6 @@ s3Sink:
   # -- The object storage connection URL, for non-AWS s3 providers.
   storeUrl: ""
 
-mirrorMaker2:
-  # -- Whether the MirrorMaker 2 connectors (heartbeat, checkpoint and mirror-source) are deployed.
-  enabled: false
-  # -- Name od the connector to create.
-  name: "replicator"
-  # -- Source Kafka cluster.
-  sourceClusterBootstrapServers: "localhost:31090"
-  # -- Alias for the source cluster. The remote topic name is prefixed by this value.
-  # Use an empty string to preserve the name of the source topic in the destination cluster.
-  sourceClusterAlias: "src"
-  # -- Separator used to format the remote topic name.
-  # Use an empty string if sourceClusterAlias is empty.
-  replicationPolicySeparator: "."
-  # -- Destination Kafka cluster.
-  targetClusterBootstrapServers: "localhost:31090"
-  # -- Name of the destination cluster.
-  targetClusterAlias: "destn"
-  # -- Regex for selecting topics.
-  # Comma-separated lists are also supported.
-  topicRegex: ".*"
-  # -- Number of Kafka Connect tasks.
-  tasksMax: 1
-  # -- Whether to monitor source cluster ACLs for changes.
-  syncTopicAclsEnabled: false
-
 jdbcSink:
   # -- Whether the JDBC Sink connector is deployed.
   enabled: false

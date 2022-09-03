@@ -39,16 +39,6 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | jdbcSink.tableNameFormat | string | `"${topic}"` | A format string for the destination table name. |
 | jdbcSink.tasksMax | string | `"10"` | Number of Kafka Connect tasks. |
 | jdbcSink.topicRegex | string | `".*"` | Regex for selecting topics. |
-| mirrorMaker2.enabled | bool | `false` | Whether the MirrorMaker 2 connectors (heartbeat, checkpoint and mirror-source) are deployed. |
-| mirrorMaker2.name | string | `"replicator"` | Name od the connector to create. |
-| mirrorMaker2.replicationPolicySeparator | string | `"."` | Separator used to format the remote topic name. Use an empty string if sourceClusterAlias is empty. |
-| mirrorMaker2.sourceClusterAlias | string | `"src"` | Alias for the source cluster. The remote topic name is prefixed by this value. Use an empty string to preserve the name of the source topic in the destination cluster. |
-| mirrorMaker2.sourceClusterBootstrapServers | string | `"localhost:31090"` | Source Kafka cluster. |
-| mirrorMaker2.syncTopicAclsEnabled | bool | `false` | Whether to monitor source cluster ACLs for changes. |
-| mirrorMaker2.targetClusterAlias | string | `"destn"` | Name of the destination cluster. |
-| mirrorMaker2.targetClusterBootstrapServers | string | `"localhost:31090"` | Destination Kafka cluster. |
-| mirrorMaker2.tasksMax | int | `1` | Number of Kafka Connect tasks. |
-| mirrorMaker2.topicRegex | string | `".*"` | Regex for selecting topics. Comma-separated lists are also supported. |
 | s3Sink.behaviorOnNullValues | string | `"fail"` | How to handle records with a null value (for example, Kafka tombstone records). Valid options are ignore and fail. |
 | s3Sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | s3Sink.enabled | bool | `false` | Whether the Amazon S3 Sink connector is deployed. |
