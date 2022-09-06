@@ -2,9 +2,7 @@ autostart:
   jupyter: |
     {
       "name": "jupyter",
-      "labels": {
-          "jupyterlab": "ok"
-      },
+      "labels": {},
       "repomen": [
         {
           "type": "RubinRepoMan",
