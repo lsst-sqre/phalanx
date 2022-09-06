@@ -234,6 +234,7 @@ config:
     WORKFLOW_ROUTE: /wf
     AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
     NO_SUDO: "TRUE"
+    EXTERNAL_GID: "{{ gid if gid else uid }}"
     EXTERNAL_GROUPS: "{{ external_groups }}"
     EXTERNAL_UID: "{{ uid }}"
     ACCESS_TOKEN: "{{ token }}"
