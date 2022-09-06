@@ -25,13 +25,12 @@ influxdb:
         proxy_set_header X-Forwarded-Path /;
     path: /
 
-
 kafka-connect-manager:
   influxdbSink:
     influxdb-sink:
       enabled: true
-      connectInfluxErrorPolicy: NOOP
       tasksMax: 10
+      topicsRegex: "lsst.sal.*"
 
 kafdrop:
   ingress:
