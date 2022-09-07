@@ -9,6 +9,10 @@ strimzi-kafka:
 influxdb:
   persistence:
     storageClass: rook-ceph-block
+  # Temporarily enable this ingress to allow access by the EFD client
+  # version 0.11.0. Once version 0.12.0 is the default one, this
+  # can be removed and we should use tucson-teststand.lsst.codes/influxdb
+  # instead.
   ingress:
     enabled: true
     tls: true
