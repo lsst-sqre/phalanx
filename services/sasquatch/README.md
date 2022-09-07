@@ -31,7 +31,7 @@ Rubin Observatory's telemetry service.
 | influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
-| kafka-connect-manager | object | `{}` | Override strimzi-kafka configuration. |
+| kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.5"}` | Kapacitor image tag. |

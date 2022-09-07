@@ -63,7 +63,7 @@ influxdb:
     # # -- InfluxDB custom initialization script.
     #   init.iql: |+
 
-# -- Override strimzi-kafka configuration.
+# -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
 
 chronograf:
