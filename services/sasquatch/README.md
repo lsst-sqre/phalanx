@@ -12,7 +12,6 @@ Rubin Observatory's telemetry service.
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
-| https://helm.influxdata.com/ | telegraf | 1.8.20 |
 | https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.1.0 |
 
 ## Values
@@ -28,7 +27,7 @@ Rubin Observatory's telemetry service.
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
-| influxdb.initScripts | object | `{"enabled":true,"scripts":{"init.iql":"CREATE DATABASE \"telegraf\" WITH DURATION 30d REPLICATION 1 NAME \"rp_30d\"\n\n"}}` | InfluxDB Custom initialization scripts. |
+| influxdb.initScripts.enabled | bool | `false` | Enable InfluxDB custom initialization script. |
 | influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
@@ -44,9 +43,3 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
-| telegraf.config.inputs | list | `[{"prometheus":{"metric_version":2,"urls":["http://hub.nublado2:8081/nb/hub/metrics"]}}]` | Telegraf input plugins. Collect JupyterHub Prometheus metrics by dedault. See https://jupyterhub.readthedocs.io/en/stable/reference/metrics.html |
-| telegraf.config.outputs | list | `[{"influxdb":{"database":"telegraf","password":"$TELEGRAF_PASSWORD","urls":["http://sasquatch-influxdb.sasquatch:8086"],"username":"telegraf"}}]` | Telegraf default output destination. |
-| telegraf.config.processors | object | `{}` | Telegraf processor plugins. |
-| telegraf.env[0] | object | `{"name":"TELEGRAF_PASSWORD","valueFrom":{"secretKeyRef":{"key":"telegraf-password","name":"sasquatch"}}}` | Telegraf password. |
-| telegraf.podLabels | object | `{"hub.jupyter.org/network-access-hub":"true"}` | Allow network access to JupyterHub pod. |
-| telegraf.service.enabled | bool | `false` | Telegraf service. |
