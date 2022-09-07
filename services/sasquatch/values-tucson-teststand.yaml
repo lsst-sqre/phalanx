@@ -9,6 +9,10 @@ strimzi-kafka:
 influxdb:
   persistence:
     storageClass: rook-ceph-block
+  # Temporarily enable this ingress to allow access by the EFD client
+  # version 0.11.0. Once version 0.12.0 is the default one, this
+  # can be removed and we should use tucson-teststand.lsst.codes/influxdb
+  # instead.
   ingress:
     enabled: true
     tls: true
@@ -27,10 +31,57 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
-    influxdb-sink:
-      enabled: true
-      tasksMax: 10
-      topicsRegex: "lsst.sal.*"
+    # Based on the kafka producers configuration for the TTS
+    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-tucson-teststand.yaml
+    connectors:
+      auxtel:
+        enabled: true
+        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+      maintel:
+        enabled: true
+        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+      mtmount:
+        enabled: true
+        topicsRegex: ".*MTMount"
+      comcam:
+        enabled: true
+        topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
+      eas:
+        enabled: true
+        topicsRegex: ".*DIMM|.*DSM|.*WeatherStation"
+      latiss:
+        enabled: true
+        topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+      m1m3:
+        enabled: true
+        topicsRegex: ".*MTM1M3"
+      m2:
+        enabled: true
+        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+      obssys:
+        enabled: true
+        topicsRegex: ".*GenericCamera|.*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+      ocps:
+        enabled: true
+        topicsRegex: ".*OCPS"
+      test:
+        enabled: true
+        topicsRegex: ".*Test"
+      pmd:
+        enabled: true
+        topicsRegex: ".*PMD"
+      calsys:
+        enabled: true
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+      mtaircompressor:
+        enabled: true
+        topicsRegex: ".*MTAirCompressor"
+      authorize:
+        enabled: true
+        topicsRegex: ".*Authorize"
+      mtalignment:
+        enabled: true
+        topicsRegex: ".*MTAlignment"
 
 kafdrop:
   ingress:

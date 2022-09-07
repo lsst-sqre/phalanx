@@ -13,6 +13,11 @@ spec:
     type: simple
     acls:
       - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
           type: topic
           name: "*"
           patternType: literal

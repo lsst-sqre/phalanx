@@ -29,6 +29,8 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
+    # Based on the kafka producers configuration for the Summit
+    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
     connectors:
       auxtel:
         enabled: true
