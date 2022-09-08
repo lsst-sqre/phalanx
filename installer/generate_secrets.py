@@ -257,7 +257,7 @@ class SecretGenerator:
 
         if (
             self.secrets.get("rsp-alerts", {}).get("slack-webhook", None)
-            != None
+            is not None
         ):
             slack_webhook = self.secrets["rsp-alerts"]["slack-webhook"]
             if slack_webhook:
