@@ -254,9 +254,9 @@ class SecretGenerator:
                 )
         else:
             raise Exception(f"Invalid auth provider {auth_type}")
-            
+
         if (
-            self.secrets.get("rsp-alerts", {}).get("slack-webhook", None) 
+            self.secrets.get("rsp-alerts", {}).get("slack-webhook", None)
             != None
         ):
             slack_webhook = self.secrets["rsp-alerts"]["slack-webhook"]
