@@ -6,6 +6,8 @@ redis:
     storageClass: "standard-rwo"
 
 config:
+  slackAlerts: true
+
   github:
     clientId: "65b6333a066375091548"
 
