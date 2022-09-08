@@ -223,7 +223,7 @@ class SecretGenerator:
             )
 
         self.input_field("gafaelfawr", "ldap", "Use LDAP? (y/n):")
-        use_ldap = self.secrets["gaelfawr"]["ldap"]
+        use_ldap = self.secrets["gafaelfawr"]["ldap"]
         if use_ldap == "y":
             self.input_field("gafaelfawr", "ldap-password", "LDAP password")
 
