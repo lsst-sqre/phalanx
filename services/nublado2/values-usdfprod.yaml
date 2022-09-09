@@ -75,12 +75,12 @@ config:
 #    - name: sdf-group-rubin
 #      mountPath: /datasets
 #      subPath: datasets
-    - name: sdf-group-rubin
-      mountPath: /repo
-      subPath: repo
-    - name: sdf-group-rubin
-      mountPath: /project
-      subPath: g
+#    - name: sdf-group-rubin
+#      mountPath: /repo
+#      subPath: repo
+#    - name: sdf-group-rubin
+#      mountPath: /project
+#      subPath: g
     - name: sdf-group-rubin
       mountPath: /sdf/group/rubin
     - name: sdf-data-rubin
