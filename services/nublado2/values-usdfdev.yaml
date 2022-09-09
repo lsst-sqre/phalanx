@@ -65,7 +65,7 @@ config:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
     DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-    S3_ENDPOINT_URL: "https://storage.googleapis.com"
+    S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
     AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
     AUTO_REPO_BRANCH: prod
     AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
@@ -107,7 +107,7 @@ config:
 #    - name: sdf-group-rubin
 #      mountPath: /datasets
 #      subPath: datasets
-    - name: sdf-group-rubin
+    - name: sdf-data-rubin
       mountPath: /repo
       subPath: repo
     - name: sdf-group-rubin

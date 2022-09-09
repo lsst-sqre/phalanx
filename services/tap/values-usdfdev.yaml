@@ -1,47 +1,15 @@
-cadc-tap:
+qserv:
+  host: "172.24.4.101:4040"
+  mock:
+    enabled: false
 
+config:
+  gcsBucket: "rubin-qserv"
+  gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
+  gcsBucketType: "S3"
+  jvmMaxHeapSize: "31G"
 
-  imagePullSecrets:
-    - name: "pull-secret"
+image:
+  repository: "gabrimaine/lsst-tap-service"
+  tag: "1.2.1-CC2"
 
-  vaultSecretsPath: 'secret/rubin/usdf-staffrsp-dev/tap'
-
-  ingress:
-    host: "rubin-data-dev.slac.stanford.edu"
-    authenticated_annotations:
-      nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-Uid, X-Auth-Request-Token
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=read:tap&auth_type=basic&delegate_to=tap"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        auth_request_set $auth_token $upstream_http_x_auth_request_token;
-        proxy_set_header Authorization "Bearer $auth_token";
-
-  qserv:
-    host: "10.140.1.211:4040"
-    mock:
-      enabled: true
-
-  resources:
-    requests:
-      cpu: 2.0
-      memory: 2G
-    limits:
-      cpu: 8.0
-      memory: 32G
-
-  config:
-    gcsBucket: "async-results.lsst.codes"
-    gcsBucketUrl: "http://async-results.lsst.codes"
-    jvmMaxHeapSize: "31G"
-
-  uws:
-    resources:
-      requests:
-        cpu: 0.25
-        memory: "1G"
-      limits:
-        cpu: 2.0
-        memory: "4G"
-
-pull-secret:
-  enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret

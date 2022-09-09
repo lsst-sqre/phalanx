@@ -1,30 +1,4 @@
-moneypenny:
 
-  imagePullSecrets:
-    - name: "pull-secret"
-
-  ingress:
-    enabled: true
-    host: "rubin-data-dev.slac.stanford.edu"
-    annotations:
-      nginx.ingress.kubernetes.io/auth-url: "https://rubin-data-dev.slac.stanford.edu/auth?scope=admin:provision"
-
-  orders: 
-    commission: []
-    retire: []
-#      - name: initcommission
-#        image: lsstsqre/inituserhome
-#        securityContext:
-#          runAsUser: 0
-#          runAsNonRootUser: false
-#        volumeMounts:
-#        - mountPath: /homedirs
-#          name: homedirs
-#    volumes:
-#      - name: homedirs
-#        local:
-#          path: /home
-
-pull-secret:
-  enabled: true
-  path: "secret/rubin/usdf-staffrsp-dev/pull-secret"
+orders: 
+  commission: []
+  retire: []

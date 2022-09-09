@@ -31,7 +31,10 @@ config:
     groupMemberAttr: memberUid    
     userBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
     userSearchAttr: uid
+    addUserGroup: false
     uidAttr: uidNumber
+    gidAttr: gidNumber
+    nameAttr: gecos
 
 
   # Allow access by GitHub team.
@@ -39,6 +42,9 @@ config:
     "admin:token":
       - "rubinmgr"
       - "unix-admin" 
+    "admin:users":
+      - "rubinmgr"
+      - "unix-admin"
     "exec:admin":
       - "rubinmgr"
       - "unix-admin"
