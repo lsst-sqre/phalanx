@@ -13,7 +13,7 @@ replicaCount: 1
 
 image:
   # -- tap image to use
-  repository: "lsstdax/lsst-tap-service"
+  repository: "ghcr.io/lsst-sqre/lsst-tap-service"
 
   # -- Pull policy for the tap image
   pullPolicy: "IfNotPresent"
@@ -73,6 +73,10 @@ config:
   # @default -- None, must be set
   gcsBucketUrl: ""
 
+  # -- GCS bucket type (GCS or S3)
+  # @default -- GCS
+  gcsBucketType: "GCS"
+
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.
@@ -89,7 +93,7 @@ qserv:
 
     image:
       # -- Mock QServ image to use
-      repository: "lsstdax/mock-qserv"
+      repository: "ghcr.io/lsst-sqre/lsst-tap-mock-qserv"
 
       # -- Pull policy for the mock QServ image
       pullPolicy: "IfNotPresent"
@@ -116,7 +120,7 @@ qserv:
 uws:
   image:
     # -- UWS database image to use
-    repository: "lsstdax/uws-db"
+    repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
 
     # -- Pull policy for the UWS database image
     pullPolicy: "IfNotPresent"

@@ -4,16 +4,21 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: ""
+        loadBalancerIP: "35.188.187.82"
         host: sasquatch-int-kafka-bootstrap.lsst.cloud
 
       brokers:
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.171.69.125"
           host: sasquatch-int-kafka-0.lsst.cloud
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.72.50.204"
           host: sasquatch-int-kafka-1.lsst.cloud
-        - loadBalancerIP: ""
+        - loadBalancerIP: "34.173.225.150"
           host: sasquatch-int-kafka-2.lsst.cloud
+  mirrormaker2:
+    enabled: true
+    source:
+      bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
+      topicsPattern: "registry-schemas, lsst.sal.*"
 
 influxdb:
   ingress:
@@ -22,9 +27,10 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
-    influxdb-sink:
-      enabled: true
-      tasksMax: 10
+    connectors:
+      test:
+        enabled: true
+        topicsRegex: ".*Test"
 
 kafdrop:
   ingress:

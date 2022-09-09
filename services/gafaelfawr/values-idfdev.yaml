@@ -4,17 +4,12 @@ redis:
     storageClass: "standard-rwo"
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
   loglevel: "DEBUG"
   slackAlerts: true
 
-  # Support OpenID Connect clients like Chronograf.
-  oidcServer:
-    enabled: true
-
   cilogon:
     clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"
-    enrollmentUrl: "https://registry-test.lsst.codes/registry/co_petitions/start/coef:6"
+    enrollmentUrl: "https://id-dev.lsst.cloud/registry/co_petitions/start/coef:6"
     test: true
     usernameClaim: "username"
 
@@ -23,13 +18,17 @@ config:
 
   ldap:
     url: "ldaps://ldap-test.cilogon.org"
-    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
-    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst_dev,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst_dev,dc=org"
     groupObjectClass: "eduMember"
     groupMemberAttr: "hasMember"
-    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst_dev,dc=org"
     userSearchAttr: "voPersonApplicationUID"
     addUserGroup: true
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
 
   groupMapping:
     "admin:provision":

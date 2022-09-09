@@ -1,0 +1,47 @@
+jupyterhub:
+  debug:
+    enabled: true
+
+  # hub:
+  #   resources:
+  #     requests:
+  #       cpu: "2"
+  #       memory: 3Gi
+  ingress:
+    hosts: ["data-dev.lsst.eu"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
+
+config:
+  base_url: "https://data-dev.lsst.eu"
+  butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
+  pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+  pinned_images:
+    - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+      name: Recommended
+  volumes:
+    - name: data
+      hostPath:
+        path: /data/rsp/nublado2
+        # type: Directory
+    - name: home
+      hostPath:
+        path: /data/rsp/home
+        # type: Directory
+
+  volume_mounts:
+    - name: data
+      mountPath: /data
+    - name: home
+      mountPath: /home
+
+vault_secret_path: "secret/k8s_operator/rsp-cc/nublado2"
+
+pull-secret:
+  enabled: true
+  path: "secret/k8s_operator/rsp-cc/pull-secret"

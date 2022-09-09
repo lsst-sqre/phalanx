@@ -4,14 +4,14 @@ redis:
     storageClass: "standard-rwo"
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+  slackAlerts: true
+
+  github:
+    clientId: "0c4cc7eaffc0f89b9ace"
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
-
-  github:
-    clientId: "0c4cc7eaffc0f89b9ace"
 
   # Allow access by GitHub team.
   groupMapping:

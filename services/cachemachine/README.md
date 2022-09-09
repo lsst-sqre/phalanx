@@ -18,7 +18,6 @@ Service to prepull Docker images for the Science Platform
 | ingress.annotations | object | `{}` | Additional annotations to add for endpoints that are authenticated. |
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to add for endpoints that allow anonymous access, such as `/*/available`. |
 | ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string |
-| ingress.tls | list | `[]` | Configures TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the cachemachine frontend pod |
 | podAnnotations | object | `{}` | Annotations for the cachemachine frontend pod |

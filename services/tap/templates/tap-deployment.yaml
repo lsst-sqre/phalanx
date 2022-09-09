@@ -20,8 +20,6 @@ spec:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "server"
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       automountServiceAccountToken: false
       containers:
         - name: "tap-server"
@@ -48,11 +46,24 @@ spec:
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
+                -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
+            {{- if eq .Values.config.gcsBucketType "S3" }}
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_SECRET_ACCESS_KEY"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_ACCESS_KEY_ID"
+            {{- end }}
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
           ports:

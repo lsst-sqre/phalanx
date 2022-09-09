@@ -2,6 +2,19 @@ strimzi-kafka:
   kafka:
     storage:
       storageClassName: rook-ceph-block
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        loadBalancerIP: "139.229.160.152"
+        host: sasquatch-summit-kafka-bootstrap.lsst.codes
+      brokers:
+        - loadBalancerIP: "139.229.160.154"
+          host: sasquatch-summit-kafka-0.lsst.codes
+        - loadBalancerIP: "139.229.160.153"
+          host: sasquatch-summit-kafka-1.lsst.codes
+        - loadBalancerIP: "139.229.160.155"
+          host: sasquatch-summit-kafka-2.lsst.codes
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
@@ -16,8 +29,51 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
-    influxdb-sink:
-      enabled: true
+    # Based on the kafka producers configuration for the Summit
+    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
+    connectors:
+      auxtel:
+        enabled: true
+        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+      maintel:
+        enabled: true
+        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+      mtmount:
+        enabled: true
+        topicsRegex: ".*MTMount"
+      comcam:
+        enabled: true
+        topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
+      eas:
+        enabled: true
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherStation"
+      latiss:
+        enabled: true
+        topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+      m1m3:
+        enabled: true
+        topicsRegex: ".*MTM1M3"
+      m2:
+        enabled: true
+        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+      obssys:
+        enabled: true
+        topicsRegex: ".*GenericCamera|.*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+      ocps:
+        enabled: true
+        topicsRegex: ".*OCPS"
+      test:
+        enabled: true
+        topicsRegex: ".*Test"
+      pmd:
+        enabled: true
+        topicsRegex: ".*PMD"
+      calsys:
+        enabled: true
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+      mtaircompressor:
+        enabled: true
+        topicsRegex: ".*MTAirCompressor"
 
 kafdrop:
   ingress:

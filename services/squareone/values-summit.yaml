@@ -1,6 +1,2 @@
 config:
   siteName: "Rubin Science Platform @ Summit"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/summit-lsp.lsst.codes/pull-secret

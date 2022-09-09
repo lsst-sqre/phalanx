@@ -62,7 +62,7 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"lsstsqre/nublado2"` |  |
-| jupyterhub.hub.image.tag | string | `"2.4.0"` |  |
+| jupyterhub.hub.image.tag | string | `"2.5.0"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
@@ -70,12 +70,12 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
 | jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
 | jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
-| jupyterhub.ingress.annotations."kubernetes.io/ingress.class" | string | `"nginx"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-method" | string | `"GET"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-response-headers" | string | `"X-Auth-Request-Token"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-url" | string | `"http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"` |  |
 | jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet" | string | `"error_page 403 = \"/auth/forbidden?scope=exec:notebook\";\n"` |  |
 | jupyterhub.ingress.enabled | bool | `true` |  |
+| jupyterhub.ingress.ingressClassName | string | `"nginx"` |  |
 | jupyterhub.ingress.pathSuffix | string | `"*"` |  |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` |  |
 | jupyterhub.prePuller.hook.enabled | bool | `false` |  |

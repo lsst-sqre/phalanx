@@ -62,4 +62,7 @@ autostart:
         gidnumber: 74775
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
+    options:
+      tap_sync: true
+      tap_query_set: "dp0.2"
     restart: true

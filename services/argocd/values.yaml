@@ -1,5 +1,5 @@
 ## Argo CD configuration
-## https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
+## https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 argo-cd:
   redis:
     enabled: true
@@ -27,10 +27,11 @@ argo-cd:
     ingress:
       enabled: true
       annotations:
-        kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+      ingressClassName: "nginx"
       paths:
-        - /argo-cd(/|$)(.*)
+        - "/argo-cd(/|$)(.*)"
+      pathType: "ImplementationSpecific"
 
     extraArgs:
       - "--basehref=/argo-cd"
@@ -55,6 +56,9 @@ argo-cd:
     secret:
       createSecret: false
 
-vault_secret:
-  enabled: true
-  path: ""
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

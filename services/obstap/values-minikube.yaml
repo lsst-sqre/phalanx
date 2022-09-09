@@ -1,3 +1,0 @@
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"

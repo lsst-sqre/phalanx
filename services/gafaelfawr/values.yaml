@@ -37,7 +37,7 @@ affinity: {}
 
 config:
   # -- URL for the PostgreSQL database
-  # @default -- None, must be set
+  # @default -- None, must be set if `cloudsql.enabled` is not true
   databaseUrl: ""
 
   # -- Choose from the text form of Python logging levels
@@ -87,6 +87,16 @@ config:
     # from LDAP or Firestore)
     # @default -- `"uidNumber"`
     uidClaim: ""
+
+    # -- Claim from which to get the primary GID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- Do not set a primary GID
+    gidClaim: ""
+
+    # -- Claim from which to get the group membership (only used if not
+    # retrieved from LDAP)
+    # @default -- `"isMemberOf"`
+    groupsClaim: ""
 
   firestore:
     # -- If set, assign UIDs and GIDs using Google Firestore in the given
@@ -140,6 +150,16 @@ config:
     # from LDAP or Firestore)
     # @default -- `"uidNumber"`
     uidClaim: ""
+
+    # -- Claim from which to get the primary GID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- Do not set a primary GID
+    gidClaim: ""
+
+    # -- Claim from which to get the group membership (only used if not
+    # retrieved from LDAP)
+    # @default -- `"isMemberOf"`
+    groupsClaim: ""
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
@@ -239,8 +259,10 @@ config:
   errorFooter: ""
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
-  # on Google Cloud
+  # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
+  # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as
+  # a separate service (behind a `NetworkPolicy`) for other, lower-traffic
+  # services.
   enabled: false
 
   image:
@@ -248,33 +270,55 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.31.2-alpine"
+    tag: "1.31.2"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
   # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
 
   # -- The Google service account that has an IAM binding to the `gafaelfawr`
-  # and `gafaelfawr-tokens` Kubernetes service accounts and has the
-  # `cloudsql.client` role
+  # Kubernetes service account and has the `cloudsql.client` role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   serviceAccount: ""
 
-maintenance:
-  # -- Resource limits and requests for the Gafaelfawr maintenance pod
+  # -- Resource limits and requests for the Cloud SQL Proxy pod
   resources: {}
 
-  # -- Annotations for the Gafaelfawr maintenance pod
+  # -- Annotations for the Cloud SQL Proxy pod
   podAnnotations: {}
 
-  # -- Node selection rules for the Gafaelfawr maintenance pod
+  # -- Node selection rules for the Cloud SQL Proxy pod
   nodeSelector: {}
 
-  # -- Tolerations for the Gafaelfawr maintenance pod
+  # -- Tolerations for the Cloud SQL Proxy pod
   tolerations: []
 
-  # -- Affinity rules for the Gafaelfawr maintenance pod
+  # -- Affinity rules for the Cloud SQL Proxy pod
+  affinity: {}
+
+maintenance:
+  # -- Cron schedule string for Gafaelfawr data consistency audit (in UTC)
+  auditSchedule: "30 3 * * *"
+
+  # -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
+  maintenanceSchedule: "5 * * * *"
+
+  # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
+  resources: {}
+
+  # -- Annotations for Gafaelfawr maintenance and audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Gafaelfawr maintenance and audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Gafaelfawr maintenance and audit pods
+  tolerations: []
+
+  # -- Affinity rules for Gafaelfawr maintenance and audit pods
   affinity: {}
 
 tokens:

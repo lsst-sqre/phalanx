@@ -29,8 +29,6 @@ spec:
           value: {{ .Values.fqdn | quote }}
         - name: "global.baseUrl"
           value: "https://{{ .Values.fqdn }}"
-        - name: "global.vaultSecretsPathPrefix"
-          value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"

@@ -1,19 +1,17 @@
-# Reset token storage on every Redis restart for now.  This should change to
-# use persistent volumes once we can coordinate that.
 redis:
   persistence:
     storageClass: "rook-ceph-block"
 
 config:
+  slackAlerts: true
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+  github:
+    clientId: "49533cbd8a8079730dcf"
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
-
-  # Use GitHub authentication.
-  github:
-    clientId: "49533cbd8a8079730dcf"
 
   # Allow access by GitHub team.
   groupMapping:
@@ -27,6 +25,11 @@ config:
       - "lsst-ts-base-access"
       - "rubin-summit-rsp-access"
     "exec:portal":
+      - "lsst-sqre-square"
+      - "lsst-sqre-friends"
+      - "lsst-ts-base-access"
+      - "rubin-summit-rsp-access"
+    "read:image":
       - "lsst-sqre-square"
       - "lsst-sqre-friends"
       - "lsst-ts-base-access"

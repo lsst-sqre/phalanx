@@ -17,8 +17,15 @@ ingress-nginx:
     metrics:
       enabled: true
 
-vault_certificate:
+vaultCertificate:
   # -- Whether to store ingress TLS certificate via
   # vault-secrets-operator.  Typically "squareone" owns it instead in an
   # RSP.
   enabled: false
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
