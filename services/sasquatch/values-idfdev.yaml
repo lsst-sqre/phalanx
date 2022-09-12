@@ -22,9 +22,10 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
-    influxdb-sink:
-      enabled: true
-      tasksMax: 10
+    connectors:
+      test:
+        enabled: true
+        topicsRegex: ".*Test"
 
 kafdrop:
   ingress:

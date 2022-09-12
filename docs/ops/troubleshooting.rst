@@ -103,13 +103,16 @@ Login fails with "bad verification code" error
 **Symptoms:** When attempting to authenticate to a Science Platform deployment using GitHub, the user gets the error message ``Authentication provider failed: bad_verification_code: The code passed is incorrect or expired.``
 
 **Cause:** GitHub login failed after the OAuth 2.0 interaction with GitHub was successfully completed, and then the user reloaded the failed login page (or reloaded the page while Gafaelfawr was attempting to complete the authentication).
-This error is normal and expected if one reloads a GitHub login error page or interrupts the GitHub login.
-It itself doesn't represent a problem, and is probably a red herring distracting from whatever real problem there is.
-Most likely, there is some failure on the Gafaelfawr side after GitHub authentication that's preventing the authentication from completing or making it take a long time, and the user ran out of patience and reloaded the page (which will never work).
+Usually this happens because Gafaelfawr was unable to write to its storage, either Redis or PostgreSQL.
+If the storage underlying the deployment is broken, this can happen without producing obvious error messages, since the services can go into disk wait and just time out.
+Restarting the in-cluster ``postgresql`` pod, if PostgreSQL is running inside the Kubernetes deployment, will generally make this problem obvious because PostgreSQL will be unable to start.
 
-**Solution:** Don't reload the login page.
-Find the underlying problem and troubleshoot it.
-For example, if Gafaelfawr Redis storage is unavailable, Gafaelfawr may time out or fail to store the user's token after completing GitHub authentication.
+**Solution:** Check the underlying storage for Redis and Gafaelfawr.
+For in-cluster PostgreSQL, if this is happening for all users, try restarting the ``postgresql`` pod, which will not fix the problem but will make it obvious if it is indeed storage.
+If the problem is storage, this will need to be escalated to whoever runs the storage for that Gafaelfawr deployment.
+
+Note that reloading a failed login page from Gafaelfawr will never work and will always produce this error, so it can also be caused by user impatience.
+In that case, the solution is to just wait or to return to the front page and try logging in again, rather than reloading the page.
 
 User keeps logging in through the wrong identity provider
 =========================================================

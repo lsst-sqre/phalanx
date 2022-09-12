@@ -6,36 +6,35 @@ image:
   pullPolicy: IfNotPresent
 
 influxdbSink:
-  # Repeat this block to create multiple instances of this connector.
-  influxdb-sink:
-    # -- Name of the connector instance to create.
-    name: influxdb-sink
-    # -- Whether this connector instance is deployed.
-    enabled: false
-    # -- InfluxDB URL, can be internal to the cluster.
-    connectInfluxUrl: "http://sasquatch-influxdb.sasquatch:8086"
-    # -- InfluxDB database to write to.
-    connectInfluxDb: "efd"
-    # -- Number of KafkaConnect tasks.
-    tasksMax: 1
-    # -- Regex to select topics from Kafka.
-    topicRegex: "lsst.sal.*"
-    # -- If autoUpdate is enabled, check for new kafka topics.
-    autoUpdate: true
-    # -- The interval, in milliseconds, to check for new topics and update the connector.
-    checkInterval: "15000"
-    # -- Regex to exclude topics from the list of selected topics from Kafka.
-    excludedTopicRegex: ""
-    # -- Timestamp field to be used as the InfluxDB time, if not specified `sys_time()` the current timestamp.
-    timestamp: private_efdStamp
-    # -- Error policy.
-    connectInfluxErrorPolicy: THROW
-    # -- The maximum number of times a message is retried.
-    connectInfluxMaxRetries: "10"
-    # -- The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`.
-    connectInfluxRetryInterval: "60000"
-    # -- Enables the output for how many records have been processed.
-    connectProgressEnabled: false
+  # -- InfluxDB URL.
+  connectInfluxUrl: "http://sasquatch-influxdb.sasquatch:8086"
+  # -- InfluxDB database to write to.
+  connectInfluxDb: "efd"
+  # -- Maxium number of tasks to run the connector.
+  tasksMax: 1
+  # -- If autoUpdate is enabled, check for new kafka topics.
+  autoUpdate: true
+  # -- The interval, in milliseconds, to check for new topics and update the connector.
+  checkInterval: "15000"
+  # -- Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`.
+  timestamp: private_efdStamp
+  # -- Error policy, see connector documetation for details.
+  connectInfluxErrorPolicy: NOOP
+  # -- The maximum number of times a message is retried.
+  connectInfluxMaxRetries: "10"
+  # -- The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`.
+  connectInfluxRetryInterval: "60000"
+  # -- Enables the output for how many records have been processed.
+  connectProgressEnabled: false
+  # -- Regex to exclude topics from the list of selected topics from Kafka.
+  excludedTopicsRegex: ""
+  # -- Connector instances to deploy.
+  connectors:
+    test:
+      # -- Whether this connector instance is deployed.
+      enabled: false
+      # -- Regex to select topics from Kafka.
+      topicsRegex: ".*Test"
 
 # The s3Sink connector assumes Parquet format with Snappy compression
 # and a time based partitioner.
@@ -91,31 +90,6 @@ s3Sink:
   timestampField: ""
   # -- The object storage connection URL, for non-AWS s3 providers.
   storeUrl: ""
-
-mirrorMaker2:
-  # -- Whether the MirrorMaker 2 connectors (heartbeat, checkpoint and mirror-source) are deployed.
-  enabled: false
-  # -- Name od the connector to create.
-  name: "replicator"
-  # -- Source Kafka cluster.
-  sourceClusterBootstrapServers: "localhost:31090"
-  # -- Alias for the source cluster. The remote topic name is prefixed by this value.
-  # Use an empty string to preserve the name of the source topic in the destination cluster.
-  sourceClusterAlias: "src"
-  # -- Separator used to format the remote topic name.
-  # Use an empty string if sourceClusterAlias is empty.
-  replicationPolicySeparator: "."
-  # -- Destination Kafka cluster.
-  targetClusterBootstrapServers: "localhost:31090"
-  # -- Name of the destination cluster.
-  targetClusterAlias: "destn"
-  # -- Regex for selecting topics.
-  # Comma-separated lists are also supported.
-  topicRegex: ".*"
-  # -- Number of Kafka Connect tasks.
-  tasksMax: 1
-  # -- Whether to monitor source cluster ACLs for changes.
-  syncTopicAclsEnabled: false
 
 jdbcSink:
   # -- Whether the JDBC Sink connector is deployed.
