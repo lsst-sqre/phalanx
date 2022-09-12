@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sqlproxy-butler-int
+  name: sqlproxy-cross-project
 spec:
   finalizers:
     - kubernetes
@@ -10,17 +10,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sqlproxy-butler-int
+  name: sqlproxy-cross-project
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: sqlproxy-butler-int
+    namespace: sqlproxy-cross-project
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/sqlproxy-gcp
+    path: services/sqlproxy
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.revision }}
     helm:
