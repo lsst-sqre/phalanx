@@ -27,7 +27,7 @@
 | sasquatch.enabled | bool | `false` |  |
 | semaphore.enabled | bool | `false` |  |
 | sherlock.enabled | bool | `false` |  |
-| sqlproxy_butler_int.enabled | bool | `false` |  |
+| sqlproxy_cross_project.enabled | bool | `false` |  |
 | squareone.enabled | bool | `false` |  |
 | squash_api.enabled | bool | `false` |  |
 | strimzi.enabled | bool | `false` |  |

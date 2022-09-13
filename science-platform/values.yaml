@@ -38,7 +38,7 @@ semaphore:
   enabled: false
 sherlock:
   enabled: false
-sqlproxy_butler_int:
+sqlproxy_cross_project:
   enabled: false
 squareone:
   enabled: false
