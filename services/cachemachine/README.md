@@ -2,6 +2,8 @@
 
 Service to prepull Docker images for the Science Platform
 
+**Homepage:** <https://github.com/lsst-sqre/cachemachine>
+
 ## Values
 
 | Key | Type | Default | Description |
