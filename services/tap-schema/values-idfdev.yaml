@@ -1,2 +1,4 @@
 image:
-  repository: "lsstsqre/tap-schema-idfdev:1.2.1"
+  repository: "lsstsqre/tap-schema-idfdev"
+  tag: "1.2.1"
+
