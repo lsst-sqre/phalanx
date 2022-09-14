@@ -45,3 +45,13 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer |
+| telegraf.config.inputs | list | `[{"kafka_consumer":{"avro_fields":["heartbeat","private_efdStamp","salIndex"],"avro_measurement":"test","avro_schema_registry":"http://sasquatch-schema-registry.sasquatch:8081","avro_timestamp":"private_efdStamp","avro_timestamp_format":"unix_us","brokers":["sasquatch-kafka-brokers.sasquatch:9092"],"consumer_group":"telegraf-test","data_format":"avro","max_message_len":32768,"sasl_mechanism":"SCRAM-SHA-512","sasl_password":"$TELEGRAF_PASSWORD","sasl_username":"telegraf","topics":["lsst.sal.Test.logevent_heartbeat"]}}]` | Telegraf input plugins. |
+| telegraf.config.inputs[0] | object | `{"kafka_consumer":{"avro_fields":["heartbeat","private_efdStamp","salIndex"],"avro_measurement":"test","avro_schema_registry":"http://sasquatch-schema-registry.sasquatch:8081","avro_timestamp":"private_efdStamp","avro_timestamp_format":"unix_us","brokers":["sasquatch-kafka-brokers.sasquatch:9092"],"consumer_group":"telegraf-test","data_format":"avro","max_message_len":32768,"sasl_mechanism":"SCRAM-SHA-512","sasl_password":"$TELEGRAF_PASSWORD","sasl_username":"telegraf","topics":["lsst.sal.Test.logevent_heartbeat"]}}` | See https://github.com/influxdata/telegraf/blob/master/plugins/inputs/kafka_consumer/README.md |
+| telegraf.config.outputs | list | `[{"influxdb":{"database":"kafkaconsumer","password":"$INFLUXDB_ADMIN_PASSWORD","urls":["http://sasquatch-influxdb.sasquatch:8086"],"username":"admin"}}]` | Telegraf output destination. |
+| telegraf.config.processors | object | `{}` | Telegraf processor plugins. |
+| telegraf.env[0] | object | `{"name":"TELEGRAF_PASSWORD","valueFrom":{"secretKeyRef":{"key":"telegraf-password","name":"sasquatch"}}}` | Telegraf KafkaUser password. |
+| telegraf.env[1] | object | `{"name":"INFLUXDB_ADMIN_PASSWORD","valueFrom":{"secretKeyRef":{"key":"influxdb-password","name":"sasquatch"}}}` | InfluxDB admin password. |
+| telegraf.image.pullPolicy | string | `"Always"` |  |
+| telegraf.image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf.image.tag | string | `"avro"` | Telegraf image tag |
+| telegraf.service.enabled | bool | `false` | Telegraf service. |
