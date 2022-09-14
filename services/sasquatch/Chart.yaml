@@ -22,3 +22,6 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: kafdrop
     version: 1.0.0
+  - name: telegraf
+    version: 1.8.20
+    repository: https://helm.influxdata.com/

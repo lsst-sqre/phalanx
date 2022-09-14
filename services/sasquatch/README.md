@@ -9,6 +9,7 @@ Rubin Observatory's telemetry service.
 |  | kafdrop | 1.0.0 |
 |  | kafka-connect-manager | 1.0.0 |
 |  | strimzi-kafka | 1.0.0 |
+|  | telegraf-kafka-consumer | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
@@ -43,3 +44,4 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
+| telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer |
