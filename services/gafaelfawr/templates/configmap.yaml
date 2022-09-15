@@ -26,14 +26,6 @@
     error_footer: {{ .Values.config.errorFooter | quote }}
     {{- end }}
 
-    {{- if .Values.config.influxdb.enabled }}
-    influxdb:
-      secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
-      {{- if .Values.config.issuer.influxdb.username }}
-      username: {{ .Values.config.issuer.influxdb.username | quote }}
-      {{- end }}
-    {{- end }}
-
     {{- if .Values.config.github.clientId }}
 
     github:
