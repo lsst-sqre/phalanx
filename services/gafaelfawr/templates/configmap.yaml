@@ -63,11 +63,7 @@
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end }}
-      {{- if .Values.config.cilogon.redirectUrl }}
-      redirect_url: {{ .Values.config.cilogon.redirectUrl | quote }}
-      {{- else }}
       redirect_url: "{{ .Values.global.baseUrl }}/login"
-      {{- end }}
       scopes:
         - "email"
         - "org.cilogon.userinfo"
@@ -101,11 +97,7 @@
       enrollment_url: {{ .Values.config.oidc.enrollmentUrl | quote }}
       {{- end }}
       issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
-      {{- if .Values.config.oidc.redirectUrl }}
-      redirect_url: {{ .Values.config.oidc.redirectUrl | quote }}
-      {{- else }}
       redirect_url: "{{ .Values.global.baseUrl }}/login"
-      {{- end }}
       scopes:
         {{- with .Values.config.oidc.scopes }}
         {{- toYaml . | nindent 8 }}

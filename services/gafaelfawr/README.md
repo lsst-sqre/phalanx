@@ -29,7 +29,6 @@ Science Platform authentication and authorization system
 | config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.groupsClaim | string | `"isMemberOf"` | Claim from which to get the group membership (only used if not retrieved from LDAP) |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
-| config.cilogon.redirectUrl | string | `/login` at the value of config.host | Return URL given to CILogon (must match the CILogon configuration) |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.cilogon.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
