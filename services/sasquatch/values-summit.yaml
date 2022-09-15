@@ -92,7 +92,7 @@ chronograf:
     GENERIC_TOKEN_URL: https://summit-lsp.lsst.codes/auth/openid/token
     USE_ID_TOKEN: 1
     JWKS_URL: https://summit-lsp.lsst.codes/.well-known/jwks.json
-    GENERIC_API_URL: https://summit-lsp.lsst.codes/auth/userinfo
+    GENERIC_API_URL: https://summit-lsp.lsst.codes/auth/openid/userinfo
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://summit-lsp.lsst.codes
