@@ -6,7 +6,7 @@ metadata:
     {{- include "cadc-tap.labels" . | nindent 4 }}
   annotations:
     nginx.ingress.kubernetes.io/auth-method: "GET"
-    nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Uid, X-Auth-Request-Token"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
     nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAuthQuery }}"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       auth_request_set $auth_token $upstream_http_x_auth_request_token;
