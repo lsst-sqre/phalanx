@@ -108,14 +108,6 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.singleuser.storage.extraVolumeMounts[6].name | string | `"group"` |  |
 | jupyterhub.singleuser.storage.extraVolumeMounts[6].readOnly | bool | `true` |  |
 | jupyterhub.singleuser.storage.extraVolumeMounts[6].subPath | string | `"group"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[7].mountPath | string | `"/etc/shadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[7].name | string | `"shadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[7].readOnly | bool | `true` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[7].subPath | string | `"shadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[8].mountPath | string | `"/etc/gshadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[8].name | string | `"gshadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[8].readOnly | bool | `true` |  |
-| jupyterhub.singleuser.storage.extraVolumeMounts[8].subPath | string | `"gshadow"` |  |
 | jupyterhub.singleuser.storage.extraVolumes[0].configMap.name | string | `"dask"` |  |
 | jupyterhub.singleuser.storage.extraVolumes[0].name | string | `"dask"` |  |
 | jupyterhub.singleuser.storage.extraVolumes[1].configMap.name | string | `"idds-config"` |  |
@@ -133,12 +125,5 @@ Kubernetes: `>=1.20.0-0`
 | jupyterhub.singleuser.storage.extraVolumes[6].configMap.defaultMode | int | `420` |  |
 | jupyterhub.singleuser.storage.extraVolumes[6].configMap.name | string | `"group"` |  |
 | jupyterhub.singleuser.storage.extraVolumes[6].name | string | `"group"` |  |
-| jupyterhub.singleuser.storage.extraVolumes[7].configMap.defaultMode | int | `384` |  |
-| jupyterhub.singleuser.storage.extraVolumes[7].configMap.name | string | `"shadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumes[7].name | string | `"shadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumes[8].configMap.defaultMode | int | `384` |  |
-| jupyterhub.singleuser.storage.extraVolumes[8].configMap.name | string | `"gshadow"` |  |
-| jupyterhub.singleuser.storage.extraVolumes[8].name | string | `"gshadow"` |  |
 | jupyterhub.singleuser.storage.type | string | `"none"` |  |
 | network_policy.enabled | bool | `true` |  |
-| vault_secret_path | string | `""` |  |

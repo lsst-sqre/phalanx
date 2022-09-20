@@ -109,50 +109,6 @@ config:
     - apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: gshadow
-        namespace: "{{ user_namespace }}"
-      data:
-        gshadow: |
-          root:!::
-          bin:!::
-          daemon:!::
-          sys:!::
-          adm:!::
-          tty:!::
-          disk:!::
-          lp:!::
-          mem:!::
-          kmem:!::
-          wheel:!::
-          cdrom:!::
-          mail:!::
-          man:!::
-          dialout:!::
-          floppy:!::
-          games:!::
-          tape:!::
-          video:!::
-          ftp:!::
-          lock:!::
-          audio:!::
-          nobody:!::
-          users:!::
-          utmp:!::
-          utempter:!::
-          input:!::
-          systemd-journal:!::
-          systemd-network:!::
-          dbus:!::
-          ssh_keys:!::
-          lsst_lcl:!::{{ user }}
-          tss:!::
-          cgred:!::
-          screen:!::
-          jovyan:!::{{ user }}{% for g in groups %}
-          {{ g.name }}:!::{{ user if g.id != gid else "" }}{% endfor %}
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
         name: passwd
         namespace: "{{ user_namespace }}"
       data:
@@ -175,31 +131,6 @@ config:
           lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user }}:/bin/bash
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: shadow
-        namespace: "{{ user_namespace }}"
-      data:
-        shadow: |
-          root:*:18000:0:99999:7:::
-          bin:*:18000:0:99999:7:::
-          daemon:*:18000:0:99999:7:::
-          adm:*:18000:0:99999:7:::
-          lp:*:18000:0:99999:7:::
-          sync:*:18000:0:99999:7:::
-          shutdown:*:18000:0:99999:7:::
-          halt:*:18000:0:99999:7:::
-          mail:*:18000:0:99999:7:::
-          operator:*:18000:0:99999:7:::
-          games:*:18000:0:99999:7:::
-          ftp:*:18000:0:99999:7:::
-          nobody:*:18000:0:99999:7:::
-          systemd-network:*:18000:0:99999:7:::
-          dbus:*:18000:0:99999:7:::
-          lsst_lcl:*:18000:0:99999:7:::
-          tss:*:18000:0:99999:7:::
-          {{user}}:*:18000:0:99999:7:::
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -295,9 +226,3 @@ config:
         hard:
           limits.cpu: 9
           limits.memory: 27Gi
-
-vault_secret_path: "secret/k8s_operator/data.lsst.cloud/nublado2"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data.lsst.cloud/pull-secret"
