@@ -6,6 +6,9 @@ config:
       path: "/share1/home/firefly/shared-workarea"
       server: "10.87.86.26"
 
+image:
+  tag: "suit-2022.5.5"
+
 resources:
   limits:
     memory: "2Gi"
