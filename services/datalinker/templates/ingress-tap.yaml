@@ -1,10 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "datalinker.fullname" . }}
+  name: {{ include "datalinker.fullname" . }}-tap
   labels:
     {{- include "datalinker.labels" . | nindent 4 }}
   annotations:
+    nginx.ingress.kubernetes.io/auth-method: "GET"
     nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User"
     nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?scope=read:tap"
     {{- with .Values.ingress.annotations }}
