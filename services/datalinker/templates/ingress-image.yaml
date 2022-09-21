@@ -5,12 +5,9 @@ metadata:
   labels:
     {{- include "datalinker.labels" . | nindent 4 }}
   annotations:
-    {{- if .Values.ingress.gafaelfawrAuthQuery }}
     nginx.ingress.kubernetes.io/auth-method: "GET"
     nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User"
-    nginx.ingress.kubernetes.io/auth-signin: "{{ .Values.global.baseUrl }}/login"
-    nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAuthQuery }}"
-    {{- end }}
+    nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?scope=read:image"
     {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
@@ -20,8 +17,8 @@ spec:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: "/api/datalink"
-            pathType: "Prefix"
+          - path: "/api/datalink/links"
+            pathType: "Exact"
             backend:
               service:
                 name: {{ include "datalinker.fullname" . }}
