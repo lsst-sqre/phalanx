@@ -4,7 +4,7 @@
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://ricoberger.github.io/helm-charts/ | vault-secrets-operator | 1.19.2 |
+| https://ricoberger.github.io/helm-charts/ | vault-secrets-operator | 1.19.5 |
 
 ## Values
 

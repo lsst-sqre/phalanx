@@ -97,9 +97,3 @@ config:
     - name: base-comcam
       mountPath: /data/lsstdata/base/comcam
       readOnly: true
-
-vault_secret_path: "secret/k8s_operator/summit-lsp.lsst.codes/nublado2"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/summit-lsp.lsst.codes/pull-secret"

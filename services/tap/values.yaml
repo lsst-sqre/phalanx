@@ -59,7 +59,7 @@ config:
   tapSchemaAddress: "tap-schema-db.tap-schema.svc.cluster.local:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.1.4/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
 
   # -- Gafaelfawr hostname to get user information from a token
   # @default -- Value of `ingress.host`

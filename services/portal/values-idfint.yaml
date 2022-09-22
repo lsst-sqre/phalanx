@@ -1,13 +1,13 @@
 replicaCount: 4
 
-image:
-  tag: "suit-2022.5.3"
-
 config:
   volumes:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
       server: "10.22.240.130"
+
+image:
+  tag: "suit-2022.5.5"
 
 resources:
   limits:

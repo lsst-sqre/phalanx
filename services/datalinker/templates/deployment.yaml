@@ -43,6 +43,12 @@ spec:
               value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
             - name: "DATALINKER_HIPS_BASE_URL"
               value: "{{ .Values.global.baseUrl }}/api/hips"
+            {{- if .Values.config.tapMetadataUrl }}
+            - name: "DATALINKER_TAP_METADATA_DIR"
+              value: "/tmp/tap-metadata"
+            - name: "DATALINKER_TAP_METADATA_URL"
+              value: {{ .Values.config.tapMetadataUrl | quote }}
+            {{- end }}
             - name: "DATALINKER_TOKEN"
               valueFrom:
                 secretKeyRef:

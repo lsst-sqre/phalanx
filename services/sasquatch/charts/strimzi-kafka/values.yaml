@@ -69,7 +69,7 @@ connect:
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
   image: lsstsqre/strimzi-0.29.0-kafka-3.1.1:1.0.0
   # -- Number of Kafka Connect replicas to run.
-  replicas: 1
+  replicas: 3
 
 registry:
   # -- Name of the topic used by the Schema Registry
@@ -79,3 +79,12 @@ registry:
 # These users will be created, along with their credentials.
 superusers:
   - kafka-admin
+
+mirrormaker2:
+  # -- Enable replication in the target (passive) cluster.
+  enabled: false
+  source:
+    # -- Source (active) cluster to replicate from.
+    bootstrapServer: ""
+    # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
+    topicsPattern: "registry-schemas, lsst.sal.*"

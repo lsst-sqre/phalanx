@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
-  schedule: "5 * * * *"
+  schedule: {{ .Values.maintenance.maintenanceSchedule | quote }}
   concurrencyPolicy: "Forbid"
   jobTemplate:
     spec:

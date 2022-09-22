@@ -1,3 +1,4 @@
+{{- if .Values.cloudsql.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -20,6 +21,10 @@ spec:
         - podSelector:
             matchLabels:
               {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "audit"
+        - podSelector:
+            matchLabels:
+              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
               app.kubernetes.io/component: "maintenance"
         - podSelector:
             matchLabels:
@@ -28,3 +33,4 @@ spec:
       ports:
         - protocol: "TCP"
           port: 5432
+{{- end }}

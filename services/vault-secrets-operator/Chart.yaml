@@ -3,5 +3,5 @@ name: vault-secrets-operator
 version: 1.0.0
 dependencies:
 - name: vault-secrets-operator
-  version: 1.19.2
+  version: 1.19.5
   repository: https://ricoberger.github.io/helm-charts/

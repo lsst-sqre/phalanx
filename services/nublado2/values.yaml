@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.4.1"
+      tag: "2.6.0"
     resources:
       limits:
         cpu: 900m
@@ -104,14 +104,6 @@ jupyterhub:
           configMap:
             defaultMode: 420
             name: group
-        - name: shadow
-          configMap:
-            defaultMode: 384
-            name: shadow
-        - name: gshadow
-          configMap:
-            defaultMode: 384
-            name: gshadow
       extraVolumeMounts:
         - name: dask
           mountPath: /etc/dask
@@ -131,14 +123,6 @@ jupyterhub:
           mountPath: /etc/group
           readOnly: true
           subPath: group
-        - name: shadow
-          mountPath: /etc/shadow
-          readOnly: true
-          subPath: shadow
-        - name: gshadow
-          mountPath: /etc/gshadow
-          readOnly: true
-          subPath: gshadow
       type: none
 
   proxy:
@@ -234,6 +218,7 @@ config:
     WORKFLOW_ROUTE: /wf
     AUTO_REPO_URLS: https://github.com/lsst-sqre/notebook-demo
     NO_SUDO: "TRUE"
+    EXTERNAL_GID: "{{ gid if gid else uid }}"
     EXTERNAL_GROUPS: "{{ external_groups }}"
     EXTERNAL_UID: "{{ uid }}"
     ACCESS_TOKEN: "{{ token }}"
@@ -296,56 +281,8 @@ config:
           tss:x:59:
           cgred:x:997:
           screen:x:84:
-          jovyan:x:768:{{ user }}
-          provisionator:x:769:
-          {{user}}:x:{{uid}}:{% for group in groups %}
-          {{ group.name }}:x:{{ group.id }}:{{ user }}{% endfor %}
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: gshadow
-        namespace: "{{ user_namespace }}"
-      data:
-        gshadow: |
-          root:!::
-          bin:!::
-          daemon:!::
-          sys:!::
-          adm:!::
-          tty:!::
-          disk:!::
-          lp:!::
-          mem:!::
-          kmem:!::
-          wheel:!::
-          cdrom:!::
-          mail:!::
-          man:!::
-          dialout:!::
-          floppy:!::
-          games:!::
-          tape:!::
-          video:!::
-          ftp:!::
-          lock:!::
-          audio:!::
-          nobody:!::
-          users:!::
-          utmp:!::
-          utempter:!::
-          input:!::
-          systemd-journal:!::
-          systemd-network:!::
-          dbus:!::
-          ssh_keys:!::
-          lsst_lcl:!::{{ user }}
-          tss:!::
-          cgred:!::
-          screen:!::
-          jovyan:!::{{ user }}
-          provisionator:!::
-          {{ user }}:!::{% for g in groups %}
-          {{ g.name }}:!::{{ user }}{% endfor %}
+          jovyan:x:768:{{ user }}{% for g in groups %}
+          {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -370,34 +307,7 @@ config:
           dbus:x:81:81:System message bus:/:/sbin/nologin
           lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          provisionator:x:769:769:Lab provisioning user:/home/provisionator:/bin/bash
-          {{ user }}:x:{{ uid }}:{{ uid }}::/home/{{ user }}:/bin/bash
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: shadow
-        namespace: "{{ user_namespace }}"
-      data:
-        shadow: |
-          root:*:18000:0:99999:7:::
-          bin:*:18000:0:99999:7:::
-          daemon:*:18000:0:99999:7:::
-          adm:*:18000:0:99999:7:::
-          lp:*:18000:0:99999:7:::
-          sync:*:18000:0:99999:7:::
-          shutdown:*:18000:0:99999:7:::
-          halt:*:18000:0:99999:7:::
-          mail:*:18000:0:99999:7:::
-          operator:*:18000:0:99999:7:::
-          games:*:18000:0:99999:7:::
-          ftp:*:18000:0:99999:7:::
-          nobody:*:18000:0:99999:7:::
-          systemd-network:*:18000:0:99999:7:::
-          dbus:*:18000:0:99999:7:::
-          lsst_lcl:*:18000:0:99999:7:::
-          tss:*:18000:0:99999:7:::
-          provisionator:*:18000:0:99999:7:::
-          {{user}}:*:18000:0:99999:7:::
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -485,14 +395,10 @@ config:
         path: "{{ pull_secret_path }}"
         type: kubernetes.io/dockerconfigjson
 
-# Note: See note above about existingSecret.
-vault_secret_path: ""
-
 # Built-in network policy doesn't quite work (Labs can't talk to Hub,
 # even with port 8081 explicitly enabled), so let's use our own for now.
 network_policy:
   enabled: true
-
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
