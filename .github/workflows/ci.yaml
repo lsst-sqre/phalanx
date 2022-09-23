@@ -12,8 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up go
+        uses: actions/setup-go@v3
+
       - name: Install helm-docs
-        run: brew install norwoodj/tap/helm-docs
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@latest
+        env:
+          GOBIN: /usr/local/bin/
 
       - name: Set up Python
         uses: actions/setup-python@v4
