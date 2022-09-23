@@ -42,6 +42,9 @@ config:
     "admin:token":
       - "rubinmgr"
       - "unix-admin" 
+    "admin:users":
+      - "rubinmgr"
+      - "unix-admin"
     "exec:admin":
       - "rubinmgr"
       - "unix-admin"
