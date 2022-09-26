@@ -8,6 +8,7 @@ config:
   gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
   gcsBucketType: "S3"
   jvmMaxHeapSize: "31G"
+  http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
 
 image:
   repository: "gabrimaine/lsst-tap-service"
