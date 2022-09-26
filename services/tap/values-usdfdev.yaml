@@ -9,7 +9,3 @@ config:
   gcsBucketType: "S3"
   jvmMaxHeapSize: "31G"
 
-image:
-  repository: "gabrimaine/lsst-tap-service"
-  tag: "1.2.1-CC2"
-
