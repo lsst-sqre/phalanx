@@ -10,7 +10,3 @@ config:
   jvmMaxHeapSize: "31G"
   http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
 
-image:
-  repository: "gabrimaine/lsst-tap-service"
-  tag: "1.2.1-CC2"
-
