@@ -64,10 +64,6 @@ config:
     # `config.github.clientId`, or `config.oidc.clientId` must be set.
     clientId: ""
 
-    # -- Return URL given to CILogon (must match the CILogon configuration)
-    # @default -- `/login` at the value of config.host
-    redirectUrl: ""
-
     # -- Where to send the user if their username cannot be found in LDAP
     # @default -- Login fails with an error
     enrollmentUrl: ""
@@ -208,15 +204,6 @@ config:
     # -- Whether to synthesize a user private group for each user with a GID
     # equal to their UID
     addUserGroup: false
-
-  influxdb:
-    # -- Whether to issue tokens for InfluxDB. If set to true,
-    # `influxdb-secret` must be set in the Gafaelfawr secret.
-    enabled: false
-
-    # -- If set, force all InfluxDB tokens to have that username instead of
-    # the authenticated identity of the user requesting a token
-    username: ""
 
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
