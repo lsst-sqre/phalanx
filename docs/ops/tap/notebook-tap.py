@@ -1,19 +1,11 @@
-import os
-
-from diagrams import Cluster, Diagram, Edge
+from diagrams import Cluster, Edge
 from diagrams.gcp.compute import KubernetesEngine
 from diagrams.gcp.database import SQL, Datastore, Memorystore
 from diagrams.gcp.network import LoadBalancing
 from diagrams.onprem.client import User
+from sphinx_diagrams import SphinxDiagram
 
-os.chdir(os.path.dirname(__file__))
-
-with Diagram(
-    "Notebook to TAP",
-    show=False,
-    filename="notebook-tap",
-    outformat="png",
-):
+with SphinxDiagram(title="Notebook to TAP"):
     user = User("End User")
 
     with Cluster("Kubernetes"):

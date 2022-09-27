@@ -7,7 +7,7 @@ Since we're using GitHub for group information, all organizations that should co
 GitHub supports two ways of doing this: make the organization membership public, or grant the OAuth App access to that organization's data explicitly.
 GitHub allows the user to do the latter in the authorization screen during OAuth 2.0 authentication.
 
-.. figure:: /_static/github-oauth.png
+.. figure:: github-oauth.png
    :name: GitHub OAuth authorization screen
 
    The authorization screen shown by GitHub during an OAuth App authentication.

@@ -8,6 +8,9 @@ version = "Current"
 
 [sphinx]
 rst_epilog_file = "_rst_epilog.rst"
+extensions = [
+  "sphinx_diagrams"
+]
 
 [sphinx.linkcheck]
 ignore = [

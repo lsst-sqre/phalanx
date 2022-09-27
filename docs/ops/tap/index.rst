@@ -24,12 +24,6 @@ Upgrading ``tap`` normally only requires an Argo CD sync.
 
 .. rubric:: Architecture
 
-.. figure:: /_static/notebook-tap.png
-   :name: Flow for Notebook Aspect queries to TAP
+.. diagrams:: notebook-tap.py
 
-   Flow for Notebook Aspect queries to TAP
-
-.. figure:: /_static/portal-tap.png
-   :name: Flow for Portal Aspect queries to TAP
-
-   Flow for Portal Aspect queries to TAP
+.. diagrams:: portal-tap.py
