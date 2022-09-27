@@ -9,8 +9,8 @@ Requirements
 
 * The installer assumes Git 2.22 or later.
 
-* We presume that you are using `Vault <https://www.vaultproject.io/>`__ coupled with `Vault Secrets Operator <https://github.com/ricoberger/vault-secrets-operator>`__ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
-  We strongly recommend using the `LSST Vault Utilites <https://github.com/lsst-sqre/lsstvaultutils/>`__ to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
+* We presume that you are using Vault_ coupled with `Vault Secrets Operator`_ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities documentation <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
+  We strongly recommend using the `LSST Vault Utilites`_ to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
 
 * Rubin Science Platform applications expect the public hostname of the Science Platform to have a TLS certificate that can be verified using standard CA roots.
   Using a self-signed certificate or an institutional CA that is not in the normal list of CAs shipped with Docker base images will probably not work.
@@ -19,12 +19,10 @@ Requirements
 Checklist
 =========
 
-#. Fork the `phalanx repository
-   <https://github.com/lsst-sqre/phalanx>`__ if this work is separate
-   from the SQuaRE-managed environments.
+#. Fork the `phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
 
-#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/tree/master/installer/requirements.txt>`__.
-   If you are not using 1password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
+#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/master/installer/requirements.txt>`__.
+   If you are not using 1Password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
    In any event, note the write key for your Vault enclave.
 
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
@@ -46,10 +44,10 @@ Checklist
 
    See :ref:`service-notes` for more details on special considerations for individual services.
 
-#. Generate the secrets for the new environment with `/installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/tree/master/installer/generate_secrets.py>`__ and store them in Vault with `/installer/push_secrets.sh <https://github.com/lsst-sqre/phalanx/tree/master/installer/push_secrets.sh>`__.
+#. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__.
    This is where you will need the write key for the Vault enclave.
 
-#. Run the installer script at `/installer/install.sh <https://github.co/lsst-sqre/phalanx/tree/master/installer/install.sh>`__.
+#. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
 
    If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
    For installations that are intended to be long-lived, it is worth capturing the IP address at this point and modifying your configuration to use it statically should you ever need to reinstall the instance.
@@ -113,7 +111,7 @@ The corresponding group for Gafaelfawr purposes will be ``<organization>-<team>`
 That means the team name will be converted to lowercase and spaces will be replaced with dashes, and other transformations will be done for special characters.
 For more information about how Gafaelfawr constructs groups from GitHub teams, see `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/arch/providers.html#github-groups>`__.
 
-For an example of a ``group_mapping`` configuration for GitHub authentication, see `/services/gafaelfawr/values-idfdev.yaml <https://github.com/lsst-sqre/phalanx/tree/master/services/gafaelfawr/values-idfdev.yaml>`__.
+For an example of a ``group_mapping`` configuration for GitHub authentication, see `/services/gafaelfawr/values-idfdev.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/gafaelfawr/values-idfdev.yaml>`__.
 
 If you run into authentication problems, see :doc:`the Gafaelfawr operational documentation <gafaelfawr/index>` for debugging instructions.
 

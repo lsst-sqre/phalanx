@@ -51,7 +51,7 @@ Requirements
 
 #. Install `Vault <https://learn.hashicorp.com/tutorials/vault/getting-started-install>`__.
 
-#. Clone the `Phalanx repository <https://github.com/lsst-sqre/phalanx.git>`__.
+#. Clone the `Phalanx repository`_.
 
 Open Phalanx's ``installer/`` directory:
 
@@ -89,7 +89,7 @@ You can do this by editing the `/science-platform/values-minikube.yaml <https://
 Set any service you do not want to deploy to ``enabled: false``.
 
 Commit any changes with Git into a development branch of the Phalanx repository.
-**You must also push this development branch to the GitHub origin,** https://github.com/lsst-sqre/phalanx.git.
+**You must also push this development branch to the GitHub origin,** ``https://github.com/lsst-sqre/phalanx.git``.
 The ``install.sh`` script uses your locally-checked out branch of Phalanx, but also requires that the branch be accessible from GitHub.
 
 **Services that must be disabled for local Minikube:**

@@ -47,7 +47,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 #. Enter "Argo CD" as the name.
 
 #. Add the ``/argo-cd/api/dex/callback`` route under "Authorized redirect URIs."
-   For example: https://data-int.lsst.cloud/argo-cd/api/dex/callback
+   For example: ``https://data-int.lsst.cloud/argo-cd/api/dex/callback``
 
 #. Click on create.
    This will pop up a dialog with the client ID and secret for the newly-created OAuth client.
@@ -121,9 +121,9 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 #. Click New OAuth App.
 
 #. Enter the following information (adjust for the environment):
-   - Application name: RSP Argo CD (IDF-int)
-   - Homepage URL: https://data-int.lsst.cloud/argo-cd
-   - Authorization callback URL: https://data-int.lsst.cloud/argo-cd/api/dex/callback
+   - Application name: ``RSP Argo CD (IDF-int)``
+   - Homepage URL: ``https://data-int.lsst.cloud/argo-cd``
+   - Authorization callback URL: ``https://data-int.lsst.cloud/argo-cd/api/dex/callback``
 
 #. Click "Register Application".
 

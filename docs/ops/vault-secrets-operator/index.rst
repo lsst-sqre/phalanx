@@ -19,9 +19,7 @@ vault-secrets-operator
 The ``vault-secrets-operator`` service is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other services.
 It processes ``VaultSecret`` resources defined in the `Science Platform repository <https://github.com/lsst-sqre/phalanx>`__ and creates corresponding Kubernetes ``Secret`` resources.
 
-.. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
-
-See `DMTN-112 <https://dmtn-112.lsst.io>`__ for the LSST Vault design.
+See :dmtn:`112` for the LSST Vault design.
 
 .. rubric:: Upgrading
 
@@ -35,7 +33,7 @@ The Gafaelfawr secret is a good one to use for this purpose since it is only rea
 .. rubric:: Bootstrapping the service
 
 Vault Secrets Operator is the only component of the Science Platform whose secret has to be manually created, so that it can create the secrets for all other services.
-This will be done automatically by the `install script <https://github.com/lsst-sqre/phalanx/blob/master/install.sh>`__.
+This will be done automatically by the `install script <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
 
 Its secret will look like this:
 
@@ -52,4 +50,4 @@ Its secret will look like this:
      VAULT_TOKEN_LEASE_DURATION: 86400
 
 Replace ``<token>`` with the ``read`` Vault token for the path ``secret/k8s_operator/<cluster-name>`` in Vault.
-See `DMTN-112 <https://dmtn-112.lsst.io>`__ for more information.
+See :dmtn:`112` for more information.

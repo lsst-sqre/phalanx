@@ -28,7 +28,7 @@ In your clone of Phalanx, run:
 This command uses Python to install pre-commit and enable it in your Phalanx clone.
 
 **You will also need to install helm-docs separately.**
-See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs/#installation>`__ for details.
+See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.
 
 What to expect when developing in Phalanx with pre-commit
 =========================================================

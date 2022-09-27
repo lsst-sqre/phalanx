@@ -14,7 +14,7 @@ cert-manager
 
 .. rubric:: Overview
 
-The ``cert-manager`` service is an installation of `cert-manager <https://cert-manager.io>`__ from its `Helm chart repository <https://hub.helm.sh/charts/jetstack/cert-manager>`__.
+The ``cert-manager`` service is an installation of `cert-manager <https://cert-manager.io>`__ from its `Helm chart repository <https://artifacthub.io/packages/helm/cert-manager/cert-manager>`__.
 It creates TLS certificates via `Let's Encrypt <https://letsencrypt.org/>`__ and automatically renews them.
 
 This service is only deployed on clusters managed by SQuaRE.

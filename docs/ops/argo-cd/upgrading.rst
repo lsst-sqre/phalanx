@@ -45,7 +45,7 @@ Manual upgrade process
    Replace ``$VERSION`` with the version of Argo CD as discovered above.
    The version will begin with a ``v``.
 
-   This is taken from the `Argo CD disaster recovery documentation <https://argoproj.github.io/argo-cd/operator-manual/disaster_recovery/>`__ with the addition of the namespace flag.
+   This is taken from the `Argo CD disaster recovery documentation <https://argo-cd.readthedocs.io/en/stable/operator-manual/disaster_recovery/>`__ with the addition of the namespace flag.
 
    The backup will not be needed if all goes well.
 

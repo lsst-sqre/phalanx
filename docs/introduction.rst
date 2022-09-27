@@ -6,9 +6,6 @@ The Rubin Science Platform runs on `Kubernetes`_
 Kubernetes provides a way to coordinate running services on multiple nodes.
 Kubernetes runs a set of `Docker`_ containers and sets up the networking, storage, and configuration of those containers.
 
-.. _Kubernetes: https://kubernetes.io/
-.. _Docker: https://docker.com/
-
 Git repositories for individual services typically have build pipelines resulting in new Docker container builds when code changes are merged.
 For example, our Jenkins build system builds stack and JupyterLab containers, and the `lsst-tap-service repository <https://github.com/lsst-sqre/lsst-tap-service>`__ builds the TAP service containers.
 
@@ -30,5 +27,5 @@ That is, it won't notice when the configuration changes and apply those changes.
 Argo CD watches its source repository for new Git commits and will keep track of those changes, either applying them automatically ("syncing" them), or waiting for an operator to press the sync button in the web UI.
 Argo CD is the only layer in this stack that has a web UI that can be easily navigated, and it provides many useful features, such as deleting resources and resyncing services.
 
-The Rubin Science Platform stores its Argo CD configuration in the `phalanx repository <https://github.com/lsst-sqre/phalanx>`__.
+The Rubin Science Platform stores its Argo CD configuration in the `phalanx repository`_.
 This includes the Argo CD application resources, pointers to the Helm charts for all services that are installed as part of the Science Platform, and values files to configure those services.

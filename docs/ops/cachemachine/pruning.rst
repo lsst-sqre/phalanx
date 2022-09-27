@@ -8,6 +8,6 @@ This is a function of Kubernetes, by default, `only showing 50 images on a node 
 
 Should you encounter this problem, for each node, perform the following actions:
 
-#. Download `purge <https://github.com/lsst-sqre/imagepurger/tree/main/node-script/purge>`__
+#. Download `purge <https://github.com/lsst-sqre/imagepurger/blob/main/node-script/purge>`__
 #. Run it using an account allowed to use the Docker socket (thus, probably in group ``docker``).  You may want to run it with ``-x`` first to see what it's going to do.  If you want output during the actual run, run it with ``-v``.
 
