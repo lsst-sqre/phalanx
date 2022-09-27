@@ -69,7 +69,6 @@ Services
    ops/mobu/index
    ops/nublado2/index
    ops/postgres/index
-   ops/squash-api/index
    ops/tap/index
    ops/vault-secrets-operator/index
 
