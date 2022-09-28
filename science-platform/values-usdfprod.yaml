@@ -33,7 +33,7 @@ nublado2:
 obstap:
   enabled: false
 plot_navigator:
-  enabled: false
+  enabled: true
 portal:
   enabled: true
 postgres:
