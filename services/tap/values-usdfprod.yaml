@@ -1,0 +1,12 @@
+qserv:
+  host: "172.24.4.101:4040"
+  mock:
+    enabled: false
+
+config:
+  gcsBucket: "rubin-qserv"
+  gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
+  gcsBucketType: "S3"
+  jvmMaxHeapSize: "31G"
+  http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+
