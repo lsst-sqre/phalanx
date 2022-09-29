@@ -1,17 +1,17 @@
-###########################
-Science Platform operations
-###########################
+#################################################
+Phalanx: Rubin Observatory Kubernetes Deployments
+#################################################
 
-The Rubin Science Platform is described in `LDM-542 <https://ldm-542.lsst.io/>`__.
-This document contains operational notes of interest to administrators of the Science Platform and maintainers of services deployed via the Science Platform, but not of interest to users.
+Phalanx [#name]_ is a GitOps repository for Rubin Observatory's Kubernetes clusters, notably including the Rubin Science Platform deployments like https://data.lsst.cloud.
+Using Helm_ and `Argo CD`_, Phalanx defines the configuration of services in each environment.
 
-For user documentation of the Notebook Aspect of the Rubin Science Platform, see `nb.lsst.io <https://nb.lsst.io/>`__.
+This documentation is for Rubin team members that are building services and operating Kubernetes clusters.
+Astronomers and other end-users can visit the Rubin Documentation Portal to learn how to use Rubin Observatory's software, services, and datasets.
 
-The Science Platform uses `Argo CD`_ to manage its Kubernetes resources.
-The Argo CD configuration and this documentation are maintained on `GitHub <https://github.com/lsst-sqre/phalanx>`__.
+Phalanx is on GitHub at https://github.com/lsst-sqre/phalanx.
 
-A phalanx is a SQuaRE deployment (Science Quality and Reliability Engineering, the team responsible for the Rubin Science Platform).
-Phalanx is how we ensure that all of our services work together as a unit.
+.. [#name] A phalanx is a SQuaRE deployment (Science Quality and Reliability Engineering, the team responsible for the Rubin Science Platform).
+   Phalanx is how we ensure that all of our services work together as a unit.
 
 Overview
 ========
