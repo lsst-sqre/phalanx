@@ -16,82 +16,39 @@ Phalanx is how we ensure that all of our services work together as a unit.
 Overview
 ========
 
-.. toctree::
-   :maxdepth: 2
-
-   introduction
-   arch/repository
-   arch/secrets
-
-For service maintainers
-=======================
-
-General development and operations
-----------------------------------
+Learn about Phalanx's architecture and technologies.
 
 .. toctree::
    :maxdepth: 2
 
-   service-guide/linting-and-helm-docs
-   service-guide/create-service
-   service-guide/add-a-onepassword-secret
-   service-guide/update-a-onepassword-secret
-   service-guide/update-pull-secret
-   service-guide/add-service
-   service-guide/add-external-chart
-   service-guide/local-development
-   service-guide/sync-argo-cd
-   service-guide/upgrade
+   overview/index
 
-Specific tasks
---------------
+For service developers and maintainers
+======================================
+
+Learn how to build services — including websites, web APIs, and other cloud-based infrastructure — and integrate them into Phalanx.
 
 .. toctree::
    :maxdepth: 2
 
-   service-guide/update-tap-schema
-   service-guide/mobu-manage-flocks
+   service-guide/index
 
-For science platform administrators
-===================================
+For platform administrators
+===========================
+
+Learn how to bootstrap and operate a Rubin Science Platform Kubernetes cluster.
+
+.. toctree::
+   :maxdepth: 2
+
+   ops/index
 
 Services
---------
+========
+
+Learn about the individual services deployed through Phalanx.
 
 .. toctree::
    :maxdepth: 2
 
-   ops/argo-cd/index
-   ops/cachemachine/index
-   ops/cert-manager/index
-   ops/gafaelfawr/index
-   ops/ingress-nginx/index
-   ops/mobu/index
-   ops/nublado2/index
-   ops/postgres/index
-   ops/tap/index
-   ops/vault-secrets-operator/index
-
-Bootstrapping
--------------
-
-.. toctree::
-   :maxdepth: 3
-
-   ops/bootstrapping
-
-Infrastructure
---------------
-
-.. toctree::
-  :maxdepth: 2
-
-  ops/infrastructure/filestore/index
-
-Troubleshooting
----------------
-
-.. toctree::
-   :maxdepth: 2
-
-   ops/troubleshooting
+   services/index
