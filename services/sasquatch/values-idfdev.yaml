@@ -43,7 +43,7 @@ chronograf:
     GENERIC_TOKEN_URL: https://data-dev.lsst.cloud/auth/openid/token
     USE_ID_TOKEN: 1
     JWKS_URL: https://data-dev.lsst.cloud/.well-known/jwks.json
-    GENERIC_API_URL: https://data-dev.lsst.cloud/auth/userinfo
+    GENERIC_API_URL: https://data-dev.lsst.cloud/auth/openid/userinfo
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
