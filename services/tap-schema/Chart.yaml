@@ -3,4 +3,4 @@ name: tap-schema
 version: 1.0.0
 description: The TAP_SCHEMA database
 home: https://github.com/lsst/sdm_schemas
-appVersion: 1.2.2
+appVersion: 1.2.3
