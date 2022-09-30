@@ -16,7 +16,7 @@ If the pod is already running, it gets I/O errors from its database, hangs, or o
 If the backing store is corrupt or has been deleted or otherwise is disrupted, sometimes the ``PersistentVolume`` will become unavailable, but the ``PersistentVolumeClaim`` will hang on to it and keep trying to futilely mount it.
 When this happens, you may need to recreate the persistent volume.
 
-**Solution:** :doc:`postgres/recreate-pvc`
+**Solution:** :doc:`/services/postgres/recreate-pvc`
 
 Spawner menu missing images, cachemachine stuck pulling the same image
 ======================================================================
@@ -35,7 +35,7 @@ The most common cause of this problem is a Kubernetes limitation.
 By default, the Kubernetes list node API only returns the "first" (which usually means oldest) 50 cached images.
 If more than 50 images are cached, images may go missing from that list even though they are cached, leading cachemachine to think they aren't cached and omitting them from the spawner menu.
 
-**Solution:** :doc:`cachemachine/pruning`
+**Solution:** :doc:`/services/cachemachine/pruning`
 
 If this doesn't work, another possibility is that there is a node that cachemachine thinks is available for JupyterLab images but which is not eligible for its ``DaemonSet``.
 This would be a bug in cachemachine, which should ignore cordoned nodes, but it's possible there is a new iteration of node state or a new rule for where ``DaemonSets`` are allowed to run that it does not know about.
@@ -60,14 +60,14 @@ Spawning a notebook fails with a pending error
 In this case, JupyterHub may not recover without assistance.
 You may need to delete the record for the affected user, and also make sure the user's lab namespace (visible in Argo CD under the ``nublado-users`` application) has been deleted.
 
-**Solution:** :doc:`nublado2/database`
+**Solution:** :doc:`/services/nublado2/database`
 
 User gets permission denied from services
 =========================================
 
 **Symptoms:** A user is able to authenticate to the Rubin Science Platform (prompted by going to the first authenticated URL, such as the Notebook Aspect spawner page), but then gets permission denied from other services.
 
-**Causes:** Authentication and authorization to the Rubin Science Platform is done via a service called Gafaelfawr (see :doc:`./gafaelfawr/index`).
+**Causes:** Authentication and authorization to the Rubin Science Platform is done via a service called Gafaelfawr (see :doc:`/services//gafaelfawr/index`).
 After the user authenticates, Gafaelfawr asks their authentication provider for the user's group memberships and then translates that to a list of scopes.
 The mapping of group memberships to scopes is defined in the ``values.yaml`` file for Gafaelfawr for the relevant environment, in the ``gafaelfawr.config.groupMapping`` configuration option.
 
@@ -75,7 +75,7 @@ The most likely cause of this problem is that the user is not a member of a grou
 Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to a service.
 If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other services.
 
-**Solution:** :doc:`gafaelfawr/debugging`
+**Solution:** :doc:`/services/gafaelfawr/debugging`
 
 You need privileged access to the filestore
 ===========================================
@@ -95,7 +95,7 @@ User pods don't spawn, reporting "permission denied" from Moneypenny
 **Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.
 This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of July 2022), or because that storage had been lost.
 
-**Solution:** :doc:`gafaelfawr/recreate-token`
+**Solution:** :doc:`/services/gafaelfawr/recreate-token`
 
 Login fails with "bad verification code" error
 ==============================================

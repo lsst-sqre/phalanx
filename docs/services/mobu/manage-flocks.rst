@@ -1,5 +1,6 @@
+####################
 Managing mobu flocks
-====================
+####################
 
 mobu is our monitoring system for the Science Platform.
 It exercises JupyterHub and labs, and tests other services within the Science Platform by running notebooks on those labs.

@@ -26,3 +26,4 @@ mobu is maintained on `GitHub <https://github.com/lsst-sqre/mobu>`__.
 .. toctree::
 
    configuring
+   manage-flocks

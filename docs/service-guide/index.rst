@@ -16,10 +16,3 @@ Service DevOps
    local-development
    sync-argo-cd
    upgrade
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Tasks
-
-   update-tap-schema
-   mobu-manage-flocks

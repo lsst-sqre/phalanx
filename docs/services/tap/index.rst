@@ -27,3 +27,10 @@ Upgrading ``tap`` normally only requires an Argo CD sync.
 .. diagrams:: notebook-tap.py
 
 .. diagrams:: portal-tap.py
+
+Upgrade procedures
+==================
+
+.. toctree::
+
+   update-tap-schema

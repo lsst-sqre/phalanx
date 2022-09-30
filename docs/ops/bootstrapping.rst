@@ -37,7 +37,7 @@ Checklist
    If you are using a cloud provider or something like minikube where the IP address is not yet known, then you will need to create that record once the top-level ingress is created and has an external IP address.
 
    The first time you set up the RSP for a given domain (note: *not* hostname, but *domain*, so if you were setting up ``dev.my-rsp.net`` and ``prod.my-rsp.net``, ``dev`` first, you would only need to do this when you created ``dev``), if you are using Let's Encrypt for certificate management (which we highly recommend), you will need to create glue records to enable Let's Encrypt to manage TLS for the domain.
-   See :doc:`cert-manager/route53-setup` for more details.
+   See :doc:`/services/cert-manager/route53-setup` for more details.
 
 #. For each enabled service, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
    Customization will vary from service to service.
@@ -67,13 +67,13 @@ There are supported two mechanisms to configure that TLS certificate:
 
 #. Purchase a commercial certificate and configure it as the ingress-nginx default certificate.
    Do not add TLS configuration to any of the service ingresses.
-   For more information, see :doc:`ingress-nginx/certificates`.
+   For more information, see :doc:`/services/ingress-nginx/certificates`.
    With this approach, the certificate will have to be manually renewed and replaced once per year.
 
 #. Configure Let's Encrypt to obtain a certificate via the DNS solver.
    Once this is configured, TLS will be handled automatically without further human intervention.
    However, this approach is far more complex to set up and has some significant prerequisites.
-   For more information, see :doc:`cert-manager/bootstrapping`.
+   For more information, see :doc:`/services/cert-manager/bootstrapping`.
 
 To use the second approach, you must have the following:
 
@@ -113,7 +113,7 @@ For more information about how Gafaelfawr constructs groups from GitHub teams, s
 
 For an example of a ``group_mapping`` configuration for GitHub authentication, see `/services/gafaelfawr/values-idfdev.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/gafaelfawr/values-idfdev.yaml>`__.
 
-If you run into authentication problems, see :doc:`the Gafaelfawr operational documentation <gafaelfawr/index>` for debugging instructions.
+If you run into authentication problems, see :doc:`the Gafaelfawr operational documentation </services/gafaelfawr/index>` for debugging instructions.
 
 Nublado 2
 ---------

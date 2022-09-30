@@ -1,5 +1,6 @@
+###############################
 Update the ``TAP_SCHEMA`` table
-===============================
+###############################
 
 The ``TAP_SCHEMA`` table stores information about the tables available in a given installation of the Rubin Science Platform.
 This table is kept in sync with the felis files using the following process:
