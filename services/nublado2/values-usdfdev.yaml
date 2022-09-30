@@ -31,6 +31,7 @@ config:
 
   lab_environment:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+    PGUSER: "rubin"
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
     DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
     S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
