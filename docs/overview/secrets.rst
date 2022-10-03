@@ -1,8 +1,11 @@
 .. _secrets:
 
-#######
-Secrets
-#######
+###########################
+Secrets management overview
+###########################
+
+Phalanx is a public repository on GitHub, nevertheless service configurations generally require some secrets such as random numbers, certificates, or passwords.
+This page explains how secrets are managed in Phalanx with Vault, 1Password, and Vault Secrets Operator.
 
 Vault
 =====
@@ -20,22 +23,16 @@ That path, in turn, is configured in the Helm per-environment values files for t
 
 Most Rubin Science Platform installations use the Vault server at vault.lsst.codes, which is managed using `Roundtable`_.
 
-.. _Roundtable: https://roundtable.lsst.io/
-
 Each installation environment has its own root path in that Vault server.
 The path is ``k8s_operator/<fqdn>`` where ``<fqdn>`` is the domain name of that environment.
 When the environment is bootstrapped, it is given a Kubernetes secret with the Vault token required to read that path of Vault.
-See `DMTN-112`_ for more information about that Vault instance and its naming conventions.
-
-.. _DMTN-112: https://dmtn-112.lsst.io/
+See :dmtn:`122` for more information about that Vault instance and its naming conventions.
 
 1Password
 =========
 
 While Kubernetes and Argo CD do not look beyond Vault, Vault is not the source of truth for persistent secrets for Rubin Science Platform environments maintained by SQuaRE.
 Secrets for external services or which for whatever reason cannot be randomly regenerated when the environment is reinstalled are stored in `1Password`_.
-
-.. _1Password: https://1password.com/
 
 Inside 1Password, there is a vault named RSP-Vault that contains all of the persistent secrets.
 Each secret is stored in either a Login or a Secure Note object.
