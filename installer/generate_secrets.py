@@ -370,6 +370,16 @@ class SecretGenerator:
             "rsp-alerts", "slack-webhook", "Slack webhook for alerts"
         )
 
+    def _narrativelog(self):
+        """Give narrativelog its own secret for externalization."""
+        db_pass = self.secrets["postgres"]["narrativelog_password"]
+        self._set("narrativelog", "database-password", db_pass)
+
+    def _exposurelog(self):
+        """Give exposurelog its own secret for externalization."""
+        db_pass = self.secrets["postgres"]["exposurelog_password"]
+        self._set("exposureloglog", "database-password", db_pass)
+
 
 class OnePasswordSecretGenerator(SecretGenerator):
     """A secret generator that syncs 1Password secrets into a secrets directory
