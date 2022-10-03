@@ -20,6 +20,16 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
+db:
+  # -- database host
+  host: postgres.postgres
+  # -- database port
+  port: 5432
+  # -- database user
+  user: narrativelog
+  # -- database name
+  database: narrativelog
+
 ingress:
   # -- Gafaelfawr auth query string
   gafaelfawrAuthQuery: ""
