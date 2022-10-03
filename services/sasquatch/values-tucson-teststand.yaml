@@ -81,7 +81,7 @@ telegraf-kafka-consumer:
     obssys:
       enabled: true
       topicRegexps: |
-        [ ".*GenericCamera", ".*Scheduler", ".*Script", ".*ScriptQueue", ".*Watcher" ]
+        [ ".*Scheduler", ".*Script", ".*ScriptQueue", ".*Watcher" ]
     ocps:
       enabled: true
       topicRegexps: |
@@ -110,6 +110,10 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ "lsst.sal.Test" ]
+    genericcamera:
+      enabled: true
+      topicRegexps: |
+        [ ".*GCHeaderService", .*GenericCamera" ]
 
 kafka-connect-manager:
   influxdbSink:
@@ -142,7 +146,7 @@ kafka-connect-manager:
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        topicsRegex: ".*GenericCamera|.*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
         topicsRegex: ".*OCPS"
@@ -164,6 +168,9 @@ kafka-connect-manager:
       mtalignment:
         enabled: true
         topicsRegex: ".*MTAlignment"
+      genericcamera:
+        enabled: true
+        topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
   ingress:
