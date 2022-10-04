@@ -119,63 +119,6 @@ kapacitor:
       memory: 16Gi
       cpu: 4
 
-telegraf:
-  image:
-    # -- Telegraf image repository
-    repo: "lsstsqre/telegraf"
-    # -- Telegraf image tag
-    tag: "avro"
-    pullPolicy: Always
-  env:
-    # -- Telegraf KafkaUser password.
-    - name: TELEGRAF_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: sasquatch
-          key: telegraf-password
-    # -- InfluxDB admin password.
-    - name: INFLUXDB_ADMIN_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: sasquatch
-          key: influxdb-password
-  service:
-    # -- Telegraf service.
-    enabled: false
-  config:
-    # -- Telegraf processor plugins.
-    processors: {}
-    # -- Telegraf input plugins.
-    inputs:
-      # -- See https://github.com/influxdata/telegraf/blob/master/plugins/inputs/kafka_consumer/README.md
-      - kafka_consumer:
-          brokers:
-            - sasquatch-kafka-brokers.sasquatch:9092
-          topics:
-            - lsst.sal.Test.logevent_heartbeat
-          sasl_username: telegraf
-          sasl_password: $TELEGRAF_PASSWORD
-          sasl_mechanism: SCRAM-SHA-512
-          consumer_group: telegraf-test
-          max_message_len: 32768
-          data_format: avro
-          avro_schema_registry: "http://sasquatch-schema-registry.sasquatch:8081"
-          avro_measurement: "test"
-          avro_fields:
-            - heartbeat
-            - private_efdStamp
-            - salIndex
-          avro_timestamp: private_efdStamp
-          avro_timestamp_format: unix_us
-    # -- Telegraf output destination.
-    outputs:
-      - influxdb:
-          urls:
-            - "http://sasquatch-influxdb.sasquatch:8086"
-          database: "kafkaconsumer"
-          username: admin
-          password: $INFLUXDB_ADMIN_PASSWORD
-
 global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
