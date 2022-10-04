@@ -31,13 +31,6 @@ spec:
                 name: {{ template "gafaelfawr.fullname" . }}
                 port:
                   number: 8080
-          - path: "/oauth2/callback"
-            pathType: Exact
-            backend:
-              service:
-                name: {{ template "gafaelfawr.fullname" . }}
-                port:
-                  number: 8080
           {{- if .Values.config.oidcServer.enabled }}
           - path: "/.well-known/jwks.json"
             pathType: Exact

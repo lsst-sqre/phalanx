@@ -22,3 +22,5 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: kafdrop
     version: 1.0.0
+  - name: telegraf-kafka-consumer
+    version: 1.0.0

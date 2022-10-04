@@ -20,12 +20,19 @@ influxdb:
     enabled: true
     hostname: data-dev.lsst.cloud
 
-kafka-connect-manager:
-  influxdbSink:
-    connectors:
-      test:
-        enabled: true
-        topicsRegex: ".*Test"
+telegraf-kafka-consumer:
+  kafkaConsumers:
+    test:
+      enabled: true
+      replicaCount: 1
+      topicRegexps: |
+        [ ".*Test" ]
+    atmcs:
+      enabled: true
+      replicaCount: 1
+      topicRegexps: |
+        [ ".*ATMCS" ]
+
 
 kafdrop:
   ingress:
@@ -43,7 +50,7 @@ chronograf:
     GENERIC_TOKEN_URL: https://data-dev.lsst.cloud/auth/openid/token
     USE_ID_TOKEN: 1
     JWKS_URL: https://data-dev.lsst.cloud/.well-known/jwks.json
-    GENERIC_API_URL: https://data-dev.lsst.cloud/auth/userinfo
+    GENERIC_API_URL: https://data-dev.lsst.cloud/auth/openid/userinfo
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/

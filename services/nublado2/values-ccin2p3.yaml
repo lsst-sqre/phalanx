@@ -1,6 +1,9 @@
 jupyterhub:
   debug:
     enabled: true
+  hub:
+    db:
+      upgrade: true
 
   # hub:
   #   resources:
