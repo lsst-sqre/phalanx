@@ -100,7 +100,7 @@ The Phalanx repository uses two levels of testing and continuous integration.
 `Pre-commit`_ performs file formatting and linting, both on your local editing environment (when configured) and verified in the GitHub Actions.
 In one check, pre-commit regenerates Helm chart documentation for services with helm-docs_.
 See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/master/.pre-commit-config.yaml>`__ file for configuration details.
-Learn how to set up pre-commit in your local editing environment in :doc:`/service-guide/linting-and-helm-docs`.
+Learn how to set up pre-commit in your local editing environment in :doc:`precommit-and-helm-docs`.
 
 Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__).
 This workflow has three key jobs:

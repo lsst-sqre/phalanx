@@ -15,7 +15,6 @@ Service DevOps
    :caption: Integration
 
    service-chart-architecture
-   linting-and-helm-docs
    add-service
    add-external-chart
    add-a-onepassword-secret
