@@ -8,7 +8,3 @@ qserv:
   host: "ccqserv201.in2p3.fr:30040"
   mock:
     enabled: false
-image:
-  # -- tap image to use
-  repository: "gabrimaine/lsst-tap-service"
-  tag: "1.2.1-CC2"
