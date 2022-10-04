@@ -52,18 +52,18 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: NARRATIVELOG_DB_USER
-              value: narrativelog
+              value: {{ .Values.db.user | quote }}
             - name: NARRATIVELOG_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: narrativelog
                   key: narrativelog_password
             - name: NARRATIVELOG_DB_HOST
-              value: postgres.postgres
+              value: {{ .Values.db.host | quote }}
             - name: NARRATIVELOG_DB_PORT
-              value: "5432"
-            - name: NARRATIVELOG_DB_DATABSE
-              value: narrativelog
+              value: {{ .Values.db.port | quote }}
+            - name: NARRATIVELOG_DB_DATABASE
+              value: {{ .Values.db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
       {{- with .Values.nodeSelector }}

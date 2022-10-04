@@ -3,6 +3,9 @@ jupyterhub:
     hosts: ["tucson-teststand.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
+  hub:
+    db:
+      url: "postgresql://jovyan@140.252.146.49/jupyterhub"
 
   singleuser:
     extraAnnotations:
