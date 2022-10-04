@@ -4,15 +4,30 @@ Service DevOps
 
 .. toctree::
    :maxdepth: 2
-   :caption: General
+   :titlesonly:
+   :caption: Build
 
-   linting-and-helm-docs
    create-service
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+   :caption: Integration
+
+   service-chart-architecture
+   linting-and-helm-docs
+   add-service
+   add-external-chart
    add-a-onepassword-secret
    update-a-onepassword-secret
    update-pull-secret
-   add-service
-   add-external-chart
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+   :caption: Deploy & maintain
+
    local-development
+   deploy-from-a-branch
    sync-argo-cd
    upgrade

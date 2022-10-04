@@ -112,6 +112,9 @@ Next steps
 ==========
 
 This page provided a brief tour of the concepts and components of Phalanx-based service deployments.
+For more introductory topics, see the :doc:`index` overview topics.
+
+Start working with Phalanx:
 
 - If you are a service developer looking to integrate your service into Phalanx, see the :doc:`Service maintainer's guide </service-guide/index>` to get started.
 - If you are an operator looking to create a new environment or operate an existing one, see the :doc:`Operator's guide </ops/index>`

@@ -10,6 +10,7 @@
 .. _IVOA: https://ivoa.net/documents/
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
+.. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
@@ -17,6 +18,7 @@
 .. _Secret: https://kubernetes.io/docs/concepts/configuration/secret/
 .. _semantic versioning: https://semver.org/
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
+.. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _pre-commit: https://pre-commit.com
 .. _Vault: https://www.vaultproject.io/
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator

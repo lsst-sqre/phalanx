@@ -1,66 +1,118 @@
-####################
-Repository structure
-####################
+################################
+Phalanx Git repository structure
+################################
 
-Layout
-======
+Phalanx is an open source Git repository hosted at https://github.com/lsst-sqre/phalanx.
+This page provides an overview of how this repository is structured, for both service developers and environment operators alike.
+For background on Phalanx and its technologies, see :doc:`introduction` first.
 
-While ArgoCD can be used and configured in any number of ways, there is also a layer of convention to simplify and add some structure that works for us to deploy the science platform services.
+Key directories
+===============
 
-First, there is the `installer directory <https://github.com/lsst-sqre/phalanx/tree/master/installer>`__.
+services directory
+------------------
+
+:bdg-link-primary-line:`Browse /services/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/services>`
+
+Every Phalanx service has its own sub-directory within ``services`` named after the service itself (commonly the name is also used as a Kubernetes namespace).
+A Phalanx service is itself a Helm_ chart.
+Helm charts define Kubernetes templates for the service deployment, values for the templates, and references to any sub-charts from external repositories to include in the sub-chart.
+See the `Helm documentation for details on the structure of Helm charts. <https://helm.sh/docs/topics/charts/>`__
+
+Per-environment Helm values
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The novel aspect of Helm charts in Phalanx is the per-environment values files.
+The default values for a chart are located in its main ``values.yaml`` file.
+There are also additional values for each service, named ``values-<environment>.yaml``, that override default values for the service's deployment in that specific environment.
+
+Services based on third-party charts
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Note that some services are based entirely (or primarily) on third-party open source charts.
+In this chase, the service's chart includes that external chart as a dependency through its ``Chart.yaml``.
+See the `Helm documentation on chart dependencies. <https://helm.sh/docs/topics/charts/#chart-dependencies>`__
+
+science-platform directory
+--------------------------
+
+:bdg-link-primary-line:`Browse /science-platform/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/science-platform>`
+
+The ``science-platform`` directory is where environments are defined (an environment is a distinct Kubernetes cluster).
+.. This directory is itself a single Helm chart that deploys Kubernetes ``Namespace`` and Argo CD ``Application`` resources for each service.
+
+The ``/science-platform/templates`` directory contains a Helm template per service, like this one for the ``noteburst`` application:
+
+.. literalinclude:: ../../science-platform/templates/noteburst-application.yaml
+   :caption: /science-platform/templates/noteburst-application.yaml
+
+The template defines a Kubernetes Namespace_ and an Argo CD ``Application`` for each service.
+``Application`` resources directs Argo CD to deploy and synchronize the corresponding services from the Phalanx ``services`` directory.
+
+Notice that these templates are wrapped in a conditional, which controls whether a service is deployed in a given environment.
+The ``values.yaml`` file in the ``science-platform`` defines boolean variables for each service.
+Then in corresponding values files for each environment, named, ``values-<environment>.yaml``, services are enabled, or not, for the specific environment.
+
+installer directory
+-------------------
+
+:bdg-link-primary-line:`Browse /installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/installer>`
+
 This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
 The arguments to this are the name of the environment, the FQDN, and the read key for Vault (see :ref:`secrets` for more details on Vault).
-This installer script is the entrypoint for setting up a new environment.
+This installer script is the entry point for setting up a new environment.
 It can also be run on an existing environment to update it.
 
-Next, there is the `services directory <https://github.com/lsst-sqre/phalanx/tree/master/services>`__.
-Each sub-directory in services is one service installed in (at least some environments of) the Rubin Science Platform.
-This directory contains Helm values files for each of the environments that use that service.
-It also specifies which Helm chart is used to deploy that service.
-Each of the values files are named ``values-<environment>.yaml``.
+docs directory
+--------------
 
-Finally, there is the `science-platform directory <https://github.com/lsst-sqre/phalanx/tree/master/science-platform>`__.
-This contains an Argo CD parent application that specifies which services an environment should use and creates the corresponding Argo CD applications in Argo CD.
-The values files in this directory contain the service manifest and other top level configuration.
+:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/docs>`
 
-Charts
-======
+This directory contains the Sphinx_ documentation that you are reading now.
 
-Argo CD manages services in the Rubin Science Platform through a set of Helm charts.
-Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
+starters directory
+------------------
 
-The `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__ directory defines templates in its ``templates`` directory and values to resolve those templates in ``values.yaml`` and ``values-<environment>.yaml`` files to customize the service for each environment.  For first-party charts, the ``templates`` directory is generally richly populated.
+:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/starers>`
 
-For third-party charts the ``templates`` directory might not exist or might have only a small set of resources specific to the Science Platform.  In that case, most of the work of deploying a service is done by charts declared as dependencies (via the ``dependencies`` key in ``Chart.yaml``) of the top-level service chart.
-By convention, the top-level chart has the same name as the underlying chart that it deploys.
-Subcharts may be external third-party Helm charts provided by other projects, or, in rare instances, they may be Helm charts maintained by Rubin Observatory.
-In the latter case, these charts are maintained in the `lsst-sqre/charts GitHub repository <https://github.com/lsst-sqre/charts/>`__.
+This directory contains templates for contributing new services to Phalanx.
+See :doc:`/service-guide/add-service`.
 
-.. _chart-versioning:
+Branches
+========
 
-Chart versioning
-================
+The default branch is ``master`` [#1]_.
+This default branch is considered the source of truth for full synchronized phalanx service deployments.
 
-The top level of charts defined in the ``/services`` directory are used only by Argo CD and are never published as Helm charts.
-Their versions are therefore irrelevant.
-The version of each chart is set to ``1.0.0`` because ``version`` is a required field in ``Chart.yaml`` and then never changed.
-It is instead the ``appVersion`` field that is used to point to a particular release of a first-person chart.  Reverting to a previous configuration in this layer of charts is done via a manual revert in Argo CD or by reverting a change in the GitHub repository so that the ``appVersion`` points to an earlier release.  It is **not** done by pointing Argo CD to an older chart.
+.. [#1] This branch will be renamed to ``main`` in the near future.
 
-Third-party charts are declared as dependencies; they are normal, published Helm charts that follow normal Helm semantic versioning conventions.
-In the case of the ``lsst-sqre/charts`` repository, this is enforced by CI.
-We can then constrain the version of the chart Argo CD will deploy by changing the ``dependencies`` configuration in the top-level chart.
+Updates to Phalanx are introduced as pull requests on GitHub.
+Repository members create branches directly on the https://github.com/lsst-sqre/phalanx origin (see the `Data Management workflow guide <https://developer.lsst.io/work/flow.html>`__, while external collaborators should fork Phalanx and provide pull requests.
 
-Best practice is for a release of a chart to deploy the latest version of the corresponding service, so that upgrading the chart also implies upgrading the service.
-This allows automatic creation of pull requests to upgrade any services deployed by Argo CD (see `SQR-042 <https://sqr-042.lsst.io/>`__ for more details).
-Charts maintained as first-party charts in Phalanx follow this convention (for the most part).
-Most upstream charts also follow this convention, but some require explicitly changing version numbers in ``values-*.yaml``.
+It is possible (particularly in non-production environments) to deploy from branches of Phalanx, which is useful for debugging new and updating services before updating the ``master`` branch.
+You can learn how to do this in :doc:`/service-guide/deploy-from-a-branch`.
 
-In general, we pin the version of the chart to deploy in the ``dependencies`` metadata of the top-level chart.
-This ensures deterministic cluster configuration and avoids inadvertently upgrading services.
-However, for services still under development, we sometimes use a floating dependency to reduce the number of pull requests required when iterating, and then switch to a pinned version once the service is stable.
+Test and formatting infrastructure
+==================================
 
-There is currently no generic mechanism to deploy different versions of a chart in different environments, as appVersion is set in ``Chart.yaml``.
+The Phalanx repository uses two levels of testing and continuous integration.
 
-That does not mean that rolling out a new version is all-or-nothing: you have a couple of different options for testing new versions.  The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use ArgoCD to deploy the application from the branch, rather than ``master``, ``main``, or ``HEAD`` (as the case may be).  This will cause the application resource in the ``science-platform`` app to show as out of sync, which is indeed correct, and a helpful reminder that you may be running from a branch when you forget and subsequently rediscover that fact weeks later.
-Additionally, many charts allow specification of a tag (usually some variable like ``image.tag`` in a values file), so that is a possibility as well.  If your chart doesn't have a way to control what image tag you're deploying from, consider adding the capability.
-In any event, for RSP instances, we (as a matter of policy) disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment, and updates are deployed to production environments (barring extraordinary circumstances) during our specified maintenance windows.
+`Pre-commit`_ performs file formatting and linting, both on your local editing environment (when configured) and verified in the GitHub Actions.
+In one check, pre-commit regenerates Helm chart documentation for services with helm-docs_.
+See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/master/.pre-commit-config.yaml>`__ file for configuration details.
+Learn how to set up pre-commit in your local editing environment in :doc:`/service-guide/linting-and-helm-docs`.
+
+Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__).
+This workflow has three key jobs:
+
+- Linting with pre-commit_, mirroring the local editing environment.
+- Static validation of Helm charts, see `helm/chart-testing-action <https://github.com/helm/chart-testing-action>`__ on GitHub.
+- An integration test of a Phalanx deployment in a minikube environment.
+
+Next steps
+==========
+
+Start working with Phalanx:
+
+- If you are a service developer looking to integrate your service into Phalanx, see the :doc:`Service maintainer's guide </service-guide/index>` to get started.
+- If you are an operator looking to create a new environment or operate an existing one, see the :doc:`Operator's guide </ops/index>`
