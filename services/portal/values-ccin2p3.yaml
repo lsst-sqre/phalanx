@@ -6,4 +6,3 @@ resources:
 
 config:
   hipsUrl: "http://alasky.cds.unistra.fr/DSS/DSSColor"
-  
