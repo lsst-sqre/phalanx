@@ -3,6 +3,8 @@ jupyterhub:
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
+    db:
+      upgrade: true
 
   cull:
     enabled: true
