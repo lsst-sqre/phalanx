@@ -2,8 +2,11 @@
 .. _Argo CD: https://argoproj.github.io/argo-cd/
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
+.. _Data Management workflow guide: https://developer.lsst.io/work/flow.html
 .. _Deployment: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 .. _Docker: https://www.docker.com/
+.. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html
+.. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -11,6 +14,7 @@
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
+.. _`lsst-sqre/phalanx`:
 .. _phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
@@ -22,3 +26,4 @@
 .. _pre-commit: https://pre-commit.com
 .. _Vault: https://www.vaultproject.io/
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
+.. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment

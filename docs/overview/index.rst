@@ -19,3 +19,4 @@ After you have reviewed this documentation, see the :doc:`/service-guide/index` 
    :caption: Contributing
 
    precommit-and-helm-docs
+   contributing-docs
