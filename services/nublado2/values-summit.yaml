@@ -1,7 +1,4 @@
 jupyterhub:
-  hub:
-    db:
-      upgrade: true
   ingress:
     hosts: ["summit-lsp.lsst.codes"]
     annotations:

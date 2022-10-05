@@ -5,6 +5,7 @@ jupyterhub:
       nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
   hub:
     db:
+      upgrade: true
       url: "postgresql://jovyan@140.252.146.49/jupyterhub"
 
   singleuser:
