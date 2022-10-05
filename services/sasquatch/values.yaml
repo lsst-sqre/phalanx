@@ -62,6 +62,14 @@ influxdb:
     # scripts:
     # # -- InfluxDB custom initialization script.
     #   init.iql: |+
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 96Gi
+      cpu: 8
+
 
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
@@ -94,6 +102,13 @@ chronograf:
     CUSTOM_AUTO_REFRESH: "1s=1000"
   # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
   envFromSecret: "sasquatch"
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 16Gi
+      cpu: 4
 
 kapacitor:
   # -- Kapacitor image tag.

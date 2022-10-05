@@ -24,6 +24,10 @@ Rubin Observatory's telemetry service.
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.9.4"}` | Chronograf image tag. |
 | chronograf.ingress | object | disabled | Chronograf ingress configuration. |
 | chronograf.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
+| chronograf.resources.limits.cpu | int | `4` |  |
+| chronograf.resources.limits.memory | string | `"16Gi"` |  |
+| chronograf.resources.requests.cpu | int | `1` |  |
+| chronograf.resources.requests.memory | string | `"1Gi"` |  |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
@@ -31,6 +35,10 @@ Rubin Observatory's telemetry service.
 | influxdb.initScripts.enabled | bool | `false` | Enable InfluxDB custom initialization script. |
 | influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
+| influxdb.resources.limits.cpu | int | `8` |  |
+| influxdb.resources.limits.memory | string | `"96Gi"` |  |
+| influxdb.resources.requests.cpu | int | `1` |  |
+| influxdb.resources.requests.memory | string | `"1Gi"` |  |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
