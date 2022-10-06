@@ -19,7 +19,6 @@ Service DevOps
    add-external-chart
    add-a-onepassword-secret
    update-a-onepassword-secret
-   update-pull-secret
 
 .. toctree::
    :maxdepth: 2

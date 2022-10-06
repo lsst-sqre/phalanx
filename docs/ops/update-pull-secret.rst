@@ -1,6 +1,6 @@
-######################################################
-Updating the pull secret stored in 1Password and Vault
-######################################################
+#############################################################
+Updating the Docker pull secret stored in 1Password and Vault
+#############################################################
 
 The pull secret, present in each RSP instance, and shared by many
 services there, is notoriously tricky to format correctly.

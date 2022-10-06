@@ -27,6 +27,7 @@ Operations
 
    upgrade-windows
    sync-argo-cd
+   update-pull-secret
 
 .. toctree::
    :caption: Troubleshooting
