@@ -1,29 +1,23 @@
-###############
-Syncing Argo CD
-###############
+#################################
+Syncing Argo CD in an environment
+#################################
 
-Go to Argo CD for the environment
-=================================
+Phalanx enables environment operators to roll out new and updates services by synchronizing deployed in Kubernetes with the current HEAD of the `phalanx repository`_ using `Argo CD`_.
+This page explains the key steps in this process for environment operators.
+
+.. important::
+
+   Keep in mind that environments have specific upgrade windows and that application updates should be rolled out to environments in order, to development and integration environments before production environments.
+   See :doc:`upgrade-windows` for details.
+
+Log into Argo CD for the environment
+====================================
 
 To access the Argo CD UI, go to the ``/argo-cd`` URL under the domain name of that deployment of the Rubin Science Platform.
-See `the Phalanx README <https://github.com/lsst-sqre/phalanx/blob/master/README.rst>`__ for the names of all Phalanx environments and direct links to their Argo CD pages.
+See :doc:`/ops/environments/index` for a list of Phalanx environments and direct links to their Argo CD pages.
 
-Depending on the environment, you will need to authenticate with either GitHub or with Google OAuth.
+Depending on the environment, you will need to authenticate with either GitHub, Google OAuth, CILogon, or another OAuth provider as relevant.
 You can use the ``admin`` account and password, stored in 1Password for deployments managed by SQuaRE, in case of an emergency.
-
-When deploying an update, it should normally follow this sequence (skipping environments that aren't relevant to that update).
-
-* data-dev.lsst.cloud
-* data-int.lsst.cloud
-* tucson-teststand.lsst.codes
-* data.lsst.cloud
-* base-lsp.lsst.codes
-* summit-lsp.lsst.codes
-
-Some of these environments have maintenance windows, in which case, in the absence of an emergency, updates should only be synced during the maintenance window.
-See `SQR-056`_ for more information.
-
-.. _SQR-056: https://sqr-056.lsst.io/
 
 Sync the application
 ====================

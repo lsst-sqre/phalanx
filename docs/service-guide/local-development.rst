@@ -137,4 +137,4 @@ The minikube Argo CD admin password can be retrieved from Vault.
   VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
-With Argo CD you can sync your service (see :doc:`sync-argo-cd`).
+With Argo CD you can sync your service (see :doc:`/ops/sync-argo-cd`).

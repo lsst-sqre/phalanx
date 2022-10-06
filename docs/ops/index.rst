@@ -10,16 +10,23 @@ Operations
    environments/index
 
 .. toctree::
+   :caption: Infrastructure
+   :maxdepth: 2
+
+   infrastructure/filestore/index
+
+.. toctree::
    :caption: Bootstrapping
    :maxdepth: 1
 
    bootstrapping
 
 .. toctree::
-   :caption: Infrastructure
-   :maxdepth: 2
+   :caption: Procedures
+   :maxdepth: 1
 
-   infrastructure/filestore/index
+   upgrade-windows
+   sync-argo-cd
 
 .. toctree::
    :caption: Troubleshooting

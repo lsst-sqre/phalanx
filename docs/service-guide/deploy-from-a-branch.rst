@@ -183,4 +183,4 @@ Next steps
 
 Follow this page, you have iterated on the development of your service and ultimately upgraded that service in a development environment.
 The next step is to roll out this change to other environments.
-For details, see :doc:`sync-argo-cd`.
+For details, see :doc:`/ops/sync-argo-cd`.

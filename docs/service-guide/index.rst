@@ -29,4 +29,3 @@ Service DevOps
    upgrade
    deploy-from-a-branch
    local-development
-   sync-argo-cd

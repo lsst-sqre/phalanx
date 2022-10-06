@@ -10,4 +10,4 @@ Upgrading a service
     - If it is a complex application such as ``sasquatch`` that bundles first- and third-party applications, you may need to do both, or indeed descend into the ``charts`` directory and update the ``appVersion`` of the subcharts therein.  Tricky cases such as these may require some study before deciding on the best course of action.
 
 Once you have updated the service, Argo CD will that the change is pending, but no changes will be applied automatically.
-To apply the changes in a given environment, see :doc:`sync-argo-cd`.
+To apply the changes in a given environment, see :doc:`/ops/sync-argo-cd`.
