@@ -94,9 +94,9 @@ spec:
     topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}
   resources:
     requests:
-      cpu: "1"
-      memory: 512Mi
+      cpu: {{ .Values.mirrormaker2.resources.requests.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.requests.memory | quote }}
     limits:
-      cpu: "2"
-      memory: 4Gi
+      cpu: {{ .Values.mirrormaker2.resources.limits.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.limits.memory | quote }}
 {{ end }}

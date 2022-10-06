@@ -19,6 +19,13 @@ strimzi-kafka:
     source:
       bootstrapServer: sasquatch-dev-kafka-bootstrap.lsst.cloud:9094
       topicsPattern: "registry-schemas, lsst.sal.*"
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
 
 influxdb:
   ingress:
