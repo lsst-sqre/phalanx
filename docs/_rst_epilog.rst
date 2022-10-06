@@ -3,6 +3,7 @@
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
 .. _Data Management workflow guide: https://developer.lsst.io/work/flow.html
+.. _Deployments:
 .. _Deployment: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 .. _Docker: https://www.docker.com/
 .. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html

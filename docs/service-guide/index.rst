@@ -26,7 +26,7 @@ Service DevOps
    :titlesonly:
    :caption: Deploy & maintain
 
-   local-development
-   deploy-from-a-branch
-   sync-argo-cd
    upgrade
+   deploy-from-a-branch
+   local-development
+   sync-argo-cd
