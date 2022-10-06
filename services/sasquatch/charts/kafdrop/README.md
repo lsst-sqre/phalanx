@@ -30,7 +30,7 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | resources.limits.cpu | int | `2` |  |
 | resources.limits.memory | string | `"4Gi"` |  |
 | resources.requests.cpu | int | `1` |  |
-| resources.requests.memory | string | `"0.2Gi"` |  |
+| resources.requests.memory | string | `"200Mi"` |  |
 | schemaregistry | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | The endpoint of Schema Registry |
 | server.port | int | Defaults to 9000. | The web server port to listen on. |
 | server.servlet | object | Defaults to /. | The context path to serve requests on (must end with a /). |
