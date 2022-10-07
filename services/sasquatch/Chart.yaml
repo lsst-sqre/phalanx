@@ -12,6 +12,9 @@ dependencies:
   - name: influxdb
     version: 4.12.0
     repository: https://helm.influxdata.com/
+  - name: influxdb2
+    version: 2.1.0
+    repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
     version: 1.0.0
   - name: chronograf
