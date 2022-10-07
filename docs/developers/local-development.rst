@@ -78,7 +78,7 @@ Lastly, set the environment variables for Vault access:
 The Vault read key for minikube is accessible from the ``vault_keys_json`` item in the LSST IT/RSP-Vault 1Password Vault.
 The key itself is under the ``k8s_operator/minikube.lsst.codes`` → ``read`` → ``id`` field.
 If you do not have Vault access, ask SQuaRE for the minikube Vault read key.
-See also :doc:`/overview/secrets`.
+See also :doc:`/about/secrets`.
 
 Set up a Phalanx branch for your local minikube deployment
 ----------------------------------------------------------
@@ -137,4 +137,4 @@ The minikube Argo CD admin password can be retrieved from Vault.
   VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
-With Argo CD you can sync your service (see :doc:`/ops/sync-argo-cd`).
+With Argo CD you can sync your service (see :doc:`/admin/sync-argo-cd`).

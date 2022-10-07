@@ -76,7 +76,7 @@ starters directory
 :bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/starers>`
 
 This directory contains templates for contributing new services to Phalanx.
-See :doc:`/service-guide/add-service`.
+See :doc:`/developers/add-service`.
 
 Branches
 ========
@@ -87,10 +87,10 @@ This default branch is considered the source of truth for full synchronized phal
 .. [#1] This branch will be renamed to ``main`` in the near future.
 
 Updates to Phalanx are introduced as pull requests on GitHub.
-Repository members create branches directly on the https://github.com/lsst-sqre/phalanx origin (see the `Data Management workflow guide <https://developer.lsst.io/work/flow.html>`__, while external collaborators should fork Phalanx and provide pull requests.
+Repository members create branches directly on the https://github.com/lsst-sqre/phalanx origin (see the `Data Management workflow guide`_, while external collaborators should fork Phalanx and provide pull requests.
 
 It is possible (particularly in non-production environments) to deploy from branches of Phalanx, which is useful for debugging new and updating services before updating the ``master`` branch.
-You can learn how to do this in :doc:`/service-guide/deploy-from-a-branch`.
+You can learn how to do this in :doc:`/developers/deploy-from-a-branch`.
 
 Test and formatting infrastructure
 ==================================
@@ -114,5 +114,5 @@ Next steps
 
 Start working with Phalanx:
 
-- If you are a service developer looking to integrate your service into Phalanx, see the :doc:`Service maintainer's guide </service-guide/index>` to get started.
-- If you are an operator looking to create a new environment or operate an existing one, see the :doc:`Operator's guide </ops/index>`
+- If you are an application developer looking to integrate your service into Phalanx, see the :doc:`/developers/index` section to get started.
+- If you are an administrator looking to create a new environment or operate an existing one, see the :doc:`/admin/index` section.

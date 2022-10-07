@@ -15,7 +15,7 @@ This page provides steps for adding a service secret through 1Password.
 .. note::
 
    This document only covers creating a 1Password-backed Secret for the first time for a service.
-   If you want to update a Secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/service-guide/update-a-onepassword-secret`.
+   If you want to update a Secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
 
 Part 1. Open the 1Password vault
 ================================

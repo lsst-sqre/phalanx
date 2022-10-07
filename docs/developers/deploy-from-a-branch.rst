@@ -2,7 +2,7 @@
 Deploying from a branch for development
 #######################################
 
-When developing services and their :doc:`Helm charts </service-guide/service-chart-architecture>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
+When developing services and their :doc:`Helm charts </developers/service-chart-architecture>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
 
 Some use cases include:
 
@@ -183,4 +183,4 @@ Next steps
 
 Follow this page, you have iterated on the development of your service and ultimately upgraded that service in a development environment.
 The next step is to roll out this change to other environments.
-For details, see :doc:`/ops/sync-argo-cd`.
+This activity is normally done by the administrators for each environment, see :doc:`/admin/sync-argo-cd`.

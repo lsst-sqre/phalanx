@@ -28,7 +28,7 @@ For service developers, the main interface for defining how a service runs is th
    Deployments are made available to the network by defining a Service_.
    An Ingress_ resource publishes that Service to the internet and defines what authentication and authorization is needed.
 
-   You can `learn more about Kubernetes from its documentation <https://kubernetes.io/>`_, and also in Phalanx's :doc:`documentation on creating services </service-guide/index>`.
+   You can `learn more about Kubernetes from its documentation <https://kubernetes.io/>`_, and also in Phalanx's :doc:`documentation on creating application </developers/index>`.
 
 Environments are specific Kubernetes clusters
 ---------------------------------------------
@@ -116,5 +116,5 @@ For more introductory topics, see the :doc:`index` overview topics.
 
 Start working with Phalanx:
 
-- If you are a service developer looking to integrate your service into Phalanx, see the :doc:`Service maintainer's guide </service-guide/index>` to get started.
-- If you are an operator looking to create a new environment or operate an existing one, see the :doc:`Operator's guide </ops/index>`
+- If you are an application developer looking to integrate your service into Phalanx, see the :doc:`/developers/index` section to get started.
+- If you are an administrator looking to create a new environment or operate an existing one, see the :doc:`/admin/index` section.

@@ -1,7 +1,8 @@
-##########
-Operations
-##########
+##############
+Administrators
+##############
 
+Administrators operate infrastructure, bootstrap infrastructure, and are involved in the deployment, configuration, and Argo CD synchronization of applications.
 
 .. toctree::
    :caption: Infrastructure

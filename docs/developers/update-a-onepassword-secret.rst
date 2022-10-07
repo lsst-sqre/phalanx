@@ -16,7 +16,7 @@ This reconciliation process can also take a bit of time; the net result is that 
 So, if you want to make any changes to a ``VaultSecret``'s data, you'll need to:
 
 1. Make the changes in 1Password
-2. Run the `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__ script, as described in :doc:`/service-guide/add-a-onepassword-secret`.
+2. Run the `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__ script, as described in :doc:`add-a-onepassword-secret`.
 3. Wait a few minutes for automatic reconciliation
 
 
