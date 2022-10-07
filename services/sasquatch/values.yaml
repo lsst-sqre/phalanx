@@ -180,6 +180,14 @@ kapacitor:
       memory: 16Gi
       cpu: 4
 
+bucketmapper:
+  # -- image for monitoring-related cronjobs
+  image:
+    # -- repository for rubin-influx-tools
+    repository: ghcr.io/lsst-sqre/rubin-influx-tools
+    # -- tag for rubin-influx-tools
+    tag: 0.1.22
+
 global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
