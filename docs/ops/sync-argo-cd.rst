@@ -14,7 +14,7 @@ Log into Argo CD for the environment
 ====================================
 
 To access the Argo CD UI, go to the ``/argo-cd`` URL under the domain name of that deployment of the Rubin Science Platform.
-See :doc:`/ops/environments/index` for a list of Phalanx environments and direct links to their Argo CD pages.
+See :doc:`/environments/index` for a list of Phalanx environments and direct links to their Argo CD pages.
 
 Depending on the environment, you will need to authenticate with either GitHub, Google OAuth, CILogon, or another OAuth provider as relevant.
 You can use the ``admin`` account and password, stored in 1Password for deployments managed by SQuaRE, in case of an emergency.

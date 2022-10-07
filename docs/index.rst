@@ -13,42 +13,12 @@ Phalanx is on GitHub at https://github.com/lsst-sqre/phalanx.
 .. [#name] A phalanx is a SQuaRE deployment (Science Quality and Reliability Engineering, the team responsible for the Rubin Science Platform).
    Phalanx is how we ensure that all of our services work together as a unit.
 
-Overview
-========
-
-Learn about Phalanx's architecture and technologies.
-
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
 
    overview/index
-
-For service developers and maintainers
-======================================
-
-Learn how to build services — including websites, web APIs, and other cloud-based infrastructure — and integrate them into Phalanx.
-
-.. toctree::
-   :maxdepth: 2
-
    service-guide/index
-
-For platform administrators
-===========================
-
-Learn how to bootstrap and operate a Rubin Science Platform Kubernetes cluster.
-
-.. toctree::
-   :maxdepth: 2
-
    ops/index
-
-Services
-========
-
-Learn about the individual services deployed through Phalanx.
-
-.. toctree::
-   :maxdepth: 2
-
    services/index
+   environments/index

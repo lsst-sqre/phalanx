@@ -2,12 +2,6 @@
 Operations
 ##########
 
-.. toctree::
-   :caption: Environments
-   :maxdepth: 2
-   :titlesonly:
-
-   environments/index
 
 .. toctree::
    :caption: Infrastructure
