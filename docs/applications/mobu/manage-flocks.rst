@@ -3,7 +3,7 @@ Managing mobu flocks
 ####################
 
 mobu is our monitoring system for the Science Platform.
-It exercises JupyterHub and labs, and tests other services within the Science Platform by running notebooks on those labs.
+It exercises JupyterHub and JupyterLab, and tests other applications within the Science Platform by running notebooks on those JupyterLab Pods.
 
 mobu calls each test runner a "monkey" and organizes them into groups called "flocks."
 You can get a list of flocks from the mobu API.

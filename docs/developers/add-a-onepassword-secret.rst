@@ -2,10 +2,10 @@
 Add a secret with 1Password and VaultSecret
 ###########################################
 
-Static secrets for services are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes ``Secret`` resources via :ref:`vault-secrets-operator`.
+Static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes Secret_ resources via :ref:`vault-secrets-operator`.
 Such secrets are things for external cloud services where we don't automatically provision accounts and password.
 When we manually create such a secret, we store it in 1Password.
-This page provides steps for adding a service secret through 1Password.
+This page provides steps for adding an application secret through 1Password.
 
 .. note::
 
@@ -14,7 +14,7 @@ This page provides steps for adding a service secret through 1Password.
 
 .. note::
 
-   This document only covers creating a 1Password-backed Secret for the first time for a service.
+   This document only covers creating a 1Password-backed Secret for the first time for an application.
    If you want to update a Secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
 
 Part 1. Open the 1Password vault
@@ -33,7 +33,7 @@ Each item in a Kubernetes ``Secret`` corresponds to either the contents of a sec
 
   .. code-block:: text
 
-     {{service}} {{env}} {{description}}
+     {{application}} {{env}} {{description}}
 
   This format is a convention and isn't tied into the automation.
   The ``env`` can be omitted if the secret applies to all environments.
@@ -47,7 +47,7 @@ Each item in a Kubernetes ``Secret`` corresponds to either the contents of a sec
 
   .. code-block:: text
 
-     {{service}} {{secret name}}
+     {{application}} {{secret name}}
 
   This field provides part of a Vault path for the secret value, which in turn is used by :ref:`vault-secrets-operator` resources to create Kubernetes secrets.
 
@@ -60,7 +60,7 @@ Each item in a Kubernetes ``Secret`` corresponds to either the contents of a sec
 Part 3. Sync 1Password items into Vault
 =======================================
 
-Once a service's secrets are stored in 1Password, you need to sync them into Vault.
+Once an application's secrets are stored in 1Password, you need to sync them into Vault.
 
 Open Phalanx's ``installer/`` directory:
 
@@ -95,10 +95,10 @@ To sync multiple environments at once:
 Next steps: connecting Vault to Kubernetes with VaultSecret
 ===========================================================
 
-Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your services deployment (typically in its Helm_ chart).
-See :doc:`create-service` for more details about creating a Helm chart for a service.
+Once a secret is in Vault, you need to create or update a ``VaultSecret`` resource in your application's deployment (typically in its Helm_ chart).
+See :doc:`create-an-application` for more details about creating a Helm chart for an application.
 
-A conventional ``VaultSecret`` Helm template looks like this (update ``myapp`` with your service's name):
+A conventional ``VaultSecret`` Helm template looks like this (update ``myapp`` with your application's name):
 
 .. code-block:: yaml
 
@@ -117,12 +117,12 @@ This Vault path is formatted as:
 
 .. code-block:: text
 
-   secret/k8s_operator/{{host}}/{{service}}
+   secret/k8s_operator/{{host}}/{{application}}
 
 The path components correspond to metadata in 1Password items:
 
 - ``{{host}}`` corresponds to the value of the ``environment`` metadata field
-- ``{{service}}`` corresponds to the first part of the ``generate_secrets_key`` metadata field
+- ``{{application}}`` corresponds to the first part of the ``generate_secrets_key`` metadata field
 
 Within Kubernetes, vault-secrets-operator acts on the ``VaultSecret`` to create a ``Secret`` resource.
 The ``Secret`` has the same name and namespace as the ``VaultSecret`` that you explicitly template in your Helm chart.

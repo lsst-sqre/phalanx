@@ -2,12 +2,12 @@
 Syncing Argo CD in an environment
 #################################
 
-Phalanx enables environment operators to roll out new and updates services by synchronizing deployed in Kubernetes with the current HEAD of the `phalanx repository`_ using `Argo CD`_.
-This page explains the key steps in this process for environment operators.
+Phalanx enables environment administrators to roll out new and updated applications by synchronizing deployemnts in Kubernetes to the current HEAD of the `phalanx repository`_ using `Argo CD`_.
+This page explains the key steps in this process for environment administrators.
 
 .. important::
 
-   Keep in mind that environments have specific upgrade windows and that application updates should be rolled out to environments in order, to development and integration environments before production environments.
+   Keep in mind that environments have specific upgrade windows and that application updates should be rolled out to environments in sequence to development and integration environments before production environments.
    See :doc:`upgrade-windows` for details.
 
 Log into Argo CD for the environment

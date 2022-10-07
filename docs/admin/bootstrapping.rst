@@ -1,8 +1,8 @@
-##############################
-Bootstrapping a new deployment
-##############################
+###############################
+Bootstrapping a new environment
+###############################
 
-This is (somewhat incomplete) documentation on how to add a new Rubin Science Platform environment.
+This is (somewhat incomplete) documentation on how to create a new Rubin Science Platform environment.
 
 Requirements
 ============
@@ -27,7 +27,8 @@ Checklist
 
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
-   Edit it so that ``environment``, ``fqdn``, and ``vault_path_prefix`` at the top match your new environment.  Choose which services to enable or leave disabled.
+   Edit it so that ``environment``, ``fqdn``, and ``vault_path_prefix`` at the top match your new environment.
+   Choose which applications to enable or leave disabled.
 
 #. Decide on your approach to TLS certificates.
    See :ref:`hostnames` for more details.
@@ -39,17 +40,17 @@ Checklist
    The first time you set up the RSP for a given domain (note: *not* hostname, but *domain*, so if you were setting up ``dev.my-rsp.net`` and ``prod.my-rsp.net``, ``dev`` first, you would only need to do this when you created ``dev``), if you are using Let's Encrypt for certificate management (which we highly recommend), you will need to create glue records to enable Let's Encrypt to manage TLS for the domain.
    See :doc:`/applications/cert-manager/route53-setup` for more details.
 
-#. For each enabled service, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
-   Customization will vary from service to service.
+#. For each enabled application, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
+   Customization will vary from application to application.
 
-   See :ref:`service-notes` for more details on special considerations for individual services.
+   See :ref:`application-notes` for more details on special considerations for individual applications.
 
 #. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__.
    This is where you will need the write key for the Vault enclave.
 
 #. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
 
-   If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
+   If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller Service_ comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
    For installations that are intended to be long-lived, it is worth capturing the IP address at this point and modifying your configuration to use it statically should you ever need to reinstall the instance.
 
 .. _hostnames:
@@ -58,7 +59,7 @@ Hostnames and TLS
 =================
 
 The Science Platform is designed to run under a single hostname.
-All ingresses for all services use different routes on the same external hostname.
+Ingresses for all applications use different routes on the same external hostname.
 That hostname, in turn, is served by an NGINX proxy web server, configured via the ``ingress-nginx`` Helm chart (normally installed with the Science Platform).
 An NGINX ingress controller is required since its ``auth_request`` mechanism is used for authentication.
 
@@ -66,7 +67,7 @@ The external hostname must have a valid TLS certificate that is trusted by the s
 There are supported two mechanisms to configure that TLS certificate:
 
 #. Purchase a commercial certificate and configure it as the ingress-nginx default certificate.
-   Do not add TLS configuration to any of the service ingresses.
+   Do not add TLS configuration to any of the application ingresses.
    For more information, see :doc:`/applications/ingress-nginx/certificates`.
    With this approach, the certificate will have to be manually renewed and replaced once per year.
 
@@ -84,10 +85,10 @@ To use the second approach, you must have the following:
 
 If neither of those requirements sound familiar, you almost certainly want to use the first option and purchase a commercial certificate.
 
-.. _service-notes:
+.. _application-notes:
 
-Service notes
-=============
+Application bootstrapping notes
+===============================
 
 Gafaelfawr
 ----------
@@ -118,7 +119,7 @@ If you run into authentication problems, see :doc:`the Gafaelfawr operational do
 Nublado 2
 ---------
 
-Nublado (the ``nublado2`` service) and moneypenny need to know where the NFS server that provides user home space is.
+Nublado (the ``nublado2`` application) and moneypenny need to know where the NFS server that provides user home space is.
 Nublado also requires other persistent storage space.
 Ensure the correct definitions are in place in their configuration.
 
@@ -159,16 +160,16 @@ Squareone
 
 If you are using the Let's Encrypt approach to obtain TLS certificates, you must give the Squareone ingress with an appropriate TLS configuration.
 
-Because all service ingresses share the same external hostname, the way the ingress configuration is structured is somewhat unusual.
-Nearly all of the services create an ingress without adding TLS configuration.
+Because all application ingresses share the same external hostname, the way the ingress configuration is structured is somewhat unusual.
+Nearly all application create an ingress without adding TLS configuration.
 Instead, they all use the same hostname, without a TLS stanza.
 The Squareone ingress is the one designated ingress with a TLS configuration to request creation of certificates.
 Because each ingress uses the same hostname, the NGINX ingress will merge all of those ingresses into one virtual host and will set up TLS if TLS is defined on any of them.
 
 Were TLS defined on more than one ingress, only one of those TLS configurations would be used, but which one is chosen is somewhat random.
-Therefore, we designate a single service to hold the configuration to avoid any confusion from unused configurations.
+Therefore, we designate a single application to hold the configuration to avoid any confusion from unused configurations.
 
-This means adding something like the following to ``values-<environment>.yaml`` in `/applications/squareone <https://github.com/lsst-sqre/phalanx/tree/master/services/squareone>`__:
+This means adding something like the following to ``values-<environment>.yaml`` in `/services/squareone <https://github.com/lsst-sqre/phalanx/tree/master/services/squareone>`__:
 
 .. code-block:: yaml
 

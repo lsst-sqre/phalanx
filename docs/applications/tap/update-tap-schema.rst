@@ -11,4 +11,4 @@ This table is kept in sync with the felis files using the following process:
    This will create a tag and run a publishing pipeline GitHub Action.
    That publishing pipeline will run the Python felis library against the YAML files in the ``yml`` directory and make different Docker images for the different supported environments.
    It will then push the images to DockerHub.
-#. Update the ``appVersion`` version to the version of the new release in the `tap-schema Phalanx service <https://github.com/lsst-sqre/phalanx/blob/master/services/tap-schema/Chart.yaml>`__.
+#. Update the ``appVersion`` version to the version of the new release in the `tap-schema Phalanx application <https://github.com/lsst-sqre/phalanx/blob/master/services/tap-schema/Chart.yaml>`__.

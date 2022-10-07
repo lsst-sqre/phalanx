@@ -2,7 +2,7 @@
 Debugging authentication issues
 ###############################
 
-If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access a service such as the Notebook or Portal Aspects, a good initial debugging step is to determine what scopes the user was granted on the basis of their group membership.
+If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access an application such as the Notebook or Portal, a good initial debugging step is to determine what scopes the user was granted on the basis of their group membership.
 
 Have the user go to ``/auth/analyze``, which will provide a JSON dump of their authentication information.
 The important information is in the ``token.data`` portion of the JSON document.

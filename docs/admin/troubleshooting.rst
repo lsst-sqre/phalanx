@@ -2,14 +2,14 @@
 Troubleshooting the Rubin Science Platform
 ##########################################
 
-Intended audience: Anyone who is administering an installation of the Rubin Science Platform.
+Intended audience: Anyone who is administering a Rubin Science Platform environment.
 
 Sometimes things break, and we are assembling the most common failure scenarios, and their fixes, in this document.
 
 PostgreSQL cannot mount its persistent volume
 =============================================
 
-**Symptoms:** When restarted, the ``postgres`` service pod fails to start because it cannot mount its persistent volume.
+**Symptoms:** When restarted, the ``postgres`` application pod fails to start because it cannot mount its persistent volume.
 If the pod is already running, it gets I/O errors from its database, hangs, or otherwise shows signs of storage problems.
 
 **Cause:** The ``postgres`` deployment requests a ``PersistentVolume`` via a ``PersistentVolumeClaim``.
@@ -23,7 +23,7 @@ Spawner menu missing images, cachemachine stuck pulling the same image
 
 **Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
 Instead, the menu is either empty or missing the right number of images of different classes.
-The cachemachine service is continuously creating a ``DaemonSet`` for the same image without apparent forward progress.
+The cachemachine application is continuously creating a ``DaemonSet`` for the same image without apparent forward progress.
 Querying the cachemachine ``/available`` API shows either nothing in ``images`` or not everything that was expected.
 
 **Cause:** Cachemachine is responsible for generating the menu used for spawning new JupyterLab instances.
@@ -62,18 +62,18 @@ You may need to delete the record for the affected user, and also make sure the 
 
 **Solution:** :doc:`/applications/nublado2/database`
 
-User gets permission denied from services
-=========================================
+User gets permission denied from applications
+=============================================
 
-**Symptoms:** A user is able to authenticate to the Rubin Science Platform (prompted by going to the first authenticated URL, such as the Notebook Aspect spawner page), but then gets permission denied from other services.
+**Symptoms:** A user is able to authenticate to the Rubin Science Platform (prompted by going to the first authenticated URL, such as the Notebook Aspect spawner page), but then gets permission denied from other application.
 
-**Causes:** Authentication and authorization to the Rubin Science Platform is done via a service called Gafaelfawr (see :doc:`/applications/gafaelfawr/index`).
+**Causes:** Authentication and authorization to the Rubin Science Platform is done via a application called Gafaelfawr (see :doc:`/applications/gafaelfawr/index`).
 After the user authenticates, Gafaelfawr asks their authentication provider for the user's group memberships and then translates that to a list of scopes.
 The mapping of group memberships to scopes is defined in the ``values.yaml`` file for Gafaelfawr for the relevant environment, in the ``gafaelfawr.config.groupMapping`` configuration option.
 
-The most likely cause of this problem is that the user is not a member of a group that grants them access to that service.
-Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to a service.
-If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other services.
+The most likely cause of this problem is that the user is not a member of a group that grants them access to that application.
+Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to an application.
+If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other application.
 
 **Solution:** :doc:`/applications/gafaelfawr/debugging`
 
@@ -104,7 +104,7 @@ Login fails with "bad verification code" error
 
 **Cause:** GitHub login failed after the OAuth 2.0 interaction with GitHub was successfully completed, and then the user reloaded the failed login page (or reloaded the page while Gafaelfawr was attempting to complete the authentication).
 Usually this happens because Gafaelfawr was unable to write to its storage, either Redis or PostgreSQL.
-If the storage underlying the deployment is broken, this can happen without producing obvious error messages, since the services can go into disk wait and just time out.
+If the storage underlying the deployment is broken, this can happen without producing obvious error messages, since the applications can go into disk wait and just time out.
 Restarting the in-cluster ``postgresql`` pod, if PostgreSQL is running inside the Kubernetes deployment, will generally make this problem obvious because PostgreSQL will be unable to start.
 
 **Solution:** Check the underlying storage for Redis and Gafaelfawr.

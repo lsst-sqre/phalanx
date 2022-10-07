@@ -16,8 +16,8 @@ vault-secrets-operator
 
 .. rubric:: Overview
 
-The ``vault-secrets-operator`` service is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other services.
-It processes ``VaultSecret`` resources defined in the `Science Platform repository <https://github.com/lsst-sqre/phalanx>`__ and creates corresponding Kubernetes ``Secret`` resources.
+The ``vault-secrets-operator`` application is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other applications.
+It processes ``VaultSecret`` resources defined in the `phalanx repository`_ and creates corresponding Kubernetes Secret_ resources.
 
 See :dmtn:`112` for the LSST Vault design.
 
@@ -30,9 +30,9 @@ After upgrading, check that Vault Secrets Operator is still working properly by 
 It should be nearly immediately re-created from the ``VaultSecret`` resource by Vault Secrets Operator.
 The Gafaelfawr secret is a good one to use for this purpose since it is only read during Gafaelfawr start-up.
 
-.. rubric:: Bootstrapping the service
+.. rubric:: Bootstrapping
 
-Vault Secrets Operator is the only component of the Science Platform whose secret has to be manually created, so that it can create the secrets for all other services.
+Vault Secrets Operator is the only component of the Science Platform whose secret has to be manually created, so that it can create the secrets for all other applications.
 This will be done automatically by the `install script <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
 
 Its secret will look like this:

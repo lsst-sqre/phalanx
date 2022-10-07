@@ -16,17 +16,15 @@ to reauthenticate.
 Assuming that the internal Postgres is indeed the right choice for your
 needs, there are several steps.
 
-=========================
 Decide on a database name
 =========================
 
 In general the database will require three things: a database name, a
 username, and a password.  Usually the database name and user should be
-identical and should reflect the service that will consume the database,
+identical and should reflect the application that will consume the database,
 e.g. ``gafaelfawr`` or ``exposurelog``.  We will use ``exposurelog`` as
 the model for the remainder of this document.
 
-==================================
 Add the database to the deployment
 ==================================
 
@@ -34,21 +32,20 @@ Go to the ``services/postgres/templates`` directory from the Phalanx
 root, and edit ``deployment.yaml`` to add the new database/password
 entry.  You should copy an existing entry, and it should look like this:
 
-   .. code-block:: yaml
+.. code-block:: yaml
 
-      {{- with .Values.exposurelog_db }}
-      - name: VRO_DB_EXPOSURELOG_USER
-        value: {{ .user }}
-      - name: VRO_DB_EXPOSURELOG_DB
-        value: {{ .db }}
-      - name: VRO_DB_EXPOSURELOG_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: postgres
-            key: exposurelog_password
-      {{- end }}
+   {{- with .Values.exposurelog_db }}
+   - name: VRO_DB_EXPOSURELOG_USER
+     value: {{ .user }}
+   - name: VRO_DB_EXPOSURELOG_DB
+     value: {{ .db }}
+   - name: VRO_DB_EXPOSURELOG_PASSWORD
+     valueFrom:
+       secretKeyRef:
+         name: postgres
+         key: exposurelog_password
+   {{- end }}
 
-=====================================
 Add the database to Phalanx installer
 =====================================
 
@@ -60,27 +57,28 @@ the ``_postgres()`` method.
 Typically we use passwords that are ASCII representations of random
 32-byte hexadecimal sequences.  The passwords for all the non-root
 Postgres users already look like that, so copying an existing line
-and changing the name to reflect your service is usually correct:
+and changing the name to reflect your application is usually correct:
 
-   .. code-block:: python
+.. code-block:: python
+   :caption: /installer/generate_secrets.py
 
-      self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
+   self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
 
 Finally, go edit the postgres ``values-<env>.yaml`` files and add
 a section for your new database with appropriate ``user`` and ``db``
 entries:
 
-   .. code-block:: yaml
+.. code-block:: yaml
+   :caption: /services/postgres/values-<environment>.yaml
 
-      exposurelog_db:
-        user: 'exposurelog'
-        db: 'exposurelog'
+   exposurelog_db:
+     user: 'exposurelog'
+     db: 'exposurelog'
 
 Now start the PR and review process.  However, there is a step you still
-must do before you can synchronize the updated services: put the
+must do before you can synchronize the updated application: put the
 password into Vault so it appears in the postgres secrets.
 
-================================
 Manually add the secret to Vault
 ================================
 
@@ -102,7 +100,6 @@ just your new password.
   force Vault Secrets Operator to recreate it.
 * Repeat for each environment where you need the new database.
 
-=======================
 Restart with new values
 =======================
 
@@ -121,4 +118,4 @@ that happens, you need to identify the ReplicaSet responsible for the
 stuck Pod, and delete that ReplicaSet.
 
 Once Postgres restarts, the new database will be present, with the user
-and password set.  At that point it is ready for use by your new service.
+and password set.  At that point it is ready for use by your new application.

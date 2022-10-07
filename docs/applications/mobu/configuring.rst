@@ -42,7 +42,7 @@ Important points to note here:
 
 * If the monkey user will need additional scopes, they must be specified.
   Here, the required scope is ``exec:notebook``, which allows spawning Notebooks.
-  More scopes would be needed if the monkey were running notebooks that interacted with other services.
+  More scopes would be needed if the monkey were running notebooks that interacted with other applications.
 
 * The ``business`` key specifies the type of test to perform.
   Here, ``JupyterPythonLoop`` just runs a small bit of Python through the Jupyter lab API after spawning a lab pod.
@@ -117,7 +117,7 @@ The usernames will be formed by adding consecutive digits to the end of the ``us
 Testing TAP
 ===========
 
-Here is an example of testing a TAP service:
+Here is an example of testing the TAP application:
 
 .. code-block:: yaml
 

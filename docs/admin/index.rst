@@ -5,14 +5,9 @@ Administrators
 Administrators operate infrastructure, bootstrap infrastructure, and are involved in the deployment, configuration, and Argo CD synchronization of applications.
 
 .. toctree::
-   :caption: Infrastructure
-   :maxdepth: 2
-
-   infrastructure/filestore/index
-
-.. toctree::
    :caption: Bootstrapping
    :maxdepth: 1
+   :name: bootstrapping-toc
 
    bootstrapping
 
@@ -28,3 +23,9 @@ Administrators operate infrastructure, bootstrap infrastructure, and are involve
    :caption: Troubleshooting
 
    troubleshooting
+
+.. toctree::
+   :caption: Infrastructure
+   :maxdepth: 2
+
+   infrastructure/filestore/index

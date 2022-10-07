@@ -3,7 +3,7 @@ Updating the Docker pull secret stored in 1Password and Vault
 #############################################################
 
 The pull secret, present in each RSP instance, and shared by many
-services there, is notoriously tricky to format correctly.
+applications there, is notoriously tricky to format correctly.
 
 The recommended way to update it is to edit the pull secret in 1Password
 and then deploy it with the `installer/update-secrets.sh` script;

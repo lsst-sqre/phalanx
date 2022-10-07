@@ -7,6 +7,7 @@
 .. _Deployment: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 .. _Docker: https://www.docker.com/
 .. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html
+.. _FastAPI: https://fastapi.tiangolo.com/
 .. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
@@ -20,8 +21,10 @@
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
 .. _Roundtable: https://roundtable.lsst.io/
+.. _Safir: https://safir.lsst.io/
 .. _Secret: https://kubernetes.io/docs/concepts/configuration/secret/
 .. _semantic versioning: https://semver.org/
+.. _Services:
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _pre-commit: https://pre-commit.com

@@ -2,18 +2,18 @@
 Set up a local development environment with minikube
 ####################################################
 
-Using `minikube <https://minikube.sigs.k8s.io/docs/>`__ you can quickly set up a local Kubernetes cluster to help you adding a service to Phalanx (see :doc:`add-service`).
+Using `minikube <https://minikube.sigs.k8s.io/docs/>`__ you can quickly set up a local Kubernetes cluster to help you develop and test an application for Phalanx (see :doc:`add-application`).
 This page shows you how to run a Minikube cluster on macOS (amd64 or arm64) using the `docker driver <https://minikube.sigs.k8s.io/docs/drivers/docker/>`__.
 
 You may be able to deploy the entire Science Platform, provided that you have enough cpu and memory on your local machine.
-If not, you can enable only the essential services to develop with minikube.
+If not, you can enable only the essential applications to develop with minikube.
 
 .. warning::
 
    This procedure may not create a fully-operational auth system since the ingress is different from the production system.
    As well, this procedure does not create a TLS certificate.
 
-   Instead, the recommended pattern for developing a service in a Kubernetes cluster is to use a development environment.
+   Instead, the recommended pattern for developing an application in a Kubernetes cluster is to use a development environment.
    See :doc:`deploy-from-a-branch` for details.
 
 Start minikube
@@ -85,29 +85,28 @@ Set up a Phalanx branch for your local minikube deployment
 
 The ``install.sh`` uses the locally checked out branch of your Phalanx repository clone.
 
-To conserve resources, you may want to deploy a subset of Phalanx services in your local minikube cluster.
+To conserve resources, you may want to deploy a subset of Phalanx applications in your local minikube cluster.
 You can do this by editing the `/science-platform/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`_ file.
-Set any service you do not want to deploy to ``enabled: false``.
+Set any application you do not want to deploy to ``enabled: false``.
 
 Commit any changes with Git into a development branch of the Phalanx repository.
 **You must also push this development branch to the GitHub origin,** ``https://github.com/lsst-sqre/phalanx.git``.
 The ``install.sh`` script uses your locally-checked out branch of Phalanx, but also requires that the branch be accessible from GitHub.
 
-**Services that must be disabled for local Minikube:**
+**Application that must be disabled for local Minikube:**
 
 - ``ingress-nginx`` (conflicts with the minikube addon of Nginx Ingress Controller)
 
-**Minimal set of services that should be enabled:**
+**Minimal set of applications that should be enabled:**
 
 - ``vault_secrets_operator`` (for Vault secrets)
 - ``gafaelfawr`` (for authentication)
-- ``postgreql`` (for gafaelfawr)
+- ``postgresql`` (for gafaelfawr)
 
 Run the installer
 ------------------
 
 Finally, run the installer for the minikube environment.
-
 
 .. code-block:: sh
 
@@ -123,7 +122,7 @@ Add the following line to ``/etc/hosts``.
 
   127.0.0.1 minikube.lsst.codes
 
-On a new terminal, use ``minikube tunnel`` to route traffic from the host to the services in minikube.
+On a new terminal, use ``minikube tunnel`` to route traffic from the host to the application in minikube.
 
 .. code-block:: sh
 
@@ -137,4 +136,4 @@ The minikube Argo CD admin password can be retrieved from Vault.
   VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
-With Argo CD you can sync your service (see :doc:`/admin/sync-argo-cd`).
+With Argo CD you can sync your application (see :doc:`/admin/sync-argo-cd`).

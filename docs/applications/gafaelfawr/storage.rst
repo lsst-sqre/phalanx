@@ -41,7 +41,7 @@ Do this by putting:
 in the ``values-*.yaml`` file for that environment under the ``gafaelfawr`` key.
 
 In this configuration, you may want to start Gafaelfawr so that the persistent volume claim and corresponding persistent volume has been created, locate that persistent volume, and then change its reclaim policy from the default (usually ``Delete``) to ``Retain``.
-This provides some additional protection against wiping the storage in accidents or service redeployments that cause the ``StatefulSet`` and its ``PersistentVolumeClaim`` to be deleted.
+This provides some additional protection against wiping the storage in accidents or application redeployments that cause the ``StatefulSet`` and its ``PersistentVolumeClaim`` to be deleted.
 
 Existing ``PersistentVolumeClaim``
 ==================================
