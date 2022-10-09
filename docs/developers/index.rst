@@ -3,10 +3,10 @@ Developers
 ##########
 
 Developers can deploy their applications on Rubin's Kubernetes environments, such as the Rubin Science Platform, by integrating into Phalanx.
-In this section of the Phalanx documentation you can learn how to build and integrate your application with Phalanx, and how to test your applications deployment in development Phalanx environments.
+In this section of the Phalanx documentation you can learn how to build and integrate your application, and how to test your application's deployment in development Phalanx environments.
 
 For background on Phalanx and how to contribute to the Phalanx repository itself, see the :doc:`/about/index` section.
-Individual applications are documented in :doc:`/applications/index` section.
+Individual applications are documented in the :doc:`/applications/index` section.
 
 .. toctree::
    :maxdepth: 2
