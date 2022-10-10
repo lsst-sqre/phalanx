@@ -28,12 +28,12 @@ env:
         name: sasquatch
         # -- Telegraf KafkaUser password.
         key: telegraf-password
-  - name: INFLUXDB_ADMIN_PASSWORD
+  - name: INFLUXDB_TOKEN
     valueFrom:
       secretKeyRef:
         name: sasquatch
-        # -- InfluxDB admin password.
-        key: influxdb-password
+        # -- InfluxDB admin token.
+        key: admin-token
 
 # -- Name of the secret with values to be added to the environment.
 envFromSecret: ""
@@ -51,9 +51,9 @@ kafkaConsumers:
     topicRegexps: |
       [ ".*Test" ]
 
-influxdb:
-  # -- Name of the InfluxDB database to write to.
-  database: "telegraf-kafka-consumer"
+influxdb2:
+  # -- Name of the InfluxDB v2 bucket to write to.
+  bucket: "telegraf-kafka-consumer"
 
 # -- Kubernetes resources requests and limits.
 resources: {}

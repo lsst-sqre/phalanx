@@ -23,13 +23,13 @@ data:
       quiet = false
       round_interval = true
 
-    [[outputs.influxdb]]
-      database = {{ $.Values.influxdb.database | quote }}
-      password = "$INFLUXDB_ADMIN_PASSWORD"
+    [[outputs.influxdb_v2]]
+      bucket = {{ $.Values.influxdb2.bucket | quote }}
+      token = "$INFLUXDB_TOKEN"
+      organization = "default"
       urls = [
-        "http://sasquatch-influxdb.sasquatch:8086"
+        "http://sasquatch-influxdb2.sasquatch:80"
       ]
-      username = "admin"
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
