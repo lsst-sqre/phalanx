@@ -6,7 +6,6 @@ strimzi-kafka:
       bootstrap:
         loadBalancerIP: "34.173.210.129"
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
-
       brokers:
         - loadBalancerIP: "34.173.20.18"
           host: sasquatch-dev-kafka-0.lsst.cloud
@@ -16,6 +15,11 @@ strimzi-kafka:
           host: sasquatch-dev-kafka-2.lsst.cloud
 
 influxdb:
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
+
+influxdb2:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
@@ -33,7 +37,6 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ ".*ATMCS" ]
 
-
 kafdrop:
   ingress:
     enabled: true
@@ -43,7 +46,6 @@ chronograf:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
-
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://data-dev.lsst.cloud/auth/openid/login

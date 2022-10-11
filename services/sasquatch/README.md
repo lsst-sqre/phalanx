@@ -12,6 +12,7 @@ Rubin Observatory's telemetry service.
 |  | telegraf-kafka-consumer | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
+| https://helm.influxdata.com/ | influxdb2 | 2.1.0 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.1.0 |
 
@@ -19,6 +20,9 @@ Rubin Observatory's telemetry service.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.1.22"}` | image for monitoring-related cronjobs |
+| bucketmapper.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
+| bucketmapper.image.tag | string | `"0.1.22"` | tag for rubin-influx-tools |
 | chronograf.env | object | `{"BASE_PATH":"/chronograf","CUSTOM_AUTO_REFRESH":"1s=1000","HOST_PAGE_DISABLED":true}` | Chronograf environment variables. |
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.9.4"}` | Chronograf image tag. |
@@ -40,6 +44,30 @@ Rubin Observatory's telemetry service.
 | influxdb.resources.requests.cpu | int | `1` |  |
 | influxdb.resources.requests.memory | string | `"1Gi"` |  |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
+| influxdb2.adminUser.bucket | string | `"default"` | Admin default bucket. |
+| influxdb2.adminUser.existingSecret | string | `"sasquatch"` | Get admin-password/admin-token keys from secret. |
+| influxdb2.adminUser.organization | string | `"default"` | Admin default organization. |
+| influxdb2.env[0].name | string | `"INFLUXD_STORAGE_WAL_FSYNC_DELAY"` |  |
+| influxdb2.env[0].value | string | `"100ms"` |  |
+| influxdb2.env[1].name | string | `"INFLUXD_HTTP_IDLE_TIMEOUT"` |  |
+| influxdb2.env[1].value | string | `"0"` |  |
+| influxdb2.env[2].name | string | `"INFLUXD_FLUX_LOG_ENABLED"` |  |
+| influxdb2.env[2].value | string | `"true"` |  |
+| influxdb2.env[3].name | string | `"INFLUXD_LOG_LEVEL"` |  |
+| influxdb2.env[3].value | string | `"debug"` |  |
+| influxdb2.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/api/v2/$2"` |  |
+| influxdb2.ingress.className | string | `"nginx"` |  |
+| influxdb2.ingress.enabled | bool | `false` | InfluxDB2 ingress configuration |
+| influxdb2.ingress.hostname | string | `""` |  |
+| influxdb2.ingress.path | string | `"/influxdb2(/|$)(.*)"` |  |
+| influxdb2.initScripts.enabled | bool | `true` | InfluxDB2 initialization scripts |
+| influxdb2.initScripts.scripts."init.sh" | string | `"#!/bin/bash\ninflux bucket create --name telegra-kafka-consumer --org default\n"` |  |
+| influxdb2.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
+| influxdb2.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments. |
+| influxdb2.resources.limits.cpu | int | `8` |  |
+| influxdb2.resources.limits.memory | string | `"96Gi"` |  |
+| influxdb2.resources.requests.cpu | int | `1` |  |
+| influxdb2.resources.requests.memory | string | `"1Gi"` |  |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
