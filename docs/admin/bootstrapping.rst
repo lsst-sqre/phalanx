@@ -110,7 +110,7 @@ If you are using GitHub, group membership will be synthesized from all of the te
 These must be team memberships, not just organization memberships.
 The corresponding group for Gafaelfawr purposes will be ``<organization>-<team>`` where ``<team>`` is the team **slug**, not the team name.
 That means the team name will be converted to lowercase and spaces will be replaced with dashes, and other transformations will be done for special characters.
-For more information about how Gafaelfawr constructs groups from GitHub teams, see `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/arch/providers.html#github-groups>`__.
+For more information about how Gafaelfawr constructs groups from GitHub teams, see `the Gafaelfawr documentation <https://gafaelfawr.lsst.io/dev/providers.html#github-groups>`__.
 
 For an example of a ``group_mapping`` configuration for GitHub authentication, see `/applications/gafaelfawr/values-idfdev.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/gafaelfawr/values-idfdev.yaml>`__.
 

@@ -38,7 +38,7 @@ You will need to make at least the following changes to the default Helm chart t
          nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin"
 
   For user-facing applications you will want a scope other than ``exec:admin``.
-  See `the Gafaelfawr's documentation on protecting an application <https://gafaelfawr.lsst.io/applications.html#protecting-a-service>`__ for more information.
+  See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/ingress.html>`__ for more information.
 
 - If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/master/services/telegraf/values.yaml#L36>`__.
 
