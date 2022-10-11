@@ -55,7 +55,7 @@ Rubin Observatory's telemetry service.
 | influxdb2.env[2].value | string | `"true"` |  |
 | influxdb2.env[3].name | string | `"INFLUXD_LOG_LEVEL"` |  |
 | influxdb2.env[3].value | string | `"debug"` |  |
-| influxdb2.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| influxdb2.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/api/v2/$2"` |  |
 | influxdb2.ingress.className | string | `"nginx"` |  |
 | influxdb2.ingress.enabled | bool | `false` | InfluxDB2 ingress configuration |
 | influxdb2.ingress.hostname | string | `""` |  |

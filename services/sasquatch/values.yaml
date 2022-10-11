@@ -90,7 +90,7 @@ influxdb2:
     enabled: false
     hostname: ""
     annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /$2
+      nginx.ingress.kubernetes.io/rewrite-target: /api/v2/$2
     className: "nginx"
     path: /influxdb2(/|$)(.*)
   env:
