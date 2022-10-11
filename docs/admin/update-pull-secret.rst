@@ -6,7 +6,7 @@ The pull secret, present in each RSP instance, and shared by many
 applications there, is notoriously tricky to format correctly.
 
 The recommended way to update it is to edit the pull secret in 1Password
-and then deploy it with the `installer/update-secrets.sh` script;
+and then deploy it with the ``installer/update-secrets.sh`` script;
 however, this only works (at the time of writing, 20 May 2022) on Linux
 systems with the 1Password 1.x CLI installed.
 
