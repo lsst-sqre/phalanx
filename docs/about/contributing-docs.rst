@@ -22,62 +22,27 @@ Set up pre-commit
 Phalanx uses Pre-commit_ to lint files and, in some cases, automatically reformat files.
 Follow the instructions in :doc:`precommit-and-helm-docs`.
 
-Install the Sphinx dependencies
--------------------------------
+Initialize the development environment
+--------------------------------------
 
-From the
-The Sphinx_ documentation project requires Python dependencies located in the ``docs/requirements.txt`` directory.
-For best results, install these dependencies in a dedicated Python virtual environment, such as with venv_ or other tools:
+From the ``phalanx`` directory, initialize your environment:
 
-.. tab-set::
+.. code-block:: bash
 
-   .. tab-item:: pip install
+    make init
 
-      .. code-block:: bash
-
-         cd docs
-         pip install -r requirements.txt
-
-   .. tab-item:: Workflow with venv
-
-      Create and activate the virtual environment:
-
-      .. code-block:: bash
-
-         cd docs
-         python -m venv .venv
-         source .venv/bin/activate
-
-      Install documentation dependencies:
-
-      .. code-block:: bash
-
-         pip install -r requirements.txt
-
-      .. note::
-
-         When you want to de-activate this virtual environment in your current shell you can run:
-
-         .. code-block:: bash
-
-            deactivate
-
-         And later set up the environment again by sourcing the ``activate`` script again with:
-
-         .. code-block:: bash
-
-            source .venv/bin/activate
+This steps installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files (see :doc:`precommit-and-helm-docs`).
 
 Compiling the documentation
 ===========================
 
-The Makefile includes a target for building the documentation:
+Use the tox_ ``docs`` environment for compiling the documentation:
 
 .. code-block:: bash
 
-   make html
+   tox -e docs
 
-The built documentation is located in the ``_build/html`` directory (relative to the ``/docs`` directory).
+The built documentation is located in the ``docs/_build/html`` directory.
 
 Sphinx caches build products and in some cases you may need to delete the build to get a consistent result:
 
@@ -92,7 +57,7 @@ Links in the documentation are validated in the GitHub Actions workflow, but you
 
 .. code-block:: bash
 
-   make linkcheck
+   tox -e docs-linkcheck
 
 Submitting a pull request and sharing documentation drafts
 ==========================================================

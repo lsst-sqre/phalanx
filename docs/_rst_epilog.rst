@@ -27,6 +27,7 @@
 .. _Services:
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
+.. _tox: https://tox.wiki/en/latest/
 .. _pre-commit: https://pre-commit.com
 .. _Vault: https://www.vaultproject.io/
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
