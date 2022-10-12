@@ -11,6 +11,11 @@ The primary use of idfdev is for application development by the SQuaRE team.
      - ``idfdev``
    * - Root domain
      - `data-dev.lsst.cloud <https://data-dev.lsst.cloud>`__
+   * - Argo CD
+     - https://data-dev.lsst.cloud/argo-cd
+   * - Applications
+     - - `argocd <#>`__ — `values-idfdev.yaml <#>`__ + `values.yaml <#>`__
+       - `gafaelfawr <#>`__ — `values-idfdev.yaml <#>`__ + `values.yaml <#>`__
    * - Identity provider
      - ``ldaps://ldap-test.cilogon.org``
    * - Gafaelfawr groups
@@ -30,8 +35,6 @@ The primary use of idfdev is for application development by the SQuaRE team.
             - - ``g_science-platform-idf-dev``
           * - ``read:tap``
             - - ``g_science-platform-idf-dev``
-   * - Argo CD
-     - https://data-dev.lsst.cloud/argo-cd
    * - Argo CD access
      - .. code-block:: text
 
@@ -46,7 +49,3 @@ The primary use of idfdev is for application development by the SQuaRE team.
           g, gpdf@lsst.cloud, role:admin
           g, loi@lsst.cloud, role:admin
           g, roby@lsst.cloud, role:admin
-
-   * - Applications
-     - - `argocd <#>`__ — `values-idfdev.yaml <#>`__ + `values.yaml <#>`__
-       - `gafaelfawr <#>`__ — `values-idfdev.yaml <#>`__ + `values.yaml <#>`__
