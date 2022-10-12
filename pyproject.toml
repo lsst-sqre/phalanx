@@ -19,7 +19,9 @@ classifiers = [
     "Operating System :: POSIX",
 ]
 requires-python = ">=3.8"
-dependencies = []
+dependencies = [
+    "GitPython",
+]
 
 [project.optional-dependencies]
 dev = [
@@ -32,6 +34,9 @@ dev = [
     "documenteer[guide]>=0.7.0b4",
     "sphinx-diagrams"
 ]
+
+[project.scripts]
+expand-charts = "phalanx.testing.expandcharts:main"
 
 [project.urls]
 Homepage = "https://phalanx.lsst.io"

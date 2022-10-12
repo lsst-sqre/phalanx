@@ -43,10 +43,10 @@ jobs:
           python-version: 3.9
 
       - name: Install test dependencies
-        run: pip install -r tests/requirements.txt
+        run: pip install .
 
       - name: Expand modified charts
-        run: tests/expand-services
+        run: expand-charts
 
       - name: Set up chart-testing
         uses: helm/chart-testing-action@v2.3.1

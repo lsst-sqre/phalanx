@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """Expand Helm charts for testing.
 
 Discover the list of supported environments, find all charts that have changed
@@ -85,7 +83,3 @@ def main() -> None:
     environments = get_environments()
     for chart in charts:
         expand_chart(chart, environments)
-
-
-if __name__ == "__main__":
-    main()
