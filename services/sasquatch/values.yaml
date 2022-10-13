@@ -186,7 +186,7 @@ bucketmapper:
     # -- repository for rubin-influx-tools
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
-    tag: 0.1.22
+    tag: 0.1.23
 
 global:
   # -- Base path for Vault secrets
