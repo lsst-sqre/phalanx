@@ -29,7 +29,7 @@ def get_changed_charts() -> List[str]:
         if (path / "Chart.yaml").exists():
             diff = repo.head.commit.diff("origin/master", paths=[str(path)])
             for change_type in DiffIndex.change_type:
-                if any(diff.iter_change_type(change_type)):
+                if any(diff.iter_change_type(change_type)):  # type: ignore
                     print("Found changed chart", path.name)
                     charts.append(path.name)
                     break
