@@ -1,5 +1,17 @@
+from typing import Dict
+from pathlib import Path
+
 from documenteer.conf.guide import *  # noqa: F401 F403
 
-exclude_patterns.append("requirements.txt")  # noqa: F405
+from phalanx.docs.models import Phalanx as PhalanxModel
+
+phalanx_metadata = PhalanxModel.load_phalanx(Path(__file__).parent.parent)
+jinja_contexts: Dict[str, Dict] = {}
+for env in phalanx_metadata.environments:
+    jinja_contexts[env.name] = {"env": env}
+
+exclude_patterns.extend(  # noqa: F405
+    ["requirements.txt", "environments/_summary.rst.jinja"]
+)
 
 linkcheck_anchors = False

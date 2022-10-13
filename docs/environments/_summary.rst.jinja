@@ -1,0 +1,17 @@
+.. list-table::
+
+   * - Phalanx name
+     - ``{{ env.name }}``
+   * - Root domain
+     - `{{ env.domain }} <https://{{ env.domain }}>`__
+   * - Applications
+     - .. list-table::
+
+          * - Documentation
+            - Environment values
+            - Defaults
+          {% for app in env.apps %}
+          * - {{ app.name }}
+            - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env.name }}.yaml>`__
+            - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values.yaml>`__
+          {% endfor %}
