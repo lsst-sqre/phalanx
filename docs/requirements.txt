@@ -1,2 +1,0 @@
-documenteer[guide]>=0.7.0b4
-sphinx-diagrams

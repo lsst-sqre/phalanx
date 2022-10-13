@@ -74,7 +74,7 @@ See :doc:`contributing-docs`.
 starters directory
 ------------------
 
-:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/starers>`
+:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/starters>`
 
 This directory contains templates for contributing new applications to Phalanx.
 See :doc:`/developers/add-application`.
