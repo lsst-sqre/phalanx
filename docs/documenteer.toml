@@ -17,4 +17,9 @@ extensions = [
 ignore = [
     '^http://localhost',
     '^http(s)*://ls.st',
+    '^https://tucson-teststand.lsst.codes',
+    '^https://summit-lsp.lsst.codes',
+    '^https://minikube.lsst.codes',
+    '^https://base-lsp.lsst.codes',
+    '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
 ]

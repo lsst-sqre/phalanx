@@ -12,4 +12,12 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
 .. toctree::
    :maxdepth: 1
 
+   base/index
+   ccin2p3/index
    idfdev/index
+   idfint/index
+   idfprod/index
+   minikube/index
+   roe/index
+   summit/index
+   tucson-teststand/index
