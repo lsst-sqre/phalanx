@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import List
+from typing import Dict, List, Optional
 
 import yaml
 
@@ -25,9 +25,18 @@ class Application:
     This name is used to label directories, etc.
     """
 
+    env_values: Dict[str, Dict]
+    """The parsed Helm values for each environment."""
+
     @classmethod
     def load(cls, *, app_dir: Path) -> Application:
-        return cls(name=app_dir.name)
+        # Load values files for each environment
+        env_values: Dict[str, Dict] = {}
+        for values_path in app_dir.glob("values-*.yaml"):
+            env_name = values_path.stem.removeprefix("values-")
+            env_values[env_name] = yaml.safe_load(values_path.read_text())
+
+        return cls(name=app_dir.name, env_values=env_values)
 
 
 @dataclass(kw_only=True)
@@ -49,6 +58,28 @@ class Environment:
     apps: List[Application]
     """The applications that are enabled for this service."""
 
+    @property
+    def argocd_url(self) -> Optional[str]:
+        """Path to the Argo CD UI."""
+        argocd = self.get_app("argocd")
+        if argocd is None:
+            return None
+
+        try:
+            return argocd.env_values[self.name]["argo-cd"]["server"]["config"][
+                "url"
+            ]
+        except KeyError:
+            # Environments like minikube don't expose an argo cd URL
+            return None
+
+    def get_app(self, name) -> Optional[Application]:
+        """Get the named application."""
+        for app in self.apps:
+            if app.name == name:
+                return app
+        return None
+
     @classmethod
     def load(
         cls, *, env_values_path: Path, applications: List[Application]
@@ -61,6 +92,11 @@ class Environment:
         # Get Application instances active in this environment
         apps: List[Application] = []
         for app in applications:
+            if app.name == "argocd":
+                # argocd is a special case because it's not toggled per env
+                apps.append(app)
+                continue
+
             try:
                 if env_values[app.name]["enabled"] is True:
                     apps.append(app)

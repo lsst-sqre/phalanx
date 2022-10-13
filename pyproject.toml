@@ -31,6 +31,7 @@ dev = [
     "pytest",
     "pre-commit",
     "mypy",
+    "types-PyYAML",
     # Documentation
     "documenteer[guide]>=0.7.0b4",
     "sphinx-diagrams",
