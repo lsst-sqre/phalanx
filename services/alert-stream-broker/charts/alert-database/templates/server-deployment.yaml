@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ template "alertDatabase.serverName" . }}
+  labels:
+    {{- include "alertDatabase.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "alertDatabase.serverSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "alertDatabase.serverSelectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: "alert-database-server"
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
+
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+
+          livenessProbe:
+            httpGet:
+              path: /v1/health
+              port: http
+
+          command:
+            - "alertdb"
+            - "--listen-host=0.0.0.0"
+            - "--listen-port=3000"
+            - "--backend=google-cloud"
+            - "--gcp-project={{ required "A GCP project is required " .Values.storage.gcp.project }}"
+            - "--gcp-bucket-alerts={{ required "A GCP bucket name is required " .Values.storage.gcp.alertBucket }}"
+            - "--gcp-bucket-schemas={{ required "A GCP bucket name is required " .Values.storage.gcp.schemaBucket }}"
+            {{- if eq .Values.ingester.logLevel "debug" }}
+            - "--debug"
+            {{- end }}
+            {{- if eq .Values.ingester.logLevel "verbose" }}
+            - "--verbose"
+            {{- end }}
+
+
+      serviceAccountName: "{{ .Values.server.serviceAccountName }}"
