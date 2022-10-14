@@ -4,6 +4,9 @@ jupyterhub:
   hub:
     db:
       upgrade: true
+    image:
+      name: gabrimaine/nublado2
+      tag: "2.6.0-dev"
 
   # hub:
   #   resources:
