@@ -12,8 +12,8 @@ config:
   issuer:
     exp_minutes: 43200  # 30 days
 
-  github:
-    clientId: ae314e45a6af43ea910a
+  # github:
+  #   clientId: ae314e45a6af43ea910a
 
 oidc:
   clientId: "lsst_rsp"
