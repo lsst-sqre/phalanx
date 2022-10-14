@@ -29,6 +29,10 @@ oidc:
 
 oidcServer:
   enabled: true
+
+initialAdmins:
+    - "mainetti"
+
 groupMapping:
   "admin":
     - "lsst"
@@ -79,6 +83,6 @@ groupMapping:
   #         organization: "rubin-in2p3"
   #         team: "delegates"
 
-  initialAdmins:
-    - "mainetti"
-    #- "gabrimaine"
+  # initialAdmins:
+  #   - "mainetti"
+  #   #- "gabrimaine"
