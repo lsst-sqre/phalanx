@@ -15,63 +15,70 @@ config:
   github:
     clientId: ae314e45a6af43ea910a
 
-#   oidc:
-#     clientId: "lsst_rsp"
-#     loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
-#     tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
-#     issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
-#     usernameClaim: "preferred_username"
-#     uidClaim: 'uid_number'
-#     isMemberOf: 'groups'
+oidc:
+  clientId: "lsst_rsp"
+  loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
+  tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
+  # scopes: 
+  #   - "openid"
+  issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
+  gidClaim: "gid_number"
+  uidClaim: "uid_number"
+  groupsClaim: "groups"
+  usernameClaim: "preferred_username"
 
-#   # oidcServer:
-#   #   enabled: true
-
+oidcServer:
+  enabled: true
+groupMapping:
+  "admin":
+    - "lsst"
+  "read:all":
+    - "lsst"
   # Allow access by GitHub team.
-  groupMapping:
-    "admin:provision":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-    "exec:admin":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-    "exec:notebook":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-      - github:
-          organization: "rubin-in2p3"
-          team: "user"
-    "exec:portal":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-      - github:
-          organization: "rubin-in2p3"
-          team: "user"
-    "read:tap":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-      - github:
-          organization: "rubin-in2p3"
-          team: "user"
-      - github:
-          organization: "rubin-in2p3"
-          team: "delegates"
-    "read:image":
-      - github:
-          organization: "rubin-in2p3"
-          team: "admin"
-      - github:
-          organization: "rubin-in2p3"
-          team: "user"
-      - github:
-          organization: "rubin-in2p3"
-          team: "delegates"
+  # groupMapping:
+  #   "admin:provision":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #   "exec:admin":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #   "exec:notebook":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #   "exec:portal":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #   "read:tap":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "delegates"
+  #   "read:image":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "delegates"
 
   initialAdmins:
-    # - "mainetti"
-    - "gabrimaine"
+    - "mainetti"
+    #- "gabrimaine"
