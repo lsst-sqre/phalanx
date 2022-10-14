@@ -10,6 +10,10 @@ jinja_contexts: Dict[str, Dict] = {}
 for env in phalanx_metadata.environments:
     jinja_contexts[env.name] = {"env": env}
 
+jinja_env_kwargs = {
+    "lstrip_blocks": True,
+}
+
 exclude_patterns.extend(  # noqa: F405
     ["requirements.txt", "environments/_summary.rst.jinja"]
 )

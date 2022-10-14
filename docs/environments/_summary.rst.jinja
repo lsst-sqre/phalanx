@@ -19,3 +19,11 @@
           {% endfor %}
    * - Identity provider
      - {{ env.identity_provider }}
+   {% if env.argocd_rbac_csv %}
+   * - Argo CD RBAC
+     - .. csv-table::
+
+          {% for csvline in env.argocd_rbac_csv %}
+          {{ csvline }}
+          {%- endfor %}
+   {% endif %}

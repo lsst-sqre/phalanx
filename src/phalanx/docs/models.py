@@ -63,7 +63,7 @@ class Environment:
         """Path to the Argo CD UI."""
         argocd = self.get_app("argocd")
         if argocd is None:
-            return None
+            return "N/A"
 
         try:
             return argocd.env_values[self.name]["argo-cd"]["server"]["config"][
@@ -71,6 +71,27 @@ class Environment:
             ]
         except KeyError:
             # Environments like minikube don't expose an argo cd URL
+            return "N/A"
+
+    @property
+    def argocd_rbac_csv(self) -> Optional[List[str]]:
+        """The Argo CD RBAC table, as a list of CSV lines."""
+        argocd = self.get_app("argocd")
+        if argocd is None:
+            return None
+
+        try:
+            rbac_csv = argocd.env_values[self.name]["argo-cd"]["server"][
+                "rbacConfig"
+            ]["policy.csv"]
+            lines = [
+                ",".join([f"``{item.strip()}``" for item in line.split(",")])
+                for line in rbac_csv.splitlines()
+            ]
+            print(lines)
+            return lines
+        except KeyError:
+            # Some environments may not configure an RBAC
             return None
 
     @property
