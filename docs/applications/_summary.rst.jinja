@@ -1,0 +1,16 @@
+.. list-table::
+
+   * - Type
+     - Helm_
+   * - Namespace
+     - {{ app.namespace }}
+   {% if app.active_environments %}
+   * - Environments
+     - .. list-table::
+
+          {% for env_name in app.active_environments %}
+          * - :px-env:`{{ env_name }}`
+            - `values <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env_name }}.yaml>`__
+            - `Argo CD <{{ envs[env_name].argocd_url }}/applications/{{ app.name }}>`__
+          {% endfor %}
+    {% endif %}

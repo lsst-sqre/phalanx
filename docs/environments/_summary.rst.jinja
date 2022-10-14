@@ -13,7 +13,7 @@
             - Environment values
             - Defaults
           {% for app in env.apps %}
-          * - {{ app.name }}
+          * - :px-app:`{{ app.name }}`
             - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env.name }}.yaml>`__
             - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values.yaml>`__
           {% endfor %}

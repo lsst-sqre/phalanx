@@ -1,6 +1,15 @@
-#######
-Argo CD
-#######
+.. px-app:: argocd
+
+######
+argocd
+######
+
+`Argo CD`_ is the software that manages all Kubernetes resources in a deployment of the Rubin Science Platform.
+It is itself a set of Kubernetes resources and running pods managed with `Helm`_.
+
+.. jinja:: argocd
+   :file: applications/_summary.rst.jinja
+   :debug:
 
 .. list-table::
    :widths: 10,40
@@ -10,7 +19,8 @@ Argo CD
    * - Namespace
      - ``argocd``
 
-.. rubric:: Overview
+Overview
+========
 
 `Argo CD`_ is the software that manages all Kubernetes resources in a deployment of the Rubin Science Platform.
 It is itself a set of Kubernetes resources and running pods managed with `Helm`_.
@@ -19,10 +29,10 @@ Argo CD cannot manage and upgrade itself, so it periodically should be upgraded 
 Argo CD is installed and bootstrapped as part of the cluster creation process.
 The UI is exposed on the ``/argo-cd`` route for the Science Platform.
 Unlike other resources on the Science Platform, it is not protected by Gafaelfawr.
-It instead uses username and password authentication.
-The username and password are stored in the SQuaRE 1Password vault.
+See :doc:`authentication`
 
-.. rubric:: Warnings
+Warnings
+========
 
 Argo CD is somewhat particular about how its resources are set up.
 Everything related to Argo CD that can be namespaced must be in the ``argocd`` namespace.
@@ -42,7 +52,8 @@ To delete the stray ``Application`` resource, edit it with ``kubectl edit`` and 
 
 Instead, follow the upgrade process described below.
 
-.. rubric:: Guides
+Guides
+======
 
 .. toctree::
 

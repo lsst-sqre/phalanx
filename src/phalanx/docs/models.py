@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
@@ -25,18 +26,82 @@ class Application:
     This name is used to label directories, etc.
     """
 
-    env_values: Dict[str, Dict]
+    values: Dict[str, Dict]
     """The parsed Helm values for each environment."""
 
+    active_environments: List[str] = field(default_factory=list)
+    """Environments where this application is active."""
+
+    namespace: str
+    """Kubernetes namespace"""
+
     @classmethod
-    def load(cls, *, app_dir: Path) -> Application:
-        # Load values files for each environment
-        env_values: Dict[str, Dict] = {}
+    def load(
+        cls, *, app_dir: Path, root_dir: Path, env_values: Dict[str, Dict]
+    ) -> Application:
+        """Load an application from the Phalanx repository.
+
+        Parameters
+        ----------
+        app_dir : `pathlib.Path`
+            The application's directory (where its Helm chart is located
+            in Phalanx).
+        env_values : `dict`
+            The Helm values for each environment, keyed by the environment
+            name. This data determines where the application is active.
+        """
+        app_name = app_dir.name
+
+        # Load the app's values files for each environment
+        values: Dict[str, Dict] = {}
         for values_path in app_dir.glob("values-*.yaml"):
             env_name = values_path.stem.removeprefix("values-")
-            env_values[env_name] = yaml.safe_load(values_path.read_text())
+            values[env_name] = yaml.safe_load(values_path.read_text())
 
-        return cls(name=app_dir.name, env_values=env_values)
+        # Determine what environments use this app based on the environment's
+        # values file.
+        active_environments: List[str] = []
+        for env_name, env_configs in env_values.items():
+            if app_name == "argocd":
+                active_environments.append(env_name)
+                continue
+
+            try:
+                reformatted_name = app_name.replace("-", "_")
+                if env_configs[reformatted_name]["enabled"] is True:
+                    active_environments.append(env_name)
+            except KeyError:
+                pass
+        active_environments.sort()
+
+        # Open the Application Helm definition to get namespace info
+        namespace = "Unknown"
+        app_template_path = root_dir.joinpath(
+            ENVIRONMENTS_DIR, "templates", f"{app_name}-application.yaml"
+        )
+        if app_template_path.is_file():
+            app_template = app_template_path.read_text()
+            # Extract the namespace from the Helm template
+            pattern = (
+                r"destination:\n"
+                r"[ ]+namespace:[ ]*[\"]?(?P<namespace>[a-zA-Z][\w-]+)[\"]?"
+            )
+            m = re.search(
+                pattern, app_template, flags=re.MULTILINE | re.DOTALL
+            )
+            if m:
+                namespace = m.group("namespace")
+            else:
+                print(f"Did not match template for namespace for {app_name}")
+        else:
+            print(f"Could not open app template for {app_name}")
+
+        return cls(
+            name=app_name,
+            values=values,
+            active_environments=active_environments,
+            namespace=namespace,
+        )
 
 
 @dataclass(kw_only=True)
@@ -66,7 +131,7 @@ class Environment:
             return "N/A"
 
         try:
-            return argocd.env_values[self.name]["argo-cd"]["server"]["config"][
+            return argocd.values[self.name]["argo-cd"]["server"]["config"][
                 "url"
             ]
         except KeyError:
@@ -81,7 +146,7 @@ class Environment:
             return None
 
         try:
-            rbac_csv = argocd.env_values[self.name]["argo-cd"]["server"][
+            rbac_csv = argocd.values[self.name]["argo-cd"]["server"][
                 "rbacConfig"
             ]["policy.csv"]
             lines = [
@@ -101,7 +166,7 @@ class Environment:
         if gafaelfawr is None:
             return "Unknown"
 
-        config_values = gafaelfawr.env_values[self.name]["config"]
+        config_values = gafaelfawr.values[self.name]["config"]
         if "cilogon" in config_values:
             return "CILogon"
 
@@ -123,7 +188,7 @@ class Environment:
             return roles
 
         try:
-            group_mapping = gafaelfawr.env_values[self.name]["config"][
+            group_mapping = gafaelfawr.values[self.name]["config"][
                 "groupMapping"
             ]
         except KeyError:
@@ -145,12 +210,11 @@ class Environment:
 
     @classmethod
     def load(
-        cls, *, env_values_path: Path, applications: List[Application]
+        cls, *, values: Dict[str, Any], applications: List[Application]
     ) -> Environment:
         """Load an environment by inspecting the Phalanx repository."""
         # Extract name from dir/values-envname.yaml
-        env_values = yaml.safe_load(env_values_path.read_text())
-        name = env_values["environment"]
+        name = values["environment"]
 
         # Get Application instances active in this environment
         apps: List[Application] = []
@@ -161,7 +225,7 @@ class Environment:
                 continue
 
             try:
-                if env_values[app.name]["enabled"] is True:
+                if values[app.name]["enabled"] is True:
                     apps.append(app)
             except KeyError:
                 continue
@@ -169,8 +233,8 @@ class Environment:
 
         return Environment(
             name=name,
-            domain=env_values["fqdn"],
-            vault_path_prefix=env_values["vault_path_prefix"],
+            domain=values["fqdn"],
+            vault_path_prefix=values["vault_path_prefix"],
             apps=apps,
         )
 
@@ -203,23 +267,30 @@ class Phalanx:
         apps: List[Application] = []
         envs: List[Environment] = []
 
-        # Gather applications
-        for app_dir in root_dir.joinpath(APPS_DIR).iterdir():
-            if not app_dir.is_dir():
-                continue
-            app = Application.load(app_dir=app_dir)
-            apps.append(app)
-        apps.sort(key=lambda a: a.name)
-
-        # Gather environments
+        # Pre-load the values files for each environment
+        env_values: Dict[str, Dict[str, Any]] = {}
         for env_values_path in root_dir.joinpath(ENVIRONMENTS_DIR).glob(
             "values-*.yaml"
         ):
             if not env_values_path.is_file():
                 continue
-            env = Environment.load(
-                env_values_path=env_values_path, applications=apps
+            values = yaml.safe_load(env_values_path.read_text())
+            name = values["environment"]
+            env_values[name] = values
+
+        # Gather applications
+        for app_dir in root_dir.joinpath(APPS_DIR).iterdir():
+            if not app_dir.is_dir():
+                continue
+            app = Application.load(
+                app_dir=app_dir, env_values=env_values, root_dir=root_dir
             )
+            apps.append(app)
+        apps.sort(key=lambda a: a.name)
+
+        # Gather environments
+        for env_name, values in env_values.items():
+            env = Environment.load(values=values, applications=apps)
             envs.append(env)
 
         return cls(environments=envs, apps=apps)
