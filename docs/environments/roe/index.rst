@@ -1,5 +1,8 @@
-.. jinja:: roe
-   :file: environments/_title.rst.jinja
+.. px-env:: roe
+
+####################
+roe — rsp.lsst.ac.uk
+####################
 
 roe is the environment for the Rubin Science Platform hosted at the `Royal Observatory, Edinburgh <https://www.roe.ac.uk/>`__.
 
