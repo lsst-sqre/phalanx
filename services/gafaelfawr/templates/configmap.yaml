@@ -159,13 +159,10 @@
       {{ $key | quote }}: {{ $value | quote }}
       {{- end }}
 
+    {{- with .Values.config.groupMapping }}
     group_mapping:
-      {{- range $key, $value := .Values.config.groupMapping }}
-      {{ $key | quote }}:
-        {{- range $group := $value }}
-        - {{ $group | quote }}
-        {{- end }}
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
 
     {{- if .Values.config.initialAdmins }}
     initial_admins:

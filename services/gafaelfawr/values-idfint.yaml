@@ -16,33 +16,75 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:notebook":
-      - "lsst-ops-panda"
-      - "lsst-ops"
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst"
+          team: "ops-panda"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:portal":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst"
+          team: "ops-panda"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "read:alertdb":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "read:image":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst"
+          team: "ops-panda"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "read:tap":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst"
+          team: "ops-panda"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
 
   initialAdmins:
     - "afausti"
