@@ -15,29 +15,29 @@ config:
   # github:
   #   clientId: ae314e45a6af43ea910a
 
-oidc:
-  clientId: "lsst_rsp"
-  loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
-  tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
-  # scopes: 
-  #   - "openid"
-  issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
-  gidClaim: "gid_number"
-  uidClaim: "uid_number"
-  groupsClaim: "groups"
-  usernameClaim: "preferred_username"
+  oidc:
+    clientId: "lsst_rsp"
+    loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
+    tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
+    # scopes: 
+    #   - "openid"
+    issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
+    gidClaim: "gid_number"
+    uidClaim: "uid_number"
+    groupsClaim: "groups"
+    usernameClaim: "preferred_username"
 
-oidcServer:
-  enabled: true
+  oidcServer:
+    enabled: true
 
-initialAdmins:
-    - "mainetti"
+  initialAdmins:
+      - "mainetti"
 
-groupMapping:
-  "admin":
-    - "lsst"
-  "read:all":
-    - "lsst"
+  groupMapping:
+    "admin":
+      - "lsst"
+    "read:all":
+      - "lsst"
   # Allow access by GitHub team.
   # groupMapping:
   #   "admin:provision":
