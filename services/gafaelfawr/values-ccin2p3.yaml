@@ -38,6 +38,15 @@ config:
       - "lsst"
     "read:all":
       - "lsst"
+    "exec:notebook":
+      - "lsst"
+    "exec:portal":
+      - "lsst"
+    "read:tap":
+      - "lsst"
+    "read:image"
+      - "lsst"
+      
   # Allow access by GitHub team.
   # groupMapping:
   #   "admin:provision":
