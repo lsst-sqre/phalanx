@@ -1,3 +1,0 @@
-diagrams
-documenteer[pipelines]
-ltd-conveyor

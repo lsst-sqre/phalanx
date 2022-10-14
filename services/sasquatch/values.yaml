@@ -62,6 +62,60 @@ influxdb:
     # scripts:
     # # -- InfluxDB custom initialization script.
     #   init.iql: |+
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 96Gi
+      cpu: 8
+
+influxdb2:
+  adminUser:
+    # -- Admin default organization.
+    organization: "default"
+    # -- Admin default bucket.
+    bucket: "default"
+    # -- Get admin-password/admin-token keys from secret.
+    existingSecret: sasquatch
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments.
+    size: 1Ti
+  ingress:
+    # -- InfluxDB2 ingress configuration
+    enabled: false
+    hostname: ""
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /api/v2/$2
+    className: "nginx"
+    path: /influxdb2(/|$)(.*)
+  env:
+    - name: INFLUXD_STORAGE_WAL_FSYNC_DELAY
+      value: "100ms"
+    - name: INFLUXD_HTTP_IDLE_TIMEOUT
+      value: "0"
+    - name: INFLUXD_FLUX_LOG_ENABLED
+      value: "true"
+    - name: INFLUXD_LOG_LEVEL
+      value: "debug"
+  initScripts:
+    # -- InfluxDB2 initialization scripts
+    enabled: true
+    scripts:
+      init.sh: |+
+        #!/bin/bash
+        influx bucket create --name telegra-kafka-consumer --org default
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 96Gi
+      cpu: 8
 
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
@@ -94,6 +148,13 @@ chronograf:
     CUSTOM_AUTO_REFRESH: "1s=1000"
   # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
   envFromSecret: "sasquatch"
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 16Gi
+      cpu: 4
 
 kapacitor:
   # -- Kapacitor image tag.
@@ -119,62 +180,13 @@ kapacitor:
       memory: 16Gi
       cpu: 4
 
-telegraf:
+bucketmapper:
+  # -- image for monitoring-related cronjobs
   image:
-    # -- Telegraf image repository
-    repo: "lsstsqre/telegraf"
-    # -- Telegraf image tag
-    tag: "avro"
-    pullPolicy: Always
-  env:
-    # -- Telegraf KafkaUser password.
-    - name: TELEGRAF_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: sasquatch
-          key: telegraf-password
-    # -- InfluxDB admin password.
-    - name: INFLUXDB_ADMIN_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: sasquatch
-          key: influxdb-password
-  service:
-    # -- Telegraf service.
-    enabled: false
-  config:
-    # -- Telegraf processor plugins.
-    processors: {}
-    # -- Telegraf input plugins.
-    inputs:
-      # -- See https://github.com/influxdata/telegraf/blob/master/plugins/inputs/kafka_consumer/README.md
-      - kafka_consumer:
-          brokers:
-            - sasquatch-kafka-brokers.sasquatch:9092
-          topics:
-            - lsst.sal.Test.logevent_heartbeat
-          sasl_username: telegraf
-          sasl_password: $TELEGRAF_PASSWORD
-          sasl_mechanism: SCRAM-SHA-512
-          consumer_group: telegraf-test
-          max_message_len: 32768
-          data_format: avro
-          avro_schema_registry: "http://sasquatch-schema-registry.sasquatch:8081"
-          avro_measurement: "test"
-          avro_fields:
-            - heartbeat
-            - private_efdStamp
-            - salIndex
-          avro_timestamp: private_efdStamp
-          avro_timestamp_format: unix_us
-    # -- Telegraf output destination.
-    outputs:
-      - influxdb:
-          urls:
-            - "http://sasquatch-influxdb.sasquatch:8086"
-          database: "kafkaconsumer"
-          username: admin
-          password: $INFLUXDB_ADMIN_PASSWORD
+    # -- repository for rubin-influx-tools
+    repository: ghcr.io/lsst-sqre/rubin-influx-tools
+    # -- tag for rubin-influx-tools
+    tag: 0.1.23
 
 global:
   # -- Base path for Vault secrets

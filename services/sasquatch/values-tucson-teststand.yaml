@@ -22,25 +22,9 @@ strimzi-kafka:
 influxdb:
   persistence:
     storageClass: rook-ceph-block
-  # Temporarily enable this ingress to allow access by the EFD client
-  # version 0.11.0. Once version 0.12.0 is the default one, this
-  # can be removed and we should use tucson-teststand.lsst.codes/influxdb
-  # instead.
   ingress:
     enabled: true
-    tls: true
-    secretName: tls-certs
-    hostname: influxdb-tucson-teststand-efd.lsst.codes
-    annotations:
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/affinity: "cookie"
-      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
-      nginx.ingress.kubernetes.io/rewrite-target: /
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        proxy_set_header X-Forwarded-Proto https;
-        proxy_set_header X-Forwarded-Port 443;
-        proxy_set_header X-Forwarded-Path /;
-    path: /
+    hostname: tucson-teststand.lsst.codes
 
 telegraf-kafka-consumer:
   kafkaConsumers:
