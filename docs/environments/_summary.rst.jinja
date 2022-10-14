@@ -19,6 +19,22 @@
           {% endfor %}
    * - Identity provider
      - {{ env.identity_provider }}
+   {% if env.gafaelfawr_roles %}
+   * - Gafaelfawr groups
+     - .. list-table::
+
+          * - Role
+            - Groups
+          {% for role_groups in env.gafaelfawr_roles %}
+          * - ``{{ role_groups[0] }}``
+            - - ``{{ role_groups[1][0] }}``
+            {% if role_groups[1]|length > 1 %}
+            {% for group in role_groups[1][1:] %}
+              - ``{{ group }}``
+            {%- endfor %}
+            {%- endif %}
+          {%- endfor %}
+   {% endif %}
    {% if env.argocd_rbac_csv %}
    * - Argo CD RBAC
      - .. csv-table::

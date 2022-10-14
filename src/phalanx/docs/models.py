@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import yaml
 
@@ -112,6 +112,29 @@ class Environment:
             return "OIDC"
 
         return "Unknown"
+
+    @property
+    def gafaelfawr_roles(self) -> List[Tuple[str, List[str]]]:
+        """Gafaelfawr role mapping."""
+        roles: List[Tuple[str, List[str]]] = []
+
+        gafaelfawr = self.get_app("gafaelfawr")
+        if gafaelfawr is None:
+            return roles
+
+        try:
+            group_mapping = gafaelfawr.env_values[self.name]["config"][
+                "groupMapping"
+            ]
+        except KeyError:
+            return roles
+
+        role_names = sorted(group_mapping.keys())
+        for role_name in role_names:
+            groups = group_mapping[role_name]
+            roles.append((role_name, groups))
+
+        return roles
 
     def get_app(self, name) -> Optional[Application]:
         """Get the named application."""
