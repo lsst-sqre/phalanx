@@ -34,6 +34,8 @@ config:
       - "mainetti"
 
   groupMapping:
+    "admin:provision":
+      - "lsst"
     "admin":
       - "lsst"
     "read:all":
