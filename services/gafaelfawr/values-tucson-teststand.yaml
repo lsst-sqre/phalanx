@@ -4,7 +4,7 @@ redis:
 
 config:
   slackAlerts: true
-  databaseUrl: "postgresql://gafaelfawr@140.252.146.49/gafaelfawr"
+  databaseUrl: "postgresql://gafaelfawr@squoint.tu.lsst.org/gafaelfawr"
 
   github:
     clientId: "49533cbd8a8079730dcf"
