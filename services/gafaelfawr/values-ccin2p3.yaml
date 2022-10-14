@@ -28,7 +28,7 @@ config:
     usernameClaim: "preferred_username"
 
   oidcServer:
-    enabled: true
+    enabled: false
 
   initialAdmins:
       - "mainetti"
