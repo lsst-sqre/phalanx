@@ -11,6 +11,7 @@ rst_epilog_file = "_rst_epilog.rst"
 extensions = [
   "sphinx_diagrams",
   "sphinx_jinja",
+  "phalanx.docs.crossref",
 ]
 
 [sphinx.linkcheck]
