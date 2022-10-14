@@ -73,6 +73,25 @@ class Environment:
             # Environments like minikube don't expose an argo cd URL
             return None
 
+    @property
+    def identity_provider(self) -> str:
+        """A description of the identity provider for Gafaelfawr."""
+        gafaelfawr = self.get_app("gafaelfawr")
+        if gafaelfawr is None:
+            return "Unknown"
+
+        config_values = gafaelfawr.env_values[self.name]["config"]
+        if "cilogon" in config_values:
+            return "CILogon"
+
+        if "github" in config_values:
+            return "GitHub"
+
+        if "oidc" in config_values:
+            return "OIDC"
+
+        return "Unknown"
+
     def get_app(self, name) -> Optional[Application]:
         """Get the named application."""
         for app in self.apps:
