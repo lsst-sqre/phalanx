@@ -30,25 +30,47 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "rubin-in2p3-admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
     "exec:admin":
-      - "rubin-in2p3-admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
     "exec:notebook":
-      - "rubin-in2p3-admin"
-      - "rubin-in2p3-user"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "user"
     "exec:portal":
-      - "rubin-in2p3-admin"
-      - "rubin-in2p3-user"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "user"
     "read:tap":
-      - "rubin-in2p3-admin"
-      - "rubin-in2p3-user"
-      - "rubin-in2p3"
-      - "rubin-in2p3-delegates"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "user"
+      - github:
+          organization: "rubin-in2p3"
+          team: "delegates"
     "read:image":
-      - "rubin-in2p3-admin"
-      - "rubin-in2p3-user"
-      - "rubin-in2p3"
-      - "rubin-in2p3-delegates"
+      - github:
+          organization: "rubin-in2p3"
+          team: "admin"
+      - github:
+          organization: "rubin-in2p3"
+          team: "user"
+      - github:
+          organization: "rubin-in2p3"
+          team: "delegates"
 
   initialAdmins:
     # - "mainetti"
