@@ -6,7 +6,7 @@ jupyterhub:
   hub:
     db:
       upgrade: true
-      url: "postgresql://jovyan@140.252.146.49/jupyterhub"
+      url: "postgresql://jovyan@squoint.tu.lsst.org/jupyterhub"
 
   singleuser:
     extraAnnotations:
