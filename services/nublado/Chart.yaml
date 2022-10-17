@@ -1,0 +1,6 @@
+apiVersion: v2
+name: nublado
+version: 1.0.0
+description: Service to manage user labs
+home: https://github.com/lsst-sqre/jupyterlab-controller
+appVersion: 0.0.1

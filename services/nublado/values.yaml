@@ -1,0 +1,196 @@
+# Default values for nublado.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+image:
+  # -- nublado image to use
+  repository: lsstsqre/nublado
+
+  # -- Pull policy for the nublado image
+  pullPolicy: IfNotPresent
+
+  # -- Tag of nublado image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+serviceAccount:
+  # -- Name of the service account to use
+  # @default -- Name based on the fullname template
+  name: ""
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+controller:
+  # -- Settings for the JupyterLab controller
+  lab:
+    # These are the maximum CPU/memory allocations for each size
+    # category.
+    # The size names and ordering are taken from:
+    # https://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#bigandLittleCreaturesInCombat
+    # Typically, we support small, medium, and large, but can range up
+    # and down in instance-specific configuration.
+    sizes:
+      small:
+        cpu: 1.0
+        memory: 3Gi
+      medium:
+        cpu: 2.0
+        memory: 6Gi
+      large:
+        cpu: 4.0
+        memory: 12Gi
+    # -- Maximum CPU/memory resources for user namespace
+    quota:
+      cpu: 81
+      memory: 243Gi
+    # -- Volumes defined to user lab pods
+    volumes:
+    - name: home
+      nfs:
+        path: /share1/home
+        server: 10.13.105.122
+    - name: project
+      nfs:
+        path: /share1/project
+        server: 10.13.105.122
+    - name: scratch
+      nfs:
+        path: /share1/scratch
+        server: 10.13.105.122
+    # -- Volume Mounts corresponding to user lab pod Volumes
+    volume_mounts:
+    - name: home
+      mountPath: /home
+    - name: project
+      mountPath: /project
+    - name: scratch
+      mountPath: /scratch
+    # Environment variables for user lab pods
+    env:
+      BASE_URL: "{{ Values.config.base_url }}"
+      PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+      AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
+      GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json"
+      DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+      S3_ENDPOINT_URL: "https://storage.googleapis.com"
+      AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks"
+      AUTO_REPO_BRANCH: "prod"
+      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+      NO_ACTIVITY_TIMEOUT: "432000"
+      CULL_KERNEL_IDLE_TIMEOUT: "432000"
+      CULL_KERNEL_CONNECTED: "True"
+      CULL_KERNEL_INTERVAL: "300"
+    # File fragments for modification and injection into user lab pods
+    files:
+      passwd: |
+        root:x:0:0:root:/root:/bin/bash
+        bin:x:1:1:bin:/bin:/sbin/nologin
+        daemon:x:2:2:daemon:/sbin:/sbin/nologin
+        adm:x:3:4:adm:/var/adm:/sbin/nologin
+        lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+        sync:x:5:0:sync:/sbin:/bin/sync
+        shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+        halt:x:7:0:halt:/sbin:/sbin/halt
+        mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+        operator:x:11:0:operator:/root:/sbin/nologin
+        games:x:12:100:games:/usr/games:/sbin/nologin
+        ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+        tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+        dbus:x:81:81:System message bus:/:/sbin/nologin
+        nobody:x:99:99:Nobody:/:/sbin/nologin
+        systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+        lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
+      group: |
+        root:x:0:
+        bin:x:1:
+        daemon:x:2:
+        sys:x:3:
+        adm:x:4:
+        tty:x:5:
+        disk:x:6:
+        lp:x:7:
+        mem:x:8:
+        kmem:x:9:
+        wheel:x:10:
+        cdrom:x:11:
+        mail:x:12:
+        man:x:15:
+        dialout:x:18:
+        floppy:x:19:
+        games:x:20:
+        utmp:x:22:
+        tape:x:33:
+        utempter:x:35:
+        video:x:39:
+        ftp:x:50:
+        lock:x:54:
+        tss:x:59:
+        audio:x:63:
+        dbus:x:81:
+        screen:x:84:
+        nobody:x:99:
+        users:x:100:
+        systemd-journal:x:190:
+        systemd-network:x:192:
+        cgred:x:997:
+        ssh_keys:x:998:
+        input:x:999:
+      idds: |
+        # Licensed under the Apache License, Version 2.0 (the "License");
+        # You may not use this file except in compliance with the License.
+        # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+        #
+        # Authors:
+        # - Wen Guan, <wen.guan@cern.ch>, 2020
+        [common]
+        # if logdir is configured, idds will write to idds.log in this
+        # directory, otherwise to to stdout/stderr.
+        # With supervisord, it's good to write to stdout/stderr, then
+        # supervisord can manage and rotate logs.
+        # logdir = /var/log/idds
+        loglevel = INFO
+        [rest]
+        host = https://iddsserver.cern.ch:443/idds
+        #url_prefix = /idds
+        #cacher_dir = /tmp
+        cacher_dir = /data/idds
+
+ingress:
+  # -- Additional annotations to add for endpoints that are authenticated.
+  annotations: {}
+
+# -- Resource limits and requests for the nublado frontend pod
+resources: {}
+
+# -- Annotations for the nublado frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the nublado frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the nublado frontend pod
+tolerations: []
+
+# -- Affinity rules for the nublado frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

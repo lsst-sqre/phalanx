@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nublado.fullname" . }}
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "nublado.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "nublado.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: "pull-secret"
+      serviceAccountName: {{ template "nublado.serviceAccountName" . }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: DOCKER_SECRET_NAME
+              value: "pull-secret"
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml .Values.controller.resources | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "docker-creds"
+              mountPath: "/etc/secrets"
+              readOnly: true
+            - name: config
+              mountPath: "/etc/nublado"
+              readOnly: true
+            - name: podinfo
+              mountPath: /etc/podinfo
+      volumes:
+        - name: docker-creds
+          secret:
+            secretName: pull-secret
+        - name: autostart
+          configMap:
+            name: {{ include "nublado.fullname" . }}-controller
+        - name: podinfo
+          downwardAPI:
+            items:
+              - path: "annotations"
+                fieldRef:
+                  fieldPath: metadata.annotations
+              - path: "labels"
+                fieldRef:
+                  fieldPath: metadata.labels
+              - path: "name"
+                fieldRef:
+                  fieldPath: metadata.name
+              - path: "uid"
+                fieldRef:
+                  fieldPath: metadata.uid
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
