@@ -1,25 +1,18 @@
+.. px-app:: vault-secrets-operator
+
 .. _vault-secrets-operator:
 
 ######################
 vault-secrets-operator
 ######################
 
-.. list-table::
-   :widths: 10,40
-
-   * - Edit on GitHub
-     - `/services/vault-secrets-operator <https://github.com/lsst-sqre/phalanx/tree/master/services/vault-secrets-operator>`__
-   * - Type
-     - Helm_
-   * - Namespace
-     - ``vault-secrets-operator``
-
-.. rubric:: Overview
-
 The ``vault-secrets-operator`` application is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other applications.
 It processes ``VaultSecret`` resources defined in the `phalanx repository`_ and creates corresponding Kubernetes Secret_ resources.
 
 See :dmtn:`112` for the LSST Vault design.
+
+.. jinja:: vault-secrets-operator
+   :file: applications/_summary.rst.jinja
 
 .. rubric:: Upgrading
 
