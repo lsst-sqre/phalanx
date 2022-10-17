@@ -27,10 +27,10 @@
             - Groups
           {% for role_groups in env.gafaelfawr_roles %}
           * - ``{{ role_groups[0] }}``
-            - - ``{{ role_groups[1][0] }}``
+            - - {{ role_groups[1][0] }}
             {% if role_groups[1]|length > 1 %}
             {% for group in role_groups[1][1:] %}
-              - ``{{ group }}``
+              - {{ group }}
             {%- endfor %}
             {%- endif %}
           {%- endfor %}

@@ -23,4 +23,5 @@ ignore = [
     '^https://minikube.lsst.codes',
     '^https://base-lsp.lsst.codes',
     '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
+    '^https://github.com/orgs/',
 ]

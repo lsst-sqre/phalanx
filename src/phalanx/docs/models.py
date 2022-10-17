@@ -180,7 +180,11 @@ class Environment:
 
     @property
     def gafaelfawr_roles(self) -> List[Tuple[str, List[str]]]:
-        """Gafaelfawr role mapping."""
+        """Gafaelfawr role mapping (reStructuredText).
+
+        Group strings may be formatted as reStructuredText links to GitHub
+        teams.
+        """
         roles: List[Tuple[str, List[str]]] = []
 
         gafaelfawr = self.get_app("gafaelfawr")
@@ -196,7 +200,19 @@ class Environment:
 
         role_names = sorted(group_mapping.keys())
         for role_name in role_names:
-            groups = group_mapping[role_name]
+            groups: List[str] = []
+            for group in group_mapping[role_name]:
+                if isinstance(group, str):
+                    # e.g. a comanage group
+                    groups.append(f"``{group}``")
+                elif isinstance(group, dict) and "github" in group:
+                    org = group["github"]["organization"]
+                    team = group["github"]["team"]
+                    url = f"https://github.com/orgs/{org}/teams/{team}"
+                    groups.append(f":fab:`github` `{org}/{team} <{url}>`__")
+                else:
+                    print(f"Group type unknown: {group}")
+                    continue
             roles.append((role_name, groups))
 
         return roles
