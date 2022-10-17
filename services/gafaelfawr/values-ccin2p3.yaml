@@ -32,13 +32,10 @@ config:
 
   initialAdmins:
       - "mainetti"
-
   groupMapping:
+    "admin:token": "lsst"
+    "user:token": "lsst"
     "exec:admin": "lsst"
-    # "admin:provision":
-    #   - "lsst"
-    # "admin":
-    #   - "lsst"
     "read:all":
       - "lsst"
     "exec:notebook":
