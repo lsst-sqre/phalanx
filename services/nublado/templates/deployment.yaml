@@ -64,9 +64,9 @@ spec:
         - name: docker-creds
           secret:
             secretName: pull-secret
-        - name: autostart
+        - name: config
           configMap:
-            name: {{ include "nublado.fullname" . }}-controller
+            name: {{ include "nublado.fullname" . }}-config
         - name: podinfo
           downwardAPI:
             items:
