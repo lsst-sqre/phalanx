@@ -12,7 +12,7 @@ Rubin Observatory's telemetry service.
 |  | telegraf-kafka-consumer | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
-| https://helm.influxdata.com/ | influxdb2 | 2.1.0 |
+| https://helm.influxdata.com/ | influxdb2 | 2.1.1 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.1.0 |
 
