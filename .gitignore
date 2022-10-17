@@ -134,3 +134,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+.idea/workspace.xml
+
+.idea/inspectionProfiles/Project_Default.xml
+
+services/alert-stream-broker/charts/.DS_Store
+
+services/.DS_Store
