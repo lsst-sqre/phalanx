@@ -1,16 +1,13 @@
+.. px-app:: cert-manager
+
 ############
 cert-manager
 ############
 
-.. list-table::
-   :widths: 10,40
+Cert-manager creates TLS certificates via `Let's Encrypt <https://letsencrypt.org/>`__ and automatically renews them.
 
-   * - Edit on GitHub
-     - `/services/cert-manager <https://github.com/lsst-sqre/phalanx/tree/master/services/cert-manager>`__
-   * - Type
-     - Helm_
-   * - Namespace
-     - ``cert-manager``
+.. jinja:: cert-manager
+   :file: applications/_summary.rst.jinja
 
 .. rubric:: Overview
 
@@ -47,7 +44,8 @@ It should be recreated by cert-manager.
 (You may have to also delete the ``Certificate`` resource of the same name and let Argo CD re-create it to trigger this.)
 This may cause an outage for the Science Platform since it is using this certificate, so you may want to be prepared to port-forward to get to the Argo CD UI in case something goes wrong.
 
-.. rubric:: Guides
+Guides
+======
 
 .. toctree::
 

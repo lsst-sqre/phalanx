@@ -11,14 +11,6 @@ It is itself a set of Kubernetes resources and running pods managed with `Helm`_
    :file: applications/_summary.rst.jinja
    :debug:
 
-.. list-table::
-   :widths: 10,40
-
-   * - Type
-     - Helm_
-   * - Namespace
-     - ``argocd``
-
 Overview
 ========
 
