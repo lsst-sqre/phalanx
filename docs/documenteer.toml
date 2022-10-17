@@ -22,6 +22,11 @@ ignore = [
     '^https://summit-lsp.lsst.codes',
     '^https://minikube.lsst.codes',
     '^https://base-lsp.lsst.codes',
+    '^https://data-dev.lsst.cloud',
+    '^https://data-int.lsst.cloud',
+    '^https://data.lsst.cloud',
+    '^https://data-dev.lsst.eu',
+    '^https://rsp.lsst.ac.uk',
     '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
     '^https://github.com/orgs/',
 ]
