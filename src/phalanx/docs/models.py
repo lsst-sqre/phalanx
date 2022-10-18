@@ -29,11 +29,30 @@ class Application:
     values: Dict[str, Dict]
     """The parsed Helm values for each environment."""
 
+    chart: Dict[str, Any]
+    """The parsed Helm Chart.yaml file."""
+
     active_environments: List[str] = field(default_factory=list)
     """Environments where this application is active."""
 
     namespace: str
     """Kubernetes namespace"""
+
+    @property
+    def homepage_url(self) -> Optional[str]:
+        """The Helm home field, typically used for the app's docs."""
+        if "home" in self.chart:
+            return self.chart["home"]
+        else:
+            return None
+
+    @property
+    def source_urls(self) -> Optional[List[str]]:
+        """Application source URLs, typically from the Helm sources field."""
+        if "sources" in self.chart:
+            return self.chart["sources"]
+        else:
+            return None
 
     @classmethod
     def load(
@@ -51,6 +70,13 @@ class Application:
             name. This data determines where the application is active.
         """
         app_name = app_dir.name
+
+        # Open the chart's Chart.yaml
+        chart_path = app_dir.joinpath("Chart.yaml")
+        if chart_path.is_file():
+            chart = yaml.safe_load(chart_path.read_text())
+        else:
+            chart = {}
 
         # Load the app's values files for each environment
         values: Dict[str, Dict] = {}
@@ -98,6 +124,7 @@ class Application:
 
         return cls(
             name=app_name,
+            chart=chart,
             values=values,
             active_environments=active_environments,
             namespace=namespace,

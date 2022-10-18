@@ -1,5 +1,22 @@
 .. list-table::
 
+   {% if app.homepage_url %}
+   * - Homepage
+     - {{ app.homepage_url }}
+   {% endif %}
+   {% if app.source_urls %}
+   * - Source
+   {% if app.source_urls|length == 1 %}
+     - {{ app.source_urls[0] }}
+   {% else %}
+     - - {{ app.source_urls[0] }}
+   {% endif %}
+   {% if app.source_urls|length > 1 %}
+   {% for source_url in app.source_urls[1:] %}
+       - {{ source_url }}
+   {% endfor %}
+   {% endif %}
+   {% endif %}
    * - Type
      - Helm_
    * - Namespace
