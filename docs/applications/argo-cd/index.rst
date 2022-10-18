@@ -51,3 +51,4 @@ Guides
 
    upgrading
    authentication
+   values
