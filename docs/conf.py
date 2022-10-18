@@ -29,3 +29,6 @@ exclude_patterns.extend(  # noqa: F405
 )
 
 linkcheck_anchors = False
+linkcheck_exclude_documents = [
+    r"applications/.*/values",
+]
