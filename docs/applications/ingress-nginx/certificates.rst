@@ -6,7 +6,7 @@ The entire Science Platform uses the same external hostname and relies on NGINX 
 As discussed in :ref:`hostnames`, TLS for the Science Platform can be configured with either a default certificate in ``ingress-nginx`` or through Let's Encrypt with the DNS solver.
 
 If an installation is using Let's Encrypt with the DNS solver, no further configuration of the NGINX ingress is required.
-See :doc:`../cert-manager/bootstrapping` for setup information.
+See :px-app-bootstrap:`cert-manager` for setup information.
 
 When using a commercial certificate, that certificate should be configured in the ``values-*.yaml`` for ``ingress-nginx`` for that environment.
 Specifically, add the following under ``ingress-nginx.controller``:
@@ -16,7 +16,7 @@ Specifically, add the following under ``ingress-nginx.controller``:
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
 
-and add, at the top level:
+And at the top level, add:
 
 .. code-block:: yaml
 
@@ -24,7 +24,8 @@ and add, at the top level:
      enabled: true
      path: secret/k8s_operator/<environment>/ingress-nginx
 
-replacing ``<environment>`` with the hostname of the environment.
+Replace ``<environment>`` with the hostname of the environment.
+
 Then, in the Vault key named by that path, store the commercial certificate.
 The Vault secret should have two keys: ``tls.crt`` and ``tls.key``.
 The first should contain the full public certificate chain.
