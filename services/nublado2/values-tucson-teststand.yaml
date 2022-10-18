@@ -1,4 +1,11 @@
 jupyterhub:
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
   ingress:
     hosts: ["tucson-teststand.lsst.codes"]
     annotations:
