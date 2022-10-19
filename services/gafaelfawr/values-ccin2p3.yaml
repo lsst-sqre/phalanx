@@ -32,6 +32,7 @@ config:
 
   initialAdmins:
       - "mainetti"
+      
   groupMapping:
     "admin:token": "lsst"
     "user:token": "lsst"
