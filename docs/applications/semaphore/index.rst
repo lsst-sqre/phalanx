@@ -9,8 +9,10 @@ Semaphore is the user notification and messaging service for the Rubin Science P
 .. jinja:: semaphore
    :file: applications/_summary.rst.jinja
 
-.. Guides
-.. ======
-..
-.. .. toctree::
-..    :maxdepth: 1
+Guides
+======
+
+.. toctree::
+   :maxdepth: 1
+
+   values

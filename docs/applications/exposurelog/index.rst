@@ -9,8 +9,10 @@ Exposure log is a REST web service to create and manage log messages that are as
 .. jinja:: exposurelog
    :file: applications/_summary.rst.jinja
 
-.. Guides
-.. ======
-..
-.. .. toctree::
-..    :maxdepth: 1
+Guides
+======
+
+.. toctree::
+   :maxdepth: 1
+
+   values

@@ -10,8 +10,10 @@ It is primarily based on the IVOA DataLink standard, but also provides some rela
 .. jinja:: datalinker
    :file: applications/_summary.rst.jinja
 
-.. Guides
-.. ======
-..
-.. .. toctree::
-..    :maxdepth: 1
+Guides
+======
+
+.. toctree::
+   :maxdepth: 1
+
+   values

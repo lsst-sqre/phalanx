@@ -4,13 +4,15 @@
 telegraf-ds
 ###########
 
-SQuaRE DaemonSet (K8s) telemetry collection service
+SQuaRE DaemonSet (K8s) telemetry collection service.
 
 .. jinja:: telegraf-ds
    :file: applications/_summary.rst.jinja
 
-.. Guides
-.. ======
-..
-.. .. toctree::
-..    :maxdepth: 1
+Guides
+======
+
+.. toctree::
+   :maxdepth: 1
+
+   values

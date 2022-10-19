@@ -23,14 +23,13 @@ Users will have to log in, restart sessions, and recreate authentication tokens.
 .. jinja:: postgres
    :file: applications/_summary.rst.jinja
 
-Upgrading ``postgres`` is generally painless.
-A simple Argo CD sync is sufficient.
-
 Guides
 ======
 
 .. toctree::
    :maxdepth: 2
 
-   recreate-pvc
+   upgrade
    add-database
+   troubleshoot
+   values

@@ -4,7 +4,6 @@
 strimzi-registry-operator
 #########################
 
-Alert stream broker.
 The Strimzi Registry Operator operates a Confluence Schema Registry for Strimzi-based Kafka clusters.
 
 .. jinja:: strimzi-registry-operator

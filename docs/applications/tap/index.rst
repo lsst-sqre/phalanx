@@ -11,19 +11,13 @@ The data itself, apart from schema queries, comes from Qserv.
 .. jinja:: tap
    :file: applications/_summary.rst.jinja
 
-.. rubric:: Architecture
-
-The ``tap`` application consists of the TAP Java web application, a PostgreSQL database used to track user job submissions, and (on development deployments) a mock version of qserv.
-
-.. diagrams:: notebook-tap.py
-
-.. diagrams:: portal-tap.py
-
-Upgrading ``tap`` normally only requires an Argo CD sync.
 
 Guides
 ======
 
 .. toctree::
 
+   notes
+   upgrade
    update-tap-schema
+   values
