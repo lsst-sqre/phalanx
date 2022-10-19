@@ -1,8 +1,8 @@
 .. px-app:: tap-schema
 
-##########
-tap-schema
-##########
+########################
+tap-schema — TAP schemas
+########################
 
 The TAP schema database, for the :px-app:`tap` application.
 

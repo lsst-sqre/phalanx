@@ -1,8 +1,8 @@
 .. px-app:: strimzi-registry-operator
 
-#########################
-strimzi-registry-operator
-#########################
+############################################################
+strimzi-registry-operator — Schema registry for Alert Broker
+############################################################
 
 The Strimzi Registry Operator operates a Confluence Schema Registry for Strimzi-based Kafka clusters.
 

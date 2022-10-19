@@ -1,8 +1,8 @@
 .. px-app:: telegraf
 
-########
-telegraf
-########
+######################################
+telegraf — SQuaRE telemetry collection
+######################################
 
 SQuaRE telemetry collection service.
 

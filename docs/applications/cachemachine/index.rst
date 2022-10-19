@@ -1,8 +1,8 @@
 .. px-app:: cachemachine
 
-############
-cachemachine
-############
+#########################################
+cachemachine — JupyterLab image prepuller
+#########################################
 
 Cachemachine is the RSP's image prepulling service.
 

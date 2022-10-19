@@ -1,8 +1,8 @@
 .. px-app:: portal
 
-######
-portal
-######
+#################################
+portal — Firefly-based RSP Portal
+#################################
 
 The portal aspect of the Rubin Science Platform, powered by Firefly.
 

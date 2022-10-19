@@ -1,8 +1,8 @@
 .. px-app:: gafaelfawr
 
-##########
-gafaelfawr
-##########
+######################################
+gafaelfawr — Authentication & identity
+######################################
 
 Gafaelfawr provides authentication and identity management services for the Rubin Science Platform.
 It is primarily used as an NGINX ``auth_request`` handler configured via annotations on the ``Ingress`` resources of Science Platform services.

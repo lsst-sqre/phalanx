@@ -1,8 +1,8 @@
 .. px-app:: telegraf-ds
 
-###########
-telegraf-ds
-###########
+#########################################
+telegraf-ds — SQuaRE telemetry collection
+#########################################
 
 SQuaRE DaemonSet (K8s) telemetry collection service.
 

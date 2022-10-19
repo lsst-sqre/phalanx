@@ -1,8 +1,8 @@
 .. px-app:: postgres
 
-########
-postgres
-########
+###############################
+postgres — In-cluster SQL store
+###############################
 
 The ``postgres`` service is a very small PostgreSQL installation to provide relational storage for applications and environments where data loss is acceptable.
 Two intended purposes for this service are:

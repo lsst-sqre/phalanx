@@ -1,8 +1,8 @@
 .. px-app:: strimzi
 
-#######
-strimzi
-#######
+##################################
+strimzi — Strimzi for Alert Broker
+##################################
 
 Strimzi is an operator for Kafka clusters.
 

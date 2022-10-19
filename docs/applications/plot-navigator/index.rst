@@ -1,8 +1,8 @@
 .. px-app:: plot-navigator
 
-##############
-plot-navigator
-##############
+############################################
+plot-navigator — Data production plot viewer
+############################################
 
 Panel-based plot viewer.
 

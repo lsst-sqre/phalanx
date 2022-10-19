@@ -1,8 +1,8 @@
 .. px-app:: sasquatch
 
-#########
-sasquatch
-#########
+#################################
+sasquatch — Observatory telemetry
+#################################
 
 Rubin Observatory's telemetry service.
 

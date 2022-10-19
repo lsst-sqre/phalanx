@@ -1,8 +1,8 @@
 .. px-app:: vo-cutouts
 
-##########
-vo-cutouts
-##########
+####################################
+vo-cutouts — IVOA SODA image cutouts
+####################################
 
 Image cutout service that implements the IVOA SODA specification.
 

@@ -1,8 +1,8 @@
 .. px-app:: hips
 
-####
-hips
-####
+#######################
+hips — HiPS tile server
+#######################
 
 HiPS web server backed by Google Cloud Storage.
 

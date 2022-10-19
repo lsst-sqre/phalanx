@@ -1,8 +1,8 @@
 .. px-app:: noteburst
 
-#########
-noteburst
-#########
+###########################################
+noteburst — Notebook execution-as-a-service
+###########################################
 
 Noteburst is a notebook execution service for the Rubin Science Platform.
 

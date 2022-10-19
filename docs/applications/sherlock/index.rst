@@ -1,8 +1,8 @@
 .. px-app:: sherlock
 
-########
-sherlock
-########
+#########################################
+sherlock — App ingress status and metrics
+#########################################
 
 Sherlock collects service status and metrics from ingress logs.
 

@@ -1,8 +1,8 @@
 .. px-app:: times-square
 
-############
-times-square
-############
+######################################
+times-square — Parameterized notebooks
+######################################
 
 An API service for managing and rendering parameterized Jupyter notebooks, integrated with :px-app:`squareone` (user interface) and :px-app:`noteburst` (notebook execution).
 

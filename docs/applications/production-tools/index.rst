@@ -1,8 +1,8 @@
 .. px-app:: production-tools
 
-################
-production-tools
-################
+##################################
+production-tools — Data Production
+##################################
 
 Production Tools provides a collection of utility pages for monitoring data processing.
 

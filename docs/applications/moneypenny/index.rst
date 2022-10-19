@@ -1,8 +1,8 @@
 .. px-app:: moneypenny
 
-##########
-moneypenny
-##########
+##################################
+moneypenny — RSP user provisioning
+##################################
 
 Moneypenny provides user-provisioning actions for the Rubin Science Platform.
 

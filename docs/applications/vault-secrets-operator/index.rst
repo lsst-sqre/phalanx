@@ -2,9 +2,9 @@
 
 .. _vault-secrets-operator:
 
-######################
-vault-secrets-operator
-######################
+############################################
+vault-secrets-operator — Vault to Kubernetes
+############################################
 
 The ``vault-secrets-operator`` application is an installation of `Vault Secrets Operator`_ to retrieve necessary secrets from Vault and materialize them as Kubernetes secrets for the use of other applications.
 It processes ``VaultSecret`` resources defined in the `phalanx repository`_ and creates corresponding Kubernetes Secret_ resources.

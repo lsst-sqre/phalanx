@@ -1,8 +1,8 @@
 .. px-app:: cert-manager
 
-############
-cert-manager
-############
+######################################
+cert-manager — TLS certificate manager
+######################################
 
 Cert-manager creates TLS certificates via `Let's Encrypt <https://letsencrypt.org/>`__ and automatically renews them.
 

@@ -1,8 +1,8 @@
 .. px-app:: narrativelog
 
-############
-narrativelog
-############
+########################################
+narrativelog — Narrative observatory log
+########################################
 
 Narrative log API service for Rubin Observatory.
 

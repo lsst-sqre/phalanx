@@ -1,8 +1,8 @@
 .. px-app:: squareone
 
-#########
-squareone
-#########
+########################
+squareone — RSP homepage
+########################
 
 Squareone is the Rubin Science Platform's homepage and general-purpose UI.
 
