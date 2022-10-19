@@ -1,8 +1,8 @@
 .. px-env:: roe
 
-####################
-roe — rsp.lsst.ac.uk
-####################
+#######################################
+roe — rsp.lsst.ac.uk (UK Data Facility)
+#######################################
 
 roe is the environment for the Rubin Science Platform hosted at the `Royal Observatory, Edinburgh <https://www.roe.ac.uk/>`__.
 

@@ -1,8 +1,8 @@
 .. px-env:: base
 
-##########################
-base — base-lsp.lsst.codes
-##########################
+######################################
+base — base-lsp.lsst.codes (La Serena)
+######################################
 
 base is the environment for the Rubin Science Platform at the Rubin Base facility in La Serena.
 
