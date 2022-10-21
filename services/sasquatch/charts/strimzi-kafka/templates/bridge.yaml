@@ -1,0 +1,49 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaBridge
+metadata:
+  name: {{ .Values.cluster.name }}
+spec:
+  replicas: 1
+  bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
+  http:
+    port: 8080
+  tls:
+    trustedCertificates:
+      - secretName: {{ .Values.cluster.name }}-cluster-ca-cert
+        certificate: ca.crt
+  authentication:
+    type: tls
+    certificateAndKey:
+      secretName: {{ .Values.cluster.name }}-bridge
+      certificate: user.crt
+      key: user.key
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: {{ .Values.cluster.name }}-bridge
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: data-dev.lsst.cloud
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ .Values.cluster.name }}-bridge-service
+                port:
+                  number: 8080
+            path: /{{ .Values.cluster.name }}-bridge(/|$)(.*)
+            pathType: Prefix
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-bridge
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
