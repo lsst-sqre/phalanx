@@ -6,7 +6,7 @@ Let's Encrypt certificate management
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://charts.jetstack.io | cert-manager | v1.9.1 |
+| https://charts.jetstack.io | cert-manager | v1.10.0 |
 
 ## Values
 
