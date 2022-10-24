@@ -27,7 +27,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: data-dev.lsst.cloud
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
           - backend:
