@@ -142,3 +142,15 @@ dmypy.json
 services/alert-stream-broker/charts/.DS_Store
 
 services/.DS_Store
+
+services/alert-stream-broker/.DS_Store
+
+.idea/modules.xml
+
+.idea/phalanx.iml
+
+.idea/vcs.xml
+
+.DS_Store
+
+.idea/inspectionProfiles/profiles_settings.xml
