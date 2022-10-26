@@ -1,6 +1,6 @@
-######################
-Updating "recommended"
-######################
+###########################################
+Updating the "recommended" JupyterLab image
+###########################################
 
 The "recommended" tag for JupyterLab images is usually a recent weekly image.
 The image marked "recommended" is guaranteed by SQuaRE to be compatible with other services and materials--such as tutorial or system testing notebooks--that we make available on RSP deployments.

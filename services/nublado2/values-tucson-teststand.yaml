@@ -1,4 +1,11 @@
 jupyterhub:
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
   ingress:
     hosts: ["tucson-teststand.lsst.codes"]
     annotations:
@@ -6,7 +13,7 @@ jupyterhub:
   hub:
     db:
       upgrade: true
-      url: "postgresql://jovyan@140.252.146.49/jupyterhub"
+      url: "postgresql://jovyan@squoint.tu.lsst.org/jupyterhub"
 
   singleuser:
     extraAnnotations:

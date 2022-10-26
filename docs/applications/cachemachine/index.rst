@@ -1,27 +1,20 @@
-############
-cachemachine
-############
+.. px-app:: cachemachine
 
-.. list-table::
-   :widths: 10,40
+#########################################
+cachemachine — JupyterLab image prepuller
+#########################################
 
-   * - Edit on GitHub
-     - `/services/cachemachine <https://github.com/lsst-sqre/phalanx/tree/master/services/cachemachine>`__
-   * - Type
-     - Helm_
-   * - Namespace
-     - ``cachemachine``
+Cachemachine is the RSP's image prepulling service.
 
-.. rubric:: Overview
+.. jinja:: cachemachine
+   :file: applications/_summary.rst.jinja
 
-The ``cachemachine`` service is an installation of the RSP's image-prepulling service from its `Helm chart <https://github.com/lsst-sqre/phalanx/tree/master/services/cachemachine>`__.
-
-Upgrading ``cachemachine`` is generally painless.
-A simple Argo CD sync is sufficient.
-
-.. rubric:: Guides
+Guides
+======
 
 .. toctree::
 
+   upgrade
    pruning
    updating-recommended
+   values

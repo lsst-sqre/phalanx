@@ -25,6 +25,10 @@ spec:
     targetRevision: {{ .Values.revision }}
     helm:
       parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vault_path_prefix | quote }}
       valueFiles:

@@ -1,8 +1,10 @@
+.. px-app-bootstrap:: cert-manager
+
 ##########################
 Bootstrapping cert-manager
 ##########################
 
-The issuer defined in the ``cert-manager`` application uses the DNS solver.
+The issuer defined in the :px-app:`cert-manager` application uses the DNS solver.
 The advantage of the DNS solver is that it works behind firewalls and can provision certificates for environments not exposed to the Internet, such as the Tucson teststand.
 The DNS solver uses an AWS service user with write access to Route 53 to answer Let's Encrypt challenges.
 

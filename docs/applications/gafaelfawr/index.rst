@@ -1,18 +1,8 @@
-##########
-Gafaelfawr
-##########
+.. px-app:: gafaelfawr
 
-.. list-table::
-   :widths: 10,40
-
-   * - Edit on GitHub
-     - `/services/gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/master/services/gafaelfawr>`__
-   * - Type
-     - Helm_
-   * - Namespace
-     - ``gafaelfawr``
-
-.. rubric:: Overview
+######################################
+gafaelfawr — Authentication & identity
+######################################
 
 Gafaelfawr provides authentication and identity management services for the Rubin Science Platform.
 It is primarily used as an NGINX ``auth_request`` handler configured via annotations on the ``Ingress`` resources of Science Platform services.
@@ -22,18 +12,18 @@ Gafaelfawr supports authentication via either OpenID Connect (often through CILo
 
 Gafaelfawr also provides a token management API and (currently) UI for users of the Science Platform.
 
-.. rubric:: Guides
+.. jinja:: gafaelfawr
+   :file: applications/_summary.rst.jinja
+
+Guides
+======
 
 .. toctree::
+   :maxdepth: 2
 
-   debugging
+   notes
    storage
    recreate-token
    github-organizations
-
-.. seealso::
-
-   * `DMTN-234: Identity management design <https://dmtn-234.lsst.io/>`__
-   * `DMTN-224: Identity management implementation <https://dmtn-224.lsst.io/>`__
-   * `SQR-069: Identity management history and decisions <https://sqr-069.lsst.io/>`__
-   * `Gafaelfawr documentation <https://gafaelfawr.lsst.io/>`__
+   troubleshoot
+   values

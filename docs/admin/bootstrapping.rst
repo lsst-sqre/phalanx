@@ -74,7 +74,7 @@ There are supported two mechanisms to configure that TLS certificate:
 #. Configure Let's Encrypt to obtain a certificate via the DNS solver.
    Once this is configured, TLS will be handled automatically without further human intervention.
    However, this approach is far more complex to set up and has some significant prerequisites.
-   For more information, see :doc:`/applications/cert-manager/bootstrapping`.
+   For more information, see :px-app-bootstrap:`cert-manager`.
 
 To use the second approach, you must have the following:
 
