@@ -37,8 +37,8 @@ config:
         # type: Directory
     - name: home
       hostPath:
-        #path: /data/rsp/home
-        path: /pbs/home/m
+        path: /data/rsp/home
+        #path: /pbs/home/m
         # type: Directory
 
   volume_mounts:
