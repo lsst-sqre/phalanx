@@ -36,6 +36,7 @@ config:
     LSST_DDS_INTERFACE: net1
     LSST_DDS_PARTITION_PREFIX: tucson
     LSST_SITE: tucson
+    PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
   volumes:
     - name: home
       nfs:
