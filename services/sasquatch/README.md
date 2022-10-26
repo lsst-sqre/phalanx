@@ -12,7 +12,7 @@ Rubin Observatory's telemetry service.
 |  | telegraf-kafka-consumer | 1.0.0 |
 | https://helm.influxdata.com/ | chronograf | 1.2.5 |
 | https://helm.influxdata.com/ | influxdb | 4.12.0 |
-| https://helm.influxdata.com/ | influxdb2 | 2.1.0 |
+| https://helm.influxdata.com/ | influxdb2 | 2.1.1 |
 | https://helm.influxdata.com/ | kapacitor | 1.4.6 |
 | https://lsst-sqre.github.io/charts/ | strimzi-registry-operator | 2.1.0 |
 
@@ -32,6 +32,8 @@ Rubin Observatory's telemetry service.
 | chronograf.resources.limits.memory | string | `"16Gi"` |  |
 | chronograf.resources.requests.cpu | int | `1` |  |
 | chronograf.resources.requests.memory | string | `"1Gi"` |  |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |

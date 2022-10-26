@@ -1,6 +1,11 @@
-###############################
+.. px-app-troubleshooting:: gafaelfawr
+
+###############
+Troubleshooting
+###############
+
 Debugging authentication issues
-###############################
+===============================
 
 If a user successfully authenticates through the Gafaelfawr ``/login`` route but then cannot access an application such as the Notebook or Portal, a good initial debugging step is to determine what scopes the user was granted on the basis of their group membership.
 

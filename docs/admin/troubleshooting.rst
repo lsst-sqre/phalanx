@@ -16,7 +16,7 @@ If the pod is already running, it gets I/O errors from its database, hangs, or o
 If the backing store is corrupt or has been deleted or otherwise is disrupted, sometimes the ``PersistentVolume`` will become unavailable, but the ``PersistentVolumeClaim`` will hang on to it and keep trying to futilely mount it.
 When this happens, you may need to recreate the persistent volume.
 
-**Solution:** :doc:`/applications/postgres/recreate-pvc`
+**Solution:** :ref:`recreate-postgres-pvc`
 
 Spawner menu missing images, cachemachine stuck pulling the same image
 ======================================================================
@@ -60,7 +60,7 @@ Spawning a notebook fails with a pending error
 In this case, JupyterHub may not recover without assistance.
 You may need to delete the record for the affected user, and also make sure the user's lab namespace (visible in Argo CD under the ``nublado-users`` application) has been deleted.
 
-**Solution:** :doc:`/applications/nublado2/database`
+**Solution:** :ref:`nublado2-clear-session-database`
 
 User gets permission denied from applications
 =============================================
@@ -75,7 +75,7 @@ The most likely cause of this problem is that the user is not a member of a grou
 Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to an application.
 If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other application.
 
-**Solution:** :doc:`/applications/gafaelfawr/debugging`
+**Solution:** :px-app-troubleshooting:`Gafaelfawr troubleshooting <gafaelfawr>`
 
 You need privileged access to the filestore
 ===========================================
