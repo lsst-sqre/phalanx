@@ -4,9 +4,9 @@ jupyterhub:
   hub:
     db:
       upgrade: true
-    image:
-      name: gabrimaine/nublado2
-      tag: "2.6.0-dev"
+    # image:
+    #   name: gabrimaine/nublado2
+    #   tag: "2.6.0-dev"
 
   # hub:
   #   resources:
@@ -38,7 +38,7 @@ config:
     - name: home
       hostPath:
         #path: /data/rsp/home
-        path: /pbs/home
+        path: /pbs/home/m
         # type: Directory
 
   volume_mounts:
