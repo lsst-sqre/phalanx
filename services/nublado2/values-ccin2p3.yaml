@@ -37,7 +37,7 @@ config:
         # type: Directory
     - name: home
       hostPath:
-        path: /pbs/home"{{ user[1] }}"
+        path: /pbs/home/"{{ user[1] }}"
         #path: /data/rsp/home
         #path: /pbs/home/m
         # type: Directory
