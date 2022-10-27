@@ -31,9 +31,9 @@ config:
     - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
       name: Recommended
   volumes:
-    - name: data
-      hostPath:
-        path: /data/rsp/nublado2
+    # - name: data
+    #   hostPath:
+    #     path: /data/rsp/nublado2
         # type: Directory
     - name: home
       hostPath:
@@ -43,8 +43,8 @@ config:
         # type: Directory
 
   volume_mounts:
-    - name: data
-      mountPath: /data
+    # - name: data
+    #   mountPath: /data
     - name: home
       mountPath: /home
   
