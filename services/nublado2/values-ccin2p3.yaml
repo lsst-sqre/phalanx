@@ -47,7 +47,7 @@ config:
       mountPath: /data
     - name: home
       mountPath: /home
-
+  
   user_resources_template: |
     - apiVersion: v1
       kind: Namespace
@@ -119,9 +119,9 @@ config:
           nobody:x:99:99:Nobody:/:/sbin/nologin
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
-          lsst_lcl:x:1000:1000::/home/{{ user[0]}}/lsst_lcl:/bin/bash
+          lsst_lcl:x:1000:1000::/home/{{ user[0] }}/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home//{{ user[0]}}/{{ user }}:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user[0] }}/{{ user }}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -208,5 +208,3 @@ config:
       spec:
         path: "{{ pull_secret_path }}"
         type: kubernetes.io/dockerconfigjson
-
-      #subPath: "{{ $user[1] }}/{{ $user }}"
