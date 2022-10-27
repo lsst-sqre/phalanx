@@ -4,6 +4,13 @@ jupyterhub:
   hub:
     db:
       upgrade: true
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
     # image:
     #   name: gabrimaine/nublado2
     #   tag: "2.6.0-dev"
@@ -18,6 +25,10 @@ jupyterhub:
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "20s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
 config:
   base_url: "https://data-dev.lsst.eu"
@@ -27,6 +38,12 @@ config:
     AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
     AUTO_REPO_BRANCH: "prod"
     AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    NO_ACTIVITY_TIMEOUT: "432000"
+    CULL_KERNEL_IDLE_TIMEOUT: "432000"
+    CULL_KERNEL_CONNECTED: "True"
+    CULL_KERNEL_INTERVAL: "300"
+    CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+    CULL_TERMINAL_INTERVAL: "300"
   pinned_images:
     - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
       name: Recommended
