@@ -46,5 +46,5 @@ config:
     - name: data
       mountPath: /data
     - name: home
-      mountPath: /home
-      subPath: "{{ $user[1] }}/{{ $user }}"
+      mountPath: /home/{{ $user[1] }}/{{ $user }}
+      #subPath: "{{ $user[1] }}/{{ $user }}"
