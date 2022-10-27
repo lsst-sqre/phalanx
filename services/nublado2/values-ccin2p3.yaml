@@ -37,7 +37,7 @@ config:
         # type: Directory
     - name: home
       hostPath:
-        path: /pbs/home
+        path: /pbs/home"{{ $user[1] }}"
         #path: /data/rsp/home
         #path: /pbs/home/m
         # type: Directory
@@ -46,5 +46,5 @@ config:
     - name: data
       mountPath: /data
     - name: home
-      mountPath: /home/"{{ $user[1] }}/{{ $user }}""
+      mountPath: /home/"{{ $user[1] }}/{{ $user }}"
       #subPath: "{{ $user[1] }}/{{ $user }}"
