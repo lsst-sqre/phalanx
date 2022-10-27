@@ -38,6 +38,7 @@ config:
     - name: home
       hostPath:
         path: /pbs/home
+        subPath: "{{ user[1] }}"
         #path: /data/rsp/home
         #path: /pbs/home/m
         # type: Directory
