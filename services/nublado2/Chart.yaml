@@ -5,7 +5,9 @@ description: JupyterHub for the Rubin Science Platform
 home: https://github.com/lsst-sqre/nublado2
 sources:
   - https://github.com/lsst-sqre/nublado2
+# This version is not used directly.  Also update the tag in values.yaml.
 appVersion: "2.6.1"
+
 # Match the jupyterhub Helm chart for kubeVersion
 kubeVersion: ">=1.20.0-0"
 dependencies:
@@ -14,3 +16,9 @@ dependencies:
     # Jupyterhub package itself.
     version: "2.0.0"
     repository: https://jupyterhub.github.io/helm-chart/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-164"
+      title: "Nublado v2 Architecture"
+      url: "https://dmtn-164.lsst.io/"

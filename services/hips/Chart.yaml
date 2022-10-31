@@ -5,3 +5,8 @@ description: HiPS web server backed by Google Cloud Storage
 sources:
   - https://github.com/lsst-sqre/crawlspace
 appVersion: 0.2.1
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-230"
+      title: "RSP HiPS service implementation strategy"
+      url: "https://dmtn-230.lsst.io/"
