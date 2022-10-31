@@ -17,4 +17,5 @@ Guides
    upgrade
    pruning
    updating-recommended
+   gar
    values
