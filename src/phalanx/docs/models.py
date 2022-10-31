@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
+from functools import cached_property
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -14,6 +15,31 @@ ENVIRONMENTS_DIR = "science-platform"
 
 APPS_DIR = "services"
 """Root directory of the application Helm charts in Phalanx."""
+
+
+@dataclass(kw_only=True)
+class DocLink:
+    """A model describing a document link, based on an individual array item
+    in the ``phalanx.lsst.io/docs`` chart annotation.
+    """
+
+    url: str
+    """URL to the document."""
+
+    title: str
+    """Document title."""
+
+    id: Optional[str]
+    """Document identifier."""
+
+    def __str__(self) -> str:
+        """A reStructuredText-formatted link."""
+        if self.id is not None:
+            label = f"{self.id}: {self.title}"
+        else:
+            label = self.title
+
+        return f"`{label} <{self.url}>`__"
 
 
 @dataclass(kw_only=True)
@@ -67,6 +93,17 @@ class Application:
             if line.startswith("## Values"):
                 return "\n".join(lines[i + 1 :])
         return ""
+
+    @cached_property
+    def doc_links(self) -> List[str]:
+        """reStructuredText-formatted list of links."""
+        key = "phalanx.lsst.io/docs"
+        if "annotations" in self.chart and key in self.chart["annotations"]:
+            docs_data = yaml.safe_load(self.chart["annotations"][key])
+            docs = [DocLink(**d) for d in docs_data]
+            return docs
+        else:
+            return []
 
     @classmethod
     def load(
