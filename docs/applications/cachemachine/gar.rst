@@ -41,7 +41,7 @@ The following Kubernetes annotation must be added to the Kubernetes ``ServiceAcc
        iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-dev-7696.iam.gserviceaccount.com
      }
 
-To troubleshoot or validate Workload Identity, a test pod can be provisioned using [these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#verify_the_setup)
+To troubleshoot or validate Workload Identity, a test pod can be provisioned using `these instructions <https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#verify_the_setup>`__.
 
 Validating operations
 =====================
