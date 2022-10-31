@@ -3,7 +3,8 @@ name: times-square
 version: 1.0.0
 description: |
   An API service for managing and rendering parameterized Jupyter notebooks.
-home: https://github.com/lsst-sqre/times-square
+sources:
+  - https://github.com/lsst-sqre/times-square
 type: application
 
 # The default version tag of the times-square docker image

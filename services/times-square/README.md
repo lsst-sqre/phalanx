@@ -2,7 +2,9 @@
 
 An API service for managing and rendering parameterized Jupyter notebooks.
 
-**Homepage:** <https://github.com/lsst-sqre/times-square>
+## Source Code
+
+* <https://github.com/lsst-sqre/times-square>
 
 ## Requirements
 
