@@ -1,38 +1,62 @@
-##############################################################################
-Overview of Cachemachine integration with Google Cloud Artifact Registry (GAR)
-##############################################################################
+################################################
+Google Cloud Artifact Registry (GAR) integration
+################################################
 
-The existing Cachemachine service was updated to support interfacing with the Google Artifact Registry (GAR) API instead of using the docker client.  This allows for workload identity credentials to be used instead of docker credentials.  Docker client authentication with GAR is cumbersome because a JSON token is used for authentication that contains special characters which makes it difficult to pass between multiple secret engine layers.  The other main advantage of interfacing directly with GAR is that a hash cache does not need to be built.  The GAR API returns a list of images with all tags for that image.   The docker client will return a list of images with a single tag.  The single tag per image approach with the docker client requires that a hash cache is built to group the same images together.  That construct is not used by the GAR instance of cachemachine because the image already has the tags included in the API response.
+Cachemachine optionally supports using the Google Cloud Artifact Registry (GAR) API to list images rather than the Docker API.
+
+This allows workload identity credentials to be used instead of Docker credentials when the images are stored in GAR.
+Docker client authentication with GAR is cumbersome because a JSON token is used for authentication, and that token contains special characters that make it difficult to pass between multiple secret engine layers.
+
+Using the GAR API directly also avoids the need to build a cache of hashes to resolve tags to images.
+The Docker API returns a list of images with a single tag, which requires constructing a cache of known hashes to determine which tags are alternate names for images that have already been seen.
+The GAR API returns a list of images with all tags for that image, avoiding this problem.
 
 Container Image Streaming
 =========================
 
-[Container Image Streaming](https://cloud.google.com/blog/products/containers-kubernetes/introducing-container-image-streaming-in-gke) is used by uncached images and by cachemachine to decrease the time for the image pull time.  The sciplat lab images are 4 GB and the image pull time decreased from 4 minutes to 30 seconds using image streaming.  Image streaming is per project by enabling the `containerfilesystem.googleapis.com` API.  This was enabled via Terraform.
+`Container Image Streaming <https://cloud.google.com/blog/products/containers-kubernetes/introducing-container-image-streaming-in-gke>`__ is used by cachemachine to decrease the time for the image pull time.
+It's also used when an image isn't cached, which makes it practical to use uncached images.
+With normal Docker image retrieval, using an uncached image can result in a five-minute wait and an almost-certain timeout.
 
+The ``sciplatlab`` images are 4GB.
+Image pull time for those images decreased from 4 minutes to 30 seconds using image streaming.
+
+Image streaming is per project by enabling the ``containerfilesystem.googleapis.com`` API.
+This was enabled via Terraform for the Interim Data Facility environments.
 
 Workload Identity
 =================
 
-[Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity) is used by Cachemachine to authenticate with GAR API.  Workload Identity allows kubernetes service accounts to impersonate Google Cloud Platform (GCP) Service Accounts to authenticate to GCP services.  Workload Identity is enabled on all of the Rubin Science Platform (RSP) Google Kuberentes Engine (GKE) Clusters.  The binding between the Kubernetes and the GCP service account is done through IAM permissions deployed via Terraform.  A kubernetes annotation is deployed via phalanx as detailed below to bind the GCP service account to the Kubernetes service account.
+`Workload Identity <https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity>`__ is used by Cachemachine to authenticate to the GAR API.
+Workload Identity allows Kubernetes service accounts to impersonate Google Cloud Platform (GCP) Service Accounts to authenticate to GCP services.
+Workload Identity is enabled on all of the Rubin Science Platform (RSP) Google Kuberentes Engine (GKE) Clusters.
 
-```
-serviceAccount:
-  annotations: {
-    iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-dev-7696.iam.gserviceaccount.com
-  }
-```
-To troubleshoot or validate workload identity a test pod can be provisioned using [these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#verify_the_setup)
+The binding between the Kubernetes and the GCP service account is done through IAM permissions deployed via Terraform.
+The following Kubernetes annotation must be added to the Kubernetes ``ServiceAccount`` object as deployed via Phalanx to bind that service account to the GCP service account.
 
+.. code-block:: yaml
 
-Validating Operations
+   serviceAccount:
+     annotations: {
+       iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-dev-7696.iam.gserviceaccount.com
+     }
+
+To troubleshoot or validate Workload Identity, a test pod can be provisioned using [these instructions](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#verify_the_setup)
+
+Validating operations
 =====================
 
-To validate cachemachine is running check the status page at this url `https://data-dev.lsst.cloud/cachemachine/jupyter`.  Replace `data-dev` with the appropriate environment.  Check the `common_cache` for new images cached and see if in `images_to_cache` is blank or only showing new images that are in the process of being downloaded.
+To validate cachemachine is running, check the status page at ``https://data-dev.lsst.cloud/cachemachine/jupyter``.
+(Replace ``data-dev`` with the appropriate environment.)
+Check the ``common_cache`` key for cached images, and see if ``images_to_cache`` is blank or only showing new images that are in the process of being downloaded.
 
+Future work
+===========
 
-https://data-dev.lsst.cloud/cachemachine/jupyter
+- Cachemachine and Nublado both default to configuring an image pull secret when spawning pods.
+  This value is not used by GAR.
+  In GKE, the nodes default to using the built-in service account to pull images.
+  This means we can drop the ``pull-secret`` secret and its configuration when GAR is in use.
 
-Below are notes from the deployment and considerations for future.
-
-* The kubernetes python client defaults to including an image pull secret.  This value is not used by GAR.  In GKE the nodes default to using the built in service account to pull images.  Noting here to avoid confusion in the future.
-* Image streaming is currently a per region setting.  If GKE clustes are deployed outside of us-central1 in the future a GAR repo should be created for that region to stream images.
+- Image streaming is currently a per-region setting.
+  If GKE clustes are deployed outside of ``us-central1`` in the future, a GAR repository should be created for that region to stream images.
