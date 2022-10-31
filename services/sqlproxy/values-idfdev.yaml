@@ -1,6 +1,6 @@
 serviceAccountName: sqlproxy-butler-int
 
-nameOverride: sqlproxy-butler-int
+fullnameOverride: sqlproxy-butler-int
 
 serviceAccount:
   annotations: {
