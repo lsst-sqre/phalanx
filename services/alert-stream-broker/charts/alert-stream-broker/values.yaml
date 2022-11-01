@@ -9,13 +9,13 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: 2.8.1
+  version: 3.2.3
   # -- Encoding version for messages, see
   # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-  logMessageFormatVersion: 2.8
+  logMessageFormatVersion: 3.2.3
   # -- Version of the protocol for inter-broker communication, see
   # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-  interBrokerProtocolVersion: 2.8
+  interBrokerProtocolVersion: 3.2.3
 
   # -- Number of Kafka broker replicas to run.
   replicas: 3
