@@ -9,7 +9,8 @@ Requirements
 
 * The installer assumes Git 2.22 or later.
 
-* We presume that you are using Vault_ coupled with `Vault Secrets Operator`_ to manage your Kubernetes secrets, and further that you will use the same taxonomy that SQuaRE does as described in the `LSST Vault Utilities documentation <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ documentation (essentially ``secret/k8s_operator/<instance-name>``).
+* We presume that you are using Vault_ coupled with `Vault Secrets Operator`_ to manage your Kubernetes secrets, and that all of the secrets for your environment will be stored under a single common prefix.
+  See the `LSST Vault Utilities documentation <https://github.com/lsst-sqre/lsstvaultutils#secrets>`__ for the naming convention that we usually use.
   We strongly recommend using the `LSST Vault Utilites`_ to create multiple enclaves (one per instance), so that then compromise of one instance doesn't expose all your secrets for all instances.
 
 * Rubin Science Platform applications expect the public hostname of the Science Platform to have a TLS certificate that can be verified using standard CA roots.
@@ -19,11 +20,12 @@ Requirements
 Checklist
 =========
 
-#. Fork the `phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
+.. rst-class:: open
+
+#. Fork the `Phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
 
 #. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/master/installer/requirements.txt>`__.
    If you are not using 1Password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
-   In any event, note the write key for your Vault enclave.
 
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
@@ -32,13 +34,11 @@ Checklist
 
 #. Decide on your approach to TLS certificates.
    See :ref:`hostnames` for more details.
+   This may require DNS configuration in Route 53 if this is the first deployment in a new domain and you are using Let's Encrypt for certificates.
 
 #. Do what DNS setup you can.
    If you already know the IP address where your instance will reside, create the DNS records (A or possibly CNAME) for that instance.
    If you are using a cloud provider or something like minikube where the IP address is not yet known, then you will need to create that record once the top-level ingress is created and has an external IP address.
-
-   The first time you set up the RSP for a given domain (note: *not* hostname, but *domain*, so if you were setting up ``dev.my-rsp.net`` and ``prod.my-rsp.net``, ``dev`` first, you would only need to do this when you created ``dev``), if you are using Let's Encrypt for certificate management (which we highly recommend), you will need to create glue records to enable Let's Encrypt to manage TLS for the domain.
-   See :doc:`/applications/cert-manager/route53-setup` for more details.
 
 #. For each enabled application, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
    Customization will vary from application to application.
@@ -46,11 +46,13 @@ Checklist
    See :ref:`application-notes` for more details on special considerations for individual applications.
 
 #. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__.
-   This is where you will need the write key for the Vault enclave.
+   You will need the write key for the Vault enclave you are using for this environment.
 
 #. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
+   Debug any problems.
+   The most common source of problems are errors or missing configuration in the ``values-<environment>.yaml`` files you created for each application.
 
-   If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller Service_ comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
+#. If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller Service_ comes up and has an external IP address; then go set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
    For installations that are intended to be long-lived, it is worth capturing the IP address at this point and modifying your configuration to use it statically should you ever need to reinstall the instance.
 
 .. _hostnames:
@@ -59,17 +61,20 @@ Hostnames and TLS
 =================
 
 The Science Platform is designed to run under a single hostname.
-Ingresses for all applications use different routes on the same external hostname.
-That hostname, in turn, is served by an NGINX proxy web server, configured via the ``ingress-nginx`` Helm chart (normally installed with the Science Platform).
+``Ingress`` resources for all applications use different routes on the same external hostname.
+That hostname, in turn, is served by an NGINX proxy web server, configured via the ``ingress-nginx`` Helm chart.
 An NGINX ingress controller is required since its ``auth_request`` mechanism is used for authentication.
 
 The external hostname must have a valid TLS certificate that is trusted by the stock configuration of standard CentOS, Debian, and Alpine containers.
 There are supported two mechanisms to configure that TLS certificate:
 
+.. rst-class:: open
+
 #. Purchase a commercial certificate and configure it as the ingress-nginx default certificate.
-   Do not add TLS configuration to any of the application ingresses.
    For more information, see :doc:`/applications/ingress-nginx/certificates`.
-   With this approach, the certificate will have to be manually renewed and replaced once per year.
+   Do not add TLS configuration to any of the application ``Ingress`` resources.
+   With this approach, the certificate will have to be manually renewed and replaced at whatever frequency the commercial certificate provider requires.
+   Usually this is once per year.
 
 #. Configure Let's Encrypt to obtain a certificate via the DNS solver.
    Once this is configured, TLS will be handled automatically without further human intervention.

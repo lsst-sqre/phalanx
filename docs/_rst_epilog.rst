@@ -17,7 +17,7 @@
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _`lsst-sqre/phalanx`:
-.. _phalanx repository: https://github.com/lsst-sqre/phalanx
+.. _Phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
 .. _Roundtable: https://roundtable.lsst.io/
