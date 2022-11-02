@@ -4,6 +4,8 @@ name: Docs
   pull_request:
     paths:
       - "docs/**"
+      - "services/*/Chart.yaml"
+      - "services/*/values.yaml"
   push:
     branches-ignore:
       # These should always correspond to pull requests, so ignore them for
@@ -18,6 +20,8 @@ name: Docs
       - "*"
     paths:
       - "docs/**"
+      - "services/*/Chart.yaml"
+      - "services/*/values.yaml"
 
 jobs:
   docs:

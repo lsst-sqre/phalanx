@@ -71,6 +71,7 @@ influxdb:
       cpu: 8
 
 influxdb2:
+  enabled: false
   adminUser:
     # -- Admin default organization.
     organization: "default"
