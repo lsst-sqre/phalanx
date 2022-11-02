@@ -67,7 +67,7 @@ User gets permission denied from applications
 
 **Symptoms:** A user is able to authenticate to the Rubin Science Platform (prompted by going to the first authenticated URL, such as the Notebook Aspect spawner page), but then gets permission denied from other application.
 
-**Causes:** Authentication and authorization to the Rubin Science Platform is done via a application called Gafaelfawr (see :doc:`/applications/gafaelfawr/index`).
+**Causes:** Authentication and authorization to the Rubin Science Platform is done via a application called :doc:`Gafaelfawr </applications/gafaelfawr/index>`.
 After the user authenticates, Gafaelfawr asks their authentication provider for the user's group memberships and then translates that to a list of scopes.
 The mapping of group memberships to scopes is defined in the ``values.yaml`` file for Gafaelfawr for the relevant environment, in the ``gafaelfawr.config.groupMapping`` configuration option.
 
