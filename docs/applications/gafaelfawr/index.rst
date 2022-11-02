@@ -21,7 +21,6 @@ Guides
 .. toctree::
    :maxdepth: 2
 
-   notes
    storage
    recreate-token
    github-organizations

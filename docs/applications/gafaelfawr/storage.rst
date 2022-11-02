@@ -18,7 +18,7 @@ To choose this method, put:
      persistence:
        enabled: false
 
-in the ``values-*.yaml`` file for that environment under the ``gafaelfawr`` key.
+in the ``values-*.yaml`` file for that environment.
 
 .. _dynamic-gafaelfawr:
 
@@ -38,9 +38,11 @@ Do this by putting:
      persistence:
        storageClass: "standard-rwo"
 
-in the ``values-*.yaml`` file for that environment under the ``gafaelfawr`` key.
+in the ``values-*.yaml`` file for that environment.
 
-In this configuration, you may want to start Gafaelfawr so that the persistent volume claim and corresponding persistent volume has been created, locate that persistent volume, and then change its reclaim policy from the default (usually ``Delete``) to ``Retain``.
+You may want to change the reclaim policy from the default.
+First, start Gafaelfawr so that hte persistent volume claim and corresponding persistent volume have been created.
+Then, locate that persistent volume and change its reclaim policy from the default (usually ``Delete``) to ``Retain``.
 This provides some additional protection against wiping the storage in accidents or application redeployments that cause the ``StatefulSet`` and its ``PersistentVolumeClaim`` to be deleted.
 
 Existing ``PersistentVolumeClaim``
@@ -57,4 +59,7 @@ To use this method, add:
      persistence:
        volumeClaimName: "<volume-claim>"
 
-to ``values-*.yaml`` file for that environment under the ``gafaelfawr`` key, replacing ``<volume-claim>`` with the name of an existing ``PersistentVolumeClaim`` in the ``gafaelfawr`` namespace.
+to ``values-*.yaml`` file for that environment, replacing ``<volume-claim>`` with the name of an existing ``PersistentVolumeClaim`` in the ``gafaelfawr`` namespace.
+
+When using this method, Phalanx does not attempt to create or manage the ``PersistentVolumeClaim`` resource.
+This must be done outside of Phalanx.
