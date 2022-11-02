@@ -1,4 +1,6 @@
 .. _1Password: https://1password.com/
+.. _Apache Avro: https://avro.apache.org/
+.. _Apache Kafka: https://kafka.apache.org/
 .. _Argo CD: https://argoproj.github.io/argo-cd/
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
