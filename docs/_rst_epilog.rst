@@ -9,6 +9,7 @@
 .. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html
 .. _FastAPI: https://fastapi.tiangolo.com/
 .. _Google Documentation Style Guide: https://developers.google.com/style/
+.. _Google Filestore: https://cloud.google.com/filestore
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/

@@ -21,6 +21,7 @@ Guides
 .. toctree::
    :maxdepth: 2
 
+   bootstrap
    storage
    recreate-token
    github-organizations

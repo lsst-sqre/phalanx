@@ -15,6 +15,7 @@ Guides
 .. toctree::
    :maxdepth: 2
 
+   bootstrap
    upgrade
    troubleshoot
    values
