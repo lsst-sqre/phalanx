@@ -63,7 +63,7 @@ config:
     # - name: data
     #   mountPath: /data
     - name: home
-      mountPath: /home
+      mountPath: /pbs/home
   
   user_resources_template: |
     - apiVersion: v1
