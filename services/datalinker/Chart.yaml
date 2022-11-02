@@ -5,3 +5,8 @@ description: Service and data discovery for Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/datalinker
 appVersion: 1.5.0
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-238"
+      title: "RSP DataLink service implementation strategy"
+      url: "https://dmtn-238.lsst.io/"

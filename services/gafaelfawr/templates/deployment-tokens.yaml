@@ -25,8 +25,12 @@ spec:
       containers:
         - name: "gafaelfawr-tokens"
           command:
-            - "gafaelfawr"
-            - "kubernetes-controller"
+            - "kopf"
+            - "run"
+            - "-A"
+            - "--log-format=json"
+            - "-m"
+            - "gafaelfawr.operator"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.tokens.resources }}

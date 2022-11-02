@@ -3,3 +3,9 @@ appVersion: "1.0.0"
 description: User provisioning actions for the Science Platform
 name: moneypenny
 version: 1.0.2
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-052"
+      title: >-
+        Proposal for privilege separation in RSP Notebook Aspect containers
+      url: "https://sqr-052.lsst.io/"

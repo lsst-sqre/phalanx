@@ -49,6 +49,7 @@ Rubin Observatory's telemetry service.
 | influxdb2.adminUser.bucket | string | `"default"` | Admin default bucket. |
 | influxdb2.adminUser.existingSecret | string | `"sasquatch"` | Get admin-password/admin-token keys from secret. |
 | influxdb2.adminUser.organization | string | `"default"` | Admin default organization. |
+| influxdb2.enabled | bool | `false` |  |
 | influxdb2.env[0].name | string | `"INFLUXD_STORAGE_WAL_FSYNC_DELAY"` |  |
 | influxdb2.env[0].value | string | `"100ms"` |  |
 | influxdb2.env[1].name | string | `"INFLUXD_HTTP_IDLE_TIMEOUT"` |  |

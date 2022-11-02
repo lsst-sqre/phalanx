@@ -57,7 +57,14 @@ spec:
               value: {{ .Values.config.butler_uri_2 | quote }}
             - name: EXPOSURELOG_DB_USER
               value: {{ .Values.db.user | quote }}
+            - name: PGUSER
+              value: {{ .Values.db.user | quote }}
             - name: EXPOSURELOG_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: exposurelog
+                  key: exposurelog_password
+            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: exposurelog

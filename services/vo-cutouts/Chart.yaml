@@ -5,3 +5,8 @@ description: "Image cutout service complying with IVOA SODA"
 sources:
   - "https://github.com/lsst-sqre/vo-cutouts"
 appVersion: 0.4.2
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-208"
+      title: "RSP image cutout service implementation strategy"
+      url: "https://dmtn-208.lsst.io/"

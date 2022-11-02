@@ -49,3 +49,60 @@ This will cause the application resource in the ``science-platform`` app to show
 Additionally, many charts allow specification of a tag (usually some variable like ``image.tag`` in a values file), so that is a possibility as well.
 If your chart doesn't have a way to control what image tag you're deploying from, consider adding the capability.
 In any event, for RSP instances, we (as a matter of policy) disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment, and updates are deployed to production environments (barring extraordinary circumstances) during our specified maintenance windows.
+
+.. _chart-doc-links:
+
+Source and documentation links in Chart.yaml
+============================================
+
+You can add source and documentation links to an app's ``Chart.yaml`` and that information is included in the :doc:`app's homepage in the Phalanx docs </applications/index>`.
+
+home
+----
+
+Use the ``home`` field in ``Chart.yaml`` for the app's documentation site (if it has one).
+For example:
+
+.. code-block:: yaml
+   :caption: Chart.yaml
+
+   home: https://gafaelfawr.lsst.io/
+
+Don't use the ``home`` field for links to documents (technotes) or source repositories.
+
+sources
+-------
+
+Use ``sources`` to link to the Git repositories related to the application.
+Note that ``sources`` is an array of URLs:
+
+.. code-block:: yaml
+   :caption: Chart.yaml
+
+   sources:
+     - https://github.com/lsst-sqre/gafaelfawr
+
+phalanx.lsst.io/docs
+--------------------
+
+Use this custom annotation to link to documents (as opposed to the user guide, see ``home``).
+Documents are technotes and change-controlled documents:
+
+
+.. code-block:: yaml
+   :caption: Chart.yaml
+
+   annotations:
+     phalanx.lsst.io/docs: |
+       - id: "SQR-065"
+         title: "Design of Noteburst, a programatic JupyterLab notebook execution service for the Rubin Science Platform"
+         url: "https://sqr-065.lsst.io/"
+       - id: "SQR-062"
+         title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science platform"
+         url: "https://sqr-062.lsst.io/"
+
+.. note::
+
+   Note how the value of ``phalanx.lsst.io/docs`` is a YAML-formatted string (hence the ``|`` symbol).
+   The ``id`` field is optional, but can be set to the document's handle.
+   The ``title`` and ``url`` fields are required.

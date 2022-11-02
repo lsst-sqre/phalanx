@@ -6,3 +6,8 @@ dependencies:
   - name: telegraf
     version: 1.8.22
     repository: https://helm.influxdata.com/
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-061"
+      title: "Monitoring architecture for the RSP"
+      url: "https://sqr-061.lsst.io/"
