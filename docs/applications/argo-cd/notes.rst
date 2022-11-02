@@ -4,12 +4,9 @@
 Argo CD architecture and notes
 ##############################
 
-`Argo CD`_ is the software that manages all Kubernetes resources in a deployment of the Rubin Science Platform.
-It is itself a set of Kubernetes resources and running pods managed with `Helm`_.
-Argo CD cannot manage and upgrade itself, so it periodically should be upgraded manually.
-
 Argo CD is installed and bootstrapped as part of the cluster creation process.
 The UI is exposed on the ``/argo-cd`` route for the Science Platform.
+
 Unlike other resources on the Science Platform, it is not protected by Gafaelfawr.
 See :doc:`authentication`
 

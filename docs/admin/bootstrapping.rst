@@ -44,6 +44,7 @@ Checklist
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
 
+   - :px-app-bootstrap:`argo-cd`
    - :px-app-bootstrap:`gafaelfawr`
    - :px-app-bootstrap:`nublado2`
    - :px-app-bootstrap:`portal`
