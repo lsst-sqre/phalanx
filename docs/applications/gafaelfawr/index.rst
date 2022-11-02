@@ -22,7 +22,6 @@ Guides
    :maxdepth: 2
 
    bootstrap
-   storage
    recreate-token
    github-organizations
    troubleshoot
