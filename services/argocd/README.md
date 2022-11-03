@@ -1,5 +1,7 @@
 # argo-cd
 
+Kubernetes application manager
+
 ## Requirements
 
 | Repository | Name | Version |

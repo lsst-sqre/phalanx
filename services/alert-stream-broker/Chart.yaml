@@ -1,6 +1,7 @@
 apiVersion: v2
 name: alert-stream-broker
 version: "3"
+description: Alert transmission to community brokers
 dependencies:
   - name: alert-stream-broker
     version: 2.5.1

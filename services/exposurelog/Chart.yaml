@@ -1,6 +1,6 @@
 apiVersion: v2
 name: exposurelog
-description: Exposure log service
+description: Log messages related to an exposure
 type: application
 sources:
   - https://github.com/lsst-sqre/exposurelog

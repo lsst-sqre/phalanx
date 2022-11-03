@@ -1,6 +1,6 @@
 # exposurelog
 
-Exposure log service
+Log messages related to an exposure
 
 ## Source Code
 

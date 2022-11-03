@@ -1,7 +1,7 @@
 apiVersion: v2
 name: cert-manager
 version: 1.0.0
-description: "Let's Encrypt certificate management"
+description: TLS certificate manager
 dependencies:
   - name: cert-manager
     version: v1.10.0

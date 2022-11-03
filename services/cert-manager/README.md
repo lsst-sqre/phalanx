@@ -1,6 +1,6 @@
 # cert-manager
 
-Let's Encrypt certificate management
+TLS certificate manager
 
 ## Requirements
 

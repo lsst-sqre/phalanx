@@ -1,6 +1,7 @@
 apiVersion: v2
 name: ingress-nginx
 version: 1.0.0
+description: Ingress controller
 dependencies:
   - name: ingress-nginx
     version: 4.3.0

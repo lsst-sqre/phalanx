@@ -1,8 +1,8 @@
 .. px-app:: mobu
 
-##############################
-mobu — RSP integration testing
-##############################
+##########################
+mobu — Integration testing
+##########################
 
 mobu is the continuous integration testing framework for the Rubin Science Platform.
 It runs some number of "monkeys" that simulate a random user of the Science Platform.

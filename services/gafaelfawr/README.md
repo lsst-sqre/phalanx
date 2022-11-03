@@ -1,6 +1,6 @@
 # gafaelfawr
 
-Science Platform authentication and authorization system
+Authentication and identity system
 
 **Homepage:** <https://gafaelfawr.lsst.io/>
 

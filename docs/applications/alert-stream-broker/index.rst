@@ -1,8 +1,8 @@
 .. px-app:: alert-stream-broker
 
-###################
-Alert Stream Broker
-###################
+###################################################
+alert-stream-broker — Alert transmission to brokers
+###################################################
 
 The Alert Stream Broker is responsible for rapid dissemination of alerts (from observatory operations) to community alert brokers.
 It is built on top of `Apache Kafka`_ and uses `Apache Avro`_ as the schema for alerts.

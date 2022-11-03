@@ -1,5 +1,7 @@
 # alert-stream-broker
 
+Alert transmission to community brokers
+
 ## Requirements
 
 | Repository | Name | Version |

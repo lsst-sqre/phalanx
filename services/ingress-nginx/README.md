@@ -1,5 +1,7 @@
 # ingress-nginx
 
+Ingress controller
+
 ## Requirements
 
 | Repository | Name | Version |
