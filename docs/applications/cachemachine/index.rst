@@ -18,6 +18,7 @@ Guides
 
 .. toctree::
 
+   bootstrap
    pruning
    updating-recommended
    gar

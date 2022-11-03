@@ -45,6 +45,7 @@ Checklist
    The following applications have special bootstrapping considerations:
 
    - :px-app-bootstrap:`argo-cd`
+   - :px-app-bootstrap:`cachemachine`
    - :px-app-bootstrap:`gafaelfawr`
    - :px-app-bootstrap:`nublado2`
    - :px-app-bootstrap:`portal`
