@@ -4,14 +4,14 @@
 Bootstrapping Nublado
 #####################
 
-Nublado (the ``nublado2`` application) and moneypenny need to know where the NFS server that provides user home space is.
+Nublado and :px-app:`moneypenny` need to know where the NFS server that provides user home space is.
 Nublado also requires other persistent storage space.
 Ensure the correct definitions are in place in their configuration.
 
 Telescope and Site deployments
 ==============================
 
-For T&S deployments that require instrument control, make sure you have any Multus network definitions you need in the ``values-<environment>.yaml``.
+For Telescope and Site deployments that require instrument control, make sure you have any Multus network definitions you need in the ``values-<environment>.yaml``.
 This will look something like:
 
 .. code-block:: yaml
