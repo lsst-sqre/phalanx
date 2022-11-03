@@ -25,8 +25,8 @@ jupyterhub:
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
       nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30s"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "20s"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "50s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
       nginx.ingress.kubernetes.io/client-max-body-size: "50m"
       nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
@@ -48,10 +48,10 @@ config:
     - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
       name: Recommended
   volumes:
-    # - name: data
-    #   hostPath:
-    #     path: /data/rsp/nublado2
-        # type: Directory
+    - name: data
+      hostPath:
+        path: /data/rsp/nublado2
+        type: Directory
     - name: home
       hostPath:
         path: /pbs/home
@@ -60,8 +60,8 @@ config:
         # type: Directory
 
   volume_mounts:
-    # - name: data
-    #   mountPath: /data
+    - name: data
+      mountPath: /data
     - name: home
       mountPath: /pbs/home
   
@@ -136,7 +136,6 @@ config:
           nobody:x:99:99:Nobody:/:/sbin/nologin
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
-          lsst_lcl:x:1000:1000::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
     - apiVersion: v1
