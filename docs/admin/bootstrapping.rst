@@ -40,6 +40,11 @@ Checklist
    If you already know the IP address where your instance will reside, create the DNS records (A or possibly CNAME) for that instance.
    If you are using a cloud provider or something like minikube where the IP address is not yet known, then you will need to create that record once the top-level ingress is created and has an external IP address.
 
+#. Decide on your approach to user home directory storage.
+   The Notebook Aspect requires a POSIX file system.
+   The most frequently used method of providing that file system is NFS mounts, but you may instead want to use a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
+   Either way, you will need to configure appropriate mount points in :px-app:`nublado2` and :px-app:`moneypenny` when you configure each application in the next step.
+
 #. For each enabled application, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
