@@ -1,5 +1,7 @@
 apiVersion: v2
 name: plot-navigator
-description: Panel-based plot viewer.
+description: Panel-based plot viewer
 version: 1.6.1
+sources:
+  - https://github.com/lsst-dm/pipetask-plot-navigator
 appVersion: 0.6.1
