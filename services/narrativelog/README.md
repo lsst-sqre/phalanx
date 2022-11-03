@@ -2,6 +2,10 @@
 
 Narrative log service
 
+## Source Code
+
+* <https://github.com/lsst-sqre/narrativelog>
+
 ## Values
 
 | Key | Type | Default | Description |
