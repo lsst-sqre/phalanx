@@ -2,6 +2,10 @@
 
 Exposure log service
 
+## Source Code
+
+* <https://github.com/lsst-sqre/exposurelog>
+
 ## Values
 
 | Key | Type | Default | Description |
