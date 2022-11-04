@@ -1,6 +1,8 @@
 apiVersion: v2
-appVersion: 0.1.8
-description: A Helm chart for Kubernetes
 name: sherlock
 type: application
-version: 0.1.13
+version: 1.0.0
+description: Application ingress status and metrics
+sources:
+  - https://github.com/lsst-sqre/sherlock
+appVersion: 0.1.8

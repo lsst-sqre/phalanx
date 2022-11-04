@@ -20,9 +20,9 @@ Configuring Google SSO
 
 To set up Google SSO authentication to Argo CD in a new cluster, take the following steps as a user with the ``roles/oauthconfig.editor`` role:
 
-#. On the GCP console, go to "OAuth consent screen" under "APIs & Services."
+#. On the GCP console, go to :guilabel:`OAuth consent screen` under :guilabel:`APIs & Services`.
 
-#. Select "Internal" and click Create.
+#. Select :guilabel:`Internal` and click :guilabel:`Create`.
 
 #. Enter the environment information.
    For example (adjust for the environment):
@@ -32,24 +32,24 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
    - Authorized domains: lsst.cloud
    - Developer contact information email addresses: Work email address
 
-#. Click "Save and Continue."
+#. Click :guilabel:`Save and Continue`.
 
-#. Add the ``openid`` scope and click "Save and Continue."
+#. Add the ``openid`` scope and click :guilabel:`Save and Continue`.
 
-#. Click "Back to Dashboard."
+#. Click :guilabel:`Back to Dashboard`.
 
-#. Go to "Credentials" still under "APIs & Services."
+#. Go to :guilabel:`Credentials` still under :guilabel:`APIs & Services`.
 
-#. Click "Create Credentials" and choose "OAuth client ID."
+#. Click :guilabel:`Create Credentials` and choose :guilabel:`OAuth client ID`.
 
-#. Choose "Web application" as the application type.
+#. Choose :guilabel:`Web application` as the application type.
 
 #. Enter "Argo CD" as the name.
 
 #. Add the ``/argo-cd/api/dex/callback`` route under "Authorized redirect URIs."
    For example: ``https://data-int.lsst.cloud/argo-cd/api/dex/callback``
 
-#. Click on create.
+#. Click on :guilabel:`Create`.
    This will pop up a dialog with the client ID and secret for the newly-created OAuth client.
 
 #. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD Google OAuth - data-int.lsst.cloud" (replacing the last part with the FQDN of the environment).
@@ -102,7 +102,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 
    Change the list of users to the email addresses of the users who should have admin access to this environment.
 
-#. Create a PR with the above changes, merge it, and then sync Argo CD.
+#. If the environment already exists, create a PR with the above changes, merge it, and then sync Argo CD.
    Ensure that both the ``argocd-server`` and ``argocd-dex-server`` deployments are restarted (in case the Argo CD Helm chart doesn't ensure this).
 
 #. Go to the ``/argo-cd`` route on the environment.
@@ -116,18 +116,18 @@ Configuring GitHub SSO
 
 To set up Google SSO authentication to Argo CD in a new cluster, take the following steps:
 
-#. From the GitHub page of the organization in which you want to create the OAuth application (such as https://github.com/lsst-sqre), go to Settings → Developer Settings → OAuth Apps.
+#. From the GitHub page of the organization in which you want to create the OAuth application (such as `lsst-sqre <https://github.com/lsst-sqre>`__), go to :guilabel:`Settings → Developer Settings → OAuth Apps`.
 
-#. Click New OAuth App.
+#. Click :guilabel:`New OAuth App`.
 
 #. Enter the following information (adjust for the environment):
    - Application name: ``RSP Argo CD (IDF-int)``
    - Homepage URL: ``https://data-int.lsst.cloud/argo-cd``
    - Authorization callback URL: ``https://data-int.lsst.cloud/argo-cd/api/dex/callback``
 
-#. Click "Register Application".
+#. Click :guilabel:`Register Application`.
 
-#. Click "Generate a new client secret".
+#. Click :guilabel:`Generate a new client secret`.
 
 #. For SQuaRE-run enviroments, go to the RSP-Vault 1Password vault and create a new Login item with a name like "Argo CD GitHub OAuth - data-int.lsst.cloud" (replacing the last part with the FQDN of the environment).
    In this secret, put the client ID in the username field.
@@ -175,7 +175,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
    Add lines for additional GitHub teams as needed for that environment.
    Be aware that this uses the human-readable name of the team (with capital letters and spaces if applicable), not the slug.
 
-#. Create a PR with the above changes, merge it, and then sync Argo CD.
+#. If the environment already exists, create a PR with the above changes, merge it, and then sync Argo CD.
    Ensure that both the ``argocd-server`` and ``argocd-dex-server`` deployments are restarted (in case the Argo CD Helm chart doesn't ensure this).
 
 #. Go to the ``/argo-cd`` route on the environment.

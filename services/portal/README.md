@@ -1,8 +1,11 @@
 # portal
 
-Rubin Science Platform portal aspect
+Rubin Science Platform Portal Aspect
 
-**Homepage:** <https://github.com/lsst/suit>
+## Source Code
+
+* <https://github.com/lsst/suit>
+* <https://github.com/Caltech-IPAC/firefly>
 
 ## Values
 

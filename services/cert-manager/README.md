@@ -1,6 +1,12 @@
 # cert-manager
 
-Let's Encrypt certificate management
+TLS certificate manager
+
+**Homepage:** <https://cert-manager.io/>
+
+## Source Code
+
+* <https://github.com/cert-manager/cert-manager>
 
 ## Requirements
 

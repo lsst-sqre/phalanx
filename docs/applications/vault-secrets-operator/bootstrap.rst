@@ -21,5 +21,7 @@ Its secret will look like this:
      VAULT_TOKEN: <token>
      VAULT_TOKEN_LEASE_DURATION: 86400
 
-Replace ``<token>`` with the ``read`` Vault token for the path ``secret/k8s_operator/<cluster-name>`` in Vault.
+Replace ``<token>`` with the ``read`` Vault token for the path ``secret/k8s_operator/<cluster-name>`` in Vault (or whatever Vault enclave you plan to use for this Phalanx environment).
+The path must match the path configured in ``values-<environment>.yaml`` in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform>`__.
+
 See :dmtn:`112` for more information.

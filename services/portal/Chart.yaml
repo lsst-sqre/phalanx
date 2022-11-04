@@ -1,6 +1,13 @@
 apiVersion: v2
 name: portal
 version: 1.0.0
-description: "Rubin Science Platform portal aspect"
-home: "https://github.com/lsst/suit"
+description: Rubin Science Platform Portal Aspect
+sources:
+  - https://github.com/lsst/suit
+  - https://github.com/Caltech-IPAC/firefly
 appVersion: "suit-2022.5.5"
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-136"
+      title: "LSST Science Platform Portal Aspect Design and Maintenance Manual"
+      url: "https://dmtn-136.lsst.io/"

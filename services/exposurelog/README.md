@@ -1,6 +1,10 @@
 # exposurelog
 
-Exposure log service
+Log messages related to an exposure
+
+## Source Code
+
+* <https://github.com/lsst-sqre/exposurelog>
 
 ## Values
 
