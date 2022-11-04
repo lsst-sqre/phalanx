@@ -1,8 +1,11 @@
 # cadc-tap
 
-VO TAP service for the Rubin Science Platform
+IVOA TAP service
 
-**Homepage:** <https://github.com/lsst-sqre/lsst-tap-service>
+## Source Code
+
+* <https://github.com/lsst-sqre/lsst-tap-service>
+* <https://github.com/opencadc/tap>
 
 ## Values
 

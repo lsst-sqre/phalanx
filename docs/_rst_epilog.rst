@@ -11,6 +11,7 @@
 .. _Docker: https://www.docker.com/
 .. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html
 .. _FastAPI: https://fastapi.tiangolo.com/
+.. _Felis: https://felis.lsst.io/
 .. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Google Filestore: https://cloud.google.com/filestore
 .. _Helm: https://helm.sh
@@ -21,9 +22,11 @@
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _`lsst-sqre/phalanx`:
+.. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
+.. _pre-commit: https://pre-commit.com
 .. _Roundtable: https://roundtable.lsst.io/
 .. _Safir: https://safir.lsst.io/
 .. _Secret: https://kubernetes.io/docs/concepts/configuration/secret/
@@ -31,8 +34,9 @@
 .. _Services:
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
+.. _TAP: https://www.ivoa.net/documents/TAP/
 .. _tox: https://tox.wiki/en/latest/
-.. _pre-commit: https://pre-commit.com
+.. _UWS: https://www.ivoa.net/documents/UWS/
 .. _Vault: https://www.vaultproject.io/
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
