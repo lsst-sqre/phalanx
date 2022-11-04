@@ -11,5 +11,5 @@ orders:
   volumes:
     - name: homedirs
       hostPath:
-        path: /data/rsp/home
-        type: Directory
+        path: /pbs/home
+#        type: Directory
