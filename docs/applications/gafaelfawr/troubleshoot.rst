@@ -4,6 +4,8 @@
 Troubleshooting
 ###############
 
+.. _gafaelfawr-no-access:
+
 User has no access to services
 ==============================
 

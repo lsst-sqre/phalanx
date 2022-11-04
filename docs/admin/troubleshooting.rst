@@ -75,7 +75,7 @@ The most likely cause of this problem is that the user is not a member of a grou
 Gafaelfawr will prevent the user from logging in at all if they are not a member of any group that grants access to an application.
 If they are a member of at least one group, they'll be able to log in but may get permission denied errors from other application.
 
-**Solution:** :px-app-troubleshooting:`Gafaelfawr troubleshooting <gafaelfawr>`
+**Solution:** :ref:`gafaelfawr-no-access`
 
 You need privileged access to the filestore
 ===========================================
