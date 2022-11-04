@@ -4,6 +4,7 @@
 .. _Argo CD: https://argoproj.github.io/argo-cd/
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
+.. _Confluent Schema Registry: https://docs.confluent.io/current/schema-registry/index.html
 .. _Data Management workflow guide: https://developer.lsst.io/work/flow.html
 .. _Deployments:
 .. _Deployment: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
