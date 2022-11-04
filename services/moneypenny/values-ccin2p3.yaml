@@ -8,8 +8,8 @@ orders:
       volumeMounts:
         - mountPath: /homedirs
           name: homedirs
-  # volumes:
-  #   - name: homedirs
-  #     hostPath:
-  #       path: /pbs/home
-#        type: Directory
+  volumes:
+    - name: homedirs
+      hostPath:
+        path: /pbs/home
+        type: Directory
