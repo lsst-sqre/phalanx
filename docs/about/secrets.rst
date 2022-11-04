@@ -13,7 +13,7 @@ Vault
 Argo CD allows all application configurations to be checked into Git and deployed from that repository.
 However, many application configurations require some secrets such as random numbers, certificates, or passwords.
 These obviously cannot be committed to a public repository.
-We instead use `Vault`_ to store secrets and then materialize them in Kubernetes using :ref:`vault-secrets-operator`.
+We instead use `Vault`_ to store secrets and then materialize them in Kubernetes using :px-app:`vault-secrets-operator`.
 
 .. _Vault: https://www.vaultproject.io/
 

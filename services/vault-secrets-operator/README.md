@@ -1,5 +1,9 @@
 # vault-secrets-operator
 
+## Source Code
+
+* <https://github.com/ricoberger/vault-secrets-operator>
+
 ## Requirements
 
 | Repository | Name | Version |

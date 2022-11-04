@@ -1,7 +1,14 @@
 apiVersion: v2
 name: vault-secrets-operator
 version: 1.0.0
+sources:
+  - https://github.com/ricoberger/vault-secrets-operator
 dependencies:
-- name: vault-secrets-operator
-  version: 1.19.6
-  repository: https://ricoberger.github.io/helm-charts/
+  - name: vault-secrets-operator
+    version: 1.19.6
+    repository: https://ricoberger.github.io/helm-charts/
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-112"
+      title: "LSST DM Vault"
+      url: "https://dmtn-112.lsst.io/"
