@@ -97,7 +97,7 @@ jobs:
       - name: Download installer dependencies
         if: steps.filter.outputs.minikube == 'true'
         run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.9.4/vault_1.9.4_linux_amd64.zip
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.12.1/vault_1.12.1_linux_amd64.zip
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
