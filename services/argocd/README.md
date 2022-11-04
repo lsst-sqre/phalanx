@@ -2,6 +2,13 @@
 
 Kubernetes application manager
 
+**Homepage:** <https://argoproj.github.io/cd/>
+
+## Source Code
+
+* <https://github.com/argoproj/argo-cd>
+* <https://github.com/argoproj/argo-helm>
+
 ## Requirements
 
 | Repository | Name | Version |

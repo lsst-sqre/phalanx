@@ -2,6 +2,12 @@
 
 TLS certificate manager
 
+**Homepage:** <https://cert-manager.io/>
+
+## Source Code
+
+* <https://github.com/cert-manager/cert-manager>
+
 ## Requirements
 
 | Repository | Name | Version |

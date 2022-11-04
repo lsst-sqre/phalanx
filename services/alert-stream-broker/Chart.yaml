@@ -2,6 +2,9 @@ apiVersion: v2
 name: alert-stream-broker
 version: "3"
 description: Alert transmission to community brokers
+sources:
+  - https://github.com/lsst-dm/alert_database_ingester
+  - https://github.com/lsst-dm/alert-stream-simulator
 dependencies:
   - name: alert-stream-broker
     version: 2.5.1
