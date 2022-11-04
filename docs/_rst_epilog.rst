@@ -17,6 +17,7 @@
 .. _Helm: https://helm.sh
 .. _helm-docs: https://github.com/norwoodj/helm-docs
 .. _Ingress: https://kubernetes.io/docs/concepts/services-networking/ingress/
+.. _InfluxDB: https://www.influxdata.com/
 .. _IVOA: https://ivoa.net/documents/
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
@@ -35,6 +36,7 @@
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _TAP: https://www.ivoa.net/documents/TAP/
+.. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
 .. _tox: https://tox.wiki/en/latest/
 .. _UWS: https://www.ivoa.net/documents/UWS/
 .. _Vault: https://www.vaultproject.io/
