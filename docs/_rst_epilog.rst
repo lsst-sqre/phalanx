@@ -5,6 +5,7 @@
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
 .. _Confluent Schema Registry: https://docs.confluent.io/current/schema-registry/index.html
+.. _DataLink: https://www.ivoa.net/documents/DataLink/
 .. _Data Management workflow guide: https://developer.lsst.io/work/flow.html
 .. _Deployments:
 .. _Deployment: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
@@ -34,6 +35,7 @@
 .. _semantic versioning: https://semver.org/
 .. _Services:
 .. _Service: https://kubernetes.io/docs/concepts/services-networking/service/
+.. _SODA: https://ivoa.net/documents/SODA/
 .. _Sphinx: https://www.sphinx-doc.org/en/master/
 .. _TAP: https://www.ivoa.net/documents/TAP/
 .. _Telegraf: https://www.influxdata.com/time-series-platform/telegraf/
