@@ -113,7 +113,7 @@ config:
           cgred:x:997:
           screen:x:84:
           jovyan:x:768:{{ user }}{% for g in groups %}
-          {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
+          ccin2p3:x:102
     - apiVersion: v1
       kind: ConfigMap
       metadata:
