@@ -63,7 +63,7 @@ config:
     - name: data
       mountPath: /data
     - name: home
-      mountPath: /pbs/home
+      mountPath: /home
   
   user_resources_template: |
     - apiVersion: v1
@@ -137,7 +137,7 @@ config:
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
