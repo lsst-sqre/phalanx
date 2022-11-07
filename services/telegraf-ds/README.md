@@ -13,7 +13,7 @@ Kubernetes node telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf-ds | 1.1.4 |
+| https://helm.influxdata.com/ | telegraf-ds | 1.1.5 |
 
 ## Values
 
