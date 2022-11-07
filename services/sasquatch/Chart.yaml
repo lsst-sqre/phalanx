@@ -28,6 +28,7 @@ dependencies:
   - name: kafdrop
     version: 1.0.0
   - name: telegraf-kafka-consumer
+    condition: influxdb2.enabled
     version: 1.0.0
 
 annotations:
