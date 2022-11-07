@@ -13,7 +13,7 @@ Application telemetry collection service
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.22 |
+| https://helm.influxdata.com/ | telegraf | 1.8.23 |
 
 ## Values
 
