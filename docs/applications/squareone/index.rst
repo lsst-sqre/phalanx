@@ -15,4 +15,6 @@ Guides
 .. toctree::
    :maxdepth: 1
 
+   notes
+   bootstrap
    values

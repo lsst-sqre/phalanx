@@ -2,7 +2,7 @@
 Add a secret with 1Password and VaultSecret
 ###########################################
 
-Static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes Secret_ resources via :ref:`vault-secrets-operator`.
+Static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service itself and ultimately to Kubernetes Secret_ resources via :px-app:`vault-secrets-operator`.
 Such secrets are things for external cloud services where we don't automatically provision accounts and password.
 When we manually create such a secret, we store it in 1Password.
 This page provides steps for adding an application secret through 1Password.
@@ -49,7 +49,7 @@ Each item in a Kubernetes ``Secret`` corresponds to either the contents of a sec
 
      {{application}} {{secret name}}
 
-  This field provides part of a Vault path for the secret value, which in turn is used by :ref:`vault-secrets-operator` resources to create Kubernetes secrets.
+  This field provides part of a Vault path for the secret value, which in turn is used by :px-app:`vault-secrets-operator` resources to create Kubernetes secrets.
 
 - Add a metadata field labeled ``environment``. The value of that field should be the **hostname** of the RSP environment that this secret applies to (e.g. ``data.lsst.cloud``, not the Phalanx name ``idfprod``).
 

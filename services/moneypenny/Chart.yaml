@@ -1,7 +1,11 @@
 apiVersion: v2
 appVersion: "1.0.0"
-description: User provisioning actions for the Science Platform
 name: moneypenny
+description: User provisioning actions
+sources:
+  - https://github.com/lsst-sqre/moneypenny
+  - https://github.com/lsst-sqre/farthing
+  - https://github.com/lsst-sqre/inituserhome
 version: 1.0.2
 annotations:
   phalanx.lsst.io/docs: |

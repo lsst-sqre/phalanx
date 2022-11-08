@@ -14,21 +14,18 @@ Specifically, add the following under ``ingress-nginx.controller``:
 .. code-block:: yaml
 
     extraArgs:
-      default-ssl-certificate: ingress-nginx/ingress-certificate
+      default-ssl-certificate: "ingress-nginx/ingress-certificate"
 
 And at the top level, add:
 
 .. code-block:: yaml
 
-   vault_certificate:
+   vaultCertificate:
      enabled: true
-     path: secret/k8s_operator/<environment>/ingress-nginx
 
-Replace ``<environment>`` with the hostname of the environment.
-
-Then, in the Vault key named by that path, store the commercial certificate.
-The Vault secret should have two keys: ``tls.crt`` and ``tls.key``.
-The first should contain the full public certificate chain.
-The second should contain the private key (without a passphrase).
+Then, in the Vault key named ``ingress-nginx`` in the Vault enclave for that environment, store the commercial certificate.
+The Vault secret must have two keys: ``tls.crt`` and ``tls.key``.
+The first must contain the full public certificate chain.
+The second must contain the private key (without a passphrase).
 
 For an example of an environment configured this way, see `/services/ingress-nginx/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/ingress-nginx/values-minikube.yaml>`__

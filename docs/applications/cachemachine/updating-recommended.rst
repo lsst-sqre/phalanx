@@ -1,60 +1,53 @@
-###########################################
-Updating the "recommended" JupyterLab image
-###########################################
+##############################################
+Updating the recommended Notebook Aspect image
+##############################################
 
-The "recommended" tag for JupyterLab images is usually a recent weekly image.
-The image marked "recommended" is guaranteed by SQuaRE to be compatible with other services and materials--such as tutorial or system testing notebooks--that we make available on RSP deployments.
-Because this process requires quite a bit of checking and sign-off from multiple stakeholders, it is possible that approving a new version for "recommended" may take more than the two weeks (for most deployments) it takes for a weekly image to roll off the default list of images to pull.
+The ``recommended`` tag for JupyterLab images is usually a recent weekly image.
+The image tagged ``recommended`` is guaranteed by SQuaRE to be compatible with other services and materials, such as tutorial or system testing notebooks, that we make available on RSP deployments.
+
+Because this process requires quite a bit of checking and sign-off from multiple stakeholders, it is possible that approving a new recommended version may take more than the two weeks (for most deployments) it takes for a weekly image to roll off the default list of images to pull.
 This can cause the RSP JupyterHub options form to display empty parentheses rather than the correct target version when a user requests a lab container.
 
-This document explains how to circumvent that display bug by changing cachemachine's ``values-<instance>.yaml`` for the appropriate instance when moving the "recommended" tag.
+This document explains the process for moving the ``recommended`` tag, and how to circumvent that display bug by changing cachemachine's ``values-<instance>.yaml`` for the appropriate instance when moving the ``recommended`` tag.
 
 Tagging a new container version
 --------------------------------
 
-When a new version is to be approved (after passing through its prior QA and sign-off gates), the "recommended" tag must be updated to point to the new version.
+When a new version is to be approved (after passing through its prior QA and sign-off gates), the ``recommended`` tag must be updated to point to the new version.
 
-This really is as simple as pulling the new target version, tagging it as recommended, and pushing it again.
-This is, sadly, necessary — there is no way to tag an image on Docker Hub without pulling and re-pushing it.
-However, the push will be a no-op, since all the layers are, by definition, already there, so while the pull may be slow, the push will be fast.
+To do this, run the GitHub retag workflow for the `sciplat-lab <https://github.com/lsst-sqre/sciplat-lab>`__ repository, as follows:
 
-The procedure is as follows:
+#. Go to `the retag workflow page <https://github.com/lsst-sqre/sciplat-lab/actions/workflows/retag.yaml>`__.
+#. Click on :guilabel:`Run workflow`.
+#. Enter the tag of the image to promote to recommended under :guilabel:`Docker tag of input container`.
+   This will be a tag like ``w_2022_40``.
+#. Enter ``recommended`` under :guilabel:`Additional value to tag container with`.
+#. Click on the :guilabel:`Run workflow` submit button.
 
-.. code-block:: sh
-
-   docker pull registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33  # or whatever tag
-   docker tag registry.hub.docker.com/lsstsqre/sciplat-lab:w_2021_33 registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
-   docker login  # This may require interaction, depending on how you've set up your docker credentials
-   docker push registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
-
-The DockerHub ``sqreadmin`` user could be used for this; however, when the process is not automated (it currently is not), using personal credentials is acceptible.
-The ``sqreadmin`` DockerHub credentials are within the SQuaRE 1Password credential store.
+Don't change the URIs.
 
 .. _prepull-recommended:
 
-Updating Phalanx to ensure the "recommended" target is pre-pulled
------------------------------------------------------------------
+Ensure the recommended image is pre-pulled
+------------------------------------------
 
-In most environments, cachemachine only ensures pulling of the latest two weekly images, and it is therefore not at all unusual for more than two weeks to go by before approving a new version.
+In most environments, cachemachine only prepulls the latest two weekly images.
+It is common for more than two weeks to go by before approving a new version of recommended.
+While the recommended tag is always prepulled, cachemachine cannot resolve that tag to a regular image tag unless the corresponding image tag is also prepulled.
+The result is a display bug where recommended is not resolved to a particular tag, and therefore is missing the information in parentheses after the :guilabel:`Recommended` menu option in the spawner form.
 
-Usually this doesn't matter: the image cache on a node uses a Least Recently Used replacement strategy, and the great majority of users spawn "recommended," so it's not going to be purged.
-However, there is a display bug in the Notebook Aspect spawner form can occur.
-If a new node has come online after the recommended weekly has rolled out of the weekly list, then, although the new node will pre-pull "recommended", it will not pre-pull the corresponding weekly by the weekly tag
-Cachemachine, and therefore the options form, will fail to resolve "recommended" to a particular weekly, which means the description in parentheses after the image name will be empty.
+To avoid this, we therefore explicitly prepull the weekly tag corresponding to the ``recommended`` tag.
+This ensures that cachemachine can map the ``recommended`` tag to a weekly tag.
+This doesn't consume any additional cache space on the nodes, since Kubernetes, when cachemachine tells it to cache that weekly tag, will realize that it already has it cached under another name.
 
-Fortunately, this is easy to fix.
+We add this configuration to the IDF environments.
+Other Phalanx environments handle recommended images differently and don't need this configuration.
 
 In cachemachine's ``values-<instance>.yaml`` file for the affected environment, go towards the bottom and look in ``repomen``.
 The first entry will always be of type ``RubinRepoMan``, and will contain the definitions of how many daily, weekly, and release images to prepull.
-
-There are currently only two environments in which we care about keeping the "recommended" target pre-pulled:
-
-#. IDF Production (``data.lsst.cloud``)
-#. IDF Integration (``data-int.lsst.cloud``)
-
 Beneath the ``RubinRepoMan`` entry, you should find an entry that looks like:
 
-.. code-block:: yaml
+.. code-block:: json
 
    {
      "type": "SimpleRepoMan",
@@ -66,16 +59,10 @@ Beneath the ``RubinRepoMan`` entry, you should find an entry that looks like:
      ]
    }
 
-Replace the tag and image name with the current approved versions.
+Replace the tag and name with the weekly tag and corresponding name for the weekly image that is also tagged ``recommended``.
 
-If you are adding these definitions to an instance that does not already ensure that the target image for "recommended" is always prepulled, add an entry to the ``repomen`` list that looks like the above, with current approved versions.
+Once this change is merged, sync cachemachine (using Argo CD) in the affected environments.
+You do not have to wait for a maintenance window to do this, since the change is low risk, although it will result in a very brief outage for Notebook Aspect lab spawning while cachemachine is restarted.
 
-Commit your changes to a git branch, and then create a GitHub pull request to ``services/cachemachine`` in `Phalanx <https://github.com/lsst-sqre/phalanx/tree/master/services/cachemachine/>`__ from that branch.
-Request that someone review the PR, and then merge it.
-
-Then synchronize cachemachine (using Argo CD) in the correct environment.
-It is not generally required to wait for a maintenance window to do this, since making this change is low-risk.
-The cachemachine deployment will automatically restart, and that will kick off any required pulls.
-Since these pulls will just be pulling "recommended" under a different name, the image will almost certainly already be cached, and therefore the pull will be near-instant.
-Each pod that starts from the pulled image simply sleeps for one minute and then terminates.
-After each pod has run and terminated, the Notebook Aspect options form will again show the correct data.
+cachemachine will then spawn a ``DaemonSet`` that pulls the weekly tag to every node, which as mentioned above will be fairly quick since Kubernetes will realize it already has the image cached under another name.
+Once cachemachine rechecks the cached images on each node, it will have enough information to build the menu correctly, and the spawner menu in the Notebook Aspect should be correct.

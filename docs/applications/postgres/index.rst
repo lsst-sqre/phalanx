@@ -10,15 +10,14 @@ Two intended purposes for this service are:
 - The JupyterHub user session database
 - Backing store for Gafaelfawr's authentication tokens
 
-If either of those is destroyed, then all current user sessions and authentication tokens are invalidated, work up to the last checkpoint (five minutes in JupyterLab) may be lost.
-Users will have to log in, restart sessions, and recreate authentication tokens.
+It may also be used by other applications, such as :px-app:`exposurelog` and :px-app:`narrativelog`.
 
 .. important::
 
    Do not use this service for important data.
    Use a managed relational database, such as Google CloudSQL, instead.
 
-   Production instances of the Science Platform use CloudSQL for the Gafaelfawr token database instead of this service.
+   Production instances of the Science Platform use CloudSQL or a local external PostgreSQL server for the Gafaelfawr token database instead of this service.
 
 .. jinja:: postgres
    :file: applications/_summary.rst.jinja
@@ -29,7 +28,6 @@ Guides
 .. toctree::
    :maxdepth: 2
 
-   upgrade
    add-database
    troubleshoot
    values
