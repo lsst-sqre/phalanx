@@ -47,7 +47,7 @@ config:
   volume_mounts:
     - name: home
       mountPath: /home
-  
+
   user_resources_template: |
     - apiVersion: v1
       kind: Namespace
