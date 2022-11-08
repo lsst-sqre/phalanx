@@ -11,15 +11,7 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
-    # image:
-    #   name: gabrimaine/nublado2
-    #   tag: "2.6.0-dev"
 
-  # hub:
-  #   resources:
-  #     requests:
-  #       cpu: "2"
-  #       memory: 3Gi
   ingress:
     hosts: ["data-dev.lsst.eu"]
     annotations:
@@ -48,20 +40,11 @@ config:
     - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
       name: Recommended
   volumes:
-    - name: data
-      hostPath:
-        path: /data/rsp/nublado2
-        type: Directory
     - name: home
       hostPath:
         path: /pbs/home
-        #path: /data/rsp/home
-        #path: /pbs/home/m
-        # type: Directory
 
   volume_mounts:
-    - name: data
-      mountPath: /data
     - name: home
       mountPath: /home
   
@@ -112,7 +95,6 @@ config:
           tss:x:59:
           cgred:x:997:
           screen:x:84:
-          ccin2p3:x:102:{{ user }}
           jovyan:x:768:{{ user }}{% for g in groups %}
           {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
     - apiVersion: v1
