@@ -1,12 +1,19 @@
 # telegraf
 
-SQuaRE telemetry collection service
+Application telemetry collection service
+
+**Homepage:** <https://www.influxdata.com/time-series-platform/telegraf/>
+
+## Source Code
+
+* <https://github.com/influxdata/telegraf>
+* <https://github.com/influxdata/helm-charts>
 
 ## Requirements
 
 | Repository | Name | Version |
 |------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.22 |
+| https://helm.influxdata.com/ | telegraf | 1.8.23 |
 
 ## Values
 

@@ -55,3 +55,7 @@ The Vault secret should look something like this:
 
 The secrets for the SQuaRE-maintained Rubin Science Platform domains are stored in 1Password (search for ``cert-manager-lsst-codes`` or ``cert-manager-lsst-cloud``).
 If this cluster is in the same domain as another, working cluster, you can copy the secret from that cluster into the appropriate path for the new cluster.
+
+.. seealso::
+
+   `cert-manager documentation for Route 53 <https://cert-manager.io/docs/configuration/acme/dns01/route53/>`__.

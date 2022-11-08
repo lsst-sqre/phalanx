@@ -1,7 +1,7 @@
 apiVersion: v2
 name: hips
 version: 1.0.0
-description: HiPS web server backed by Google Cloud Storage
+description: HiPS tile server backed by Google Cloud Storage
 sources:
   - https://github.com/lsst-sqre/crawlspace
 appVersion: 0.2.1

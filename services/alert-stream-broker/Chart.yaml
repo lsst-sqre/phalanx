@@ -1,6 +1,10 @@
 apiVersion: v2
 name: alert-stream-broker
 version: "3"
+description: Alert transmission to community brokers
+sources:
+  - https://github.com/lsst-dm/alert_database_ingester
+  - https://github.com/lsst-dm/alert-stream-simulator
 dependencies:
   - name: alert-stream-broker
     version: 2.5.1
@@ -22,3 +26,15 @@ dependencies:
 
   - name: alert-database
     version: 2.1.0
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-093"
+      title: "Design of the LSST Alert Distribution System"
+      url: "https://dmtn-093.lsst.io/"
+    - id: "DMTN-210"
+      title: "Implementation of the LSST Alert Distribution System"
+      url: "https://dmtn-210.lsst.io/"
+    - id: "DMTN-214"
+      title: "Alert Distribution System Operator's Manual"
+      url: "https://dmtn-214.lsst.io/"

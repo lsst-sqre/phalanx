@@ -1,10 +1,14 @@
 .. px-app:: moneypenny
 
-##################################
-moneypenny — RSP user provisioning
-##################################
+##############################
+moneypenny — User provisioning
+##############################
 
-Moneypenny provides user-provisioning actions for the Rubin Science Platform.
+Moneypenny is responsible for provisioning new users of the Notebook Aspect of a Science Platform installation.
+It is invoked by :px-app:`nublado2` whenever a user pod is spawned and decides whether provisioning is required.
+If so, it does so before the lab spawn, usually by spawning a privileged pod.
+
+A typical example of the type of provisioning it does is creating the user's home directory, with appropriate ownership and permissions, in an NFS file store.
 
 .. jinja:: moneypenny
    :file: applications/_summary.rst.jinja

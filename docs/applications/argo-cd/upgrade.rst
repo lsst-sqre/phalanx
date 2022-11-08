@@ -4,29 +4,32 @@
 Upgrading Argo CD
 #################
 
-This page provides upgrade procedures for the :px-app:`argocd` app.
+This page provides upgrade procedures for the :px-app:`argocd` application.
 
 .. warning::
 
    Do not use the `documented Argo CD upgrade method <https://argo-cd.readthedocs.io/en/stable/operator-manual/upgrading/overview/>`__ that uses ``kubectl apply``.
-   This will not work properly when Argo CD is installed via Helm, as it is Phalanx.
+   This will not work properly when Argo CD is installed via Helm, as it is in Phalanx.
 
 Automatic upgrades
 ==================
 
-Normally, you can let Argo CD upgrade itself (`Manage Argo CD Using Argo CD <https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#manage-argo-cd-using-argo-cd>`__).
-When performing the upgrade through Argo CD, it appears to be somewhat more reliable to use the following process rather than syncing everything at once:
+Normally, you can let Argo CD upgrade itself (see `Manage Argo CD Using Argo CD <https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#manage-argo-cd-using-argo-cd>`__).
+The upgrade will appear to proceed up to a point and then will apparently stall when the frontend pod is restarted.
+When that happens, wait a minute or two and reload the page.
+You should be presented with the login screen, can authenticate with GitHub or Google, and then will see the completed upgrade.
 
-#. Sync everything except the deployments by unchecking them in the sync dialog
-#. Sync the argocd-redis deployment and wait for it to be green
-#. Sync the remaining deployments one at a time in the following order (the exact order probably doesn't matter, but this is what we've done):
-   - ``argocd-application-controller``
-   - ``argocd-server``
-   - ``argocd-repo-server``
-   - ``argocd-dex-server``
+In some cases after an upgrade, Argo CD will claim that syncing itself failed.
+This is usually a spurious failure caused by the controller restarting due to the upgrade.
+Simply sync Argo CD again to resolve the error state.
+
+If the upgrade results in a non-working Argo CD, often you can get it back to a working state by selectively downgrading the failed component using ``kubectl edit`` on the relevant ``Deployment`` resource.
+This is particularly true if Dex failed (which will cause errors when logging in), since it is largely independent of the rest of Argo CD.
 
 Manual upgrade process
 ======================
+
+Only use this process if the automatic upgrade failed or if there are documented serious problems with automatic upgrades.
 
 #. Determine the current version of Argo CD.
 
@@ -65,7 +68,7 @@ Manual upgrade process
    Note the chart version for ``argo/argo-cd``.
 
 #. Upgrade Argo CD using Helm.
-   Check out the `phalanx repository <https://github.com/lsst-sqre/phalanx>`_ first.
+   Check out the `Phalanx repository`_ first.
 
    .. code-block:: sh
 
@@ -77,43 +80,8 @@ Manual upgrade process
 
 If all goes well, you can now view the UI at ``/argo-cd`` and confirm that everything still looks correct.
 
-Troubleshooting the helm upgrade
---------------------------------
-
-The ``helm upgrade`` command may return an error:
-
-    Error: rendered manifests contain a resource that already
-    exists. Unable to continue with install: Service
-    "argocd-application-controller" in namespace "argocd" exists and
-    cannot be imported into the current release: invalid ownership
-    metadata; label validation error: key "app.kubernetes.io/managed-by"
-    must equal "Helm": current value is "Tiller"; annotation validation
-    error: missing key "meta.helm.sh/release-name": must be set to
-    "argocd"; annotation validation error: missing key
-    "meta.helm.sh/release-namespace": must be set to "argocd"
-
-This means Argo CD was originally installed with Helm v2 and you're using Helm v3.
-You can proceed with Helm v3, but you will need to fix all of the annotations and labels first.
-For all namespaced resources, you can do this by running the following two commands for each resource type that ``helm upgrade`` warns about.
-
-.. code-block:: sh
-
-   kubectl -n argocd label --overwrite $RESOURCE \
-     -l "app.kubernetes.io/managed-by=Tiller" \
-     "app.kubernetes.io/managed-by=Helm"
-   kubectl -n argocd annotate $RESOURCE \
-     -l "app.kubernetes.io/managed-by=Helm" \
-     meta.helm.sh/release-name=argocd meta.helm.sh/release-namespace=argocd
-
-Replace ``$RESOURCE`` with the type of the resource.
-You should not use this command for non-namespaced resources (specifically ``ClusterRole`` and ``ClusterRoleBinding``).
-For those resources, instead of using the ``-l`` selector, find the resources that are part of Argo CD via the ``argocd-`` prefix and then run the ``label`` and ``annotate`` commands naming them explicitly.
-If you fix those non-namespaced resources and then iterate for each namespaced resource, eventually the ``helm upgrade`` command will succeed.
-
-You should only have to do this once per cluster, and then subsequent upgrades with Helm v3 should work smoothly.
-
 Recovering from a botched upgrade
-=================================
+---------------------------------
 
 If everything goes horribly wrong, you can remove Argo CD entirely and the restore it from the backup that you took.
 To do this, first drop the Argo CD namespace:

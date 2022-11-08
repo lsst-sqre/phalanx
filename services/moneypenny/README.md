@@ -1,6 +1,12 @@
 # moneypenny
 
-User provisioning actions for the Science Platform
+User provisioning actions
+
+## Source Code
+
+* <https://github.com/lsst-sqre/moneypenny>
+* <https://github.com/lsst-sqre/farthing>
+* <https://github.com/lsst-sqre/inituserhome>
 
 ## Values
 

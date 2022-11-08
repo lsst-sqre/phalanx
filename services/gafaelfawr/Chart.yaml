@@ -1,7 +1,7 @@
 apiVersion: v2
 name: gafaelfawr
 version: 1.0.0
-description: Science Platform authentication and authorization system
+description: Authentication and identity system
 home: https://gafaelfawr.lsst.io/
 sources:
   - https://github.com/lsst-sqre/gafaelfawr
