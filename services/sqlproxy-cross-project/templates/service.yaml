@@ -7,8 +7,9 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 5432
+    - protocol: "TCP"
+      port: 5432
       targetPort: 5432
-      protocol: TCP
   selector:
     {{- include "sqlproxy.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "cloud-sql-proxy"
