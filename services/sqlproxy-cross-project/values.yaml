@@ -1,49 +1,25 @@
-# Default values for sqlproxy
+# Default values for sqlproxy-cross-project
 
-# -- Override the base name for resources
-nameOverride: ""
+# -- The Google service account that has an IAM binding to the Cloud SQL
+# Proxy Kubernetes service account and has the `cloudsql.client` role
+# @default -- None, must be set
+googleServiceAccount: ""
 
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
+cloudsql-proxy:
+  # -- Override the full name for resources
+  fullnameOverride: "sqlproxy-cross-project"
 
-# -- Number of pods to start
-replicaCount: 1
+  config:
+    # -- Instance connection name for a CloudSQL PostgreSQL instance
+    # @default -- None, must be set
+    instanceConnectionName: ""
 
-image:
-  # -- Cloud SQL Proxy image to use
-  repository: "gcr.io/cloudsql-docker/gce-proxy"
+    # -- IP address type of the instance to connect to (either `PUBLIC` or
+    # `PRIVATE`)
+    ipAddressType: "PRIVATE"
 
-  # -- Tag of Cloud SQL Proxy image to use
-  tag: "1.32.0"
+    # -- Kubernetes service account to run the Cloud SQL Proxy under
+    serviceAccount: "sqlproxy-cross-project"
 
-  # -- Pull policy for the Cloud SQL Proxy image
-  pullPolicy: "IfNotPresent"
-
-config:
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
-  # @default -- None, must be set
-  instanceConnectionName: ""
-
-  # -- IP address type of the instance to connect to (either `PUBLIC` or
-  # `PRIVATE`)
-  ipAddressType: "PRIVATE"
-
-  # -- The Google service account that has an IAM binding to the Cloud SQL
-  # Proxy Kubernetes service account and has the `cloudsql.client` role
-  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
-  serviceAccount: ""
-
-# -- Resource limits and requests for the Cloud SQL Proxy pod
-resources: {}
-
-# -- Annotations for the Cloud SQL Proxy pod
-podAnnotations: {}
-
-# -- Node selector rules for the Cloud SQL Proxy pod
-nodeSelector: {}
-
-# -- Tolerations for the Cloud SQL Proxy pod
-tolerations: []
-
-# -- Affinity rules for the Cloud SQL Proxy pod
-affinity: {}
+  # -- Resource limits and requests for the Cloud SQL Proxy pod
+  resources: {}

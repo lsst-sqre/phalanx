@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "sqlproxy.fullname" . }}
+  name: {{ include "cloudsql-proxy.fullname" . }}
   labels:
-    {{- include "sqlproxy.labels" . | nindent 4 }}
+    {{- include "cloudsql-proxy.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
@@ -11,5 +11,5 @@ spec:
       port: 5432
       targetPort: 5432
   selector:
-    {{- include "sqlproxy.selectorLabels" . | nindent 4 }}
+    {{- include "cloudsql-proxy.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: "cloud-sql-proxy"

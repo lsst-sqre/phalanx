@@ -1,11 +1,14 @@
-fullnameOverride: sqlproxy-butler-int
+googleServiceAccount: "sqlproxy-butler-int@science-platform-dev-7696.iam.gserviceaccount.com"
 
-config:
-  ipAddressType: "PUBLIC"
-  instanceConnectionName: "science-platform-int-dc5d:us-central1:butler-registry-int-72f9812d"
-  serviceAccount: "sqlproxy-butler-int@science-platform-dev-7696.iam.gserviceaccount.com"
+cloudsql-proxy:
+  fullnameOverride: "sqlproxy-butler-int"
 
-resources:
-  requests:
-    cpu: "1"
-    memory: "2Gi"
+  config:
+    ipAddressType: "PUBLIC"
+    instanceConnectionName: "science-platform-int-dc5d:us-central1:butler-registry-int-72f9812d"
+    serviceAccount: "sqlproxy-butler-int"
+
+  resources:
+    requests:
+      cpu: "1"
+      memory: "2Gi"

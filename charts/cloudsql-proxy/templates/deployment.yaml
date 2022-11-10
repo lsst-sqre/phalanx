@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "sqlproxy.fullname" . }}
+  name: {{ include "cloudsql-proxy.fullname" . }}
   labels:
-    {{- include "sqlproxy.labels" . | nindent 4 }}
+    {{- include "cloudsql-proxy.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "sqlproxy.selectorLabels" . | nindent 6 }}
+      {{- include "cloudsql-proxy.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: "cloud-sql-proxy"
   template:
     metadata:
@@ -17,18 +17,18 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "sqlproxy.selectorLabels" . | nindent 8 }}
+        {{- include "cloudsql-proxy.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "cloud-sql-proxy"
     spec:
-      serviceAccountName: {{ include "sqlproxy.fullname" . }}
+      serviceAccountName: {{ required "config.serviceAccount must be set" .Values.config.serviceAccount | quote }}
       containers:
         - name: cloud-sql-proxy
           command:
             - "/cloud_sql_proxy"
             - "-log_debug_stdout"
             - "-structured_logs"
-            - "-ip_address_types={{ required "config.ipAddressType must be specified" .Values.config.ipAddressType}}"
-            - "-instances={{ required "config.instanceConnectionName must be specified" .Values.config.instanceConnectionName }}=tcp:0.0.0.0:5432"
+            - "-ip_address_types={{ required "config.ipAddressType must be set" .Values.config.ipAddressType}}"
+            - "-instances={{ required "config.instanceConnectionName must be set" .Values.config.instanceConnectionName }}=tcp:0.0.0.0:5432"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
