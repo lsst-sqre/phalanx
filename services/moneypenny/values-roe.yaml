@@ -11,5 +11,5 @@ orders:
   volumes:
     - name: homedirs
       nfs:
-        server: 192.41.122.33
+        server: 10.72.0.23
         path: /jhome
