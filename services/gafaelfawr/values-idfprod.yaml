@@ -1,9 +1,12 @@
 replicaCount: 2
 
-# Use the CSI storage class so that we can use snapshots.
+# Use the CSI storage class for the Redis master so that we can use
+# snapshots.  This is probably not the correct approach to taking backups, but
+# we can revisit later.
 redis:
-  persistence:
-    storageClass: "standard-rwo"
+  master:
+    persistence:
+      storageClass: "standard-rwo"
 
 config:
   slackAlerts: true

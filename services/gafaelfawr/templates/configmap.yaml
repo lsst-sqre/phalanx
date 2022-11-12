@@ -9,7 +9,7 @@
     session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
     bootstrap_token_file: "/etc/gafaelfawr/secrets/bootstrap-token"
     database_password_file: "/etc/gafaelfawr/secrets/database-password"
-    redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
+    redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis-master.{{ .Release.Namespace }}:6379/0"
     redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
     {{- if .Values.config.slackAlerts }}
     slack_webhook_file: "/etc/gafaelfawr/secrets/slack-webhook"

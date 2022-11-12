@@ -327,46 +327,82 @@ operator:
   affinity: {}
 
 redis:
-  image:
-    # -- Redis image to use
-    repository: "redis"
+  # -- Authentication configuration for Redis (should not need to be changed
+  # unless you set `nameOverride` or `fullnameOverride`)
+  # @default -- See `values.yaml`
+  auth:
+    enabled: true
+    existingSecret: "gafaelfawr-secret"
+    existingSecretPasswordKey: "redis-password"
 
-    # -- Redis image tag to use
-    tag: "7.0.5"
+  master:
+    # -- Resource limits for the master Redis pod
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+      requests:
+        cpu: "100m"
 
-    # -- Pull policy for the Redis image
-    pullPolicy: "IfNotPresent"
+    persistence:
+      # -- Whether to persist Redis master storage and thus tokens. Setting
+      # this to false will use `emptyDir` and reset all tokens on every
+      # restart. Only use this for a test deployment.
+      enabled: true
 
-  persistence:
-    # -- Whether to persist Redis storage and thus tokens. Setting this to
-    # false will use `emptyDir` and reset all tokens on every restart. Only
-    # use this for a test deployment.
+      # -- Amount of persistent storage to request for Redis master
+      size: "1Gi"
+
+      # -- Class of storage to request for Redis master
+      storageClass: ""
+
+    serviceAccount:
+      # -- Whether to create a service account for the Redis master (required
+      # to disable automounting)
+      create: true
+
+      # -- Whether to automount the default service account token in the Redis
+      # master pod (this should never be necessary)
+      automountServiceAccountToken: false
+
+  replica:
+    # -- How many Redis replicas to create
+    replicaCount: 1
+
+    # -- Resource limits for the replica Redis pods
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+
+    persistence:
+      # -- Whether to persist Redis replica storage and thus tokens. Setting
+      # this to false will use `emptyDir` and replicate all tokens from the
+      # mater on restart.
+      enabled: true
+
+      # -- Amount of persistent storage to request for Redis replicas (should
+      # match the setting for the Redis master)
+      size: "1Gi"
+
+      # -- Class of storage to request for Redis replicas
+      storageClass: ""
+
+    serviceAccount:
+      # -- Whether to create a service account for the Redis replica pods
+      # (required to disable automounting)
+      create: true
+
+      # -- Whether to automount the default service account token in the Redis
+      # replica pods (this should never be necessary)
+      automountServiceAccountToken: false
+
+  networkPolicy:
+    # -- Whether to install a `NetworkPolicy` for Redis
     enabled: true
 
-    # -- Amount of persistent storage to request
-    size: "1Gi"
-
-    # -- Class of storage to request
-    storageClass: ""
-
-    # -- Access mode of storage to request
-    accessMode: "ReadWriteOnce"
-
-    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
-    # size, storageClass, and accessMode settings are ignored.
-    volumeClaimName: ""
-
-  # -- Pod annotations for the Redis pod
-  podAnnotations: {}
-
-  # -- Node selection rules for the Redis pod
-  nodeSelector: {}
-
-  # -- Tolerations for the Redis pod
-  tolerations: []
-
-  # -- Affinity rules for the Redis pod
-  affinity: {}
+    # -- Allow connections from pods without a client label
+    allowExternal: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

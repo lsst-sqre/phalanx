@@ -1,6 +1,10 @@
 redis:
-  persistence:
-    enabled: false
+  master:
+    persistence:
+      enabled: false
+  replica:
+    persistence:
+      enabled: false
 
 config:
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"

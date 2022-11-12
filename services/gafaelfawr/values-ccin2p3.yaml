@@ -1,8 +1,12 @@
 replicaCount: 2
 
 redis:
-  persistence:
-    enabled: false
+  master:
+    persistence:
+      enabled: false
+  replica:
+    persistence:
+      enabled: false
 
 config:
   loglevel: "DEBUG"

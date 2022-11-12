@@ -18,6 +18,7 @@ spec:
           labels:
             {{- include "gafaelfawr.selectorLabels" . | nindent 12 }}
             app.kubernetes.io/component: "maintenance"
+            gafaelfawr-redis-client: "true"
         spec:
           restartPolicy: "Never"
           automountServiceAccountToken: false

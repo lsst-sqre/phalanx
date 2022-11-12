@@ -1,6 +1,10 @@
 redis:
-  persistence:
-    storageClass: "rook-ceph-block"
+  master:
+    persistence:
+      storageClass: "rook-ceph-block"
+  replica:
+    persistence:
+      storageClass: "rook-ceph-block"
 
 config:
   slackAlerts: true
