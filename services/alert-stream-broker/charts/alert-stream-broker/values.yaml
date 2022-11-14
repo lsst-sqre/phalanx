@@ -37,6 +37,10 @@ kafka:
     log.retention.bytes: "644245094400"
 
   externalListener:
+    tls:
+      # -- Whether TLS encryption is enabled.
+      enabled: false
+      certIssuerName: "letsencrypt-dns"
     bootstrap:
       # -- IP address that should be used by the broker's external bootstrap load
       # balancer for access from the internet. The format of this is a string like
@@ -45,6 +49,7 @@ kafka:
       # -- Hostname that should be used by clients who want to connect to the
       # broker through the bootstrap address.
       host: ""
+      annotations: {}
 
     # -- List of hostname and IP for each broker. The format of this is a list
     # of maps with 'ip' and 'host' keys. For example:
