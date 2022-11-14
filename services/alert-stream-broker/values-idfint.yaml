@@ -7,7 +7,7 @@ alert-stream-broker:
     # Google and now we're pinning them.
     externalListener:
       bootstrap:
-        ip: 35.188.169.31
+        ip: 35.224.176.103
         host: alert-stream-int.lsst.cloud
       brokers:
         - ip: 35.239.64.164
