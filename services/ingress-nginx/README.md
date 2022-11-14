@@ -8,12 +8,6 @@ Ingress controller
 
 * <https://github.com/kubernetes/ingress-nginx>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://kubernetes.github.io/ingress-nginx | ingress-nginx | 4.3.0 |
-
 ## Values
 
 | Key | Type | Default | Description |

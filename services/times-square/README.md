@@ -6,12 +6,6 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 
 * <https://github.com/lsst-sqre/times-square>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | 17.3.8 |
-
 ## Values
 
 | Key | Type | Default | Description |
