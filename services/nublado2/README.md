@@ -8,14 +8,6 @@ JupyterHub for the Rubin Science Platform
 
 * <https://github.com/lsst-sqre/nublado2>
 
-## Requirements
-
-Kubernetes: `>=1.20.0-0`
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://jupyterhub.github.io/helm-chart/ | jupyterhub | 2.0.0 |
-
 ## Values
 
 | Key | Type | Default | Description |

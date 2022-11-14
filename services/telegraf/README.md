@@ -9,12 +9,6 @@ Application telemetry collection service
 * <https://github.com/influxdata/telegraf>
 * <https://github.com/influxdata/helm-charts>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://helm.influxdata.com/ | telegraf | 1.8.23 |
-
 ## Values
 
 | Key | Type | Default | Description |
