@@ -9,13 +9,6 @@ alert-stream-broker:
       bootstrap:
         ip: 35.224.176.103
         host: alert-stream-int.lsst.cloud
-      brokers:
-        - ip: 35.239.64.164
-          host: alert-stream-int-broker-0.lsst.cloud
-        - ip: 34.122.165.155
-          host: alert-stream-int-broker-1.lsst.cloud
-        - ip: 35.238.120.127
-          host: alert-stream-int-broker-2.lsst.cloud
     storage:
       size: 1500Gi
 
