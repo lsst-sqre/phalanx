@@ -5,7 +5,8 @@ description: Authentication and identity system
 home: https://gafaelfawr.lsst.io/
 sources:
   - https://github.com/lsst-sqre/gafaelfawr
-appVersion: 7.0.0
+appVersion: 7.1.0
+
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-234"
