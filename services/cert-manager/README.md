@@ -8,12 +8,6 @@ TLS certificate manager
 
 * <https://github.com/cert-manager/cert-manager>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.jetstack.io | cert-manager | v1.10.0 |
-
 ## Values
 
 | Key | Type | Default | Description |
