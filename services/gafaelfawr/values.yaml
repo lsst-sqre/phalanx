@@ -308,8 +308,8 @@ maintenance:
   # -- Affinity rules for Gafaelfawr maintenance and audit pods
   affinity: {}
 
-tokens:
-  # -- Resource limits and requests for the Gafaelfawr token management pod
+operator:
+  # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
   resources: {}
 
   # -- Annotations for the token management pod

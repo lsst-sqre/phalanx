@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-tokens
+  name: {{ template "gafaelfawr.fullname" . }}-operator
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -9,21 +9,21 @@ spec:
   selector:
     matchLabels:
       {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: "tokens"
+      app.kubernetes.io/component: "operator"
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.tokens.podAnnotations }}
+        {{- with .Values.operator.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
         {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "tokens"
+        app.kubernetes.io/component: "operator"
     spec:
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}-tokens
+      serviceAccountName: {{ include "gafaelfawr.fullname" . }}-operator
       containers:
-        - name: "gafaelfawr-tokens"
+        - name: "gafaelfawr"
           command:
             - "kopf"
             - "run"
@@ -33,7 +33,7 @@ spec:
             - "gafaelfawr.operator"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          {{- with .Values.tokens.resources }}
+          {{- with .Values.operator.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -61,15 +61,15 @@ spec:
         - name: "secret"
           secret:
             secretName: {{ template "gafaelfawr.fullname" . }}-secret
-      {{- with .Values.tokens.nodeSelector }}
+      {{- with .Values.operator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tokens.affinity }}
+      {{- with .Values.operator.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tokens.tolerations }}
+      {{- with .Values.operator.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
