@@ -5,6 +5,8 @@ metadata:
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
-  {{- toYaml .Values.controller | nindent 2 }}
-  global:
-    {{- toYaml .Values.global | nindent 4 }}
+  config.yaml: |-
+  {{- toYaml .Values.controller | nindent 4 }}
+    global:
+    {{- toYaml .Values.global | nindent 6 }}
+

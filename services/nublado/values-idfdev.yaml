@@ -1,0 +1,30 @@
+image:
+  imagePullPolicy: Always
+  tag: ajt-dev
+controller:
+  lab:
+    volumes:
+    - containerPath: /home
+      serverPath: /share1/home
+      server: 10.13.105.122
+      mode: rw
+    - containerPath: /project
+      serverPath: /share1/project
+      server: 10.13.105.122
+      mode: ro
+    - containerPath: /scratch
+      serverPath: /share1/scratch
+      server: 10.13.105.122
+      mode: rw
+  images:
+    # -- config from sqr-066
+    docker: null
+    gar:
+      repository: sciplat
+      image: sciplat-lab
+      projectId: rubin-shared-services-71ec
+      registry: us-central1-docker.pkg.dev
+    recommendedTag: recommended
+    numReleases: 1
+    numWeeklies: 2
+    numDailies: 3

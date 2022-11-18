@@ -8,7 +8,7 @@ fullnameOverride: ""
 
 image:
   # -- nublado image to use
-  repository: lsstsqre/nublado
+  repository: lsstsqre/jupyterlabcontroller
 
   # -- Pull policy for the nublado image
   pullPolicy: IfNotPresent
@@ -50,18 +50,16 @@ controller:
   # but we'd rather do it this way and just control all config through
   # the ConfigMap
   safir:
-    # -- The application's name (not the root HTTP endpoint path)
+    # -- The application's name (not necessarily the root HTTP endpoint path)
     name: jupyterlab-controller
+    # -- The application's root HTTP endpoint path
+    rootEndpoint: nublado
     # -- Application run profile: "development" or "production"
     profile: development
     # -- Root name of the application's logger.
-    logger_name: jupyterlabcontroller
+    loggerName: jupyterlabcontroller
     #
-    log_level: DEBUG
-  # -- Kubernetes API settings
-  kubernetes:
-    # -- timeout in seconds for kubernetes API requests.
-    request_timeout: 60
+    logLevel: DEBUG
   # -- Settings for the JupyterLab controller
   lab:
     # These are the maximum CPU/memory allocations for each size
@@ -83,39 +81,35 @@ controller:
     # -- List of specifications for containers to run to commission a new user.
     initcontainers: []
     # Each member of the list should set a container `name`, `image`, and
-    # `securityContext` and may contain `volumeMounts`.
+    # `privileged`, and may contain `volumes` (defined immediately below).
+    # If `privileged` is true, the container will run as root with
+    # `allowPrivilegeEscalation` true; otherwise it will (by convention)
+    # run as user 1000.
     # - name: farthing
     #   image: lsstsqre/farthing
-    #   securityContext:
-    #     runAsUser: 1000
-    #     runAsNonRootUser: true
-    #     allowPrivilegeEscalation: false
-    # -- Maximum CPU/memory resources for user namespace
-    quota:
-      cpu: 81
-      memory: 243Gi
+    #   privileged: false
+    # - name: provisionator
+    #   image: lsstsqre/provisionator
+    #   privileged: true
+    #   volumes:
+    #   - containerPath: /home
+    #     serverPath: /share1/home
+    #     server: 10.13.105.122
+    #     mode: rw
     # -- Volumes defined to user lab pods
     volumes:
-    - name: home
-      nfs:
-        path: /share1/home
-        server: 10.13.105.122
-    - name: project
-      nfs:
-        path: /share1/project
-        server: 10.13.105.122
-    - name: scratch
-      nfs:
-        path: /share1/scratch
-        server: 10.13.105.122
-    # -- Volume Mounts corresponding to user lab pod Volumes
-    volume_mounts:
-    - name: home
-      mountPath: /home
-    - name: project
-      mountPath: /project
-    - name: scratch
-      mountPath: /scratch
+    - containerPath: /home
+      serverPath: /share1/home
+      server: 10.13.105.122
+      mode: rw
+    - containerPath: /project
+      serverPath: /share1/project
+      server: 10.13.105.122
+      mode: ro
+    - containerPath: /scratch
+      serverPath: /share1/scratch
+      server: 10.13.105.122
+      mode: rw
     # -- Environment variables for user lab pods, common to all lab pods
     # in this RSP instance.
     env:
@@ -169,138 +163,117 @@ controller:
       # files.
       # EXTERNAL_INSTANCE_URL is a special case: it's
       # constant-per-instance, but you can't template values files
-    form:
-      # -- Lab form restrictions.  It's a list of objects where each
-      # object has three fields, 'type', 'value', and 'groups'.  'type'
-      # must be one of "size", "image", or "tag".  'value' is a regular
-      # expression matching a string that is an allowed value for 'type'.
-      # 'groups', if specified, is a list of group names allowed to use
-      # a resource where 'type' matches 'value'.  An empty list is
-      # unrestricted.
-      restrictions: []
-      # - type: "size"
-      #   value: "large"
-      #   groups:
-      #   - "admins"
-      #   - "power_users"
-      # - type: "image"
-      #   value: "docker.io/lsstsqre/admin-*"
-      #   groups: [ "admins" ]
-      # - type "tag"
-      #   value: ".*_exp_.*"
-      #  groups:
-      #  - "experimental_users"
+    secrets: []
+    #  secretRef: credentials
+    #  secretKey: butler-credentials
     # -- Files to be mounted as ConfigMaps inside the user lab pod.
     # Some of these will require modification.  Those are noted with
     # modify: true, and the file name will be the unique key directing
     # how the Lab controller is to modify it.
     files:
-    - name: passwd
-      mountPath: /etc/passwd
-      modify: true
-      contents: |
-        root:x:0:0:root:/root:/bin/bash
-        bin:x:1:1:bin:/bin:/sbin/nologin
-        daemon:x:2:2:daemon:/sbin:/sbin/nologin
-        adm:x:3:4:adm:/var/adm:/sbin/nologin
-        lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-        sync:x:5:0:sync:/sbin:/bin/sync
-        shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-        halt:x:7:0:halt:/sbin:/sbin/halt
-        mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-        operator:x:11:0:operator:/root:/sbin/nologin
-        games:x:12:100:games:/usr/games:/sbin/nologin
-        ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
-        tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-        dbus:x:81:81:System message bus:/:/sbin/nologin
-        nobody:x:99:99:Nobody:/:/sbin/nologin
-        systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
-        lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
-    - name: group
-      mountPath: /etc/group
-      modify: true
-      contents: |
-        root:x:0:
-        bin:x:1:
-        daemon:x:2:
-        sys:x:3:
-        adm:x:4:
-        tty:x:5:
-        disk:x:6:
-        lp:x:7:
-        mem:x:8:
-        kmem:x:9:
-        wheel:x:10:
-        cdrom:x:11:
-        mail:x:12:
-        man:x:15:
-        dialout:x:18:
-        floppy:x:19:
-        games:x:20:
-        utmp:x:22:
-        tape:x:33:
-        utempter:x:35:
-        video:x:39:
-        ftp:x:50:
-        lock:x:54:
-        tss:x:59:
-        audio:x:63:
-        dbus:x:81:
-        screen:x:84:
-        nobody:x:99:
-        users:x:100:
-        systemd-journal:x:190:
-        systemd-network:x:192:
-        cgred:x:997:
-        ssh_keys:x:998:
-        input:x:999:
-    - name: dask-config
-      mountPath: /opt/lsst/software/jupyterlab/lsst_dask.yml
-      contents: |
-        # No longer used, but preserves compatibility with runlab.sh
-        dask_worker.yml: |
-          enabled: false
-    - name: idds-config
-      mountPath: /opt/lsst/software/jupyterlab/panda
-      modify: false
-      contents: |
-        # Licensed under the Apache License, Version 2.0 (the "License");
-        # You may not use this file except in compliance with the License.
-        # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-        #
-        # Authors:
-        # - Wen Guan, <wen.guan@cern.ch>, 2020
-        [common]
-        # if logdir is configured, idds will write to idds.log in this directory.
-        # else idds will go to stdout/stderr.
-        # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
-        # logdir = /var/log/idds
-        loglevel = INFO
-        [rest]
-        host = https://iddsserver.cern.ch:443/idds
-        #url_prefix = /idds
-        #cacher_dir = /tmp
-        cacher_dir = /data/idds
-    # -- Secrets for injection into user lab pods.  The name is again
-    # the unique key that allows the Lab Controller to create the
-    # contents.  Since these are stored as secrets, they will be created
-    # from whole cloth, rather than modified from a base template.
-    # If 'env' is specified, the mountPath will be stored in that environment
-    # variable.
-    secrets:
-    - name: aws-credentials.ini
-      mountPath: /opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini
-      env: AWS_SHARED_CREDENTIALS_FILE
+      /etc/passwd:
+        modify: true
+        contents: |
+          root:x:0:0:root:/root:/bin/bash
+          bin:x:1:1:bin:/bin:/sbin/nologin
+          daemon:x:2:2:daemon:/sbin:/sbin/nologin
+          adm:x:3:4:adm:/var/adm:/sbin/nologin
+          lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+          sync:x:5:0:sync:/sbin:/bin/sync
+          shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+          halt:x:7:0:halt:/sbin:/sbin/halt
+          mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+          operator:x:11:0:operator:/root:/sbin/nologin
+          games:x:12:100:games:/usr/games:/sbin/nologin
+          ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+          tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+          dbus:x:81:81:System message bus:/:/sbin/nologin
+          nobody:x:99:99:Nobody:/:/sbin/nologin
+          systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
+      /etc/group:
+        modify: true
+        contents: |
+          root:x:0:
+          bin:x:1:
+          daemon:x:2:
+          sys:x:3:
+          adm:x:4:
+          tty:x:5:
+          disk:x:6:
+          lp:x:7:
+          mem:x:8:
+          kmem:x:9:
+          wheel:x:10:
+          cdrom:x:11:
+          mail:x:12:
+          man:x:15:
+          dialout:x:18:
+          floppy:x:19:
+          games:x:20:
+          utmp:x:22:
+          tape:x:33:
+          utempter:x:35:
+          video:x:39:
+          ftp:x:50:
+          lock:x:54:
+          tss:x:59:
+          audio:x:63:
+          dbus:x:81:
+          screen:x:84:
+          nobody:x:99:
+          users:x:100:
+          systemd-journal:x:190:
+          systemd-network:x:192:
+          cgred:x:997:
+          ssh_keys:x:998:
+          input:x:999:
+      /opt/lsst/software/jupyterlab/lsst_dask.yml:
+        modify: false
+        contents: |
+          # No longer used, but preserves compatibility with runlab.sh
+          dask_worker.yml: |
+            enabled: false
+      /opt/lsst/software/jupyterlab/panda:
+        modify: false
+        contents: |
+          # Licensed under the Apache License, Version 2.0 (the "License");
+          # You may not use this file except in compliance with the License.
+          # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+          #
+          # Authors:
+          # - Wen Guan, <wen.guan@cern.ch>, 2020
+          [common]
+          # if logdir is configured, idds will write to idds.log in this directory.
+          # else idds will go to stdout/stderr.
+          # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
+          # logdir = /var/log/idds
+          loglevel = INFO
+          [rest]
+          host = https://iddsserver.cern.ch:443/idds
+          #url_prefix = /idds
+          #cacher_dir = /tmp
+          cacher_dir = /data/idds
+    # # -- Secrets for injection into user lab pods.  The name is again
+    # # the unique key that allows the Lab Controller to create the
+    # # contents.  Since these are stored as secrets, they will be created
+    # # from whole cloth, rather than modified from a base template.
+    # # If 'env' is specified, the mount_path will be stored in that environment
+    # # variable.
+    # secrets:
+    # - name: aws-credentials.ini
+    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini
+    #   env: AWS_SHARED_CREDENTIALS_FILE
 
-    - name: butler-gcs-idf-creds.json
-      mountPath: /opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json
-      env: GOOGLE_APPLICATION_CREDENTIALS
-    - name: butler-hmac-idf-creds.json
-      mountPath: /opt/lsst/software/jupyterlab/butler-secret/butler-hmac-idf-creds.json
-    - name: postgres-credentials.txt
-      mountPath: /opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt
-      env: PGPASSFILE
-  prepuller:
+    # - name: butler-gcs-idf-creds.json
+    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json
+    #   env: GOOGLE_APPLICATION_CREDENTIALS
+    # - name: butler-hmac-idf-creds.json
+    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/butler-hmac-idf-creds.json
+    # - name: postgres-credentials.txt
+    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt
+    #   env: PGPASSFILE
+  images:
     # -- config from sqr-066
     registry: lighthouse.ceres
     docker:
@@ -309,86 +282,11 @@ controller:
     numReleases: 1
     numWeeklies: 2
     numDailies: 3
-    pollInterval: 60
-  form:
-    # -- options form template text keyed by group name.
-    # "default" is always present.
-    forms:
-      default: |
-        <script>
-        function selectDropdown() {
-            document.getElementById('{{ dropdown_sentinel }}').checked = true;
-        }
-        </script>
-        <style>
-            td {
-                border: 1px solid black;
-                padding: 2%;
-                vertical-align: top;
-            }
-            .radio label,
-            .checkbox label {
-                padding-left: 0px;
-            }
-        </style>
-        <table width="100%">
-        <tr>
-          <th>Image</th>
-          <th>Options</th>
-        </tr>
-        <tr>
-        <td width="50%">
-          <div class="radio radio-inline">
-        {% for i in cached_images %}
-            <input type="radio" name="image_list"
-             id="image{{ loop.index }}" value="{{ i.path }}"
-             {% if loop.first %} checked {% endif %}
-            >
-            <label for="image{{ loop.index }}">{{ i.name }}</label><br />
-        {% endfor %}
-            <input type="radio" name="image_list"
-                id="{{ dropdown_sentinel }}"
-                value="{{ dropdown_sentinel }}"
-                {% if not cached_images %} checked {% endif %}
-            >
-            <label for="{{ dropdown_sentinel }}">
-              Select uncached image (slower start):
-            </label><br />
-            <select name="image_dropdown" onclick="selectDropdown()">
-            {% for i in all_images %}
-                <option value="{{ i.path }}">{{ i.name }}</option>
-            {% endfor %}
-            </select>
-          </div>
-        </td>
-        <td width="50%">
-          <div class="radio radio-inline">
-        {% for s in sizes %}
-            <input type="radio" name="size"
-             id="{{ s.name }}" value="{{ s.name }}"
-             {% if loop.first %} checked {% endif %}
-            >
-            <label for="{{ s.name }}">
-              {{ s.name }} ({{ s.cpu }} CPU, {{ s.memory }} RAM)
-            </label><br />
-        {% endfor %}
-          </div>
-          <br />
-          <br />
-          <div class="checkbox checkbox-inline">
-            <input type="checkbox" id="enable_debug"
-             name="enable_debug" value="false">
-            <label for="enable_debug">Enable debug logs</label><br />
-
-            <input type="checkbox" id="reset_user_env"
-             name="reset_user_env" value="false">
-            <label for="reset_user_env">
-              Reset user environment: relocate .cache, .jupyter, and .local
-            </label><br />
-          </div>
-        </td>
-        </tr>
-        </table>
+  # -- Runtime config will be filled in on initialization
+  runtime:
+    path: ""
+    namespace: ""
+    instanceUrl: ""
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
