@@ -43,8 +43,9 @@ config:
     - name: home
       hostPath:
         path: /pbs/home
+
     - name: data
-       hostPath:
+      hostPath:
          path: /data/rsp/nublado2
          type: Directory
 
