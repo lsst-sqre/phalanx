@@ -43,11 +43,17 @@ config:
     - name: home
       hostPath:
         path: /pbs/home
+    - name: data
+       hostPath:
+         path: /data/rsp/nublado2
+         type: Directory
 
   volume_mounts:
     - name: home
       mountPath: /home
-  
+    - name: data
+      mountPath: /data
+
   user_resources_template: |
     - apiVersion: v1
       kind: Namespace
