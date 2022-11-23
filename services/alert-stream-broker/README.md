@@ -12,4 +12,5 @@ Alert transmission to community brokers
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | strimzi-registry-operator.clusterName | string | `"alert-broker"` |  |
+| strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |
