@@ -1,0 +1,322 @@
+# The canonical version of this file is in the Gafaelfawr repository:
+# https://github.com/lsst-sqre/gafaelfawr/blob/main/crds/ingress.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: gafaelfawringresses.gafaelfawr.lsst.io
+  labels:
+    app.kubernetes.io/name: gafaelfawr.lsst.io
+    app.kubernetes.io/part-of: gafaelfawr
+  annotations:
+    helm.sh/hook: crd-install
+spec:
+  group: gafaelfawr.lsst.io
+  scope: Namespaced
+  names:
+    plural: gafaelfawringresses
+    singular: gafaelfawringress
+    kind: GafaelfawrIngress
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      additionalPrinterColumns:
+        - description: "If the ingress was created successfully"
+          jsonPath: .status.create.status
+          name: "Succeeded"
+          type: string
+        - description: "Reason for the current status"
+          jsonPath: .status.create.reason
+          name: "Reason"
+          type: string
+        - description: "More information about the current status"
+          jsonPath: .status.create.message
+          name: "Message"
+          type: string
+        - description: "Time when the condition was last updated"
+          jsonPath: .status.create.lastTransitionTime
+          name: "Last Transition"
+          type: date
+        - description: "Time when the GafaelfawrIngress was created"
+          jsonPath: .metadata.creationTimestamp
+          name: "Age"
+          type: date
+      subresources:
+        status: {}
+      schema:
+        openAPIV3Schema:
+          description: >-
+            GafaelfawrIngress defines the parameters used to create an Ingress
+            resource.
+          type: object
+          required:
+            - config
+            - template
+          properties:
+            config:
+              type: object
+              description: "Configuration for the ingress to create."
+              required:
+                - baseUrl
+              properties:
+                baseUrl:
+                  type: string
+                  description: "Base URL for Gafaelfawr APIs."
+                  pattern: "^https://[a-z.-]+"
+                scopes:
+                  type: object
+                  description: >-
+                    The token scope or scopes required to access this
+                    service.  May be omitted if the service allows
+                    anonymous access.
+                  properties:
+                    any:
+                      type: array
+                      description: >-
+                        Access is granted if any of the listed scopes are
+                        present.
+                      items:
+                        type: string
+                    all:
+                      type: array
+                      description: >-
+                        Access is granted if all of the listed scopes are
+                        present.
+                      items:
+                        type: string
+                  oneOf:
+                    - required:
+                        - any
+                    - required:
+                        - all
+                authType:
+                  type: string
+                  enum:
+                    - basic
+                    - bearer
+                  description: >-
+                    Controls the authentication type in the challenge
+                    returned in the `WWW-Authenticate` header if the user
+                    is not authenticated. By default, this is `bearer`.
+                loginRedirect:
+                  type: boolean
+                  description: >-
+                    Whether to redirect to the login flow if the user is
+                    not currently authenticated.
+                replace403:
+                  type: boolean
+                  description: >-
+                    Whether to replace 403 responses with a custom 403
+                    response from Gafaelfawr that disables caching and
+                    includes authorization-related errors in the
+                    `WWW-Authenticate` header.
+                delegate:
+                  type: object
+                  description: >-
+                    Create a (or reuse a cached) delegated token and
+                    include it in the request to the backend service.
+                  properties:
+                    internal:
+                      type: object
+                      description: >-
+                        Delegate an internal token to this service.
+                      required:
+                        - scopes
+                        - service
+                      properties:
+                        scopes:
+                          type: array
+                          description: >-
+                            Scopes to include in the delegated token if
+                            they are available. These scopes are not
+                            required to access the service; to make them
+                            required, include them in spec.scopes as well.
+                          items:
+                            type: string
+                        service:
+                          type: string
+                          description: >-
+                            Name of the service to which the token is
+                            delegated.
+                    notebook:
+                      type: object
+                      description: >-
+                        Delegate a notebook token to this service.
+                    minimumLifetime:
+                      type: integer
+                      description: >-
+                        Minimum lifetime of delegated token in seconds. If
+                        the user's token has less than that time
+                        remaining, force them to reauthenticate.
+                  oneOf:
+                    - required:
+                        - internal
+                    - required:
+                        - notebook
+            template:
+              type: object
+              description: "The template used to create the ingress."
+              required:
+                - metadata
+                - spec
+              properties:
+                metadata:
+                  type: object
+                  description: "Metadata attributes for the generated ingress."
+                  properties:
+                    annotations:
+                      type: object
+                      description: >-
+                        Annotations to apply to the generated ingress. These
+                        will be merged with the annotations required by
+                        Gafaelfawr. If there is a conflict, the
+                        Gafaelfawr-generated annotations will override the
+                        ones provided in this field.
+                      additionalProperties:
+                        type: string
+                    labels:
+                      type: object
+                      description: "Labels to apply to the generated ingress."
+                      additionalProperties:
+                        type: string
+                    name:
+                      type: string
+                      description: "Name of the generated ingress"
+                spec:
+                  type: object
+                  description: "Spec for the generated ingress."
+                  required:
+                    - rules
+                  properties:
+                    rules:
+                      type: array
+                      description: >-
+                        Host rules for the generated ingress. See the schema
+                        for the regular Ingress resource for descriptions of
+                        the individual fields.
+                      items:
+                        type: object
+                        properties:
+                          host:
+                            type: string
+                          http:
+                            type: object
+                            required:
+                              - paths
+                            properties:
+                              paths:
+                                type: array
+                                items:
+                                  type: object
+                                  required:
+                                    - path
+                                    - pathType
+                                    - backend
+                                  properties:
+                                    path:
+                                      type: string
+                                    pathType:
+                                      type: string
+                                      enum:
+                                        - Exact
+                                        - ImplementationSpecific
+                                        - Prefix
+                                    backend:
+                                      type: object
+                                      properties:
+                                        service:
+                                          type: object
+                                          properties:
+                                            name:
+                                              type: string
+                                            port:
+                                              type: object
+                                              properties:
+                                                number:
+                                                  type: integer
+                                                name:
+                                                  type: string
+                    tls:
+                      type: array
+                      description: >-
+                        TLS configuration if one should be added to this
+                        generated ingress. See the schema for the regular
+                        Ingress resource for descriptions of the individual
+                        fields.
+                      items:
+                        type: object
+                        properties:
+                          hosts:
+                            type: array
+                            items:
+                              type: string
+                          secretName:
+                            type: string
+            status:
+              type: object
+              description: >-
+                The current state of the GafaelfawrIngress, its processing by
+                Gafaelfawr, and its child resources.
+              x-kubernetes-preserve-unknown-fields: true
+              properties:
+                create:
+                  type: object
+                  description: >-
+                    Status of processing of the last creation or update of the
+                    GafaelfawrIngress object.
+                  required:
+                    - lastTransitionTime
+                    - message
+                    - reason
+                    - status
+                    - type
+                  properties:
+                    lastTransitionTime:
+                      type: string
+                      format: date-time
+                      description: >
+                        The last time the child Ingress status changed.
+                    message:
+                      type: string
+                      description: >
+                        A human readable message indicating details about the
+                        transition. This may be an empty string.
+                      maxLength: 32768
+                    observedGeneration:
+                      description: >
+                        The .metadata.generation that the condition was set
+                        based upon. For instance, if .metadata.generation is
+                        currently 12, but the
+                        .status.create.observedGeneration is 9, the condition
+                        is out of date with respect to the current state of
+                        the instance.
+                      format: int64
+                      minimum: 0
+                      type: integer
+                    reason:
+                      type: string
+                      description: >
+                        A programmatic identifier indicating the reason for
+                        the condition's last transition. Producers of specific
+                        condition types may define expected values and
+                        meanings for this field, and whether the values are
+                        considered a guaranteed API. The value should be a
+                        CamelCase string. This field may not be empty.
+                      maxLength: 1024
+                      minLength: 1
+                      pattern: "^[A-Za-z]([A-Za-z0-9_,:]*[A-Za-z0-9_])?$"
+                    status:
+                      type: string
+                      description: >
+                        Status of the condition, one of True, False, Unknown.
+                      enum:
+                        - "True"
+                        - "False"
+                        - "Unknown"
+                    type:
+                      type: string
+                      description: >
+                        Type of condition in CamelCase or in
+                        foo.example.com/CamelCase.
+                      maxLength: 316
+                      pattern: "^([a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*/)?(([A-Za-z0-9][-A-Za-z0-9_.]*)?[A-Za-z0-9])$"

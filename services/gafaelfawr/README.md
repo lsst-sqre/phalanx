@@ -84,6 +84,11 @@ Authentication and identity system
 | maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
+| operator.affinity | object | `{}` | Affinity rules for the token management pod |
+| operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
+| operator.podAnnotations | object | `{}` | Annotations for the token management pod |
+| operator.resources | object | `{}` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
+| operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
@@ -99,9 +104,4 @@ Authentication and identity system
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
-| tokens.affinity | object | `{}` | Affinity rules for the token management pod |
-| tokens.nodeSelector | object | `{}` | Node selection rules for the token management pod |
-| tokens.podAnnotations | object | `{}` | Annotations for the token management pod |
-| tokens.resources | object | `{}` | Resource limits and requests for the Gafaelfawr token management pod |
-| tokens.tolerations | list | `[]` | Tolerations for the token management pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
