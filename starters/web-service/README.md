@@ -20,8 +20,6 @@ Helm starter chart for a new RSP service.
 | image.repository | string | `"ghcr.io/lsst-sqre/<CHARTNAME>"` | Image to use in the <CHARTNAME> deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.gafaelfawrAuthQuery | string | Unauthenticated | Gafaelfawr auth query string |
-| ingress.path | string | `"/<CHARTNAME>"` | Path at which to serve the service |
 | nodeSelector | object | `{}` | Node selection rules for the <CHARTNAME> deployment pod |
 | podAnnotations | object | `{}` | Annotations for the <CHARTNAME> deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |

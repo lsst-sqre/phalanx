@@ -52,7 +52,7 @@ Requirements
 
 #. Install `Helm 3 <https://helm.sh/docs/intro/install/>`__.
 
-#. Install `Vault <https://learn.hashicorp.com/tutorials/vault/getting-started-install>`__.
+#. Install `Vault <https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install>`__.
 
 #. Clone the `Phalanx repository`_.
 

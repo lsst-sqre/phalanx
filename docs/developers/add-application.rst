@@ -13,10 +13,10 @@ Currently, all applications use Helm charts.
 
 .. note::
 
-   Kustomize is theoretically supported but has not been used to date in the `phalanx repository`_, and therefore isn't recommended.
+   Kustomize is theoretically supported but has not been used to date in the `Phalanx repository`_, and therefore isn't recommended.
 
 There does not yet exist a SQuaRE-produced a template for the Helm chart; rather, we use the built-in Helm starter template.
-Use ``helm create`` to create a new chart from that template.
+Use ``helm create -p starters/web-service`` to create a new chart from that template.
 **Be sure you are using Helm v3.**
 Helm v2 is not supported.
 
@@ -28,17 +28,10 @@ You will need to make at least the following changes to the default Helm chart t
   See :doc:`add-a-onepassword-secret` for more information about secrets.
 
 - Application providing a web API should be protected by Gafaelfawr and require an appropriate scope.
-  This normally means adding annotations to the ``Ingress`` resource via ``values.yaml`` similar to:
+  This is set up for you by the template using a ``GafaelfawrIngress`` resource in ``templates/ingress.yaml``, but you will need to customize the scope required for access, and may need to add additional configuration.
+  You will also need to customize the path under which your application should be served.
 
-  .. code-block:: yaml
-
-     ingress:
-       annotations:
-         nginx.ingress.kubernetes.io/auth-method: "GET"
-         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin"
-
-  For user-facing applications you will want a scope other than ``exec:admin``.
-  See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/ingress.html>`__ for more information.
+  See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html>`__ for more information, and see :dmtn:`235` for a guide to what scopes to use to protect the application.
 
 - If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/master/services/telegraf/values.yaml#L36>`__.
 
@@ -58,7 +51,7 @@ Examples
 
 Existing Helm charts that are good examples to read or copy are:
 
-- `cachemachine <https://github.com/lsst-sqre/phalanx/tree/master/services/cachemachine>`__ (fairly simple)
+- `hips <https://github.com/lsst-sqre/phalanx/tree/master/services/hips>`__ (fairly simple)
 - `mobu <https://github.com/lsst-sqre/phalanx/tree/master/services/mobu>`__ (also simple)
 - `gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/master/services/gafaelfawr>`__ (complex, including CRDs and multiple pods)
 
