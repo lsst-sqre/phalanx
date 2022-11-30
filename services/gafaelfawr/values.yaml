@@ -215,6 +215,8 @@ config:
   # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
   # @default -- See the `values.yaml` file
   knownScopes:
+    "admin:jupyterlab": >-
+      Can create and destroy labs for any user
     "admin:token": >-
       Can create and modify tokens for any user
     "admin:provision": >-
