@@ -126,7 +126,7 @@ config:
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          {{ user }}:x:{{ uid }}:1021::/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
+          {{ user }}:x:{{ uid }}:1021::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
