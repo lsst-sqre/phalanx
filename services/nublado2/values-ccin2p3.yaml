@@ -50,9 +50,9 @@ config:
 
   volume_mounts:
     - name: home
-      mountPath: /home
+      mountPath: /pbs/home
     # - name: trhong
-    #   mountPath: /throng
+    #   mountPath: /pbs/throng/lsst
 
   user_resources_template: |
     - apiVersion: v1
@@ -102,7 +102,7 @@ config:
           cgred:x:997:
           screen:x:84:
           jovyan:x:768:{{ user }}{% for g in groups %}
-          {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
+          {{ g.name }}:x:1021:{{ user if g.id != gid else "" }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
       metadata:
