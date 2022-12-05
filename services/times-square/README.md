@@ -38,11 +38,6 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.className | string | `"nginx"` | Class name that should serve this ingress |
-| ingress.enabled | bool | `true` | Create an ingress resource |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin&auth_type=basic"` | Gafaelfawr auth query string |
-| ingress.path | string | `"/times-square/api"` | Root URL path prefix for times-square API |
-| ingress.pathType | string | `"ImplementationSpecific"` | Path type for the ingress rule |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |

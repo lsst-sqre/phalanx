@@ -58,17 +58,8 @@ service:
   port: 80
 
 ingress:
-  # -- Enable ingress
-  enabled: true
-
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin&auth_type=basic"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
-
-  # -- Path prefix where noteburst is hosted
-  path: "/noteburst"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

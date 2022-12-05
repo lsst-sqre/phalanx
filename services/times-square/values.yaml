@@ -53,23 +53,8 @@ service:
   port: 8080
 
 ingress:
-  # -- Create an ingress resource
-  enabled: true
-
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin&auth_type=basic"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-  # -- Class name that should serve this ingress
-  className: "nginx"
-
-  # -- Path type for the ingress rule
-  pathType: ImplementationSpecific
-
-  # -- Root URL path prefix for times-square API
-  path: "/times-square/api"
 
 # -- Resource limits and requests for the times-square deployment pod
 resources: {}

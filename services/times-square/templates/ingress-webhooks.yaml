@@ -1,4 +1,3 @@
-{{- if .Values.ingress.enabled -}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -10,18 +9,15 @@ metadata:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
-  {{- if .Values.ingress.className }}
-  ingressClassName: {{ .Values.ingress.className }}
-  {{- end }}
+  ingressClassName: "nginx"
   rules:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-          - path: {{ .Values.ingress.path }}/github
-            pathType: {{ default "Prefix" .Values.ingress.pathType }}
+          - path: "/times-square/api/github"
+            pathType: "Prefix"
             backend:
               service:
                 name: {{ include "times-square.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
-{{- end }}

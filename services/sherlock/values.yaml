@@ -28,9 +28,6 @@ fullnameOverride: ""
 podAnnotations: {}
 
 ingress:
-  # -- Gafaelfawr auth query string (default, unauthenticated)
-  gafaelfawrAuthQuery: "scope=exec:admin"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
 
