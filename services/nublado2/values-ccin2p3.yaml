@@ -51,7 +51,7 @@ config:
   volume_mounts:
     - name: home
       mountPath: /pbs/home
-    - name: trhong
+    - name: throng
       mountPath: /pbs/throng/lsst
 
   user_resources_template: |
