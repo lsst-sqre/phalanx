@@ -4,12 +4,6 @@
 
 * <https://github.com/ricoberger/vault-secrets-operator>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://ricoberger.github.io/helm-charts/ | vault-secrets-operator | 1.19.6 |
-
 ## Values
 
 | Key | Type | Default | Description |

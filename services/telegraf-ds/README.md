@@ -9,12 +9,6 @@ Kubernetes node telemetry collection service
 * <https://github.com/influxdata/telegraf>
 * <https://github.com/influxdata/helm-charts>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://helm.influxdata.com/ | telegraf-ds | 1.1.5 |
-
 ## Values
 
 | Key | Type | Default | Description |

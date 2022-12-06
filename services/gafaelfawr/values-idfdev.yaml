@@ -31,6 +31,8 @@ config:
     enabled: true
 
   groupMapping:
+    "admin:jupyterlab":
+      - "g_science-platform-idf-dev"
     "admin:provision":
       - "g_science-platform-idf-dev"
     "exec:admin":

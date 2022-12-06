@@ -25,6 +25,8 @@ config:
     LSST_DDS_INTERFACE: net1
     LSST_DDS_PARTITION_PREFIX: summit
     LSST_SITE: summit
+    PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+    PGUSER: "oods"
   volumes:
     - name: home
       nfs:

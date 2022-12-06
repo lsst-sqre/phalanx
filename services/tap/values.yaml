@@ -24,9 +24,6 @@ image:
 
 # Settings for the ingress rules.
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=read:tap&auth_type=basic&delegate_to=tap"
-
   # -- Additional annotations to use for endpoints that allow anonymous
   # access, such as `/capabilities` and `/availability`
   anonymousAnnotations: {}

@@ -4,10 +4,10 @@ metadata:
   name: {{ include "datalinker.fullname" . }}-anonymous
   labels:
     {{- include "datalinker.labels" . | nindent 4 }}
+  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
-    {{- end }}
+  {{- end }}
 spec:
   ingressClassName: "nginx"
   rules:

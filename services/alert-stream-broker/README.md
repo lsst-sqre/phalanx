@@ -7,12 +7,10 @@ Alert transmission to community brokers
 * <https://github.com/lsst-dm/alert_database_ingester>
 * <https://github.com/lsst-dm/alert-stream-simulator>
 
-## Requirements
+## Values
 
-| Repository | Name | Version |
-|------------|------|---------|
-|  | alert-database | 2.1.0 |
-|  | alert-stream-broker | 2.5.1 |
-|  | alert-stream-schema-registry | 2.1.0 |
-|  | alert-stream-simulator | 1.6.2 |
-
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| strimzi-registry-operator.clusterName | string | `"alert-broker"` |  |
+| strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
+| strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |

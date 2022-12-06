@@ -29,7 +29,7 @@ spec:
         - podSelector:
             matchLabels:
               {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
-              app.kubernetes.io/component: "tokens"
+              app.kubernetes.io/component: "operator"
       ports:
         - protocol: "TCP"
           port: 5432

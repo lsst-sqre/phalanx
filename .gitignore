@@ -154,3 +154,15 @@ services/alert-stream-broker/.DS_Store
 .DS_Store
 
 .idea/inspectionProfiles/profiles_settings.xml
+
+services/alert-stream-broker/.idea/alert-stream-broker.iml
+
+services/alert-stream-broker/.idea/vcs.xml
+
+services/alert-stream-broker/.idea/inspectionProfiles/profiles_settings.xml
+
+services/alert-stream-broker/.idea/inspectionProfiles/Project_Default.xml
+
+services/alert-stream-broker/.idea/modules.xml
+
+services/alert-stream-broker/.idea/misc.xml

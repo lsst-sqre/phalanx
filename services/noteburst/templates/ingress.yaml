@@ -1,31 +1,31 @@
-{{- if .Values.ingress.enabled -}}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
   name: {{ template "noteburst.fullname" . }}
   labels:
     {{- include "noteburst.labels" . | nindent 4 }}
-  annotations:
-    {{- if .Values.ingress.gafaelfawrAuthQuery }}
-    nginx.ingress.kubernetes.io/auth-method: "GET"
-    nginx.ingress.kubernetes.io/auth-response-headers: X-Auth-Request-User,X-Auth-Request-Email,X-Auth-Request-Token
-    nginx.ingress.kubernetes.io/auth-signin: "{{ .Values.global.baseUrl }}/login"
-    nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAuthQuery }}"
-    {{- end }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:admin"
+  loginRedirect: true
+template:
+  metadata:
+    name: {{ template "noteburst.fullname" . }}
     {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
     {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ required "global.host must be set" .Values.global.host | quote }}
-      http:
-        paths:
-          - path: {{ .Values.ingress.path }}
-            pathType: "Prefix"
-            backend:
-              service:
-                name: {{ template "noteburst.fullname" . }}
-                port:
-                  number: {{ .Values.service.port }}
-{{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "noteburst.fullname" . }}
+                  port:
+                    number: {{ .Values.service.port }}

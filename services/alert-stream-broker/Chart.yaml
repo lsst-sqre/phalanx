@@ -27,6 +27,10 @@ dependencies:
   - name: alert-database
     version: 2.1.0
 
+  - name: strimzi-registry-operator
+    version: 2.1.0
+    repository: https://lsst-sqre.github.io/charts/
+
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-093"

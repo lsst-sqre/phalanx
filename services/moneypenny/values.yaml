@@ -28,12 +28,8 @@ serviceAccount:
   name: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=admin:provision"
-
-  # -- Configure TLS for the ingress if needed. If multiple ingresses share
-  # the same hostname, only one of them needs a TLS configuration.
-  tls: []
+  # -- Additional annotations to add to the ingress
+  annotations: {}
 
 orders:
   # -- List of specifications for containers to run to commission a new user.

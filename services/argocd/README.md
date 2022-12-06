@@ -9,12 +9,6 @@ Kubernetes application manager
 * <https://github.com/argoproj/argo-cd>
 * <https://github.com/argoproj/argo-helm>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 5.13.4 |
-
 ## Values
 
 | Key | Type | Default | Description |

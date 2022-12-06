@@ -58,12 +58,6 @@ service:
   port: 80
 
 ingress:
-  # -- Enable ingress
-  enabled: true
-
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin&auth_type=basic"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
 

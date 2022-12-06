@@ -7,8 +7,6 @@ image:
 environment: {}
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=plotnavigator"
   # -- Additional annotations to add to the ingress
   annotations: {}
 
