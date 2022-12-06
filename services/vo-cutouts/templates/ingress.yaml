@@ -9,7 +9,7 @@ config:
   scopes:
     all:
       - "read:image"
-templates:
+template:
   metadata:
     name: {{ template "vo-cutouts.fullname" . }}
     {{- with .Values.ingress.annotations }}
