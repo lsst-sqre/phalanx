@@ -56,6 +56,9 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
+  # -- Root URL path prefix for times-square API
+  path: "/times-square/api"
+
 # -- Resource limits and requests for the times-square deployment pod
 resources: {}
 
