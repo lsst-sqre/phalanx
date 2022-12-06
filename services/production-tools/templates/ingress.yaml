@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "production-tools.labels" . | nindent 4 }}
 config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "exec:portal"
