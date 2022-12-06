@@ -34,6 +34,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | image.tag | string | The appVersion of the chart | Tag of the image |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
+| ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
