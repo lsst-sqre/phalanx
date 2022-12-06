@@ -28,14 +28,8 @@ podAnnotations: {}
 environment: {}
 
 ingress:
-  # -- Gafaelfawr Auth Query string (default, unauthenticated)
-  gafaelfawrAuthQuery: "scope=exec:portal"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-  # -- Path type for the ingress rule
-  pathType: Prefix
 
 # -- Resource limits and requests for the production-tools deployment pod
 resources: {}

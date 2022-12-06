@@ -47,7 +47,6 @@ Image cutout service complying with IVOA SODA
 | image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts"` | vo-cutouts image to use |
 | image.tag | string | The appVersion of the chart | Tag of vo-cutouts image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the vo-cutouts frontend pod |
 | podAnnotations | object | `{}` | Annotations for the vo-cutouts frontend pod |

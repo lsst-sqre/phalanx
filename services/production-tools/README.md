@@ -20,8 +20,6 @@ A collection of utility pages for monitoring data processing.
 | image.repository | string | `"lsstdm/production_tools"` | Image to use in the production-tools deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:portal"` | Gafaelfawr Auth Query string (default, unauthenticated) |
-| ingress.pathType | string | `"Prefix"` | Path type for the ingress rule |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the production-tools deployment pod |
 | podAnnotations | object | `{}` | Annotations for the production-tools deployment pod |

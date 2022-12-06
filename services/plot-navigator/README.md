@@ -17,4 +17,3 @@ Panel-based plot viewer
 | image.repository | string | `"lsstdm/pipetask-plot-navigator"` | plot-navigator image to use |
 | image.tag | string | `""` |  |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:portal&delegate_to=plotnavigator"` | Gafaelfawr auth query string |

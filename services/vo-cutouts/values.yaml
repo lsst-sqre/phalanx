@@ -21,9 +21,6 @@ image:
   tag: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=read:image"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
 
