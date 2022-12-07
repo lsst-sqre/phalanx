@@ -3,7 +3,10 @@ jupyterhub:
     hosts: ["summit-lsp.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
-
+  hub:
+    db:
+      upgrade: true
+      url: "postgresql://jovyan@postgresdb01.cp.lsst.org/jupyterhub"
   singleuser:
     extraAnnotations:
       k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
