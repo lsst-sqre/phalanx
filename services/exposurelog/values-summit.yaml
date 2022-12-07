@@ -7,3 +7,5 @@ config:
   nfs_path_2: /repo/LATISS  # Mounted as /volume_2
   nfs_server_2: auxtel-archiver.cp.lsst.org
   butler_uri_2: /volume_2
+db:
+  host: postgresdb01.cp.lsst.org
