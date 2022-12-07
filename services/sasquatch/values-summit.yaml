@@ -46,7 +46,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
         topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
@@ -58,7 +58,7 @@ kafka-connect-manager:
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        topicsRegex: ".*GenericCamera|.*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
         topicsRegex: ".*OCPS"
@@ -74,6 +74,9 @@ kafka-connect-manager:
       mtaircompressor:
         enabled: true
         topicsRegex: ".*MTAirCompressor"
+      genericcamera:
+        enabled: true
+        topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
   ingress:
