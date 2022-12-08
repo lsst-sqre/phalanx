@@ -17,3 +17,6 @@ qserv:
   host: "10.136.1.211:4040"
   mock:
     enabled: false
+
+image:
+  tag: "1.4.1"
