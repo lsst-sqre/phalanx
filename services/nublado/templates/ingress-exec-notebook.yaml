@@ -10,6 +10,8 @@ config:
   scopes:
     all:
       - "exec:notebook"
+  delegate:
+    notebook: {}
 template:
   metadata:
     name: {{ template "nublado.fullname" . }}-exec-notebook
@@ -20,35 +22,35 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: "/nublado/v1/labs/.*/create"
+            - path: "/nublado/spawner/v1/labs/.*/create"
               pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: {{ template "nublado.fullname" . }}
                   port:
                     number: 80
-            - path: "/nublado/v1/labs/.*/events"
+            - path: "/nublado/spawner/v1/labs/.*/events"
               pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: {{ template "nublado.fullname" . }}
                   port:
                     number: 80
-            - path: "/nublado/v1/lab-form/.*"
+            - path: "/nublado/spawner/v1/lab-form/.*"
               pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: {{ template "nublado.fullname" . }}
                   port:
                     number: 80
-            - path: "/nublado/v1/user-status"
+            - path: "/nublado/spawner/v1/user-status"
               pathType: "Exact"
               backend:
                 service:
                   name: {{ template "nublado.fullname" . }}
                   port:
                     number: 80
-            - path: "/nublado/v1/user-status/"
+            - path: "/nublado/spawner/v1/user-status/"
               pathType: "Exact"
               backend:
                 service:

@@ -1,5 +1,5 @@
 image:
-  imagePullPolicy: Always
+  pullPolicy: Always
   tag: ajt-dev
 controller:
   lab:
