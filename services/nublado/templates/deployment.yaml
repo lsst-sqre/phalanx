@@ -39,6 +39,8 @@ spec:
           env:
             - name: DOCKER_SECRET_NAME
               value: "pull-secret"
+            - name: EXTERNAL_INSTANCE_URL
+              value: {{ .Values.global.baseUrl | quote }}
           ports:
             - name: "http"
               containerPort: 8080
