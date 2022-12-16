@@ -14,13 +14,11 @@ config:
     internal:
       scopes: []
       service: "tap"
+    useAuthorization: true
 template:
   metadata:
     name: {{ template "cadc-tap.fullname" . }}-authenticated
     annotations:
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        auth_request_set $auth_token $upstream_http_x_auth_request_token;
-        proxy_set_header Authorization "Bearer $auth_token";
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "1800"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "1800"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"

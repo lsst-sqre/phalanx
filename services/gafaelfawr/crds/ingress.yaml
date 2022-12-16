@@ -63,32 +63,6 @@ spec:
                   type: string
                   description: "Base URL for Gafaelfawr APIs."
                   pattern: "^https://[a-z.-]+"
-                scopes:
-                  type: object
-                  description: >-
-                    The token scope or scopes required to access this
-                    service.  May be omitted if the service allows
-                    anonymous access.
-                  properties:
-                    any:
-                      type: array
-                      description: >-
-                        Access is granted if any of the listed scopes are
-                        present.
-                      items:
-                        type: string
-                    all:
-                      type: array
-                      description: >-
-                        Access is granted if all of the listed scopes are
-                        present.
-                      items:
-                        type: string
-                  oneOf:
-                    - required:
-                        - any
-                    - required:
-                        - all
                 authType:
                   type: string
                   enum:
@@ -98,18 +72,6 @@ spec:
                     Controls the authentication type in the challenge
                     returned in the `WWW-Authenticate` header if the user
                     is not authenticated. By default, this is `bearer`.
-                loginRedirect:
-                  type: boolean
-                  description: >-
-                    Whether to redirect to the login flow if the user is
-                    not currently authenticated.
-                replace403:
-                  type: boolean
-                  description: >-
-                    Whether to replace 403 responses with a custom 403
-                    response from Gafaelfawr that disables caching and
-                    includes authorization-related errors in the
-                    `WWW-Authenticate` header.
                 delegate:
                   type: object
                   description: >-
@@ -148,11 +110,68 @@ spec:
                         Minimum lifetime of delegated token in seconds. If
                         the user's token has less than that time
                         remaining, force them to reauthenticate.
+                    useAuthorization:
+                      type: boolean
+                      description: >-
+                        If set to true, put the delegated token in the
+                        Authorization header of the request as a bearer token,
+                        in addition to X-Auth-Request-Token.
                   oneOf:
                     - required:
                         - internal
                     - required:
                         - notebook
+                loginRedirect:
+                  type: boolean
+                  description: >-
+                    Whether to redirect to the login flow if the user is
+                    not currently authenticated.
+                replace403:
+                  type: boolean
+                  description: >-
+                    Whether to replace 403 responses with a custom 403
+                    response from Gafaelfawr that disables caching and
+                    includes authorization-related errors in the
+                    `WWW-Authenticate` header.
+                scopes:
+                  type: object
+                  description: >-
+                    The token scope or scopes required to access this
+                    service.  May be omitted if the service allows
+                    anonymous access.
+                  properties:
+                    any:
+                      type: array
+                      description: >-
+                        Access is granted if any of the listed scopes are
+                        present.
+                      items:
+                        type: string
+                    all:
+                      type: array
+                      description: >-
+                        Access is granted if all of the listed scopes are
+                        present.
+                      items:
+                        type: string
+                    anonymous:
+                      type: boolean
+                      description: >-
+                        Allow anonymous access to this ingress. No access
+                        control checks will be made and no token delegation is
+                        possible, but Gafaelfawr tokens will still be stripped
+                        from the `Authorization` and `Cookie` headers.
+                  oneOf:
+                    - required:
+                        - any
+                    - required:
+                        - all
+                    - properties:
+                        anonymous:
+                          enum:
+                            - true
+                      required:
+                        - anonymous
             template:
               type: object
               description: "The template used to create the ingress."
