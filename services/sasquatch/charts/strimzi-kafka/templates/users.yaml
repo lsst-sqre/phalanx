@@ -156,7 +156,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
-  name: kafka-rest
+  name: rest-proxy
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -166,7 +166,7 @@ spec:
       valueFrom:
         secretKeyRef:
           name: sasquatch
-          key: kafka-rest-password
+          key: rest-proxy-password
   authorization:
     type: simple
     acls:

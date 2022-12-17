@@ -121,9 +121,12 @@ influxdb2:
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
 
-# -- Override telegraf-kafka-consumer
+# -- Override telegraf-kafka-consumer configuration.
 telegraf-kafka-consumer: {}
 
+# -- Override rest-proxy configuration.
+rest-proxy:
+  enabled: false
 
 chronograf:
   # -- Chronograf image tag.

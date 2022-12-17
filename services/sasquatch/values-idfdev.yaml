@@ -43,6 +43,12 @@ kafdrop:
     enabled: true
     hostname: data-dev.lsst.cloud
 
+rest-proxy:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: data-dev.lsst.cloud
+
 chronograf:
   ingress:
     enabled: true
