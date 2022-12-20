@@ -6,15 +6,15 @@ controller:
     volumes:
     - containerPath: /home
       serverPath: /share1/home
-      server: 10.13.105.122
+      server: 10.87.86.26
       mode: rw
     - containerPath: /project
       serverPath: /share1/project
-      server: 10.13.105.122
-      mode: ro
+      server: 10.87.86.26
+      mode: rw
     - containerPath: /scratch
       serverPath: /share1/scratch
-      server: 10.13.105.122
+      server: 10.87.86.26
       mode: rw
   images:
     # -- config from sqr-066
