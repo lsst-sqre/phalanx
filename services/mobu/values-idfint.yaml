@@ -41,4 +41,4 @@ autostart:
     restart: true
     options:
       tap_sync: true
-      tap_query_set: "dp0.2"
+      tap_query_set: "dp0.1"
