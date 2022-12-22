@@ -40,5 +40,5 @@ autostart:
     business: "TAPQueryRunner"
     restart: true
     options:
-      tap_sync: true
-      tap_query_set: "dp0.1"
+      tap_sync: false
+      tap_query_set: "dp0.2"
