@@ -67,6 +67,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.limits.memory | string | `"16Gi"` |  |
 | kapacitor.resources.requests.cpu | int | `1` |  |
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
+| rest-proxy | object | `{"enabled":false}` | Override rest-proxy configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
-| telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer |
+| telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer configuration. |
