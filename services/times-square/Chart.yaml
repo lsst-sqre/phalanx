@@ -12,7 +12,7 @@ appVersion: "0.6.0"
 
 dependencies:
   - name: redis
-    version: 17.3.14
+    version: 17.4.0
     repository: https://charts.bitnami.com/bitnami
 
 annotations:
