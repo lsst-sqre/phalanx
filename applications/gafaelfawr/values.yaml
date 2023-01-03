@@ -329,15 +329,14 @@ operator:
   affinity: {}
 
 redis:
-  image:
-    # -- Redis image to use
-    repository: "redis"
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "gafaelfawr-secret"
 
-    # -- Redis image tag to use
-    tag: "7.0.8"
-
-    # -- Pull policy for the Redis image
-    pullPolicy: "IfNotPresent"
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
 
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
@@ -357,6 +356,14 @@ redis:
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
     # size, storageClass, and accessMode settings are ignored.
     volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+    requests:
+      cpu: "100m"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

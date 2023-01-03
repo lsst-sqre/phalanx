@@ -7,6 +7,11 @@ sources:
   - https://github.com/lsst-sqre/gafaelfawr
 appVersion: 9.0.0
 
+dependencies:
+  - name: redis
+    version: 1.0.2
+    repository: https://lsst-sqre.github.io/charts/
+
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-234"
