@@ -19,9 +19,8 @@ JupyterLab image prepuller
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the cachemachine image |
 | image.repository | string | `"lsstsqre/cachemachine"` | cachemachine image to use |
 | image.tag | string | The appVersion of the chart | Tag of cachemachine image to use |
-| ingress.annotations | object | `{}` | Additional annotations to add for endpoints that are authenticated. |
-| ingress.anonymousAnnotations | object | `{}` | Additional annotations to add for endpoints that allow anonymous access, such as `/*/available`. |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string |
+| ingress.annotations | object | `{}` | Additional annotations to add for endpoints that are authenticated |
+| ingress.anonymousAnnotations | object | `{}` | Additional annotations to add for endpoints that allow anonymous access, such as `/*/available` |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the cachemachine frontend pod |
 | podAnnotations | object | `{}` | Annotations for the cachemachine frontend pod |
