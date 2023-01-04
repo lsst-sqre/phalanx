@@ -19,6 +19,7 @@ spec:
       labels:
         {{- include "portal.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "firefly"
+        portal-redis-client: "true"
     spec:
       automountServiceAccountToken: false
       containers:
