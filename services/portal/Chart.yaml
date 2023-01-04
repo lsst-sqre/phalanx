@@ -6,6 +6,12 @@ sources:
   - https://github.com/lsst/suit
   - https://github.com/Caltech-IPAC/firefly
 appVersion: "suit-2022.5.5"
+
+dependencies:
+  - name: redis
+    version: 0.1.4
+    repository: https://lsst-sqre.github.io/charts/
+
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-136"

@@ -32,12 +32,12 @@ Rubin Science Platform Portal Aspect
 | nodeSelector | object | `{}` | Node selector rules for the Portal pod |
 | podAnnotations | object | `{}` | Annotations for the Portal pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
-| redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
-| redis.image.repository | string | `"redis"` | Redis image to use |
-| redis.image.tag | string | `"7.0.7"` | Redis image tag to use |
+| redis.config.secretKey | string | `"ADMIN_PASSWORD"` | Key inside secret from which to get the Redis password (do not change) |
+| redis.config.secretName | string | `"portal-secret"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
+| redis.persistance.enabled | bool | `false` | Whether to persist Redis storage. Setting this to false will use `emptyDir` and reset all data on every restart. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
-| redis.resources | object | `{"limits":{"memory":"20Mi"}}` | Resource limits and requests |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{"limits":{"cpu":2,"memory":"6Gi"}}` | Resource limits and requests. The Portal will use (by default) 93% of container RAM.  This is a smallish Portal; tweak it as you need to in instance definitions in Phalanx. |
