@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "vo-cutouts.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "frontend"
+        vo-cutouts-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
       serviceAccountName: {{ include "vo-cutouts.fullname" . }}
