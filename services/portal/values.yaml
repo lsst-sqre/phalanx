@@ -92,7 +92,7 @@ redis:
     # change)
     secretKey: "ADMIN_PASSWORD"
 
-  persistance:
+  persistence:
     # -- Whether to persist Redis storage. Setting this to false will use
     # `emptyDir` and reset all data on every restart.
     enabled: false

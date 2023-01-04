@@ -35,7 +35,7 @@ Rubin Science Platform Portal Aspect
 | redis.config.secretKey | string | `"ADMIN_PASSWORD"` | Key inside secret from which to get the Redis password (do not change) |
 | redis.config.secretName | string | `"portal-secret"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
-| redis.persistance.enabled | bool | `false` | Whether to persist Redis storage. Setting this to false will use `emptyDir` and reset all data on every restart. |
+| redis.persistence.enabled | bool | `false` | Whether to persist Redis storage. Setting this to false will use `emptyDir` and reset all data on every restart. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
