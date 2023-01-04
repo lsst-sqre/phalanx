@@ -21,7 +21,6 @@ template:
       {{- toYaml . | nindent 6 }}
       {{- end }}
   spec:
-    ingressClassName: "nginx"
     {{- if .Values.ingress.tls }}
     tls:
       - hosts:
