@@ -1,23 +1,30 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
   name: {{ include "times-square.fullname" . }}-github-webhook
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
-  annotations:
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ include "times-square.fullname" . }}-github-webhook
     {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
     {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ required "global.host must be set" .Values.global.host | quote }}
-      http:
-        paths:
-          - path: "{{ .Values.ingress.path }}/github"
-            pathType: "Prefix"
-            backend:
-              service:
-                name: {{ include "times-square.fullname" . }}
-                port:
-                  number: {{ .Values.service.port }}
+  spec:
+    ingressClassName: "nginx"
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/github"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ include "times-square.fullname" . }}
+                  port:
+                    number: {{ .Values.service.port }}
