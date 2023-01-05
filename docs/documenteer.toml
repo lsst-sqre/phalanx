@@ -27,9 +27,6 @@ ignore = [
     '^https://data.lsst.cloud',
     '^https://data-dev.lsst.eu',
     '^https://rsp.lsst.ac.uk',
-    '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
+    '^https://github.com/lsst-sqre/phalanx/blob/master/applications/strimzi/values.yaml',
     '^https://github.com/orgs/',
-    # Temporary until merged.
-    "^https://github.com/lsst-sqre/phalanx/tree/master/services/sqlproxy-cross-project",
-    "^https://github.com/lsst-sqre/phalanx/blob/master/services/sqlproxy-cross-project",
 ]

@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`vo-cutouts` application.
 
-```{include} ../../../services/vo-cutouts/README.md
+```{include} ../../../applications/vo-cutouts/README.md
 ---
 start-after: "## Values"
 ---

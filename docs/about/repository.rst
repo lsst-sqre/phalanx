@@ -9,12 +9,12 @@ For background on Phalanx and its technologies, see :doc:`introduction` first.
 Key directories
 ===============
 
-services directory
-------------------
+applications directory
+----------------------
 
-:bdg-link-primary-line:`Browse /services/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/services>`
+:bdg-link-primary-line:`Browse /applications/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/applications>`
 
-Every Phalanx application has its own sub-directory within ``services`` named after the application itself (commonly the name is also used as a Kubernetes Namespace_).
+Every Phalanx application has its own sub-directory within ``applications`` named after the application itself (commonly the name is also used as a Kubernetes Namespace_).
 A Phalanx application is itself a Helm_ chart.
 Helm charts define Kubernetes templates for the application deployment, values for the templates, and references to any sub-charts from external repositories to include as a sub-chart.
 See the `Helm documentation for details on the structure of Helm charts. <https://helm.sh/docs/topics/charts/>`__
@@ -33,23 +33,23 @@ Note that some applications are based entirely (or primarily) on third-party ope
 In this case, the application's Helm chart includes that external chart as a *dependency* through its ``Chart.yaml``.
 See the `Helm documentation on chart dependencies. <https://helm.sh/docs/topics/charts/#chart-dependencies>`__
 
-science-platform directory
---------------------------
+environments directory
+----------------------
 
-:bdg-link-primary-line:`Browse /science-platform/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/science-platform>`
+:bdg-link-primary-line:`Browse /environments/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/environments>`
 
-The ``science-platform`` directory is where environments are defined (an environment is a distinct Kubernetes cluster).
+The ``environments`` directory is where environments are defined (an environment is a distinct Kubernetes cluster).
 
-The ``/science-platform/templates`` directory contains a Helm template per application, like this one for the ``noteburst`` application:
+The ``/environments/templates`` directory contains a Helm template per application, like this one for the ``noteburst`` application:
 
-.. literalinclude:: ../../science-platform/templates/noteburst-application.yaml
-   :caption: /science-platform/templates/noteburst-application.yaml
+.. literalinclude:: ../../environments/templates/noteburst-application.yaml
+   :caption: /environments/templates/noteburst-application.yaml
 
 The template defines a Kubernetes Namespace_ and an Argo CD ``Application`` for each Phalanx application.
-``Application`` resources direct Argo CD to deploy and synchronize the corresponding application Helm chart from the Phalanx ``services`` directory.
+``Application`` resources direct Argo CD to deploy and synchronize the corresponding application Helm chart from the Phalanx ``applications`` directory.
 
 Notice that these templates are wrapped in a conditional, which controls whether an application is deployed in a given environment.
-The ``values.yaml`` file in the ``science-platform`` directory defines boolean variables for each application.
+The ``values.yaml`` file in the ``environments`` directory defines boolean variables for each application.
 Then in corresponding values files for each environment, named ``values-<environment>.yaml``, applications are enabled, or not, for the specific environment.
 
 installer directory

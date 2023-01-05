@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`squareone` application.
 
-```{include} ../../../services/squareone/README.md
+```{include} ../../../applications/squareone/README.md
 ---
 start-after: "## Values"
 ---

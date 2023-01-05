@@ -41,7 +41,7 @@ Throughout this process, you can continue to commit changes and push updates to 
    In the application's Helm values file for the development environment, set this pull policy to ``Always``:
 
    .. code-block:: yaml
-      :caption: services/<application>/values-<environment>.yaml
+      :caption: applications/<application>/values-<environment>.yaml
 
       image:
         pullPolicy: Always

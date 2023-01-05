@@ -3,6 +3,7 @@ name: CI
 "on":
   pull_request:
     branches:
+      - "main"
       - "master"
 
 jobs:
@@ -75,14 +76,14 @@ jobs:
           filters: |
             minikube:
               - ".github/**"
+              - "applications/*/Chart.yaml"
+              - "applications/*/templates/**"
+              - "applications/*/values.yaml"
+              - "applications/*/values-minikube.yaml"
+              - "environments/Chart.yaml"
+              - "environments/templates/**"
+              - "environments/values-minikube.yaml"
               - "installer/**"
-              - "science-platform/Chart.yaml"
-              - "science-platform/templates/**"
-              - "science-platform/values-minikube.yaml"
-              - "services/*/Chart.yaml"
-              - "services/*/templates/**"
-              - "services/*/values.yaml"
-              - "services/*/values-minikube.yaml"
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'

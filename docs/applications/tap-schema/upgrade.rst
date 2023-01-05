@@ -20,6 +20,6 @@ When a new version of the project schema is ready for deployment, use the follow
    This will create a tag and run the publishing pipeline GitHub Action.
    That, in turn, will run Felis_ against the YAML schema files in the ``yml`` directory and build the Docker images for the different supported environments.
 
-#. Update the ``appVersion`` field to the version of the new release in `/services/tap-schema/Chart.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/tap-schema/Chart.yaml>`__.
+#. Update the ``appVersion`` field to the version of the new release in `/applications/tap-schema/Chart.yaml <https://github.com/lsst-sqre/phalanx/blob/master/applications/tap-schema/Chart.yaml>`__.
 
 #. Sync the tap-schema Argo CD application on affected environments as normal.

@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`exposurelog` application.
 
-```{include} ../../../services/exposurelog/README.md
+```{include} ../../../applications/exposurelog/README.md
 ---
 start-after: "## Values"
 ---

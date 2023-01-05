@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`hips` application.
 
-```{include} ../../../services/hips/README.md
+```{include} ../../../applications/hips/README.md
 ---
 start-after: "## Values"
 ---

@@ -14,8 +14,8 @@
             - Defaults
           {% for app in env.apps %}
           * - :px-app:`{{ app.name }}`
-            - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env.name }}.yaml>`__
-            - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values.yaml>`__
+            - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/master/applications/{{ app.name }}/values-{{ env.name }}.yaml>`__
+            - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/applications/{{ app.name }}/values.yaml>`__
           {% endfor %}
    * - Identity provider
      - {{ env.identity_provider }}

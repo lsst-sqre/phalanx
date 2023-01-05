@@ -86,7 +86,7 @@ Set up a Phalanx branch for your local minikube deployment
 The ``install.sh`` uses the locally checked out branch of your Phalanx repository clone.
 
 To conserve resources, you may want to deploy a subset of Phalanx applications in your local minikube cluster.
-You can do this by editing the `/science-platform/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`_ file.
+You can do this by editing the `/environments/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/environments/values-minikube.yaml>`_ file.
 Set any application you do not want to deploy to ``enabled: false``.
 
 Commit any changes with Git into a development branch of the Phalanx repository.
@@ -133,7 +133,7 @@ The minikube Argo CD admin password can be retrieved from Vault.
 
 .. code-block:: sh
 
-  VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-minikube.yaml`
+  VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../environments/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
 With Argo CD you can sync your application (see :doc:`/admin/sync-argo-cd`).

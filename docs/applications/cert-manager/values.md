@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`cert-manager` application.
 
-```{include} ../../../services/cert-manager/README.md
+```{include} ../../../applications/cert-manager/README.md
 ---
 start-after: "## Values"
 ---

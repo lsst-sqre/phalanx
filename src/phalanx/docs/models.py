@@ -10,10 +10,10 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import yaml
 
-ENVIRONMENTS_DIR = "science-platform"
+ENVIRONMENTS_DIR = "environments"
 """Directory of the environments Helm chart in Phalanx."""
 
-APPS_DIR = "services"
+APPS_DIR = "applications"
 """Root directory of the application Helm charts in Phalanx."""
 
 

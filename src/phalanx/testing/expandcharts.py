@@ -25,7 +25,7 @@ def get_changed_charts() -> List[str]:
     repo = Repo(str(Path.cwd()))
 
     charts = []
-    for path in (Path.cwd() / "services").iterdir():
+    for path in (Path.cwd() / "applications").iterdir():
         if (path / "Chart.yaml").exists():
             diff = repo.head.commit.diff("origin/master", paths=[str(path)])
             for change_type in DiffIndex.change_type:
@@ -39,7 +39,7 @@ def get_changed_charts() -> List[str]:
 
 def get_environments() -> List[str]:
     """Get the list of supported environments."""
-    science_platform_path = Path.cwd() / "science-platform"
+    science_platform_path = Path.cwd() / "environments"
 
     environments = []
     for path in science_platform_path.iterdir():
@@ -54,9 +54,9 @@ def get_environments() -> List[str]:
 
 
 def expand_chart(chart: str, environments: Sequence[str]) -> None:
-    """Expand a chart from the services directory into services-expanded."""
-    chart_path = Path.cwd() / "services" / chart
-    expanded_path = Path.cwd() / "services-expanded"
+    """Expand charts from applications into applications-expanded."""
+    chart_path = Path.cwd() / "applications" / chart
+    expanded_path = Path.cwd() / "applications-expanded"
     expanded_path.mkdir(exist_ok=True)
 
     if (chart_path / "values.yaml").exists():
@@ -74,7 +74,7 @@ def expand_chart(chart: str, environments: Sequence[str]) -> None:
 
 
 def main() -> None:
-    expanded_path = Path.cwd() / "services-expanded"
+    expanded_path = Path.cwd() / "applications-expanded"
     if expanded_path.exists():
         shutil.rmtree(expanded_path)
     expanded_path.mkdir()

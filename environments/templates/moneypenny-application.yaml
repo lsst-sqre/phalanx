@@ -1,0 +1,37 @@
+{{- if .Values.moneypenny.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: moneypenny
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: moneypenny
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: moneypenny
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/moneypenny
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.revision }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vault_path_prefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

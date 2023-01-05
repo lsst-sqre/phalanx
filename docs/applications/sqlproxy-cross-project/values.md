@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`sqlproxy-cross-project` application.
 
-```{include} ../../../services/sqlproxy-cross-project/README.md
+```{include} ../../../applications/sqlproxy-cross-project/README.md
 ---
 start-after: "## Values"
 ---
