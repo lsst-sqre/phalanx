@@ -120,4 +120,4 @@ Replace ``$HELM_VERSION`` with the version of the Helm chart you want to use and
 
 This should hopefully restore Argo CD to a working state.
 If it doesn't, you'll need to reinstall it using the more extended process used by the cluster installer.
-See `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__ for the commands to run.
+See `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__ for the commands to run.

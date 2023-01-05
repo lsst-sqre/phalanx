@@ -9,7 +9,7 @@ This page provides steps for adding an application secret through 1Password.
 
 .. note::
 
-   Dynamic secrets that don't have to be coordinated with external resources and only have to be consistent for a given installation of the Science Platform should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
+   Dynamic secrets that don't have to be coordinated with external resources and only have to be consistent for a given installation of the Science Platform should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/main/installer/generate_secrets.py>`__ script.
    Those secrets are not stored in 1Password since it's fine for them to change on each installation of the Science Platform.
 
 .. note::

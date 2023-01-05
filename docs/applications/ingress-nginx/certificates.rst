@@ -28,4 +28,4 @@ The Vault secret must have two keys: ``tls.crt`` and ``tls.key``.
 The first must contain the full public certificate chain.
 The second must contain the private key (without a passphrase).
 
-For an example of an environment configured this way, see `/applications/ingress-nginx/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/applications/ingress-nginx/values-minikube.yaml>`__
+For an example of an environment configured this way, see `/applications/ingress-nginx/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/main/applications/ingress-nginx/values-minikube.yaml>`__

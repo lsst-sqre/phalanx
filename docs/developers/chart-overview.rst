@@ -8,9 +8,9 @@ Charts
 ======
 
 Argo CD manages applications in the Rubin Science Platform through a set of Helm charts.
-Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/master/environments/>`__.
+Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
 
-The `/applications <https://github.com/lsst-sqre/phalanx/tree/master/applications/>`__ directory defines templates in its ``templates`` directory and values to resolve those templates in ``values.yaml`` and ``values-<environment>.yaml`` files to customize the application for each environment.  For first-party charts, the ``templates`` directory is generally richly populated.
+The `/applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__ directory defines templates in its ``templates`` directory and values to resolve those templates in ``values.yaml`` and ``values-<environment>.yaml`` files to customize the application for each environment.  For first-party charts, the ``templates`` directory is generally richly populated.
 
 For third-party charts the ``templates`` directory might not exist or might have only a small set of resources specific to the Science Platform.
 In that case, most of the work of deploying an application is done by charts declared as dependencies (via the ``dependencies`` key in ``Chart.yaml``) of the top-level chart.
@@ -44,7 +44,7 @@ However, for applications still under development, we sometimes use a floating d
 There is currently no generic mechanism to deploy different versions of a chart in different environments, as appVersion is set in ``Chart.yaml``.
 
 That does not mean that rolling out a new version is all-or-nothing: you have a couple of different options for testing new versions.
-The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use Argo CD to deploy the application from the branch, rather than ``master``, ``main``, or ``HEAD`` (as the case may be).
+The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use Argo CD to deploy the application from the branch, rather than ``main`` or ``HEAD`` (as the case may be).
 This will cause the application resource in the ``environments`` app to show as out of sync, which is indeed correct, and a helpful reminder that you may be running from a branch when you forget and subsequently rediscover that fact weeks later.
 Additionally, many charts allow specification of a tag (usually some variable like ``image.tag`` in a values file), so that is a possibility as well.
 If your chart doesn't have a way to control what image tag you're deploying from, consider adding the capability.

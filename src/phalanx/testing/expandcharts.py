@@ -1,7 +1,7 @@
 """Expand Helm charts for testing.
 
 Discover the list of supported environments, find all charts that have changed
-relative to master, and then expand those charts into directories for each
+relative to main, and then expand those charts into directories for each
 chart and environment pair and a values.yaml file for that environment.
 
 This is a workaround for limitations in the helm/chart-testing tool, which
@@ -21,13 +21,13 @@ if TYPE_CHECKING:
 
 
 def get_changed_charts() -> List[str]:
-    """Get a list of charts that have changed relative to master."""
+    """Get a list of charts that have changed relative to main."""
     repo = Repo(str(Path.cwd()))
 
     charts = []
     for path in (Path.cwd() / "applications").iterdir():
         if (path / "Chart.yaml").exists():
-            diff = repo.head.commit.diff("origin/master", paths=[str(path)])
+            diff = repo.head.commit.diff("origin/main", paths=[str(path)])
             for change_type in DiffIndex.change_type:
                 if any(diff.iter_change_type(change_type)):  # type: ignore
                     print("Found changed chart", path.name)

@@ -33,7 +33,7 @@ You will need to make at least the following changes to the default Helm chart t
 
   See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html>`__ for more information, and see :dmtn:`235` for a guide to what scopes to use to protect the application.
 
-- If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/master/applications/telegraf/values.yaml#L36>`__.
+- If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml#L36>`__.
 
 Documentation
 -------------
@@ -44,16 +44,16 @@ This produces a nice Markdown README file that documents all the chart options, 
 Publication
 -----------
 
-Rubin-developed Helm charts for the Science Platform are stored as part of the `phalanx repository <https://github.com/lsst-sqre/phalanx/>`__.  They can be found in the `applications directory <https://github.com/lsst-sqre/phalanx/tree/master/applications>`__.
+Rubin-developed Helm charts for the Science Platform are stored as part of the `phalanx repository <https://github.com/lsst-sqre/phalanx/>`__.  They can be found in the `applications directory <https://github.com/lsst-sqre/phalanx/tree/main/applications>`__.
 
 Examples
 --------
 
 Existing Helm charts that are good examples to read or copy are:
 
-- `hips <https://github.com/lsst-sqre/phalanx/tree/master/applications/hips>`__ (fairly simple)
-- `mobu <https://github.com/lsst-sqre/phalanx/tree/master/applications/mobu>`__ (also simple)
-- `gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/master/applications/gafaelfawr>`__ (complex, including CRDs and multiple pods)
+- `hips <https://github.com/lsst-sqre/phalanx/tree/main/applications/hips>`__ (fairly simple)
+- `mobu <https://github.com/lsst-sqre/phalanx/tree/main/applications/mobu>`__ (also simple)
+- `gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/main/applications/gafaelfawr>`__ (complex, including CRDs and multiple pods)
 
 .. _add-argocd-application:
 
@@ -92,7 +92,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 	     vaultSecretsPath: ""
 
 #. Create the Argo CD application resource.
-   This is a new file in `/environments/templates <https://github.com/lsst-sqre/phalanx/tree/master/environments/templates>`__ named ``<name>-application.yaml`` where ``<name>`` must match the name of the directory created above.
+   This is a new file in `/environments/templates <https://github.com/lsst-sqre/phalanx/tree/main/environments/templates>`__ named ``<name>-application.yaml`` where ``<name>`` must match the name of the directory created above.
    The contents of this file should look like:
 
    .. code-block:: yaml
@@ -158,7 +158,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    In general, copying and pasting the basic setup from another application (``cachemachine`` or ``mobu`` recommended for simple applications) is a good way to save effort.
 
-#. Finally, edit ``values.yaml`` and each of the ``values-*.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/master/environments/>`__ and add a stanza for your application.
+#. Finally, edit ``values.yaml`` and each of the ``values-*.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__ and add a stanza for your application.
    The stanza in ``values.yaml`` should always say:
 
    .. code-block:: yaml

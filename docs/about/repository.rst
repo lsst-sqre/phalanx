@@ -12,7 +12,7 @@ Key directories
 applications directory
 ----------------------
 
-:bdg-link-primary-line:`Browse /applications/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/applications>`
+:bdg-link-primary-line:`Browse /applications/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/applications>`
 
 Every Phalanx application has its own sub-directory within ``applications`` named after the application itself (commonly the name is also used as a Kubernetes Namespace_).
 A Phalanx application is itself a Helm_ chart.
@@ -36,7 +36,7 @@ See the `Helm documentation on chart dependencies. <https://helm.sh/docs/topics/
 environments directory
 ----------------------
 
-:bdg-link-primary-line:`Browse /environments/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/environments>`
+:bdg-link-primary-line:`Browse /environments/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/environments>`
 
 The ``environments`` directory is where environments are defined (an environment is a distinct Kubernetes cluster).
 
@@ -55,9 +55,9 @@ Then in corresponding values files for each environment, named ``values-<environ
 installer directory
 -------------------
 
-:bdg-link-primary-line:`Browse /installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/installer>`
+:bdg-link-primary-line:`Browse /installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
 
-This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
+This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
 The arguments to this are the name of the environment, the FQDN, and the read key for Vault (see :ref:`secrets` for more details on Vault).
 This installer script is the entry point for setting up a new environment.
 It can also be run on an existing environment to update it.
@@ -66,7 +66,7 @@ See the :ref:`environment bootstrapping documentation <bootstrapping-toc>` for d
 docs directory
 --------------
 
-:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/docs>`
+:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/docs>`
 
 This directory contains the Sphinx_ documentation that you are reading now.
 See :doc:`contributing-docs`.
@@ -74,7 +74,7 @@ See :doc:`contributing-docs`.
 starters directory
 ------------------
 
-:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/master/starters>`
+:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/starters>`
 
 This directory contains templates for contributing new applications to Phalanx.
 See :doc:`/developers/add-application`.
@@ -82,15 +82,13 @@ See :doc:`/developers/add-application`.
 Branches
 ========
 
-The default branch is ``master`` [#1]_.
+The default branch is ``main``.
 This default branch is considered the source of truth for fullly synchronized Phalanx environments.
-
-.. [#1] This branch will be renamed to ``main`` in the near future.
 
 Updates to Phalanx are introduced as pull requests on GitHub.
 Repository members create branches directly on the https://github.com/lsst-sqre/phalanx origin (see the `Data Management workflow guide`_, while external collaborators should fork Phalanx and provide pull requests.
 
-It is possible (particularly in non-production environments) to deploy from branches of Phalanx, which is useful for debugging new and updating applications before updating the ``master`` branch.
+It is possible (particularly in non-production environments) to deploy from branches of Phalanx, which is useful for debugging new and updating applications before updating the ``main`` branch.
 You can learn how to do this in :doc:`/developers/deploy-from-a-branch`.
 
 Test and formatting infrastructure
@@ -100,10 +98,10 @@ The Phalanx repository uses two levels of testing and continuous integration.
 
 `Pre-commit`_ performs file formatting and linting, both on your local editing environment (when configured) and verified in GitHub Actions.
 In one check, Pre-commit regenerates Helm chart documentation for applications with helm-docs_.
-See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/master/.pre-commit-config.yaml>`__ file for configuration details.
+See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.pre-commit-config.yaml>`__ file for configuration details.
 Learn how to set up Pre-commit in your local editing environment in :doc:`precommit-and-helm-docs`.
 
-Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__).
+Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__).
 This workflow has three key jobs:
 
 - Linting with Pre-commit_, mirroring the local editing environment.

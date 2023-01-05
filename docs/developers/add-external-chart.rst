@@ -56,7 +56,7 @@ Tell Argo CD about the upstream Helm repository
 Argo CD has to know about every Helm repository that contributes charts to the Rubin Science Platform.
 If upstream runs their own Helm chart repository, you will therefore need to add it to the Argo CD configuration.
 
-In the `Phalanx repository <https://github.com/lsst-sqre/phalanx>`__, check the ``argo-cd.config.helm.repositories`` configuration option in `any values file <https://github.com/lsst-sqre/phalanx/blob/master/applications/argocd/values-idfprod.yaml>`__ to see if the repository used by the upstream chart is already listed.
+In the `Phalanx repository <https://github.com/lsst-sqre/phalanx>`__, check the ``argo-cd.config.helm.repositories`` configuration option in `any values file <https://github.com/lsst-sqre/phalanx/blob/main/applications/argocd/values-idfprod.yaml>`__ to see if the repository used by the upstream chart is already listed.
 If it is not, you will need to add a stanza like:
 
 .. code-block:: yaml
