@@ -1,20 +1,43 @@
-## Ingress configuration
-## https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+# Ingress configuration
+# https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
     config:
+      # -- Put the complete path in `X-Forwarded-For`, not just the last hop,
+      # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
+
+      # -- Increase the buffer size for client headers because we may have
+      # JWTs in the client request
       large-client-header-buffers: "4 64k"
+
+      # -- Maximum size of the client request body (needs to be large enough
+      # to allow table uploads)
       proxy-body-size: "100m"
+
+      # -- Increase the buffer size for responses from backend servers to
+      # allow for longer headers
       proxy-buffer-size: "64k"
+
+      # -- Redirect all non-SSL access to SSL.
       ssl-redirect: "true"
+
+      # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
+
     service:
+      # -- Force traffic routing policy to Local so that the external IP in
+      # `X-Forwarded-For` will be correct
       externalTrafficPolicy: Local
+
+    # -- Add labels used by `NetworkPolicy` objects to restrict access to the
+    # ingress and thus ensure that auth subrequest handlers run
     podLabels:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
+
     metrics:
+      # -- Enable metrics reporting via Prometheus
       enabled: true
 
 vaultCertificate:
