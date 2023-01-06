@@ -81,6 +81,7 @@ jobs:
               - "science-platform/values-minikube.yaml"
               - "services/*/Chart.yaml"
               - "services/*/templates/**"
+              - "services/*/values.yaml"
               - "services/*/values-minikube.yaml"
 
       - name: Setup Minikube

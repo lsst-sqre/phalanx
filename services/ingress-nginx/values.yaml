@@ -25,6 +25,20 @@ ingress-nginx:
       # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
 
+      # -- Add additional configuration used by Gafaelfawr to report errors
+      # from the authorization layer
+      # @default -- See `values.yaml`
+      server-snippet: |
+        location @autherror {
+          add_header Cache-Control "no-cache, must-revalidate" always;
+          add_header WWW-Authenticate $auth_www_authenticate always;
+          if ($auth_status = 400) {
+            add_header Content-Type "application/json" always;
+            return 400 $auth_error_body;
+          }
+          return 403;
+        }
+
     service:
       # -- Force traffic routing policy to Local so that the external IP in
       # `X-Forwarded-For` will be correct
@@ -32,6 +46,7 @@ ingress-nginx:
 
     # -- Add labels used by `NetworkPolicy` objects to restrict access to the
     # ingress and thus ensure that auth subrequest handlers run
+    # @default -- See `values.yaml`
     podLabels:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
