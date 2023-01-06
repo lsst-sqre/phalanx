@@ -27,14 +27,11 @@ serviceAccount:
   annotations: {}
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin"
-
-  # -- Additional annotations to add for endpoints that are authenticated.
+  # -- Additional annotations to add for endpoints that are authenticated
   annotations: {}
 
   # -- Additional annotations to add for endpoints that allow anonymous
-  # access, such as `/*/available`.
+  # access, such as `/*/available`
   anonymousAnnotations: {}
 
 # -- Resource limits and requests for the cachemachine frontend pod

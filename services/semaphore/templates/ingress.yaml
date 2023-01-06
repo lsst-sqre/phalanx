@@ -1,25 +1,31 @@
 {{- if .Values.ingress.enabled -}}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
   name: {{ template "semaphore.fullname" . }}
   labels:
     {{- include "semaphore.labels" . | nindent 4 }}
-  annotations:
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ template "semaphore.fullname" . }}
     {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
     {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ required "global.host must be set" .Values.global.host | quote }}
-      http:
-        paths:
-          - path: {{ .Values.ingress.path }}
-            pathType: "Prefix"
-            backend:
-              service:
-                name: {{ template "semaphore.fullname" . }}
-                port:
-                  number: 80
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "semaphore.fullname" . }}
+                  port:
+                    number: 80
 {{- end }}
