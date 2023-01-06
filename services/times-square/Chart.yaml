@@ -12,8 +12,8 @@ appVersion: "0.6.0"
 
 dependencies:
   - name: redis
-    version: 17.4.0
-    repository: https://charts.bitnami.com/bitnami
+    version: 0.1.4
+    repository: https://lsst-sqre.github.io/charts/
 
 annotations:
   phalanx.lsst.io/docs: |

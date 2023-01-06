@@ -38,7 +38,15 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
-| redis.auth.enabled | bool | `false` |  |
+| redis.affinity | object | `{}` | Affinity rules for the Redis pod |
+| redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
+| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redis.persistence.size | string | `"8Gi"` | Amount of persistent storage to request |
+| redis.persistence.storageClass | string | `""` | Class of storage to request |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of API pods to run |
 | resources | object | `{}` |  |
 | service.port | int | `80` | Port of the service to create and map to the ingress |

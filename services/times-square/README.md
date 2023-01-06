@@ -27,8 +27,8 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
-| config.queueRedisUrl | string | Points to embedded Redis | URL for Redis arq queue database |
-| config.redisUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
+| config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
+| config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |
 | global.host | string | Set by times-square Argo CD Application | Host name for ingress |
@@ -42,8 +42,15 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |
-| redis.auth.enabled | bool | `false` |  |
-| redis.fullnameOverride | string | `"times-square-redis"` |  |
+| redis.affinity | object | `{}` | Affinity rules for the Redis pod |
+| redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
+| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redis.persistence.size | string | `"8Gi"` | Amount of persistent storage to request |
+| redis.persistence.storageClass | string | `""` | Class of storage to request |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount.api | int | `1` | Number of API deployment pods to start |
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the times-square deployment pod |
