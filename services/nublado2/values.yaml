@@ -143,12 +143,18 @@ jupyterhub:
   # appropriate fully-qualified URLs for the Gafaelfawr /login route.
   ingress:
     enabled: true
+
+    # -- Extra annotations to add to the ingress
+    # @default -- See `values.yaml`
     annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
+      nginx.ingress.kubernetes.io/auth-method: "GET"
+      nginx.ingress.kubernetes.io/auth-response-headers: "Authorization,Cookie,X-Auth-Request-Email,X-Auth-Request-User,X-Auth-Request-Token"
       nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"
       nginx.ingress.kubernetes.io/configuration-snippet: |
-        error_page 403 = "/auth/forbidden?scope=exec:notebook";
+        auth_request_set $auth_www_authenticate $upstream_http_www_authenticate;
+        auth_request_set $auth_status $upstream_http_x_error_status;
+        auth_request_set $auth_error_body $upstream_http_x_error_body;
+        error_page 403 = @autherror;
     ingressClassName: "nginx"
     pathSuffix: "*"
 
