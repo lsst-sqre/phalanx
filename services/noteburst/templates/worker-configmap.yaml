@@ -7,8 +7,8 @@ metadata:
 data:
   SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   NOTEBURST_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
-  NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}/0"
-  NOTEBURST_WORKER_LOCK_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis-master.{{ .Release.Namespace }}:{{ .Values.redis.master.service.ports.redis }}/1"
+  NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
+  NOTEBURST_WORKER_LOCK_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/1"
   NOTEBURST_WORKER_JOB_TIMEOUT: {{ .Values.config.worker.jobTimeout | quote }}
   NOTEBURST_WORKER_TOKEN_LIFETIME: {{ .Values.config.worker.tokenLifetime | quote }}
   NOTEBURST_WORKER_IMAGE_SELECTOR: {{ .Values.config.worker.imageSelector | quote  }}
