@@ -17,9 +17,10 @@ Ingress controller
 | ingress-nginx.controller.config.large-client-header-buffers | string | `"4 64k"` | Increase the buffer size for client headers because we may have JWTs in the client request |
 | ingress-nginx.controller.config.proxy-body-size | string | `"100m"` | Maximum size of the client request body (needs to be large enough to allow table uploads) |
 | ingress-nginx.controller.config.proxy-buffer-size | string | `"64k"` | Increase the buffer size for responses from backend servers to allow for longer headers |
+| ingress-nginx.controller.config.server-snippet | string | See `values.yaml` | Add additional configuration used by Gafaelfawr to report errors from the authorization layer |
 | ingress-nginx.controller.config.ssl-redirect | string | `"true"` | Redirect all non-SSL access to SSL. |
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
 | ingress-nginx.controller.metrics.enabled | bool | `true` | Enable metrics reporting via Prometheus |
-| ingress-nginx.controller.podLabels | object | `{"gafaelfawr.lsst.io/ingress":"true","hub.jupyter.org/network-access-proxy-http":"true"}` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
+| ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
 | ingress-nginx.controller.service.externalTrafficPolicy | string | `"Local"` | Force traffic routing policy to Local so that the external IP in `X-Forwarded-For` will be correct |
 | vaultCertificate.enabled | bool | `false` | Whether to store ingress TLS certificate via vault-secrets-operator.  Typically "squareone" owns it instead in an RSP. |

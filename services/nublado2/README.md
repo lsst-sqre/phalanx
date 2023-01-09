@@ -62,10 +62,7 @@ JupyterHub for the Rubin Science Platform
 | jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
 | jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
 | jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
-| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-method" | string | `"GET"` |  |
-| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-response-headers" | string | `"X-Auth-Request-Token"` |  |
-| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-url" | string | `"http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"` |  |
-| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet" | string | `"error_page 403 = \"/auth/forbidden?scope=exec:notebook\";\n"` |  |
+| jupyterhub.ingress.annotations | object | See `values.yaml` | Extra annotations to add to the ingress |
 | jupyterhub.ingress.enabled | bool | `true` |  |
 | jupyterhub.ingress.ingressClassName | string | `"nginx"` |  |
 | jupyterhub.ingress.pathSuffix | string | `"*"` |  |
