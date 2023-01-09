@@ -30,10 +30,10 @@ ingress-nginx:
       # @default -- See `values.yaml`
       server-snippet: |
         location @autherror {
+          default_type application/json;
           if ($auth_status = 400) {
             add_header Cache-Control "no-cache, must-revalidate" always;
             add_header WWW-Authenticate $auth_www_authenticate always;
-            add_header Content-Type "application/json" always;
             return 400 $auth_error_body;
           }
           add_header Cache-Control "no-cache, must-revalidate" always;
