@@ -1,0 +1,39 @@
+# Default values for Gafaelfawr.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Number of web frontend pods to start
+replicaCount: 1
+
+image:
+  # -- Gafaelfawr image to use
+  repository: "ghcr.io/lsst-sqre/linters"
+
+  # -- Pull policy for the Gafaelfawr image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of linter image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Resource limits and requests for the Gafaelfawr frontend pod
+resources: {}
+
+# -- Annotations for the Gafaelfawr frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the Gafaelfawr frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the Gafaelfawr frontend pod
+tolerations: []
+
+# -- Affinity rules for the Gafaelfawr frontend pod
+affinity: {}
+
+# -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
+linterSchedule: "0 0 1 * *"

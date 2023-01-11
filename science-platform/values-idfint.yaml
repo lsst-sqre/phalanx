@@ -19,6 +19,8 @@ hips:
   enabled: true
 ingress_nginx:
   enabled: true
+linters:
+  enabled: true
 mobu:
   enabled: true
 moneypenny:
