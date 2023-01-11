@@ -11,9 +11,6 @@ Linters running for operational reasons
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the linter pod |
-| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
-| global.host | string | Set by Argo CD | Host name for ingress |
-| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the linter image |
 | image.repository | string | `"ghcr.io/lsst-sqre/linters"` | linter image to use |
