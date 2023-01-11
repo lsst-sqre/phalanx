@@ -26,6 +26,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    cachemachine/index
    datalinker/index
    hips/index
+   linters/index
    mobu/index
    moneypenny/index
    noteburst/index
