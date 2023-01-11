@@ -1,7 +1,6 @@
 # linters
 
-Automatically run linters checking ops data and environments, like DNS records
-that may be dangling.
+Linters running for operational reasons
 
 ## Source Code
 
