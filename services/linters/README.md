@@ -1,4 +1,4 @@
-# Linters
+# linters
 
 Automatically run linters checking ops data and environments, like DNS records
 that may be dangling.
@@ -15,12 +15,14 @@ that may be dangling.
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the linter image |
 | image.repository | string | `"ghcr.io/lsst-sqre/linters"` | linter image to use |
 | image.tag | string | The appVersion of the chart | Tag of linter image to use |
+| linterSchedule | string | `"0 0 1 * *"` | Cron schedule string for linter checking (in UTC) |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the linter pod |
 | podAnnotations | object | `{}` | Annotations for the linter pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | `{}` | Resource limits and requests for the linter pod |
-| tolerations | list | `[]` | Tolerations for the linter frontend pod |
+| tolerations | list | `[]` | Tolerations for the linter pod |
