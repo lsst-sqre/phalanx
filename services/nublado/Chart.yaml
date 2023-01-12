@@ -1,6 +1,25 @@
 apiVersion: v2
 name: nublado
-version: 1.0.0
-description: Service to manage user labs
+version: 3.0.0-0.dev
+description: JupyterHub and custom spawner for the Rubin Science Platform
+sources:
+  - https://github.com/lsst-sqre/jupyterlab-controller
+  - https://github.com/lsst-sqre/rsp-restspawner
 home: https://github.com/lsst-sqre/jupyterlab-controller
-appVersion: 3.0.0
+appVersion: 3.0.0-0.dev
+
+dependencies:
+  - name: jupyterhub
+    # This is the Zero To Jupyterhub version, *not* the version of the
+    # Jupyterhub package itself.
+    version: "2.0.0"
+    repository: https://jupyterhub.github.io/helm-chart/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-164"
+      title: "Nublado v2 Architecture"
+      url: "https://dmtn-164.lsst.io/"
+    - id: "SQR-066"
+      title: "RSP Notebook Aspect lab controller design"
+      url: "https://sqr-066.lsst.io/"

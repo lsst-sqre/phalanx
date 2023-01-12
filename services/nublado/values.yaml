@@ -128,7 +128,7 @@ controller:
       JUPYTERHUB_API_URL: http://hub.nublado2:8081/nb/hub/api
       JUPYTERHUB_BASE_URL: /nb/
       JUPYTERHUB_DEFAULT_URL: /lab
-      JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES: '[]' # needed?
+      JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES: '[]'  # needed?
       NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
       NO_SUDO: "TRUE"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
@@ -287,6 +287,132 @@ controller:
     path: ""
     namespace: ""
     instanceUrl: ""
+
+# Configuration for z2jh subchart
+jupyterhub:
+  hub:
+    authenticatePrometheus: false
+    image:
+      name: lsstsqre/rsp-restspawner
+      tag: "ajt-dev"
+    resources:
+      limits:
+        cpu: 900m
+        memory: 1Gi  # Should support about 200 users
+    config:
+      Authenticator:
+        enable_auth_state: true
+      JupyterHub:
+        authenticator_class: nublado2.auth.GafaelfawrAuthenticator
+      ServerApp:
+        shutdown_no_activity_timeout: 604800  # one week
+    db:
+      # Password comes from the nublado2-secret.
+      type: "postgres"
+      password: "true"
+      url: "postgresql://jovyan@postgres.postgres/jupyterhub"
+    containerSecurityContext:
+      runAsUser: 768
+      runAsGroup: 768
+      allowPrivilegeEscalation: false
+    baseUrl: "/nb"
+    # Note: this has to match up with the kubernetes secret created by the
+    # vault secret, and since you can't put templating in a values file, I'm
+    # just setting the name here.
+    existingSecret: "nublado2-secret"
+    # This will need work
+    extraConfig:
+      nublado.py: |
+        import nublado2.hub_config
+        nublado2.hub_config.HubConfig().configure(c)
+    extraVolumes:
+    - name: nublado-config
+      configMap:
+        name: nublado-config
+    - name: nublado-gafaelfawr
+      secret:
+        secretName: gafaelfawr-token
+    extraVolumeMounts:
+    - name: nublado-config
+      mountPath: /etc/jupyterhub/nublado_config.yaml
+      subPath: nublado_config.yaml
+    - name: nublado-gafaelfawr
+      mountPath: /etc/secret/admin-token
+      subPath: token
+    # We still have to use our own, enabled at the top level, which is
+    #  similar but not identical.  This one still doesn't work, even if
+    #  you explicitly enable port 8081 so the labs can talk to the Hub.
+    networkPolicy:
+      enabled: false
+    loadRoles:
+      self:
+        scopes: ['admin:servers!user', 'read:metrics']
+      server:
+        scopes: ['inherit']  # Let server use API like user
+
+  prePuller:
+    continuous:
+      enabled: false
+    hook:
+      enabled: false
+
+  singleuser:
+    cloudMetadata:
+      blockWithIptables: false
+    cmd: "/opt/lsst/software/jupyterlab/runlab.sh"
+    defaultUrl: "/lab"
+    extraAnnotations:
+      argocd.argoproj.io/compare-options: 'IgnoreExtraneous'
+      argocd.argoproj.io/sync-options: 'Prune=false'
+    extraLabels:
+      hub.jupyter.org/network-access-hub: 'true'
+      argocd.argoproj.io/instance: 'nublado-users'
+
+  proxy:
+    service:
+      type: ClusterIP
+    # Replace with traefik
+    chp:
+      networkPolicy:
+        interNamespaceAccessLabels: accept
+      # This currently causes Minikube deployment in GH-actions to fail.
+      # We want it sometime but it's not critical; it will help with
+      # scale-down
+      # pdb:
+      #   enabled: true
+      #   minAvailable: 1
+
+  # Any instantiation of this chart must also set ingress.hosts and add
+  # the nginx.ingress.kubernetes.io/auth-signin annotation pointing to the
+  # appropriate fully-qualified URLs for the Gafaelfawr /login route.
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/auth-method: GET
+      nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        error_page 403 = "/auth/forbidden?scope=exec:notebook";
+    ingressClassName: "nginx"
+    pathSuffix: "*"
+
+  cull:
+    enabled: true
+    timeout: 2592000  # 30 days -- shorten later
+    every: 600  # Check every ten minutes
+    users: true  # log out user when we cull
+    removeNamedServers: true  # Post-stop hook may already do this
+    maxAge: 5184000  # 60 days -- shorten later
+
+  imagePullSecrets:
+  - name: pull-secret
+
+  scheduling:
+    userScheduler:
+      enabled: false
+    userPlaceholder:
+      enabled: false
+
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

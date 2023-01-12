@@ -1,8 +1,13 @@
 # nublado
 
-Service to manage user labs
+JupyterHub and custom spawner for the Rubin Science Platform
 
 **Homepage:** <https://github.com/lsst-sqre/jupyterlab-controller>
+
+## Source Code
+
+* <https://github.com/lsst-sqre/jupyterlab-controller>
+* <https://github.com/lsst-sqre/rsp-restspawner>
 
 ## Values
 
@@ -34,6 +39,64 @@ Service to manage user labs
 | image.repository | string | `"lsstsqre/jupyterlabcontroller"` | nublado image to use |
 | image.tag | string | The appVersion of the chart | Tag of nublado image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add for endpoints that are authenticated. |
+| jupyterhub.cull.enabled | bool | `true` |  |
+| jupyterhub.cull.every | int | `600` |  |
+| jupyterhub.cull.maxAge | int | `5184000` |  |
+| jupyterhub.cull.removeNamedServers | bool | `true` |  |
+| jupyterhub.cull.timeout | int | `2592000` |  |
+| jupyterhub.cull.users | bool | `true` |  |
+| jupyterhub.hub.authenticatePrometheus | bool | `false` |  |
+| jupyterhub.hub.baseUrl | string | `"/nb"` |  |
+| jupyterhub.hub.config.Authenticator.enable_auth_state | bool | `true` |  |
+| jupyterhub.hub.config.JupyterHub.authenticator_class | string | `"nublado2.auth.GafaelfawrAuthenticator"` |  |
+| jupyterhub.hub.config.ServerApp.shutdown_no_activity_timeout | int | `604800` |  |
+| jupyterhub.hub.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
+| jupyterhub.hub.containerSecurityContext.runAsGroup | int | `768` |  |
+| jupyterhub.hub.containerSecurityContext.runAsUser | int | `768` |  |
+| jupyterhub.hub.db.password | string | `"true"` |  |
+| jupyterhub.hub.db.type | string | `"postgres"` |  |
+| jupyterhub.hub.db.url | string | `"postgresql://jovyan@postgres.postgres/jupyterhub"` |  |
+| jupyterhub.hub.existingSecret | string | `"nublado2-secret"` |  |
+| jupyterhub.hub.extraConfig."nublado.py" | string | `"import nublado2.hub_config\nnublado2.hub_config.HubConfig().configure(c)\n"` |  |
+| jupyterhub.hub.extraVolumeMounts[0].mountPath | string | `"/etc/jupyterhub/nublado_config.yaml"` |  |
+| jupyterhub.hub.extraVolumeMounts[0].name | string | `"nublado-config"` |  |
+| jupyterhub.hub.extraVolumeMounts[0].subPath | string | `"nublado_config.yaml"` |  |
+| jupyterhub.hub.extraVolumeMounts[1].mountPath | string | `"/etc/secret/admin-token"` |  |
+| jupyterhub.hub.extraVolumeMounts[1].name | string | `"nublado-gafaelfawr"` |  |
+| jupyterhub.hub.extraVolumeMounts[1].subPath | string | `"token"` |  |
+| jupyterhub.hub.extraVolumes[0].configMap.name | string | `"nublado-config"` |  |
+| jupyterhub.hub.extraVolumes[0].name | string | `"nublado-config"` |  |
+| jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
+| jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
+| jupyterhub.hub.image.name | string | `"lsstsqre/rsp-restspawner"` |  |
+| jupyterhub.hub.image.tag | string | `"ajt-dev"` |  |
+| jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
+| jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
+| jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
+| jupyterhub.hub.networkPolicy.enabled | bool | `false` |  |
+| jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
+| jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
+| jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
+| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-method" | string | `"GET"` |  |
+| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-response-headers" | string | `"X-Auth-Request-Token"` |  |
+| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/auth-url" | string | `"http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"` |  |
+| jupyterhub.ingress.annotations."nginx.ingress.kubernetes.io/configuration-snippet" | string | `"error_page 403 = \"/auth/forbidden?scope=exec:notebook\";\n"` |  |
+| jupyterhub.ingress.enabled | bool | `true` |  |
+| jupyterhub.ingress.ingressClassName | string | `"nginx"` |  |
+| jupyterhub.ingress.pathSuffix | string | `"*"` |  |
+| jupyterhub.prePuller.continuous.enabled | bool | `false` |  |
+| jupyterhub.prePuller.hook.enabled | bool | `false` |  |
+| jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` |  |
+| jupyterhub.proxy.service.type | string | `"ClusterIP"` |  |
+| jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` |  |
+| jupyterhub.scheduling.userScheduler.enabled | bool | `false` |  |
+| jupyterhub.singleuser.cloudMetadata.blockWithIptables | bool | `false` |  |
+| jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` |  |
+| jupyterhub.singleuser.defaultUrl | string | `"/lab"` |  |
+| jupyterhub.singleuser.extraAnnotations."argocd.argoproj.io/compare-options" | string | `"IgnoreExtraneous"` |  |
+| jupyterhub.singleuser.extraAnnotations."argocd.argoproj.io/sync-options" | string | `"Prune=false"` |  |
+| jupyterhub.singleuser.extraLabels."argocd.argoproj.io/instance" | string | `"nublado-users"` |  |
+| jupyterhub.singleuser.extraLabels."hub.jupyter.org/network-access-hub" | string | `"true"` |  |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the nublado frontend pod |
 | podAnnotations | object | `{}` | Annotations for the nublado frontend pod |
