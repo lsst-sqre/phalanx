@@ -16,7 +16,7 @@ Linters running for operational reasons
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the linter image |
-| image.repository | string | `"ghcr.io/lsst-sqre/linters"` | linter image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/ops-linters"` | linter image to use |
 | image.tag | string | The appVersion of the chart | Tag of linter image to use |
 | linterSchedule | string | `"0 0 1 * *"` | Cron schedule string for linter checking (in UTC) |
 | nameOverride | string | `""` | Override the base name for resources |
