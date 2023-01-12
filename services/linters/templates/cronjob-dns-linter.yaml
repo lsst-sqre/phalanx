@@ -1,0 +1,64 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ template "linters.fullname" . }}-maintenance
+  labels:
+    {{- include "linters.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.linterSchedule | quote }}
+  concurrencyPolicy: "Forbid"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- with .Values.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "linters.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: "linter"
+        spec:
+          restartPolicy: "Never"
+          automountServiceAccountToken: false
+          containers:
+            - name: "linters"
+              command:
+                - "python"
+                - "checker.py"
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+              {{- with .Values.resources }}
+              resources:
+                {{- toYaml . | nindent 16 }}
+              {{- end }}
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - "all"
+                readOnlyRootFilesystem: true
+              volumeMounts:
+                - name: "aws-secret"
+                  mountPath: "/etc/linters/aws-secrets"
+                  readOnly: true
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumes:
+            - name: "secret"
+              secret:
+                secretName: {{ template "linters.fullname" . }}-secret
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}

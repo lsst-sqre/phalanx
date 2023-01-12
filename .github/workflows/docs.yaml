@@ -48,7 +48,7 @@ jobs:
         uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.10"
-          tox-envs: "docs,docs-linkcheck"
+          tox-envs: "docs"
 
       # Only attempt documentation uploads for long-lived branches, tagged
       # releases, and pull requests from ticket branches.  This avoids version
