@@ -4,4 +4,4 @@ version: 1.0.0
 description: Linters running for operational reasons
 sources:
   - https://github.com/lsst-sqre/ops-linters
-appVersion: 0.1.0
+appVersion: 0.1.2
