@@ -11,7 +11,7 @@ replicaCount: 1
 
 image:
   # -- linter image to use
-  repository: "ghcr.io/lsst-sqre/linters"
+  repository: "ghcr.io/lsst-sqre/ops-linters"
 
   # -- Pull policy for the linter image
   pullPolicy: "IfNotPresent"
