@@ -47,7 +47,7 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           volumes:
-            - name: "secret"
+            - name: "aws-secret"
               secret:
                 secretName: {{ template "linters.fullname" . }}-secret
           {{- with .Values.nodeSelector }}
