@@ -23,9 +23,6 @@ spec:
           automountServiceAccountToken: false
           containers:
             - name: "linters"
-              command:
-                - "python"
-                - "checker.py"
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
               {{- with .Values.resources }}
@@ -40,7 +37,7 @@ spec:
                 readOnlyRootFilesystem: true
               volumeMounts:
                 - name: "aws-secret"
-                  mountPath: "/etc/linters/aws-secrets"
+                  mountPath: "/etc/linters/secrets"
                   readOnly: true
           securityContext:
             runAsNonRoot: true
