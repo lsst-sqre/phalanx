@@ -37,7 +37,7 @@ spec:
                 readOnlyRootFilesystem: true
               volumeMounts:
                 - name: "aws-secret"
-                  mountPath: "/etc/linters/aws-secrets"
+                  mountPath: "/etc/linters/secrets"
                   readOnly: true
           securityContext:
             runAsNonRoot: true
