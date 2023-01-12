@@ -125,7 +125,8 @@ controller:
       HUB_ROUTE: /nb/hub
       # JS9_ROUTE: /js9  # No longer used?
       JUPYTERHUB_ADMIN_ACCESS: "1"  # Do we need this?!?
-      JUPYTERHUB_API_URL: http://hub.nublado2:8081/nb/hub/api
+      JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api  # Pass
+      # from Hub
       JUPYTERHUB_BASE_URL: /nb/
       JUPYTERHUB_DEFAULT_URL: /lab
       JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES: '[]'  # needed?
@@ -288,13 +289,13 @@ controller:
     namespace: ""
     instanceUrl: ""
 
+
 # Configuration for z2jh subchart
 jupyterhub:
   hub:
     authenticatePrometheus: false
     image:
-      name: lsstsqre/rsp-restspawner
-      tag: "ajt-dev"
+      name: docker.io/lsstsqre/rsp-restspawner
     resources:
       limits:
         cpu: 900m
@@ -303,11 +304,12 @@ jupyterhub:
       Authenticator:
         enable_auth_state: true
       JupyterHub:
-        authenticator_class: nublado2.auth.GafaelfawrAuthenticator
+        authenticator_class: rsp_restspawner.auth.GafaelfawrAuthenticator
+        spawner_class: rsp_restspawner.RSPRestSpawner
       ServerApp:
         shutdown_no_activity_timeout: 604800  # one week
     db:
-      # Password comes from the nublado2-secret.
+      # Password comes from the nublado-secret.
       type: "postgres"
       password: "true"
       url: "postgresql://jovyan@postgres.postgres/jupyterhub"
@@ -319,12 +321,30 @@ jupyterhub:
     # Note: this has to match up with the kubernetes secret created by the
     # vault secret, and since you can't put templating in a values file, I'm
     # just setting the name here.
-    existingSecret: "nublado2-secret"
+    existingSecret: "nublado-secret"
     # This will need work
-    extraConfig:
-      nublado.py: |
-        import nublado2.hub_config
-        nublado2.hub_config.HubConfig().configure(c)
+    extraFiles:
+      00_hub_config.py:
+        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub_config.py
+        stringData: |
+          import os
+          import rsp_restspawner  # Baked into image
+          from rsp_restspawner.util import get_namespace
+
+          # Turn off concurrent spawn limit
+          c.JupyterHub.concurrent_spawn_limit = 0
+          #
+          c.JupyterHub.hub_connect_url = (
+              "http://hub." +
+              f"{get_namespace()}:" +
+              f"{os.environ['HUB_SERVICE_PORT']}"
+          )
+          # Turn off restart after n consecutive failures
+          c.Spawner.consecutive_failure_limit = 0
+          # Use JupyterLab by default
+          c.Spawner.default_url = "/lab"
+          c.Spawner.start_timeout = 10 * 60  # 10 minutes
+          c.Spawner.http_timeout = 90  # For debug mode and slow disks
     extraVolumes:
     - name: nublado-config
       configMap:
