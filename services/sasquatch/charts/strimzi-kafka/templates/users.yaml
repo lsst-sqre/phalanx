@@ -177,8 +177,8 @@ spec:
         operation: All
       - resource:
           type: topic
-          name: "sasquatch-test"
-          patternType: literal
+          name: "lsst.dm"
+          patternType: prefix
         type: allow
         host: "*"
         operation: All
