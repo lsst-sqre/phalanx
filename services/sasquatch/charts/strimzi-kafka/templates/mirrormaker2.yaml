@@ -6,7 +6,7 @@ kind: KafkaMirrorMaker2
 metadata:
   name: replicator
 spec:
-  version: 3.2.0
+  version: {{ .Values.kafka.version | quote }}
   replicas: 1
   # In the unidirectional (active/passive) replication scenario
   # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
