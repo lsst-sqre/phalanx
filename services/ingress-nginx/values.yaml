@@ -7,17 +7,9 @@ ingress-nginx:
       # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
 
-      # -- Increase the buffer size for client headers because we may have
-      # JWTs in the client request
-      large-client-header-buffers: "4 64k"
-
       # -- Maximum size of the client request body (needs to be large enough
       # to allow table uploads)
       proxy-body-size: "100m"
-
-      # -- Increase the buffer size for responses from backend servers to
-      # allow for longer headers
-      proxy-buffer-size: "64k"
 
       # -- Redirect all non-SSL access to SSL.
       ssl-redirect: "true"
