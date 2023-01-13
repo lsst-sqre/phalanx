@@ -223,6 +223,8 @@ config:
       Can perform privileged user provisioning
     "exec:admin": >-
       Administrative access to all APIs
+    "exec:internal-tools": >-
+      Use project-internal tools.
     "exec:notebook": >-
       Use the Notebook Aspect
     "exec:portal": >-

@@ -32,23 +32,25 @@ config:
 
   groupMapping:
     "admin:jupyterlab":
-      - "g_science-platform-idf-dev"
+      - "g_admins"
     "admin:provision":
-      - "g_science-platform-idf-dev"
+      - "g_admins"
     "exec:admin":
-      - "g_science-platform-idf-dev"
+      - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
     "exec:notebook":
-      - "g_science-platform-idf-dev"
+      - "g_users"
     "exec:portal":
-      - "g_science-platform-idf-dev"
+      - "g_users"
     "read:image":
-      - "g_science-platform-idf-dev"
+      - "g_users"
     "read:tap":
-      - "g_science-platform-idf-dev"
+      - "g_users"
 
   initialAdmins:
-    - "afausti"
     - "adam"
+    - "afausti"
     - "cbanek"
     - "frossie"
     - "jsick"

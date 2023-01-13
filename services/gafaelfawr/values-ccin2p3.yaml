@@ -39,6 +39,8 @@ config:
     "exec:admin": "lsst"
     "read:all":
       - "lsst"
+    "exec:internal-tools":
+      - "lsst"
     "exec:notebook":
       - "lsst"
     "exec:portal":

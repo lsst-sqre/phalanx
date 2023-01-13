@@ -35,29 +35,23 @@ config:
       - "g_admins"
     "exec:admin":
       - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
     "exec:notebook":
-      - "g_admins"
-      - "g_developers"
       - "g_users"
     "exec:portal":
-      - "g_admins"
-      - "g_developers"
       - "g_users"
     "read:alertdb":
       - "g_admins"
       - "g_developers"
     "read:image":
-      - "g_admins"
-      - "g_developers"
       - "g_users"
     "read:tap":
-      - "g_admins"
-      - "g_developers"
       - "g_users"
 
   initialAdmins:
-    - "afausti"
     - "adam"
+    - "afausti"
     - "cbanek"
     - "frossie"
     - "jsick"
