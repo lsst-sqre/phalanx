@@ -4,7 +4,7 @@ version: 1.0.0
 description: HiPS tile server backed by Google Cloud Storage
 sources:
   - https://github.com/lsst-sqre/crawlspace
-appVersion: 0.2.1
+appVersion: 1.0.0
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-230"
