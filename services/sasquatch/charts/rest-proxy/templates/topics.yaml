@@ -1,0 +1,9 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: lsst.dm.sky-flux-visit-statistic-metric
+  labels:
+      strimzi.io/cluster: sasquatch
+spec:
+  replicas: 3
+  partitions: 1
