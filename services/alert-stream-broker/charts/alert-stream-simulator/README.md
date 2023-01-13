@@ -13,7 +13,7 @@ Producer which repeatedly publishes a static set of alerts into a Kafka topic
 | image.repository | string | `"lsstdm/alert-stream-simulator"` | Source repository for the image which holds the rubin-alert-stream program. |
 | image.tag | string | `"v1.2.1"` | Tag to use for the rubin-alert-stream container. |
 | kafkaUserName | string | `"alert-stream-simulator"` | The username of the Kafka user identity used to connect to the broker. |
-| maxBytesRetained | string | `"100000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB |
+| maxBytesRetained | string | `"24000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB |
 | maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | nameOverride | string | `""` | Explicitly sets the name of the deployment and job. |
 | repeatInterval | int | `37` | How often (in seconds) to repeat the sample data into the replay topic. |
