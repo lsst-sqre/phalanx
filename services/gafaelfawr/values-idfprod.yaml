@@ -21,6 +21,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:notebook":
       - github:
           organization: "lsst"

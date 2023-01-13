@@ -37,6 +37,8 @@ config:
       - "g_admins"
     "exec:admin":
       - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
     "exec:notebook":
       - "g_users"
     "exec:portal":
