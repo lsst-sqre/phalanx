@@ -36,7 +36,7 @@ spec:
                     - "all"
                 readOnlyRootFilesystem: true
               volumeMounts:
-                - name: "aws-secret"
+                - name: "secret"
                   mountPath: "/etc/linters/secrets"
                   readOnly: true
           securityContext:
@@ -44,7 +44,7 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           volumes:
-            - name: "aws-secret"
+            - name: "secret"
               secret:
                 secretName: {{ template "linters.fullname" . }}-secret
           {{- with .Values.nodeSelector }}
