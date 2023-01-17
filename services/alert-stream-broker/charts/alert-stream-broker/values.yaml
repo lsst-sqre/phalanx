@@ -32,8 +32,8 @@ kafka:
     offsets.retention.minutes: 1440
     # -- Number of hours for a brokers data to be retained.
     log.retention.hours: 168
-    # -- Maximum retained number of bytes for a brokers's data. This is a string
-    # -- to avoid YAML type conversion issues for large numbers.
+    # -- Maximum retained number of bytes for a broker's data. This is a string
+    # to avoid YAML type conversion issues for large numbers.
     log.retention.bytes: "42949672960"
 
   externalListener:

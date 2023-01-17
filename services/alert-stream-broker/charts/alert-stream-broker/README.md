@@ -9,7 +9,7 @@ Kafka broker cluster for distributing alerts
 | cluster.name | string | `"alert-broker"` | Name used for the Kafka broker, and used by Strimzi for many annotations. |
 | fullnameOverride | string | `""` | Override for the full name used for Kubernetes resources; by default one will be created based on the chart name and helm release name. |
 | kafka.config | object | `{"log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":1440}` | Configuration overrides for the Kafka server. |
-| kafka.config."log.retention.bytes" | string | `"42949672960"` | to avoid YAML type conversion issues for large numbers. |
+| kafka.config."log.retention.bytes" | string | `"42949672960"` | Maximum retained number of bytes for a broker's data. This is a string to avoid YAML type conversion issues for large numbers. |
 | kafka.config."log.retention.hours" | int | `168` | Number of hours for a brokers data to be retained. |
 | kafka.config."offsets.retention.minutes" | int | `1440` | Number of minutes for a consumer group's offsets to be retained. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` |  |
