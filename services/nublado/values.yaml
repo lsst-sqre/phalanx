@@ -114,9 +114,7 @@ controller:
     # in this RSP instance.
     env:
       API_ROUTE: /api
-      # AUTO_REPO_BRANCH: "prod"  # No longer needed
       AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
-      # AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks"  # No longer needed
       CULL_KERNEL_IDLE_TIMEOUT: "432000"  # These might be set from group?
       CULL_KERNEL_CONNECTED: "True"
       CULL_KERNEL_INTERVAL: "300"
@@ -125,11 +123,6 @@ controller:
       HUB_ROUTE: /nb/hub
       # JS9_ROUTE: /js9  # No longer used?
       JUPYTERHUB_ADMIN_ACCESS: "1"  # Do we need this?!?
-      JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api  # Pass
-      # from Hub
-      JUPYTERHUB_BASE_URL: /nb/
-      JUPYTERHUB_DEFAULT_URL: /lab
-      JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES: '[]'  # needed?
       NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
       NO_SUDO: "TRUE"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
@@ -141,16 +134,23 @@ controller:
       # must be calculated from other Lab-spawn-time values, and
       # include:
       # ACCESS_TOKEN
+      # CPU_GUARANTEE
       # CPU_LIMIT
       # DEBUG
       # EXTERNAL_GID
       # EXTERNAL_GROUPS
-      # JPY_API_TOKEN
+      # JPY_API_TOKEN  # Deprecated, alias for JUPYTERHUB_API_TOKEN
+      # JUPYTERHUB_API_URL
+      # JUPYTERHUB_API_TOKEN
       # JUPYTERHUB_ACTIVITY_URL
+      # JUPYTERHUB_BASE_URL
       # JUPYTERHUB_CLIENT_ID
+      # JUPYTERHUB_DEFAULT_URL
       # JUPYTERHUB_OAUTH_ACCESS_SCOPES
       # JUPYTERHUB_OAUTH_CALLBACK_URL
-      # JUPYTERHUB_OAUTH_SCOPES  # Alias for JUPYTERHUB_OAUTH_ACCESS_SCOPES
+      # JUPYTERHUB_OAUTH_SCOPES  # Deprecated JUPYTERHUB_OAUTH_ACCESS_SCOPES
+      # JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES
+      # JUPYTERHUB_SERVER_NAME
       # JUPYTERHUB_SERVICE_PREFIX
       # JUPYTERHUB_SERVICE_URL
       # JUPYTERHUB_USER
@@ -323,9 +323,15 @@ jupyterhub:
     # just setting the name here.
     existingSecret: "nublado-secret"
     # This will need work
+    extraEnv:
+      JUPYTERHUB_CRYPT_KEY:
+        valueFrom:
+          secretKeyRef:
+            name: "nublado-secret"
+            key: "hub.config.CryptKeeper.keys"
     extraFiles:
-      00_hub_config.py:
-        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub_config.py
+      00_hub.py:
+        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub.py
         stringData: |
           import os
           import rsp_restspawner  # Baked into image
@@ -334,17 +340,47 @@ jupyterhub:
           # Turn off concurrent spawn limit
           c.JupyterHub.concurrent_spawn_limit = 0
           #
+          # Set internal url
           c.JupyterHub.hub_connect_url = (
               "http://hub." +
               f"{get_namespace()}:" +
               f"{os.environ['HUB_SERVICE_PORT']}"
           )
+      01_spawner.py:
+        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/01_spawner.py
+        stringData: |
           # Turn off restart after n consecutive failures
           c.Spawner.consecutive_failure_limit = 0
           # Use JupyterLab by default
           c.Spawner.default_url = "/lab"
           c.Spawner.start_timeout = 10 * 60  # 10 minutes
-          c.Spawner.http_timeout = 90  # For debug mode and slow disks
+          c.Spawner.http_timeout = 10 * 60   # For debug mode and slow disks
+      02_scopes.py:
+        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/02_scopes.py
+        stringData: |
+          # Not sure why this isn't working from the config, but...
+          c.JupyterHub.load_roles = [
+            {
+              'name': 'server',
+              'scopes': ['inherit'],
+            },
+            {
+              'name': 'self',
+              'scopes':  ['admin:servers!user', 'read:metrics'],
+            },
+            {
+              'name': 'jupyterhub-idle-culler-role',
+              'scopes': [
+                'list:users',
+                'read:users:activity',
+                'read:servers',
+                'delete:servers',
+                'admin:users', # if using --cull-users
+              ],
+              # assignment of role's permissions to:
+              'services': ['jupyterhub-idle-culler-service'],
+            },
+          ]
     extraVolumes:
     - name: nublado-config
       configMap:
@@ -364,6 +400,7 @@ jupyterhub:
     #  you explicitly enable port 8081 so the labs can talk to the Hub.
     networkPolicy:
       enabled: false
+    # Why is this not working?
     loadRoles:
       self:
         scopes: ['admin:servers!user', 'read:metrics']
@@ -402,19 +439,12 @@ jupyterhub:
       #   enabled: true
       #   minAvailable: 1
 
-  # Any instantiation of this chart must also set ingress.hosts and add
-  # the nginx.ingress.kubernetes.io/auth-signin annotation pointing to the
-  # appropriate fully-qualified URLs for the Gafaelfawr /login route.
+  # Rather than using the JupyterHub-provided ingress, which requires us
+  # to repeat the global host name, we just use a GafaelfawrIngress of
+  # our own, found in templates.  That also means the annotations are
+  # automatically in sync.
   ingress:
-    enabled: true
-    annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
-      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"
-      nginx.ingress.kubernetes.io/configuration-snippet: |
-        error_page 403 = "/auth/forbidden?scope=exec:notebook";
-    ingressClassName: "nginx"
-    pathSuffix: "*"
+    enabled: false
 
   cull:
     enabled: true
@@ -424,7 +454,7 @@ jupyterhub:
     removeNamedServers: true  # Post-stop hook may already do this
     maxAge: 5184000  # 60 days -- shorten later
 
-  imagePullSecrets:
+  imagePullSecrets:  # This is probably irrelevant with the RESTSpawner
   - name: pull-secret
 
   scheduling:
