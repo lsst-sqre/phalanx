@@ -36,7 +36,7 @@ tolerations: []
 affinity: {}
 
 # -- Cron schedule string for linter checking (in UTC)
-linterSchedule: "0 0 1 * *"
+linterSchedule: "0 0 * * *"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
