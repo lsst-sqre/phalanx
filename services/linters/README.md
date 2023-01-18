@@ -18,7 +18,7 @@ Linters running for operational reasons
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the linter image |
 | image.repository | string | `"ghcr.io/lsst-sqre/ops-linters"` | linter image to use |
 | image.tag | string | The appVersion of the chart | Tag of linter image to use |
-| linterSchedule | string | `"0 0 1 * *"` | Cron schedule string for linter checking (in UTC) |
+| linterSchedule | string | `"0 0 * * *"` | Cron schedule string for linter checking (in UTC) |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the linter pod |
 | podAnnotations | object | `{}` | Annotations for the linter pod |
