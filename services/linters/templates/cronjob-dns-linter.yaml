@@ -21,6 +21,7 @@ spec:
         spec:
           restartPolicy: "Never"
           automountServiceAccountToken: false
+          serviceAccountName: {{ include "linters.fullname" . }}
           containers:
             - name: "linters"
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
