@@ -44,8 +44,8 @@ repeatInterval: 37
 maxMillisecondsRetained: "604800000"
 
 # -- Maximum number of bytes for the replay topic, per partition, per replica.
-# Default is 100GB
-maxBytesRetained: "100000000000"
+# Default is 100GB, but should be lower to not fill storage.
+maxBytesRetained: "24000000000"
 
 replayTopicPartitions: 8
 

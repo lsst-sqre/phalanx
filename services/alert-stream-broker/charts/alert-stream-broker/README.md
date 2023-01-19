@@ -8,15 +8,15 @@ Kafka broker cluster for distributing alerts
 |-----|------|---------|-------------|
 | cluster.name | string | `"alert-broker"` | Name used for the Kafka broker, and used by Strimzi for many annotations. |
 | fullnameOverride | string | `""` | Override for the full name used for Kubernetes resources; by default one will be created based on the chart name and helm release name. |
-| kafka.config | object | `{"log.retention.bytes":"644245094400","log.retention.hours":168,"offsets.retention.minutes":10080}` | Configuration overrides for the Kafka server. |
-| kafka.config."log.retention.bytes" | string | `"644245094400"` | to avoid YAML type conversion issues for large numbers. |
-| kafka.config."log.retention.hours" | int | `168` | Number of days for a topic's data to be retained. |
-| kafka.config."offsets.retention.minutes" | int | `10080` | Number of minutes for a consumer group's offsets to be retained. |
+| kafka.config | object | `{"log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":1440}` | Configuration overrides for the Kafka server. |
+| kafka.config."log.retention.bytes" | string | `"42949672960"` | Maximum retained number of bytes for a broker's data. This is a string to avoid YAML type conversion issues for large numbers. |
+| kafka.config."log.retention.hours" | int | `168` | Number of hours for a brokers data to be retained. |
+| kafka.config."offsets.retention.minutes" | int | `1440` | Number of minutes for a consumer group's offsets to be retained. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` |  |
 | kafka.externalListener.bootstrap.host | string | `""` | Hostname that should be used by clients who want to connect to the broker through the bootstrap address. |
 | kafka.externalListener.bootstrap.ip | string | `""` | IP address that should be used by the broker's external bootstrap load balancer for access from the internet. The format of this is a string like "192.168.1.1". |
 | kafka.externalListener.brokers | list | `[]` | List of hostname and IP for each broker. The format of this is a list of maps with 'ip' and 'host' keys. For example:     - ip: "192.168.1.1"      host: broker-0.example    - ip: "192.168.1.2"      host: broker-1.example  Each replica should get a host and IP. If these are unset, then IP addresses will be chosen automatically by the Kubernetes cluster's LoadBalancer controller, and hostnames will be unset, which will break TLS connections. |
-| kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` |  |
+| kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of the certificate issuer. |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
 | kafka.interBrokerProtocolVersion | float | `3.2` | Version of the protocol for inter-broker communication, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
 | kafka.logMessageFormatVersion | float | `3.2` | Encoding version for messages, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
