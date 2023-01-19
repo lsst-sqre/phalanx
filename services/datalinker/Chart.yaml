@@ -4,7 +4,7 @@ version: 1.0.0
 description: IVOA DataLink-based service and data discovery
 sources:
   - https://github.com/lsst-sqre/datalinker
-appVersion: 1.5.1
+appVersion: 1.5.2
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-238"
