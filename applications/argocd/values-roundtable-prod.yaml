@@ -1,0 +1,32 @@
+argo-cd:
+  server:
+    ingress:
+      hosts:
+        - "roundtable.lsst.cloud"
+
+    config:
+      url: "https://roundtable.lsst.cloud/argo-cd"
+      dex.config: |
+        connectors:
+          # Auth using Google.
+          # See https://dexidp.io/docs/connectors/google/
+          - type: google
+            id: google
+            name: Google
+            config:
+              clientID: "206661279619-ohmlnblv3usl7prj55m47lp27nl7gt9l.apps.googleusercontent.com"
+              clientSecret: $dex.clientSecret
+              hostedDomains:
+                - lsst.cloud
+              redirectURI: https://roundtable.lsst.cloud/argo-cd/api/dex/callback
+
+    rbacConfig:
+      policy.csv: |
+        g, adam@lsst.cloud, role:admin
+        g, afausti@lsst.cloud, role:admin
+        g, christine@lsst.cloud, role:admin
+        g, dspeck@lsst.cloud, role:admin
+        g, frossie@lsst.cloud, role:admin
+        g, jsick@lsst.cloud, role:admin
+        g, rra@lsst.cloud, role:admin
+      scopes: "[email]"
