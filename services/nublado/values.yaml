@@ -355,32 +355,6 @@ jupyterhub:
           c.Spawner.default_url = "/lab"
           c.Spawner.start_timeout = 10 * 60  # 10 minutes
           c.Spawner.http_timeout = 10 * 60   # For debug mode and slow disks
-      02_scopes.py:
-        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/02_scopes.py
-        stringData: |
-          # Not sure why this isn't working from the config, but...
-          c.JupyterHub.load_roles = [
-            {
-              'name': 'server',
-              'scopes': ['inherit'],
-            },
-            {
-              'name': 'self',
-              'scopes':  ['admin:servers!user', 'read:metrics'],
-            },
-            {
-              'name': 'jupyterhub-idle-culler-role',
-              'scopes': [
-                'list:users',
-                'read:users:activity',
-                'read:servers',
-                'delete:servers',
-                'admin:users', # if using --cull-users
-              ],
-              # assignment of role's permissions to:
-              'services': ['jupyterhub-idle-culler-service'],
-            },
-          ]
     extraVolumes:
     - name: nublado-config
       configMap:
@@ -400,7 +374,6 @@ jupyterhub:
     #  you explicitly enable port 8081 so the labs can talk to the Hub.
     networkPolicy:
       enabled: false
-    # Why is this not working?
     loadRoles:
       self:
         scopes: ['admin:servers!user', 'read:metrics']
