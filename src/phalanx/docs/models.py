@@ -326,11 +326,15 @@ class Environment:
                 apps.append(app)
                 continue
 
-            try:
+            if app.name in values:
                 if values[app.name]["enabled"] is True:
                     apps.append(app)
-            except KeyError:
-                continue
+            elif (app_name_underscore := app.name.replace("-", "_")) in values:
+                # Many keys in an env's values.yaml use underscores instead of
+                # dashes, so they don't match the actual application name
+                if values[app_name_underscore]["enabled"] is True:
+                    apps.append(app)
+
         apps.sort(key=lambda a: a.name)
 
         return Environment(
