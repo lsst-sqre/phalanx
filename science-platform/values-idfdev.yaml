@@ -1,6 +1,7 @@
 environment: idfdev
 fqdn: data-dev.lsst.cloud
 vault_path_prefix: secret/k8s_operator/data-dev.lsst.cloud
+butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 
 alert_stream_broker:
   enabled: false
