@@ -65,4 +65,4 @@ times_square:
 vault_secrets_operator:
   enabled: true
 vo_cutouts:
-  enabled: false
+  enabled: true
