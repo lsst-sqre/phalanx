@@ -19,7 +19,7 @@ GCP SQL Proxy as a service
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Cloud SQL Proxy image |
 | image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Proxy image to use |
-| image.tag | string | `"1.33.1"` | Tag of Cloud SQL Proxy image to use |
+| image.tag | string | `"1.33.2"` | Tag of Cloud SQL Proxy image to use |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Cloud SQL Proxy pod |
 | podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
