@@ -25,6 +25,16 @@ Usually this means they weren't added or (in the case of groups from GitHub team
 For a new GitHub configuration, it's possible that the organizational membership is private and the user didn't release it.
 See :doc:`github-organizations` for more details about that problem.
 
+COmanage enrollment fails after prompting for attributes
+========================================================
+
+If all attempts to enroll new users in COmanage fail after the user enters their name and email address with the error "Please recheck the highlighted fields," the issue is probably with the enrollment attribute configuration.
+If there is a problem with the configuration of a hidden field, the error message may be very confusing and non-specific.
+
+Double-check the configuration of the "Self Signup With Approval" enrollment flow against :sqr:`055`.
+Pay careful attention to the enrollment attributes, particularly the "Users group" configuration, which has a hidden value.
+There is currently a bug in COmanage that causes it to not display the default values for attributes properly, so you may need to edit the enrollment attribute and set the default value again to be certain it's correct.
+
 Viewing logs
 ============
 
