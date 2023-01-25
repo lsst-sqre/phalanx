@@ -7,3 +7,14 @@ metadata:
 spec:
   replicas: 3
   partitions: 1
+---
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: test.next-visit
+  labels:
+      strimzi.io/cluster: sasquatch
+spec:
+  replicas: 3
+  partitions: 1
+
