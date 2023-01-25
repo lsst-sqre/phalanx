@@ -67,7 +67,7 @@ zookeeper:
 
 connect:
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: lsstsqre/strimzi-0.32.0-kafka-3.3.1:1.0.1
+  image: lsstsqre/strimzi-0.32.0-kafka-3.3.1:1.0.2
   # -- Number of Kafka Connect replicas to run.
   replicas: 3
 

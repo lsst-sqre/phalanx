@@ -7,7 +7,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
-| connect.image | string | `"lsstsqre/strimzi-0.32.0-kafka-3.3.1:1.0.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| connect.image | string | `"lsstsqre/strimzi-0.32.0-kafka-3.3.1:1.0.2"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | kafka.config | object | `{"log.retention.bytes":"429496729600","log.retention.hours":72,"offsets.retention.minutes":4320}` | Configuration overrides for the Kafka server. |
 | kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
