@@ -11,7 +11,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
-| image.tag | string | `"1.0.0"` |  |
+| image.tag | string | `"1.0.2"` |  |
 | influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
