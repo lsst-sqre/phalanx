@@ -12,7 +12,7 @@ autostart:
       - "read:tap"
     business: "NotebookRunner"
     options:
-      repo_url: "https://github.com/SimonKrughoff/system-test.git"
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
       repo_branch: "prod"
       max_executions: 1
     restart: true
