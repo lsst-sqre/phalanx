@@ -25,7 +25,6 @@ Checklist
 #. Fork the `Phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
 
 #. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/master/installer/requirements.txt>`__.
-   If you are not using 1Password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
 
 #. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
@@ -58,6 +57,8 @@ Checklist
 
 #. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__.
    You will need the write key for the Vault enclave you are using for this environment.
+   If you are using 1Password as a source of secrets, you will also need the access token for the 1Password Connect server.
+   (For SQuaRE-managed deployments, this is in the ``SQuaRE Integration Access Token: Argo`` 1Password item in the SQuaRE vault.)
 
 #. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
    Debug any problems.
