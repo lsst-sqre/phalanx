@@ -434,7 +434,14 @@ class OnePasswordSecretGenerator(SecretGenerator):
                 elif field.purpose == "PASSWORD":
                     secret_password = field.value
 
+            if not key:
+                continue
+
             secret_value = secret_notes or secret_password
+
+            if not secret_value:
+                logging.error("No value found for %s", item.title)
+                continue
 
             logging.debug("Environments are %s for %s", environments, item.id)
 
