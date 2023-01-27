@@ -53,20 +53,8 @@ service:
   port: 8080
 
 ingress:
-  # -- Create an ingress resource
-  enabled: true
-
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin&auth_type=basic"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
-
-  # -- Class name that should serve this ingress
-  className: "nginx"
-
-  # -- Path type for the ingress rule
-  pathType: ImplementationSpecific
 
   # -- Root URL path prefix for times-square API
   path: "/times-square/api"
@@ -113,11 +101,11 @@ config:
 
   # -- URL for Redis html / noteburst job cache database
   # @default -- Points to embedded Redis
-  redisUrl: "redis://times-square-redis-master:6379/0"
+  redisCacheUrl: "redis://times-square-redis:6379/0"
 
   # -- URL for Redis arq queue database
   # @default -- Points to embedded Redis
-  queueRedisUrl: "redis://times-square-redis-master:6379/1"
+  redisQueueUrl: "redis://times-square-redis:6379/1"
 
   # -- GitHub application ID
   githubAppId: ""
@@ -135,7 +123,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.32.0"
+    tag: "1.33.2"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -148,10 +136,39 @@ cloudsql:
   serviceAccount: ""
 
 redis:
-  fullnameOverride: times-square-redis
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
 
-  auth:
-    enabled: false
+    # -- Amount of persistent storage to request
+    size: "8Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
 
 global:
   # -- Base URL for the environment

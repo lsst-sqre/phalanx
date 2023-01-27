@@ -1,5 +1,8 @@
 replicaCount: 4
 
+image:
+  tag: "suit-2022.6.0"
+
 config:
   volumes:
     workareaNfs:

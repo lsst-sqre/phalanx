@@ -16,15 +16,6 @@ image:
   tag: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  # @default -- Unauthenticated
-  gafaelfawrAuthQuery: ""
-  # gafaelfawrAuthQuery: "scope=read:image"
-  # gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:tap"
-
-  # -- Path at which to serve the service
-  path: "/<CHARTNAME>"
-
   # -- Additional annotations for the ingress rule
   annotations: {}
 

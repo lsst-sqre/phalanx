@@ -33,7 +33,7 @@ plot_navigator:
 portal:
   enabled: true
 postgres:
-  enabled: true
+  enabled: false
 sasquatch:
   enabled: true
 production_tools:

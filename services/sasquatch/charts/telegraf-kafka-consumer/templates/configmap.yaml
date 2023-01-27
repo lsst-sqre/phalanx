@@ -1,0 +1,55 @@
+{{- range $key, $value := .Values.kafkaConsumers }}
+{{- if $value.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-telegraf-kafka-consumer-{{ $key }}
+  labels:
+    app: sasquatch-telegraf-kafka-consumer
+data:
+  telegraf.conf: |+
+    [agent]
+      collection_jitter = "0s"
+      debug = true
+      flush_interval = {{ default "1s" $value.flush_interval | quote }}
+      flush_jitter = "0s"
+      interval = {{ default "1s" $value.interval | quote }}
+      logfile = ""
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      omit_hostname = true
+      precision = ""
+      quiet = false
+      round_interval = true
+
+    [[outputs.influxdb_v2]]
+      bucket = {{ $.Values.influxdb2.bucket | quote }}
+      token = "$INFLUXDB_TOKEN"
+      organization = "default"
+      urls = [
+        "http://sasquatch-influxdb2.sasquatch:80"
+      ]
+
+    [[inputs.kafka_consumer]]
+      avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
+      avro_timestamp = "private_efdStamp"
+      avro_timestamp_format = "unix_us"
+      brokers = [
+        "sasquatch-kafka-brokers.sasquatch:9092"
+      ]
+      consumer_group = "telegraf-kafka-consumer-{{ $key }}"
+      data_format = "avro"
+      max_message_len = 1000000
+      sasl_mechanism = "SCRAM-SHA-512"
+      sasl_password = "$TELEGRAF_PASSWORD"
+      sasl_username = "telegraf"
+      topic_refresh_interval = "60s"
+      topic_regexps = {{ $value.topicRegexps }}
+      offset = "newest"
+      consumer_fetch_default = "20MB"
+
+    [[inputs.internal]]
+      collect_memstats = false
+{{- end }}
+{{- end }}

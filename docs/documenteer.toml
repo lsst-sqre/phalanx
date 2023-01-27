@@ -1,0 +1,35 @@
+[project]
+title = "Phalanx"
+copyright = "2020-2022 Association of Universities for Research in Astronomy, Inc. (AURA)"
+base_url = "https://phalanx.lsst.io"
+github_url = "https://github.com/lsst-sqre/phalanx"
+github_default_branch = "master"
+version = "Current"
+
+[sphinx]
+rst_epilog_file = "_rst_epilog.rst"
+extensions = [
+  "sphinx_diagrams",
+  "sphinx_jinja",
+  "phalanx.docs.crossref",
+]
+
+[sphinx.linkcheck]
+ignore = [
+    '^http://localhost',
+    '^http(s)*://ls.st',
+    '^https://tucson-teststand.lsst.codes',
+    '^https://summit-lsp.lsst.codes',
+    '^https://minikube.lsst.codes',
+    '^https://base-lsp.lsst.codes',
+    '^https://data-dev.lsst.cloud',
+    '^https://data-int.lsst.cloud',
+    '^https://data.lsst.cloud',
+    '^https://data-dev.lsst.eu',
+    '^https://rsp.lsst.ac.uk',
+    '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
+    '^https://github.com/orgs/',
+    # Temporary until merged.
+    "^https://github.com/lsst-sqre/phalanx/tree/master/services/sqlproxy-cross-project",
+    "^https://github.com/lsst-sqre/phalanx/blob/master/services/sqlproxy-cross-project",
+]

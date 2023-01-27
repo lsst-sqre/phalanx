@@ -1,0 +1,68 @@
+## Default values.yaml for Telegraf Kafka Consumer
+image:
+  # -- Telegraf image repository.
+  repo: "lsstsqre/telegraf"
+  # -- Telegraf image tag.
+  tag: "kafka-regexp"
+  # -- Image pull policy.
+  # @default -- IfNotPresent
+  pullPolicy: "Always"
+
+# -- Annotations for telegraf-kafka-consumers pods.
+podAnnotations: {}
+
+# -- Labels for telegraf-kafka-consumer pods.
+podLabels: {}
+
+# -- Secret names to use for Docker pulls.
+imagePullSecrets: []
+
+# -- Arguments passed to the Telegraf agent containers.
+args: []
+
+# Telegraf agent enviroment variables
+env:
+  - name: TELEGRAF_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # -- Telegraf KafkaUser password.
+        key: telegraf-password
+  - name: INFLUXDB_TOKEN
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # -- InfluxDB admin token.
+        key: admin-token
+
+# -- Name of the secret with values to be added to the environment.
+envFromSecret: ""
+
+# List of Telegraf Kafka consumers to deploy.
+kafkaConsumers:
+  test:
+    # -- Enable the Telegraf Kafka consumer.
+    enabled: false
+    # -- Data collection interval for the Kafka consumer.
+    interval: "1s"
+    # -- Default data flushing interval to InfluxDB.
+    flush_interval: "1s"
+    # -- List of regular expressions to specify the Kafka topics consumed by this agent.
+    topicRegexps: |
+      [ ".*Test" ]
+
+influxdb2:
+  # -- Name of the InfluxDB v2 bucket to write to.
+  bucket: "telegraf-kafka-consumer"
+
+# -- Kubernetes resources requests and limits.
+resources: {}
+
+# -- Node labels for pod assignment.
+nodeSelector: {}
+
+# -- Affinity for pod assignment.
+affinity: {}
+
+# -- Tolerations for pod assignment.
+tolerations: []

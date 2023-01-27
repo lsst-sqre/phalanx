@@ -6,16 +6,20 @@ alert-stream-broker:
     # Addresses based on the state as of 2021-12-02; these were assigned by
     # Google and now we're pinning them.
     externalListener:
+      tls:
+        enabled: true
       bootstrap:
-        ip: 35.188.169.31
+        ip: "35.224.176.103"
         host: alert-stream-int.lsst.cloud
       brokers:
-        - ip: 35.239.64.164
+        - ip: "34.28.80.188"
           host: alert-stream-int-broker-0.lsst.cloud
-        - ip: 34.122.165.155
+        - ip: "35.188.136.140"
           host: alert-stream-int-broker-1.lsst.cloud
-        - ip: 35.238.120.127
+        - ip: "35.238.84.221"
           host: alert-stream-int-broker-2.lsst.cloud
+
+
     storage:
       size: 1500Gi
 

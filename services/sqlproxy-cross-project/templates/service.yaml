@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "sqlproxy.fullname" . }}
+  labels:
+    {{- include "sqlproxy.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 5432
+      targetPort: 5432
+  selector:
+    {{- include "sqlproxy.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "cloud-sql-proxy"

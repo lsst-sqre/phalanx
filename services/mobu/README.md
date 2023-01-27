@@ -1,8 +1,10 @@
 # mobu
 
-Generate system load by pretending to be a random scientist
+Continuous integration testing
 
-**Homepage:** <https://github.com/lsst-sqre/mobu>
+## Source Code
+
+* <https://github.com/lsst-sqre/mobu>
 
 ## Values
 
@@ -19,7 +21,6 @@ Generate system load by pretending to be a random scientist
 | image.repository | string | `"ghcr.io/lsst-sqre/mobu"` | mobu image to use |
 | image.tag | string | The appVersion of the chart | Tag of mobu image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |

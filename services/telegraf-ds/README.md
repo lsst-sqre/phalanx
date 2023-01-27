@@ -1,12 +1,13 @@
 # telegraf-ds
 
-SQuaRE DaemonSet (K8s) telemetry collection service
+Kubernetes node telemetry collection service
 
-## Requirements
+**Homepage:** <https://www.influxdata.com/time-series-platform/telegraf/>
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://helm.influxdata.com/ | telegraf-ds | 1.1.1 |
+## Source Code
+
+* <https://github.com/influxdata/telegraf>
+* <https://github.com/influxdata/helm-charts>
 
 ## Values
 

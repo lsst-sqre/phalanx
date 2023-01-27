@@ -1,0 +1,31 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: rest-proxy
+  labels:
+    strimzi.io/cluster: {{ .Values.kafka.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: rest-proxy-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      {{- range $topic := .Values.kafka.topics }}
+      - resource:
+          type: topic
+          name: {{ $topic }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}

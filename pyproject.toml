@@ -1,3 +1,82 @@
+[project]
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/
+name = "phalanx"
+version = "1.0.0"
+description = "Python support code for the Rubin Phalanx platform."
+license = {file = "LICENSE"}
+readme= "README.rst"
+keywords = [
+    "rubin",
+    "lsst",
+]
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Operating System :: POSIX",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "PyYAML",
+    "GitPython",
+]
+
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "coverage[toml]",
+    "pytest",
+    "pre-commit",
+    "mypy",
+    "types-PyYAML",
+    # Documentation
+    "documenteer[guide]>=0.7.0b4",
+    "sphinx-diagrams",
+    "sphinx-jinja",
+]
+
+[project.scripts]
+expand-charts = "phalanx.testing.expandcharts:main"
+
+[project.urls]
+Homepage = "https://phalanx.lsst.io"
+Source = "https://github.com/lsst-sqre/phalanx"
+
+[build-system]
+requires = [
+    "setuptools>=61",
+    "wheel",
+    "setuptools_scm[toml]>=6.2"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.coverage.run]
+parallel = true
+branch = true
+source = ["phalanx"]
+
+[tool.coverage.paths]
+source = ["src", ".tox/*/site-packages"]
+
+[tool.coverage.report]
+show_missing = true
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:"
+]
+
 [tool.black]
 line-length = 79
 target-version = ['py38']

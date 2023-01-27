@@ -21,9 +21,6 @@ image:
   tag: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=read:image"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
 
@@ -78,7 +75,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.32.0"
+    tag: "1.33.2"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -142,15 +139,14 @@ databaseWorker:
   affinity: {}
 
 redis:
-  image:
-    # -- Redis image to use
-    repository: "redis"
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "vo-cutouts-secret"
 
-    # -- Redis image tag to use
-    tag: "7.0.4"
-
-    # -- Pull policy for the Redis image
-    pullPolicy: "IfNotPresent"
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
 
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
@@ -170,6 +166,12 @@ redis:
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
     # size, storageClass, and accessMode settings are ignored.
     volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

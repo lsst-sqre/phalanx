@@ -1,15 +1,18 @@
 # cadc-tap
 
-VO TAP service for the Rubin Science Platform
+IVOA TAP service
 
-**Homepage:** <https://github.com/lsst-sqre/lsst-tap-service>
+## Source Code
+
+* <https://github.com/lsst-sqre/lsst-tap-service>
+* <https://github.com/opencadc/tap>
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Gafaelfawr frontend pod |
-| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.1.4/datalink-snippets.zip"` | Datalink payload URL |
+| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"` | Datalink payload URL |
 | config.gafaelfawrHost | string | Value of `ingress.host` | Gafaelfawr hostname to get user information from a token |
 | config.gcsBucket | string | None, must be set | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | GCS | GCS bucket type (GCS or S3) |
@@ -25,7 +28,6 @@ VO TAP service for the Rubin Science Platform
 | image.tag | string | The appVersion of the chart | Tag of tap image to use |
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to use for endpoints that allow anonymous access, such as `/capabilities` and `/availability` |
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
-| ingress.gafaelfawrAuthQuery | string | `"scope=read:tap&auth_type=basic&delegate_to=tap"` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |

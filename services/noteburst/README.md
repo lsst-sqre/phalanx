@@ -8,12 +8,6 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 
 * <https://github.com/lsst-sqre/noteburst>
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| https://charts.bitnami.com/bitnami | redis | 17.1.4 |
-
 ## Values
 
 | Key | Type | Default | Description |
@@ -40,13 +34,19 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | image.tag | string | The appVersion of the chart | Tag of the image |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.enabled | bool | `true` | Enable ingress |
-| ingress.gafaelfawrAuthQuery | string | `"scope=exec:admin&auth_type=basic"` | Gafaelfawr auth query string |
 | ingress.path | string | `"/noteburst"` | Path prefix where noteburst is hosted |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
-| redis.auth.enabled | bool | `false` |  |
+| redis.affinity | object | `{}` | Affinity rules for the Redis pod |
+| redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
+| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redis.persistence.size | string | `"8Gi"` | Amount of persistent storage to request |
+| redis.persistence.storageClass | string | `""` | Class of storage to request |
+| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
+| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
+| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of API pods to run |
 | resources | object | `{}` |  |
 | service.port | int | `80` | Port of the service to create and map to the ingress |

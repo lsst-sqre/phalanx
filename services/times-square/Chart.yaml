@@ -3,7 +3,8 @@ name: times-square
 version: 1.0.0
 description: |
   An API service for managing and rendering parameterized Jupyter notebooks.
-home: https://github.com/lsst-sqre/times-square
+sources:
+  - https://github.com/lsst-sqre/times-square
 type: application
 
 # The default version tag of the times-square docker image
@@ -11,5 +12,14 @@ appVersion: "0.6.0"
 
 dependencies:
   - name: redis
-    version: 17.1.4
-    repository: https://charts.bitnami.com/bitnami
+    version: 0.1.4
+    repository: https://lsst-sqre.github.io/charts/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-062"
+      title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science platform"
+      url: "https://sqr-062.lsst.io/"
+    - id: "SQR-065"
+      title: "Design of Noteburst, a programatic JupyterLab notebook execution service for the Rubin Science Platform"
+      url: "https://sqr-065.lsst.io/"

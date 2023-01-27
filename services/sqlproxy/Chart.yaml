@@ -1,6 +1,0 @@
-apiVersion: v2
-name: sqlproxy
-description: gcp sql proxy as a service deployment
-type: application
-version: 0.1.0
-appVersion: "0.1.0"

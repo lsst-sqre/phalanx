@@ -1,45 +1,47 @@
-{{- if .Values.ingress.gafaelfawrAdminAuthQuery -}}
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
 metadata:
   name: {{ include "portal.fullname" . }}-admin
   labels:
     {{- include "portal.labels" . | nindent 4 }}
-  annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/affinity: "cookie"
-    nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
-    nginx.ingress.kubernetes.io/proxy-body-size: "0m"
-    nginx.ingress.kubernetes.io/proxy-buffer-size: "24k"
-    nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
-    nginx.ingress.kubernetes.io/rewrite-target: "/suit/admin$1$2"
-    nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
-    nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
-    nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
-    nginx.ingress.kubernetes.io/session-cookie-path: "/portal/app"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Original-URI $request_uri;
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-Port 443;
-      proxy_set_header X-Forwarded-Path /portal/app;
-    nginx.ingress.kubernetes.io/auth-method: "GET"
-    nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User,X-Auth-Request-Email"
-    nginx.ingress.kubernetes.io/auth-signin: "{{ .Values.global.baseUrl }}/login"
-    nginx.ingress.kubernetes.io/auth-url: "{{ .Values.global.baseUrl }}/auth?{{ .Values.ingress.gafaelfawrAdminAuthQuery }}"
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
-spec:
-  ingressClassName: "nginx"
-  rules:
-    - host: {{ required "global.host must be set" .Values.global.host | quote }}
-      http:
-        paths:
-          - path: "/portal/app/admin(/|$)(.*)"
-            pathType: "ImplementationSpecific"
-            backend:
-              service:
-                name: {{ include "portal.fullname" . }}
-                port:
-                  number: 8080
-{{- end }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:admin"
+  loginRedirect: true
+template:
+  metadata:
+    name: {{ include "portal.fullname" . }}-admin
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+      nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "24k"
+      nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
+      nginx.ingress.kubernetes.io/rewrite-target: "/suit$1"
+      nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
+      nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
+      nginx.ingress.kubernetes.io/session-cookie-path: "/portal/app"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /portal/app;
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/portal/app(/admin.*)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ include "portal.fullname" . }}
+                  port:
+                    number: 8080

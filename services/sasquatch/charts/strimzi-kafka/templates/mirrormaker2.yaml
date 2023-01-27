@@ -6,7 +6,7 @@ kind: KafkaMirrorMaker2
 metadata:
   name: replicator
 spec:
-  version: 3.2.0
+  version: {{ .Values.kafka.version | quote }}
   replicas: 1
   # In the unidirectional (active/passive) replication scenario
   # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
@@ -94,9 +94,9 @@ spec:
     topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}
   resources:
     requests:
-      cpu: "1"
-      memory: 512Mi
+      cpu: {{ .Values.mirrormaker2.resources.requests.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.requests.memory | quote }}
     limits:
-      cpu: "2"
-      memory: 4Gi
+      cpu: {{ .Values.mirrormaker2.resources.limits.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.limits.memory | quote }}
 {{ end }}

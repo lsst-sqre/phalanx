@@ -1,20 +1,52 @@
-## Ingress configuration
-## https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
+# Ingress configuration
+# https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
     config:
+      # -- Put the complete path in `X-Forwarded-For`, not just the last hop,
+      # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
-      large-client-header-buffers: "4 64k"
+
+      # -- Maximum size of the client request body (needs to be large enough
+      # to allow table uploads)
       proxy-body-size: "100m"
-      proxy-buffer-size: "64k"
+
+      # -- Redirect all non-SSL access to SSL.
       ssl-redirect: "true"
+
+      # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
+
+      # -- Add additional configuration used by Gafaelfawr to report errors
+      # from the authorization layer
+      # @default -- See `values.yaml`
+      server-snippet: |
+        location @autherror {
+          default_type application/json;
+          if ($auth_status = 400) {
+            add_header Cache-Control "no-cache, must-revalidate" always;
+            add_header WWW-Authenticate $auth_www_authenticate always;
+            return 400 $auth_error_body;
+          }
+          add_header Cache-Control "no-cache, must-revalidate" always;
+          add_header WWW-Authenticate $auth_www_authenticate always;
+          return 403;
+        }
+
     service:
+      # -- Force traffic routing policy to Local so that the external IP in
+      # `X-Forwarded-For` will be correct
       externalTrafficPolicy: Local
+
+    # -- Add labels used by `NetworkPolicy` objects to restrict access to the
+    # ingress and thus ensure that auth subrequest handlers run
+    # @default -- See `values.yaml`
     podLabels:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
+
     metrics:
+      # -- Enable metrics reporting via Prometheus
       enabled: true
 
 vaultCertificate:

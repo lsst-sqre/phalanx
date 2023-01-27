@@ -26,14 +26,6 @@
     error_footer: {{ .Values.config.errorFooter | quote }}
     {{- end }}
 
-    {{- if .Values.config.influxdb.enabled }}
-    influxdb:
-      secret_file: "/etc/gafaelfawr/secrets/influxdb-secret"
-      {{- if .Values.config.issuer.influxdb.username }}
-      username: {{ .Values.config.issuer.influxdb.username | quote }}
-      {{- end }}
-    {{- end }}
-
     {{- if .Values.config.github.clientId }}
 
     github:
@@ -63,11 +55,7 @@
         {{ $key }}: {{ $value | quote }}
         {{- end }}
       {{- end }}
-      {{- if .Values.config.cilogon.redirectUrl }}
-      redirect_url: {{ .Values.config.cilogon.redirectUrl | quote }}
-      {{- else }}
       redirect_url: "{{ .Values.global.baseUrl }}/login"
-      {{- end }}
       scopes:
         - "email"
         - "org.cilogon.userinfo"
@@ -101,11 +89,7 @@
       enrollment_url: {{ .Values.config.oidc.enrollmentUrl | quote }}
       {{- end }}
       issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
-      {{- if .Values.config.oidc.redirectUrl }}
-      redirect_url: {{ .Values.config.oidc.redirectUrl | quote }}
-      {{- else }}
       redirect_url: "{{ .Values.global.baseUrl }}/login"
-      {{- end }}
       scopes:
         {{- with .Values.config.oidc.scopes }}
         {{- toYaml . | nindent 8 }}
@@ -175,13 +159,10 @@
       {{ $key | quote }}: {{ $value | quote }}
       {{- end }}
 
+    {{- with .Values.config.groupMapping }}
     group_mapping:
-      {{- range $key, $value := .Values.config.groupMapping }}
-      {{ $key | quote }}:
-        {{- range $group := $value }}
-        - {{ $group | quote }}
-        {{- end }}
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
 
     {{- if .Values.config.initialAdmins }}
     initial_admins:

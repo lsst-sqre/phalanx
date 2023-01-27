@@ -1,0 +1,52 @@
+{{ range $idx, $user := $.Values.users }}
+---
+apiVersion: kafka.strimzi.io/{{ $.Values.strimziAPIVersion }}
+kind: KafkaUser
+metadata:
+  name: {{ $user.username }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: {{ template "alertStreamBroker.fullname" $ }}-secrets
+          key: {{ $user.username }}-password
+  authorization:
+    type: simple
+    acls:
+      {{- range $idx, $topic := $user.readonlyTopics }}
+      - resource:
+          type: topic
+          name: {{ $topic | quote }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      - resource:
+          type: topic
+          name: {{ $topic | quote }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Describe
+      - resource:
+          type: topic
+          name: {{ $topic | quote }}
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: DescribeConfigs
+      {{- end }}
+      {{- range $idx, $group := $user.groups }}
+      - resource:
+          type: group
+          name: {{ $group | quote }}
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+{{- end }}

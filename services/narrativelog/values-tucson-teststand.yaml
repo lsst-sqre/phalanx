@@ -1,2 +1,4 @@
 config:
   site_id: tucson
+db:
+  host: squoint.tu.lsst.org

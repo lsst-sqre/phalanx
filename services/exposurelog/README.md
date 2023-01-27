@@ -1,6 +1,10 @@
 # exposurelog
 
-Exposure log service
+Log messages related to an exposure
+
+## Source Code
+
+* <https://github.com/lsst-sqre/exposurelog>
 
 ## Values
 
@@ -21,6 +25,10 @@ Exposure log service
 | config.nfs_server_1 | string | `""` | Name of the NFS server that exports nfs_path_1 Specify a non-blank value if and only if the corresponding nfs_path_1 is not blank. |
 | config.nfs_server_2 | string | `""` | Name of the NFS server that exports nfs_path_2 Specify a non-blank value if and only if the corresponding nfs_path_1 is not blank. |
 | config.site_id | string | `""` | Site ID; a non-empty string of up to 16 characters. This should be different for each non-sandbox deployment. Sandboxes should use `test`. |
+| db.database | string | `"exposurelog"` | database name |
+| db.host | string | `"postgres.postgres"` | database host |
+| db.port | int | `5432` | database port |
+| db.user | string | `"exposurelog"` | database user |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

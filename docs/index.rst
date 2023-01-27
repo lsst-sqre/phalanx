@@ -1,98 +1,58 @@
-###########################
-Science Platform operations
-###########################
+################################################################
+Phalanx: Rubin Observatory Kubernetes Application Configurations
+################################################################
 
-The Rubin Science Platform is described in `LDM-542 <https://ldm-542.lsst.io/>`__.
-This document contains operational notes of interest to administrators of the Science Platform and maintainers of services deployed via the Science Platform, but not of interest to users.
+Phalanx [#name]_ is a GitOps repository for Rubin Observatory's Kubernetes environments, notably including Rubin Science Platform deployments like https://data.lsst.cloud.
+Using Helm_ and `Argo CD`_, Phalanx defines the configurations of applications in each environment.
 
-For user documentation of the Notebook Aspect of the Rubin Science Platform, see `nb.lsst.io <https://nb.lsst.io/>`__.
+This documentation is for Rubin team members that are developing applications and administering Kubernetes clusters.
+Astronomers and other end-users can visit the `Rubin Documentation Portal <https://www.lsst.io>`__ to learn how to use Rubin Observatory's software, services, and datasets.
 
-The Science Platform uses `Argo CD`_ to manage its Kubernetes resources.
-The Argo CD configuration and this documentation are maintained on `GitHub <https://github.com/lsst-sqre/phalanx>`__.
+Phalanx is on GitHub at https://github.com/lsst-sqre/phalanx.
 
-A phalanx is a SQuaRE deployment (Science Quality and Reliability Engineering, the team responsible for the Rubin Science Platform).
-Phalanx is how we ensure that all of our services work together as a unit.
-
-Overview
-========
+.. [#name] A phalanx is a SQuaRE deployment (Science Quality and Reliability Engineering, the team responsible for the Rubin Science Platform).
+   Phalanx is how we ensure that all of our applications work together as a unit.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :hidden:
 
-   introduction
-   arch/repository
-   arch/secrets
+   about/index
+   developers/index
+   admin/index
+   applications/index
+   environments/index
 
-For service maintainers
-=======================
+.. grid:: 3
 
-General development and operations
-----------------------------------
+   .. grid-item-card:: About
+      :link: about/index
+      :link-type: doc
 
-.. toctree::
-   :maxdepth: 2
+      Learn about Phalanx's design and how to contribute.
 
-   service-guide/linting-and-helm-docs
-   service-guide/create-service
-   service-guide/add-a-onepassword-secret
-   service-guide/update-a-onepassword-secret
-   service-guide/update-pull-secret
-   service-guide/add-service
-   service-guide/add-external-chart
-   service-guide/local-development
-   service-guide/sync-argo-cd
-   service-guide/upgrade
+   .. grid-item-card:: Developers
+      :link: developers/index
+      :link-type: doc
 
-Specific tasks
---------------
+      Learn how to develop applications that are deployed with Phalanx.
 
-.. toctree::
-   :maxdepth: 2
+   .. grid-item-card:: Administrators
+      :link: admin/index
+      :link-type: doc
 
-   service-guide/update-tap-schema
-   service-guide/mobu-manage-flocks
+      Learn how install and operate Phalanx applications, such as the Rubin Science Platform, in your data access center.
 
-For science platform administrators
-===================================
+.. grid:: 2
 
-Services
---------
+   .. grid-item-card:: Applications
+      :link: applications/index
+      :link-type: doc
 
-.. toctree::
-   :maxdepth: 2
+      Learn about the individual applications that are configured to deploy with Phalanx.
 
-   ops/argo-cd/index
-   ops/cachemachine/index
-   ops/cert-manager/index
-   ops/gafaelfawr/index
-   ops/ingress-nginx/index
-   ops/mobu/index
-   ops/nublado2/index
-   ops/postgres/index
-   ops/squash-api/index
-   ops/tap/index
-   ops/vault-secrets-operator/index
+   .. grid-item-card:: Environments
+      :link: environments/index
+      :link-type: doc
 
-Bootstrapping
--------------
-
-.. toctree::
-   :maxdepth: 3
-
-   ops/bootstrapping
-
-Infrastructure
---------------
-
-.. toctree::
-  :maxdepth: 2
-
-  ops/infrastructure/filestore/index
-
-Troubleshooting
----------------
-
-.. toctree::
-   :maxdepth: 2
-
-   ops/troubleshooting
+      Learn about the Kubernetes clusters that are running Phalanx.

@@ -7,7 +7,7 @@ jupyterhub:
     authenticatePrometheus: false
     image:
       name: lsstsqre/nublado2
-      tag: "2.5.0"
+      tag: "2.6.1"
     resources:
       limits:
         cpu: 900m
@@ -104,14 +104,6 @@ jupyterhub:
           configMap:
             defaultMode: 420
             name: group
-        - name: shadow
-          configMap:
-            defaultMode: 384
-            name: shadow
-        - name: gshadow
-          configMap:
-            defaultMode: 384
-            name: gshadow
       extraVolumeMounts:
         - name: dask
           mountPath: /etc/dask
@@ -131,14 +123,6 @@ jupyterhub:
           mountPath: /etc/group
           readOnly: true
           subPath: group
-        - name: shadow
-          mountPath: /etc/shadow
-          readOnly: true
-          subPath: shadow
-        - name: gshadow
-          mountPath: /etc/gshadow
-          readOnly: true
-          subPath: gshadow
       type: none
 
   proxy:
@@ -159,12 +143,18 @@ jupyterhub:
   # appropriate fully-qualified URLs for the Gafaelfawr /login route.
   ingress:
     enabled: true
+
+    # -- Extra annotations to add to the ingress
+    # @default -- See `values.yaml`
     annotations:
-      nginx.ingress.kubernetes.io/auth-method: GET
-      nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-Token"
-      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/auth-method: "GET"
+      nginx.ingress.kubernetes.io/auth-response-headers: "Authorization,Cookie,X-Auth-Request-Email,X-Auth-Request-User,X-Auth-Request-Token"
+      nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:notebook&notebook=true&minimum_lifetime=2160000"
       nginx.ingress.kubernetes.io/configuration-snippet: |
-        error_page 403 = "/auth/forbidden?scope=exec:notebook";
+        auth_request_set $auth_www_authenticate $upstream_http_www_authenticate;
+        auth_request_set $auth_status $upstream_http_x_error_status;
+        auth_request_set $auth_error_body $upstream_http_x_error_body;
+        error_page 403 = @autherror;
     ingressClassName: "nginx"
     pathSuffix: "*"
 
@@ -302,50 +292,6 @@ config:
     - apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: gshadow
-        namespace: "{{ user_namespace }}"
-      data:
-        gshadow: |
-          root:!::
-          bin:!::
-          daemon:!::
-          sys:!::
-          adm:!::
-          tty:!::
-          disk:!::
-          lp:!::
-          mem:!::
-          kmem:!::
-          wheel:!::
-          cdrom:!::
-          mail:!::
-          man:!::
-          dialout:!::
-          floppy:!::
-          games:!::
-          tape:!::
-          video:!::
-          ftp:!::
-          lock:!::
-          audio:!::
-          nobody:!::
-          users:!::
-          utmp:!::
-          utempter:!::
-          input:!::
-          systemd-journal:!::
-          systemd-network:!::
-          dbus:!::
-          ssh_keys:!::
-          lsst_lcl:!::{{ user }}
-          tss:!::
-          cgred:!::
-          screen:!::
-          jovyan:!::{{ user }}{% for g in groups %}
-          {{ g.name }}:!::{{ user if g.id != gid else "" }}{% endfor %}
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
         name: passwd
         namespace: "{{ user_namespace }}"
       data:
@@ -368,31 +314,6 @@ config:
           lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
           {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user }}:/bin/bash
-    - apiVersion: v1
-      kind: ConfigMap
-      metadata:
-        name: shadow
-        namespace: "{{ user_namespace }}"
-      data:
-        shadow: |
-          root:*:18000:0:99999:7:::
-          bin:*:18000:0:99999:7:::
-          daemon:*:18000:0:99999:7:::
-          adm:*:18000:0:99999:7:::
-          lp:*:18000:0:99999:7:::
-          sync:*:18000:0:99999:7:::
-          shutdown:*:18000:0:99999:7:::
-          halt:*:18000:0:99999:7:::
-          mail:*:18000:0:99999:7:::
-          operator:*:18000:0:99999:7:::
-          games:*:18000:0:99999:7:::
-          ftp:*:18000:0:99999:7:::
-          nobody:*:18000:0:99999:7:::
-          systemd-network:*:18000:0:99999:7:::
-          dbus:*:18000:0:99999:7:::
-          lsst_lcl:*:18000:0:99999:7:::
-          tss:*:18000:0:99999:7:::
-          {{user}}:*:18000:0:99999:7:::
     - apiVersion: v1
       kind: ConfigMap
       metadata:
@@ -480,14 +401,10 @@ config:
         path: "{{ pull_secret_path }}"
         type: kubernetes.io/dockerconfigjson
 
-# Note: See note above about existingSecret.
-vault_secret_path: ""
-
 # Built-in network policy doesn't quite work (Labs can't talk to Hub,
 # even with port 8081 explicitly enabled), so let's use our own for now.
 network_policy:
   enabled: true
-
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

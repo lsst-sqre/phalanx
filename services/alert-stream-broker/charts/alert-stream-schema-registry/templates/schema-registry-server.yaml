@@ -1,0 +1,7 @@
+apiVersion: roundtable.lsst.codes/v1beta1
+kind: StrimziSchemaRegistry
+metadata:
+  name: {{ .Values.name }}
+spec:
+  strimzi-version: {{ .Values.strimziAPIVersion }}
+  listener: internal

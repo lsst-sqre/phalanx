@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sqlproxy.fullname" . }}
+  labels:
+    {{- include "sqlproxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sqlproxy.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "cloud-sql-proxy"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "sqlproxy.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "cloud-sql-proxy"
+    spec:
+      serviceAccountName: {{ include "sqlproxy.fullname" . }}
+      containers:
+        - name: cloud-sql-proxy
+          command:
+            - "/cloud_sql_proxy"
+            - "-log_debug_stdout"
+            - "-structured_logs"
+            - "-ip_address_types={{ required "config.ipAddressType must be specified" .Values.config.ipAddressType}}"
+            - "-instances={{ required "config.instanceConnectionName must be specified" .Values.config.instanceConnectionName }}=tcp:0.0.0.0:5432"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - containerPort: 5432
+              protocol: "TCP"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

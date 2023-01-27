@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-sync-schema"
+  labels:
+    app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+    app.kubernetes.io/instance: {{ .Release.Name | quote }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion }}
+    helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+  annotations:
+    argocd.argoproj.io/hook: Sync
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+        app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
+        app.kubernetes.io/instance: {{ .Release.Name | quote }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: sync-schema-job
+        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
+        command:
+          - "syncLatestSchemaToRegistry.py"
+          - "--schema-registry-url=http://{{ .Values.name }}:{{ .Values.port }}"
+          - "--subject={{ .Values.schemaSync.subject }}"

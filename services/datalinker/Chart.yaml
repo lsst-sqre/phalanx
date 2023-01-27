@@ -1,7 +1,12 @@
 apiVersion: v2
 name: datalinker
 version: 1.0.0
-description: Service and data discovery for Rubin Science Platform
+description: IVOA DataLink-based service and data discovery
 sources:
   - https://github.com/lsst-sqre/datalinker
-appVersion: 1.5.0
+appVersion: 1.5.2
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-238"
+      title: "RSP DataLink service implementation strategy"
+      url: "https://dmtn-238.lsst.io/"

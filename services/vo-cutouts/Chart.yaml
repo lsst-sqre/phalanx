@@ -4,4 +4,15 @@ version: 1.0.0
 description: "Image cutout service complying with IVOA SODA"
 sources:
   - "https://github.com/lsst-sqre/vo-cutouts"
-appVersion: 0.4.2
+appVersion: 1.0.0
+
+dependencies:
+  - name: redis
+    version: 1.0.0
+    repository: https://lsst-sqre.github.io/charts/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-208"
+      title: "RSP image cutout service implementation strategy"
+      url: "https://dmtn-208.lsst.io/"
