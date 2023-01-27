@@ -276,9 +276,9 @@ controller:
     #   env: PGPASSFILE
   images:
     # -- config from sqr-066
-    registry: lighthouse.ceres
+    registry: docker.io
     docker:
-      repository: library/sketchbook
+      repository: lsstsqre/sciplat-lab
     recommendedTag: recommended
     numReleases: 1
     numWeeklies: 2
@@ -405,12 +405,12 @@ jupyterhub:
     chp:
       networkPolicy:
         interNamespaceAccessLabels: accept
-      # This currently causes Minikube deployment in GH-actions to fail.
-      # We want it sometime but it's not critical; it will help with
-      # scale-down
-      # pdb:
-      #   enabled: true
-      #   minAvailable: 1
+        # This currently causes Minikube deployment in GH-actions to fail.
+        # We want it sometime but it's not critical; it will help with
+        # scale-down
+        # pdb:
+        #   enabled: true
+        #   minAvailable: 1
 
   # Rather than using the JupyterHub-provided ingress, which requires us
   # to repeat the global host name, we just use a GafaelfawrIngress of

@@ -16,10 +16,6 @@ controller:
       serverPath: /share1/scratch
       server: 10.87.86.26
       mode: rw
-    env:
-      HUB_ROUTE: /squoint/hub
-      JUPYTERHUB_BASE_URL: /squoint/
-      JUPYTERHUB_API_URL: http://hub.nublado:8081/squoint/hub/api
 
   images:
     # -- config from sqr-066
@@ -39,5 +35,3 @@ jupyterhub:
     image:
       tag: "ajt-dev"
       pullPolicy: "Always"
-    baseUrl: "/squoint"
-
