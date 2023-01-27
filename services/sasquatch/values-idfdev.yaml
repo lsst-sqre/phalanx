@@ -48,6 +48,10 @@ rest-proxy:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
+  kafka:
+    topics:
+      - lsst.dm.sky-flux-visit-statistic-metric
+      - test.next-visit
 
 chronograf:
   ingress:
