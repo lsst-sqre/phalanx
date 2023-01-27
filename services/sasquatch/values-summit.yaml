@@ -46,7 +46,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
         topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
@@ -58,7 +58,7 @@ kafka-connect-manager:
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        topicsRegex: ".*GenericCamera|.*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
         topicsRegex: ".*OCPS"
@@ -74,6 +74,9 @@ kafka-connect-manager:
       mtaircompressor:
         enabled: true
         topicsRegex: ".*MTAirCompressor"
+      genericcamera:
+        enabled: true
+        topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
   ingress:
@@ -92,7 +95,7 @@ chronograf:
     GENERIC_TOKEN_URL: https://summit-lsp.lsst.codes/auth/openid/token
     USE_ID_TOKEN: 1
     JWKS_URL: https://summit-lsp.lsst.codes/.well-known/jwks.json
-    GENERIC_API_URL: https://summit-lsp.lsst.codes/auth/userinfo
+    GENERIC_API_URL: https://summit-lsp.lsst.codes/auth/openid/userinfo
     GENERIC_SCOPES: openid
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://summit-lsp.lsst.codes

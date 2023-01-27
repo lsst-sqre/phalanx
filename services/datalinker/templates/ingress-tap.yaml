@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "datalinker.fullname" . }}-tap
+  labels:
+    {{- include "datalinker.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:tap"
+template:
+  metadata:
+    name: {{ include "datalinker.fullname" . }}-tap
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/api/datalink"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ include "datalinker.fullname" . }}
+                  port:
+                    number: 8080

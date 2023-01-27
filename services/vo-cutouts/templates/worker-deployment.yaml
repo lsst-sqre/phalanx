@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "vo-cutouts.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "worker"
+        vo-cutouts-redis-client: "true"
     spec:
       automountServiceAccountToken: false
 

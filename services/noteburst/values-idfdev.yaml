@@ -13,3 +13,8 @@ config:
       - username: "bot-noteburst90003"
       - username: "bot-noteburst90004"
       - username: "bot-noteburst90005"
+
+# Use SSD for Redis storage.
+redis:
+  persistence:
+    storageClass: "premium-rwo"

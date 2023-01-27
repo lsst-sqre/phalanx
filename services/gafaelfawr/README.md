@@ -1,6 +1,6 @@
 # gafaelfawr
 
-Science Platform authentication and authorization system
+Authentication and identity system
 
 **Homepage:** <https://gafaelfawr.lsst.io/>
 
@@ -17,7 +17,7 @@ Science Platform authentication and authorization system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.32.0"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.33.2"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
@@ -29,7 +29,6 @@ Science Platform authentication and authorization system
 | config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.groupsClaim | string | `"isMemberOf"` | Claim from which to get the group membership (only used if not retrieved from LDAP) |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
-| config.cilogon.redirectUrl | string | `/login` at the value of config.host | Return URL given to CILogon (must match the CILogon configuration) |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.cilogon.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
@@ -38,8 +37,6 @@ Science Platform authentication and authorization system
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project.  Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. See [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes. |
-| config.influxdb.enabled | bool | `false` | Whether to issue tokens for InfluxDB. If set to true, `influxdb-secret` must be set in the Gafaelfawr secret. |
-| config.influxdb.username | string | `""` | If set, force all InfluxDB tokens to have that username instead of the authenticated identity of the user requesting a token |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
 | config.knownScopes | object | See the `values.yaml` file | Names and descriptions of all scopes in use. This is used to populate the new token creation page. Only scopes listed here will be options when creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/). |
 | config.ldap.addUserGroup | bool | `false` | Whether to synthesize a user private group for each user with a GID equal to their UID |
@@ -87,11 +84,16 @@ Science Platform authentication and authorization system
 | maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
+| operator.affinity | object | `{}` | Affinity rules for the token management pod |
+| operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
+| operator.podAnnotations | object | `{}` | Annotations for the token management pod |
+| operator.resources | object | `{}` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
+| operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Redis image |
 | redis.image.repository | string | `"redis"` | Redis image to use |
-| redis.image.tag | string | `"7.0.4"` | Redis image tag to use |
+| redis.image.tag | string | `"7.0.8"` | Redis image tag to use |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
@@ -102,9 +104,4 @@ Science Platform authentication and authorization system
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
-| tokens.affinity | object | `{}` | Affinity rules for the token management pod |
-| tokens.nodeSelector | object | `{}` | Node selection rules for the token management pod |
-| tokens.podAnnotations | object | `{}` | Annotations for the token management pod |
-| tokens.resources | object | `{}` | Resource limits and requests for the Gafaelfawr token management pod |
-| tokens.tolerations | list | `[]` | Tolerations for the token management pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |

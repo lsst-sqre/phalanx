@@ -3,6 +3,8 @@ jupyterhub:
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
+    db:
+      upgrade: true
 
   cull:
     enabled: true
@@ -57,9 +59,3 @@ config:
       mountPath: /project
     - name: scratch
       mountPath: /scratch
-
-vault_secret_path: "secret/k8s_operator/data-dev.lsst.cloud/nublado2"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/data-dev.lsst.cloud/pull-secret"

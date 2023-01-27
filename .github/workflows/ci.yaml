@@ -12,8 +12,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Set up go
+        uses: actions/setup-go@v3
+
       - name: Install helm-docs
-        run: brew install norwoodj/tap/helm-docs
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@latest
+        env:
+          GOBIN: /usr/local/bin/
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -38,13 +43,13 @@ jobs:
           python-version: 3.9
 
       - name: Install test dependencies
-        run: pip install -r tests/requirements.txt
+        run: pip install .
 
       - name: Expand modified charts
-        run: tests/expand-services
+        run: expand-charts
 
       - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.3.0
+        uses: helm/chart-testing-action@v2.3.1
 
       - name: Run chart-testing (lint)
         run: ct lint --all --config ct.yaml
@@ -76,14 +81,15 @@ jobs:
               - "science-platform/values-minikube.yaml"
               - "services/*/Chart.yaml"
               - "services/*/templates/**"
+              - "services/*/values.yaml"
               - "services/*/values-minikube.yaml"
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: manusa/actions-setup-minikube@v2.7.0
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
-          minikube version: 'v1.25.2'
-          kubernetes version: 'v1.22.8'
+          minikube version: 'v1.28.0'
+          kubernetes version: 'v1.25.2'
 
       - name: Test interaction with the cluster
         if: steps.filter.outputs.minikube == 'true'
@@ -92,11 +98,11 @@ jobs:
       - name: Download installer dependencies
         if: steps.filter.outputs.minikube == 'true'
         run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.9.4/vault_1.9.4_linux_amd64.zip
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.12.1/vault_1.12.1_linux_amd64.zip
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.3.3/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.5.1/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
           sudo pip install -r installer/requirements.txt

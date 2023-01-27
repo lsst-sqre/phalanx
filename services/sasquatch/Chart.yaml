@@ -3,6 +3,7 @@ name: sasquatch
 version: 1.0.0
 description: Rubin Observatory's telemetry service.
 appVersion: 0.1.0
+
 dependencies:
   - name: strimzi-kafka
     version: 1.0.0
@@ -11,6 +12,10 @@ dependencies:
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
     version: 4.12.0
+    repository: https://helm.influxdata.com/
+  - name: influxdb2
+    condition: influxdb2.enabled
+    version: 2.1.1
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
     version: 1.0.0
@@ -22,3 +27,16 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: kafdrop
     version: 1.0.0
+  - name: telegraf-kafka-consumer
+    condition: influxdb2.enabled
+    version: 1.0.0
+  - name: rest-proxy
+    condition: rest-proxy.enabled
+    version: 1.0.0
+
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-068"
+      title: "Sasquatch: beyond the EFD"
+      url: "https://sqr-068.lsst.io/"

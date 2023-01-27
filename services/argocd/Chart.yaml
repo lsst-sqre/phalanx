@@ -1,7 +1,12 @@
 apiVersion: v2
 name: argo-cd
 version: 1.0.0
+description: Kubernetes application manager
+home: https://argoproj.github.io/cd/
+sources:
+  - https://github.com/argoproj/argo-cd
+  - https://github.com/argoproj/argo-helm
 dependencies:
-- name: argo-cd
-  version: 4.10.9
-  repository: https://argoproj.github.io/argo-helm
+  - name: argo-cd
+    version: 5.16.14
+    repository: https://argoproj.github.io/argo-helm

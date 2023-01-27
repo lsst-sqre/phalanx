@@ -1,6 +1,6 @@
 # datalinker
 
-Service and data discovery for Rubin Science Platform
+IVOA DataLink-based service and data discovery
 
 ## Source Code
 
@@ -24,8 +24,7 @@ Service and data discovery for Rubin Science Platform
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the datalinker image |
 | image.repository | string | `"ghcr.io/lsst-sqre/datalinker"` | Image to use in the datalinker deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
+| ingress.annotations | object | `{}` | Additional annotations for the ingresses |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the datalinker deployment pod |
 | podAnnotations | object | `{}` | Annotations for the datalinker deployment pod |

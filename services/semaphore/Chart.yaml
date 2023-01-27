@@ -9,3 +9,8 @@ sources:
 maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-060"
+      title: "Design of the Semaphore user broadcast message system for the Rubin Science Platform"
+      url: "https://sqr-060.lsst.io/"

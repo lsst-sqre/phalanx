@@ -1,10 +1,13 @@
 # argo-cd
 
-## Requirements
+Kubernetes application manager
 
-| Repository | Name | Version |
-|------------|------|---------|
-| https://argoproj.github.io/argo-helm | argo-cd | 4.10.9 |
+**Homepage:** <https://argoproj.github.io/cd/>
+
+## Source Code
+
+* <https://github.com/argoproj/argo-cd>
+* <https://github.com/argoproj/argo-helm>
 
 ## Values
 

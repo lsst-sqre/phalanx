@@ -1,0 +1,45 @@
+.. list-table::
+
+   * - Phalanx name
+     - ``{{ env.name }}``
+   * - Root domain
+     - `{{ env.domain }} <https://{{ env.domain }}>`__
+   * - Argo CD
+     - {{ env.argocd_url }}
+   * - Applications
+     - .. list-table::
+
+          * - Documentation
+            - Environment values
+            - Defaults
+          {% for app in env.apps %}
+          * - :px-app:`{{ app.name }}`
+            - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env.name }}.yaml>`__
+            - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values.yaml>`__
+          {% endfor %}
+   * - Identity provider
+     - {{ env.identity_provider }}
+   {% if env.gafaelfawr_roles %}
+   * - Gafaelfawr groups
+     - .. list-table::
+
+          * - Role
+            - Groups
+          {% for role_groups in env.gafaelfawr_roles %}
+          * - ``{{ role_groups[0] }}``
+            - - {{ role_groups[1][0] }}
+            {% if role_groups[1]|length > 1 %}
+            {% for group in role_groups[1][1:] %}
+              - {{ group }}
+            {%- endfor %}
+            {%- endif %}
+          {%- endfor %}
+   {% endif %}
+   {% if env.argocd_rbac_csv %}
+   * - Argo CD RBAC
+     - .. csv-table::
+
+          {% for csvline in env.argocd_rbac_csv %}
+          {{ csvline }}
+          {%- endfor %}
+   {% endif %}

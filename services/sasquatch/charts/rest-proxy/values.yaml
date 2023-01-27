@@ -1,0 +1,75 @@
+# Default values for kafka REST proxy
+
+# -- Number of Kafka REST proxy pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Kafka REST proxy image repository.
+  repository: confluentinc/cp-kafka-rest
+  # -- Image pull policy.
+  pullPolicy: IfNotPresent
+  # -- Kafka REST proxy image tag.
+  tag: 6.2.8
+
+service:
+  # -- Kafka REST proxy service port
+  port: 8082
+
+ingress:
+  # -- Enable Ingress. This should be true to create an ingress rule for the application.
+  enabled: false
+  # -- Ingress annotations.
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  # -- Ingress hostname.
+  hostname: ""
+  # -- Ingress path.
+  path: /sasquatch-rest-proxy(/|$)(.*)
+
+# -- Kafka REST proxy JVM Heap Option
+heapOptions: "-Xms512M -Xmx512M"
+
+# -- Kafka REST configuration options
+configurationOverrides:
+  "client.security.protocol": SASL_PLAINTEXT
+  "client.sasl.mechanism": SCRAM-SHA-512
+
+# -- Kafka REST additional env variables
+customEnv:
+
+schemaregistry:
+  # -- Schema registry URL
+  url: "http://sasquatch-schema-registry.sasquatch:8081"
+
+kafka:
+  cluster:
+    # -- Name of the Strimzi Kafka cluster.
+    name: sasquatch
+  # -- Kafka bootstrap servers, use the internal listerner on port 9092 wit SASL connection.
+  bootstrapServers: "SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- List of Kafka topics to create and expose through the REST proxy API
+  topics:
+
+resources:
+  requests:
+    # -- Kafka REST proxy memory requests
+    memory: 200Mi
+    # -- Kafka REST proxy cpu requests
+    cpu: 1
+  limits:
+    # -- Kafka REST proxy memory limits
+    memory: 4Gi
+    # -- Kafka REST proxy cpu limits
+    cpu: 2
+
+# -- Node selector configuration.
+nodeSelector: {}
+
+# -- Tolerations configuration.
+tolerations: []
+
+# -- Affinity configuration.
+affinity: {}
+
+# -- Pod annotations.
+podAnnotations: {}

@@ -1,5 +1,5 @@
 bcrypt
 cryptography
+onepasswordconnectsdk
 pyyaml
 yq
-1password

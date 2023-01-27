@@ -14,33 +14,87 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-data-management"
-      - "lsst-ops"
-      - "rubin-dp0-delegates"
-      - "rubin-dp0-friends"
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "rubin-dp0"
+          team: "delegates"
+      - github:
+          organization: "rubin-dp0"
+          team: "friends"
     "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-data-management"
-      - "lsst-ops"
-      - "rubin-dp0-delegates"
-      - "rubin-dp0-friends"
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "rubin-dp0"
+          team: "delegates"
+      - github:
+          organization: "rubin-dp0"
+          team: "friends"
     "read:image":
-      - "lsst-sqre-square"
-      - "lsst-data-management"
-      - "lsst-ops"
-      - "rubin-dp0-delegates"
-      - "rubin-dp0-friends"
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "rubin-dp0"
+          team: "delegates"
+      - github:
+          organization: "rubin-dp0"
+          team: "friends"
     "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-data-management"
-      - "lsst-ops"
-      - "rubin-dp0-delegates"
-      - "rubin-dp0-friends"
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "rubin-dp0"
+          team: "delegates"
+      - github:
+          organization: "rubin-dp0"
+          team: "friends"
 
   initialAdmins:
     - "afausti"

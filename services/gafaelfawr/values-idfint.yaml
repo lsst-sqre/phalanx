@@ -6,8 +6,24 @@ redis:
 config:
   slackAlerts: true
 
-  github:
-    clientId: "0c4cc7eaffc0f89b9ace"
+  cilogon:
+    clientId: "cilogon:/client_id/6b3f86ecfe74f14afa81b73a76be0868"
+    enrollmentUrl: "https://id-int.lsst.cloud/registry/co_petitions/start/coef:10"
+    test: true
+    usernameClaim: "username"
+
+  firestore:
+    project: "rsp-firestore-int-7bfb"
+
+  ldap:
+    url: "ldaps://ldap-test.cilogon.org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    groupObjectClass: "eduMember"
+    groupMemberAttr: "hasMember"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userSearchAttr: "voPersonApplicationUID"
+    addUserGroup: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
@@ -16,47 +32,31 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - "g_admins"
     "exec:admin":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
     "exec:notebook":
-      - "lsst-ops-panda"
-      - "lsst-ops"
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_users"
     "exec:portal":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - "g_users"
     "read:alertdb":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
+      - "g_admins"
+      - "g_developers"
     "read:image":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - "g_users"
     "read:tap":
-      - "lsst-ops-panda"
-      - "lsst-sqre-square"
-      - "lsst-ops"
-      - "lsst-sqre-friends"
+      - "g_users"
 
   initialAdmins:
+    - "adam"
     - "afausti"
-    - "athornton"
     - "cbanek"
     - "frossie"
-    - "jonathansick"
+    - "jsick"
     - "rra"
     - "simonkrughoff"
-
-  errorFooter: |
-    To report problems or ask for help, please open an issue in the
-    <a href="https://github.com/rubin-dp0/Support/issues">GitHub
-    rubin-dp0/Support project</a>.
 
 cloudsql:
   enabled: true

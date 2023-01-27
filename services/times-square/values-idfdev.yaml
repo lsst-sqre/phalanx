@@ -5,9 +5,10 @@ config:
   databaseUrl: "postgresql://times-square@localhost/times-square"
   githubAppId: "196798"
   enableGitHubApp: "True"
-  redisCacheUrl: "redis://times-square-redis-master:6379/0"
-  redisQueueUrl: "redis://times-square-redis-master:6379/1"
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
   serviceAccount: "times-square@science-platform-dev-7696.iam.gserviceaccount.com"
+redis:
+  persistence:
+    storageClass: "premium-rwo"

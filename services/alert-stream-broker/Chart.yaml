@@ -1,10 +1,13 @@
 apiVersion: v2
 name: alert-stream-broker
 version: "3"
+description: Alert transmission to community brokers
+sources:
+  - https://github.com/lsst-dm/alert_database_ingester
+  - https://github.com/lsst-dm/alert-stream-simulator
 dependencies:
   - name: alert-stream-broker
     version: 2.5.1
-    repository: https://lsst-sqre.github.io/charts/
 
   # The schema registry is bundled together in the same application as the
   # Kafka broker because Strimzi Registry Operator expects everything (the
@@ -12,7 +15,6 @@ dependencies:
   # resource) to be in the same namespace.
   - name: alert-stream-schema-registry
     version: 2.1.0
-    repository: https://lsst-sqre.github.io/charts/
 
   # alert-stream-simulator is bundled together with the broker too for a
   # similar reason: the Strimzi EntityOperator can only watch a single
@@ -21,8 +23,22 @@ dependencies:
   # connect.
   - name: alert-stream-simulator
     version: 1.6.2
-    repository: https://lsst-sqre.github.io/charts/
 
   - name: alert-database
     version: 2.1.0
+
+  - name: strimzi-registry-operator
+    version: 2.1.0
     repository: https://lsst-sqre.github.io/charts/
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-093"
+      title: "Design of the LSST Alert Distribution System"
+      url: "https://dmtn-093.lsst.io/"
+    - id: "DMTN-210"
+      title: "Implementation of the LSST Alert Distribution System"
+      url: "https://dmtn-210.lsst.io/"
+    - id: "DMTN-214"
+      title: "Alert Distribution System Operator's Manual"
+      url: "https://dmtn-214.lsst.io/"

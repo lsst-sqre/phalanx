@@ -28,9 +28,6 @@ image:
   tag: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:admin"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
 

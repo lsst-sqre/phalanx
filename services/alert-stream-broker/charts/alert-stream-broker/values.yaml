@@ -1,0 +1,135 @@
+# -- Version of the Strimzi Custom Resource API. The correct value depends on
+# the deployed version of Strimzi. See [this blog
+# post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more.
+strimziAPIVersion: v1beta2
+
+cluster:
+  # -- Name used for the Kafka broker, and used by Strimzi for many annotations.
+  name: alert-broker
+
+kafka:
+  # -- Version of Kafka to deploy.
+  version: 3.2.3
+  # -- Encoding version for messages, see
+  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+  logMessageFormatVersion: 3.2
+  # -- Version of the protocol for inter-broker communication, see
+  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+  interBrokerProtocolVersion: 3.2
+
+  # -- Number of Kafka broker replicas to run.
+  replicas: 3
+
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka brokers.
+    size: 1000Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: standard
+
+  # -- Configuration overrides for the Kafka server.
+  config:
+    # -- Number of minutes for a consumer group's offsets to be retained.
+    offsets.retention.minutes: 1440
+    # -- Number of hours for a brokers data to be retained.
+    log.retention.hours: 168
+    # -- Maximum retained number of bytes for a broker's data. This is a string
+    # to avoid YAML type conversion issues for large numbers.
+    log.retention.bytes: "42949672960"
+
+  externalListener:
+    tls:
+      # -- Whether TLS encryption is enabled.
+      enabled: false
+      # -- Name of the certificate issuer.
+      certIssuerName: "letsencrypt-dns"
+    bootstrap:
+      # -- IP address that should be used by the broker's external bootstrap load
+      # balancer for access from the internet. The format of this is a string like
+      # "192.168.1.1".
+      ip: ""
+      # -- Hostname that should be used by clients who want to connect to the
+      # broker through the bootstrap address.
+      host: ""
+      annotations: {}
+
+    # -- List of hostname and IP for each broker. The format of this is a list
+    # of maps with 'ip' and 'host' keys. For example:
+    #
+    #    - ip: "192.168.1.1"
+    #      host: broker-0.example
+    #    - ip: "192.168.1.2"
+    #      host: broker-1.example
+    #
+    # Each replica should get a host and IP. If these are unset, then IP
+    # addresses will be chosen automatically by the Kubernetes cluster's
+    # LoadBalancer controller, and hostnames will be unset, which will break
+    # TLS connections.
+    brokers: []
+
+  nodePool:
+    # -- List of node affinities to set for the broker's nodes. The key should
+    # be a label key, and the value should be a label value, and then the
+    # broker will prefer running Kafka and Zookeeper on nodes with those
+    # key-value pairs.
+    affinities:
+      - key: kafka
+        value: ok
+
+    # -- List of taint tolerations when scheduling the broker's pods onto
+    # nodes. The key should be a taint key, the value should be a taint
+    # value, and effect should be a taint effect that can be tolerated
+    # (ignored) when scheduling the broker's Kafka and Zookeeper pods.
+    tolerations:
+      - key: kafka
+        value: ok
+        effect: NoSchedule
+
+
+# -- A list of usernames for users who should have global admin permissions.
+# These users will be created, along with their credentials.
+superusers:
+  - kafka-admin
+
+# -- A list of users that should be created and granted access.
+#
+# Passwords for these users are not generated automatically; they are expected
+# to be stored as 1Password secrets which are replicated into Vault. Each
+# username should have a "{{ $username }}-password" secret associated with it.
+users:
+  -  # -- The username for the user that should be created.
+    username: rubin-testing
+    # -- A list of topics that the user should get read-only access to.
+    readonlyTopics: ["alert-stream", "alerts-simulated"]
+    # -- A list of string prefixes for groups that the user should get admin
+    # access to, allowing them to create, delete, describe, etc consumer
+    # groups. Note that these are prefix-matched, not just literal exact
+    # matches.
+    groups: ["rubin-testing"]
+
+
+zookeeper:
+  # -- Number of Zookeeper replicas to run.
+  replicas: 3
+
+  storage:
+    # -- Size of the backing storage disk for each of the Zookeeper instances.
+    size: 1000Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: standard
+
+tls:
+  subject:
+    # -- Organization to use in the 'Subject' field of the broker's TLS certificate.
+    organization: "Vera C. Rubin Observatory"
+  # -- Name of a ClusterIssuer capable of provisioning a TLS certificate for
+  # the broker.
+  certIssuerName: "letsencrypt-dns"
+
+# -- Path to the secret resource in Vault
+vaultSecretsPath: ""
+
+# -- Override for the full name used for Kubernetes resources; by default one
+# will be created based on the chart name and helm release name.
+fullnameOverride: ""
+
+nameOverride: ""

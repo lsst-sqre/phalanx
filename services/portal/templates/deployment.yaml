@@ -19,6 +19,7 @@ spec:
       labels:
         {{- include "portal.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "firefly"
+        portal-redis-client: "true"
     spec:
       automountServiceAccountToken: false
       containers:
@@ -33,10 +34,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "portal.fullname" . }}-secret
                   key: "ADMIN_PASSWORD"
-            {{- if .Values.ingress.gafaelfawrAdminAuthQuery }}
             - name: "USE_ADMIN_AUTH"
               value: "false"
-            {{- end }}
             - name: "REDIS_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -89,7 +88,12 @@ spec:
                           ],
                           "label": "Rubin Featured MOC"
                       }
-                   }
+                   },
+                   "searchActionsCmdMask": [
+                     "tableHiPS", "tapRadius", "tapArea", "tableTapRadius",
+                     "HiPS", "lsstObsCoreTap", "lsstTruthSummaryRadius", "lsstTruthSummaryArea",
+                     "lsstObsCoreTapTable", "lsstTruthSummaryRadiusTable"
+                   ]
                 }'
             - name: "SERVER_CONFIG_DIR"
               value: "/firefly/config"

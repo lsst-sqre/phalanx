@@ -1,6 +1,6 @@
 # hips
 
-HiPS web server backed by Google Cloud Storage
+HiPS tile server backed by Google Cloud Storage
 
 ## Source Code
 
@@ -24,9 +24,7 @@ HiPS web server backed by Google Cloud Storage
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the hips image |
 | image.repository | string | `"ghcr.io/lsst-sqre/crawlspace"` | Image to use in the hips deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| ingress.gafaelfawrAuthQuery | string | `"scope=read:image"` | Gafaelfawr auth query string |
-| ingress.path | string | `"/api/hips"` | Path at which to serve the service |
+| ingress.annotations | object | `{}` | Additional annotations for the ingress |
 | nodeSelector | object | `{}` | Node selection rules for the hips deployment pod |
 | podAnnotations | object | `{}` | Annotations for the hips deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |

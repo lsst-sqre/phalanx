@@ -4,7 +4,7 @@ vault_path_prefix: secret/k8s_operator/data-int.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 
 alert_stream_broker:
-  enabled: false
+  enabled: true
 cachemachine:
   enabled: true
 cert_manager:
@@ -18,6 +18,8 @@ gafaelfawr:
 hips:
   enabled: true
 ingress_nginx:
+  enabled: true
+linters:
   enabled: true
 mobu:
   enabled: true

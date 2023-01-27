@@ -1,6 +1,12 @@
 # moneypenny
 
-User provisioning actions for the Science Platform
+User provisioning actions
+
+## Source Code
+
+* <https://github.com/lsst-sqre/moneypenny>
+* <https://github.com/lsst-sqre/farthing>
+* <https://github.com/lsst-sqre/inituserhome>
 
 ## Values
 
@@ -14,8 +20,7 @@ User provisioning actions for the Science Platform
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the moneypenny image |
 | image.repository | string | `"lsstsqre/moneypenny"` | moneypenny image to use |
 | image.tag | string | The appVersion of the chart | Tag of moneypenny image to use |
-| ingress.gafaelfawrAuthQuery | string | `"scope=admin:provision"` | Gafaelfawr auth query string |
-| ingress.tls | list | `[]` | Configure TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
+| ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the vo-cutouts frontend pod |
 | orders.commission | list | `[{"image":"lsstsqre/farthing","name":"farthing","securityContext":{"allowPrivilegeEscalation":false,"runAsNonRootUser":true,"runAsUser":1000}}]` | List of specifications for containers to run to commission a new user. Each member of the list should set a container `name`, `image`, and `securityContext` and may contain `volumeMounts`. |

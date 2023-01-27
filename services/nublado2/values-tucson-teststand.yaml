@@ -1,8 +1,19 @@
 jupyterhub:
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
   ingress:
     hosts: ["tucson-teststand.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
+  hub:
+    db:
+      upgrade: true
+      url: "postgresql://jovyan@squoint.tu.lsst.org/jupyterhub"
 
   singleuser:
     extraAnnotations:
@@ -25,6 +36,8 @@ config:
     LSST_DDS_INTERFACE: net1
     LSST_DDS_PARTITION_PREFIX: tucson
     LSST_SITE: tucson
+    PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+    PGUSER: "oods"
   volumes:
     - name: home
       nfs:
@@ -79,9 +92,3 @@ config:
     - name: comcam-oods
       mountPath: /data/lsstdata/TTS/comcam
       readOnly: true
-
-vault_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/nublado2"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/tucson-teststand.lsst.codes/pull-secret"

@@ -56,18 +56,25 @@ spec:
             - name: BUTLER_URI_2
               value: {{ .Values.config.butler_uri_2 | quote }}
             - name: EXPOSURELOG_DB_USER
-              value: exposurelog
+              value: {{ .Values.db.user | quote }}
+            - name: PGUSER
+              value: {{ .Values.db.user | quote }}
             - name: EXPOSURELOG_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres
+                  name: exposurelog
+                  key: exposurelog_password
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: exposurelog
                   key: exposurelog_password
             - name: EXPOSURELOG_DB_HOST
-              value: postgres.postgres
+              value: {{ .Values.db.host | quote }}
             - name: EXPOSURELOG_DB_PORT
-              value: "5432"
-            - name: EXPOSURELOG_DB_DATABSE
-              value: exposurelog
+              value: {{ .Values.db.port | quote }}
+            - name: EXPOSURELOG_DB_DATABASE
+              value: {{ .Values.db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
           volumeMounts:

@@ -20,6 +20,7 @@ spec:
         {{- end }}
       labels:
         {{- include "noteburst.selectorLabels" . | nindent 8 }}
+        noteburst-redis-client: "true"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

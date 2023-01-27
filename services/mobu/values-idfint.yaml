@@ -5,8 +5,6 @@ autostart:
     count: 1
     users:
       - username: "bot-mobu-recommended"
-        uidnumber: 74768
-        gidnumber: 74768
     scopes:
       - "exec:notebook"
       - "exec:portal"
@@ -14,7 +12,7 @@ autostart:
       - "read:tap"
     business: "NotebookRunner"
     options:
-      repo_url: "https://github.com/SimonKrughoff/system-test.git"
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
       repo_branch: "prod"
       max_executions: 1
     restart: true
@@ -22,8 +20,6 @@ autostart:
     count: 1
     users:
       - username: "bot-mobu-weekly"
-        uidnumber: 74769
-        gidnumber: 74769
     scopes:
       - "exec:notebook"
       - "exec:portal"
@@ -40,11 +36,9 @@ autostart:
     count: 1
     users:
       - username: "bot-mobu-tap"
-        uidnumber: 74775
-        gidnumber: 74775
     scopes: ["read:tap"]
     business: "TAPQueryRunner"
     restart: true
     options:
-      tap_sync: true
+      tap_sync: false
       tap_query_set: "dp0.2"

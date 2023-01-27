@@ -44,9 +44,3 @@ config:
       mountPath: /project
     - name: scratch
       mountPath: /scratch
-
-vault_secret_path: "secret/k8s_operator/base-lsp.lsst.codes/nublado2"
-
-pull-secret:
-  enabled: true
-  path: "secret/k8s_operator/base-lsp.lsst.codes/pull-secret"

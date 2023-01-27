@@ -17,27 +17,25 @@ config:
     - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
       name: Recommended
   volumes:
-    - name: datasets
-      hostPath:
-        path: /lsstdata/user/precursor_data/datasets
+    - name: data
+      nfs:
+        path: /data
+        server: 10.72.0.23
     - name: home
-      hostPath:
-        path: /lsstdata/user/staff/jhome
-    - name: project
-      hostPath:
-        path: /lsstdata/user/staff/project
-    - name: scratch
-      hostPath:
-        path: /lsstdata/user/staff/scratch
-  volume_mounts:
+      nfs:
+        path: /jhome
+        server: 10.72.0.23
     - name: datasets
-      mountPath: /datasets
+      nfs:
+        path: /datasets
+        server: 10.72.0.23
+  volume_mounts:
+    - name: data
+      mountPath: /data
     - name: home
       mountPath: /home
-    - name: project
-      mountPath: /project
-    - name: scratch
-      mountPath: /scratch
+    - name: datasets
+      mountPath: /datasets
 
 vault_secret_path: "secret/k8s_operator/roe/nublado2"
 

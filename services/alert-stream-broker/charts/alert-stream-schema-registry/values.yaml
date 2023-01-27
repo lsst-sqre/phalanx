@@ -1,0 +1,33 @@
+# -- Name used by the registry, and by its users.
+name: alert-schema-registry
+
+# -- Port where the registry is listening. NOTE: Not actually configurable in
+# strimzi-registry-operator, so this basically cannot be changed.
+port: 8081
+
+# -- Version of the Strimzi Custom Resource API. The correct value depends on
+# the deployed version of Strimzi. See [this blog
+# post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more.
+strimziAPIVersion: v1beta2
+
+# -- Strimzi "cluster name" of the broker to use as a backend.
+clusterName: alert-broker
+
+# -- Name of the topic used by the Schema Registry to store data.
+schemaTopic: registry-schemas
+
+# -- Hostname for an ingress which sends traffic to the Schema Registry.
+hostname: alert-schemas-int.lsst.cloud
+
+# -- Configuration for the Job which injects the most recent alert_packet
+# schema into the Schema Registry
+schemaSync:
+  image:
+    # -- Repository of a container which has the alert_packet
+    # syncLatestSchemaToRegistry.py program
+    repository: lsstdm/lsst_alert_packet
+    # -- Version of the container to use
+    tag: tickets-DM-32743
+
+  # -- Subject name to use when inserting data into the Schema Registry
+  subject: alert-packet

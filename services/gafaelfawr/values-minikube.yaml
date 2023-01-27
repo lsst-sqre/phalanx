@@ -16,17 +16,33 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:notebook":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:portal":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "read:image":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "read:tap":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
 
   initialAdmins:
     - "afausti"

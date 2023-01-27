@@ -4,7 +4,7 @@ redis:
 
 config:
   slackAlerts: true
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  databaseUrl: "postgresql://gafaelfawr@postgresdb01.cp.lsst.org/gafaelfawr"
 
   github:
     clientId: "220d64cbf46f9d2b7873"
@@ -16,29 +16,79 @@ config:
   # Allow access by GitHub team.
   groupMapping:
     "admin:provision":
-      - "lsst-sqre-square"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
     "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
       - "lsst-sqre-square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "summit-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
     "exec:notebook":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-      - "rubin-summit-rsp-access"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "summit-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
     "exec:portal":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-      - "rubin-summit-rsp-access"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "summit-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
     "read:image":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-      - "rubin-summit-rsp-access"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "summit-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
     "read:tap":
-      - "lsst-sqre-square"
-      - "lsst-sqre-friends"
-      - "lsst-ts-summit-access"
-      - "rubin-summit-rsp-access"
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "summit-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
 
   initialAdmins:
     - "afausti"

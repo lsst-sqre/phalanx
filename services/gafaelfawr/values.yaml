@@ -64,10 +64,6 @@ config:
     # `config.github.clientId`, or `config.oidc.clientId` must be set.
     clientId: ""
 
-    # -- Return URL given to CILogon (must match the CILogon configuration)
-    # @default -- `/login` at the value of config.host
-    redirectUrl: ""
-
     # -- Where to send the user if their username cannot be found in LDAP
     # @default -- Login fails with an error
     enrollmentUrl: ""
@@ -209,15 +205,6 @@ config:
     # equal to their UID
     addUserGroup: false
 
-  influxdb:
-    # -- Whether to issue tokens for InfluxDB. If set to true,
-    # `influxdb-secret` must be set in the Gafaelfawr secret.
-    enabled: false
-
-    # -- If set, force all InfluxDB tokens to have that username instead of
-    # the authenticated identity of the user requesting a token
-    username: ""
-
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
     # `oidc-server-secrets` must be set in the Gafaelfawr secret.
@@ -228,12 +215,16 @@ config:
   # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
   # @default -- See the `values.yaml` file
   knownScopes:
+    "admin:jupyterlab": >-
+      Can create and destroy labs for any user
     "admin:token": >-
       Can create and modify tokens for any user
     "admin:provision": >-
       Can perform privileged user provisioning
     "exec:admin": >-
       Administrative access to all APIs
+    "exec:internal-tools": >-
+      Use project-internal tools.
     "exec:notebook": >-
       Use the Notebook Aspect
     "exec:portal": >-
@@ -270,7 +261,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.32.0"
+    tag: "1.33.2"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -321,8 +312,8 @@ maintenance:
   # -- Affinity rules for Gafaelfawr maintenance and audit pods
   affinity: {}
 
-tokens:
-  # -- Resource limits and requests for the Gafaelfawr token management pod
+operator:
+  # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
   resources: {}
 
   # -- Annotations for the token management pod
@@ -343,7 +334,7 @@ redis:
     repository: "redis"
 
     # -- Redis image tag to use
-    tag: "7.0.4"
+    tag: "7.0.8"
 
     # -- Pull policy for the Redis image
     pullPolicy: "IfNotPresent"

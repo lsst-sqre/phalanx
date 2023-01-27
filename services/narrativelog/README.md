@@ -2,6 +2,10 @@
 
 Narrative log service
 
+## Source Code
+
+* <https://github.com/lsst-sqre/narrativelog>
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -15,6 +19,10 @@ Narrative log service
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` | Target memory utilization for narrativelog pod autoscale calculations |
 | config | object | `{"site_id":""}` | Application-specific configuration |
 | config.site_id | string | `""` | Site ID; a non-empty string of up to 16 characters. This should be different for each non-sandbox deployment. Sandboxes should use `test`. |
+| db.database | string | `"narrativelog"` | database name |
+| db.host | string | `"postgres.postgres"` | database host |
+| db.port | int | `5432` | database port |
+| db.user | string | `"narrativelog"` | database user |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

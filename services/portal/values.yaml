@@ -21,12 +21,6 @@ image:
   tag: ""
 
 ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: "scope=exec:portal&delegate_to=portal&delegate_scope=read:image,read:tap"
-
-  # -- Gafaelfawr auth query string for the admin API
-  gafaelfawrAdminAuthQuery: "scope=exec:admin"
-
   # -- Additional annotations to add to the ingress
   annotations: {}
 
@@ -89,19 +83,25 @@ config:
     configNfs: {}
 
 redis:
-  image:
-    # -- Redis image to use
-    repository: "redis"
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "portal-secret"
 
-    # -- Redis image tag to use
-    tag: "7.0.4"
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "ADMIN_PASSWORD"
 
-    # -- Pull policy for the Redis image
-    pullPolicy: "IfNotPresent"
+  persistence:
+    # -- Whether to persist Redis storage. Setting this to false will use
+    # `emptyDir` and reset all data on every restart.
+    enabled: false
 
-  # -- Resource limits and requests
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
   resources:
     limits:
+      cpu: "1"
       memory: "20Mi"
 
   # -- Pod annotations for the Redis pod

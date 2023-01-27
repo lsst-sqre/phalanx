@@ -12,6 +12,7 @@
 | gafaelfawr.enabled | bool | `false` |  |
 | hips.enabled | bool | `false` |  |
 | ingress_nginx.enabled | bool | `false` |  |
+| linters.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |
 | narrativelog.enabled | bool | `false` |  |
