@@ -14,7 +14,7 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from onepassword import OnePassword
+from onepasswordconnectsdk.client import new_client_from_environment
 
 
 class SecretGenerator:
@@ -398,7 +398,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
     def __init__(self, environment, regenerate):
         super().__init__(environment, regenerate)
         self.op_secrets = {}
-        self.op = OnePassword()
+        self.op = new_client_from_environment()
         self.parse_vault()
 
     def parse_vault(self):
@@ -408,60 +408,44 @@ class OnePasswordSecretGenerator(SecretGenerator):
         This method is called automatically when initializing a
         `OnePasswordSecretGenerator`.
         """
-        items = self.op.list_items("RSP-Vault")
+        vault = self.op.get_vault_by_title("RSP-Vault")
+        items = self.op.get_items(vault.id)
 
-        for i in items:
+        for item_summary in items:
             key = None
+            secret_notes = None
+            secret_password = None
             environments = []
-            uuid = i["uuid"]
-            doc = self.op.get_item(uuid=uuid)
+            item = self.op.get_item(item_summary.id, vault.id)
 
-            logging.debug(f"Looking at {uuid}")
-            logging.debug(f"{doc}")
+            logging.debug(f"Looking at {item.id}")
 
-            for section in doc["details"]["sections"]:
-                if "fields" not in section:
-                    continue
+            for field in item.fields:
+                if field.label == "generate_secrets_key":
+                    if key is None:
+                        key = field.value
+                    else:
+                        msg = "Found two generate_secrets_keys for {key}"
+                        raise Exception(msg)
+                elif field.label == "environment":
+                    environments.append(field.value)
+                elif field.label == "notesPlain":
+                    secret_notes = field.value
+                elif field.purpose == "PASSWORD":
+                    secret_password = field.value
 
-                for field in section["fields"]:
-                    if field["t"] == "generate_secrets_key":
-                        if key is None:
-                            key = field["v"]
-                        else:
-                            raise Exception(
-                                "Found two generate_secrets_keys for {key}"
-                            )
-                    elif field["t"] == "environment":
-                        environments.append(field["v"])
+            secret_value = secret_notes or secret_password
 
-            # If we don't find a generate_secrets_key somewhere, then we
-            # shouldn't bother with this document in the vault.
-            if not key:
-                logging.debug(
-                    "Skipping because of no generate_secrets_key, %s", uuid
-                )
-                continue
-
-            # The type of secret is either a note or a password login.
-            # First, check the notes.
-            secret_value = doc["details"]["notesPlain"]
-
-            # If we don't find anything, pull the password from a login item.
-            if not secret_value:
-                for f in doc["details"]["fields"]:
-                    if f["designation"] == "password":
-                        secret_value = f["value"]
-
-            logging.debug("Environments are %s for %s", environments, uuid)
+            logging.debug("Environments are %s for %s", environments, item.id)
 
             if self.environment in environments:
                 self.op_secrets[key] = secret_value
-                logging.debug("Storing %s (matching environment)", uuid)
+                logging.debug("Storing %s (matching environment)", item.id)
             elif not environments and key not in self.op_secrets:
                 self.op_secrets[key] = secret_value
-                logging.debug("Storing %s (applicable to all envs)", uuid)
+                logging.debug("Storing %s (applicable to all envs)", item.id)
             else:
-                logging.debug("Ignoring %s", uuid)
+                logging.debug("Ignoring %s", item.id)
 
     def input_field(self, component, name, description):
         """Query for a secret's value from 1Password (`op_secrets` attribute).
