@@ -3,6 +3,9 @@ image:
   tag: ajt-dev
 controller:
   lab:
+    env:
+      JUPYTERHUB_BASE_URL: /nb/
+      JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api
     volumes:
     - containerPath: /home
       serverPath: /share1/home
