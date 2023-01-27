@@ -42,8 +42,13 @@ schemaregistry:
   url: "http://sasquatch-schema-registry.sasquatch:8081"
 
 kafka:
+  cluster:
+    # -- Name of the Strimzi Kafka cluster.
+    name: sasquatch
   # -- Kafka bootstrap servers, use the internal listerner on port 9092 wit SASL connection.
   bootstrapServers: "SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- List of Kafka topics to create and expose through the REST proxy API
+  topics:
 
 resources:
   requests:
