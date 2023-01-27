@@ -66,12 +66,6 @@ spec:
             {{- end }}
             - name: DATALINK_PAYLOAD_URL
               value: "{{ .Values.config.datalinkPayloadUrl }}"
-            {{- if .Values.config.http_proxy }}
-            - name: HTTPS_PROXY
-              value: {{ .Values.config.http_proxy }}
-            - name: NO_PROXY
-              value: 127.0.0.1
-            {{- end }}
           ports:
             - containerPort: 8080
           {{- with .Values.resources }}
