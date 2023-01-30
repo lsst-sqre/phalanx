@@ -19,6 +19,15 @@ controller:
       serverPath: /share1/scratch
       server: 10.87.86.26
       mode: rw
+    initContainers:
+    - name: initdir
+      image: ghcr.io/lsst-sqre/initdir:0.0.3
+      privileged: true
+      volumes:
+      - containerPath: /home
+        serverPath: /share1/home
+        server: 10.87.86.26
+        mode: rw
 
   images:
     # -- config from sqr-066
