@@ -8,11 +8,11 @@ autostart:
           "type": "RubinRepoMan",
           "registry_url": "ts-dockerhub.lsst.org",
           "repo": "sal-sciplat-lab",
-          "recommended_tag": "recommended_c0028",
+          "recommended_tag": "recommended_c0029",
           "num_releases": 1,
           "num_weeklies": 3,
           "num_dailies": 2,
-          "cycle": 28,
+          "cycle": 29,
           "alias_tags": [
               "latest",
               "latest_daily",

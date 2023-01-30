@@ -43,15 +43,15 @@ telegraf-kafka-consumer:
     comcam:
       enabled: true
       topicRegexps: |
-        [ ".*CCArchiver", ".*CCCamera", ".*CCHeaderService", ".*CCOODS" ]
+        [ ".*CCCamera", ".*CCHeaderService", ".*CCOODS" ]
     eas:
       enabled: true
       topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*WeatherStation" ]
+        [ ".*DIMM", ".*DSM", ".*WeatherForecast", ".*WeatherStation" ]
     latiss:
       enabled: true
       topicRegexps: |
-        [ ".*ATArchiver", ".*ATCamera", ".*ATHeaderService", ".*ATOODS", ".*ATSpectrograph" ]
+        [ ".*ATCamera", ".*ATHeaderService", ".*ATOODS", ".*ATSpectrograph" ]
     m1m3:
       enabled: true
       flush_interval: "0.1s"
@@ -86,10 +86,10 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ ".*Authorize" ]
-    mtalignment:
+    lasertracker:
       enabled: true
       topicRegexps: |
-        [ ".*MTAlignment" ]
+        [ ".*LaserTracker" ]
     test:
       enabled: true
       topicRegexps: |
@@ -115,13 +115,13 @@ kafka-connect-manager:
         topicsRegex: ".*MTMount"
       comcam:
         enabled: true
-        topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
+        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
-        topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
         enabled: true
         topicsRegex: ".*MTM1M3"
@@ -149,9 +149,9 @@ kafka-connect-manager:
       authorize:
         enabled: true
         topicsRegex: ".*Authorize"
-      mtalignment:
+      lasertracker:
         enabled: true
-        topicsRegex: ".*MTAlignment"
+        topicsRegex: ".*LaserTracker"
       genericcamera:
         enabled: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
