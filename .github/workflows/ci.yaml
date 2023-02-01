@@ -4,7 +4,6 @@ name: CI
   pull_request:
     branches:
       - "main"
-      - "master"
 
 jobs:
   lint:
@@ -24,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
@@ -41,7 +40,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "3.11"
 
       - name: Install test dependencies
         run: pip install .
@@ -103,7 +102,7 @@ jobs:
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.5.1/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.5.5/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
           sudo pip install -r installer/requirements.txt

@@ -24,7 +24,7 @@
 | postgres.enabled | bool | `false` |  |
 | production_tools.enabled | bool | `false` |  |
 | repoURL | string | `"https://github.com/lsst-sqre/phalanx.git"` |  |
-| revision | string | `"HEAD"` |  |
+| revision | string | `"main"` |  |
 | sasquatch.enabled | bool | `false` |  |
 | semaphore.enabled | bool | `false` |  |
 | sherlock.enabled | bool | `false` |  |
