@@ -3,7 +3,7 @@ USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
 ENVIRONMENT=${1:?$USAGE}
 export VAULT_TOKEN=${2:?$USAGE}
 export VAULT_ADDR=https://vault.lsst.codes
-VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../environments/values-$ENVIRONMENT.yaml`
+VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
@@ -79,7 +79,7 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-if [ $(yq -r .ingress_nginx.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '."ingress-nginx".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
 then
   echo "Syncing ingress-nginx..."
   argocd app sync ingress-nginx \
@@ -89,7 +89,7 @@ fi
 
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl, argocd's sync doesn't seem to wait for this to finish.
-if [ $(yq -r .cert_manager.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '."cert-manager".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
 then
   echo "Syncing cert-manager..."
   argocd app sync cert-manager \

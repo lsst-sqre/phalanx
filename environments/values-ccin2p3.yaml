@@ -1,12 +1,12 @@
 environment: ccin2p3
 fqdn: data-dev.lsst.eu
-vault_path_prefix: secret/k8s_operator/rsp-cc
+vaultPathPrefix: secret/k8s_operator/rsp-cc
 
-alert_stream_broker:
+alert-stream-broker:
   enabled: false
 cachemachine:
   enabled: true
-cert_manager:
+cert-manager:
   enabled: true
 datalinker:
   enabled: true
@@ -18,7 +18,7 @@ mobu:
   enabled: false
 moneypenny:
   enabled: true
-ingress_nginx:
+ingress-nginx:
   enabled: true
 narrativelog:
   enabled: false
@@ -26,7 +26,7 @@ noteburst:
   enabled: false
 nublado2:
   enabled: true
-plot_navigator:
+plot-navigator:
   enabled: false
 portal:
   enabled: true
@@ -34,7 +34,7 @@ postgres:
   enabled: true
 sasquatch:
   enabled: false
-production_tools:
+production-tools:
   enabled: false
 semaphore:
   enabled: false
@@ -42,23 +42,23 @@ sherlock:
   enabled: false
 squareone:
   enabled: true
-squash_api:
+squash-api:
   enabled: false
 strimzi:
   enabled: false
-strimzi_registry_operator:
+strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true
-tap_schema:
+tap-schema:
   enabled: true
 telegraf:
   enabled: false
 telegraf-ds:
   enabled: false
-times_square:
+times-square:
   enabled: false
-vault_secrets_operator:
+vault-secrets-operator:
   enabled: true
-vo_cutouts:
+vo-cutouts:
   enabled: false

@@ -1,4 +1,4 @@
-{{- if .Values.tap_schema.enabled -}}
+{{- if (index .Values "tap-schema" "enabled") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -26,7 +26,7 @@ spec:
     helm:
       parameters:
         - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
+          value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"
