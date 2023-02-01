@@ -161,6 +161,16 @@ kafdrop:
     enabled: true
     hostname: tucson-teststand.lsst.codes
 
+rest-proxy:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: tucson-teststand.lsst.codes
+  kafka:
+    topics:
+      - lsst.dm.sky-flux-visit-statistic-metric
+      - test.next-visit
+
 chronograf:
   persistence:
     storageClass: rook-ceph-block
