@@ -4,7 +4,6 @@ name: CI
   pull_request:
     branches:
       - "main"
-      - "master"
 
 jobs:
   lint:
