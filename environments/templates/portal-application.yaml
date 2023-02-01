@@ -19,7 +19,7 @@ spec:
   source:
     path: "applications/portal"
     repoURL: {{ .Values.repoURL | quote }}
-    targetRevision: {{ .Values.revision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
