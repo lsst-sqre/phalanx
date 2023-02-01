@@ -97,14 +97,14 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    .. code-block:: yaml
 
-      {{- if .Values.<name>.enabled -}}
+      {{- if (index .Values "<name>" "enabled") -}}
       apiVersion: v1
       kind: Namespace
       metadata:
         name: <name>
       spec:
         finalizers:
-          - kubernetes
+          - "kubernetes"
       ---
       apiVersion: argoproj.io/v1alpha1
       kind: Application
@@ -112,26 +112,26 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
         name: <name>
         namespace: argocd
         finalizers:
-          - resources-finalizer.argocd.argoproj.io
+          - "resources-finalizer.argocd.argoproj.io"
       spec:
         destination:
-          namespace: <name>
-          server: https://kubernetes.default.svc
-        project: default
+          namespace: "<name>"
+          server: "https://kubernetes.default.svc"
+        project: "default"
         source:
-          path: applications/<name>
-          repoURL: {{ .Values.repoURL }}
-          targetRevision: {{ .Values.revision }}
+          path: "applications/<name>"
+          repoURL: {{ .Values.repoURL | quote }}
+          targetRevision: {{ .Values.targetRevision | quote }}
           helm:
             parameters:
               - name: "global.host"
-	             value: {{ .Values.fqdn | quote }}
+                value: {{ .Values.fqdn | quote }}
               - name: "global.baseUrl"
                 value: "https://{{ .Values.fqdn }}"
               - name: "global.vaultSecretsPath"
-                value: {{ .Values.vault_path_prefix | quote }}
+                value: {{ .Values.vaultPathPrefix | quote }}
             valueFiles:
-	           - "values.yaml"
+              - "values.yaml"
               - 'values-{{ .Values.environment }}.yaml"
       {{- end -}}
 
@@ -142,9 +142,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
    Both the ``fqdn`` and ``host`` must be defined in each RSP instance definition file (that is, ``/environments/values-<env>.yaml`` files in the `phalanx repository`_).
    Typically this is done at the top; should you at some point deploy an entirely new instance of the RSP, remember to do this in the base environments application definition for the new instance.
 
-#. If your application image resides at a Docker repository which requires authentication (either to pull the image at all or to raise
-   the pull rate limit), then you must tell any pods deployed by your application to use a pull secret named ``pull-secret``, and you must
-   configure that pull secret in the application's ``vault-secrets.yaml``.
+#. If your application image resides at a Docker repository which requires authentication (either to pull the image at all or to raise the pull rate limit), then you must tell any pods deployed by your application to use a pull secret named ``pull-secret``, and you must configure that pull secret in the application's ``vault-secrets.yaml``.
    If you are using the default Helm template, this will mean a block like:
 
    .. code-block:: yaml
@@ -154,7 +152,9 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    If you are using an external chart, see its documentation for how to configure pull secrets.
 
-   Note that if your container image is built through GitHub actions and stored at ghcr.io, there is no rate limiting (as long as your container image is built from a public repository, which it should be).  If it is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub in the past.  If it is pulled from a private repository, obviously you will need authentication, and if the container is stored within the Rubin Google Artifact Registry, there is likely to be some Google setup required to make pulls magically work from within a given cluster.
+   Note that if your container image is built through GitHub actions and stored at ghcr.io, there is no rate limiting (as long as your container image is built from a public repository, which it should be).
+   If it is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub in the past.
+   If it is pulled from a private repository, obviously you will need authentication, and if the container is stored within the Rubin Google Artifact Registry, there is likely to be some Google setup required to make pulls magically work from within a given cluster.
 
    In general, copying and pasting the basic setup from another application (``cachemachine`` or ``mobu`` recommended for simple applications) is a good way to save effort.
 

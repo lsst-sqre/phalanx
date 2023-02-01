@@ -99,7 +99,7 @@ The ``install.sh`` script uses your locally-checked out branch of Phalanx, but a
 
 **Minimal set of applications that should be enabled:**
 
-- ``vault_secrets_operator`` (for Vault secrets)
+- ``vault-secrets-operator`` (for Vault secrets)
 - ``gafaelfawr`` (for authentication)
 - ``postgresql`` (for gafaelfawr)
 
@@ -133,7 +133,7 @@ The minikube Argo CD admin password can be retrieved from Vault.
 
 .. code-block:: sh
 
-  VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../environments/values-minikube.yaml`
+  VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
 With Argo CD you can sync your application (see :doc:`/admin/sync-argo-cd`).

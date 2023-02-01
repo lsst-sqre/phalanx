@@ -325,7 +325,7 @@ class Environment:
         return Environment(
             name=name,
             domain=values["fqdn"],
-            vault_path_prefix=values["vault_path_prefix"],
+            vault_path_prefix=values["vaultPathPrefix"],
             apps=apps,
         )
 
