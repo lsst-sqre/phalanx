@@ -22,7 +22,7 @@ spec:
   source:
     path: applications/strimzi-registry-operator
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    targetRevision: {{ .Values.targetRevision }}
     helm:
       valueFiles:
         - values-{{ .Values.environment }}.yaml

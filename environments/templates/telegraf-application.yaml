@@ -23,7 +23,7 @@ spec:
   source:
     path: applications/telegraf
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    targetRevision: {{ .Values.targetRevision }}
     helm:
       parameters:
         - name: "global.enabled_services"

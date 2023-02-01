@@ -22,7 +22,7 @@ spec:
   source:
     path: "applications/nublado2"
     repoURL: {{ .Values.repoURL | quote }}
-    targetRevision: {{ .Values.revision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
         - "values.yaml"

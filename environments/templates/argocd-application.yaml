@@ -13,7 +13,7 @@ spec:
   source:
     path: "applications/argocd"
     repoURL: {{ .Values.repoURL | quote }}
-    targetRevision: {{ .Values.revision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.vaultSecretsPath"

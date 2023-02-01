@@ -22,7 +22,7 @@ spec:
   source:
     path: "applications/vo-cutouts"
     repoURL: {{ .Values.repoURL | quote }}
-    targetRevision: {{ .Values.revision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.baseUrl"
