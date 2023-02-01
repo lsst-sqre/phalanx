@@ -41,7 +41,7 @@ Throughout this process, you can continue to commit changes and push updates to 
    In the application's Helm values file for the development environment, set this pull policy to ``Always``:
 
    .. code-block:: yaml
-      :caption: services/<application>/values-<environment>.yaml
+      :caption: applications/<application>/values-<environment>.yaml
 
       image:
         pullPolicy: Always
@@ -53,7 +53,7 @@ Throughout this process, you can continue to commit changes and push updates to 
 Switching the Argo CD Application to sync the branch
 ====================================================
 
-By default, Argo CD syncs your application from the default branch (``master``) of the `phalanx repository`_.
+By default, Argo CD syncs your application from the default branch (``main``) of the `phalanx repository`_.
 Change the application in Argo CD to instead sync from the branch you've pushed to GitHub:
 
 1. Open your application's page in your environment's Argo CD UI.
@@ -163,7 +163,7 @@ Merging and switching the Argo CD Application to the default branch
 ===================================================================
 
 Once development and testing is complete, you should submit the pull request for review following the `Data Management workflow guide`_.
-Once your branch is merged, remember to reset your application's Argo CD ``Application`` resource to point back to the default branch (currently ``master``).
+Once your branch is merged, remember to reset your application's Argo CD ``Application`` resource to point back to the default branch (``main``).
 
 1. Open your application's page in your environment's Argo CD UI.
    Generally the URL path for this page, relative to the environment's domain, is ``argo-cd/applications/<application name>``.
@@ -173,7 +173,7 @@ Once your branch is merged, remember to reset your application's Argo CD ``Appli
 
 3. Click on the :guilabel:`Edit` button in the :guilabel:`Summary` pane:
 
-   - Edit the :guilabel:`Target revision` field back to the default branch (``master``).
+   - Edit the :guilabel:`Target revision` field back to the default branch (``main``).
    - Finally, click on the :guilabel:`Save` button.
 
 4. In the application's page in Argo CD, click on the :guilabel:`Sync` button to redeploy the application from the default branch.

@@ -20,7 +20,7 @@ We will use ``exposurelog`` as the model for the remainder of this document.
 Add the database to the deployment
 ==================================
 
-Go to the ``/services/postgres/templates`` directory and edit ``deployment.yaml`` to add an entry for the new database.
+Go to the ``/applications/postgres/templates`` directory and edit ``deployment.yaml`` to add an entry for the new database.
 You should copy an existing entry to get the syntax correct, and then change the names.
 The result should look like this:
 
@@ -55,7 +55,7 @@ The passwords for all the non-root PostgreSQL users already look like that, so c
 Finally, edit the ``postgres`` ``values-<environment>.yaml`` files for the environments that need this database and add a section for your new database with appropriate ``user`` and ``db`` entries:
 
 .. code-block:: yaml
-   :caption: /services/postgres/values-<environment>.yaml
+   :caption: /applications/postgres/values-<environment>.yaml
 
    exposurelog_db:
      user: "exposurelog"

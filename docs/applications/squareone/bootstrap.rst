@@ -9,7 +9,7 @@ This assumes the Let's Encrypt approach to obtaining TLS certificates, and the d
 See :doc:`/applications/cert-manager/notes` for more information.
 
 If you instead are using a commercial certificate and configuring ingress-nginx to use it, you need to disable the TLS configuration for Squareone.
-Do that with the following in ``values-<environment>.yaml`` in `/services/squareone <https://github.com/lsst-sqre/phalanx/tree/master/services/squareone>`__:
+Do that with the following in ``values-<environment>.yaml`` in `/applications/squareone <https://github.com/lsst-sqre/phalanx/tree/main/applications/squareone>`__:
 
 .. code-block:: yaml
 

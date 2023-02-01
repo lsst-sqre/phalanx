@@ -6,8 +6,8 @@
 # environment and base chart.
 
 chart-dirs:
-  - "science-platform"
-  - "services-expanded"
+  - "applications-expanded"
+  - "environments"
 check-version-increment: false
 validate-maintainers: false
 validate-chart-schema: false

@@ -1,0 +1,30 @@
+{{- if .Values.sqlproxy_cross_project.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "sqlproxy-cross-project"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "sqlproxy-cross-project"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "sqlproxy-cross-project"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/sqlproxy-cross-project"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
+    helm:
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

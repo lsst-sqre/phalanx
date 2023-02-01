@@ -1,0 +1,35 @@
+{{- if .Values.noteburst.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "noteburst"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "noteburst"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "noteburst"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/noteburst"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.revision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

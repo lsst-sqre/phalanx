@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`argocd` application.
 
-```{include} ../../../services/argocd/README.md
+```{include} ../../../applications/argocd/README.md
 ---
 start-after: "## Values"
 ---

@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`linters` application.
 
-```{include} ../../../services/linters/README.md
+```{include} ../../../applications/linters/README.md
 ---
 start-after: "## Values"
 ---

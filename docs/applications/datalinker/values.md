@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`datalinker` application.
 
-```{include} ../../../services/datalinker/README.md
+```{include} ../../../applications/datalinker/README.md
 ---
 start-after: "## Values"
 ---

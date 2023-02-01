@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`noteburst` application.
 
-```{include} ../../../services/noteburst/README.md
+```{include} ../../../applications/noteburst/README.md
 ---
 start-after: "## Values"
 ---

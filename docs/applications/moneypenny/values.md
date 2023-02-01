@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`moneypenny` application.
 
-```{include} ../../../services/moneypenny/README.md
+```{include} ../../../applications/moneypenny/README.md
 ---
 start-after: "## Values"
 ---

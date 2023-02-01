@@ -1,8 +1,8 @@
 .. list-table::
 
    * - View on GitHub
-     - :bdg-link-primary-line:`/services/{{ app.name }} <https://github.com/lsst-sqre/phalanx/tree/master/services/{{app.name}}>`
-       :bdg-link-primary-line:`Application template <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/templates/{{app.name}}-application.yaml>`
+     - :bdg-link-primary-line:`/applications/{{ app.name }} <https://github.com/lsst-sqre/phalanx/tree/main/applications/{{app.name}}>`
+       :bdg-link-primary-line:`Application template <https://github.com/lsst-sqre/phalanx/blob/main/environments/templates/{{app.name}}-application.yaml>`
    {% if app.homepage_url %}
    * - Homepage
      - {{ app.homepage_url }}
@@ -43,7 +43,7 @@
 
           {% for env_name in app.active_environments %}
           * - :px-env:`{{ env_name }}`
-            - `values <https://github.com/lsst-sqre/phalanx/blob/master/services/{{ app.name }}/values-{{ env_name }}.yaml>`__
+            - `values <https://github.com/lsst-sqre/phalanx/blob/main/applications/{{ app.name }}/values-{{ env_name }}.yaml>`__
             {% if envs[env_name].argocd_url != "N/A" %}
             - `Argo CD <{{ envs[env_name].argocd_url }}/applications/{{ app.name }}>`__
             {% else %}

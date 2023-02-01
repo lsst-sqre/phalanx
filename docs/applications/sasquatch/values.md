@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`sasquatch` application.
 
-```{include} ../../../services/sasquatch/README.md
+```{include} ../../../applications/sasquatch/README.md
 ---
 start-after: "## Values"
 ---

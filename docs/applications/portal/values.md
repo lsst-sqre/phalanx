@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`portal` application.
 
-```{include} ../../../services/portal/README.md
+```{include} ../../../applications/portal/README.md
 ---
 start-after: "## Values"
 ---
