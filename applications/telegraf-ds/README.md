@@ -13,7 +13,7 @@ Kubernetes node telemetry collection service
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| global.enabled_services | string | Set by Argo CD | services enabled in this RSP instance |
+| global.enabledServices | string | Set by Argo CD | services enabled in this RSP instance |
 | global.host | string | Set by Argo CD | Host name for instance identification |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | telegraf-ds.args[0] | string | `"--config"` |  |

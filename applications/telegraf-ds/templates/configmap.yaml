@@ -29,7 +29,7 @@ data:
         resource_include = [ "pods" ]
         insecure_skip_verify = true
         namespace = ""
-  {{ range $app := splitList "@" .Values.global.enabled_services }}
+  {{ range $app := splitList "@" .Values.global.enabledServices }}
     {{- $bucket := replace "-" "_" $app }}
     {{- $namespace := replace "_" "-" $app }}
       [[outputs.influxdb_v2]]

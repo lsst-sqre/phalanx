@@ -4,7 +4,7 @@ metadata:
   name: telegraf-generated-config
 data:
   telegraf-generated.conf: |
-    {{- $enabled_apps := splitList "@" .Values.global.enabled_services }}
+    {{- $enabled_apps := splitList "@" .Values.global.enabledServices }}
     [global_tags]
       cluster = {{- .Values.global.host | quote }}
     [agent]
