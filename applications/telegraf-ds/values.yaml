@@ -37,7 +37,7 @@ telegraf-ds:
 global:
   # -- services enabled in this RSP instance
   # @default -- Set by Argo CD
-  enabled_services: ""
+  enabledServices: ""
 
   # -- Host name for instance identification
   # @default -- Set by Argo CD
