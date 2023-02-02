@@ -3,6 +3,12 @@ argo-cd:
     ingress:
       hosts:
         - "roundtable.lsst.cloud"
+      tls:
+        - hosts:
+            - "roundtable.lsst.cloud"
+          secretName: "argocd-tls"
+      annotations:
+        cert-manager.io/cluster-issuer: "letsencrypt-dns"
 
     config:
       url: "https://roundtable.lsst.cloud/argo-cd"
