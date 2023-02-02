@@ -28,7 +28,7 @@ Checklist
 
 #. Create a new ``values-<environment>.yaml`` file in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
-   Edit it so that ``environment``, ``fqdn``, and ``vault_path_prefix`` at the top match your new environment.
+   Edit it so that ``environment``, ``fqdn``, and ``vaultPathPrefix`` at the top match your new environment.
    Choose which applications to enable or leave disabled.
 
 #. Decide on your approach to TLS certificates.

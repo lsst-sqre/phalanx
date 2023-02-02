@@ -1,7 +1,7 @@
 #!/bin/bash -e
 ENVIRONMENT=$1
 
-export VAULT_DOC_UUID=`yq -r .onepassword_uuid ../environments/values.yaml`
+export VAULT_DOC_UUID=`yq -r .onepasswordUuid ../environments/values.yaml`
 export VAULT_ADDR=https://vault.lsst.codes
 export VAULT_TOKEN=`./vault_key.py $ENVIRONMENT write`
 export OP_CONNECT_HOST=https://roundtable.lsst.codes/1password

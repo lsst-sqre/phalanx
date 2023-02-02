@@ -1,12 +1,12 @@
 environment: tucson-teststand
 fqdn: tucson-teststand.lsst.codes
-vault_path_prefix: secret/k8s_operator/tucson-teststand.lsst.codes
+vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
-alert_stream_broker:
+alert-stream-broker:
   enabled: false
 cachemachine:
   enabled: true
-cert_manager:
+cert-manager:
   enabled: true
 datalinker:
   enabled: false
@@ -16,7 +16,7 @@ gafaelfawr:
   enabled: true
 hips:
   enabled: false
-ingress_nginx:
+ingress-nginx:
   enabled: true
 mobu:
   enabled: false
@@ -28,7 +28,7 @@ noteburst:
   enabled: false
 nublado2:
   enabled: true
-plot_navigator:
+plot-navigator:
   enabled: false
 portal:
   enabled: true
@@ -36,29 +36,29 @@ postgres:
   enabled: false
 sasquatch:
   enabled: true
-production_tools:
+production-tools:
   enabled: false
 semaphore:
   enabled: false
 squareone:
   enabled: true
-squash_api:
+squash-api:
   enabled: false
 strimzi:
   enabled: true
-strimzi_registry_operator:
+strimzi-registry-operator:
   enabled: false
 tap:
   enabled: false
-tap_schema:
+tap-schema:
   enabled: false
 telegraf:
   enabled: true
 telegraf-ds:
   enabled: true
-times_square:
+times-square:
   enabled: false
-vault_secrets_operator:
+vault-secrets-operator:
   enabled: true
-vo_cutouts:
+vo-cutouts:
   enabled: false

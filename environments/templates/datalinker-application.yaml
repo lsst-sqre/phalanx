@@ -32,7 +32,7 @@ spec:
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
+          value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"

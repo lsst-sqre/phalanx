@@ -29,7 +29,7 @@ spec:
         - "values-{{ .Values.environment }}.yaml"
       parameters:
         - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
+          value: {{ .Values.vaultPathPrefix | quote }}
   ignoreDifferences:
     - group: ""
       kind: "Secret"

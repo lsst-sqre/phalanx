@@ -1,13 +1,13 @@
 environment: idfint
 fqdn: data-int.lsst.cloud
-vault_path_prefix: secret/k8s_operator/data-int.lsst.cloud
+vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 
-alert_stream_broker:
+alert-stream-broker:
   enabled: true
 cachemachine:
   enabled: true
-cert_manager:
+cert-manager:
   enabled: true
 datalinker:
   enabled: true
@@ -17,7 +17,7 @@ gafaelfawr:
   enabled: true
 hips:
   enabled: true
-ingress_nginx:
+ingress-nginx:
   enabled: true
 linters:
   enabled: true
@@ -31,7 +31,7 @@ noteburst:
   enabled: false
 nublado2:
   enabled: true
-plot_navigator:
+plot-navigator:
   enabled: true
 portal:
   enabled: true
@@ -39,7 +39,7 @@ postgres:
   enabled: true
 sasquatch:
   enabled: true
-production_tools:
+production-tools:
   enabled: true
 semaphore:
   enabled: true
@@ -49,19 +49,19 @@ squareone:
   enabled: true
 strimzi:
   enabled: true
-strimzi_registry_operator:
+strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true
-tap_schema:
+tap-schema:
   enabled: true
 telegraf:
   enabled: true
 telegraf-ds:
   enabled: true
-times_square:
+times-square:
   enabled: false
-vault_secrets_operator:
+vault-secrets-operator:
   enabled: true
-vo_cutouts:
+vo-cutouts:
   enabled: true

@@ -148,14 +148,8 @@ class Application:
         for env_name, env_configs in env_values.items():
             if app_name == "argocd":
                 active_environments.append(env_name)
-                continue
-
-            try:
-                reformatted_name = app_name.replace("-", "_")
-                if env_configs[reformatted_name]["enabled"] is True:
-                    active_environments.append(env_name)
-            except KeyError:
-                pass
+            elif env_configs.get(app_name, {}).get("enabled", False):
+                active_environments.append(env_name)
         active_environments.sort()
 
         # Open the Application Helm definition to get namespace info
@@ -324,23 +318,14 @@ class Environment:
             if app.name == "argocd":
                 # argocd is a special case because it's not toggled per env
                 apps.append(app)
-                continue
-
-            if app.name in values:
-                if values[app.name]["enabled"] is True:
-                    apps.append(app)
-            elif (app_name_underscore := app.name.replace("-", "_")) in values:
-                # Many keys in an env's values.yaml use underscores instead of
-                # dashes, so they don't match the actual application name
-                if values[app_name_underscore]["enabled"] is True:
-                    apps.append(app)
-
+            elif values.get(app.name, {}).get("enabled", False):
+                apps.append(app)
         apps.sort(key=lambda a: a.name)
 
         return Environment(
             name=name,
             domain=values["fqdn"],
-            vault_path_prefix=values["vault_path_prefix"],
+            vault_path_prefix=values["vaultPathPrefix"],
             apps=apps,
         )
 

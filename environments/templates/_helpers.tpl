@@ -1,5 +1,5 @@
 {{/* vim: set filetype=mustache: */}}
-{{- define "enabled_services" -}}
+{{- define "enabledServices" -}}
 argocd
   {{- range $okey, $oval := .Values }}
     {{- $otype := typeOf $oval -}}
