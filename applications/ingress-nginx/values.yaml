@@ -17,8 +17,8 @@ ingress-nginx:
       # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
 
-      # -- Add additional configuration used by Gafaelfawr to report errors
-      # from the authorization layer
+      # -- Add additional per-server configuration used by Gafaelfawr to
+      # report errors from the authorization layer
       # @default -- See `values.yaml`
       server-snippet: |
         location @autherror {
@@ -32,6 +32,11 @@ ingress-nginx:
           add_header WWW-Authenticate $auth_www_authenticate always;
           return 403;
         }
+
+      # -- Add additional global configuration required by `server-snippet`
+      # @default -- See `values.yaml`
+      http-snippet: |
+        set $auth_status '';
 
     service:
       # -- Force traffic routing policy to Local so that the external IP in
