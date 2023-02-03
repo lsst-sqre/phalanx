@@ -23,6 +23,7 @@ ingress-nginx:
       server-snippet: |
         set $auth_error_body '';
         set $auth_status '';
+        set $auth_www_authenticate '';
         location @autherror {
           default_type application/json;
           if ($auth_status = 400) {
