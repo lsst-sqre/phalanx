@@ -11,7 +11,7 @@ config:
     enabled: true
 
   github:
-    clientId: "65b6333a066375091548"
+    clientId: "64d11db34c968448381e"
 
   # Allow access by GitHub team.
   groupMapping:
