@@ -31,7 +31,7 @@ nublado2:
 plot-navigator:
   enabled: false
 portal:
-  enabled: true
+  enabled: false
 postgres:
   enabled: true
 sasquatch:
