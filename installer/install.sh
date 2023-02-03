@@ -119,12 +119,6 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
   --port-forward \
   --port-forward-namespace argocd
 
-echo "Waiting for all apps to be healthy"
-argocd app wait -l "argocd.argoproj.io/instance=science-platform" \
-  --port-forward \
-  --port-forward-namespace argocd \
-  --timeout 300
-
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
 echo "For the ArgoCD admin password:"
