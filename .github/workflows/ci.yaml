@@ -116,4 +116,7 @@ jobs:
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'
-        run: kubectl get all -A
+        run: |
+          kubectl get all -A
+          kubectl get ingress -A
+          kubectl logs -n gafaelfawr $(kubectl get -n gafaelfawr pods | awk '{ print $1 }' | grep gafaelfawr | egrep -v '(audit|maintenance|operator|redis)')
