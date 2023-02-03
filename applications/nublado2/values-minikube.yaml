@@ -1,4 +1,6 @@
 jupyterhub:
+  hub:
+    resources: {}
   debug:
     enabled: true
   ingress:
