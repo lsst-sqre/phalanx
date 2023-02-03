@@ -1,5 +1,7 @@
-cachemachineImagePolicy: "desired"
-
+image:
+  repository: "docker.io/lsstsqre/mobu"
+  tag: "ajt-dev"
+  pullPolicy: "Always"
 autostart:
   - name: "python"
     count: 1
