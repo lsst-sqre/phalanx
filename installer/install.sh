@@ -38,7 +38,7 @@ helm upgrade vault-secrets-operator ../applications/vault-secrets-operator \
   --values ../applications/vault-secrets-operator/values-$ENVIRONMENT.yaml \
   --create-namespace \
   --namespace vault-secrets-operator \
-  --timeout 15m \
+  --timeout 5m \
   --wait
 
 echo "Update / install argocd using helm..."
@@ -50,7 +50,7 @@ helm upgrade argocd ../applications/argocd \
   --set global.vaultSecretsPath="$VAULT_PATH_PREFIX" \
   --create-namespace \
   --namespace argocd \
-  --timeout 15m \
+  --timeout 5m \
   --wait
 
 echo "Login to argocd..."
