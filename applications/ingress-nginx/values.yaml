@@ -36,6 +36,7 @@ ingress-nginx:
       # -- Add additional global configuration required by `server-snippet`
       # @default -- See `values.yaml`
       http-snippet: |
+        set $auth_error_body '';
         set $auth_status '';
 
     service:
