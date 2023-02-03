@@ -116,4 +116,14 @@ jobs:
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'
-        run: kubectl get all -A
+        run: |
+          kubectl get all -A
+          kubectl get ingress -A
+
+      - name: Wait for all applications to be healthy
+        if: steps.filter.outputs.minikube == 'true'
+        run: |
+          argocd app wait -l "argocd.argoproj.io/instance=science-platform" \
+            --port-forward \
+            --port-forward-namespace argocd \
+            --timeout 300

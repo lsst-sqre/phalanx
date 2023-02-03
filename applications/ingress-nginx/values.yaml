@@ -17,10 +17,13 @@ ingress-nginx:
       # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
 
-      # -- Add additional configuration used by Gafaelfawr to report errors
-      # from the authorization layer
+      # -- Add additional per-server configuration used by Gafaelfawr to
+      # report errors from the authorization layer
       # @default -- See `values.yaml`
       server-snippet: |
+        set $auth_error_body '';
+        set $auth_status '';
+        set $auth_www_authenticate '';
         location @autherror {
           default_type application/json;
           if ($auth_status = 400) {

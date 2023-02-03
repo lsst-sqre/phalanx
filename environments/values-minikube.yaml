@@ -27,11 +27,11 @@ narrativelog:
 noteburst:
   enabled: true
 nublado2:
-  enabled: true
+  enabled: false
 plot-navigator:
   enabled: false
 portal:
-  enabled: true
+  enabled: false
 postgres:
   enabled: true
 sasquatch:
@@ -39,9 +39,9 @@ sasquatch:
 production-tools:
   enabled: false
 semaphore:
-  enabled: true
+  enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash-api:
