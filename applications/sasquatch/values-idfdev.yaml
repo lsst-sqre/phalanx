@@ -50,8 +50,10 @@ rest-proxy:
     hostname: data-dev.lsst.cloud
   kafka:
     topics:
-      - lsst.dm.sky-flux-visit-statistic-metric
       - test.next-visit
+    topicPrefixes:
+      - test
+      - lsst.dm
 
 chronograf:
   ingress:

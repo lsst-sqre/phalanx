@@ -20,11 +20,11 @@ spec:
           name: "*"
           patternType: literal
         operation: All
-      {{- range $topic := .Values.kafka.topics }}
+      {{- range $prefix := .Values.kafka.topicPrefixes }}
       - resource:
           type: topic
-          name: {{ $topic }}
-          patternType: literal
+          name: {{ $prefix }}
+          patternType: prefix
         type: allow
         host: "*"
         operation: All
