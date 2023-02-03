@@ -11,6 +11,7 @@ autostart:
     business: "JupyterPythonLoop"
     options:
       jupyter:
+        image_class: "latest-weekly"
         image_size: "Small"
     restart: true
   - name: "tap"
