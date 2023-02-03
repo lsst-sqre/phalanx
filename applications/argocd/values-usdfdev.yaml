@@ -29,19 +29,6 @@ argo-cd:
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
 
-      #dex.config: |
-      #  connectors:
-      #    # Auth using Google.
-      #    # See https://dexidp.io/docs/connectors/google/
-      #    - type: google
-      #      id: google
-      #      name: Google
-      #      config:
-      #        clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
-      #        clientSecret: $dex.clientSecret
-      #        hostedDomains:
-      #          - lsst.cloud
-      #        redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
           name: lsst-sqre
@@ -52,8 +39,6 @@ argo-cd:
         - url: https://charts.helm.sh/stable
           name: stable
 
-<<<<<<< HEAD:applications/argocd/values-usdfdev.yaml
-=======
   repoServer:
 
     env:
@@ -74,7 +59,6 @@ argo-cd:
       - name: NO_PROXY
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
->>>>>>> 4d2d4196 (feat: usdfdev initial import):services/argocd/values-usdfdev.yaml
     rbacConfig:
       policy.csv: |
         g, adam@lsst.cloud, role:admin
@@ -93,18 +77,10 @@ argo-cd:
 
 vault_secret:
   enabled: true
-<<<<<<< HEAD:applications/argocd/values-usdfdev.yaml
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/argocd
-=======
   path: secret/rubin/usdf-rsp-dev/argocd
->>>>>>> 4d2d4196 (feat: usdfdev initial import):services/argocd/values-usdfdev.yaml
 
 
 pull-secret:
   enabled: true
-<<<<<<< HEAD:applications/argocd/values-usdfdev.yaml
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
-=======
   path: secret/rubin/usdf-rsp-dev/pull-secret
->>>>>>> 4d2d4196 (feat: usdfdev initial import):services/argocd/values-usdfdev.yaml
 
