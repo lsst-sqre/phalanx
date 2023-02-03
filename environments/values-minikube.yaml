@@ -39,9 +39,9 @@ sasquatch:
 production-tools:
   enabled: false
 semaphore:
-  enabled: true
+  enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash-api:
