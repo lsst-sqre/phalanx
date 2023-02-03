@@ -21,6 +21,8 @@ ingress-nginx:
       # report errors from the authorization layer
       # @default -- See `values.yaml`
       server-snippet: |
+        set $auth_error_body '';
+        set $auth_status '';
         location @autherror {
           default_type application/json;
           if ($auth_status = 400) {
@@ -32,12 +34,6 @@ ingress-nginx:
           add_header WWW-Authenticate $auth_www_authenticate always;
           return 403;
         }
-
-      # -- Add additional global configuration required by `server-snippet`
-      # @default -- See `values.yaml`
-      http-snippet: |
-        set $auth_error_body '';
-        set $auth_status '';
 
     service:
       # -- Force traffic routing policy to Local so that the external IP in
