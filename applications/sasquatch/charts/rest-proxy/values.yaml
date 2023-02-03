@@ -47,8 +47,10 @@ kafka:
     name: sasquatch
   # -- Kafka bootstrap servers, use the internal listerner on port 9092 wit SASL connection.
   bootstrapServers: "SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"
-  # -- List of Kafka topics to create and expose through the REST proxy API
+  # -- List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API.
   topics:
+  # -- List of topic prefixes to use when exposing Kafka topics to the REST Proxy v2 API.
+  topicPrefixes:
 
 resources:
   requests:

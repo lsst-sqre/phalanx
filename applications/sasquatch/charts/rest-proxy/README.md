@@ -23,7 +23,8 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | ingress.path | string | `"/sasquatch-rest-proxy(/|$)(.*)"` | Ingress path. |
 | kafka.bootstrapServers | string | `"SASL_PLAINTEXT://sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap servers, use the internal listerner on port 9092 wit SASL connection. |
 | kafka.cluster.name | string | `"sasquatch"` | Name of the Strimzi Kafka cluster. |
-| kafka.topics | string | `nil` | List of Kafka topics to create and expose through the REST proxy API |
+| kafka.topicPrefixes | string | `nil` | List of topic prefixes to use when exposing Kafka topics to the REST Proxy v2 API. |
+| kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | nodeSelector | object | `{}` | Node selector configuration. |
 | podAnnotations | object | `{}` | Pod annotations. |
 | replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
