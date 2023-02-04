@@ -19,7 +19,7 @@ gafaelfawr:
 hips:
   enabled: false
 ingress_nginx:
-  enabled: true
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
