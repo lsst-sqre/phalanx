@@ -29,38 +29,6 @@ config:
   pull_secret_path: "secret/rubin/usdf-rsp-dev/pull-secret"
   cachemachine_image_policy: "desired"
 
-<<<<<<< HEAD
-    lab_environment:
-      PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
-      AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
-      S3_ENDPOINT_URL: "https://storage.googleapis.com"
-      AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
-      AUTO_REPO_BRANCH: prod
-      AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod
-
-    volumes:
-      - name: datasets
-        hostPath:
-          path: /data
-      - name: home
-        hostPath:
-          path: /tmp
-      - name: project
-        hostPath:
-          path: /tmp 
-      - name: scratch
-        hostPath:
-          path: /tmp
-    volume_mounts:
-      - name: datasets
-        mountPath: /datasets
-      - name: home
-        mountPath: /home
-      - name: project
-        mountPath: /project
-      - name: scratch
-        mountPath: /scratch
-=======
   lab_environment:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
     PGUSER: "rubin"
@@ -120,14 +88,6 @@ config:
       mountPath: /sdf/data/rubin
     - name: sdf-scratch
       mountPath: /scratch
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> c46dc451 (fix: remove indents)
-=======
-    - name: sdf-group-lsst
-      mountPath: /sdf/group/lsst
->>>>>>> b4d1d328 (feat: add sdf-group-lsst storage)
-=======
 #    - name: fs-ddn-sdf-group-rubin
 #      mountPath: /teststand
 #      subPath: lsstdata/offline/teststand
@@ -141,7 +101,6 @@ config:
     - name: fs-ddn-sdf-group-lsst
       mountPath: /fs/ddn/sdf/group/lsst
 
->>>>>>> 4d2d4196 (feat: usdfdev initial import)
 
   # Workaround to impose resource quotas at IDF
   user_resources_template: |

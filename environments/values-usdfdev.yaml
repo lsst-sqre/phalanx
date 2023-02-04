@@ -67,8 +67,5 @@ times_square:
 vault_secrets_operator:
   enabled: true
 vo_cutouts:
-<<<<<<< HEAD:environments/values-usdfdev.yaml
-  enabled: false
-=======
   enabled: true
->>>>>>> 4d2d4196 (feat: usdfdev initial import):science-platform/values-usdfdev.yaml
+
