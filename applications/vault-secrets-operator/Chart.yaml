@@ -5,7 +5,7 @@ sources:
   - https://github.com/ricoberger/vault-secrets-operator
 dependencies:
   - name: vault-secrets-operator
-    version: 1.19.8
+    version: 2.1.0
     repository: https://ricoberger.github.io/helm-charts/
 annotations:
   phalanx.lsst.io/docs: |
