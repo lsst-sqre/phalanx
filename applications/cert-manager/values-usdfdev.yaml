@@ -1,9 +1,5 @@
-cert-manager:
-  installCRDs: true
-  extraArgs:
-    - --dns01-recursive-nameservers-only
-    - --dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53
-
-pull-secret:
-  enabled: true
-  path: secret/rubin/data-dev.lsst.cloud/pull-secret
+solver:
+  route53:
+    aws_access_key_id: AKIAQSJOS2SFL5I4TYND
+    hosted_zone: Z0567328105IEHEMIXLCO
+    vault_secret_path: "secret/rubin/data-dev.lsst.cloud/cert-manager"
