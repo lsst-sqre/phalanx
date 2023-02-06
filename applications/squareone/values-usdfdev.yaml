@@ -3,6 +3,3 @@ config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://usdf-rsp-dev.slac.stanford.edu/semaphore"
 
-pull-secret:
-  enabled: true
-  path: secret/rubin/usdf-rsp-dev/pull-secret
