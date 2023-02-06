@@ -12,7 +12,7 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
-    
+
   ingress:
     hosts: ["usdf-rsp.slac.stanford.edu"]
     annotations:
@@ -73,9 +73,9 @@ config:
   volume_mounts:
     - name: home
       mountPath: "/home/"
-#    - name: sdf-group-rubin
-#      mountPath: /datasets
-#      subPath: datasets
+#   - name: sdf-group-rubin
+#     mountPath: /datasets
+#     subPath: datasets
     - name: sdf-data-rubin
       mountPath: /repo
       subPath: repo
@@ -88,12 +88,12 @@ config:
       mountPath: /sdf/data/rubin
     - name: sdf-scratch
       mountPath: /scratch
-#    - name: fs-ddn-sdf-group-rubin
-#      mountPath: /teststand
-#      subPath: lsstdata/offline/teststand
-#    - name: fs-ddn-sdf-group-rubin 
-#      mountPath: /instrument
-#      subPath: lsstdata/offline/instrument
+#   - name: fs-ddn-sdf-group-rubin
+#     mountPath: /teststand
+#     subPath: lsstdata/offline/teststand
+#   - name: fs-ddn-sdf-group-rubin
+#     mountPath: /instrument
+#     subPath: lsstdata/offline/instrument
     - name: fs-nfs
       mountPath: /fs/nfs
     - name: fs-ddn-sdf-group-rubin

@@ -2,4 +2,3 @@ replicaCount: 3
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://usdf-rsp-dev.slac.stanford.edu/semaphore"
-

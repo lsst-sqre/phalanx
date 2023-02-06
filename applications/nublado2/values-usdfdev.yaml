@@ -12,7 +12,7 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
-    
+
   ingress:
     hosts: ["usdf-rsp-dev.slac.stanford.edu"]
     annotations:

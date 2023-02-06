@@ -28,7 +28,7 @@ argo-cd:
     config:
       url: https://usdf-rsp.slac.stanford.edu/argo-cd
       oidc.config: |
-        name: SLAC 
+        name: SLAC
         issuer: https://dex.slac.stanford.edu/
         clientID: $oidc.clientId
         clientSecret: $oidc.clientSecret
@@ -71,4 +71,3 @@ argo-cd:
   configs:
     secret:
       createSecret: false
-

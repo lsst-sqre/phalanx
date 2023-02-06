@@ -8,4 +8,3 @@ config:
   gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
   gcsBucketType: "S3"
   jvmMaxHeapSize: "31G"
-

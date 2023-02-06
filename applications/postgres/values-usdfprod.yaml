@@ -1,4 +1,3 @@
-
 jupyterhub_db:
   user: 'jovyan'
   db: 'jupyterhub'

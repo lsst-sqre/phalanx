@@ -68,4 +68,3 @@ vault-secrets-operator:
   enabled: true
 vo-cutouts:
   enabled: true
-
