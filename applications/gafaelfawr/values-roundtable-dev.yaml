@@ -1,0 +1,36 @@
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "roundtable-dev-abe2:us-central1:roundtable-dev-572a252e"
+  serviceAccount: "gafaelfawr@roundtable-dev-abe2.iam.gserviceaccount.com"
+
+config:
+  slackAlerts: false
+
+  github:
+    clientId: "083a615e03ca3dde9392"
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: false
+
+  groupMapping:
+    "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+
+  errorFooter: |
+    To report problems or ask for help, contact #dm-square on the LSSTC Slack.

@@ -19,5 +19,7 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    idfprod/index
    minikube/index
    roe/index
+   roundtable-dev/index
+   roundtable-prod/index
    summit/index
    tucson-teststand/index
