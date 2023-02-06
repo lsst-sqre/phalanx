@@ -19,10 +19,6 @@ config:
     enabled: false
 
   groupMapping:
-    "admin:provision":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
