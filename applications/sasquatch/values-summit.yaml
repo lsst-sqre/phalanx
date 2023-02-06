@@ -43,13 +43,13 @@ kafka-connect-manager:
         topicsRegex: ".*MTMount"
       comcam:
         enabled: true
-        topicsRegex: ".*CCArchiver|.*CCCamera|.*CCHeaderService|.*CCOODS"
+        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
         topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
-        topicsRegex: ".*ATArchiver|.*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
         enabled: true
         topicsRegex: ".*MTM1M3"
