@@ -221,6 +221,3 @@ config:
     - "ytl"
     - "ppascual"
 
-cloudsql:
-  enabled: false
-

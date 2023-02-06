@@ -7,15 +7,4 @@ semaphore:
     enabled: true
     annotations:
       kubernetes.io/ingress.class: nginx
-    hosts:
-      - host: "rubin-data-dev.slac.stanford.edu"
-        paths:
-          - path: "/semaphore"
-            pathType: Prefix
-  imagePullSecrets:
-    - name: "pull-secret"
-  vaultSecretsPath: "secret/rubin/usdf-staffrsp-dev/semaphore"
 
-pull-secret:
-  enabled: true
-  path: secret/rubin/usdf-staffrsp-dev/pull-secret

@@ -13,9 +13,3 @@ ingress-nginx:
     podLabels:
       hub.jupyter.org/network-access-proxy-http: "true"
 
-vault_certificate:
-  enabled: false
-
-pull-secret:
-  enabled: true
-  path: secret/rubin/rubin-data-dev.slac.stanford.edu/pull-secret
