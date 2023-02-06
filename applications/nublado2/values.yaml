@@ -131,12 +131,12 @@ jupyterhub:
     chp:
       networkPolicy:
         interNamespaceAccessLabels: accept
-      # This currently causes Minikube deployment in GH-actions to fail.
-      # We want it sometime but it's not critical; it will help with
-      # scale-down
-      # pdb:
-      #   enabled: true
-      #   minAvailable: 1
+        # This currently causes Minikube deployment in GH-actions to fail.
+        # We want it sometime but it's not critical; it will help with
+        # scale-down
+        # pdb:
+        #   enabled: true
+        #   minAvailable: 1
 
   # Any instantiation of this chart must also set ingress.hosts and add
   # the nginx.ingress.kubernetes.io/auth-signin annotation pointing to the

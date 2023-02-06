@@ -193,7 +193,7 @@ bucketmapper:
     tag: 0.1.23
 
 global:
-   # -- Base URL for the environment
+  # -- Base URL for the environment
   # @default -- Set by Argo CD
   baseUrl: ""
 
