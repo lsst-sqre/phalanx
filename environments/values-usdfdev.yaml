@@ -45,7 +45,7 @@ production-tools:
 semaphore:
   enabled: true
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash-api:
@@ -67,4 +67,4 @@ times-square:
 vault-secrets-operator:
   enabled: true
 vo-cutouts:
-  enabled: true
+  enabled: false
