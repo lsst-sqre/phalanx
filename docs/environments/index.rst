@@ -23,3 +23,5 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    roundtable-prod/index
    summit/index
    tucson-teststand/index
+   usdfdev/index
+   usdfprod/index
