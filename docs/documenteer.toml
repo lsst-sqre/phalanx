@@ -27,6 +27,10 @@ ignore = [
     '^https://data.lsst.cloud',
     '^https://data-dev.lsst.eu',
     '^https://rsp.lsst.ac.uk',
+    '^https://roundtable-dev.lsst.cloud',
+    '^https://roundtable.lsst.cloud',
+    '^https://usdf-rsp.slac.stanford.edu',
+    '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://github.com/lsst-sqre/phalanx/blob/main/applications/strimzi/values.yaml',
     '^https://github.com/orgs/',
 ]
