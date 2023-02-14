@@ -1,0 +1,95 @@
+redis:
+  persistence:
+    storageClass: "rook-ceph-block"
+
+config:
+  slackAlerts: true
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+  github:
+    clientId: "ec88b9b897f302b620d1"
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "base-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+    "exec:notebook":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "base-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "base-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+    "read:image":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "base-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+      - github:
+          organization: "lsst-ts"
+          team: "base-access"
+      - github:
+          organization: "rubin-summit"
+          team: "rsp-access"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"

@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "cachemachine.fullname" . }}-anonymous
+  labels:
+    {{- include "cachemachine.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ template "cachemachine.fullname" . }}-anonymous
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+      {{- with .Values.ingress.anonymousAnnotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/cachemachine/.*/(available|desired)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "cachemachine.fullname" . }}
+                  port:
+                    number: 80

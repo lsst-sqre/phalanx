@@ -3,14 +3,19 @@ import argparse
 import json
 import os
 
-from onepassword import OnePassword
+from onepasswordconnectsdk import new_client_from_environment
 
 
 class VaultKeyRetriever:
     def __init__(self):
-        self.op = OnePassword()
-        vault_keys_doc = self.op.get_item(uuid=os.environ["VAULT_DOC_UUID"])
-        vault_keys_json = vault_keys_doc["details"]["notesPlain"]
+        self.op = new_client_from_environment()
+        vault_keys = self.op.get_item(
+            os.environ["VAULT_DOC_UUID"], "RSP-Vault"
+        )
+        for field in vault_keys.fields:
+            if field.label == "notesPlain":
+                vault_keys_json = field.value
+                break
         self.vault_keys = json.loads(vault_keys_json)
 
     def retrieve_key(self, environment, key_type):

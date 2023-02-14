@@ -1,0 +1,37 @@
+{{- if .Values.sasquatch.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sasquatch
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: sasquatch
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: sasquatch
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/sasquatch
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

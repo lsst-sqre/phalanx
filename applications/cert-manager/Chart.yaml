@@ -1,0 +1,11 @@
+apiVersion: v2
+name: cert-manager
+version: 1.0.0
+description: TLS certificate manager
+home: https://cert-manager.io/
+sources:
+  - https://github.com/cert-manager/cert-manager
+dependencies:
+  - name: cert-manager
+    version: v1.11.0
+    repository: https://charts.jetstack.io

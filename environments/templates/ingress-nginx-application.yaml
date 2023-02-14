@@ -1,0 +1,33 @@
+{{- if (index .Values "ingress-nginx" "enabled") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ingress-nginx
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: ingress-nginx
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/ingress-nginx
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

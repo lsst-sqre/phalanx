@@ -1,0 +1,184 @@
+# Global parameters will be set by parameters injected via the Argo CD
+# Application resource and should not be set in the individual environment
+# values files.
+
+replicaCount:
+  # -- Number of API deployment pods to start
+  api: 1
+
+  # -- Number of worker deployment pods to start
+  worker: 1
+
+image:
+  # -- Image to use in the times-square deployment
+  repository: ghcr.io/lsst-sqre/times-square
+
+  # -- Pull policy for the times-square image
+  pullPolicy: IfNotPresent
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for the times-square deployment pod
+podAnnotations: {}
+
+serviceAccount:
+  # -- Force creation of a service account. Normally, no service account is
+  # used or mounted. If CloudSQL is enabled, a service account is always
+  # created regardless of this value.
+  create: false
+
+  # -- Annotations to add to the service account. If CloudSQL is in use, the
+  # annotation specifying the Google service account will also be added.
+  annotations: {}
+
+  # -- Name of the service account to use
+  # @default -- Name based on the fullname template
+  name: ""
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 8080
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Root URL path prefix for times-square API
+  path: "/times-square/api"
+
+# -- Resource limits and requests for the times-square deployment pod
+resources: {}
+
+autoscaling:
+  # -- Enable autoscaling of times-square deployment
+  enabled: false
+
+  # -- Minimum number of times-square deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of times-square deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of times-square deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Node selection rules for the times-square deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the times-square deployment pod
+tolerations: []
+
+# -- Affinity rules for the times-square deployment pod
+affinity: {}
+
+config:
+  # -- Name of the service.
+  name: "times-square"
+
+  # -- Run profile: "production" or "development"
+  profile: "production"
+
+  # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  logLevel: "INFO"
+
+  # -- URL for the PostgreSQL database
+  # @default -- None, must be set
+  databaseUrl: ""
+
+  # -- URL for Redis html / noteburst job cache database
+  # @default -- Points to embedded Redis
+  redisCacheUrl: "redis://times-square-redis:6379/0"
+
+  # -- URL for Redis arq queue database
+  # @default -- Points to embedded Redis
+  redisQueueUrl: "redis://times-square-redis:6379/1"
+
+  # -- GitHub application ID
+  githubAppId: ""
+
+  # -- Toggle to enable the GitHub App functionality
+  enableGitHubApp: "False"
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.33.2"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `times-square`
+  # Kubernetes service accounts and has the `cloudsql.client` role
+  serviceAccount: ""
+
+redis:
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "8Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+global:
+  # -- Base URL for the environment
+  # @default -- Set by times-square Argo CD Application
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by times-square Argo CD Application
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by times-square Argo CD Application
+  vaultSecretsPathPrefix: ""

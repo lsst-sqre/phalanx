@@ -4,8 +4,9 @@ name: Docs
   pull_request:
     paths:
       - "docs/**"
-      - "services/*/Chart.yaml"
-      - "services/*/values.yaml"
+      - "applications/*/Chart.yaml"
+      - "applications/*/values.yaml"
+      - "environments/values-*.yaml"
   push:
     branches-ignore:
       # These should always correspond to pull requests, so ignore them for
@@ -20,8 +21,9 @@ name: Docs
       - "*"
     paths:
       - "docs/**"
-      - "services/*/Chart.yaml"
-      - "services/*/values.yaml"
+      - "applications/*/Chart.yaml"
+      - "applications/*/values.yaml"
+      - "environments/values-*.yaml"
 
 jobs:
   docs:
@@ -48,7 +50,7 @@ jobs:
         uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.10"
-          tox-envs: "docs,docs-linkcheck"
+          tox-envs: "docs"
 
       # Only attempt documentation uploads for long-lived branches, tagged
       # releases, and pull requests from ticket branches.  This avoids version

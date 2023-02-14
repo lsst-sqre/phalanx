@@ -1,9 +1,0 @@
-apiVersion: v2
-name: alert-database
-version: 2.1.0
-description: Archival database of alerts sent through the alert stream.
-maintainers:
-  - name: swnelson
-    email: swnelson@uw.edu
-appVersion: 1.0.0
-type: application

@@ -1,0 +1,93 @@
+# These four settings should be set in each environment values-*.yaml file.
+
+# -- Name of the environment
+# @default -- None, must be set
+environment: ""
+
+# -- Fully-qualified domain name where the environment is running
+# @default -- None, must be set
+fqdn: ""
+
+# -- Prefix for Vault secrets for this environment
+# @default -- None, must be set
+vaultPathPrefix: ""
+
+# -- Butler repository index to use for this environment
+# @default -- None, must be set
+butlerRepositoryIndex: ""
+
+alert-stream-broker:
+  enabled: false
+cachemachine:
+  enabled: false
+cert-manager:
+  enabled: false
+datalinker:
+  enabled: false
+exposurelog:
+  enabled: false
+gafaelfawr:
+  enabled: false
+hips:
+  enabled: false
+ingress-nginx:
+  enabled: false
+linters:
+  enabled: false
+mobu:
+  enabled: false
+moneypenny:
+  enabled: false
+narrativelog:
+  enabled: false
+noteburst:
+  enabled: false
+nublado2:
+  enabled: false
+plot-navigator:
+  enabled: false
+portal:
+  enabled: false
+postgres:
+  enabled: false
+sasquatch:
+  enabled: false
+production-tools:
+  enabled: false
+semaphore:
+  enabled: false
+sherlock:
+  enabled: false
+sqlproxy-cross-project:
+  enabled: false
+squareone:
+  enabled: false
+squash-api:
+  enabled: false
+strimzi:
+  enabled: false
+strimzi-registry-operator:
+  enabled: false
+tap:
+  enabled: false
+tap-schema:
+  enabled: false
+telegraf:
+  enabled: false
+telegraf-ds:
+  enabled: false
+times-square:
+  enabled: false
+vault-secrets-operator:
+  enabled: false
+vo-cutouts:
+  enabled: false
+
+# -- URL of the repository for all applications
+repoURL: https://github.com/lsst-sqre/phalanx.git
+
+# -- Revision of repository to use for all applications
+targetRevision: "main"
+
+# -- UUID of the 1Password item in which to find Vault tokens
+onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"

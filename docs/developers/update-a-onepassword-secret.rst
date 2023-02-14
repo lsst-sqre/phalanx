@@ -2,7 +2,7 @@
 Updating a secret stored in 1Password and VaultSecret
 #####################################################
 
-Secrets that are stored in 1Password are synchronized into Vault using the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
+Secrets that are stored in 1Password are synchronized into Vault using the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/main/installer/generate_secrets.py>`__ script.
 Once they are in Vault, they are accessible to the Vault Secrets Operator, which responds to creation of any ``VaultSecret`` resources in Kubernetes by grabbing the current value of the secret data in Vault.
 
 The Vault Secrets Operator reconciles any changes as well by comparing Vault's state with that of any ``VaultSecret`` resources every 60 seconds.
@@ -16,7 +16,7 @@ This reconciliation process can also take a bit of time; the net result is that 
 So, if you want to make any changes to a ``VaultSecret``'s data, you'll need to:
 
 1. Make the changes in 1Password
-2. Run the `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__ script, as described in :doc:`add-a-onepassword-secret`.
+2. Run the `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__ script, as described in :doc:`add-a-onepassword-secret`.
 3. Wait a few minutes for automatic reconciliation
 
 

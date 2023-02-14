@@ -3,7 +3,7 @@ name: CI
 "on":
   pull_request:
     branches:
-      - "master"
+      - "main"
 
 jobs:
   lint:
@@ -23,7 +23,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
@@ -40,7 +40,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: "3.11"
 
       - name: Install test dependencies
         run: pip install .
@@ -75,17 +75,18 @@ jobs:
           filters: |
             minikube:
               - ".github/**"
+              - "applications/*/Chart.yaml"
+              - "applications/*/templates/**"
+              - "applications/*/values.yaml"
+              - "applications/*/values-minikube.yaml"
+              - "environments/Chart.yaml"
+              - "environments/templates/**"
+              - "environments/values-minikube.yaml"
               - "installer/**"
-              - "science-platform/Chart.yaml"
-              - "science-platform/templates/**"
-              - "science-platform/values-minikube.yaml"
-              - "services/*/Chart.yaml"
-              - "services/*/templates/**"
-              - "services/*/values-minikube.yaml"
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: manusa/actions-setup-minikube@v2.7.1
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
           minikube version: 'v1.28.0'
           kubernetes version: 'v1.25.2'
@@ -101,7 +102,7 @@ jobs:
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.5.1/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.5.5/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
           sudo pip install -r installer/requirements.txt
@@ -115,4 +116,14 @@ jobs:
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'
-        run: kubectl get all -A
+        run: |
+          kubectl get all -A
+          kubectl get ingress -A
+
+      - name: Wait for all applications to be healthy
+        if: steps.filter.outputs.minikube == 'true'
+        run: |
+          argocd app wait -l "argocd.argoproj.io/instance=science-platform" \
+            --port-forward \
+            --port-forward-namespace argocd \
+            --timeout 300

@@ -24,12 +24,11 @@ Checklist
 
 #. Fork the `Phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
 
-#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/master/installer/requirements.txt>`__.
-   If you are not using 1Password as your source of truth (which, if you are not in a SQuaRE-managed environment, you probably are not) then you may omit ``1password``.
+#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/main/installer/requirements.txt>`__.
 
-#. Create a new ``values-<environment>.yaml`` file in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
+#. Create a new ``values-<environment>.yaml`` file in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
-   Edit it so that ``environment``, ``fqdn``, and ``vault_path_prefix`` at the top match your new environment.
+   Edit it so that ``environment``, ``fqdn``, and ``vaultPathPrefix`` at the top match your new environment.
    Choose which applications to enable or leave disabled.
 
 #. Decide on your approach to TLS certificates.
@@ -45,7 +44,7 @@ Checklist
    The most frequently used method of providing that file system is NFS mounts, but you may instead want to use a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
    Either way, you will need to configure appropriate mount points in :px-app:`nublado2` and :px-app:`moneypenny` when you configure each application in the next step.
 
-#. For each enabled application, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__.
+#. For each enabled application, create a corresponding ``values-<environment>.yaml`` file in the relevant directory under `/applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
 
@@ -56,10 +55,12 @@ Checklist
    - :px-app-bootstrap:`portal`
    - :px-app-bootstrap:`squareone`
 
-#. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__.
+#. Generate the secrets for the new environment and store them in Vault with `/installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__.
    You will need the write key for the Vault enclave you are using for this environment.
+   If you are using 1Password as a source of secrets, you will also need the access token for the 1Password Connect server.
+   (For SQuaRE-managed deployments, this is in the ``SQuaRE Integration Access Token: Argo`` 1Password item in the SQuaRE vault.)
 
-#. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/install.sh>`__.
+#. Run the installer script at `/installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
    Debug any problems.
    The most common source of problems are errors or missing configuration in the ``values-<environment>.yaml`` files you created for each application.
 

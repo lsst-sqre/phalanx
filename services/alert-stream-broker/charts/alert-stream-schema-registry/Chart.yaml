@@ -1,9 +1,0 @@
-apiVersion: v2
-name: alert-stream-schema-registry
-version: 2.1.0
-description: Confluent Schema Registry for managing schema versions for the Alert Stream
-maintainers:
-  - name: swnelson
-    email: swnelson@uw.edu
-appVersion: 1.0.0
-type: application

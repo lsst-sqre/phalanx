@@ -1,0 +1,102 @@
+# Mostly based on the Strimzi Kafka MirrorMaker2 example
+# configuration for handling high volumes of messages.
+{{ if .Values.mirrormaker2.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker2
+metadata:
+  name: replicator
+spec:
+  version: {{ .Values.kafka.version | quote }}
+  replicas: 1
+  # In the unidirectional (active/passive) replication scenario
+  # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
+  connectCluster: "target"
+  clusters:
+  - alias: "source"
+    bootstrapServers: {{ .Values.mirrormaker2.source.bootstrapServer }}
+    tls: {}
+    # The external kafka listeneres in Sasquatch use scram-sha-512 authentication
+    # Use the replicator Kafka user to authenticate against the Kafka source cluster.
+    # Not the same secret with the replicator password must exist in both the source
+    # and the target clusters.
+    authentication:
+      type: scram-sha-512
+      username: replicator
+      passwordSecret:
+        secretName: sasquatch
+        password: replicator-password
+  - alias: "target"
+    # For the Kafka target cluster, use the internal listener with tls encryption and mutual tls authentication.
+    bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
+    tls:
+      trustedCertificates:
+        - secretName: {{ .Values.cluster.name }}-cluster-ca-cert
+          certificate: ca.crt
+    authentication:
+      type: tls
+      certificateAndKey:
+        secretName: {{ .Values.cluster.name }}-connect
+        certificate: user.crt
+        key: user.key
+    config:
+      # This should be enough time for the sent messages to be acknowledged
+      # by the brokers and offset data committed.
+      offset.flush.timeout.ms: 10000
+  mirrors:
+  - sourceCluster: "source"
+    targetCluster: "target"
+    sourceConnector:
+      tasksMax: 10
+      config:
+        replication.factor: 3
+        offset-syncs.topic.replication.factor: 3
+        # Dot not replicate topic ACLs configuration.
+        sync.topic.acls.enabled: "false"
+        # The frequency to check for new topics.
+        refresh.topics.interval.seconds: 60
+        # Policy to define the remote topic naming convention.
+        # This setting will preserve topic names in the target cluster.
+        replication.policy.separator: ""
+        replication.policy.class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+        # Handling high volumes of messages
+        # By increasing the batch size, produce requests are delayed and more messages are
+        # added to the batch and sent to brokers at the same time.
+        # This can improve throughput when you have just a few topic partitions that
+        # handle large numbers of messages.
+        producer.override.batch.size: 327680
+        # Use linger.ms to add a wait time in milliseconds to delay produce requests when
+        # producer load decreases.
+        # The delay means that more records can be added to batches if they are under the
+        # maximum batch size.
+        producer.override.linger.ms: 100
+        # Accept larger messages.
+        # See also message.max.bytes broker configuration.
+        producer.max.request.size: 262144
+    heartbeatConnector:
+      config:
+        heartbeats.topic.replication.factor: 3
+    checkpointConnector:
+      config:
+        checkpoints.topic.replication.factor: 3
+        # Frequency of checks for new consumer groups.
+        refresh.groups.interval.seconds: 300
+        # Enables synchronization of consumer group offsets to the target cluster.
+        sync.group.offsets.enabled: true
+        # The frequency to sync group offsets.
+        sync.group.offsets.interval.seconds: 60
+        # The frequency of checks for offset tracking.
+        emit.checkpoints.interval.seconds: 60
+        # Policy to define the remote topic naming convention.
+        # This setting will preserve topic names in the target cluster.
+        replication.policy.class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+    # Topic replication from the source cluster defined as a comma-separated list
+    # or regular expression pattern.
+    topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}
+  resources:
+    requests:
+      cpu: {{ .Values.mirrormaker2.resources.requests.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.requests.memory | quote }}
+    limits:
+      cpu: {{ .Values.mirrormaker2.resources.limits.cpu | quote }}
+      memory: {{ .Values.mirrormaker2.resources.limits.memory | quote }}
+{{ end }}

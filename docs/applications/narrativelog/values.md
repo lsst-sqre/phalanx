@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`narrativelog` application.
 
-```{include} ../../../services/narrativelog/README.md
+```{include} ../../../applications/narrativelog/README.md
 ---
 start-after: "## Values"
 ---

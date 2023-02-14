@@ -1,0 +1,386 @@
+# Default values for Gafaelfawr.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Number of web frontend pods to start
+replicaCount: 1
+
+image:
+  # -- Gafaelfawr image to use
+  repository: "ghcr.io/lsst-sqre/gafaelfawr"
+
+  # -- Pull policy for the Gafaelfawr image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of Gafaelfawr image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Resource limits and requests for the Gafaelfawr frontend pod
+resources: {}
+
+# -- Annotations for the Gafaelfawr frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the Gafaelfawr frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the Gafaelfawr frontend pod
+tolerations: []
+
+# -- Affinity rules for the Gafaelfawr frontend pod
+affinity: {}
+
+config:
+  # -- URL for the PostgreSQL database
+  # @default -- None, must be set if `cloudsql.enabled` is not true
+  databaseUrl: ""
+
+  # -- Choose from the text form of Python logging levels
+  loglevel: "INFO"
+
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
+  # -- Session length and token expiration (in minutes)
+  # @default -- `43200` (30 days)
+  tokenLifetimeMinutes: 43200
+
+  # -- List of netblocks used for internal Kubernetes IP addresses, used to
+  # determine the true client IP for logging
+  # @default -- [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`]
+  proxies:
+    - "10.0.0.0/8"
+    - "172.16.0.0/12"
+    - "192.168.0.0/16"
+
+  cilogon:
+    # -- CILogon client ID. One and only one of this,
+    # `config.github.clientId`, or `config.oidc.clientId` must be set.
+    clientId: ""
+
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
+
+    # -- Whether to use the test instance of CILogon
+    test: false
+
+    # -- Additional parameters to add
+    loginParams:
+      skin: "LSST"
+
+    # -- Claim from which to get the username
+    # @default -- `"uid"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
+
+    # -- Claim from which to get the primary GID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- Do not set a primary GID
+    gidClaim: ""
+
+    # -- Claim from which to get the group membership (only used if not
+    # retrieved from LDAP)
+    # @default -- `"isMemberOf"`
+    groupsClaim: ""
+
+  firestore:
+    # -- If set, assign UIDs and GIDs using Google Firestore in the given
+    # project.  Cloud SQL must be enabled and the Cloud SQL service account
+    # must have read/write access to that Firestore instance.
+    # @default -- Firestore support is disabled
+    project: ""
+
+  github:
+    # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
+    # or `config.oidc.clientId` must be set.
+    clientId: ""
+
+  oidc:
+    # -- Client ID for generic OpenID Connect support. One and only one of
+    # this, `config.cilogon.clientId`, or `config.github.clientId` must be set.
+    clientId: ""
+
+    # -- Audience for the JWT token
+    # @default -- Value of `config.oidc.clientId`
+    audience: ""
+
+    # -- URL to which to redirect the user for authorization
+    # @default -- None, must be set
+    loginUrl: ""
+
+    # -- Additional parameters to add to the login request
+    loginParams: {}
+
+    # -- URL from which to retrieve the token for the user
+    # @default -- None, must be set
+    tokenUrl: ""
+
+    # -- Where to send the user if their username cannot be found in LDAP
+    # @default -- Login fails with an error
+    enrollmentUrl: ""
+
+    # -- Issuer for the JWT token
+    # @default -- None, must be set
+    issuer: ""
+
+    # -- Scopes to request from the OpenID Connect provider
+    scopes:
+      - "openid"
+
+    # -- Claim from which to get the username
+    # @default -- `"sub"`
+    usernameClaim: ""
+
+    # -- Claim from which to get the numeric UID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- `"uidNumber"`
+    uidClaim: ""
+
+    # -- Claim from which to get the primary GID (only used if not retrieved
+    # from LDAP or Firestore)
+    # @default -- Do not set a primary GID
+    gidClaim: ""
+
+    # -- Claim from which to get the group membership (only used if not
+    # retrieved from LDAP)
+    # @default -- `"isMemberOf"`
+    groupsClaim: ""
+
+  ldap:
+    # -- LDAP server URL from which to retrieve user group information
+    # @default -- Do not use LDAP
+    url: ""
+
+    # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
+    # set in the Gafaelfawr secret
+    # @default -- Use anonymous binds
+    userDn: ""
+
+    # -- Base DN for the LDAP search to find a user's groups
+    # @default -- None, must be set
+    groupBaseDn: ""
+
+    # -- Object class containing group information
+    groupObjectClass: "posixGroup"
+
+    # -- Member attribute of the object class. Values must match the username
+    # returned in the token from the OpenID Connect authentication server.
+    groupMemberAttr: "member"
+
+    # -- Base DN for the LDAP search to find a user's entry
+    # @default -- Get user metadata from the upstream authentication provider
+    userBaseDn: ""
+
+    # -- Search attribute containing the user's username
+    userSearchAttr: "uid"
+
+    # -- Attribute containing the user's full name
+    nameAttr: "displayName"
+
+    # -- Attribute containing the user's email address
+    emailAttr: "mail"
+
+    # -- Attribute containing the user's UID number (set to `uidNumber` for
+    # most LDAP servers)
+    # @default -- Get UID from upstream authentication provider
+    uidAttr: ""
+
+    # -- Attribute containing the user's primary GID (set to `gidNumber` for
+    # most LDAP servers)
+    # @default -- Use GID of user private group
+    gidAttr: ""
+
+    # -- Whether to synthesize a user private group for each user with a GID
+    # equal to their UID
+    addUserGroup: false
+
+  oidcServer:
+    # -- Whether to support OpenID Connect clients. If set to true,
+    # `oidc-server-secrets` must be set in the Gafaelfawr secret.
+    enabled: false
+
+  # -- Names and descriptions of all scopes in use. This is used to populate
+  # the new token creation page. Only scopes listed here will be options when
+  # creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/).
+  # @default -- See the `values.yaml` file
+  knownScopes:
+    "admin:jupyterlab": >-
+      Can create and destroy labs for any user
+    "admin:token": >-
+      Can create and modify tokens for any user
+    "admin:provision": >-
+      Can perform privileged user provisioning
+    "exec:admin": >-
+      Administrative access to all APIs
+    "exec:internal-tools": >-
+      Use project-internal tools.
+    "exec:notebook": >-
+      Use the Notebook Aspect
+    "exec:portal": >-
+      Use the Portal Aspect
+    "read:alertdb": >-
+      Retrieve alert packets and schemas from the alert archive database
+    "read:image": >-
+      Retrieve images from project datasets
+    "read:tap": >-
+      Execute SELECT queries in the TAP interface on project datasets
+    "user:token": >-
+      Can create and modify user tokens
+
+  # -- Defines a mapping of scopes to groups that provide that scope. See
+  # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
+  groupMapping: {}
+
+  # -- Usernames to add as administrators when initializing a new database.
+  # Used only if there are no administrators.
+  initialAdmins: []
+
+  # -- HTML footer to add to any login error page (inside a <p> tag).
+  errorFooter: ""
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
+  # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as
+  # a separate service (behind a `NetworkPolicy`) for other, lower-traffic
+  # services.
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.33.2"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `gafaelfawr`
+  # Kubernetes service account and has the `cloudsql.client` role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
+
+  # -- Resource limits and requests for the Cloud SQL Proxy pod
+  resources: {}
+
+  # -- Annotations for the Cloud SQL Proxy pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Cloud SQL Proxy pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Cloud SQL Proxy pod
+  tolerations: []
+
+  # -- Affinity rules for the Cloud SQL Proxy pod
+  affinity: {}
+
+maintenance:
+  # -- Cron schedule string for Gafaelfawr data consistency audit (in UTC)
+  auditSchedule: "30 3 * * *"
+
+  # -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
+  maintenanceSchedule: "5 * * * *"
+
+  # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
+  resources: {}
+
+  # -- Annotations for Gafaelfawr maintenance and audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Gafaelfawr maintenance and audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Gafaelfawr maintenance and audit pods
+  tolerations: []
+
+  # -- Affinity rules for Gafaelfawr maintenance and audit pods
+  affinity: {}
+
+operator:
+  # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
+  resources: {}
+
+  # -- Annotations for the token management pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the token management pod
+  nodeSelector: {}
+
+  # -- Tolerations for the token management pod
+  tolerations: []
+
+  # -- Affinity rules for the token management pod
+  affinity: {}
+
+redis:
+  image:
+    # -- Redis image to use
+    repository: "redis"
+
+    # -- Redis image tag to use
+    tag: "7.0.8"
+
+    # -- Pull policy for the Redis image
+    pullPolicy: "IfNotPresent"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

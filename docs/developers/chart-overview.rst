@@ -8,9 +8,9 @@ Charts
 ======
 
 Argo CD manages applications in the Rubin Science Platform through a set of Helm charts.
-Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__.
+Which Helm charts to deploy in a given environment is controlled by the ``values-<environment>.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
 
-The `/services <https://github.com/lsst-sqre/phalanx/tree/master/services/>`__ directory defines templates in its ``templates`` directory and values to resolve those templates in ``values.yaml`` and ``values-<environment>.yaml`` files to customize the application for each environment.  For first-party charts, the ``templates`` directory is generally richly populated.
+The `/applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__ directory defines templates in its ``templates`` directory and values to resolve those templates in ``values.yaml`` and ``values-<environment>.yaml`` files to customize the application for each environment.  For first-party charts, the ``templates`` directory is generally richly populated.
 
 For third-party charts the ``templates`` directory might not exist or might have only a small set of resources specific to the Science Platform.
 In that case, most of the work of deploying an application is done by charts declared as dependencies (via the ``dependencies`` key in ``Chart.yaml``) of the top-level chart.
@@ -23,7 +23,7 @@ In the latter case, these charts are maintained in the `lsst-sqre/charts GitHub 
 Chart versioning
 ================
 
-The top level of charts defined in the ``/services`` directory are used only by Argo CD and are never published as Helm charts.
+The top level of charts defined in the ``/applications`` directory are used only by Argo CD and are never published as Helm charts.
 Their versions are therefore irrelevant.
 The version of each chart is set to ``1.0.0`` because ``version`` is a required field in ``Chart.yaml`` and then never changed.
 It is instead the ``appVersion`` field that is used to point to a particular release of a first-person chart.  Reverting to a previous configuration in this layer of charts is done via a manual revert in Argo CD or by reverting a change in the GitHub repository so that the ``appVersion`` points to an earlier release.  It is **not** done by pointing Argo CD to an older chart.
@@ -44,8 +44,8 @@ However, for applications still under development, we sometimes use a floating d
 There is currently no generic mechanism to deploy different versions of a chart in different environments, as appVersion is set in ``Chart.yaml``.
 
 That does not mean that rolling out a new version is all-or-nothing: you have a couple of different options for testing new versions.
-The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use Argo CD to deploy the application from the branch, rather than ``master``, ``main``, or ``HEAD`` (as the case may be).
-This will cause the application resource in the ``science-platform`` app to show as out of sync, which is indeed correct, and a helpful reminder that you may be running from a branch when you forget and subsequently rediscover that fact weeks later.
+The easiest is to modify the appVersion in ``Chart.yaml`` on your development branch and then use Argo CD to deploy the application from the branch, rather than ``main`` or ``HEAD`` (as the case may be).
+This will cause the application resource in the ``environments`` app to show as out of sync, which is indeed correct, and a helpful reminder that you may be running from a branch when you forget and subsequently rediscover that fact weeks later.
 Additionally, many charts allow specification of a tag (usually some variable like ``image.tag`` in a values file), so that is a possibility as well.
 If your chart doesn't have a way to control what image tag you're deploying from, consider adding the capability.
 In any event, for RSP instances, we (as a matter of policy) disable automatic deployment in Argo CD so there is a human check on whether a given chart is safe to deploy in a given environment, and updates are deployed to production environments (barring extraordinary circumstances) during our specified maintenance windows.

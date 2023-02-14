@@ -1,0 +1,31 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "semaphore.fullname" . }}
+  labels:
+    {{- include "semaphore.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ template "semaphore.fullname" . }}
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "semaphore.fullname" . }}
+                  port:
+                    number: 80
+{{- end }}

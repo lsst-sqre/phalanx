@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`sherlock` application.
 
-```{include} ../../../services/sherlock/README.md
+```{include} ../../../applications/sherlock/README.md
 ---
 start-after: "## Values"
 ---

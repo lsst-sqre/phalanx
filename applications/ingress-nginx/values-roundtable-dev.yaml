@@ -1,0 +1,4 @@
+ingress-nginx:
+  controller:
+    service:
+      loadBalancerIP: "34.29.88.130" # public-ip reserved by Terraform
