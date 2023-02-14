@@ -19,6 +19,18 @@ kafdrop:
     enabled: true
     hostname: usdf-rsp-dev.slac.stanford.edu
 
+rest-proxy:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdf-rsp-dev.slac.stanford.edu
+  kafka:
+    topics:
+      - test.next-visit
+    topicPrefixes:
+      - test
+      - lsst.dm
+
 chronograf:
   ingress:
     enabled: true
