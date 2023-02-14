@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   # -- tap image to use
-  repository: "gabrimaine/gafaelfawr"
+  repository: "gabrimaine/gafaefawr"
   tag: "7.0.0-dev"
 
 redis:
@@ -26,11 +26,14 @@ config:
     # scopes: 
     #   - "openid"
     issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
-    gidClaim: "gid_number"
+    #gidClaim: "gid_number"
     uidClaim: "uid_number"
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
-
+  idm: 
+    url: "https://idnum.in2p3.fr:8443/openidm/system/freeipa/"
+    idmId: "idnum-client-ldaplsst"
+    
   oidcServer:
     enabled: false
 
