@@ -1,12 +1,23 @@
 jupyterhub:
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
   ingress:
     hosts: ["base-lsp.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
+  hub:
+    db:
+      upgrade: true
+      url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
 
   singleuser:
     extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+      k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
     initContainers:
       - name: "multus-init"
         image: "lsstit/ddsnet4u:latest"
@@ -21,25 +32,34 @@ config:
     AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
     AUTO_REPO_BRANCH: "prod"
     AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
     LSST_DDS_INTERFACE: net1
     LSST_DDS_PARTITION_PREFIX: base
     LSST_SITE: base
+    PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+    PGUSER: "oods"
   volumes:
     - name: home
       nfs:
-        path: /lsstdata/user/staff/jhome
-        server: ddn-nfs.ls.lsst.org
+        path: /jhome
+        server: nfs-jhome.ls.lsst.org
     - name: project
       nfs:
-        path: /lsstdata/user/staff/project
-        server: ddn-nfs.ls.lsst.org
+        path: /project
+        server: nfs-project.ls.lsst.org
     - name: scratch
       nfs:
-        path: /lsstdata/user/staff/scratch
-        server: ddn-nfs.ls.lsst.org
+        path: /scratch
+        server: nfs-scratch.ls.lsst.org
+    - name: datasets
+      nfs:
+        path: /lsstdata
+        server: nfs-lsstdata.ls.lsst.org
   volume_mounts:
     - name: home
       mountPath: /home
+    - name: datasets
+      mountPath: /datasets
     - name: project
       mountPath: /project
     - name: scratch

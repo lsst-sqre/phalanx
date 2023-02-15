@@ -4,10 +4,14 @@ redis:
 
 config:
   slackAlerts: true
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  databaseUrl: "postgresql://gafaelfawr@postgresdb01.ls.lsst.org/gafaelfawr"
 
   github:
     clientId: "ec88b9b897f302b620d1"
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
 
   # Allow access by GitHub team.
   groupMapping:
