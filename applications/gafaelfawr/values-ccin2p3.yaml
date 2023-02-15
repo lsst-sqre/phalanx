@@ -1,4 +1,9 @@
 replicaCount: 2
+image:
+  # -- tap image to use
+  repository: "gabrimaine/gafaelfawr"
+  tag: "7.0.0-dev"
+
 
 redis:
   persistence:
@@ -26,6 +31,10 @@ config:
     uidClaim: "uid_number"
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
+  
+  idm: 
+    url: "https://idnum.in2p3.fr:8443/openidm/system/freeipa/"
+    idmId: "idnum-client-ldaplsst"
 
   oidcServer:
     enabled: false

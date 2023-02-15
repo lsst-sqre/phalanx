@@ -44,9 +44,15 @@ config:
       hostPath:
         path: /pbs/home
 
+    - name: throng
+      hostPath:
+        path: /pbs/throng/lsst
+
   volume_mounts:
     - name: home
-      mountPath: /home
+      mountPath: /pbs/home
+    - name: throng
+      mountPath: /pbs/throng/lsst
 
   user_resources_template: |
     - apiVersion: v1
