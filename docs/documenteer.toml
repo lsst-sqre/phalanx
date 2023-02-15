@@ -3,7 +3,7 @@ title = "Phalanx"
 copyright = "2020-2022 Association of Universities for Research in Astronomy, Inc. (AURA)"
 base_url = "https://phalanx.lsst.io"
 github_url = "https://github.com/lsst-sqre/phalanx"
-github_default_branch = "master"
+github_default_branch = "main"
 version = "Current"
 
 [sphinx]
@@ -27,6 +27,10 @@ ignore = [
     '^https://data.lsst.cloud',
     '^https://data-dev.lsst.eu',
     '^https://rsp.lsst.ac.uk',
-    '^https://github.com/lsst-sqre/phalanx/blob/master/services/strimzi/values.yaml',
+    '^https://roundtable-dev.lsst.cloud',
+    '^https://roundtable.lsst.cloud',
+    '^https://usdf-rsp.slac.stanford.edu',
+    '^https://usdf-rsp-dev.slac.stanford.edu',
+    '^https://github.com/lsst-sqre/phalanx/blob/main/applications/strimzi/values.yaml',
     '^https://github.com/orgs/',
 ]

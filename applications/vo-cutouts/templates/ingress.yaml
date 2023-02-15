@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "vo-cutouts.fullname" . }}
+  labels:
+    {{- include "vo-cutouts.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+template:
+  metadata:
+    name: {{ template "vo-cutouts.fullname" . }}
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/api/cutout"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "vo-cutouts.fullname" . }}
+                  port:
+                    number: 8080

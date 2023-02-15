@@ -1,0 +1,27 @@
+ingress-nginx:
+  controller:
+    nodeSelector:
+      kubernetes.io/hostname: "ccqserv202"
+
+    tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "qserv"
+        effect: "NoSchedule"
+
+    config:
+      large-client-header-buffers: "4 64k"
+      proxy-buffer-size: "64k"
+    service:
+      externalIPs:
+        - 134.158.237.2
+      type: NodePort
+    admissionWebhooks:
+      enabled: false
+    extraArgs:
+      default-ssl-certificate: ingress-nginx/ingress-certificate
+    # podLabels:
+    #   hub.jupyter.org/network-access-proxy-http: "true"
+
+vaultCertificate:
+  enabled: true

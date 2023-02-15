@@ -1,0 +1,100 @@
+replicaCount: 2
+
+redis:
+  persistence:
+    enabled: false
+
+config:
+  loglevel: "DEBUG"
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+  # Session length and token expiration (in minutes).
+  issuer:
+    exp_minutes: 43200  # 30 days
+
+  # github:
+  #   clientId: ae314e45a6af43ea910a
+
+  oidc:
+    clientId: "lsst_rsp"
+    loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
+    tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
+    # scopes:
+    #   - "openid"
+    issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
+    gidClaim: "gid_number"
+    uidClaim: "uid_number"
+    groupsClaim: "groups"
+    usernameClaim: "preferred_username"
+
+  oidcServer:
+    enabled: false
+
+  initialAdmins:
+    - "mainetti"
+
+  groupMapping:
+    "admin:token": "lsst"
+    "user:token": "lsst"
+    "exec:admin": "lsst"
+    "read:all":
+      - "lsst"
+    "exec:internal-tools":
+      - "lsst"
+    "exec:notebook":
+      - "lsst"
+    "exec:portal":
+      - "lsst"
+    "read:tap":
+      - "lsst"
+    "read:image":
+      - "lsst"
+
+  # Allow access by GitHub team.
+  # groupMapping:
+  #   "admin:provision":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #   "exec:admin":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #   "exec:notebook":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #   "exec:portal":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #   "read:tap":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "delegates"
+  #   "read:image":
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "admin"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "user"
+  #     - github:
+  #         organization: "rubin-in2p3"
+  #         team: "delegates"
+
+  # initialAdmins:
+  #   - "mainetti"
+  #   #- "gabrimaine"

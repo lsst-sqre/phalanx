@@ -1,9 +1,0 @@
-apiVersion: v2
-name: alert-stream-simulator
-version: 1.6.2
-description: Producer which repeatedly publishes a static set of alerts into a Kafka topic
-maintainers:
-  - name: swnelson
-    email: swnelson@uw.edu
-appVersion: 1.2.1
-type: application

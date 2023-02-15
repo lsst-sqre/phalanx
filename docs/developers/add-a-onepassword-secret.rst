@@ -9,13 +9,13 @@ This page provides steps for adding an application secret through 1Password.
 
 .. note::
 
-   Dynamic secrets that don't have to be coordinated with external resources and only have to be consistent for a given installation of the Science Platform should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ script.
+   Dynamic secrets that don't have to be coordinated with external resources and only have to be consistent for a given installation of the Science Platform should be generated automatically via the ``SecretGenerator`` class in the `installer/generate_secrets.py <https://github.com/lsst-sqre/phalanx/blob/main/installer/generate_secrets.py>`__ script.
    Those secrets are not stored in 1Password since it's fine for them to change on each installation of the Science Platform.
 
 .. note::
 
-   This document only covers creating a 1Password-backed Secret for the first time for an application.
-   If you want to update a Secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
+   This document only covers creating a 1Password-backed secret for the first time for an application.
+   If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
 
 Part 1. Open the 1Password vault
 ================================
@@ -61,6 +61,9 @@ Part 3. Sync 1Password items into Vault
 =======================================
 
 Once an application's secrets are stored in 1Password, you need to sync them into Vault.
+
+First, set the ``OP_CONNECT_TOKEN`` environment variable to the access token for the SQuaRE 1Password Connect service.
+This is stored in the SQuaRE 1Password vault under the item named ``SQuaRE Integration Access Token: Argo``.
 
 Open Phalanx's ``installer/`` directory:
 

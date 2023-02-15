@@ -1,0 +1,53 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "portal.fullname" . }}
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:portal"
+  loginRedirect: true
+  delegate:
+    internal:
+      service: "portal"
+      scopes:
+        - "read:image"
+        - "read:tap"
+template:
+  metadata:
+    name: {{ include "portal.fullname" . }}
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/affinity: "cookie"
+      nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
+      nginx.ingress.kubernetes.io/proxy-buffer-size: "24k"
+      nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
+      nginx.ingress.kubernetes.io/rewrite-target: "/suit$1$2"
+      nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
+      nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
+      nginx.ingress.kubernetes.io/session-cookie-path: "/portal/app"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        proxy_set_header X-Original-URI $request_uri;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Port 443;
+        proxy_set_header X-Forwarded-Path /portal/app;
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/portal/app(/|$)(.*)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ include "portal.fullname" . }}
+                  port:
+                    number: 8080

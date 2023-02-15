@@ -9,9 +9,9 @@ As part of bootstrapping a new environment, you will want to configure it to pre
 
 For deployments on Google Kubernetes Engine, you will want to use Google Artifact Repository (GAR) as the source of images.
 See :doc:`gar` for basic information and instructions on how to configure workload identity.
-A good starting point for the cachemachine configuration is the `configuration from the IDF environment <https://github.com/lsst-sqre/phalanx/blob/master/services/cachemachine/values-idfprod.yaml>`__, which sets up GAR as the image source and prepulls a reasonable number of images.
+A good starting point for the cachemachine configuration is the `configuration from the IDF environment <https://github.com/lsst-sqre/phalanx/blob/main/applications/cachemachine/values-idfprod.yaml>`__, which sets up GAR as the image source and prepulls a reasonable number of images.
 
-For Telescope and Site deployments that need special images and image cycle configuration, start from the `summit configuration <https://github.com/lsst-sqre/phalanx/blob/master/services/cachemachine/values-summit.yaml>`__.
+For Telescope and Site deployments that need special images and image cycle configuration, start from the `summit configuration <https://github.com/lsst-sqre/phalanx/blob/main/applications/cachemachine/values-summit.yaml>`__.
 Consult with Telescope and Site to determine the correct recommended tag and cycle number.
 
 For other deployments that use the normal Rubin Notebook Aspect images, a reasonable starting configuration for cachemachine is:

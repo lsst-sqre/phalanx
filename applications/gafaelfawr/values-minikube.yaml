@@ -1,0 +1,54 @@
+# Reset token storage on every Redis restart.
+redis:
+  persistence:
+    enabled: false
+
+config:
+  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
+
+  github:
+    clientId: "64d11db34c968448381e"
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:notebook":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "read:image":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "cbanek"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "simonkrughoff"

@@ -13,10 +13,10 @@ Currently, all applications use Helm charts.
 
 .. note::
 
-   Kustomize is theoretically supported but has not been used to date in the `phalanx repository`_, and therefore isn't recommended.
+   Kustomize is theoretically supported but has not been used to date in the `Phalanx repository`_, and therefore isn't recommended.
 
 There does not yet exist a SQuaRE-produced a template for the Helm chart; rather, we use the built-in Helm starter template.
-Use ``helm create`` to create a new chart from that template.
+Use ``helm create -p starters/web-service`` to create a new chart from that template.
 **Be sure you are using Helm v3.**
 Helm v2 is not supported.
 
@@ -28,19 +28,12 @@ You will need to make at least the following changes to the default Helm chart t
   See :doc:`add-a-onepassword-secret` for more information about secrets.
 
 - Application providing a web API should be protected by Gafaelfawr and require an appropriate scope.
-  This normally means adding annotations to the ``Ingress`` resource via ``values.yaml`` similar to:
+  This is set up for you by the template using a ``GafaelfawrIngress`` resource in ``templates/ingress.yaml``, but you will need to customize the scope required for access, and may need to add additional configuration.
+  You will also need to customize the path under which your application should be served.
 
-  .. code-block:: yaml
+  See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html>`__ for more information, and see :dmtn:`235` for a guide to what scopes to use to protect the application.
 
-     ingress:
-       annotations:
-         nginx.ingress.kubernetes.io/auth-method: "GET"
-         nginx.ingress.kubernetes.io/auth-url: "http://gafaelfawr.gafaelfawr.svc.cluster.local:8080/auth?scope=exec:admin"
-
-  For user-facing applications you will want a scope other than ``exec:admin``.
-  See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/ingress.html>`__ for more information.
-
-- If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/master/services/telegraf/values.yaml#L36>`__.
+- If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml#L36>`__.
 
 Documentation
 -------------
@@ -51,16 +44,16 @@ This produces a nice Markdown README file that documents all the chart options, 
 Publication
 -----------
 
-Rubin-developed Helm charts for the Science Platform are stored as part of the `phalanx repository <https://github.com/lsst-sqre/phalanx/>`__.  They can be found in the `services directory <https://github.com/lsst-sqre/phalanx/tree/master/services>`__.
+Rubin-developed Helm charts for the Science Platform are stored as part of the `phalanx repository <https://github.com/lsst-sqre/phalanx/>`__.  They can be found in the `applications directory <https://github.com/lsst-sqre/phalanx/tree/main/applications>`__.
 
 Examples
 --------
 
 Existing Helm charts that are good examples to read or copy are:
 
-- `cachemachine <https://github.com/lsst-sqre/phalanx/tree/master/services/cachemachine>`__ (fairly simple)
-- `mobu <https://github.com/lsst-sqre/phalanx/tree/master/services/mobu>`__ (also simple)
-- `gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/master/services/gafaelfawr>`__ (complex, including CRDs and multiple pods)
+- `hips <https://github.com/lsst-sqre/phalanx/tree/main/applications/hips>`__ (fairly simple)
+- `mobu <https://github.com/lsst-sqre/phalanx/tree/main/applications/mobu>`__ (also simple)
+- `gafaelfawr <https://github.com/lsst-sqre/phalanx/tree/main/applications/gafaelfawr>`__ (complex, including CRDs and multiple pods)
 
 .. _add-argocd-application:
 
@@ -78,7 +71,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
 #. Most applications will need a base URL, which is the top-level externally-accessible URL (this is presented within the chart as a separate parameter, although as we will see it is derived from the hostname) for the ingress to the application, the hostname, and the base path within Vault for storage of secrets.
 
-   In general these will be set within the application definition within the ``science-platform`` directory and carried through to application charts via global Argo CD variables.
+   In general these will be set within the application definition within the ``environments`` directory and carried through to application charts via global Argo CD variables.
    You should generally simply need the boilerplate setting them to empty:
 
    .. code-block:: yaml
@@ -99,19 +92,19 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 	     vaultSecretsPath: ""
 
 #. Create the Argo CD application resource.
-   This is a new file in `/science-platform/templates <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/templates>`__ named ``<name>-application.yaml`` where ``<name>`` must match the name of the directory created above.
+   This is a new file in `/environments/templates <https://github.com/lsst-sqre/phalanx/tree/main/environments/templates>`__ named ``<name>-application.yaml`` where ``<name>`` must match the name of the directory created above.
    The contents of this file should look like:
 
    .. code-block:: yaml
 
-      {{- if .Values.<name>.enabled -}}
+      {{- if (index .Values "<name>" "enabled") -}}
       apiVersion: v1
       kind: Namespace
       metadata:
         name: <name>
       spec:
         finalizers:
-          - kubernetes
+          - "kubernetes"
       ---
       apiVersion: argoproj.io/v1alpha1
       kind: Application
@@ -119,26 +112,26 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
         name: <name>
         namespace: argocd
         finalizers:
-          - resources-finalizer.argocd.argoproj.io
+          - "resources-finalizer.argocd.argoproj.io"
       spec:
         destination:
-          namespace: <name>
-          server: https://kubernetes.default.svc
-        project: default
+          namespace: "<name>"
+          server: "https://kubernetes.default.svc"
+        project: "default"
         source:
-          path: services/<name>
-          repoURL: {{ .Values.repoURL }}
-          targetRevision: {{ .Values.revision }}
+          path: "applications/<name>"
+          repoURL: {{ .Values.repoURL | quote }}
+          targetRevision: {{ .Values.targetRevision | quote }}
           helm:
             parameters:
               - name: "global.host"
-	             value: {{ .Values.fqdn | quote }}
+                value: {{ .Values.fqdn | quote }}
               - name: "global.baseUrl"
                 value: "https://{{ .Values.fqdn }}"
               - name: "global.vaultSecretsPath"
-                value: {{ .Values.vault_path_prefix | quote }}
+                value: {{ .Values.vaultPathPrefix | quote }}
             valueFiles:
-	           - "values.yaml"
+              - "values.yaml"
               - 'values-{{ .Values.environment }}.yaml"
       {{- end -}}
 
@@ -146,12 +139,10 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
    This creates the namespace and Argo CD application for your application.
    Note that this is where we derive baseURL from host.
 
-   Both the ``fqdn`` and ``host`` must be defined in each RSP instance definition file (that is, ``/science-platform/values-<env>.yaml`` files in the `phalanx repository`_).
-   Typically this is done at the top; should you at some point deploy an entirely new instance of the RSP, remember to do this in the base science-platform application definition for the new instance.
+   Both the ``fqdn`` and ``host`` must be defined in each RSP instance definition file (that is, ``/environments/values-<env>.yaml`` files in the `phalanx repository`_).
+   Typically this is done at the top; should you at some point deploy an entirely new instance of the RSP, remember to do this in the base environments application definition for the new instance.
 
-#. If your application image resides at a Docker repository which requires authentication (either to pull the image at all or to raise
-   the pull rate limit), then you must tell any pods deployed by your application to use a pull secret named ``pull-secret``, and you must
-   configure that pull secret in the application's ``vault-secrets.yaml``.
+#. If your application image resides at a Docker repository which requires authentication (either to pull the image at all or to raise the pull rate limit), then you must tell any pods deployed by your application to use a pull secret named ``pull-secret``, and you must configure that pull secret in the application's ``vault-secrets.yaml``.
    If you are using the default Helm template, this will mean a block like:
 
    .. code-block:: yaml
@@ -161,11 +152,13 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    If you are using an external chart, see its documentation for how to configure pull secrets.
 
-   Note that if your container image is built through GitHub actions and stored at ghcr.io, there is no rate limiting (as long as your container image is built from a public repository, which it should be).  If it is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub in the past.  If it is pulled from a private repository, obviously you will need authentication, and if the container is stored within the Rubin Google Artifact Registry, there is likely to be some Google setup required to make pulls magically work from within a given cluster.
+   Note that if your container image is built through GitHub actions and stored at ghcr.io, there is no rate limiting (as long as your container image is built from a public repository, which it should be).
+   If it is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub in the past.
+   If it is pulled from a private repository, obviously you will need authentication, and if the container is stored within the Rubin Google Artifact Registry, there is likely to be some Google setup required to make pulls magically work from within a given cluster.
 
    In general, copying and pasting the basic setup from another application (``cachemachine`` or ``mobu`` recommended for simple applications) is a good way to save effort.
 
-#. Finally, edit ``values.yaml`` and each of the ``values-*.yaml`` files in `/science-platform <https://github.com/lsst-sqre/phalanx/tree/master/science-platform/>`__ and add a stanza for your application.
+#. Finally, edit ``values.yaml`` and each of the ``values-*.yaml`` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__ and add a stanza for your application.
    The stanza in ``values.yaml`` should always say:
 
    .. code-block:: yaml

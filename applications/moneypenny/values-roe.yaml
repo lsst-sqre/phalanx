@@ -1,0 +1,15 @@
+orders:
+  commission:
+    - name: initcommission
+      image: lsstsqre/inituserhome
+      securityContext:
+        runAsUser: 0
+        runAsNonRootUser: false
+      volumeMounts:
+        - mountPath: /homedirs
+          name: homedirs
+  volumes:
+    - name: homedirs
+      nfs:
+        server: 10.72.0.23
+        path: /jhome

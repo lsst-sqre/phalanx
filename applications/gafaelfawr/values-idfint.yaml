@@ -1,0 +1,64 @@
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+
+config:
+  slackAlerts: true
+
+  cilogon:
+    clientId: "cilogon:/client_id/6b3f86ecfe74f14afa81b73a76be0868"
+    enrollmentUrl: "https://id-int.lsst.cloud/registry/co_petitions/start/coef:10"
+    test: true
+    usernameClaim: "username"
+
+  firestore:
+    project: "rsp-firestore-int-7bfb"
+
+  ldap:
+    url: "ldaps://ldap-test.cilogon.org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    groupObjectClass: "eduMember"
+    groupMemberAttr: "hasMember"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userSearchAttr: "voPersonApplicationUID"
+    addUserGroup: true
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:provision":
+      - "g_admins"
+    "exec:admin":
+      - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
+    "exec:notebook":
+      - "g_users"
+    "exec:portal":
+      - "g_users"
+    "read:alertdb":
+      - "g_admins"
+      - "g_developers"
+    "read:image":
+      - "g_users"
+    "read:tap":
+      - "g_users"
+
+  initialAdmins:
+    - "adam"
+    - "afausti"
+    - "cbanek"
+    - "frossie"
+    - "jsick"
+    - "rra"
+    - "simonkrughoff"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+  serviceAccount: "gafaelfawr@science-platform-int-dc5d.iam.gserviceaccount.com"

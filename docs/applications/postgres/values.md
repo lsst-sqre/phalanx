@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`postgres` application.
 
-```{include} ../../../services/postgres/README.md
+```{include} ../../../applications/postgres/README.md
 ---
 start-after: "## Values"
 ---

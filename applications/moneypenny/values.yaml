@@ -1,0 +1,118 @@
+# Default values for moneypenny.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Number of pods to start
+replicaCount: 1
+
+image:
+  # -- moneypenny image to use
+  repository: "lsstsqre/moneypenny"
+
+  # -- Pull policy for the moneypenny image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of moneypenny image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+serviceAccount:
+  # -- Name of the service account to use
+  # @default -- Name based on the fullname template
+  name: ""
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+orders:
+  # -- List of specifications for containers to run to commission a new user.
+  # Each member of the list should set a container `name`, `image`, and
+  # `securityContext` and may contain `volumeMounts`.
+  commission:
+    - name: farthing
+      image: lsstsqre/farthing
+      securityContext:
+        runAsUser: 1000
+        runAsNonRootUser: true
+        allowPrivilegeEscalation: false
+
+  # -- List of specifications for containers to run to retire a user.  Each
+  # member of the list should set a container `name`, `image`, and
+  # `securityContext` and may contain `volumeMounts`.
+  retire:
+    - name: farthing
+      image: lsstsqre/farthing
+      securityContext:
+        runAsUser: 1000
+        runAsNonRootUser: true
+        allowPrivilegeEscalation: false
+
+  # -- Additional volumes to mount when commissioning or retiring users.
+  volumes: []
+
+# -- Resource limits and requests for the vo-cutouts frontend pod
+resources: {}
+
+# -- Annotations for the vo-cutouts frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the vo-cutouts frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the vo-cutouts frontend pod
+tolerations: []
+
+# -- Affinity rules for the vo-cutouts frontend pod
+affinity: {}
+
+# -- Moneypenny quotes
+# @default -- A small selection
+quips: |
+  Flattery will get you nowhere... but don't stop trying.
+  %
+  You never take me to dinner looking like this, James. You never take me to dinner, period.
+  %
+  M: (on intercom) Miss Moneypenny, give 007 the password we've agreed
+  with Japanese SIS.
+  Moneypenny: Yes, Sir. We tried to think of something that you wouldn't
+  forget.
+  Bond: Yes?
+  Moneypenny: I... love... you. Repeat it please, to make sure you get it.
+  Bond: Don't worry, I get it. Sayonara.
+  %
+  My problem is, James, you never do anything with me.
+  %
+  I didn't know you were a music lover. Any time you want to come over and hear my Barry Manilow collection...
+  %
+  Someday you'll have to make good on your innuendos.
+  %
+  You always were a cunning linguist, James.
+  %
+  Bond: (about getting shot) In your defense, a moving target is harder to hit.
+  Moneypenny: Then you'd better keep moving.
+  %
+  Moneypenny: Cut-throat razor. How very traditional.
+  Bond: Well, I like to do some things the old-fashioned way.
+  Moneypenny: Sometimes the old ways are best.
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

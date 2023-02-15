@@ -52,7 +52,7 @@ Requirements
 
 #. Install `Helm 3 <https://helm.sh/docs/intro/install/>`__.
 
-#. Install `Vault <https://learn.hashicorp.com/tutorials/vault/getting-started-install>`__.
+#. Install `Vault <https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install>`__.
 
 #. Clone the `Phalanx repository`_.
 
@@ -86,7 +86,7 @@ Set up a Phalanx branch for your local minikube deployment
 The ``install.sh`` uses the locally checked out branch of your Phalanx repository clone.
 
 To conserve resources, you may want to deploy a subset of Phalanx applications in your local minikube cluster.
-You can do this by editing the `/science-platform/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values-minikube.yaml>`_ file.
+You can do this by editing the `/environments/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/main/environments/values-minikube.yaml>`_ file.
 Set any application you do not want to deploy to ``enabled: false``.
 
 Commit any changes with Git into a development branch of the Phalanx repository.
@@ -99,7 +99,7 @@ The ``install.sh`` script uses your locally-checked out branch of Phalanx, but a
 
 **Minimal set of applications that should be enabled:**
 
-- ``vault_secrets_operator`` (for Vault secrets)
+- ``vault-secrets-operator`` (for Vault secrets)
 - ``gafaelfawr`` (for authentication)
 - ``postgresql`` (for gafaelfawr)
 
@@ -133,7 +133,7 @@ The minikube Argo CD admin password can be retrieved from Vault.
 
 .. code-block:: sh
 
-  VAULT_PATH_PREFIX=`yq -r .vault_path_prefix ../science-platform/values-minikube.yaml`
+  VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer
 
 With Argo CD you can sync your application (see :doc:`/admin/sync-argo-cd`).

@@ -1,0 +1,36 @@
+{{- if .Values.cloudsql.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "cloud-sql-proxy"
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    # This policy controls inbound and outbound access to the Cloud SQL Proxy.
+    matchLabels:
+      {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "cloud-sql-proxy"
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow inbound access to the Cloud SQL Proxy from other components except
+    # the frontend.  The frontend, since it's performance-critical and gates
+    # all access to the cluster, continues running its own sidecar.
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "audit"
+        - podSelector:
+            matchLabels:
+              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "maintenance"
+        - podSelector:
+            matchLabels:
+              {{- include "gafaelfawr.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "operator"
+      ports:
+        - protocol: "TCP"
+          port: 5432
+{{- end }}

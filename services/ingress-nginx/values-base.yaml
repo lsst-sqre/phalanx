@@ -1,4 +1,0 @@
-ingress-nginx:
-  controller:
-    service:
-      loadBalancerIP: "139.229.146.150"

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: rest-proxy
+version: 1.0.0
+description: A subchart to deploy Confluent REST proxy for Sasquatch.
+sources:
+  - https://github.com/confluentinc/kafka-rest
+appVersion: 6.2.8

@@ -1,0 +1,209 @@
+jupyterhub:
+  debug:
+    enabled: true
+  hub:
+    db:
+      upgrade: true
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
+
+  ingress:
+    hosts: ["data-dev.lsst.eu"]
+    annotations:
+      nginx.ingress.kubernetes.io/auth-signin: "https://data-dev.lsst.eu/login"
+      nginx.ingress.kubernetes.io/auth-url: "https://data-dev.lsst.eu/auth?scope=exec:notebook&notebook=true"
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "50s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+
+config:
+  base_url: "https://data-dev.lsst.eu"
+  butler_secret_path: "secret/k8s_operator/rsp-cc/butler-secret"
+  pull_secret_path: "secret/k8s_operator/rsp-cc/pull-secret"
+  lab_environment:
+    AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+    AUTO_REPO_BRANCH: "prod"
+    AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+    NO_ACTIVITY_TIMEOUT: "432000"
+    CULL_KERNEL_IDLE_TIMEOUT: "432000"
+    CULL_KERNEL_CONNECTED: "True"
+    CULL_KERNEL_INTERVAL: "300"
+    CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+    CULL_TERMINAL_INTERVAL: "300"
+  pinned_images:
+    - image_url: registry.hub.docker.com/lsstsqre/sciplat-lab:recommended
+      name: Recommended
+  volumes:
+    - name: home
+      hostPath:
+        path: /pbs/home
+
+  volume_mounts:
+    - name: home
+      mountPath: /home
+
+  user_resources_template: |
+    - apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: "{{ user_namespace }}"
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: group
+        namespace: "{{ user_namespace }}"
+      data:
+        group: |
+          root:x:0:
+          bin:x:1:
+          daemon:x:2:
+          sys:x:3:
+          adm:x:4:
+          tty:x:5:
+          disk:x:6:
+          lp:x:7:
+          mem:x:8:
+          kmem:x:9:
+          wheel:x:10:
+          cdrom:x:11:
+          mail:x:12:
+          man:x:15:
+          dialout:x:18:
+          floppy:x:19:
+          games:x:20:
+          tape:x:33:
+          video:x:39:
+          ftp:x:50:
+          lock:x:54:
+          audio:x:63:
+          nobody:x:99:
+          users:x:100:
+          utmp:x:22:
+          utempter:x:35:
+          input:x:999:
+          systemd-journal:x:190:
+          systemd-network:x:192:
+          dbus:x:81:
+          ssh_keys:x:998:
+          lsst_lcl:x:1000:{{ user }}
+          tss:x:59:
+          cgred:x:997:
+          screen:x:84:
+          jovyan:x:768:{{ user }}{% for g in groups %}
+          {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: passwd
+        namespace: "{{ user_namespace }}"
+      data:
+        passwd: |
+          root:x:0:0:root:/root:/bin/bash
+          bin:x:1:1:bin:/bin:/sbin/nologin
+          daemon:x:2:2:daemon:/sbin:/sbin/nologin
+          adm:x:3:4:adm:/var/adm:/sbin/nologin
+          lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+          sync:x:5:0:sync:/sbin:/bin/sync
+          shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+          halt:x:7:0:halt:/sbin:/sbin/halt
+          mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+          operator:x:11:0:operator:/root:/sbin/nologin
+          games:x:12:100:games:/usr/games:/sbin/nologin
+          ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+          nobody:x:99:99:Nobody:/:/sbin/nologin
+          systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+          dbus:x:81:81:System message bus:/:/sbin/nologin
+          tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: dask
+        namespace: "{{ user_namespace }}"
+      data:
+        dask_worker.yml: |
+          {{ dask_yaml | indent(6) }}
+    # When we break out the resources we should make this per-instance
+    #  configurable.
+    - apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: idds-config
+        namespace: "{{ user_namespace }}"
+      data:
+        idds_cfg.client.template: |
+          # Licensed under the Apache License, Version 2.0 (the "License");
+          # You may not use this file except in compliance with the License.
+          # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+          #
+          # Authors:
+          # - Wen Guan, <wen.guan@cern.ch>, 2020
+          [common]
+          # if logdir is configured, idds will write to idds.log in this directory.
+          # else idds will go to stdout/stderr.
+          # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
+          # logdir = /var/log/idds
+          loglevel = INFO
+          [rest]
+          host = https://iddsserver.cern.ch:443/idds
+          #url_prefix = /idds
+          #cacher_dir = /tmp
+          cacher_dir = /data/idds
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: "{{ user }}-serviceaccount"
+        namespace: "{{ user_namespace }}"
+      imagePullSecrets:
+      - name: pull-secret
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: Role
+      metadata:
+        name: "{{ user }}-role"
+        namespace: "{{ user_namespace }}"
+      rules:
+      # cf https://kubernetes.dask.org/en/latest/kubecluster.html
+        - apiGroups: [""]
+          resources: ["pods", "services"]
+          verbs: ["create", "delete", "get", "list", "watch"]
+        - apiGroups: [""]
+          resources: ["pods/log"]
+          verbs: ["get","list"]
+        - apiGroups: ["policy"]
+          resources: ["poddisruptionbudgets"]
+          verbs: ["create", "delete", "get", "list", "watch"]
+    - apiVersion: rbac.authorization.k8s.io/v1
+      kind: RoleBinding
+      metadata:
+        name: "{{ user }}-rolebinding"
+        namespace: "{{ user_namespace }}"
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: Role
+        name: "{{ user }}-role"
+      subjects:
+        - kind: ServiceAccount
+          name: "{{ user }}-serviceaccount"
+          namespace: "{{ user_namespace }}"
+    - apiVersion: ricoberger.de/v1alpha1
+      kind: VaultSecret
+      metadata:
+        name: butler-secret
+        namespace: "{{ user_namespace }}"
+      spec:
+        path: "{{ butler_secret_path }}"
+        type: Opaque
+    - apiVersion: ricoberger.de/v1alpha1
+      kind: VaultSecret
+      metadata:
+        name: pull-secret
+        namespace: "{{ user_namespace }}"
+      spec:
+        path: "{{ pull_secret_path }}"
+        type: kubernetes.io/dockerconfigjson

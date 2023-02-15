@@ -61,7 +61,7 @@ In other cases, external Helm charts are composed as sub-charts within Phalanx's
 Applications are Helm charts in Phalanx
 ---------------------------------------
 
-In Phalanx, the word *application* specifically refers to a Helm chart located in the :file:`services` directory of the `phalanx repository`_.
+In Phalanx, the word *application* specifically refers to a Helm chart located in the :file:`applications` directory of the `phalanx repository`_.
 That Helm chart directory includes the Kubernetes templates and Docker image references to deploy the application, as well as values files to configure the application for each environment.
 
 Argo CD

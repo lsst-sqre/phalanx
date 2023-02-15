@@ -1,0 +1,39 @@
+{{- if .Values.datalinker.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "datalinker"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "datalinker"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "datalinker"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/datalinker"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.butlerRepositoryIndex"
+          value: {{ .Values.butlerRepositoryIndex | quote }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

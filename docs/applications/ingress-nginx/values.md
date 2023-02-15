@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`ingress-nginx` application.
 
-```{include} ../../../services/ingress-nginx/README.md
+```{include} ../../../applications/ingress-nginx/README.md
 ---
 start-after: "## Values"
 ---

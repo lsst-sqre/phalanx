@@ -1,0 +1,90 @@
+# Default values for kafka used in Sasquatch.
+cluster:
+  # -- Name used for the Kafka cluster, and used by Strimzi for many annotations.
+  name: sasquatch
+
+kafka:
+  # -- Version of Kafka to deploy.
+  version: "3.3.1"
+  # -- Number of Kafka broker replicas to run.
+  replicas: 3
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka brokers.
+    size: 500Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: ""
+  # -- Configuration overrides for the Kafka server.
+  config:
+    # -- Number of minutes for a consumer group's offsets to be retained.
+    offsets.retention.minutes: 4320
+    # -- Number of days for a topic's data to be retained.
+    log.retention.hours: 72
+    # -- Maximum retained number of bytes for a topic's data.
+    log.retention.bytes: "429496729600"
+
+  externalListener:
+    tls:
+      # -- Whether TLS encryption is enabled.
+      enabled: false
+      # -- Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker.
+      certIssuerName: "letsencrypt-dns"
+
+    bootstrap:
+      # -- The loadbalancer is requested with the IP address specified in this field.
+      # This feature depends on whether the underlying cloud provider supports specifying the loadBalancerIP when a load balancer is created.
+      # This field is ignored if the cloud provider does not support the feature.
+      # Once the IP address is provisioned this option make it possible to pin the IP address.
+      # We can request the same IP next time it is provisioned. This is important because
+      # it lets us configure a DNS record, associating a hostname with that pinned IP address.
+      loadBalancerIP: ""
+      # -- Name used for TLS hostname verification.
+      host: ""
+      # -- Annotations that will be added to the Ingress, Route, or Service resource.
+      annotations: {}
+
+    # -- Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification.
+    # The format is a list of maps.
+    brokers: []
+    # For example:
+    # brokers:
+    #   - loadBalancerIP: "192.168.1.1"
+    #     host: broker-0.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
+    #   - loadBalancerIP: "192.168.1.2"
+    #     host: broker-1.example
+    #     annotations:
+    #       metallb.universe.tf/address-pool: sdf-dmz
+
+zookeeper:
+  # -- Number of Zookeeper replicas to run.
+  replicas: 3
+  storage:
+    # -- Size of the backing storage disk for each of the Zookeeper instances.
+    size: 100Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: ""
+
+connect:
+  # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
+  image: lsstsqre/strimzi-0.32.0-kafka-3.3.1:1.0.2
+  # -- Number of Kafka Connect replicas to run.
+  replicas: 3
+
+registry:
+  # -- Name of the topic used by the Schema Registry
+  schemaTopic: registry-schemas
+
+# -- A list of usernames for users who should have global admin permissions.
+# These users will be created, along with their credentials.
+superusers:
+  - kafka-admin
+
+mirrormaker2:
+  # -- Enable replication in the target (passive) cluster.
+  enabled: false
+  source:
+    # -- Source (active) cluster to replicate from.
+    bootstrapServer: ""
+    # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
+    topicsPattern: "registry-schemas, lsst.sal.*"

@@ -63,7 +63,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
    This will add the value to the Argo CD secret once vault-secrets-operator notices the change.
    You can delete ``argocd-secret`` to immediately recreate it to speed up the propagation.
 
-#. In the Phalanx repository, under ``services/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
+#. In the Phalanx repository, under ``applications/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
    In ``argo-cd.server.config``, at the same level as ``helm.repositories``, add the following, modifying the URLs and ``hostedDomains`` for the environment and changing the ``clientID`` to the value from the pop-up:
 
    .. code-block:: yaml
@@ -141,7 +141,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
    This will add the value to the Argo CD secret once vault-secrets-operator notices the change.
    You can delete ``argocd-secret`` to immediately recreate it to speed up the propagation.
 
-#. In the Phalanx repository, under ``services/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
+#. In the Phalanx repository, under ``applications/argocd``, edit the ``values-*.yaml`` file for the relevant environment.
    In ``argo-cd.server.config``, at the same level as ``helm.repositories``, add the following, modifying the URL for the environment and changing the ``clientID`` to the value from GitHub:
 
    .. code-block:: yaml

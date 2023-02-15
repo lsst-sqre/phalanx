@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`mobu` application.
 
-```{include} ../../../services/mobu/README.md
+```{include} ../../../applications/mobu/README.md
 ---
 start-after: "## Values"
 ---

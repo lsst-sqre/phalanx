@@ -1,0 +1,23 @@
+apiVersion: v2
+name: gafaelfawr
+version: 1.0.0
+description: Authentication and identity system
+home: https://gafaelfawr.lsst.io/
+sources:
+  - https://github.com/lsst-sqre/gafaelfawr
+appVersion: 9.0.0
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-234"
+      title: "RSP identity management design"
+      url: "https://dmtn-234.lsst.io/"
+    - id: "DMTN-224"
+      title: "RSP identity management implementation strategy"
+      url: "https://dmtn-224.lsst.io/"
+    - id: "SQR-055"
+      title: "COmanage configuration for Rubin Science Platform"
+      url: "https://sqr-055.lsst.io/"
+    - id: "SQR-069"
+      title: "Implementation decisions for RSP identity management"
+      url: "https://sqr-069.lsst.io/"

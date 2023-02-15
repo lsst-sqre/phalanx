@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`plot-navigator` application.
 
-```{include} ../../../services/plot-navigator/README.md
+```{include} ../../../applications/plot-navigator/README.md
 ---
 start-after: "## Values"
 ---

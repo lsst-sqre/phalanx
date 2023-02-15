@@ -1,7 +1,7 @@
 /installer/secrets/
 /installer/docker-creds
-/services/*/charts/*.tgz
-/services-expanded/
+/applications/*/charts/*.tgz
+/applications-expanded/
 **/Chart.lock
 
 # Byte-compiled / optimized / DLL files
@@ -135,22 +135,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-.idea/workspace.xml
-
-.idea/inspectionProfiles/Project_Default.xml
-
-services/alert-stream-broker/charts/.DS_Store
-
-services/.DS_Store
-
-services/alert-stream-broker/.DS_Store
-
-.idea/modules.xml
-
-.idea/phalanx.iml
-
-.idea/vcs.xml
-
+# Editor files
 .DS_Store
-
-.idea/inspectionProfiles/profiles_settings.xml
+.idea/

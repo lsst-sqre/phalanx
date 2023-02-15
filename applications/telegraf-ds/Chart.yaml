@@ -1,0 +1,17 @@
+apiVersion: v2
+name: telegraf-ds
+version: 1.0.0
+description: Kubernetes node telemetry collection service
+home: https://www.influxdata.com/time-series-platform/telegraf/
+sources:
+  - https://github.com/influxdata/telegraf
+  - https://github.com/influxdata/helm-charts
+dependencies:
+  - name: telegraf-ds
+    version: 1.1.7
+    repository: https://helm.influxdata.com/
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-061"
+      title: "Monitoring architecture for the RSP"
+      url: "https://sqr-061.lsst.io/"

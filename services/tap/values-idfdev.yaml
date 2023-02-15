@@ -1,8 +1,0 @@
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
-
-qserv:
-  host: "10.136.1.211:4040"
-  mock:
-    enabled: false

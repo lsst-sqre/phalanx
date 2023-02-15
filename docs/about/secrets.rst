@@ -42,9 +42,9 @@ There may also be one or more keys named ``environment``.
 Its values are the domain names of the environments to which that specific secret applies.
 If ``environment`` is missing, that 1Password object provides a default for the given ``generate_secrets_key`` key, which will be used if there is no other object with the same key and a matching environment.
 
-These 1Password objects are used by the `generate_secrets.py script <https://github.com/lsst-sqre/phalanx/blob/master/installer/generate_secrets.py>`__ as part of the installation process to retrieve the persistent secrets.
+These 1Password objects are used by the `generate_secrets.py script <https://github.com/lsst-sqre/phalanx/blob/main/installer/generate_secrets.py>`__ as part of the installation process to retrieve the persistent secrets.
 Ephemeral secrets that can be reset when the environment is reinstalled are generated during the installation process.
-`update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/master/installer/update_secrets.sh>`__ uses the ``onepassword_uuid`` setting in `/science-platform/values.yaml <https://github.com/lsst-sqre/phalanx/blob/master/science-platform/values.yaml>`__ to locate the appropriate 1Password vault.
+`update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__ uses the ``onepassword_uuid`` setting in `/environments/values.yaml <https://github.com/lsst-sqre/phalanx/blob/main/environments/values.yaml>`__ to locate the appropriate 1Password vault.
 
 For a step-by-step guide on adding a 1Password-based secret, see :doc:`/developers/add-a-onepassword-secret`.
 For updating an existing 1Password-based secret, see :doc:`/developers/update-a-onepassword-secret`.

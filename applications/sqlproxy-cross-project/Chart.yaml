@@ -1,0 +1,15 @@
+apiVersion: v2
+name: sqlproxy
+type: application
+version: 1.0.0
+description: GCP SQL Proxy as a service
+home: https://cloud.google.com/sql/docs/postgres/sql-proxy
+sources:
+  - https://github.com/GoogleCloudPlatform/cloud-sql-proxy
+
+# Normally, we would put the tag of the Docker container here and have the
+# deployment default to that value.  However, in this case, since the image is
+# maintained externally and we want Renovate to send us PRs for version
+# updates, the version is tracked only in values.yaml and this version is not
+# used.
+# appVersion: "0.1.0"

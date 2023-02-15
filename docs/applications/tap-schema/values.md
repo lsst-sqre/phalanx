@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`tap-schema` application.
 
-```{include} ../../../services/tap-schema/README.md
+```{include} ../../../applications/tap-schema/README.md
 ---
 start-after: "## Values"
 ---

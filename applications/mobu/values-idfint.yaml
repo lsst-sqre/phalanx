@@ -1,0 +1,44 @@
+cachemachineImagePolicy: "desired"
+
+autostart:
+  - name: "firefighter"
+    count: 1
+    users:
+      - username: "bot-mobu-recommended"
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
+    business: "NotebookRunner"
+    options:
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+      max_executions: 1
+    restart: true
+  - name: "weekly"
+    count: 1
+    users:
+      - username: "bot-mobu-weekly"
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
+    business: "NotebookRunner"
+    options:
+      jupyter:
+        image_class: "latest-weekly"
+      repo_url: "https://github.com/lsst-sqre/system-test.git"
+      repo_branch: "prod"
+    restart: true
+  - name: "tap"
+    count: 1
+    users:
+      - username: "bot-mobu-tap"
+    scopes: ["read:tap"]
+    business: "TAPQueryRunner"
+    restart: true
+    options:
+      tap_sync: false
+      tap_query_set: "dp0.2"

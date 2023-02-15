@@ -1,9 +1,0 @@
-apiVersion: v2
-name: alert-stream-broker
-version: 2.5.1
-description: Kafka broker cluster for distributing alerts
-maintainers:
-  - name: swnelson
-    email: swnelson@uw.edu
-appVersion: 1.0.0
-type: application

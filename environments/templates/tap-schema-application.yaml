@@ -1,0 +1,33 @@
+{{- if (index .Values "tap-schema" "enabled") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "tap-schema"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "tap-schema"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "tap-schema"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/tap-schema"
+    repoURL: {{ .Values.repoURL | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}

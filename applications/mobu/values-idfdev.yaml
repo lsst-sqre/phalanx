@@ -1,0 +1,23 @@
+cachemachineImagePolicy: "desired"
+
+autostart:
+  - name: "python"
+    count: 1
+    users:
+      - username: "bot-mobu-user"
+    scopes: ["exec:notebook"]
+    business: "JupyterPythonLoop"
+    options:
+      jupyter:
+        image_size: "Small"
+    restart: true
+  - name: "tap"
+    count: 1
+    users:
+      - username: "bot-mobu-tap"
+    scopes: ["read:tap"]
+    business: "TAPQueryRunner"
+    restart: true
+    options:
+      tap_sync: true
+      tap_query_set: "dp0.2"

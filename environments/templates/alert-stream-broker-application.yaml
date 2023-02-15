@@ -1,0 +1,29 @@
+{{- if (index .Values "alert-stream-broker" "enabled") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alert-stream-broker
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alert-stream-broker
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: alert-stream-broker
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/alert-stream-broker
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}
