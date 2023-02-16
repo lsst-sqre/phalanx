@@ -8,4 +8,5 @@ spec:
   service: "bot-noteburst"
   scopes:
     - "admin:token"
+    - "admin:notebook"
     - "exec:admin"
