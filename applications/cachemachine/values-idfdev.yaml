@@ -25,8 +25,8 @@ autostart:
           "type": "SimpleRepoMan",
           "images": [
             {
-              "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2022_40",
-              "name": "Weekly 2022_40"
+              "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2023_07",
+              "name": "Weekly 2023_07"
             }
           ]
         }
