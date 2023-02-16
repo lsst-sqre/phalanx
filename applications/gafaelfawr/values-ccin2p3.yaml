@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   # -- tap image to use
   repository: "gabrimaine/gafaelfawr"
-  tag: "7.0.0-dev"
+  tag: "9.0.0-dev"
 
 
 redis:
