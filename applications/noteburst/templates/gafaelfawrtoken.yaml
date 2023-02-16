@@ -7,6 +7,6 @@ metadata:
 spec:
   service: "bot-noteburst"
   scopes:
+    - "admin:jupyterlab"
     - "admin:token"
-    - "admin:notebook"
     - "exec:admin"
