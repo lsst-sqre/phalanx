@@ -46,13 +46,13 @@ config:
 
     - name: throng
       hostPath:
-        path: /pbs/throng/lsst
+        path: /pbs/throng
 
   volume_mounts:
     - name: home
       mountPath: /pbs/home
     - name: throng
-      mountPath: /pbs/throng/lsst
+      mountPath: /pbs/throng
 
   user_resources_template: |
     - apiVersion: v1
@@ -126,7 +126,7 @@ config:
           systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
           dbus:x:81:81:System message bus:/:/sbin/nologin
           tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home:/bin/bash
+          {{ user }}:x:{{ uid }}:{{ gid if gid else uid }}::/pbs/home/{{ user[0] }}/{{ user }}/rsp_home:{% for g in groups %}/pbs/throng/{{ g.name }}{% endfor %}:/bin/bash
     - apiVersion: v1
       kind: ConfigMap
       metadata:
