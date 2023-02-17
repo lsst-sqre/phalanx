@@ -113,6 +113,13 @@
 
     {{- end }}
 
+    {{- if .Values.config.idm.url }}
+    idm:
+      url: {{ .Values.config.idm.url | quote }}
+      idm_id: {{ .Values.config.idm.idmId | quote }}
+      idm_secret_file: "/etc/gafaelfawr/secrets/idm_secret"
+    {{- end }}
+
     {{- if .Values.config.firestore.project }}
     firestore:
       project: {{ .Values.config.firestore.project | quote }}

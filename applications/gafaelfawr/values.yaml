@@ -105,6 +105,12 @@ config:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
     # or `config.oidc.clientId` must be set.
     clientId: ""
+  idm:
+    # IDM client config. If set, it assign the GID. 
+    # @default -- IDM support is disabled
+    url: ""
+    # @default -- None, to be set if `config.idm.url` is provided  
+    idmId: ""
 
   oidc:
     # -- Client ID for generic OpenID Connect support. One and only one of
