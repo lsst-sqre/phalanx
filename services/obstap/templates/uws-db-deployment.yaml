@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cadc-tap.fullname" . }}-uws-db
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "uws-db"
+  template:
+    metadata:
+      {{- with .Values.uws.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cadc-tap.labels" . | nindent 8 }}
+        app.kubernetes.io/component: "uws-db"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "postgresql"
+          image: "{{ .Values.uws.image.repository }}:{{ .Values.uws.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.uws.image.pullPolicy | quote }}
+          ports:
+            - containerPort: 5432
+          {{- with .Values.uws.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "data"
+              mountPath: "/var/lib/postgresql/data"
+      volumes:
+        - name: "data"
+          emptyDir: {}
+      {{- with .Values.uws.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.uws.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.uws.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
