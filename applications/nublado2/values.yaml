@@ -155,6 +155,8 @@ jupyterhub:
         auth_request_set $auth_status $upstream_http_x_error_status;
         auth_request_set $auth_error_body $upstream_http_x_error_body;
         error_page 403 = @autherror;
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
     ingressClassName: "nginx"
     pathSuffix: "*"
 
