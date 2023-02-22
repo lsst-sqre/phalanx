@@ -20,23 +20,22 @@ spec:
     server: "https://kubernetes.default.svc"
   project: "default"
   source:
-    path: "services/nublado"
+    path: "applications/nublado"
     repoURL: {{ .Values.repoURL | quote }}
-    targetRevision: {{ .Values.revision | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
-      valueFiles:
-        - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
       parameters:
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.baseUrl"
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
   ignoreDifferences:
-    - group: ""
-      kind: "Secret"
+    - kind: "Secret"
       jsonPointers:
         - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
         - "/data/hub.config.CryptKeeper.keys"
