@@ -15,7 +15,6 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: true
-  revision: tickets/DM-37390
 hips:
   enabled: true
 ingress-nginx:
