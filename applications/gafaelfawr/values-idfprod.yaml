@@ -31,16 +31,14 @@ config:
       - "g_admins"
     "exec:admin":
       - "g_admins"
-    "exec:internal-tools":
-      - "g_users"
     "exec:notebook":
-      - "g_users"
+      - "g_admins"
     "exec:portal":
-      - "g_users"
+      - "g_admins"
     "read:image":
-      - "g_users"
+      - "g_admins"
     "read:tap":
-      - "g_users"
+      - "g_admins"
 
   initialAdmins:
     - "afausti"
