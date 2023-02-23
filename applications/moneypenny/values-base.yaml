@@ -11,5 +11,5 @@ orders:
   volumes:
     - name: homedirs
       nfs:
-        server: ddn-nfs.ls.lsst.org
-        path: /lsstdata/user/staff/jhome
+        server: nfs-jhome.ls.lsst.org
+        path: /jhome
