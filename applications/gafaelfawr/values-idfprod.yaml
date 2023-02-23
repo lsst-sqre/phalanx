@@ -6,6 +6,7 @@ redis:
     storageClass: "standard-rwo"
 
 config:
+  loglevel: "DEBUG"
   slackAlerts: true
 
   cilogon:
@@ -19,7 +20,7 @@ config:
   ldap:
     url: "ldaps://ldap.cilogon.org"
     userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
-    groupBaseDn: "ou=groups,o=LSST,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
     groupObjectClass: "eduMember"
     groupMemberAttr: "hasMember"
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
