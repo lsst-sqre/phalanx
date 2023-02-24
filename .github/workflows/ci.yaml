@@ -74,7 +74,7 @@ jobs:
         with:
           filters: |
             minikube:
-              - ".github/**"
+              - ".github/workflows/ci.yaml"
               - "applications/*/Chart.yaml"
               - "applications/*/templates/**"
               - "applications/*/values.yaml"

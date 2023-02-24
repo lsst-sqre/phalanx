@@ -6,6 +6,7 @@ name: Docs
       - "docs/**"
       - "applications/*/Chart.yaml"
       - "applications/*/values.yaml"
+      - "applications/gafaelfawr/values-*.yaml"
       - "environments/values-*.yaml"
   push:
     branches-ignore:
@@ -24,6 +25,7 @@ name: Docs
       - "applications/*/Chart.yaml"
       - "applications/*/values.yaml"
       - "environments/values-*.yaml"
+  workflow_dispatch: {}
 
 jobs:
   docs:
