@@ -32,13 +32,13 @@ config:
     "exec:admin":
       - "g_admins"
     "exec:notebook":
-      - "g_admins"
+      - "g_users"
     "exec:portal":
-      - "g_admins"
+      - "g_users"
     "read:image":
-      - "g_admins"
+      - "g_users"
     "read:tap":
-      - "g_admins"
+      - "g_users"
 
   initialAdmins:
     - "afausti"
