@@ -6,7 +6,6 @@ redis:
     storageClass: "standard-rwo"
 
 config:
-  loglevel: "DEBUG"
   slackAlerts: true
 
   cilogon:
