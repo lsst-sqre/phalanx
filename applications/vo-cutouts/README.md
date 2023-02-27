@@ -14,7 +14,7 @@ Image cutout service complying with IVOA SODA
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.33.2"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.33.4"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to the GCS bucket, and ability to sign URLs as itself |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
