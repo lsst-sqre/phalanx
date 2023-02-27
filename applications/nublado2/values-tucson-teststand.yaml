@@ -15,15 +15,6 @@ jupyterhub:
       upgrade: true
       url: "postgresql://jovyan@squoint.tu.lsst.org/jupyterhub"
 
-  singleuser:
-    extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
-    initContainers:
-      - name: "multus-init"
-        image: "lsstit/ddsnet4u:latest"
-        securityContext:
-          privileged: true
-
 config:
   base_url: "https://tucson-teststand.lsst.codes"
   butler_secret_path: "secret/k8s_operator/tucson-teststand.lsst.codes/butler-secret"
