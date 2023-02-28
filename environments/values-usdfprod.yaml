@@ -19,7 +19,7 @@ gafaelfawr:
 hips:
   enabled: false
 ingress-nginx:
-  enabled: true
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
@@ -59,9 +59,9 @@ tap:
 tap-schema:
   enabled: true
 telegraf:
-  enabled: true
+  enabled: false
 telegraf-ds:
-  enabled: true
+  enabled: false
 times-square:
   enabled: false
 vault-secrets-operator:
