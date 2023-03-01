@@ -3,3 +3,4 @@ replicaCount: 3
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://data.lsst.cloud/semaphore"
+  coManageRegistryUrl: "https://id.lsst.cloud"

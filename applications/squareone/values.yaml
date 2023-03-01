@@ -34,7 +34,8 @@ ingress:
   # if TLS is managed elsewhere, such as in an ingress-nginx app.
   tls: true
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -75,6 +76,10 @@ config:
   # -- URL to the Times Square (parameterized notebooks) API service.
   # @default null disables the Times Square integration
   timesSquareUrl: null
+
+  # -- URL to the COmanage registry, if the environment uses COmanage for identity.
+  # @default null disables the COmanage integration
+  coManageRegistryUrl: null
 
 # Global parameters are set by parameters injected by the Argo CD Application
 # and should not be set in the individual environment values files.

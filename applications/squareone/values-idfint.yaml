@@ -1,3 +1,4 @@
 config:
   siteName: "Rubin Science Platform @ data-int"
   semaphoreUrl: "https://data-int.lsst.cloud/semaphore"
+  coManageRegistryUrl: "https://id-int.lsst.cloud"

@@ -15,3 +15,6 @@ data:
     {{- if .Values.config.timesSquareUrl }}
     timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
     {{- end}}
+    {{- if .Values.config.coManageRegistryUrl }}
+    coManageRegistryUrl: {{ .Values.config.coManageRegistryUrl | quote }}
+    {{- end}}
