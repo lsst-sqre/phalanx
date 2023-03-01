@@ -41,7 +41,7 @@ production-tools:
 semaphore:
   enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash-api:
