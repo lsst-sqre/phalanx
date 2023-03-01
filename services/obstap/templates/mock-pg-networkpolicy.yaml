@@ -1,12 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "cadc-tap.fullname" . }}-mock-qserv
+  name: {{ include "cadc-tap.fullname" . }}-mock-pg
 spec:
   podSelector:
     matchLabels:
       {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: "mock-qserv"
+      app.kubernetes.io/component: "mock-pg"
   policyTypes:
     - Ingress
     # Deny all outbound access; MySQL doesn't need to talk to anything.

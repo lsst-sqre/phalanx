@@ -31,16 +31,16 @@ IVOA TAP service
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
-| qserv.host | string | `"mock-qserv:3306"` (the mock QServ) | QServ hostname:port to connect to |
-| qserv.mock.affinity | object | `{}` | Affinity rules for the mock QServ pod |
-| qserv.mock.enabled | bool | `true` | Spin up a container to pretend to be QServ. |
-| qserv.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock QServ image |
-| qserv.mock.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-mock-qserv"` | Mock QServ image to use |
-| qserv.mock.image.tag | string | The appVersion of the chart | Tag of mock QServ image to use |
-| qserv.mock.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
-| qserv.mock.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
-| qserv.mock.resources | object | `{}` | Resource limits and requests for the mock QServ pod |
-| qserv.mock.tolerations | list | `[]` | Tolerations for the mock QServ pod |
+| pg.host | string | `"mock-pg:5432"` (the mock pg) | Postgres hostname:port to connect to |
+| pg.mock.affinity | object | `{}` | Affinity rules for the mock postgres pod |
+| pg.mock.enabled | bool | `true` | Spin up a container to pretend to be postgres. |
+| pg.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock postgres image |
+| pg.mock.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-db:dev"` | Mock postgres image to use |
+| pg.mock.image.tag | string | The appVersion of the chart | Tag of mock postgres image to use |
+| pg.mock.nodeSelector | object | `{}` | Node selection rules for the mock postgres pod |
+| pg.mock.podAnnotations | object | `{}` | Annotations for the mock postgres pod |
+| pg.mock.resources | object | `{}` | Resource limits and requests for the mock postgres pod |
+| pg.mock.tolerations | list | `[]` | Tolerations for the mock postgres pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |

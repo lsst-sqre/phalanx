@@ -13,7 +13,7 @@ replicaCount: 1
 
 image:
   # -- tap image to use
-  repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+  repository: "ghcr.io/lsstdax/tap-postgres-service"
 
   # -- Pull policy for the tap image
   pullPolicy: "IfNotPresent"
@@ -79,45 +79,45 @@ config:
   # maths.
   jvmMaxHeapSize: 4G
 
-qserv:
-  # -- QServ hostname:port to connect to
-  # @default -- `"mock-qserv:3306"` (the mock QServ)
-  host: "mock-qserv:3306"
+pg:
+  # -- Postgres hostname:port to connect to
+  # @default -- `"mock-pg:5432"` (the mock pg)
+  host: "mock-pg:5432"
 
   mock:
-    # -- Spin up a container to pretend to be QServ.
+    # -- Spin up a container to pretend to be postgres.
     enabled: true
 
     image:
-      # -- Mock QServ image to use
-      repository: "ghcr.io/lsst-sqre/lsst-tap-mock-qserv"
+      # -- Mock postgres image to use
+      repository: "ghcr.io/lsstdax/tap-postgres-db:dev"
 
-      # -- Pull policy for the mock QServ image
+      # -- Pull policy for the mock postgres image
       pullPolicy: "IfNotPresent"
 
-      # -- Tag of mock QServ image to use
+      # -- Tag of mock postgres image to use
       # @default -- The appVersion of the chart
       tag: ""
 
-    # -- Resource limits and requests for the mock QServ pod
+    # -- Resource limits and requests for the mock postgres pod
     resources: {}
 
-    # -- Annotations for the mock QServ pod
+    # -- Annotations for the mock postgres pod
     podAnnotations: {}
 
-    # -- Node selection rules for the mock QServ pod
+    # -- Node selection rules for the mock postgres pod
     nodeSelector: {}
 
-    # -- Tolerations for the mock QServ pod
+    # -- Tolerations for the mock postgres pod
     tolerations: []
 
-    # -- Affinity rules for the mock QServ pod
+    # -- Affinity rules for the mock postgres pod
     affinity: {}
 
 uws:
   image:
     # -- UWS database image to use
-    repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
+    repository: "ghcr.io/lsstdax/tap-postgres-uws"
 
     # -- Pull policy for the UWS database image
     pullPolicy: "IfNotPresent"

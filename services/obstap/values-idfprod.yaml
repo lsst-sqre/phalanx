@@ -13,10 +13,9 @@ config:
   gcsBucketUrl: "http://async-results.lsst.codes"
   jvmMaxHeapSize: "31G"
 
-qserv:
-  host: "10.140.1.211:4040"
+pg:
   mock:
-    enabled: false
+    enabled: true
 
 uws:
   resources:

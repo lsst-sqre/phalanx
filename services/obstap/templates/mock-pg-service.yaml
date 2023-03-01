@@ -1,8 +1,8 @@
-{{ if .Values.qserv.mock.enabled -}}
+{{ if .Values.pg.mock.enabled -}}
 kind: Service
 apiVersion: v1
 metadata:
-  name: "mock-qserv"
+  name: "mock-pg"
   labels:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 spec:
@@ -13,5 +13,5 @@ spec:
       targetPort: 3306
   selector:
     {{- include "cadc-tap.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: "mock-qserv"
+    app.kubernetes.io/component: "mock-pg"
 {{- end }}
