@@ -10,6 +10,7 @@ jupyterhub:
   singleuser:
     extraAnnotations:
       k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+      # Will become "kube-system/dds" when we change to new CNI
     initContainers:
       - name: "multus-init"
         image: "lsstit/ddsnet4u:latest"
