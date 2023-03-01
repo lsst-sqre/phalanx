@@ -10,6 +10,9 @@ jupyterhub:
     hosts: ["base-lsp.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
   hub:
     db:
       upgrade: true
