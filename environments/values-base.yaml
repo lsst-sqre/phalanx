@@ -35,7 +35,7 @@ portal:
 postgres:
   enabled: false
 sasquatch:
-  enabled: false
+  enabled: true
 production-tools:
   enabled: false
 semaphore:
@@ -45,7 +45,7 @@ squareone:
 squash-api:
   enabled: false
 strimzi:
-  enabled: false
+  enabled: true
 strimzi-registry-operator:
   enabled: false
 tap:
