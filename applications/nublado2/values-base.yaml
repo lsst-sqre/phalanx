@@ -12,7 +12,7 @@ jupyterhub:
       nginx.ingress.kubernetes.io/auth-signin: "https://base-lsp.lsst.codes/login"
   singleuser:
     extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
+      k8s.v1.cni.cncf.io/networks: "kube-system/dds"
   hub:
     db:
       upgrade: true
