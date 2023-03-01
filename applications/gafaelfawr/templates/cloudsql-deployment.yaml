@@ -27,6 +27,8 @@ spec:
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout=true"
+            - "-structured_logs=true"
             - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:0.0.0.0:5432"
           image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
           imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
