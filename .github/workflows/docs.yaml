@@ -63,6 +63,6 @@ jobs:
           password: ${{ secrets.LTD_USERNAME }}
         if: >-
           steps.filter.outputs.docs == 'true'
-          && ((github.event_name != 'pull_request'
-               && github.event_name != 'merge_group')
-              || startsWith(github.head_ref, 'tickets/'))
+          && github.event_name != 'merge_group'
+          && (github.event_name != 'pull_request'
+              || startsWith(github.head_ref, 'tickets/')
