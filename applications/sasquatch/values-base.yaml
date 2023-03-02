@@ -8,21 +8,13 @@ strimzi-kafka:
       bootstrap:
         loadBalancerIP: "139.229.153.65"
         host: sasquatch-base-kafka-bootstrap.lsst.codes
-        annotations:
-          metallb.universe.tf/address-pool: lhn
       brokers:
         - loadBalancerIP: "139.229.153.66"
           host: sasquatch-base-kafka-0.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
         - loadBalancerIP: "139.229.153.67"
           host: sasquatch-base-kafka-1.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
         - loadBalancerIP: "139.229.153.68"
           host: sasquatch-base-kafka-2.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
