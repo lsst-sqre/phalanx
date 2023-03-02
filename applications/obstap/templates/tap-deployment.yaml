@@ -31,7 +31,7 @@ spec:
                 -Dqservuser.jdbc.username=qsmaster
                 -Dqservuser.jdbc.password=
                 -Dqservuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.jdbc.url=jdbc:mysql://{{ .Values.qserv.host }}/
+                -Dqservuser.jdbc.url=jdbc:mysql://{{ .Values.pg.host }}/
                 -Dqservuser.maxActive=100
                 -Dtapuser.jdbc.username=TAP_SCHEMA
                 -Dtapuser.jdbc.password=TAP_SCHEMA
