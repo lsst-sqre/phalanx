@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`obstap` application.
 
-```{include} ../../../services/obstap/README.md
+```{include} ../../../applications/obstap/README.md
 ---
 start-after: "## Values"
 ---
