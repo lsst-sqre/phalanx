@@ -2,6 +2,9 @@
 Getting application logs
 ########################
 
+Find logs in Argo CD
+====================
+
 To see the logs for your application, use Argo CD:
 
 #. Go to the Argo CD UI for the environment for which you want to see logs.
