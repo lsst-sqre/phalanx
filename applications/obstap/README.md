@@ -24,13 +24,12 @@ IVOA TAP service
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
-| image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | tap image to use |
+| image.repository | string | `"ghcr.io/lsstdax/tap-postgres-service"` | tap image to use |
 | image.tag | string | The appVersion of the chart | Tag of tap image to use |
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to use for endpoints that allow anonymous access, such as `/capabilities` and `/availability` |
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
-| podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | pg.host | string | `"mock-pg:5432"` (the mock pg) | Postgres hostname:port to connect to |
 | pg.mock.affinity | object | `{}` | Affinity rules for the mock postgres pod |
 | pg.mock.enabled | bool | `true` | Spin up a container to pretend to be postgres. |
@@ -41,12 +40,13 @@ IVOA TAP service
 | pg.mock.podAnnotations | object | `{}` | Annotations for the mock postgres pod |
 | pg.mock.resources | object | `{}` | Resource limits and requests for the mock postgres pod |
 | pg.mock.tolerations | list | `[]` | Tolerations for the mock postgres pod |
+| podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
-| uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
+| uws.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-uws"` | UWS database image to use |
 | uws.image.tag | string | The appVersion of the chart | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |

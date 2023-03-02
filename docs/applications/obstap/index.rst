@@ -1,4 +1,4 @@
-.. px-app:: obstap 
+.. px-app:: obstap
 
 ################################
 obstap — IVOA OBSCore Table Access Protocol
