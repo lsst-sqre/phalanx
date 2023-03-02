@@ -1,0 +1,51 @@
+# This is a separate documentation build just to check links.  We don't check
+# links as part of the normal documentation build since, unlike Sphinx errors
+# and warnings, we don't want broken links to block a merge.  (Sometimes they
+# will be fixed by the same merge, sometimes they're temporary rate limit
+# issues.)
+#
+# Instead, we do an advisory run of link checking on relevant PRs that doesn't
+# block merging, and we do a weekly link check to catch any links that have
+# gone stale.
+
+name: Link Check
+
+"on":
+  push:
+    branches-ignore:
+      # These should always correspond to pull requests, so ignore them for
+      # the push trigger and let them be triggered by the pull_request
+      # trigger, avoiding running the workflow twice.  This is a minor
+      # optimization so there's no need to ensure this is comprehensive.
+      - "dependabot/**"
+      - "renovate/**"
+      - "tickets/**"
+      - "u/**"
+    tags:
+      - "*"
+    paths:
+      - "docs/**"
+      - "applications/*/Chart.yaml"
+      - "applications/*/values.yaml"
+      - "applications/gafaelfawr/values-*.yaml"
+      - "environments/values-*.yaml"
+  schedule:
+    - cron: "0 12 * * 1"
+  workflow_dispatch: {}
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install graphviz
+        run: sudo apt-get install graphviz
+
+      - name: Check links
+        uses: lsst-sqre/run-tox@v1
+        with:
+          python-version: "3.11"
+          tox-envs: docs-linkcheck
