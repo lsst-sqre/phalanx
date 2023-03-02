@@ -6,3 +6,4 @@ config:
   siteName: "Rubin Science Platform @ data-dev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
+  coManageRegistryUrl: "https://id-dev.lsst.cloud"
