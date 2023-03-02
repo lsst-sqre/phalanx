@@ -9,13 +9,7 @@ jupyterhub:
       url: "postgresql://jovyan@postgresdb01.cp.lsst.org/jupyterhub"
   singleuser:
     extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
-      # Will become "kube-system/dds" when we change to new CNI
-    initContainers:
-      - name: "multus-init"
-        image: "lsstit/ddsnet4u:latest"
-        securityContext:
-          privileged: true
+      k8s.v1.cni.cncf.io/networks: "kube-system/dds"
 
 config:
   base_url: "https://summit-lsp.lsst.codes"
