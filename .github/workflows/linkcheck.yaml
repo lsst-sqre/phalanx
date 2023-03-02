@@ -18,6 +18,7 @@ name: Link Check
       # trigger, avoiding running the workflow twice.  This is a minor
       # optimization so there's no need to ensure this is comprehensive.
       - "dependabot/**"
+      - "gh-readonly-queue/**"
       - "renovate/**"
       - "tickets/**"
       - "u/**"
