@@ -29,7 +29,6 @@ noteburst:
   enabled: true
 nublado:
   enabled: true
-  revision: tickets/DM-36570
 nublado2:
   enabled: false
 plot-navigator:
