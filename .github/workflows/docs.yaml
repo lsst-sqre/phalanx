@@ -2,9 +2,7 @@ name: Docs
 
 "on":
   merge_group: {}
-  pull_request:
-    branches:
-      - "main"
+  pull_request: {}
   push:
     branches-ignore:
       # These should always correspond to pull requests, so ignore them for
@@ -65,4 +63,4 @@ jobs:
           steps.filter.outputs.docs == 'true'
           && github.event_name != 'merge_group'
           && (github.event_name != 'pull_request'
-              || startsWith(github.head_ref, 'tickets/')
+              || startsWith(github.head_ref, 'tickets/'))
