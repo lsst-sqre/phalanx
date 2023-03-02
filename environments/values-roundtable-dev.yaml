@@ -18,6 +18,10 @@ hips:
   enabled: false
 ingress-nginx:
   enabled: true
+linters:
+  enabled: false
+obstap:
+  enabled: false
 mobu:
   enabled: false
 moneypenny:
