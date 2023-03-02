@@ -1,13 +1,10 @@
 name: Docs
 
 "on":
+  merge_group: {}
   pull_request:
-    paths:
-      - "docs/**"
-      - "applications/*/Chart.yaml"
-      - "applications/*/values.yaml"
-      - "applications/gafaelfawr/values-*.yaml"
-      - "environments/values-*.yaml"
+    branches:
+      - "main"
   push:
     branches-ignore:
       # These should always correspond to pull requests, so ignore them for
@@ -20,11 +17,6 @@ name: Docs
       - "u/**"
     tags:
       - "*"
-    paths:
-      - "docs/**"
-      - "applications/*/Chart.yaml"
-      - "applications/*/values.yaml"
-      - "environments/values-*.yaml"
   workflow_dispatch: {}
 
 jobs:
@@ -32,40 +24,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Filter paths
+        uses: dorny/paths-filter@v2
+        id: filter
         with:
-          python-version: "3.10"
-
-      - name: Python install
-        run: |
-          python -m pip install --upgrade pip tox
-          python -m pip install -e ".[dev]"
-          python -m pip install ltd-conveyor
+          filters: |
+            docs:
+              - "docs/**"
+              - "applications/*/Chart.yaml"
+              - "applications/*/values.yaml"
+              - "applications/gafaelfawr/values-*.yaml"
+              - "environments/values-*.yaml"
 
       - name: Install graphviz
+        if: steps.filter.outputs.docs == 'true'
         run: sudo apt-get install graphviz
 
-      - name: Run tox
+      - name: Build docs
+        if: steps.filter.outputs.docs == 'true'
         uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.10"
-          tox-envs: "docs"
+          python-version: "3.11"
+          tox-envs: docs
 
-      # Only attempt documentation uploads for long-lived branches, tagged
-      # releases, and pull requests from ticket branches.  This avoids version
-      # clutter in the docs and failures when a PR doesn't have access to
-      # secrets.  This will still trigger on pull requests from untrusted
-      # repositories whose branch names match our tickets/* branch convention,
-      # but in this case the build will fail with an error since the secret
-      # won't be set.
-      - name: Upload
-        env:
-          LTD_PASSWORD: ${{ secrets.LTD_PASSWORD }}
-          LTD_USERNAME: ${{ secrets.LTD_USERNAME }}
-        run: ltd upload --gh --product phalanx --dir docs/_build/html
+      # Only attempt documentation uploads for tagged releases and pull
+      # requests from ticket branches in the same repository. This avoids
+      # version clutter in the docs and failures when a PR doesn't have access
+      # to secrets.
+      - name: Upload to LSST the Docs
+        uses: lsst-sqre/ltd-upload@v1
+        with:
+          project: "phalanx"
+          dir: "docs/_build/html"
+          username: ${{ secrets.LTD_PASSWORD }}
+          password: ${{ secrets.LTD_USERNAME }}
         if: >-
-          github.event_name != 'pull_request'
-          || startsWith(github.head_ref, 'tickets/')
+          steps.filter.outputs.docs == 'true'
+          && ((github.event_name != 'pull_request'
+               && github.event_name != 'merge_group')
+              || startsWith(github.head_ref, 'tickets/'))
