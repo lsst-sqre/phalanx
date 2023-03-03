@@ -109,7 +109,7 @@ influxdb2:
     scripts:
       init.sh: |+
         #!/bin/bash
-        influx bucket create --name telegra-kafka-consumer --org default
+        influx bucket create --name telegraf-kafka-consumer --org default
   resources:
     requests:
       memory: 1Gi
