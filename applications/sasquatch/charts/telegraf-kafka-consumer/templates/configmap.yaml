@@ -34,7 +34,7 @@ data:
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
       avro_timestamp = "private_efdStamp"
-      avro_timestamp_format = "unix_us"
+      avro_timestamp_format = "unix"
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
