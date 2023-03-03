@@ -3,23 +3,14 @@ ingress-nginx:
     config:
       large-client-header-buffers: "4 64k"
       proxy-buffer-size: "64k"
+      use-proxy-protocol: "false"
+      enable-health-monitor: "false"
     service:
-      externalTrafficPolicy: null
-      type: ClusterIP
-    affinity:
-      nodeAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 1
-          preference:
-            matchExpressions:
-            - key: nodetype
-              operator: In
-              values:
-              - public
-    dnsPolicy: ClusterFirstWithHostNet
-    hostNetwork: true
+      loadBalancerIP: "192.41.122.16"
+      annotations:
+        kubernetes.io/ingress.class: "openstack"
+        loadbalancer.openstack.org/enable-health-monitor: "false"
     extraArgs:
       default-ssl-certificate: ingress-nginx/ingress-certificate
-
 vaultCertificate:
   enabled: true
