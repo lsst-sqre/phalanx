@@ -44,6 +44,8 @@ noteburst:
   enabled: false
 nublado2:
   enabled: false
+obstap:
+  enabled: false
 plot-navigator:
   enabled: false
 portal:

@@ -31,6 +31,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    moneypenny/index
    noteburst/index
    nublado2/index
+   obstap/index
    portal/index
    semaphore/index
    sherlock/index
