@@ -20,12 +20,13 @@ influxdb:
     hostname: data-dev.lsst.cloud
 
 influxdb2:
-  enabled: true
+  enabled: false
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
 
 telegraf-kafka-consumer:
+  enabled: false
   kafkaConsumers:
     test:
       enabled: true

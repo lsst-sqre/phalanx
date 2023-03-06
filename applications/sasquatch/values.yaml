@@ -122,7 +122,8 @@ influxdb2:
 kafka-connect-manager: {}
 
 # -- Override telegraf-kafka-consumer configuration.
-telegraf-kafka-consumer: {}
+telegraf-kafka-consumer:
+  enabled: false
 
 # -- Override rest-proxy configuration.
 rest-proxy:
