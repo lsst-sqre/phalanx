@@ -20,9 +20,9 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: services/obstap
+    path: applications/obstap
     repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.revision }}
+    targetRevision: {{ .Values.targetRevision }}
     helm:
       parameters:
         - name: "global.host"
@@ -30,7 +30,7 @@ spec:
         - name: "global.baseUrl"
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
-          value: {{ .Values.vault_path_prefix | quote }}
+          value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"
