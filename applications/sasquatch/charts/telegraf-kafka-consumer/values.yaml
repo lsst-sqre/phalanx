@@ -1,4 +1,9 @@
 ## Default values.yaml for Telegraf Kafka Consumer
+
+# -- Enable Telegraf Kafka Consumer.
+# Note that the default configuration is meant to work with InfluxDB2.
+enabled: false
+
 image:
   # -- Telegraf image repository.
   repo: "lsstsqre/telegraf"

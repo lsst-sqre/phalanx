@@ -36,6 +36,7 @@ influxdb2:
     hostname: tucson-teststand.lsst.codes
 
 telegraf-kafka-consumer:
+  enabled: true
   kafkaConsumers:
     auxtel:
       enabled: true
