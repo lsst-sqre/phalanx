@@ -26,7 +26,17 @@ influxdb:
     enabled: true
     hostname: tucson-teststand.lsst.codes
 
+influxdb2:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
+  ingress:
+    # -- InfluxDB2 ingress configuration
+    enabled: true
+    hostname: tucson-teststand.lsst.codes
+
 telegraf-kafka-consumer:
+  enabled: true
   kafkaConsumers:
     auxtel:
       enabled: true

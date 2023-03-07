@@ -50,7 +50,7 @@ Rubin Observatory's telemetry service.
 | influxdb2.ingress.hostname | string | `""` |  |
 | influxdb2.ingress.path | string | `"/influxdb2(/|$)(.*)"` |  |
 | influxdb2.initScripts.enabled | bool | `true` | InfluxDB2 initialization scripts |
-| influxdb2.initScripts.scripts."init.sh" | string | `"#!/bin/bash\ninflux bucket create --name telegra-kafka-consumer --org default\n"` |  |
+| influxdb2.initScripts.scripts."init.sh" | string | `"#!/bin/bash\ninflux bucket create --name telegraf-kafka-consumer --org default\n"` |  |
 | influxdb2.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
 | influxdb2.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments. |
 | influxdb2.resources.limits.cpu | int | `8` |  |
@@ -70,4 +70,4 @@ Rubin Observatory's telemetry service.
 | rest-proxy | object | `{"enabled":false}` | Override rest-proxy configuration. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
-| telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer configuration. |
+| telegraf-kafka-consumer | object | `{"enabled":false}` | Override telegraf-kafka-consumer configuration. |

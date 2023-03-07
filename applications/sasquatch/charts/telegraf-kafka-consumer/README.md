@@ -8,6 +8,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment. |
 | args | list | `[]` | Arguments passed to the Telegraf agent containers. |
+| enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB2. |
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |

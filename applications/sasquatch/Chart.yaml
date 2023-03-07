@@ -28,7 +28,7 @@ dependencies:
   - name: kafdrop
     version: 1.0.0
   - name: telegraf-kafka-consumer
-    condition: influxdb2.enabled
+    condition: telegraf-kafka-consumer.enabled
     version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled
