@@ -13,7 +13,6 @@ kafka:
     size: 500Gi
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
-  # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
     offsets.retention.minutes: 4320
@@ -21,6 +20,10 @@ kafka:
     log.retention.hours: 72
     # -- Maximum retained number of bytes for a topic's data.
     log.retention.bytes: "429496729600"
+    # -- The largest record batch size allowed by Kafka.
+    message.max.bytes: 655360
+    # -- The number of bytes of messages to attempt to fetch for each partition.
+    replica.fetch.max.bytes: 655360
 
   externalListener:
     tls:

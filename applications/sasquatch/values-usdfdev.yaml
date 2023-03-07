@@ -2,7 +2,7 @@ strimzi-kafka:
   mirrormaker2:
     enabled: true
     source:
-      bootstrapServer: sasquatch-tts-kafka-bootstrap.lsst.codes:9094
+      bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
     resources:
       requests:
@@ -22,9 +22,60 @@ influxdb:
 
 kafka-connect-manager:
   influxdbSink:
-    influxdb-sink:
-      enabled: true
-      tasksMax: 10
+    # Based on the kafka producers configuration for the BTS
+    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
+    connectors:
+      auxtel:
+        enabled: true
+        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+      maintel:
+        enabled: true
+        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+      mtmount:
+        enabled: true
+        topicsRegex: ".*MTMount"
+      comcam:
+        enabled: true
+        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
+      eas:
+        enabled: true
+        topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
+      latiss:
+        enabled: true
+        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+      m1m3:
+        enabled: true
+        topicsRegex: ".*MTM1M3"
+      m2:
+        enabled: true
+        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+      obssys:
+        enabled: true
+        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+      ocps:
+        enabled: true
+        topicsRegex: ".*OCPS"
+      test:
+        enabled: true
+        topicsRegex: ".*Test"
+      pmd:
+        enabled: true
+        topicsRegex: ".*PMD"
+      calsys:
+        enabled: true
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+      mtaircompressor:
+        enabled: true
+        topicsRegex: ".*MTAirCompressor"
+      authorize:
+        enabled: true
+        topicsRegex: ".*Authorize"
+      lasertracker:
+        enabled: true
+        topicsRegex: ".*LaserTracker"
+      genericcamera:
+        enabled: true
+        topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
   ingress:
