@@ -34,7 +34,7 @@ IVOA TAP service
 | pg.mock.affinity | object | `{}` | Affinity rules for the mock postgres pod |
 | pg.mock.enabled | bool | `true` | Spin up a container to pretend to be postgres. |
 | pg.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock postgres image |
-| pg.mock.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-db:dev"` | Mock postgres image to use |
+| pg.mock.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-db"` | Mock postgres image to use |
 | pg.mock.image.tag | string | The appVersion of the chart | Tag of mock postgres image to use |
 | pg.mock.nodeSelector | object | `{}` | Node selection rules for the mock postgres pod |
 | pg.mock.podAnnotations | object | `{}` | Annotations for the mock postgres pod |
