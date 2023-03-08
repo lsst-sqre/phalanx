@@ -1,4 +1,16 @@
-strimzi-kafka: {}
+strimzi-kafka:
+  mirrormaker2:
+    enabled: true
+    source:
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
 
 influxdb:
   ingress:
