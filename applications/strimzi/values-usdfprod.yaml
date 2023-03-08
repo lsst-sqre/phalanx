@@ -1,4 +1,4 @@
 strimzi-kafka-operator:
   watchNamespaces:
     - "sasquatch"
-  logLevel: "DEBUG"
+  logLevel: "INFO"
