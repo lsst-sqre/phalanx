@@ -76,6 +76,9 @@ kafka-connect-manager:
       genericcamera:
         enabled: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
+      gis:
+        enabled: true
+        topicsRegex: ".*GIS"
 
 kafdrop:
   ingress:
