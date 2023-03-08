@@ -90,7 +90,7 @@ pg:
 
     image:
       # -- Mock postgres image to use
-      repository: "ghcr.io/lsstdax/tap-postgres-db:dev"
+      repository: "ghcr.io/lsstdax/tap-postgres-db"
 
       # -- Pull policy for the mock postgres image
       pullPolicy: "IfNotPresent"
