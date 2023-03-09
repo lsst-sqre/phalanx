@@ -1,6 +1,12 @@
-## Argo CD configuration
-## https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+# Argo CD configuration
+# https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
+
 argo-cd:
+  global:
+    logging:
+      # -- Set the global logging format. Either: `text` or `json`
+      format: "json"
+
   redis:
     enabled: true
     metrics:
