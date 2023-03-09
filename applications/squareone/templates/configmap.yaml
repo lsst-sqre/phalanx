@@ -18,3 +18,8 @@ data:
     {{- if .Values.config.coManageRegistryUrl }}
     coManageRegistryUrl: {{ .Values.config.coManageRegistryUrl | quote }}
     {{- end}}
+    supportPageMdx: {{ .Values.config.supportPageMdx | quote }}
+    verifyEmailPageMdx: {{ .Values.config.verifyEmailPageMdx | quote }}
+    emailVerifiedPageMdx: {{ .Values.config.emailVerifiedPageMdx | quote }}
+    pendingApprovalPageMdx: {{ .Values.config.pendingApprovalPageMdx | quote }}
+    pendingVerificationPageMdx: {{ .Values.config.pendingVerificationPageMdx | quote }}
