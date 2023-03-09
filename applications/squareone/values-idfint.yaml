@@ -2,3 +2,13 @@ config:
   siteName: "Rubin Science Platform @ data-int"
   semaphoreUrl: "https://data-int.lsst.cloud/semaphore"
   coManageRegistryUrl: "https://id-int.lsst.cloud"
+  supportPageMdx: |
+    # Get help with the Rubin Science Platform on idf-int.lsst.cloud
+
+    For user-oriented questions, contact us on the LSSTC Slack in the
+    [#dm-rsp-support channel](https://lsstc.slack.com/archives/CAS7Y9ADS).
+
+    If you're a developer working on an RSP application, join us in the
+    [#dm-rsp-team channel](https://lsstc.slack.com/archives/C8EEUGDSA).
+
+    Don't forget to check the <Link href="/docs">documentation</Link>.

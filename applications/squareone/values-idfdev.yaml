@@ -7,3 +7,15 @@ config:
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"
+  supportPageMdx: |
+    # Get help with the Rubin Science Platform on idf-dev.lsst.cloud
+
+    This is SQuaRE’s development environment for the RSP. If you're not a
+    member of the SQuaRE team, you’ll want to try a more public RSP environment
+    first:
+
+    - [data.lsst.cloud](https://data.lsst.cloud) — for most users, including DP0 delegates
+    - [usdf-rsp.slac.stanford.edu](http://usdf-rsp.slac.stanford.edu/) — for Rubin staff
+    - [data-int.lsst.cloud](https://data-int.lsst.cloud) — for Rubin RSP developers
+
+    Don't forget to check the <Link href="/docs">documentation</Link>.
