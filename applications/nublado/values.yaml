@@ -55,19 +55,25 @@ controller:
     # -- The application's root HTTP endpoint path
     rootEndpoint: nublado
     # -- Application run profile: "development" or "production"
-    profile: development
+    profile: production
     # -- Root name of the application's logger.
     loggerName: jupyterlabcontroller
     #
-    logLevel: DEBUG
+    logLevel: INFO
   # -- Settings for the JupyterLab controller
   lab:
+    env:
+      JUPYTERHUB_BASE_URL: /nb/
+    #  JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api
     # These are the maximum CPU/memory allocations for each size
     # category.
     # The size names and ordering are taken from:
     # https://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#bigandLittleCreaturesInCombat
     # Typically, we support small, medium, and large, but can range up
     # and down in instance-specific configuration.
+    #
+    # The first one listed will be checked by default, so you probably
+    # want them listed smallest to largest.
     sizes:
       small:
         cpu: 1.0
@@ -122,46 +128,12 @@ controller:
       FIREFLY_ROUTE: /portal/app
       HUB_ROUTE: /nb/hub
       # JS9_ROUTE: /js9  # No longer used?
-      JUPYTERHUB_ADMIN_ACCESS: "1"  # Do we need this?!?
+      # JUPYTERHUB_ADMIN_ACCESS: "1"  # Do we need this?!?
       NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
       NO_SUDO: "TRUE"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
       SODA_ROUTE: /api/image/soda
       TAP_ROUTE: /api/tap
-      # WORKFLOW_ROUTE: /wf  # No longer used
-      # Note that other environment variables will be injected by the
-      # Lab controller (to match KubeSpawner's behavior).  These
-      # must be calculated from other Lab-spawn-time values, and
-      # include:
-      # ACCESS_TOKEN
-      # CPU_GUARANTEE
-      # CPU_LIMIT
-      # DEBUG
-      # EXTERNAL_GID
-      # EXTERNAL_GROUPS
-      # JPY_API_TOKEN  # Deprecated, alias for JUPYTERHUB_API_TOKEN
-      # JUPYTERHUB_API_URL
-      # JUPYTERHUB_API_TOKEN
-      # JUPYTERHUB_ACTIVITY_URL
-      # JUPYTERHUB_BASE_URL
-      # JUPYTERHUB_CLIENT_ID
-      # JUPYTERHUB_DEFAULT_URL
-      # JUPYTERHUB_OAUTH_ACCESS_SCOPES
-      # JUPYTERHUB_OAUTH_CALLBACK_URL
-      # JUPYTERHUB_OAUTH_SCOPES  # Deprecated JUPYTERHUB_OAUTH_ACCESS_SCOPES
-      # JUPYTERHUB_OAUTH_CLIENT_ALLOWED_SCOPES
-      # JUPYTERHUB_SERVER_NAME
-      # JUPYTERHUB_SERVICE_PREFIX
-      # JUPYTERHUB_SERVICE_URL
-      # JUPYTERHUB_USER
-      # JUPYTER_IMAGE
-      # JUPYTER_IMAGE_SPEC  # Alias for JUPYTER_IMAGE
-      # MEM_GUARANTEE  # in bytes
-      # MEM_LIMIT      # in bytes
-      # RESET_USER_ENV
-      # Additionally, some environment variables will be set from the
-      # secrets below.  These will be paths to injected credential
-      # files.
       # EXTERNAL_INSTANCE_URL is a special case: it's
       # constant-per-instance, but you can't template values files
     secrets: []
@@ -283,11 +255,6 @@ controller:
     numReleases: 1
     numWeeklies: 2
     numDailies: 3
-  # -- Runtime config will be filled in on initialization
-  runtime:
-    path: ""
-    namespace: ""
-    instanceUrl: ""
 
 
 # Configuration for z2jh subchart
@@ -333,18 +300,16 @@ jupyterhub:
       00_hub.py:
         mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub.py
         stringData: |
-          import os
-          import rsp_restspawner  # Baked into image
-          from rsp_restspawner.util import get_namespace
-
+          import rsp_restspawner
+          cfg_obj=rsp_restspawner.util.get_config()
           # Turn off concurrent spawn limit
           c.JupyterHub.concurrent_spawn_limit = 0
-          #
-          # Set internal url
+          # Set internal Hub API URL
           c.JupyterHub.hub_connect_url = (
-              "http://hub." +
-              f"{get_namespace()}:" +
-              f"{os.environ['HUB_SERVICE_PORT']}"
+            "http://hub." +
+            cfg_obj["Release"]["Namespace"] +
+            ":" +
+            f"{os.environ['HUB_SERVICE_PORT']}"
           )
       01_spawner.py:
         mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/01_spawner.py
@@ -435,7 +400,6 @@ jupyterhub:
       enabled: false
     userPlaceholder:
       enabled: false
-
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
