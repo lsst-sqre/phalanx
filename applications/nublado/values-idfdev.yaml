@@ -1,11 +1,5 @@
-image:
-  pullPolicy: Always
-  tag: ajt-dev
 controller:
   lab:
-    env:
-      JUPYTERHUB_BASE_URL: /nb/
-      # JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api
     volumes:
     - containerPath: /home
       serverPath: /share1/home
@@ -40,12 +34,3 @@ controller:
     numReleases: 1
     numWeeklies: 2
     numDailies: 3
-  safir:
-    profile: development
-    logLevel: DEBUG
-
-jupyterhub:
-  hub:
-    image:
-      tag: "ajt-dev"
-      pullPolicy: "Always"

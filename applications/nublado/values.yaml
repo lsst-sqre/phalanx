@@ -8,7 +8,7 @@ fullnameOverride: ""
 
 image:
   # -- nublado image to use
-  repository: lsstsqre/jupyterlabcontroller
+  repository: ghcr.io/lsst-sqre/jupyterlab-controller
 
   # -- Pull policy for the nublado image
   pullPolicy: IfNotPresent
@@ -62,9 +62,6 @@ controller:
     logLevel: INFO
   # -- Settings for the JupyterLab controller
   lab:
-    env:
-      JUPYTERHUB_BASE_URL: /nb/
-    #  JUPYTERHUB_API_URL: http://hub.nublado:8081/nb/hub/api
     # These are the maximum CPU/memory allocations for each size
     # category.
     # The size names and ordering are taken from:
@@ -127,8 +124,6 @@ controller:
       DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
       FIREFLY_ROUTE: /portal/app
       HUB_ROUTE: /nb/hub
-      # JS9_ROUTE: /js9  # No longer used?
-      # JUPYTERHUB_ADMIN_ACCESS: "1"  # Do we need this?!?
       NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
       NO_SUDO: "TRUE"
       S3_ENDPOINT_URL: "https://storage.googleapis.com"
@@ -262,7 +257,8 @@ jupyterhub:
   hub:
     authenticatePrometheus: false
     image:
-      name: docker.io/lsstsqre/rsp-restspawner
+      name: ghcr.io/lsst-sqre/rsp-restspawner
+      tag: 0.1.2
     resources:
       limits:
         cpu: 900m
