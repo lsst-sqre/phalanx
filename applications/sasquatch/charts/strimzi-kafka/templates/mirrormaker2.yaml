@@ -63,7 +63,7 @@ spec:
         # added to the batch and sent to brokers at the same time.
         # This can improve throughput when you have just a few topic partitions that
         # handle large numbers of messages.
-        producer.override.batch.size: 327680
+        producer.override.batch.size: 524288
         # Use linger.ms to add a wait time in milliseconds to delay produce requests when
         # producer load decreases.
         # The delay means that more records can be added to batches if they are under the
@@ -71,7 +71,9 @@ spec:
         producer.override.linger.ms: 100
         # Accept larger messages.
         # See also message.max.bytes broker configuration.
-        producer.max.request.size: 262144
+        producer.max.request.size: 10485760
+        producer.buffer.memory: 10485760
+
     heartbeatConnector:
       config:
         heartbeats.topic.replication.factor: 3
