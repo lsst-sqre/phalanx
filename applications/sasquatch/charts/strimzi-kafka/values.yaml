@@ -21,9 +21,9 @@ kafka:
     # -- Maximum retained number of bytes for a topic's data.
     log.retention.bytes: "429496729600"
     # -- The largest record batch size allowed by Kafka.
-    message.max.bytes: 655360
+    message.max.bytes: 10485760
     # -- The number of bytes of messages to attempt to fetch for each partition.
-    replica.fetch.max.bytes: 655360
+    replica.fetch.max.bytes: 10485760
 
   externalListener:
     tls:
