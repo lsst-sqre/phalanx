@@ -33,8 +33,6 @@ spec:
             - name: "AUTOSTART"
               value: "/etc/mobu/autostart.yaml"
             {{- end }}
-            - name: "CACHEMACHINE_IMAGE_POLICY"
-              value: {{ .Values.cachemachineImagePolicy }}
             - name: "ENVIRONMENT_URL"
               value: {{ .Values.global.baseUrl }}
             - name: "GAFAELFAWR_TOKEN"

@@ -1,5 +1,7 @@
-cachemachineImagePolicy: "desired"
-
+image:
+  repository: "docker.io/lsstsqre/mobu"
+  tag: "ajt-dev"
+  pullPolicy: "Always"
 autostart:
   - name: "python"
     count: 1
@@ -9,6 +11,7 @@ autostart:
     business: "JupyterPythonLoop"
     options:
       jupyter:
+        image_class: "latest-weekly"
         image_size: "Small"
     restart: true
   - name: "tap"

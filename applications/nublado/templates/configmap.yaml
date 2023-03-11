@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nublado.fullname" . }}-config
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+  {{- toYaml .Values.controller | nindent 4 }}
+

@@ -1,8 +1,8 @@
-{{- if .Values.nublado2.enabled -}}
+{{- if .Values.nublado.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "nublado2"
+  name: "nublado"
 spec:
   finalizers:
     - "kubernetes"
@@ -10,23 +10,20 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "nublado2"
+  name: "nublado"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "nublado2"
+    namespace: "nublado"
     server: "https://kubernetes.default.svc"
   project: "default"
   source:
-    path: "applications/nublado2"
+    path: "applications/nublado"
     repoURL: {{ .Values.repoURL | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
-      valueFiles:
-        - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
       parameters:
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
@@ -34,9 +31,11 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
   ignoreDifferences:
-    - group: ""
-      kind: "Secret"
+    - kind: "Secret"
       jsonPointers:
         - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
         - "/data/hub.config.CryptKeeper.keys"

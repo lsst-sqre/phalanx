@@ -9,3 +9,7 @@ spec:
   scopes:
     - "admin:token"
     - "exec:admin"
+    - "admin:jupyterlab"
+
+
+

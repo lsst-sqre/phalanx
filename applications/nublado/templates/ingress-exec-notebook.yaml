@@ -1,0 +1,59 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "nublado.fullname" . }}-exec-notebook
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+  namespace: {{ template "nublado.fullname" . }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  delegate:
+    notebook: {}
+template:
+  metadata:
+    name: {{ template "nublado.fullname" . }}-exec-notebook
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: 'true'
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/nublado/spawner/v1/labs/.*/create"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "nublado.fullname" . }}
+                  port:
+                    number: 80
+            - path: "/nublado/spawner/v1/labs/.*/events"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "nublado.fullname" . }}
+                  port:
+                    number: 80
+            - path: "/nublado/spawner/v1/lab-form/.*"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "nublado.fullname" . }}
+                  port:
+                    number: 80
+            - path: "/nublado/spawner/v1/user-status"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: {{ template "nublado.fullname" . }}
+                  port:
+                    number: 80
+            - path: "/nublado/spawner/v1/user-status/"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: {{ template "nublado.fullname" . }}
+                  port:
+                    number: 80
