@@ -17,7 +17,7 @@ template:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
       nginx.ingress.kubernetes.io/rewrite-target: "/tap/$1"
       nginx.ingress.kubernetes.io/proxy-redirect-from: "http://$host/tap/"
-      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/tap/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/obstap/"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
       {{- with .Values.ingress.anonymousAnnotations }}
@@ -28,7 +28,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/api/tap/(availability|capabilities|swagger-ui.*)"
+            - path: "/api/obstap/(availability|capabilities|swagger-ui.*)"
               pathType: "ImplementationSpecific"
               backend:
                 service:
