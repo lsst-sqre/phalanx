@@ -24,7 +24,7 @@ IVOA TAP service
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
-| image.repository | string | `"ghcr.io/lsstdax/tap-postgres-service"` | tap image to use |
+| image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | tap image to use |
 | image.tag | string | The appVersion of the chart | Tag of tap image to use |
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to use for endpoints that allow anonymous access, such as `/capabilities` and `/availability` |
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
@@ -34,7 +34,7 @@ IVOA TAP service
 | pg.mock.affinity | object | `{}` | Affinity rules for the mock postgres pod |
 | pg.mock.enabled | bool | `true` | Spin up a container to pretend to be postgres. |
 | pg.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock postgres image |
-| pg.mock.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-db"` | Mock postgres image to use |
+| pg.mock.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-db"` | Mock postgres image to use |
 | pg.mock.image.tag | string | The appVersion of the chart | Tag of mock postgres image to use |
 | pg.mock.nodeSelector | object | `{}` | Node selection rules for the mock postgres pod |
 | pg.mock.podAnnotations | object | `{}` | Annotations for the mock postgres pod |
@@ -46,7 +46,7 @@ IVOA TAP service
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
-| uws.image.repository | string | `"ghcr.io/lsstdax/tap-postgres-uws"` | UWS database image to use |
+| uws.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-uws"` | UWS database image to use |
 | uws.image.tag | string | The appVersion of the chart | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
