@@ -13,7 +13,7 @@ replicaCount: 1
 
 image:
   # -- tap image to use
-  repository: "ghcr.io/lsstdax/tap-postgres-service"
+  repository: "ghcr.io/lsst-sqre/tap-postgres-service"
 
   # -- Pull policy for the tap image
   pullPolicy: "IfNotPresent"
@@ -90,7 +90,7 @@ pg:
 
     image:
       # -- Mock postgres image to use
-      repository: "ghcr.io/lsstdax/tap-postgres-db"
+      repository: "ghcr.io/lsst-sqre/tap-postgres-db"
 
       # -- Pull policy for the mock postgres image
       pullPolicy: "IfNotPresent"
@@ -117,7 +117,7 @@ pg:
 uws:
   image:
     # -- UWS database image to use
-    repository: "ghcr.io/lsstdax/tap-postgres-uws"
+    repository: "ghcr.io/lsst-sqre/tap-postgres-uws"
 
     # -- Pull policy for the UWS database image
     pullPolicy: "IfNotPresent"
