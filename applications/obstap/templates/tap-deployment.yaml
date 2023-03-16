@@ -37,7 +37,8 @@ spec:
                 -Dtapuser.jdbc.password=TAP_SCHEMA
                 -Dtapuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dtapuser.jdbc.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
-                -Dtapuser.maxActive=100
+                -Dtap.maxActive=100
+                -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
                 -Duws.jdbc.username=postgres
                 -Duws.jdbc.driverClassName=org.postgresql.Driver
