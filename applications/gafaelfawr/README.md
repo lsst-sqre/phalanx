@@ -34,7 +34,9 @@ Authentication and identity system
 | config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
 | config.databaseUrl | string | None, must be set if `cloudsql.enabled` is not true | URL for the PostgreSQL database |
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
-| config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project.  Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
+| config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
+| config.forgerock.url | string | ForgeRock Identity Management support is disabled | If set, obtain the GIDs for groups from this ForgeRock Identity Management server. |
+| config.forgerock.username | string | None, must be set if `config.forgerock.url` is set | Username to use for HTTP Basic authentication to ForgeRock Identity Managemnt. The corresponding password must be in the `forgerock-passsword` key of the Gafaelfawr Vault secret. |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. See [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes. |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
