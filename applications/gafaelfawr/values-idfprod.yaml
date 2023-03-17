@@ -27,7 +27,7 @@ config:
     project: "rsp-firestore-stable-e8eb"
 
   # User quota settings for services.
-  quotas:
+  quota:
     default:
       notebook:
         cpu: 9.0

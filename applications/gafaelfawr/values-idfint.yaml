@@ -32,7 +32,7 @@ config:
     enabled: true
 
   # User quota settings for services.
-  quotas:
+  quota:
     default:
       notebook:
         cpu: 9.0

@@ -216,7 +216,7 @@ config:
 
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
-  quotas: {}
+  quota: {}
 
   # -- Usernames to add as administrators when initializing a new database.
   # Used only if there are no administrators.
