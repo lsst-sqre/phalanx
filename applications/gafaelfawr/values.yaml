@@ -43,10 +43,6 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
-  # -- Whether to send certain serious alerts to Slack. If `true`, the
-  # `slack-webhook` secret must also be set.
-  slackAlerts: false
-
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
   tokenLifetimeMinutes: 43200
@@ -58,6 +54,19 @@ config:
     - "10.0.0.0/8"
     - "172.16.0.0/12"
     - "192.168.0.0/16"
+
+  # -- HTML footer to add to any login error page (will be enclosed in a <p>
+  # tag).
+  errorFooter: ""
+
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
+  github:
+    # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
+    # or `config.oidc.clientId` must be set.
+    clientId: ""
 
   cilogon:
     # -- CILogon client ID. One and only one of this,
@@ -93,18 +102,6 @@ config:
     # retrieved from LDAP)
     # @default -- `"isMemberOf"`
     groupsClaim: ""
-
-  firestore:
-    # -- If set, assign UIDs and GIDs using Google Firestore in the given
-    # project.  Cloud SQL must be enabled and the Cloud SQL service account
-    # must have read/write access to that Firestore instance.
-    # @default -- Firestore support is disabled
-    project: ""
-
-  github:
-    # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
-    # or `config.oidc.clientId` must be set.
-    clientId: ""
 
   oidc:
     # -- Client ID for generic OpenID Connect support. One and only one of
@@ -205,10 +202,25 @@ config:
     # equal to their UID
     addUserGroup: false
 
+  firestore:
+    # -- If set, assign UIDs and GIDs using Google Firestore in the given
+    # project.  Cloud SQL must be enabled and the Cloud SQL service account
+    # must have read/write access to that Firestore instance.
+    # @default -- Firestore support is disabled
+    project: ""
+
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
     # `oidc-server-secrets` must be set in the Gafaelfawr secret.
     enabled: false
+
+  # -- Quota settings (see
+  # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
+  quotas: {}
+
+  # -- Usernames to add as administrators when initializing a new database.
+  # Used only if there are no administrators.
+  initialAdmins: []
 
   # -- Names and descriptions of all scopes in use. This is used to populate
   # the new token creation page. Only scopes listed here will be options when
@@ -241,13 +253,6 @@ config:
   # -- Defines a mapping of scopes to groups that provide that scope. See
   # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
-
-  # -- Usernames to add as administrators when initializing a new database.
-  # Used only if there are no administrators.
-  initialAdmins: []
-
-  # -- HTML footer to add to any login error page (inside a <p> tag).
-  errorFooter: ""
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google

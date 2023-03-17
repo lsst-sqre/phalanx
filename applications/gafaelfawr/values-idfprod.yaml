@@ -13,9 +13,6 @@ config:
     enrollmentUrl: "https://id.lsst.cloud/registry/co_petitions/start/coef:6"
     usernameClaim: "username"
 
-  firestore:
-    project: "rsp-firestore-stable-e8eb"
-
   ldap:
     url: "ldaps://ldap.cilogon.org"
     userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
@@ -25,6 +22,16 @@ config:
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
     userSearchAttr: "voPersonApplicationUID"
     addUserGroup: true
+
+  firestore:
+    project: "rsp-firestore-stable-e8eb"
+
+  # User quota settings for services.
+  quotas:
+    default:
+      notebook:
+        cpu: 9.0
+        memory: 27
 
   groupMapping:
     "admin:provision":
