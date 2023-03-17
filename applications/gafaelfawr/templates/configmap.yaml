@@ -141,6 +141,13 @@
       project: {{ .Values.config.firestore.project | quote }}
     {{- end }}
 
+    {{- if .Values.config.forgerock.url }}
+    forgerock:
+      url: {{ .Values.config.forgerock.url | quote }}
+      username: {{ .Values.config.forgerock.username | quote }}
+      passwordFile: "/etc/gafaelfawr/secrets/forgerock-password"
+    {{- end }}
+
     {{- if .Values.config.oidcServer.enabled }}
     oidcServer:
       issuer: "https://{{ .Values.global.host }}"

@@ -1,5 +1,9 @@
 replicaCount: 2
 
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-38058"
+
 redis:
   persistence:
     enabled: false
@@ -26,6 +30,10 @@ config:
     uidClaim: "uid_number"
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
+
+  forgerock:
+    url: "https://idnum.in2p3.fr:8443/openidm/"
+    username: "idnum-client-ldaplsst"
 
   oidcServer:
     enabled: false
