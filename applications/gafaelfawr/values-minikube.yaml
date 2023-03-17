@@ -1,3 +1,7 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-38058"
+
 # Reset token storage on every Redis restart.
 redis:
   persistence:
