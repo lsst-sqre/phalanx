@@ -1,3 +1,5 @@
+replicaCount: 2
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -12,9 +14,6 @@ config:
     test: true
     usernameClaim: "username"
 
-  firestore:
-    project: "rsp-firestore-int-7bfb"
-
   ldap:
     url: "ldaps://ldap-test.cilogon.org"
     userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
@@ -25,9 +24,19 @@ config:
     userSearchAttr: "voPersonApplicationUID"
     addUserGroup: true
 
+  firestore:
+    project: "rsp-firestore-int-7bfb"
+
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
+
+  # User quota settings for services.
+  quotas:
+    default:
+      notebook:
+        cpu: 9.0
+        memory: 27
 
   # Allow access by GitHub team.
   groupMapping:
