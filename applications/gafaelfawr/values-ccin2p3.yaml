@@ -1,9 +1,5 @@
 replicaCount: 2
 
-image:
-  pullPolicy: "Always"
-  tag: "tickets-DM-38058"
-
 redis:
   persistence:
     enabled: false
