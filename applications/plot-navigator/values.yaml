@@ -1,6 +1,6 @@
 image:
   # -- plot-navigator image to use
-  repository: lsstdm/pipetask-plot-navigator
+  repository: ghcr.io/lsst-dm/pipetask-plot-navigator
   tag: ""
 
 # -- Environment variables (e.g. butler configuration/auth parms) for panel
@@ -9,6 +9,18 @@ environment: {}
 ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
+
+
+config:
+  # -- Additional volumes to attach
+  volumes: []
+
+  # -- Mount points for additional volumes
+  volume_mounts: []
+
+  # -- PersistentVolumeClaims to create.
+  persistentVolumeClaims: []
+
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

@@ -24,6 +24,9 @@ spec:
         # butler-secrets are the copied and chmoded versions
         - name: "butler-secrets"
           emptyDir: {}
+        {{- with .Values.config.volumes }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
       # Have to fix permissions on the pgpass file.
       # init container pattern borrowed from vo-cutouts.
       initContainers:
@@ -59,6 +62,9 @@ spec:
         volumeMounts:
           - name: butler-secrets
             mountPath: "/home/worker/.lsst/"
+          {{- with .Values.config.volume_mounts }}
+          {{- . | toYaml | nindent 10 }}
+          {{- end }}
         command:
           - /bin/bash
           - -c
