@@ -56,7 +56,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/mobu/flocks"
+              path: "/"
               port: "http"
             timeoutSeconds: 10
           {{- with .Values.resources }}
