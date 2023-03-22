@@ -44,6 +44,10 @@ spec:
             - name: "USE_CACHEMACHINE"
               value: "false"
             {{- end }}
+            {{- if (not .Values.config.debug) }}
+            - name: "SAFIR_PROFILE"
+              value: "production"
+            {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:

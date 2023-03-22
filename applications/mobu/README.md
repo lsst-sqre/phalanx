@@ -12,6 +12,7 @@ Continuous integration testing
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the mobu frontend pod |
 | config.autostart | list | `[]` | Autostart specification. Must be a list of mobu flock specifications. Each flock listed will be automatically started when mobu is started. |
+| config.debug | bool | `false` | If set to true, include the output from all flocks in the main mobu log and disable structured JSON logging. |
 | config.useCachemachine | bool | `true` | Whether to use cachemachine. Set to false on environments using the Nublado lab controller. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |

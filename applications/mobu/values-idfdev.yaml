@@ -3,6 +3,7 @@ image:
   pullPolicy: "Always"
 config:
   useCachemachine: false
+  debug: true
   autostart:
     - name: "python"
       count: 1
