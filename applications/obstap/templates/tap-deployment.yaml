@@ -30,7 +30,7 @@ spec:
               value: >-
                 -Dtap.username=tapuser
                 -Dtap.password=pw-tapuser
-                -Dtap.url=jdbc:mysql://{{ .Values.pg.host }}/
+                -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/
                 -Dtap.maxActive=100
                 -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
