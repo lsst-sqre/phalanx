@@ -28,15 +28,9 @@ spec:
           env:
             - name: CATALINA_OPTS
               value: >-
-                -Dqservuser.jdbc.username=qsmaster
-                -Dqservuser.jdbc.password=
-                -Dqservuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.jdbc.url=jdbc:mysql://{{ .Values.pg.host }}/
-                -Dqservuser.maxActive=100
-                -Dtapuser.jdbc.username=TAP_SCHEMA
-                -Dtapuser.jdbc.password=TAP_SCHEMA
-                -Dtapuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtapuser.jdbc.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtap.username=tapuser
+                -Dtap.password=pw-tapuser
+                -Dtap.url=jdbc:mysql://{{ .Values.pg.host }}/
                 -Dtap.maxActive=100
                 -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
