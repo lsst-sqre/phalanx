@@ -6,16 +6,6 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
-# -- Autostart specification. Must be a list of mobu flock specifications.
-# Each flock listed will be automatically started when mobu is started.
-autostart: []
-
-# -- Cachemachine image policy.  Must be one of `desired` or
-# `available`.  Determines whether cachemachine reports the images it
-# has or the ones it wants.  Should be `desired` in environments with
-# image streaming enabled (e.g. IDF).
-cachemachineImagePolicy: "available"
-
 image:
   # -- mobu image to use
   repository: "ghcr.io/lsst-sqre/mobu"
@@ -30,6 +20,15 @@ image:
 ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
+
+config:
+  # -- Autostart specification. Must be a list of mobu flock specifications.
+  # Each flock listed will be automatically started when mobu is started.
+  autostart: []
+
+  # -- Whether to use cachemachine. Set to false on environments using the
+  # Nublado lab controller.
+  useCachemachine: true
 
 # -- Resource limits and requests for the mobu frontend pod
 resources: {}

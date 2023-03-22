@@ -1,28 +1,31 @@
-autostart:
-  - name: "firefighter"
-    count: 1
-    users:
-      - username: "bot-mobu-recommended"
-        uidnumber: 74768
-        gidnumber: 74768
-    scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
-    business: "NotebookRunner"
-    options:
-      repo_url: "https://github.com/SimonKrughoff/system-test.git"
-      repo_branch: "prod"
-      max_executions: 1
-    restart: true
-  - name: "weekly"
-    count: 1
-    users:
-      - username: "bot-mobu-weekly"
-        uidnumber: 74769
-        gidnumber: 74769
-    scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
-    business: "NotebookRunner"
-    options:
-      jupyter:
-        image_class: "latest-weekly"
-      repo_url: "https://github.com/lsst-sqre/system-test.git"
-      repo_branch: "prod"
-    restart: true
+config:
+  autostart:
+    - name: "firefighter"
+      count: 1
+      users:
+        - username: "bot-mobu-recommended"
+          uidnumber: 74768
+          gidnumber: 74768
+      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          max_executions: 1
+        restart: true
+    - name: "weekly"
+      count: 1
+      users:
+        - username: "bot-mobu-weekly"
+          uidnumber: 74769
+          gidnumber: 74769
+      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
+      business:
+        type: "NotebookRunner"
+        options:
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+        restart: true
