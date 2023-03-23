@@ -81,6 +81,117 @@ config:
   # @default null disables the COmanage integration
   coManageRegistryUrl: null
 
+  # -- MDX content for the `/api-aspect` page
+  apiAspectPageMdx: |
+    # Rubin Science Platform APIs
+
+    <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
+
+    To access most APIs you need an [*access token*](/auth/tokens).
+    See our guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn more.
+
+    ## Table Access Protocol
+
+    You can access catalog data using the Table Access Protocol (TAP)
+    service with popular tools such as
+    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
+    (pyvo)[https://pyvo.readthedocs.io/en/latest/index.html]
+    (Python package). The TAP endpoint is:
+
+    ```
+    https://data.lsst.cloud/api/tap
+    ```
+
+    See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
+    to learn more about accessing TAP datasets from your own computer.
+
+  # -- MDX content for the `/docs` page
+  docsPageMdx: |
+    # Rubin Science Platform documentation
+
+    <Lede>Find documentation for Rubin Observatory data, science platform
+    services, and software.</Lede>
+
+    <Section>
+
+      ## Data documentation
+
+      <CardGroup>
+        <a href="https://dp0-2.lsst.io/">
+          <Card>
+            ### Data Preview 0.2 (DP0.2)
+
+            DP0.2 is the second phase of the Data Preview 0 program using
+            precursor data (simulated images from the DESC DC2 data
+            challenge). For the first time, all the derived data products
+            have been generated “in-house” on an early version of the Rubin
+            processing infrastructure using version 23.0 of the LSST Science
+            Pipelines. As a result, the data model is significantly
+            different from the DP0.1 dataset.
+          </Card>
+        </a>
+
+        <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
+          <Card>
+            ### DP0.2 Catalog Schema
+
+            Schema reference for the DP0.2 catalog dataset available through
+            the Table Access Protocol (TAP) service.
+          </Card>
+        </a>
+      </CardGroup>
+    </Section>
+
+    <Section>
+
+      ## Platform and software documentation
+
+      <CardGroup>
+        <a href="https://rsp.lsst.io">
+          <Card>
+            ### Rubin Science Platform
+
+            The Notebook aspect is a powerful data analysis environment with
+            Jupyter Notebooks and terminals in the browser.
+            Documentation for the Rubin Science Platform, including account set up,
+            portal, notebooks, and API aspects.
+          </Card>
+        </a>
+
+        <a href="/portal/app/onlinehelp/">
+          <Card>
+            ### Portal
+
+            The Portal enables you to explore LSST image and table data in
+            your browser.
+          </Card>
+        </a>
+
+        <a href="https://pipelines.lsst.io">
+          <Card>
+            ### LSST Science Pipelines
+
+            The Science Pipelines include the Butler for accessing LSST data
+            and a pipeline framework for processing data. The LSST Science
+            Pipelines Python package is preinstalled in the Notebook aspect.
+          </Card>
+        </a>
+
+      </CardGroup>
+    </Section>
+
+    <Section>
+
+      ## Have more questions?
+
+      <Link href="/support">Learn how to get support or report issues.</Link>
+
+      Want to dive deeper into the Rubin Observatory and Legacy Survey of
+      Space and Time? [Search in our technical documentation
+      portal.](https://www.lsst.io)
+
+    </Section>
+
   # -- MDX content for the `/support` page
   supportPageMdx: |
     # Get help with the Rubin Science Platform
