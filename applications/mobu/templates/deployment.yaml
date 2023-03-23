@@ -24,11 +24,13 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if (not .Values.config.disableSlackAlerts) }}
             - name: "ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "ALERT_HOOK"
+            {{- end }}
             {{- if .Values.config.autostart }}
             - name: "AUTOSTART"
               value: "/etc/mobu/autostart.yaml"
