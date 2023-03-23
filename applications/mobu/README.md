@@ -11,8 +11,10 @@ Continuous integration testing
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the mobu frontend pod |
-| autostart | list | `[]` | Autostart specification. Must be a list of mobu flock specifications. Each flock listed will be automatically started when mobu is started. |
-| cachemachineImagePolicy | string | `"available"` | Cachemachine image policy.  Must be one of `desired` or `available`.  Determines whether cachemachine reports the images it has or the ones it wants.  Should be `desired` in environments with image streaming enabled (e.g. IDF). |
+| config.autostart | list | `[]` | Autostart specification. Must be a list of mobu flock specifications. Each flock listed will be automatically started when mobu is started. |
+| config.debug | bool | `false` | If set to true, include the output from all flocks in the main mobu log and disable structured JSON logging. |
+| config.disableSlackAlerts | bool | `false` | If set to true, do not configure mobu to send alerts to Slack. |
+| config.useCachemachine | bool | `true` | Whether to use cachemachine. Set to false on environments using the Nublado lab controller. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

@@ -24,12 +24,14 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
+            {{- if (not .Values.config.disableSlackAlerts) }}
             - name: "ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "ALERT_HOOK"
-            {{- if .Values.autostart }}
+            {{- end }}
+            {{- if .Values.config.autostart }}
             - name: "AUTOSTART"
               value: "/etc/mobu/autostart.yaml"
             {{- end }}
@@ -40,6 +42,14 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
+            {{- if (not .Values.config.useCachemachine) }}
+            - name: "USE_CACHEMACHINE"
+              value: "false"
+            {{- end }}
+            {{- if (not .Values.config.debug) }}
+            - name: "SAFIR_PROFILE"
+              value: "production"
+            {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
@@ -48,7 +58,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/mobu/flocks"
+              path: "/"
               port: "http"
             timeoutSeconds: 10
           {{- with .Values.resources }}
@@ -62,7 +72,7 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            {{- if .Values.autostart }}
+            {{- if .Values.config.autostart }}
             - name: "autostart"
               mountPath: "/etc/mobu"
               readOnly: true
@@ -74,7 +84,7 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        {{- if .Values.autostart }}
+        {{- if .Values.config.autostart }}
         - name: "autostart"
           configMap:
             name: {{ include "mobu.fullname" . }}-autostart
