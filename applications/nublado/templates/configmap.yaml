@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "nublado.fullname" . }}-config
+  name: nublado-config
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
@@ -35,3 +35,5 @@ data:
 
     # Configure the URL to the lab controller.
     c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}/{{ .Values.controller.safir.rootEndpoint }}"
+  config.yaml: |-
+    {{- toYaml .Values.controller | nindent 4 }}
