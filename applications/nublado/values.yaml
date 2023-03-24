@@ -263,14 +263,6 @@ jupyterhub:
       limits:
         cpu: 900m
         memory: 1Gi  # Should support about 200 users
-    config:
-      Authenticator:
-        enable_auth_state: true
-      JupyterHub:
-        authenticator_class: rsp_restspawner.auth.GafaelfawrAuthenticator
-        spawner_class: rsp_restspawner.RSPRestSpawner
-      ServerApp:
-        shutdown_no_activity_timeout: 604800  # one week
     db:
       # Password comes from the nublado-secret.
       type: "postgres"

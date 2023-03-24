@@ -46,10 +46,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.cull.users | bool | `true` |  |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` |  |
 | jupyterhub.hub.baseUrl | string | `"/nb"` |  |
-| jupyterhub.hub.config.Authenticator.enable_auth_state | bool | `true` |  |
-| jupyterhub.hub.config.JupyterHub.authenticator_class | string | `"rsp_restspawner.auth.GafaelfawrAuthenticator"` |  |
-| jupyterhub.hub.config.JupyterHub.spawner_class | string | `"rsp_restspawner.RSPRestSpawner"` |  |
-| jupyterhub.hub.config.ServerApp.shutdown_no_activity_timeout | int | `604800` |  |
 | jupyterhub.hub.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
 | jupyterhub.hub.containerSecurityContext.runAsGroup | int | `768` |  |
 | jupyterhub.hub.containerSecurityContext.runAsUser | int | `768` |  |
