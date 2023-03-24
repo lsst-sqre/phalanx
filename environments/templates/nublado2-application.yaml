@@ -28,15 +28,10 @@ spec:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"
       parameters:
-        - name: "global.host"
-          value: {{ .Values.fqdn | quote }}
-        - name: "global.baseUrl"
-          value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
   ignoreDifferences:
-    - group: ""
-      kind: "Secret"
+    - kind: "Secret"
       jsonPointers:
         - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
         - "/data/hub.config.CryptKeeper.keys"

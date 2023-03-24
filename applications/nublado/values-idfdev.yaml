@@ -1,3 +1,11 @@
+image:
+  tag: "tickets-DM-38279-queue"
+  pullPolicy: "Always"
+jupyterhub:
+  hub:
+    image:
+      tag: "tickets-DM-38279-queue"
+      pullPolicy: "Always"
 controller:
   lab:
     volumes:
