@@ -101,18 +101,18 @@ controller:
     #     mode: rw
     # -- Volumes defined to user lab pods
     volumes:
-    - containerPath: /home
-      serverPath: /share1/home
-      server: 10.13.105.122
-      mode: rw
-    - containerPath: /project
-      serverPath: /share1/project
-      server: 10.13.105.122
-      mode: ro
-    - containerPath: /scratch
-      serverPath: /share1/scratch
-      server: 10.13.105.122
-      mode: rw
+      - containerPath: /home
+        serverPath: /share1/home
+        server: 10.13.105.122
+        mode: rw
+      - containerPath: /project
+        serverPath: /share1/project
+        server: 10.13.105.122
+        mode: ro
+      - containerPath: /scratch
+        serverPath: /share1/scratch
+        server: 10.13.105.122
+        mode: rw
     # -- Environment variables for user lab pods, common to all lab pods
     # in this RSP instance.
     env:
@@ -292,44 +292,18 @@ jupyterhub:
           secretKeyRef:
             name: "nublado-secret"
             key: "hub.config.CryptKeeper.keys"
-    extraFiles:
-      00_hub.py:
-        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub.py
-        stringData: |
-          import rsp_restspawner
-          cfg_obj=rsp_restspawner.util.get_config()
-          # Turn off concurrent spawn limit
-          c.JupyterHub.concurrent_spawn_limit = 0
-          # Set internal Hub API URL
-          c.JupyterHub.hub_connect_url = (
-            "http://hub." +
-            cfg_obj["Release"]["Namespace"] +
-            ":" +
-            f"{os.environ['HUB_SERVICE_PORT']}"
-          )
-      01_spawner.py:
-        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d/01_spawner.py
-        stringData: |
-          # Turn off restart after n consecutive failures
-          c.Spawner.consecutive_failure_limit = 0
-          # Use JupyterLab by default
-          c.Spawner.default_url = "/lab"
-          c.Spawner.start_timeout = 10 * 60  # 10 minutes
-          c.Spawner.http_timeout = 10 * 60   # For debug mode and slow disks
     extraVolumes:
-    - name: nublado-config
-      configMap:
-        name: nublado-config
-    - name: nublado-gafaelfawr
-      secret:
-        secretName: gafaelfawr-token
+      - name: nublado-config
+        configMap:
+          name: nublado-config
+      - name: nublado-gafaelfawr
+        secret:
+          secretName: gafaelfawr-token
     extraVolumeMounts:
-    - name: nublado-config
-      mountPath: /etc/jupyterhub/nublado_config.yaml
-      subPath: nublado_config.yaml
-    - name: nublado-gafaelfawr
-      mountPath: /etc/secret/admin-token
-      subPath: token
+      - name: nublado-config
+        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d
+      - name: nublado-gafaelfawr
+        mountPath: /etc/gafaelfawr
     # We still have to use our own, enabled at the top level, which is
     #  similar but not identical.  This one still doesn't work, even if
     #  you explicitly enable port 8081 so the labs can talk to the Hub.
@@ -389,7 +363,7 @@ jupyterhub:
     maxAge: 5184000  # 60 days -- shorten later
 
   imagePullSecrets:  # This is probably irrelevant with the RESTSpawner
-  - name: pull-secret
+    - name: pull-secret
 
   scheduling:
     userScheduler:

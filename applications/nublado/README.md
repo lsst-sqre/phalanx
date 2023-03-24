@@ -59,16 +59,10 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.existingSecret | string | `"nublado-secret"` |  |
 | jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.key | string | `"hub.config.CryptKeeper.keys"` |  |
 | jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.name | string | `"nublado-secret"` |  |
-| jupyterhub.hub.extraFiles."00_hub.py".mountPath | string | `"/usr/local/etc/jupyterhub/jupyterhub_config.d/00_hub.py"` |  |
-| jupyterhub.hub.extraFiles."00_hub.py".stringData | string | `"import rsp_restspawner\ncfg_obj=rsp_restspawner.util.get_config()\n# Turn off concurrent spawn limit\nc.JupyterHub.concurrent_spawn_limit = 0\n# Set internal Hub API URL\nc.JupyterHub.hub_connect_url = (\n  \"http://hub.\" +\n  cfg_obj[\"Release\"][\"Namespace\"] +\n  \":\" +\n  f\"{os.environ['HUB_SERVICE_PORT']}\"\n)\n"` |  |
-| jupyterhub.hub.extraFiles."01_spawner.py".mountPath | string | `"/usr/local/etc/jupyterhub/jupyterhub_config.d/01_spawner.py"` |  |
-| jupyterhub.hub.extraFiles."01_spawner.py".stringData | string | `"# Turn off restart after n consecutive failures\nc.Spawner.consecutive_failure_limit = 0\n# Use JupyterLab by default\nc.Spawner.default_url = \"/lab\"\nc.Spawner.start_timeout = 10 * 60  # 10 minutes\nc.Spawner.http_timeout = 10 * 60   # For debug mode and slow disks\n"` |  |
-| jupyterhub.hub.extraVolumeMounts[0].mountPath | string | `"/etc/jupyterhub/nublado_config.yaml"` |  |
+| jupyterhub.hub.extraVolumeMounts[0].mountPath | string | `"/usr/local/etc/jupyterhub/jupyterhub_config.d"` |  |
 | jupyterhub.hub.extraVolumeMounts[0].name | string | `"nublado-config"` |  |
-| jupyterhub.hub.extraVolumeMounts[0].subPath | string | `"nublado_config.yaml"` |  |
-| jupyterhub.hub.extraVolumeMounts[1].mountPath | string | `"/etc/secret/admin-token"` |  |
+| jupyterhub.hub.extraVolumeMounts[1].mountPath | string | `"/etc/gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumeMounts[1].name | string | `"nublado-gafaelfawr"` |  |
-| jupyterhub.hub.extraVolumeMounts[1].subPath | string | `"token"` |  |
 | jupyterhub.hub.extraVolumes[0].configMap.name | string | `"nublado-config"` |  |
 | jupyterhub.hub.extraVolumes[0].name | string | `"nublado-config"` |  |
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |

@@ -5,6 +5,25 @@ metadata:
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
-  config.yaml: |-
-  {{- toYaml .Values.controller | nindent 4 }}
+  00_nublado.py: |
+    # Turn off concurrent spawn limit
+    c.JupyterHub.concurrent_spawn_limit = 0
 
+    # Set internal Hub API URL
+    c.JupyterHub.hub_connect_url = (
+        "http://hub.{{ .Release.Namespace }}:"
+        + str(os.environ["HUB_SERVICE_PORT"])
+    )
+
+    # Turn off restart after n consecutive failures
+    c.Spawner.consecutive_failure_limit = 0
+
+    # Use JupyterLab by default
+    c.Spawner.default_url = "/lab"
+
+    # Allow ten minutes for the lab to spawn in case it needs to be pulled
+    c.Spawner.start_timeout = 10 * 60
+    c.Spawner.http_timeout = 10 * 60
+
+    # Configure the URL to the lab controller.
+    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}/{{ .Values.controller.safir.rootEndpoint }}"
