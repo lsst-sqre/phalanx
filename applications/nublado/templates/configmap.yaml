@@ -9,8 +9,8 @@ data:
     import rsp_restspawner
 
     # Use our authenticator and spawner.
-    c.JupyterHub.authenticator_class: "rsp_restspawner.GafaelfawrAuthenticator"
-    c.JupyterHub.spawner_class: "rsp_restspawner.RSPRestSpawner"
+    c.JupyterHub.authenticator_class = "rsp_restspawner.GafaelfawrAuthenticator"
+    c.JupyterHub.spawner_class = "rsp_restspawner.RSPRestSpawner"
 
     # Set internal Hub API URL.
     c.JupyterHub.hub_connect_url = (
@@ -22,7 +22,7 @@ data:
     c.JupyterHub.concurrent_spawn_limit = 0
 
     # Enable stored auth state.
-    c.Authenticator.enable_auth_statue = True
+    c.Authenticator.enable_auth_state = True
 
     # Turn off restart after n consecutive failures.
     c.Spawner.consecutive_failure_limit = 0
