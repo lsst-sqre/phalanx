@@ -32,9 +32,21 @@ config:
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
   
-  idm: 
-    url: "https://idnum.in2p3.fr:8443/openidm/system/freeipa/"
-    idmId: "idnum-client-ldaplsst"
+  ldap:
+    url: ldap://ccidm01.in2p3.fr
+    groupBaseDn: cn=groups,cn=accounts,dc=cc,dc=in2p3,dc=fr
+    groupObjectClass: posixGroup
+    groupMemberAttr: memberUid
+    userBaseDn: cn=users,cn=accounts,dc=cc,dc=in2p3,dc=fr
+    userSearchAttr: uid
+    addUserGroup: false
+    uidAttr: uidNumber
+    gidAttr: gidNumber
+    nameAttr: gecos
+
+  # idm: 
+  #   url: "https://idnum.in2p3.fr:8443/openidm/system/freeipa/"
+  #   idmId: "idnum-client-ldaplsst"
 
   oidcServer:
     enabled: false
