@@ -82,6 +82,7 @@ config:
   coManageRegistryUrl: null
 
   # -- MDX content for the `/api-aspect` page
+  # @default -- See `values.yaml`
   apiAspectPageMdx: |
     # Rubin Science Platform APIs
 
@@ -106,6 +107,7 @@ config:
     to learn more about accessing TAP datasets from your own computer.
 
   # -- MDX content for the `/docs` page
+  # @default -- See `values.yaml`
   docsPageMdx: |
     # Rubin Science Platform documentation
 
@@ -193,6 +195,7 @@ config:
     </Section>
 
   # -- MDX content for the `/support` page
+  # @default -- See `values.yaml`
   supportPageMdx: |
     # Get help with the Rubin Science Platform
 
@@ -222,6 +225,7 @@ config:
     </Section>
 
   # -- MDX content for the `/enrollment/thanks-for-signing-up` page
+  # @default -- See `values.yaml`
   verifyEmailPageMdx: |
     # Thanks for registering
 
@@ -229,6 +233,7 @@ config:
     message to verify your address and continue your account set up.</Lede>
 
   # -- MDX content for the `/enrollment/thanks-for-verifying` page
+  # @default -- See `values.yaml`
   emailVerifiedPageMdx: |
     # Your email is verified
 
@@ -236,6 +241,7 @@ config:
     your account is approved.</Lede>
 
   # -- MDX content for the `/enrollment/pending-approval` page
+  # @default -- See `values.yaml`
   pendingApprovalPageMdx: |
     # Your account is pending approval
 
@@ -247,6 +253,7 @@ config:
     <Link href="../support"><a>Contact us</a></Link> if you have further questions.
 
   # -- MDX content for the `/enrollment/pending-confirmation`
+  # @default -- See `values.yaml`
   pendingVerificationPageMdx: |
     # Please confirm your email
 
