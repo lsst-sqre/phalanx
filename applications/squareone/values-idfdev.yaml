@@ -7,3 +7,102 @@ config:
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"
+  apiAspectPageMdx: |
+    # Rubin Science Platform APIs
+
+    <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
+
+    To access most APIs you need an [*access token*](/auth/tokens).
+    See our guide [Creating user tokens](https://rsp.lsst.io/data-dev/guides/auth/creating-user-tokens.html) to learn more.
+
+    ## Table Access Protocol
+
+    You can access catalog data using the Table Access Protocol (TAP)
+    service with popular tools such as
+    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
+    (pyvo)[https://pyvo.readthedocs.io/en/latest/index.html]
+    (Python package). The TAP endpoint is:
+
+    ```
+    https://data-dev.lsst.cloud/api/tap
+    ```
+
+    See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/data-dev/guides/auth/using-topcat-outside-rsp.html)
+    to learn more about accessing TAP datasets from your own computer.
+
+  docsPageMdx: |
+    # Rubin Science Platform documentation
+
+    <Lede>Find documentation for Rubin Observatory data, science platform
+    services, and software.</Lede>
+
+    <Section>
+
+      ## Platform and software documentation
+
+      <CardGroup>
+        <a href="https://phalanx.lsst.io">
+          <Card>
+            ### Phalanx
+
+            The configuration repository for Rubin's Kubernetes deployments.
+          </Card>
+        </a>
+
+        <a href="https://rsp.lsst.io">
+          <Card>
+            ### Rubin Science Platform
+
+            The Notebook aspect is a powerful data analysis environment with
+            Jupyter Notebooks and terminals in the browser.
+            Documentation for the Rubin Science Platform, including account set up,
+            portal, notebooks, and API aspects.
+          </Card>
+        </a>
+
+        <a href="/portal/app/onlinehelp/">
+          <Card>
+            ### Portal
+
+            The Portal enables you to explore LSST image and table data in
+            your browser.
+          </Card>
+        </a>
+
+        <a href="https://pipelines.lsst.io">
+          <Card>
+            ### LSST Science Pipelines
+
+            The Science Pipelines include the Butler for accessing LSST data
+            and a pipeline framework for processing data. The LSST Science
+            Pipelines Python package is preinstalled in the Notebook aspect.
+          </Card>
+        </a>
+
+      </CardGroup>
+    </Section>
+
+    <Section>
+
+      ## Have more questions?
+
+      <Link href="/support">Learn how to get support or report issues.</Link>
+
+      Want to dive deeper into the Rubin Observatory and Legacy Survey of
+      Space and Time? [Search in our technical documentation
+      portal.](https://www.lsst.io)
+
+    </Section>
+
+  supportPageMdx: |
+    # Get help with the Rubin Science Platform on idf-dev.lsst.cloud
+
+    This is SQuaRE’s development environment for the RSP. If you're not a
+    member of the SQuaRE team, you’ll want to try a more public RSP environment
+    first:
+
+    - [data.lsst.cloud](https://data.lsst.cloud) — for most users, including DP0 delegates
+    - [usdf-rsp.slac.stanford.edu](http://usdf-rsp.slac.stanford.edu/) — for Rubin staff
+    - [data-int.lsst.cloud](https://data-int.lsst.cloud) — for Rubin RSP developers
+
+    Don't forget to check the <Link href="/docs">documentation</Link>.
