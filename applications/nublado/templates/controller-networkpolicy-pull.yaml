@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ template "nublado.fullname" . }}-pull
+  name: nublado-controller-pull
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 spec:
@@ -11,5 +11,5 @@ spec:
     matchLabels:
       nublado: "pull"
   policyTypes:
-    - Ingress
-    - Egress
+    - "Ingress"
+    - "Egress"

@@ -1,13 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "nublado.fullname" . }}
+  name: "nublado-controller"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
 spec:
   podSelector:
     matchLabels:
       {{- include "nublado.selectorLabels" . | nindent 6 }}
   policyTypes:
-    - Ingress
+    - "Ingress"
   ingress:
     # Allow inbound access from pods (in any namespace) labeled
     # gafaelfawr.lsst.io/ingress: true.

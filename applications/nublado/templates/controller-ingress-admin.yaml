@@ -1,10 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "nublado.fullname" . }}-admin-jupyterlab
+  name: "nublado-controller-admin"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
-  namespace: {{ template "nublado.fullname" . }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
@@ -12,16 +11,16 @@ config:
       - "admin:jupyterlab"
 template:
   metadata:
-    name: {{ template "nublado.fullname" . }}-admin-jupyterlab
+    name: "controller-admin"
   spec:
     rules:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: /nublado
+            - path: {{ .Values.controller.config.safir.pathPrefix | quote }}
               pathType: "Prefix"
               backend:
                 service:
-                  name: {{ template "nublado.fullname" . }}
+                  name: "nublado-controller"
                   port:
                     number: 80

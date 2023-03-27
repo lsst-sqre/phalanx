@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nublado-config
+  name: "hub-config"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
@@ -34,6 +34,4 @@ data:
     c.Spawner.start_timeout = 10 * 60
 
     # Configure the URL to the lab controller.
-    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}/{{ .Values.controller.safir.rootEndpoint }}"
-  config.yaml: |-
-    {{- toYaml .Values.controller | nindent 4 }}
+    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.safir.pathPrefix }}"

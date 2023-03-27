@@ -51,10 +51,3 @@ Selector labels
 app.kubernetes.io/name: {{ include "nublado.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "nublado.serviceAccountName" -}}
-{{ default (include "nublado.fullname" .) .Values.serviceAccount.name }}
-{{- end -}}
