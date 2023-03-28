@@ -44,13 +44,9 @@ config:
     gidAttr: gidNumber
     nameAttr: gecos
 
-  # idm: 
-  #   url: "https://idnum.in2p3.fr:8443/openidm/system/freeipa/"
-  #   idmId: "idnum-client-ldaplsst"
-
-  forgerock:
-    url: "https://idnum.in2p3.fr:8443/openidm/"
-    username: "idnum-client-ldaplsst"
+  # forgerock:
+  #   url: "https://idnum.in2p3.fr:8443/openidm/"
+  #   username: "idnum-client-ldaplsst"
 
   oidcServer:
     enabled: false
