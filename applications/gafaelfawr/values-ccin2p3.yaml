@@ -31,7 +31,7 @@ config:
     uidClaim: "uid_number"
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
-  
+    
   ldap:
     url: ldap://ccidm01.in2p3.fr
     groupBaseDn: cn=groups,cn=compat,dc=cc,dc=in2p3,dc=fr
