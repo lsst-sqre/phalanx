@@ -19,7 +19,7 @@ dependencies:
 annotations:
   phalanx.lsst.io/docs: |
     - id: "SQR-065"
-      title: "Design of Noteburst, a programatic JupyterLab notebook execution service for the Rubin Science Platform"
+      title: "Design of Noteburst, a programmatic JupyterLab notebook execution service for the Rubin Science Platform"
       url: "https://sqr-065.lsst.io/"
     - id: "SQR-062"
       title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science platform"
