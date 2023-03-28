@@ -15,3 +15,13 @@ data:
     {{- if .Values.config.timesSquareUrl }}
     timesSquareUrl: {{ .Values.config.timesSquareUrl | quote }}
     {{- end}}
+    {{- if .Values.config.coManageRegistryUrl }}
+    coManageRegistryUrl: {{ .Values.config.coManageRegistryUrl | quote }}
+    {{- end}}
+    apiAspectPageMdx: {{ .Values.config.apiAspectPageMdx | quote }}
+    docsPageMdx: {{ .Values.config.docsPageMdx | quote }}
+    supportPageMdx: {{ .Values.config.supportPageMdx | quote }}
+    verifyEmailPageMdx: {{ .Values.config.verifyEmailPageMdx | quote }}
+    emailVerifiedPageMdx: {{ .Values.config.emailVerifiedPageMdx | quote }}
+    pendingApprovalPageMdx: {{ .Values.config.pendingApprovalPageMdx | quote }}
+    pendingVerificationPageMdx: {{ .Values.config.pendingVerificationPageMdx | quote }}

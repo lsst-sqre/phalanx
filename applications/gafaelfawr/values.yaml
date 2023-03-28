@@ -43,10 +43,6 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
-  # -- Whether to send certain serious alerts to Slack. If `true`, the
-  # `slack-webhook` secret must also be set.
-  slackAlerts: false
-
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
   tokenLifetimeMinutes: 43200
@@ -58,6 +54,19 @@ config:
     - "10.0.0.0/8"
     - "172.16.0.0/12"
     - "192.168.0.0/16"
+
+  # -- HTML footer to add to any login error page (will be enclosed in a <p>
+  # tag).
+  errorFooter: ""
+
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
+  github:
+    # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
+    # or `config.oidc.clientId` must be set.
+    clientId: ""
 
   cilogon:
     # -- CILogon client ID. One and only one of this,
@@ -93,24 +102,6 @@ config:
     # retrieved from LDAP)
     # @default -- `"isMemberOf"`
     groupsClaim: ""
-
-  firestore:
-    # -- If set, assign UIDs and GIDs using Google Firestore in the given
-    # project.  Cloud SQL must be enabled and the Cloud SQL service account
-    # must have read/write access to that Firestore instance.
-    # @default -- Firestore support is disabled
-    project: ""
-
-  github:
-    # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
-    # or `config.oidc.clientId` must be set.
-    clientId: ""
-  idm:
-    # IDM client config. If set, it assign the GID. 
-    # @default -- IDM support is disabled
-    url: ""
-    # @default -- None, to be set if `config.idm.url` is provided  
-    idmId: ""
 
   oidc:
     # -- Client ID for generic OpenID Connect support. One and only one of
@@ -211,10 +202,37 @@ config:
     # equal to their UID
     addUserGroup: false
 
+  firestore:
+    # -- If set, assign UIDs and GIDs using Google Firestore in the given
+    # project. Cloud SQL must be enabled and the Cloud SQL service account
+    # must have read/write access to that Firestore instance.
+    # @default -- Firestore support is disabled
+    project: ""
+
+  forgerock:
+    # -- If set, obtain the GIDs for groups from this ForgeRock Identity
+    # Management server.
+    # @default -- ForgeRock Identity Management support is disabled
+    url: ""
+
+    # -- Username to use for HTTP Basic authentication to ForgeRock Identity
+    # Managemnt. The corresponding password must be in the
+    # `forgerock-passsword` key of the Gafaelfawr Vault secret.
+    # @default -- None, must be set if `config.forgerock.url` is set
+    username: ""
+
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
     # `oidc-server-secrets` must be set in the Gafaelfawr secret.
     enabled: false
+
+  # -- Quota settings (see
+  # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
+  quota: {}
+
+  # -- Usernames to add as administrators when initializing a new database.
+  # Used only if there are no administrators.
+  initialAdmins: []
 
   # -- Names and descriptions of all scopes in use. This is used to populate
   # the new token creation page. Only scopes listed here will be options when
@@ -248,13 +266,6 @@ config:
   # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
 
-  # -- Usernames to add as administrators when initializing a new database.
-  # Used only if there are no administrators.
-  initialAdmins: []
-
-  # -- HTML footer to add to any login error page (inside a <p> tag).
-  errorFooter: ""
-
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
   # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as
@@ -267,7 +278,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.2"
+    tag: "1.33.5"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -335,15 +346,14 @@ operator:
   affinity: {}
 
 redis:
-  image:
-    # -- Redis image to use
-    repository: "redis"
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "gafaelfawr-secret"
 
-    # -- Redis image tag to use
-    tag: "7.0.8"
-
-    # -- Pull policy for the Redis image
-    pullPolicy: "IfNotPresent"
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
 
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
@@ -363,6 +373,14 @@ redis:
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
     # size, storageClass, and accessMode settings are ignored.
     volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+    requests:
+      cpu: "100m"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

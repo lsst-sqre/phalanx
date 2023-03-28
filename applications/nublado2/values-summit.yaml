@@ -9,12 +9,7 @@ jupyterhub:
       url: "postgresql://jovyan@postgresdb01.cp.lsst.org/jupyterhub"
   singleuser:
     extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/macvlan-conf"
-    initContainers:
-      - name: "multus-init"
-        image: "lsstit/ddsnet4u:latest"
-        securityContext:
-          privileged: true
+      k8s.v1.cni.cncf.io/networks: "kube-system/dds"
 
 config:
   base_url: "https://summit-lsp.lsst.codes"
@@ -76,6 +71,10 @@ config:
         path: /lsstdata/base/comcam
         server: comcam-archiver.cp.lsst.org
         readOnly: true
+    - name: obs-env
+      nfs:
+        path: /obs-env
+        server: nfs-obsenv.cp.lsst.org
   volume_mounts:
     - name: home
       mountPath: /home
@@ -102,3 +101,5 @@ config:
     - name: base-comcam
       mountPath: /data/lsstdata/base/comcam
       readOnly: true
+    - name: obs-env
+      mountPath: /opt/obs_env

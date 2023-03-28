@@ -18,6 +18,7 @@ Kubernetes application manager
 | argo-cd.controller.metrics.applicationLabels.labels[0] | string | `"name"` |  |
 | argo-cd.controller.metrics.applicationLabels.labels[1] | string | `"instance"` |  |
 | argo-cd.controller.metrics.enabled | bool | `true` |  |
+| argo-cd.global.logging.format | string | `"json"` | Set the global logging format. Either: `text` or `json` |
 | argo-cd.notifications.metrics.enabled | bool | `true` |  |
 | argo-cd.redis.enabled | bool | `true` |  |
 | argo-cd.redis.metrics.enabled | bool | `true` |  |

@@ -26,6 +26,8 @@ narrativelog:
   enabled: true
 noteburst:
   enabled: false
+nublado:
+  enabled: false
 nublado2:
   enabled: true
 plot-navigator:
@@ -41,7 +43,7 @@ production-tools:
 semaphore:
   enabled: false
 sherlock:
-  enabled: true
+  enabled: false
 squareone:
   enabled: true
 squash-api:

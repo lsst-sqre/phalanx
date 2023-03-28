@@ -31,8 +31,7 @@ spec:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
   ignoreDifferences:
-    - group: ""
-      kind: "Secret"
+    - kind: "Secret"
       jsonPointers:
         - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
         - "/data/hub.config.CryptKeeper.keys"

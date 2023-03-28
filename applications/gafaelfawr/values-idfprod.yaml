@@ -8,93 +8,44 @@ redis:
 config:
   slackAlerts: true
 
-  github:
-    clientId: "65b6333a066375091548"
+  cilogon:
+    clientId: "cilogon:/client_id/22adcdc145791f85b4d1edbf3157e21b"
+    enrollmentUrl: "https://id.lsst.cloud/registry/co_petitions/start/coef:6"
+    usernameClaim: "username"
 
-  # Allow access by GitHub team.
+  ldap:
+    url: "ldaps://ldap.cilogon.org"
+    userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst,dc=org"
+    groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
+    groupObjectClass: "eduMember"
+    groupMemberAttr: "hasMember"
+    userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
+    userSearchAttr: "voPersonApplicationUID"
+    addUserGroup: true
+
+  firestore:
+    project: "rsp-firestore-stable-e8eb"
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 9.0
+        memory: 27
+
   groupMapping:
     "admin:provision":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
+      - "g_admins"
     "exec:admin":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-    "exec:internal-tools":
-      - github:
-          organization: "lsst"
-          team: "data-management"
-      - github:
-          organization: "lsst"
-          team: "ops"
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
+      - "g_admins"
     "exec:notebook":
-      - github:
-          organization: "lsst"
-          team: "data-management"
-      - github:
-          organization: "lsst"
-          team: "ops"
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "rubin-dp0"
-          team: "delegates"
-      - github:
-          organization: "rubin-dp0"
-          team: "friends"
+      - "g_users"
     "exec:portal":
-      - github:
-          organization: "lsst"
-          team: "data-management"
-      - github:
-          organization: "lsst"
-          team: "ops"
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "rubin-dp0"
-          team: "delegates"
-      - github:
-          organization: "rubin-dp0"
-          team: "friends"
+      - "g_users"
     "read:image":
-      - github:
-          organization: "lsst"
-          team: "data-management"
-      - github:
-          organization: "lsst"
-          team: "ops"
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "rubin-dp0"
-          team: "delegates"
-      - github:
-          organization: "rubin-dp0"
-          team: "friends"
+      - "g_users"
     "read:tap":
-      - github:
-          organization: "lsst"
-          team: "data-management"
-      - github:
-          organization: "lsst"
-          team: "ops"
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "rubin-dp0"
-          team: "delegates"
-      - github:
-          organization: "rubin-dp0"
-          team: "friends"
+      - "g_users"
 
   initialAdmins:
     - "afausti"

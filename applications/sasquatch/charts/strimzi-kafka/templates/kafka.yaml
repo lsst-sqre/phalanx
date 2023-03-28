@@ -75,8 +75,6 @@ spec:
 {{- end }}
 {{- end }}
     config:
-      # Accept larger messages
-      message.max.bytes: 262144
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.min.isr: {{ .Values.kafka.replicas }}

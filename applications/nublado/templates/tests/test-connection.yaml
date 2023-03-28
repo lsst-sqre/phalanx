@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: {{ include "nublado.fullname" . }}-test-connection
+  annotations:
+    "helm.sh/hook": "test-success"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+spec:
+  containers:
+    - name: "wget"
+      image: "busybox"
+      command: ['wget']
+      args:
+        - '{{ include "nublado.fullname" . }}:8080'
+  restartPolicy: Never

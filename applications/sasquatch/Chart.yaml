@@ -11,7 +11,7 @@ dependencies:
     version: 2.1.0
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
-    version: 4.12.0
+    version: 4.12.1
     repository: https://helm.influxdata.com/
   - name: influxdb2
     condition: influxdb2.enabled
@@ -28,7 +28,7 @@ dependencies:
   - name: kafdrop
     version: 1.0.0
   - name: telegraf-kafka-consumer
-    condition: influxdb2.enabled
+    condition: telegraf-kafka-consumer.enabled
     version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled

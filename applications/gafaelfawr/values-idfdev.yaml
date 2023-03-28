@@ -13,9 +13,6 @@ config:
     test: true
     usernameClaim: "username"
 
-  firestore:
-    project: "rsp-firestore-dev-31c4"
-
   ldap:
     url: "ldaps://ldap-test.cilogon.org"
     userDn: "uid=readonly_user,ou=system,o=LSST,o=CO,dc=lsst_dev,dc=org"
@@ -26,9 +23,19 @@ config:
     userSearchAttr: "voPersonApplicationUID"
     addUserGroup: true
 
+  firestore:
+    project: "rsp-firestore-dev-31c4"
+
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 9.0
+        memory: 27
 
   groupMapping:
     "admin:jupyterlab":

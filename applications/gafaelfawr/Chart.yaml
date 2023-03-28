@@ -5,7 +5,12 @@ description: Authentication and identity system
 home: https://gafaelfawr.lsst.io/
 sources:
   - https://github.com/lsst-sqre/gafaelfawr
-appVersion: 9.0.0
+appVersion: 9.1.0
+
+dependencies:
+  - name: redis
+    version: 1.0.4
+    repository: https://lsst-sqre.github.io/charts/
 
 annotations:
   phalanx.lsst.io/docs: |

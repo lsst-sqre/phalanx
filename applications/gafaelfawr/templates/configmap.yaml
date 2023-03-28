@@ -6,118 +6,133 @@
 {{- define "gafaelfawr.configMap" }}
     realm: {{ required "global.host must be set" .Values.global.host | quote }}
     loglevel: {{ .Values.config.loglevel | quote }}
-    session_secret_file: "/etc/gafaelfawr/secrets/session-secret"
-    bootstrap_token_file: "/etc/gafaelfawr/secrets/bootstrap-token"
-    database_password_file: "/etc/gafaelfawr/secrets/database-password"
-    redis_url: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
-    redis_password_file: "/etc/gafaelfawr/secrets/redis-password"
-    {{- if .Values.config.slackAlerts }}
-    slack_webhook_file: "/etc/gafaelfawr/secrets/slack-webhook"
-    {{- end }}
-    token_lifetime_minutes: {{ .Values.config.tokenLifetimeMinutes }}
-    {{- if .Values.config.proxies }}
+    sessionSecretFile: "/etc/gafaelfawr/secrets/session-secret"
+    redisUrl: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
+    redisPasswordFile: "/etc/gafaelfawr/secrets/redis-password"
+    databasePasswordFile: "/etc/gafaelfawr/secrets/database-password"
+    bootstrapTokenFile: "/etc/gafaelfawr/secrets/bootstrap-token"
+    tokenLifetimeMinutes: {{ .Values.config.tokenLifetimeMinutes }}
+    {{- with .Values.config.proxies }}
     proxies:
-      {{- range $netblock := .Values.config.proxies }}
-      - {{ $netblock | quote }}
-      {{- end }}
+      {{- toYaml . | nindent 6 }}
     {{- end }}
-    after_logout_url: {{ required "global.baseUrl must be set" .Values.global.baseUrl }}
+    afterLogoutUrl: {{ required "global.baseUrl must be set" .Values.global.baseUrl }}
     {{- if .Values.config.errorFooter }}
-    error_footer: {{ .Values.config.errorFooter | quote }}
+    errorFooter: {{ .Values.config.errorFooter | quote }}
+    {{- end }}
+    {{- if .Values.config.slackAlerts }}
+    slackWebhookFile: "/etc/gafaelfawr/secrets/slack-webhook"
     {{- end }}
 
     {{- if .Values.config.github.clientId }}
 
     github:
-      client_id: {{ .Values.config.github.clientId | quote }}
-      client_secret_file: "/etc/gafaelfawr/secrets/github-client-secret"
+      clientId: {{ .Values.config.github.clientId | quote }}
+      clientSecretFile: "/etc/gafaelfawr/secrets/github-client-secret"
 
     {{- else if .Values.config.cilogon.clientId }}
 
     oidc:
-      client_id: {{ .Values.config.cilogon.clientId | quote }}
-      client_secret_file: "/etc/gafaelfawr/secrets/cilogon-client-secret"
+      clientId: {{ .Values.config.cilogon.clientId | quote }}
+      clientSecretFile: "/etc/gafaelfawr/secrets/cilogon-client-secret"
       {{- if .Values.config.cilogon.test }}
-      login_url: "https://test.cilogon.org/authorize"
-      token_url: "https://test.cilogon.org/oauth2/token"
+      loginUrl: "https://test.cilogon.org/authorize"
+      tokenUrl: "https://test.cilogon.org/oauth2/token"
       issuer: "https://test.cilogon.org"
       {{- else }}
-      login_url: "https://cilogon.org/authorize"
-      token_url: "https://cilogon.org/oauth2/token"
+      loginUrl: "https://cilogon.org/authorize"
+      tokenUrl: "https://cilogon.org/oauth2/token"
       issuer: "https://cilogon.org"
       {{- end }}
       {{- if .Values.config.cilogon.enrollmentUrl }}
-      enrollment_url: {{ .Values.config.cilogon.enrollmentUrl | quote }}
+      enrollmentUrl: {{ .Values.config.cilogon.enrollmentUrl | quote }}
       {{- end }}
-      {{- if .Values.config.cilogon.loginParams }}
-      login_params:
-        {{- range $key, $value := .Values.config.cilogon.loginParams }}
-        {{ $key }}: {{ $value | quote }}
-        {{- end }}
+      {{- with .Values.config.cilogon.loginParams }}
+      loginParams:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
-      redirect_url: "{{ .Values.global.baseUrl }}/login"
+      redirectUrl: "{{ .Values.global.baseUrl }}/login"
       scopes:
         - "email"
         - "org.cilogon.userinfo"
       audience: {{ .Values.config.cilogon.clientId | quote }}
       {{- if .Values.config.cilogon.usernameClaim }}
-      username_claim: {{ .Values.config.cilogon.usernameClaim | quote }}
+      usernameClaim: {{ .Values.config.cilogon.usernameClaim | quote }}
       {{- end }}
       {{- if .Values.config.cilogon.uidClaim }}
-      uid_claim: {{ .Values.config.cilogon.uidClaim | quote }}
+      uidClaim: {{ .Values.config.cilogon.uidClaim | quote }}
       {{- end }}
       {{- if .Values.config.cilogon.gidClaim }}
-      gid_claim: {{ .Values.config.cilogon.gidClaim | quote }}
+      gidClaim: {{ .Values.config.cilogon.gidClaim | quote }}
       {{- end }}
       {{- if .Values.config.cilogon.groupsClaim }}
-      groups_claim: {{ .Values.config.cilogon.groupsClaim | quote }}
+      groupsClaim: {{ .Values.config.cilogon.groupsClaim | quote }}
       {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
 
     oidc:
-      client_id: {{ .Values.config.oidc.clientId | quote }}
-      client_secret_file: "/etc/gafaelfawr/secrets/oidc-client-secret"
+      clientId: {{ .Values.config.oidc.clientId | quote }}
+      clientSecretFile: "/etc/gafaelfawr/secrets/oidc-client-secret"
       {{- if .Values.config.oidc.audience }}
       audience: {{ .Values.config.oidc.audience | quote }}
       {{- else }}
       audience: {{ .Values.config.oidc.clientId | quote }}
       {{- end }}
-      login_url: {{ required "config.oidc.loginUrl must be set" .Values.config.oidc.loginUrl | quote }}
-      token_url: {{ required "config.oidc.tokenUrl must be set" .Values.config.oidc.tokenUrl | quote }}
+      loginUrl: {{ required "config.oidc.loginUrl must be set" .Values.config.oidc.loginUrl | quote }}
+      tokenUrl: {{ required "config.oidc.tokenUrl must be set" .Values.config.oidc.tokenUrl | quote }}
       {{- if .Values.config.oidc.enrollmentUrl }}
-      enrollment_url: {{ .Values.config.oidc.enrollmentUrl | quote }}
+      enrollmentUrl: {{ .Values.config.oidc.enrollmentUrl | quote }}
       {{- end }}
       issuer: {{ required "config.oidc.issuer must be set" .Values.config.oidc.issuer | quote }}
-      redirect_url: "{{ .Values.global.baseUrl }}/login"
+      redirectUrl: "{{ .Values.global.baseUrl }}/login"
+      {{- with .Values.config.oidc.scopes }}
       scopes:
-        {{- with .Values.config.oidc.scopes }}
         {{- toYaml . | nindent 8 }}
-        {{- end }}
+      {{- end }}
       {{- with .Values.config.oidc.loginParams }}
-      login_params:
+      loginParams:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- if .Values.config.oidc.usernameClaim }}
-      username_claim: {{ .Values.config.oidc.usernameClaim | quote }}
+      usernameClaim: {{ .Values.config.oidc.usernameClaim | quote }}
       {{- end }}
       {{- if .Values.config.oidc.uidClaim }}
-      uid_claim: {{ .Values.config.oidc.uidClaim | quote }}
+      uidClaim: {{ .Values.config.oidc.uidClaim | quote }}
       {{- end }}
       {{- if .Values.config.oidc.gidClaim }}
-      gid_claim: {{ .Values.config.oidc.gidClaim | quote }}
+      gidClaim: {{ .Values.config.oidc.gidClaim | quote }}
       {{- end }}
       {{- if .Values.config.oidc.groupsClaim }}
-      groups_claim: {{ .Values.config.oidc.groupsClaim | quote }}
+      groupsClaim: {{ .Values.config.oidc.groupsClaim | quote }}
       {{- end }}
 
     {{- end }}
-
-    {{- if .Values.config.idm.url }}
-    idm:
-      url: {{ .Values.config.idm.url | quote }}
-      idm_id: {{ .Values.config.idm.idmId | quote }}
-      idm_secret_file: "/etc/gafaelfawr/secrets/idm_secret"
+    {{- if .Values.config.ldap.url }}
+    ldap:
+      url: {{ .Values.config.ldap.url | quote }}
+      groupBaseDn: {{ required "config.ldap.groupBaseDn must be set" .Values.config.ldap.groupBaseDn | quote }}
+      {{- if .Values.config.ldap.userDn }}
+      userDn: {{ .Values.config.ldap.userDn | quote }}
+      passwordFile: "/etc/gafaelfawr/secrets/ldap-password"
+      {{- end }}
+      groupObjectClass: {{ .Values.config.ldap.groupObjectClass | quote }}
+      groupMemberAttr: {{ .Values.config.ldap.groupMemberAttr | quote }}
+      {{- if .Values.config.ldap.userBaseDn }}
+      userBaseDn: {{ .Values.config.ldap.userBaseDn | quote }}
+      userSearchAttr: {{ .Values.config.ldap.userSearchAttr | quote }}
+      nameAttr: {{ .Values.config.ldap.nameAttr | quote }}
+      emailAttr: {{ .Values.config.ldap.emailAttr | quote }}
+      {{- if .Values.config.ldap.uidAttr }}
+      uidAttr: {{ .Values.config.ldap.uidAttr | quote }}
+      {{- end }}
+      {{- if .Values.config.ldap.gidAttr }}
+      gidAttr: {{ .Values.config.ldap.gidAttr | quote }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.config.ldap.addUserGroup }}
+      addUserGroup: true
+      {{- end }}
     {{- end }}
 
     {{- if .Values.config.firestore.project }}
@@ -125,57 +140,40 @@
       project: {{ .Values.config.firestore.project | quote }}
     {{- end }}
 
-    {{- if .Values.config.ldap.url }}
-    ldap:
-      url: {{ .Values.config.ldap.url | quote }}
-      group_base_dn: {{ required "config.ldap.groupBaseDn must be set" .Values.config.ldap.groupBaseDn | quote }}
-      {{- if .Values.config.ldap.userDn }}
-      user_dn: {{ .Values.config.ldap.userDn | quote }}
-      password_file: "/etc/gafaelfawr/secrets/ldap-password"
-      {{- end }}
-      group_object_class: {{ .Values.config.ldap.groupObjectClass | quote }}
-      group_member_attr: {{ .Values.config.ldap.groupMemberAttr | quote }}
-      {{- if .Values.config.ldap.userBaseDn }}
-      user_base_dn: {{ .Values.config.ldap.userBaseDn | quote }}
-      user_search_attr: {{ .Values.config.ldap.userSearchAttr | quote }}
-      name_attr: {{ .Values.config.ldap.nameAttr | quote }}
-      email_attr: {{ .Values.config.ldap.emailAttr | quote }}
-      {{- if .Values.config.ldap.uidAttr }}
-      uid_attr: {{ .Values.config.ldap.uidAttr | quote }}
-      {{- end }}
-      {{- if .Values.config.ldap.gidAttr }}
-      gid_attr: {{ .Values.config.ldap.gidAttr | quote }}
-      {{- end }}
-      {{- end }}
-      {{- if .Values.config.ldap.addUserGroup }}
-      add_user_group: true
-      {{- end }}
+    {{- if .Values.config.forgerock.url }}
+    forgerock:
+      url: {{ .Values.config.forgerock.url | quote }}
+      username: {{ .Values.config.forgerock.username | quote }}
+      passwordFile: "/etc/gafaelfawr/secrets/forgerock-password"
     {{- end }}
 
     {{- if .Values.config.oidcServer.enabled }}
-    oidc_server:
+    oidcServer:
       issuer: "https://{{ .Values.global.host }}"
-      key_id: "gafaelfawr"
+      keyId: "gafaelfawr"
       audience: "https://{{ .Values.global.host }}"
-      key_file: "/etc/gafaelfawr/secrets/signing-key"
-      secrets_file: "/etc/gafaelfawr/secrets/oidc-server-secrets"
+      keyFile: "/etc/gafaelfawr/secrets/signing-key"
+      secretsFile: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}
 
-    known_scopes:
-      {{- range $key, $value := .Values.config.knownScopes }}
-      {{ $key | quote }}: {{ $value | quote }}
-      {{- end }}
-
-    {{- with .Values.config.groupMapping }}
-    group_mapping:
+    {{- with .Values.config.quota }}
+    quota:
       {{- toYaml . | nindent 6 }}
     {{- end }}
 
-    {{- if .Values.config.initialAdmins }}
-    initial_admins:
-      {{- range $admin := .Values.config.initialAdmins }}
-      - {{ $admin | quote }}
-      {{- end }}
+    {{- with .Values.config.initialAdmins }}
+    initialAdmins:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+
+    {{- with .Values.config.knownScopes }}
+    knownScopes:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+
+    {{- with .Values.config.groupMapping }}
+    groupMapping:
+      {{- toYaml . | nindent 6 }}
     {{- end }}
 {{- end }}
 apiVersion: v1
@@ -187,9 +185,9 @@ metadata:
 data:
   gafaelfawr.yaml: |
     {{- if .Values.cloudsql.enabled }}
-    database_url: "postgresql://gafaelfawr@cloud-sql-proxy/gafaelfawr"
+    databaseUrl: "postgresql://gafaelfawr@cloud-sql-proxy/gafaelfawr"
     {{- else }}
-    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    databaseUrl: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     {{- end }}
     {{- template "gafaelfawr.configMap" . }}
 ---
@@ -202,8 +200,8 @@ metadata:
 data:
   gafaelfawr.yaml: |
     {{- if .Values.cloudsql.enabled }}
-    database_url: "postgresql://gafaelfawr@localhost/gafaelfawr"
+    databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
     {{- else }}
-    database_url: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
+    databaseUrl: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     {{- end }}
     {{- template "gafaelfawr.configMap" . }}

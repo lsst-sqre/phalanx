@@ -10,19 +10,13 @@ jupyterhub:
     hosts: ["tucson-teststand.lsst.codes"]
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://tucson-teststand.lsst.codes/login"
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/dds"
   hub:
     db:
       upgrade: true
       url: "postgresql://jovyan@squoint.tu.lsst.org/jupyterhub"
-
-  singleuser:
-    extraAnnotations:
-      k8s.v1.cni.cncf.io/networks: "kube-system/misc-dds"
-    initContainers:
-      - name: "multus-init"
-        image: "lsstit/ddsnet4u:latest"
-        securityContext:
-          privileged: true
 
 config:
   base_url: "https://tucson-teststand.lsst.codes"

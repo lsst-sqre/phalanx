@@ -1,68 +1,62 @@
-cachemachineImagePolicy: "desired"
-
-autostart:
-  - name: "firefighter"
-    count: 5
-    user_spec:
-      username_prefix: "bot-mobu-recommended"
-      uid_start: 74768
-      gid_start: 74768
-    scopes:
-      - "exec:notebook"
-      - "exec:portal"
-      - "read:image"
-      - "read:tap"
-    business: "NotebookRunner"
-    options:
-      repo_url: "https://github.com/lsst-sqre/system-test.git"
-      repo_branch: "prod"
-      max_executions: 1
-    restart: true
-  - name: "quickbeam"
-    count: 1
-    users:
-      - username: "bot-mobu-persistent"
-        uidnumber: 74773
-        gidnumber: 74773
-    scopes:
-      - "exec:notebook"
-      - "exec:portal"
-      - "read:image"
-      - "read:tap"
-    business: "NotebookRunner"
-    options:
-      repo_url: "https://github.com/lsst-sqre/system-test.git"
-      repo_branch: "prod"
-      idle_time: 900
-      delete_lab: false
-    restart: true
-  - name: "tutorial"
-    count: 1
-    users:
-      - username: "bot-mobu-tutorial"
-        uidnumber: 74774
-        gidnumber: 74774
-    scopes:
-      - "exec:notebook"
-      - "exec:portal"
-      - "read:image"
-      - "read:tap"
-    business: "NotebookRunner"
-    options:
-      repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-      repo_branch: "prod"
-      max_executions: 1
-      working_directory: "notebooks/tutorial-notebooks"
-    restart: true
-  - name: "tap"
-    count: 1
-    users:
-      - username: "bot-mobu-tap"
-        uidnumber: 74775
-        gidnumber: 74775
-    scopes: ["read:tap"]
-    business: "TAPQueryRunner"
-    options:
-      tap_sync: true
-      tap_query_set: "dp0.2"
-    restart: true
+config:
+  autostart:
+    - name: "firefighter"
+      count: 5
+      user_spec:
+        username_prefix: "bot-mobu-recommended"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          max_executions: 1
+        restart: true
+    - name: "quickbeam"
+      count: 1
+      users:
+        - username: "bot-mobu-persistent"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          idle_time: 900
+          delete_lab: false
+        restart: true
+    - name: "tutorial"
+      count: 1
+      users:
+        - username: "bot-mobu-tutorial"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
+          repo_branch: "prod"
+          max_executions: 1
+          working_directory: "notebooks/tutorial-notebooks"
+        restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu-tap"
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQueryRunner"
+        options:
+          query_set: "dp0.2"
+        restart: true

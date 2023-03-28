@@ -1,23 +1,26 @@
-cachemachineImagePolicy: "desired"
-
-autostart:
-  - name: "python"
-    count: 1
-    users:
-      - username: "bot-mobu-user"
-    scopes: ["exec:notebook"]
-    business: "JupyterPythonLoop"
-    options:
-      jupyter:
-        image_size: "Small"
-    restart: true
-  - name: "tap"
-    count: 1
-    users:
-      - username: "bot-mobu-tap"
-    scopes: ["read:tap"]
-    business: "TAPQueryRunner"
-    restart: true
-    options:
-      tap_sync: true
-      tap_query_set: "dp0.2"
+config:
+  useCachemachine: false
+  debug: true
+  autostart:
+    - name: "python"
+      count: 1
+      users:
+        - username: "bot-mobu-user"
+      scopes: ["exec:notebook"]
+      business:
+        type: "JupyterPythonLoop"
+        options:
+          image:
+            image_class: "latest-weekly"
+            size: "Small"
+        restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu-tap"
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQueryRunner"
+        options:
+          query_set: "dp0.2"
+        restart: true

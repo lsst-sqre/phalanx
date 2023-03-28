@@ -6,14 +6,14 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "139.229.160.152"
+        loadBalancerIP: "139.229.180.2"
         host: sasquatch-summit-kafka-bootstrap.lsst.codes
       brokers:
-        - loadBalancerIP: "139.229.160.154"
+        - loadBalancerIP: "139.229.180.3"
           host: sasquatch-summit-kafka-0.lsst.codes
-        - loadBalancerIP: "139.229.160.153"
+        - loadBalancerIP: "139.229.180.4"
           host: sasquatch-summit-kafka-1.lsst.codes
-        - loadBalancerIP: "139.229.160.155"
+        - loadBalancerIP: "139.229.180.5"
           host: sasquatch-summit-kafka-2.lsst.codes
   zookeeper:
     storage:
@@ -77,6 +77,9 @@ kafka-connect-manager:
       genericcamera:
         enabled: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
+      gis:
+        enabled: true
+        topicsRegex: ".*GIS"
 
 kafdrop:
   ingress:

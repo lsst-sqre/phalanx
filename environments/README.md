@@ -20,7 +20,9 @@
 | moneypenny.enabled | bool | `false` |  |
 | narrativelog.enabled | bool | `false` |  |
 | noteburst.enabled | bool | `false` |  |
+| nublado.enabled | bool | `false` |  |
 | nublado2.enabled | bool | `false` |  |
+| obstap.enabled | bool | `false` |  |
 | onepasswordUuid | string | `"dg5afgiadsffeklfr6jykqymeu"` | UUID of the 1Password item in which to find Vault tokens |
 | plot-navigator.enabled | bool | `false` |  |
 | portal.enabled | bool | `false` |  |

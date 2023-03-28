@@ -177,9 +177,9 @@ spec:
         operation: All
       - resource:
           type: topic
-          name: "test.next-visit"
+          name: "lsst.sal.ScriptQueue.logevent_nextVisit"
           patternType: literal
         type: allow
         host: "*"
-        operation: All
+        operation: Read
 

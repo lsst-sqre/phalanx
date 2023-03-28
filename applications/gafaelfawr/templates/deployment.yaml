@@ -20,6 +20,7 @@ spec:
       labels:
         {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "frontend"
+        gafaelfawr-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
       serviceAccountName: {{ include "gafaelfawr.fullname" . }}
@@ -32,6 +33,8 @@ spec:
           command:
             - "/cloud_sql_proxy"
             - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout=true"
+            - "-structured_logs=true"
             - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
           image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
           imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}

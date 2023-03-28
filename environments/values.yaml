@@ -42,7 +42,11 @@ narrativelog:
   enabled: false
 noteburst:
   enabled: false
+nublado:
+  enabled: false
 nublado2:
+  enabled: false
+obstap:
   enabled: false
 plot-navigator:
   enabled: false

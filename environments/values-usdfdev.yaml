@@ -2,7 +2,7 @@ environment: usdfdev
 fqdn: usdf-rsp-dev.slac.stanford.edu
 vaultPathPrefix: secret/rubin/usdf-rsp-dev
 # butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
-repoURL: https://github.com/slaclab/phalanx.git
+repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
   enabled: false
@@ -19,7 +19,7 @@ gafaelfawr:
 hips:
   enabled: false
 ingress-nginx:
-  enabled: true
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
@@ -28,12 +28,14 @@ narrativelog:
   enabled: false
 noteburst:
   enabled: false
+nublado:
+  enabled: false
 nublado2:
   enabled: true
 obstap:
-  enabled: false
+  enabled: true
 plot-navigator:
-  enabled: false
+  enabled: true
 portal:
   enabled: true
 postgres:
@@ -59,9 +61,9 @@ tap:
 tap-schema:
   enabled: true
 telegraf:
-  enabled: true
+  enabled: false
 telegraf-ds:
-  enabled: true
+  enabled: false
 times-square:
   enabled: false
 vault-secrets-operator:

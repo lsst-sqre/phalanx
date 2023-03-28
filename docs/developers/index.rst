@@ -34,6 +34,7 @@ Individual applications are documented in the :doc:`/applications/index` section
    :caption: Deploy & maintain
    :name: dev-deploy-toc
 
+   get-application-logs
    upgrade
    deploy-from-a-branch
    local-development

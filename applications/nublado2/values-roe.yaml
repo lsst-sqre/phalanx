@@ -20,15 +20,15 @@ config:
     - name: data
       nfs:
         path: /data
-        server: 10.72.0.23
+        server: 192.41.122.33
     - name: home
       nfs:
         path: /jhome
-        server: 10.72.0.23
+        server: 192.41.122.33
     - name: datasets
       nfs:
         path: /datasets
-        server: 10.72.0.23
+        server: 192.41.122.33
   volume_mounts:
     - name: data
       mountPath: /data
