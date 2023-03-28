@@ -4,7 +4,7 @@ image:
 config:
   logLevel: "DEBUG"
   worker:
-    workerCount: 1
+    workerCount: 0
     identities:
       - username: "bot-noteburst90000"
       - username: "bot-noteburst90001"
