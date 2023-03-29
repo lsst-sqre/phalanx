@@ -34,6 +34,7 @@ spec:
     value.converter: io.confluent.connect.avro.AvroConverter
     value.converter.schemas.enable: true
     value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+    request.timeout.ms: 120000
   resources:
     requests:
       cpu: "2"
