@@ -28,6 +28,11 @@ spec:
           env:
             - name: CATALINA_OPTS
               value: >-
+                -Dtapschemauser.username=TAP_SCHEMA
+                -Dtapschemauser.password=TAP_SCHEMA
+                -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtapschemauser.maxActive=100
                 -Dtap.username=tapuser
                 -Dtap.password=pw-tapuser
                 -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/
