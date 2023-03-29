@@ -39,7 +39,7 @@ sasquatch:
 production-tools:
   enabled: false
 semaphore:
-  enabled: false
+  enabled: true
 sherlock:
   enabled: false
 squareone:
