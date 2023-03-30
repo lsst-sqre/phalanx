@@ -1,3 +1,6 @@
+image:
+  tag: "1.2.3"
+
 serviceAccount:
   annotations: {
     iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-int-dc5d.iam.gserviceaccount.com
