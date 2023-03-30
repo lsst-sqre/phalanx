@@ -4,4 +4,4 @@ version: 1.0.0
 description: The TAP_SCHEMA database
 sources:
   - https://github.com/lsst/sdm_schemas
-appVersion: 1.2.3
+appVersion: 1.2.4
