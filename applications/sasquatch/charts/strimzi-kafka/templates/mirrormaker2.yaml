@@ -46,7 +46,7 @@ spec:
   - sourceCluster: "source"
     targetCluster: "target"
     sourceConnector:
-      tasksMax: 1
+      tasksMax: 10
       config:
         replication.factor: 3
         offset-syncs.topic.replication.factor: 3
