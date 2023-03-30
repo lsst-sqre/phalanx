@@ -31,6 +31,12 @@ controller:
     # -- Additional annotations to add for the lab controller pod ingress
     annotations: {}
 
+  # -- If Google Artifact Registry is used as the image source, the Google
+  # service account that has an IAM binding to the `nublado-controller`
+  # Kubernetes service account and has the Artifact Registry reader role
+  # @default -- None, must be set when using Google Artifact Registry
+  googleServiceAccount: ""
+
   config:
     images:
       # -- Source for prepulled images. For Docker, set `type` to `docker`,

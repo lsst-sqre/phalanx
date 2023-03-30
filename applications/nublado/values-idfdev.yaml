@@ -2,6 +2,7 @@ controller:
   image:
     tag: "tickets-DM-38279-queue"
     pullPolicy: "Always"
+  googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   config:
     images:
       source:

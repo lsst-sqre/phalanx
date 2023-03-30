@@ -30,6 +30,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.volumes | object | `{}` | Volumes that should be mounted in lab pods. Currently this only supports NFS volumes and must specify `containerPath`, `server`, `serverPath`, and `mode` where mode is one of `ro` or `rw`. |
 | controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
 | controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
+| controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
 | controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nublado image |
 | controller.image.repository | string | `"ghcr.io/lsst-sqre/jupyterlab-controller"` | nublado image to use |
 | controller.image.tag | string | The appVersion of the chart | Tag of nublado image to use |
