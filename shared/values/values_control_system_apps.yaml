@@ -1,0 +1,31 @@
+# The namespace for the application
+namespace: ""
+
+# -- The default image tag for all of the child applications
+imageTag: ""
+
+csc_collector:
+  # -- The site-specific name used for handling configurable CSCs
+  siteTag: ""
+
+  # -- This section holds secret specifications.
+  # Each object listed can have the following attributes defined:
+  # _name_ (The name used by pods to access the secret)
+  # _key_ (The key in the vault store where the secret resides)
+  # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
+  secrets: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

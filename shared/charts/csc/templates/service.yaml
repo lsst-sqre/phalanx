@@ -1,0 +1,15 @@
+{{- if .Values.service.use }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    csc: {{ include "chart.name" . }}
+  name: {{ include "chart.name" . }}-service
+  namespace: {{ .Values.namespace }}
+spec:
+  ports:
+  - port: {{ .Values.service.port }}
+  selector:
+    csc: {{ include "chart.name" . }}
+  type: {{ .Values.service.type }}
+{{- end }}

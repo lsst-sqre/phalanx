@@ -1,0 +1,181 @@
+{{- if .Values.enabled -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "chart.name" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "csc.labels" . | nindent 4 }}
+  {{- with .Values.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  completions: 1
+  template:
+    metadata:
+      labels:
+        {{- include "csc.selectorLabels" . | nindent 8 }}
+      {{- with .Values.annotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    spec:
+      containers:
+        - name: {{ include "csc.class" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          stdin: true
+          tty: true
+          envFrom:
+          - configMapRef:
+            name: csc-env-config
+          - secretRef:
+            name: ts-salkafka
+          {{- if or .Values.env .Values.envSecrets }}
+          env:
+          {{- range $env_var, $env_value := .Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.butlerSecret }}
+            - name: PGPASSFILE
+              value: "{{ .Values.butlerSecret.containerPath }}/postgres-credentials.txt"
+            - name: PGUSER
+              value: {{ .Values.butlerSecret.dbUser | quote }}
+          {{- end }}
+          volumeMounts:
+          {{- if .Values.entrypoint }}
+            - name: entrypoint
+              mountPath: /home/saluser/.startup.sh
+              subPath: .startup.sh
+          {{- end }}
+          {{- if .Values.configfile }}
+            - name: configfile
+              mountPath: {{ .Values.configfile.path }}/{{ .Values.configfile.filename }}
+              subPath: {{ .Values.configfile.filename }}
+          {{- end }}
+          {{- if .Values.secretPermFixer }}
+          {{- range $values := .Values.secretPermFixer }}
+            - name: {{ include "chart.name" . }}-{{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.pvcMountpoint }}
+          {{- range $values := .Values.pvcMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.path }}
+          {{- end}}
+          {{- end}}
+          {{- if .Values.nfsMountpoint }}
+          {{- range $values := .Values.nfsMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              readOnly: {{ $values.readOnly }}
+          {{- end}}
+          {{- end}}
+          {{- with $.Values.resources }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- end }}
+      {{- if .Values.secretPermFixer }}
+      initContainers:
+      {{- if .Values.secretPermFixer }}
+      {{- range $values := .Values.secretPermFixer }}
+        - name: {{ include "chart.name" . }}-{{ $values.name }}-perm-fixer
+          image: "alpine:latest"
+          command:
+            - "/bin/ash"
+            - "-c"
+            - |
+              cp -RL /secrets-raw/* /secrets
+              chown 73006:73006 /secrets/*
+              chmod 0600 /secrets/*
+              {{- if $values.specialInstructions }}
+              {{- toYaml $values.specialInstructions | nindent 14 }}
+              {{- end }}
+          volumeMounts:
+            - name: {{ include "chart.name" . }}-raw-{{ $values.name }}
+              mountPath: /secrets-raw
+              readOnly: true
+            - name: {{ include "chart.name" . }}-{{ $values.name }}
+              mountPath: /secrets
+      {{- end }}
+      {{- end }}
+      {{- end }}
+      {{- if .Values.securityContext }}
+      securityContext:
+        runAsUser: {{ .Values.securityContext.user }}
+        runAsGroup: {{ .Values.securityContext.group }}
+        {{- if .Values.securityContext.fsGroup }}
+        fsGroup: {{ .Values.securityContext.fsGroup }}
+        {{- end}}
+      {{- end }}
+      volumes:
+      {{- if .Values.entrypoint }}
+        - name: entrypoint
+          configMap:
+            name: {{ .Release.Name }}-entrypoint
+            defaultMode: 0755
+            items:
+              - key: .startup.sh
+                path: .startup.sh
+      {{- end }}
+      {{- if .Values.configfile }}
+        - name: configfile
+          configMap:
+            name: {{ .Release.Name }}-configfile
+            items:
+              - key: {{ .Values.configfile.filename }}
+                path: {{ .Values.configfile.filename }}
+      {{- end }}
+      {{- if  .Values.secretPermFixer }}
+      {{- range $values := .Values.secretPermFixer }}
+        - name: {{ include "chart.name" . }}-{{ $values.name }}
+          emptyDir: {}
+        - name: {{ include "chart.name" . }}-raw-{{ $values.name }}
+          secret:
+            secretName: {{ $.Values.namespace }}-{{ or $values.secretName $values.name }}
+            defaultMode: 0600
+      {{- end }}
+      {{- end }}
+      {{- if .Values.pvcMountpoint }}
+      {{- range $values := .Values.pvcMountpoint }}
+        - name: {{ $values.name }}
+          persistentVolumeClaim:
+            claimName: {{ include "chart.name" . }}-{{ $values.name }}-pvc
+      {{- end }}
+      {{- end }}
+      {{- if .Values.nfsMountpoint }}
+      {{- range $values := .Values.nfsMountpoint }}
+        - name: {{ $values.name }}
+          nfs:
+            path: {{ $values.serverPath }}
+            readOnly: {{ $values.readOnly }}
+            server: {{ $values.server }}
+      {{- end }}
+      {{- end }}
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: nexus3-docker
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+{{- end -}}

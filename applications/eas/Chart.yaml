@@ -1,0 +1,13 @@
+apiVersion: v2
+name: eas
+version: 1.0.0
+description: Deployment for the Environmental Awareness Sytems CSCs
+dependencies:
+  - name: csc_collector
+    version: 1.0.0
+  - name: csc
+    alias: dimm
+    version: 1.0.0
+  - name: csc
+    alias: dimm1-sim
+    version: 1.0.0

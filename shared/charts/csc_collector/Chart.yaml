@@ -1,0 +1,4 @@
+name: csc_collector
+apiVersion: v2
+version: 1.0.0
+description: A Helm chart provided shared information for Control System CSCs.

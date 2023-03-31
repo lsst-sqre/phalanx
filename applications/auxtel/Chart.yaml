@@ -1,0 +1,10 @@
+apiVersion: v2
+name: auxtel
+version: 1.0.0
+description: Deployment for the Auxiliary Telescope CSCs
+dependencies:
+  - name: csc_collector
+    version: 1.0.0
+  - name: csc
+    alias: ataos
+    version: 1.0.0

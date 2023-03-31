@@ -36,6 +36,9 @@ applications:
   # environments and is present here only because it makes parsing easier
   argocd: true
 
+  # -- Eanble the auxtel control system application
+  auxtel: false
+
   # -- Enable the butler application
   butler: false
 
@@ -45,6 +48,9 @@ applications:
 
   # -- Eanble the datalinker application
   datalinker: false
+
+  # -- Enable the eas control system application
+  eas: false
 
   # -- Enable the exposurelog application
   exposurelog: false

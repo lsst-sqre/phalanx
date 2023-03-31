@@ -1,0 +1,27 @@
+namespace: &ns auxtel
+imageTag: &imageTag c0029
+
+csc_collector:
+  namespace: *ns
+  siteTag: tucson
+  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
+
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+  - name: butler-secret
+    key: butler-secret
+
+ataos:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/ataos
+    tag: *imageTag
+    pullPolicy: Always

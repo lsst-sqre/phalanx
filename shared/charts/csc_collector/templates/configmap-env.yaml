@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: csc-env-configfile
+data:
+    LSST_SITE: {{ .Values.siteTag }}
+    LSST_KAFKA_BROKER_ADDR: {{ .Values.kafkaBrokerAddress }}
+    LSST_SCHEMA_REGISTRY_URL: {{ .Values.schemaRegistryUrl }}
+    TS_SALKAFKA_USERNAME: ts-salkafka

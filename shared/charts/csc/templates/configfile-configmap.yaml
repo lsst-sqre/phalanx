@@ -1,0 +1,11 @@
+{{- if .Values.configfile }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "chart.name" . }}-configfile
+  namespace: {{ .Values.namespace }}
+data:
+  {{ .Values.configfile.filename }}:
+{{ .Values.configfile.content | toYaml | indent 4 }}
+{{- end }}
+

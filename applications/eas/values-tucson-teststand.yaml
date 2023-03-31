@@ -1,0 +1,18 @@
+namespace: &ns eas
+imageTag: &imageTag c0029
+
+csc_collector:
+  namespace: *ns
+  siteTag: tucson
+  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
+
+dimm1-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/dimm
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate
