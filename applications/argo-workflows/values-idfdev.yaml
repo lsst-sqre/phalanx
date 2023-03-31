@@ -1,0 +1,5 @@
+argo-workflows:
+  server:
+    ingress:
+      hosts:
+        - data-dev-workflows.lsst.cloud

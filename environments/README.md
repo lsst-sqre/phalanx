@@ -5,6 +5,7 @@
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | alert-stream-broker.enabled | bool | `false` |  |
+| argo-workflows.enabled | bool | `false` |  |
 | butlerRepositoryIndex | string | None, must be set | Butler repository index to use for this environment |
 | cachemachine.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `false` |  |
