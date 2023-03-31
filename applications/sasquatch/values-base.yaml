@@ -45,7 +45,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"

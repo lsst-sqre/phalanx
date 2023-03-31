@@ -1,3 +1,6 @@
+image:
+  tag: "1.2.3"
+
 autostart:
   jupyter: |
     {

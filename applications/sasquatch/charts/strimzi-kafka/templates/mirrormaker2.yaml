@@ -73,6 +73,9 @@ spec:
         # See also message.max.bytes broker configuration.
         producer.max.request.size: 10485760
         producer.buffer.memory: 10485760
+        # Increase request timeout
+        producer.request.timeout.ms: 120000
+        consumer.request.timeout.ms: 120000
 
     heartbeatConnector:
       config:
