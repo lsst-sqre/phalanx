@@ -55,9 +55,9 @@ config:
     - "mainetti"
 
   groupMapping:
-    "admin:token": "lsst"
+    "admin:token": "cin2p3"
     "user:token": "lsst"
-    "exec:admin": "lsst"
+    "exec:admin": "ccin2p3"
     "read:all":
       - "lsst"
     "exec:internal-tools":
