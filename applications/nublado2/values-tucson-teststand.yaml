@@ -67,6 +67,10 @@ config:
         path: /lsstdata/TTS/comcam
         server: comcam-archiver.tu.lsst.org
         readOnly: true
+    - name: obs-env
+      nfs:
+        path: /obs-env
+        server: nfs-obsenv.tu.lsst.org
   volume_mounts:
     - name: home
       mountPath: /home
@@ -86,3 +90,5 @@ config:
     - name: comcam-oods
       mountPath: /data/lsstdata/TTS/comcam
       readOnly: true
+    - name: obs-env
+      mountPath: /opt/obs_env
