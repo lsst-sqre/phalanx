@@ -29,7 +29,7 @@ argo-cd:
       url: https://usdf-rsp.slac.stanford.edu/argo-cd
       oidc.config: |
         name: SLAC
-        issuer: https://dex.slac.stanford.edu/
+        issuer: https://dex.slac.stanford.edu
         clientID: $oidc.clientId
         clientSecret: $oidc.clientSecret
         # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
