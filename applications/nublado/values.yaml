@@ -1,256 +1,222 @@
-# Default values for nublado.
-
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
-image:
-  # -- nublado image to use
-  repository: ghcr.io/lsst-sqre/jupyterlab-controller
-
-  # -- Pull policy for the nublado image
-  pullPolicy: IfNotPresent
-
-  # -- Tag of nublado image to use
-  # @default -- The appVersion of the chart
-  tag: ""
-
-# -- Secret names to use for all Docker pulls
-serviceAccount:
-  # -- Name of the service account to use
-  # @default -- Name based on the fullname template
-  name: ""
-
-  # -- Annotations to add to the service account
-  annotations: {}
-
-# -- Resource limits and requests for the nublado frontend pod
-resources: {}
-
-# -- Annotations for the nublado frontend pod
-podAnnotations: {}
-
-# -- Node selector rules for the nublado frontend pod
-nodeSelector: {}
-
-# -- Tolerations for the nublado frontend pod
-tolerations: []
-
-# -- Affinity rules for the nublado frontend pod
-affinity: {}
-
-ingress:
-  # -- Additional annotations to add for endpoints that are authenticated.
-  annotations: {}
+# Default values for Nublado.
 
 controller:
-  # -- safir settings; generically set through environment variables,
-  # but we'd rather do it this way and just control all config through
-  # the ConfigMap
-  safir:
-    # -- The application's name (not necessarily the root HTTP endpoint path)
-    name: jupyterlab-controller
-    # -- The application's root HTTP endpoint path
-    rootEndpoint: nublado
-    # -- Application run profile: "development" or "production"
-    profile: production
-    # -- Root name of the application's logger.
-    loggerName: jupyterlabcontroller
-    #
-    logLevel: INFO
-  # -- Settings for the JupyterLab controller
-  lab:
-    # These are the maximum CPU/memory allocations for each size
-    # category.
-    # The size names and ordering are taken from:
-    # https://www.d20srd.org/srd/combat/movementPositionAndDistance.htm#bigandLittleCreaturesInCombat
-    # Typically, we support small, medium, and large, but can range up
-    # and down in instance-specific configuration.
-    #
-    # The first one listed will be checked by default, so you probably
-    # want them listed smallest to largest.
-    sizes:
-      small:
-        cpu: 1.0
-        memory: 3Gi
-      medium:
-        cpu: 2.0
-        memory: 6Gi
-      large:
-        cpu: 4.0
-        memory: 12Gi
-    # -- List of specifications for containers to run to commission a new user.
-    initcontainers: []
-    # Each member of the list should set a container `name`, `image`, and
-    # `privileged`, and may contain `volumes` (defined immediately below).
-    # If `privileged` is true, the container will run as root with
-    # `allowPrivilegeEscalation` true; otherwise it will (by convention)
-    # run as user 1000.
-    # - name: farthing
-    #   image: lsstsqre/farthing
-    #   privileged: false
-    # - name: provisionator
-    #   image: lsstsqre/provisionator
-    #   privileged: true
-    #   volumes:
-    #   - containerPath: /home
-    #     serverPath: /share1/home
-    #     server: 10.13.105.122
-    #     mode: rw
-    # -- Volumes defined to user lab pods
-    volumes:
-      - containerPath: /home
-        serverPath: /share1/home
-        server: 10.13.105.122
-        mode: rw
-      - containerPath: /project
-        serverPath: /share1/project
-        server: 10.13.105.122
-        mode: ro
-      - containerPath: /scratch
-        serverPath: /share1/scratch
-        server: 10.13.105.122
-        mode: rw
-    # -- Environment variables for user lab pods, common to all lab pods
-    # in this RSP instance.
-    env:
-      API_ROUTE: /api
-      AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
-      CULL_KERNEL_IDLE_TIMEOUT: "432000"  # These might be set from group?
-      CULL_KERNEL_CONNECTED: "True"
-      CULL_KERNEL_INTERVAL: "300"
-      DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
-      FIREFLY_ROUTE: /portal/app
-      HUB_ROUTE: /nb/hub
-      NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
-      NO_SUDO: "TRUE"
-      S3_ENDPOINT_URL: "https://storage.googleapis.com"
-      SODA_ROUTE: /api/image/soda
-      TAP_ROUTE: /api/tap
-      # EXTERNAL_INSTANCE_URL is a special case: it's
-      # constant-per-instance, but you can't template values files
-    secrets: []
-    #  secretRef: credentials
-    #  secretKey: butler-credentials
-    # -- Files to be mounted as ConfigMaps inside the user lab pod.
-    # Some of these will require modification.  Those are noted with
-    # modify: true, and the file name will be the unique key directing
-    # how the Lab controller is to modify it.
-    files:
-      /etc/passwd:
-        modify: true
-        contents: |
-          root:x:0:0:root:/root:/bin/bash
-          bin:x:1:1:bin:/bin:/sbin/nologin
-          daemon:x:2:2:daemon:/sbin:/sbin/nologin
-          adm:x:3:4:adm:/var/adm:/sbin/nologin
-          lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
-          sync:x:5:0:sync:/sbin:/bin/sync
-          shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
-          halt:x:7:0:halt:/sbin:/sbin/halt
-          mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
-          operator:x:11:0:operator:/root:/sbin/nologin
-          games:x:12:100:games:/usr/games:/sbin/nologin
-          ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
-          tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
-          dbus:x:81:81:System message bus:/:/sbin/nologin
-          nobody:x:99:99:Nobody:/:/sbin/nologin
-          systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
-          lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
-      /etc/group:
-        modify: true
-        contents: |
-          root:x:0:
-          bin:x:1:
-          daemon:x:2:
-          sys:x:3:
-          adm:x:4:
-          tty:x:5:
-          disk:x:6:
-          lp:x:7:
-          mem:x:8:
-          kmem:x:9:
-          wheel:x:10:
-          cdrom:x:11:
-          mail:x:12:
-          man:x:15:
-          dialout:x:18:
-          floppy:x:19:
-          games:x:20:
-          utmp:x:22:
-          tape:x:33:
-          utempter:x:35:
-          video:x:39:
-          ftp:x:50:
-          lock:x:54:
-          tss:x:59:
-          audio:x:63:
-          dbus:x:81:
-          screen:x:84:
-          nobody:x:99:
-          users:x:100:
-          systemd-journal:x:190:
-          systemd-network:x:192:
-          cgred:x:997:
-          ssh_keys:x:998:
-          input:x:999:
-      /opt/lsst/software/jupyterlab/lsst_dask.yml:
-        modify: false
-        contents: |
-          # No longer used, but preserves compatibility with runlab.sh
-          dask_worker.yml: |
-            enabled: false
-      /opt/lsst/software/jupyterlab/panda:
-        modify: false
-        contents: |
-          # Licensed under the Apache License, Version 2.0 (the "License");
-          # You may not use this file except in compliance with the License.
-          # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-          #
-          # Authors:
-          # - Wen Guan, <wen.guan@cern.ch>, 2020
-          [common]
-          # if logdir is configured, idds will write to idds.log in this directory.
-          # else idds will go to stdout/stderr.
-          # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
-          # logdir = /var/log/idds
-          loglevel = INFO
-          [rest]
-          host = https://iddsserver.cern.ch:443/idds
-          #url_prefix = /idds
-          #cacher_dir = /tmp
-          cacher_dir = /data/idds
-    # # -- Secrets for injection into user lab pods.  The name is again
-    # # the unique key that allows the Lab Controller to create the
-    # # contents.  Since these are stored as secrets, they will be created
-    # # from whole cloth, rather than modified from a base template.
-    # # If 'env' is specified, the mount_path will be stored in that environment
-    # # variable.
-    # secrets:
-    # - name: aws-credentials.ini
-    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini
-    #   env: AWS_SHARED_CREDENTIALS_FILE
+  image:
+    # -- nublado image to use
+    repository: ghcr.io/lsst-sqre/jupyterlab-controller
 
-    # - name: butler-gcs-idf-creds.json
-    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json
-    #   env: GOOGLE_APPLICATION_CREDENTIALS
-    # - name: butler-hmac-idf-creds.json
-    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/butler-hmac-idf-creds.json
-    # - name: postgres-credentials.txt
-    #   mount_path: /opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt
-    #   env: PGPASSFILE
-  images:
-    # -- config from sqr-066
-    registry: docker.io
-    docker:
-      repository: lsstsqre/sciplat-lab
-    recommendedTag: recommended
-    numReleases: 1
-    numWeeklies: 2
-    numDailies: 3
+    # -- Pull policy for the nublado image
+    pullPolicy: IfNotPresent
 
+    # -- Tag of nublado image to use
+    # @default -- The appVersion of the chart
+    tag: ""
+
+  # -- Affinity rules for the lab controller pod
+  affinity: {}
+
+  # -- Node selector rules for the lab controller pod
+  nodeSelector: {}
+
+  # -- Annotations for the lab controller pod
+  podAnnotations: {}
+
+  # -- Resource limits and requests for the lab controller pod
+  resources: {}
+
+  # -- Tolerations for the lab controller pod
+  tolerations: []
+
+  ingress:
+    # -- Additional annotations to add for the lab controller pod ingress
+    annotations: {}
+
+  config:
+    images:
+      # -- Prepull images from a Docker Registry. Set `registry` to the
+      # hostname and `repository` to the name of the repository that will be
+      # used as a source of images.
+      docker: {}
+
+      # -- Prepull images from a Google Artifact Repository. Set `registry` to
+      # the name of the server, `projectId` to the Google project,
+      # `repository` to the name of the repository, and `image` to the name of
+      # the image.
+      gar: {}
+
+      # -- Tag marking the recommended image (shown first in the menu)
+      recommendedTag: "recommended"
+
+      # -- Number of most-recent releases to prepull.
+      numReleases: 1
+
+      # -- Number of most-recent weeklies to prepull.
+      numWeeklies: 2
+
+      # -- Number of most-recent dailies to prepull.
+      numDailies: 3
+
+      # -- Restrict images to the given cycle.
+      cycle: null
+
+      # -- List of additional image tags to prepull. Listing the image tagged
+      # as recommended here is recommended to ensure its name can be expanded
+      # properly in the menu.
+      pin: []
+
+      # -- Additional tags besides `recommendedTag` that should be recognized
+      # as aliases.
+      aliasTags: []
+
+    lab:
+      # -- Environment variables to set for every user lab.
+      # @default -- See `values.yaml`
+      env:
+        API_ROUTE: /api
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"  # These might be set from group?
+        CULL_KERNEL_CONNECTED: "True"
+        CULL_KERNEL_INTERVAL: "300"
+        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+        FIREFLY_ROUTE: /portal/app
+        HUB_ROUTE: /nb/hub
+        NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
+        NO_SUDO: "TRUE"
+        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        TAP_ROUTE: /api/tap
+
+      # -- Containers run as init containers with each user pod. Each should
+      # set `name`, `image` (a Docker image reference), and `privileged`, and
+      # may contain `volumes` (similar to the main `volumes`
+      # configuration). If `privileged` is true, the container will run as
+      # root with `allowPrivilegeEscalation` true. Otherwise it will, run as
+      # UID 1000.
+      initcontainers: []
+
+      # -- Secrets to set in the user pods. Each should have a `secretKey` key
+      # pointing to a secret in the same namespace as the controller
+      # (generally `nublado-secret`) and `secretRef` pointing to a field in
+      # that key.
+      secrets: []
+
+      # -- Available lab sizes. Names must be chosen from `fine`,
+      # `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`,
+      # `gargantuan`, and `colossal` in that order. Each should specify the
+      # maximum CPU equivalents and memory. SI prefixes for memory are
+      # supported.
+      # @default -- See `values.yaml` (specifies `small`, `medium`, and
+      # `large`)
+      sizes:
+        small:
+          cpu: 1.0
+          memory: 3Gi
+        medium:
+          cpu: 2.0
+          memory: 6Gi
+        large:
+          cpu: 4.0
+          memory: 12Gi
+
+      # -- Volumes that should be mounted in lab pods. Currently this only
+      # supports NFS volumes and must specify `containerPath`, `server`,
+      # `serverPath`, and `mode` where mode is one of `ro` or `rw`.
+      volumes: {}
+
+      # -- Files to be mounted as ConfigMaps inside the user lab pod.
+      # `contents` contains the file contents. Set `modify` to true to make
+      # the file writable in the pod.
+      # @default -- See `values.yaml`
+      files:
+        /etc/passwd:
+          modify: true
+          contents: |
+            root:x:0:0:root:/root:/bin/bash
+            bin:x:1:1:bin:/bin:/sbin/nologin
+            daemon:x:2:2:daemon:/sbin:/sbin/nologin
+            adm:x:3:4:adm:/var/adm:/sbin/nologin
+            lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+            sync:x:5:0:sync:/sbin:/bin/sync
+            shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+            halt:x:7:0:halt:/sbin:/sbin/halt
+            mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+            operator:x:11:0:operator:/root:/sbin/nologin
+            games:x:12:100:games:/usr/games:/sbin/nologin
+            ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+            tss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin
+            dbus:x:81:81:System message bus:/:/sbin/nologin
+            nobody:x:99:99:Nobody:/:/sbin/nologin
+            systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+            lsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash
+        /etc/group:
+          modify: true
+          contents: |
+            root:x:0:
+            bin:x:1:
+            daemon:x:2:
+            sys:x:3:
+            adm:x:4:
+            tty:x:5:
+            disk:x:6:
+            lp:x:7:
+            mem:x:8:
+            kmem:x:9:
+            wheel:x:10:
+            cdrom:x:11:
+            mail:x:12:
+            man:x:15:
+            dialout:x:18:
+            floppy:x:19:
+            games:x:20:
+            utmp:x:22:
+            tape:x:33:
+            utempter:x:35:
+            video:x:39:
+            ftp:x:50:
+            lock:x:54:
+            tss:x:59:
+            audio:x:63:
+            dbus:x:81:
+            screen:x:84:
+            nobody:x:99:
+            users:x:100:
+            systemd-journal:x:190:
+            systemd-network:x:192:
+            cgred:x:997:
+            ssh_keys:x:998:
+            input:x:999:
+        /opt/lsst/software/jupyterlab/lsst_dask.yml:
+          modify: false
+          contents: |
+            # No longer used, but preserves compatibility with runlab.sh
+            dask_worker.yml: |
+              enabled: false
+        /opt/lsst/software/jupyterlab/panda:
+          modify: false
+          contents: |
+            # Licensed under the Apache License, Version 2.0 (the "License");
+            # You may not use this file except in compliance with the License.
+            # You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+            #
+            # Authors:
+            # - Wen Guan, <wen.guan@cern.ch>, 2020
+            [common]
+            # if logdir is configured, idds will write to idds.log in this directory.
+            # else idds will go to stdout/stderr.
+            # With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.
+            # logdir = /var/log/idds
+            loglevel = INFO
+            [rest]
+            host = https://iddsserver.cern.ch:443/idds
+            #url_prefix = /idds
+            #cacher_dir = /tmp
+            cacher_dir = /data/idds
+
+    safir:
+      # -- Level of Python logging
+      logLevel: "INFO"
+
+      # -- Path prefix that will be routed to the controller
+      pathPrefix: "/nublado"
 
 # Configuration for z2jh subchart
 jupyterhub:
@@ -273,9 +239,6 @@ jupyterhub:
       runAsGroup: 768
       allowPrivilegeEscalation: false
     baseUrl: "/nb"
-    # Note: this has to match up with the kubernetes secret created by the
-    # vault secret, and since you can't put templating in a values file, I'm
-    # just setting the name here.
     existingSecret: "nublado-secret"
     # This will need work
     extraEnv:
@@ -285,17 +248,17 @@ jupyterhub:
             name: "nublado-secret"
             key: "hub.config.CryptKeeper.keys"
     extraVolumes:
-      - name: nublado-config
+      - name: "hub-config"
         configMap:
-          name: nublado-config
-      - name: nublado-gafaelfawr
+          name: "hub-config"
+      - name: "hub-gafaelfawr-token"
         secret:
-          secretName: gafaelfawr-token
+          secretName: "hub-gafaelfawr-token"
     extraVolumeMounts:
-      - name: nublado-config
-        mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d
-      - name: nublado-gafaelfawr
-        mountPath: /etc/gafaelfawr
+      - name: "hub-config"
+        mountPath: "/usr/local/etc/jupyterhub/jupyterhub_config.d"
+      - name: "hub-gafaelfawr-token"
+        mountPath: "/etc/gafaelfawr"
     # We still have to use our own, enabled at the top level, which is
     #  similar but not identical.  This one still doesn't work, even if
     #  you explicitly enable port 8081 so the labs can talk to the Hub.
@@ -318,12 +281,6 @@ jupyterhub:
       blockWithIptables: false
     cmd: "/opt/lsst/software/jupyterlab/runlab.sh"
     defaultUrl: "/lab"
-    extraAnnotations:
-      argocd.argoproj.io/compare-options: 'IgnoreExtraneous'
-      argocd.argoproj.io/sync-options: 'Prune=false'
-    extraLabels:
-      hub.jupyter.org/network-access-hub: 'true'
-      argocd.argoproj.io/instance: 'nublado-users'
 
   proxy:
     service:
@@ -353,9 +310,6 @@ jupyterhub:
     users: true  # log out user when we cull
     removeNamedServers: true  # Post-stop hook may already do this
     maxAge: 5184000  # 60 days -- shorten later
-
-  imagePullSecrets:  # This is probably irrelevant with the RESTSpawner
-    - name: pull-secret
 
   scheduling:
     userScheduler:

@@ -1,21 +1,20 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "nublado.fullname" . }}-hub
+  name: "hub"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
-  namespace: {{ template "nublado.fullname" . }}
 config:
-  loginRedirect: true
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
       - "exec:notebook"
+  loginRedirect: true
   delegate:
     notebook: {}
 template:
   metadata:
-    name: {{ template "nublado.fullname" . }}-hub
+    name: "hub"
   spec:
     rules:
       - host: {{ .Values.global.host | quote }}
@@ -25,6 +24,6 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: proxy-public
+                  name: "proxy-public"
                   port:
-                    name: http
+                    name: "http"

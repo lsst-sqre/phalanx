@@ -1,10 +1,10 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrServiceToken
 metadata:
-  name: "gafaelfawr-token"
+  name: "hub-gafaelfawr-token"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 spec:
-  service: "bot-admin-jupyterlab"
+  service: "bot-jupyterhub"
   scopes:
     - "admin:jupyterlab"

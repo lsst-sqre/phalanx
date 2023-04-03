@@ -1,0 +1,51 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "nublado-controller-user"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  delegate:
+    notebook: {}
+template:
+  metadata:
+    name: "controller-user"
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/labs/.*/create"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80
+            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/labs/.*/events"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80
+            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/lab-form"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80
+            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/user-status"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80

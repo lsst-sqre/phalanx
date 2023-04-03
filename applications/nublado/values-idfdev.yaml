@@ -1,44 +1,50 @@
-image:
-  tag: "tickets-DM-38279-queue"
-  pullPolicy: "Always"
+controller:
+  image:
+    tag: "tickets-DM-38279-queue"
+    pullPolicy: "Always"
+  config:
+    images:
+      gar:
+        repository: "sciplat"
+        image: "sciplat-lab"
+        projectId: "rubin-shared-services-71ec"
+        registry: "us-central1-docker.pkg.dev"
+      recommendedTag: "recommended"
+      numReleases: 1
+      numWeeklies: 2
+      numDailies: 3
+      pin:
+        - "w_2023_07"
+      aliasTags:
+        - "latest"
+        - "latest_release"
+        - "latest_weekly"
+        - "latest_daily"
+    lab:
+      initContainers:
+        - name: "initdir"
+          image: "ghcr.io/lsst-sqre/initdir:0.0.3"
+          privileged: true
+          volumes:
+            - containerPath: "/home"
+              serverPath: "/share1/home"
+              server: "10.87.86.26"
+              mode: "rw"
+      volumes:
+        - containerPath: "/home"
+          serverPath: "/share1/home"
+          server: "10.87.86.26"
+          mode: "rw"
+        - containerPath: "/project"
+          serverPath: "/share1/project"
+          server: "10.87.86.26"
+          mode: "rw"
+        - containerPath: "/scratch"
+          serverPath: "/share1/scratch"
+          server: "10.87.86.26"
+          mode: "rw"
 jupyterhub:
   hub:
     image:
       tag: "tickets-DM-38279-queue"
       pullPolicy: "Always"
-controller:
-  lab:
-    volumes:
-    - containerPath: /home
-      serverPath: /share1/home
-      server: 10.87.86.26
-      mode: rw
-    - containerPath: /project
-      serverPath: /share1/project
-      server: 10.87.86.26
-      mode: rw
-    - containerPath: /scratch
-      serverPath: /share1/scratch
-      server: 10.87.86.26
-      mode: rw
-    initContainers:
-    - name: initdir
-      image: ghcr.io/lsst-sqre/initdir:0.0.3
-      privileged: true
-      volumes:
-      - containerPath: /home
-        serverPath: /share1/home
-        server: 10.87.86.26
-        mode: rw
-  images:
-    # -- config from sqr-066
-    docker: null
-    gar:
-      repository: sciplat
-      image: sciplat-lab
-      projectId: rubin-shared-services-71ec
-      registry: us-central1-docker.pkg.dev
-    recommendedTag: recommended
-    numReleases: 1
-    numWeeklies: 2
-    numDailies: 3

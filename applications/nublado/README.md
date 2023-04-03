@@ -13,31 +13,35 @@ JupyterHub and custom spawner for the Rubin Science Platform
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| affinity | object | `{}` | Affinity rules for the nublado frontend pod |
-| controller.images.docker.repository | string | `"lsstsqre/sciplat-lab"` |  |
-| controller.images.numDailies | int | `3` |  |
-| controller.images.numReleases | int | `1` |  |
-| controller.images.numWeeklies | int | `2` |  |
-| controller.images.recommendedTag | string | `"recommended"` |  |
-| controller.images.registry | string | `"docker.io"` | config from sqr-066 |
-| controller.lab | object | `{"env":{"API_ROUTE":"/api","AUTO_REPO_SPECS":"https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod","CULL_KERNEL_CONNECTED":"True","CULL_KERNEL_IDLE_TIMEOUT":"432000","CULL_KERNEL_INTERVAL":"300","DAF_BUTLER_REPOSITORY_INDEX":"s3://butler-us-central1-repo-locations/data-repos.yaml","FIREFLY_ROUTE":"/portal/app","HUB_ROUTE":"/nb/hub","NO_ACTIVITY_TIMEOUT":"432000","NO_SUDO":"TRUE","S3_ENDPOINT_URL":"https://storage.googleapis.com","SODA_ROUTE":"/api/image/soda","TAP_ROUTE":"/api/tap"},"files":{"/etc/group":{"contents":"root:x:0:\nbin:x:1:\ndaemon:x:2:\nsys:x:3:\nadm:x:4:\ntty:x:5:\ndisk:x:6:\nlp:x:7:\nmem:x:8:\nkmem:x:9:\nwheel:x:10:\ncdrom:x:11:\nmail:x:12:\nman:x:15:\ndialout:x:18:\nfloppy:x:19:\ngames:x:20:\nutmp:x:22:\ntape:x:33:\nutempter:x:35:\nvideo:x:39:\nftp:x:50:\nlock:x:54:\ntss:x:59:\naudio:x:63:\ndbus:x:81:\nscreen:x:84:\nnobody:x:99:\nusers:x:100:\nsystemd-journal:x:190:\nsystemd-network:x:192:\ncgred:x:997:\nssh_keys:x:998:\ninput:x:999:\n","modify":true},"/etc/passwd":{"contents":"root:x:0:0:root:/root:/bin/bash\nbin:x:1:1:bin:/bin:/sbin/nologin\ndaemon:x:2:2:daemon:/sbin:/sbin/nologin\nadm:x:3:4:adm:/var/adm:/sbin/nologin\nlp:x:4:7:lp:/var/spool/lpd:/sbin/nologin\nsync:x:5:0:sync:/sbin:/bin/sync\nshutdown:x:6:0:shutdown:/sbin:/sbin/shutdown\nhalt:x:7:0:halt:/sbin:/sbin/halt\nmail:x:8:12:mail:/var/spool/mail:/sbin/nologin\noperator:x:11:0:operator:/root:/sbin/nologin\ngames:x:12:100:games:/usr/games:/sbin/nologin\nftp:x:14:50:FTP User:/var/ftp:/sbin/nologin\ntss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin\ndbus:x:81:81:System message bus:/:/sbin/nologin\nnobody:x:99:99:Nobody:/:/sbin/nologin\nsystemd-network:x:192:192:systemd Network Management:/:/sbin/nologin\nlsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash\n","modify":true},"/opt/lsst/software/jupyterlab/lsst_dask.yml":{"contents":"# No longer used, but preserves compatibility with runlab.sh\ndask_worker.yml: |\n  enabled: false\n","modify":false},"/opt/lsst/software/jupyterlab/panda":{"contents":"# Licensed under the Apache License, Version 2.0 (the \"License\");\n# You may not use this file except in compliance with the License.\n# You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0\n#\n# Authors:\n# - Wen Guan, <wen.guan@cern.ch>, 2020\n[common]\n# if logdir is configured, idds will write to idds.log in this directory.\n# else idds will go to stdout/stderr.\n# With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.\n# logdir = /var/log/idds\nloglevel = INFO\n[rest]\nhost = https://iddsserver.cern.ch:443/idds\n#url_prefix = /idds\n#cacher_dir = /tmp\ncacher_dir = /data/idds\n","modify":false}},"initcontainers":[],"secrets":[],"sizes":{"large":{"cpu":4,"memory":"12Gi"},"medium":{"cpu":2,"memory":"6Gi"},"small":{"cpu":1,"memory":"3Gi"}},"volumes":[{"containerPath":"/home","mode":"rw","server":"10.13.105.122","serverPath":"/share1/home"},{"containerPath":"/project","mode":"ro","server":"10.13.105.122","serverPath":"/share1/project"},{"containerPath":"/scratch","mode":"rw","server":"10.13.105.122","serverPath":"/share1/scratch"}]}` | Settings for the JupyterLab controller |
-| controller.lab.env | object | `{"API_ROUTE":"/api","AUTO_REPO_SPECS":"https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod","CULL_KERNEL_CONNECTED":"True","CULL_KERNEL_IDLE_TIMEOUT":"432000","CULL_KERNEL_INTERVAL":"300","DAF_BUTLER_REPOSITORY_INDEX":"s3://butler-us-central1-repo-locations/data-repos.yaml","FIREFLY_ROUTE":"/portal/app","HUB_ROUTE":"/nb/hub","NO_ACTIVITY_TIMEOUT":"432000","NO_SUDO":"TRUE","S3_ENDPOINT_URL":"https://storage.googleapis.com","SODA_ROUTE":"/api/image/soda","TAP_ROUTE":"/api/tap"}` | Environment variables for user lab pods, common to all lab pods in this RSP instance. |
-| controller.lab.files | object | `{"/etc/group":{"contents":"root:x:0:\nbin:x:1:\ndaemon:x:2:\nsys:x:3:\nadm:x:4:\ntty:x:5:\ndisk:x:6:\nlp:x:7:\nmem:x:8:\nkmem:x:9:\nwheel:x:10:\ncdrom:x:11:\nmail:x:12:\nman:x:15:\ndialout:x:18:\nfloppy:x:19:\ngames:x:20:\nutmp:x:22:\ntape:x:33:\nutempter:x:35:\nvideo:x:39:\nftp:x:50:\nlock:x:54:\ntss:x:59:\naudio:x:63:\ndbus:x:81:\nscreen:x:84:\nnobody:x:99:\nusers:x:100:\nsystemd-journal:x:190:\nsystemd-network:x:192:\ncgred:x:997:\nssh_keys:x:998:\ninput:x:999:\n","modify":true},"/etc/passwd":{"contents":"root:x:0:0:root:/root:/bin/bash\nbin:x:1:1:bin:/bin:/sbin/nologin\ndaemon:x:2:2:daemon:/sbin:/sbin/nologin\nadm:x:3:4:adm:/var/adm:/sbin/nologin\nlp:x:4:7:lp:/var/spool/lpd:/sbin/nologin\nsync:x:5:0:sync:/sbin:/bin/sync\nshutdown:x:6:0:shutdown:/sbin:/sbin/shutdown\nhalt:x:7:0:halt:/sbin:/sbin/halt\nmail:x:8:12:mail:/var/spool/mail:/sbin/nologin\noperator:x:11:0:operator:/root:/sbin/nologin\ngames:x:12:100:games:/usr/games:/sbin/nologin\nftp:x:14:50:FTP User:/var/ftp:/sbin/nologin\ntss:x:59:59:Account used by the trousers package to sandbox the tcsd daemon:/dev/null:/sbin/nologin\ndbus:x:81:81:System message bus:/:/sbin/nologin\nnobody:x:99:99:Nobody:/:/sbin/nologin\nsystemd-network:x:192:192:systemd Network Management:/:/sbin/nologin\nlsst_lcl:x:1000:1000::/home/lsst_lcl:/bin/bash\n","modify":true},"/opt/lsst/software/jupyterlab/lsst_dask.yml":{"contents":"# No longer used, but preserves compatibility with runlab.sh\ndask_worker.yml: |\n  enabled: false\n","modify":false},"/opt/lsst/software/jupyterlab/panda":{"contents":"# Licensed under the Apache License, Version 2.0 (the \"License\");\n# You may not use this file except in compliance with the License.\n# You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0\n#\n# Authors:\n# - Wen Guan, <wen.guan@cern.ch>, 2020\n[common]\n# if logdir is configured, idds will write to idds.log in this directory.\n# else idds will go to stdout/stderr.\n# With supervisord, it's good to write to stdout/stderr, then supervisord can manage and rotate logs.\n# logdir = /var/log/idds\nloglevel = INFO\n[rest]\nhost = https://iddsserver.cern.ch:443/idds\n#url_prefix = /idds\n#cacher_dir = /tmp\ncacher_dir = /data/idds\n","modify":false}}` | Files to be mounted as ConfigMaps inside the user lab pod. Some of these will require modification.  Those are noted with modify: true, and the file name will be the unique key directing how the Lab controller is to modify it. |
-| controller.lab.initcontainers | list | `[]` | List of specifications for containers to run to commission a new user. |
-| controller.lab.volumes | list | `[{"containerPath":"/home","mode":"rw","server":"10.13.105.122","serverPath":"/share1/home"},{"containerPath":"/project","mode":"ro","server":"10.13.105.122","serverPath":"/share1/project"},{"containerPath":"/scratch","mode":"rw","server":"10.13.105.122","serverPath":"/share1/scratch"}]` | Volumes defined to user lab pods |
-| controller.safir | object | `{"logLevel":"INFO","loggerName":"jupyterlabcontroller","name":"jupyterlab-controller","profile":"production","rootEndpoint":"nublado"}` | safir settings; generically set through environment variables, but we'd rather do it this way and just control all config through the ConfigMap |
-| controller.safir.loggerName | string | `"jupyterlabcontroller"` | Root name of the application's logger. |
-| controller.safir.name | string | `"jupyterlab-controller"` | The application's name (not necessarily the root HTTP endpoint path) |
-| controller.safir.profile | string | `"production"` | Application run profile: "development" or "production" |
-| controller.safir.rootEndpoint | string | `"nublado"` | The application's root HTTP endpoint path |
-| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
+| controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
+| controller.config.images.cycle | string | `nil` | Restrict images to the given cycle. |
+| controller.config.images.docker | object | `{}` | Prepull images from a Docker Registry. Set `registry` to the hostname and `repository` to the name of the repository that will be used as a source of images. |
+| controller.config.images.gar | object | `{}` | Prepull images from a Google Artifact Repository. Set `registry` to the name of the server, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
+| controller.config.images.numReleases | int | `1` | Number of most-recent releases to prepull. |
+| controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
+| controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended to ensure its name can be expanded properly in the menu. |
+| controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
+| controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab. |
+| controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
+| controller.config.lab.initcontainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image reference), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with `allowPrivilegeEscalation` true. Otherwise it will, run as UID 1000. |
+| controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
+| controller.config.lab.sizes | object | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Names must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI prefixes for memory are supported. `large`) |
+| controller.config.lab.volumes | object | `{}` | Volumes that should be mounted in lab pods. Currently this only supports NFS volumes and must specify `containerPath`, `server`, `serverPath`, and `mode` where mode is one of `ro` or `rw`. |
+| controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
+| controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
+| controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nublado image |
+| controller.image.repository | string | `"ghcr.io/lsst-sqre/jupyterlab-controller"` | nublado image to use |
+| controller.image.tag | string | The appVersion of the chart | Tag of nublado image to use |
+| controller.ingress.annotations | object | `{}` | Additional annotations to add for the lab controller pod ingress |
+| controller.nodeSelector | object | `{}` | Node selector rules for the lab controller pod |
+| controller.podAnnotations | object | `{}` | Annotations for the lab controller pod |
+| controller.resources | object | `{}` | Resource limits and requests for the lab controller pod |
+| controller.tolerations | list | `[]` | Tolerations for the lab controller pod |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nublado image |
-| image.repository | string | `"ghcr.io/lsst-sqre/jupyterlab-controller"` | nublado image to use |
-| image.tag | string | The appVersion of the chart | Tag of nublado image to use |
-| ingress.annotations | object | `{}` | Additional annotations to add for endpoints that are authenticated. |
 | jupyterhub.cull.enabled | bool | `true` |  |
 | jupyterhub.cull.every | int | `600` |  |
 | jupyterhub.cull.maxAge | int | `5184000` |  |
@@ -56,13 +60,13 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.key | string | `"hub.config.CryptKeeper.keys"` |  |
 | jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.name | string | `"nublado-secret"` |  |
 | jupyterhub.hub.extraVolumeMounts[0].mountPath | string | `"/usr/local/etc/jupyterhub/jupyterhub_config.d"` |  |
-| jupyterhub.hub.extraVolumeMounts[0].name | string | `"nublado-config"` |  |
+| jupyterhub.hub.extraVolumeMounts[0].name | string | `"hub-config"` |  |
 | jupyterhub.hub.extraVolumeMounts[1].mountPath | string | `"/etc/gafaelfawr"` |  |
-| jupyterhub.hub.extraVolumeMounts[1].name | string | `"nublado-gafaelfawr"` |  |
-| jupyterhub.hub.extraVolumes[0].configMap.name | string | `"nublado-config"` |  |
-| jupyterhub.hub.extraVolumes[0].name | string | `"nublado-config"` |  |
-| jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
-| jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
+| jupyterhub.hub.extraVolumeMounts[1].name | string | `"hub-gafaelfawr-token"` |  |
+| jupyterhub.hub.extraVolumes[0].configMap.name | string | `"hub-config"` |  |
+| jupyterhub.hub.extraVolumes[0].name | string | `"hub-config"` |  |
+| jupyterhub.hub.extraVolumes[1].name | string | `"hub-gafaelfawr-token"` |  |
+| jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"hub-gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` |  |
 | jupyterhub.hub.image.tag | string | `"0.1.2"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
@@ -71,7 +75,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` |  |
 | jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
 | jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
-| jupyterhub.imagePullSecrets[0].name | string | `"pull-secret"` |  |
 | jupyterhub.ingress.enabled | bool | `false` |  |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` |  |
 | jupyterhub.prePuller.hook.enabled | bool | `false` |  |
@@ -82,15 +85,3 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.singleuser.cloudMetadata.blockWithIptables | bool | `false` |  |
 | jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` |  |
 | jupyterhub.singleuser.defaultUrl | string | `"/lab"` |  |
-| jupyterhub.singleuser.extraAnnotations."argocd.argoproj.io/compare-options" | string | `"IgnoreExtraneous"` |  |
-| jupyterhub.singleuser.extraAnnotations."argocd.argoproj.io/sync-options" | string | `"Prune=false"` |  |
-| jupyterhub.singleuser.extraLabels."argocd.argoproj.io/instance" | string | `"nublado-users"` |  |
-| jupyterhub.singleuser.extraLabels."hub.jupyter.org/network-access-hub" | string | `"true"` |  |
-| nameOverride | string | `""` | Override the base name for resources |
-| nodeSelector | object | `{}` | Node selector rules for the nublado frontend pod |
-| podAnnotations | object | `{}` | Annotations for the nublado frontend pod |
-| resources | object | `{}` | Resource limits and requests for the nublado frontend pod |
-| serviceAccount | object | `{"annotations":{},"name":""}` | Secret names to use for all Docker pulls |
-| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
-| serviceAccount.name | string | Name based on the fullname template | Name of the service account to use |
-| tolerations | list | `[]` | Tolerations for the nublado frontend pod |
