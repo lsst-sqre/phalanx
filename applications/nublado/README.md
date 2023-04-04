@@ -15,14 +15,13 @@ JupyterHub and custom spawner for the Rubin Science Platform
 |-----|------|---------|-------------|
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
-| controller.config.images.cycle | string | `nil` | Restrict images to the given cycle. |
-| controller.config.images.docker | object | `{}` | Prepull images from a Docker Registry. Set `registry` to the hostname and `repository` to the name of the repository that will be used as a source of images. |
-| controller.config.images.gar | object | `{}` | Prepull images from a Google Artifact Repository. Set `registry` to the name of the server, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
 | controller.config.images.numReleases | int | `1` | Number of most-recent releases to prepull. |
 | controller.config.images.numWeeklies | int | `2` | Number of most-recent weeklies to prepull. |
-| controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended to ensure its name can be expanded properly in the menu. |
+| controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
+| controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab. |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.initcontainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image reference), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with `allowPrivilegeEscalation` true. Otherwise it will, run as UID 1000. |

@@ -4,22 +4,16 @@ controller:
     pullPolicy: "Always"
   config:
     images:
-      gar:
+      source:
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
-        projectId: "rubin-shared-services-71ec"
-        registry: "us-central1-docker.pkg.dev"
       recommendedTag: "recommended"
       numReleases: 1
       numWeeklies: 2
       numDailies: 3
-      pin:
-        - "w_2023_07"
-      aliasTags:
-        - "latest"
-        - "latest_release"
-        - "latest_weekly"
-        - "latest_daily"
     lab:
       initContainers:
         - name: "initdir"

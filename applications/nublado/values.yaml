@@ -33,16 +33,14 @@ controller:
 
   config:
     images:
-      # -- Prepull images from a Docker Registry. Set `registry` to the
-      # hostname and `repository` to the name of the repository that will be
-      # used as a source of images.
-      docker: {}
-
-      # -- Prepull images from a Google Artifact Repository. Set `registry` to
-      # the name of the server, `projectId` to the Google project,
+      # -- Source for prepulled images. For Docker, set `type` to `docker`,
+      # `registry` to the hostname and `repository` to the name of the
+      # repository. For Google Artifact Repository, set `type` to `google`,
+      # `location` to the region, `projectId` to the Google project,
       # `repository` to the name of the repository, and `image` to the name of
       # the image.
-      gar: {}
+      # @default -- None, must be specified
+      source: {}
 
       # -- Tag marking the recommended image (shown first in the menu)
       recommendedTag: "recommended"
@@ -56,12 +54,12 @@ controller:
       # -- Number of most-recent dailies to prepull.
       numDailies: 3
 
-      # -- Restrict images to the given cycle.
+      # -- Restrict images to this SAL cycle, if given.
       cycle: null
 
       # -- List of additional image tags to prepull. Listing the image tagged
-      # as recommended here is recommended to ensure its name can be expanded
-      # properly in the menu.
+      # as recommended here is recommended when using a Docker image source to
+      # ensure its name can be expanded properly in the menu.
       pin: []
 
       # -- Additional tags besides `recommendedTag` that should be recognized
