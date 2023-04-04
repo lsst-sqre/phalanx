@@ -85,7 +85,6 @@ controller:
         FIREFLY_ROUTE: /portal/app
         HUB_ROUTE: /nb/hub
         NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
-        NO_SUDO: "TRUE"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
         TAP_ROUTE: /api/tap
 
