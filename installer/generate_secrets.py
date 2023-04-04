@@ -44,6 +44,7 @@ class SecretGenerator:
         self._pull_secret()
         self._rsp_alerts()
         self._butler_secret()
+        self._argo_sso_secret()
         self._postgres()
         self._tap()
         self._nublado2()
@@ -281,6 +282,16 @@ class SecretGenerator:
             "butler-secret",
             "postgres-credentials.txt",
             "Postgres credentials for butler",
+        )
+
+    def _argo_sso_secret(self):
+        # We aren't currently using this, but might as well generate it
+        # against the day we do.
+        self._set_generated(
+            "argo-sso-secret", "client-id", "argo-workflows-sso"
+        )
+        self._set_generated(
+            "argo-sso-secret", "client-secret", secrets.token_hex(16)
         )
 
     def _ingress_nginx(self):

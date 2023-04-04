@@ -2,11 +2,30 @@ argo-workflows:
   crds:
     keep: false
   server:
+    baseHref: "/argo-workflows/"
+    # This is basically unauthenticated: we are doing access control via
+    # GafaelfawrIngress, by requiring (currently) 'exec:admin' scope.
     extraArgs:
     - "--auth-mode=server"
+    sso:
+      insecureSkipVerify: true
+      issuer: https://data-dev.lsst.cloud/argo-cd/api/dex
+      clientId:
+        name: argo-sso-secret
+        key: client-id
+      clientSecret:
+        name: argo-sso-secret
+        key: client-secret
+      rbac:
+        enabled: true
+      redirectUrl: https://data-dev.lsst.cloud/argo-workflows/oauth2/callback
     ingress:
-      enabled: True
-      ingressClassName: nginx
+      enabled: false
+
+ingress:
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: "/$2"
 
 # The following will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.
