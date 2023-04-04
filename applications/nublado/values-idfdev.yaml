@@ -16,6 +16,10 @@ controller:
       numWeeklies: 2
       numDailies: 3
     lab:
+      env:
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+        S3_ENDPOINT_URL: "https://storage.googleapis.com"
       initContainers:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.3"
