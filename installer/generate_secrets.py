@@ -47,6 +47,7 @@ class SecretGenerator:
         self._argo_sso_secret()
         self._postgres()
         self._tap()
+        self._nublado()
         self._nublado2()
         self._mobu()
         self._gafaelfawr()
@@ -157,6 +158,21 @@ class SecretGenerator:
         self._set_generated(
             "postgres", "narrativelog_password", secrets.token_hex(32)
         )
+
+    def _nublado(self):
+        self._set_generated("nublado", "crypto_key", secrets.token_hex(32))
+        self._set_generated("nublado", "proxy_token", secrets.token_hex(32))
+        self._set_generated(
+            "nublado", "cryptkeeper_key", secrets.token_hex(32)
+        )
+
+        # Pluck the password out of the postgres portion.
+        db_password = self.secrets["postgres"]["jupyterhub_password"]
+        self.secrets["nublado"]["hub_db_password"] = db_password
+
+        slack_webhook = self._get_current("rsp-alerts", "slack-webhook")
+        if slack_webhook:
+            self._set("nublado", "slack_webhook", slack_webhook)
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
