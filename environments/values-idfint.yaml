@@ -5,6 +5,8 @@ butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.ya
 
 alert-stream-broker:
   enabled: true
+argo-workflows:
+  enabled: false
 cachemachine:
   enabled: true
 cert-manager:

@@ -4,6 +4,8 @@ vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 
 alert-stream-broker:
   enabled: false
+argo-workflows:
+  enabled: false
 cachemachine:
   enabled: true
 cert-manager:

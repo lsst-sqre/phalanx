@@ -6,6 +6,8 @@ repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
   enabled: false
+argo-workflows:
+  enabled: false
 cachemachine:
   enabled: true
 cert-manager:
