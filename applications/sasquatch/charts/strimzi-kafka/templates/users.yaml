@@ -182,4 +182,11 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      - resource:
+          type: topic
+          name: "test.next-visit"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
 
