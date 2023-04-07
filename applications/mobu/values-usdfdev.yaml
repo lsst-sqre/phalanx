@@ -12,4 +12,5 @@ config:
           image:
             image_class: "latest-weekly"
             size: "Small"
+          idle_time: 60
         restart: true
