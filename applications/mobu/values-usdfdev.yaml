@@ -1,33 +1,34 @@
 config:
   disableSlackAlerts: true
   autostart:
-    - name: "python"
-      count: 1
-      users:
-        - username: "bot-mobu-user"
-      scopes: ["exec:notebook"]
-      business:
-        type: "JupyterPythonLoop"
-        options:
-          image:
-            image_class: "latest-weekly"
-            size: "Small"
-          idle_time: 60
-        restart: true
+#   - name: "python"
+#     count: 1
+#     users:
+#       - username: "bot-mobu-user"
+#     scopes: ["exec:notebook"]
+#     business:
+#       type: "JupyterPythonLoop"
+#       options:
+#         image:
+#           image_class: "latest-weekly"
+#           size: "Small"
+#         idle_time: 60
+#       restart: true
     - name: "firefighter"
       count: 5
       user_spec:
         username_prefix: "bot-mobu-recommended"
-        uid_start: 74768
-        gid_start: 74768
+#       uid_start: 74768
+#       gid_start: 74768
       scopes:
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
-      business: "NotebookRunner"
-      options:
-        repo_url: "https://github.com/lsst-sqre/system-test.git"
-        repo_branch: "prod"
-        max_executions: 1
-      restart: true
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          max_executions: 1
+        restart: true
