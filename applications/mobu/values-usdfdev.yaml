@@ -6,8 +6,10 @@ config:
       users:
         - username: "bot-mobu-user"
       scopes: ["exec:notebook"]
-      business: "JupyterPythonLoop"
-      options:
-        jupyter:
-          image_size: "Small"
-      restart: true
+      business:
+        type: "JupyterPythonLoop"
+        options:
+          image:
+            image_class: "latest-weekly"
+            size: "Small"
+        restart: true
