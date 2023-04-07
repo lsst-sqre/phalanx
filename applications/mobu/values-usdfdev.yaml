@@ -1,2 +1,13 @@
 config:
   disableSlackAlerts: true
+  autostart:
+    - name: "python"
+      count: 1
+      users:
+        - username: "bot-mobu-user"
+      scopes: ["exec:notebook"]
+      business: "JupyterPythonLoop"
+      options:
+        jupyter:
+          image_size: "Small"
+      restart: true
