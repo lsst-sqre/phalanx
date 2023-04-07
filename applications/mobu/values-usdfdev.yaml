@@ -14,3 +14,20 @@ config:
             size: "Small"
           idle_time: 60
         restart: true
+    - name: "firefighter"
+      count: 5
+      user_spec:
+        username_prefix: "bot-mobu-recommended"
+        uid_start: 74768
+        gid_start: 74768
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business: "NotebookRunner"
+      options:
+        repo_url: "https://github.com/lsst-sqre/system-test.git"
+        repo_branch: "prod"
+        max_executions: 1
+      restart: true
