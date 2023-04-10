@@ -24,9 +24,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
-      - github:
-          organization: "lsst-ts"
-          team: "nublado-control-access"
       - "lsst-sqre-square"
     "exec:internal-tools":
       - github:
