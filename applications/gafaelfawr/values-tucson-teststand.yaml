@@ -64,6 +64,13 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+    "exec:workflows":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-ts"
+          team: "integration-testing-team"
     "read:image":
       - github:
           organization: "lsst-sqre"
