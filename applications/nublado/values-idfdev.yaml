@@ -22,7 +22,7 @@ controller:
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
       initContainers:
         - name: "initdir"
-          image: "ghcr.io/lsst-sqre/initdir:0.0.3"
+          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
           volumes:
             - containerPath: "/home"
