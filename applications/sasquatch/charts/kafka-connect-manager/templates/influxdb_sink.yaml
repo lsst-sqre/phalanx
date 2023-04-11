@@ -62,7 +62,11 @@ spec:
           - name: KAFKA_CONNECT_EXCLUDED_TOPIC_REGEX
             value: {{ $.Values.influxdbSink.excludedTopicsRegex | quote }}
           - name: KAFKA_CONNECT_INFLUXDB_TIMESTAMP
+            {{- if $value.timestamp }}
+            value: {{ $value.timestamp | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.timestamp | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_ERROR_POLICY
             value: {{ $.Values.influxdbSink.connectInfluxErrorPolicy | quote }}
           - name: KAFKA_CONNECT_MAX_RETRIES
