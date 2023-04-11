@@ -42,7 +42,11 @@ spec:
           - name: KAFKA_CONNECT_INFLUXDB_URL
             value: {{ $.Values.influxdbSink.connectInfluxUrl | quote }}
           - name: KAFKA_CONNECT_DATABASE
+            {{- if $value.connectInfluxDb }}
+            value: {{ $value.connectInfluxDb | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.connectInfluxDb | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_INFLUXDB_USERNAME
             valueFrom:
               secretKeyRef:
