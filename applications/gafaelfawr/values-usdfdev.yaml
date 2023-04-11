@@ -36,7 +36,6 @@ config:
     gidAttr: gidNumber
     nameAttr: gecos
 
-
   groupMapping:
     "admin:token":
     - "rubinmgr"
@@ -208,6 +207,9 @@ config:
     - rubin_users-z
     - rubin_admin_datasets
     - rubin_admin_repos
+    - "unix-admin"
+    "write:sasquatch":
+    - "rubinmgr"
     - "unix-admin"
 
   initialAdmins:

@@ -88,6 +88,10 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+    "write:sasquatch":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
 
   initialAdmins:
     - "afausti"

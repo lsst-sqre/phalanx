@@ -54,6 +54,8 @@ config:
       - "g_users"
     "read:tap":
       - "g_users"
+    "write:sasquatch":
+      - "g_admins"
 
   initialAdmins:
     - "adam"
