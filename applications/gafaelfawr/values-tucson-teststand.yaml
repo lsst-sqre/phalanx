@@ -19,12 +19,10 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
-      - "lsst-sqre-square"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
           team: "square"
-      - "lsst-sqre-square"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
@@ -97,6 +95,10 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+    "write:sasquatch":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
 
   initialAdmins:
     - "afausti"
