@@ -1,0 +1,5 @@
+argo-workflows:
+  controller:
+    logging:
+      level: debug
+      globalLevel: "1"
