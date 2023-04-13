@@ -71,6 +71,12 @@ spec:
             {{- else }}
             value: {{ $.Values.influxdbSink.timestamp | quote }}
             {{- end }}
+          - name: KAFKA_CONNECT_INFLUXDB_TAGS
+            {{- if $value.tags }}
+            value: {{ $value.tags | quote }}
+            {{- else }}
+            value: {{ $.Values.influxdbSink.tags | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_ERROR_POLICY
             value: {{ $.Values.influxdbSink.connectInfluxErrorPolicy | quote }}
           - name: KAFKA_CONNECT_MAX_RETRIES
