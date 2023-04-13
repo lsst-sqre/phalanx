@@ -1,4 +1,4 @@
 config:
   site_id: tucson
 db:
-  host: squoint.tu.lsst.org
+  host: postgresdb01.tu.lsst.org
