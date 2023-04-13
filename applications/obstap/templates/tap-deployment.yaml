@@ -26,6 +26,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           env:
+            - name: "pgpassword"
+              valueFrom:
+                secretKeyRef:
+                  name: "pgpassword"
+                  key: "pgpassword"
             - name: CATALINA_OPTS
               value: >-
                 -Dtapschemauser.username=TAP_SCHEMA
@@ -34,7 +39,7 @@ spec:
                 -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
                 -Dtapschemauser.maxActive=100
                 -Dtap.username=tapuser
-                -Dtap.password=pw-tapuser
+                -Dtap.password=$pgpassword
                 -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/
                 -Dtap.maxActive=100
                 -Duws.maxActive=100
