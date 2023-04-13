@@ -28,6 +28,8 @@ influxdbSink:
   connectProgressEnabled: false
   # -- Regex to exclude topics from the list of selected topics from Kafka.
   excludedTopicsRegex: ""
+  # -- Fields in the Avro payload that are treated as InfluxDB tags.
+  tags: ""
   # -- Connector instances to deploy.
   connectors:
     test:

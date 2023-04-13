@@ -21,6 +21,8 @@ influxdb:
     size: 15Ti
 
 kafka-connect-manager:
+  image:
+    tag: tickets-DM-37633
   influxdbSink:
     # Based on the kafka producers configuration for the BTS
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
@@ -84,16 +86,20 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.dm"
         topicsRegex: "lsst.dm.*"
+        tags: dataset_tag
       lsstdebug:
         enabled: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.debug"
         topicsRegex: "lsst.debug.*"
+        tags: dataset_tag
       lsstexample:
         enabled: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.example"
         topicsRegex: "lsst.example.*"
+        tags: dataset_tag
+
 
 kafdrop:
   ingress:
