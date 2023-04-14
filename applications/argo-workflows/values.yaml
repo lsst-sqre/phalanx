@@ -28,6 +28,8 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+  scopes:
+  - "exec:admin"
 
 # The following will be set by parameters injected by Argo CD and should
 # not be set in the individual environment values files.

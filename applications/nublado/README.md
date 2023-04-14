@@ -38,6 +38,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.nodeSelector | object | `{}` | Node selector rules for the lab controller pod |
 | controller.podAnnotations | object | `{}` | Annotations for the lab controller pod |
 | controller.resources | object | `{}` | Resource limits and requests for the lab controller pod |
+| controller.slackAlerts | bool | `false` | Whether to enable Slack alerts. If set to true, `slack_webhook` must be set in the corresponding Nublado Vault secret. |
 | controller.tolerations | list | `[]` | Tolerations for the lab controller pod |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

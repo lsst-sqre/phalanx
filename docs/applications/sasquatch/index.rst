@@ -15,4 +15,5 @@ Guides
 .. toctree::
    :maxdepth: 1
 
+   create-write-token
    values

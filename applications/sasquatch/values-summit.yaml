@@ -80,6 +80,9 @@ kafka-connect-manager:
       gis:
         enabled: true
         topicsRegex: ".*GIS"
+      mtvms:
+        enabled: true
+        topicsRegex: ".*MTVMS"
 
 kafdrop:
   ingress:

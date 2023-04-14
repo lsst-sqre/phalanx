@@ -211,6 +211,9 @@ config:
     - rubin_admin_datasets
     - rubin_admin_repos
     - "unix-admin"
+    "write:sasquatch":
+    - "rubinmgr"
+    - "unix-admin"
 
   initialAdmins:
   - "afausti"

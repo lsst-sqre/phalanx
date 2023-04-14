@@ -3,6 +3,7 @@ controller:
     tag: "tickets-DM-38279-queue"
     pullPolicy: "Always"
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
+  slackAlerts: true
   config:
     images:
       source:
@@ -22,7 +23,7 @@ controller:
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
       initContainers:
         - name: "initdir"
-          image: "ghcr.io/lsst-sqre/initdir:0.0.3"
+          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
           volumes:
             - containerPath: "/home"

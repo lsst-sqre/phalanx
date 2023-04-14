@@ -8,4 +8,4 @@ config:
   nfs_server_2: auxtel-archiver.tu.lsst.org
   butler_uri_2: /volume_2
 db:
-  host: squoint.tu.lsst.org
+  host: postgresdb01.tu.lsst.org

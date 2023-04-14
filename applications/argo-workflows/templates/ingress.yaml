@@ -5,8 +5,7 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
-    all:
-      - "exec:admin"
+    all: {{ .Values.ingress.scopes }}
   loginRedirect: true
 template:
   metadata:

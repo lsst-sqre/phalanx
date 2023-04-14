@@ -79,6 +79,21 @@ kafka-connect-manager:
       gis:
         enabled: true
         topicsRegex: ".*GIS"
+      lsstdm:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.dm"
+        topicsRegex: "lsst.dm.*"
+      lsstdebug:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.debug"
+        topicsRegex: "lsst.debug.*"
+      lsstexample:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.example"
+        topicsRegex: "lsst.example.*"
 
 kafdrop:
   ingress:
@@ -96,6 +111,8 @@ rest-proxy:
     topicPrefixes:
       - test
       - lsst.dm
+      - lsst.debug
+      - lsst.example
 
 chronograf:
   ingress:
