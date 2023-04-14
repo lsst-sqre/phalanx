@@ -37,6 +37,11 @@ controller:
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: ""
 
+  # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
+  # set in the corresponding Nublado Vault secret.
+  slackAlerts: false
+
+  # Passed as YAML to the lab controller.
   config:
     images:
       # -- Source for prepulled images. For Docker, set `type` to `docker`,

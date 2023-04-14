@@ -41,6 +41,13 @@ spec:
               value: "pull-secret"
             - name: EXTERNAL_INSTANCE_URL
               value: {{ .Values.global.baseUrl | quote }}
+            {{- if .Values.controller.slackAlerts }}
+            - name: "NUBLADO_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-secret"
+                  key: "slack-webhook"
+            {{- end }}
           ports:
             - name: "http"
               containerPort: 8080
