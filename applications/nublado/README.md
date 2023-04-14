@@ -69,7 +69,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumes[1].name | string | `"hub-gafaelfawr-token"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"hub-gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` |  |
-| jupyterhub.hub.image.tag | string | `"0.1.2"` |  |
+| jupyterhub.hub.image.tag | string | `"0.2.0"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
