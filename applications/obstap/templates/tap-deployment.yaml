@@ -29,8 +29,8 @@ spec:
             - name: "pgpassword"
               valueFrom:
                 secretKeyRef:
-                  name: "pgpassword"
-                  key: "cadc-tap"
+                  name: "cadc-tap"
+                  key: "pgpassword"
             - name: CATALINA_OPTS
               value: >-
                 -Dtapschemauser.username=TAP_SCHEMA
