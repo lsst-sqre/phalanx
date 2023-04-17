@@ -38,9 +38,9 @@ spec:
                 -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
                 -Dtapschemauser.maxActive=100
-                -Dtap.username=tapuser
+                -Dtap.username={{ .Values.pg.username }}
                 -Dtap.password=$pgpassword
-                -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/
+                -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/{{ .Values.pg.database }}
                 -Dtap.maxActive=100
                 -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
