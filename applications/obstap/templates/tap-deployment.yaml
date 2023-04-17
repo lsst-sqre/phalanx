@@ -30,7 +30,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: "pgpassword"
-                  key: "pgpassword"
+                  key: "cadc-tap"
             - name: CATALINA_OPTS
               value: >-
                 -Dtapschemauser.username=TAP_SCHEMA
@@ -96,7 +96,7 @@ spec:
       volumes:
         - name: "google-creds"
           secret:
-            secretName: {{ template "cadc-tap.fullname" . }}-secret
+            secretName: {{ template "cadc-tap.fullname" . }}
         - name: "tmp"
           emptyDir: {}
       {{- with .Values.nodeSelector }}
