@@ -117,6 +117,9 @@
       userDn: {{ .Values.config.ldap.userDn | quote }}
       passwordFile: "/etc/gafaelfawr/secrets/ldap-password"
       {{- end }}
+      {{- if .Values.config.ldap.kerberosConfig }}
+      useKerberos: true
+      {{- end }}
       groupObjectClass: {{ .Values.config.ldap.groupObjectClass | quote }}
       groupMemberAttr: {{ .Values.config.ldap.groupMemberAttr | quote }}
       {{- if .Values.config.ldap.userBaseDn }}

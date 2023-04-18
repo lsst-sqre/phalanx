@@ -26,6 +26,12 @@ spec:
       containers:
         - name: "gafaelfawr"
           command:
+            {{- if .Values.config.ldap.kerberosConfig }}
+            - "k5start"
+            - "-aqUFf"
+            - "/etc/krb5.keytab"
+            - "--"
+            {{- end }}
             - "kopf"
             - "run"
             - "-A"
@@ -51,6 +57,18 @@ spec:
             - name: "secret"
               mountPath: "/etc/gafaelfawr/secrets"
               readOnly: true
+            {{- if .Values.config.ldap.kerberosConfig }}
+            - name: "keytab"
+              mountPath: "/etc/krb5.keytab"
+              readOnly: true
+              subPath: "ldap-keytab"
+            - name: "kerberos-config"
+              mountPath: "/etc/krb5.conf"
+              readOnly: true
+              subPath: "krb5.conf"
+            - name: "tmp"
+              mountPath: "/tmp"
+            {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -62,6 +80,16 @@ spec:
         - name: "secret"
           secret:
             secretName: {{ template "gafaelfawr.fullname" . }}-secret
+        {{- if .Values.config.ldap.kerberosConfig }}
+        - name: "keytab"
+          secret:
+            secretName: {{ template "gafaelfawr.fullname" . }}-keytab
+        - name: "kerberos-config"
+          configMap:
+            name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+        - name: "tmp"
+          emptyDir: {}
+        {{- end }}
       {{- with .Values.operator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

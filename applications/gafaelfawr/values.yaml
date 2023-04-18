@@ -160,9 +160,16 @@ config:
     url: ""
 
     # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
-    # set in the Gafaelfawr secret
+    # set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not
+    # both.
     # @default -- Use anonymous binds
     userDn: ""
+
+    # -- Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file.
+    # If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set
+    # either this or `userDn`, not both.
+    # @default -- Use anonymous binds
+    kerberosConfig: ""
 
     # -- Base DN for the LDAP search to find a user's groups
     # @default -- None, must be set
