@@ -11,7 +11,7 @@ Archival database of alerts sent through the alert stream.
 | ingester.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | ingester.image.imagePullPolicy | string | `"IfNotPresent"` |  |
 | ingester.image.repository | string | `"lsstdm/alert_database_ingester"` |  |
-| ingester.image.tag | string | `"v2.0.1"` |  |
+| ingester.image.tag | string | `"v2.0.2"` |  |
 | ingester.kafka.cluster | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | ingester.kafka.port | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal listener that expects SCRAM SHA-512 auth. |
 | ingester.kafka.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
