@@ -1,0 +1,10 @@
+{{- if .Values.config.ldap.kerberosConfig }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
+data:
+  krb5.conf: {{ .Values.config.ldap.kerberosConfig | quote }}
+{{- end }}
