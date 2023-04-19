@@ -1,0 +1,12 @@
+# -- Flag to enable the given CSC application
+enabled: false
+# -- This is the namespace in which the hexapod controller simulator will be placed
+namespace: auxtel
+# -- This section holds the configuration of the container image
+image:
+  # -- The Docker registry name of the container image
+  repository: ts-dockerhub.lsst.org/hexapod_simulator
+  # -- The tag of the container image
+  tag: latest
+  # -- The policy to apply when pulling an image for deployment
+  pullPolicy: Always

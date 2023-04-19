@@ -65,7 +65,7 @@ spec:
           {{- end }}
           {{- if .Values.secretPermFixer }}
           {{- range $values := .Values.secretPermFixer }}
-            - name: {{ include "chart.name" . }}-{{ $values.name }}
+            - name: {{ include "chart.name" $ }}-{{ $values.name }}
               mountPath: {{ $values.containerPath }}
           {{- end }}
           {{- end }}
@@ -90,7 +90,7 @@ spec:
       initContainers:
       {{- if .Values.secretPermFixer }}
       {{- range $values := .Values.secretPermFixer }}
-        - name: {{ include "chart.name" . }}-{{ $values.name }}-perm-fixer
+        - name: {{ include "chart.name" $ }}-{{ $values.name }}-perm-fixer
           image: "alpine:latest"
           command:
             - "/bin/ash"
@@ -103,10 +103,10 @@ spec:
               {{- toYaml $values.specialInstructions | nindent 14 }}
               {{- end }}
           volumeMounts:
-            - name: {{ include "chart.name" . }}-raw-{{ $values.name }}
+            - name: {{ include "chart.name" $ }}-raw-{{ $values.name }}
               mountPath: /secrets-raw
               readOnly: true
-            - name: {{ include "chart.name" . }}-{{ $values.name }}
+            - name: {{ include "chart.name" $ }}-{{ $values.name }}
               mountPath: /secrets
       {{- end }}
       {{- end }}
@@ -139,9 +139,9 @@ spec:
       {{- end }}
       {{- if  .Values.secretPermFixer }}
       {{- range $values := .Values.secretPermFixer }}
-        - name: {{ include "chart.name" . }}-{{ $values.name }}
+        - name: {{ include "chart.name" $ }}-{{ $values.name }}
           emptyDir: {}
-        - name: {{ include "chart.name" . }}-raw-{{ $values.name }}
+        - name: {{ include "chart.name" $ }}-raw-{{ $values.name }}
           secret:
             secretName: {{ $.Values.namespace }}-{{ or $values.secretName $values.name }}
             defaultMode: 0600
@@ -151,7 +151,7 @@ spec:
       {{- range $values := .Values.pvcMountpoint }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
-            claimName: {{ include "chart.name" . }}-{{ $values.name }}-pvc
+            claimName: {{ include "chart.name" $ }}-{{ $values.name }}-pvc
       {{- end }}
       {{- end }}
       {{- if .Values.nfsMountpoint }}

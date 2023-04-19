@@ -25,3 +25,158 @@ ataos:
     repository: ts-dockerhub.lsst.org/ataos
     tag: *imageTag
     pullPolicy: Always
+
+atdome-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/atdome
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+atdometrajectory:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/atdometrajectory
+    tag: *imageTag
+    pullPolicy: Always
+
+atheaderservice:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    tag: ts-v3.1.11_c0029
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance tuc
+    S3_ENDPOINT_URL: https://s3.tu.lsst.org
+    TSTAND_HEADERSERVICE: TUCSON
+    CAMERA: at
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+
+athexapod-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/athexapod
+    tag: *imageTag
+    pullPolicy: Always
+
+atoods:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/atoods
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+  butlerSecret:
+    containerPath: &bS-cP /home/saluser/.lsst
+    dbUser: oods
+  secretPermFixer:
+  - name: butler-secret
+    containerPath: *bS-cP
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: auxtel-archiver.tu.lsst.org
+    serverPath: /repo/LATISS
+  - name: auxtel-oods-data
+    containerPath: /data
+    readOnly: false
+    server: auxtel-archiver.tu.lsst.org
+    serverPath: /data
+  configfile:
+    path: /etc
+    filename: atoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingester:
+          imageStagingDirectory: /data/staging/auxtel/oods
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.Latiss
+                  class:
+                      import : lsst.ctrl.oods.gen3ButlerIngester
+                      name : Gen3ButlerIngester
+                  stagingDirectory : /data/lsstdata/TTS/auxtel/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/TTS/auxtel/oods/gen3butler/badfiles
+                  repoDirectory : /repo/LATISS
+                  collections:
+                      - LATISS/raw/all
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+                  filesOlderThan:
+                      <<: *interval
+                      days: 30
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              - /data/lsstdata/TTS/auxtel/oods/gen3butler/raw
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/TTS/auxtel/oods/gen3butler/badfiles
+              - /data/staging/auxtel/oods
+              - /data/staging/auxtel/forwarder
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 31
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
+
+atptg:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/ptkernel
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    TELESCOPE: AT
+
+atspectrograph-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/atspec
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+hexapod-sim:
+  enabled: true
