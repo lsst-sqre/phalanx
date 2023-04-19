@@ -41,7 +41,7 @@ config:
   databaseUrl: ""
 
   # -- Choose from the text form of Python logging levels
-  loglevel: "INFO"
+  logLevel: "INFO"
 
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
