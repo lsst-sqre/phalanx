@@ -5,7 +5,11 @@
      a CronJob ends. */}}
 {{- define "gafaelfawr.configMap" }}
     realm: {{ required "global.host must be set" .Values.global.host | quote }}
-    loglevel: {{ .Values.config.loglevel | quote }}
+    {{- if .Values.config.loglevel }}
+    logLevel: {{ .Values.config.loglevel | quote }}
+    {{- else }}
+    logLevel: {{ .Values.config.logLevel | quote }}
+    {{- end }}
     sessionSecretFile: "/etc/gafaelfawr/secrets/session-secret"
     redisUrl: "redis://{{ template "gafaelfawr.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
     redisPasswordFile: "/etc/gafaelfawr/secrets/redis-password"

@@ -54,7 +54,7 @@ Authentication and identity system
 | config.ldap.userBaseDn | string | Get user metadata from the upstream authentication provider | Base DN for the LDAP search to find a user's entry |
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
-| config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
+| config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
 | config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
