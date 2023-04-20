@@ -1,5 +1,5 @@
 controller:
-  googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
+  googleServiceAccount: "nublado-controller@science-platform-int-dc5d.iam.gserviceaccount.com"
   slackAlerts: true
   config:
     images:
@@ -18,6 +18,27 @@ controller:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        PANDA_AUTH: oidc
+        PANDA_VERIFY_HOST: "off"
+        PANDA_AUTH_VO: Rubin
+        PANDA_URL_SSL: https://pandaserver-doma.cern.ch:25443/server/panda
+        PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
+        IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
+        PANDA_CONFIG_ROOT: "~"
+
+      sizes:
+        small:
+          cpu: 1.0
+          memory: 3Gi
+        medium:
+          cpu: 2.0
+          memory: 6Gi
+        large:
+          cpu: 4.0
+          memory: 12Gi
+        huge:
+          cpu: 8.0
+          memory: 24Gi
       initContainers:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
@@ -25,18 +46,32 @@ controller:
           volumes:
             - containerPath: "/home"
               serverPath: "/share1/home"
-              server: "10.87.86.26"
+              server: "10.22.240.130"
               mode: "rw"
       volumes:
         - containerPath: "/home"
           serverPath: "/share1/home"
-          server: "10.87.86.26"
+          server: "10.22.240.130"
           mode: "rw"
         - containerPath: "/project"
           serverPath: "/share1/project"
-          server: "10.87.86.26"
+          server: "10.22.240.130"
           mode: "rw"
         - containerPath: "/scratch"
           serverPath: "/share1/scratch"
-          server: "10.87.86.26"
+          server: "10.22.240.130"
           mode: "rw"
+
+jupyterhub:
+  hub:
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 432000
+
+  cull:
+    enabled: true
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
