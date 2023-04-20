@@ -19,7 +19,7 @@ controller:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
-        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
         PANDA_AUTH: oidc
         PANDA_VERIFY_HOST: "off"
