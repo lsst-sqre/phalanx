@@ -25,6 +25,9 @@ controller:
         PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
         IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
         PANDA_CONFIG_ROOT: "~"
+        NO_ACTIVITY_TIMEOUT: "432000"
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
 
       sizes:
         small:
