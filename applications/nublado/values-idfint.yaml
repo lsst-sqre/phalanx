@@ -68,13 +68,13 @@ controller:
           server: "10.22.240.130"
           mode: "rw"
       secrets:
-        - secretName: "nublado-secret"
+        - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
-        - secretName: "nublado-secret"
+        - secretName: "nublado-lab-secret"
           secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-secret"
+        - secretName: "nublado-lab-secret"
           secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-secret"
+        - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
 
 jupyterhub:
