@@ -30,6 +30,7 @@ IVOA TAP service
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
+| pg.database | string | `"pg12db"` | Postgres database to connect to |
 | pg.host | string | `"mock-pg:5432"` (the mock pg) | Postgres hostname:port to connect to |
 | pg.mock.affinity | object | `{}` | Affinity rules for the mock postgres pod |
 | pg.mock.enabled | bool | `true` | Spin up a container to pretend to be postgres. |
@@ -40,6 +41,7 @@ IVOA TAP service
 | pg.mock.podAnnotations | object | `{}` | Annotations for the mock postgres pod |
 | pg.mock.resources | object | `{}` | Resource limits and requests for the mock postgres pod |
 | pg.mock.tolerations | list | `[]` | Tolerations for the mock postgres pod |
+| pg.username | string | `"tapadm"` | Postgres username to use to connect |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |

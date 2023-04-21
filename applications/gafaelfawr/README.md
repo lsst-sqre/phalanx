@@ -47,13 +47,14 @@ Authentication and identity system
 | config.ldap.groupBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
 | config.ldap.groupObjectClass | string | `"posixGroup"` | Object class containing group information |
+| config.ldap.kerberosConfig | string | Use anonymous binds | Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file. If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set either this or `userDn`, not both. |
 | config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
 | config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
 | config.ldap.url | string | Do not use LDAP | LDAP server URL from which to retrieve user group information |
 | config.ldap.userBaseDn | string | Get user metadata from the upstream authentication provider | Base DN for the LDAP search to find a user's entry |
-| config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr secret |
+| config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
-| config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
+| config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
 | config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |

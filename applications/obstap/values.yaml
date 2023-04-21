@@ -84,6 +84,12 @@ pg:
   # @default -- `"mock-pg:5432"` (the mock pg)
   host: "mock-pg:5432"
 
+  # -- Postgres database to connect to
+  database: "pg12db"
+
+  # -- Postgres username to use to connect
+  username: "tapadm"
+
   mock:
     # -- Spin up a container to pretend to be postgres.
     enabled: true

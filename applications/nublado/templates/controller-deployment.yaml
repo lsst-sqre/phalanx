@@ -19,13 +19,10 @@ spec:
       labels:
         {{- include "nublado.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
-      serviceAccountName: "nublado-controller"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+      {{- with .Values.controller.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: "controller"
           securityContext:
@@ -61,20 +58,37 @@ spec:
             {{- toYaml .Values.controller.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
-            - name: "docker-creds"
-              mountPath: "/etc/secrets"
-              readOnly: true
             - name: "config"
               mountPath: "/etc/nublado"
               readOnly: true
+            {{- if eq "docker" .Values.controller.config.images.source.type }}
+            - name: "docker-creds"
+              mountPath: "/etc/secrets"
+              readOnly: true
+            {{- end }}
             - name: "podinfo"
               mountPath: "/etc/podinfo"
             - name: "tmp"
               mountPath: "/tmp"
+      {{- with .Values.controller.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: "nublado-controller"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.controller.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
+        {{- if eq "docker" .Values.controller.config.images.source.type }}
         - name: "docker-creds"
           secret:
             secretName: "pull-secret"
+        {{- end }}
         - name: "config"
           configMap:
             name: "nublado-controller-config"
@@ -95,15 +109,3 @@ spec:
                   fieldPath: "metadata.uid"
         - name: "tmp"
           emptyDir: {}
-      {{- with .Values.controller.nodeSelector }}
-      nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.controller.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.controller.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}

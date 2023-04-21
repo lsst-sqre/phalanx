@@ -1,7 +1,4 @@
 controller:
-  image:
-    tag: "tickets-DM-38279-queue"
-    pullPolicy: "Always"
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   config:
@@ -43,8 +40,3 @@ controller:
           serverPath: "/share1/scratch"
           server: "10.87.86.26"
           mode: "rw"
-jupyterhub:
-  hub:
-    image:
-      tag: "tickets-DM-38279-queue"
-      pullPolicy: "Always"

@@ -99,6 +99,11 @@ controller:
       # UID 1000.
       initcontainers: []
 
+      # -- Pull secret to use for labs. Set to the string `pull-secret` to use
+      # the normal pull secret from Vault.
+      # @default -- Do not use a pull secret
+      pullSecret: null
+
       # -- Secrets to set in the user pods. Each should have a `secretKey` key
       # pointing to a secret in the same namespace as the controller
       # (generally `nublado-secret`) and `secretRef` pointing to a field in
@@ -224,13 +229,25 @@ controller:
       # -- Path prefix that will be routed to the controller
       pathPrefix: "/nublado"
 
-# Configuration for z2jh subchart
+# JupyterHub configuration handled directly by this chart rather than by Zero
+# to JupyterHub.
+hub:
+  timeout:
+    # -- Timeout for the Kubernetes spawn process in seconds. (Allow long
+    # enough to pull uncached images if needed.)
+    spawn: 600
+
+    # -- Timeout for JupyterLab to start. Currently this sometimes takes over
+    # 60 seconds for reasons we don't understand.
+    startup: 90
+
+# Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:
     authenticatePrometheus: false
     image:
       name: ghcr.io/lsst-sqre/rsp-restspawner
-      tag: 0.1.2
+      tag: 0.2.0
     resources:
       limits:
         cpu: 900m

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: semaphore
 version: 1.0.0
-appVersion: "0.3.0"
+appVersion: "0.4.0"
 type: application
 description: Semaphore is the user notification and messaging service for the Rubin Science Platform.
 sources:
