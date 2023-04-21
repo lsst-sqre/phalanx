@@ -229,7 +229,19 @@ controller:
       # -- Path prefix that will be routed to the controller
       pathPrefix: "/nublado"
 
-# Configuration for z2jh subchart
+# JupyterHub configuration handled directly by this chart rather than by Zero
+# to JupyterHub.
+hub:
+  timeout:
+    # -- Timeout for the Kubernetes spawn process in seconds. (Allow long
+    # enough to pull uncached images if needed.)
+    spawn: 600
+
+    # -- Timeout for JupyterLab to start. Currently this sometimes takes over
+    # 60 seconds for reasons we don't understand.
+    startup: 90
+
+# Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:
     authenticatePrometheus: false
