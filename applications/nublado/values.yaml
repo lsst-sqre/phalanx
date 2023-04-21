@@ -99,6 +99,11 @@ controller:
       # UID 1000.
       initcontainers: []
 
+      # -- Pull secret to use for labs. Set to the string `pull-secret` to use
+      # the normal pull secret from Vault.
+      # @default -- Do not use a pull secret
+      pullSecret: null
+
       # -- Secrets to set in the user pods. Each should have a `secretKey` key
       # pointing to a secret in the same namespace as the controller
       # (generally `nublado-secret`) and `secretRef` pointing to a field in
