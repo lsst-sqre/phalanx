@@ -44,6 +44,8 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| hub.timeout.spawn | int | `600` | Timeout for the Kubernetes spawn process in seconds. (Allow long enough to pull uncached images if needed.) |
+| hub.timeout.startup | int | `90` | Timeout for JupyterLab to start. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | jupyterhub.cull.enabled | bool | `true` |  |
 | jupyterhub.cull.every | int | `600` |  |
 | jupyterhub.cull.maxAge | int | `5184000` |  |
