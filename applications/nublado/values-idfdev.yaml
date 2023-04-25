@@ -5,11 +5,11 @@ controller:
     tag: "ajt-dev"
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
-  fileserver:
-    image: docker.io/lsstsqre/worblehat
-    tag: ajt-dev
-    pullPolicy: Always
   config:
+    fileserver:
+      image: docker.io/lsstsqre/worblehat
+      tag: ajt-dev
+      pullPolicy: Always
     images:
       source:
         type: "google"

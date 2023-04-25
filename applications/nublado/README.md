@@ -14,6 +14,11 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
+| controller.config.fileserver.image | string | None, must be specified | Image for fileserver container |
+| controller.config.fileserver.namespace | string | `fileservers` | Namespace for user fileservers |
+| controller.config.fileserver.pullPolicy | string | `IfNotPresent` | Pull policy for fileserver container |
+| controller.config.fileserver.tag | string | `latest` | Tag for fileserver container |
+| controller.config.fileserver.timeout | int | 3600 | Timeout for user fileservers, in seconds |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -31,11 +36,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.volumes | object | `{}` | Volumes that should be mounted in lab pods. Currently this only supports NFS volumes and must specify `containerPath`, `server`, `serverPath`, and `mode` where mode is one of `ro` or `rw`. |
 | controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
 | controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
-| controller.fileserver.image | string | None, must be specified | Image for fileserver container |
-| controller.fileserver.namespace | string | `fileservers` | Namespace for user fileservers |
-| controller.fileserver.pullPolicy | string | `IfNotPresent` | Pull policy for fileserver container |
-| controller.fileserver.tag | string | `latest` | Tag for fileserver container |
-| controller.fileserver.timeout | int | 3600 | Timeout for user fileservers, in seconds |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
 | controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nublado image |
 | controller.image.repository | string | `"ghcr.io/lsst-sqre/jupyterlab-controller"` | nublado image to use |

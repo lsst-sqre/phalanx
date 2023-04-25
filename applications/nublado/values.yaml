@@ -44,6 +44,27 @@ controller:
 
   # Passed as YAML to the lab controller.
   config:
+  # The controller also manages file serving environments
+    fileserver:
+      # -- Image for fileserver container
+      # @default -- None, must be specified
+      image: ghcr.io/lsst-sqre/worblehat
+
+      # -- Tag for fileserver container
+      # @default -- `latest`
+      tag: 0.1.0
+
+      # -- Pull policy for fileserver container
+      # @default -- `IfNotPresent`
+      pullPolicy: IfNotPresent
+
+      # -- Timeout for user fileservers, in seconds
+      # @default -- 3600
+      timeout: 64800
+
+      # -- Namespace for user fileservers
+      # @default -- `fileservers`
+      namespace: fileservers
     images:
       # -- Source for prepulled images. For Docker, set `type` to `docker`,
       # `registry` to the hostname and `repository` to the name of the
@@ -229,29 +250,6 @@ controller:
 
       # -- Path prefix that will be routed to the controller
       pathPrefix: "/nublado"
-
-  # The controller also manages file serving environments
-  fileserver:
-    # -- Image for fileserver container
-    # @default -- None, must be specified
-    image: ghcr.io/lsst-sqre/worblehat
-
-    # -- Tag for fileserver container
-    # @default -- `latest`
-    tag: 0.1.0
-
-    # -- Pull policy for fileserver container
-    # @default -- `IfNotPresent`
-    pullPolicy: IfNotPresent
-
-    # -- Timeout for user fileservers, in seconds
-    # @default -- 3600
-    timeout: 64800
-
-    # -- Namespace for user fileservers
-    # @default -- `fileservers`
-    namespace: fileservers
-
 
 # JupyterHub configuration handled directly by this chart rather than by Zero
 # to JupyterHub.
