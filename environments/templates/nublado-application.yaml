@@ -7,6 +7,14 @@ spec:
   finalizers:
     - "kubernetes"
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "fileservers"
+spec:
+  finalizers:
+    - "kubernetes"
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
