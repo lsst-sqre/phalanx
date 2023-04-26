@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: obsloctap
+  labels:
+    {{- include "obsloctap.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "obsloctap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "obsloctap.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: "pull-secret"
+      volumes:
+        # butler-secrets-raw is the secrets we get from vault
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: "butler-secret"
+        # butler-secrets are the copied and chmoded versions
+        - name: "butler-secrets"
+          emptyDir: {}
+        {{- with .Values.config.volumes }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
+      # Have to fix permissions on the pgpass file.
+      # init container pattern borrowed from vo-cutouts.
+      initContainers:
+        - name: fix-secret-permissions
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: Always
+          command:
+            - "/bin/bash"
+            - "-c"
+            - |
+              cp -RL /home/worker/secrets-raw/* /home/worker/.lsst/
+              chown worker:worker /home/worker/.lsst/*
+              chmod 0400 /home/worker/.lsst/*
+          securityContext:
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/home/worker/.lsst/"
+            - name: "butler-secrets-raw"
+              mountPath: "/home/worker/secrets-raw/"
+              readOnly: true
+      containers:
+      - name: obsloctap
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion}}
+        imagePullPolicy: Always
+        env:
+{{- range $key, $value := .Values.environment }}
+          - name: {{ $key | quote }}
+            value: {{ $value | quote }}
+{{- end }}
+        volumeMounts:
+          - name: butler-secrets
+            mountPath: "/home/worker/.lsst/"
+          {{- with .Values.config.volume_mounts }}
+          {{- . | toYaml | nindent 10 }}
+          {{- end }}
+        command:
+          - /bin/bash
+          - -c
+          - panel serve dashboard_gen3.py --port 8080 --prefix /obsloctap --allow-websocket-origin {{ .Values.global.host }} --static-dirs assets=./assets

@@ -11,22 +11,8 @@ Phalanx is developed by the `Vera C. Rubin Observatory <https://www.lsst.org/>`_
 
 Environments
 ============
-
-The following environments are managed by Argo CD using configuration in this repository.
-(The links are links to the Argo CD dashboards, which require authentication.
-The names in parentheses are the environment names used internally in this repository to name values files and for other purposes.)
-
-IDF:
-
-* `data-dev.lsst.cloud <https://data-dev.lsst.cloud/argo-cd>`__ (idfdev)
-* `data-int.lsst.cloud <https://data-int.lsst.cloud/argo-cd>`__ (idfint)
-* `data.lsst.cloud <https://data.lsst.cloud/argo-cd>`__ (idfprod)
-
-Telescope and Site:
-
-* `tucson-teststand.lsst.codes <https://tucson-teststand.lsst.codes/argo-cd>`__ (tucson-teststand)
-* `base-lsp.lsst.codes <https://base-lsp.lsst.codes/argo-cd>`__ (base)
-* `summit-lsp.lsst.codes <https://summit-lsp.lsst.codes/argo-cd>`__ (summit)
+The environments managed by Argo CD using configuration in this repository are detaild
+on `phalanx.lsst.io <https://phalanx.lsst.io/environments/index.html>`
 
 There are some other environments that are used for development and testing and may not be up or reachable at any given moment.
 
