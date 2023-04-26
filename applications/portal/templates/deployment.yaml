@@ -90,6 +90,7 @@ spec:
                       }
                    },
                    "searchActionsCmdMask": [
+                     "tableTapUpload",
                      "tableHiPS", "tapRadius", "tapArea", "tableTapRadius",
                      "HiPS", "lsstObsCoreTap", "lsstTruthSummaryRadius", "lsstTruthSummaryArea",
                      "lsstObsCoreTapTable", "lsstTruthSummaryRadiusTable"
