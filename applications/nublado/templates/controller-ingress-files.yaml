@@ -13,7 +13,7 @@ config:
     notebook: {}
 template:
   metadata:
-    name: "controller-user"
+    name: "controller-files"
     annotations:
       nginx.ingress.kubernetes.io/use-regex: "true"
   spec:
