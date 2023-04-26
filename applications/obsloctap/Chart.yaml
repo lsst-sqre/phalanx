@@ -1,0 +1,7 @@
+apiVersion: v0
+name: obsloctap
+description: Publish observing schedule
+version: 0.1
+sources:
+  - https://github.com/lsst-dm/obsloctap
+appVersion: "0.0.1"
