@@ -14,8 +14,6 @@ config:
 template:
   metadata:
     name: "controller-files"
-    annotations:
-      nginx.ingress.kubernetes.io/use-regex: "true"
   spec:
     rules:
       - host: {{ .Values.global.host | quote }}
