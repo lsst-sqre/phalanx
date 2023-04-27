@@ -5,9 +5,9 @@ controller:
     repository: docker.lsst.io/lsstsqre/jupyterlabcontroller
     tag: ajt-dev
     pullPolicy: "Always"
-  safir:
-    logLevel: "DEBUG"
   config:
+    safir:
+      logLevel: "DEBUG"
     fileserver:
       enabled: true
       image: docker.io/lsstsqre/worblehat
