@@ -5,9 +5,9 @@ controller:
     tag: "ajt-dev"
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
-  safir:
-    logLevel: "DEBUG"
   config:
+    safir:
+      logLevel: "DEBUG"
     fileserver:
       image: docker.io/lsstsqre/worblehat
       tag: ajt-dev
