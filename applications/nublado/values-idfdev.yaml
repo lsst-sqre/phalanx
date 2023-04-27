@@ -5,6 +5,8 @@ controller:
     repository: docker.lsst.io/lsstsqre/jupyterlabcontroller
     tag: ajt-dev
     pullPolicy: "Always"
+  safir:
+    logLevel: "DEBUG"
   config:
     fileserver:
       enabled: true
