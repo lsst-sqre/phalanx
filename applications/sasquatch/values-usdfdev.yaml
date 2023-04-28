@@ -84,16 +84,19 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.dm"
         topicsRegex: "lsst.dm.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
       lsstdebug:
         enabled: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.debug"
         topicsRegex: "lsst.debug.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
       lsstexample:
         enabled: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.example"
         topicsRegex: "lsst.example.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
 
 kafdrop:
   ingress:

@@ -11,7 +11,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"lsstsqre/kafkaconnect"` |  |
-| image.tag | string | `"1.0.2"` |  |
+| image.tag | string | `"1.1.0"` |  |
 | influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
@@ -20,8 +20,9 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| influxdbSink.connectors | object | `{"test":{"enabled":false,"topicsRegex":".*Test"}}` | Connector instances to deploy. |
+| influxdbSink.connectors | object | `{"test":{"enabled":false,"tags":"","topicsRegex":".*Test"}}` | Connector instances to deploy. |
 | influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
+| influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
 | influxdbSink.connectors.test.topicsRegex | string | `".*Test"` | Regex to select topics from Kafka. |
 | influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |

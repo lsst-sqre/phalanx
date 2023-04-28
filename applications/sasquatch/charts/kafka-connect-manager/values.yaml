@@ -2,7 +2,7 @@
 # See also https://kafka-connect-manager.lsst.io
 image:
   repository: lsstsqre/kafkaconnect
-  tag: 1.0.2
+  tag: 1.1.0
   pullPolicy: IfNotPresent
 
 influxdbSink:
@@ -35,6 +35,8 @@ influxdbSink:
       enabled: false
       # -- Regex to select topics from Kafka.
       topicsRegex: ".*Test"
+      # -- Fields in the Avro payload that are treated as InfluxDB tags.
+      tags: ""
 
 # The s3Sink connector assumes Parquet format with Snappy compression
 # and a time based partitioner.
