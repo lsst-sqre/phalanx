@@ -46,7 +46,7 @@ config:
     CULL_TERMINAL_INTERVAL: "300"
     http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
     https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
-    no_proxy: hub.nublado2,.sdf.slac.stanford.edu,.slac.stanford.edu
+    no_proxy: hub.nublado2,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1
 
   volumes:
     - name: home
