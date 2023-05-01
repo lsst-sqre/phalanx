@@ -10,9 +10,7 @@ controller:
       logLevel: "DEBUG"
     fileserver:
       enabled: true
-      image: docker.io/lsstsqre/worblehat
-      tag: ajt-dev
-      pullPolicy: Always
+      timeout: 43200
     images:
       source:
         type: "google"
