@@ -8,9 +8,6 @@ controller:
   config:
     safir:
       logLevel: "DEBUG"
-    fileserver:
-      tag: tickets-DM-38726
-      pullPolicy: Always
     images:
       source:
         type: "google"
