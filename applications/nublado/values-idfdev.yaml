@@ -9,8 +9,7 @@ controller:
     safir:
       logLevel: "DEBUG"
     fileserver:
-      image: docker.io/lsstsqre/worblehat
-      tag: ajt-dev
+      tag: tickets-DM-38726
       pullPolicy: Always
     images:
       source:
