@@ -12,6 +12,6 @@ config:
   jvmMaxHeapSize: "31G"
 
 qserv:
-  host: "10.136.1.211:4040"
+  host: "134.79.23.209:4040"
   mock:
     enabled: false
