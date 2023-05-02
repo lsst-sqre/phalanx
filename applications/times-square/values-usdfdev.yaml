@@ -1,0 +1,12 @@
+image:
+  pullPolicy: Always
+config:
+  logLevel: "DEBUG"
+  databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
+  githubAppId: "327289"
+  enableGitHubApp: "True"
+cloudsql:
+  enabled: false
+redis:
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"
