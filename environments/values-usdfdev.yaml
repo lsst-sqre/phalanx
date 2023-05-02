@@ -75,7 +75,7 @@ telegraf:
 telegraf-ds:
   enabled: false
 times-square:
-  enabled: false
+  enabled: true
 vault-secrets-operator:
   enabled: true
 vo-cutouts:
