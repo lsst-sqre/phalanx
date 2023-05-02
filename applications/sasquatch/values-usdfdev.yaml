@@ -123,6 +123,7 @@ rest-proxy:
       - lsst.dm
       - lsst.debug
       - lsst.example
+      - lsst.rubintv
 
 chronograf:
   ingress:
