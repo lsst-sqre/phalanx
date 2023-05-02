@@ -31,7 +31,7 @@ moneypenny:
 narrativelog:
   enabled: false
 noteburst:
-  enabled: false
+  enabled: true
 nublado:
   enabled: true
 nublado2:
