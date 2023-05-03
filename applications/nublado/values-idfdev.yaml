@@ -1,6 +1,9 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
+  image:
+    tag: "tickets-DM-38795-queue"
+    pullPolicy: "Always"
   config:
     images:
       source:
