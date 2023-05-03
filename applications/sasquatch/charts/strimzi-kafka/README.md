@@ -21,6 +21,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.externalListener.brokers | list | `[]` | Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification. The format is a list of maps. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
+| kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled. |
+| kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled. |
+| kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |

@@ -27,6 +27,19 @@ kafka:
     # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
     replica.lag.time.max.ms: 120000
 
+  listeners:
+    plain:
+      # -- Whether internal plaintext listener is enabled.
+      enabled: true
+
+    tls:
+      # -- Whether internal TLS listener is enabled.
+      enabled: true
+
+    external:
+      # -- Whether external listener is enabled.
+      enabled: true
+
   externalListener:
     tls:
       # -- Whether TLS encryption is enabled.
