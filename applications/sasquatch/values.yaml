@@ -132,6 +132,8 @@ rest-proxy:
   enabled: false
 
 chronograf:
+  # -- Enable Chronograf.
+  enabled: true
   # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"

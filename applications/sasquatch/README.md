@@ -9,6 +9,7 @@ Rubin Observatory's telemetry service.
 | bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.1.23"}` | image for monitoring-related cronjobs |
 | bucketmapper.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
 | bucketmapper.image.tag | string | `"0.1.23"` | tag for rubin-influx-tools |
+| chronograf.enabled | bool | `true` | Enable Chronograf. |
 | chronograf.env | object | `{"BASE_PATH":"/chronograf","CUSTOM_AUTO_REFRESH":"1s=1000","HOST_PAGE_DISABLED":true}` | Chronograf environment variables. |
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
 | chronograf.image | object | `{"repository":"quay.io/influxdb/chronograf","tag":"1.10.1"}` | Chronograf image tag. |
