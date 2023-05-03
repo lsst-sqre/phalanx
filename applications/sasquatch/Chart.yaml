@@ -19,6 +19,7 @@ dependencies:
     version: 2.1.1
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
+    condition: kafka-connect-manager.enabled
     version: 1.0.0
   - name: chronograf
     version: 1.2.5

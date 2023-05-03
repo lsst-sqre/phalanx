@@ -1,5 +1,9 @@
 # Default values for kafka-connect-manager.
 # See also https://kafka-connect-manager.lsst.io
+
+# -- Enable Kafka Connect Manager.
+enabled: true
+
 image:
   repository: ghcr.io/lsst-sqre/kafkaconnect
   tag: 1.1.0
