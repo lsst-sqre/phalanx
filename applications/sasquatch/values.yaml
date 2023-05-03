@@ -10,6 +10,8 @@ strimzi-registry-operator:
   operatorNamespace: sasquatch
 
 influxdb:
+  # -- Enable InfluxDB.
+  enabled: true
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"

@@ -11,6 +11,7 @@ dependencies:
     version: 2.1.0
     repository: https://lsst-sqre.github.io/charts/
   - name: influxdb
+    condition: influxdb.enabled
     version: 4.12.1
     repository: https://helm.influxdata.com/
   - name: influxdb2
@@ -33,7 +34,6 @@ dependencies:
   - name: rest-proxy
     condition: rest-proxy.enabled
     version: 1.0.0
-
 
 annotations:
   phalanx.lsst.io/docs: |
