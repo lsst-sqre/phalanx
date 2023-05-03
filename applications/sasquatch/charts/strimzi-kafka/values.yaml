@@ -84,6 +84,8 @@ zookeeper:
     storageClassName: ""
 
 connect:
+  # -- Enable Kafka Connect.
+  enabled: true
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
   image: ghcr.io/lsst-sqre/strimzi-0.34.0-kafka-3.3.1:1.1.0
   # -- Number of Kafka Connect replicas to run.
