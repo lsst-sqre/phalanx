@@ -11,6 +11,15 @@ spec:
           annotations:
             argocd.argoproj.io/compare-options: IgnoreExtraneous
             argocd.argoproj.io/sync-options: Prune=false
+      pod:
+        {{- with .Values.kafka.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.kafka.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end}}
     version: {{ .Values.kafka.version | quote }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:
@@ -110,6 +119,15 @@ spec:
           annotations:
             argocd.argoproj.io/compare-options: IgnoreExtraneous
             argocd.argoproj.io/sync-options: Prune=false
+      pod:
+        {{- with .Values.zookeeper.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.zookeeper.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end}}
     replicas: {{ .Values.zookeeper.replicas }}
     storage:
       # Note that storage is configured per replica. If there are 3 replicas,

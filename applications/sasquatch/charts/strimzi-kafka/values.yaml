@@ -74,6 +74,12 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
+  # -- Node affinity for Kafka broker pod assignment.
+  affinity: {}
+
+  # -- Tolerations for Kafka broker pod assignment.
+  tolerations: []
+
 zookeeper:
   # -- Number of Zookeeper replicas to run.
   replicas: 3
@@ -82,6 +88,12 @@ zookeeper:
     size: 100Gi
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
+
+  # -- Node affinity for Zookeeper pod assignment.
+  affinity: {}
+
+  # -- Tolerations for Zookeeper pod assignment.
+  tolerations: []
 
 connect:
   # -- Enable Kafka Connect.
