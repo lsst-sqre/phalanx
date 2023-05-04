@@ -166,6 +166,8 @@ chronograf:
       cpu: 4
 
 kapacitor:
+  # -- Enable Kapacitor.
+  enabled: true
   # -- Kapacitor image tag.
   image:
     repository: kapacitor

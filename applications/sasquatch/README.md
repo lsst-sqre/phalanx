@@ -61,6 +61,7 @@ Rubin Observatory's telemetry service.
 | influxdb2.resources.requests.memory | string | `"1Gi"` |  |
 | kafdrop.enabled | bool | `true` | Enable Kafdrop. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
+| kapacitor.enabled | bool | `true` | Enable Kapacitor. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
 | kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.6"}` | Kapacitor image tag. |
