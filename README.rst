@@ -11,8 +11,8 @@ Phalanx is developed by the `Vera C. Rubin Observatory <https://www.lsst.org/>`_
 
 Environments
 ============
-The environments managed by Argo CD using configuration in this repository are detaild
-on `phalanx.lsst.io <https://phalanx.lsst.io/environments/index.html>`
+The environments managed by Argo CD using configuration in this repository are detailed
+on `phalanx.lsst.io <https://phalanx.lsst.io/environments/>`__.
 
 There are some other environments that are used for development and testing and may not be up or reachable at any given moment.
 
