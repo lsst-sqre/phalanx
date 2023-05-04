@@ -45,6 +45,8 @@ postgres:
   enabled: true
 sasquatch:
   enabled: true
+ssotap:
+  enabled: true
 production-tools:
   enabled: true
 semaphore:

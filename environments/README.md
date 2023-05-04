@@ -36,6 +36,7 @@
 | sqlproxy-cross-project.enabled | bool | `false` |  |
 | squareone.enabled | bool | `false` |  |
 | squash-api.enabled | bool | `false` |  |
+| ssotap.enabled | bool | `false` |  |
 | strimzi-registry-operator.enabled | bool | `false` |  |
 | strimzi.enabled | bool | `false` |  |
 | tap-schema.enabled | bool | `false` |  |

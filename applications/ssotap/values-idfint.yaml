@@ -1,0 +1,18 @@
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 8.0
+    memory: "32G"
+
+replicaCount: 2
+
+config:
+  gcsBucket: "async-results.lsst.codes"
+  gcsBucketUrl: "http://async-results.lsst.codes"
+  jvmMaxHeapSize: "31G"
+
+pg:
+  mock:
+    enabled: true
