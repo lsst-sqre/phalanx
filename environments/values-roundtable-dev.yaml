@@ -39,7 +39,7 @@ portal:
 postgres:
   enabled: false
 sasquatch:
-  enabled: false
+  enabled: true
 production-tools:
   enabled: false
 semaphore:
@@ -53,7 +53,7 @@ squash-api:
 sqlproxy-cross-project:
   enabled: false
 strimzi:
-  enabled: false
+  enabled: true
 strimzi-registry-operator:
   enabled: false
 tap:
