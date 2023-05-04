@@ -189,6 +189,10 @@ kapacitor:
       memory: 16Gi
       cpu: 4
 
+kafdrop:
+  # -- Enable Kafdrop.
+  enabled: true
+
 bucketmapper:
   # -- image for monitoring-related cronjobs
   image:
