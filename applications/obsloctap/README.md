@@ -17,6 +17,7 @@ Publish observing schedule
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.repository | string | `nil` | obsloctap image to use |
-| image.tag | string | `""` |  |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the obsloctap image |
+| image.repository | string | `"ghcr.io/lsst-dm/obsloctap"` | obsloctap image to use |
+| image.tag | string | The appVersion of the chart | Tag of obsloctap image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |

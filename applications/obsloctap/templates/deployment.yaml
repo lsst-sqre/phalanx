@@ -14,8 +14,6 @@ spec:
       labels:
         {{- include "obsloctap.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       volumes:
         # butler-secrets-raw is the secrets we get from vault
         - name: "butler-secrets-raw"
@@ -32,18 +30,18 @@ spec:
       initContainers:
         - name: fix-secret-permissions
           image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: Always
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command:
             - "/bin/bash"
             - "-c"
             - |
               cp -RL /home/worker/secrets-raw/* /home/worker/.lsst/
-              chown worker:worker /home/worker/.lsst/*
               chmod 0400 /home/worker/.lsst/*
           securityContext:
-            runAsNonRoot: false
-            runAsUser: 0
-            runAsGroup: 0
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/home/worker/.lsst/"
@@ -65,7 +63,3 @@ spec:
           {{- with .Values.config.volume_mounts }}
           {{- . | toYaml | nindent 10 }}
           {{- end }}
-        command:
-          - /bin/bash
-          - -c
-          - panel serve dashboard_gen3.py --port 8080 --prefix /obsloctap --allow-websocket-origin {{ .Values.global.host }} --static-dirs assets=./assets

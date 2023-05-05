@@ -8,12 +8,7 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "exec:portal"
-  loginRedirect: true
-  delegate:
-    internal:
-      scopes: []
-      service: "obsloctap"
+      - "read:all"
 template:
   metadata:
     name: "obsloctap"

@@ -48,6 +48,8 @@ nublado:
   enabled: false
 nublado2:
   enabled: false
+obsloctap:
+  enabled: false
 obstap:
   enabled: false
 plot-navigator:
