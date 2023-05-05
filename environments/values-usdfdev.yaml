@@ -5,7 +5,7 @@ vaultPathPrefix: secret/rubin/usdf-rsp-dev
 repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
-  enabled: false
+  enabled: true
 argo-workflows:
   enabled: false
 cachemachine:
