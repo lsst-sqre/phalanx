@@ -102,7 +102,7 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.rubintv"
         topicsRegex: "lsst.rubintv.*"
-        tags: observation_type,observation_reason,science_program,filter,disperser
+        tags: image_type,observation_reason,science_program,filter,disperser
 
 
 kafdrop:
