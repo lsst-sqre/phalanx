@@ -19,8 +19,8 @@ alert-stream-broker:
         - ip: "35.238.84.221"
           host: alert-stream-int-broker-2.lsst.cloud
 
-    relicas: 6
-    
+    replicas: 6
+
     storage:
       size: 1500Gi
 
