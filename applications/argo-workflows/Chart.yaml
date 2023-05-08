@@ -8,5 +8,5 @@ sources:
   - https://github.com/argoproj/argo-helm
 dependencies:
   - name: argo-workflows
-    version: 0.22.15
+    version: 0.26.1
     repository: https://argoproj.github.io/argo-helm
