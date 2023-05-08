@@ -23,16 +23,16 @@ alert-stream-broker:
     storage:
       size: 1500Gi
 
-    nodePool:
-      affinities:
-        - key: kafka
-          value: ok
+    #nodePool:
+    #  affinities:
+    #    - key: kafka
+    #      value: ok
 
-      tolerations:
-        - key: kafka
-          value: ok
-          effect: NoSchedule
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/alert-stream-broker"
+    #  tolerations:
+    #    - key: kafka
+    #      value: ok
+    #      effect: NoSchedule
+  vaultSecretsPath: "secret/rubin/usdf-alert-distribtion-dev"
 
   users:
     # A user for development purposes by the Rubin team, with access to all
