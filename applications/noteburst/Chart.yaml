@@ -13,7 +13,7 @@ maintainers:
 
 dependencies:
   - name: redis
-    version: 1.0.4
+    version: 1.0.5
     repository: https://lsst-sqre.github.io/charts/
 
 annotations:
