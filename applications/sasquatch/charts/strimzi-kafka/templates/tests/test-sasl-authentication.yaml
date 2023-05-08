@@ -1,3 +1,4 @@
+{{- if .Values.kafka.listeners.plain.enabled -}}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
@@ -78,3 +79,4 @@ spec:
           imagePullPolicy: IfNotPresent
           name: kafka-producer-client
       restartPolicy: "Never"
+{{- end }}
