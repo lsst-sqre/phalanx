@@ -2,10 +2,10 @@ config:
   autostart:
     - name: "notebook-start-test"
       count: 5
-      users:
-        - username: "bot-mobu-notebook-user"
-          uid_start: 74768
-          gid_start: 74768
+      user_spec:
+        username_prefix: "bot-mobu-notebook-user"
+        uid_start: 74768
+        gid_start: 74768
       scopes:
         - "exec:notebook"
         - "exec:portal"
