@@ -1,0 +1,113 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cadc-tap.fullname" . }}
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "server"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "server"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "tap-server"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          env:
+            - name: "pgpassword"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "pgpassword"
+            - name: CATALINA_OPTS
+              value: >-
+                -Dtapschemauser.username=TAP_SCHEMA
+                -Dtapschemauser.password=TAP_SCHEMA
+                -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtapschemauser.maxActive=100
+                -Dtap.username={{ .Values.pg.username }}
+                -Dtap.password=$pgpassword
+                -Dtap.url=jdbc:postgresql://{{ .Values.pg.host }}/{{ .Values.pg.database }}
+                -Dtap.maxActive=100
+                -Duws.maxActive=100
+                -Dca.nrc.cadc.reg.client.RegistryClient.local=true
+                -Duws.username=postgres
+                -Duws.driverClassName=org.postgresql.Driver
+                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
+                -Dca.nrc.cadc.auth.Authenticator=ca.nrc.cadc.sample.AuthenticatorImpl
+                -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
+                -Dgcs_bucket={{ .Values.config.gcsBucket }}
+                -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
+                -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
+                -Dbase_url={{ .Values.global.baseUrl }}
+                -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
+                -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/etc/creds/google_creds.json"
+            {{- if eq .Values.config.gcsBucketType "S3" }}
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_SECRET_ACCESS_KEY"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  key: "AWS_ACCESS_KEY_ID"
+            {{- end }}
+            - name: DATALINK_PAYLOAD_URL
+              value: "{{ .Values.config.datalinkPayloadUrl }}"
+          ports:
+            - containerPort: 8080
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "google-creds"
+              mountPath: "/etc/creds"
+              readOnly: true
+            - name: "tmp"
+              mountPath: "/tmp"
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /tap/availability
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+      volumes:
+        - name: "google-creds"
+          secret:
+            secretName: {{ template "cadc-tap.fullname" . }}
+        - name: "tmp"
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
