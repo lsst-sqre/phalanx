@@ -33,6 +33,8 @@ influxdbSink:
     test:
       # -- Whether this connector instance is deployed.
       enabled: false
+      # -- Whether to deploy a repairer connector in addition to the original connector instance.
+      repairerConnector: false
       # -- Regex to select topics from Kafka.
       topicsRegex: ".*Test"
       # -- Fields in the Avro payload that are treated as InfluxDB tags.

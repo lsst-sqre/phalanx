@@ -27,6 +27,7 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
+        repairerConnector: true
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       maintel:
         enabled: true
