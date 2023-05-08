@@ -22,5 +22,4 @@ Guides
 
 .. toctree::
 
-   notes
    values
