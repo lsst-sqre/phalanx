@@ -38,6 +38,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern. |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
+| users.kafkaConnectManager.enabled | bool | `true` | Enable user kafka-connect-manager |
+| users.promptProcessing.enabled | bool | `true` | Enable user prompt-processing |
+| users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
+| users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
 | zookeeper.affinity | object | `{}` | Node affinity for Zookeeper pod assignment. |
 | zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |

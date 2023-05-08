@@ -112,6 +112,27 @@ registry:
 superusers:
   - kafka-admin
 
+users:
+  tsSalKafka:
+    # -- Enable user ts-salkafka.
+    enabled: true
+
+  kafdrop:
+    # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
+    enabled: true
+
+  telegraf:
+    # -- Enable user telegraf (deployed by parent Sasquatch chart)
+    enabled: true
+
+  promptProcessing:
+    # -- Enable user prompt-processing
+    enabled: true
+
+  kafkaConnectManager:
+    # -- Enable user kafka-connect-manager
+    enabled: true
+
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster.
   enabled: false
