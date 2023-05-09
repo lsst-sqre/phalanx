@@ -50,6 +50,8 @@ squash-api:
   enabled: false
 strimzi:
   enabled: false
+strimzi-access-operator:
+  enabled: false
 strimzi-registry-operator:
   enabled: false
 tap:

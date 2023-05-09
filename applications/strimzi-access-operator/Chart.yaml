@@ -1,0 +1,7 @@
+apiVersion: v2
+name: strimzi-access-operator
+type: application
+version: "1.0.0"
+description: Strimzi Access Operator
+home: https://strimzi.io
+appVersion: "tickets-DM-39107"
