@@ -27,74 +27,57 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       maintel:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
       mtmount:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*MTMount"
       comcam:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*MTM1M3"
       m2:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*OCPS"
       test:
         enabled: true
         topicsRegex: ".*Test"
       pmd:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*PMD"
       calsys:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
       mtaircompressor:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*MTAirCompressor"
       authorize:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*Authorize"
       lasertracker:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*LaserTracker"
       genericcamera:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
       gis:
         enabled: true
-        repairerConnector: true
         topicsRegex: ".*GIS"
       lsstdm:
         enabled: true
@@ -120,7 +103,6 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.rubintv"
         topicsRegex: "lsst.rubintv.*"
         tags: image_type,observation_reason,science_program,filter,disperser
-
 
 kafdrop:
   ingress:
