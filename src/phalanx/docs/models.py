@@ -95,7 +95,7 @@ class Application:
         return ""
 
     @cached_property
-    def doc_links(self) -> List[str]:
+    def doc_links(self) -> List[DocLink]:
         """reStructuredText-formatted list of links."""
         key = "phalanx.lsst.io/docs"
         if "annotations" in self.chart and key in self.chart["annotations"]:
