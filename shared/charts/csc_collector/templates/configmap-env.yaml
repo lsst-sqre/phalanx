@@ -6,4 +6,5 @@ data:
     LSST_SITE: {{ .Values.siteTag }}
     LSST_KAFKA_BROKER_ADDR: {{ .Values.kafkaBrokerAddress }}
     LSST_SCHEMA_REGISTRY_URL: {{ .Values.schemaRegistryUrl }}
+    S3_ENDPOINT_URL: {{ .Values.s3EndpointUrl }}
     TS_SALKAFKA_USERNAME: ts-salkafka

@@ -1,0 +1,25 @@
+apiVersion: v2
+name: obssys
+version: 1.0.0
+description: Deployment for the Observatory System CSCs
+dependencies:
+  - name: csc_collector
+    version: 1.0.0
+  - name: csc
+    alias: atqueue
+    version: 1.0.0
+  - name: csc
+    alias: atscheduler
+    version: 1.0.0
+  - name: csc
+    alias: authorize
+    version: 1.0.0
+  - name: csc
+    alias: mtqueue
+    version: 1.0.0
+  - name: csc
+    alias: mtscheduler
+    version: 1.0.0
+  - name: csc
+    alias: watcher
+    version: 1.0.0

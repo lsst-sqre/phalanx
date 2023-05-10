@@ -101,6 +101,9 @@ applications:
   # -- Enable the nublado application (v3 of the Notebook Aspect)
   nublado: false
 
+  # -- Enable the obssys control system application
+  obssys: false
+
   # -- Enable the onepassword-connect application
   onepassword-connect: false
 

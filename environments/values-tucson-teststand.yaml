@@ -9,6 +9,7 @@ applications:
   exposurelog: true
   narrativelog: true
   nublado: true
+  obssys: true
   portal: true
   sasquatch: true
   squareone: true
