@@ -53,6 +53,8 @@ semaphore:
   enabled: true
 sherlock:
   enabled: true
+squarebot:
+  enabled: false
 squareone:
   enabled: true
 strimzi:

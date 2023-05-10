@@ -35,6 +35,7 @@
 | semaphore.enabled | bool | `false` |  |
 | sherlock.enabled | bool | `false` |  |
 | sqlproxy-cross-project.enabled | bool | `false` |  |
+| squarebot.enabled | bool | `false` |  |
 | squareone.enabled | bool | `false` |  |
 | squash-api.enabled | bool | `false` |  |
 | ssotap.enabled | bool | `false` |  |

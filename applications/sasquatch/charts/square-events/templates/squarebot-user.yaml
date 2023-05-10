@@ -12,21 +12,56 @@ spec:
     type: simple
     acls:
       - resource:
-          type: group
-          name: "squarebot*"
-          patternType: literal
-        operation: All
-      - resource:
           type: topic
-          name: "rubin.square.events.squarebot.*"
+          name: "rubin.square.events.squarebot.slack.app_mention"
           patternType: literal
         type: allow
         host: "*"
-        operation: "Write"
+        operations:
+          - "Write"
+          - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.*"
+          name: "rubin.square.events.squarebot.slack.message.channels"
           patternType: literal
         type: allow
         host: "*"
-        operation: "Describe"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.slack.message.groups"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.slack.message.im"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.slack.message.mpim"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.slack.interaction"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"

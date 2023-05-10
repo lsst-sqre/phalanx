@@ -60,3 +60,9 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    strimzi-registry-operator/index
    telegraf/index
    telegraf-ds/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Roundtable
+
+   squarebot/index

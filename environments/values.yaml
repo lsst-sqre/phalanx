@@ -70,6 +70,8 @@ sherlock:
   enabled: false
 sqlproxy-cross-project:
   enabled: false
+squarebot:
+  enabled: false
 squareone:
   enabled: false
 squash-api:

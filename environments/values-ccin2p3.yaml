@@ -44,6 +44,8 @@ semaphore:
   enabled: false
 sherlock:
   enabled: false
+squarebot:
+  enabled: false
 squareone:
   enabled: true
 squash-api:
