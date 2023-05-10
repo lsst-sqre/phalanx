@@ -1,0 +1,32 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: squarebot
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "squarebot*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: "Write"
+      - resource:
+          type: topic
+          name: "rubin.square.events.squarebot.*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: "Describe"

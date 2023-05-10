@@ -203,6 +203,10 @@ bucketmapper:
     # -- tag for rubin-influx-tools
     tag: 0.1.23
 
+squareEvents:
+  # -- Enable the Square Events subchart with topic and user configurations.
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
