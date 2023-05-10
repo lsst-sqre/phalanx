@@ -1,7 +1,7 @@
 apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
-  name: squarebot
+  name: {{ include "squarebot.fullname" . }}-kafka
 spec:
   kafka:
     name: sasquatch
