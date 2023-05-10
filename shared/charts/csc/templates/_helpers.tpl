@@ -30,10 +30,11 @@ Create chart name and version as used by the chart label.
 Create the CSC name by removing sim tag.
 */}}
 {{- define "csc.name" -}}
-{{- if contains "sim" .Chart.Name -}}
-{{- .Chart.Name | splitList "-" | first -}}
+{{- $name := or .Values.classifier .Chart.Name -}}
+{{- if contains "sim" $name -}}
+{{- $name | splitList "-" | first -}}
 {{- else -}}
-{{- .Chart.Name -}}
+{{- $name -}}
 {{- end -}}
 {{- end -}}
 
@@ -42,8 +43,8 @@ Create the CSC class name by removing sim tag and index.
 */}}
 {{- define "csc.class" -}}
 {{- $protectedApps := list "mtm2" "mtm1m3" -}}
-{{- $name := .Chart.Name -}}
-{{- if contains "sim" .Chart.Name -}}
+{{- $name := or .Values.classifier .Chart.Name -}}
+{{- if contains "sim" $name -}}
 {{- $name = $name | splitList "-" | first -}}
 {{- end -}}
 {{- $checkForIndex := list -}}

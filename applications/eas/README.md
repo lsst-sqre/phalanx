@@ -1,6 +1,6 @@
 # eas
 
-Deployment for the Environmental Awareness Sytems CSCs
+Deployment for the Environmental Awareness Systems CSCs
 
 ## Values
 

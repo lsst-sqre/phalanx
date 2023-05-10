@@ -1,13 +1,100 @@
 apiVersion: v2
 name: eas
 version: 1.0.0
-description: Deployment for the Environmental Awareness Sytems CSCs
+description: Deployment for the Environmental Awareness Systems CSCs
 dependencies:
   - name: csc_collector
     version: 1.0.0
   - name: csc
-    alias: dimm
+    alias: auxtel-ess01
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess01-sim
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess02
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess02-sim
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess03
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess03-sim
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess04
+    version: 1.0.0
+  - name: csc
+    alias: auxtel-ess04-sim
+    version: 1.0.0
+  - name: csc
+    alias: calibhill-ess01
+    version: 1.0.0
+  - name: csc
+    alias: calibhill-ess01-sim
+    version: 1.0.0
+  - name: csc
+    alias: dimm1
     version: 1.0.0
   - name: csc
     alias: dimm1-sim
+    version: 1.0.0
+  - name: csc
+    alias: dimm2
+    version: 1.0.0
+  - name: csc
+    alias: dimm2-sim
+    version: 1.0.0
+  - name: csc
+    alias: dsm1
+    version: 1.0.0
+  - name: csc
+    alias: dsm1-sim
+    version: 1.0.0
+  - name: csc
+    alias: dsm2
+    version: 1.0.0
+  - name: csc
+    alias: dsm2-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess01
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess01-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess02
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess02-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess03
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-ess03-sim
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess01
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess01-sim
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess104
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess104-sim
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess105
+    version: 1.0.0
+  - name: csc
+    alias: tma-ess105-sim
+    version: 1.0.0
+  - name: csc
+    alias: weatherforecast
     version: 1.0.0

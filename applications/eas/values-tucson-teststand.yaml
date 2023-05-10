@@ -7,6 +7,70 @@ csc_collector:
   kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
   schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
 
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: meteoblue
+    key: ts/software/meteoblue
+
+auxtel-ess01-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess201
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 201 --simulate
+
+auxtel-ess02-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess202
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 202 --simulate
+
+auxtel-ess03-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess203
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 203 --simulate
+
+auxtel-ess04-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess204
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 204 --simulate
+
+calibhill-ess01-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess301
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 301 --simulate
+
 dimm1-sim:
   enabled: true
   namespace: *ns
@@ -16,3 +80,115 @@ dimm1-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate
+
+dimm2-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/dimm
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2 --simulate
+
+dsm1-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/dsm
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    CSC_INDEX: 1
+    RUN_ARG: --simulate 1 --state enabled
+
+dsm2-sim:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/dsm
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    CSC_INDEX: 2
+    RUN_ARG: --simulate 2 --state enabled
+
+mtdome-ess01-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess101
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101 --simulate
+
+mtdome-ess02-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess102
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 102 --simulate
+
+mtdome-ess03-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess103
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103 --simulate
+
+tma-ess01-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess1
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate
+
+tma-ess104-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess104
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 104 --simulate
+
+tma-ess105-sim:
+  enabled: true
+  namespace: *ns
+  classifier: ess105
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 105 --simulate
+
+weatherforecast:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/weatherforecast
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: --state enabled
+  envSecrets:
+  - name: METEOBLUE_API_KEY
+    secretName: meteoblue
+    secretKey: api-key

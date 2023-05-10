@@ -6,6 +6,7 @@ csc_collector:
   siteTag: tucson
   kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
   schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
+  s3EndpointUrl: https://s3.tu.lsst.org
 
   secrets:
   - name: nexus3-docker
@@ -53,7 +54,6 @@ atheaderservice:
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
-    S3_ENDPOINT_URL: https://s3.tu.lsst.org
     TSTAND_HEADERSERVICE: TUCSON
     CAMERA: at
   envSecrets:
