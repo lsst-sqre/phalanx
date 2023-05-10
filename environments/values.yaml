@@ -36,11 +36,13 @@ applications:
   # environments and is present here only because it makes parsing easier
   argocd: true
 
-  # -- Eanble the auxtel control system application
+  # -- Enable the auxtel control system application
   auxtel: false
 
   # -- Enable the butler application
   butler: false
+
+  # -- Enable the calsys control system application
 
   # -- Enable the cert-manager application, required unless the environment
   # makes separate arrangements to inject a current TLS certificate

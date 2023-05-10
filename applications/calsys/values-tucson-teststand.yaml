@@ -1,0 +1,71 @@
+namespace: &ns calsys
+imageTag: &imageTag c0029
+
+csc_collector:
+  namespace: *ns
+  siteTag: tucson
+  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
+  s3EndpointUrl: https://s3.tu.lsst.org
+
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+
+gcheaderservice1:
+  enabled: true
+  namespace: *ns
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    tag: ts-v3.1.11_c0029
+    pullPolicy: Always
+  env:
+    CAMERA: gc1
+    TSTAND_HEADERSERVICE: TUCSON
+    URL_SPEC: --lfa_mode s3 --s3instance tuc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+
+simulation-gencam:
+  enabled: true
+  namespace: *ns
+  classifier: genericcamera1
+  image:
+    repository: ts-dockerhub.lsst.org/genericcamera
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  service:
+    enabled: true
+    port: 5013
+    type: LoadBalancer

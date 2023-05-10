@@ -5,6 +5,7 @@ vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 applications:
   argo-workflows: true
   auxtel: true
+  calsys: true
   eas: true
   exposurelog: true
   narrativelog: true
