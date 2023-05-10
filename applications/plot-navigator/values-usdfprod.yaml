@@ -4,6 +4,7 @@ environment:
   PGUSER: "rubin"
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+  BUTLER_DEFAULT_REPO: "/repo/main"
 
 config:
   volumes:
