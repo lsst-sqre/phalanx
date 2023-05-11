@@ -104,7 +104,6 @@ kafka-connect-manager:
         topicsRegex: "lsst.rubintv.*"
         tags: image_type,observation_reason,science_program,filter,disperser
 
-
 kafdrop:
   ingress:
     enabled: true

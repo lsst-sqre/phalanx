@@ -20,8 +20,9 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| influxdbSink.connectors | object | `{"test":{"enabled":false,"tags":"","topicsRegex":".*Test"}}` | Connector instances to deploy. |
+| influxdbSink.connectors | object | `{"test":{"enabled":false,"repairerConnector":false,"tags":"","topicsRegex":".*Test"}}` | Connector instances to deploy. |
 | influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
+| influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
 | influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
 | influxdbSink.connectors.test.topicsRegex | string | `".*Test"` | Regex to select topics from Kafka. |
 | influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
