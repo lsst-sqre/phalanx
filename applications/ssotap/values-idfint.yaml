@@ -15,4 +15,7 @@ config:
 
 pg:
   mock:
-    enabled: true
+    enabled: false
+  database: "dp03_catalogs"
+  host: "usdf-pg-catalogs.slac.stanford.edu:5432"
+  username: "dp03"
