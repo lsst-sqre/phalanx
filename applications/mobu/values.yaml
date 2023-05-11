@@ -33,6 +33,9 @@ config:
   # -- If set to true, do not configure mobu to send alerts to Slack.
   disableSlackAlerts: false
 
+  # -- Prefix for mobu's API routes.
+  pathPrefix: "/mobu"
+
   # -- Whether to use cachemachine. Set to false on environments using the
   # Nublado lab controller.
   useCachemachine: true

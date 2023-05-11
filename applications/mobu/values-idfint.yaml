@@ -1,4 +1,9 @@
+image:
+  tag: "tickets-DM-38425"
+  pullPolicy: "Always"
+
 config:
+  useCachemachine: false
   autostart:
     - name: "firefighter"
       count: 1

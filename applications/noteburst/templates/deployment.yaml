@@ -4,6 +4,8 @@ metadata:
   name: {{ include "noteburst.fullname" . }}
   labels:
     {{- include "noteburst.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "server"
+    app.kubernetes.io/part-of: "noteburst"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
@@ -21,6 +23,8 @@ spec:
       labels:
         {{- include "noteburst.selectorLabels" . | nindent 8 }}
         noteburst-redis-client: "true"
+        app.kubernetes.io/component: "server"
+        app.kubernetes.io/part-of: "noteburst"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

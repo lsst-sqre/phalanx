@@ -1,0 +1,12 @@
+apiVersion: v2
+name: argo-workflows
+version: 1.0.0
+description: Kubernetes workflow engine
+home: https://argoproj.github.io/argo-workflows
+sources:
+  - https://github.com/argoproj/argo-workflows
+  - https://github.com/argoproj/argo-helm
+dependencies:
+  - name: argo-workflows
+    version: 0.26.1
+    repository: https://argoproj.github.io/argo-helm

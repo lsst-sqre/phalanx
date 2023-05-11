@@ -44,8 +44,10 @@ class SecretGenerator:
         self._pull_secret()
         self._rsp_alerts()
         self._butler_secret()
+        self._argo_sso_secret()
         self._postgres()
         self._tap()
+        self._nublado()
         self._nublado2()
         self._mobu()
         self._gafaelfawr()
@@ -156,6 +158,21 @@ class SecretGenerator:
         self._set_generated(
             "postgres", "narrativelog_password", secrets.token_hex(32)
         )
+
+    def _nublado(self):
+        self._set_generated("nublado", "crypto_key", secrets.token_hex(32))
+        self._set_generated("nublado", "proxy_token", secrets.token_hex(32))
+        self._set_generated(
+            "nublado", "cryptkeeper_key", secrets.token_hex(32)
+        )
+
+        # Pluck the password out of the postgres portion.
+        db_password = self.secrets["postgres"]["jupyterhub_password"]
+        self.secrets["nublado"]["hub_db_password"] = db_password
+
+        slack_webhook = self._get_current("rsp-alerts", "slack-webhook")
+        if slack_webhook:
+            self._set("nublado", "slack_webhook", slack_webhook)
 
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
@@ -281,6 +298,16 @@ class SecretGenerator:
             "butler-secret",
             "postgres-credentials.txt",
             "Postgres credentials for butler",
+        )
+
+    def _argo_sso_secret(self):
+        # We aren't currently using this, but might as well generate it
+        # against the day we do.
+        self._set_generated(
+            "argo-sso-secret", "client-id", "argo-workflows-sso"
+        )
+        self._set_generated(
+            "argo-sso-secret", "client-secret", secrets.token_hex(16)
         )
 
     def _ingress_nginx(self):

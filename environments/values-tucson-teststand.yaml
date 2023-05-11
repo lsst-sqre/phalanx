@@ -4,6 +4,8 @@ vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 alert-stream-broker:
   enabled: false
+argo-workflows:
+  enabled: true
 cachemachine:
   enabled: true
 cert-manager:

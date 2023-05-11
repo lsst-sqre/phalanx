@@ -79,6 +79,31 @@ kafka-connect-manager:
       gis:
         enabled: true
         topicsRegex: ".*GIS"
+      lsstdm:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.dm"
+        topicsRegex: "lsst.dm.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+      lsstdebug:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.debug"
+        topicsRegex: "lsst.debug.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+      lsstexample:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.example"
+        topicsRegex: "lsst.example.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+      lsstrubintv:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.rubintv"
+        topicsRegex: "lsst.rubintv.*"
+        tags: image_type,observation_reason,science_program,filter,disperser
+
 
 kafdrop:
   ingress:
@@ -96,6 +121,9 @@ rest-proxy:
     topicPrefixes:
       - test
       - lsst.dm
+      - lsst.debug
+      - lsst.example
+      - lsst.rubintv
 
 chronograf:
   ingress:

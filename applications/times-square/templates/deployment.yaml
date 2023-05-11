@@ -4,6 +4,8 @@ metadata:
   name: {{ include "times-square.fullname" . }}
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "server"
+    app.kubernetes.io/part-of: "times-square"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount.api }}
@@ -21,6 +23,8 @@ spec:
       labels:
         {{- include "times-square.selectorLabels" . | nindent 8 }}
         times-square-redis-client: "true"
+        app.kubernetes.io/component: "server"
+        app.kubernetes.io/part-of: "times-square"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

@@ -1,11 +1,12 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ include "nublado.fullname" . }}
+  name: {{ include "cadc-tap.fullname" . }}
 spec:
   podSelector:
     matchLabels:
-      {{- include "nublado.selectorLabels" . | nindent 6 }}
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "server"
   policyTypes:
     - Ingress
   ingress:

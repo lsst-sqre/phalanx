@@ -41,7 +41,7 @@ config:
   databaseUrl: ""
 
   # -- Choose from the text form of Python logging levels
-  loglevel: "INFO"
+  logLevel: "INFO"
 
   # -- Session length and token expiration (in minutes)
   # @default -- `43200` (30 days)
@@ -160,9 +160,16 @@ config:
     url: ""
 
     # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
-    # set in the Gafaelfawr secret
+    # set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not
+    # both.
     # @default -- Use anonymous binds
     userDn: ""
+
+    # -- Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file.
+    # If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set
+    # either this or `userDn`, not both.
+    # @default -- Use anonymous binds
+    kerberosConfig: ""
 
     # -- Base DN for the LDAP search to find a user's groups
     # @default -- None, must be set
@@ -259,6 +266,8 @@ config:
       Retrieve images from project datasets
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
+    "write:sasquatch": >-
+      "Write access to the Sasquatch telemetry service"
     "user:token": >-
       Can create and modify user tokens
 
@@ -278,7 +287,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.5"
+    tag: "1.33.6"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

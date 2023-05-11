@@ -10,7 +10,7 @@ redis:
     enabled: false
 
 config:
-  loglevel: "DEBUG"
+  logLevel: "DEBUG"
   databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
   # Session length and token expiration (in minutes).

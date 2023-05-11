@@ -1,0 +1,28 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: argo-workflows
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all: {{ .Values.ingress.scopes }}
+  loginRedirect: true
+template:
+  metadata:
+    name: argo-workflows
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/argo-workflows(/|$)(.*)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: argo-workflows-server
+                  port:
+                    number: 2746

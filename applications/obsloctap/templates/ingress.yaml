@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "obsloctap"
+  labels:
+    {{- include "obsloctap.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:all"
+template:
+  metadata:
+    name: "obsloctap"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
+      http:
+        paths:
+        - path: "/obsloctap"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: "obsloctap"
+              port:
+                number: 80

@@ -46,7 +46,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
@@ -80,6 +80,9 @@ kafka-connect-manager:
       gis:
         enabled: true
         topicsRegex: ".*GIS"
+      mtvms:
+        enabled: true
+        topicsRegex: ".*MTVMS"
 
 kafdrop:
   ingress:

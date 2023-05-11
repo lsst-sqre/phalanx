@@ -1,4 +1,18 @@
 argo-cd:
+  # Some time we may want to play with this more, but currently we're
+  # just using GafaelfawrIngress to protect Argo Workflows and requiring
+  # 'exec:admin' scope.  It is theoretically possible to piggyback
+  # Workflows off of Dex SSO, but how to actually hook up the RBAC is
+  # going to need a lot of experimentation, creating service tokens, etc.
+
+  #dex:
+  #  env:
+  #    - name: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
+  #      valueFrom:
+  #        secretKeyRef:
+  #          name: argo-sso-secret
+  #          key: client-secret
+
   server:
     ingress:
       hosts:
@@ -20,6 +34,15 @@ argo-cd:
                 - lsst.cloud
               redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
 
+        # Again, change this if we want to use SSO
+
+        # staticClients:
+        #   - id: argo-workflows-sso
+        #     name: Argo Workflow
+        #     redirectURIs:
+        #       - https://data-dev-workflows.lsst.cloud/oauth2/callback
+        #     secretEnv: ARGO_WORKFLOWS_SSO_CLIENT_SECRET
+
     rbacConfig:
       policy.csv: |
         g, adam@lsst.cloud, role:admin
@@ -33,4 +56,6 @@ argo-cd:
         g, gpdf@lsst.cloud, role:admin
         g, loi@lsst.cloud, role:admin
         g, roby@lsst.cloud, role:admin
+        g, kkoehler@lsst.cloud, role:admin
+        g, fritzm@lsst.cloud, role:admin
       scopes: "[email]"

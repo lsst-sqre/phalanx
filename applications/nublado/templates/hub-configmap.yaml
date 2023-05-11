@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nublado-config
+  name: "hub-config"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
@@ -31,9 +31,12 @@ data:
     c.Spawner.default_url = "/lab"
 
     # Allow ten minutes for the lab to spawn in case it needs to be pulled.
-    c.Spawner.start_timeout = 10 * 60
+    c.Spawner.start_timeout = {{ .Values.hub.timeout.spawn }}
+
+    # Allow 90 seconds for JupyterLab to start. For reasons we do not yet
+    # understand, it is often glacially slow and sometimes takes over 60
+    # seconds.
+    c.Spawner.http_timeout = {{ .Values.hub.timeout.startup }}
 
     # Configure the URL to the lab controller.
-    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}/{{ .Values.controller.safir.rootEndpoint }}"
-  config.yaml: |-
-    {{- toYaml .Values.controller | nindent 4 }}
+    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.safir.pathPrefix }}"

@@ -13,6 +13,7 @@
 .. _Documentation Style Guide: https://developer.lsst.io/user-docs/index.html
 .. _FastAPI: https://fastapi.tiangolo.com/
 .. _Felis: https://felis.lsst.io/
+.. _Gafaelfawr: https://gafaelfawr.lsst.io/
 .. _Google Documentation Style Guide: https://developers.google.com/style/
 .. _Google Filestore: https://cloud.google.com/filestore
 .. _Helm: https://helm.sh

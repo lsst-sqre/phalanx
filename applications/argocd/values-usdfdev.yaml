@@ -29,13 +29,25 @@ argo-cd:
       url: https://usdf-rsp-dev.slac.stanford.edu/argo-cd
       oidc.config: |
         name: SLAC
-        issuer: https://dex.slac.stanford.edu/
+        issuer: https://dex.slac.stanford.edu
         clientID: $oidc.clientId
         clientSecret: $oidc.clientSecret
         # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
+    rbacConfig:
+      policy.csv: |
+        g, ytl@slac.stanford.edu, role:admin
+        g, pav@slac.stanford.edu, role:admin
+        g, dspeck@slac.stanford.edu, role:admin
+        g, afausti@slac.stanford.edu, role:admin
+        g, mfl@slac.stanford.edu, role:admin
+        g, cbanek@slac.stanford.edu, role:admin
+        g, hchiang2@slac.stanford.edu, role:admin
+        g, athor@slac.stanford.edu, role:admin
+        g, jsick@slac.stanford.edu, role:admin
+      scopes: "[email]"
 
       helm.repositories: |
         - url: https://lsst-sqre.github.io/charts/
@@ -61,11 +73,6 @@ argo-cd:
         value: http://sdfproxy.sdf.slac.stanford.edu:3128
       - name: NO_PROXY
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
-
-    rbacConfig:
-      policy.csv: |
-        g, ytl@slac.stanford.edu, role:admin
-      scopes: "[email]"
 
   configs:
     secret:

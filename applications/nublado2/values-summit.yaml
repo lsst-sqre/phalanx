@@ -102,4 +102,4 @@ config:
       mountPath: /data/lsstdata/base/comcam
       readOnly: true
     - name: obs-env
-      mountPath: /opt/obs_env
+      mountPath: /net/obs-env

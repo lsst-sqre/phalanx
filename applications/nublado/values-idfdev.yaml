@@ -1,44 +1,45 @@
-image:
-  tag: "tickets-DM-38279-queue"
-  pullPolicy: "Always"
-jupyterhub:
-  hub:
-    image:
-      tag: "tickets-DM-38279-queue"
-      pullPolicy: "Always"
 controller:
-  lab:
-    volumes:
-    - containerPath: /home
-      serverPath: /share1/home
-      server: 10.87.86.26
-      mode: rw
-    - containerPath: /project
-      serverPath: /share1/project
-      server: 10.87.86.26
-      mode: rw
-    - containerPath: /scratch
-      serverPath: /share1/scratch
-      server: 10.87.86.26
-      mode: rw
-    initContainers:
-    - name: initdir
-      image: ghcr.io/lsst-sqre/initdir:0.0.3
-      privileged: true
+  googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
+  slackAlerts: true
+  image:
+    tag: "tickets-DM-38795-queue"
+    pullPolicy: "Always"
+  config:
+    images:
+      source:
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
+        repository: "sciplat"
+        image: "sciplat-lab"
+      recommendedTag: "recommended"
+      numReleases: 1
+      numWeeklies: 2
+      numDailies: 3
+    lab:
+      env:
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+      initContainers:
+        - name: "initdir"
+          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+          privileged: true
+          volumes:
+            - containerPath: "/home"
+              serverPath: "/share1/home"
+              server: "10.87.86.26"
+              mode: "rw"
       volumes:
-      - containerPath: /home
-        serverPath: /share1/home
-        server: 10.87.86.26
-        mode: rw
-  images:
-    # -- config from sqr-066
-    docker: null
-    gar:
-      repository: sciplat
-      image: sciplat-lab
-      projectId: rubin-shared-services-71ec
-      registry: us-central1-docker.pkg.dev
-    recommendedTag: recommended
-    numReleases: 1
-    numWeeklies: 2
-    numDailies: 3
+        - containerPath: "/home"
+          serverPath: "/share1/home"
+          server: "10.87.86.26"
+          mode: "rw"
+        - containerPath: "/project"
+          serverPath: "/share1/project"
+          server: "10.87.86.26"
+          mode: "rw"
+        - containerPath: "/scratch"
+          serverPath: "/share1/scratch"
+          server: "10.87.86.26"
+          mode: "rw"
