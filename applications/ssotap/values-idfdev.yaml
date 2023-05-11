@@ -11,7 +11,9 @@ config:
   gcsBucketUrl: "http://async-results.lsst.codes"
   jvmMaxHeapSize: "31G"
 
-qserv:
-  host: "10.136.1.211:4040"
+pg:
   mock:
     enabled: false
+  database: "dp03_catalogs"
+  host: "usdf-pg-catalogs.slac.stanford.edu:5432"
+  username: "dp03"
