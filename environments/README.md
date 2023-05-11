@@ -16,6 +16,7 @@
 | gafaelfawr.enabled | bool | `false` |  |
 | hips.enabled | bool | `false` |  |
 | ingress-nginx.enabled | bool | `false` |  |
+| kubernetes-replicator.enabled | bool | `false` |  |
 | linters.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |

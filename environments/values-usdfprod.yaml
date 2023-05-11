@@ -22,6 +22,8 @@ hips:
   enabled: false
 ingress-nginx:
   enabled: false
+kubernetes-replicator:
+  enabled: false
 mobu:
   enabled: true
 moneypenny:

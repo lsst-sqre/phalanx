@@ -20,6 +20,8 @@ hips:
   enabled: true
 ingress-nginx:
   enabled: true
+kubernetes-replicator:
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
