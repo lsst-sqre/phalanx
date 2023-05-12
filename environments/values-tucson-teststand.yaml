@@ -13,6 +13,7 @@ applications:
   obssys: true
   portal: true
   sasquatch: true
+  simonyitel: true
   squareone: true
   strimzi: true
   telegraf: true

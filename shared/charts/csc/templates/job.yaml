@@ -32,7 +32,7 @@ spec:
             name: csc-env-config
           - secretRef:
             name: ts-salkafka
-          {{- if or .Values.env .Values.envSecrets }}
+          {{- if or (or .Values.env .Values.envSecrets) .Values.butlerSecret }}
           env:
           {{- range $env_var, $env_value := .Values.env }}
             - name: {{ $env_var }}
@@ -137,7 +137,7 @@ spec:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
       {{- end }}
-      {{- if  .Values.secretPermFixer }}
+      {{- if .Values.secretPermFixer }}
       {{- range $values := .Values.secretPermFixer }}
         - name: {{ include "chart.name" $ }}-{{ $values.name }}
           emptyDir: {}

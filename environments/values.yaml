@@ -141,6 +141,9 @@ applications:
   # -- Enable the siav2 application
   siav2: false
 
+  # -- Enable the simonyitel control system application
+  simonyitel: false
+
   # -- Enable the ssotap application
   ssotap: false
 

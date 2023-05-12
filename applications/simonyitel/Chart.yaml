@@ -1,0 +1,79 @@
+apiVersion: v2
+name: simonyitel
+version: 1.0.0
+description: Deployment for the Simonyi Survey Telescope CSCs
+dependencies:
+  - name: csc_collector
+    version: 1.0.0
+  - name: csc
+    alias: ccheaderservice
+    version: 1.0.0
+  - name: csc
+    alias: ccoods
+    version: 1.0.0
+  - name: csc
+    alias: lasertracker1
+    version: 1.0.0
+  - name: csc
+    alias: lasertracker1-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtaircompressor1
+    version: 1.0.0
+  - name: csc
+    alias: mtaircompressor1-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtaircompressor2
+    version: 1.0.0
+  - name: csc
+    alias: mtaircompressor2-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtaos
+    version: 1.0.0
+  - name: csc
+    alias: mtcamhexapod
+    version: 1.0.0
+  - name: csc
+    alias: mtcamhexapod-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtdome
+    version: 1.0.0
+  - name: csc
+    alias: mtdome-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtdometrajectory
+    version: 1.0.0
+  - name: csc
+    alias: mtm1m3-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtm2
+    version: 1.0.0
+  - name: csc
+    alias: mtm2-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtm2hexapod
+    version: 1.0.0
+  - name: csc
+    alias: mtm2hexapod-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtmount
+    version: 1.0.0
+  - name: csc
+    alias: mtmount-sim
+    version: 1.0.0
+  - name: csc
+    alias: mtptg
+    version: 1.0.0
+  - name: csc
+    alias: mtrotator
+    version: 1.0.0
+  - name: csc
+    alias: mtrotator-sim
+    version: 1.0.0
