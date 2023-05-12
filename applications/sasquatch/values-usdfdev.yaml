@@ -103,6 +103,11 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.rubintv"
         topicsRegex: "lsst.rubintv.*"
         tags: image_type,observation_reason,science_program,filter,disperser
+      lsstcamera:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.camera"
+        topicsRegex: "lsst.camera.*"
 
 kafdrop:
   ingress:
@@ -123,6 +128,7 @@ rest-proxy:
       - lsst.debug
       - lsst.example
       - lsst.rubintv
+      - lsst.camera
 
 chronograf:
   ingress:
