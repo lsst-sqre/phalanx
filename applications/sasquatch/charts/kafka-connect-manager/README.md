@@ -10,7 +10,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"lsstsqre/kafkaconnect"` |  |
+| image.repository | string | `"ghcr.io/lsst-sqre/kafkaconnect"` |  |
 | image.tag | string | `"1.1.0"` |  |
 | influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |

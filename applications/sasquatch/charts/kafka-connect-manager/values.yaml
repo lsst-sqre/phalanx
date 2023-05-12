@@ -1,7 +1,7 @@
 # Default values for kafka-connect-manager.
 # See also https://kafka-connect-manager.lsst.io
 image:
-  repository: lsstsqre/kafkaconnect
+  repository: ghcr.io/lsst-sqre/kafkaconnect
   tag: 1.1.0
   pullPolicy: IfNotPresent
 
