@@ -132,3 +132,8 @@ alert-database:
       project: science-platform-int-dc5d
       alertBucket: rubin-alertdb-int-us-central1-packets
       schemaBucket: rubin-alertdb-int-us-central1-schemas
+
+kafdrop:
+  ingress:
+    enabled: true
+    hostname: data-int.lsst.cloud
