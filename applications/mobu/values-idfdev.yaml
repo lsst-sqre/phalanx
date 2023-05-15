@@ -17,6 +17,7 @@ config:
           image:
             image_class: "latest-weekly"
             size: "Small"
+            debug: true
         restart: true
     - name: "tap"
       count: 1
