@@ -48,6 +48,9 @@ applications:
   # makes separate arrangements to inject a current TLS certificate
   cert-manager: true
 
+  # -- Enable the control-system-test application
+  control-system-test: false
+
   # -- Eanble the datalinker application
   datalinker: false
 
