@@ -1,8 +1,4 @@
-namespace: &ns simonyitel
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -16,7 +12,6 @@ csc_collector:
 
 ccheaderservice:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     tag: ts-v3.1.11_c0029
@@ -41,7 +36,6 @@ ccheaderservice:
 
 ccoods:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
@@ -120,7 +114,6 @@ ccoods:
 
 lasertracker1-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/lasertracker
     pullPolicy: Always
@@ -129,21 +122,18 @@ lasertracker1-sim:
 
 mtaircompressor1-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
     pullPolicy: Always
 
 mtaircompressor2-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
     pullPolicy: Always
 
 mtaos:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
@@ -172,7 +162,6 @@ mtaos:
 
 mtcamhexapod-sim:
   enabled: true
-  namespace: *ns
   classifier: mthexapod1
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
@@ -182,7 +171,6 @@ mtcamhexapod-sim:
 
 mtdome-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
@@ -191,21 +179,18 @@ mtdome-sim:
 
 mtdometrajectory:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
 
 mtm1m3-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
     pullPolicy: Always
 
 mtm2-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/m2
     pullPolicy: Always
@@ -214,7 +199,6 @@ mtm2-sim:
 
 mtm2hexapod-sim:
   enabled: true
-  namespace: *ns
   classifier: mthexapod2
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
@@ -224,7 +208,6 @@ mtm2hexapod-sim:
 
 mtmount-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
@@ -232,7 +215,6 @@ mtmount-sim:
     RUN_ARG: --simulate
 
 mtptg:
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
@@ -240,7 +222,6 @@ mtptg:
     TELESCOPE: MT
 
 mtrotator-sim:
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always

@@ -1,7 +1,5 @@
 # -- Flag to enable the given CSC application
 enabled: false
-# -- Namespace for the given CSC application
-namespace: ""
 # -- Provide an alternate name for the application
 nameOverride: ""
 # -- This marks the CSC as the primary object to sync upon system starts.

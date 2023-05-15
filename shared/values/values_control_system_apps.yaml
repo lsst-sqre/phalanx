@@ -1,13 +1,4 @@
-# The namespace for the application
-namespace: ""
-
-# -- The default image tag for all of the child applications
-# imageTag: ""
-
 csc_collector:
-  # -- The site-specific name used for handling configurable CSCs
-  # siteTag: ""
-
   # -- This section holds secret specifications.
   # Each object listed can have the following attributes defined:
   # _name_ (The name used by pods to access the secret)
@@ -29,6 +20,10 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+  # -- Application namespacce for the control system deployment
+  # @default -- Set by ArgoCD
+  controlSystemAppNamespace: ""
 
   # -- Image tag for the control system deployment
   # @default -- Set by ArgoCD

@@ -1,8 +1,4 @@
-namespace: &ns control-system-test
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -14,7 +10,6 @@ csc_collector:
 
 test42:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/test
     pullPolicy: Always

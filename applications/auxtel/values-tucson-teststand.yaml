@@ -1,8 +1,4 @@
-namespace: &ns auxtel
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -16,14 +12,12 @@ csc_collector:
 
 ataos:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
 
 atdome-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atdome
     pullPolicy: Always
@@ -32,14 +26,12 @@ atdome-sim:
 
 atdometrajectory:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
 
 atheaderservice:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     tag: ts-v3.1.11_c0029
@@ -64,14 +56,12 @@ atheaderservice:
 
 athexapod-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
 
 atoods:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
@@ -150,7 +140,6 @@ atoods:
 
 atptg:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
@@ -159,7 +148,6 @@ atptg:
 
 atspectrograph-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atspec
     pullPolicy: Always

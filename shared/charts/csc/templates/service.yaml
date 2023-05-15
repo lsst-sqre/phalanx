@@ -5,7 +5,7 @@ metadata:
   labels:
     csc: {{ include "csc.name" . }}
   name: {{ include "chart.name" . }}-service
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
 spec:
   {{- if and (eq .Values.service.type "LoadBalancer") .Values.service.loadBalancerIP }}
   loadBalancerIP: {{ .Values.service.loadBalancerIP }}

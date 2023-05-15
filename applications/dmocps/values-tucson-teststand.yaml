@@ -1,8 +1,4 @@
-namespace: &ns uws
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -12,7 +8,6 @@ csc_collector:
 
 atocps:
   enabled: true
-  namespace: *ns
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
@@ -22,7 +17,6 @@ atocps:
 
 ccocps:
   enabled: true
-  namespace: *ns
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps

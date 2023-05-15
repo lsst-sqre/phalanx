@@ -1,8 +1,4 @@
-namespace: &ns eas
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -14,7 +10,6 @@ csc_collector:
 
 auxtel-ess01-sim:
   enabled: true
-  namespace: *ns
   classifier: ess201
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -24,7 +19,6 @@ auxtel-ess01-sim:
 
 auxtel-ess02-sim:
   enabled: true
-  namespace: *ns
   classifier: ess202
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -34,7 +28,6 @@ auxtel-ess02-sim:
 
 auxtel-ess03-sim:
   enabled: true
-  namespace: *ns
   classifier: ess203
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -44,7 +37,6 @@ auxtel-ess03-sim:
 
 auxtel-ess04-sim:
   enabled: true
-  namespace: *ns
   classifier: ess204
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -54,7 +46,6 @@ auxtel-ess04-sim:
 
 calibhill-ess01-sim:
   enabled: true
-  namespace: *ns
   classifier: ess301
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -64,7 +55,6 @@ calibhill-ess01-sim:
 
 dimm1-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/dimm
     pullPolicy: Always
@@ -73,7 +63,6 @@ dimm1-sim:
 
 dimm2-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/dimm
     pullPolicy: Always
@@ -82,7 +71,6 @@ dimm2-sim:
 
 dsm1-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/dsm
     pullPolicy: Always
@@ -92,7 +80,6 @@ dsm1-sim:
 
 dsm2-sim:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/dsm
     pullPolicy: Always
@@ -102,7 +89,6 @@ dsm2-sim:
 
 mtdome-ess01-sim:
   enabled: true
-  namespace: *ns
   classifier: ess101
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -112,7 +98,6 @@ mtdome-ess01-sim:
 
 mtdome-ess02-sim:
   enabled: true
-  namespace: *ns
   classifier: ess102
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -122,7 +107,6 @@ mtdome-ess02-sim:
 
 mtdome-ess03-sim:
   enabled: true
-  namespace: *ns
   classifier: ess103
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -132,7 +116,6 @@ mtdome-ess03-sim:
 
 tma-ess01-sim:
   enabled: true
-  namespace: *ns
   classifier: ess1
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -142,7 +125,6 @@ tma-ess01-sim:
 
 tma-ess104-sim:
   enabled: true
-  namespace: *ns
   classifier: ess104
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -152,7 +134,6 @@ tma-ess104-sim:
 
 tma-ess105-sim:
   enabled: true
-  namespace: *ns
   classifier: ess105
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -162,7 +143,6 @@ tma-ess105-sim:
 
 weatherforecast:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/weatherforecast
     pullPolicy: Always

@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "chart.name" . }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
   labels:
     {{- include "csc.labels" . | nindent 4 }}
   {{- with .Values.annotations }}

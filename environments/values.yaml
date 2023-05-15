@@ -210,6 +210,10 @@ applications:
 
 # The following settings are used for the control system
 
+# -- Application namespacce for the control system deployment
+# @default -- None, must be set
+controlSystemAppNamespace: ""
+
 # -- Image tag for the control system deployment
 # @default -- None, must be set
 controlSystemImageTag: ""

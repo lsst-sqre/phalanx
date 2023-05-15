@@ -23,6 +23,8 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.controlSystemAppNamespace"
+          value: "uws"
         - name: "global.controlSystemImageTag"
           value: {{ .Values.controlSystemImageTag | quote }}
         - name: "global.controlSystemSiteTag"

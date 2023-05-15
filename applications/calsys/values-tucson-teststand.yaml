@@ -1,8 +1,4 @@
-namespace: &ns calsys
-
 csc_collector:
-  namespace: *ns
-
   secrets:
   - name: nexus3-docker
     key: pull-secret
@@ -14,7 +10,6 @@ csc_collector:
 
 gcheaderservice1:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     tag: ts-v3.1.11_c0029
@@ -39,7 +34,6 @@ gcheaderservice1:
 
 simulation-gencam:
   enabled: true
-  namespace: *ns
   classifier: genericcamera1
   image:
     repository: ts-dockerhub.lsst.org/genericcamera
