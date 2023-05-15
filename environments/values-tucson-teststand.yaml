@@ -20,3 +20,7 @@ applications:
   strimzi: true
   telegraf: true
   telegraf-ds: true
+
+controlSystemImageTag: c0030
+controlSystemSiteTag: tucson
+controlSystemS3EndpointUrl: https://s3.tu.lsst.org

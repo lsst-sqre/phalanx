@@ -1,12 +1,7 @@
 namespace: &ns obssys
-imageTag: &imageTag c0029
 
 csc_collector:
   namespace: *ns
-  siteTag: tucson
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
-  s3EndpointUrl: https://s3.tu.lsst.org
 
   secrets:
   - name: nexus3-docker
@@ -27,7 +22,6 @@ atqueue:
   classifier: scriptqueue2
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
-    tag: *imageTag
     pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -77,7 +71,6 @@ atscheduler:
   classifier: scheduler2
   image:
     repository: ts-dockerhub.lsst.org/scheduler
-    tag: *imageTag
     pullPolicy: Always
   env:
     INDEX: 2
@@ -106,7 +99,6 @@ authorize:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/authorize
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --state enabled
@@ -122,7 +114,6 @@ mtqueue:
   classifier: scriptqueue1
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
-    tag: *imageTag
     pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -172,7 +163,6 @@ mtscheduler:
   classifier: scheduler1
   image:
     repository: ts-dockerhub.lsst.org/scheduler
-    tag: *imageTag
     pullPolicy: Always
   env:
     INDEX: 1
@@ -201,7 +191,6 @@ watcher:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/watcher
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --state enabled

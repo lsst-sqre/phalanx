@@ -1,11 +1,7 @@
 namespace: &ns uws
-imageTag: &imageTag c0029
 
 csc_collector:
   namespace: *ns
-  siteTag: tucson
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
 
   secrets:
   - name: nexus3-docker
@@ -20,7 +16,6 @@ atocps:
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: 1
@@ -31,7 +26,6 @@ ccocps:
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: 2

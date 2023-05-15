@@ -1,12 +1,7 @@
 namespace: &ns simonyitel
-imageTag: &imageTag c0029
 
 csc_collector:
   namespace: *ns
-  siteTag: tucson
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
-  s3EndpointUrl: https://s3.tu.lsst.org
 
   secrets:
   - name: nexus3-docker
@@ -49,7 +44,6 @@ ccoods:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ccoods
-    tag: *imageTag
     pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -129,7 +123,6 @@ lasertracker1-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/lasertracker
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate 2
@@ -139,7 +132,6 @@ mtaircompressor1-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
-    tag: *imageTag
     pullPolicy: Always
 
 mtaircompressor2-sim:
@@ -147,7 +139,6 @@ mtaircompressor2-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
-    tag: *imageTag
     pullPolicy: Always
 
 mtaos:
@@ -155,7 +146,6 @@ mtaos:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtaos
-    tag: *imageTag
     pullPolicy: Always
   butlerSecret:
     containerPath: *bS-cP
@@ -186,7 +176,6 @@ mtcamhexapod-sim:
   classifier: mthexapod1
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
@@ -196,7 +185,6 @@ mtdome-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtdome
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 1
@@ -206,7 +194,6 @@ mtdometrajectory:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
-    tag: *imageTag
     pullPolicy: Always
 
 mtm1m3-sim:
@@ -214,7 +201,6 @@ mtm1m3-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
-    tag: *imageTag
     pullPolicy: Always
 
 mtm2-sim:
@@ -222,7 +208,6 @@ mtm2-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/m2
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
@@ -233,7 +218,6 @@ mtm2hexapod-sim:
   classifier: mthexapod2
   image:
     repository: ts-dockerhub.lsst.org/mthexapod
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate 2
@@ -243,7 +227,6 @@ mtmount-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtmount
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
@@ -252,7 +235,6 @@ mtptg:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
-    tag: *imageTag
     pullPolicy: Always
   env:
     TELESCOPE: MT
@@ -261,7 +243,6 @@ mtrotator-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/mtrotator
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate

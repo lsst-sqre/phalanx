@@ -31,6 +31,18 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.controlSystemImageTag"
+          value: {{ .Values.controlSystemImageTag | quote }}
+        - name: "global.controlSystemSiteTag"
+          value: {{ .Values.controlSystemSiteTag | quote }}
+        - name: "global.controlSystemTopicName"
+          value: {{ .Values.controlSystemTopicName | quote }}
+        - name: "global.controlSystemKafkaBrokerAddress"
+          value: {{ .Values.controlSystemKafkaBrokerAddress | quote }}
+        - name: "global.controlSystemSchemaRegistryUrl"
+          value: {{ .Values.controlSystemSchemaRegistryUrl | quote }}
+        - name: "global.controlSystemS3EndpointUrl"
+          value: {{ .Values.controlSystemS3EndpointUrl | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.environment }}.yaml"

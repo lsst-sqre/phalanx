@@ -16,7 +16,7 @@ A Helm chart for deploying the Control System CSCs.
 | envSecrets | list | `[]` | This section holds specifications for secret injection. If this section is used, each object listed must have the following attributes defined: _name_ (The label for the secret), _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name), _secretKey_ (The key in the vault store containing the necessary secret) |
 | image.pullPolicy | string | `"IfNotPresent"` | The policy to apply when pulling an image for deployment |
 | image.repository | string | `"lsstts/test"` | The Docker registry name of the container image to use for the CSC |
-| image.tag | string | `"develop"` | The tag of the container image to use for the CSC |
+| image.tag | string | `nil` | The tag of the container image to use for the CSC |
 | imagePullSecrets | list | `[]` | The list of pull secrets needed for the images. If this section is used, each object listed can have the following attributes defined: _name_ (The label identifying the pull-secret to use) |
 | isPrimary | bool | `true` | This marks the CSC as the primary object to sync upon system starts. This is set to false when two CSCs of the same flavor are deployed (one real, one simulator) to mark the simulator so it can be filtered out for automatic syncing. |
 | nameOverride | string | `""` | Provide an alternate name for the application |

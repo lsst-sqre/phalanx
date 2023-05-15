@@ -23,7 +23,8 @@ spec:
     spec:
       containers:
         - name: {{ include "csc.class" . }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystemImageTag }}
+          image: "{{ .Values.image.repository }}:{{ $imageTag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           stdin: true
           tty: true

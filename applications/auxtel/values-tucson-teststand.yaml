@@ -1,12 +1,7 @@
 namespace: &ns auxtel
-imageTag: &imageTag c0029
 
 csc_collector:
   namespace: *ns
-  siteTag: tucson
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
-  s3EndpointUrl: https://s3.tu.lsst.org
 
   secrets:
   - name: nexus3-docker
@@ -24,7 +19,6 @@ ataos:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ataos
-    tag: *imageTag
     pullPolicy: Always
 
 atdome-sim:
@@ -32,7 +26,6 @@ atdome-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atdome
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
@@ -42,7 +35,6 @@ atdometrajectory:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
-    tag: *imageTag
     pullPolicy: Always
 
 atheaderservice:
@@ -75,7 +67,6 @@ athexapod-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/athexapod
-    tag: *imageTag
     pullPolicy: Always
 
 atoods:
@@ -83,7 +74,6 @@ atoods:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atoods
-    tag: *imageTag
     pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
@@ -163,7 +153,6 @@ atptg:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
-    tag: *imageTag
     pullPolicy: Always
   env:
     TELESCOPE: AT
@@ -173,7 +162,6 @@ atspectrograph-sim:
   namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/atspec
-    tag: *imageTag
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
