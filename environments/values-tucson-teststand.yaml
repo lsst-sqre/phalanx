@@ -6,6 +6,7 @@ applications:
   argo-workflows: true
   auxtel: true
   calsys: true
+  dmocps: true
   eas: true
   exposurelog: true
   narrativelog: true

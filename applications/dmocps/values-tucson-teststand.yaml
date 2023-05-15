@@ -1,0 +1,37 @@
+namespace: &ns uws
+imageTag: &imageTag c0029
+
+csc_collector:
+  namespace: *ns
+  siteTag: tucson
+  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
+
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+
+atocps:
+  enabled: true
+  namespace: *ns
+  classifier: ocps1
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+
+ccocps:
+  enabled: true
+  namespace: *ns
+  classifier: ocps2
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    tag: *imageTag
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
