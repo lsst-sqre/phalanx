@@ -8,7 +8,7 @@
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| vault-secrets-operator.environmentVars[0] | object | `{"name":"VAULT_TOKEN","valueFrom":{"secretKeyRef":{"key":"VAULT_TOKEN","name":"vault-secrets-operator"}}}` | environment variable where the Vault read token is kept |
-| vault-secrets-operator.environmentVars[1] | object | `{"name":"VAULT_TOKEN_LEASE_DURATION","valueFrom":{"secretKeyRef":{"key":"VAULT_TOKEN_LEASE_DURATION","name":"vault-secrets-operator"}}}` | environment variable storing the lease duration, in seconds |
+| vault-secrets-operator.environmentVars | list | Set `VAULT_TOKEN` and `VAULT_TOKEN_LEASE_DURATION` from secret | Additional environment variables used to configure the operator |
+| vault-secrets-operator.serviceAccount.createSecret | bool | `false` | Disable creation of a secret for the service account. It shouldn't be needed and it conflicts with the secret we create that contains the credentials for talking to Vault. |
 | vault-secrets-operator.vault.address | string | `"https://vault.lsst.codes"` | URL of the underlying Vault implementation |
 | vault-secrets-operator.vault.reconciliationTime | int | `60` | Sync secrets from vault on this cadence |

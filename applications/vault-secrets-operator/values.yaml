@@ -1,21 +1,29 @@
-## Variables for Vault Secrets Operator
-## https://github.com/ricoberger/vault-secrets-operator/blob/master/charts/README.md
+# https://github.com/ricoberger/vault-secrets-operator/tree/main/charts
+
 vault-secrets-operator:
+  # -- Additional environment variables used to configure the operator
+  # @default -- Set `VAULT_TOKEN` and `VAULT_TOKEN_LEASE_DURATION` from secret
   environmentVars:
-    # -- environment variable where the Vault read token is kept
-    - name: VAULT_TOKEN
+    - name: "VAULT_TOKEN"
       valueFrom:
         secretKeyRef:
-          name: vault-secrets-operator
-          key: VAULT_TOKEN
-    # -- environment variable storing the lease duration, in seconds
-    - name: VAULT_TOKEN_LEASE_DURATION
+          name: "vault-secrets-operator"
+          key: "VAULT_TOKEN"
+    - name: "VAULT_TOKEN_LEASE_DURATION"
       valueFrom:
         secretKeyRef:
-          name: vault-secrets-operator
-          key: VAULT_TOKEN_LEASE_DURATION
+          name: "vault-secrets-operator"
+          key: "VAULT_TOKEN_LEASE_DURATION"
+
+  serviceAccount:
+    # -- Disable creation of a secret for the service account. It shouldn't be
+    # needed and it conflicts with the secret we create that contains the
+    # credentials for talking to Vault.
+    createSecret: false
+
   vault:
     # -- URL of the underlying Vault implementation
     address: "https://vault.lsst.codes"
+
     # -- Sync secrets from vault on this cadence
     reconciliationTime: 60
