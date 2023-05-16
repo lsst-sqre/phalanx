@@ -3,11 +3,11 @@ name: dmocps
 version: 1.0.0
 description: Deployment for the DM OCPS CSCs
 dependencies:
-  - name: csc_collector
-    version: 1.0.0
-  - name: csc
-    alias: atocps
-    version: 1.0.0
-  - name: csc
-    alias: ccocps
-    version: 1.0.0
+- name: csc_collector
+  version: 1.0.0
+- name: csc
+  alias: atocps
+  version: 1.0.0
+- name: csc
+  alias: ccocps
+  version: 1.0.0

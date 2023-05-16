@@ -3,11 +3,11 @@ name: calsys
 version: 1.0.0
 description: Deployment for the Calibration System CSCs
 dependencies:
-  - name: csc_collector
-    version: 1.0.0
-  - name: csc
-    alias: gcheaderservice1
-    version: 1.0.0
-  - name: csc
-    alias: simulation-gencam
-    version: 1.0.0
+- name: csc_collector
+  version: 1.0.0
+- name: csc
+  alias: gcheaderservice1
+  version: 1.0.0
+- name: csc
+  alias: simulation-gencam
+  version: 1.0.0

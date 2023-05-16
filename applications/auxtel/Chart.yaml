@@ -3,40 +3,40 @@ name: auxtel
 version: 1.0.0
 description: Deployment for the Auxiliary Telescope CSCs
 dependencies:
-  - name: csc_collector
-    version: 1.0.0
-  - name: hexapod-sim
-    version: 1.0.0
-  - name: csc
-    alias: ataos
-    version: 1.0.0
-  - name: csc
-    alias: atdome
-    version: 1.0.0
-  - name: csc
-    alias: atdome-sim
-    version: 1.0.0
-  - name: csc
-    alias: atdometrajectory
-    version: 1.0.0
-  - name: csc
-    alias: atheaderservice
-    version: 1.0.0
-  - name: csc
-    alias: athexapod
-    version: 1.0.0
-  - name: csc
-    alias: athexapod-sim
-    version: 1.0.0
-  - name: csc
-    alias: atoods
-    version: 1.0.0
-  - name: csc
-    alias: atptg
-    version: 1.0.0
-  - name: csc
-    alias: atspectrograph
-    version: 1.0.0
-  - name: csc
-    alias: atspectrograph-sim
-    version: 1.0.0
+- name: csc_collector
+  version: 1.0.0
+- name: hexapod-sim
+  version: 1.0.0
+- name: csc
+  alias: ataos
+  version: 1.0.0
+- name: csc
+  alias: atdome
+  version: 1.0.0
+- name: csc
+  alias: atdome-sim
+  version: 1.0.0
+- name: csc
+  alias: atdometrajectory
+  version: 1.0.0
+- name: csc
+  alias: atheaderservice
+  version: 1.0.0
+- name: csc
+  alias: athexapod
+  version: 1.0.0
+- name: csc
+  alias: athexapod-sim
+  version: 1.0.0
+- name: csc
+  alias: atoods
+  version: 1.0.0
+- name: csc
+  alias: atptg
+  version: 1.0.0
+- name: csc
+  alias: atspectrograph
+  version: 1.0.0
+- name: csc
+  alias: atspectrograph-sim
+  version: 1.0.0
