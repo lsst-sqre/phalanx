@@ -49,7 +49,7 @@ controller:
       # -- Enable fileserver management
       # @default -- false
       enabled: false
-      
+
       # -- Image for fileserver container
       # @default -- None, must be specified
       image: ghcr.io/lsst-sqre/worblehat
@@ -154,10 +154,16 @@ controller:
           cpu: 4.0
           memory: 12Gi
 
-      # -- Volumes that should be mounted in lab pods. Currently this only
-      # supports NFS volumes and must specify `containerPath`, `server`,
-      # `serverPath`, and `mode` where mode is one of `ro` or `rw`.
-      volumes: {}
+      # -- Volumes that should be mounted in lab pods. This supports NFS,
+      # HostPath, and PVC volume types (differentiated in source.type)
+      # volumes:
+      # - containerPath: "/project"
+      #   mode: "rw"
+      #   source:
+      #     type: nfs
+      #     serverPath: "/share1/project"
+      #     server: "10.87.86.26"
+      volumes: []
 
       # -- Files to be mounted as ConfigMaps inside the user lab pod.
       # `contents` contains the file contents. Set `modify` to true to make
