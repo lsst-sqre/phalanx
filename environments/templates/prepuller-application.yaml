@@ -1,0 +1,18 @@
+{{- if (or .Values.nublado.enabled .Values.nublado2.enabled) -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prepuller
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: nublado
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prepuller
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+{{- end -}}

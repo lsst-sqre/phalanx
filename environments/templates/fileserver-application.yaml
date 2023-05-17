@@ -1,3 +1,4 @@
+{{- if (or .Values.nublado.enabled .Values.nublado2.enabled) -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -11,7 +12,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    # This is just an empty application...
-    path: applications/nublado-users
-    repoURL: https://github.com/lsst-sqre/phalanx.git
-    targetRevision: main
+    path: applications/fileserver
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+{{- end -}}
