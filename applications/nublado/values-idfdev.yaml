@@ -33,19 +33,28 @@ controller:
           privileged: true
           volumes:
             - containerPath: "/home"
-              serverPath: "/share1/home"
-              server: "10.87.86.26"
               mode: "rw"
+              source:
+                type: nfs
+                serverPath: "/share1/home"
+                server: "10.87.86.26"
+
       volumes:
         - containerPath: "/home"
-          serverPath: "/share1/home"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/home"
+            server: "10.87.86.26"
         - containerPath: "/project"
-          serverPath: "/share1/project"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/project"
+            server: "10.87.86.26"
         - containerPath: "/scratch"
-          serverPath: "/share1/scratch"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/scratch"
+            server: "10.87.86.26"
