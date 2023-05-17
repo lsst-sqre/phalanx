@@ -9,11 +9,9 @@ config:
   scopes:
     all:
       - "exec:notebook"
-  delegate:
-    notebook: {}
 template:
   metadata:
-    name: "controller-files"
+    name: "nublado-controller-files"
   spec:
     rules:
       - host: {{ .Values.global.host | quote }}

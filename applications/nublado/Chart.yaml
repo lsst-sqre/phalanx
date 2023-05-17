@@ -6,7 +6,7 @@ sources:
   - https://github.com/lsst-sqre/jupyterlab-controller
   - https://github.com/lsst-sqre/rsp-restspawner
 home: https://github.com/lsst-sqre/jupyterlab-controller
-appVersion: 0.3.0
+appVersion: 0.4.0
 
 dependencies:
   - name: jupyterhub
