@@ -11,6 +11,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/nublado
+    # This is just an empty application...
+    path: applications/nublado-users
     repoURL: https://github.com/lsst-sqre/phalanx.git
     targetRevision: main
