@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "prepuller"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "nublado"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "fileserver"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "fileservers"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+
