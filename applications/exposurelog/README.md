@@ -17,13 +17,16 @@ Log messages related to an exposure
 | autoscaling.minReplicas | int | `1` | minimum number of exposurelog replicas |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization for exposurelog pod autoscale calculations |
 | autoscaling.targetMemoryUtilizationPercentage | int | `80` | Target memory utilization for exposurelog pod autoscale calculations |
-| config | object | `{"butler_uri_1":"","butler_uri_2":"","nfs_path_1":"","nfs_path_2":"","nfs_server_1":"","nfs_server_2":"","site_id":""}` | Application-specific configuration |
+| config | object | `{"butler_uri_1":"","butler_uri_2":"","butler_uri_3":"","nfs_path_1":"","nfs_path_2":"","nfs_path_3":"","nfs_server_1":"","nfs_server_2":"","nfs_server_3":"","site_id":""}` | Application-specific configuration |
 | config.butler_uri_1 | string | `""` | URI for butler registry 1 (required).  Format: * For a volume mounted using `nfs_path_1` (see above):   An absolute path starting with `/volume_1/`. * For a network URI: see the daf_butler documentation. * For a sandbox deployment: specify `LSSTCam` for butler_uri_1. |
 | config.butler_uri_2 | string | `""` | URI for butler registry 2 (optional).  Format: * For a volume mounted using `nfs_path_2` (see above):   An absolute path starting with `/volume_2/`. * For a network URI: see the daf_butler documentation. * For a sandbox deployment: specify `LATISS` for butler_uri_2. |
+| config.butler_uri_3 | string | `""` | URI for butler registry 3 (optional).  Format: * For a volume mounted using `nfs_path_3` (see above):   An absolute path starting with `/volume_3/`. * For a network URI: see the daf_butler documentation. * For a sandbox deployment: specify `LATISS` for butler_uri_3. |
 | config.nfs_path_1 | string | `""` | NFS path to butler registry 1 Only specify a non-blank value if reading the registry from an NFS-mounted file. If not blank then mount the specified NFS path as internal volume /volume1 |
 | config.nfs_path_2 | string | `""` | NFS path to butler registry 2 Only specify a non-blank value if reading the registry from an NFS-mounted file. If not blank then mount the specified NFS path as internal volume /volume2 |
+| config.nfs_path_3 | string | `""` | NFS path to butler registry 3 Only specify a non-blank value if reading the registry from an NFS-mounted file. If not blank then mount the specified NFS path as internal volume /volume3 |
 | config.nfs_server_1 | string | `""` | Name of the NFS server that exports nfs_path_1 Specify a non-blank value if and only if the corresponding nfs_path_1 is not blank. |
-| config.nfs_server_2 | string | `""` | Name of the NFS server that exports nfs_path_2 Specify a non-blank value if and only if the corresponding nfs_path_1 is not blank. |
+| config.nfs_server_2 | string | `""` | Name of the NFS server that exports nfs_path_2 Specify a non-blank value if and only if the corresponding nfs_path_2 is not blank. |
+| config.nfs_server_3 | string | `""` | Name of the NFS server that exports nfs_path_3 Specify a non-blank value if and only if the corresponding nfs_path_3 is not blank. |
 | config.site_id | string | `""` | Site ID; a non-empty string of up to 16 characters. This should be different for each non-sandbox deployment. Sandboxes should use `test`. |
 | db.database | string | `"exposurelog"` | database name |
 | db.host | string | `"postgres.postgres"` | database host |
