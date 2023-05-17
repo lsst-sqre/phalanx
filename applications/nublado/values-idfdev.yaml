@@ -2,9 +2,7 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   image:
-    repository: docker.io/lsstsqre/jupyterlabcontroller
-    tag: ajt-dev
-    pullPolicy: "Always"
+    tag: "0.4.0"
   config:
     safir:
       logLevel: "DEBUG"
