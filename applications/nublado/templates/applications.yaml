@@ -12,3 +12,5 @@ spec:
   project: default
   source:
     path: applications/nublado
+    repoURL: https://github.com/lsst-sqre/phalanx.git
+    targetRevision: main
