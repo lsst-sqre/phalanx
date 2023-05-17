@@ -12,5 +12,3 @@ spec:
   project: default
   source:
     path: applications/nublado
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
