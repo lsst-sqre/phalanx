@@ -8,38 +8,31 @@ alert-stream-broker:
     externalListener:
       tls:
         enabled: true
-      bootstrap:
-        ip: "35.224.176.103"
-        host: alert-stream-int.lsst.cloud
-      brokers:
-        - ip: "34.28.80.188"
-          host: alert-stream-int-broker-0.lsst.cloud
-        - ip: "35.188.136.140"
-          host: alert-stream-int-broker-1.lsst.cloud
-        - ip: "35.238.84.221"
-          host: alert-stream-int-broker-2.lsst.cloud
-        - ip: "35.188.93.220"
-          host: alert-stream-int-broker-3.lsst.cloud
-        - ip: "35.224.219.71"
-          host: alert-stream-int-broker-4.lsst.cloud
-        - ip: "35.232.51.105"
-          host: alert-stream-int-broker-5.lsst.cloud
+      #bootstrap:
+      #  ip: "35.224.176.103"
+      #  host: alert-stream-int.lsst.cloud
+      #brokers:
+      #  - ip: "34.28.80.188"
+      #    host: alert-stream-int-broker-0.lsst.cloud
+      #  - ip: "35.188.136.140"
+      #    host: alert-stream-int-broker-1.lsst.cloud
+      #  - ip: "35.238.84.221"
+      #    host: alert-stream-int-broker-2.lsst.cloud
 
-    replicas: 6
 
     storage:
       size: 1500Gi
 
-    nodePool:
-      affinities:
-        - key: kafka
-          value: ok
+    #nodePool:
+    #  affinities:
+    #    - key: kafka
+    #      value: ok
 
-      tolerations:
-        - key: kafka
-          value: ok
-          effect: NoSchedule
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/alert-stream-broker"
+    #  tolerations:
+    #    - key: kafka
+    #      value: ok
+    #      effect: NoSchedule
+  vaultSecretsPath: "secret/rubin/usdf-alert-distribtion-dev"
 
   users:
     # A user for development purposes by the Rubin team, with access to all
@@ -84,13 +77,13 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
 alert-stream-schema-registry:
-  hostname: "alert-schemas-int.lsst.cloud"
+  hostname: "alert-schemas-dev.slac.stanford.edu"
   schemaTopic: "registry-schemas"
 
 alert-stream-simulator:
   clusterPort: 9092 # internal TLS listener
   replayTopicName: "alerts-simulated"
-  replayTopicPartitions: 300
+  replayTopicPartitions: 60
   staticTopicName: "alerts-static"
   image:
     tag: v1.2.1
@@ -102,7 +95,7 @@ alert-database:
 
     logLevel: verbose
 
-    schemaRegistryURL: https://alert-schemas-int.lsst.cloud
+    schemaRegistryURL: alert-schemas-dev.slac.stanford.edu
 
     serviceAccountName: alert-database-writer
 
@@ -124,7 +117,7 @@ alert-database:
 
   ingress:
     enabled: true
-    host: "data-int.lsst.cloud"
+    host: "usdf-rsp-dev.slac.stanford.edu"
     gafaelfawrAuthQuery: "scope=read:alertdb"
 
   storage:
