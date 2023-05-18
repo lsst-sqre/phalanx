@@ -6,6 +6,9 @@ metadata:
     {{- include "nublado.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
   delegate:
     internal:
       service: "nublado"
