@@ -1,10 +1,8 @@
 config:
-  # WARNING: this is a "playground" deployment
-  # using exposurelog's built-in test butler registries.
-  site_id: test
-  # Use the test butler registries.
-  # Note: exposurelog's Dockerfile copies the test repos to the top of the container
-  butler_uri_1: LSSTCam
-  butler_uri_2: LATISS
+  site_id: base
+  nfs_path_1: /repo/LATISS  # Mounted as /volume_1
+  nfs_server_1: auxtel-archiver.ls.lsst.org
+  butler_uri_1: /volume_1
+
 db:
   host: postgresdb01.ls.lsst.org
