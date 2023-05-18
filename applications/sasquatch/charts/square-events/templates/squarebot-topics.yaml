@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.slack.interaction"
+  name: "lsst.square-events.squarebot.slack.interaction"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -15,7 +15,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.app.mention"
+  name: "lsst.square-events.squarebot.slack.app.mention"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -28,7 +28,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.message.channels"
+  name: "lsst.square-events.squarebot.slack.message.channels"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -41,7 +41,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.message.groups"
+  name: "lsst.square-events.squarebot.slack.message.groups"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -54,7 +54,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.message.im"
+  name: "lsst.square-events.squarebot.slack.message.im"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
@@ -67,7 +67,7 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "rubin.square.events.squarebot.message.mpim"
+  name: "lsst.square-events.squarebot.slack.message.mpim"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:

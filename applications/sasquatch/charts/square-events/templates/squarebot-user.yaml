@@ -19,7 +19,7 @@ spec:
     acls:
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.app_mention"
+          name: "lsst.square-events.squarebot.slack.app.mention"
           patternType: literal
         type: allow
         host: "*"
@@ -28,7 +28,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.message.channels"
+          name: "lsst.square-events.squarebot.slack.message.channels"
           patternType: literal
         type: allow
         host: "*"
@@ -37,7 +37,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.message.groups"
+          name: "lsst.square-events.squarebot.slack.message.groups"
           patternType: literal
         type: allow
         host: "*"
@@ -46,7 +46,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.message.im"
+          name: "lsst.square-events.squarebot.slack.message.im"
           patternType: literal
         type: allow
         host: "*"
@@ -55,7 +55,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.message.mpim"
+          name: "lsst.square-events.squarebot.slack.message.mpim"
           patternType: literal
         type: allow
         host: "*"
@@ -64,7 +64,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "rubin.square.events.squarebot.slack.interaction"
+          name: "lsst.square-events.squarebot.slack.interaction"
           patternType: literal
         type: allow
         host: "*"

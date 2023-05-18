@@ -21,7 +21,7 @@ Squarebot feeds events from services like Slack and GitHub into the SQuaRE Event
 | config.registryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Cluster URL for the Confluent Schema Registry |
 | config.subjectCompatibility | string | `"FORWARD"` | Schema subject compatibility. |
 | config.subjectSuffix | string | `""` | Schema subject suffix. Should be empty for production but can be set to a value to create unique subjects in the Confluent Schema Registry for testing. |
-| config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app_mention"` | Kafka topic name for the Slack `app_mention` events |
+| config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app.mention"` | Kafka topic name for the Slack `app_mention` events |
 | config.topics.slackInteraction | string | `"lsst.square-events.squarebot.slack.interaction"` | Kafka topic for Slack interaction events |
 | config.topics.slackMessageChannels | string | `"lsst.square-events.squarebot.slack.message.channels"` | Kafka topic name for the Slack `message.channels` events (public channels) |
 | config.topics.slackMessageGroups | string | `"lsst.square-events.squarebot.slack.message.groups"` | Kafka topic name for the Slack `message.groups` events (private channels) |

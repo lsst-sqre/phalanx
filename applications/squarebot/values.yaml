@@ -107,7 +107,7 @@ config:
 
   topics:
     # -- Kafka topic name for the Slack `app_mention` events
-    slackAppMention: "lsst.square-events.squarebot.slack.app_mention"
+    slackAppMention: "lsst.square-events.squarebot.slack.app.mention"
 
     # -- Kafka topic name for the Slack `message.channels` events (public channels)
     slackMessageChannels: "lsst.square-events.squarebot.slack.message.channels"
