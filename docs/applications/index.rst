@@ -56,6 +56,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    production-tools/index
    sasquatch/index
    strimzi/index
+   strimzi-access-operator/index
    strimzi-registry-operator/index
    telegraf/index
    telegraf-ds/index

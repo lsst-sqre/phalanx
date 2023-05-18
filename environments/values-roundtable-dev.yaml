@@ -54,6 +54,8 @@ sqlproxy-cross-project:
   enabled: false
 strimzi:
   enabled: true
+strimzi-access-operator:
+  enabled: true
 strimzi-registry-operator:
   enabled: false
 tap:

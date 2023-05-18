@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "strimzi-access-operator.fullname" . }}
+  labels:
+    {{- include "strimzi-access-operator.labels" . | nindent 4 }}
+    app: strimzi-access-operator
+    app.kubernetes.io/component: access-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "strimzi-access-operator.selectorLabels" . | nindent 6 }}
+      app: strimzi-access-operator
+      strimzi.io/kind: access-operator
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "strimzi-access-operator.selectorLabels" . | nindent 8 }}
+        app: strimzi-access-operator
+        strimzi.io/kind: access-operator
+    spec:
+      serviceAccountName: {{ include "strimzi-access-operator.serviceAccountName" . }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: strimzi-tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 1Mi
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+              name: http
+          args:
+            - /opt/strimzi/bin/run_java.sh
+          volumeMounts:
+            - name: strimzi-tmp
+              mountPath: /tmp
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 500m
+            requests:
+              memory: 256Mi
+              cpu: 100m
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+  strategy:
+    type: Recreate
