@@ -66,10 +66,11 @@ spec:
                   name: {{ template "squarebot.fullname" . }}-kafka
                   key: "bootstrapServers"
             - name: "KAFKA_SECURITY_PROTOCOL"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "squarebot.fullname" . }}-kafka
-                  key: "securityProtocol"
+              value: "SSL"
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: {{ template "squarebot.fullname" . }}-kafka
+              #     key: "securityProtocol"
             # From replicated KafkaUser secret
             - name: "KAFKA_SSL_CLUSTER_CAFILE"
               value: "/etc/kafkauser/ca.crt"
