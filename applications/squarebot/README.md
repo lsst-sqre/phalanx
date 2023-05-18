@@ -17,9 +17,6 @@ Squarebot feeds events from services like Slack and GitHub into the SQuaRE Event
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| config.brokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Bootstrap URLs for the Kafka brokers |
-| config.enableProducers | bool | `true` | Enable Kafka producers |
-| config.enableSchemas | bool | `true` | Enable Avro schema registration |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.registryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Cluster URL for the Confluent Schema Registry |
 | config.subjectCompatibility | string | `"FORWARD"` | Schema subject compatibility. |
