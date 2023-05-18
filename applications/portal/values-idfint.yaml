@@ -1,8 +1,5 @@
 replicaCount: 4
 
-image:
-  tag: "suit-2023.1.0"
-
 config:
   volumes:
     workareaNfs:
