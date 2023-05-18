@@ -12,7 +12,6 @@ data:
   SQUAREBOT_REGISTRY_URL: {{ .Values.config.registryUrl | quote }}
   SQUAREBOT_SUBJECT_SUFFIX: {{ .Values.config.subjectSuffix | quote }}
   SQUAREBOT_SUBJECT_COMPATIBILITY: {{ .Values.config.subjectCompatibility | quote }}
-  # SQUAREBOT_BROKER_URL: {{ .Values.config.brokerUrl | quote }}
   SQUAREBOT_TOPIC_APP_MENTION: {{ .Values.config.topics.slackAppMention | quote }}
   SQUAREBOT_TOPIC_MESSAGE_CHANNELS: {{ .Values.config.topics.slackMessageChannels | quote }}
   SQUAREBOT_TOPIC_MESSAGE_GROUPS: {{ .Values.config.topics.slackMessageGroups | quote }}

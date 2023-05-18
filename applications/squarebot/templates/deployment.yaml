@@ -73,7 +73,7 @@ spec:
               #     key: "securityProtocol"
             # From replicated KafkaUser secret
             - name: "KAFKA_SSL_CLUSTER_CAFILE"
-              value: "/etc/kafkauser/ca.crt"
+              value: "/etc/kafkacluster/ca.crt"
             - name: "KAFKA_SSL_CLIENT_CAFILE"
               value: "/etc/kafkauser/ca.crt"
             - name: "KAFKA_SSL_CLIENT_CERTFILE"
@@ -103,6 +103,9 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
+            - name: "{{ template "squarebot.fullname" . }}"
+              mountPath: "/etc/kafkacluster/ca.crt"
+              subPath: "ca.crt"
             - name: "kafka-user"
               mountPath: "/etc/kafkauser/ca.crt"
               subPath: "ca.crt"
@@ -130,5 +133,8 @@ spec:
         - name: "kafka-user"
           secret:
             secretName: {{ template "squarebot.fullname" . }}-kafka-user
+        - name: "{{ template "squarebot.fullname" . }}"
+          secret:
+            secretName: {{ template "squarebot.fullname" . }}
         - name: "tmp"
           emptyDir: {}
