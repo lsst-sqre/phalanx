@@ -269,32 +269,57 @@ hub:
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:
+    # -- Whether to require metrics requests to be authenticated
     authenticatePrometheus: false
+
     image:
+      # -- Image to use for JupyterHub
       name: ghcr.io/lsst-sqre/rsp-restspawner
+
+      # -- Tag of image to use for JupyterHub
       tag: 0.2.0
+
+    # -- Resource limits and requests
     resources:
       limits:
         cpu: 900m
         memory: 1Gi  # Should support about 200 users
+
     db:
-      # Password comes from the nublado-secret.
+      # -- Type of database to use
       type: "postgres"
+
+      # -- Database password (not used)
+      # @default -- Comes from nublado-secret
       password: "true"
+
+      # -- URL of PostgreSQL server
+      # @default -- Use the in-cluster PostgreSQL installed by Phalanx
       url: "postgresql://jovyan@postgres.postgres/jupyterhub"
+
+    # -- Security context for JupyterHub container
     containerSecurityContext:
       runAsUser: 768
       runAsGroup: 768
       allowPrivilegeEscalation: false
+
+    # -- Base URL on which JupyterHub listens
     baseUrl: "/nb"
+
+    # -- Existing secret to use for private keys
     existingSecret: "nublado-secret"
-    # This will need work
+
+    # -- Additional environment variables to set
+    # @default -- Gets `JUPYTERHUB_CRYPT_KEY` from `nublado-secret`
     extraEnv:
       JUPYTERHUB_CRYPT_KEY:
         valueFrom:
           secretKeyRef:
             name: "nublado-secret"
             key: "hub.config.CryptKeeper.keys"
+
+    # -- Additional volumes to make available to JupyterHub
+    # @default -- The `hub-config` `ConfigMap` and the Gafaelfawr token
     extraVolumes:
       - name: "hub-config"
         configMap:
@@ -302,41 +327,62 @@ jupyterhub:
       - name: "hub-gafaelfawr-token"
         secret:
           secretName: "hub-gafaelfawr-token"
+
+    # -- Additional volume mounts for JupyterHub
+    # @default -- `hub-config` and the Gafaelfawr token
     extraVolumeMounts:
       - name: "hub-config"
         mountPath: "/usr/local/etc/jupyterhub/jupyterhub_config.d"
       - name: "hub-gafaelfawr-token"
         mountPath: "/etc/gafaelfawr"
-    # We still have to use our own, enabled at the top level, which is
-    #  similar but not identical.  This one still doesn't work, even if
-    #  you explicitly enable port 8081 so the labs can talk to the Hub.
+
     networkPolicy:
+      # -- Whether to enable the default `NetworkPolicy` (currently, the
+      # upstream one does not work correctly)
       enabled: false
+
     loadRoles:
-      self:
-        scopes: ['admin:servers!user', 'read:metrics']
       server:
-        scopes: ['inherit']  # Let server use API like user
+        # -- Default scopes for the user's lab, overridden to allow the lab to
+        # delete itself (which we use for our added menu items)
+        scopes: ["self"]
 
   prePuller:
     continuous:
+      # -- Whether to run the JupyterHub continuous prepuller (the Nublado
+      # controller does its own prepulling)
       enabled: false
+
     hook:
+      # -- Whether to run the JupyterHub hook prepuller (the Nublado
+      # controller does its own prepulling)
       enabled: false
 
   singleuser:
     cloudMetadata:
+      # -- Whether to configure iptables to block cloud metadata endpoints.
+      # This is unnecessary in our environments (they are blocked by cluster
+      # configuration) and thus is disabled to reduce complexity.
       blockWithIptables: false
+
+    # -- Start command for labs
     cmd: "/opt/lsst/software/jupyterlab/runlab.sh"
+
+    # -- Default URL prefix for lab endpoints
     defaultUrl: "/lab"
 
   proxy:
     service:
+      # -- Only expose the proxy to the cluster, overriding the default of
+      # exposing the proxy directly to the Internet
       type: ClusterIP
-    # Replace with traefik
+
     chp:
       networkPolicy:
+        # -- Enable access to the proxy from other namespaces, since we put
+        # each user's lab environment in its own namespace
         interNamespaceAccessLabels: accept
+
         # This currently causes Minikube deployment in GH-actions to fail.
         # We want it sometime but it's not critical; it will help with
         # scale-down
@@ -344,25 +390,44 @@ jupyterhub:
         #   enabled: true
         #   minAvailable: 1
 
-  # Rather than using the JupyterHub-provided ingress, which requires us
-  # to repeat the global host name, we just use a GafaelfawrIngress of
-  # our own, found in templates.  That also means the annotations are
-  # automatically in sync.
+  # Rather than using the JupyterHub-provided ingress, which requires us to
+  # repeat the global host name and manually configure authentication, we
+  # instead install our own GafaelfawrIngress.
   ingress:
+    # -- Whether to enable the default ingress
     enabled: false
 
   cull:
+    # -- Enable the lab culler.
     enabled: true
-    timeout: 2592000  # 30 days -- shorten later
-    every: 600  # Check every ten minutes
-    users: true  # log out user when we cull
-    removeNamedServers: true  # Post-stop hook may already do this
-    maxAge: 5184000  # 60 days -- shorten later
+
+    # -- Default idle timeout before the lab is automatically deleted in
+    # seconds
+    # @default -- 2592000 (30 days)
+    timeout: 2592000
+
+    # -- How frequently to check for idle labs in seconds
+    # @default -- 600 (10 minutes)
+    every: 600
+
+    # -- Whether to log out the server when culling their lab
+    users: true
+
+    # -- Whether to remove named servers when culling their lab
+    removeNamedServers: true
+
+    # -- Maximum age of a lab regardless of activity
+    # @default -- 5184000 (60 days)
+    maxAge: 5184000
 
   scheduling:
     userScheduler:
+      # -- Whether the user scheduler should be enabled
       enabled: false
+
     userPlaceholder:
+      # -- Whether to spawn placeholder pods representing fake users to force
+      # autoscaling in advance of running out of resources
       enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
