@@ -74,6 +74,8 @@ spec:
             # From replicated KafkaUser secret
             - name: "KAFKA_SSL_CLUSTER_CAFILE"
               value: "/etc/kafkauser/ca.crt"
+            - name: "KAFKA_SSL_CLIENT_CAFILE"
+              value: "/etc/kafkauser/ca.crt"
             - name: "KAFKA_SSL_CLIENT_CERTFILE"
               value: "/etc/kafkauser/user.crt"
             - name: "KAFKA_SSL_CLIENT_KEYFILE"
