@@ -1,16 +1,18 @@
+{{- if .Values.nublado.enabled -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prepuller
+  name: fileservers
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: nublado
+    namespace: fileservers
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/nublado/charts/prepuller
-    repoURL: https://github.com/lsst-sqre/phalanx.git
-    targetRevision: tickets/DM-38972
+    path: applications/fileservers
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+{{- end -}}
