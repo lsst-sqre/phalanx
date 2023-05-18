@@ -14,6 +14,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
+| controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
+| controller.config.fileserver.image | string | `"ghcr.io/lsst-sqre/worblehat"` | Image for fileserver container |
+| controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user fileservers |
+| controller.config.fileserver.pullPolicy | string | `"IfNotPresent"` | Pull policy for fileserver container |
+| controller.config.fileserver.tag | string | `"0.1.0"` | Tag for fileserver container |
+| controller.config.fileserver.timeout | int | `3600` | Timeout for user fileservers, in seconds |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -28,7 +34,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | object | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Names must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI prefixes for memory are supported. `large`) |
-| controller.config.lab.volumes | object | `{}` | Volumes that should be mounted in lab pods. Currently this only supports NFS volumes and must specify `containerPath`, `server`, `serverPath`, and `mode` where mode is one of `ro` or `rw`. |
+| controller.config.lab.volumes | list | `[]` | Volumes that should be mounted in lab pods. This supports NFS, HostPath, and PVC volume types (differentiated in source.type) |
 | controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
 | controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |

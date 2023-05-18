@@ -51,22 +51,30 @@ controller:
           privileged: true
           volumes:
             - containerPath: "/home"
-              serverPath: "/share1/home"
-              server: "10.22.240.130"
               mode: "rw"
+              source:
+                serverPath: "/share1/home"
+                server: "10.22.240.130"
+                type: "nfs"
       volumes:
         - containerPath: "/home"
-          serverPath: "/share1/home"
-          server: "10.22.240.130"
           mode: "rw"
+          source:
+            serverPath: "/share1/home"
+            server: "10.22.240.130"
+            type: "nfs"
         - containerPath: "/project"
-          serverPath: "/share1/project"
-          server: "10.22.240.130"
           mode: "rw"
+          source:
+            serverPath: "/share1/project"
+            server: "10.22.240.130"
+            type: "nfs"
         - containerPath: "/scratch"
-          serverPath: "/share1/scratch"
-          server: "10.22.240.130"
           mode: "rw"
+          source:
+            serverPath: "/share1/scratch"
+            server: "10.22.240.130"
+            type: "nfs"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"

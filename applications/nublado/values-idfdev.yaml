@@ -1,10 +1,12 @@
 controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
-  image:
-    tag: "tickets-DM-38795-queue"
-    pullPolicy: "Always"
   config:
+    safir:
+      logLevel: "DEBUG"
+    fileserver:
+      enabled: true
+      timeout: 43200
     images:
       source:
         type: "google"
@@ -27,19 +29,28 @@ controller:
           privileged: true
           volumes:
             - containerPath: "/home"
-              serverPath: "/share1/home"
-              server: "10.87.86.26"
               mode: "rw"
+              source:
+                type: nfs
+                serverPath: "/share1/home"
+                server: "10.87.86.26"
+
       volumes:
         - containerPath: "/home"
-          serverPath: "/share1/home"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/home"
+            server: "10.87.86.26"
         - containerPath: "/project"
-          serverPath: "/share1/project"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/project"
+            server: "10.87.86.26"
         - containerPath: "/scratch"
-          serverPath: "/share1/scratch"
-          server: "10.87.86.26"
           mode: "rw"
+          source:
+            type: nfs
+            serverPath: "/share1/scratch"
+            server: "10.87.86.26"
