@@ -1,3 +1,5 @@
+{{- if .Values.users.tsSalKafka.enabled }}
+---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
 metadata:
@@ -27,6 +29,8 @@ spec:
     consumerByteRate: 1073741824
     requestPercentage: 90
     controllerMutationRate: 1000
+{{- end }}
+{{- if .Values.mirrormaker2.enabled -}}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -62,6 +66,8 @@ spec:
     consumerByteRate: 1073741824
     requestPercentage: 90
     controllerMutationRate: 1000
+{{- end }}
+{{- if .Values.users.kafkaConnectManager.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -92,6 +98,8 @@ spec:
     consumerByteRate: 1073741824
     requestPercentage: 90
     controllerMutationRate: 1000
+{{- end }}
+{{- if .Values.users.kafdrop.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -122,6 +130,8 @@ spec:
         type: allow
         host: "*"
         operation: All
+{{- end }}
+{{- if .Values.users.telegraf.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -152,6 +162,8 @@ spec:
         type: allow
         host: "*"
         operation: Read
+{{- end }}
+{{- if .Values.users.promptProcessing.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -189,4 +201,4 @@ spec:
         type: allow
         host: "*"
         operation: Read
-
+{{- end }}

@@ -6,6 +6,7 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| enabled | bool | `true` | Enable Kafka Connect Manager. |
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |

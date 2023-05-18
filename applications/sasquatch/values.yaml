@@ -10,6 +10,8 @@ strimzi-registry-operator:
   operatorNamespace: sasquatch
 
 influxdb:
+  # -- Enable InfluxDB.
+  enabled: true
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
@@ -130,6 +132,8 @@ rest-proxy:
   enabled: false
 
 chronograf:
+  # -- Enable Chronograf.
+  enabled: true
   # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"
@@ -162,6 +166,8 @@ chronograf:
       cpu: 4
 
 kapacitor:
+  # -- Enable Kapacitor.
+  enabled: true
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
@@ -184,6 +190,10 @@ kapacitor:
     limits:
       memory: 16Gi
       cpu: 4
+
+kafdrop:
+  # -- Enable Kafdrop.
+  enabled: true
 
 bucketmapper:
   # -- image for monitoring-related cronjobs

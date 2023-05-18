@@ -27,6 +27,19 @@ kafka:
     # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
     replica.lag.time.max.ms: 120000
 
+  listeners:
+    plain:
+      # -- Whether internal plaintext listener is enabled.
+      enabled: true
+
+    tls:
+      # -- Whether internal TLS listener is enabled.
+      enabled: true
+
+    external:
+      # -- Whether external listener is enabled.
+      enabled: true
+
   externalListener:
     tls:
       # -- Whether TLS encryption is enabled.
@@ -61,6 +74,12 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
+  # -- Node affinity for Kafka broker pod assignment.
+  affinity: {}
+
+  # -- Tolerations for Kafka broker pod assignment.
+  tolerations: []
+
 zookeeper:
   # -- Number of Zookeeper replicas to run.
   replicas: 3
@@ -70,7 +89,15 @@ zookeeper:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
 
+  # -- Node affinity for Zookeeper pod assignment.
+  affinity: {}
+
+  # -- Tolerations for Zookeeper pod assignment.
+  tolerations: []
+
 connect:
+  # -- Enable Kafka Connect.
+  enabled: true
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
   image: ghcr.io/lsst-sqre/strimzi-0.34.0-kafka-3.3.1:1.1.0
   # -- Number of Kafka Connect replicas to run.
@@ -84,6 +111,27 @@ registry:
 # These users will be created, along with their credentials.
 superusers:
   - kafka-admin
+
+users:
+  tsSalKafka:
+    # -- Enable user ts-salkafka.
+    enabled: true
+
+  kafdrop:
+    # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
+    enabled: true
+
+  telegraf:
+    # -- Enable user telegraf (deployed by parent Sasquatch chart)
+    enabled: true
+
+  promptProcessing:
+    # -- Enable user prompt-processing
+    enabled: true
+
+  kafkaConnectManager:
+    # -- Enable user kafka-connect-manager
+    enabled: true
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster.

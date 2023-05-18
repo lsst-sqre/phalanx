@@ -11,10 +11,20 @@ spec:
           annotations:
             argocd.argoproj.io/compare-options: IgnoreExtraneous
             argocd.argoproj.io/sync-options: Prune=false
+      pod:
+        {{- with .Values.kafka.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.kafka.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end}}
     version: {{ .Values.kafka.version | quote }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:
-      # internal istener without tls encryption and with scram-sha-512 authentication
+      {{- if .Values.kafka.listeners.plain.enabled }}
+      # internal listener without tls encryption and with scram-sha-512 authentication
       # used by clients inside the Kubernetes cluster
       - name: plain
         port: 9092
@@ -22,6 +32,8 @@ spec:
         tls: false
         authentication:
           type: scram-sha-512
+      {{- end }}
+      {{- if .Values.kafka.listeners.tls.enabled }}
       # internal listener with tls encryption and mutual tls authentication
       # used by the schema registry and kafka connect clients
       - name: tls
@@ -30,6 +42,8 @@ spec:
         tls: true
         authentication:
           type: tls
+      {{- end }}
+      {{- if .Values.kafka.listeners.external.enabled }}
       # external listener of type loadbalancer with tls encryption and scram-sha-512
       # authentication used by clients outside the Kubernetes cluster
       - name: external
@@ -65,6 +79,7 @@ spec:
             certificate: tls.crt
             key: tls.key
           {{- end }}
+      {{- end }}
 
     authorization:
       type: simple
@@ -104,6 +119,15 @@ spec:
           annotations:
             argocd.argoproj.io/compare-options: IgnoreExtraneous
             argocd.argoproj.io/sync-options: Prune=false
+      pod:
+        {{- with .Values.zookeeper.affinity }}
+        affinity:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        {{- with .Values.zookeeper.tolerations }}
+        tolerations:
+          {{- toYaml . | nindent 10 }}
+        {{- end}}
     replicas: {{ .Values.zookeeper.replicas }}
     storage:
       # Note that storage is configured per replica. If there are 3 replicas,
