@@ -44,6 +44,17 @@ spec:
                   name: "postgres"
                   key: "jupyterhub_password"
             {{- end }}
+            {{- with .Values.nublado3_db }}
+            - name: "VRO_DB_NUBLADO3_USER"
+              value: {{ .user | quote }}
+            - name: "VRO_DB_NUBLADO3_DB"
+              value: {{ .db | quote }}
+            - name: "VRO_DB_NUBLADO3_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "nublado3_password"
+            {{- end }}
             {{- with .Values.lovelog_db }}
             - name: "VRO_DB_LOVELOG_USER"
               value: {{ .user | quote }}
