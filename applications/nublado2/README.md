@@ -54,7 +54,7 @@ JupyterHub for the Rubin Science Platform
 | jupyterhub.hub.extraVolumes[1].name | string | `"nublado-gafaelfawr"` |  |
 | jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"gafaelfawr-token"` |  |
 | jupyterhub.hub.image.name | string | `"lsstsqre/nublado2"` |  |
-| jupyterhub.hub.image.tag | string | `"2.6.3"` |  |
+| jupyterhub.hub.image.tag | string | `"2.6.2"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
 | jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
 | jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |

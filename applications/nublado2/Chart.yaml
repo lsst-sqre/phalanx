@@ -6,7 +6,7 @@ home: https://github.com/lsst-sqre/nublado2
 sources:
   - https://github.com/lsst-sqre/nublado2
 # This version is not used directly.  Also update the tag in values.yaml.
-appVersion: "2.6.3"
+appVersion: "2.6.1"
 
 # Match the jupyterhub Helm chart for kubeVersion
 kubeVersion: ">=1.20.0-0"
