@@ -8,7 +8,7 @@ alert-stream-broker:
 argo-workflows:
   enabled: false
 cachemachine:
-  enabled: false
+  enabled: true
 cert-manager:
   enabled: true
 datalinker:
@@ -28,7 +28,7 @@ linters:
 mobu:
   enabled: true
 moneypenny:
-  enabled: false
+  enabled: true
 narrativelog:
   enabled: false
 noteburst:
