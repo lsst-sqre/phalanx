@@ -92,7 +92,7 @@ jupyterhub:
       ServerApp:
         shutdown_no_activity_timeout: 432000
   db:
-    url: "postgresql://jovyan@postgres.postgres/nublado3"
+    url: "postgresql://nublado3@postgres.postgres/nublado3"
 
   cull:
     enabled: true

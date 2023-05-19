@@ -58,4 +58,4 @@ jupyterhub:
   hub:
     baseUrl: "/n3"
   db:
-    url: "postgresql://jovyan@postgres.postgres/nublado3"
+    url: "postgresql://nublado3@postgres.postgres/nublado3"
