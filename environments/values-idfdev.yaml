@@ -34,7 +34,7 @@ noteburst:
 nublado:
   enabled: true
 nublado2:
-  enabled: false
+  enabled: true
 plot-navigator:
   enabled: false
 portal:
