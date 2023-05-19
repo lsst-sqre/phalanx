@@ -3,4 +3,4 @@ jupyterhub_db:
   db: "jupyterhub"
 nublado3_db:
   user: "jovyan"
-  db: "jupyterhub"
+  db: "nublado3"
