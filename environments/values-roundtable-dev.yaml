@@ -20,6 +20,8 @@ hips:
   enabled: false
 ingress-nginx:
   enabled: true
+kubernetes-replicator:
+  enabled: true
 mobu:
   enabled: false
 moneypenny:
@@ -46,6 +48,8 @@ semaphore:
   enabled: false
 sherlock:
   enabled: false
+squarebot:
+  enabled: true
 squareone:
   enabled: true
 squash-api:

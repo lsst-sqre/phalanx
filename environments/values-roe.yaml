@@ -20,6 +20,8 @@ hips:
   enabled: false
 ingress-nginx:
   enabled: true
+kubernetes-replicator:
+  enabled: false
 mobu:
   enabled: true
 moneypenny:
@@ -43,6 +45,8 @@ sasquatch:
 production-tools:
   enabled: false
 semaphore:
+  enabled: false
+squarebot:
   enabled: false
 squareone:
   enabled: true

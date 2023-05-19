@@ -102,3 +102,6 @@ rest-proxy:
 
 chronograf:
   enabled: false
+
+squareEvents:
+  enabled: true

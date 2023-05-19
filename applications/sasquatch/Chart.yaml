@@ -38,6 +38,9 @@ dependencies:
   - name: rest-proxy
     condition: rest-proxy.enabled
     version: 1.0.0
+  - name: square-events
+    condition: squareEvents.enabled
+    version: 1.0.0
 
 annotations:
   phalanx.lsst.io/docs: |

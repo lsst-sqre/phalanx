@@ -16,6 +16,7 @@
 | gafaelfawr.enabled | bool | `false` |  |
 | hips.enabled | bool | `false` |  |
 | ingress-nginx.enabled | bool | `false` |  |
+| kubernetes-replicator.enabled | bool | `false` |  |
 | linters.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |
@@ -35,6 +36,7 @@
 | semaphore.enabled | bool | `false` |  |
 | sherlock.enabled | bool | `false` |  |
 | sqlproxy-cross-project.enabled | bool | `false` |  |
+| squarebot.enabled | bool | `false` |  |
 | squareone.enabled | bool | `false` |  |
 | squash-api.enabled | bool | `false` |  |
 | ssotap.enabled | bool | `false` |  |
