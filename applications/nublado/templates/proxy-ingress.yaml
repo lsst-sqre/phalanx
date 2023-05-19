@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "hub"
+  name: "proxy"
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 config:
@@ -14,7 +14,11 @@ config:
     notebook: {}
 template:
   metadata:
-    name: "hub"
+    name: "proxy"
+    {{- with .Values.proxy.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
   spec:
     rules:
       - host: {{ .Values.global.host | quote }}

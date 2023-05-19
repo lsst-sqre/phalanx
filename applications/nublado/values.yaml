@@ -266,6 +266,17 @@ hub:
     # 60 seconds for reasons we don't understand.
     startup: 90
 
+# JupyterHub proxy configuration handled directly by this chart rather than by
+# Zero to JupyterHub.
+proxy:
+  ingress:
+    # -- Additional annotations to add to the proxy ingress (also used to talk
+    # to JupyterHub and all user labs)
+    # @default -- Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:
