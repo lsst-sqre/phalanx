@@ -1,7 +1,23 @@
+image:
+  tag: "tickets-DM-39325"
+  pullPolicy: "Always"
 config:
   debug: true
   autostart:
-    - name: "python"
+    - name: "nublado2"
+      count: 1
+      users:
+        - username: "bot-mobu-nublado2"
+      scopes: ["exec:notebook"]
+      business:
+        type: "JupyterPythonLoop"
+        options:
+          image:
+            image_class: "latest-weekly"
+            size: "Small"
+            debug: true
+        restart: true
+    - name: "nublado3"
       count: 1
       users:
         - username: "bot-mobu-user"
@@ -13,6 +29,8 @@ config:
             image_class: "latest-weekly"
             size: "Small"
             debug: true
+          use_cachemachine: false
+          url_prefix: "/n3"
         restart: true
     - name: "tap"
       count: 1
