@@ -9,3 +9,5 @@ data:
   NOTEBURST_PATH_PREFIX: {{ .Values.ingress.path | quote }}
   NOTEBURST_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
   NOTEBURST_REDIS_URL: "redis://{{ include "noteburst.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0"
+  NOTEBURST_JUPYTERHUB_PATH_PREFIX: {{ .Values.config.hubPathPrefix | quote }}
+  NOTEBURST_NUBLADO_CONTROLLER_PATH_PREFIX: {{ .Values.config.nubladoControllerPathPrefix | quote }}
