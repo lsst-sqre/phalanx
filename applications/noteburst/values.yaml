@@ -64,7 +64,8 @@ ingress:
   # -- Path prefix where noteburst is hosted
   path: "/noteburst"
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -92,6 +93,12 @@ affinity: {}
 config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
+
+  # -- URL path prefix for the JupyterHub service
+  hubPathPrefix: "/nb"
+
+  # -- URL path prefix for the Nublado JupyterLab Controller service
+  nubladoControllerPathPrefix: "/nublado"
 
   worker:
     # -- Science Platform user identities that workers can acquire. Each item
