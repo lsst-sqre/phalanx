@@ -29,7 +29,7 @@ config:
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/butler-secret/aws-credentials.ini"
     S3_ENDPOINT_URL: "https://storage.googleapis.com"
     GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/butler-secret/butler-gcs-idf-creds.json"
-    DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
+    DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
     AUTO_REPO_URLS: https://github.com/lsst-sqre/system-test,https://github.com/rubin-dp0/tutorial-notebooks
     AUTO_REPO_BRANCH: prod
     AUTO_REPO_SPECS: https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod

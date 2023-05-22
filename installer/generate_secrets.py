@@ -174,6 +174,10 @@ class SecretGenerator:
         if slack_webhook:
             self._set("nublado", "slack_webhook", slack_webhook)
 
+        # Grab lab secrets from the Butler secret.
+        butler = self.secrets["butler-secret"].copy()
+        self.secrets["nublado-lab-secret"] = butler
+
     def _nublado2(self):
         crypto_key = secrets.token_hex(32)
         self._set_generated("nublado2", "crypto_key", crypto_key)
