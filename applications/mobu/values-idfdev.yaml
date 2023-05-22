@@ -1,5 +1,4 @@
 config:
-  useCachemachine: false
   debug: true
   autostart:
     - name: "python"

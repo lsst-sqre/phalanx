@@ -87,9 +87,12 @@ controller:
 
 jupyterhub:
   hub:
+    baseUrl: "/n3"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
+    db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
 
   cull:
     enabled: true
