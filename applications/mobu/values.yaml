@@ -36,10 +36,6 @@ config:
   # -- Prefix for mobu's API routes.
   pathPrefix: "/mobu"
 
-  # -- Whether to use cachemachine. Set to false on environments using the
-  # Nublado lab controller.
-  useCachemachine: true
-
 # -- Resource limits and requests for the mobu frontend pod
 resources: {}
 

@@ -15,7 +15,6 @@ Continuous integration testing
 | config.debug | bool | `false` | If set to true, include the output from all flocks in the main mobu log and disable structured JSON logging. |
 | config.disableSlackAlerts | bool | `false` | If set to true, do not configure mobu to send alerts to Slack. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
-| config.useCachemachine | bool | `true` | Whether to use cachemachine. Set to false on environments using the Nublado lab controller. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
