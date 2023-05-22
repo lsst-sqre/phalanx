@@ -1,2 +1,12 @@
+semaphore:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx  
+pull-secret:
+  enabled: true
+  path: secret/rubin/usdf-rsp/semaphore
 config:
   phalanx_env: "usdfprod"
+  github_app_id: "337324"
+  enable_github_app: "True"
