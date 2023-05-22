@@ -1,5 +1,4 @@
 config:
-  useCachemachine: false
   autostart:
     - name: "firefighter"
       count: 1
