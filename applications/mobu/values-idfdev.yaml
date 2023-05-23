@@ -4,30 +4,38 @@ config:
     - name: "nublado2"
       count: 1
       users:
-        - username: "bot-mobu-nublado2"
-      scopes: ["exec:notebook"]
+        - username: "bot-mobu-user"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
       business:
-        type: "JupyterPythonLoop"
+        type: "NotebookRunner"
         options:
           image:
             image_class: "latest-weekly"
-            size: "Small"
-            debug: true
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
         restart: true
-    - name: "nublado3"
+    - name: "weekly"
       count: 1
       users:
-        - username: "bot-mobu-user"
-      scopes: ["exec:notebook"]
+        - username: "bot-mobu-weekly"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
       business:
-        type: "JupyterPythonLoop"
+        type: "NotebookRunner"
         options:
           image:
             image_class: "latest-weekly"
-            size: "Small"
-            debug: true
-          use_cachemachine: false
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
           url_prefix: "/n3"
+          use_cachemachine: false
         restart: true
     - name: "tap"
       count: 1
