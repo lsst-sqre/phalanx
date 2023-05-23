@@ -1,6 +1,3 @@
-image:
-  tag: "tickets-DM-39325"
-  pullPolicy: "Always"
 config:
   debug: true
   autostart:
