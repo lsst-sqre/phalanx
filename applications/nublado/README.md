@@ -83,3 +83,4 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.singleuser.cloudMetadata.blockWithIptables | bool | `false` | Whether to configure iptables to block cloud metadata endpoints. This is unnecessary in our environments (they are blocked by cluster configuration) and thus is disabled to reduce complexity. |
 | jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` | Start command for labs |
 | jupyterhub.singleuser.defaultUrl | string | `"/lab"` | Default URL prefix for lab endpoints |
+| proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |

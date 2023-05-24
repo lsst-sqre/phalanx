@@ -1,6 +1,6 @@
 apiVersion: v2
 name: nublado
-version: 3.0.0
+version: 1.0.0
 description: JupyterHub and custom spawner for the Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/jupyterlab-controller
