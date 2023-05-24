@@ -28,3 +28,7 @@ uws:
     limits:
       cpu: 2.0
       memory: "4G"
+
+tap_schema:
+  image:
+    repository: "lsstsqre/tap-schema-idfsso"

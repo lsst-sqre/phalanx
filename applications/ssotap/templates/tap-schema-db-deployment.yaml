@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cadc-tap.fullname" . }}-tap-schema-db
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "tap-schema-db"
+          env:
+            - name: MYSQL_DATABASE
+              value: "TAP_SCHEMA"
+            - name: MYSQL_USER
+              value: "TAP_SCHEMA"
+            - name: MYSQL_PASSWORD
+              value: "TAP_SCHEMA"
+            - name: MYSQL_ROOT_HOST
+              value: "%"
+          image: "{{ .Values.tap_schema.image.repository }}:{{ .Values.tap_schema.image.tag}}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - containerPort: 3306
+              protocol: "TCP"
+          {{- with .Values.tap_schema.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      imagePullSecrets:
+        - name: "pull-secret"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
