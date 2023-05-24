@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "cadc-tap.fullname" . }}-db
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - protocol: "TCP"
+      port: 3306
+      targetPort: 3306
+  selector:
+    {{- include "cadc-tap.selectorLabels" . | nindent 4 }}
