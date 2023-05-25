@@ -2,6 +2,9 @@ controller:
   config:
     safir:
       logLevel: "DEBUG"
+    fileserver:
+      enabled: true
+      timeout: 21600
 
     images:
       source:
@@ -172,6 +175,8 @@ proxy:
 jupyterhub:
   hub:
     baseUrl: "/n3"
+    db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
   cull:
     timeout: 432000
     every: 300
