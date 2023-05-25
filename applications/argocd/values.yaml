@@ -59,6 +59,11 @@ argo-cd:
       pathType: "ImplementationSpecific"
 
   configs:
+    cm:
+      # -- Configure resource comparison
+      resource.compareoptions: |
+        ignoreAggregatedRoles: true
+
     params:
       # -- Do not use TLS (this is terminated at the ingress)
       server.insecure: true
