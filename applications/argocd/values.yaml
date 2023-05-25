@@ -8,58 +8,66 @@ argo-cd:
       format: "json"
 
   redis:
-    enabled: true
     metrics:
+      # -- Enable Redis metrics service
       enabled: true
 
   controller:
     metrics:
+      # -- Enable controller metrics service
       enabled: true
+
       applicationLabels:
+        # -- Enable adding additional labels to `argocd_app_labels` metric
         enabled: true
+
+        # -- Labels to add to `argocd_app_labels` metric
         labels: ["name", "instance"]
 
   repoServer:
     metrics:
+      # -- Enable repo server metrics service
       enabled: true
 
   notifications:
     metrics:
+      # -- Enable notifications metrics service
       enabled: true
 
   server:
     metrics:
+      # -- Enable server metrics service
       enabled: true
+
     ingress:
+      # -- Create an ingress for the Argo CD server
       enabled: true
+
+      # -- Additional annotations to add to the Argo CD ingress
+      # @default -- Rewrite requests to remove `/argo-cd/` prefix
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+
+      # -- Ingress class to use for Argo CD ingress
       ingressClassName: "nginx"
+
+      # -- Paths to route to Argo CD
       paths:
         - "/argo-cd(/|$)(.*)"
+
+      # -- Type of path expression for Argo CD ingress
       pathType: "ImplementationSpecific"
 
-    extraArgs:
-      - "--basehref=/argo-cd"
-      - "--insecure=true"
-
-    config:
-      helm.repositories: |
-        - url: https://lsst-sqre.github.io/charts/
-          name: lsst-sqre
-        - url: https://ricoberger.github.io/helm-charts/
-          name: ricoberger
-        - url: https://kubernetes.github.io/ingress-nginx/
-          name: ingress-nginx
-        - url: https://charts.helm.sh/stable
-          name: stable
-        - url: https://strimzi.io/charts/
-          name: strimzi
-      resource.compareoptions: |
-        ignoreAggregatedRoles: true
-
   configs:
+    params:
+      # -- Do not use TLS (this is terminated at the ingress)
+      server.insecure: true
+
+      # -- Base href for `index.html` when running under a reverse proxy
+      server.basehref: "/argo-cd"
+
     secret:
+      # -- Create the Argo CD secret (we manage this with Vault)
       createSecret: false
 
 # The following will be set by parameters injected by Argo CD and should not
