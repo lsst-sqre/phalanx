@@ -1,4 +1,6 @@
 controller:
+  image:
+    tag: tickets-DM-39406
   config:
     safir:
       logLevel: "DEBUG"
