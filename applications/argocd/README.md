@@ -13,6 +13,7 @@ Kubernetes application manager
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| argo-cd.configs.cm."resource.compareoptions" | string | `"ignoreAggregatedRoles: true\n"` | Configure resource comparison |
 | argo-cd.configs.params."server.basehref" | string | `"/argo-cd"` | Base href for `index.html` when running under a reverse proxy |
 | argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
 | argo-cd.configs.secret.createSecret | bool | `false` | Create the Argo CD secret (we manage this with Vault) |
