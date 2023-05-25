@@ -18,7 +18,7 @@ IVOA TAP service
 | config.gcsBucketType | string | GCS | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | None, must be set | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"4G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
-| config.tapSchemaAddress | string | `"tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
+| config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

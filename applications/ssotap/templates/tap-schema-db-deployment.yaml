@@ -17,6 +17,7 @@ spec:
       {{- end }}
       labels:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-db"
     spec:
       automountServiceAccountToken: false
       containers:
