@@ -1,6 +1,7 @@
 controller:
   image:
     tag: tickets-DM-39406
+    pullPolicy: Always
   config:
     safir:
       logLevel: "DEBUG"
