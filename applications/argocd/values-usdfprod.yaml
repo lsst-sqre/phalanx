@@ -38,7 +38,7 @@ argo-cd:
         requestedIDTokenClaims: {"groups": {"essential": true}}
     rbacConfig:
       policy.csv: |
-        g, ytl@slac.stanford.edu, role:adming
+        g, ytl@slac.stanford.edu, role:admin
         g, pav@slac.stanford.edu, role:admin
         g, dspeck@slac.stanford.edu, role:admin
         g, afausti@slac.stanford.edu, role:admin
@@ -46,6 +46,8 @@ argo-cd:
         g, cbanek@slac.stanford.edu, role:admin
         g, hchiang2@slac.stanford.edu, role:admin
         g, athor@slac.stanford.edu, role:admin
+        g, reinking@slac.stanford.edu, role:admin
+        g, smart@slac.stanford.edu, role:admin
       scopes: "[email]"
 
       helm.repositories: |
