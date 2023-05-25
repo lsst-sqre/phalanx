@@ -22,6 +22,8 @@ controller:
     lab:
       pullSecret: "pull-secret"
 
+      homedirSchema: "initial_then_username"
+
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
