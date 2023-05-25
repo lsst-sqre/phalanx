@@ -58,32 +58,14 @@ argo-cd:
       # -- Type of path expression for Argo CD ingress
       pathType: "ImplementationSpecific"
 
-    # -- Extra arguments to pass to the Argo CD server
-    extraArgs:
-      - "--basehref=/argo-cd"
-      - "--insecure=true"
-
-    config:
-      # -- Additional Helm repositories to use
-      # @default -- See `values.yaml`
-      helm.repositories: |
-        - url: https://lsst-sqre.github.io/charts/
-          name: lsst-sqre
-        - url: https://ricoberger.github.io/helm-charts/
-          name: ricoberger
-        - url: https://kubernetes.github.io/ingress-nginx/
-          name: ingress-nginx
-        - url: https://charts.helm.sh/stable
-          name: stable
-        - url: https://strimzi.io/charts/
-          name: strimzi
-
-      # -- Comparison options for resources
-      # @default -- Ignore aggregated cluster roles
-      resource.compareoptions: |
-        ignoreAggregatedRoles: true
-
   configs:
+    params:
+      # -- Do not use TLS (this is terminated at the ingress)
+      server.insecure: true
+
+      # -- Base href for `index.html` when running under a reverse proxy
+      server.basehref: "/argo-cd"
+
     secret:
       # -- Create the Argo CD secret (we manage this with Vault)
       createSecret: false

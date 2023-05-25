@@ -13,6 +13,8 @@ Kubernetes application manager
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| argo-cd.configs.params."server.basehref" | string | `"/argo-cd"` | Base href for `index.html` when running under a reverse proxy |
+| argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
 | argo-cd.configs.secret.createSecret | bool | `false` | Create the Argo CD secret (we manage this with Vault) |
 | argo-cd.controller.metrics.applicationLabels.enabled | bool | `true` | Enable adding additional labels to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.applicationLabels.labels | list | `["name","instance"]` | Labels to add to `argocd_app_labels` metric |
@@ -21,9 +23,6 @@ Kubernetes application manager
 | argo-cd.notifications.metrics.enabled | bool | `true` | Enable notifications metrics service |
 | argo-cd.redis.metrics.enabled | bool | `true` | Enable Redis metrics service |
 | argo-cd.repoServer.metrics.enabled | bool | `true` | Enable repo server metrics service |
-| argo-cd.server.config."helm.repositories" | string | See `values.yaml` | Additional Helm repositories to use |
-| argo-cd.server.config."resource.compareoptions" | string | Ignore aggregated cluster roles | Comparison options for resources |
-| argo-cd.server.extraArgs | list | `["--basehref=/argo-cd","--insecure=true"]` | Extra arguments to pass to the Argo CD server |
 | argo-cd.server.ingress.annotations | object | Rewrite requests to remove `/argo-cd/` prefix | Additional annotations to add to the Argo CD ingress |
 | argo-cd.server.ingress.enabled | bool | `true` | Create an ingress for the Argo CD server |
 | argo-cd.server.ingress.ingressClassName | string | `"nginx"` | Ingress class to use for Argo CD ingress |
