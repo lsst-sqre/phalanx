@@ -22,7 +22,7 @@ controller:
     lab:
       pullSecret: "pull-secret"
 
-      homedirSchema: "initial_then_username"
+      homedirSchema: "initialThenUsername"
 
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
