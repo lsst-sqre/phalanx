@@ -37,25 +37,6 @@ config:
           url_prefix: "/n3"
           use_cachemachine: false
         restart: true
-    - name: "tutorial"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunner"
-        options:
-          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "main"
-          max_executions: 1
-          working_directory: "notebooks/tutorial-notebooks"
-          use_cachemachine: false
-          url_prefix: "/n3"
-        restart: true
     - name: "tap"
       count: 1
       users:
