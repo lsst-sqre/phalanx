@@ -15,6 +15,7 @@ Rubin Science Platform Portal Aspect
 | config.cleanupInterval | string | `"36h"` | How long results should be retained before being deleted |
 | config.debug | string | `"FALSE"` | Set to `TRUE` to enable service debugging |
 | config.hipsUrl | string | `/api/hips/images/color_gri` in the local Science Platform | URL for default HiPS service |
+| config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
 | config.volumes.configHostPath | string | Use an `emptyDir` | hostPath to mount as configuration.  Set either this of `configNfs`, not both. |
 | config.volumes.configNfs | object | Use an `emptyDir` | NFS information for a configuration.  If set, must have keys for path and server, Set either this of `configHostPath`, not both. |
