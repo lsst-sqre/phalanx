@@ -50,7 +50,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "prod"
+          repo_branch: "main"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
           use_cachemachine: false
