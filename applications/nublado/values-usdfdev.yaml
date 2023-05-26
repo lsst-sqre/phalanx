@@ -2,6 +2,9 @@ controller:
   config:
     safir:
       logLevel: "DEBUG"
+    fileserver:
+      enabled: true
+      timeout: 21600
 
     images:
       source:
@@ -16,10 +19,13 @@ controller:
     lab:
       pullSecret: "pull-secret"
 
+      homedirSchema: "initialThenUsername"
+
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        HUB_ROUTE: "/n3/hub"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
         S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
@@ -169,6 +175,10 @@ proxy:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "20"
 
 jupyterhub:
+  hub:
+    baseUrl: "/n3"
+    db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
   cull:
     timeout: 432000
     every: 300
