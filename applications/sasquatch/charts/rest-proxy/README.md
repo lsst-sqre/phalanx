@@ -11,7 +11,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity configuration. |
-| configurationOverrides | object | `{"client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
+| configurationOverrides | object | `{"access.control.allow.headers":"origin,content-type,accept,authorization","access.control.allow.methods":"GET,POST,PUT,DELETE","client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
 | customEnv | string | `nil` | Kafka REST additional env variables |
 | heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
