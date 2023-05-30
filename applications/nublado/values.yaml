@@ -139,13 +139,13 @@ controller:
       sizes:
         small:
           cpu: 1.0
-          memory: 3Gi
+          memory: 4Gi
         medium:
           cpu: 2.0
-          memory: 6Gi
+          memory: 8Gi
         large:
           cpu: 4.0
-          memory: 12Gi
+          memory: 16Gi
 
       # -- Volumes that should be mounted in lab pods. This supports NFS,
       # HostPath, and PVC volume types (differentiated in source.type)

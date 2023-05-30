@@ -37,16 +37,16 @@ controller:
       sizes:
         small:
           cpu: 1.0
-          memory: 3Gi
+          memory: 4Gi
         medium:
           cpu: 2.0
-          memory: 6Gi
+          memory: 8Gi
         large:
           cpu: 4.0
-          memory: 12Gi
+          memory: 16Gi
         huge:
           cpu: 8.0
-          memory: 24Gi
+          memory: 32Gi
       initContainers:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
