@@ -73,6 +73,9 @@ kafka-connect-manager:
       gis:
         enabled: true
         topicsRegex: ".*GIS"
+      lasertracker:
+        enabled: true
+        topicsRegex: ".*LaserTracker"
 
 kafdrop:
   ingress:
