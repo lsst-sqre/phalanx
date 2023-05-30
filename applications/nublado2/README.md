@@ -19,7 +19,7 @@ JupyterHub for the Rubin Science Platform
 | config.pinned_images | list | `[]` | images to pin to spawner menu |
 | config.pull_secret_path | string | `""` | pull_secret_path must also be set here; it specifies resources in the lab namespace |
 | config.shutdown_on_logout | bool | `true` | shut down user pods on logout.  Superfluous, because our LogoutHandler enforces this in any event, but nice to make explicit. |
-| config.sizes | list | `[{"cpu":1,"name":"Small","ram":"3072M"},{"cpu":2,"name":"Medium","ram":"6144M"},{"cpu":4,"name":"Large","ram":"12288M"}]` | definitions of Lab sizes available in a given instance |
+| config.sizes | list | `[{"cpu":1,"name":"Small","ram":"4096M"},{"cpu":2,"name":"Medium","ram":"8192M"},{"cpu":4,"name":"Large","ram":"16384M"}]` | definitions of Lab sizes available in a given instance |
 | config.user_resources_template | string | See `values.yaml` | Templates for the user resources to create for each lab spawn. This is a string that can be templated and then loaded as YAML to generate a list of Kubernetes objects to create. |
 | config.volume_mounts | list | `[]` | Where to mount volumes for a particular instance |
 | config.volumes | list | `[]` | Volumes to use for a particular instance |
