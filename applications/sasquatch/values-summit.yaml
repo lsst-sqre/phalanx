@@ -99,6 +99,10 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*MTVMS"
+      lasertracker:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*LaserTracker"
 
 kafdrop:
   ingress:
