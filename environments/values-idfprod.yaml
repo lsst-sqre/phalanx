@@ -55,6 +55,8 @@ squareone:
   enabled: true
 squash-api:
   enabled: false
+ssotap:
+  enabled: true
 strimzi:
   enabled: false
 strimzi-access-operator:
