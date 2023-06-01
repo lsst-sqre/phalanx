@@ -49,6 +49,8 @@ semaphore:
   enabled: true
 sherlock:
   enabled: true
+ssotap:
+  enabled: true
 squareone:
   enabled: true
 squarebot:
