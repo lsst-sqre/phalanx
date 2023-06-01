@@ -33,7 +33,13 @@ You will need to make at least the following changes to the default Helm chart t
 
   See `the Gafaelfawr's documentation on Ingress configurations <https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html>`__ for more information, and see :dmtn:`235` for a guide to what scopes to use to protect the application.
 
-- If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml#L36>`__.
+Other Phalanx configuration
+---------------------------
+
+If the application needs to listen on hostnames other than the normal cluster-wide hostname, you will need to configure :px-app:`cert-manager` so that it can generate a TLS certificate for that hostname.
+See :doc:`/applications/cert-manager/add-new-hostname` for more details.
+
+If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml#L36>`__.
 
 Documentation
 -------------
@@ -41,13 +47,11 @@ Documentation
 Phalanx uses `helm-docs`_ to generate documentation for Helm charts.
 This produces a nice Markdown README file that documents all the chart options, but it requires special formatting of the ``values.yaml`` file that is not present in the default Helm template.
 
-Documentation is **NOT Optional**  for any new application added to phalanx a
-folder must be added under the
-`docs directory <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications>`__.
-This must have at least an ``index.rst`` file.
+Documentation is **REQUIRED**.
+Every new application added to Phalanx must have a corresponding folder in the `docs/applications directory <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications>`__ containing at least an ``index.rst`` file and a ``values.md`` file.
+The ``values.md`` file is boilerplate to incorporate the documentation of the ``values.yaml`` file for the new application.
 
-For a simple example see:
-- `hips docs <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications/hips>`__ .
+For a simple example that you can copy if desired, see the `docs for the HIPS service <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications/hips>`__.
 
 Publication
 -----------

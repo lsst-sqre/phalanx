@@ -17,8 +17,9 @@ Guides
 
 .. toctree::
 
-   notes
    bootstrap
+   add-new-hostname
    route53-setup
    upgrade
+   notes
    values

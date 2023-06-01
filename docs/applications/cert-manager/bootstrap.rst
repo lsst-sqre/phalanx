@@ -21,6 +21,9 @@ Select **CNAME** from the lower drop-down menu and then **IP address or other va
 For example, if the cluster name is ``data-dev.lsst.cloud``, create a CNAME record at ``_acme-challenge.data-dev.lsst.cloud`` whose value is ``_acme-challenge.tls.lsst.cloud``.
 In the Route 53 console, the name of the record you create in the ``lsst.cloud`` hosted zone will be ``_acme-challenge.data-dev`` (yes, including the period).
 
+This will need to be done for each hostname served by this instance of the RSP.
+See :doc:`add-new-hostname` for a shorter version of these instructions to follow for each new hostname added.
+
 Add the following to the ``values-*.yaml`` file for an environment:
 
 .. code-block:: yaml
