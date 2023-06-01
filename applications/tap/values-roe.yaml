@@ -1,3 +1,7 @@
+tap_schema:
+  image:
+    repository: "lsstsqre/tap-schema-idfprod-tap"
+
 config:
   gcsBucket: "async"
   gcsBucketUrl: "https://somerville.ed.ac.uk:6780"

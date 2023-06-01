@@ -53,7 +53,7 @@ vaultSecretsPath: ""
 
 config:
   # -- Address to a MySQL database containing TAP schema data
-  tapSchemaAddress: "tap-schema-db.tap-schema.svc.cluster.local:3306"
+  tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
   datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
@@ -113,6 +113,12 @@ qserv:
 
     # -- Affinity rules for the mock QServ pod
     affinity: {}
+
+tap_schema:
+  image:
+    repository: {}
+    tag: "1.2.11"
+  resources: {}
 
 uws:
   image:
