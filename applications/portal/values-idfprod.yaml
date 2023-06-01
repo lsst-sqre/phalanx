@@ -5,6 +5,7 @@ config:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
       server: "10.13.105.122"
+  ssotap: "ssotap"
 
 resources:
   limits:
