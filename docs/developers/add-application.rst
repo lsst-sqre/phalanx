@@ -41,12 +41,18 @@ Documentation
 Phalanx uses `helm-docs`_ to generate documentation for Helm charts.
 This produces a nice Markdown README file that documents all the chart options, but it requires special formatting of the ``values.yaml`` file that is not present in the default Helm template.
 
+Documentation is **NOT Optional**  for any new application added to phalanx a
+folder must be added under the
+`docs directory <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications>`__.
+This must have at least an ``index.rst`` file.
+
+For a simple example see:
+- `hips docs <https://github.com/lsst-sqre/phalanx/tree/main/docs/applications/hips>`__ .
 
 Publication
 -----------
 
 Rubin-developed Helm charts for the Science Platform are stored as part of the `phalanx repository <https://github.com/lsst-sqre/phalanx/>`__.  They can be found in the `applications directory <https://github.com/lsst-sqre/phalanx/tree/main/applications>`__.
-
 Examples
 --------
 
