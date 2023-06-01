@@ -37,7 +37,7 @@ nublado:
 nublado2:
   enabled: true
 obsloctap:
-  enabled: false
+  enabled: true
 obstap:
   enabled: true
 plot-navigator:
