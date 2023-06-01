@@ -52,6 +52,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    alert-stream-broker/index
    exposurelog/index
    narrativelog/index
+   obsloctap/index
    plot-navigator/index
    production-tools/index
    sasquatch/index

@@ -41,6 +41,7 @@ Documentation
 Phalanx uses `helm-docs`_ to generate documentation for Helm charts.
 This produces a nice Markdown README file that documents all the chart options, but it requires special formatting of the ``values.yaml`` file that is not present in the default Helm template.
 
+
 Publication
 -----------
 
