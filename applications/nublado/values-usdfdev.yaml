@@ -131,16 +131,6 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/fs/nfs"
-          mode: "rw"
-          source:
-            type: "persistentVolumeClaim"
-            storageClassName: "fs-nfs"
-            accessModes:
-              - "ReadWriteMany"
-            resources:
-              requests:
-                storage: "1Gi"
         - containerPath: "/fs/ddn/sdf/group/rubin"
           mode: "rw"
           source:
