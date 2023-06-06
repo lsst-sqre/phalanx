@@ -22,6 +22,18 @@ Rubin Observatory's telemetry service.
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| influxdb-staging.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| influxdb-staging.enabled | bool | `false` | Enable InfluxDB staging deployment. |
+| influxdb-staging.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
+| influxdb-staging.ingress | object | disabled | InfluxDB ingress configuration. |
+| influxdb-staging.initScripts.enabled | bool | `false` | Enable InfluxDB custom initialization script. |
+| influxdb-staging.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
+| influxdb-staging.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
+| influxdb-staging.resources.limits.cpu | int | `8` |  |
+| influxdb-staging.resources.limits.memory | string | `"96Gi"` |  |
+| influxdb-staging.resources.requests.cpu | int | `1` |  |
+| influxdb-staging.resources.requests.memory | string | `"1Gi"` |  |
+| influxdb-staging.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.enabled | bool | `true` | Enable InfluxDB. |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
