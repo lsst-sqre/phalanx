@@ -20,7 +20,7 @@ influxdb:
     hostname: data-dev.lsst.cloud
 
 influxdb2:
-  enabled: false
+  enabled: true
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
