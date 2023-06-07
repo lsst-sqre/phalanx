@@ -25,7 +25,7 @@
 | nublado.enabled | bool | `false` |  |
 | nublado2.enabled | bool | `false` |  |
 | obsloctap.enabled | bool | `false` |  |
-| obstap.enabled | bool | `false` |  |
+| livetap.enabled | bool | `false` |  |
 | onepasswordUuid | string | `"dg5afgiadsffeklfr6jykqymeu"` | UUID of the 1Password item in which to find Vault tokens |
 | plot-navigator.enabled | bool | `false` |  |
 | portal.enabled | bool | `false` |  |

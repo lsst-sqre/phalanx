@@ -36,8 +36,6 @@ nublado:
   enabled: false
 nublado2:
   enabled: true
-obstap:
-  enabled: true
 plot-navigator:
   enabled: true
 portal:

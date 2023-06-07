@@ -38,6 +38,8 @@ kubernetes-replicator:
   enabled: false
 linters:
   enabled: false
+livetap:
+  enabled: false
 mobu:
   enabled: false
 moneypenny:
@@ -51,8 +53,6 @@ nublado:
 nublado2:
   enabled: false
 obsloctap:
-  enabled: false
-obstap:
   enabled: false
 plot-navigator:
   enabled: false
