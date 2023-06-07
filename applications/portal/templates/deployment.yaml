@@ -62,26 +62,6 @@ spec:
                    "tap" : {
                       "additional": {
                           "services": [
-                            {{- if .Values.config.ssotap }}
-                            {
-                               "label": "LSST DP0.2 DC2",
-                               "value": "{{ .Values.global.baseUrl }}/api/tap",
-                               {{- if .Values.config.hipsUrl }}
-                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
-                               {{- else }}
-                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
-                               {{- end }}
-                               "centerWP": "62;-37;EQ_J2000",
-                               "fovDeg": 10
-                            },
-                            {
-                               "label": "LSST DP0.3 SSO",
-                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.ssotap}}",
-                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
-                               "centerWP": "0;0;ECL",
-                               "fovDeg": 10
-                            }
-                            {{- else }}
                             {
                                "label": "LSST RSP",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
@@ -91,6 +71,15 @@ spec:
                                "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
                                {{- end }}
                                "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                            }
+                            {{- if .Values.config.ssotap }}
+                            ,
+                            {
+                               "label": "LSST DP0.3 SSO",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.ssotap}}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
                                "fovDeg": 10
                             }
                             {{- end }}
