@@ -149,7 +149,7 @@ config:
           <Card>
             ### Rubin Science Platform
 
-            The Notebook aspect is a powerful data analysis environment with
+            The Notebook Aspect is a powerful data analysis environment with
             Jupyter Notebooks and terminals in the browser.
             Documentation for the Rubin Science Platform, including account set up,
             portal, notebooks, and API aspects.
@@ -171,7 +171,7 @@ config:
 
             The Science Pipelines include the Butler for accessing LSST data
             and a pipeline framework for processing data. The LSST Science
-            Pipelines Python package is preinstalled in the Notebook aspect.
+            Pipelines is preinstalled in the Notebook Aspect.
           </Card>
         </a>
 
