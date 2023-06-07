@@ -26,7 +26,9 @@ influxdb2:
     hostname: data-dev.lsst.cloud
 
 telegraf-kafka-consumer:
-  enabled: false
+  enabled: true
+  image:
+    tag: "refreshregex"
   kafkaConsumers:
     test:
       enabled: true
