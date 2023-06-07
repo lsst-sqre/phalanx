@@ -44,7 +44,7 @@ IVOA TAP service
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tap_schema.image.repository | object | `{}` |  |
-| tap_schema.image.tag | string | `"1.2.11"` |  |
+| tap_schema.image.tag | string | `"2.0.0"` |  |
 | tap_schema.resources | object | `{}` |  |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |

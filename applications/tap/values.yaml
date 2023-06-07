@@ -117,7 +117,7 @@ qserv:
 tap_schema:
   image:
     repository: {}
-    tag: "1.2.11"
+    tag: "2.0.0"
   resources: {}
 
 uws:
