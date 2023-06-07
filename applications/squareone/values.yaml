@@ -158,10 +158,8 @@ config:
           <Card>
             ### Rubin Science Platform
 
-            The Notebook Aspect is a powerful data analysis environment with
-            Jupyter Notebooks and terminals in the browser.
-            Documentation for the Rubin Science Platform, including account set up,
-            portal, notebooks, and API aspects.
+            Guides for setting up an account on the Rubin Science Platform
+            and using the Portal, Notebook, and API Aspects.
           </Card>
         </a>
 
