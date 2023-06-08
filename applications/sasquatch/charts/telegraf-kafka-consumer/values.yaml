@@ -8,7 +8,7 @@ image:
   # -- Telegraf image repository.
   repo: "lsstsqre/telegraf"
   # -- Telegraf image tag.
-  tag: "kafka-regexp"
+  tag: "refreshregex"
   # -- Image pull policy.
   # @default -- IfNotPresent
   pullPolicy: "Always"
@@ -55,6 +55,9 @@ kafkaConsumers:
     # -- List of regular expressions to specify the Kafka topics consumed by this agent.
     topicRegexps: |
       [ ".*Test" ]
+    # -- Default interval for refreshing topics to check for new or
+    # removed regexp matches
+    topicRefreshInterval: "60s"
 
 influxdb2:
   # -- Name of the InfluxDB v2 bucket to write to.

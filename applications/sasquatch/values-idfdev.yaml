@@ -20,22 +20,26 @@ influxdb:
     hostname: data-dev.lsst.cloud
 
 influxdb2:
-  enabled: false
+  enabled: true
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
 
 telegraf-kafka-consumer:
-  enabled: false
+  enabled: true
+  image:
+    tag: "refreshregex"
   kafkaConsumers:
     test:
       enabled: true
       replicaCount: 1
+      refresh_interval: "60s"
       topicRegexps: |
         [ ".*Test" ]
     atmcs:
       enabled: true
       replicaCount: 1
+      refresh_interval: "60s"
       topicRegexps: |
         [ ".*ATMCS" ]
 
