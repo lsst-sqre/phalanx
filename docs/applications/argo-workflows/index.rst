@@ -1,8 +1,8 @@
 .. px-app:: argo-workflows
 
-#############################################
-production-tools — Data Production monitoring
-#############################################
+###############################
+argo-workflows — Argo workflows
+###############################
 
 Argo Workflows is a workflow engine for job parallelization on Kubernetes.
 
