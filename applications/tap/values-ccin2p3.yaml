@@ -1,3 +1,7 @@
+tap_schema:
+  image:
+    repository: "lsstsqre/tap-schema-idfprod-tap"
+
 config:
   gcsBucket: "async-results.lsst.codes"
   gcsBucketUrl: "https://cccephs3.in2p3.fr:8080"

@@ -1,3 +1,7 @@
+tap_schema:
+  image:
+    repository: "lsstsqre/tap-schema-idfint-sso"
+
 resources:
   requests:
     cpu: 2.0
@@ -19,7 +23,3 @@ pg:
   database: "dp03_catalogs"
   host: "usdf-pg-catalogs.slac.stanford.edu:5432"
   username: "dp03"
-
-tap_schema:
-  image:
-    repository: "lsstsqre/tap-schema-idfsso"

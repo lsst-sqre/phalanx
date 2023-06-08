@@ -36,8 +36,6 @@ nublado:
   enabled: false
 nublado2:
   enabled: true
-obstap:
-  enabled: true
 plot-navigator:
   enabled: true
 portal:
@@ -52,6 +50,8 @@ semaphore:
   enabled: true
 sherlock:
   enabled: false
+ssotap:
+  enabled: true
 squarebot:
   enabled: false
 squareone:

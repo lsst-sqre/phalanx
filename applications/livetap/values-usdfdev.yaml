@@ -1,3 +1,7 @@
+tap_schema:
+  image:
+    repository: "lsstsqre/tap-schema-usdf-dev-livetap"
+
 resources:
   requests:
     cpu: 2.0

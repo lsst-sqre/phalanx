@@ -1,8 +1,8 @@
-{{- if .Values.obstap.enabled -}}
+{{- if .Values.livetap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: obstap
+  name: livetap
 spec:
   finalizers:
     - kubernetes
@@ -10,17 +10,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: obstap
+  name: livetap
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: obstap
+    namespace: livetap
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/obstap
+    path: applications/livetap
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
