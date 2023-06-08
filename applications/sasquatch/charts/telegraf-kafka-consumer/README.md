@@ -18,12 +18,13 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | image.pullPolicy | string | IfNotPresent | Image pull policy. |
 | image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository. |
-| image.tag | string | `"kafka-regexp"` | Telegraf image tag. |
+| image.tag | string | `"refreshregex"` | Telegraf image tag. |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
 | influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
+| kafkaConsumers.test.topicRefreshInterval | string | `"60s"` | Default interval for refreshing topics to check for new or removed regexp matches |
 | kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods. |
