@@ -64,8 +64,6 @@ chronograf:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
-  image:
-    tag: "1.10.1"
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://data-dev.lsst.cloud/auth/openid/login
