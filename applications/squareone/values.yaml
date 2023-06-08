@@ -124,12 +124,17 @@ config:
             ### Data Preview 0.2 (DP0.2)
 
             DP0.2 is the second phase of the Data Preview 0 program using
-            precursor data (simulated images from the DESC DC2 data
-            challenge). For the first time, all the derived data products
-            have been generated “in-house” on an early version of the Rubin
-            processing infrastructure using version 23.0 of the LSST Science
-            Pipelines. As a result, the data model is significantly
-            different from the DP0.1 dataset.
+            simulated images from the DESC DC2 data challenge processed with
+            version 23.0 of the LSST Science Pipelines.
+          </Card>
+        </a>
+
+        <a href="https://dp0-2.lsst.io/tutorials-examples/index.html">
+          <Card>
+            ### DP0.2 Tutorials
+
+            Tutorials for exploring the DP0.2 dataset on the Rubin Science
+            Platform.
           </Card>
         </a>
 
@@ -153,10 +158,8 @@ config:
           <Card>
             ### Rubin Science Platform
 
-            The Notebook aspect is a powerful data analysis environment with
-            Jupyter Notebooks and terminals in the browser.
-            Documentation for the Rubin Science Platform, including account set up,
-            portal, notebooks, and API aspects.
+            Guides for setting up an account on the Rubin Science Platform
+            and using the Portal, Notebook, and API Aspects.
           </Card>
         </a>
 
@@ -175,7 +178,7 @@ config:
 
             The Science Pipelines include the Butler for accessing LSST data
             and a pipeline framework for processing data. The LSST Science
-            Pipelines Python package is preinstalled in the Notebook aspect.
+            Pipelines is preinstalled in the Notebook Aspect.
           </Card>
         </a>
 
