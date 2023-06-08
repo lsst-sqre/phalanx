@@ -63,7 +63,7 @@ spec:
                       "additional": {
                           "services": [
                             {
-                               "label": "LSST RSP",
+                               "label": "LSST DP0.2 DC2",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
