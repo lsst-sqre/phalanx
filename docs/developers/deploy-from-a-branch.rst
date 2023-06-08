@@ -21,7 +21,7 @@ Through this process it is possible to develop an application in a fairly tight 
 Preparing and pushing a branch
 ==============================
 
-Start by creating a branch of the `phalanx repository`_ and editing your appliation.
+Start by creating a branch of the `phalanx repository`_ and editing your application.
 
 You can make many types of edits to the application.
 The most straightforward changes are updates to your application's Docker images or the Helm sub-charts the application depends on.
