@@ -2,8 +2,10 @@
   "extends": [
     "config:base"
   ],
-  "prConcurrentLimit": 5,
+  "configMigration": true,
+  "rebaseWhen": "conflicted",
   "schedule": [
     "before 6am on Monday"
-  ]
+  ],
+  "timezone": "America/Los_Angeles"
 }
