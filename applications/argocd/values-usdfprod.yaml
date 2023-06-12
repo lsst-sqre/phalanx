@@ -39,6 +39,7 @@ argo-cd:
     rbacConfig:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin
+        g, ppascual@slac.stanford.edu, role:admin
         g, pav@slac.stanford.edu, role:admin
         g, dspeck@slac.stanford.edu, role:admin
         g, afausti@slac.stanford.edu, role:admin
