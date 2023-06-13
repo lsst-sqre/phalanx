@@ -6,7 +6,7 @@ enabled: true
 
 image:
   repository: ghcr.io/lsst-sqre/kafkaconnect
-  tag: 1.1.0
+  tag: 1.2.0
   pullPolicy: IfNotPresent
 
 influxdbSink:
