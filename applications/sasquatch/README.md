@@ -16,9 +16,9 @@ Rubin Observatory's telemetry service.
 | chronograf.ingress | object | disabled | Chronograf ingress configuration. |
 | chronograf.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | chronograf.resources.limits.cpu | int | `4` |  |
-| chronograf.resources.limits.memory | string | `"16Gi"` |  |
+| chronograf.resources.limits.memory | string | `"64Gi"` |  |
 | chronograf.resources.requests.cpu | int | `1` |  |
-| chronograf.resources.requests.memory | string | `"1Gi"` |  |
+| chronograf.resources.requests.memory | string | `"4Gi"` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

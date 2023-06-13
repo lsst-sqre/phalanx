@@ -39,6 +39,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | users.kafkaConnectManager.enabled | bool | `true` | Enable user kafka-connect-manager |
 | users.promptProcessing.enabled | bool | `true` | Enable user prompt-processing |
+| users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
 | zookeeper.affinity | object | `{}` | Node affinity for Zookeeper pod assignment. |

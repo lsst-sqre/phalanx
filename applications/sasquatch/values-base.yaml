@@ -22,8 +22,6 @@ strimzi-kafka:
     replicator:
       enabled: true
 
-
-
 influxdb:
   persistence:
     storageClass: rook-ceph-block
