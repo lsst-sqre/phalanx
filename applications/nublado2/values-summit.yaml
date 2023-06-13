@@ -40,8 +40,8 @@ config:
         server: nfs1.cp.lsst.org
     - name: auxtel
       nfs:
-        path: /lsstdata
-        server: auxtel-archiver.cp.lsst.org
+        path: /auxtel/lsstdata
+        server: nfs-auxtel.cp.lsst.org
         readOnly: true
     - name: comcam
       nfs:
@@ -55,12 +55,12 @@ config:
         readOnly: true
     - name: latiss
       nfs:
-        path: /repo/LATISS
-        server: auxtel-archiver.cp.lsst.org
+        path: /auxtel/repo/LATISS
+        server: nfs-auxtel.cp.lsst.org
     - name: base-auxtel
       nfs:
-        path: /lsstdata/base/auxtel
-        server: auxtel-archiver.cp.lsst.org
+        path: /auxtel/lsstdata/base/auxtel
+        server: nfs-auxtel.cp.lsst.org
         readOnly: true
     - name: lsstcomcam
       nfs:
