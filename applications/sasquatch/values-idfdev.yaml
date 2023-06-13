@@ -13,6 +13,9 @@ strimzi-kafka:
           host: sasquatch-dev-kafka-1.lsst.cloud
         - loadBalancerIP: "35.184.86.132"
           host: sasquatch-dev-kafka-2.lsst.cloud
+  users:
+    replicator:
+      enabled: true
 
 influxdb:
   ingress:

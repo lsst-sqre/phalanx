@@ -30,7 +30,7 @@ spec:
     requestPercentage: 90
     controllerMutationRate: 1000
 {{- end }}
-{{- if .Values.mirrormaker2.enabled -}}
+{{- if .Values.users.replicator.enabled -}}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser

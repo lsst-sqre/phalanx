@@ -11,6 +11,9 @@ strimzi-kafka:
       limits:
         cpu: 4
         memory: 8Gi
+  users:
+    replicator:
+      enabled: true
 
 influxdb:
   ingress:

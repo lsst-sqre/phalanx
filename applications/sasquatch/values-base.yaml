@@ -18,6 +18,9 @@ strimzi-kafka:
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+  users:
+    replicator:
+      enabled: true
 
 influxdb:
   persistence:
