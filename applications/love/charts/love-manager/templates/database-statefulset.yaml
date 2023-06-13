@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "love-manager.database.fullname" . }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  labels:
+    {{- include "love-manager.database.labels" . | nindent 4 }}
+spec:
+  serviceName: {{ include "love-manager.database.fullname" . }}-service
+  selector:
+    matchLabels:
+      {{- include "love-manager.database.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.database.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        {{- include "love-manager.database.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "love-manager.database.fullname" . }}
+        image: "{{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}"
+        imagePullPolicy: {{ .Values.database.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.database.port }}
+        volumeMounts:
+          - mountPath: {{ .Values.database.storage.path }}
+            name: {{ .Values.database.storage.name }}-pvc
+        env:
+        {{- $data := dict "env" .Values.database.env "secretName" "" }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- $data := dict "env" .Values.database.envSecrets "secretName" .Values.envSecretKeyName }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- with $.Values.database.resources }}
+        resources:
+          {{- toYaml $.Values.database.resources | nindent 10 }}
+        {{- end }}
+      {{- with $.Values.database.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.database.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.database.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+    - metadata:
+        name: {{ .Values.database.storage.name }}-pvc
+      spec:
+        accessModes:
+          - {{ .Values.database.storage.accessMode | quote }}
+        storageClassName: {{ .Values.database.storage.storageClass }}
+        resources:
+          requests:
+            storage: {{ .Values.database.storage.claimSize }}

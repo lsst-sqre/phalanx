@@ -1,0 +1,174 @@
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+
+love-commander:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/love-commander
+    pullPolicy: Always
+  env:
+    S3_INSTANCE: tuc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  service:
+    use: true
+    port: 5000
+    type: ClusterIP
+
+love-manager:
+  image:
+    repository: ts-dockerhub.lsst.org/love-manager
+    pullPolicy: Always
+  env:
+    SERVER_URL: love.tu.lsst.org
+    OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+    AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+    AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+    AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+    REDIS_CONFIG_EXPIRY: 5
+    REDIS_CONFIG_CAPACITY: 5000
+    LOVE_SITE: tucson
+  envSecrets:
+    AUTHLIST_USER_PASS: authlist-user-pass
+    AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 25
+    targetCPUUtilizationPercentage: 50
+  resources:
+    requests:
+      cpu: 250m
+      memory: 500Mi
+    limits:
+      cpu: 750m
+      memory: 1000Mi
+  readinessProbe:
+    tcpSocket:
+      port: 8000
+    initialDelaySeconds: 20
+    periodSeconds: 10
+  database:
+    image:
+      repository: postgres
+      tag: '12.0'
+      pullPolicy: IfNotPresent
+    storage:
+      name: love-manager-database
+      path: /var/lib/postgresql
+      storageClass: rook-ceph-block
+      accessMode: ReadWriteOnce
+      claimSize: 2Gi
+  redis:
+    image:
+      repository: redis
+      tag: 5.0.3
+      pullPolicy: IfNotPresent
+  viewBackup:
+    enabled: true
+    image:
+      repository: ts-dockerhub.lsst.org/love-view-backup
+      pullPolicy: Always
+    schedule: 0 12 * * *
+
+love-nginx:
+  image:
+    repository: nginx
+    tag: 1.13.1
+    pullPolicy: Always
+  ingress:
+    hostname: love.tu.lsst.org
+    annotations:
+      kubernetes.io/ingress.class: nginx
+  imagePullSecrets:
+  - name: nexus3-docker
+  initContainers:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/love-frontend
+        pullPolicy: Always
+    manager:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager-static
+        pullPolicy: Always
+      command:
+      - /bin/sh
+      - -c
+      - cp -Rv /usr/src/love/manager/static /usr/src/love-manager; cp -Rv /usr/src/love/manager/media
+        /usr/src/love-manager
+  staticStore:
+    name: love-nginx-static
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    claimSize: 2Gi
+  nginxConfig: |
+    server {
+      listen 80;
+      server_name localhost;
+      location / {
+        root   /usr/src/love-frontend;
+        try_files $uri$args $uri$args/ $uri/ /index.html;
+      }
+      location /manager {
+          proxy_pass http://love-manager-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /media {
+          alias /usr/src/love-manager/media;
+      }
+      location /manager/static {
+          alias /usr/src/love-manager/static;
+      }
+      location /manager/media {
+          alias /usr/src/love-manager/media;
+      }
+      location /simcam {
+          proxy_pass http://simulation-gencam-service.calsys:5013;
+          proxy_redirect off;
+      }
+    }
+  loveConfig: |
+    {
+      "alarms": {
+        "minSeveritySound": "serious",
+        "minSeverityNotification": "warning"
+      },
+      "camFeeds": {
+        "simcam": "/simcam"
+      },
+      "efd": {
+        "defaultEfdInstance": "tucson_teststand_efd"
+      }
+    }
+
+love-producer:
+  image:
+    repository: ts-dockerhub.lsst.org/love-producer
+    pullPolicy: Always
+  env:
+    WEBSOCKET_HOST: love-nginx-service/manager/ws/subscription
+  producers:
+    ataos: ATAOS:0
+    atcamera: ATCamera:0

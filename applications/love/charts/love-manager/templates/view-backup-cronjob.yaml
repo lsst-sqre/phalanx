@@ -1,0 +1,83 @@
+{{- if .Values.viewBackup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "love-manager.view-backup.fullname" . }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  labels:
+    {{- include "love-manager.view-backup.labels" . | nindent 4 }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.viewBackup.schedule | quote }}
+  jobTemplate:
+    metadata:
+      labels:
+        {{- include "love-manager.view-backup.labels" . | nindent 8 }}
+    spec:
+      completions: 1
+      {{- if .Values.viewBackup.ttlSecondsAfterFinished }}
+      ttlSecondsAfterFinished: {{ .Values.viewBackup.ttlSecondsAfterFinished }}
+      {{- end }}
+      template:
+        metadata:
+          labels:
+            {{- include "love-manager.view-backup.labels" . | nindent 12 }}
+        spec:
+          containers:
+            - name: {{ include "love-manager.view-backup.fullname" . }}
+              {{- $imageTag := .Values.viewBackup.image.tag | default $.Values.global.controlSystemImageTag }}
+              image: "{{ .Values.viewBackup.image.repository }}:{{ $imageTag }}"
+              imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
+              envFrom:
+              - configMapRef:
+                name: csc-env-config
+              env:
+                - name: PGHOST
+                  value: {{ .Values.env.DB_HOST | quote }}
+                - name: PGPORT
+                  value: {{ .Values.database.port | quote }}
+                - name: PGDATABASE
+                  value: {{ .Values.database.env.POSTGRES_DB | quote }}
+                - name: PGUSER
+                  value: {{ .Values.database.env.POSTGRES_USER | quote }}
+                - name: LOVE_SITE
+                  value: {{ .Values.env.LOVE_SITE | quote }}
+                {{- range $env_var, $env_value := .Values.viewBackup.env }}
+                - name: {{ $env_var }}
+                  value: {{ $env_value | quote }}
+                {{- end }}
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.namespace }}-secrets
+                      key: {{ .Values.database.envSecrets.POSTGRES_PASSWORD }}
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: lfa
+                      key: aws-access-key-id
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: lfa
+                      key: aws-secret-access-key
+              {{- with $.Values.viewBackup.resources }}
+              resources:
+                {{- toYaml $.Values.viewBackup.resources | nindent 16 }}
+              {{- end }}
+          restartPolicy: {{ .Values.viewBackup.restartPolicy }}
+          imagePullSecrets:
+            - name: nexus3-docker
+          {{- with $.Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.affinity }}
+          affinity:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.tolerations }}
+          tolerations:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+{{- end }}

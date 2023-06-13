@@ -91,6 +91,9 @@ applications:
   # -- Enable the livetap application
   livetap: false
 
+  # -- Enable the love control system application
+  love: false
+
   # -- Enable the mobu application
   mobu: false
 

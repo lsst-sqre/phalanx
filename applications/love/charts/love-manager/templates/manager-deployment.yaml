@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "love-manager.fullname" . }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  labels:
+    {{- include "love-manager.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "love-manager.selectorLabels" . | nindent 6 }}
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicas }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "love-manager.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "love-manager.fullname" . }}
+        {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystemImageTag }}
+        image: "{{ .Values.image.repository }}:{{ $imageTag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.ports.container }}
+        env:
+        {{- $data := dict "env" .Values.env "secretName" "" }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- $data := dict "secretName" .Values.envSecretKeyName "env" .Values.envSecrets }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- with $.Values.resources }}
+        resources:
+          {{- toYaml $.Values.resources | nindent 10 }}
+        {{- end }}
+        {{- with $.Values.readinessProbe }}
+        readinessProbe:
+          {{- toYaml $.Values.readinessProbe | nindent 10 }}
+        {{- end }}
+      {{- if $.Values.image.nexus3 }}
+      imagePullSecrets:
+        - name: nexus3-docker
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}

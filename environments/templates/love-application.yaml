@@ -1,0 +1,51 @@
+{{- if .Values.love.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: love
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: love
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: love
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/love
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.controlSystemAppNamespace"
+          value: "love"
+        - name: "global.controlSystemImageTag"
+          value: {{ .Values.controlSystemImageTag | quote }}
+        - name: "global.controlSystemSiteTag"
+          value: {{ .Values.controlSystemSiteTag | quote }}
+        - name: "global.controlSystemTopicName"
+          value: {{ .Values.controlSystemTopicName | quote }}
+        - name: "global.controlSystemKafkaBrokerAddress"
+          value: {{ .Values.controlSystemKafkaBrokerAddress | quote }}
+        - name: "global.controlSystemSchemaRegistryUrl"
+          value: {{ .Values.controlSystemSchemaRegistryUrl | quote }}
+        - name: "global.controlSystemS3EndpointUrl"
+          value: {{ .Values.controlSystemS3EndpointUrl | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
+{{- end -}}
