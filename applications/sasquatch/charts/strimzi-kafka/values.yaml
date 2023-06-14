@@ -113,13 +113,13 @@ superusers:
   - kafka-admin
 
 users:
-  tsSalKafka:
-    # -- Enable user ts-salkafka.
-    enabled: true
-
   replicator:
     # -- Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters)
     enabled: false
+
+  tsSalKafka:
+    # -- Enable user ts-salkafka.
+    enabled: true
 
   kafdrop:
     # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
