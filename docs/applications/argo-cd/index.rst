@@ -20,4 +20,5 @@ Guides
    bootstrap
    authentication
    upgrade
+   troubleshoot
    values
