@@ -62,6 +62,7 @@ rest-proxy:
     topicPrefixes:
       - test
       - lsst.dm
+      - lsst.Test
 
 chronograf:
   ingress:
