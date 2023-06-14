@@ -19,6 +19,8 @@ strimzi-kafka:
     storage:
       storageClassName: rook-ceph-block
   users:
+    tsSalKafka:
+      enabled: true
     replicator:
       enabled: true
 
