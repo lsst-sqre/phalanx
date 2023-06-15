@@ -36,15 +36,9 @@ telegraf-kafka-consumer:
     test:
       enabled: true
       replicaCount: 1
-      refresh_interval: "60s"
+      refresh_interval: "5s"
       topicRegexps: |
-        [ ".*Test" ]
-    atmcs:
-      enabled: true
-      replicaCount: 1
-      refresh_interval: "60s"
-      topicRegexps: |
-        [ ".*ATMCS" ]
+        [ "lsst.Test*" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
