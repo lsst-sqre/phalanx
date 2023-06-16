@@ -40,7 +40,6 @@ data:
       ]
       consumer_group = "telegraf-kafka-consumer-{{ $key }}"
       data_format = "avro"
-      max_message_len = 1000000
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
