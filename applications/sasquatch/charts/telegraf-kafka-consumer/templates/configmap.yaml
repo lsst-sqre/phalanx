@@ -46,7 +46,7 @@ data:
       sasl_username = "telegraf"
       topic_refresh_interval = {{ default "60s" $value.topicRefreshInterval |  quote }}
       topic_regexps = {{ $value.topicRegexps }}
-      offset = "newest"
+      offset = "oldest"
       consumer_fetch_default = "20MB"
 
     [[inputs.internal]]
