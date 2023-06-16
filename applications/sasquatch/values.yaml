@@ -137,6 +137,8 @@ influxdb-staging:
 
 influxdb2:
   enabled: false
+  image:
+    tag: 2.7.1-alpine
   adminUser:
     # -- Admin default organization.
     organization: "default"
