@@ -66,7 +66,7 @@ telegraf-kafka-consumer:
       enabled: true
       flush_interval: "0.1s"
       metric_batch_size: 5000
-      interval: "1s"
+      interval: "0.1s"
       topicRegexps: |
         [ ".*MTM1M3" ]
     m2:
