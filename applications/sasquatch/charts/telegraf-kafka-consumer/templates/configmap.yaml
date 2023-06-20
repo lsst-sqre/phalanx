@@ -16,7 +16,7 @@ data:
       flush_jitter = "0s"
       interval = {{ default "1s" $value.interval | quote }}
       logfile = ""
-      metric_batch_size = 1000
+      metric_batch_size = {{ default 1000 $value.metric_batch_size }}
       metric_buffer_limit = 10000
       omit_hostname = true
       precision = ""
@@ -40,7 +40,7 @@ data:
       ]
       consumer_group = "telegraf-kafka-consumer-{{ $key }}"
       data_format = "avro"
-      max_message_len = 1000000
+      max_processing_time = "5s"
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"

@@ -64,7 +64,8 @@ telegraf-kafka-consumer:
         [ ".*ATCamera", ".*ATHeaderService", ".*ATOODS", ".*ATSpectrograph" ]
     m1m3:
       enabled: true
-      flush_interval: "0.1s"
+      flush_interval: "1s"
+      metric_batch_size: 5000
       interval: "0.1s"
       topicRegexps: |
         [ ".*MTM1M3" ]
