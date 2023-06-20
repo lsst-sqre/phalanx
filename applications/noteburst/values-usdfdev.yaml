@@ -6,12 +6,8 @@ config:
   worker:
     workerCount: 1
     identities:
-      - username: "bot-noteburst90000"
-      - username: "bot-noteburst90001"
-      - username: "bot-noteburst90002"
-      - username: "bot-noteburst90003"
-      - username: "bot-noteburst90004"
-      - username: "bot-noteburst90005"
+      - username: "bot-noteburst-01"
+      - username: "bot-noteburst-02"
 
 # Use SSD for Redis storage.
 redis:
