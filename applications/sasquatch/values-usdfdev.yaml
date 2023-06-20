@@ -117,6 +117,11 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.verify"
         topicsRegex: "lsst.verify.*"
         tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+      lsstlf:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.lf"
+        topicsRegex: "lsst.lf.*"
 
 kafdrop:
   ingress:
@@ -139,6 +144,7 @@ rest-proxy:
       - lsst.rubintv
       - lsst.camera
       - lsst.verify
+      - lsst.lf
 
 chronograf:
   ingress:
