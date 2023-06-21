@@ -122,6 +122,7 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.lf"
         topicsRegex: "lsst.lf.*"
+        tags: benchmark_env,module,benchmark_type
 
 kafdrop:
   ingress:
