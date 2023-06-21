@@ -51,12 +51,12 @@ config:
         server: nfs-lsstdata.ls.lsst.org
     - name: auxtel-butler
       nfs:
-        path: /repo/LATISS
-        server: auxtel-archiver.ls.lsst.org
+        path: /auxtel/repo/LATISS
+        server: nfs-auxtel.ls.lsst.org
     - name: auxtel-oods
       nfs:
-        path: /lsstdata/BTS/auxtel
-        server: auxtel-archiver.ls.lsst.org
+        path: /auxtel/lsstdata/BTS/auxtel
+        server: nfs-auxtel.ls.lsst.org
         readOnly: true
     - name: obs-env
       nfs:

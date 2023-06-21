@@ -4,8 +4,8 @@ config:
   nfs_server_1: comcam-archiver.tu.lsst.org
   butler_uri_1: /volume_1
 
-  nfs_path_2: /repo/LATISS  # Mounted as /volume_2
-  nfs_server_2: auxtel-archiver.tu.lsst.org
+  nfs_path_2: /auxtel/repo/LATISS  # Mounted as /volume_2
+  nfs_server_2: nfs-auxtel.tu.lsst.org
   butler_uri_2: /volume_2
 db:
   host: postgresdb01.tu.lsst.org
