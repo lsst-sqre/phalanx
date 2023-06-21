@@ -1,7 +1,7 @@
 config:
   site_id: base
-  nfs_path_1: /repo/LATISS  # Mounted as /volume_1
-  nfs_server_1: auxtel-archiver.ls.lsst.org
+  nfs_path_1: /auxtel/repo/LATISS  # Mounted as /volume_1
+  nfs_server_1: nfs-auxtel.ls.lsst.org
   butler_uri_1: /volume_1
 
 db:

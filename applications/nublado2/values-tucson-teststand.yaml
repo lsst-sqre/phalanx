@@ -51,12 +51,12 @@ config:
         server: nfs-lsstdata.tu.lsst.org
     - name: auxtel-butler
       nfs:
-        path: /repo/LATISS
-        server: auxtel-archiver.tu.lsst.org
+        path: /auxtel/repo/LATISS
+        server: nfs-auxtel.tu.lsst.org
     - name: auxtel-oods
       nfs:
-        path: /lsstdata/TTS/auxtel
-        server: auxtel-archiver.tu.lsst.org
+        path: /auxtel/lsstdata/TTS/auxtel
+        server: nfs-auxtel.tu.lsst.org
         readOnly: true
     - name: comcam-butler
       nfs:
