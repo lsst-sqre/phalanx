@@ -123,7 +123,7 @@ pg:
 tap_schema:
   image:
     repository: {}
-    tag: "2.0.1"
+    tag: "2.0.2"
   resources: {}
 
 uws:
