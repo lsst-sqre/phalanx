@@ -29,7 +29,6 @@ kubectl create secret generic pull-secret -n vault-secrets-operator \
     --type=kubernetes.io/dockerconfigjson \
     --dry-run=client -o yaml | kubectl apply -f -
 
-
 echo "Update / install vault-secrets-operator..."
 # ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
 helm dependency update ../applications/vault-secrets-operator
