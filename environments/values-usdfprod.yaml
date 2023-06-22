@@ -24,6 +24,8 @@ ingress-nginx:
   enabled: false
 kubernetes-replicator:
   enabled: false
+livetap:
+  enabled: true
 mobu:
   enabled: true
 moneypenny:
