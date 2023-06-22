@@ -19,5 +19,7 @@ pg:
   mock:
     enabled: false
   database: "dp03_catalogs"
-  host: "usdf-pg-catalogs.slac.stanford.edu:5432"
+  # Redirect to interim cloud Postgres during USDF outage 6/25/23-7/4/23
+  # host: "usdf-pg-catalogs.slac.stanford.edu:5432"
+  host: 104.197.78.194:5432
   username: "dp03"
