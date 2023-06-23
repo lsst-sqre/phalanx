@@ -1,0 +1,83 @@
+{{- if .Values.mirrormaker2.sourceConnect.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnect
+metadata:
+  name: {{ .Values.cluster.name }}-source
+  annotations:
+    # Use Connect REST API to configure connectors
+    strimzi.io/use-connector-resources: "false"
+spec:
+  image:  {{ .Values.connect.image | quote }}
+  replicas: {{ .Values.connect.replicas }}
+  bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
+  tls:
+    trustedCertificates:
+      - secretName: {{ .Values.cluster.name }}-cluster-ca-cert
+        certificate: ca.crt
+  authentication:
+    type: tls
+    certificateAndKey:
+      secretName: {{ .Values.cluster.name }}-source-connect
+      certificate: user.crt
+      key: user.key
+  config:
+    group.id: {{ .Values.cluster.name }}-source-connect
+    offset.storage.topic: {{ .Values.cluster.name }}-source-connect-offsets
+    config.storage.topic: {{ .Values.cluster.name }}-source-connect-configs
+    status.storage.topic: {{ .Values.cluster.name }}-source-connect-status
+    # -1 means it will use the default replication factor configured in the broker
+    config.storage.replication.factor: -1
+    offset.storage.replication.factor: -1
+    status.storage.replication.factor: -1
+    key.converter: io.confluent.connect.avro.AvroConverter
+    key.converter.schemas.enable: true
+    key.converter.schema.registry.url: http://sasquatch-source-schema-registry.sasquatch:8081
+    value.converter: io.confluent.connect.avro.AvroConverter
+    value.converter.schemas.enable: true
+    value.converter.schema.registry.url: http://sasquatch-source-schema-registry.sasquatch:8081
+    request.timeout.ms: 120000
+  resources:
+    requests:
+      cpu: "2"
+      memory: 4Gi
+    limits:
+      cpu: "8"
+      memory: 24Gi
+  jvmOptions:
+    "-Xmx": "8g"
+    "-Xms": "8g"
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-source-connect
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: {{ .Values.cluster.name }}-source-connect
+        operation: Read
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+  quotas:
+    producerByteRate: 1073741824
+    consumerByteRate: 1073741824
+    requestPercentage: 90
+    controllerMutationRate: 1000
+{{- end }}

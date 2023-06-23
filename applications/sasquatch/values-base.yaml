@@ -11,6 +11,8 @@ strimzi-kafka:
     sourceRegistry:
       enabled: true
       schemaTopic: source.registry-schemas
+    sourceConnect:
+      enabled: true
     resources:
       requests:
         cpu: 2
