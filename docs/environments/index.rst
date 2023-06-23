@@ -25,3 +25,4 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
    tucson-teststand/index
    usdfdev/index
    usdfprod/index
+   usdf-tel-rsp/index
