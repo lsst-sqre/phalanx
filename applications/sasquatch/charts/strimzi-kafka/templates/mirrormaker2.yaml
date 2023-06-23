@@ -55,9 +55,10 @@ spec:
         # The frequency to check for new topics.
         refresh.topics.interval.seconds: 60
         # Policy to define the remote topic naming convention.
-        # This setting will preserve topic names in the target cluster.
-        replication.policy.separator: ""
-        replication.policy.class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+        # The default is to preserve topic names in the target cluster.
+        # To add the source cluster alias as a prefix to the topic name, use replication.policy.separator="." and replication.policy.class="org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+        replication.policy.separator: {{ default "" .Values.mirrormaker2.replication.policy.separator }}
+        replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
         # Handling high volumes of messages
         # By increasing the batch size, produce requests are delayed and more messages are
         # added to the batch and sent to brokers at the same time.
@@ -76,7 +77,6 @@ spec:
         # Increase request timeout
         producer.request.timeout.ms: 120000
         consumer.request.timeout.ms: 120000
-
     heartbeatConnector:
       config:
         heartbeats.topic.replication.factor: 3
@@ -91,9 +91,7 @@ spec:
         sync.group.offsets.interval.seconds: 60
         # The frequency of checks for offset tracking.
         emit.checkpoints.interval.seconds: 60
-        # Policy to define the remote topic naming convention.
-        # This setting will preserve topic names in the target cluster.
-        replication.policy.class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+        replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
     # Topic replication from the source cluster defined as a comma-separated list
     # or regular expression pattern.
     topicsPattern: {{ .Values.mirrormaker2.source.topicsPattern }}

@@ -32,8 +32,12 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
+| mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
+| mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster to replicate from. |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern. |
+| mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster. |
+| mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
