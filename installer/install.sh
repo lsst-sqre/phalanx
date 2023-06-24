@@ -1,8 +1,9 @@
 #!/bin/bash -e
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [VAULT_ADDR] [VAULT_TOKEN_LEASE_DURATION]"
 ENVIRONMENT=${1:?$USAGE}
 export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_ADDR=https://vault.lsst.codes
+export VAULT_ADDR=${3:-https://vault.lsst.codes}
+export VAULT_TOKEN_LEASE_DURATION=${4:-31536000}
 VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
@@ -18,7 +19,7 @@ kubectl create ns vault-secrets-operator || true
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
-  --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
+  --from-literal=VAULT_TOKEN_LEASE_DURATION=$VAULT_TOKEN_LEASE_DURATION \
   --dry-run=client -o yaml | kubectl apply -f -
 
 echo "Set up docker pull secret for vault-secrets-operator..."
@@ -27,7 +28,6 @@ kubectl create secret generic pull-secret -n vault-secrets-operator \
     --from-file=.dockerconfigjson=docker-creds \
     --type=kubernetes.io/dockerconfigjson \
     --dry-run=client -o yaml | kubectl apply -f -
-
 
 echo "Update / install vault-secrets-operator..."
 # ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
