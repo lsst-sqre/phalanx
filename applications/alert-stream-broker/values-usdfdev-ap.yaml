@@ -18,11 +18,18 @@ alert-stream-broker:
       #    host: alert-stream-int-broker-1.lsst.cloud
       #  - ip: "35.238.84.221"
       #    host: alert-stream-int-broker-2.lsst.cloud
+  # -- Version of Kafka to deploy.
+  version: 3.4.0
+  # -- Encoding version for messages, see
+  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+  logMessageFormatVersion: 3.4
+  # -- Version of the protocol for inter-broker communication, see
+  # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+  interBrokerProtocolVersion: 3.4
 
-
-    storage:
-      size: 1500Gi
-      storageClassName: standard
+  storage:
+    size: 1500Gi
+    storageClassName: standard
 
   vaultSecretsPath: "secret/rubin/usdf-alert-distribution-dev"
 
