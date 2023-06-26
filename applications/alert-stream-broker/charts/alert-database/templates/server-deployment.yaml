@@ -57,3 +57,11 @@ spec:
           {{- end }}
 
       serviceAccountName: "{{ .Values.server.serviceAccountName }}"
+
+      volumes:
+      {{- if .Values.ingester.gcp.outsideGCP }}
+      - name: {{ template "alertStreamBroker.fullname" . }}-secrets
+        secret:
+          defaultMode: 420
+          secretName: {{ template "alertStreamBroker.fullname" . }}-secrets
+       {{- end }}
