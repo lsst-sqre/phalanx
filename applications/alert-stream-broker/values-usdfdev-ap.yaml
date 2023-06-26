@@ -22,6 +22,7 @@ alert-stream-broker:
 
     storage:
       size: 1500Gi
+      storageClassName: standard
 
     #nodePool:
     #  affinities:
@@ -107,6 +108,7 @@ alert-database:
     gcp:
       serviceAccountName: alertdb-writer
       projectID: science-platform-int-dc5d
+      outsideGCP: true
 
   server:
     serviceAccountName: alert-database-reader
