@@ -1,0 +1,125 @@
+alert-stream-broker:
+  cluster:
+    name: "alert-broker"
+
+  kafka:
+    # Addresses based on the state as of 2021-12-02; these were assigned by
+    # Google and now we're pinning them.
+    externalListener:
+      tls:
+        enabled: true
+      #bootstrap:
+      #  ip: "35.224.176.103"
+      #  host: alert-stream-int.lsst.cloud
+      #brokers:
+      #  - ip: "34.28.80.188"
+      #    host: alert-stream-int-broker-0.lsst.cloud
+      #  - ip: "35.188.136.140"
+      #    host: alert-stream-int-broker-1.lsst.cloud
+      #  - ip: "35.238.84.221"
+      #    host: alert-stream-int-broker-2.lsst.cloud
+
+
+    storage:
+      size: 1500Gi
+
+    #nodePool:
+    #  affinities:
+    #    - key: kafka
+    #      value: ok
+
+    #  tolerations:
+    #    - key: kafka
+    #      value: ok
+    #      effect: NoSchedule
+  vaultSecretsPath: "secret/rubin/usdf-alert-distribtion-dev"
+
+  users:
+    # A user for development purposes by the Rubin team, with access to all
+    # topics in readonly mode.
+    - username: "rubin-devel-idfint"
+      readonlyTopics: ["*"]
+      groups: ["rubin-devel-idfint"]
+
+    # A user used by the Rubin team but with similar access to the community
+    # broker users.
+    - username: "rubin-communitybroker-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["rubin-communitybroker-idfint"]
+
+    # The actual community broker users
+    - username: "alerce-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["alerce-idfint"]
+
+    - username: "ampel-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["ampel-idfint"]
+
+    - username: "antares-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["antares-idfint"]
+
+    - username: "babamul-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["babamul-idfint"]
+
+    - username: "fink-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["fink-idfint"]
+
+    - username: "lasair-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["lasair-idfint"]
+
+    - username: "pittgoogle-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["pittgoogle-idfint"]
+
+alert-stream-schema-registry:
+  hostname: "alert-schemas-dev.slac.stanford.edu"
+  schemaTopic: "registry-schemas"
+
+alert-stream-simulator:
+  clusterPort: 9092 # internal TLS listener
+  replayTopicName: "alerts-simulated"
+  replayTopicPartitions: 60
+  staticTopicName: "alerts-static"
+  image:
+    tag: v1.2.1
+
+alert-database:
+  ingester:
+    image:
+      tag: v2.0.2
+
+    logLevel: verbose
+
+    schemaRegistryURL: alert-schemas-dev.slac.stanford.edu
+
+    serviceAccountName: alert-database-writer
+
+    kafka:
+      cluster: alert-broker
+      port: 9092
+      topic: alerts-simulated
+
+    gcp:
+      serviceAccountName: alertdb-writer
+      projectID: science-platform-int-dc5d
+
+  server:
+    serviceAccountName: alert-database-reader
+
+    gcp:
+      serviceAccountName: alertdb-reader
+      projectID: science-platform-int-dc5d
+
+  ingress:
+    enabled: false
+
+  storage:
+    gcp:
+      project: science-platform-int-dc5d
+      alertBucket: rubin-alertdb-int-us-central1-packets
+      schemaBucket: rubin-alertdb-int-us-central1-schemas
