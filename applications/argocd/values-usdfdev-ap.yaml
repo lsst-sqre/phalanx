@@ -1,0 +1,16 @@
+argo-cd:
+  redis:
+    enabled: true
+
+  server:
+    ingress:
+      enabled: true
+
+    config:
+      url: "https://argo.burwood.io/argo-cd"
+
+      helm.repositories: |
+        - url: https://lsst-sqre.github.io/charts/
+          name: lsst-sqre
+        - url: https://charts.helm.sh/stable
+          name: stable
