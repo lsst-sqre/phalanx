@@ -1,0 +1,22 @@
+image:
+  repository: docker.io/datopian/giftless
+ingress:
+  hostname: ""  # Must override in environment-specific values file
+  annotations: {}
+server:
+  debug: false
+  port: 5000
+  threads: 2
+  processes: 2
+config:
+  AUTH_PROVIDERS:
+    - giftless.auth.allow_anon:read_only
+  TRANSFER_ADAPTERS:
+    basic:
+      factory: giftless.transfer.basic_external:factory
+      options:
+        storage_class: giftless.storage.google_cloud:GoogleCloudStorage
+        storage_options:
+          project_name: plasma-geode-127520
+          bucket_name: rubin-gitlfs-experimental
+          account_key_file: /etc/secret/giftless-gcp-key.json
