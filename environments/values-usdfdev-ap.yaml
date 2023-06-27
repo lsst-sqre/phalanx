@@ -8,6 +8,8 @@ alert-stream-broker:
   enabled: true
 cert-manager:
   enabled: true
+ingress-nginx:
+  enabled: true
 strimzi:
   enabled: true
 strimzi-access-operator:
