@@ -1,4 +1,4 @@
-environment: usdfdev-test
+environment: usdfdev-ap
 #fqdn: usdf-rsp-dev.slac.stanford.edu
 #vaultPathPrefix: secret/rubin/usdf-rsp-dev
 # butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
