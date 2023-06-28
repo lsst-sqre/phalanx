@@ -9,9 +9,5 @@ spec:
     name: "letsencrypt-dns"
     kind: ClusterIssuer
 
-  subject:
-    organizations:
-      - "lsst.org"
-
   dnsNames:
     - {{ .Values.ingress.hostname }}
