@@ -29,6 +29,7 @@ spec:
             - ":{{- .Values.server.port }}"
             - "-M"
             - "-T"
+            - "--die-on-term"
             - "--threads"
             - "{{- .Values.server.threads }}"
             - "-p"
