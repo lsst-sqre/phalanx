@@ -1,13 +1,38 @@
+# Default values for giftless.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
 image:
+  # -- Giftless image to use
   repository: docker.io/datopian/giftless
+  # -- Pull policy for the giftless image
+  pullPolicy: "IfNotPresent"
+  # -- Tag of giftless image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
 ingress:
+  # -- FQDN of giftless ingress
   hostname: ""  # Must override in environment-specific values file
+  # -- Additional annotations to add to the ingress
   annotations: {}
+
 server:
+  # -- Turn on debugging mode
   debug: false
+  # -- Port for giftless server to listen on
   port: 5000
-  threads: 2
+  # -- Number of processes for server
   processes: 2
+  # -- Number of threads per process
+  threads: 2
+
+# -- Configuration for giftless server
+# @default -- YAML will be used as-is.  cf https://giftless.datopian.com/en/latest/configuration.html
 config:
   AUTH_PROVIDERS:
     - giftless.auth.allow_anon:read_only

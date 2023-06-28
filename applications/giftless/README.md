@@ -10,16 +10,15 @@ Git-LFS server with GCS S3 backend
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| config.AUTH_PROVIDERS[0] | string | `"giftless.auth.allow_anon:read_only"` |  |
-| config.TRANSFER_ADAPTERS.basic.factory | string | `"giftless.transfer.basic_external:factory"` |  |
-| config.TRANSFER_ADAPTERS.basic.options.storage_class | string | `"giftless.storage.google_cloud:GoogleCloudStorage"` |  |
-| config.TRANSFER_ADAPTERS.basic.options.storage_options.account_key_file | string | `"/etc/secret/giftless-gcp-key.json"` |  |
-| config.TRANSFER_ADAPTERS.basic.options.storage_options.bucket_name | string | `"rubin-gitlfs-experimental"` |  |
-| config.TRANSFER_ADAPTERS.basic.options.storage_options.project_name | string | `"plasma-geode-127520"` |  |
-| image.repository | string | `"docker.io/datopian/giftless"` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.hostname | string | `""` |  |
-| server.debug | bool | `false` |  |
-| server.port | int | `5000` |  |
-| server.processes | int | `2` |  |
-| server.threads | int | `2` |  |
+| config | object | YAML will be used as-is.  cf https://giftless.datopian.com/en/latest/configuration.html | Configuration for giftless server |
+| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the giftless image |
+| image.repository | string | `"docker.io/datopian/giftless"` | Giftless image to use |
+| image.tag | string | The appVersion of the chart | Tag of giftless image to use |
+| ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
+| ingress.hostname | string | `""` | FQDN of giftless ingress |
+| nameOverride | string | `""` | Override the base name for resources |
+| server.debug | bool | `false` | Turn on debugging mode |
+| server.port | int | `5000` | Port for giftless server to listen on |
+| server.processes | int | `2` | Number of processes for server |
+| server.threads | int | `2` | Number of threads per process |
