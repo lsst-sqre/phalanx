@@ -6,6 +6,23 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
+# -- Resource limits and requests for the giftless frontend pod
+resources: {}
+
+# -- Annotations for the giftless frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the giftless frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the giftless frontend pod
+tolerations: []
+
+# -- Affinity rules for the giftless frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
 image:
   # -- Giftless image to use
   repository: docker.io/datopian/giftless
@@ -17,7 +34,8 @@ image:
 
 ingress:
   # -- FQDN of giftless ingress
-  hostname: ""  # Must override in environment-specific values file
+  # @default -- Must be overridden in environment-specific values file
+  hostname: ""
   # -- Additional annotations to add to the ingress
   annotations: {}
 
@@ -45,3 +63,8 @@ config:
           project_name: plasma-geode-127520
           bucket_name: rubin-gitlfs-experimental
           account_key_file: /etc/secret/giftless-gcp-key.json
+
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
