@@ -1,9 +1,13 @@
 #!/bin/bash -e
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
-ENVIRONMENT=${1:?$USAGE}
-export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_ADDR=https://vault.lsst.codes
+USAGE="Usage: ./install.sh TOP_LEVEL_APP ENVIRONMENT VAULT_TOKEN"
+TOP_LEVEL_APP=${1:?$USAGE}
+ENVIRONMENT=${2:?$USAGE}
+export VAULT_TOKEN=${3:?$USAGE}
+# set Vault address if not set to different address
+set ${VAULT_ADDR:=https://vault.lsst.codes}
+
 VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
+echo "$VAULT_PATH_PREFIX"
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
 GIT_URL=`git config --get remote.origin.url`
@@ -62,7 +66,7 @@ argocd login \
   --password $ARGOCD_PASSWORD
 
 echo "Creating top level application"
-argocd app create science-platform \
+argocd app create $TOP_LEVEL_APP \
   --repo $GIT_URL \
   --path environments --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
@@ -74,7 +78,7 @@ argocd app create science-platform \
   --helm-set targetRevision=$GIT_BRANCH \
   --values values-$ENVIRONMENT.yaml
 
-argocd app sync science-platform \
+argocd app sync $TOP_LEVEL_APP \
   --port-forward \
   --port-forward-namespace argocd
 
@@ -114,8 +118,8 @@ then
     --port-forward-namespace argocd
 fi
 
-echo "Sync remaining science platform apps"
-argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
+echo "Sync remaining $TOP_LEVEL_APP apps"
+argocd app sync -l "argocd.argoproj.io/instance=$TOP_LEVEL_APP" \
   --port-forward \
   --port-forward-namespace argocd
 
