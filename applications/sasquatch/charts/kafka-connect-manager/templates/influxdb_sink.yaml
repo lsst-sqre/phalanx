@@ -40,7 +40,11 @@ spec:
           - name: KAFKA_CONNECT_NAME
             value: influxdb-sink-{{ $key }}
           - name: KAFKA_CONNECT_INFLUXDB_URL
+            {{- if $value.connectInfluxUrl }}
+            value: {{ $value.connectInfluxUrl | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.connectInfluxUrl | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_DATABASE
             {{- if $value.connectInfluxDb }}
             value: {{ $value.connectInfluxDb | quote }}
