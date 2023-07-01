@@ -67,55 +67,65 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+        topicsRegex: "lsst.sal.ATAOS|lsst.sal.ATDome|lsst.sal.ATDomeTrajectory|lsst.sal.ATHexapod|lsst.sal.ATPneumatics|lsst.sal.ATPtg|lsst.sal.ATMCS"
       maintel:
         enabled: true
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+        topicsRegex: "lsst.sal.MTAOS|lsst.sal.MTDome|lsst.sal.MTDomeTrajectory|lsst.sal.MTPtg"
       mtmount:
         enabled: true
-        topicsRegex: ".*MTMount"
+        topicsRegex: "lsst.sal.MTMount"
       comcam:
         enabled: true
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
+        topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast"
+        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.ESS|lsst.sal.WeatherForecast"
       latiss:
         enabled: true
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+        topicsRegex: "lsst.sal.ATCamera|lsst.sal.ATHeaderService|lsst.sal.ATOODS|lsst.sal.ATSpectrograph"
       m1m3:
         enabled: true
-        topicsRegex: ".*MTM1M3"
+        topicsRegex: "lsst.sal.MTM1M3"
       m2:
         enabled: true
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+        topicsRegex: "lsst.sal.MTHexapod|lsst.sal.MTM2|lsst.sal.MTRotator"
       obssys:
         enabled: true
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: "lsst.sal.Scheduler|lsst.sal.Script|lsst.sal.ScriptQueue|lsst.sal.Watcher"
       ocps:
         enabled: true
-        topicsRegex: ".*OCPS"
+        topicsRegex: "lsst.sal.OCPS"
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
-        topicsRegex: ".*PMD"
+        topicsRegex: "lsst.sal.PMD"
       calsys:
         enabled: true
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+        topicsRegex: "lsst.sal.ATMonochromator|lsst.sal.ATWhiteLight|lsst.sal.CBP|lsst.sal.Electrometer|lsst.sal.FiberSpectrograph|lsst.sal.LinearStage|lsst.sal.TunableLaser"
       mtaircompressor:
         enabled: true
-        topicsRegex: ".*MTAirCompressor"
+        topicsRegex: "lsst.sal.MTAirCompressor"
       authorize:
         enabled: true
-        topicsRegex: ".*Authorize"
+        topicsRegex: "lsst.sal.Authorize"
       lasertracker:
         enabled: true
-        topicsRegex: ".*LaserTracker"
+        topicsRegex: "lsst.sal.LaserTracker"
       genericcamera:
         enabled: true
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
+        topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
+
+source-kafka-connect-manager:
+  enabled: true
+  influxdbSink:
+    connectInfluxUrl: "http://sasquatch-influxdb-staging.sasquatch:8086"
+    connectInfluxDb: "test"
+    connectors:
+      source-test:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Test"
 
 kafdrop:
   ingress:
