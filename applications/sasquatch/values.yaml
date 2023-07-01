@@ -188,6 +188,12 @@ influxdb2:
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
 
+# -- Override source-kafka-connect-manager configuration.
+source-kafka-connect-manager:
+  enabled: false
+  env:
+    kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
+
 # -- Override telegraf-kafka-consumer configuration.
 telegraf-kafka-consumer:
   enabled: false
