@@ -117,15 +117,90 @@ kafka-connect-manager:
         enabled: true
         topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
 
+# This needs to follow the kafka-connect-manager configuration for the summit
+# environment where data is replicated from.
+# We need to remove the "source." prefix from the topic name before writing to InfluxDB.
 source-kafka-connect-manager:
   enabled: true
   influxdbSink:
     connectInfluxUrl: "http://sasquatch-influxdb-staging.sasquatch:8086"
     connectInfluxDb: "efd"
     connectors:
+      source-auxtel:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATAOS|source.lsst.sal.ATDome|source.lsst.sal.ATDomeTrajectory|source.lsst.sal.ATHexapod|source.lsst.sal.ATPneumatics|source.lsst.sal.ATPtg|source.lsst.sal.ATMCS"
+        removePrefix: "source."
+      source-maintel:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTAOS|source.lsst.sal.MTDome|source.lsst.sal.MTDomeTrajectory|source.lsst.sal.MTPtg"
+        removePrefix: "source."
+      source-mtmount:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTMount"
+        removePrefix: "source."
+      source-comcam:
+        enabled: true
+        topicsRegex: "source.lsst.sal.CCCamera|source.lsst.sal.CCHeaderService|source.lsst.sal.CCOODS"
+        removePrefix: "source."
+      source-eas:
+        enabled: true
+        topicsRegex: "source.lsst.sal.DIMM|source.lsst.sal.DSM|source.lsst.sal.ESS|source.lsst.sal.WeatherForecast"
+        removePrefix: "source."
+      source-latiss:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATCamera|source.lsst.sal.ATHeaderService|source.lsst.sal.ATOODS|source.lsst.sal.ATSpectrograph"
+        removePrefix: "source."
+      source-m1m3:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTM1M3"
+        removePrefix: "source."
+      source-m2:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTHexapod|source.lsst.sal.MTM2|source.lsst.sal.MTRotator"
+        removePrefix: "source."
+      source-obssys:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Scheduler|source.lsst.sal.Script|source.lsst.sal.ScriptQueue|source.lsst.sal.Watcher"
+        removePrefix: "source."
+      source-ocps:
+        enabled: true
+        topicsRegex: "source.lsst.sal.OCPS"
+        removePrefix: "source."
       source-test:
         enabled: true
         topicsRegex: "source.lsst.sal.Test"
+        removePrefix: "source."
+      source-pmd:
+        enabled: true
+        topicsRegex: "source.lsst.sal.PMD"
+        removePrefix: "source."
+      source-calsys:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATMonochromator|source.lsst.sal.ATWhiteLight|source.lsst.sal.CBP|source.lsst.sal.Electrometer|source.lsst.sal.FiberSpectrograph|source.lsst.sal.LinearStage|source.lsst.sal.TunableLaser"
+        removePrefix: "source."
+      source-mtaircompressor:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTAirCompressor"
+        removePrefix: "source."
+      source-authorize:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Authorize"
+        removePrefix: "source."
+      source-genericcamera:
+        enabled: true
+        topicsRegex: "source.lsst.sal.GCHeaderService|source.lsst.sal.GenericCamera"
+        removePrefix: "source."
+      source-gis:
+        enabled: true
+        topicsRegex: "source.lsst.sal.GIS"
+        removePrefix: "source."
+      source-mtvms:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTVMS"
+        removePrefix: "source."
+      source-lasertracker:
+        enabled: true
+        topicsRegex: "source.lsst.sal.LaserTracker"
         removePrefix: "source."
 
 kafdrop:
