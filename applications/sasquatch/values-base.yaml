@@ -121,7 +121,7 @@ source-kafka-connect-manager:
   enabled: true
   influxdbSink:
     connectInfluxUrl: "http://sasquatch-influxdb-staging.sasquatch:8086"
-    connectInfluxDb: "test"
+    connectInfluxDb: "efd"
     connectors:
       source-test:
         enabled: true
