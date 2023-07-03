@@ -126,6 +126,7 @@ source-kafka-connect-manager:
       source-test:
         enabled: true
         topicsRegex: "source.lsst.sal.Test"
+        removePrefix: "source."
 
 kafdrop:
   ingress:

@@ -79,7 +79,7 @@ spec:
           - name: KAFKA_CONNECT_INFLUXDB_TAGS
             value: {{ $value.tags | quote }}
             {{- end }}
-            {{ - if $value.removePrefix }}
+            {{- if $value.removePrefix }}
           - name: KAFKA_CONNECT_INFLUXDB_REMOVE_PREFIX
             value: {{ $value.removePrefix | quote }}
             {{- end }}
