@@ -85,6 +85,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.requests.cpu | int | `1` |  |
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | rest-proxy | object | `{"enabled":false}` | Override rest-proxy configuration. |
+| source-kafka-connect-manager | object | `{"enabled":false,"env":{"kafkaConnectUrl":"http://sasquatch-source-connect-api.sasquatch:8083"}}` | Override source-kafka-connect-manager configuration. |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |

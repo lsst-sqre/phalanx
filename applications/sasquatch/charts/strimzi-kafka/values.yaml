@@ -162,4 +162,3 @@ mirrormaker2:
     # -- Whether to deploy another Connect cluster for topics replicated from the source cluster.
     # Requires the sourceRegistry enabled.
     enabled: false
-
