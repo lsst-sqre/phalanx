@@ -145,3 +145,20 @@ mirrormaker2:
     bootstrapServer: ""
     # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
     topicsPattern: "registry-schemas, lsst.sal.*"
+  replication:
+    policy:
+      # -- Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used.
+      # @default -- ""
+      separator: "."
+      # -- Replication policy.
+      # @default -- IdentityReplicationPolicy
+      class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+  sourceRegistry:
+    # -- Whether to deploy another Schema Registry for the schemas replicated from the source cluster.
+    enabled: false
+    # -- Name of the topic Schema Registry topic replicated from the source cluster
+    schemaTopic: "source.registry-schemas"
+  sourceConnect:
+    # -- Whether to deploy another Connect cluster for topics replicated from the source cluster.
+    # Requires the sourceRegistry enabled.
+    enabled: false

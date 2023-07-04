@@ -36,6 +36,7 @@ dev = [
     "documenteer[guide]>=0.7.0b4",
     "sphinx-diagrams",
     "sphinx-jinja",
+    "pydantic<2.0.0",
 ]
 
 [project.scripts]
