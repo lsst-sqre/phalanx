@@ -118,6 +118,85 @@ kafka-connect-manager:
         repairerConnector: false
         topicsRegex: ".*LaserTracker"
 
+telegraf-kafka-consumer:
+  enabled: true
+  kafkaConsumers:
+    auxtel:
+      enabled: true
+      topicRegexps: |
+        [ ".*ATAOS", ".*ATDome", ".*ATDomeTrajectory", ".*ATHexapod", ".*ATPneumatics", ".*ATPtg", ".*ATMCS" ]
+    maintel:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTAOS", ".*MTDome", ".*MTDomeTrajectory", ".*MTPtg" ]
+    mtmount:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTMount" ]
+    comcam:
+      enabled: true
+      topicRegexps: |
+        [ ".*CCCamera", ".*CCHeaderService", ".*CCOODS" ]
+    eas:
+      enabled: true
+      topicRegexps: |
+        [ ".*DIMM", ".*DSM", ".*ESS", ".*HVAC", ".*WeatherForecast" ]
+    latiss:
+      enabled: true
+      topicRegexps: |
+        [ ".*ATCamera", ".*ATHeaderService", ".*ATOODS", ".*ATSpectrograph" ]
+    m1m3:
+      enabled: true
+      flush_interval: "1s"
+      metric_batch_size: 5000
+      interval: "0.1s"
+      topicRegexps: |
+        [ ".*MTM1M3" ]
+    m2:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTHexapod", ".*MTM2", ".*MTRotator" ]
+    obssys:
+      enabled: true
+      topicRegexps: |
+        [ ".*Scheduler", ".*Script", ".*ScriptQueue", ".*Watcher" ]
+    ocps:
+      enabled: true
+      topicRegexps: |
+        [ ".*OCPS" ]
+    test:
+      enabled: true
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+    pmd:
+      enabled: true
+      topicRegexps: |
+        [ ".*PMD" ]
+    calsys:
+      enabled: true
+      topicRegexps: |
+        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LinearStage", ".*TunableLaser" ]
+    mtaircompressor:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTAirCompressor" ]
+    genericcamera:
+      enabled: true
+      topicRegexps: |
+        [ ".*GCHeaderService", ".*GenericCamera" ]
+    gis:
+      enabled: true
+      topicRegexps: |
+        [ ".*GIS" ]
+    mtvms:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTVMS" ]
+    lasertracker:
+      enabled: true
+      topicRegexps: |
+        [ ".*LaserTracker" ]
+
 kafdrop:
   ingress:
     enabled: true
