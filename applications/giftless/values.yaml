@@ -63,6 +63,7 @@ config:
           project_name: plasma-geode-127520
           bucket_name: rubin-gitlfs-experimental
           account_key_file: /etc/secret/giftless-gcp-key.json
+  PRE_AUTHORIZED_ACTION_PROVIDER: {}
 
 global:
   # -- Base path for Vault secrets
