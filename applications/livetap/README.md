@@ -45,9 +45,14 @@ IVOA TAP service
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
-| tap_schema.image.repository | object | `{}` |  |
-| tap_schema.image.tag | string | `"2.0.2"` |  |
-| tap_schema.resources | object | `{}` |  |
+| tapSchema.affinity | object | `{}` | Affinity rules for the mock QServ pod |
+| tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
+| tapSchema.image.repository | string | `"lsstsqre/tap-schema-idfprod-tap"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
+| tapSchema.image.tag | string | `"2.0.1"` | Tag of TAP schema image |
+| tapSchema.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
+| tapSchema.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
+| tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |
+| tapSchema.tolerations | list | `[]` | Tolerations for the mock QServ pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |

@@ -120,11 +120,32 @@ pg:
     # -- Affinity rules for the mock postgres pod
     affinity: {}
 
-tap_schema:
+tapSchema:
   image:
-    repository: {}
-    tag: "2.0.2"
+    # -- TAP schema image to ue. This must be overridden by each environment
+    # with the TAP schema for that environment.
+    repository: "lsstsqre/tap-schema-idfprod-tap"
+
+    # -- Pull policy for the TAP schema image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of TAP schema image
+    tag: "2.0.1"
+
+  # -- Resource limits and requests for the TAP schema database pod
   resources: {}
+
+  # -- Annotations for the mock QServ pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the mock QServ pod
+  nodeSelector: {}
+
+  # -- Tolerations for the mock QServ pod
+  tolerations: []
+
+  # -- Affinity rules for the mock QServ pod
+  affinity: {}
 
 uws:
   image:
