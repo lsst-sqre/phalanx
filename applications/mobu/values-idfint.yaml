@@ -31,7 +31,7 @@ config:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           use_cachemachine: false
-          url_prefix: "/n3"
+          url_prefix: "/nb"
         restart: true
     - name: "weekly"
       count: 1
@@ -50,7 +50,7 @@ config:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           use_cachemachine: false
-          url_prefix: "/n3"
+          url_prefix: "/nb"
         restart: true
     - name: "tutorial"
       count: 1
@@ -71,7 +71,7 @@ config:
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
           use_cachemachine: false
-          url_prefix: "/n3"
+          url_prefix: "/nb"
         restart: true
     - name: "tap"
       count: 1

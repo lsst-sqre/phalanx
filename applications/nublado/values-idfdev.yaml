@@ -68,6 +68,5 @@ controller:
             server: "10.87.86.26"
 jupyterhub:
   hub:
-    baseUrl: "/n3"
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"

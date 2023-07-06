@@ -1,6 +1,7 @@
 jupyterhub:
 
   hub:
+    baseUrl: "/n2"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
