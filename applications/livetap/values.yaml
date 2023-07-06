@@ -124,13 +124,13 @@ tapSchema:
   image:
     # -- TAP schema image to ue. This must be overridden by each environment
     # with the TAP schema for that environment.
-    repository: "lsstsqre/tap-schema-idfprod-tap"
+    repository: "lsstsqre/tap-schema-mock"
 
     # -- Pull policy for the TAP schema image
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "2.0.1"
+    tag: "2.0.2"
 
   # -- Resource limits and requests for the TAP schema database pod
   resources: {}
