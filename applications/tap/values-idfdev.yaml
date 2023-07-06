@@ -1,4 +1,4 @@
-tap_schema:
+tapSchema:
   image:
     repository: "lsstsqre/tap-schema-idfdev-tap"
 

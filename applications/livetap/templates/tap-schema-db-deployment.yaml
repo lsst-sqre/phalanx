@@ -11,7 +11,7 @@ spec:
       {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.tapSchema.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -31,26 +31,26 @@ spec:
               value: "TAP_SCHEMA"
             - name: MYSQL_ROOT_HOST
               value: "%"
-          image: "{{ .Values.tap_schema.image.repository }}:{{ .Values.tap_schema.image.tag}}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          image: "{{ .Values.tapSchema.image.repository }}:{{ .Values.tapSchema.image.tag}}"
+          imagePullPolicy: {{ .Values.tapSchema.image.pullPolicy | quote }}
           ports:
             - containerPort: 3306
               protocol: "TCP"
-          {{- with .Values.tap_schema.resources }}
+          {{- with .Values.tapSchema.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
       imagePullSecrets:
         - name: "pull-secret"
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.tapSchema.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.tapSchema.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.tapSchema.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
