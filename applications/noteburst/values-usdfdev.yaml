@@ -3,7 +3,6 @@ image:
 
 config:
   logLevel: "DEBUG"
-  hubPathPrefix: "/n3"
   worker:
     workerCount: 1
     identities:
