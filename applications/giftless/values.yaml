@@ -25,7 +25,7 @@ affinity: {}
 # be set in the individual environment values files.
 image:
   # -- Giftless image to use
-  repository: docker.io/datopian/giftless
+  repository: ghcr.io/lsst-sqre/giftless-github-proxy-auth
   # -- Pull policy for the giftless image
   pullPolicy: "IfNotPresent"
   # -- Tag of giftless image to use
@@ -53,17 +53,21 @@ server:
 # @default -- YAML will be used as-is.  cf https://giftless.datopian.com/en/latest/configuration.html
 config:
   AUTH_PROVIDERS:
-    - giftless.auth.allow_anon:read_only
+    - factory: "giftless_github_proxy_auth.auth:factory"
+      options: {}
+    - "giftless.auth.allow_anon:read_only"
+  PRE_AUTHORIZED_ACTION_PROVIDER:
+    factory: "giftless_github_proxy_auth.auth:factory"
+    options: {}
   TRANSFER_ADAPTERS:
     basic:
-      factory: giftless.transfer.basic_external:factory
+      factory: "giftless.transfer.basic_external:factory"
       options:
-        storage_class: giftless.storage.google_cloud:GoogleCloudStorage
+        storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
         storage_options:
-          project_name: plasma-geode-127520
-          bucket_name: rubin-gitlfs-experimental
-          account_key_file: /etc/secret/giftless-gcp-key.json
-  PRE_AUTHORIZED_ACTION_PROVIDER: {}
+          project_name: "plasma-geode-127520"
+          bucket_name: "rubin-gitlfs-experimental"
+          account_key_file: "/etc/secret/giftless-gcp-key.json"
 
 global:
   # -- Base path for Vault secrets

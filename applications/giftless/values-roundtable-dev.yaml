@@ -1,13 +1,4 @@
-image:
-  repository: docker.io/lsstsqre/giftless
-  tag: ajt-dev
-  pullPolicy: "Always"
 server:
   debug: true
 ingress:
   hostname: "git-lfs-dev.lsst.cloud"
-config:
-  AUTH_PROVIDERS:
-    - factory: "giftless_github_proxy_auth.auth:factory"
-      options: {}
-    - giftless.auth.allow_anon:read_only
