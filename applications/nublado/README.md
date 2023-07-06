@@ -69,7 +69,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"0.3.1"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"0.3.2"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |
