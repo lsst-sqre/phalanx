@@ -3,6 +3,15 @@ alert-stream-broker:
     name: "alert-broker"
 
   kafka:
+
+    version: 3.4.0
+    # -- Encoding version for messages, see
+    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+    logMessageFormatVersion: 3.4
+    # -- Version of the protocol for inter-broker communication, see
+    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+    interBrokerProtocolVersion: 3.4
+
     # Addresses based on the state as of 2021-12-02; these were assigned by
     # Google and now we're pinning them.
     externalListener:
