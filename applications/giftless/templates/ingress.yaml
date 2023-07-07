@@ -52,7 +52,7 @@ template:
       - host: {{ .Values.ingress.hostname.readwrite | quote }}
         http:
           paths:
-            - path: "/files"
+            - path: "/"
               pathType: "Prefix"
               backend:
                 service:

@@ -44,5 +44,5 @@ config:
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.
 
   additionalFQDNs:
-    - "git-lfs-dev.data.lsst.cloud"
-    - "git-lfs-dev-rw.data.lsst.cloud"
+    - "git-lfs-dev.lsst.cloud"
+    - "git-lfs-dev-rw.lsst.cloud"
