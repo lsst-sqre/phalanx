@@ -1,4 +1,25 @@
 server:
   debug: true
 ingress:
-  hostname: "git-lfs-dev.lsst.cloud"
+  hostname:
+    readonly: "git-lfs-dev.lsst.cloud"
+    readwrite: "git-lfs-dev-rw.lsst.cloud"
+config:
+  readonly:
+    TRANSFER_ADAPTERS:
+      basic:
+        options:
+          storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
+          storage_options:
+            project_name: "plasma-geode-127520"
+            bucket_name: "rubin-gitlfs-experimental"
+            account_key_file: "/etc/secret/giftless-gcp-key.json"
+  readwrite:
+    TRANSFER_ADAPTERS:
+      basic:
+        options:
+          storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
+          storage_options:
+            project_name: "plasma-geode-127520"
+            bucket_name: "rubin-gitlfs-experimental"
+            account_key_file: "/etc/secret/giftless-gcp-key.json"

@@ -1,6 +1,6 @@
 # giftless
 
-Git-LFS server with GCS S3 backend
+Git-LFS server with GCS S3 backend, with Rubin-specific auth
 
 ## Source Code
 
@@ -18,7 +18,7 @@ Git-LFS server with GCS S3 backend
 | image.repository | string | `"docker.io/datopian/giftless"` | Giftless image to use |
 | image.tag | string | The appVersion of the chart | Tag of giftless image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.hostname | string | Must be overridden in environment-specific values file | FQDN of giftless ingress |
+| ingress.hostname | object | Must be overridden in environment-specific values file | FQDNs of giftless ingresses |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the giftless frontend pod |
 | podAnnotations | object | `{}` | Annotations for the giftless frontend pod |

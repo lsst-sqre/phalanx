@@ -12,3 +12,18 @@ spec:
       protocol: "TCP"
   selector:
     {{- include "giftless.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "giftless.fullname" . }}-rw
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 5000
+      targetPort: "http"
+      protocol: "TCP"
+  selector:
+    {{- include "giftless.selectorLabels" . | nindent 4 }}

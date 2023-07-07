@@ -10,4 +10,5 @@ spec:
     kind: ClusterIssuer
 
   dnsNames:
-    - {{ .Values.ingress.hostname }}
+    - {{ .Values.ingress.hostname.readonly  | quote }}
+    - {{ .Values.ingress.hostname.readwrite | quote }}

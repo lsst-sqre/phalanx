@@ -25,7 +25,7 @@ affinity: {}
 # be set in the individual environment values files.
 image:
   # -- Giftless image to use
-  repository: ghcr.io/lsst-sqre/giftless-github-proxy-auth
+  repository: docker.io/datopian/giftless
   # -- Pull policy for the giftless image
   pullPolicy: "IfNotPresent"
   # -- Tag of giftless image to use
@@ -33,9 +33,11 @@ image:
   tag: ""
 
 ingress:
-  # -- FQDN of giftless ingress
+  # -- FQDNs of giftless ingresses
   # @default -- Must be overridden in environment-specific values file
-  hostname: ""
+  hostname:
+    readonly: ""
+    readwrite: ""
   # -- Additional annotations to add to the ingress
   annotations: {}
 
@@ -52,22 +54,20 @@ server:
 # -- Configuration for giftless server
 # @default -- YAML will be used as-is.  cf https://giftless.datopian.com/en/latest/configuration.html
 config:
-  AUTH_PROVIDERS:
-    - factory: "giftless_github_proxy_auth.auth:factory"
-      options: {}
-    - "giftless.auth.allow_anon:read_only"
-  PRE_AUTHORIZED_ACTION_PROVIDER:
-    factory: "giftless_github_proxy_auth.auth:factory"
-    options: {}
-  TRANSFER_ADAPTERS:
-    basic:
-      factory: "giftless.transfer.basic_external:factory"
-      options:
-        storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
-        storage_options:
-          project_name: "plasma-geode-127520"
-          bucket_name: "rubin-gitlfs-experimental"
-          account_key_file: "/etc/secret/giftless-gcp-key.json"
+  readonly:
+    AUTH_PROVIDERS:
+      - "giftless.auth.allow_anon:read_only"
+    TRANSFER_ADAPTERS:
+      basic:
+        factory: "giftless.transfer.basic_external:factory"
+        # @default -- Must be overridden in environment-specific values file
+  readwrite:
+    AUTH_PROVIDERS:
+      - "giftless.auth.allow_anon:read_write"  # Ingress does control.
+    TRANSFER_ADAPTERS:
+      basic:
+        factory: "giftless.transfer.basic_external:factory"
+        # @default -- Must be overridden in environment-specific values file
 
 global:
   # -- Base path for Vault secrets
