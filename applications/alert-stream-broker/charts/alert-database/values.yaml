@@ -74,8 +74,6 @@ server:
     type: ClusterIP
     port: 3000
 
-  vaultPathPrefix: secret/rubin/k8s_operator/usdfdev-ap/alert-database
-
 
 storage:
   gcp:

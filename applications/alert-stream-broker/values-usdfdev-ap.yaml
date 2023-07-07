@@ -31,7 +31,7 @@ alert-stream-broker:
     size: 1500Gi
     storageClassName: standard
 
-  vaultSecretsPath: "secret/rubin/usdf-alert-distribution-dev"
+  vaultSecretsPath: "rubin/k8s_operator/usdfdev-ap/alert-stream-broker"
 
   users:
     # A user for development purposes by the Rubin team, with access to all
