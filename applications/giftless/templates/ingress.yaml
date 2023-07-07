@@ -12,6 +12,10 @@ template:
   metadata:
     name: {{ include "giftless.fullname" . }}
   spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readonly | quote }}
+        secretName: tls
     rules:
       - host: {{ .Values.ingress.hostname.readonly | quote }}
         http:
@@ -40,6 +44,10 @@ template:
   metadata:
     name: {{ template "giftless.fullname" . }}-rw
   spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readwrite | quote }}
+        secretName: tls
     rules:
       - host: {{ .Values.ingress.hostname.readwrite | quote }}
         http:
