@@ -66,8 +66,8 @@ influxdb:
     #   init.iql: |+
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 96Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
