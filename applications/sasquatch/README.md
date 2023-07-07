@@ -43,8 +43,8 @@ Rubin Observatory's telemetry service.
 | influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb.resources.limits.cpu | int | `8` |  |
 | influxdb.resources.limits.memory | string | `"96Gi"` |  |
-| influxdb.resources.requests.cpu | int | `1` |  |
-| influxdb.resources.requests.memory | string | `"1Gi"` |  |
+| influxdb.resources.requests.cpu | int | `8` |  |
+| influxdb.resources.requests.memory | string | `"96Gi"` |  |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | influxdb2.adminUser.bucket | string | `"default"` | Admin default bucket. |
 | influxdb2.adminUser.existingSecret | string | `"sasquatch"` | Get admin-password/admin-token keys from secret. |
