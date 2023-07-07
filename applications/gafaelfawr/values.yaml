@@ -275,6 +275,12 @@ config:
   # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
 
+  # -- Defines additional FQDNs for Gafaelfawr.  This doesn't work for
+  # cookie or browser authentication, but for token-based services like
+  # git-lfs or the webdav server it does.
+
+  additionalFQDNs: []
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
   # Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as

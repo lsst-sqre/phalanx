@@ -18,6 +18,10 @@ config:
   oidcServer:
     enabled: false
 
+  knownScopes:
+    "write:git-lfs": >-
+      Can write objects to Git LFS storage bucket
+
   groupMapping:
     "exec:admin":
       - github:
@@ -38,3 +42,7 @@ config:
 
   errorFooter: |
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.
+
+  additionalFQDNs:
+    - "git-lfs-dev.data.lsst.cloud"
+    - "git-lfs-dev-rw.data.lsst.cloud"
