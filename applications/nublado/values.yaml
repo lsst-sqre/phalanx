@@ -226,7 +226,7 @@ controller:
             # No longer used, but preserves compatibility with runlab.sh
             dask_worker.yml: |
               enabled: false
-        /opt/lsst/software/jupyterlab/panda:
+        /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template:
           modify: false
           contents: |
             # Licensed under the Apache License, Version 2.0 (the "License");
