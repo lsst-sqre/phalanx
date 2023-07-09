@@ -59,6 +59,15 @@ influxdb-staging:
     enabled: true
     hostname: base-lsp.lsst.codes
 
+source-influxdb:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
+    size: 5Ti
+  ingress:
+    enabled: true
+    hostname: base-lsp.lsst.codes
+
 
 kafka-connect-manager:
   influxdbSink:
