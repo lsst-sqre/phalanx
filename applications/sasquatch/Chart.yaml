@@ -20,6 +20,11 @@ dependencies:
     condition: influxdb-staging.enabled
     version: 4.12.4
     repository: https://helm.influxdata.com/
+  - name: influxdb
+    alias: source-influxdb
+    condition: source-influxdb.enabled
+    version: 4.12.4
+    repository: https://helm.influxdata.com/
   - name: influxdb2
     condition: influxdb2.enabled
     version: 2.1.1
