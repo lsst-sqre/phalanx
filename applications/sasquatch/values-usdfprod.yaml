@@ -23,6 +23,15 @@ influxdb:
     enabled: true
     size: 15Ti
 
+source-influxdb:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdf-rsp.slac.stanford.edu
+  persistence:
+    enabled: true
+    size: 15Ti
+
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
