@@ -85,6 +85,18 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.requests.cpu | int | `1` |  |
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | rest-proxy | object | `{"enabled":false}` | Override rest-proxy configuration. |
+| source-influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| source-influxdb.enabled | bool | `false` | Enable InfluxDB staging deployment. |
+| source-influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
+| source-influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
+| source-influxdb.initScripts.enabled | bool | `false` | Enable InfluxDB custom initialization script. |
+| source-influxdb.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
+| source-influxdb.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
+| source-influxdb.resources.limits.cpu | int | `8` |  |
+| source-influxdb.resources.limits.memory | string | `"96Gi"` |  |
+| source-influxdb.resources.requests.cpu | int | `8` |  |
+| source-influxdb.resources.requests.memory | string | `"96Gi"` |  |
+| source-influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | source-kafka-connect-manager | object | `{"enabled":false,"env":{"kafkaConnectUrl":"http://sasquatch-source-connect-api.sasquatch:8083"}}` | Override source-kafka-connect-manager configuration. |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
