@@ -166,7 +166,7 @@ proxy:
 
 jupyterhub:
   hub:
-    baseUrl: "/n3"
+    baseUrl: "/nb"
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
   cull:
