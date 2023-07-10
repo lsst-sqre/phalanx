@@ -53,7 +53,7 @@ spec:
           volumeMounts:
           {{- if .Values.ingester.gcp.outsideGCP }}
           - mountPath: /var/secrets/google
-            name: alert-database
+            name: alert-stream-broker-secrets
           {{- end }}
 
       serviceAccountName: "{{ .Values.server.serviceAccountName }}"
@@ -63,5 +63,5 @@ spec:
       - name: alert-database
         secret:
           defaultMode: 420
-          secretName: alert-database
+          secretName: alert-stream-broker-secrets
        {{- end }}
