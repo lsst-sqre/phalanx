@@ -99,12 +99,12 @@ kind: Deployment
 metadata:
   name: {{ template "giftless.fullname" . }}-rw
   labels:
-    {{- include "giftless.labels" . | nindent 4 }}
+    {{- include "giftless-rw.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "giftless.selectorLabels" . | nindent 6 }}
+      {{- include "giftless-rw.selectorLabels" . | nindent 6 }}
   strategy:
     type: "Recreate"
   template:
@@ -115,7 +115,7 @@ spec:
         {{- end }}
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
       labels:
-        {{- include "giftless.selectorLabels" . | nindent 8 }}
+        {{- include "giftless-rw.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       containers:

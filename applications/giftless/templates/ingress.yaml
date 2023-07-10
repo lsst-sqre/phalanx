@@ -34,7 +34,7 @@ metadata:
   name: "giftless-rw"
   name: {{ template "giftless.fullname" . }}-rw
   labels:
-    {{- include "giftless.labels" . | nindent 4 }}
+    {{- include "giftless-rw.labels" . | nindent 4 }}
 config:
   baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
   scopes:

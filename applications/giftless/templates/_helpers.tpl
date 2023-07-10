@@ -51,3 +51,23 @@ Selector labels
 app.kubernetes.io/name: {{ include "giftless.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+{{/*
+Common labels-RW
+*/}}
+{{- define "giftless-rw.labels" -}}
+app.kubernetes.io/name: {{ include "giftless.name" . }}-rw
+helm.sh/chart: {{ include "giftless.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "giftless-rw.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "giftless.name" . }}-rw
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
