@@ -15,6 +15,7 @@ config:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           max_executions: 1
+          url_prefix: "/n2"
         restart: true
     - name: "recommended"
       count: 1
