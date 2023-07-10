@@ -17,6 +17,7 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
+          url_prefix: "/n2"
         restart: true
     - name: "weekly"
       count: 1
@@ -34,7 +35,6 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
-          url_prefix: "/nb"
           use_cachemachine: false
         restart: true
     - name: "tutorial"
@@ -56,7 +56,6 @@ config:
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
           use_cachemachine: false
-          url_prefix: "/nb"
         restart: true
     - name: "tap"
       count: 1
