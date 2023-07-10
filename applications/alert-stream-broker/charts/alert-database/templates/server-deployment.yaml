@@ -60,7 +60,7 @@ spec:
 
       volumes:
       {{- if .Values.ingester.gcp.outsideGCP }}
-      - name: alert-database
+      - name: alert-stream-broker-secrets
         secret:
           defaultMode: 420
           secretName: alert-stream-broker-secrets
