@@ -5,4 +5,4 @@ description: IVOA TAP service
 sources:
   - https://github.com/lsst-sqre/tap-postgres
   - https://github.com/opencadc/tap
-appVersion: "1.10"
+appVersion: "1.12"
