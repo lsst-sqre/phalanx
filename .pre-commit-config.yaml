@@ -21,7 +21,7 @@ repos:
           # The `./` makes it relative to the chart-search-root set above
           - "--template-files=./helm-docs.md.gotmpl"
 
-  - repo: https://github.com/PyCQA/isort
+  - repo: https://github.com/pycqa/isort
     rev: 5.12.0
     hooks:
       - id: isort
@@ -33,13 +33,13 @@ repos:
     hooks:
       - id: black
 
-  - repo: https://github.com/asottile/blacken-docs
+  - repo: https://github.com/adamchainz/blacken-docs
     rev: 1.13.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==23.1.0]
 
-  - repo: https://github.com/PyCQA/flake8
+  - repo: https://github.com/pycqa/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
