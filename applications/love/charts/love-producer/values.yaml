@@ -13,18 +13,26 @@ env:
 # -- This section holds a set of key, value pairs for secrets
 envSecrets:
   PROCESS_CONNECTION_PASS: process-connection-pass
-# -- This sections sets the list of producers to use.
+# -- (obj) This sections sets the list of producers to use.
+# The producers are collected into producer groups and a CSC producers
+# will be assigned to a given container.
 # The producers should be specified like:
-# _name_: _CSC name:index_
+# _name_: The top-level name for the producer group.
+# _cscs_: Map of _CSC name:index_
 # Example: ataos: ATAOS:0
-producers: {}
-# -- This allows the specification of pod annotations.
-podAnnotations: {}
-# -- Resource specifications for the LOVE producer pods
+# The following attributes are optional
+# _resources_ (A resource object specification)
+# _nodeSelector_ (A node selector object specification)
+# _tolerations_ (A list of tolerations)
+# _affinity_ (An affinity object specification)
+producers: []
+# -- This allows for the specification of pod annotations.
+annotations: {}
+# -- Resource specifications applied to all LOVE producer pods
 resources: {}
-# -- Node selection rules for the LOVE producer pods
+# -- Node selection rules applied to all LOVE producer pods
 nodeSelector: {}
-# -- Toleration specifications for the LOVE producer pods
+# -- Toleration specifications applied to all LOVE producer pods
 tolerations: []
-# -- Affinity rules for the LOVE producer pods
+# -- Affinity rules applied to all LOVE producer pods
 affinity: {}

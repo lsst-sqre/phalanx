@@ -1,5 +1,5 @@
-{{- range $producer, $csc := .Values.producers }}
-{{ $appName := printf "%s-%s" $.Release.Name $producer | trunc 63 | trimSuffix "-" }}
+{{- range $producer := .Values.producers }}
+{{ $appName := printf "%s-%s" $.Release.Name $producer.name | trunc 63 | trimSuffix "-" }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -15,7 +15,7 @@ spec:
       app.kubernetes.io/instance: {{ $appName }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
+      {{- with $.Values.annotations }}
       annotations:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
@@ -24,7 +24,8 @@ spec:
         app.kubernetes.io/instance: {{ $appName }}
     spec:
       containers:
-        - name: {{ $appName }}
+        {{- range $cName, $csc := $producer.cscs }}
+        - name: {{ $cName }}
           {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystemImageTag }}
           image: "{{ $.Values.image.repository }}:{{ $imageTag }}"
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
@@ -44,25 +45,50 @@ spec:
             - name: {{ $env_var }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ $.Values.namespace }}-secrets
+                  name: love-secrets
                   key: {{ $env_value }}
           {{- end }}
-          {{- with $.Values.resources }}
-          resources:
-            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- if or $.Values.resources $producer.resources }}
+          {{- $resources := "" }}
+          {{- if $producer.resources }}
+          {{- $resources = $producer.resources }}
+          {{- else }}
+          {{- $resources = $.Values.resources }}
           {{- end }}
+          resources:
+            {{- toYaml $resources | nindent 12 }}
+          {{- end }}
+        {{- end }}
       imagePullSecrets:
         - name: nexus3-docker
-      {{- with $.Values.nodeSelector }}
+      {{- if or $.Values.nodeSelector $producer.nodeSelector }}
+      {{- $nodeSelector := "" }}
+      {{- if $producer.nodeSelector }}
+      {{- $nodeSelector = $producer.nodeSelector }}
+      {{- else }}
+      {{- $nodeSelector = $.Values.nodeSelector }}
+      {{- end }}
       nodeSelector:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $nodeSelector | nindent 8 }}
       {{- end }}
-      {{- with $.Values.affinity }}
+      {{- if or $.Values.affinity $producer.affinity }}
+      {{- $affinity := "" }}
+      {{- if $producer.affinity }}
+      {{- $affinity = $producer.affinity }}
+      {{- else }}
+      {{- $affinity = $.Values.affinity }}
+      {{- end }}
       affinity:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $affinity | nindent 8 }}
       {{- end }}
-      {{- with $.Values.tolerations }}
+      {{- if or $.Values.tolerations $producer.tolerations }}
+      {{- $tolerations := "" }}
+      {{- if $producer.tolerations }}
+      {{- $tolerations = $producer.tolerations }}
+      {{- else }}
+      {{- $tolerations = $.Values.tolerations }}
+      {{- end }}
       tolerations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $tolerations | nindent 8 }}
       {{- end }}
 {{- end }}

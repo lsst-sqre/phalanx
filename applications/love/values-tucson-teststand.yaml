@@ -170,5 +170,10 @@ love-producer:
   env:
     WEBSOCKET_HOST: love-nginx-service/manager/ws/subscription
   producers:
-    ataos: ATAOS:0
-    atcamera: ATCamera:0
+  - name: auxtel
+    cscs:
+      ataos: ATAOS:0
+      atdome: ATDome:0
+  - name: latiss
+    cscs:
+      atcamera: ATCamera:0
