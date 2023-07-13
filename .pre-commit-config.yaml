@@ -6,20 +6,20 @@ repos:
       - id: check-toml
 
   - repo: https://github.com/adrienverge/yamllint
-    rev: v1.30.0
+    rev: v1.32.0
     hooks:
       - id: yamllint
         args:
-          - "-c=.yamllint.yml"
+          - -c=.yamllint.yml
 
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.0
+    rev: '19.0614'
     hooks:
       - id: helm-docs
         args:
-          - "--chart-search-root=."
+          - --chart-search-root=.
           # The `./` makes it relative to the chart-search-root set above
-          - "--template-files=./helm-docs.md.gotmpl"
+          - --template-files=./helm-docs.md.gotmpl
 
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0
@@ -29,12 +29,12 @@ repos:
           - toml
 
   - repo: https://github.com/psf/black
-    rev: 23.1.0
+    rev: 23.7.0
     hooks:
       - id: black
 
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: 1.13.0
+    rev: 1.15.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==23.1.0]
