@@ -22,6 +22,22 @@ influxdb:
   persistence:
     enabled: true
     size: 15Ti
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - csi-wekafs-controller
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: type
+            operator: In
+            values:
+            - psql
 
 source-influxdb:
   enabled: true
