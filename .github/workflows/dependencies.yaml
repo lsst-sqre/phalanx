@@ -14,14 +14,13 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run neophile
-        uses: lsst-sqre/run-tox@v1
+        uses: lsst-sqre/run-neophile@v1
         with:
           python-version: "3.11"
-          tox-envs: "neophile-update"
-          tox-posargs: "--pr pre-commit"
-        env:
-          NEOPHILE_GITHUB_APP_ID: ${{ secrets.NEOPHILE_APP_ID }}
-          NEOPHILE_GITHUB_PRIVATE_KEY: ${{ secrets.NEOPHILE_PRIVATE_KEY }}
+          mode: pr
+          types: pre-commit
+          app-id: ${{ secrets.NEOPHILE_APP_ID }}
+          app-secret: ${{ secrets.NEOPHILE_PRIVATE_KEY }}
 
       - name: Report status
         if: always()
