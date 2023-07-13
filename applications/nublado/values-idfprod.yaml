@@ -2,8 +2,6 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-stable-6994.iam.gserviceaccount.com"
   slackAlerts: true
   config:
-    fileserver:
-      enabled: true
     images:
       source:
         type: "google"
