@@ -149,10 +149,10 @@ mirrormaker2:
     policy:
       # -- Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used.
       # @default -- ""
-      separator: "."
+      separator: ""
       # -- Replication policy.
       # @default -- IdentityReplicationPolicy
-      class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+      class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
   sourceRegistry:
     # -- Whether to deploy another Schema Registry for the schemas replicated from the source cluster.
     enabled: false
