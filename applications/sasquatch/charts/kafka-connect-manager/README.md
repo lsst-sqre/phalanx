@@ -16,8 +16,8 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
-| influxdbSink.connectInfluxErrorPolicy | string | `"NOOP"` | Error policy, see connector documetation for details. |
-| influxdbSink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
+| influxdbSink.connectInfluxErrorPolicy | string | `"RETRY"` | Error policy, see connector documetation for details. |
+| influxdbSink.connectInfluxMaxRetries | string | `"20"` | The maximum number of times a message is retried. |
 | influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |

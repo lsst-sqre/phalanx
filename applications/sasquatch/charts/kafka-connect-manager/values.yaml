@@ -23,9 +23,9 @@ influxdbSink:
   # -- Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`.
   timestamp: private_efdStamp
   # -- Error policy, see connector documetation for details.
-  connectInfluxErrorPolicy: NOOP
+  connectInfluxErrorPolicy: RETRY
   # -- The maximum number of times a message is retried.
-  connectInfluxMaxRetries: "10"
+  connectInfluxMaxRetries: "20"
   # -- The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`.
   connectInfluxRetryInterval: "60000"
   # -- Enables the output for how many records have been processed.
