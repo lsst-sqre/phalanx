@@ -88,6 +88,8 @@ jobs:
         uses: medyagh/setup-minikube@v0.0.13
         with:
           kubernetes-version: "v1.27.3"
+          cpus: max
+          memory: max
 
       - name: Test interaction with the cluster
         if: steps.filter.outputs.minikube == 'true'
