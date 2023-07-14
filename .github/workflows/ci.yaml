@@ -89,7 +89,7 @@ jobs:
         with:
           kubernetes-version: "v1.27.3"
           cpus: max
-          memory: max
+          memory: 5500m  # Linux virtual machines have 7GB of RAM
 
       - name: Test interaction with the cluster
         if: steps.filter.outputs.minikube == 'true'
