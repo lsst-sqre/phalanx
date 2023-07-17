@@ -83,6 +83,7 @@ kafka-connect-manager:
       mtmount:
         enabled: true
         topicsRegex: "lsst.sal.MTMount"
+        tasksMax: "8"
       comcam:
         enabled: true
         topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
@@ -95,6 +96,7 @@ kafka-connect-manager:
       m1m3:
         enabled: true
         topicsRegex: "lsst.sal.MTM1M3"
+        tasksMax: "8"
       m2:
         enabled: true
         topicsRegex: "lsst.sal.MTHexapod|lsst.sal.MTM2|lsst.sal.MTRotator"
