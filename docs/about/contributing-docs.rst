@@ -64,9 +64,9 @@ Submitting a pull request and sharing documentation drafts
 
 Members of the `lsst-sqre/phalanx`_ repository should submit pull requests following the `Data Management workflow guide`_.
 Note that GitHub Actions builds the documentation and uploads a draft edition of the documentation to the web.
-You can find your branch's development edition at https://phalanx.lsst.io/v.
+You can find your branch's development edition at `the list of available versions <https://phalanx.lsst.io/v/index.html>`__.
 
-If you are submitting a GitHub pull request from a fork, the documentation will build as a check, however the draft won't upload for public staging.
+If you are submitting a GitHub pull request from a fork, the documentation will build as a check, but the draft won't upload for public staging.
 
 More information on writing documentation
 =========================================
