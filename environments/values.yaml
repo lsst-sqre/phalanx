@@ -54,6 +54,8 @@ nublado:
   enabled: false
 nublado2:
   enabled: false
+ook:
+  enabled: false
 obsloctap:
   enabled: false
 plot-navigator:
