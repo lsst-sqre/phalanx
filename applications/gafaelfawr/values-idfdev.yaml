@@ -34,8 +34,8 @@ config:
   quota:
     default:
       notebook:
-        cpu: 9.0
-        memory: 27
+        cpu: 4.0
+        memory: 16
 
   groupMapping:
     "admin:jupyterlab":
