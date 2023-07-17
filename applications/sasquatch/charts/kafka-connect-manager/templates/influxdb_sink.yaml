@@ -62,7 +62,11 @@ spec:
                 name: sasquatch
                 key: influxdb-password
           - name: KAFKA_CONNECT_TASKS_MAX
+            {{- if $value.tasksMax }}
+            value: {{ $value.tasksMax | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.tasksMax | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_TOPIC_REGEX
             value: {{ $value.topicsRegex | quote }}
           - name: KAFKA_CONNECT_CHECK_INTERVAL
