@@ -5,7 +5,7 @@ vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 alert-stream-broker:
   enabled: false
 argo-workflows:
-  enabled: false
+  enabled: true
 cachemachine:
   enabled: true
 cert-manager:
