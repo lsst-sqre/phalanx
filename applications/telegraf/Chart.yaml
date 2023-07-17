@@ -8,7 +8,7 @@ sources:
   - https://github.com/influxdata/helm-charts
 dependencies:
   - name: telegraf
-    version: 1.8.28
+    version: 1.8.29
     repository: https://helm.influxdata.com/
 annotations:
   phalanx.lsst.io/docs: |
