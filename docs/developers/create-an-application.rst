@@ -22,9 +22,8 @@ Select ``FastAPI application (Safir)`` from the list of project types.
 This will create a new GitHub repository with the basic framework of a FastAPI_ application that will work well inside the Rubin Science Platform.
 The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logger to database handling.
 
-Any Python application destined for the RSP should regularly update its dependencies to pick up any security fixes.
-If your application follows the code layout of the FastAPI template, use `neophile <https://neophile.lsst.io/>`__ to automatically create PRs to update your dependencies.
-To add your application to the list of repositories that neophile updates, submit a PR to add the repository owner and name to `neophile's configuration <https://github.com/lsst-sqre/roundtable/blob/master/deployments/neophile/values.yaml>`__.
+Any Python application destined for the RSP must regularly update its dependencies to pick up any security fixes and make new releases with those updated dependencies.
+If you use the template as described above, GitHub Actions CI will warn you when application dependencies are out of date.
 
 Each release of your application must be tagged.
 The tag should use `semantic versioning`_ (for example, ``1.3.2``).
