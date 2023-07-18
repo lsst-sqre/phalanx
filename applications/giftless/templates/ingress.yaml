@@ -4,6 +4,11 @@ metadata:
   name: {{ include "giftless.fullname" . }}
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 config:
   baseUrl: "https://{{ .Values.ingress.hostname.readonly }}"
   scopes:
@@ -35,6 +40,11 @@ metadata:
   name: {{ template "giftless.fullname" . }}-rw
   labels:
     {{- include "giftless-rw.labels" . | nindent 4 }}
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-dns"
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 config:
   baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
   scopes:
