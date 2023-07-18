@@ -43,6 +43,7 @@ config:
   errorFooter: |
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.
 
-  additionalFQDNs:
+ingress:
+  additionalHosts:
     - "git-lfs-dev.lsst.cloud"
     - "git-lfs-dev-rw.lsst.cloud"
