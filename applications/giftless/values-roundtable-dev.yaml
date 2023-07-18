@@ -1,0 +1,9 @@
+server:
+  debug: true
+ingress:
+  hostname:
+    readonly: "git-lfs-dev.lsst.cloud"
+    readwrite: "git-lfs-dev-rw.lsst.cloud"
+config:
+  projectName: "plasma-geode-127520"
+  bucketName: "rubin-gitlfs-experimental"

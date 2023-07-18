@@ -14,6 +14,7 @@
 | exposurelog.enabled | bool | `false` |  |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | gafaelfawr.enabled | bool | `false` |  |
+| giftless.enabled | bool | `false` |  |
 | hips.enabled | bool | `false` |  |
 | ingress-nginx.enabled | bool | `false` |  |
 | kubernetes-replicator.enabled | bool | `false` |  |

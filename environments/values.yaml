@@ -30,6 +30,8 @@ exposurelog:
   enabled: false
 gafaelfawr:
   enabled: false
+giftless:
+  enabled: false
 hips:
   enabled: false
 ingress-nginx:

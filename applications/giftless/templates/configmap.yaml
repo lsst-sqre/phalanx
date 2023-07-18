@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "giftless.fullname" . }}
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+data:
+  giftless.conf.yaml: |-
+    AUTH_PROVIDERS:
+      - "giftless.auth.allow_anon:read_only"
+    TRANSFER_ADAPTERS:
+      basic:
+        factory: "giftless.transfer.basic_external:factory"
+        options:
+          storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
+          storage_options:
+            account_key_file: "/etc/secret/giftless-gcp-key.json"
+            project_name: {{ .Values.config.projectName | quote }}
+            bucket_name: {{ .Values.config.bucketName | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "giftless.fullname" . }}-rw
+  labels:
+    {{- include "giftless-rw.labels" . | nindent 4 }}
+data:
+  giftless.conf.yaml: |-
+    AUTH_PROVIDERS:
+      - "giftless.auth.allow_anon:read_write"
+    TRANSFER_ADAPTERS:
+      basic:
+        factory: "giftless.transfer.basic_external:factory"
+        options:
+          storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
+          storage_options:
+            account_key_file: "/etc/secret/giftless-gcp-key.json"
+            project_name: {{ .Values.config.projectName | quote }}
+            bucket_name: {{ .Values.config.bucketName | quote }}
