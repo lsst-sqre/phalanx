@@ -66,5 +66,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Roundtable
 
+   giftless/index
    kubernetes-replicator/index
    squarebot/index
