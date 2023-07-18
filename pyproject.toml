@@ -18,7 +18,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
 ]
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 dependencies = [
     "PyYAML",
     "GitPython",
@@ -33,10 +33,10 @@ dev = [
     "mypy",
     "types-PyYAML",
     # Documentation
-    "documenteer[guide]>=0.7.0b4",
+    "documenteer[guide]>=0.7.0,<1",
     "sphinx-diagrams",
     "sphinx-jinja",
-    "pydantic<2.0.0",
+    "pydantic<2",
 ]
 
 [project.scripts]
