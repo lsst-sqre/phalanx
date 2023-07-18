@@ -14,7 +14,8 @@ import shutil
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from git import DiffIndex, Repo
+from git import DiffIndex
+from git.repo import Repo
 
 if TYPE_CHECKING:
     from typing import List, Sequence

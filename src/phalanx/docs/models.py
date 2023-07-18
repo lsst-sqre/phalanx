@@ -297,7 +297,7 @@ class Environment:
 
         return roles
 
-    def get_app(self, name) -> Optional[Application]:
+    def get_app(self, name: str) -> Optional[Application]:
         """Get the named application."""
         for app in self.apps:
             if app.name == name:

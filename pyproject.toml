@@ -56,6 +56,24 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 
+[tool.black]
+line-length = 79
+target-version = ["py311"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | build
+  | dist
+)/
+'''
+# Use single-quoted strings so TOML treats the string like a Python r-string
+# Multi-line strings are implicitly treated by black as regular expressions
+
 [tool.coverage.run]
 parallel = true
 branch = true
@@ -78,23 +96,24 @@ exclude_lines = [
     "if TYPE_CHECKING:"
 ]
 
-[tool.black]
-line-length = 79
-target-version = ['py38']
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | build
-  | dist
-)/
-'''
-# Use single-quoted strings so TOML treats the string like a Python r-string
-# Multi-line strings are implicitly treated by black as regular expressions
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+local_partial_types = true
+no_implicit_reexport = true
+plugins = ["pydantic.mypy"]
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_ignores = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
 
 [tool.isort]
 include_trailing_comma = true
