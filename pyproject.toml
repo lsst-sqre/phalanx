@@ -4,7 +4,7 @@ name = "phalanx"
 version = "1.0.0"
 description = "Python support code for the Rubin Phalanx platform."
 license = {file = "LICENSE"}
-readme= "README.rst"
+readme= "README.md"
 keywords = [
     "rubin",
     "lsst",
