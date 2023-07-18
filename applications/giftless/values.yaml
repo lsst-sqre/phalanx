@@ -36,7 +36,11 @@ ingress:
   # -- FQDNs of giftless ingresses
   # @default -- Must be overridden in environment-specific values file
   hostname:
+    # -- FQDN for the read-only giftless ingress
+    # @default -- Must be overridden in environment-specific values file
     readonly: ""
+    # -- FQDN for the read-write giftless ingress
+    # @default -- Must be overridden in environment-specific values file
     readwrite: ""
   # -- Additional annotations to add to the ingress
   annotations: {}
@@ -44,8 +48,6 @@ ingress:
 server:
   # -- Turn on debugging mode
   debug: false
-  # -- Port for giftless server to listen on
-  port: 5000
   # -- Number of processes for server
   processes: 2
   # -- Number of threads per process
