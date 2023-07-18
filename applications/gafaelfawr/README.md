@@ -24,7 +24,6 @@ Authentication and identity system
 | cloudsql.resources | object | `{}` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
-| config.additionalFQDNs | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
@@ -80,6 +79,7 @@ Authentication and identity system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
+| ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
 | maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
 | maintenance.maintenanceSchedule | string | `"5 * * * *"` | Cron schedule string for Gafaelfawr periodic maintenance (in UTC) |

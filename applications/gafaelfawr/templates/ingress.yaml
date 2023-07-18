@@ -48,7 +48,7 @@ spec:
                   number: 8080
           {{- end }}
     {{- $context := . }}
-    {{- with $context.Values.config.additionalFQDNs }}
+    {{- with $context.Values.ingress.additionalHosts }}
     {{- range . }}
     - host: {{ . | quote }}
       http:
@@ -60,35 +60,5 @@ spec:
                 name: {{ template "gafaelfawr.fullname" $context }}
                 port:
                   number: 8080
-          - path: "/login"
-            pathType: Exact
-            backend:
-              service:
-                name: {{ template "gafaelfawr.fullname" $context }}
-                port:
-                  number: 8080
-          - path: "/logout"
-            pathType: Exact
-            backend:
-              service:
-                name: {{ template "gafaelfawr.fullname" $context }}
-                port:
-                  number: 8080
-          {{- if $context.Values.config.oidcServer.enabled }}
-          - path: "/.well-known/jwks.json"
-            pathType: Exact
-            backend:
-              service:
-                name: {{ template "gafaelfawr.fullname" $context }}
-                port:
-                  number: 8080
-          - path: "/.well-known/openid-configuration"
-            pathType: Exact
-            backend:
-              service:
-                name: {{ template "gafaelfawr.fullname" $context }}
-                port:
-                  number: 8080
-          {{- end }}
     {{- end }}
     {{- end }}
