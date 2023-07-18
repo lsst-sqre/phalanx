@@ -25,6 +25,15 @@ influxdb:
   ingress:
     enabled: true
     hostname: tucson-teststand.lsst.codes
+  backup:
+    enabled: true
+    persistence:
+      enabled: true
+      storageClass: rook-ceph-block
+      size: 1Ti
+    schedule: "45 12 * * *"
+    s3:
+      endpointUrl: ""
 
 influxdb2:
   enabled: true
