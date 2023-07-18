@@ -1,12 +1,12 @@
 # Note that this creates two nearly-identical deployments, one named
 # "giftless" and one named "giftless-rw".  The only real difference
-# between them is that their configuration configmaps are different: one
-# has the configuration for read-only access to the Git LFS server, and
-# other has configuration for read-write access.  It is possible that we
-# might in future want to further split the configuration in order to
-# allow, for instance, different numbers of processes and threads for
-# the read-write and the read-only servers, on the grounds that our Git
-# LFS usage is read-mostly.
+# between them is that their configuration configmaps and secrets are
+# different: one has the configuration for read-only access to the Git
+# LFS server, and other has configuration for read-write access.  It is
+# possible that we might in future want to further split the
+# configuration in order to allow, for instance, different numbers of
+# processes and threads for the read-write and the read-only servers, on
+# the grounds that our Git LFS usage is read-mostly.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -58,7 +58,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
-              containerPort: {{ .Values.server.port }}
+              containerPort: 5000
               protocol: "TCP"
           {{- with .Values.resources }}
           resources:
@@ -154,7 +154,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
-              containerPort: {{ .Values.server.port }}
+              containerPort: 5000
               protocol: "TCP"
           {{- with .Values.resources }}
           resources:

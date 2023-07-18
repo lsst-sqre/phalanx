@@ -54,22 +54,13 @@ server:
   threads: 2
 
 # -- Configuration for giftless server
-# @default -- YAML will be used as-is.  cf https://giftless.datopian.com/en/latest/configuration.html
 config:
-  readonly:
-    AUTH_PROVIDERS:
-      - "giftless.auth.allow_anon:read_only"
-    TRANSFER_ADAPTERS:
-      basic:
-        factory: "giftless.transfer.basic_external:factory"
-        # @default -- Must be overridden in environment-specific values file
-  readwrite:
-    AUTH_PROVIDERS:
-      - "giftless.auth.allow_anon:read_write"  # Ingress does control.
-    TRANSFER_ADAPTERS:
-      basic:
-        factory: "giftless.transfer.basic_external:factory"
-        # @default -- Must be overridden in environment-specific values file
+  # -- Project name for GCS LFS Object bucket
+  # @default -- Must be overridden in environment-specific values file
+  projectName: ""
+  # -- Bucket name for GCS LFS Object bucket
+  # @default -- Must be overridden in environment-specific values file
+  bucketName: ""
 
 global:
   # -- Base path for Vault secrets
