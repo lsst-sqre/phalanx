@@ -24,7 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            {{- if (not .Values.config.disableSlackAlerts) }}
+            {{- if .Values.config.slackAlerts }}
             - name: "ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
