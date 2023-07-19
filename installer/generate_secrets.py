@@ -6,7 +6,7 @@ import logging
 import os
 import secrets
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import bcrypt
@@ -31,7 +31,7 @@ class SecretGenerator:
         will be regenerated.
     """
 
-    def __init__(self, environment, regenerate):
+    def __init__(self, environment, regenerate) -> None:
         self.secrets = defaultdict(dict)
         self.environment = environment
         self.regenerate = regenerate
@@ -109,7 +109,7 @@ class SecretGenerator:
         fname = input(prompt_string)
 
         if fname:
-            with open(fname, "r") as f:
+            with open(fname) as f:
                 self.secrets[component][name] = f.read()
 
     @staticmethod
@@ -334,9 +334,7 @@ class SecretGenerator:
             h = bcrypt.hashpw(
                 new_pw.encode("ascii"), bcrypt.gensalt(rounds=15)
             ).decode("ascii")
-            now_time = datetime.now(timezone.utc).strftime(
-                "%Y-%m-%dT%H:%M:%SZ"
-            )
+            now_time = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
 
             self._set("argocd", "admin.password", h)
             self._set("argocd", "admin.passwordMtime", now_time)
@@ -426,7 +424,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
         will be regenerated.
     """
 
-    def __init__(self, environment, regenerate):
+    def __init__(self, environment, regenerate) -> None:
         super().__init__(environment, regenerate)
         self.op_secrets = {}
         self.op = new_client_from_environment()
@@ -517,7 +515,7 @@ class OnePasswordSecretGenerator(SecretGenerator):
         """
         super().generate()
 
-        for composite_key, secret_value in self.op_secrets.items():
+        for composite_key, _secret_value in self.op_secrets.items():
             item_component, item_name = composite_key.split()
             # Special case for components that may not be present in every
             # environment, but nonetheless might be 1Password secrets (see
