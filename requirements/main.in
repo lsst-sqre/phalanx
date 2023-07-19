@@ -1,0 +1,10 @@
+# Editable runtime dependencies (equivalent to project.dependencies).
+# Add direct runtime dependencies here, as well as implicit dependencies
+# with constrained versions. These should be sufficient to run the phalanx
+# command-line tool.
+#
+# After editing, update requirements/main.txt by running:
+#     make update-deps
+
+GitPython
+PyYAML
