@@ -9,7 +9,7 @@ help:
 
 .PHONY: clean
 clean:
-	rm -rf .mypy_cache .ruff_cache .tox
+	rm -rf .mypy_cache .ruff_cache .tox docs/_build
 	make -C docs clean
 
 .PHONY: init
