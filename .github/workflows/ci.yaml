@@ -60,7 +60,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install test dependencies
-        run: pip install .
+        run: |
+          pip install -r requirements/main.txt
+          pip install --upgrade .
 
       - name: Expand modified charts
         run: expand-charts
