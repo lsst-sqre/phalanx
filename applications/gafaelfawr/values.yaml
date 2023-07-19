@@ -36,8 +36,12 @@ tolerations: []
 affinity: {}
 
 config:
+  # -- Whether to use the PostgreSQL server internal to the Kubernetes cluster
+  internalDatabase: false
+
   # -- URL for the PostgreSQL database
-  # @default -- None, must be set if `cloudsql.enabled` is not true
+  # @default -- None, must be set if neither `cloudsql.enabled`
+  # nor `config.internalDatabase` are true
   databaseUrl: ""
 
   # -- Choose from the text form of Python logging levels
