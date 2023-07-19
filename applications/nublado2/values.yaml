@@ -178,6 +178,10 @@ jupyterhub:
       enabled: false
 
 config:
+  # -- Whether to use the cluster-internal PostgreSQL server instead of an
+  # external server. This is not used directly by the Nublado chart, but
+  # controls how the database password is managed.
+  internalDatabase: true
   # -- base_url must be set in each instantiation of this chart to the URL of
   # the primary ingress.  It's used to construct API requests to the
   # authentication service (which should go through the ingress).

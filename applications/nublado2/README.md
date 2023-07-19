@@ -15,6 +15,7 @@ JupyterHub for the Rubin Science Platform
 | config.base_url | string | `""` | base_url must be set in each instantiation of this chart to the URL of the primary ingress.  It's used to construct API requests to the authentication service (which should go through the ingress). |
 | config.butler_secret_path | string | `""` | butler_secret_path must be set here, because it's passed through to the lab rather than being part of the Hub configuration. |
 | config.cachemachine_image_policy | string | `"available"` | Cachemachine image policy: "available" or "desired".  Use "desired" at instances with streaming image support. |
+| config.internalDatabase | bool | `true` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
 | config.lab_environment | object | See `values.yaml` | Environment variables to set in spawned lab containers. Each value will be expanded using Jinja 2 templating. |
 | config.pinned_images | list | `[]` | images to pin to spawner menu |
 | config.pull_secret_path | string | `""` | pull_secret_path must also be set here; it specifies resources in the lab namespace |
