@@ -1,6 +1,6 @@
 tapSchema:
   image:
-    repository: "lsstsqre/tap-schema-idfprod-tap"
+    repository: "stvoutsin/tap-schema-roe"
 
 config:
   gcsBucket: "async"
