@@ -33,4 +33,5 @@ ignore = [
     '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://github.com/lsst-sqre/phalanx/blob/main/applications/strimzi/values.yaml',
     '^https://github.com/orgs/',
+    '^https://ook.lsst.io/',  # FIXME readd when Ook docs are published
 ]

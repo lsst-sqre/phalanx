@@ -32,6 +32,8 @@ noteburst:
   enabled: false
 nublado:
   enabled: false
+ook:
+  enabled: false
 nublado2:
   enabled: true
 plot-navigator:
