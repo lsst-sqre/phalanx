@@ -19,23 +19,6 @@ classifiers = [
     "Operating System :: POSIX",
 ]
 requires-python = ">=3.11"
-dependencies = []
-
-[project.optional-dependencies]
-dev = [
-    # Testing
-    "coverage[toml]",
-    "pytest",
-    "pre-commit",
-    "mypy",
-    "ruff",
-    "types-PyYAML",
-    # Documentation
-    "documenteer[guide]>=0.7.0,<1",
-    "sphinx-diagrams",
-    "sphinx-jinja",
-    "pydantic<2",
-]
 
 [project.scripts]
 expand-charts = "phalanx.testing.expandcharts:main"
