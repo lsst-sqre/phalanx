@@ -45,6 +45,7 @@ exclude = '''
     \.eggs
   | \.git
   | \.mypy_cache
+  | \.ruff_cache
   | \.tox
   | \.venv
   | _build
