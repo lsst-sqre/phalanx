@@ -1,0 +1,24 @@
+# These four settings should be set in each environment values-*.yaml file.
+
+# -- Name of the environment
+# @default -- None, must be set
+environment: ""
+
+# -- Fully-qualified domain name where the environment is running
+# @default -- None, must be set
+fqdn: ""
+
+# -- Prefix for Vault secrets for this environment
+# @default -- None, must be set
+vaultPathPrefix: ""
+
+# -- Butler repository index to use for this environment
+# @default -- None, must be set
+butlerRepositoryIndex: ""
+
+gafaelfawr:
+  enabled: false
+nublado:
+  enabled: false
+postgres:
+  enabled: false

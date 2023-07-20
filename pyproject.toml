@@ -22,6 +22,7 @@ requires-python = ">=3.11"
 
 [project.scripts]
 expand-charts = "phalanx.testing.expandcharts:main"
+phalanx = "phalanx.cli:main"
 
 [project.urls]
 Homepage = "https://phalanx.lsst.io"
@@ -129,6 +130,7 @@ ignore = [
     "FBT003",  # positional booleans are normal for Pydantic field defaults
     "G004",    # forbidding logging f-strings is appealing, but not our style
     "PD011",   # false positive with non-NumPY code that uses .values
+    "PLR0911", # way too strict of a function complexity constraint
     "PLR0913", # factory pattern uses constructors with many arguments
     "PLR2004", # too aggressive about magic values
     "RET505",  # disagree that omitting else always makes code more readable

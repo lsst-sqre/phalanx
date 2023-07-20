@@ -6,5 +6,8 @@
 # After editing, update requirements/main.txt by running:
 #     make update-deps
 
+bcrypt
+click
+cryptography
 GitPython
 PyYAML
