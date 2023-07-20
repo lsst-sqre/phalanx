@@ -10,3 +10,8 @@ sources:
 maintainers:
   - name: jonathansick
     url: https://github.com/jonathansick
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-075"
+      title: "Shared Pydantic schemas as the basis for Kafka/Avro messages in SQuaRE Roundtable"
+      url: "https://sqr-076.lsst.io/"
