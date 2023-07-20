@@ -20,7 +20,6 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
-        HUB_ROUTE: "/n3/hub"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
@@ -78,7 +77,6 @@ controller:
 
 jupyterhub:
   hub:
-    baseUrl: "/n3"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
