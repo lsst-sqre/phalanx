@@ -3,7 +3,7 @@ controller:
     safir:
       logLevel: "DEBUG"
     fileserver:
-      enabled: true
+      enabled: false
       timeout: 21600
 
     images:
