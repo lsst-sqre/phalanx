@@ -12,7 +12,7 @@ resources:
 
 config:
   gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
+  gcsBucketUrl: "https://tap-files.lsst.codes"
   jvmMaxHeapSize: "31G"
 
 pg:
