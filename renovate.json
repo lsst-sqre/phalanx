@@ -3,6 +3,12 @@
     "config:recommended"
   ],
   "configMigration": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["lsstsqre/tap-schema-mock"],
+      "allowedVersions": "<10"
+    }
+  ],
   "rebaseWhen": "conflicted",
   "schedule": [
     "before 6am on Monday"
