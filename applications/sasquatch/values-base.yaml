@@ -23,6 +23,7 @@ strimzi-kafka:
   kafka:
     storage:
       storageClassName: rook-ceph-block
+      size: 1Ti
     externalListener:
       tls:
         enabled: true
