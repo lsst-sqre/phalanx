@@ -9,7 +9,7 @@ appVersion: "suit-2023.1.5"
 
 dependencies:
   - name: redis
-    version: 1.0.5
+    version: 1.0.6
     repository: https://lsst-sqre.github.io/charts/
 
 annotations:
