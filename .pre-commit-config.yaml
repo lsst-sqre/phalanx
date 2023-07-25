@@ -14,7 +14,7 @@ repos:
           - -c=.yamllint.yml
 
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.0
+    rev: v1.11.1
     hooks:
       - id: helm-docs
         args:
@@ -24,7 +24,7 @@ repos:
           - --document-dependency-values=true
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.278
+    rev: v0.0.280
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]

@@ -257,6 +257,11 @@ controller:
 # JupyterHub configuration handled directly by this chart rather than by Zero
 # to JupyterHub.
 hub:
+  # -- Whether to use the cluster-internal PostgreSQL server instead of an
+  # external server. This is not used directly by the Nublado chart, but
+  # controls how the database password is managed.
+  internalDatabase: true
+
   timeout:
     # -- Timeout for the Kubernetes spawn process in seconds. (Allow long
     # enough to pull uncached images if needed.)
