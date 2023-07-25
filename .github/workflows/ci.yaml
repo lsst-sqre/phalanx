@@ -27,6 +27,24 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.0
 
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        python:
+          - "3.11"
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: lsst-sqre/run-tox@v1
+        with:
+          python-version: ${{ matrix.python }}
+          tox-envs: "typing,py,coverage-report"
+          cache-key-prefix: test
+
   helm:
     runs-on: ubuntu-latest
 
@@ -42,7 +60,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install test dependencies
-        run: pip install .
+        run: make init
 
       - name: Expand modified charts
         run: expand-charts
@@ -103,7 +121,7 @@ jobs:
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.7.7/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.7.8/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
           sudo pip install -r installer/requirements.txt

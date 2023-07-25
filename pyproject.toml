@@ -4,7 +4,7 @@ name = "phalanx"
 version = "1.0.0"
 description = "Python support code for the Rubin Phalanx platform."
 license = {file = "LICENSE"}
-readme= "README.rst"
+readme= "README.md"
 keywords = [
     "rubin",
     "lsst",
@@ -18,26 +18,7 @@ classifiers = [
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
 ]
-requires-python = ">=3.8"
-dependencies = [
-    "PyYAML",
-    "GitPython",
-]
-
-[project.optional-dependencies]
-dev = [
-    # Testing
-    "coverage[toml]",
-    "pytest",
-    "pre-commit",
-    "mypy",
-    "types-PyYAML",
-    # Documentation
-    "documenteer[guide]>=0.7.0b4",
-    "sphinx-diagrams",
-    "sphinx-jinja",
-    "pydantic<2.0.0",
-]
+requires-python = ">=3.11"
 
 [project.scripts]
 expand-charts = "phalanx.testing.expandcharts:main"
@@ -55,6 +36,25 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
+
+[tool.black]
+line-length = 79
+target-version = ["py311"]
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.ruff_cache
+  | \.tox
+  | \.venv
+  | _build
+  | build
+  | dist
+)/
+'''
+# Use single-quoted strings so TOML treats the string like a Python r-string
+# Multi-line strings are implicitly treated by black as regular expressions
 
 [tool.coverage.run]
 parallel = true
@@ -78,26 +78,120 @@ exclude_lines = [
     "if TYPE_CHECKING:"
 ]
 
-[tool.black]
-line-length = 79
-target-version = ['py38']
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | build
-  | dist
-)/
-'''
-# Use single-quoted strings so TOML treats the string like a Python r-string
-# Multi-line strings are implicitly treated by black as regular expressions
+[tool.mypy]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+ignore_missing_imports = true
+local_partial_types = true
+no_implicit_reexport = true
+plugins = ["pydantic.mypy"]
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_ignores = true
 
-[tool.isort]
-include_trailing_comma = true
-multi_line_output = 3
-known_first_party = []
-skip = ["docs/conf.py"]
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+warn_untyped_fields = true
+
+# The rule used with Ruff configuration is to disable every lint that has
+# legitimate exceptions that are not dodgy code, rather than cluttering code
+# with noqa markers. This is therefore a reiatively relaxed configuration that
+# errs on the side of disabling legitimate lints.
+#
+# Reference for settings: https://beta.ruff.rs/docs/settings/
+# Reference for rules: https://beta.ruff.rs/docs/rules/
+[tool.ruff]
+exclude = [
+    "docs/**",
+    "installer/**",
+]
+line-length = 79
+ignore = [
+    "ANN101",  # self should not have a type annotation
+    "ANN102",  # cls should not have a type annotation
+    "ANN401",  # sometimes Any is the right type
+    "ARG001",  # unused function arguments are often legitimate
+    "ARG002",  # unused method arguments are often legitimate
+    "ARG005",  # unused lambda arguments are often legitimate
+    "BLE001",  # we want to catch and report Exception in background tasks
+    "C414",    # nested sorted is how you sort by multiple keys with reverse
+    "COM812",  # omitting trailing commas allows black autoreformatting
+    "D102",    # sometimes we use docstring inheritence
+    "D104",    # don't see the point of documenting every package
+    "D105",    # our style doesn't require docstrings for magic methods
+    "D106",    # Pydantic uses a nested Config class that doesn't warrant docs
+    "EM101",   # justification (duplicate string in traceback) is silly
+    "EM102",   # justification (duplicate string in traceback) is silly
+    "FBT003",  # positional booleans are normal for Pydantic field defaults
+    "G004",    # forbidding logging f-strings is appealing, but not our style
+    "PD011",   # false positive with non-NumPY code that uses .values
+    "PLR0913", # factory pattern uses constructors with many arguments
+    "PLR2004", # too aggressive about magic values
+    "RET505",  # disagree that omitting else always makes code more readable
+    "S105",    # good idea but too many false positives on non-passwords
+    "S106",    # good idea but too many false positives on non-passwords
+    "SIM102",  # sometimes the formatting of nested if statements is clearer
+    "SIM114",  # sometimes or conditions result in long lines and awkward code
+    "SIM117",  # sometimes nested with contexts are clearer
+    "TCH001",  # we decided to not maintain separate TYPE_CHECKING blocks
+    "TCH002",  # we decided to not maintain separate TYPE_CHECKING blocks
+    "TCH003",  # we decided to not maintain separate TYPE_CHECKING blocks
+    "TID252",  # if we're going to use relative imports, use them always
+    "TRY003",  # good general advice but lint is way too aggressive
+
+    # Phalanx-specific exclusions.
+    "T201",    # print makes sense to use because Phalanx is interactive
+]
+select = ["ALL"]
+target-version = "py311"
+
+[tool.ruff.per-file-ignores]
+"tests/**" = [
+    "D103",    # tests don't need docstrings
+    "PLR0915", # tests are allowed to be long, sometimes that's convenient
+    "PT012",   # way too aggressive about limiting pytest.raises blocks
+    "S101",    # tests should use assert
+    "SLF001",  # tests are allowed to access private members
+]
+
+[tool.ruff.isort]
+known-first-party = ["gafaelfawr", "tests"]
+split-on-trailing-comma = false
+
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Form",
+    "fastapi.Header",
+    "fastapi.Depends",
+    "fastapi.Path",
+    "fastapi.Query",
+]
+
+# These are too useful as attributes or methods to allow the conflict with the
+# built-in to rule out their use.
+[tool.ruff.flake8-builtins]
+builtins-ignorelist = [
+    "all",
+    "any",
+    "help",
+    "id",
+    "list",
+    "type",
+]
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.ruff.pep8-naming]
+classmethod-decorators = [
+    "pydantic.root_validator",
+    "pydantic.validator",
+]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"
