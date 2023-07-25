@@ -4,7 +4,7 @@ redis:
     enabled: false
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  internalDatabase: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
