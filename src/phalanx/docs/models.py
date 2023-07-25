@@ -380,7 +380,7 @@ class Phalanx:
         apps.sort(key=lambda a: a.name)
 
         # Gather environments
-        for _env_name, values in env_values.items():
+        for values in env_values.values():
             env = Environment.load(values=values, applications=apps)
             envs.append(env)
 
