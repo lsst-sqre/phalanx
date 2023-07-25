@@ -3,7 +3,6 @@ help:
 	@echo "Make targets for Phalanx:"
 	@echo "make clean - Remove generated files"
 	@echo "make init - Set up dev environment (install pre-commit hooks)"
-	@echo "make setup - Install requirements for phalanx command line"
 	@echo "make update - Update pinned dependencies and run make init"
 	@echo "make update-deps - Update pinned dependencies"
 
