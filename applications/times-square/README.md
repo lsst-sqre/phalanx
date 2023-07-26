@@ -24,6 +24,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
 | config.enableGitHubApp | string | `"False"` | Toggle to enable the GitHub App functionality |
 | config.githubAppId | string | `""` | GitHub application ID |
+| config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
