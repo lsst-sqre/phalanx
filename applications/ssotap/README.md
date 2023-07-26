@@ -48,7 +48,7 @@ IVOA TAP service
 | tapSchema.affinity | object | `{}` | Affinity rules for the mock QServ pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
-| tapSchema.image.tag | string | `"2.0.2"` | Tag of TAP schema image |
+| tapSchema.image.tag | string | `"2.1"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
 | tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |
