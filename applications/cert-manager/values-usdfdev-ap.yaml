@@ -1,8 +1,7 @@
-solver:
+config:
   route53:
     awsAccessKeyId: AKIAQSJOS2SFL5I4TYND
     hostedZone: Z0567328105IEHEMIXLCO
-    vault_secret_path: "secret/rubin/usdf-alert-stream-broker-dev/cert-manager"
 
 global:
   # -- Base path for Vault secrets
