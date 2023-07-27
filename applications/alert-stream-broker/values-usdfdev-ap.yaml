@@ -22,7 +22,9 @@ alert-stream-broker:
     externalListener:
       tls:
         enabled: true
-      #bootstrap:
+      bootstrap:
+         annotations:
+           metallb.universe.tf/address-pool: 'sdf-dmz'
       #  ip: "35.224.176.103"
       #  host: alert-stream-int.lsst.cloud
       #brokers:
