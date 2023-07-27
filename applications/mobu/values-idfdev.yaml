@@ -1,24 +1,6 @@
 config:
   debug: true
   autostart:
-    - name: "nublado2"
-      count: 1
-      users:
-        - username: "bot-mobu-user"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunner"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
-          url_prefix: "/n2"
-        restart: true
     - name: "weekly"
       count: 1
       users:
