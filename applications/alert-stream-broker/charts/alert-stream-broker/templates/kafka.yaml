@@ -58,6 +58,7 @@ spec:
             - broker: {{ $idx }}
               loadBalancerIP: {{ $broker.ip }}
               advertisedHost: {{ $broker.host }}
+              annotations: {{ toYaml $broker.annotations | nindent 16 }}
             {{- end }}
           {{- end }}
 
