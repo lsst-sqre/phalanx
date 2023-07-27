@@ -1,0 +1,27 @@
+argo-cd:
+  server:
+    ingress:
+      hosts:
+        - "ap.burwood.io"
+    config:
+      #url: "https://ap.burwood.io/argo-cd"
+      url: "http://127.0.0.1"
+      dex.config: |
+        connectors:
+          # Auth using Google.
+          # See https://dexidp.io/docs/connectors/google/
+          - type: google
+            id: google
+            name: Google
+            config:
+              clientID: 392615380452-kfu4tdj37e0lusenvgnjev7j66ea5upr.apps.googleusercontent.com
+              clientSecret: $dex.clientSecret
+              hostedDomains:
+                - burwood.io
+              redirectURI: http://127.0.0.1/api/dex/callback
+
+      helm.repositories: |
+        - url: https://lsst-sqre.github.io/charts/
+          name: lsst-sqre
+        - url: https://charts.helm.sh/stable
+          name: stable

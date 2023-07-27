@@ -1,0 +1,4 @@
+vault-secrets-operator:
+
+  vault:
+    address: "http://10.104.2.73:8200"
