@@ -13,6 +13,6 @@ ingress-nginx:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: true
+  enabled: false
 strimzi-registry-operator:
   enabled: true
