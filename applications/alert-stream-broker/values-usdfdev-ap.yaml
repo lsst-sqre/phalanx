@@ -23,7 +23,8 @@ alert-stream-broker:
       tls:
         enabled: true
       bootstrap:
-         annotations: "metallb.universe.tf/address-pool=sdf-dmz"
+         annotations:
+           metallb.universe.tf/address-pool: 'sdf-dmz'
       #  ip: "35.224.176.103"
       #  host: alert-stream-int.lsst.cloud
       #brokers:
