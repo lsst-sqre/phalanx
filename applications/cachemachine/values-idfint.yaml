@@ -1,0 +1,37 @@
+image:
+  tag: "1.2.3"
+
+serviceAccount:
+  annotations: {
+    iam.gke.io/gcp-service-account: cachemachine-wi@science-platform-int-dc5d.iam.gserviceaccount.com
+  }
+
+autostart:
+  jupyter: |
+    {
+      "name": "jupyter",
+      "labels": {},
+      "repomen": [
+        {
+          "type": "RubinRepoGar",
+          "registry_url": "us-central1-docker.pkg.dev",
+          "gar_repository": "sciplat",
+          "gar_image": "sciplat-lab",
+          "project_id": "rubin-shared-services-71ec",
+          "location": "us-central1",
+          "recommended_tag": "recommended",
+          "num_releases": 1,
+          "num_weeklies": 2,
+          "num_dailies": 3
+        },
+        {
+          "type": "SimpleRepoMan",
+          "images": [
+            {
+              "image_url": "us-central1-docker.pkg.dev/rubin-shared-services-71ec/sciplat/sciplat-lab:w_2023_07",
+              "name": "Weekly 2023_07"
+            }
+          ]
+        }
+      ]
+    }
