@@ -29,6 +29,6 @@ template:
                 pathType: "Prefix"
                 backend:
                   service:
-                  name: monitoring-chronograf
-                  port:
-                    number: 80
+                    name: monitoring-chronograf
+                    port:
+                      number: 80
