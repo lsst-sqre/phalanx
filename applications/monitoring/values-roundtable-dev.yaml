@@ -1,0 +1,8 @@
+chronograf:
+  env:
+    GH_CLIENT_ID: "e85fe410b0021a251180"
+cronjob:
+  debug: true
+ingresses:
+  chronograf:
+    hostname: "monitoring-dev.lsst.cloud"

@@ -1,0 +1,158 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bucketmaker
+spec:
+  schedule: {{ .Values.cronjob.schedule.bucketmaker | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: bucketmaker
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 405
+              runAsGroup: 100
+              capabilities:
+                drop:
+                  - all
+              readOnlyRootFilesystem: true
+            env:
+              - name: "INFLUXDB_TOKEN"
+                valueFrom:
+                  secretKeyRef:
+                    name: "monitoring"
+                    key:  "influx-alert-token"
+              - name: "INFLUXDB_ORG"
+                value: {{ .Values.global.influxdbOrg | quote }}
+              - name: "INFLUXDB_URL"
+                value: {{ .Values.global.influxdbUrl | quote }}
+              {{- with .Values.cronjob.debug }}
+              - name: "DEBUG"
+                value: "true"
+              {{- end }}
+            command: [ "bucketmaker" ]
+            volumeMounts:
+            - mountPath: /tmp
+              name: tmpdir
+          volumes:
+          # We download the phalanx repo into here to determine what our
+          # active applications are.
+          - name: tmpdir
+            emptyDir: {}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: bucketmapper
+spec:
+  schedule: {{ .Values.cronjob.schedule.bucketmapper | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: bucketmapper
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 405
+              runAsGroup: 100
+              capabilities:
+                drop:
+                  - all
+              readOnlyRootFilesystem: true
+            env:
+              - name: "INFLUXDB_TOKEN"
+                valueFrom:
+                  secretKeyRef:
+                    name: "monitoring"
+                    # We should be able to do away with this level of
+                    # privilege as recent Influx versions automatically
+                    # create this mapping, but we would need to change
+                    # our naming conventions to adapt.
+                    key: "admin-token"
+              - name: "INFLUXDB_ORG"
+                value: {{ .Values.global.influxdbOrg | quote }}
+              - name: "INFLUXDB_URL"
+                value: {{ .Values.global.influxdbUrl | quote }}
+              {{- with .Values.cronjob.debug }}
+              - name: "DEBUG"
+                value: "true"
+              {{- end }}
+            command: [ "bucketmapper" ]
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: taskmaker
+spec:
+  successfulJobsHistoryLimit: 1
+  schedule: {{ .Values.cronjob.schedule.taskmaker | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: taskmaker
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 405
+              runAsGroup: 100
+              capabilities:
+                drop:
+                  - all
+              readOnlyRootFilesystem: true
+            env:
+              - name: "INFLUXDB_TOKEN"
+                valueFrom:
+                  secretKeyRef:
+                    name: "monitoring"
+                    key: "influx-alert-token"
+              - name: "INFLUXDB_ORG"
+                value: {{ .Values.global.influxdbOrg | quote }}
+              - name: "INFLUXDB_URL"
+                value: {{ .Values.global.influxdbUrl | quote }}
+              {{- with .Values.cronjob.debug }}
+              - name: "DEBUG"
+                value: "true"
+              {{- end }}
+            command: [ "taskmaker" ]

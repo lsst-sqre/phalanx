@@ -22,6 +22,7 @@
 | livetap.enabled | bool | `false` |  |
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |
+| monitoring.enabled | bool | `false` |  |
 | narrativelog.enabled | bool | `false` |  |
 | noteburst.enabled | bool | `false` |  |
 | nublado.enabled | bool | `false` |  |

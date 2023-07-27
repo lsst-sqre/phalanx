@@ -26,6 +26,8 @@ mobu:
   enabled: false
 moneypenny:
   enabled: true
+monitoring:
+  enabled: false
 narrativelog:
   enabled: true
 noteburst:
