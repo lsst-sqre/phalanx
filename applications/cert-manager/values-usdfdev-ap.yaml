@@ -4,3 +4,7 @@ solver:
     hosted_zone: Z0567328105IEHEMIXLCO
     vault_secret_path: "secret/rubin/usdf-alert-stream-broker-dev/cert-manager"
 
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: secret/rubin/usdf-alert-stream-broker-dev
