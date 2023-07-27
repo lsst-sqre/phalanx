@@ -1,7 +1,7 @@
 solver:
   route53:
-    aws_access_key_id: AKIAQSJOS2SFL5I4TYND
-    hosted_zone: Z0567328105IEHEMIXLCO
+    awsAccessKeyId: AKIAQSJOS2SFL5I4TYND
+    hostedZone: Z0567328105IEHEMIXLCO
     vault_secret_path: "secret/rubin/usdf-alert-stream-broker-dev/cert-manager"
 
 global:
