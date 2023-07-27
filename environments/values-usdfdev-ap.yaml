@@ -1,6 +1,6 @@
 environment: usdfdev-ap
-#fqdn: usdf-rsp-dev.slac.stanford.edu
-#vaultPathPrefix: secret/rubin/usdf-rsp-dev
+fqdn: alert-stream-broker.slac.stanford.edu
+vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
 # butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 repoURL: https://github.com/lsst-sqre/phalanx.git
 
@@ -10,6 +10,10 @@ cert-manager:
   enabled: true
 ingress-nginx:
   enabled: true
+postgres:
+  enabled: false
+portal:
+  enabled: false
 strimzi:
   enabled: true
 strimzi-access-operator:
