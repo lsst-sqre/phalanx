@@ -10,13 +10,9 @@ cert-manager:
   enabled: true
 ingress-nginx:
   enabled: true
-postgres:
-  enabled: false
-portal:
-  enabled: false
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
+  enabled: true
 strimzi-registry-operator:
-  enabled: false
+  enabled: true
