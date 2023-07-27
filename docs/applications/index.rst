@@ -68,5 +68,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
    giftless/index
    kubernetes-replicator/index
+   monitoring/index
    ook/index
    squarebot/index

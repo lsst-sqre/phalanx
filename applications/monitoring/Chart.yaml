@@ -1,0 +1,11 @@
+apiVersion: v2
+name: monitoring
+version: 0.0.1
+description: Chronograf-based UI for monitoring (data stored in InfluxDBv2)
+sources:
+  - https://github.com/lsst-sqre/rubin-influx-tools
+appVersion: 0.2.0
+dependencies:
+  - name: chronograf
+    version: 1.2.5
+    repository: https://helm.influxdata.com/
