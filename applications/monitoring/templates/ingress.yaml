@@ -16,17 +16,17 @@ config:
 template:
   metadata:
     name: "chronograf"
-    spec:
-      tls:
-        - hosts:
-          - {{ .Values.ingress.chronograf.hostname | quote }}
-          secretName: tls
-      rules:
-        - host: {{ .Values.ingress.chronograf.hostname | quote }}
-          http:
-            paths:
-              - path: "/"
-                pathType: "Prefix"
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.chronograf.hostname | quote }}
+        secretName: tls
+    rules:
+      - host: {{ .Values.ingress.chronograf.hostname | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
                 backend:
                   service:
                     name: monitoring-chronograf
