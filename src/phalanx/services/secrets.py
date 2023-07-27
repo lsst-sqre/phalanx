@@ -17,12 +17,12 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from pydantic import SecretStr
 
-from ..exceptions import InvalidSecretConfigError, UnresolvedSecretsError
+from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import (
-    RequiredSecret,
     ResolvedSecret,
+    Secret,
     SecretGenerateRules,
     SecretGenerateType,
 )
@@ -132,7 +132,7 @@ class SecretsService:
                 return SecretStr(date)
 
     def _resolve_secrets(
-        self, secrets: list[RequiredSecret], environment: Environment
+        self, secrets: list[Secret], environment: Environment
     ) -> list[ResolvedSecret]:
         """Resolve the secrets for a Phalanx environment.
 
@@ -184,7 +184,7 @@ class SecretsService:
 
     def _resolve_secret(
         self,
-        config: RequiredSecret,
+        config: Secret,
         instance: ApplicationInstance,
         resolved: dict[str, dict[str, ResolvedSecret]],
     ) -> _SecretResolution:
@@ -204,11 +204,6 @@ class SecretsService:
         -------
         SecretResolution
             Results of attempting to resolve this secret.
-
-        Raises
-        ------
-        InvalidSecretConfigError
-            Raised if the secret configuration has conflicting rules.
         """
         # If a value was already provided, this is the easy case.
         if config.value:
@@ -221,21 +216,8 @@ class SecretsService:
                 ),
             )
 
-        # See if either generate or copy were configured for this secret.
-        should_copy = False
+        # Do copying or generation if configured.
         if config.copy_rules:
-            condition = config.copy_rules.condition
-            should_copy = instance.is_condition_met(condition)
-        should_generate = False
-        if config.generate:
-            condition = config.generate.condition
-            should_generate = instance.is_condition_met(condition)
-        if should_copy and should_generate:
-            msg = "Copy and generate rules conflict"
-            raise InvalidSecretConfigError(config, msg)
-
-        # Do the copying or generation.
-        if should_copy and config.copy_rules:
             application = config.copy_rules.application
             other = resolved.get(application, {}).get(config.copy_rules.key)
             if not other:
@@ -248,7 +230,7 @@ class SecretsService:
                     value=other.value,
                 ),
             )
-        elif should_generate and config.generate:
+        if config.generate:
             if config.generate.source:
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)

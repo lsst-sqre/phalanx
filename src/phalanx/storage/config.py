@@ -7,10 +7,10 @@ from typing import Any
 
 import yaml
 
-from ..exceptions import UnknownEnvironmentError
+from ..exceptions import InvalidSecretConfigError, UnknownEnvironmentError
 from ..models.applications import Application, ApplicationInstance
 from ..models.environments import Environment, EnvironmentConfig
-from ..models.secrets import RequiredSecret, Secret, SecretConfig
+from ..models.secrets import ConditionalSecretConfig, Secret
 
 __all__ = ["ConfigStorage"]
 
@@ -75,6 +75,33 @@ class ConfigStorage:
         }
         return Environment(name=config.environment, applications=instances)
 
+    def _is_condition_satisfied(
+        self, instance: ApplicationInstance, condition: str | None
+    ) -> bool:
+        """Evaluate a secret condition on an application instance.
+
+        This is a convenience wrapper around
+        `ApplicationInstance.is_is_values_setting_true` that also treats a
+        `None` condition parameter as true.
+
+        Parameters
+        ----------
+        instance
+            Application instance for a specific environment.
+        condition
+            Condition, or `None` if there is no condition.
+
+        Returns
+        -------
+        bool
+            `True` if condition is `None` or corresponds to a values setting
+            whose value is true, `False` otherwise.
+        """
+        if not condition:
+            return True
+        else:
+            return instance.is_values_setting_true(condition)
+
     def _load_application(self, name: str) -> Application:
         """Load the configuration for an application from disk.
 
@@ -107,14 +134,14 @@ class ConfigStorage:
 
         # Load the secrets configuration.
         secrets_path = base_path / "secrets.yaml"
-        secrets = []
+        secrets = {}
         if secrets_path.exists():
             with secrets_path.open("r") as fh:
                 raw_secrets = yaml.safe_load(fh)
-            for key, raw_config in raw_secrets.items():
-                config = SecretConfig.parse_obj(raw_config)
-                secret = Secret(key=key, application=name, **config.dict())
-                secrets.append(secret)
+            secrets = {
+                k: ConditionalSecretConfig.parse_obj(s)
+                for k, s in raw_secrets.items()
+            }
 
         # Load the environment-specific secrets configuration.
         environment_secrets = {}
@@ -122,12 +149,10 @@ class ConfigStorage:
             env_name = path.stem[len("secrets-") :]
             with path.open("r") as fh:
                 raw_secrets = yaml.safe_load(fh)
-            env_secrets = []
-            for key, raw_config in raw_secrets.items():
-                config = SecretConfig.parse_obj(raw_config)
-                secret = Secret(key=key, application=name, **config.dict())
-                env_secrets.append(secret)
-            environment_secrets[env_name] = env_secrets
+            environment_secrets[env_name] = {
+                k: ConditionalSecretConfig.parse_obj(s)
+                for k, s in raw_secrets.items()
+            }
 
         # Return the resulting application.
         return Application(
@@ -201,27 +226,17 @@ class ConfigStorage:
         -------
         ApplicationInstance
             Resolved application.
+
+        Raises
+        ------
+        InvalidSecretConfigError
+            Raised if the secret configuration has conflicting rules.
         """
         # Merge values with any environment overrides.
         values = application.values
         if environment_name in application.environment_values:
             env_values = application.environment_values[environment_name]
             values = _merge_overrides(values, env_values)
-
-        # Merge secrets with any environment secrets.
-        if environment_name in application.environment_secrets:
-            env_secrets = application.environment_secrets[environment_name]
-            extra_secrets = {s.key: s for s in env_secrets}
-            secrets = []
-            for secret in application.secrets:
-                if secret.key in extra_secrets:
-                    secrets.append(extra_secrets[secret.key])
-                    del extra_secrets[secret.key]
-                else:
-                    secrets.append(secret)
-            secrets.extend(extra_secrets.values())
-        else:
-            secrets = application.secrets
 
         # Create an initial application instance without secrets so that we
         # can use its class methods.
@@ -231,10 +246,43 @@ class ConfigStorage:
             values=values,
         )
 
-        # Filter out the secrets that don't apply to this instance.
-        instance.secrets = [
-            RequiredSecret.from_secret(s)
-            for s in secrets
-            if instance.is_condition_met(s.condition)
-        ]
+        # Merge secrets with any environment secrets.
+        secrets = application.secrets
+        if environment_name in application.environment_secrets:
+            secrets = application.secrets.copy()
+            secrets.update(application.environment_secrets[environment_name])
+
+        # Evaluate the conditions on all of the secrets. Both the top-level
+        # condition and any conditions on the copy and generate rules will be
+        # resolved, so that any subsequent processing based on the instance no
+        # longer needs to worry about conditions.
+        required_secrets = []
+        for key, config in secrets.items():
+            if not self._is_condition_satisfied(instance, config.condition):
+                continue
+            copy = config.copy_rules
+            if copy:
+                condition = copy.condition
+                if not self._is_condition_satisfied(instance, condition):
+                    copy = None
+            generate = config.generate
+            if generate:
+                condition = generate.condition
+                if not self._is_condition_satisfied(instance, condition):
+                    generate = None
+            if copy and generate:
+                msg = "Copy and generate rules conflict"
+                raise InvalidSecretConfigError(instance.name, key, msg)
+            secret = Secret(
+                application=application.name,
+                key=key,
+                description=config.description,
+                copy_rules=copy,
+                generate=generate,
+                value=config.value,
+            )
+            required_secrets.append(secret)
+
+        # Add the secrets to the new instance and return it.
+        instance.secrets = required_secrets
         return instance

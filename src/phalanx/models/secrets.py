@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Any, Self
+from typing import Any
 
 from pydantic import BaseModel, Extra, Field, SecretStr, validator
 
 __all__ = [
-    "RequiredSecret",
-    "RequiredSecretConfig",
+    "ConditionalSecretConfig",
+    "ConditionalSecretCopyRules",
+    "ConditionalSecretGenerateRules",
     "ResolvedSecret",
     "Secret",
     "SecretConfig",
@@ -28,6 +29,14 @@ class SecretCopyRules(BaseModel):
     key: str
     """Secret key from which the secret should be copied."""
 
+    class Config:
+        allow_population_by_field_name = True
+        extra = Extra.forbid
+
+
+class ConditionalSecretCopyRules(SecretCopyRules):
+    """Possibly conditional rules for copying a secret value from another."""
+
     condition: str | None = Field(
         None,
         description=(
@@ -36,10 +45,6 @@ class SecretCopyRules(BaseModel):
         ),
         alias="if",
     )
-
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
 
 
 class SecretGenerateType(Enum):
@@ -66,15 +71,6 @@ class SecretGenerateRules(BaseModel):
     ``mtime``.
     """
 
-    condition: str | None = Field(
-        None,
-        description=(
-            "Helm chart value that, if set, indicates the secret should be"
-            " generated"
-        ),
-        alias="if",
-    )
-
     class Config:
         allow_population_by_field_name = True
         extra = Extra.forbid
@@ -97,14 +93,21 @@ class SecretGenerateRules(BaseModel):
         return v
 
 
-class RequiredSecretConfig(BaseModel):
-    """Specification for an application secret after checking ``if``.
+class ConditionalSecretGenerateRules(SecretGenerateRules):
+    """Possibly conditional rules for generating a secret value."""
 
-    The general class for secret configuration is `SecretConfig`. This is the
-    same model except without the ``if`` (``condition``) attribute and is used
-    for secrets that have already been filtered for whether they are required
-    by a given application instance.
-    """
+    condition: str | None = Field(
+        None,
+        description=(
+            "Helm chart value that, if set, indicates the secret should be"
+            " generated"
+        ),
+        alias="if",
+    )
+
+
+class SecretConfig(BaseModel):
+    """Specification for an application secret."""
 
     description: str
     """Description of the secret."""
@@ -149,10 +152,15 @@ class RequiredSecretConfig(BaseModel):
         return v
 
 
-class SecretConfig(RequiredSecretConfig):
-    """Specification for an application secret.
+class ConditionalSecretConfig(SecretConfig):
+    """Possibly conditional specification for an application secret.
 
-    Represents the on-disk schema for secret configurations.
+    This class represents the on-disk schema for secret configurations, which
+    may include conditions on the secret itself and on its copy and generate
+    rules. Those conditions cannot be evaluated until the configuration of an
+    application for a specific environment is known.
+
+    The equivalent class with the conditions evaluated is `SecretConfig`.
     """
 
     condition: str | None = Field(
@@ -164,9 +172,18 @@ class SecretConfig(RequiredSecretConfig):
         alias="if",
     )
 
+    copy_rules: ConditionalSecretCopyRules | None = Field(
+        None,
+        description="Rules for where the secret should be copied from",
+        alias="copy",
+    )
+
+    generate: ConditionalSecretGenerateRules | None = None
+    """Rules for how the secret should be generated."""
+
 
 class Secret(SecretConfig):
-    """An application secret.
+    """Specification for an application secret for a specific environment.
 
     The same as `SecretConfig` except augmented with the secret application
     and key for internal convenience.
@@ -177,40 +194,6 @@ class Secret(SecretConfig):
 
     application: str
     """Application of the secret."""
-
-
-class RequiredSecret(SecretConfig):
-    """An application secret required for this instance.
-
-    This represents the secret configuration for an application instance after
-    filtering out secrets that are not relevant to the instance's environment
-    and adding the secret application and key information from context.
-    """
-
-    key: str
-    """Key of the secret."""
-
-    application: str
-    """Application of the secret."""
-
-    @classmethod
-    def from_secret(cls, secret: Secret) -> Self:
-        """Convert from a `Secret` assuming its condition was met.
-
-        Parameters
-        ----------
-        secret
-            Secret with a condition that has been met.
-
-        Returns
-        -------
-        RequiredSecret
-            Secret with no top-level condition, since it has been satisfied.
-        """
-        attrs = secret.dict()
-        if "condition" in attrs:
-            del attrs["condition"]
-        return cls(**attrs)
 
 
 class ResolvedSecret(BaseModel):

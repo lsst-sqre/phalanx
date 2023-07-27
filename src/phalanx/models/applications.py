@@ -6,7 +6,7 @@ from typing import Any
 
 from pydantic import BaseModel
 
-from .secrets import RequiredSecret, Secret
+from .secrets import ConditionalSecretConfig, Secret
 
 __all__ = [
     "Application",
@@ -26,11 +26,11 @@ class Application(BaseModel):
     environment_values: dict[str, dict[str, Any]]
     """Per-environment Helm chart overrides by environment name."""
 
-    secrets: list[Secret]
-    """Base secret configuration for the application."""
+    secrets: dict[str, ConditionalSecretConfig]
+    """Secrets for the application, by secret key."""
 
-    environment_secrets: dict[str, list[Secret]]
-    """Per-environment secrets for the application."""
+    environment_secrets: dict[str, dict[str, ConditionalSecretConfig]]
+    """Per-environment secrets for the application, by secret key."""
 
 
 class ApplicationInstance(BaseModel):
@@ -45,31 +45,28 @@ class ApplicationInstance(BaseModel):
     values: dict[str, Any]
     """Merged Helm values for the application in this environment."""
 
-    secrets: list[RequiredSecret] = []
+    secrets: list[Secret] = []
     """Secrets required for this application in this environment."""
 
-    def is_condition_met(self, condition: str | None) -> bool:
-        """Determine whether a secret condition has been met.
+    def is_values_setting_true(self, setting: str) -> bool:
+        """Determine whether a given Helm values setting is true.
 
-        Conditions are used both for the secret as a whole and for the
-        ``copy`` and ``generate`` sections. The condition is met if it either
-        is `None` or if it is a string pointing to a values parameter for the
-        application instance that is set to a true value.
+        The values setting is considered true if the corresponding values
+        parameter is present and set to a true value (a non-empty array or
+        dictionary or a string, number, or boolean value that evaluates to
+        true in Python).
 
         Parameters
         ----------
-        condition
-            Condition to check.
+        setting
+            Setting to check.
 
         Returns
         -------
         bool
-            `True` if the condition was met or does not exist, `False`
-            otherwise.
+            `True` if the setting was set to a true value, `False` otherwise.
         """
-        if not condition:
-            return True
-        path = condition.split(".")
+        path = setting.split(".")
         values = self.values
         for key in path:
             if key not in values:
