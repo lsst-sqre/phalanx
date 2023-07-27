@@ -1,4 +1,4 @@
-environment: usdfdev-ap
+environment: usdfdev-alert-stream-broker
 fqdn: alert-stream-broker.slac.stanford.edu
 vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
 # butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
