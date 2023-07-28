@@ -2,30 +2,14 @@
 
 from __future__ import annotations
 
-import os
-import secrets
-from base64 import urlsafe_b64encode
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import UTC, datetime
 from enum import Enum
-
-import bcrypt
-from cryptography.fernet import Fernet
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
-from pydantic import SecretStr
 
 from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
-from ..models.secrets import (
-    ResolvedSecret,
-    Secret,
-    SecretGenerateRules,
-    SecretGenerateType,
-)
+from ..models.secrets import ResolvedSecret, Secret, SourceSecretGenerateRules
 from ..storage.config import ConfigStorage
 
 __all__ = ["SecretsService"]
@@ -80,56 +64,6 @@ class SecretsService:
         for application in environment.all_applications():
             secrets.extend(application.secrets)
         return self._resolve_secrets(secrets, environment)
-
-    def _generate_secret(
-        self, config: SecretGenerateRules, source: SecretStr | None = None
-    ) -> SecretStr:
-        """Generate the value of a secret.
-
-        Parameters
-        ----------
-        config
-            Rules for generating the secret.
-        source
-            Secret on which this secret is based.
-
-        Returns
-        -------
-        SecretStr
-            Newly-generated secret.
-        """
-        match config.type:
-            case SecretGenerateType.password:
-                return SecretStr(secrets.token_hex(32))
-            case SecretGenerateType.gafaelfawr_token:
-                key = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
-                secret = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
-                return SecretStr(f"gt-{key}.{secret}")
-            case SecretGenerateType.fernet_key:
-                return SecretStr(Fernet.generate_key().decode())
-            case SecretGenerateType.rsa_private_key:
-                private_key = rsa.generate_private_key(
-                    backend=default_backend(),
-                    public_exponent=65537,
-                    key_size=2048,
-                )
-                private_key_bytes = private_key.private_bytes(
-                    serialization.Encoding.PEM,
-                    serialization.PrivateFormat.PKCS8,
-                    serialization.NoEncryption(),
-                )
-                return SecretStr(private_key_bytes.decode())
-            case SecretGenerateType.bcrypt_password_hash:
-                if not source:
-                    raise RuntimeError("bcrypt-password-hash with no source")
-                password_hash = bcrypt.hashpw(
-                    source.get_secret_value().encode(),
-                    bcrypt.gensalt(rounds=15),
-                )
-                return SecretStr(password_hash.decode())
-            case SecretGenerateType.mtime:
-                date = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-                return SecretStr(date)
 
     def _resolve_secrets(
         self, secrets: list[Secret], environment: Environment
@@ -231,14 +165,14 @@ class SecretsService:
                 ),
             )
         if config.generate:
-            if config.generate.source:
+            if isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
-                if not other:
+                if not (other and other.value):
                     return _SecretResolution(status=_SecretStatus.PENDING)
-                value = self._generate_secret(config.generate, other.value)
+                value = config.generate.generate(other.value)
             else:
-                value = self._generate_secret(config.generate)
+                value = config.generate.generate()
             return _SecretResolution(
                 status=_SecretStatus.KEEP,
                 secret=ResolvedSecret(

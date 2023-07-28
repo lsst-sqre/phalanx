@@ -2,22 +2,49 @@
 
 from __future__ import annotations
 
+import os
+import secrets
+from base64 import urlsafe_b64encode
+from datetime import UTC, datetime
 from enum import Enum
-from typing import Any
+from typing import Any, Literal
 
+import bcrypt
+from cryptography.fernet import Fernet
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
 from pydantic import BaseModel, Extra, Field, SecretStr, validator
 
 __all__ = [
+    "ConditionalMixin",
     "ConditionalSecretConfig",
     "ConditionalSecretCopyRules",
     "ConditionalSecretGenerateRules",
+    "ConditionalSimpleSecretGenerateRules",
+    "ConditionalSourceSecretGenerateRules",
     "ResolvedSecret",
     "Secret",
     "SecretConfig",
     "SecretCopyRules",
     "SecretGenerateRules",
     "SecretGenerateType",
+    "SimpleSecretGenerateRules",
+    "SourceSecretGenerateRules",
 ]
+
+
+class ConditionalMixin(BaseModel):
+    """Mix-in class for elements that may have a condition."""
+
+    condition: str | None = Field(
+        None,
+        description=(
+            "Helm chart value that, if set, indicates the secret should be"
+            " copied"
+        ),
+        alias="if",
+    )
 
 
 class SecretCopyRules(BaseModel):
@@ -34,20 +61,11 @@ class SecretCopyRules(BaseModel):
         extra = Extra.forbid
 
 
-class ConditionalSecretCopyRules(SecretCopyRules):
+class ConditionalSecretCopyRules(SecretCopyRules, ConditionalMixin):
     """Possibly conditional rules for copying a secret value from another."""
 
-    condition: str | None = Field(
-        None,
-        description=(
-            "Helm chart value that, if set, indicates the secret should be"
-            " copied"
-        ),
-        alias="if",
-    )
 
-
-class SecretGenerateType(Enum):
+class SecretGenerateType(str, Enum):
     """Type of secret for generated secrets."""
 
     password = "password"
@@ -58,52 +76,91 @@ class SecretGenerateType(Enum):
     mtime = "mtime"
 
 
-class SecretGenerateRules(BaseModel):
-    """Rules for generating a secret value."""
+class SimpleSecretGenerateRules(BaseModel):
+    """Rules for generating a secret value with no source information."""
 
-    type: SecretGenerateType
+    type: Literal[
+        SecretGenerateType.password,
+        SecretGenerateType.gafaelfawr_token,
+        SecretGenerateType.fernet_key,
+        SecretGenerateType.rsa_private_key,
+    ]
     """Type of secret."""
 
-    source: str | None = None
+    class Config:
+        allow_population_by_field_name = True
+        extra = Extra.forbid
+
+    def generate(self) -> SecretStr:
+        """Generate a new secret following these rules."""
+        match self.type:
+            case SecretGenerateType.password:
+                return SecretStr(secrets.token_hex(32))
+            case SecretGenerateType.gafaelfawr_token:
+                key = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+                secret = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
+                return SecretStr(f"gt-{key}.{secret}")
+            case SecretGenerateType.fernet_key:
+                return SecretStr(Fernet.generate_key().decode())
+            case SecretGenerateType.rsa_private_key:
+                private_key = rsa.generate_private_key(
+                    backend=default_backend(),
+                    public_exponent=65537,
+                    key_size=2048,
+                )
+                private_key_bytes = private_key.private_bytes(
+                    serialization.Encoding.PEM,
+                    serialization.PrivateFormat.PKCS8,
+                    serialization.NoEncryption(),
+                )
+                return SecretStr(private_key_bytes.decode())
+
+
+class ConditionalSimpleSecretGenerateRules(
+    SimpleSecretGenerateRules, ConditionalMixin
+):
+    """Conditional rules for generating a secret value with no source."""
+
+
+class SourceSecretGenerateRules(BaseModel):
+    """Rules for generating a secret from another secret."""
+
+    type: Literal[
+        SecretGenerateType.bcrypt_password_hash,
+        SecretGenerateType.mtime,
+    ]
+    """Type of secret."""
+
+    source: str
     """Key of secret on which this secret is based.
 
     This may only be set by secrets of type ``bcrypt-password-hash`` or
     ``mtime``.
     """
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
-
-    @validator("source")
-    def _validate_source(
-        cls, v: str | None, values: dict[str, Any]
-    ) -> str | None:
-        secret_type = values["type"]
-        want_value = secret_type in (
-            SecretGenerateType.bcrypt_password_hash,
-            SecretGenerateType.mtime,
-        )
-        if v is None and want_value:
-            msg = f"source not set for secret of type {secret_type}"
-            raise ValueError(msg)
-        if v is not None and not want_value:
-            msg = f"source not allowed for secret of type {secret_type}"
-            raise ValueError(msg)
-        return v
+    def generate(self, source: SecretStr) -> SecretStr:
+        match self.type:
+            case SecretGenerateType.bcrypt_password_hash:
+                password_hash = bcrypt.hashpw(
+                    source.get_secret_value().encode(),
+                    bcrypt.gensalt(rounds=15),
+                )
+                return SecretStr(password_hash.decode())
+            case SecretGenerateType.mtime:
+                date = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                return SecretStr(date)
 
 
-class ConditionalSecretGenerateRules(SecretGenerateRules):
-    """Possibly conditional rules for generating a secret value."""
+class ConditionalSourceSecretGenerateRules(
+    SourceSecretGenerateRules, ConditionalMixin
+):
+    """Conditional rules for generating a secret from another secret."""
 
-    condition: str | None = Field(
-        None,
-        description=(
-            "Helm chart value that, if set, indicates the secret should be"
-            " generated"
-        ),
-        alias="if",
-    )
+
+SecretGenerateRules = SimpleSecretGenerateRules | SourceSecretGenerateRules
+ConditionalSecretGenerateRules = (
+    ConditionalSimpleSecretGenerateRules | ConditionalSourceSecretGenerateRules
+)
 
 
 class SecretConfig(BaseModel):
@@ -128,10 +185,33 @@ class SecretConfig(BaseModel):
         allow_population_by_field_name = True
         extra = Extra.forbid
 
+
+class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
+    """Possibly conditional specification for an application secret.
+
+    This class represents the on-disk schema for secret configurations, which
+    may include conditions on the secret itself and on its copy and generate
+    rules. Those conditions cannot be evaluated until the configuration of an
+    application for a specific environment is known.
+
+    The equivalent class with the conditions evaluated is `SecretConfig`.
+    """
+
+    copy_rules: ConditionalSecretCopyRules | None = Field(
+        None,
+        description="Rules for where the secret should be copied from",
+        alias="copy",
+    )
+
+    generate: ConditionalSecretGenerateRules | None = None
+    """Rules for how the secret should be generated."""
+
     @validator("generate")
     def _validate_generate(
-        cls, v: SecretGenerateRules | None, values: dict[str, Any]
-    ) -> SecretGenerateRules | None:
+        cls,
+        v: ConditionalSecretGenerateRules | None,
+        values: dict[str, Any],
+    ) -> ConditionalSecretGenerateRules | None:
         has_copy = "copy" in values and "condition" not in values["copy"]
         if v and has_copy:
             msg = "both copy and generate may not be set for the same secret"
@@ -150,36 +230,6 @@ class SecretConfig(BaseModel):
             msg = "value may not be set if copy or generate is set"
             raise ValueError(msg)
         return v
-
-
-class ConditionalSecretConfig(SecretConfig):
-    """Possibly conditional specification for an application secret.
-
-    This class represents the on-disk schema for secret configurations, which
-    may include conditions on the secret itself and on its copy and generate
-    rules. Those conditions cannot be evaluated until the configuration of an
-    application for a specific environment is known.
-
-    The equivalent class with the conditions evaluated is `SecretConfig`.
-    """
-
-    condition: str | None = Field(
-        None,
-        description=(
-            "Helm chart value that, if set, indicates the secret should be"
-            " generated"
-        ),
-        alias="if",
-    )
-
-    copy_rules: ConditionalSecretCopyRules | None = Field(
-        None,
-        description="Rules for where the secret should be copied from",
-        alias="copy",
-    )
-
-    generate: ConditionalSecretGenerateRules | None = None
-    """Rules for how the secret should be generated."""
 
 
 class Secret(SecretConfig):
