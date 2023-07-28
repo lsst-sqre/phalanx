@@ -13,6 +13,15 @@ repos:
         args:
           - -c=.yamllint.yml
 
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.23.3
+    hooks:
+      - id: check-jsonschema
+        files: "^applications/.*/secrets(-[^./-]+)?\\.yaml"
+        args: ["--schemafile", "docs/extras/schemas/secrets.json"]
+      - id: check-metaschema
+        files: "^docs/extras/schemas/.*\\.json"
+
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.11.1
     hooks:

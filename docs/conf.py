@@ -32,3 +32,6 @@ linkcheck_anchors = False
 linkcheck_exclude_documents = [
     r"applications/.*/values",
 ]
+
+# Include JSON schemas in the documentation output tree.
+html_extra_path = ["extras"]
