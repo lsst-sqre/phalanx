@@ -46,7 +46,7 @@ class SecretsService:
     def __init__(self, config_storage: ConfigStorage) -> None:
         self._config = config_storage
 
-    def list_secrets(self, environment_name: str) -> list[ResolvedSecret]:
+    def list_secrets(self, environment_name: str) -> list[Secret]:
         """List all required secrets for the given environment.
 
         Parameters
@@ -63,7 +63,7 @@ class SecretsService:
         secrets = []
         for application in environment.all_applications():
             secrets.extend(application.secrets)
-        return self._resolve_secrets(secrets, environment)
+        return secrets
 
     def _resolve_secrets(
         self, secrets: list[Secret], environment: Environment

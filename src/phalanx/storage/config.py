@@ -286,5 +286,7 @@ class ConfigStorage:
             required_secrets.append(secret)
 
         # Add the secrets to the new instance and return it.
-        instance.secrets = required_secrets
+        instance.secrets = sorted(
+            required_secrets, key=lambda s: (s.application, s.key)
+        )
         return instance
