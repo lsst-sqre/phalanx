@@ -65,7 +65,7 @@ In Phalanx, the word *application* specifically refers to a Helm chart located i
 That Helm chart directory includes the Kubernetes templates and Docker image references to deploy the application, as well as values files to configure the application for each environment.
 
 Argo CD
-=======
+========
 
 `Argo CD`_ manages the Kubernetes deployments of each application's Helm chart from the Phalanx repository.
 Each environment runs its own instance of Argo CD (as Argo CD is itself an application in Phalanx).

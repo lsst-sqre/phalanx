@@ -11,7 +11,18 @@ from phalanx.cli import main
 from ..support.data import phalanx_test_path, read_output_data
 
 
-def test_generate_schema() -> None:
+def test_list() -> None:
+    input_path = phalanx_test_path()
+    os.chdir(str(input_path))
+    runner = CliRunner()
+    result = runner.invoke(
+        main, ["secrets", "list", "idfdev"], catch_exceptions=False
+    )
+    assert result.exit_code == 0
+    assert result.output == read_output_data("idfdev", "secrets-list")
+
+
+def test_schema() -> None:
     runner = CliRunner()
     result = runner.invoke(main, ["secrets", "schema"], catch_exceptions=False)
     assert result.exit_code == 0
@@ -25,12 +36,12 @@ def test_generate_schema() -> None:
     assert result.output == current.read_text()
 
 
-def test_list() -> None:
+def test_static_template() -> None:
     input_path = phalanx_test_path()
     os.chdir(str(input_path))
     runner = CliRunner()
     result = runner.invoke(
-        main, ["secrets", "list", "idfdev"], catch_exceptions=False
+        main, ["secrets", "static-template", "idfdev"], catch_exceptions=False
     )
     assert result.exit_code == 0
-    assert result.output == read_output_data("idfdev", "secrets-list")
+    assert result.output == read_output_data("idfdev", "static-secrets.yaml")

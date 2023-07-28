@@ -6,11 +6,14 @@ from collections import defaultdict
 from dataclasses import dataclass
 from enum import Enum
 
+import yaml
+
 from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import ResolvedSecret, Secret, SourceSecretGenerateRules
 from ..storage.config import ConfigStorage
+from ..yaml import YAMLFoldedString
 
 __all__ = ["SecretsService"]
 
@@ -45,6 +48,36 @@ class SecretsService:
 
     def __init__(self, config_storage: ConfigStorage) -> None:
         self._config = config_storage
+
+    def generate_static_template(self, environment_name: str) -> str:
+        """Generate a template for providing static secrets.
+
+        The template provides space for all static secrets required for a
+        given environment. The resulting file, once the values have been
+        added, can be used as input to other secret commands instead of an
+        external secret source such as 1Password.
+
+        Parameters
+        ----------
+        environment_name
+            Name of the environment.
+
+        Returns
+        -------
+        dict
+            YAML template the user can fill out, as a string.
+        """
+        secrets = self.list_secrets(environment_name)
+        template: defaultdict[str, dict[str, dict[str, str | None]]]
+        template = defaultdict(dict)
+        for secret in secrets:
+            static = not (secret.copy_rules or secret.generate or secret.value)
+            if static:
+                template[secret.application][secret.key] = {
+                    "description": YAMLFoldedString(secret.description),
+                    "value": None,
+                }
+        return yaml.dump(template, width=72)
 
     def list_secrets(self, environment_name: str) -> list[Secret]:
         """List all required secrets for the given environment.
