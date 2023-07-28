@@ -2,13 +2,20 @@
 
 from __future__ import annotations
 
-import click
+import json
+import sys
+from pathlib import Path
 
-from phalanx.factory import Factory
+import click
+from pydantic.tools import schema_of
+
+from .factory import Factory
+from .models.secrets import ConditionalSecretConfig
 
 __all__ = [
     "help",
     "secrets_list",
+    "secrets_schema",
 ]
 
 
@@ -50,3 +57,32 @@ def secrets_list(environment: str) -> None:
     secrets = secrets_service.list_secrets(environment)
     for secret in secrets:
         print(secret.application, secret.key)
+
+
+@secrets.command("schema")
+@click.option(
+    "-o",
+    "--output",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to which to write schema.",
+)
+def secrets_schema(*, output: Path | None) -> None:
+    """Generate schema for application secret definition."""
+    schema = schema_of(
+        dict[str, ConditionalSecretConfig],
+        title="Phalanx application secret definitions",
+    )
+
+    # Pydantic v1 doesn't have any way that I can find to add attributes to
+    # the top level of a schema that isn't generated from a model, and the
+    # top-level secrets schema is a dict, so manually add in the $id attribute
+    # pointing to the canonical URL. Do this in a slightly odd way so that the
+    # $id attribute will be at the top of the file, not at the bottom.
+    schema = {"$id": "https://phalanx.lsst.io/schemas/secrets.json", **schema}
+
+    json_schema = json.dumps(schema, indent=2)
+    if output:
+        output.write_text(json_schema)
+    else:
+        sys.stdout.write(json_schema)

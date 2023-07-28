@@ -40,9 +40,10 @@ class ConditionalMixin(BaseModel):
     condition: str | None = Field(
         None,
         description=(
-            "Helm chart value that, if set, indicates the secret should be"
-            " copied"
+            "Configuration only applies if this Helm chart setting is set to a"
+            " true value"
         ),
+        title="Condition",
         alias="if",
     )
 
@@ -187,15 +188,7 @@ class SecretConfig(BaseModel):
 
 
 class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
-    """Possibly conditional specification for an application secret.
-
-    This class represents the on-disk schema for secret configurations, which
-    may include conditions on the secret itself and on its copy and generate
-    rules. Those conditions cannot be evaluated until the configuration of an
-    application for a specific environment is known.
-
-    The equivalent class with the conditions evaluated is `SecretConfig`.
-    """
+    """Possibly conditional specification for an application secret."""
 
     copy_rules: ConditionalSecretCopyRules | None = Field(
         None,
