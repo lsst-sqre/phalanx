@@ -25,7 +25,7 @@ Kafka broker cluster for distributing alerts
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
-| kafka.version | string | `"3.2.3"` | Version of Kafka to deploy. |
+| kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
 | nameOverride | string | `""` |  |
 | strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
