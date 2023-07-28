@@ -23,18 +23,21 @@ alert-stream-broker:
       tls:
         enabled: true
       bootstrap:
+         host: usdf-alert-stream-dev.lsst.cloud
+         ip: "134.79.23.215"
          annotations:
            metallb.universe.tf/address-pool: 'sdf-dmz'
-      #  ip: "35.224.176.103"
-      #  host: alert-stream-int.lsst.cloud
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
+          ip: "134.79.23.214"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-1.lsst.cloud
+          ip: "134.79.23.216"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-2.lsst.cloud
+          ip: "134.79.23.217"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
     storage:
