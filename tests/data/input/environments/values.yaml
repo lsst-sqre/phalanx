@@ -8,6 +8,10 @@ environment: ""
 # @default -- None, must be set
 fqdn: ""
 
+# -- URL of Vault server for this environment
+# @default -- None, must be set
+vaultUrl: ""
+
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
 vaultPathPrefix: ""

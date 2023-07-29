@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from safir.pydantic import CamelCaseModel
 
 from .applications import ApplicationInstance
 
@@ -12,7 +13,7 @@ __all__ = [
 ]
 
 
-class EnvironmentConfig(BaseModel):
+class EnvironmentConfig(CamelCaseModel):
     """Configuration for a Phalanx environment.
 
     This is a partial model for the environment :file:`values.yaml` file.
@@ -21,8 +22,15 @@ class EnvironmentConfig(BaseModel):
     environment: str
     """Name of the environment."""
 
-    applications: list[str]
-    """List of enabled applications."""
+    vault_url: str
+    """URL of Vault server for this environment."""
+
+    vault_path_prefix: str
+    """Prefix of Vault paths, including the Kv2 mount point."""
+
+    applications: list[str] = Field(
+        [], description="List of enabled applications"
+    )
 
 
 class Environment(BaseModel):
@@ -30,6 +38,12 @@ class Environment(BaseModel):
 
     name: str
     """Name of the environment."""
+
+    vault_url: str
+    """URL of Vault server for this environment."""
+
+    vault_path_prefix: str
+    """Prefix of Vault paths, including the Kv2 mount point."""
 
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""

@@ -1,0 +1,8 @@
+{
+  "bootstrap-token": "gt-xESy7hFgaLI3t7Cg8TMy8Q.gev0rVktVpL6GGZs6kv5fg",
+  "cilogon": "y",
+  "cilogon-client-secret": "some-cilogon-password",
+  "database-password": "some-database-password",
+  "ldap-password": "some-ldap-password",
+  "redis-password": "3b17413a28b5be73cc963a98558cb50eadf337e78d422476810fd562d9538492"
+}
