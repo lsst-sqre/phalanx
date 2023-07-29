@@ -14,9 +14,11 @@ from .models.secrets import ConditionalSecretConfig
 
 __all__ = [
     "help",
+    "secrets_audit",
     "secrets_list",
     "secrets_schema",
     "secrets_static_template",
+    "secrets_vault_secrets",
 ]
 
 
@@ -47,6 +49,15 @@ def help(ctx: click.Context, topic: str | None) -> None:
 @main.group()
 def secrets() -> None:
     """Secret manipulation commands."""
+
+
+@secrets.command("audit")
+@click.argument("environment")
+def secrets_audit(environment: str) -> None:
+    """Audit the secrets for the given environment for inconsistencies."""
+    factory = Factory()
+    secrets_service = factory.create_secrets_service()
+    sys.stdout.write(secrets_service.audit(environment))
 
 
 @secrets.command("list")
@@ -96,3 +107,18 @@ def secrets_static_template(environment: str) -> None:
     factory = Factory()
     secrets_service = factory.create_secrets_service()
     sys.stdout.write(secrets_service.generate_static_template(environment))
+
+
+@secrets.command("vault-secrets")
+@click.argument("environment")
+@click.argument("output", type=click.Path(path_type=Path))
+def secrets_vault_secrets(environment: str, output: Path) -> None:
+    """Write the Vault secrets for the given environment.
+
+    One JSON file per application with secrets will be created in the output
+    directory, containing the secrets for that application. If the value of a
+    secret is not known, it will be written as null.
+    """
+    factory = Factory()
+    secrets_service = factory.create_secrets_service()
+    secrets_service.generate_vault_secrets(environment, output)

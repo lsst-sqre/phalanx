@@ -1,0 +1,4 @@
+{
+  "ALERT_HOOK": "https://hooks.slack.com/mobu-slack-hook",
+  "app-alert-webhook": "https://hooks.slack.com/app-slack-hook"
+}

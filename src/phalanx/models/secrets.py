@@ -255,9 +255,3 @@ class ResolvedSecret(BaseModel):
 
     value: SecretStr | None = None
     """Value of the secret if known."""
-
-    static: bool = False
-    """Whether this is a static secret.
-
-    Static secrets are those whose values come from an external source.
-    """
