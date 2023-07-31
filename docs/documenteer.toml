@@ -31,6 +31,7 @@ ignore = [
     '^https://roundtable.lsst.cloud',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',
+    '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/lsst-sqre/phalanx/blob/main/applications/strimzi/values.yaml',
     '^https://github.com/orgs/',
     '^https://ook.lsst.io/',  # FIXME readd when Ook docs are published

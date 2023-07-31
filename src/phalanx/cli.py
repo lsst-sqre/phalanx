@@ -16,6 +16,7 @@ __all__ = [
     "help",
     "secrets_list",
     "secrets_schema",
+    "secrets_static_template",
 ]
 
 
@@ -86,3 +87,12 @@ def secrets_schema(*, output: Path | None) -> None:
         output.write_text(json_schema)
     else:
         sys.stdout.write(json_schema)
+
+
+@secrets.command("static-template")
+@click.argument("environment")
+def secrets_static_template(environment: str) -> None:
+    """Generate a template for providing static secrets for an environment."""
+    factory = Factory()
+    secrets_service = factory.create_secrets_service()
+    sys.stdout.write(secrets_service.generate_static_template(environment))
