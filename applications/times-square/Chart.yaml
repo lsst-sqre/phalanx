@@ -8,7 +8,7 @@ sources:
 type: application
 
 # The default version tag of the times-square docker image
-appVersion: "0.9.0"
+appVersion: "0.9.1"
 
 dependencies:
   - name: redis
