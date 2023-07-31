@@ -4,17 +4,17 @@ metadata:
   name: {{ include "giftless.fullname" . }}
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
 config:
   baseUrl: "https://{{ .Values.ingress.hostname.readonly }}"
   scopes:
     anonymous: true
 template:
   metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
     name: {{ include "giftless.fullname" . }}
   spec:
     tls:
@@ -36,15 +36,9 @@ template:
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "giftless-rw"
   name: {{ template "giftless.fullname" . }}-rw
   labels:
-    {{- include "giftless-rw.labels" . | nindent 4 }}
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    {{- with .Values.ingress.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
+    {{- include "giftless.labels" . | nindent 4 }}
 config:
   baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
   scopes:
@@ -53,6 +47,11 @@ config:
 template:
   metadata:
     name: {{ template "giftless.fullname" . }}-rw
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
   spec:
     tls:
       - hosts:
