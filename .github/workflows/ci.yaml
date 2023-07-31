@@ -104,7 +104,7 @@ jobs:
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: medyagh/setup-minikube@v0.0.13
+        uses: medyagh/setup-minikube@v0.0.14
         with:
           kubernetes-version: "v1.27.3"
           cpus: max
