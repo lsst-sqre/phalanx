@@ -9,3 +9,5 @@ ingress-nginx:
       use-forwarded-headers: "true"
     service:
       externalTrafficPolicy: Local
+      annotations:
+        metallb.universe.tf/address-pool: 'sdf-dmz'
