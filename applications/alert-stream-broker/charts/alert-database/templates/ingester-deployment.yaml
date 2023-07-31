@@ -25,6 +25,11 @@ spec:
             - name: "kafka-server-ca-cert"
               mountPath: "/etc/kafka-server-ca-cert"
               readOnly: True
+            {{- if .Values.ingester.gcp.outsideGCP }}
+            - mountPath: /var/secrets/google
+              name: alert-stream-broker-secrets
+            {{- end }}
+
           command:
             - "alertdb-ingester"
             - "--kafka-host={{ .Values.ingester.kafka.cluster }}-kafka-bootstrap:{{ .Values.ingester.kafka.port }}"
@@ -47,12 +52,6 @@ spec:
           {{- if .Values.ingester.gcp.outsideGCP }}
           - name: GOOGLE_APPLICATION_CREDENTIALS
             value: /var/secrets/google/google_service_account_file
-          {{- end }}
-
-          volumeMounts:
-          {{- if .Values.ingester.gcp.outsideGCP }}
-          - mountPath: /var/secrets/google
-            name: alert-stream-broker-secrets
           {{- end }}
 
 
