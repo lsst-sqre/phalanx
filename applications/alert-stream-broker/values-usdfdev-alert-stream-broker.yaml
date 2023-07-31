@@ -89,7 +89,7 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
 alert-stream-schema-registry:
-  hostname: "alert-schemas-dev.slac.stanford.edu"
+  hostname: "usdf-alert-schemas-dev.lsst.cloud"
   schemaTopic: "registry-schemas"
 
 alert-stream-simulator:
