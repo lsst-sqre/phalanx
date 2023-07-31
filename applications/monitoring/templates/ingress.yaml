@@ -4,11 +4,6 @@ metadata:
   name: "chronograf"
   labels:
     {{- include "monitoring.labels" . | nindent 4 }}
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-dns"
-    {{- with .Values.ingress.chronograf.annotations }}
-    {{- toYaml . | nindent 4 }}
-    {{- end }}
 config:
   baseUrl: "https://{{ .Values.ingress.chronograf.hostname }}"
   scopes:
@@ -16,19 +11,24 @@ config:
 template:
   metadata:
     name: "chronograf"
-    spec:
-      tls:
-        - hosts:
-          - {{ .Values.ingress.chronograf.hostname | quote }}
-          secretName: tls
-      rules:
-        - host: {{ .Values.ingress.chronograf.hostname | quote }}
-          http:
-            paths:
-              - path: "/"
-                pathType: "Prefix"
-                backend:
-                  service:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.chronograf.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.chronograf.hostname | quote }}
+        secretName: tls
+    rules:
+      - host: {{ .Values.ingress.chronograf.hostname | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
                   name: monitoring-chronograf
                   port:
                     number: 80

@@ -3,6 +3,6 @@ chronograf:
     GH_CLIENT_ID: "e85fe410b0021a251180"
 cronjob:
   debug: true
-ingresses:
+ingress:
   chronograf:
     hostname: "monitoring-dev.lsst.cloud"
