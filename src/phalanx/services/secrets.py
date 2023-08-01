@@ -12,7 +12,12 @@ from pydantic import SecretStr
 from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
-from ..models.secrets import ResolvedSecret, Secret, SourceSecretGenerateRules
+from ..models.secrets import (
+    ResolvedSecret,
+    Secret,
+    SourceSecretGenerateRules,
+    StaticSecret,
+)
 from ..storage.config import ConfigStorage
 from ..storage.vault import VaultStorage
 from ..yaml import YAMLFoldedString
@@ -37,13 +42,19 @@ class SecretsService:
         self._config = config_storage
         self._vault = vault_storage
 
-    def audit(self, env_name: str) -> str:
+    def audit(
+        self,
+        env_name: str,
+        static_secrets: dict[str, dict[str, StaticSecret]] | None = None,
+    ) -> str:
         """Compare existing secrets to configuration and report problems.
 
         Parameters
         ----------
         env_name
             Name of the environment to audit.
+        static_secrets
+            User-provided static secrets.
 
         Returns
         -------
@@ -57,7 +68,12 @@ class SecretsService:
         # secrets.
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets(environment)
-        resolved = self._resolve_secrets(secrets, environment, vault_secrets)
+        resolved = self._resolve_secrets(
+            secrets=secrets,
+            environment=environment,
+            vault_secrets=vault_secrets,
+            static_secrets=static_secrets,
+        )
 
         # Compare the resolved secrets to the Vault data.
         missing = []
@@ -169,9 +185,11 @@ class SecretsService:
 
     def _resolve_secrets(
         self,
+        *,
         secrets: list[Secret],
         environment: Environment,
         vault_secrets: dict[str, dict[str, SecretStr]],
+        static_secrets: dict[str, dict[str, StaticSecret]] | None = None,
     ) -> dict[str, dict[str, ResolvedSecret]]:
         """Resolve the secrets for a Phalanx environment.
 
@@ -188,6 +206,8 @@ class SecretsService:
         vault_secrets
             Current values from Vault. These will be used if compatible with
             the secret definitions.
+        static_secrets
+            User-provided static secrets.
 
         Returns
         -------
@@ -199,6 +219,8 @@ class SecretsService:
         UnresolvedSecretsError
             Raised if some secrets could not be resolved.
         """
+        if not static_secrets:
+            static_secrets = {}
         resolved: defaultdict[str, dict[str, ResolvedSecret]]
         resolved = defaultdict(dict)
         unresolved = list(secrets)
@@ -208,11 +230,16 @@ class SecretsService:
             unresolved = []
             for config in secrets:
                 vault_values = vault_secrets[config.application]
+                static_values = static_secrets.get(config.application, {})
+                static_value = None
+                if config.key in static_values:
+                    static_value = static_values[config.key].value
                 secret = self._resolve_secret(
                     config=config,
                     instance=environment.applications[config.application],
                     resolved=resolved,
                     current_value=vault_values.get(config.key),
+                    static_value=static_value,
                 )
                 if secret:
                     resolved[secret.application][secret.key] = secret
@@ -230,6 +257,7 @@ class SecretsService:
         instance: ApplicationInstance,
         resolved: dict[str, dict[str, ResolvedSecret]],
         current_value: SecretStr | None,
+        static_value: SecretStr | None,
     ) -> ResolvedSecret | None:
         """Resolve a single secret.
 
@@ -244,6 +272,8 @@ class SecretsService:
             resolved.
         current_value
             Current secret value in Vault, if known.
+        static_value
+            User-provided static secret value, if any.
 
         Returns
         -------
@@ -286,8 +316,18 @@ class SecretsService:
                 value=value,
             )
 
-        # The remaining case is that the secret is a static secret or a
-        # generated secret for which we already have a value.
+        # If this is a static secret and a static secret value was provided,
+        # use that one.
+        if not config.generate and static_value:
+            return ResolvedSecret(
+                key=config.key,
+                application=config.application,
+                value=static_value,
+            )
+
+        # The remaining case is that the secret is a static secret for which
+        # we don't know the value or a generated secret for which we already
+        # have a value, in which case use whatever is already in Vault.
         return ResolvedSecret(
             key=config.key, application=config.application, value=current_value
         )
