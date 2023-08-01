@@ -45,13 +45,34 @@ class VaultClient:
         Returns
         -------
         dict of pydantic.SecretStr
-            Mapping from secret key to its Vault from vault.
+            Mapping from secret key to its secret from Vault.
         """
         path = f"{self._path}/{application}"
         r = self._vault.secrets.kv.read_secret(
             path=path, raise_on_deleted_version=True
         )
         return {k: SecretStr(v) for k, v in r["data"]["data"].items()}
+
+    def get_environment_secrets(
+        self, environment: Environment
+    ) -> dict[str, dict[str, SecretStr]]:
+        """Get the secrets for an environment currently stored in Vault.
+
+        Parameters
+        ----------
+        environment
+            Name of the environment.
+
+        Returns
+        -------
+        dict of dict
+            Mapping from application to secret key to its secret from Vault.
+        """
+        vault_secrets = {}
+        for application in environment.all_applications():
+            vault_secret = self.get_application_secrets(application.name)
+            vault_secrets[application.name] = vault_secret
+        return vault_secrets
 
 
 class VaultStorage:
