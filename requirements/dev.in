@@ -12,6 +12,7 @@ coverage[toml]
 mypy
 pre-commit
 pytest
+pytest-cov
 ruff
 types-PyYAML
 
