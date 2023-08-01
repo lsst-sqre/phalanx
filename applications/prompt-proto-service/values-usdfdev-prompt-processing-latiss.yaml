@@ -23,7 +23,7 @@ s3:
 imageNotifications:
   kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
   topic: rubin-prompt-processing
-  imageTimeout: '120'
+  imageTimeout: 120
 
 apdb:
   ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
