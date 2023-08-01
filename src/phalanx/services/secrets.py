@@ -56,11 +56,7 @@ class SecretsService:
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
         secrets = environment.all_secrets()
-        vault_secrets = {}
-        for application in environment.all_applications():
-            name = application.name
-            vault_secret = vault_client.get_application_secrets(name)
-            vault_secrets[name] = vault_secret
+        vault_secrets = vault_client.get_environment_secrets(environment)
         resolved = self._resolve_secrets(secrets, environment, vault_secrets)
 
         # Compare the resolved secrets to the Vault data.
@@ -145,11 +141,7 @@ class SecretsService:
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
         secrets = environment.all_secrets()
-        vault_secrets = {}
-        for application in environment.all_applications():
-            name = application.name
-            vault_secret = vault_client.get_application_secrets(name)
-            vault_secrets[name] = vault_secret
+        vault_secrets = vault_client.get_environment_secrets(environment)
         resolved = self._resolve_secrets(secrets, environment, vault_secrets)
         for app_name, values in resolved.items():
             app_secrets: dict[str, str | None] = {}
