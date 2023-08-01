@@ -2,39 +2,22 @@
 
 from __future__ import annotations
 
+import json
 from collections import defaultdict
-from dataclasses import dataclass
-from enum import Enum
+from pathlib import Path
 
 import yaml
+from pydantic import SecretStr
 
 from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import ResolvedSecret, Secret, SourceSecretGenerateRules
 from ..storage.config import ConfigStorage
+from ..storage.vault import VaultStorage
 from ..yaml import YAMLFoldedString
 
 __all__ = ["SecretsService"]
-
-
-class _SecretStatus(Enum):
-    """Status of a secret resolution."""
-
-    DROP = "DROP"
-    KEEP = "KEEP"
-    PENDING = "PENDING"
-
-
-@dataclass
-class _SecretResolution:
-    """Status of the resolution of a secret."""
-
-    status: _SecretStatus
-    """Status of the secret."""
-
-    secret: ResolvedSecret | None = None
-    """Resolved secret, if status is ``KEEP``."""
 
 
 class SecretsService:
@@ -44,12 +27,72 @@ class SecretsService:
     ----------
     config_storage
         Storage object for the Phalanx configuration.
+    vault_storage
+        Storage object for Vault.
     """
 
-    def __init__(self, config_storage: ConfigStorage) -> None:
+    def __init__(
+        self, config_storage: ConfigStorage, vault_storage: VaultStorage
+    ) -> None:
         self._config = config_storage
+        self._vault = vault_storage
 
-    def generate_static_template(self, environment_name: str) -> str:
+    def audit(self, env_name: str) -> str:
+        """Compare existing secrets to configuration and report problems.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment to audit.
+
+        Returns
+        -------
+        str
+            Audit report as a text document.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+
+        # Retrieve all the current secrets from Vault and resolve all of the
+        # secrets.
+        secrets = environment.all_secrets()
+        vault_secrets = vault_client.get_environment_secrets(environment)
+        resolved = self._resolve_secrets(secrets, environment, vault_secrets)
+
+        # Compare the resolved secrets to the Vault data.
+        missing = []
+        mismatch = []
+        unknown = []
+        for app_name, values in resolved.items():
+            for key, value in values.items():
+                if key in vault_secrets[app_name]:
+                    if value.value:
+                        expected = value.value.get_secret_value()
+                    else:
+                        expected = None
+                    vault = vault_secrets[app_name][key].get_secret_value()
+                    if expected != vault:
+                        import logging
+
+                        logging.error("mismatch %s %s", expected, vault)
+                        mismatch.append(f"{app_name} {key}")
+                    del vault_secrets[app_name][key]
+                else:
+                    missing.append(f"{app_name} {key}")
+        unknown = [f"{a} {k}" for a, lv in vault_secrets.items() for k in lv]
+
+        # Generate the textual report.
+        report = ""
+        if missing:
+            report += "Missing secrets:\n• " + "\n• ".join(missing) + "\n"
+        if mismatch:
+            report += "Incorrect secrets:\n• " + "\n• ".join(mismatch) + "\n"
+        if unknown:
+            unknown_str = "\n  ".join(unknown)
+            report += "Unknown secrets in Vault:\n• " + unknown_str + "\n"
+        return report
+
+    def generate_static_template(self, env_name: str) -> str:
         """Generate a template for providing static secrets.
 
         The template provides space for all static secrets required for a
@@ -59,7 +102,7 @@ class SecretsService:
 
         Parameters
         ----------
-        environment_name
+        env_name
             Name of the environment.
 
         Returns
@@ -67,7 +110,7 @@ class SecretsService:
         dict
             YAML template the user can fill out, as a string.
         """
-        secrets = self.list_secrets(environment_name)
+        secrets = self.list_secrets(env_name)
         template: defaultdict[str, dict[str, dict[str, str | None]]]
         template = defaultdict(dict)
         for secret in secrets:
@@ -79,28 +122,57 @@ class SecretsService:
                 }
         return yaml.dump(template, width=72)
 
-    def list_secrets(self, environment_name: str) -> list[Secret]:
+    def list_secrets(self, env_name: str) -> list[Secret]:
         """List all required secrets for the given environment.
 
         Parameters
         ----------
-        environment_name
+        env_name
             Name of the environment.
 
         Returns
         -------
-        list of ResolvedSecret
+        list of Secret
             Secrets required for the given environment.
         """
-        environment = self._config.load_environment(environment_name)
-        secrets = []
-        for application in environment.all_applications():
-            secrets.extend(application.secrets)
-        return secrets
+        environment = self._config.load_environment(env_name)
+        return environment.all_secrets()
+
+    def save_vault_secrets(self, env_name: str, path: Path) -> None:
+        """Generate JSON files containing the Vault secrets for an environment.
+
+        One file per application with secrets will be written to the provided
+        path. Each file will be named after the application with ``.json``
+        appended, and will contain the secret values for that application.
+        Secrets that are required but have no known value will be written as
+        null.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+        path
+            Output path.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+        vault_secrets = vault_client.get_environment_secrets(environment)
+        for app_name, values in vault_secrets.items():
+            app_secrets: dict[str, str | None] = {}
+            for key, secret in values.items():
+                if secret:
+                    app_secrets[key] = secret.get_secret_value()
+                else:
+                    app_secrets[key] = None
+            with (path / f"{app_name}.json").open("w") as fh:
+                json.dump(app_secrets, fh, indent=2)
 
     def _resolve_secrets(
-        self, secrets: list[Secret], environment: Environment
-    ) -> list[ResolvedSecret]:
+        self,
+        secrets: list[Secret],
+        environment: Environment,
+        vault_secrets: dict[str, dict[str, SecretStr]],
+    ) -> dict[str, dict[str, ResolvedSecret]]:
         """Resolve the secrets for a Phalanx environment.
 
         Resolving secrets is the process where the secret configuration is
@@ -113,10 +185,13 @@ class SecretsService:
             Secret configuration by application and key.
         environment
             Phalanx environment for which to resolve secrets.
+        vault_secrets
+            Current values from Vault. These will be used if compatible with
+            the secret definitions.
 
         Returns
         -------
-        list of ResolvedSecret
+        dict
             Resolved secrets by application and secret key.
 
         Raises
@@ -132,29 +207,30 @@ class SecretsService:
             secrets = unresolved
             unresolved = []
             for config in secrets:
-                instance = environment.applications[config.application]
-                resolution = self._resolve_secret(config, instance, resolved)
-                if resolution.status == _SecretStatus.KEEP:
-                    secret = resolution.secret
-                    if not secret:
-                        raise RuntimeError("Resolved secret with no secret")
+                vault_values = vault_secrets[config.application]
+                secret = self._resolve_secret(
+                    config=config,
+                    instance=environment.applications[config.application],
+                    resolved=resolved,
+                    current_value=vault_values.get(config.key),
+                )
+                if secret:
                     resolved[secret.application][secret.key] = secret
-                if resolution.status == _SecretStatus.PENDING:
+                else:
                     unresolved.append(config)
             if len(unresolved) >= left:
                 raise UnresolvedSecretsError(unresolved)
             left = len(unresolved)
-        return sorted(
-            [s for sl in resolved.values() for s in sl.values()],
-            key=lambda s: (s.application, s.key),
-        )
+        return resolved
 
     def _resolve_secret(
         self,
+        *,
         config: Secret,
         instance: ApplicationInstance,
         resolved: dict[str, dict[str, ResolvedSecret]],
-    ) -> _SecretResolution:
+        current_value: SecretStr | None,
+    ) -> ResolvedSecret | None:
         """Resolve a single secret.
 
         Parameters
@@ -166,21 +242,22 @@ class SecretsService:
         resolved
             Other secrets for that environment that have already been
             resolved.
+        current_value
+            Current secret value in Vault, if known.
 
         Returns
         -------
-        SecretResolution
-            Results of attempting to resolve this secret.
+        ResolvedSecret or None
+            Resolved value of the secret, or `None` if the secret cannot yet
+            be resolved (because, for example, the secret from which it is
+            copied has not yet been resolved).
         """
         # If a value was already provided, this is the easy case.
         if config.value:
-            return _SecretResolution(
-                status=_SecretStatus.KEEP,
-                secret=ResolvedSecret(
-                    key=config.key,
-                    application=config.application,
-                    value=config.value,
-                ),
+            return ResolvedSecret(
+                key=config.key,
+                application=config.application,
+                value=config.value,
             )
 
         # Do copying or generation if configured.
@@ -188,35 +265,29 @@ class SecretsService:
             application = config.copy_rules.application
             other = resolved.get(application, {}).get(config.copy_rules.key)
             if not other:
-                return _SecretResolution(status=_SecretStatus.PENDING)
-            return _SecretResolution(
-                status=_SecretStatus.KEEP,
-                secret=ResolvedSecret(
-                    key=config.key,
-                    application=config.application,
-                    value=other.value,
-                ),
+                return None
+            return ResolvedSecret(
+                key=config.key,
+                application=config.application,
+                value=other.value,
             )
-        if config.generate:
+        if config.generate and not current_value:
             if isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
                 if not (other and other.value):
-                    return _SecretResolution(status=_SecretStatus.PENDING)
+                    return None
                 value = config.generate.generate(other.value)
             else:
                 value = config.generate.generate()
-            return _SecretResolution(
-                status=_SecretStatus.KEEP,
-                secret=ResolvedSecret(
-                    key=config.key,
-                    application=config.application,
-                    value=value,
-                ),
+            return ResolvedSecret(
+                key=config.key,
+                application=config.application,
+                value=value,
             )
 
-        # The remaining case is that the secret is a static secret.
-        secret = ResolvedSecret(
-            key=config.key, application=config.application, static=True
+        # The remaining case is that the secret is a static secret or a
+        # generated secret for which we already have a value.
+        return ResolvedSecret(
+            key=config.key, application=config.application, value=current_value
         )
-        return _SecretResolution(status=_SecretStatus.KEEP, secret=secret)
