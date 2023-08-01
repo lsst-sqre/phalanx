@@ -1,4 +1,10 @@
 argo-cd:
+  configs:
+
+    params:
+      # -- Base href for `index.html` when running under a reverse proxy
+      server.basehref: "/"
+      
   server:
     ingress:
       hosts:
