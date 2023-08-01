@@ -11,7 +11,7 @@ image:
 
 instrument:
   name: LATISS
-  pipelines:
+  pipelines: ""
   skymap: latiss_v1
   calibRepo: /app/butler
 
@@ -37,8 +37,8 @@ registry:
   user: rubin
 
 knative:
-  minScale: 3
-  maxScale: 100
+  minScale: "3"
+  maxScale: "100"
   ephemeralStorageRequest: "8Gi"
   ephemeralStorageLimit: "20Gi"
   timeout: 900
