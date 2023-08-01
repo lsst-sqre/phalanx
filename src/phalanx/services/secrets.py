@@ -122,7 +122,23 @@ class SecretsService:
                 }
         return yaml.dump(template, width=72)
 
-    def generate_vault_secrets(self, env_name: str, path: Path) -> None:
+    def list_secrets(self, env_name: str) -> list[Secret]:
+        """List all required secrets for the given environment.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+
+        Returns
+        -------
+        list of Secret
+            Secrets required for the given environment.
+        """
+        environment = self._config.load_environment(env_name)
+        return environment.all_secrets()
+
+    def save_vault_secrets(self, env_name: str, path: Path) -> None:
         """Generate JSON files containing the Vault secrets for an environment.
 
         One file per application with secrets will be written to the provided
@@ -140,34 +156,16 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
-        secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets(environment)
-        resolved = self._resolve_secrets(secrets, environment, vault_secrets)
-        for app_name, values in resolved.items():
+        for app_name, values in vault_secrets.items():
             app_secrets: dict[str, str | None] = {}
             for key, secret in values.items():
-                if secret.value:
-                    app_secrets[key] = secret.value.get_secret_value()
+                if secret:
+                    app_secrets[key] = secret.get_secret_value()
                 else:
                     app_secrets[key] = None
             with (path / f"{app_name}.json").open("w") as fh:
                 json.dump(app_secrets, fh, indent=2)
-
-    def list_secrets(self, env_name: str) -> list[Secret]:
-        """List all required secrets for the given environment.
-
-        Parameters
-        ----------
-        env_name
-            Name of the environment.
-
-        Returns
-        -------
-        list of Secret
-            Secrets required for the given environment.
-        """
-        environment = self._config.load_environment(env_name)
-        return environment.all_secrets()
 
     def _resolve_secrets(
         self,
