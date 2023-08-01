@@ -6,6 +6,7 @@ from pydantic import BaseModel, Field
 from safir.pydantic import CamelCaseModel
 
 from .applications import ApplicationInstance
+from .secrets import Secret
 
 __all__ = [
     "Environment",
@@ -51,3 +52,16 @@ class Environment(BaseModel):
     def all_applications(self) -> list[ApplicationInstance]:
         """Return enabled applications in sorted order."""
         return sorted(self.applications.values(), key=lambda a: a.name)
+
+    def all_secrets(self) -> list[Secret]:
+        """Return a list of all secrets regardless of application.
+
+        Returns
+        -------
+        list of Secret
+            All secrets from all applications.
+        """
+        secrets = []
+        for application in self.all_applications():
+            secrets.extend(application.secrets)
+        return secrets
