@@ -20,7 +20,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/prompt-processing
+    path: applications/prompt-proto-service
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
@@ -51,7 +51,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/prompt-processing
+    path: applications/prompt-proto-service
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:

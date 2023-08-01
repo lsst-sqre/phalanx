@@ -4,7 +4,7 @@ vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
 repoURL: https://github.com/lsst-sqre/phalanx.git
 
 prompt-processing-hsc:
-  enabled: true
+  enabled: false
 
 prompt-processing-latiss:
   enabled: true
