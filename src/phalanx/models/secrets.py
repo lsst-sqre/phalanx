@@ -255,3 +255,13 @@ class ResolvedSecret(BaseModel):
 
     value: SecretStr | None = None
     """Value of the secret if known."""
+
+
+class StaticSecret(BaseModel):
+    """Value of a static secret provided in a YAML file."""
+
+    description: str | None = None
+    """Description of the secret (ignored)."""
+
+    value: SecretStr | None
+    """Value of the secret, or `None` if it's not known."""

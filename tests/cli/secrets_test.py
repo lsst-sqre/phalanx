@@ -30,6 +30,15 @@ def test_audit(mock_vault: MockVaultClient) -> None:
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "secrets-audit")
 
+    secrets_path = input_path / "secrets" / "idfdev.yaml"
+    result = runner.invoke(
+        main,
+        ["secrets", "audit", "--secrets", str(secrets_path), "idfdev"],
+        catch_exceptions=False,
+    )
+    assert result.exit_code == 0
+    assert result.output == read_output_data("idfdev", "secrets-audit-static")
+
 
 def test_list() -> None:
     input_path = phalanx_test_path()
