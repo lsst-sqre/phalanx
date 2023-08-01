@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 import os
-import re
 from pathlib import Path
 
 from click.testing import CliRunner
@@ -89,15 +88,8 @@ def test_vault_secrets(tmp_path: Path, mock_vault: MockVaultClient) -> None:
     expected_files = {p.name for p in vault_input_path.iterdir()}
     output_files = {p.name for p in tmp_path.iterdir()}
     assert expected_files == output_files
-
-    # The output files will contain generated secrets that were missing from
-    # the input paths. Spot-check just one of those to see if it's correct.
-    # More comprehensive testing of secret generation will be done elsewhere.
-    with (vault_input_path / "argocd.json").open() as fh:
-        expected_argocd = json.load(fh)
-    with (tmp_path / "argocd.json").open() as fh:
-        output_argocd = json.load(fh)
-    assert output_argocd["server.secretkey"]
-    assert re.match("^[0-9a-f]{64}$", output_argocd["server.secretkey"])
-    del output_argocd["server.secretkey"]
-    assert expected_argocd == output_argocd
+    for expected_path in vault_input_path.iterdir():
+        with expected_path.open() as fh:
+            expected = json.load(fh)
+        with (tmp_path / expected_path.name).open() as fh:
+            assert expected == json.load(fh)

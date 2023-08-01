@@ -121,4 +121,4 @@ def secrets_vault_secrets(environment: str, output: Path) -> None:
     """
     factory = Factory()
     secrets_service = factory.create_secrets_service()
-    secrets_service.generate_vault_secrets(environment, output)
+    secrets_service.save_vault_secrets(environment, output)
