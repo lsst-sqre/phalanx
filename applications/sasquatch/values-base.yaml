@@ -64,7 +64,7 @@ source-influxdb:
   enabled: true
   persistence:
     storageClass: rook-ceph-block
-    size: 5Ti
+    size: 10Ti
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
