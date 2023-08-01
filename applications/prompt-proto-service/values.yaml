@@ -1,0 +1,41 @@
+# Default values for prompt-proto-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+
+knative:
+  class: kpa.autoscaling.knative.dev
+  minScale: 1
+  maxScale: 100
+  ephemeralStorageRequest: "8Gi"
+  ephemeralStorageLimit: "20Gi"
+  timeout: 900
+
+containerConcurrency: 1
+
+namespace: prompt-proto-service
+
+
+image:
+  repository: ghcr.io/lsst-dm/prompt-proto-service
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+
+additionalVolumeMounts: []
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

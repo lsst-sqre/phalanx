@@ -1,0 +1,113 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: prompt-proto-service
+  namespace: {{ .Values.namespace }}
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/class: {{ .Values.knative.class }}
+        autoscaling.knative.dev/min-scale: {{ .Values.knative.minScale }}
+        autoscaling.knative.dev/max-scale: {{ .Values.knative.maxScale }}
+        autoscaling.knative.dev/target-utilization-percentage: "80"
+        # Update this field if `make apply` by itself doesn't make a new revision.
+        revision: "32"
+    spec:
+      containerConcurrency: {{ .Values.containerConcurrency }}
+      containers:
+      - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+        name: user-container
+        env:
+        - name: RUBIN_INSTRUMENT
+          value: {{ .Values.instrument.name }}
+        - name: PIPELINES_CONFIG
+          value: {{ .Values.instrument.pipelines }}
+        - name: SKYMAP
+          value: {{ .Values.instrument.skymap }}
+        - name: PUBSUB_VERIFICATION_TOKEN
+          value: rubin-prompt-proto-main
+        - name: IMAGE_BUCKET
+          value: {{ .Values.s3.imageBucket }}
+        - name: BUCKET_TOPIC
+          value: {{ .Values.imageNotifications.topic }}
+        - name: IMAGE_TIMEOUT
+          value: {{ .Values.imageNotifications.imageTimeout }}
+        - name: CALIB_REPO
+          value: {{ .Values.instrument.calibRepo }}
+        - name: IP_APDB
+          # Need explicit port for make_pgpass.py
+          value: {{ .Values.apdb.ip }}
+        - name: DB_APDB
+          value: {{ .Values.apdb.db }}
+        - name: USER_APDB
+          value: {{ .Values.apdb.user }}
+        - name: NAMESPACE_APDB
+          value: {{ .Values.apdb.namespace }}
+        - name: IP_REGISTRY
+          # Need explicit port for make_pgpass.py
+          value: {{ .Values.registry.ip }}
+        - name: DB_REGISTRY
+          value: {{ .Values.registry.db }}
+        - name: USER_REGISTRY
+          value: {{ .Values.registry.user }}
+        - name: KAFKA_CLUSTER
+          value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+        - name: PSQL_REGISTRY_PASS
+          valueFrom:
+            secretKeyRef:
+              name: usdf-pp-creds
+              key: password
+        - name: PSQL_APDB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: usdf-prompt-processing-creds
+              key: password
+        - name: S3_ENDPOINT_URL
+          value: {{ .Values.s3.endpointUrl }}
+        {{- if .Values.s3.auth_env }}
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: s3-creds
+              key: access_key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: s3-creds
+              key: secret_key
+        {{- end }}
+        {{- if .Values.s3.cred_file_auth }}
+        - name: AWS_SHARED_CREDENTIALS_FILE
+          value: /app/s3/credentials
+        {{- end }}
+        - name: LOCAL_REPOS
+          value: "/tmp-butler"
+        volumeMounts:
+        - mountPath: /tmp-butler
+          name: ephemeral
+          readOnly: false
+          {{- with .Values.additionalVolumeMounts }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+        readinessProbe:
+          successThreshold: 1
+          tcpSocket:
+            port: 0
+        resources:
+          requests:
+            ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
+          limits:
+            ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
+      volumes:
+      - name: ephemeral
+        emptyDir:
+          sizeLimit: {{ .Values.knative.ephemeralStorageLimit }}
+      {{- if .Values.s3.cred_file_auth }}
+      - name: s3-credentials-file
+        secret:
+          secretName: s3-credentials-file
+      {{- end }}
+      enableServiceLinks: false
+      timeoutSeconds: {{ .Values.knative.timeout }}

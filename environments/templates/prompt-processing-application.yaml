@@ -1,0 +1,61 @@
+{{- if (index .Values "prompt-processing-hsc" "enabled") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prompt-proto-service-hsc
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prompt-processing-hsc
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: prompt-proto-service-hsc
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prompt-processing
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}-hsc.yaml
+{{- end -}}
+
+
+{{- if (index .Values "prompt-processing-latiss" "enabled") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: prompt-proto-service-latiss
+spec:
+  finalizers:
+    - kubernetes
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prompt-processing-latiss
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: prompt-proto-service-latiss
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prompt-processing
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}-latiss.yaml
+{{- end -}}
+
