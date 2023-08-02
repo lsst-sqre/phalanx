@@ -9,6 +9,7 @@ from typing import Any
 from unittest.mock import patch
 
 import hvac
+from hvac.exceptions import InvalidPath
 
 from .data import phalanx_test_path
 
@@ -49,6 +50,22 @@ class MockVaultClient:
             with app_data_path.open() as fh:
                 self._data[environment][application] = json.load(fh)
 
+    def create_or_update_secret(
+        self, path: str, secret: dict[str, str]
+    ) -> None:
+        """Create or update a full secret.
+
+        Parameters
+        ----------
+        path
+            Vault path to the secret.
+        secret
+            New value for the secret.
+        """
+        base_path, application = path.rsplit("/", 1)
+        environment = self._paths[base_path]
+        self._data[environment][application] = secret
+
     def read_secret(
         self, path: str, raise_on_deleted_version: bool | None = None
     ) -> dict[str, Any]:
@@ -70,8 +87,24 @@ class MockVaultClient:
         assert raise_on_deleted_version
         base_path, application = path.rsplit("/", 1)
         environment = self._paths[base_path]
+        if application not in self._data[environment]:
+            raise InvalidPath(f"Unknown Vault path {path}")
         values = self._data[environment][application]
         return {"data": {"data": values}}
+
+    def patch(self, path: str, secret: dict[str, str]) -> None:
+        """Update specific keys and values in a secret.
+
+        Parameters
+        ----------
+        path
+            Vault path for the secret.
+        secret
+            Keys and values to update.
+        """
+        base_path, application = path.rsplit("/", 1)
+        environment = self._paths[base_path]
+        self._data[environment][application].update(secret)
 
 
 def patch_vault() -> Iterator[MockVaultClient]:

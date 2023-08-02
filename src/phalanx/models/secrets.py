@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import os
 import secrets
-from base64 import urlsafe_b64encode
 from datetime import UTC, datetime
 from enum import Enum
 from typing import Any, Literal
@@ -15,6 +13,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from pydantic import BaseModel, Extra, Field, SecretStr, validator
+
+from .gafaelfawr import Token
 
 __all__ = [
     "ConditionalMixin",
@@ -31,6 +31,8 @@ __all__ = [
     "SecretGenerateType",
     "SimpleSecretGenerateRules",
     "SourceSecretGenerateRules",
+    "StaticSecret",
+    "StaticSecrets",
 ]
 
 
@@ -98,9 +100,7 @@ class SimpleSecretGenerateRules(BaseModel):
             case SecretGenerateType.password:
                 return SecretStr(secrets.token_hex(32))
             case SecretGenerateType.gafaelfawr_token:
-                key = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
-                secret = urlsafe_b64encode(os.urandom(16)).decode().rstrip("=")
-                return SecretStr(f"gt-{key}.{secret}")
+                return SecretStr(str(Token()))
             case SecretGenerateType.fernet_key:
                 return SecretStr(Fernet.generate_key().decode())
             case SecretGenerateType.rsa_private_key:
@@ -253,8 +253,8 @@ class ResolvedSecret(BaseModel):
     application: str
     """Application for which the secret is required."""
 
-    value: SecretStr | None = None
-    """Value of the secret if known."""
+    value: SecretStr
+    """Value of the secret."""
 
 
 class StaticSecret(BaseModel):
@@ -265,3 +265,7 @@ class StaticSecret(BaseModel):
 
     value: SecretStr | None
     """Value of the secret, or `None` if it's not known."""
+
+
+StaticSecrets = dict[str, dict[str, StaticSecret]]
+"""Data type for static secrets from a YAML file."""

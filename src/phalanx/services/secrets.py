@@ -16,7 +16,7 @@ from ..models.secrets import (
     ResolvedSecret,
     Secret,
     SourceSecretGenerateRules,
-    StaticSecret,
+    StaticSecrets,
 )
 from ..storage.config import ConfigStorage
 from ..storage.vault import VaultStorage
@@ -45,7 +45,7 @@ class SecretsService:
     def audit(
         self,
         env_name: str,
-        static_secrets: dict[str, dict[str, StaticSecret]] | None = None,
+        static_secrets: StaticSecrets | None = None,
     ) -> str:
         """Compare existing secrets to configuration and report problems.
 
@@ -81,20 +81,17 @@ class SecretsService:
         unknown = []
         for app_name, values in resolved.items():
             for key, value in values.items():
-                if key in vault_secrets[app_name]:
-                    if value.value:
-                        expected = value.value.get_secret_value()
-                    else:
-                        expected = None
-                    vault = vault_secrets[app_name][key].get_secret_value()
-                    if expected != vault:
-                        import logging
-
-                        logging.error("mismatch %s %s", expected, vault)
-                        mismatch.append(f"{app_name} {key}")
-                    del vault_secrets[app_name][key]
-                else:
+                if key not in vault_secrets.get(app_name, {}):
                     missing.append(f"{app_name} {key}")
+                    continue
+                if value.value:
+                    expected = value.value.get_secret_value()
+                else:
+                    expected = None
+                vault = vault_secrets[app_name][key].get_secret_value()
+                if expected != vault:
+                    mismatch.append(f"{app_name} {key}")
+                del vault_secrets[app_name][key]
         unknown = [f"{a} {k}" for a, lv in vault_secrets.items() for k in lv]
 
         # Generate the textual report.
@@ -183,13 +180,62 @@ class SecretsService:
             with (path / f"{app_name}.json").open("w") as fh:
                 json.dump(app_secrets, fh, indent=2)
 
+    def sync(
+        self, env_name: str, static_secrets: StaticSecrets | None = None
+    ) -> None:
+        """Synchronize secrets for an environment with Vault.
+
+        Any incorrect secrets will be replaced with the correct value and any
+        missing secrets with generate rules will be generated. For generated
+        secrets that already have a value in Vault, that value will be kept
+        and not replaced.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+        static_secrets
+            User-provided static secrets.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+
+        # Retrieve all the current secrets from Vault and resolve all of the
+        # secrets.
+        secrets = environment.all_secrets()
+        vault_secrets = vault_client.get_environment_secrets(environment)
+        resolved = self._resolve_secrets(
+            secrets=secrets,
+            environment=environment,
+            vault_secrets=vault_secrets,
+            static_secrets=static_secrets,
+        )
+
+        # Replace any Vault secrets that are incorrect.
+        for application, values in resolved.items():
+            if application not in vault_secrets:
+                to_store = {k: v.value for k, v in values.items()}
+                vault_client.store_application_secrets(application, to_store)
+                print("Created Vault secret for", application)
+                continue
+            vault_app_secrets = vault_secrets[application]
+            for key, value in values.items():
+                expected = value.value.get_secret_value()
+                if key in vault_app_secrets:
+                    seen = vault_app_secrets[key].get_secret_value()
+                else:
+                    seen = None
+                if expected != seen:
+                    vault_client.update_secret(application, key, value.value)
+                    print("Updated Vault secret for", application, key)
+
     def _resolve_secrets(
         self,
         *,
         secrets: list[Secret],
         environment: Environment,
         vault_secrets: dict[str, dict[str, SecretStr]],
-        static_secrets: dict[str, dict[str, StaticSecret]] | None = None,
+        static_secrets: StaticSecrets | None = None,
     ) -> dict[str, dict[str, ResolvedSecret]]:
         """Resolve the secrets for a Phalanx environment.
 
@@ -229,7 +275,7 @@ class SecretsService:
             secrets = unresolved
             unresolved = []
             for config in secrets:
-                vault_values = vault_secrets[config.application]
+                vault_values = vault_secrets.get(config.application, {})
                 static_values = static_secrets.get(config.application, {})
                 static_value = None
                 if config.key in static_values:
@@ -301,7 +347,13 @@ class SecretsService:
                 application=config.application,
                 value=other.value,
             )
-        if config.generate and not current_value:
+        if config.generate:
+            if current_value:
+                return ResolvedSecret(
+                    key=config.key,
+                    application=config.application,
+                    value=current_value,
+                )
             if isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
@@ -316,18 +368,12 @@ class SecretsService:
                 value=value,
             )
 
-        # If this is a static secret and a static secret value was provided,
-        # use that one.
-        if not config.generate and static_value:
-            return ResolvedSecret(
-                key=config.key,
-                application=config.application,
-                value=static_value,
-            )
-
-        # The remaining case is that the secret is a static secret for which
-        # we don't know the value or a generated secret for which we already
-        # have a value, in which case use whatever is already in Vault.
+        # This must be a static secret.  Return the value from the
+        # user-supplied static secrets.
+        if not static_value:
+            return None
         return ResolvedSecret(
-            key=config.key, application=config.application, value=current_value
+            key=config.key,
+            application=config.application,
+            value=static_value,
         )

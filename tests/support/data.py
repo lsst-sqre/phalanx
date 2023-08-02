@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
 
 import yaml
 
 __all__ = [
     "phalanx_test_path",
+    "read_input_static_secrets",
     "read_output_data",
 ]
 
@@ -24,6 +24,28 @@ def phalanx_test_path() -> Path:
         analysis.
     """
     return Path(__file__).parent.parent / "data" / "input"
+
+
+def read_input_static_secrets(environment: str) -> dict[str, dict[str, str]]:
+    """Read test output data as YAML and return the parsed format.
+
+    Parameters
+    ----------
+    environment
+        Name of the environment for which to read static secrets.
+
+    Returns
+    -------
+    dict of dict
+        Parsed version of the YAML.
+    """
+    secrets_path = phalanx_test_path() / "secrets" / f"{environment}.yaml"
+    with secrets_path.open() as fh:
+        data = yaml.safe_load(fh)
+    for secrets in data.values():
+        for key in secrets:
+            secrets[key] = secrets[key]["value"]
+    return data
 
 
 def read_output_data(environment: str, filename: str) -> str:
@@ -44,24 +66,3 @@ def read_output_data(environment: str, filename: str) -> str:
     """
     base_path = Path(__file__).parent.parent / "data" / "output"
     return (base_path / environment / filename).read_text()
-
-
-def read_output_yaml(environment: str, filename: str) -> dict[str, Any]:
-    """Read test output data as YAML and return the parsed format.
-
-    Parameters
-    ----------
-    environment
-        Name of the environment under :filename:`data/output` that the test
-        output is for.
-    filename
-        File containing the output data.
-
-    Returns
-    -------
-    dict
-        Parsed version of the YAML.
-    """
-    base_path = Path(__file__).parent.parent / "data" / "output"
-    with (base_path / environment / filename).open() as fh:
-        return yaml.safe_load(fh)
