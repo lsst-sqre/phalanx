@@ -148,6 +148,24 @@ def secrets_static_template(environment: str) -> None:
     sys.stdout.write(secrets_service.generate_static_template(environment))
 
 
+@secrets.command("sync")
+@click.argument("environment")
+@click.option(
+    "--secrets",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="YAML file containing static secrets for this environment.",
+)
+def secrets_sync(environment: str, secrets: Path | None) -> None:
+    """Synchronize the secrets for an environment into Vault."""
+    static_secrets = None
+    if secrets:
+        static_secrets = _load_static_secrets(secrets)
+    factory = Factory()
+    secrets_service = factory.create_secrets_service()
+    secrets_service.sync(environment, static_secrets)
+
+
 @secrets.command("vault-secrets")
 @click.argument("environment")
 @click.argument("output", type=click.Path(path_type=Path))

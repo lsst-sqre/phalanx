@@ -11,6 +11,7 @@ __all__ = [
     "InvalidSecretConfigError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
+    "VaultNotFoundError",
 ]
 
 
@@ -76,4 +77,20 @@ class UnknownEnvironmentError(Exception):
 
     def __init__(self, name: str) -> None:
         msg = f"No configuration found for environment {name}"
+        super().__init__(msg)
+
+
+class VaultNotFoundError(Exception):
+    """Secret could not be found in Vault.
+
+    Parameters
+    ----------
+    url
+        Base URL of the Vault server.
+    path
+        Path that was not found.
+    """
+
+    def __init__(self, url: str, path: str) -> None:
+        msg = f"Vault secret {path} not found in server {url}"
         super().__init__(msg)

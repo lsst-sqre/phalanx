@@ -10,5 +10,7 @@ mobu:
   enabled: true
 nublado:
   enabled: true
+portal:
+  enabled: true
 postgres:
   enabled: true
