@@ -23,6 +23,7 @@ vault-secrets-operator:
 
   vault:
     # -- URL of the underlying Vault implementation
+    # @default -- Set by Argo CD
     address: "https://vault.lsst.codes"
 
     # -- Sync secrets from vault on this cadence

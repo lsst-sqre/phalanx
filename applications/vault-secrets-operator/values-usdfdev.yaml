@@ -18,5 +18,4 @@ vault-secrets-operator:
           name: vault-secrets-operator
           key: VAULT_TOKEN_MAX_TTL
   vault:
-    address: "https://vault.slac.stanford.edu"
     authMethod: approle

@@ -54,4 +54,5 @@
 | times-square.enabled | bool | `false` |  |
 | vault-secrets-operator.enabled | bool | `false` |  |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
+| vaultUrl | string | None, must be set | URL of Vault server for this environment |
 | vo-cutouts.enabled | bool | `false` |  |
