@@ -21,10 +21,10 @@ alert-stream-broker:
     # Google and now we're pinning them.
     externalListener:
       tls:
-        enabled: true
+        enabled: false
       bootstrap:
-         host: usdf-alert-stream-dev.lsst.cloud
-         ip: "134.79.23.215"
+         host: usdf-alert-stream-dev.slac.stanford.edu
+         #ip: "134.79.23.215"
          annotations:
            metallb.universe.tf/address-pool: 'sdf-dmz'
       brokers:
