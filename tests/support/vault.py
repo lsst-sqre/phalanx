@@ -90,7 +90,7 @@ class MockVaultClient:
         if application not in self._data[environment]:
             raise InvalidPath(f"Unknown Vault path {path}")
         values = self._data[environment][application]
-        return {"data": {"data": values}}
+        return {"data": {"data": values.copy()}}
 
     def patch(self, path: str, secret: dict[str, str]) -> None:
         """Update specific keys and values in a secret.

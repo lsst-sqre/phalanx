@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import base64
 import os
+from typing import Self
 
 from pydantic import BaseModel, Field
 
@@ -37,6 +38,38 @@ class Token(BaseModel):
 
     key: str = Field(default_factory=_random_128_bits)
     secret: str = Field(default_factory=_random_128_bits)
+
+    @classmethod
+    def from_str(cls, token: str) -> Self:
+        """Parse a serialized token into a `Token`.
+
+        Parameters
+        ----------
+        token
+            Serialized token.
+
+        Returns
+        -------
+        Token
+            Decoded `Token`.
+
+        Raises
+        ------
+        ValueError
+            The provided string is not a valid token.
+        """
+        if not token.startswith("gt-"):
+            msg = "Token does not start with gt-"
+            raise ValueError(msg)
+        trimmed_token = token[len("gt-") :]
+
+        if "." not in trimmed_token:
+            raise ValueError("Token is malformed")
+        key, secret = trimmed_token.split(".", 1)
+        if len(key) != 22 or len(secret) != 22:
+            raise ValueError("Token is malformed")
+
+        return cls(key=key, secret=secret)
 
     @classmethod
     def is_token(cls, token: str) -> bool:
