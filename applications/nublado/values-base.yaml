@@ -1,0 +1,15 @@
+jupyterhub:
+  baseUrl: "/n3"
+  cull:
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
+  singleuser:
+    extraAnnotations:
+      k8s.v1.cni.cncf.io/networks: "kube-system/dds"
+  hub:
+    db:
+      upgrade: true
+      url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
