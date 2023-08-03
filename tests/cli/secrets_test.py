@@ -127,17 +127,39 @@ def test_sync(mock_vault: MockVaultClient) -> None:
                 assert value == vault[key]
 
     # Check generated or copied secrets.
-    vault = _get_app_secret(mock_vault, f"{base_vault_path}/argocd")
-    assert re.match("^[0-9a-f]{64}$", vault["server.secretkey"])
-    vault = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
-    assert Fernet(vault["session-secret"].encode())
-    assert "-----BEGIN PRIVATE KEY-----" in vault["signing-key"]
+    argocd = _get_app_secret(mock_vault, f"{base_vault_path}/argocd")
+    assert re.match("^[0-9a-f]{64}$", argocd["server.secretkey"])
+    gafaelfawr = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
+    assert Fernet(gafaelfawr["session-secret"].encode())
+    assert "-----BEGIN PRIVATE KEY-----" in gafaelfawr["signing-key"]
     webhook = static_secrets["mobu"]["app-alert-webhook"]
-    assert vault["slack-webhook"] == webhook
+    assert gafaelfawr["slack-webhook"] == webhook
     nublado = _get_app_secret(mock_vault, f"{base_vault_path}/nublado")
     assert re.match("^[0-9a-f]{64}$", nublado["proxy_token"])
-    vault = _get_app_secret(mock_vault, f"{base_vault_path}/postgres")
-    assert vault["nublado3_password"] == nublado["hub_db_password"]
+    postgres = _get_app_secret(mock_vault, f"{base_vault_path}/postgres")
+    assert postgres["nublado3_password"] == nublado["hub_db_password"]
+
+    # Now sync again with --delete. The only change should be that the stray
+    # Gafaelfawr Vault secret key is deleted.
+    result = runner.invoke(
+        main,
+        [
+            "secrets",
+            "sync",
+            "--delete",
+            "--secrets",
+            str(secrets_path),
+            "idfdev",
+        ],
+        catch_exceptions=False,
+    )
+    assert result.exit_code == 0
+    assert result.output == read_output_data("idfdev", "sync-delete-output")
+    after = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
+    assert "cilogon" in gafaelfawr
+    assert "cilogon" not in after
+    del gafaelfawr["cilogon"]
+    assert after == gafaelfawr
 
 
 def test_sync_regenerate(mock_vault: MockVaultClient) -> None:
@@ -214,6 +236,8 @@ def test_vault_secrets(tmp_path: Path, mock_vault: MockVaultClient) -> None:
     assert result.exit_code == 0
     assert result.output == ""
 
+    # The unknown application will be missing because we only retrieve the
+    # secrets for known applications.
     expected_files = {p.name for p in vault_input_path.iterdir()}
     output_files = {p.name for p in tmp_path.iterdir()}
     assert expected_files == output_files
