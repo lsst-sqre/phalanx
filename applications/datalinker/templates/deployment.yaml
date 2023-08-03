@@ -60,10 +60,14 @@ spec:
               value: "/tmp/secrets/aws-credentials.ini"
             - name: "DAF_BUTLER_REPOSITORY_INDEX"
               value: {{ .Values.global.butlerRepositoryIndex | quote }}
+            - name: "PGUSER"
+              value: {{ .Values.config.pgUser }}
             - name: "PGPASSFILE"
               value: "/tmp/secrets/postgres-credentials.txt"
+            - name: "STORAGE_BACKEND"
+              value: {{ .Values.config.storageBackend }}
             - name: "S3_ENDPOINT_URL"
-              value: "https://storage.googleapis.com"
+              value: {{ .Values.config.s3EndpointUrl }}
             - name: "GOOGLE_APPLICATION_CREDENTIALS"
               value: "/tmp/secrets/butler-gcs-idf-creds.json"
           ports:
