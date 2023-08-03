@@ -42,6 +42,7 @@ influxdb:
   config:
     data:
       cache-max-memory-size: 0
+      # Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
       trace-logging-enabled: true
     http:
@@ -129,8 +130,8 @@ influxdb-staging:
     #   init.iql: |+
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 96Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
@@ -198,7 +199,6 @@ source-influxdb:
       memory: 96Gi
       cpu: 8
 
-
 influxdb2:
   enabled: false
   image:
@@ -243,8 +243,8 @@ influxdb2:
         influx bucket create --name telegraf-kafka-consumer --org default
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 16Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
