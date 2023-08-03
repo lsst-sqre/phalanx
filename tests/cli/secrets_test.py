@@ -236,8 +236,6 @@ def test_vault_secrets(tmp_path: Path, mock_vault: MockVaultClient) -> None:
     assert result.exit_code == 0
     assert result.output == ""
 
-    # The unknown application will be missing because we only retrieve the
-    # secrets for known applications.
     expected_files = {p.name for p in vault_input_path.iterdir()}
     output_files = {p.name for p in tmp_path.iterdir()}
     assert expected_files == output_files

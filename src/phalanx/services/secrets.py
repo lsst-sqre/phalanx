@@ -67,7 +67,7 @@ class SecretsService:
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
         resolved = self._resolve_secrets(
             secrets=secrets,
             environment=environment,
@@ -101,7 +101,7 @@ class SecretsService:
         if mismatch:
             report += "Incorrect secrets:\n• " + "\n• ".join(mismatch) + "\n"
         if unknown:
-            unknown_str = "\n  ".join(unknown)
+            unknown_str = "\n• ".join(unknown)
             report += "Unknown secrets in Vault:\n• " + unknown_str + "\n"
         return report
 
@@ -169,7 +169,7 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
         for app_name, values in vault_secrets.items():
             app_secrets: dict[str, str | None] = {}
             for key, secret in values.items():
@@ -209,7 +209,7 @@ class SecretsService:
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
 
         # Resolve all of the secrets, regenerating if desired.
         resolved = self._resolve_secrets(
@@ -265,6 +265,7 @@ class SecretsService:
             if application not in resolved:
                 print("Deleted Vault secret for", application)
                 vault_client.delete_application_secret(application)
+                continue
             expected = resolved[application]
             to_delete = set(values.keys()) - set(expected.keys())
             if to_delete:

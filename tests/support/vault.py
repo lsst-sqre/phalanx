@@ -85,6 +85,22 @@ class MockVaultClient:
             raise InvalidPath(f"Unknown Vault path {path}")
         del self._data[environment][application]
 
+    def list_secrets(self, path: str) -> dict[str, Any]:
+        """List all secrets available under a path.
+
+        Parameters
+        ----------
+        path
+            Vault path to the directory of secrets.
+
+        Returns
+        -------
+        dict
+            Reply matching the Vault client reply structure.
+        """
+        environment = self._paths[path]
+        return {"data": {"keys": list(self._data[environment].keys())}}
+
     def read_secret(
         self, path: str, raise_on_deleted_version: bool | None = None
     ) -> dict[str, Any]:

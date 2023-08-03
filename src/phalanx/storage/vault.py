@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-import contextlib
+from contextlib import suppress
 
 import hvac
 from hvac.exceptions import InvalidPath
@@ -49,7 +49,7 @@ class VaultClient:
             Name of the application.
         """
         path = f"{self._path}/{application}"
-        with contextlib.suppress(hvac.InvalidPath):
+        with suppress(InvalidPath):
             self._vault.secrets.kv.delete_latest_version_of_secret(path)
 
     def get_application_secret(self, application: str) -> dict[str, SecretStr]:
@@ -79,15 +79,8 @@ class VaultClient:
             raise VaultNotFoundError(self._url, path) from e
         return {k: SecretStr(v) for k, v in r["data"]["data"].items()}
 
-    def get_environment_secrets(
-        self, environment: Environment
-    ) -> dict[str, dict[str, SecretStr]]:
+    def get_environment_secrets(self) -> dict[str, dict[str, SecretStr]]:
         """Get the secrets for an environment currently stored in Vault.
-
-        Parameters
-        ----------
-        environment
-            Name of the environment.
 
         Returns
         -------
@@ -95,13 +88,25 @@ class VaultClient:
             Mapping from application to secret key to its secret from Vault.
         """
         vault_secrets = {}
-        for application in environment.all_applications():
-            try:
-                vault_secret = self.get_application_secret(application.name)
-                vault_secrets[application.name] = vault_secret
-            except VaultNotFoundError:
-                pass
+        for application in self.list_application_secrets():
+            with suppress(VaultNotFoundError):
+                vault_secret = self.get_application_secret(application)
+                vault_secrets[application] = vault_secret
         return vault_secrets
+
+    def list_application_secrets(self) -> list[str]:
+        """List the available application secrets in Vault.
+
+        Returns
+        -------
+        list of str
+            Names of available application secrets.
+        """
+        try:
+            r = self._vault.secrets.kv.list_secrets(self._path)
+        except InvalidPath as e:
+            raise VaultNotFoundError(self._url, self._path) from e
+        return r["data"]["keys"]
 
     def store_application_secret(
         self, application: str, values: dict[str, SecretStr]
