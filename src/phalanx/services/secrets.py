@@ -12,7 +12,12 @@ from pydantic import SecretStr
 from ..exceptions import UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
-from ..models.secrets import ResolvedSecret, Secret, SourceSecretGenerateRules
+from ..models.secrets import (
+    ResolvedSecret,
+    Secret,
+    SourceSecretGenerateRules,
+    StaticSecrets,
+)
 from ..storage.config import ConfigStorage
 from ..storage.vault import VaultStorage
 from ..yaml import YAMLFoldedString
@@ -37,13 +42,19 @@ class SecretsService:
         self._config = config_storage
         self._vault = vault_storage
 
-    def audit(self, env_name: str) -> str:
+    def audit(
+        self,
+        env_name: str,
+        static_secrets: StaticSecrets | None = None,
+    ) -> str:
         """Compare existing secrets to configuration and report problems.
 
         Parameters
         ----------
         env_name
             Name of the environment to audit.
+        static_secrets
+            User-provided static secrets.
 
         Returns
         -------
@@ -57,7 +68,12 @@ class SecretsService:
         # secrets.
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets(environment)
-        resolved = self._resolve_secrets(secrets, environment, vault_secrets)
+        resolved = self._resolve_secrets(
+            secrets=secrets,
+            environment=environment,
+            vault_secrets=vault_secrets,
+            static_secrets=static_secrets,
+        )
 
         # Compare the resolved secrets to the Vault data.
         missing = []
@@ -65,20 +81,17 @@ class SecretsService:
         unknown = []
         for app_name, values in resolved.items():
             for key, value in values.items():
-                if key in vault_secrets[app_name]:
-                    if value.value:
-                        expected = value.value.get_secret_value()
-                    else:
-                        expected = None
-                    vault = vault_secrets[app_name][key].get_secret_value()
-                    if expected != vault:
-                        import logging
-
-                        logging.error("mismatch %s %s", expected, vault)
-                        mismatch.append(f"{app_name} {key}")
-                    del vault_secrets[app_name][key]
-                else:
+                if key not in vault_secrets.get(app_name, {}):
                     missing.append(f"{app_name} {key}")
+                    continue
+                if value.value:
+                    expected = value.value.get_secret_value()
+                else:
+                    expected = None
+                vault = vault_secrets[app_name][key].get_secret_value()
+                if expected != vault:
+                    mismatch.append(f"{app_name} {key}")
+                del vault_secrets[app_name][key]
         unknown = [f"{a} {k}" for a, lv in vault_secrets.items() for k in lv]
 
         # Generate the textual report.
@@ -167,11 +180,69 @@ class SecretsService:
             with (path / f"{app_name}.json").open("w") as fh:
                 json.dump(app_secrets, fh, indent=2)
 
+    def sync(
+        self,
+        env_name: str,
+        static_secrets: StaticSecrets | None = None,
+        *,
+        regenerate: bool = False,
+    ) -> None:
+        """Synchronize secrets for an environment with Vault.
+
+        Any incorrect secrets will be replaced with the correct value and any
+        missing secrets with generate rules will be generated. For generated
+        secrets that already have a value in Vault, that value will be kept
+        and not replaced.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+        static_secrets
+            User-provided static secrets.
+        regenerate
+            Whether to regenerate any generated secrets.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+        secrets = environment.all_secrets()
+        vault_secrets = vault_client.get_environment_secrets(environment)
+
+        # Resolve all of the secrets, regenerating if desired.
+        resolved = self._resolve_secrets(
+            secrets=secrets,
+            environment=environment,
+            vault_secrets=vault_secrets,
+            static_secrets=static_secrets,
+            regenerate=regenerate,
+        )
+
+        # Replace any Vault secrets that are incorrect.
+        for application, values in resolved.items():
+            if application not in vault_secrets:
+                to_store = {k: v.value for k, v in values.items()}
+                vault_client.store_application_secrets(application, to_store)
+                print("Created Vault secret for", application)
+                continue
+            vault_app_secrets = vault_secrets[application]
+            for key, value in values.items():
+                expected = value.value.get_secret_value()
+                if key in vault_app_secrets:
+                    seen = vault_app_secrets[key].get_secret_value()
+                else:
+                    seen = None
+                if expected != seen:
+                    vault_client.update_secret(application, key, value.value)
+                    print("Updated Vault secret for", application, key)
+
     def _resolve_secrets(
         self,
+        *,
         secrets: list[Secret],
         environment: Environment,
         vault_secrets: dict[str, dict[str, SecretStr]],
+        static_secrets: StaticSecrets | None = None,
+        regenerate: bool = False,
     ) -> dict[str, dict[str, ResolvedSecret]]:
         """Resolve the secrets for a Phalanx environment.
 
@@ -188,6 +259,10 @@ class SecretsService:
         vault_secrets
             Current values from Vault. These will be used if compatible with
             the secret definitions.
+        static_secrets
+            User-provided static secrets.
+        regenerate
+            Whether to regenerate any generated secrets.
 
         Returns
         -------
@@ -199,6 +274,8 @@ class SecretsService:
         UnresolvedSecretsError
             Raised if some secrets could not be resolved.
         """
+        if not static_secrets:
+            static_secrets = {}
         resolved: defaultdict[str, dict[str, ResolvedSecret]]
         resolved = defaultdict(dict)
         unresolved = list(secrets)
@@ -207,12 +284,18 @@ class SecretsService:
             secrets = unresolved
             unresolved = []
             for config in secrets:
-                vault_values = vault_secrets[config.application]
+                vault_values = vault_secrets.get(config.application, {})
+                static_values = static_secrets.get(config.application, {})
+                static_value = None
+                if config.key in static_values:
+                    static_value = static_values[config.key].value
                 secret = self._resolve_secret(
                     config=config,
                     instance=environment.applications[config.application],
                     resolved=resolved,
                     current_value=vault_values.get(config.key),
+                    static_value=static_value,
+                    regenerate=regenerate,
                 )
                 if secret:
                     resolved[secret.application][secret.key] = secret
@@ -230,6 +313,8 @@ class SecretsService:
         instance: ApplicationInstance,
         resolved: dict[str, dict[str, ResolvedSecret]],
         current_value: SecretStr | None,
+        static_value: SecretStr | None,
+        regenerate: bool = False,
     ) -> ResolvedSecret | None:
         """Resolve a single secret.
 
@@ -244,6 +329,10 @@ class SecretsService:
             resolved.
         current_value
             Current secret value in Vault, if known.
+        static_value
+            User-provided static secret value, if any.
+        regenerate
+            Whether to regenerate any generated secrets.
 
         Returns
         -------
@@ -271,7 +360,13 @@ class SecretsService:
                 application=config.application,
                 value=other.value,
             )
-        if config.generate and not current_value:
+        if config.generate:
+            if current_value and not regenerate:
+                return ResolvedSecret(
+                    key=config.key,
+                    application=config.application,
+                    value=current_value,
+                )
             if isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
@@ -286,8 +381,12 @@ class SecretsService:
                 value=value,
             )
 
-        # The remaining case is that the secret is a static secret or a
-        # generated secret for which we already have a value.
+        # This must be a static secret.  Return the value from the
+        # user-supplied static secrets.
+        if not static_value:
+            return None
         return ResolvedSecret(
-            key=config.key, application=config.application, value=current_value
+            key=config.key,
+            application=config.application,
+            value=static_value,
         )

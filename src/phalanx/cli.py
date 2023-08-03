@@ -7,10 +7,12 @@ import sys
 from pathlib import Path
 
 import click
+import yaml
+from pydantic import BaseModel
 from pydantic.tools import schema_of
 
 from .factory import Factory
-from .models.secrets import ConditionalSecretConfig
+from .models.secrets import ConditionalSecretConfig, StaticSecret
 
 __all__ = [
     "help",
@@ -20,6 +22,34 @@ __all__ = [
     "secrets_static_template",
     "secrets_vault_secrets",
 ]
+
+
+def _load_static_secrets(path: Path) -> dict[str, dict[str, StaticSecret]]:
+    """Load static secrets from a file.
+
+    Parameters
+    ----------
+    path
+        Path to the file.
+
+    Returns
+    -------
+    dict of dict
+        Map from application to secret key to
+        `~phalanx.models.secrets.StaticSecret`.
+    """
+    with path.open() as fh:
+        static_secrets = yaml.safe_load(fh)
+
+    # Pydantic can't parse a dictionary with arbitrary keys directly, so use a
+    # workaround: define a model with one attribute that corresponds to the
+    # nested dictionary we're expecting, and then parse the file contents with
+    # a synthetic top-level key matching that attribute.
+    class _StaticSecrets(BaseModel):
+        secrets: dict[str, dict[str, StaticSecret]]
+
+    model = _StaticSecrets.parse_obj({"secrets": static_secrets})
+    return model.secrets
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
@@ -53,11 +83,20 @@ def secrets() -> None:
 
 @secrets.command("audit")
 @click.argument("environment")
-def secrets_audit(environment: str) -> None:
+@click.option(
+    "--secrets",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="YAML file containing static secrets for this environment.",
+)
+def secrets_audit(environment: str, secrets: Path | None) -> None:
     """Audit the secrets for the given environment for inconsistencies."""
+    static_secrets = None
+    if secrets:
+        static_secrets = _load_static_secrets(secrets)
     factory = Factory()
     secrets_service = factory.create_secrets_service()
-    sys.stdout.write(secrets_service.audit(environment))
+    sys.stdout.write(secrets_service.audit(environment, static_secrets))
 
 
 @secrets.command("list")
@@ -107,6 +146,32 @@ def secrets_static_template(environment: str) -> None:
     factory = Factory()
     secrets_service = factory.create_secrets_service()
     sys.stdout.write(secrets_service.generate_static_template(environment))
+
+
+@secrets.command("sync")
+@click.argument("environment")
+@click.option(
+    "--regenerate",
+    default=False,
+    is_flag=True,
+    help="Regenerate (change) all generated secrets.",
+)
+@click.option(
+    "--secrets",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="YAML file containing static secrets for this environment.",
+)
+def secrets_sync(
+    environment: str, *, regenerate: bool, secrets: Path | None
+) -> None:
+    """Synchronize the secrets for an environment into Vault."""
+    static_secrets = None
+    if secrets:
+        static_secrets = _load_static_secrets(secrets)
+    factory = Factory()
+    secrets_service = factory.create_secrets_service()
+    secrets_service.sync(environment, static_secrets, regenerate=regenerate)
 
 
 @secrets.command("vault-secrets")

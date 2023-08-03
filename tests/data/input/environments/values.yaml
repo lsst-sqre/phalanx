@@ -22,7 +22,13 @@ butlerRepositoryIndex: ""
 
 gafaelfawr:
   enabled: false
+mobu:
+  enabled: false
 nublado:
   enabled: false
+portal:
+  enabled: false
 postgres:
+  enabled: false
+tap:
   enabled: false

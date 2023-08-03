@@ -1,5 +1,6 @@
 environment: minikube
 fqdn: minikube.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 
 alert-stream-broker:

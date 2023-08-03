@@ -1,5 +1,6 @@
 environment: idfprod
 fqdn: data.lsst.cloud
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 
