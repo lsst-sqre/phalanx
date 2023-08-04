@@ -13,9 +13,9 @@ controller:
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        LSST_DDS_INTERFACE: "net1"
-        LSST_DDS_PARTITION_PREFIX: "base"
-        LSST_SITE: "base"
+        LSST_DDS_INTERFACE: net1
+        LSST_DDS_PARTITION_PREFIX: tucson
+        LSST_SITE: tucson
         PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
         PGUSER: "oods"
       volumes:
@@ -24,42 +24,53 @@ controller:
         source:
           type: "nfs"
           path: "/jhome"
-          server: "nfs-jhome.ls.lsst.org"
+          server: "nfs-jhome.tu.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:
           type: "nfs"
           path: "/project"
-          server: "nfs-project.ls.lsst.org"
+          server: "nfs-project.tu.lsst.org"
       - containerPath: "/scratch"
         mode: "rw"
         source:
           type: "nfs"
           path: "/scratch"
-          server: "nfs-scratch.ls.lsst.org"
+          server: "nfs-scratch.tu.lsst.org"
       - containerPath: "/datasets"
         mode: "rw"
         source:
           type: "nfs"
           path: "/lsstdata"
-          server: "nfs-lsstdata.ls.lsst.org"
+          server: "nfs-lsstdata.tu.lsst.org"
       - containerPath: "/repo/LATISS"
         mode: "rw"
         source:
           type: "nfs"
           path: "/auxtel/repo/LATISS"
-          server: "nfs-auxtel.ls.lsst.org"
+          server: "nfs-auxtel.tu.lsst.org"
       - containerPath: "/net/obs-env"
         mode: "rw"
         source:
           type: "nfs"
           path: "/obs-env"
-          server: "nfs-obsenv.ls.lsst.org"
-      - containerPath: "/data/lsstdata/BTS/auxtel"
+          server: "nfs-obsenv.tu.lsst.org"
+      - containerPath: "/repo/LSSTComCam"
+        mode: "rw"
         source:
           type: "nfs"
-          path: "/auxtel/lsstdata/BTS/auxtel"
-          server: "nfs-auxtel.ls.lsst.org"
+          path: "/repo/LSSTComCam"
+          server: "comcam-archiver.tu.lsst.org"
+      - containerPath: "/data/lsstdata/TTS/auxtel"
+        source:
+          type: "nfs"
+          path: "/auxtel/lsstdata/TTS/auxtel"
+          server: "nfs-auxtel.tu.lsst.org"
+      - containerPath: "/data/lsstdata/TTS/comcam"
+        source:
+          type: "nfs"
+          path: "/lsstdata/TTS/comcam"
+          server: "comcam-archiver.tu.lsst.org"
 
 jupyterhub:
   baseUrl: "/n3"
