@@ -9,13 +9,17 @@ from hvac.exceptions import InvalidPath
 from pydantic import SecretStr
 
 from ..exceptions import VaultNotFoundError
-from ..models.environments import Environment
+from ..models.environments import EnvironmentVaultConfig
+from ..models.vault import VaultAppRole, VaultToken
 
 __all__ = ["VaultClient", "VaultStorage"]
 
 
 class VaultClient:
     """Store, retrieve, and manipulate data stored in Vault.
+
+    This client is specific to a particular Phalanx environment. It is
+    created using the metadata of a Phalanx environment by `VaultStorage`.
 
     The Vault authentication token is taken from either the ``VAULT_TOKEN``
     environment variable or a :file:`.vault-token` file in the user's home
@@ -31,11 +35,78 @@ class VaultClient:
     """
 
     def __init__(self, url: str, path: str) -> None:
-        mount, path = path.split("/", 1)
+        self._url = url
+        _, self._path = path.split("/", 1)
         self._vault = hvac.Client(url)
         self._vault.secrets.kv.default_kv_version = 2
-        self._url = url
-        self._path = path
+
+    def create_policy(self, name: str, policy: str) -> None:
+        """Create a policy allowing read of secrets for this environment.
+
+        Parameters
+        ----------
+        name
+            Name of policy to create.
+        policy
+            Text of the policy.
+        """
+        self._vault.sys.create_or_update_policy(name, policy)
+
+    def create_approle(self, name: str, policies: list[str]) -> VaultAppRole:
+        """Create a new Vault AppRole for secret access.
+
+        Parameters
+        ----------
+        name
+            Name of the AppRole to create.
+        policies
+            Policies to assign to that AppRole.
+
+        Returns
+        -------
+        VaultAppRole
+            Newly-created AppRole.
+        """
+        self._vault.auth.approle.create_or_update_approle(
+            role_name=name,
+            token_policies=policies,
+            token_type="service",
+        )
+        r = self._vault.auth.approle.read_role_id(name)
+        role_id = r["data"]["role_id"]
+        r = self._vault.auth.approle.generate_secret_id(name)
+        secret_id = r["data"]["secret_id"]
+        secret_id_accessor = r["data"]["secret_id_accessor"]
+        r = self._vault.auth.approle.read_role(name)
+        token_policies = r["data"]["token_policies"]
+        return VaultAppRole(
+            role_id=role_id,
+            secret_id=secret_id,
+            secret_id_accessor=secret_id_accessor,
+            policies=token_policies,
+        )
+
+    def create_token(self, policies: list[str], lifetime: str) -> VaultToken:
+        """Create a new Vault token.
+
+        Parameters
+        ----------
+        policies
+            Policies to assign to that token.
+        lifetime
+            Lifetime of the token as a Vault duration string.
+
+        Returns
+        -------
+        VaultToken
+            Newly-created Vault token.
+        """
+        token = self._vault.auth.token.create(policies=policies, ttl=lifetime)
+        return VaultToken(
+            token=token["auth"]["client_token"],
+            accessor=token["auth"]["accessor"],
+            policies=token["auth"]["token_policies"],
+        )
 
     def delete_application_secret(self, application: str) -> None:
         """Delete the secrets for an application currently stored in Vault.
@@ -145,7 +216,7 @@ class VaultClient:
 class VaultStorage:
     """Create Vault clients for specific environments."""
 
-    def get_vault_client(self, env: Environment) -> VaultClient:
+    def get_vault_client(self, env: EnvironmentVaultConfig) -> VaultClient:
         """Return a Vault client configured for the given environment.
 
         Parameters

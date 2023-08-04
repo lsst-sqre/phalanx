@@ -1,0 +1,6 @@
+path "secret/data/{{ path }}/+" {
+  capabilities = ["read"]
+}
+path "secret/metadata/{{ path }}/+" {
+  capabilities = ["list", "read"]
+}

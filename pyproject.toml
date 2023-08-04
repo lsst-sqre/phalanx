@@ -161,7 +161,7 @@ target-version = "py311"
 ]
 
 [tool.ruff.isort]
-known-first-party = ["gafaelfawr", "tests"]
+known-first-party = ["phalanx", "tests"]
 split-on-trailing-comma = false
 
 [tool.ruff.flake8-bugbear]
