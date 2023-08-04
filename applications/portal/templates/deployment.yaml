@@ -83,6 +83,16 @@ spec:
                                "fovDeg": 10
                             }
                             {{- end }}
+                            {{- if .Values.config.livetap }}
+                            ,
+                            {
+                               "label": "LSST Live ObsCore",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.livetap }}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
+                               "fovDeg": 10
+                            }
+                            {{- end }}
                           ]
                       }
                    },

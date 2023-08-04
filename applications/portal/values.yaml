@@ -64,6 +64,9 @@ config:
   # -- Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present
   ssotap: ""
 
+  # -- Endpoint under `/api/` for the live TAP service on the instance, if present
+  livetap: ""
+
   volumes:
     # -- hostPath to mount as a shared work area.  Set either this or
     # `workareaNfs`, not both.
