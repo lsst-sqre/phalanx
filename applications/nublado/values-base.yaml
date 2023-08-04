@@ -62,7 +62,6 @@ controller:
           server: "nfs-auxtel.ls.lsst.org"
 
 jupyterhub:
-  baseUrl: "/n3"
   cull:
     users: false
     removeNamedServers: false
@@ -73,6 +72,7 @@ jupyterhub:
     extraAnnotations:
       k8s.v1.cni.cncf.io/networks: "kube-system/dds"
   hub:
+    baseUrl: "/n3"
     db:
       upgrade: true
       url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
