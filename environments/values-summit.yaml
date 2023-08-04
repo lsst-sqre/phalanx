@@ -34,7 +34,7 @@ narrativelog:
 noteburst:
   enabled: false
 nublado:
-  enabled: false
+  enabled: true
 nublado2:
   enabled: true
 ook:
