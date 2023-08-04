@@ -95,4 +95,4 @@ jupyterhub:
     baseUrl: "/n3"
     db:
       upgrade: true
-      url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
+      url: "postgresql://nublado3@postgresdb01.ls.lsst.org/nublado3"
