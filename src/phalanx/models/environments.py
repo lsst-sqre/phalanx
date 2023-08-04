@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 from safir.pydantic import CamelCaseModel
 
 from .applications import ApplicationInstance
@@ -14,7 +14,17 @@ __all__ = [
 ]
 
 
-class EnvironmentConfig(CamelCaseModel):
+class EnvironmentVaultConfig(CamelCaseModel):
+    """Vault configuration for a specific environment."""
+
+    vault_url: str
+    """URL of Vault server for this environment."""
+
+    vault_path_prefix: str
+    """Prefix of Vault paths, including the Kv2 mount point."""
+
+
+class EnvironmentConfig(EnvironmentVaultConfig):
     """Configuration for a Phalanx environment.
 
     This is a partial model for the environment :file:`values.yaml` file.
@@ -23,18 +33,12 @@ class EnvironmentConfig(CamelCaseModel):
     environment: str
     """Name of the environment."""
 
-    vault_url: str
-    """URL of Vault server for this environment."""
-
-    vault_path_prefix: str
-    """Prefix of Vault paths, including the Kv2 mount point."""
-
     applications: list[str] = Field(
         [], description="List of enabled applications"
     )
 
 
-class Environment(BaseModel):
+class Environment(EnvironmentVaultConfig):
     """A Phalanx environment and its associated settings."""
 
     name: str
@@ -49,18 +53,15 @@ class Environment(BaseModel):
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""
 
+    class Config:
+        allow_population_by_field_name = True
+
     def all_applications(self) -> list[ApplicationInstance]:
-        """Return enabled applications in sorted order."""
+        """Return all enabled applications in sorted order."""
         return sorted(self.applications.values(), key=lambda a: a.name)
 
     def all_secrets(self) -> list[Secret]:
-        """Return a list of all secrets regardless of application.
-
-        Returns
-        -------
-        list of Secret
-            All secrets from all applications.
-        """
+        """Return all secrets regardless of application."""
         secrets = []
         for application in self.all_applications():
             secrets.extend(application.secrets)
