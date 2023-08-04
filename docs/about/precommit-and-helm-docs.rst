@@ -30,6 +30,14 @@ This command uses Python to install pre-commit and enable it in your Phalanx clo
 **You will also need to install helm-docs separately.**
 See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.
 
+.. warning::
+
+   You must have the same verison of helm-docs installed locally that is used by GitHub Actions, or you risk GitHub Actions seeing output changes, which will block merging of your PR.
+   To see what version of helm-docs is used by GitHub actions, look for helm-docs :file:`.github/workflows/ci.yaml`.
+
+   The best (but possibly not the most convenient) way to make certain you have the same version is to run the :command:`go install` command that GitHub Actions uses.
+   However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
+
 What to expect when developing in Phalanx with pre-commit
 =========================================================
 
