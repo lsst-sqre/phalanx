@@ -23,7 +23,7 @@ repos:
         files: "^docs/extras/schemas/.*\\.json"
 
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.11.1
+    rev: v1.11.0
     hooks:
       - id: helm-docs
         args:
