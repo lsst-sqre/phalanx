@@ -1,0 +1,7 @@
+apiVersion: v2
+name: rubintv
+version: 1.0.0
+description: Continuous integration testing
+sources:
+  - https://github.com/lsst-sqre/rubin-tv
+appVersion: 0.1.0

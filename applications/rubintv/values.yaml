@@ -1,0 +1,59 @@
+# Default values for rubintv.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+image:
+  # -- rubintv image to use
+  repository: "ghcr.io/lsst-sqre/rubintv"
+
+  # -- Pull policy for the rubintv image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of rubintv image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+config:
+  # -- If set to true, enable more verbose logging.
+  debug: false
+
+  # -- Prefix for rubintv's API routes.
+  pathPrefix: "/rubintv"
+
+# -- Resource limits and requests for the rubintv frontend pod
+resources: {}
+
+# -- Annotations for the rubintv frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the rubintv frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the rubintv frontend pod
+tolerations: []
+
+# -- Affinity rules for the rubintv frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
