@@ -1,9 +1,9 @@
 #!/bin/bash -e
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [VAULT_ADDR] [VAULT_TOKEN_LEASE_DURATION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [VAULT_TOKEN_LEASE_DURATION]"
 ENVIRONMENT=${1:?$USAGE}
 export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_ADDR=${3:-https://vault.lsst.codes}
 export VAULT_TOKEN_LEASE_DURATION=${4:-31536000}
+export VAULT_ADDR=`yq -r .vaultUrl ../environments/values-$ENVIRONMENT.yaml`
 VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
@@ -36,6 +36,7 @@ helm upgrade vault-secrets-operator ../applications/vault-secrets-operator \
   --install \
   --values ../applications/vault-secrets-operator/values.yaml \
   --values ../applications/vault-secrets-operator/values-$ENVIRONMENT.yaml \
+  --set vault-secrets-operator.vault.address="$VAULT_ADDR" \
   --create-namespace \
   --namespace vault-secrets-operator \
   --timeout 5m \
