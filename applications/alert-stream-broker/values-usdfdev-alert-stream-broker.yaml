@@ -108,7 +108,7 @@ alert-database:
 
     logLevel: verbose
 
-    schemaRegistryURL: https://alert-schemas-dev.slac.stanford.edu
+    schemaRegistryURL: https://usdf-alert-schemas-dev.slac.stanford.edu
 
     serviceAccountName: alert-database-writer
 
