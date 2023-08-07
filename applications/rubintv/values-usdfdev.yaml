@@ -1,3 +1,9 @@
 frontend:
   config:
     debug: true
+  image:
+    tag: develop
+    imagePullPolicy: Always
+workers:
+  image:
+    tag: c0031_usdf
