@@ -2,7 +2,8 @@ frontend:
   config:
     debug: true
   image:
-    tag: develop
+    repository: docker.io/lsstsqre/rubin-tv
+    tag: v2
     imagePullPolicy: Always
 workers:
   image:
