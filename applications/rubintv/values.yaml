@@ -12,7 +12,6 @@ frontend:
     debug: false
     # -- Prefix for rubintv's frontend API routes.
     pathPrefix: "/rubintv"
-
   image:
     # -- rubintv frontend image to use
     repository: "ghcr.io/lsst-sqre/rubintv"
@@ -44,6 +43,104 @@ workers:
     debug: false
     # -- Prefix for the (internal) worker API routes
     pathPrefix: "/"
+    # -- UID to run as (site-dependent, because of filesystem perms)
+    uid: 1000
+    # -- GID to run as
+    gid: 1000
+    # We will try to avoid fsid; just use uid.  Might need to change that.
+    image:
+      # -- The Docker registry name for the container image.
+      repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+      # -- The tag of the container image to use.
+      tag: develop
+      # -- The policy to apply when pulling an image for deployment.
+      pullPolicy: IfNotPresent
+    # -- This is the namespace where the applications will be deployed.
+    # Don't need in phalanxification, I hope
+    # namespace: rapid-analysis
+    # -- A special tag for letting the scripts know where they are
+    # running.  ** Let's derive this from the global.host **
+    # siteTag: ""
+    # -- (obj) List of script objects to run for the broadcaster.
+    # This section MUST have the following attribute specified for each entry.
+    # _name_ (The full path for the script)
+    # The following attributes are optional
+    # _resources_ (A resource object specification)
+    # _nodeSelector_ (A node selector object specification)
+    # _tolerations_ (A list of tolerations)
+    # _affinity_ (An affinity object specification)
+    scripts: []
+    # -- This section holds a set of key, value pairs for environmental variables (ENV_VAR: value).
+    # NOTE: RUN_ARG is taken care of by the chart using _script_.
+    env: {}
+    # -- This section holds specifications for secret injection.
+    # If this section is used, each object listed must have the following attributes defined:
+    # _name_ (The label for the secret),
+    # _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name),
+    # _secretKey_ (The key in the vault store containing the necessary secret)
+    envSecrets: []
+    # -- The Vault prefix path
+    vaultPrefixPath: ""
+    # The key for the pull secrets including any sub-paths.
+    pullSecretsPath: ""
+    # Path for the rubin tv specific secrets vault.  ** Let's just stuff
+    # its contents into the Phalanx secrets
+    # rubinTvSecretsPath: ""
+    # -- This key allows specification of a script to override the entrypoint.
+    # -- The list of pull secrets needed for the images.
+    # If this section is used, each object listed can have the following attributes defined:
+    # _name_ (The label identifying the pull-secret to use)
+    imagePullSecrets: []
+    # -- This section allows for specification of Butler secret information.
+    # If this section is used, it must contain the following attributes:
+    # _key_ (The vault key for the Butler secret),
+    # _containerPath_ (The directory location for the Butler secret),
+    # _dbUser_ (The username for the Butler backend database)
+    butlerSecret: {}
+    # The following stuff is gross and ugly and we should replace with
+    # something like the JupyterLab Controller stanzas so we don't need
+    # separate things for each of the possible mount types
+    # -- This section holds the information necessary to create a NFS mount for the container.
+    # If this section is used, each object listed can have the following attributes defined:
+    # _name_ (A label identifier for the mountpoint),
+    # _containerPath_ (The path inside the container to mount),
+    # _readOnly_ (This sets if the NFS mount is read only or read/write),
+    # _server_ (The hostname of the NFS server),
+    # _serverPath_ (The path exported by the NFS server)
+    nfsMountpoint: []
+    # -- This section holds information about existing volume claims.
+    # If the section is used, each object listed can have the following attributes defined:
+    # _name_ (The name ot the persistent volume),
+    # _containerPath_ (The path inside the container to mount),
+    # _subPath_ (persistent volume subpath, optional)
+    pvcMountpoint: []
+    # -- This section holds the information necessary to claim persistent volumes.
+    # If the section is used, each object listed can have the following attributes defined:
+    # _name_ (The name ot the persistent volume),
+    # _containerPath_ (The path inside the container to mount),
+    # _subPath_ (persistent volume subpath, optional)
+    pvcMountpointClaim: []
+    # -- The key for the credentials including any sub-paths.
+    credentialSecretsPath: ""
+    # -- The name of the expected credential file for the broadcasters
+    credentialFile: ""
+    # -- Generic resource limits and requests for the rubintv worker pods
+    resources: {}
+
+    # -- Annotations for the rubintv worker pods
+    podAnnotations: {}
+
+    # -- Node selector rules for the rubintv worker pods
+    nodeSelector: {}
+
+    # -- Tolerations for the rubintv worker pods
+    tolerations: []
+
+    # -- Affinity rules for the rubintv worker pods
+    affinity: {}
+    # securityContext: {}
+    # We always specify uid/gid
+    # The redis stuff is going to be provided by the SQuaRE chart.
 
   image:
     # -- rubintv worker image to use
@@ -55,25 +152,60 @@ workers:
     # -- Tag of rubintv worker image to use
     # @default -- None, must be set per-deployment
     tag: ""
-    # -- Resource limits and requests for the rubintv worker pod
-    resources: {}
-
-    # -- Annotations for the rubintv worker pod
-    podAnnotations: {}
-
-    # -- Node selector rules for the rubintv worker pod
-    nodeSelector: {}
-
-    # -- Tolerations for the rubintv worker pod
-    tolerations: []
-
-    # -- Affinity rules for the rubintv worker pod
-    affinity: {}
 
 
 ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
+
+redis:
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "rubintv-secret"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+    requests:
+      cpu: "100m"
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
 
 
 # The following will be set by parameters injected by Argo CD and should not
