@@ -11,6 +11,7 @@ Continuous integration testing
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | frontend.config.debug | bool | `false` | If set to true, enable more verbose logging. |
+| frontend.config.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's frontend API routes. |
 | frontend.image.affinity | object | `{}` | Affinity rules for the rubintv frontend pod |
 | frontend.image.nodeSelector | object | `{}` | Node selector rules for the rubintv frontend pod |
 | frontend.image.podAnnotations | object | `{}` | Annotations for the rubintv frontend pod |
@@ -24,10 +25,9 @@ Continuous integration testing
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's API routes. |
 | nameOverride | string | `""` | Override the base name for resources |
 | workers.config.debug | bool | `false` | If set to true, enable more verbose logging. |
-| workers.config.pathPrefix | string | `"/"` | Prefix for the (internal) worker APU routes |
+| workers.config.pathPrefix | string | `"/"` | Prefix for the (internal) worker API routes |
 | workers.image.affinity | object | `{}` | Affinity rules for the rubintv worker pod |
 | workers.image.nodeSelector | object | `{}` | Node selector rules for the rubintv worker pod |
 | workers.image.podAnnotations | object | `{}` | Annotations for the rubintv worker pod |

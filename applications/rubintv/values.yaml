@@ -10,6 +10,8 @@ frontend:
   config:
     # -- If set to true, enable more verbose logging.
     debug: false
+    # -- Prefix for rubintv's frontend API routes.
+    pathPrefix: "/rubintv"
 
   image:
     # -- rubintv frontend image to use
@@ -40,7 +42,7 @@ workers:
   config:
     # -- If set to true, enable more verbose logging.
     debug: false
-    # -- Prefix for the (internal) worker APU routes
+    # -- Prefix for the (internal) worker API routes
     pathPrefix: "/"
 
   image:
@@ -72,10 +74,6 @@ workers:
 ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
-
-
-  # -- Prefix for rubintv's API routes.
-  pathPrefix: "/rubintv"
 
 
 # The following will be set by parameters injected by Argo CD and should not
