@@ -91,6 +91,7 @@ alert-stream-broker:
 alert-stream-schema-registry:
   hostname: "usdf-alert-schemas-dev.lsst.cloud"
   schemaTopic: "registry-schemas"
+  tls: false
 
 alert-stream-simulator:
   clusterPort: 9092 # internal TLS listener
