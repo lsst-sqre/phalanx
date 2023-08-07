@@ -6,12 +6,14 @@ import json
 import os
 from collections import defaultdict
 from collections.abc import Iterator
+from datetime import timedelta
 from typing import Any
 from unittest.mock import patch
 from uuid import uuid4
 
 import hvac
 from hvac.exceptions import InvalidPath
+from safir.datetime import current_datetime, isodatetime
 
 from phalanx.models.vault import VaultAppRole, VaultToken
 
@@ -44,16 +46,12 @@ class MockVaultClient:
         self.sys = self
         self.token = self
 
-        # Make this public so that it can be checked by the test suite.
-        # Eventually we'll add support for listing token accessors, at which
-        # point this can be made private again.
-        self.vault_tokens: list[VaultToken] = []
-
+        self._approles: dict[str, VaultAppRole] = {}
         self._data: defaultdict[str, dict[str, dict[str, str]]]
         self._data = defaultdict(dict)
         self._paths: dict[str, str] = {}
         self._policies: dict[str, str] = {}
-        self._approles: dict[str, VaultAppRole] = {}
+        self._tokens: list[VaultToken] = []
 
     def load_test_data(self, path: str, environment: str) -> None:
         """Load Vault test data for the given environment.
@@ -76,22 +74,42 @@ class MockVaultClient:
             with app_data_path.open() as fh:
                 self._data[environment][application] = json.load(fh)
 
-    def create(self, *, policies: list[str], ttl: str) -> dict[str, Any]:
+    def create(
+        self,
+        *,
+        display_name: str,
+        policies: list[str],
+        ttl: str,
+        create_expired_token: bool = False,
+    ) -> dict[str, Any]:
         """Create a new authentication token.
 
         Parameters
         ----------
+        display_name
+            Display name of the token.
         policies
             Policies to set for the token.
         ttl
-            Lifetime (time-to-live) of the token.
+            Lifetime (time-to-live) of the token. Must end in ``d`` for the
+            test suite.
+        create_expired_token
+            Special test-only option that creates a token that expired one
+            day ago.
         """
+        assert ttl[-1] == "d"
+        if create_expired_token:
+            expires = current_datetime() - timedelta(days=1)
+        else:
+            expires = current_datetime() + timedelta(days=int(ttl[:-1]))
         token = VaultToken(
+            display_name=display_name,
             token=f"s.{os.urandom(16).hex()}",
             accessor=os.urandom(16).hex(),
             policies=policies,
+            expires=expires,
         )
-        self.vault_tokens.append(token)
+        self._tokens.append(token)
         return {
             "auth": {
                 "client_token": token.token,
@@ -198,6 +216,16 @@ class MockVaultClient:
             }
         }
 
+    def list_accessors(self) -> dict[str, Any]:
+        """List all token accessors.
+
+        Returns
+        -------
+        dict
+            Reply matching the Vault client reply structure.
+        """
+        return {"data": {"keys": [t.accessor for t in self._tokens]}}
+
     def list_secrets(self, path: str) -> dict[str, Any]:
         """List all secrets available under a path.
 
@@ -213,6 +241,60 @@ class MockVaultClient:
         """
         environment = self._paths[path]
         return {"data": {"keys": list(self._data[environment].keys())}}
+
+    def lookup_accessor(self, accessor: str) -> dict[str, Any]:
+        """Look up a token by accessor.
+
+        Parameter
+        ---------
+        accessor
+            Token accessor.
+
+        Returns
+        -------
+        dict
+            Reply matching the Vault client reply structure.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the accessor does not exist.
+        """
+        token = None
+        for candidate in self._tokens:
+            if candidate.accessor == accessor:
+                token = candidate
+                break
+        if not token:
+            raise InvalidPath(f"Unknown accessor {accessor}")
+        return {
+            "data": {
+                "display_name": token.display_name,
+                "expire_time": isodatetime(token.expires),
+                "policies": list(token.policies),
+            }
+        }
+
+    def patch(self, path: str, secret: dict[str, str]) -> None:
+        """Update specific keys and values in a secret.
+
+        Parameters
+        ----------
+        path
+            Vault path for the secret.
+        secret
+            Keys and values to update.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the provided Vault path does not exist.
+        """
+        base_path, application = path.rsplit("/", 1)
+        environment = self._paths[base_path]
+        if application not in self._data[environment]:
+            raise InvalidPath(f"Unknown Vault path {path}")
+        self._data[environment][application].update(secret)
 
     def read_policy(self, name: str) -> dict[str, Any]:
         """Read a Vault policy.
@@ -256,7 +338,11 @@ class MockVaultClient:
         """
         if role_name not in self._approles:
             raise InvalidPath(f"Unknown AppRole {role_name}")
-        return {"data": {"token_policies": self._approles[role_name].policies}}
+        return {
+            "data": {
+                "token_policies": list(self._approles[role_name].policies)
+            }
+        }
 
     def read_role_id(self, role_name: str) -> dict[str, Any]:
         """Read the RoleID of a Vault AppRole.
@@ -311,26 +397,24 @@ class MockVaultClient:
         values = self._data[environment][application]
         return {"data": {"data": values.copy()}}
 
-    def patch(self, path: str, secret: dict[str, str]) -> None:
-        """Update specific keys and values in a secret.
+    def revoke_accessor(self, accessor: str) -> None:
+        """Revoke a token by accessor.
 
         Parameters
         ----------
-        path
-            Vault path for the secret.
-        secret
-            Keys and values to update.
+        accessor
+            Accessor of the token.
 
         Raises
         ------
         InvalidPath
-            Raised if the provided Vault path does not exist.
+            Raised if the provided Vault token accessor does not exist.
         """
-        base_path, application = path.rsplit("/", 1)
-        environment = self._paths[base_path]
-        if application not in self._data[environment]:
-            raise InvalidPath(f"Unknown Vault path {path}")
-        self._data[environment][application].update(secret)
+        # Rely on the lookup to raise an exception if needed.
+        self.lookup_accessor(accessor)
+
+        # Do the delete.
+        self._tokens = [t for t in self._tokens if t.accessor != accessor]
 
 
 def patch_vault() -> Iterator[MockVaultClient]:

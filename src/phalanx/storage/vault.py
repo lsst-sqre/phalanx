@@ -10,7 +10,12 @@ from pydantic import SecretStr
 
 from ..exceptions import VaultNotFoundError
 from ..models.environments import EnvironmentVaultConfig
-from ..models.vault import VaultAppRole, VaultToken
+from ..models.vault import (
+    VaultAppRole,
+    VaultAppRoleMetadata,
+    VaultToken,
+    VaultTokenMetadata,
+)
 
 __all__ = ["VaultClient", "VaultStorage"]
 
@@ -86,11 +91,15 @@ class VaultClient:
             policies=token_policies,
         )
 
-    def create_token(self, policies: list[str], lifetime: str) -> VaultToken:
+    def create_token(
+        self, display_name: str, policies: list[str], lifetime: str
+    ) -> VaultToken:
         """Create a new Vault token.
 
         Parameters
         ----------
+        display_name
+            Display name of the token.
         policies
             Policies to assign to that token.
         lifetime
@@ -101,11 +110,17 @@ class VaultClient:
         VaultToken
             Newly-created Vault token.
         """
-        token = self._vault.auth.token.create(policies=policies, ttl=lifetime)
+        token = self._vault.auth.token.create(
+            display_name=display_name, policies=policies, ttl=lifetime
+        )
+        accessor = token["auth"]["accessor"]
+        r = self._vault.auth.token.lookup_accessor(accessor)
         return VaultToken(
+            display_name=r["data"]["display_name"],
             token=token["auth"]["client_token"],
-            accessor=token["auth"]["accessor"],
+            accessor=accessor,
             policies=token["auth"]["token_policies"],
+            expires=r["data"]["expire_time"],
         )
 
     def delete_application_secret(self, application: str) -> None:
@@ -150,6 +165,29 @@ class VaultClient:
             raise VaultNotFoundError(self._url, path) from e
         return {k: SecretStr(v) for k, v in r["data"]["data"].items()}
 
+    def get_approle(self, name: str) -> VaultAppRoleMetadata | None:
+        """Retrieve metadata about a Vault AppRole if it exists.
+
+        Parameters
+        ----------
+        approle
+            Name of the AppRole.
+
+        Returns
+        -------
+        VaultAppRoleMetadata or None
+            Metadata about the AppRole if it exists, else `None`.
+        """
+        try:
+            r = self._vault.auth.approle.read_role_id(name)
+            role_id = r["data"]["role_id"]
+            r = self._vault.auth.approle.read_role(name)
+        except InvalidPath:
+            return None
+        return VaultAppRoleMetadata(
+            role_id=role_id, policies=r["data"]["token_policies"]
+        )
+
     def get_environment_secrets(self) -> dict[str, dict[str, SecretStr]]:
         """Get the secrets for an environment currently stored in Vault.
 
@@ -165,6 +203,50 @@ class VaultClient:
                 vault_secrets[application] = vault_secret
         return vault_secrets
 
+    def get_policy(self, name: str) -> str | None:
+        """Get the contents of a Vault policy.
+
+        Parameters
+        ----------
+        name
+            Name of the policy.
+
+        Returns
+        -------
+        str or None
+            Text of the policy, or `None` if it does not exist.
+        """
+        try:
+            r = self._vault.sys.read_policy(name)
+        except InvalidPath:
+            return None
+        return r["rules"]
+
+    def get_token(self, accessor: str) -> VaultTokenMetadata | None:
+        """Get a token by accessor.
+
+        Parameters
+        ----------
+        accessor
+            Accessor for the token.
+
+        Returns
+        -------
+        VaultTokenMetadata or None
+            Metadata for the token, or `None` if no token exists with that
+            accessor.
+        """
+        try:
+            r = self._vault.auth.token.lookup_accessor(accessor)
+        except InvalidPath:
+            return None
+        return VaultTokenMetadata(
+            display_name=r["data"]["display_name"],
+            accessor=accessor,
+            expires=r["data"]["expire_time"],
+            policies=r["data"]["policies"],
+        )
+
     def list_application_secrets(self) -> list[str]:
         """List the available application secrets in Vault.
 
@@ -177,6 +259,17 @@ class VaultClient:
             r = self._vault.secrets.kv.list_secrets(self._path)
         except InvalidPath as e:
             raise VaultNotFoundError(self._url, self._path) from e
+        return r["data"]["keys"]
+
+    def list_token_accessors(self) -> list[str]:
+        """List the accessors of all known tokens.
+
+        Returns
+        -------
+        list of str
+            Accessors for all known tokens.
+        """
+        r = self._vault.auth.token.list_accessors()
         return r["data"]["keys"]
 
     def store_application_secret(
