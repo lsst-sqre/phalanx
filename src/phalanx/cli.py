@@ -205,6 +205,22 @@ def vault() -> None:
     """Vault management commands."""
 
 
+@vault.command("audit")
+@click.argument("environment")
+def vault_audit(environment: str) -> None:
+    """Audit the Vault credentials for the given environment.
+
+    The environment variable VAULT_TOKEN must be set to a token with access to
+    read policies, AppRoles, tokens, and token accessors.
+    """
+    factory = Factory()
+    vault_service = factory.create_vault_service()
+    report = vault_service.audit(environment)
+    if report:
+        sys.stdout.write(report)
+        sys.exit(1)
+
+
 @vault.command("create-read-approle")
 @click.argument("environment")
 def vault_create_read_approle(environment: str) -> None:
