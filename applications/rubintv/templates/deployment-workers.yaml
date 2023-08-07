@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "rubintv.fullname" . }}-frontend
+  name: {{ template "rubintv.fullname" . }}-workers
   labels:
     {{- include "rubintv.labels" . | nindent 4 }}
 spec:
@@ -13,7 +13,7 @@ spec:
     type: "Recreate"
   template:
     metadata:
-      {{- with .Values.frontend.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -22,18 +22,18 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: {{ .Chart.Name }}-frontend
+        - name: {{ .Chart.Name }}-worker
           env:
             - name: "ENVIRONMENT_URL"
               value: {{ .Values.global.baseUrl }}
             - name: "SAFIR_PATH_PREFIX"
-              value: {{ .Values.ingress.pathPrefix | quote }}
+              value: {{ .Values.workers.config.pathPrefix | quote }}
             {{- if (not .Values.workers.config.debug) }}
             - name: "SAFIR_PROFILE"
               value: "production"
             {{- end }}
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.frontend.image.pullPolicy | quote }}
+          image: "{{ .Values.workers.image.repository }}:{{ .Values.workers.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.workers.image.pullPolicy | quote }}
           ports:
             - name: "http"
               containerPort: 8080
@@ -43,7 +43,7 @@ spec:
               path: "/"
               port: "http"
             timeoutSeconds: 10
-          {{- with .Values.frontend.resources }}
+          {{- with .Values.workers.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -63,15 +63,15 @@ spec:
       volumes:
         - name: "tmp"
           emptyDir: {}
-      {{- with .Values.frontend.nodeSelector }}
+      {{- with .Values.workers.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.affinity }}
+      {{- with .Values.workers.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.tolerations }}
+      {{- with .Values.workers.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

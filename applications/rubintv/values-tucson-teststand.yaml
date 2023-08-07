@@ -1,2 +1,3 @@
-config:
-  debug: true
+fontend:
+  config:
+    debug: true

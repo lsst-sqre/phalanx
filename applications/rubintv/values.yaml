@@ -6,42 +6,77 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
-image:
-  # -- rubintv image to use
-  repository: "ghcr.io/lsst-sqre/rubintv"
+frontend:
+  config:
+    # -- If set to true, enable more verbose logging.
+    debug: false
 
-  # -- Pull policy for the rubintv image
-  pullPolicy: "IfNotPresent"
+  image:
+    # -- rubintv frontend image to use
+    repository: "ghcr.io/lsst-sqre/rubintv"
 
-  # -- Tag of rubintv image to use
-  # @default -- The appVersion of the chart
-  tag: ""
+    # -- Pull policy for the rubintv image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of rubintv image to use
+    # @default -- The appVersion of the chart
+    tag: ""
+    # -- Resource limits and requests for the rubintv frontend pod
+    resources: {}
+
+    # -- Annotations for the rubintv frontend pod
+    podAnnotations: {}
+
+    # -- Node selector rules for the rubintv frontend pod
+    nodeSelector: {}
+
+    # -- Tolerations for the rubintv frontend pod
+    tolerations: []
+
+    # -- Affinity rules for the rubintv frontend pod
+    affinity: {}
+
+workers:
+  config:
+    # -- If set to true, enable more verbose logging.
+    debug: false
+    # -- Prefix for the (internal) worker APU routes
+    pathPrefix: "/"
+
+  image:
+    # -- rubintv worker image to use
+    repository: "docker.io/lsstts/rubintv-broadcaster"
+
+    # -- Pull policy for the rubintv worker image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of rubintv worker image to use
+    # @default -- None, must be set per-deployment
+    tag: ""
+    # -- Resource limits and requests for the rubintv worker pod
+    resources: {}
+
+    # -- Annotations for the rubintv worker pod
+    podAnnotations: {}
+
+    # -- Node selector rules for the rubintv worker pod
+    nodeSelector: {}
+
+    # -- Tolerations for the rubintv worker pod
+    tolerations: []
+
+    # -- Affinity rules for the rubintv worker pod
+    affinity: {}
+
 
 ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
-config:
-  # -- If set to true, enable more verbose logging.
-  debug: false
 
   # -- Prefix for rubintv's API routes.
   pathPrefix: "/rubintv"
 
-# -- Resource limits and requests for the rubintv frontend pod
-resources: {}
-
-# -- Annotations for the rubintv frontend pod
-podAnnotations: {}
-
-# -- Node selector rules for the rubintv frontend pod
-nodeSelector: {}
-
-# -- Tolerations for the rubintv frontend pod
-tolerations: []
-
-# -- Affinity rules for the rubintv frontend pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
