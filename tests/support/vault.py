@@ -15,7 +15,7 @@ import hvac
 from hvac.exceptions import InvalidPath
 from safir.datetime import current_datetime, isodatetime
 
-from phalanx.models.vault import VaultAppRole, VaultToken
+from phalanx.models.vault import VaultAppRoleMetadata, VaultToken
 
 from .data import phalanx_test_path
 
@@ -40,12 +40,14 @@ class MockVaultClient:
         self.sys = self
         self.token = self
 
-        self._approles: dict[str, VaultAppRole] = {}
+        self._approles: dict[str, VaultAppRoleMetadata] = {}
         self._data: defaultdict[str, dict[str, dict[str, str]]]
         self._data = defaultdict(dict)
         self._paths: dict[str, str] = {}
         self._policies: dict[str, str] = {}
         self._tokens: list[VaultToken] = []
+        self._secret_ids: defaultdict[str, list[tuple[str, str]]]
+        self._secret_ids = defaultdict(list)
 
     def load_test_data(self, path: str, environment: str) -> None:
         """Load Vault test data for the given environment.
@@ -127,13 +129,9 @@ class MockVaultClient:
             Type of token (must be ``service``).
         """
         assert token_type == "service"
-        approle = VaultAppRole(
-            role_id=str(uuid4()),
-            secret_id=str(uuid4()),
-            secret_id_accessor=str(uuid4()),
-            policies=token_policies,
+        self._approles[role_name] = VaultAppRoleMetadata(
+            role_id=str(uuid4()), policies=token_policies
         )
-        self._approles[role_name] = approle
 
     def create_or_update_policy(self, path: str, policy: str) -> None:
         """Create or update a policy.
@@ -182,8 +180,33 @@ class MockVaultClient:
             raise InvalidPath(f"Unknown Vault path {path}")
         del self._data[environment][application]
 
+    def destroy_secret_id_accessor(
+        self, role_name: str, secret_id_accessor: str
+    ) -> None:
+        """Destroy a SecretID for an AppRole.
+
+        Parameters
+        ----------
+        role_name
+            Name of the role.
+        secret_id_accessor
+            Accessor of a SecretID.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the AppRole doesn't exist.
+        """
+        if role_name not in self._approles:
+            raise InvalidPath(f"Unknown AppRole {role_name}")
+        self._secret_ids[role_name] = [
+            s
+            for s in self._secret_ids[role_name]
+            if s[1] != secret_id_accessor
+        ]
+
     def generate_secret_id(self, role_name: str) -> dict[str, Any]:
-        """Generate (actually returns) the SecretID for an AppRole.
+        """Generate a SecretID for an AppRole.
 
         Parameters
         ----------
@@ -202,11 +225,13 @@ class MockVaultClient:
         """
         if role_name not in self._approles:
             raise InvalidPath(f"Unknown AppRole {role_name}")
-        approle = self._approles[role_name]
+        secret_id = str(uuid4())
+        secret_id_accessor = str(uuid4())
+        self._secret_ids[role_name].append((secret_id, secret_id_accessor))
         return {
             "data": {
-                "secret_id": approle.secret_id,
-                "secret_id_accessor": approle.secret_id_accessor,
+                "secret_id": secret_id,
+                "secret_id_accessor": secret_id_accessor,
             }
         }
 
@@ -219,6 +244,28 @@ class MockVaultClient:
             Reply matching the Vault client reply structure.
         """
         return {"data": {"keys": [t.accessor for t in self._tokens]}}
+
+    def list_secret_id_accessors(self, role_name: str) -> dict[str, Any]:
+        """List all SecretID accessors for a given role.
+
+        Parameters
+        ----------
+        role_name
+            Name of the role.
+
+        Returns
+        -------
+        dict
+            Reply matching the Vault client reply structure.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the AppRole doesn't exist.
+        """
+        if role_name not in self._approles:
+            raise InvalidPath(f"Unknown AppRole {role_name}")
+        return {"data": {"keys": [s[1] for s in self._secret_ids[role_name]]}}
 
     def list_secrets(self, path: str) -> dict[str, Any]:
         """List all secrets available under a path.

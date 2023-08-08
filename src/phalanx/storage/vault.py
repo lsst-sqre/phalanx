@@ -277,6 +277,18 @@ class VaultClient:
         r = self._vault.auth.token.list_accessors()
         return r["data"]["keys"]
 
+    def revoke_approle_secret_ids(self, name: str) -> None:
+        """Revoke all existing SecretIDs for a Vault AppRole.
+
+        Parameters
+        ----------
+        name
+            Name of the AppRole.
+        """
+        r = self._vault.auth.approle.list_secret_id_accessors(name)
+        for accessor in r["data"]["keys"]:
+            self._vault.auth.approle.destroy_secret_id_accessor(name, accessor)
+
     def revoke_token(self, accessor: str) -> None:
         """Revoke a token by accessor.
 
