@@ -21,6 +21,7 @@ spec:
   ignoreDifferences:
   - jsonPointers:
     - /spec/volumeName
+    - /spec/storageClassName
     kind: PersistentVolumeClaim
   project: default
   source:
