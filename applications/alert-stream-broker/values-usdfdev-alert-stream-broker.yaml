@@ -43,12 +43,15 @@ alert-stream-broker:
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-3.lsst.cloud
+          ip: "134.79.23.219"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-4.lsst.cloud
+          ip: "134.79.23.218"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-5.lsst.cloud
+          ip: "134.79.23.220"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         
