@@ -254,6 +254,11 @@ class VaultClient:
         -------
         list of str
             Names of available application secrets.
+
+        Raises
+        ------
+        VaultNotFoundError
+            Raised if the path for application secrets does not exist.
         """
         try:
             r = self._vault.secrets.kv.list_secrets(self._path)
@@ -271,6 +276,16 @@ class VaultClient:
         """
         r = self._vault.auth.token.list_accessors()
         return r["data"]["keys"]
+
+    def revoke_token(self, accessor: str) -> None:
+        """Revoke a token by accessor.
+
+        Parameters
+        ----------
+        accessor
+            Accessor of token.
+        """
+        self._vault.auth.token.revoke_accessor(accessor)
 
     def store_application_secret(
         self, application: str, values: dict[str, SecretStr]
