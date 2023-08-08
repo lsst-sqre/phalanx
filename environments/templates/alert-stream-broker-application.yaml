@@ -18,6 +18,11 @@ spec:
   destination:
     namespace: alert-stream-broker
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - jsonPointers:
+    - /spec/volumeName
+    - /spec/storageClassName
+    kind: PersistentVolumeClaim
   project: default
   source:
     path: applications/alert-stream-broker
