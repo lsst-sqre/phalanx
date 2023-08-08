@@ -68,7 +68,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         policies=["something"],
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
     )
-    accessor = r["auth"]["accessor"]
+    r["auth"]["accessor"]
     mock_vault.create_or_update_policy(f"{vault_path}/write", "blah blah blah")
     result = runner.invoke(
         main, ["vault", "audit", "idfdev"], catch_exceptions=False
@@ -77,22 +77,11 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert result.output == read_output_data("idfdev", "audit-token-policy")
 
     # Create a new token that expires in six days and use that to fix the
-    # policy. The old token should still exist and produce the same warnings,
-    # except for the incorrect write policy, and there should be a new warning
-    # about the token expiring within seven days. We have to do some munging
-    # here of the output since the date and time will vary.
+    # policy. This should also revoke the old token. Also create a new token
+    # that is already expired. We have to do some munging here of the output
+    # since the date and time will vary.
     vault_service.create_write_token("idfdev", "6d")
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
-    assert result.exit_code == 1
-    output = re.sub(r"[\d-]{10} [\d:]{8}", "<timestamp>", result.output)
-    assert output == read_output_data("idfdev", "audit-token-multiple")
-
-    # Delete the manually-created token and make a new one that is already
-    # expired.
-    mock_vault.revoke_accessor(accessor)
-    r = mock_vault.create(
+    mock_vault.create(
         display_name=role_name,
         policies=[f"{vault_path}/write"],
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
