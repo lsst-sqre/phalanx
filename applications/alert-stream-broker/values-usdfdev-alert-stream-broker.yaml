@@ -40,6 +40,16 @@ alert-stream-broker:
           ip: "134.79.23.217"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-3.lsst.cloud
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-4.lsst.cloud
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-5.lsst.cloud
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        
     storage:
       size: 1500Gi
       storageClassName: wekafs--sdf-k8s01
