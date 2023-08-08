@@ -23,7 +23,7 @@ alert-stream-broker:
       tls:
         enabled: false
       bootstrap:
-         host: usdf-alert-stream-dev.slac.stanford.edu
+         host: usdf-alert-stream-dev.lsst.cloud
          #ip: "134.79.23.215"
          annotations:
            metallb.universe.tf/address-pool: 'sdf-dmz'
