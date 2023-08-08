@@ -131,17 +131,12 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert postgres["nublado3_password"] == nublado["hub_db_password"]
 
     # Now sync again with --delete. The only change should be that the stray
-    # Gafaelfawr Vault secret key is deleted.
+    # Gafaelfawr Vault secret key is deleted. This also tests that if the
+    # static secrets are already in Vault, there's no need to provide a source
+    # for static secrets and the Phalanx CLI will silently cope.
     result = runner.invoke(
         main,
-        [
-            "secrets",
-            "sync",
-            "--delete",
-            "--secrets",
-            str(secrets_path),
-            "idfdev",
-        ],
+        ["secrets", "sync", "--delete", "idfdev"],
         catch_exceptions=False,
     )
     assert result.exit_code == 0

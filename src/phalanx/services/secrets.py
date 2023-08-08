@@ -381,33 +381,26 @@ class SecretsService:
             be resolved (because, for example, the secret from which it is
             copied has not yet been resolved).
         """
-        # If a value was already provided, this is the easy case.
-        if config.value:
-            return ResolvedSecret(
-                key=config.key,
-                application=config.application,
-                value=config.value,
-            )
+        value = None
 
-        # Do copying or generation if configured.
-        if config.copy_rules:
+        # See if the value comes from configuration, either hard-coded or via
+        # copy or generate rules. If not, it must be a static secret, in which
+        # case use the value from a static secret source, if available. If
+        # none is available from a static secret source but we have a current
+        # value, use that. Only fail if there is no static secret source and
+        # no current value.
+        if config.value:
+            value = config.value
+        elif config.copy_rules:
             application = config.copy_rules.application
             other = resolved.get(application, {}).get(config.copy_rules.key)
             if not other:
                 return None
-            return ResolvedSecret(
-                key=config.key,
-                application=config.application,
-                value=other.value,
-            )
-        if config.generate:
+            value = other.value
+        elif config.generate:
             if current_value and not regenerate:
-                return ResolvedSecret(
-                    key=config.key,
-                    application=config.application,
-                    value=current_value,
-                )
-            if isinstance(config.generate, SourceSecretGenerateRules):
+                value = current_value
+            elif isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
                 if not (other and other.value):
@@ -415,18 +408,13 @@ class SecretsService:
                 value = config.generate.generate(other.value)
             else:
                 value = config.generate.generate()
-            return ResolvedSecret(
-                key=config.key,
-                application=config.application,
-                value=value,
-            )
+        else:
+            value = static_value or current_value
 
-        # This must be a static secret.  Return the value from the
-        # user-supplied static secrets.
-        if not static_value:
+        # Return the resolved secret.
+        if value:
+            return ResolvedSecret(
+                key=config.key, application=config.application, value=value
+            )
+        else:
             return None
-        return ResolvedSecret(
-            key=config.key,
-            application=config.application,
-            value=static_value,
-        )
