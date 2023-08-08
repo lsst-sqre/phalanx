@@ -88,6 +88,9 @@ class VaultService:
         template = self._templates.get_template("vault-read-policy.tmpl")
         policy = template.render({"path": config.vault_path})
         vault_client.create_policy(config.vault_read_policy, policy)
+        approle = vault_client.get_approle(config.vault_read_approle)
+        if approle:
+            vault_client.revoke_approle_secret_ids(config.vault_read_approle)
         return vault_client.create_approle(
             config.vault_read_approle, [config.vault_read_policy]
         )

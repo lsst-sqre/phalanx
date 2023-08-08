@@ -139,6 +139,22 @@ def test_create_read_approle(
     expected_policy = template.render({"path": vault_path})
     assert seen_policy == expected_policy
 
+    # Check that it has only one SecretID.
+    r = mock_vault.list_secret_id_accessors(role_name)
+    assert r["data"]["keys"] == [approle.secret_id_accessor]
+
+    # Recreating the AppRole should result in a new SecretID and delete the
+    # old one.
+    result = runner.invoke(
+        main,
+        ["vault", "create-read-approle", "idfdev"],
+        catch_exceptions=False,
+    )
+    assert result.exit_code == 0
+    new_approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
+    r = mock_vault.list_secret_id_accessors(role_name)
+    assert r["data"]["keys"] == [new_approle.secret_id_accessor]
+
 
 def test_create_write_token(
     factory: Factory,
