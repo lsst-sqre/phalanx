@@ -17,6 +17,8 @@ alert-stream-broker:
     # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
     interBrokerProtocolVersion: 3.4
 
+    replicas: 6
+
     # Addresses based on the state as of 2021-12-02; these were assigned by
     # Google and now we're pinning them.
     externalListener:
