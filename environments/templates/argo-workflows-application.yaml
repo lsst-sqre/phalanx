@@ -2,10 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: argo-workflows
-spec:
-  finalizers:
-    - kubernetes
+  name: "argo-workflows"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
