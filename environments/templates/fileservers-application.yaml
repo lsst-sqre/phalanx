@@ -2,17 +2,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: fileservers
-  namespace: argocd
+  name: "fileservers"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: fileservers
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "fileservers"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/fileservers
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/fileservers"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
 {{- end -}}

@@ -63,8 +63,6 @@ strimzi:
   enabled: false
 strimzi-access-operator:
   enabled: false
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: false
 tap-schema:
@@ -79,4 +77,3 @@ vault-secrets-operator:
   enabled: true
 vo-cutouts:
   enabled: false
-# comment to test pre-commit
