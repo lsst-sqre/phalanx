@@ -1,4 +1,9 @@
 {{- if .Values.nublado.enabled -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "fileservers"
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
