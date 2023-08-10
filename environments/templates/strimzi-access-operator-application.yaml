@@ -2,28 +2,29 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: strimzi-access-operator
+  name: "strimzi-access-operator"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-access-operator
-  namespace: argocd
+  name: "strimzi-access-operator"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: strimzi-access-operator
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "strimzi-access-operator"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/strimzi-access-operator
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/strimzi-access-operator"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}

@@ -12,7 +12,7 @@ spec:
   project: "default"
   source:
     path: "applications/argocd"
-    repoURL: {{ .Values.repoURL | quote }}
+    repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:

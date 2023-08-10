@@ -34,7 +34,7 @@
 | portal.enabled | bool | `false` |  |
 | postgres.enabled | bool | `false` |  |
 | production-tools.enabled | bool | `false` |  |
-| repoURL | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
+| repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | sasquatch.enabled | bool | `false` |  |
 | semaphore.enabled | bool | `false` |  |
 | sherlock.enabled | bool | `false` |  |
@@ -44,7 +44,6 @@
 | squash-api.enabled | bool | `false` |  |
 | ssotap.enabled | bool | `false` |  |
 | strimzi-access-operator.enabled | bool | `false` |  |
-| strimzi-registry-operator.enabled | bool | `false` |  |
 | strimzi.enabled | bool | `false` |  |
 | tap-schema.enabled | bool | `false` |  |
 | tap.enabled | bool | `false` |  |

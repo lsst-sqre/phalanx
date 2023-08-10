@@ -21,7 +21,7 @@ spec:
   project: "default"
   source:
     path: "applications/gafaelfawr"
-    repoURL: {{ .Values.repoURL | quote }}
+    repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:

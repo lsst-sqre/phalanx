@@ -63,8 +63,6 @@ strimzi:
   enabled: false
 strimzi-access-operator:
   enabled: false
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: true
 tap-schema:

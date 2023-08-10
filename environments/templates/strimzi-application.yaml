@@ -2,28 +2,28 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: strimzi
+  name: "strimzi"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi
-  namespace: argocd
+  name: "strimzi"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: strimzi
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "strimzi"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/strimzi
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/strimzi"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}

@@ -71,7 +71,7 @@ argocd app create science-platform \
   --revision $GIT_BRANCH \
   --port-forward \
   --port-forward-namespace argocd \
-  --helm-set repoURL=$GIT_URL \
+  --helm-set repoUrl=$GIT_URL \
   --helm-set targetRevision=$GIT_BRANCH \
   --values values-$ENVIRONMENT.yaml
 
