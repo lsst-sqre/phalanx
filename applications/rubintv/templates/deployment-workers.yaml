@@ -4,67 +4,62 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "rubintv.fullname" . }}-workers
+  name: {{ template "rubintv.fullname" $ }}-workers
   labels:
     {{- include "rubintv.labels" $ | nindent 4 }}
 spec:
   revisionHistoryLimit: 0
   selector:
     matchLabels:
-      {{- include "rubintv.selectorLabels" . | nindent 6 }}
+      {{- include "rubintv.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.workers.config.podAnnotations }}
+      {{- with $.Values.workers.config.podAnnotations }}
       annotations:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "rubintv.selectorLabels" . | nindent 8 }}
+        {{- include "rubintv.selectorLabels" $ | nindent 8 }}
     spec:
       securityContext:
-        runAsUser: {{ .Values.workers.config.uid }}
-        runAsGroup: {{ .Values.workers.config.gid }}
+        runAsUser: {{ $.Values.workers.config.uid }}
+        runAsGroup: {{ $.Values.workers.config.gid }}
       containers:
         # This is going to need a bit of work
-        - name: {{ include "rubintv.workers.config.scriptName" $ }}
-          image: "{{ .Values.workers.image.repository }}:{{ .Values.workers.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.workers.image.pullPolicy | quote }}
+        - name: {{ include "rubintv.scriptName" $ }}
+          image: "{{ $.Values.workers.image.repository }}:{{ $.Values.workers.image.tag }}"
+          imagePullPolicy: {{ $.Values.workers.image.pullPolicy | quote }}
           env:
             - name: RUN_ARG
               value: {{ $script.name }} {{ $.Values.siteTag }}
-          {{- if or .Values.workers.config.env .Values.workers.config.envSecrets }}
-          {{- range $env_var, $env_value := .Values.workers.config.env }}
+          {{- if or $.Values.workers.config.env $.Values.workers.config.envSecrets }}
+          {{- range $env_var, $env_value := $.Values.workers.config.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}
           {{- end }}
-          {{- range $env := .Values.workers.config.envSecrets }}
+          {{- range $env := $.Values.workers.config.envSecrets }}
             - name: {{ $env.name }}
               valueFrom:
                 secretKeyRef:
                   name: {{ $env.secretName }}
                   key: {{ $env.secretKey }}
           {{- end }}
-          {{- end }}
-          {{- if .Values.workers.config.butlerSecret }}
+          {{- if $.Values.workers.config.butlerSecret }}
             - name: PGPASSFILE
-              value: "{{ .Values.workers.config.butlerSecret.containerPath }}/postgres-credentials.txt"
+              value: "{{ $.Values.workers.config.butlerSecret.containerPath }}/postgres-credentials.txt"
             - name: PGUSER
-              value: {{ .Values.workers.config.butlerSecret.dbUser | quote }}
+              value: {{ $.Values.workers.config.butlerSecret.dbUser | quote }}
             - name: AWS_SHARED_CREDENTIALS_FILE
-              value: "{{ .Values.workers.config.butlerSecret.containerPath }}/aws-credentials.ini"
+              value: "{{ $.Values.workers.config.butlerSecret.containerPath }}/aws-credentials.ini"
           {{- end }}
-          {{- if .Values.workers.config.redis.enabled }}
             - name: REDIS_HOST
-              value: "redis-service"
-          {{- if .Values.workers.config.redis.envSecrets }}
-          {{- range $env := .Values.workers.config.redis.envSecrets }}
-            - name: {{ $env.name }}
+              value: "redis"
+          {{- if and $.Values.redis.config.secretName $.Values.redis.config.secretKey }}
+            - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ $env.secretName }}
-                  key: {{ $env.secretKey }}
-          {{- end }}
-          {{- end }}
+                  name: {{ $.Values.redis.config.secretName | quote}}
+                  key: {{ $.Values.redis.config.secretKey | quote }}
           {{- end }}
           envFrom:
             - configMapRef:
@@ -73,15 +68,15 @@ spec:
             - name: rubintv-creds
               mountPath: "/etc/rubintv/creds"
               readOnly: true
-          {{- if .Values.workers.config.nfsMountpoint }}
-          {{- range $values := .Values.workers.config.nfsMountpoint }}
+          {{- if $.Values.workers.config.nfsMountpoint }}
+          {{- range $values := $.Values.workers.config.nfsMountpoint }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               readOnly: {{ $values.readOnly }}
           {{- end }}
           {{- end }}
-          {{- if .Values.workers.config.pvcMountpoint }}
-          {{- range $values := .Values.workers.config.pvcMountpoint }}
+          {{- if $.Values.workers.config.pvcMountpoint }}
+          {{- range $values := $.Values.workers.config.pvcMountpoint }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
@@ -89,8 +84,8 @@ spec:
               {{- end }}
           {{- end }}
           {{- end }}
-          {{- if .Values.workers.config.pvcMountpointClaim }}
-          {{- range $values := .Values.workers.config.pvcMountpointClaim }}
+          {{- if $.Values.workers.config.pvcMountpointClaim }}
+          {{- range $values := $.Values.workers.config.pvcMountpointClaim }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
@@ -98,21 +93,21 @@ spec:
               {{- end }}
           {{- end }}
           {{- end }}
-          {{- if .Values.workers.config.butlerSecret }}
+          {{- if $.Values.workers.config.butlerSecret }}
             - name: {{ $.Release.Name }}-butler-secret
-              mountPath: {{ .Values.workers.config.butlerSecret.containerPath }}
+              mountPath: {{ $.Values.workers.config.butlerSecret.containerPath }}
           {{- end }}
-          {{- if or .Values.workers.config.resources $script.resources }}
+          {{- if or $.Values.workers.config.resources $script.resources }}
           {{- $resources := "" }}
           {{- if $script.resources }}
           {{- $resources = $script.resources }}
           {{- else }}
-          {{- $resources = .Values.workers.config.resources }}
+          {{- $resources = $.Values.workers.config.resources }}
           {{- end }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
-      {{- if .Values.workers.config.butlerSecret }}
+      {{- if $.Values.workers.config.butlerSecret }}
       initContainers:
         - name: {{ $.Release.Name }}-butler-secret-perm-fixer
           image: "alpine:latest"
@@ -134,8 +129,8 @@ spec:
         - name: rubintv-creds
           secret:
             secretName: google-creds
-      {{- if .Values.workers.config.nfsMountpoint }}
-      {{- range $values := .Values.workers.config.nfsMountpoint }}
+      {{- if $.Values.workers.config.nfsMountpoint }}
+      {{- range $values := $.Values.workers.config.nfsMountpoint }}
         - name: {{ $values.name }}
           nfs:
             path: {{ $values.serverPath }}
@@ -143,21 +138,21 @@ spec:
             server: {{ $values.server }}
       {{- end }}
       {{- end }}
-      {{- if .Values.workers.config.pvcMountpoint }}
-      {{- range $values := .Values.workers.config.pvcMountpoint }}
+      {{- if $.Values.workers.config.pvcMountpoint }}
+      {{- range $values := $.Values.workers.config.pvcMountpoint }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
       {{- end }}
       {{- end }}
-      {{- if .Values.workers.config.pvcMountpointClaim }}
-      {{- range $values := .Values.workers.config.pvcMountpointClaim }}
+      {{- if $.Values.workers.config.pvcMountpointClaim }}
+      {{- range $values := $.Values.workers.config.pvcMountpointClaim }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
       {{- end }}
       {{- end }}
-      {{- if .Values.workers.config.butlerSecret }}
+      {{- if $.Values.workers.config.butlerSecret }}
         - name: {{ $.Release.Name }}-butler-secret
           emptyDir: {}
         - name: {{ $.Release.Name }}-raw-butler-secret
@@ -165,34 +160,35 @@ spec:
             secretName: butler-secret
             defaultMode: 0600
       {{- end }}
-      {{- if or .Values.workers.config.nodeSelector $script.nodeSelector }}
+      {{- if or $.Values.workers.config.nodeSelector $script.nodeSelector }}
       {{- $nodeSelector := "" }}
       {{- if $script.nodeSelector }}
       {{- $nodeSelector = $script.nodeSelector }}
       {{- else }}
-      {{- $nodeSelector = .Values.workers.config.nodeSelector }}
+      {{- $nodeSelector = $.Values.workers.config.nodeSelector }}
       {{- end }}
       nodeSelector:
         {{- toYaml $nodeSelector | nindent 8 }}
       {{- end }}
-      {{- if or .Values.workers.config.affinity $script.affinity }}
+      {{- if or $.Values.workers.config.affinity $script.affinity }}
       {{- $affinity := "" }}
       {{- if $script.affinity }}
       {{- $affinity = $script.affinity }}
       {{- else }}
-      {{- $affinity = .Values.workers.config.affinity }}
+      {{- $affinity = $.Values.workers.config.affinity }}
       {{- end }}
       affinity:
         {{- toYaml $affinity | nindent 8 }}
       {{- end }}
-      {{- if or .Values.workers.config.tolerations $script.tolerations }}
+      {{- if or $.Values.workers.config.tolerations $script.tolerations }}
       {{- $tolerations := "" }}
       {{- if $script.tolerations }}
       {{- $tolerations = $script.tolerations }}
       {{- else }}
-      {{- $tolerations = .Values.workers.config.tolerations }}
+      {{- $tolerations = $.Values.workers.config.tolerations }}
       {{- end }}
       tolerations:
         {{- toYaml $tolerations | nindent 8 }}
       {{- end }}
+{{- end }}
 {{- end }}

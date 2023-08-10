@@ -51,3 +51,9 @@ Selector labels
 app.kubernetes.io/name: {{ include "rubintv.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+{{/*
+Script name
+*/}}
+{{- define "rubintv.scriptName" -}}
+{{- regexSplit "/" .Values.script.name -1 | last | trimSuffix ".py" | kebabcase }}
+{{- end }}
