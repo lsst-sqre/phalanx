@@ -1,0 +1,25 @@
+{{- if .Values.workers.config.pvcMountpointClaim }}
+{{- range $values := .Values.workers.config.pvcMountpointClaim }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $values.name }}
+  {{- if $values.ids }}
+  annotations:
+    {{- if $values.ids.uid }}
+    pv.beta.kubernetes.io/uid: "{{ $values.ids.uid }}"
+    {{- end }}
+    {{- if $values.ids.gid }}
+    pv.beta.kubernetes.io/gid: "{{ $values.ids.gid }}"
+    {{- end }}
+  {{- end }}
+spec:
+  accessModes:
+    - {{ $values.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ $values.claimSize }}
+  storageClassName: {{ $values.name }}
+{{- end }}
+{{- end }}
