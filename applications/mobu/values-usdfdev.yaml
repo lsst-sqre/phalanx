@@ -15,11 +15,13 @@ config:
       business:
         type: "NotebookRunner"
         options:
+          image:
+            image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           use_cachemachine: false
         restart: true
-    - name: "latest-weekly"
+    - name: "weekly"
       count: 1
       users:
         - username: "bot-mobu02"
