@@ -19,7 +19,7 @@ config:
           repo_branch: "prod"
           use_cachemachine: false
         restart: true
-    - name: "weekly"
+    - name: "latest-weekly"
       count: 1
       users:
         - username: "bot-mobu02"
