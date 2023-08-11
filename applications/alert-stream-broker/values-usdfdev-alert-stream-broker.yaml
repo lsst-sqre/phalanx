@@ -56,7 +56,7 @@ alert-stream-broker:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         
     storage:
-      size: 1500Gi
+      size: 2500Gi
       storageClassName: wekafs--sdf-k8s01
 
   vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/alert-stream-broker"
