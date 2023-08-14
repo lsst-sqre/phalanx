@@ -19,12 +19,12 @@ spec:
     namespace: alert-stream-broker
     server: https://kubernetes.default.svc
   ignoreDifferences:
-  - name: data-0-alert-broker-kafka-0
-    namespace: alert-stream-broker
   #- jsonPointers:
     #- /spec/volumeName
     #- /spec/storageClassName
-    kind: PersistentVolumeClaim
+  - kind: PersistentVolumeClaim
+    managedFieldsManagers:
+      - strimzi-cluster-operator
   project: default
   source:
     path: applications/alert-stream-broker
