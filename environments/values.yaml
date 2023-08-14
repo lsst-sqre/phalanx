@@ -1,5 +1,9 @@
 # These four settings should be set in each environment values-*.yaml file.
 
+# -- Butler repository index to use for this environment
+# @default -- None, must be set
+butlerRepositoryIndex: ""
+
 # -- Name of the environment
 # @default -- None, must be set
 environment: ""
@@ -8,17 +12,8 @@ environment: ""
 # @default -- None, must be set
 fqdn: ""
 
-# -- URL of Vault server for this environment
-# @default -- None, must be set
-vaultUrl: ""
-
-# -- Prefix for Vault secrets for this environment
-# @default -- None, must be set
-vaultPathPrefix: ""
-
-# -- Butler repository index to use for this environment
-# @default -- None, must be set
-butlerRepositoryIndex: ""
+# -- UUID of the 1Password item in which to find Vault tokens
+onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
 
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
@@ -26,8 +21,13 @@ repoUrl: https://github.com/lsst-sqre/phalanx.git
 # -- Revision of repository to use for all applications
 targetRevision: "main"
 
-# -- UUID of the 1Password item in which to find Vault tokens
-onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
+# -- URL of Vault server for this environment
+# @default -- None, must be set
+vaultUrl: ""
+
+# -- Prefix for Vault secrets for this environment
+# @default -- None, must be set
+vaultPathPrefix: ""
 
 alert-stream-broker:
   enabled: false
