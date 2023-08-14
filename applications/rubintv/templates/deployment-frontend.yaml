@@ -27,12 +27,12 @@ spec:
             - name: "ENVIRONMENT_URL"
               value: {{ .Values.global.baseUrl }}
             - name: "SAFIR_PATH_PREFIX"
-              value: {{ .Values.frontend.config.pathPrefix | quote }}
-            {{- if (not .Values.frontend.config.debug) }}
+              value: {{ .Values.frontend.pathPrefix | quote }}
+            {{- if (not .Values.frontend.debug) }}
             - name: "SAFIR_PROFILE"
               value: "production"
             {{- end }}
-            {{- with .Values.frontend.config.env }}
+            {{- with .Values.frontend.env }}
             {{- toYaml . | nindent 12 }}
             {{- end }}
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"

@@ -1,303 +1,80 @@
+siteTag: "usdf-dev"
+
 frontend:
-  config:
-    debug: true
-    env:
-    - name: http_proxy
-      value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-    - name: https_proxy
-      value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-    - name: no_proxy
-      value: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+  debug: true
+  env:
+  - name: http_proxy
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: https_proxy
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: no_proxy
+    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   image:
-    repository: ghcr.io/lsstsqre/rubin-tv
-    tag: tickets/DM-40149
+    tag: tickets-DM-40149
     pullPolicy: Always
 
 workers:
+  replicas: 1
   image:
     repository: lsstts/rubintv-broadcaster
     tag: c0030_usdf
     pullPolicy: Always
-  config:
-    uid: 15517
-    gid: 4085
-    image:
-    env:
-      http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
-      https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
-      squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
-      no_proxy: .slac.stanford.edu
-      HTTP_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
-      HTTPS_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
-      SQUID_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
-      NO_PROXY: .slac.stanford.edu
-      DEPLOY_BRANCH: deploy-slac
-      S3_ENDPOINT_URL: https://s3dfrgw.slac.stanford.edu
-    scripts:
-    - name: slac/bot/runButlerWatcher.py
-    - name: slac/bot/runMetadataServer.py
-    - name: slac/bot/runPlotter.py
-      resources:
-        requests:
-          cpu: 1.0
-          memory: "12G"
-        limits:
-          cpu: 1.0
-          memory: "16G"
-    - name: slac/bot/runReplotter.py
-      resources:
-        requests:
-          cpu: 1.0
-          memory: "12G"
-        limits:
-          cpu: 1.0
-          memory: "16G"
-    - name: slac/bot/runIsrRunner_000.py
-    # - name: slac/bot/runIsrRunner_001.py
-    # - name: slac/bot/runIsrRunner_002.py
-    # - name: slac/bot/runIsrRunner_003.py
-    # - name: slac/bot/runIsrRunner_004.py
-    # - name: slac/bot/runIsrRunner_005.py
-    # - name: slac/bot/runIsrRunner_006.py
-    # - name: slac/bot/runIsrRunner_007.py
-    # - name: slac/bot/runIsrRunner_008.py
-    # - name: slac/bot/runIsrRunner_009.py
-    # - name: slac/bot/runIsrRunner_010.py
-    # - name: slac/bot/runIsrRunner_011.py
-    # - name: slac/bot/runIsrRunner_012.py
-    # - name: slac/bot/runIsrRunner_013.py
-    # - name: slac/bot/runIsrRunner_014.py
-    # - name: slac/bot/runIsrRunner_015.py
-    # - name: slac/bot/runIsrRunner_016.py
-    # - name: slac/bot/runIsrRunner_017.py
-    # - name: slac/bot/runIsrRunner_018.py
-    # - name: slac/bot/runIsrRunner_019.py
-    # - name: slac/bot/runIsrRunner_020.py
-    # - name: slac/bot/runIsrRunner_021.py
-    # - name: slac/bot/runIsrRunner_022.py
-    # - name: slac/bot/runIsrRunner_023.py
-    # - name: slac/bot/runIsrRunner_024.py
-    # - name: slac/bot/runIsrRunner_025.py
-    # - name: slac/bot/runIsrRunner_026.py
-    # - name: slac/bot/runIsrRunner_027.py
-    # - name: slac/bot/runIsrRunner_028.py
-    # - name: slac/bot/runIsrRunner_029.py
-    # - name: slac/bot/runIsrRunner_030.py
-    # - name: slac/bot/runIsrRunner_031.py
-    # - name: slac/bot/runIsrRunner_032.py
-    # - name: slac/bot/runIsrRunner_033.py
-    # - name: slac/bot/runIsrRunner_034.py
-    # - name: slac/bot/runIsrRunner_035.py
-    # - name: slac/bot/runIsrRunner_036.py
-    # - name: slac/bot/runIsrRunner_037.py
-    # - name: slac/bot/runIsrRunner_038.py
-    # - name: slac/bot/runIsrRunner_039.py
-    # - name: slac/bot/runIsrRunner_040.py
-    # - name: slac/bot/runIsrRunner_041.py
-    # - name: slac/bot/runIsrRunner_042.py
-    # - name: slac/bot/runIsrRunner_043.py
-    # - name: slac/bot/runIsrRunner_044.py
-    # - name: slac/bot/runIsrRunner_045.py
-    # - name: slac/bot/runIsrRunner_046.py
-    # - name: slac/bot/runIsrRunner_047.py
-    # - name: slac/bot/runIsrRunner_048.py
-    # - name: slac/bot/runIsrRunner_049.py
-    # - name: slac/bot/runIsrRunner_050.py
-    # - name: slac/bot/runIsrRunner_051.py
-    # - name: slac/bot/runIsrRunner_052.py
-    # - name: slac/bot/runIsrRunner_053.py
-    # - name: slac/bot/runIsrRunner_054.py
-    # - name: slac/bot/runIsrRunner_055.py
-    # - name: slac/bot/runIsrRunner_056.py
-    # - name: slac/bot/runIsrRunner_057.py
-    # - name: slac/bot/runIsrRunner_058.py
-    # - name: slac/bot/runIsrRunner_059.py
-    # - name: slac/bot/runIsrRunner_060.py
-    # - name: slac/bot/runIsrRunner_061.py
-    # - name: slac/bot/runIsrRunner_062.py
-    # - name: slac/bot/runIsrRunner_063.py
-    # - name: slac/bot/runIsrRunner_064.py
-    # - name: slac/bot/runIsrRunner_065.py
-    # - name: slac/bot/runIsrRunner_066.py
-    # - name: slac/bot/runIsrRunner_067.py
-    # - name: slac/bot/runIsrRunner_068.py
-    # - name: slac/bot/runIsrRunner_069.py
-    # - name: slac/bot/runIsrRunner_070.py
-    # - name: slac/bot/runIsrRunner_071.py
-    # - name: slac/bot/runIsrRunner_072.py
-    # - name: slac/bot/runIsrRunner_073.py
-    # - name: slac/bot/runIsrRunner_074.py
-    # - name: slac/bot/runIsrRunner_075.py
-    # - name: slac/bot/runIsrRunner_076.py
-    # - name: slac/bot/runIsrRunner_077.py
-    # - name: slac/bot/runIsrRunner_078.py
-    # - name: slac/bot/runIsrRunner_079.py
-    # - name: slac/bot/runIsrRunner_080.py
-    # - name: slac/bot/runIsrRunner_081.py
-    # - name: slac/bot/runIsrRunner_082.py
-    # - name: slac/bot/runIsrRunner_083.py
-    # - name: slac/bot/runIsrRunner_084.py
-    # - name: slac/bot/runIsrRunner_085.py
-    # - name: slac/bot/runIsrRunner_086.py
-    # - name: slac/bot/runIsrRunner_087.py
-    # - name: slac/bot/runIsrRunner_088.py
-    # - name: slac/bot/runIsrRunner_089.py
-    # - name: slac/bot/runIsrRunner_090.py
-    # - name: slac/bot/runIsrRunner_091.py
-    # - name: slac/bot/runIsrRunner_092.py
-    # - name: slac/bot/runIsrRunner_093.py
-    # - name: slac/bot/runIsrRunner_094.py
-    # - name: slac/bot/runIsrRunner_095.py
-    # - name: slac/bot/runIsrRunner_096.py
-    # - name: slac/bot/runIsrRunner_097.py
-    # - name: slac/bot/runIsrRunner_098.py
-    # - name: slac/bot/runIsrRunner_099.py
-    # - name: slac/bot/runIsrRunner_100.py
-    # - name: slac/bot/runIsrRunner_101.py
-    # - name: slac/bot/runIsrRunner_102.py
-    # - name: slac/bot/runIsrRunner_103.py
-    # - name: slac/bot/runIsrRunner_104.py
-    # - name: slac/bot/runIsrRunner_105.py
-    # - name: slac/bot/runIsrRunner_106.py
-    # - name: slac/bot/runIsrRunner_107.py
-    # - name: slac/bot/runIsrRunner_108.py
-    # - name: slac/bot/runIsrRunner_109.py
-    # - name: slac/bot/runIsrRunner_110.py
-    # - name: slac/bot/runIsrRunner_111.py
-    # - name: slac/bot/runIsrRunner_112.py
-    # - name: slac/bot/runIsrRunner_113.py
-    # - name: slac/bot/runIsrRunner_114.py
-    # - name: slac/bot/runIsrRunner_115.py
-    # - name: slac/bot/runIsrRunner_116.py
-    # - name: slac/bot/runIsrRunner_117.py
-    # - name: slac/bot/runIsrRunner_118.py
-    # - name: slac/bot/runIsrRunner_119.py
-    # - name: slac/bot/runIsrRunner_120.py
-    # - name: slac/bot/runIsrRunner_121.py
-    # - name: slac/bot/runIsrRunner_122.py
-    # - name: slac/bot/runIsrRunner_123.py
-    # - name: slac/bot/runIsrRunner_124.py
-    # - name: slac/bot/runIsrRunner_125.py
-    # - name: slac/bot/runIsrRunner_126.py
-    # - name: slac/bot/runIsrRunner_127.py
-    # - name: slac/bot/runIsrRunner_128.py
-    # - name: slac/bot/runIsrRunner_129.py
-    # - name: slac/bot/runIsrRunner_130.py
-    # - name: slac/bot/runIsrRunner_131.py
-    # - name: slac/bot/runIsrRunner_132.py
-    # - name: slac/bot/runIsrRunner_133.py
-    # - name: slac/bot/runIsrRunner_134.py
-    # - name: slac/bot/runIsrRunner_135.py
-    # - name: slac/bot/runIsrRunner_136.py
-    # - name: slac/bot/runIsrRunner_137.py
-    # - name: slac/bot/runIsrRunner_138.py
-    # - name: slac/bot/runIsrRunner_139.py
-    # - name: slac/bot/runIsrRunner_140.py
-    # - name: slac/bot/runIsrRunner_141.py
-    # - name: slac/bot/runIsrRunner_142.py
-    # - name: slac/bot/runIsrRunner_143.py
-    # - name: slac/bot/runIsrRunner_144.py
-    # - name: slac/bot/runIsrRunner_145.py
-    # - name: slac/bot/runIsrRunner_146.py
-    # - name: slac/bot/runIsrRunner_147.py
-    # - name: slac/bot/runIsrRunner_148.py
-    # - name: slac/bot/runIsrRunner_149.py
-    # - name: slac/bot/runIsrRunner_150.py
-    # - name: slac/bot/runIsrRunner_151.py
-    # - name: slac/bot/runIsrRunner_152.py
-    # - name: slac/bot/runIsrRunner_153.py
-    # - name: slac/bot/runIsrRunner_154.py
-    # - name: slac/bot/runIsrRunner_155.py
-    # - name: slac/bot/runIsrRunner_156.py
-    # - name: slac/bot/runIsrRunner_157.py
-    # - name: slac/bot/runIsrRunner_158.py
-    # - name: slac/bot/runIsrRunner_159.py
-    # - name: slac/bot/runIsrRunner_160.py
-    # - name: slac/bot/runIsrRunner_161.py
-    # - name: slac/bot/runIsrRunner_162.py
-    # - name: slac/bot/runIsrRunner_163.py
-    # - name: slac/bot/runIsrRunner_164.py
-    # - name: slac/bot/runIsrRunner_165.py
-    # - name: slac/bot/runIsrRunner_166.py
-    # - name: slac/bot/runIsrRunner_167.py
-    # - name: slac/bot/runIsrRunner_168.py
-    # - name: slac/bot/runIsrRunner_169.py
-    # - name: slac/bot/runIsrRunner_170.py
-    # - name: slac/bot/runIsrRunner_171.py
-    # - name: slac/bot/runIsrRunner_172.py
-    # - name: slac/bot/runIsrRunner_173.py
-    # - name: slac/bot/runIsrRunner_174.py
-    # - name: slac/bot/runIsrRunner_175.py
-    # - name: slac/bot/runIsrRunner_176.py
-    # - name: slac/bot/runIsrRunner_177.py
-    # - name: slac/bot/runIsrRunner_178.py
-    # - name: slac/bot/runIsrRunner_179.py
-    # - name: slac/bot/runIsrRunner_180.py
-    # - name: slac/bot/runIsrRunner_181.py
-    # - name: slac/bot/runIsrRunner_182.py
-    # - name: slac/bot/runIsrRunner_183.py
-    # - name: slac/bot/runIsrRunner_184.py
-    # - name: slac/bot/runIsrRunner_185.py
-    # - name: slac/bot/runIsrRunner_186.py
-    # - name: slac/bot/runIsrRunner_187.py
-    # - name: slac/bot/runIsrRunner_188.py
-    # - name: slac/bot/runIsrRunner_189.py
-    # - name: slac/bot/runIsrRunner_190.py
-    # - name: slac/bot/runIsrRunner_191.py
-    # - name: slac/bot/runIsrRunner_192.py
-    # - name: slac/bot/runIsrRunner_193.py
-    # - name: slac/bot/runIsrRunner_194.py
-    # - name: slac/bot/runIsrRunner_195.py
-    # - name: slac/bot/runIsrRunner_196.py
-    # - name: slac/bot/runIsrRunner_197.py
-    # - name: slac/bot/runIsrRunner_198.py
-    # - name: slac/bot/runIsrRunner_199.py
-    # - name: slac/bot/runIsrRunner_200.py
-    # - name: slac/bot/runIsrRunner_201.py
-    # - name: slac/bot/runIsrRunner_202.py
-    # - name: slac/bot/runIsrRunner_203.py
-    # - name: slac/bot/runIsrRunner_204.py
-    credentialFile: google_write_creds
-    vaultPrefixPath: secret/rubin/usdf-rubintv-broadcaster-cleanroom
-    pullSecretsPath: ts/software/nexus3-docker
-    rubinTvSecretsPath: ts/software/rubintv
-    credentialSecretsPath: rubintv-broadcaster
-    butlerSecret:
-      key: butler-secret
-      containerPath: /secrets
-      dbUser: rubin
-    envSecrets:
-    - name: ASTROMETRY_NET_API_KEY
-      secretName: rubintv-secrets
-      secretKey: astrometry-net-api-key
-    imagePullSecrets:
-    - name: pull-secret
-    pvcMountpointClaim:
-    - name: sdf-group-rubin
-      containerPath: /sdf/group/rubin
-      claimSize: 1Gi
-      accessMode: ReadWriteMany
-    - name: sdf-data-rubin
-      containerPath: /sdf/data/rubin
-      claimSize: 1Gi
-      accessMode: ReadWriteMany
-    - name: sdf-scratch
-      containerPath: /scratch
-      claimSize: 1Gi
-      accessMode: ReadWriteMany
-    - name: fs-ddn-sdf-group-rubin
-      containerPath: /fs/ddn/sdf/group/rubin
-      claimSize: 1Gi
-      accessMode: ReadWriteMany
-    - name: fs-ddn-sdf-group-lsst
-      containerPath: /fs/ddn/sdf/group/lsst
-      claimSize: 1Gi
-      accessMode: ReadWriteMany
-    # Generic resources in the absence of script-specific overrides
-    resources:
-      requests:
-        cpu: 1.0
-        memory: "1.5G"
-      limits:
-        cpu: 1.0
-        memory: "2.5G"
+  uid: 15517
+  gid: 4085
+  env:
+  - name: http_proxy
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: https_proxy
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: squid_proxy
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: no_proxy
+    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+  - name: HTTP_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: HTTPS_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: SQUID_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: NO_PROXY
+    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+  - name: DEPLOY_BRANCH
+    value: "deploy-slac"
+  - name: S3_ENDPOINT_URL
+    value: "https://s3dfrgw.slac.stanford.edu"
+  - name: DAF_BUTLER_REPOSITORY_INDEX
+    value: "s3://rubin-summit-users/data-repos.yaml"
+  envSecrets:
+  - name: ASTROMETRY_NET_API_KEY
+    secretName: rubintv-secret
+    secretKey: astrometry-net-api-key
+  imagePullSecrets:
+  - name: pull-secret
+  volumes:
+  - name: sdf-group-rubin
+    persistentVolumeClaim:
+      name: sdf-group-rubin
+      storageClass: sdf-group-rubin
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /sdf/group/rubin
+  - name: sdf-data-rubin
+    persistentVolumeClaim:
+      name: sdf-data-rubin
+      storageClass: sdf-group-rubin
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /sdf/data/rubin
+  resources:
+    limits:
+      cpu: 2.0
+      memory: "8Gi"
+  # credentialFile: google_write_creds
+  # vaultPrefixPath: secret/rubin/usdf-rubintv-broadcaster-cleanroom
+  # pullSecretsPath: ts/software/nexus3-docker
+  # rubinTvSecretsPath: ts/software/rubintv
+  # credentialSecretsPath: rubintv-broadcaster
+  # butlerSecret:
+  #   key: butler-secret
+  #   containerPath: /secrets
+  #   dbUser: rubin

@@ -6,153 +6,111 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
+# -- A special tag for letting the scripts know where they are
+# running.  Must be overridden at each site
+siteTag: ""
+
 frontend:
-  config:
-    # -- If set to true, enable more verbose logging.
-    debug: false
-    # -- Prefix for rubintv's frontend API routes.
-    pathPrefix: "/rubintv"
+  # -- If set to true, enable more verbose logging.
+  debug: false
+  # -- Prefix for rubintv's frontend API routes.
+  pathPrefix: "/rubintv"
+  # -- Settings for rubintv OCI image
   image:
     # -- rubintv frontend image to use
     repository: "ghcr.io/lsst-sqre/rubintv"
-
     # -- Pull policy for the rubintv image
     pullPolicy: "IfNotPresent"
-
     # -- Tag of rubintv image to use
     # @default -- The appVersion of the chart
     tag: ""
-    # -- Resource limits and requests for the rubintv frontend pod
-    resources: {}
-
-    # -- Annotations for the rubintv frontend pod
-    podAnnotations: {}
-
-    # -- Node selector rules for the rubintv frontend pod
-    nodeSelector: {}
-
-    # -- Tolerations for the rubintv frontend pod
-    tolerations: []
-
-    # -- Affinity rules for the rubintv frontend pod
-    affinity: {}
+  # -- Resource limits and requests for the rubintv frontend pod
+  resources: {}
+  # -- Annotations for the rubintv frontend pod
+  podAnnotations: {}
+  # -- Node selector rules for the rubintv frontend pod
+  nodeSelector: {}
+  # -- Tolerations for the rubintv frontend pod
+  tolerations: []
+  # -- Affinity rules for the rubintv frontend pod
+  affinity: {}
 
 workers:
-  config:
-    # -- If set to true, enable more verbose logging.
-    debug: false
-    # -- Prefix for the (internal) worker API routes
-    pathPrefix: "/"
-    # -- UID to run as (site-dependent, because of filesystem perms)
-    uid: 1000
-    # -- GID to run as
-    gid: 1000
-    # We will try to avoid fsid; just use uid.  Might need to change that.
-    image:
-      # -- The Docker registry name for the container image.
-      repository: ts-dockerhub.lsst.org/rubintv-broadcaster
-      # -- The tag of the container image to use.
-      tag: develop
-      # -- The policy to apply when pulling an image for deployment.
-      pullPolicy: IfNotPresent
-    # -- This is the namespace where the applications will be deployed.
-    # Don't need in phalanxification, I hope
-    # namespace: rapid-analysis
-    # -- A special tag for letting the scripts know where they are
-    # running.  ** Let's derive this from the global.host **
-    # siteTag: ""
-    # -- (obj) List of script objects to run for the broadcaster.
-    # This section MUST have the following attribute specified for each entry.
-    # _name_ (The full path for the script)
-    # The following attributes are optional
-    # _resources_ (A resource object specification)
-    # _nodeSelector_ (A node selector object specification)
-    # _tolerations_ (A list of tolerations)
-    # _affinity_ (An affinity object specification)
-    scripts: []
-    # -- This section holds a set of key, value pairs for environmental variables (ENV_VAR: value).
-    # NOTE: RUN_ARG is taken care of by the chart using _script_.
-    env: {}
-    # -- This section holds specifications for secret injection.
-    # If this section is used, each object listed must have the following attributes defined:
-    # _name_ (The label for the secret),
-    # _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name),
-    # _secretKey_ (The key in the vault store containing the necessary secret)
-    envSecrets: []
-    # -- The Vault prefix path
-    vaultPrefixPath: ""
-    # The key for the pull secrets including any sub-paths.
-    pullSecretsPath: ""
-    # Path for the rubin tv specific secrets vault.  ** Let's just stuff
-    # its contents into the Phalanx secrets
-    # rubinTvSecretsPath: ""
-    # -- This key allows specification of a script to override the entrypoint.
-    # -- The list of pull secrets needed for the images.
-    # If this section is used, each object listed can have the following attributes defined:
-    # _name_ (The label identifying the pull-secret to use)
-    imagePullSecrets: []
-    # -- This section allows for specification of Butler secret information.
-    # If this section is used, it must contain the following attributes:
-    # _key_ (The vault key for the Butler secret),
-    # _containerPath_ (The directory location for the Butler secret),
-    # _dbUser_ (The username for the Butler backend database)
-    butlerSecret: {}
-    # The following stuff is gross and ugly and we should replace with
-    # something like the JupyterLab Controller stanzas so we don't need
-    # separate things for each of the possible mount types
-    # -- This section holds the information necessary to create a NFS mount for the container.
-    # If this section is used, each object listed can have the following attributes defined:
-    # _name_ (A label identifier for the mountpoint),
-    # _containerPath_ (The path inside the container to mount),
-    # _readOnly_ (This sets if the NFS mount is read only or read/write),
-    # _server_ (The hostname of the NFS server),
-    # _serverPath_ (The path exported by the NFS server)
-    nfsMountpoint: []
-    # -- This section holds information about existing volume claims.
-    # If the section is used, each object listed can have the following attributes defined:
-    # _name_ (The name ot the persistent volume),
-    # _containerPath_ (The path inside the container to mount),
-    # _subPath_ (persistent volume subpath, optional)
-    pvcMountpoint: []
-    # -- This section holds the information necessary to claim persistent volumes.
-    # If the section is used, each object listed can have the following attributes defined:
-    # _name_ (The name ot the persistent volume),
-    # _containerPath_ (The path inside the container to mount),
-    # _subPath_ (persistent volume subpath, optional)
-    pvcMountpointClaim: []
-    # -- The key for the credentials including any sub-paths.
-    credentialSecretsPath: ""
-    # -- The name of the expected credential file for the broadcasters
-    credentialFile: ""
-    # -- Generic resource limits and requests for the rubintv worker pods
-    resources: {}
-
-    # -- Annotations for the rubintv worker pods
-    podAnnotations: {}
-
-    # -- Node selector rules for the rubintv worker pods
-    nodeSelector: {}
-
-    # -- Tolerations for the rubintv worker pods
-    tolerations: []
-
-    # -- Affinity rules for the rubintv worker pods
-    affinity: {}
-    # securityContext: {}
-    # We always specify uid/gid
-    # The redis stuff is going to be provided by the SQuaRE chart.
-
+  # -- how many replicas to use
+  replicas: 5
+  # -- If set to true, enable more verbose logging.
+  debug: false
+  # -- Prefix for the (internal) worker API routes
+  pathPrefix: "/"
+  # -- UID to run as (site-dependent, because of filesystem perms)
+  uid: 1000
+  # -- GID to run as
+  gid: 1000
+  # We will try to avoid fsid; just use uid.  Might need to change that.
+  # -- Settings for OCI image for worker pods
   image:
-    # -- rubintv worker image to use
-    repository: "docker.io/lsstts/rubintv-broadcaster"
-
-    # -- Pull policy for the rubintv worker image
-    pullPolicy: "IfNotPresent"
-
-    # -- Tag of rubintv worker image to use
-    # @default -- None, must be set per-deployment
-    tag: ""
-
+    # -- The Docker registry name for the container image.
+    repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+    # -- The tag of the container image to use.
+    tag: develop
+    # -- The policy to apply when pulling an image for deployment.
+    pullPolicy: IfNotPresent
+  # -- Script that runs in RUN_ARG.  This needs to be replaced with
+  # something less scary
+  script: slac/rubintv/workerPod1.py
+  # -- This section holds a list of key, value pairs for environmental
+  # variables (name: key, value: value).
+  # NOTE: RUN_ARG is taken care of by the chart using _script_.
+  env: []
+  # -- This section holds specifications for secret injection.
+  # If this section is used, each object listed must have the following attributes defined:
+  # _name_ (The label for the secret),
+  # _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name),
+  # _secretKey_ (The key in the vault store containing the necessary secret)
+  envSecrets: []
+  # -- The Vault prefix path
+  vaultPrefixPath: ""
+  # The key for the pull secrets including any sub-paths.
+  pullSecretsPath: ""
+  # Path for the rubin tv specific secrets vault.  ** Let's just stuff
+  # its contents into the Phalanx secrets
+  # If this section is used, each object listed can have the following attributes defined:
+  # _name_ (The label identifying the pull-secret to use)
+  imagePullSecrets: []
+  # -- This section allows for specification of Butler secret information.
+  # If this section is used, it must contain the following attributes:
+  # _key_ (The vault key for the Butler secret),
+  # _containerPath_ (The directory location for the Butler secret),
+  # _dbUser_ (The username for the Butler backend database)
+  butlerSecret: {}
+  # -- The key for the credentials including any sub-paths.
+  credentialSecretsPath: ""
+  # -- The name of the expected credential file for the broadcasters
+  credentialFile: ""
+  # -- Volumes for the rubintv worker pods
+  # If this section is used, each list item must contain the following
+  # attributes:
+  # _name_ (the name of the volume)
+  # _accessMode_ (ReadOnly, ReadWriteOnce, ReadWriteMany)
+  # _mountPath_ (path mounted into the container)
+  # and at least one of
+  # _persistentVolumeClaim_ or _nfs_
+  # _persistentVolumeClaim_ has fields
+  # _name_ (the name of the PVC)
+  # _storageClass_ (the storage class of the PVC)
+  # _capacity_ (the size (as a string) of the PVC (e.g. "1Gi"))
+  # _nfs_ is not yet implemented
+  volumes: []
+  # -- Resource limits and requests for the rubintv worker pods
+  resources: {}
+  # -- Annotations for the rubintv worker pods
+  podAnnotations: {}
+  # -- Node selector rules for the rubintv worker pods
+  nodeSelector: {}
+  # -- Tolerations for the rubintv worker pods
+  tolerations: []
+  # -- Affinity rules for the rubintv worker pods
+  affinity: {}
 
 ingress:
   # -- Additional annotations to add to the ingress
