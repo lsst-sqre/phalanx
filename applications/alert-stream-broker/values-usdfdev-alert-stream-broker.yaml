@@ -112,6 +112,7 @@ alert-stream-simulator:
   clusterPort: 9092 # internal TLS listener
   replayTopicName: "alerts-simulated"
   replayTopicPartitions: 300
+  replayTopicReplicas: 1
   staticTopicName: "alerts-static"
   image:
     tag: v1.2.1
