@@ -9,8 +9,8 @@ frontend:
     - name: no_proxy
       value: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   image:
-    repository: docker.io/lsstsqre/rubin-tv
-    tag: v2
+    repository: ghcr.io/lsstsqre/rubin-tv
+    tag: tickets/DM-40149
     pullPolicy: Always
 
 workers:
