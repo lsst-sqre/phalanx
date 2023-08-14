@@ -20,6 +20,15 @@ vaultPathPrefix: ""
 # @default -- None, must be set
 butlerRepositoryIndex: ""
 
+# -- URL of the repository for all applications
+repoUrl: https://github.com/lsst-sqre/phalanx.git
+
+# -- Revision of repository to use for all applications
+targetRevision: "main"
+
+# -- UUID of the 1Password item in which to find Vault tokens
+onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
+
 alert-stream-broker:
   enabled: false
 argo-workflows:
@@ -92,8 +101,6 @@ strimzi:
   enabled: false
 strimzi-access-operator:
   enabled: false
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: false
 tap-schema:
@@ -108,12 +115,3 @@ vault-secrets-operator:
   enabled: false
 vo-cutouts:
   enabled: false
-
-# -- URL of the repository for all applications
-repoURL: https://github.com/lsst-sqre/phalanx.git
-
-# -- Revision of repository to use for all applications
-targetRevision: "main"
-
-# -- UUID of the 1Password item in which to find Vault tokens
-onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"

@@ -3,17 +3,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "nublado"
-spec:
-  finalizers:
-    - "kubernetes"
----
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: "fileservers"
-spec:
-  finalizers:
-    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -29,7 +18,7 @@ spec:
   project: "default"
   source:
     path: "applications/nublado"
-    repoURL: {{ .Values.repoURL | quote }}
+    repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:

@@ -2,27 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: moneypenny
-spec:
-  finalizers:
-    - kubernetes
+  name: "moneypenny"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: moneypenny
-  namespace: argocd
+  name: "moneypenny"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: moneypenny
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "moneypenny"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/moneypenny
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/moneypenny"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

@@ -2,27 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: cachemachine
-spec:
-  finalizers:
-    - kubernetes
+  name: "cachemachine"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cachemachine
-  namespace: argocd
+  name: "cachemachine"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: cachemachine
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "cachemachine"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/cachemachine
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/cachemachine"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

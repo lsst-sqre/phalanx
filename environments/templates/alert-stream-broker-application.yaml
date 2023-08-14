@@ -2,28 +2,26 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: alert-stream-broker
-spec:
-  finalizers:
-    - kubernetes
+  name: "alert-stream-broker"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: alert-stream-broker
-  namespace: argocd
+  name: "alert-stream-broker"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: alert-stream-broker
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "alert-stream-broker"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/alert-stream-broker
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/alert-stream-broker"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}

@@ -2,10 +2,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: argo-workflows
-spec:
-  finalizers:
-    - kubernetes
+  name: "argo-workflows"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -21,7 +18,7 @@ spec:
   project: "default"
   source:
     path: "applications/argo-workflows"
-    repoURL: {{ .Values.repoURL | quote }}
+    repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:

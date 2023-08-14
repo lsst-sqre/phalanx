@@ -2,24 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: production-tools
+  name: "production-tools"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: production-tools
-  namespace: argocd
+  name: "production-tools"
+  namespace: "argocd"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: production-tools
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "production-tools"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/production-tools
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/production-tools"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -29,6 +29,6 @@ spec:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
-      - values.yaml
-      - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.environment }}.yaml"
 {{- end -}}
