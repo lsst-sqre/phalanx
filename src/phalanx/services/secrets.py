@@ -19,7 +19,7 @@ from ..models.secrets import (
     StaticSecrets,
 )
 from ..storage.config import ConfigStorage
-from ..storage.vault import VaultStorage
+from ..storage.vault import VaultClient, VaultStorage
 from ..yaml import YAMLFoldedString
 
 __all__ = ["SecretsService"]
@@ -67,7 +67,7 @@ class SecretsService:
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
         resolved = self._resolve_secrets(
             secrets=secrets,
             environment=environment,
@@ -101,7 +101,7 @@ class SecretsService:
         if mismatch:
             report += "Incorrect secrets:\n• " + "\n• ".join(mismatch) + "\n"
         if unknown:
-            unknown_str = "\n  ".join(unknown)
+            unknown_str = "\n• ".join(unknown)
             report += "Unknown secrets in Vault:\n• " + unknown_str + "\n"
         return report
 
@@ -169,7 +169,7 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
         for app_name, values in vault_secrets.items():
             app_secrets: dict[str, str | None] = {}
             for key, secret in values.items():
@@ -186,6 +186,7 @@ class SecretsService:
         static_secrets: StaticSecrets | None = None,
         *,
         regenerate: bool = False,
+        delete: bool = False,
     ) -> None:
         """Synchronize secrets for an environment with Vault.
 
@@ -202,11 +203,13 @@ class SecretsService:
             User-provided static secrets.
         regenerate
             Whether to regenerate any generated secrets.
+        delete
+            Whether to delete unknown Vault secrets.
         """
         environment = self._config.load_environment(env_name)
         vault_client = self._vault.get_vault_client(environment)
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets(environment)
+        vault_secrets = vault_client.get_environment_secrets()
 
         # Resolve all of the secrets, regenerating if desired.
         resolved = self._resolve_secrets(
@@ -221,7 +224,7 @@ class SecretsService:
         for application, values in resolved.items():
             if application not in vault_secrets:
                 to_store = {k: v.value for k, v in values.items()}
-                vault_client.store_application_secrets(application, to_store)
+                vault_client.store_application_secret(application, to_store)
                 print("Created Vault secret for", application)
                 continue
             vault_app_secrets = vault_secrets[application]
@@ -232,8 +235,45 @@ class SecretsService:
                 else:
                     seen = None
                 if expected != seen:
-                    vault_client.update_secret(application, key, value.value)
+                    vault_client.update_application_secret(
+                        application, key, value.value
+                    )
                     print("Updated Vault secret for", application, key)
+
+        # Optionally delete any unrecognized Vault secrets.
+        if delete:
+            self._clean_vault_secrets(vault_client, vault_secrets, resolved)
+
+    def _clean_vault_secrets(
+        self,
+        vault_client: VaultClient,
+        vault_secrets: dict[str, dict[str, SecretStr]],
+        resolved: dict[str, dict[str, ResolvedSecret]],
+    ) -> None:
+        """Delete any unrecognized Vault secrets.
+
+        Parameters
+        ----------
+        vault_client
+            Client for talking to Vault for this environment.
+        vault_secrets
+            Current secrets in Vault for this environment.
+        resolved
+            Resolved secrets for this environment.
+        """
+        for application, values in vault_secrets.items():
+            if application not in resolved:
+                print("Deleted Vault secret for", application)
+                vault_client.delete_application_secret(application)
+                continue
+            expected = resolved[application]
+            to_delete = set(values.keys()) - set(expected.keys())
+            if to_delete:
+                for key in to_delete:
+                    del values[key]
+                vault_client.store_application_secret(application, values)
+                for key in sorted(to_delete):
+                    print("Deleted Vault secret for", application, key)
 
     def _resolve_secrets(
         self,

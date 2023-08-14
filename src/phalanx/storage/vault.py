@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from contextlib import suppress
+
 import hvac
 from hvac.exceptions import InvalidPath
 from pydantic import SecretStr
@@ -35,9 +37,22 @@ class VaultClient:
         self._url = url
         self._path = path
 
-    def get_application_secrets(
-        self, application: str
-    ) -> dict[str, SecretStr]:
+    def delete_application_secret(self, application: str) -> None:
+        """Delete the secrets for an application currently stored in Vault.
+
+        If the secret does not exist, still returns success without raising an
+        exception.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        """
+        path = f"{self._path}/{application}"
+        with suppress(InvalidPath):
+            self._vault.secrets.kv.delete_latest_version_of_secret(path)
+
+    def get_application_secret(self, application: str) -> dict[str, SecretStr]:
         """Get the secrets for an application currently stored in Vault.
 
         Parameters
@@ -64,15 +79,8 @@ class VaultClient:
             raise VaultNotFoundError(self._url, path) from e
         return {k: SecretStr(v) for k, v in r["data"]["data"].items()}
 
-    def get_environment_secrets(
-        self, environment: Environment
-    ) -> dict[str, dict[str, SecretStr]]:
+    def get_environment_secrets(self) -> dict[str, dict[str, SecretStr]]:
         """Get the secrets for an environment currently stored in Vault.
-
-        Parameters
-        ----------
-        environment
-            Name of the environment.
 
         Returns
         -------
@@ -80,15 +88,27 @@ class VaultClient:
             Mapping from application to secret key to its secret from Vault.
         """
         vault_secrets = {}
-        for application in environment.all_applications():
-            try:
-                vault_secret = self.get_application_secrets(application.name)
-                vault_secrets[application.name] = vault_secret
-            except VaultNotFoundError:
-                pass
+        for application in self.list_application_secrets():
+            with suppress(VaultNotFoundError):
+                vault_secret = self.get_application_secret(application)
+                vault_secrets[application] = vault_secret
         return vault_secrets
 
-    def store_application_secrets(
+    def list_application_secrets(self) -> list[str]:
+        """List the available application secrets in Vault.
+
+        Returns
+        -------
+        list of str
+            Names of available application secrets.
+        """
+        try:
+            r = self._vault.secrets.kv.list_secrets(self._path)
+        except InvalidPath as e:
+            raise VaultNotFoundError(self._url, self._path) from e
+        return r["data"]["keys"]
+
+    def store_application_secret(
         self, application: str, values: dict[str, SecretStr]
     ) -> None:
         """Store the full set of secrets for an application.
@@ -104,7 +124,7 @@ class VaultClient:
         secret = {k: v.get_secret_value() for k, v in values.items()}
         self._vault.secrets.kv.create_or_update_secret(path, secret)
 
-    def update_secret(
+    def update_application_secret(
         self, application: str, key: str, value: SecretStr
     ) -> None:
         """Update the value of a specific secret key.

@@ -151,6 +151,12 @@ def secrets_static_template(environment: str) -> None:
 @secrets.command("sync")
 @click.argument("environment")
 @click.option(
+    "--delete",
+    default=False,
+    is_flag=True,
+    help="Delete any unexpected secrets in Vault.",
+)
+@click.option(
     "--regenerate",
     default=False,
     is_flag=True,
@@ -163,7 +169,7 @@ def secrets_static_template(environment: str) -> None:
     help="YAML file containing static secrets for this environment.",
 )
 def secrets_sync(
-    environment: str, *, regenerate: bool, secrets: Path | None
+    environment: str, *, delete: bool, regenerate: bool, secrets: Path | None
 ) -> None:
     """Synchronize the secrets for an environment into Vault."""
     static_secrets = None
@@ -171,7 +177,9 @@ def secrets_sync(
         static_secrets = _load_static_secrets(secrets)
     factory = Factory()
     secrets_service = factory.create_secrets_service()
-    secrets_service.sync(environment, static_secrets, regenerate=regenerate)
+    secrets_service.sync(
+        environment, static_secrets, regenerate=regenerate, delete=delete
+    )
 
 
 @secrets.command("vault-secrets")

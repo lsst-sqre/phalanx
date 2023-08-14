@@ -66,6 +66,41 @@ class MockVaultClient:
         environment = self._paths[base_path]
         self._data[environment][application] = secret
 
+    def delete_latest_version_of_secret(self, path: str) -> None:
+        """Delete the latest version of a Vault secret.
+
+        Parameters
+        ----------
+        path
+            Vault path to the secret.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the provided Vault path does not exist.
+        """
+        base_path, application = path.rsplit("/", 1)
+        environment = self._paths[base_path]
+        if application not in self._data[environment]:
+            raise InvalidPath(f"Unknown Vault path {path}")
+        del self._data[environment][application]
+
+    def list_secrets(self, path: str) -> dict[str, Any]:
+        """List all secrets available under a path.
+
+        Parameters
+        ----------
+        path
+            Vault path to the directory of secrets.
+
+        Returns
+        -------
+        dict
+            Reply matching the Vault client reply structure.
+        """
+        environment = self._paths[path]
+        return {"data": {"keys": list(self._data[environment].keys())}}
+
     def read_secret(
         self, path: str, raise_on_deleted_version: bool | None = None
     ) -> dict[str, Any]:
@@ -83,6 +118,11 @@ class MockVaultClient:
         -------
         dict
             Reply matching the Vault client reply structure.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the provided Vault path does not exist.
         """
         assert raise_on_deleted_version
         base_path, application = path.rsplit("/", 1)
@@ -101,9 +141,16 @@ class MockVaultClient:
             Vault path for the secret.
         secret
             Keys and values to update.
+
+        Raises
+        ------
+        InvalidPath
+            Raised if the provided Vault path does not exist.
         """
         base_path, application = path.rsplit("/", 1)
         environment = self._paths[base_path]
+        if application not in self._data[environment]:
+            raise InvalidPath(f"Unknown Vault path {path}")
         self._data[environment][application].update(secret)
 
 
