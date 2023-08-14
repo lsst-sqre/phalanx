@@ -20,6 +20,7 @@ spec:
     server: https://kubernetes.default.svc
   ignoreDifferences:
   - name: data-0-alert-broker-kafka-0
+    namespace: alert-stream-broker
   #- jsonPointers:
     #- /spec/volumeName
     #- /spec/storageClassName
