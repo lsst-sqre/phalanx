@@ -53,4 +53,3 @@ config:
         options:
           query_set: "dp0.2"
         restart: true
-  slackAlerts: false
