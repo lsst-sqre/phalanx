@@ -8,7 +8,7 @@ podAnnotations:
   autoscaling.knative.dev/max-scale: "100"
   autoscaling.knative.dev/target-utilization-percentage: "80"
   # Update this field if `make apply` by itself doesn't make a new revision.
-  revision: "32"
+  revision: "33"
 
 knative:
   ephemeralStorageRequest: "8Gi"

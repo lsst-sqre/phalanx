@@ -30,7 +30,7 @@ spec:
         - name: BUCKET_TOPIC
           value: {{ .Values.imageNotifications.topic }}
         - name: IMAGE_TIMEOUT
-          value: {{ toString .Values.imageNotifications.imageTimeout }}
+          value: "120"
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: IP_APDB
