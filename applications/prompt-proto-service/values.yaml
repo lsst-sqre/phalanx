@@ -8,11 +8,11 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
 
+# -- Annotations for the sherlock deployment pod
+podAnnotations:
+  class: kpa.autoscaling.knative.dev
 
 knative:
-  class: kpa.autoscaling.knative.dev
-  minScale: 1
-  maxScale: 100
   ephemeralStorageRequest: "8Gi"
   ephemeralStorageLimit: "20Gi"
   timeout: 900

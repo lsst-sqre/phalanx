@@ -2,6 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Annotations for the prompt-proto-service pod
+podAnnotations:
+  autoscaling.knative.dev/min-scale: "3"
+  autoscaling.knative.dev/max-scale: "100"
+  autoscaling.knative.dev/target-utilization-percentage: "80"
+  # Update this field if `make apply` by itself doesn't make a new revision.
+  revision: "32"
+
+knative:
+  ephemeralStorageRequest: "8Gi"
+  ephemeralStorageLimit: "20Gi"
+  timeout: 900
 
 image:
   repository: ghcr.io/lsst-dm/prompt-proto-service
@@ -36,12 +48,7 @@ registry:
   db: lsstdb1
   user: rubin
 
-knative:
-  minScale: "3"
-  maxScale: "100"
-  ephemeralStorageRequest: "8Gi"
-  ephemeralStorageLimit: "20Gi"
-  timeout: 900
+
 
 namespace: prompt-proto-service-latiss
 
