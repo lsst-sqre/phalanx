@@ -7,12 +7,12 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
-    syncPolicy:
-      managedNamespaceMetadata:
-        labels:
-          argocd.argoproj.io/managed-by: argocd
-      syncOptions:
-      - CreateNamespace=true
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    syncOptions:
+    - CreateNamespace=true
   destination:
     namespace: prompt-proto-service-hsc
     server: https://kubernetes.default.svc
