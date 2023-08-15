@@ -2,6 +2,12 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
 
 knative:
   class: kpa.autoscaling.knative.dev
@@ -26,8 +32,6 @@ image:
 additionalVolumeMounts: []
 
 imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
 
 autoscaling:
   enabled: false
