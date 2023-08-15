@@ -1,12 +1,4 @@
 {{- if (index .Values "prompt-processing-hsc" "enabled") -}}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: prompt-proto-service-hsc
-spec:
-  finalizers:
-    - kubernetes
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,6 +7,12 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
+    syncPolicy:
+      managedNamespaceMetadata:
+        labels:
+          argocd.argoproj.io/managed-by: argocd
+      syncOptions:
+      - CreateNamespace=true
   destination:
     namespace: prompt-proto-service-hsc
     server: https://kubernetes.default.svc
@@ -33,14 +31,6 @@ spec:
 
 
 {{- if (index .Values "prompt-processing-latiss" "enabled") -}}
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: prompt-proto-service-latiss
-spec:
-  finalizers:
-    - kubernetes
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -49,6 +39,12 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    syncOptions:
+    - CreateNamespace=true
   destination:
     namespace: prompt-proto-service-latiss
     server: https://kubernetes.default.svc
