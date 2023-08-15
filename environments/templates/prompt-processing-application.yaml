@@ -24,9 +24,9 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      parameters:
-      - name: "imageNotifications.imageTimeout"
-        forceString: true
+      #parameters:
+      #- name: "imageNotifications.imageTimeout"
+      #  forceString: true
       valueFiles:
         - values-{{ .Values.environment }}-hsc.yaml
 {{- end -}}
