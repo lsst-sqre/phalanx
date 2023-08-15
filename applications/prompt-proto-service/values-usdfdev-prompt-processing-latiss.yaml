@@ -52,4 +52,4 @@ registry:
 
 namespace: prompt-proto-service-latiss
 
-vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/prompt-processing-dev/prompt-proto-service-latiss"
+vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"

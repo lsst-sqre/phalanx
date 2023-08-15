@@ -6,7 +6,7 @@
 nameOverride: ""
 
 # -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
+fullnameOverride: "prompt-proto-service"
 
 # -- Annotations for the sherlock deployment pod
 podAnnotations:

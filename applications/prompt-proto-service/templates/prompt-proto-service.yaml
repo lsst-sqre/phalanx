@@ -54,26 +54,26 @@ spec:
         - name: PSQL_REGISTRY_PASS
           valueFrom:
             secretKeyRef:
-              name: usdf-pp-creds
-              key: password
+              name: prompt-proto-service-secrets
+              key: registry_password
         - name: PSQL_APDB_PASS
           valueFrom:
             secretKeyRef:
-              name: usdf-prompt-processing-creds
-              key: password
+              name: prompt-proto-service-secrets
+              key: apdb_password
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: s3-creds
-              key: access_key
+              name: prompt-proto-service-secrets
+              key: s3_access_key
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: s3-creds
-              key: secret_key
+              name: prompt-proto-service-secrets
+              key: s3_secret_key
         {{- end }}
         {{- if .Values.s3.cred_file_auth }}
         - name: AWS_SHARED_CREDENTIALS_FILE
