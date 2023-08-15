@@ -31,6 +31,8 @@ spec:
           value: {{ .Values.imageNotifications.topic }}
         - name: IMAGE_TIMEOUT
           value: "120"
+        - name: PGUSER
+          value: rubin
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: IP_APDB
@@ -105,6 +107,12 @@ spec:
       - name: s3-credentials-file
         secret:
           secretName: s3-credentials-file
+      {{- end }}
+      {{- if .Values.registry.centralRepoFile }}
+      - name: central-repo-file
+        secret:
+          secretName: prompt-proto-service-secrets
+          key: central-repo-file
       {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
