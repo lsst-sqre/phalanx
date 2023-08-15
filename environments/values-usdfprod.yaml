@@ -1,3 +1,4 @@
+butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
 environment: usdfprod
 fqdn: usdf-rsp.slac.stanford.edu
 vaultUrl: "https://vault.slac.stanford.edu"
