@@ -208,7 +208,7 @@ rest-proxy:
     enabled: true
     hostname: summit-lsp.lsst.codes
   configurationOverrides:
-    "access.control.allow.origin": love01.cp.lsst.org,love02.cp.lsst.org
+    "access.control.allow.origin": http://love01.cp.lsst.org,http://love02.cp.lsst.org
   kafka:
     topics:
       - test.next-visit
