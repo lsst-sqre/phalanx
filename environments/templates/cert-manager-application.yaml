@@ -26,7 +26,7 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
   ignoreDifferences:
     - group: "admissionregistration.k8s.io"
       kind: "MutatingWebhookConfiguration"

@@ -75,7 +75,7 @@ class ConfigStorage:
             for a in applications
         }
         return Environment(
-            name=config.environment,
+            name=config.name,
             vault_url=config.vault_url,
             vault_path_prefix=config.vault_path_prefix,
             applications=instances,

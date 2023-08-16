@@ -1,4 +1,4 @@
-environment: usdf-tel-rsp
+name: usdf-tel-rsp
 fqdn: usdf-tel-rsp.slac.stanford.edu
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-tel-rsp

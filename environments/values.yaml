@@ -6,7 +6,7 @@ butlerRepositoryIndex: ""
 
 # -- Name of the environment
 # @default -- None, must be set
-environment: ""
+name: ""
 
 # -- Fully-qualified domain name where the environment is running
 # @default -- None, must be set

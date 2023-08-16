@@ -67,7 +67,7 @@ class EnvironmentConfig(EnvironmentVaultConfig):
     This is a partial model for the environment :file:`values.yaml` file.
     """
 
-    environment: str
+    name: str
     """Name of the environment."""
 
     applications: list[str] = Field(

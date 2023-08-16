@@ -1,6 +1,6 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
-environment: idfint
 fqdn: data-int.lsst.cloud
+name: idfint
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
 

@@ -310,7 +310,7 @@ class Environment:
     ) -> Environment:
         """Load an environment by inspecting the Phalanx repository."""
         # Extract name from dir/values-envname.yaml
-        name = values["environment"]
+        name = values["name"]
 
         # Get Application instances active in this environment
         apps: list[Application] = []
@@ -366,7 +366,7 @@ class Phalanx:
             if not env_values_path.is_file():
                 continue
             values = yaml.safe_load(env_values_path.read_text())
-            name = values["environment"]
+            name = values["name"]
             env_values[name] = values
 
         # Gather applications
