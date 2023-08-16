@@ -34,6 +34,14 @@ influxdb2:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 2
+    limits:
+      memory: 16Gi
+      cpu: 2
+
 
 telegraf-kafka-consumer:
   enabled: true
