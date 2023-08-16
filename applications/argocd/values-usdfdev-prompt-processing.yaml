@@ -7,26 +7,72 @@ argo-cd:
       
   server:
     ingress:
+      enabled: true
       hosts:
-        - "prompt-processing-dev.lsst.cloud"
-    config:
-      url: "http://127.0.0.1"
-      dex.config: |
-        connectors:
-          # Auth using Google.
-          # See https://dexidp.io/docs/connectors/google/
-          - type: google
-            id: google
-            name: Google
-            config:
-              clientID: 392615380452-kfu4tdj37e0lusenvgnjev7j66ea5upr.apps.googleusercontent.com
-              clientSecret: $dex.clientSecret
-              hostedDomains:
-                - burwood.io
-              redirectURI: http://127.0.0.1/api/dex/callback
+        - "k8s.slac.stanford.edu"
+      annotations:
+        kubernetes.io/ingress.class: nginx
+        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+      paths:
+        - /usdf-prompt-pocessing-dev/argo-cd(/|$)(.*)
+    extraArgs:
+      - "--basehref=/usdf-prompt-pocessing-dev/argo-cd"
+      - "--insecure=true"
+    
+    env:
+      - name: HTTP_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: HTTPS_PROXY
+        value: http://squid.slac.stanford.edu:3128
+      - name: NO_PROXY
+        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
-      helm.repositories: |
-        - url: https://lsst-sqre.github.io/charts/
-          name: lsst-sqre
-        - url: https://charts.helm.sh/stable
-          name: stable
+    config:
+      url: "https://k8s.slac.stanford.edu/usdf-prompt-pocessing-dev/argo-cd"
+      oidc.config: |
+        name: SLAC
+        issuer: https://dex.slac.stanford.edu
+        clientID: $oidc.clientId
+        clientSecret: $oidc.clientSecret
+        # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
+        requestedScopes: ["openid", "profile", "email", "groups"]
+        # Optional set of OIDC claims to request on the ID token.
+        requestedIDTokenClaims: {"groups": {"essential": true}}
+      
+  rbacConfig:
+    policy.csv: |
+      g, ytl@slac.stanford.edu, role:admin
+      g, ppascual@slac.stanford.edu, role:admin
+      g, pav@slac.stanford.edu, role:admin
+      g, reinking@slac.stanford.edu, role:admin
+      g, dspeck@slac.stanford.edu, role:admin
+    scopes: "[email]"
+
+    helm.repositories: |
+      - url: https://lsst-sqre.github.io/charts/
+        name: lsst-sqre
+      - url: https://charts.helm.sh/stable
+        name: stable
+    repoServer:
+
+  env:
+    - name: HTTP_PROXY
+      value: http://sdfproxy.sdf.slac.stanford.edu:3128
+    - name: HTTPS_PROXY
+      value: http://sdfproxy.sdf.slac.stanford.edu:3128
+    - name: NO_PROXY
+      value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+
+controller:
+
+  env:
+    - name: HTTP_PROXY
+      value: http://sdfproxy.sdf.slac.stanford.edu:3128
+    - name: HTTPS_PROXY
+      value: http://sdfproxy.sdf.slac.stanford.edu:3128
+    - name: NO_PROXY
+      value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+
+  configs:
+    secret:
+      createSecret: false
