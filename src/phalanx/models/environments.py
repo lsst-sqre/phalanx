@@ -23,6 +23,43 @@ class EnvironmentVaultConfig(CamelCaseModel):
     vault_path_prefix: str
     """Prefix of Vault paths, including the Kv2 mount point."""
 
+    @property
+    def vault_path(self) -> str:
+        """Vault path without the initial Kv2 mount point."""
+        _, path = self.vault_path_prefix.split("/", 1)
+        return path
+
+    @property
+    def vault_read_approle(self) -> str:
+        """Name of the Vault read AppRole for this environment."""
+        # AppRole names cannot contain /, so we'll use only the final
+        # component of the path for the AppRole name.
+        vault_path = self.vault_path
+        if "/" in vault_path:
+            _, approle_name = vault_path.rsplit("/", 1)
+            return approle_name
+        else:
+            return vault_path
+
+    @property
+    def vault_write_token(self) -> str:
+        """Display name of the Vault write token for this environment.
+
+        Unlike AppRole names, this could include a slash, but use the same
+        name as the AppRole for consistency and simplicity.
+        """
+        return self.vault_read_approle
+
+    @property
+    def vault_read_policy(self) -> str:
+        """Name of the Vault read policy for this environment."""
+        return f"{self.vault_path}/read"
+
+    @property
+    def vault_write_policy(self) -> str:
+        """Name of the Vault write policy for this environment."""
+        return f"{self.vault_path}/write"
+
 
 class EnvironmentConfig(EnvironmentVaultConfig):
     """Configuration for a Phalanx environment.
