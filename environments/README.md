@@ -10,7 +10,6 @@
 | cachemachine.enabled | bool | `false` |  |
 | cert-manager.enabled | bool | `false` |  |
 | datalinker.enabled | bool | `false` |  |
-| environment | string | None, must be set | Name of the environment |
 | exposurelog.enabled | bool | `false` |  |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | gafaelfawr.enabled | bool | `false` |  |
@@ -23,6 +22,7 @@
 | mobu.enabled | bool | `false` |  |
 | moneypenny.enabled | bool | `false` |  |
 | monitoring.enabled | bool | `false` |  |
+| name | string | None, must be set | Name of the environment |
 | narrativelog.enabled | bool | `false` |  |
 | noteburst.enabled | bool | `false` |  |
 | nublado.enabled | bool | `false` |  |

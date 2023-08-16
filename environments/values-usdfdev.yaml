@@ -1,6 +1,6 @@
 butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
-environment: usdfdev
 fqdn: usdf-rsp-dev.slac.stanford.edu
+name: usdfdev
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-rsp-dev
 

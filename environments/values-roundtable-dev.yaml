@@ -1,4 +1,4 @@
-environment: roundtable-dev
+name: roundtable-dev
 fqdn: roundtable-dev.lsst.cloud
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable-dev.lsst.cloud

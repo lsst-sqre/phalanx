@@ -1,4 +1,4 @@
-environment: idfdev
+name: idfdev
 fqdn: data-dev.lsst.cloud
 vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/data-dev.lsst.cloud

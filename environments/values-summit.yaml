@@ -1,4 +1,4 @@
-environment: summit
+name: summit
 fqdn: summit-lsp.lsst.codes
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
