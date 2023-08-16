@@ -27,6 +27,37 @@ __all__ = [
 ]
 
 
+def _find_config() -> Path:
+    """Find the root of the Phalanx configuration tree.
+
+    Returns
+    -------
+    Path
+        Root of the tree.
+
+    Raises
+    ------
+    click.UsageError
+        Raised if we reach the root of the file system and did not locate the
+        Phalanx configuration tree.
+    """
+    current = Path.cwd()
+
+    def _is_config(path: Path) -> bool:
+        if not (path / "environments").is_dir():
+            return False
+        if not (path / "applications").is_dir():
+            return False
+        return True
+
+    while not _is_config(current):
+        if current.parent == current:
+            msg = "Cannot locate root of Phalanx configuration"
+            raise click.UsageError(msg)
+        current = current.parent
+    return current
+
+
 def _load_static_secrets(path: Path) -> dict[str, dict[str, StaticSecret]]:
     """Load static secrets from a file.
 
@@ -87,26 +118,46 @@ def secrets() -> None:
 @secrets.command("audit")
 @click.argument("environment")
 @click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
     "--secrets",
     type=click.Path(path_type=Path),
     default=None,
     help="YAML file containing static secrets for this environment.",
 )
-def secrets_audit(environment: str, secrets: Path | None) -> None:
+def secrets_audit(
+    environment: str, *, config: Path | None, secrets: Path | None
+) -> None:
     """Audit the secrets for the given environment for inconsistencies."""
+    if not config:
+        config = _find_config()
     static_secrets = None
     if secrets:
         static_secrets = _load_static_secrets(secrets)
-    factory = Factory()
+    factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     sys.stdout.write(secrets_service.audit(environment, static_secrets))
 
 
 @secrets.command("list")
 @click.argument("environment")
-def secrets_list(environment: str) -> None:
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def secrets_list(environment: str, *, config: Path | None) -> None:
     """List all secrets required for a given environment."""
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets = secrets_service.list_secrets(environment)
     for secret in secrets:
@@ -144,15 +195,31 @@ def secrets_schema(*, output: Path | None) -> None:
 
 @secrets.command("static-template")
 @click.argument("environment")
-def secrets_static_template(environment: str) -> None:
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def secrets_static_template(environment: str, *, config: Path | None) -> None:
     """Generate a template for providing static secrets for an environment."""
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     sys.stdout.write(secrets_service.generate_static_template(environment))
 
 
 @secrets.command("sync")
 @click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
 @click.option(
     "--delete",
     default=False,
@@ -172,13 +239,20 @@ def secrets_static_template(environment: str) -> None:
     help="YAML file containing static secrets for this environment.",
 )
 def secrets_sync(
-    environment: str, *, delete: bool, regenerate: bool, secrets: Path | None
+    environment: str,
+    *,
+    config: Path | None,
+    delete: bool,
+    regenerate: bool,
+    secrets: Path | None,
 ) -> None:
     """Synchronize the secrets for an environment into Vault."""
+    if not config:
+        config = _find_config()
     static_secrets = None
     if secrets:
         static_secrets = _load_static_secrets(secrets)
-    factory = Factory()
+    factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets_service.sync(
         environment, static_secrets, regenerate=regenerate, delete=delete
@@ -188,14 +262,25 @@ def secrets_sync(
 @secrets.command("vault-secrets")
 @click.argument("environment")
 @click.argument("output", type=click.Path(path_type=Path))
-def secrets_vault_secrets(environment: str, output: Path) -> None:
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def secrets_vault_secrets(
+    environment: str, output: Path, *, config: Path | None
+) -> None:
     """Write the Vault secrets for the given environment.
 
     One JSON file per application with secrets will be created in the output
     directory, containing the secrets for that application. If the value of a
     secret is not known, it will be written as null.
     """
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets_service.save_vault_secrets(environment, output)
 
@@ -207,13 +292,22 @@ def vault() -> None:
 
 @vault.command("audit")
 @click.argument("environment")
-def vault_audit(environment: str) -> None:
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_audit(environment: str, *, config: Path | None) -> None:
     """Audit the Vault credentials for the given environment.
 
     The environment variable VAULT_TOKEN must be set to a token with access to
     read policies, AppRoles, tokens, and token accessors.
     """
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     vault_service = factory.create_vault_service()
     report = vault_service.audit(environment)
     if report:
@@ -223,7 +317,16 @@ def vault_audit(environment: str) -> None:
 
 @vault.command("create-read-approle")
 @click.argument("environment")
-def vault_create_read_approle(environment: str) -> None:
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_create_read_approle(
+    environment: str, *, config: Path | None
+) -> None:
     """Create a new Vault AppRole with read access to environment secrets.
 
     This AppRole is intended for use by vault-secrets-operator to maintain
@@ -231,7 +334,9 @@ def vault_create_read_approle(environment: str) -> None:
     variable VAULT_TOKEN must be set to a token with access to create policies
     and AppRoles.
     """
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_approle = vault_service.create_read_approle(environment)
     sys.stdout.write(vault_approle.to_yaml())
@@ -240,18 +345,29 @@ def vault_create_read_approle(environment: str) -> None:
 @vault.command("create-write-token")
 @click.argument("environment")
 @click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
     "--lifetime",
     type=str,
     default=VAULT_WRITE_TOKEN_LIFETIME,
     help="Token lifetime in Vault duration format.",
 )
-def vault_create_write_token(environment: str, *, lifetime: str) -> None:
+def vault_create_write_token(
+    environment: str, *, config: Path | None, lifetime: str
+) -> None:
     """Create a new Vault token with write access to environment secrets.
 
     This token is intended for interactive use with this tool to synchronize
     environment secrets to Vault.
     """
-    factory = Factory()
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_token = vault_service.create_write_token(environment, lifetime)
     sys.stdout.write(vault_token.to_yaml())

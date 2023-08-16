@@ -45,10 +45,16 @@ def _merge_overrides(
 
 
 class ConfigStorage:
-    """Analyze Phalanx configuration and convert it to models."""
+    """Analyze Phalanx configuration and convert it to models.
 
-    def __init__(self) -> None:
-        self._path = Path.cwd()
+    Parameters
+    ----------
+    path
+        Root path to Phalanx configuration.
+    """
+
+    def __init__(self, path: Path) -> None:
+        self._path = path
 
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
@@ -104,7 +110,7 @@ class ConfigStorage:
             Raised if the named environment has no configuration.
         """
         values_name = f"values-{environment_name}.yaml"
-        values_path = Path.cwd() / "environments" / values_name
+        values_path = self._path / "environments" / values_name
         if not values_path.exists():
             raise UnknownEnvironmentError(environment_name)
         with values_path.open() as fh:
@@ -169,7 +175,7 @@ class ConfigStorage:
         Application
             Application data.
         """
-        base_path = Path.cwd() / "applications" / name
+        base_path = self._path / "applications" / name
 
         # Load main values file.
         values_path = base_path / "values.yaml"
