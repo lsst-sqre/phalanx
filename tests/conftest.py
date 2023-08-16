@@ -2,9 +2,7 @@
 
 from __future__ import annotations
 
-import os
 from collections.abc import Iterator
-from pathlib import Path
 
 import jinja2
 import pytest
@@ -16,13 +14,9 @@ from .support.vault import MockVaultClient, patch_vault
 
 
 @pytest.fixture
-def factory() -> Iterator[Factory]:
-    """Change directories to the test data directory and return a factory."""
-    input_path = phalanx_test_path()
-    cwd = Path.cwd()
-    os.chdir(str(input_path))
-    yield Factory()
-    os.chdir(str(cwd))
+def factory() -> Factory:
+    """Create a factory pointing at the test data."""
+    return Factory(phalanx_test_path())
 
 
 @pytest.fixture
