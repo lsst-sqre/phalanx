@@ -54,21 +54,21 @@ workers:
   - name: sdf-group-rubin
     persistentVolumeClaim:
       name: sdf-group-rubin
-      storageClass: sdf-group-rubin
+      storageClassName: sdf-group-rubin
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /sdf/group/rubin
   - name: sdf-data-rubin
     persistentVolumeClaim:
       name: sdf-data-rubin
-      storageClass: sdf-group-rubin
+      storageClassName: sdf-group-rubin
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /sdf/data/rubin
   - name: fs-ddn-sdf-group-lsst
     persistentVolumeClaim:
       name: fs-ddn-sdf-group-lsst
-      storageClass: fs-ddn-group-lsst
+      storageClassName: fs-ddn-group-lsst
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /fs/ddn/sdf/group/lsst
