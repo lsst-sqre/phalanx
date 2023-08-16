@@ -178,7 +178,7 @@ rest-proxy:
     enabled: true
     hostname: tucson-teststand.lsst.codes
   configurationOverrides:
-    "access.control.allow.origin": love1.tu.lsst.org
+    "access.control.allow.origin": http://love1.tu.lsst.org
   kafka:
     topics:
       - test.next-visit
