@@ -31,7 +31,7 @@ spec:
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /etc/secrets/aws-credentials.ini
         - name: REDIS_HOST
-          value: "redis"
+          value: {{include "rubintv.fullname" . }}-redis
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
