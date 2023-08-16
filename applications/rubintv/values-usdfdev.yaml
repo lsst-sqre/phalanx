@@ -68,7 +68,7 @@ workers:
   - name: fs-ddn-sdf-group-lsst
     persistentVolumeClaim:
       name: fs-ddn-sdf-group-lsst
-      storageClassName: fs-ddn-group-lsst
+      storageClassName: fs-ddn-sdf-group-lsst
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /fs/ddn/sdf/group/lsst
