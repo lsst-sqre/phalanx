@@ -63,12 +63,11 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     # Fix the AppRole again, and create a write token with the wrong policies
     # and a write policy with the wrong contents.
     vault_service.create_read_approle("idfdev")
-    r = mock_vault.create(
+    mock_vault.create(
         display_name=role_name,
         policies=["something"],
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
     )
-    r["auth"]["accessor"]
     mock_vault.create_or_update_policy(f"{vault_path}/write", "blah blah blah")
     result = runner.invoke(
         main, ["vault", "audit", "idfdev"], catch_exceptions=False
