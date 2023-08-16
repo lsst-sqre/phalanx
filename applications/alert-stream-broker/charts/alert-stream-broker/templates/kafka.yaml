@@ -136,7 +136,7 @@ spec:
                     operator: In
                     values:
                     - kafka
-            topologyKey: "kubernetes.io/hostname"
+              topologyKey: "kubernetes.io/hostname"
 
   zookeeper:
     replicas: {{ .Values.zookeeper.replicas }}
