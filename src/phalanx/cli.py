@@ -11,6 +11,7 @@ import yaml
 from pydantic import BaseModel
 from pydantic.tools import schema_of
 
+from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
 from .models.secrets import ConditionalSecretConfig, StaticSecret
 
@@ -21,6 +22,8 @@ __all__ = [
     "secrets_schema",
     "secrets_static_template",
     "secrets_vault_secrets",
+    "vault_create_read_approle",
+    "vault_create_write_token",
 ]
 
 
@@ -195,3 +198,44 @@ def secrets_vault_secrets(environment: str, output: Path) -> None:
     factory = Factory()
     secrets_service = factory.create_secrets_service()
     secrets_service.save_vault_secrets(environment, output)
+
+
+@main.group()
+def vault() -> None:
+    """Vault management commands."""
+
+
+@vault.command("create-read-approle")
+@click.argument("environment")
+def vault_create_read_approle(environment: str) -> None:
+    """Create a new Vault AppRole with read access to environment secrets.
+
+    This AppRole is intended for use by vault-secrets-operator to maintain
+    Kubernetes secrets from the Phalanx Vault secrets. The environment
+    variable VAULT_TOKEN must be set to a token with access to create policies
+    and AppRoles.
+    """
+    factory = Factory()
+    vault_service = factory.create_vault_service()
+    vault_approle = vault_service.create_read_approle(environment)
+    sys.stdout.write(vault_approle.to_yaml())
+
+
+@vault.command("create-write-token")
+@click.argument("environment")
+@click.option(
+    "--lifetime",
+    type=str,
+    default=VAULT_WRITE_TOKEN_LIFETIME,
+    help="Token lifetime in Vault duration format.",
+)
+def vault_create_write_token(environment: str, *, lifetime: str) -> None:
+    """Create a new Vault token with write access to environment secrets.
+
+    This token is intended for interactive use with this tool to synchronize
+    environment secrets to Vault.
+    """
+    factory = Factory()
+    vault_service = factory.create_vault_service()
+    vault_token = vault_service.create_write_token(environment, lifetime)
+    sys.stdout.write(vault_token.to_yaml())

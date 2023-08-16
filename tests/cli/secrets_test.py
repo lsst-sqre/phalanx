@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import os
 import re
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -11,10 +10,11 @@ from pathlib import Path
 import bcrypt
 from click.testing import CliRunner
 from cryptography.fernet import Fernet
+from safir.datetime import current_datetime
+
 from phalanx.cli import main
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
-from safir.datetime import current_datetime
 
 from ..support.data import (
     phalanx_test_path,
@@ -43,11 +43,8 @@ def _get_app_secret(mock_vault: MockVaultClient, path: str) -> dict[str, str]:
     return result["data"]["data"]
 
 
-def test_audit(mock_vault: MockVaultClient) -> None:
+def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     input_path = phalanx_test_path()
-    os.chdir(str(input_path))
-    input_path / "vault" / "idfdev"
-    factory = Factory()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
@@ -63,9 +60,7 @@ def test_audit(mock_vault: MockVaultClient) -> None:
     assert result.output == read_output_data("idfdev", "secrets-audit")
 
 
-def test_list() -> None:
-    input_path = phalanx_test_path()
-    os.chdir(str(input_path))
+def test_list(factory: Factory) -> None:
     runner = CliRunner()
     result = runner.invoke(
         main, ["secrets", "list", "idfdev"], catch_exceptions=False
@@ -88,9 +83,7 @@ def test_schema() -> None:
     assert result.output == current.read_text()
 
 
-def test_static_template() -> None:
-    input_path = phalanx_test_path()
-    os.chdir(str(input_path))
+def test_static_template(factory: Factory) -> None:
     runner = CliRunner()
     result = runner.invoke(
         main, ["secrets", "static-template", "idfdev"], catch_exceptions=False
@@ -99,11 +92,9 @@ def test_static_template() -> None:
     assert result.output == read_output_data("idfdev", "static-secrets.yaml")
 
 
-def test_sync(mock_vault: MockVaultClient) -> None:
+def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     input_path = phalanx_test_path()
     secrets_path = input_path / "secrets" / "idfdev.yaml"
-    os.chdir(str(input_path))
-    factory = Factory()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
@@ -162,11 +153,11 @@ def test_sync(mock_vault: MockVaultClient) -> None:
     assert after == gafaelfawr
 
 
-def test_sync_regenerate(mock_vault: MockVaultClient) -> None:
+def test_sync_regenerate(
+    factory: Factory, mock_vault: MockVaultClient
+) -> None:
     input_path = phalanx_test_path()
     secrets_path = input_path / "secrets" / "idfdev.yaml"
-    os.chdir(str(input_path))
-    factory = Factory()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
@@ -218,11 +209,11 @@ def test_sync_regenerate(mock_vault: MockVaultClient) -> None:
     assert now - timedelta(seconds=5) <= mtime <= now
 
 
-def test_vault_secrets(tmp_path: Path, mock_vault: MockVaultClient) -> None:
+def test_vault_secrets(
+    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+) -> None:
     input_path = phalanx_test_path()
     vault_input_path = input_path / "vault" / "idfdev"
-    os.chdir(str(input_path))
-    factory = Factory()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")

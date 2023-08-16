@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .services.secrets import SecretsService
+from .services.vault import VaultService
 from .storage.config import ConfigStorage
 from .storage.vault import VaultStorage
 
@@ -33,3 +34,15 @@ class Factory:
         config_storage = self.create_config_storage()
         vault_storage = VaultStorage()
         return SecretsService(config_storage, vault_storage)
+
+    def create_vault_service(self) -> VaultService:
+        """Create service for managing Vault tokens and policies.
+
+        Returns
+        -------
+        VaultService
+            Service for managing Vault tokens and policies.
+        """
+        config_storage = self.create_config_storage()
+        vault_storage = VaultStorage()
+        return VaultService(config_storage, vault_storage)
