@@ -61,7 +61,7 @@ workers:
   - name: sdf-data-rubin
     persistentVolumeClaim:
       name: sdf-data-rubin
-      storageClassName: sdf-group-rubin
+      storageClassName: sdf-data-rubin
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /sdf/data/rubin
