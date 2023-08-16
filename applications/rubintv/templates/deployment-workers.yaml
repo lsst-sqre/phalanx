@@ -32,6 +32,11 @@ spec:
           value: /etc/secrets/aws-credentials.ini
         - name: REDIS_HOST
           value: "redis"
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rubintv.fullname" . }}-secret
+              key: "redis-password"
         - name: "ENVIRONMENT_URL"
           value: {{ .Values.global.baseUrl }}
         - name: "SAFIR_PATH_PREFIX"
@@ -79,6 +84,8 @@ spec:
         volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
+        - name: "secrets"
+          mountPath: "/etc/secrets"
         {{- range $vol := .Values.workers.volumes }}
         - name: {{ $vol.name }}
           mountPath: {{ $vol.mountPath }}
@@ -86,10 +93,9 @@ spec:
       volumes:
       - name: "tmp"
         emptyDir: {}
-      - name: "repos"
-        emptyDir: {}
-      - name: "home"
-        emptyDir: {}
+      - name: "secrets"
+        secret:
+          secretName: {{ include "rubintv.fullname" . }}-secret
       {{- range $vol := .Values.workers.volumes }}
       - name: {{ $vol.name | quote }}
         {{ with $vol.persistentVolumeClaim }}
