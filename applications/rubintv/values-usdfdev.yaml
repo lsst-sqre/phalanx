@@ -39,7 +39,7 @@ workers:
   - name: NO_PROXY
     value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   - name: DEPLOY_BRANCH
-    value: "tickets/DM-40149"
+    value: "tickets/deploy-slac"
   - name: S3_ENDPOINT_URL
     value: "https://s3dfrgw.slac.stanford.edu"
   - name: DAF_BUTLER_REPOSITORY_INDEX
