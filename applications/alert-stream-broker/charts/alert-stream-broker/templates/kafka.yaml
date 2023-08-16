@@ -127,6 +127,17 @@ spec:
               {{- end }}
         {{- end }}
 
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key:  "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                    - kafka
+              topologyKey: "kubernetes.io/hostname"
+
   zookeeper:
     replicas: {{ .Values.zookeeper.replicas }}
     storage:
