@@ -39,7 +39,7 @@ workers:
   - name: NO_PROXY
     value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   - name: DEPLOY_BRANCH
-    value: "deploy-slac"
+    value: "tickets/DM-40149"
   - name: S3_ENDPOINT_URL
     value: "https://s3dfrgw.slac.stanford.edu"
   - name: DAF_BUTLER_REPOSITORY_INDEX
@@ -65,6 +65,13 @@ workers:
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /sdf/data/rubin
+  - name: fs-ddn-sdf-group-lsst
+    persistentVolumeClaim:
+      name: fs-ddn-sdf-group-lsst
+      storageClass: fs-ddn-group-lsst
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /fs/ddn/sdf/group/lsst
   resources:
     limits:
       cpu: 2.0
