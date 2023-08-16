@@ -26,13 +26,7 @@ __all__ = [
 
 
 class MockVaultClient:
-    """Mock Vault client for testing.
-
-    Attributes
-    ----------
-    tokens
-       All tokens that have been created.
-    """
+    """Mock Vault client for testing."""
 
     def __init__(self) -> None:
         # All APIs are currently collapsed into one object rather than using
