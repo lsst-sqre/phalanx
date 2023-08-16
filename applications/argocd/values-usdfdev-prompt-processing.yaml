@@ -14,9 +14,9 @@ argo-cd:
         kubernetes.io/ingress.class: nginx
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
       paths:
-        - /usdf-prompt-pocessing-dev/argo-cd(/|$)(.*)
+        - /usdf-prompt-processing-dev/argo-cd(/|$)(.*)
     extraArgs:
-      - "--basehref=/usdf-prompt-pocessing-dev/argo-cd"
+      - "--basehref=/usdf-prompt-processing-dev/argo-cd"
       - "--insecure=true"
     
     env:
@@ -28,7 +28,7 @@ argo-cd:
         value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
 
     config:
-      url: "https://k8s.slac.stanford.edu/usdf-prompt-pocessing-dev/argo-cd"
+      url: "https://k8s.slac.stanford.edu/usdf-prompt-processing-dev/argo-cd"
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
@@ -76,3 +76,5 @@ controller:
   configs:
     secret:
       createSecret: false
+
+vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/"
