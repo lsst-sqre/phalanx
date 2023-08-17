@@ -140,7 +140,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
                 value: {{ .Values.vaultPathPrefix | quote }}
             valueFiles:
               - "values.yaml"
-              - 'values-{{ .Values.environment }}.yaml"
+              - "values-{{ .Values.name }}.yaml"
       {{- end -}}
 
    Replace every instance of ``<name>`` with the name of your application.

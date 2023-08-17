@@ -28,5 +28,5 @@ spec:
           value: "https://{{ .Values.fqdn }}"
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

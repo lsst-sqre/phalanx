@@ -1,4 +1,4 @@
-environment: roe
+name: roe
 fqdn: rsp.lsst.ac.uk
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roe

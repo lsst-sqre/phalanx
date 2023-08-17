@@ -23,7 +23,7 @@ spec:
     helm:
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
       parameters:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
