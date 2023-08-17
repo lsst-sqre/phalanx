@@ -11,6 +11,7 @@ from phalanx.docs.jinja import build_jinja_contexts
 
 exclude_patterns.extend(
     [
+        "_templates/**",
         "environments/_summary.rst.jinja",
         "applications/_summary.rst.jinja",
     ]
