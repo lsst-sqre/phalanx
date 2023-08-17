@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bcrypt
+import click
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
@@ -60,6 +62,30 @@ def test_list() -> None:
     result = run_cli("secrets", "list", "idfdev")
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "secrets-list")
+
+
+def test_list_path_search() -> None:
+    """Test that we can find the root of the tree from a subdirectory."""
+    cwd = Path.cwd()
+    os.chdir(str(phalanx_test_path() / "applications" / "gafaelfawr"))
+    try:
+        result = run_cli("secrets", "list", "idfdev", needs_config=False)
+        assert result.exit_code == 0
+        assert result.output == read_output_data("idfdev", "secrets-list")
+    finally:
+        os.chdir(str(cwd))
+
+
+def test_list_path_failure() -> None:
+    """Test failure to find the root of the config tree."""
+    cwd = Path.cwd()
+    os.chdir("/usr")
+    try:
+        result = run_cli("secrets", "list", "idfdev", needs_config=False)
+        assert result.exit_code == click.UsageError.exit_code
+        assert "Cannot locate root of Phalanx configuration" in result.output
+    finally:
+        os.chdir(str(cwd))
 
 
 def test_schema() -> None:
