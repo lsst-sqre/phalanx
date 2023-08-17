@@ -89,25 +89,41 @@ def _load_static_secrets(path: Path) -> dict[str, dict[str, StaticSecret]]:
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(message="%(version)s")
 def main() -> None:
-    """Administrative command-line interface for gafaelfawr."""
+    """Administrative command-line interface for Phalanx."""
 
 
 @main.command()
 @click.argument("topic", default=None, required=False, nargs=1)
+@click.argument("subtopic", default=None, required=False, nargs=1)
 @click.pass_context
-def help(ctx: click.Context, topic: str | None) -> None:
+def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
     """Show help for any command."""
-    # The help command implementation is taken from
-    # https://www.burgundywall.com/post/having-click-help-subcommand
-    if topic:
-        if topic in main.commands:
-            click.echo(main.commands[topic].get_help(ctx))
-        else:
-            raise click.UsageError(f"Unknown help topic {topic}", ctx)
-    else:
+    if not topic:
         if not ctx.parent:
             raise RuntimeError("help called without topic or parent")
         click.echo(ctx.parent.get_help())
+        return
+    if topic not in main.commands:
+        raise click.UsageError(f"Unknown help topic {topic}", ctx)
+    if not subtopic:
+        ctx.info_name = topic
+        click.echo(main.commands[topic].get_help(ctx))
+        return
+
+    # Subtopic handling. This requires some care with typing, since the
+    # commands attribute (although present) is not documented, and the
+    # get_command method is only available on MultiCommands.
+    group = main.commands[topic]
+    if isinstance(group, click.MultiCommand):
+        command = group.get_command(ctx, subtopic)
+        if command:
+            ctx.info_name = f"{topic} {subtopic}"
+            click.echo(command.get_help(ctx))
+            return
+
+    # Fall through to the error case of no subcommand found.
+    msg = f"Unknown help topic {topic} {subtopic}"
+    raise click.UsageError(msg, ctx)
 
 
 @main.group()
@@ -133,7 +149,16 @@ def secrets() -> None:
 def secrets_audit(
     environment: str, *, config: Path | None, secrets: Path | None
 ) -> None:
-    """Audit the secrets for the given environment for inconsistencies."""
+    """Audit secrets for an environment.
+
+    The secrets stored in Vault for the given environment will be compared to
+    the secrets required for all applications enabled for that environment,
+    and any discrepencies will be noted. The audit report will be printed to
+    standard output and will be empty if no issues were found.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the Vault data for the given environment.
+    """
     if not config:
         config = _find_config()
     static_secrets = None
@@ -173,7 +198,16 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     help="Path to which to write schema.",
 )
 def secrets_schema(*, output: Path | None) -> None:
-    """Generate schema for application secret definition."""
+    """Generate schema for application secret definition.
+
+    The output is a JSON schema for the secrets.yaml file for an application,
+    which specifies the secrets required for that application. If the
+    ``--output`` flag is not given, the schema is printed to standard output.
+
+    Users normally don't need to run this command. It is used to update the
+    schema file in the Phalanx repository, which is used by a pre-commit hook
+    to validate secrets.yaml files before committing them.
+    """
     schema = schema_of(
         dict[str, ConditionalSecretConfig],
         title="Phalanx application secret definitions",
@@ -203,7 +237,19 @@ def secrets_schema(*, output: Path | None) -> None:
     help="Path to root of Phalanx configuration.",
 )
 def secrets_static_template(environment: str, *, config: Path | None) -> None:
-    """Generate a template for providing static secrets for an environment."""
+    """Generate a template for static secrets.
+
+    Static secrets may be provided to other commands that need to know them
+    (most notably ``phalanx secrets sync``) via the ``--secrets`` flag, which
+    points to a YAML file containing the static secrets for an environment.
+    This command generates a template for that YAML file. It will contain the
+    descriptions for each secret and a place for the value of that secret to
+    be filled in.
+
+    The template is public information, but (somewhat obviously) once secret
+    values have been added to it, this file must be kept secure and private to
+    Phalanx administrators for that environment.
+    """
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -246,7 +292,18 @@ def secrets_sync(
     regenerate: bool,
     secrets: Path | None,
 ) -> None:
-    """Synchronize the secrets for an environment into Vault."""
+    """Synchronize environment secrets with Vault.
+
+    The secrets required for all enabled applications for the given
+    environment are compared with the secrets stored for that environment in
+    Vault, any missing or incorrect secrets are updated, and optionally any
+    extraneous secrets may be deleted.
+
+    The environment variable VAULT_TOKEN must be set to a token with read and
+    write access to the secrets for this environment (and optionally delete
+    access). If Vault credentials are managed through this tool, such a token
+    can be created with the ``phalanx vault create-write-token`` command.
+    """
     if not config:
         config = _find_config()
     static_secrets = None
@@ -277,6 +334,9 @@ def secrets_vault_secrets(
     One JSON file per application with secrets will be created in the output
     directory, containing the secrets for that application. If the value of a
     secret is not known, it will be written as null.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the Vault data for the given environment.
     """
     if not config:
         config = _find_config()
@@ -300,7 +360,10 @@ def vault() -> None:
     help="Path to root of Phalanx configuration.",
 )
 def vault_audit(environment: str, *, config: Path | None) -> None:
-    """Audit the Vault credentials for the given environment.
+    """Audit Vault credentials for an environment.
+
+    The audit report will be printed to standard output and will be empty if
+    no issues were found.
 
     The environment variable VAULT_TOKEN must be set to a token with access to
     read policies, AppRoles, tokens, and token accessors.
@@ -327,12 +390,15 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
 def vault_create_read_approle(
     environment: str, *, config: Path | None
 ) -> None:
-    """Create a new Vault AppRole with read access to environment secrets.
+    """Create a new Vault read AppRole.
 
-    This AppRole is intended for use by vault-secrets-operator to maintain
-    Kubernetes secrets from the Phalanx Vault secrets. The environment
-    variable VAULT_TOKEN must be set to a token with access to create policies
-    and AppRoles.
+    The created AppRole will have read access to all of the Vault secrets for
+    the given environment. It is intended for use by vault-secrets-operator to
+    maintain Kubernetes secrets from the Phalanx Vault secrets.
+
+    The environment variable VAULT_TOKEN must be set to a token with access to
+    create policies and AppRoles, list AppRole SecretID accessors, and revoke
+    AppRole SecretIDs.
     """
     if not config:
         config = _find_config()
@@ -360,10 +426,14 @@ def vault_create_read_approle(
 def vault_create_write_token(
     environment: str, *, config: Path | None, lifetime: str
 ) -> None:
-    """Create a new Vault token with write access to environment secrets.
+    """Create a new Vault write token.
 
-    This token is intended for interactive use with this tool to synchronize
-    environment secrets to Vault.
+    The created token will have read, write, delete, and destroy access to all
+    of the Vault secrets for the given environment. It is intended for
+    interactive use with this tool synchronize environment secrets to Vault.
+
+    The environment variable VAULT_TOKEN must be set to a token with access to
+    list token accessors, create policies, and create and revoke tokens.
     """
     if not config:
         config = _find_config()
