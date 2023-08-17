@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
+from typing import Any
 
 import yaml
 
@@ -10,6 +12,7 @@ __all__ = [
     "phalanx_test_path",
     "read_input_static_secrets",
     "read_output_data",
+    "read_output_json",
 ]
 
 
@@ -66,3 +69,46 @@ def read_output_data(environment: str, filename: str) -> str:
     """
     base_path = Path(__file__).parent.parent / "data" / "output"
     return (base_path / environment / filename).read_text()
+
+
+def read_output_json(environment: str, filename: str) -> Any:
+    """Read test output data in JSON and return it.
+
+    Parameters
+    ----------
+    environment
+        Name of the environment under :filename:`data/output` that the test
+        output is for.
+    filename
+        File containing the output data. ``.json`` will be appended.
+
+    Returns
+    -------
+    Any
+        Contents of the file.
+    """
+    base_path = Path(__file__).parent.parent / "data" / "output"
+    data = (base_path / environment / (filename + ".json")).read_text()
+    return json.loads(data)
+
+
+def write_output_json(environment: str, filename: str, data: Any) -> None:
+    """Store output data as JSON.
+
+    This function is not called directly by the test suite. It is provided as
+    a convenience to write the existing output as test data so that a human
+    can review it without having to write it manually.
+
+    Parameters
+    ----------
+    config
+        Configuration to which to write data (the name of one of the
+        directories under ``tests/configs``).
+    filename
+        File to write.
+    data
+        Data to write.
+    """
+    base_path = Path(__file__).parent.parent / "data" / "output"
+    with (base_path / environment / (filename + ".json")).open("w") as f:
+        json.dump(data, f, indent=2)
