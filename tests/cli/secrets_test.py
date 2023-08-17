@@ -3,19 +3,20 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bcrypt
-from click.testing import CliRunner
+import click
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
-from phalanx.cli import main
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
 
+from ..support.cli import run_cli
 from ..support.data import (
     phalanx_test_path,
     read_input_static_secrets,
@@ -50,28 +51,45 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
 
     secrets_path = input_path / "secrets" / "idfdev.yaml"
-    runner = CliRunner()
-    result = runner.invoke(
-        main,
-        ["secrets", "audit", "--secrets", str(secrets_path), "idfdev"],
-        catch_exceptions=False,
+    result = run_cli(
+        "secrets", "audit", "--secrets", str(secrets_path), "idfdev"
     )
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "secrets-audit")
 
 
-def test_list(factory: Factory) -> None:
-    runner = CliRunner()
-    result = runner.invoke(
-        main, ["secrets", "list", "idfdev"], catch_exceptions=False
-    )
+def test_list() -> None:
+    result = run_cli("secrets", "list", "idfdev")
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "secrets-list")
 
 
+def test_list_path_search() -> None:
+    """Test that we can find the root of the tree from a subdirectory."""
+    cwd = Path.cwd()
+    os.chdir(str(phalanx_test_path() / "applications" / "gafaelfawr"))
+    try:
+        result = run_cli("secrets", "list", "idfdev", needs_config=False)
+        assert result.exit_code == 0
+        assert result.output == read_output_data("idfdev", "secrets-list")
+    finally:
+        os.chdir(str(cwd))
+
+
+def test_list_path_failure() -> None:
+    """Test failure to find the root of the config tree."""
+    cwd = Path.cwd()
+    os.chdir("/usr")
+    try:
+        result = run_cli("secrets", "list", "idfdev", needs_config=False)
+        assert result.exit_code == click.UsageError.exit_code
+        assert "Cannot locate root of Phalanx configuration" in result.output
+    finally:
+        os.chdir(str(cwd))
+
+
 def test_schema() -> None:
-    runner = CliRunner()
-    result = runner.invoke(main, ["secrets", "schema"], catch_exceptions=False)
+    result = run_cli("secrets", "schema", needs_config=False)
     assert result.exit_code == 0
     current = (
         Path(__file__).parent.parent.parent
@@ -83,11 +101,8 @@ def test_schema() -> None:
     assert result.output == current.read_text()
 
 
-def test_static_template(factory: Factory) -> None:
-    runner = CliRunner()
-    result = runner.invoke(
-        main, ["secrets", "static-template", "idfdev"], catch_exceptions=False
-    )
+def test_static_template() -> None:
+    result = run_cli("secrets", "static-template", "idfdev")
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "static-secrets.yaml")
 
@@ -100,11 +115,8 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main,
-        ["secrets", "sync", "--secrets", str(secrets_path), "idfdev"],
-        catch_exceptions=False,
+    result = run_cli(
+        "secrets", "sync", "--secrets", str(secrets_path), "idfdev"
     )
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "sync-output")
@@ -134,11 +146,7 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     # Gafaelfawr Vault secret key is deleted. This also tests that if the
     # static secrets are already in Vault, there's no need to provide a source
     # for static secrets and the Phalanx CLI will silently cope.
-    result = runner.invoke(
-        main,
-        ["secrets", "sync", "--delete", "idfdev"],
-        catch_exceptions=False,
-    )
+    result = run_cli("secrets", "sync", "--delete", "idfdev")
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "sync-delete-output")
     after = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
@@ -159,18 +167,13 @@ def test_sync_regenerate(
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
     before = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main,
-        [
-            "secrets",
-            "sync",
-            "--secrets",
-            str(secrets_path),
-            "--regenerate",
-            "idfdev",
-        ],
-        catch_exceptions=False,
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--secrets",
+        str(secrets_path),
+        "--regenerate",
+        "idfdev",
     )
     assert result.exit_code == 0
     expected = read_output_data("idfdev", "sync-regenerate-output")
@@ -213,12 +216,7 @@ def test_vault_secrets(
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main,
-        ["secrets", "vault-secrets", "idfdev", str(tmp_path)],
-        catch_exceptions=False,
-    )
+    result = run_cli("secrets", "vault-secrets", "idfdev", str(tmp_path))
     assert result.exit_code == 0
     assert result.output == ""
 

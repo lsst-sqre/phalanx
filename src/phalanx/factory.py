@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.config import ConfigStorage
@@ -11,7 +13,16 @@ __all__ = ["Factory"]
 
 
 class Factory:
-    """Factory to create Phalanx components."""
+    """Factory to create Phalanx components.
+
+    Parameters
+    ----------
+    path
+        Path to the root of the Phalanx configuration tree.
+    """
+
+    def __init__(self, path: Path) -> None:
+        self._path = path
 
     def create_config_storage(self) -> ConfigStorage:
         """Create storage layer for the Phalanx configuration.
@@ -21,7 +32,7 @@ class Factory:
         ConfigStorage
             Storage service for loading the Phalanx configuration.
         """
-        return ConfigStorage()
+        return ConfigStorage(self._path)
 
     def create_secrets_service(self) -> SecretsService:
         """Create service for manipulating Phalanx secrets.

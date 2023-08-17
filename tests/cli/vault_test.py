@@ -7,14 +7,13 @@ from datetime import datetime, timedelta
 
 import jinja2
 import yaml
-from click.testing import CliRunner
 from safir.datetime import current_datetime
 
-from phalanx.cli import main
 from phalanx.constants import VAULT_WRITE_TOKEN_LIFETIME
 from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
+from ..support.cli import run_cli
 from ..support.data import read_output_data
 from ..support.vault import MockVaultClient
 
@@ -25,12 +24,8 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     _, vault_path = environment.vault_path_prefix.split("/", 1)
     _, role_name = vault_path.rsplit("/", 1)
 
-    runner = CliRunner()
-
     # Nothing has been created, so audit will report both missing.
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-both-missing")
 
@@ -39,9 +34,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.create_or_update_approle(
         role_name, token_policies=["something"], token_type="service"
     )
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-approle-policy")
 
@@ -54,9 +47,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         token_policies=[f"{vault_path}/read", "extra"],
         token_type="service",
     )
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-approle-extra")
 
@@ -69,9 +60,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
     )
     mock_vault.create_or_update_policy(f"{vault_path}/write", "blah blah blah")
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-token-policy")
 
@@ -86,9 +75,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
         create_expired_token=True,
     )
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 1
     output = re.sub(r"[\d-]{10} [\d:]{8}", "<timestamp>", result.output)
     assert output == read_output_data("idfdev", "audit-token-expired")
@@ -99,10 +86,7 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
     vault_service.create_read_approle("idfdev")
     vault_service.create_write_token("idfdev", VAULT_WRITE_TOKEN_LIFETIME)
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main, ["vault", "audit", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 0
     assert result.output == ""
 
@@ -116,12 +100,7 @@ def test_create_read_approle(
     environment = config_storage.load_environment_config("idfdev")
     _, vault_path = environment.vault_path_prefix.split("/", 1)
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main,
-        ["vault", "create-read-approle", "idfdev"],
-        catch_exceptions=False,
-    )
+    result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
     approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
 
@@ -144,11 +123,7 @@ def test_create_read_approle(
 
     # Recreating the AppRole should result in a new SecretID and delete the
     # old one.
-    result = runner.invoke(
-        main,
-        ["vault", "create-read-approle", "idfdev"],
-        catch_exceptions=False,
-    )
+    result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
     new_approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
     r = mock_vault.list_secret_id_accessors(role_name)
@@ -170,10 +145,7 @@ def test_create_write_token(
     lifetime = timedelta(days=int(VAULT_WRITE_TOKEN_LIFETIME[:-1]))
     expires = current_datetime() + lifetime
 
-    runner = CliRunner()
-    result = runner.invoke(
-        main, ["vault", "create-write-token", "idfdev"], catch_exceptions=False
-    )
+    result = run_cli("vault", "create-write-token", "idfdev")
     assert result.exit_code == 0
     token = VaultToken.parse_obj(yaml.safe_load(result.output))
     assert token.display_name == display_name
