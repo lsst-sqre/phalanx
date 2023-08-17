@@ -27,7 +27,7 @@ class InvalidEnvironmentConfigError(Exception):
     """
 
     def __init__(self, name: str, error: str) -> None:
-        msg = "Invalid configuration for environment {name}: {error}"
+        msg = f"Invalid configuration for environment {name}: {error}"
         super().__init__(msg)
 
 
