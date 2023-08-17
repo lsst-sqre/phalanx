@@ -40,6 +40,8 @@ config:
 
   # Allow access by GitHub team.
   groupMapping:
+    "admin:jupyterlab":
+      - "g_admins"
     "admin:provision":
       - "g_admins"
     "exec:admin":
