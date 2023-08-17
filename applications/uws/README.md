@@ -1,6 +1,6 @@
-# dmocps
+# uws
 
-Deployment for the DM OCPS CSCs
+Deployment for the UWS and DM OCPS CSCs
 
 ## Values
 

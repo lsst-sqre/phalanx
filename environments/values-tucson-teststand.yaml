@@ -7,7 +7,6 @@ applications:
   auxtel: true
   calsys: true
   control-system-test: true
-  dmocps: true
   eas: true
   exposurelog: true
   love: true
@@ -19,6 +18,7 @@ applications:
   simonyitel: true
   squareone: true
   strimzi: true
+  uws: true
   telegraf: true
   telegraf-ds: true
 

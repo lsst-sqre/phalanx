@@ -1,7 +1,7 @@
 apiVersion: v2
-name: dmocps
+name: uws
 version: 1.0.0
-description: Deployment for the DM OCPS CSCs
+description: Deployment for the UWS and DM OCPS CSCs
 dependencies:
 - name: csc_collector
   version: 1.0.0
