@@ -44,6 +44,8 @@ workers:
     value: "https://s3dfrgw.slac.stanford.edu"
   - name: DAF_BUTLER_REPOSITORY_INDEX
     value: "s3://rubin-summit-users/data-repos.yaml"
+  - name: DAF_BUTLER_REPOSITORY
+    value: "/sdf/group/rubin/repo/ir2/butler.yaml"
   envSecrets:
   - name: ASTROMETRY_NET_API_KEY
     secretName: rubintv-secret
