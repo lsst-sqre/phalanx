@@ -32,15 +32,16 @@ def _merge_overrides(
     dict
         Merged dictionary.
     """
+    new = base.copy()
     for key, value in overrides.items():
-        if key in base:
-            if isinstance(base[key], dict) and isinstance(value, dict):
-                _merge_overrides(base[key], value)
+        if key in new:
+            if isinstance(new[key], dict) and isinstance(value, dict):
+                new[key] = _merge_overrides(new[key], value)
             else:
-                base[key] = value
+                new[key] = value
         else:
-            base[key] = value
-    return base
+            new[key] = value
+    return new
 
 
 class ConfigStorage:
