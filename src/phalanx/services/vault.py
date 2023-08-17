@@ -88,6 +88,9 @@ class VaultService:
         template = self._templates.get_template("vault-read-policy.tmpl")
         policy = template.render({"path": config.vault_path})
         vault_client.create_policy(config.vault_read_policy, policy)
+        approle = vault_client.get_approle(config.vault_read_approle)
+        if approle:
+            vault_client.revoke_approle_secret_ids(config.vault_read_approle)
         return vault_client.create_approle(
             config.vault_read_approle, [config.vault_read_policy]
         )
@@ -99,7 +102,10 @@ class VaultService:
 
         This will create (or update) a read policy whose name is the Vault
         secrets path with the first component (the mount) removed and
-        ``/write`` appended
+        ``/write`` appended. Any existing write tokens will be revoked.
+
+        Must be called with credentials capable of creating tokens and
+        policies and listing accessors of existing tokens.
 
         Parameters
         ----------
@@ -115,6 +121,9 @@ class VaultService:
         """
         config = self._config.load_environment_config(environment)
         vault_client = self._vault.get_vault_client(config)
+        tokens = self._find_write_tokens(vault_client, config)
+        for token in tokens:
+            vault_client.revoke_token(token.accessor)
         template = self._templates.get_template("vault-write-policy.tmpl")
         policy = template.render({"path": config.vault_path})
         vault_client.create_policy(config.vault_write_policy, policy)
