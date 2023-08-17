@@ -1,0 +1,29 @@
+{
+  "admin:jupyterlab": [
+    "``g_admins``"
+  ],
+  "admin:provision": [
+    "``g_admins``"
+  ],
+  "exec:admin": [
+    "``g_admins``"
+  ],
+  "exec:internal-tools": [
+    "``g_users``"
+  ],
+  "exec:notebook": [
+    "``g_users``"
+  ],
+  "exec:portal": [
+    "``g_users``"
+  ],
+  "read:image": [
+    "``g_users``"
+  ],
+  "read:tap": [
+    "``g_users``"
+  ],
+  "write:sasquatch": [
+    "``g_admins``"
+  ]
+}

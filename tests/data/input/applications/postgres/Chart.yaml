@@ -1,0 +1,7 @@
+apiVersion: v2
+name: postgres
+version: 1.0.0
+description: Postgres RDBMS for LSP
+sources:
+  - https://github.com/lsst-sqre/rsp-postgres
+appVersion: 0.0.5

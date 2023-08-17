@@ -2,14 +2,35 @@
 
 from __future__ import annotations
 
+import re
+from collections import defaultdict
+from contextlib import suppress
 from pathlib import Path
 from typing import Any
 
 import yaml
+from pydantic import ValidationError
 
-from ..exceptions import InvalidSecretConfigError, UnknownEnvironmentError
-from ..models.applications import Application, ApplicationInstance
-from ..models.environments import Environment, EnvironmentConfig
+from ..constants import HELM_DOCLINK_ANNOTATION
+from ..exceptions import (
+    InvalidApplicationConfigError,
+    InvalidSecretConfigError,
+    UnknownEnvironmentError,
+)
+from ..models.applications import (
+    Application,
+    ApplicationConfig,
+    ApplicationInstance,
+    DocLink,
+)
+from ..models.environments import (
+    Environment,
+    EnvironmentConfig,
+    EnvironmentDetails,
+    GafaelfawrScope,
+    IdentityProvider,
+    PhalanxConfig,
+)
 from ..models.secrets import ConditionalSecretConfig, Secret
 
 __all__ = ["ConfigStorage"]
@@ -50,7 +71,7 @@ class ConfigStorage:
     Parameters
     ----------
     path
-        Root path to Phalanx configuration.
+        Path to the root of the Phalanx configuration.
     """
 
     def __init__(self, path: Path) -> None:
@@ -75,7 +96,9 @@ class ConfigStorage:
             Raised if the named environment has no configuration.
         """
         config = self.load_environment_config(environment_name)
-        applications = [self._load_application(a) for a in config.applications]
+        applications = [
+            self._load_application_config(a) for a in config.applications
+        ]
         instances = {
             a.name: self._resolve_application(a, environment_name)
             for a in applications
@@ -90,7 +113,11 @@ class ConfigStorage:
     def load_environment_config(
         self, environment_name: str
     ) -> EnvironmentConfig:
-        """Load the configuration for a Phalanx environment.
+        """Load the top-level configuration for a Phalanx environment.
+
+        Unlike `load_environment`, this only loads the top-level environment
+        configuration and its list of enabled applications. It does not load
+        the configuration for all of the applications themselves.
 
         Parameters
         ----------
@@ -135,6 +162,200 @@ class ConfigStorage:
         environment.applications = sorted(applications)
         return environment
 
+    def load_phalanx_config(self) -> PhalanxConfig:
+        """Load the full Phalanx configuration.
+
+        Used primarily for generating docuemntation.
+
+        Returns
+        -------
+        PhalanxConfig
+            Phalanx configuration for all environments.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the namespace for the application could not be found.
+        InvalidEnvironmentConfigError
+            Raised if the configuration for an environment is invalid.
+        """
+        environments_path = self._path / "environments"
+        environments = []
+        for values_path in sorted(environments_path.glob("values-*.yaml")):
+            environment_name = values_path.stem.removeprefix("values-")
+            environments.append(self.load_environment_config(environment_name))
+
+        # Load the configurations of all enabled applications.
+        enabled_applications = set()
+        enabled_for: defaultdict[str, list[str]] = defaultdict(list)
+        for environment in environments:
+            enabled_applications |= set(environment.applications)
+            for name in environment.applications:
+                enabled_for[name].append(environment.name)
+        applications = {}
+        for name in enabled_applications:
+            application_config = self._load_application_config(name)
+            application = Application(
+                active_environments=enabled_for[name],
+                **application_config.dict(),
+            )
+            applications[name] = application
+
+        # Build the environment details, which augments the environment config
+        # with some information from Argo CD and Gafaelfawr configuration for
+        # that environment.
+        environment_details = []
+        for environment in environments:
+            name = environment.name
+            details = self._build_environment_details(
+                environment,
+                [applications[a] for a in sorted(environment.applications)],
+                self._resolve_application(applications["argocd"], name),
+                self._resolve_application(applications["gafaelfawr"], name),
+            )
+            environment_details.append(details)
+
+        # Return the resulting configuration.
+        return PhalanxConfig(
+            environments=environment_details,
+            applications=sorted(applications.values(), key=lambda a: a.name),
+        )
+
+    def _build_environment_details(
+        self,
+        config: EnvironmentConfig,
+        applications: list[Application],
+        argocd: ApplicationInstance,
+        gafaelfawr: ApplicationInstance,
+    ) -> EnvironmentDetails:
+        """Construct the details of an environment.
+
+        This is the environment configuration enhanced with some configuration
+        details from the Argo CD and Gafaelfawr applications.
+
+        Parameters
+        ----------
+        config
+            Configuration for the environment.
+        applications
+            All enabled applications for that environment.
+        argocd
+            Argo CD application configuration.
+        gafaelfawr
+            Gafaelfawr application configuration.
+
+        Returns
+        -------
+        EnvironmentDetails
+            Fleshed-out details for that environment.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the Gafaelfawr or Argo CD configuration is invalid.
+        """
+        # Public URL of Argo CD (or none for environments like minikube).
+        argocd_url = None
+        with suppress(KeyError):
+            argocd_url = argocd.values["argo-cd"]["server"]["config"]["url"]
+
+        # Argo CD role-based access control configuration.
+        argocd_rbac = []
+        with suppress(KeyError):
+            rbac_config = argocd.values["argo-cd"]["server"]["rbacConfig"]
+            rbac_csv = rbac_config["policy.csv"]
+            argocd_rbac = [
+                [i.strip() for i in line.split(",")]
+                for line in rbac_csv.splitlines()
+            ]
+
+        # Type of identity provider used for Gafaelfawr.
+        if gafaelfawr.values["config"]["cilogon"]["clientId"]:
+            identity_provider = IdentityProvider.CILOGON
+        elif gafaelfawr.values["config"]["github"]["clientId"]:
+            identity_provider = IdentityProvider.GITHUB
+        elif gafaelfawr.values["config"]["oidc"]["clientId"]:
+            identity_provider = IdentityProvider.OIDC
+        else:
+            raise InvalidApplicationConfigError(
+                "gafaelfawr",
+                "Cannot determine identity provider",
+                environment=config.name,
+            )
+
+        # Gafaelfawr scopes. Restructure the data to let Pydantic do most of
+        # the parsing.
+        try:
+            group_mapping = gafaelfawr.values["config"]["groupMapping"]
+            gafaelfawr_scopes = []
+            for scope, groups in group_mapping.items():
+                raw = {"scope": scope, "groups": groups}
+                gafaelfawr_scope = GafaelfawrScope.parse_obj(raw)
+                gafaelfawr_scopes.append(gafaelfawr_scope)
+        except KeyError as e:
+            raise InvalidApplicationConfigError(
+                "gafaelfawr", "No config.groupMapping", environment=config.name
+            ) from e
+        except ValidationError as e:
+            raise InvalidApplicationConfigError(
+                "gafaelfawr",
+                "Invalid config.groupMapping",
+                environment=config.name,
+            ) from e
+
+        # Return the resulting model.
+        return EnvironmentDetails(
+            name=config.name,
+            fqdn=config.fqdn,
+            applications=applications,
+            argocd_url=argocd_url,
+            argocd_rbac=argocd_rbac,
+            identity_provider=identity_provider,
+            gafaelfawr_scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
+        )
+
+    def _find_application_namespace(self, application: str) -> str:
+        """Determine what namespace an application will be deployed into.
+
+        This information is present in the Argo CD ``Application`` resource,
+        which by convention in Phalanx is named :file:`{app}-application.yaml`
+        in the :file:`environments/templates` directory.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        str
+            Namespace into which the application will be deployed.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the namespace for the application could not be found.
+        """
+        template_path = (
+            self._path
+            / "environments"
+            / "templates"
+            / f"{application}-application.yaml"
+        )
+        template = template_path.read_text()
+
+        # Helm templates are unfortunately not valid YAML, so do this the hard
+        # way with a regular expression.
+        pattern = (
+            r"destination:\n"
+            r"\s+namespace:\s*\"?(?P<namespace>[a-zA-Z][\w-]+)\"?\s"
+        )
+        match = re.search(pattern, template, flags=re.MULTILINE | re.DOTALL)
+        if not match:
+            msg = f"Namespace not found in {template_path!s}"
+            raise InvalidApplicationConfigError(application, msg)
+        return match.group("namespace")
+
     def _is_condition_satisfied(
         self, instance: ApplicationInstance, condition: str | None
     ) -> bool:
@@ -162,7 +383,7 @@ class ConfigStorage:
         else:
             return instance.is_values_setting_true(condition)
 
-    def _load_application(self, name: str) -> Application:
+    def _load_application_config(self, name: str) -> ApplicationConfig:
         """Load the configuration for an application from disk.
 
         Parameters
@@ -172,10 +393,12 @@ class ConfigStorage:
 
         Returns
         -------
-        Application
-            Application data.
+        ApplicationConfig
+            Application configuration.
         """
         base_path = self._path / "applications" / name
+        with (base_path / "Chart.yaml").open("r") as fh:
+            chart = yaml.safe_load(fh)
 
         # Load main values file.
         values_path = base_path / "values.yaml"
@@ -188,7 +411,7 @@ class ConfigStorage:
         # Load environment-specific values files.
         environment_values = {}
         for path in base_path.glob("values-*.yaml"):
-            env_name = path.stem[len("values-") :]
+            env_name = path.stem.removeprefix("values-")
             with path.open("r") as fh:
                 env_values = yaml.safe_load(fh)
                 if env_values:
@@ -217,16 +440,42 @@ class ConfigStorage:
             }
 
         # Return the resulting application.
-        return Application(
+        return ApplicationConfig(
             name=name,
+            namespace=self._find_application_namespace(name),
+            chart=chart,
+            doc_links=self._parse_doclinks(chart),
             values=values,
             environment_values=environment_values,
             secrets=secrets,
             environment_secrets=environment_secrets,
         )
 
+    def _parse_doclinks(self, chart: dict[str, Any]) -> list[DocLink]:
+        """Parse documentation links from Helm chart annotations.
+
+        We use the ``phalanx.lsst.io/docs`` annotation to store documentation
+        links in :file:`Chart.yaml`. This method extracts them.
+
+        Parameters
+        ----------
+        chart
+            Parsed :file:`Chart.yaml` for an application's main chart.
+
+        Returns
+        -------
+        list of DocLink
+            Documentation links, if any.
+        """
+        key = HELM_DOCLINK_ANNOTATION
+        if key in chart.get("annotations", {}):
+            links = yaml.safe_load(chart["annotations"][key])
+            return [DocLink(**link) for link in links]
+        else:
+            return []
+
     def _resolve_application(
-        self, application: Application, environment_name: str
+        self, application: ApplicationConfig, environment_name: str
     ) -> ApplicationInstance:
         """Resolve an application to its environment-specific configuration.
 
