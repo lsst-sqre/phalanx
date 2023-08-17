@@ -69,11 +69,6 @@ spec:
         resources:
           {{- toYaml . | nindent 10 }}
         {{- end }}
-        readinessProbe:
-          httpGet:
-            path: "/"
-            port: "http"
-          timeoutSeconds: 10
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
