@@ -10,15 +10,48 @@ from .secrets import ConditionalSecretConfig, Secret
 
 __all__ = [
     "Application",
+    "ApplicationConfig",
     "ApplicationInstance",
+    "DocLink",
 ]
 
 
-class Application(BaseModel):
-    """A Phalanx application."""
+class DocLink(BaseModel):
+    """A documentation link for an application.
+
+    This represents an individual array item in the ``phalanx.lsst.io/docs``
+    Helm chart annotation in :file:`Chart.yaml`.
+    """
+
+    url: str
+    """URL to the document."""
+
+    title: str
+    """Title of the document."""
+
+    id: str | None
+    """Identifier of the document."""
+
+    def to_rst(self) -> str:
+        """Format as a reStructuredText link."""
+        label = f"{self.id}: {self.title}" if self.id else self.title
+        return f"`{label} <{self.url}>`__"
+
+
+class ApplicationConfig(BaseModel):
+    """Configuration for a Phalanx application."""
 
     name: str
     """Name of the application."""
+
+    namespace: str
+    """Namespace to which the application is deployed."""
+
+    chart: dict[str, Any]
+    """Parsed Helm :file:`Chart.yaml` file."""
+
+    doc_links: list[DocLink]
+    """List of links to documentation about this application."""
 
     values: dict[str, Any]
     """Base Helm chart values."""
@@ -31,6 +64,23 @@ class Application(BaseModel):
 
     environment_secrets: dict[str, dict[str, ConditionalSecretConfig]]
     """Per-environment secrets for the application, by secret key."""
+
+    @property
+    def homepage(self) -> str | None:
+        """The Helm home field, typically used for the application's docs."""
+        return self.chart.get("home")
+
+    @property
+    def source_urls(self) -> list[str]:
+        """Application source URLs from the Helm sources field."""
+        return self.chart.get("sources", [])
+
+
+class Application(ApplicationConfig):
+    """A Phalanx application that knows which environments use it."""
+
+    active_environments: list[str]
+    """Environments on which this application is enabled."""
 
 
 class ApplicationInstance(BaseModel):

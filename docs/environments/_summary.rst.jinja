@@ -3,43 +3,51 @@
    * - Phalanx name
      - ``{{ env.name }}``
    * - Root domain
-     - `{{ env.domain }} <https://{{ env.domain }}>`__
+     - `{{ env.fqdn }} <https://{{ env.fqdn }}>`__
    * - Argo CD
-     - {{ env.argocd_url }}
+     - {% if env.argocd_url %}{{ env.argocd_url }}{% else %}N/A{% endif %}
    * - Applications
      - .. list-table::
 
           * - Documentation
             - Environment values
             - Defaults
-          {% for app in env.apps %}
+          {% for app in env.applications %}
           * - :px-app:`{{ app.name }}`
+            {%- if app.environment_values.get(env.name) %}
             - `values-{{ env.name }}.yaml <https://github.com/lsst-sqre/phalanx/blob/main/applications/{{ app.name }}/values-{{ env.name }}.yaml>`__
+            {%- else %}
+            -
+            {%- endif %}
+            {%- if app.values %}
             - `values.yaml <https://github.com/lsst-sqre/phalanx/blob/main/applications/{{ app.name }}/values.yaml>`__
+            {%- else %}
+            -
+            {%- endif %}
           {% endfor %}
    * - Identity provider
-     - {{ env.identity_provider }}
-   {% if env.gafaelfawr_roles %}
+     - {{ env.identity_provider.value }}
+   {% if env.gafaelfawr_scopes %}
    * - Gafaelfawr groups
      - .. list-table::
 
-          * - Role
+          * - Scope
             - Groups
-          {% for role_groups in env.gafaelfawr_roles %}
-          * - ``{{ role_groups[0] }}``
-            - - {{ role_groups[1][0] }}
-            {% if role_groups[1]|length > 1 %}
-            {% for group in role_groups[1][1:] %}
+          {% for scope_groups in env.gafaelfawr_scopes %}
+          * - ``{{ scope_groups.scope }}``
+            - - {{ scope_groups.groups_as_rst()[0] }}
+            {% if scope_groups.groups|length > 1 %}
+            {% for group in scope_groups.groups_as_rst()[1:] %}
               - {{ group }}
             {%- endfor %}
             {%- endif %}
           {%- endfor %}
    {% endif %}
-   {% if env.argocd_rbac_csv %}
+   {% if env.argocd_rbac %}
    * - Argo CD RBAC
      - .. csv-table::
 
-          {% for csvline in env.argocd_rbac_csv %}
-          {{ csvline }}
+          {% for line in env.argocd_rbac_csv %}
+          {{ line }}
           {%- endfor %}
    {% endif %}
