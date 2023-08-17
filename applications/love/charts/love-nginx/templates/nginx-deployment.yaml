@@ -24,7 +24,7 @@ spec:
         {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystemImageTag }}
         image: "{{ .Values.initContainers.frontend.image.repository }}:{{ $feImageTag }}"
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
-        command: ["/bin/sh", "-c", "cp -Rv /usr/src/love/ /usr/src/love-frontend"]
+        command: ["/bin/sh", "-c", "mkdir -p /usr/src/love-frontend; cp -Rv /usr/src/love/ /usr/src/love-frontend"]
         volumeMounts:
           - mountPath: /usr/src
             name: {{ .Values.staticStore.name }}

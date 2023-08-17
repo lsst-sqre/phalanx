@@ -38,7 +38,7 @@ love-manager:
     repository: ts-dockerhub.lsst.org/love-manager
     pullPolicy: Always
   env:
-    SERVER_URL: love.tu.lsst.org
+    SERVER_URL: tucson-teststand.lsst.codes
     OLE_API_HOSTNAME: tucson-teststand.lsst.codes
     AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
     AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
@@ -46,6 +46,7 @@ love-manager:
     REDIS_CONFIG_EXPIRY: 5
     REDIS_CONFIG_CAPACITY: 5000
     LOVE_SITE: tucson
+    LOVE_PRODUCER_WEBSOCKET_HOST: love-nginx-service/love/manager/ws/subscription
   envSecrets:
     AUTHLIST_USER_PASS: authlist-user-pass
     AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
@@ -69,7 +70,7 @@ love-manager:
   database:
     image:
       repository: postgres
-      tag: '12.0'
+      tag: '15.0'
       pullPolicy: IfNotPresent
     storage:
       name: love-manager-database
@@ -80,8 +81,10 @@ love-manager:
   redis:
     image:
       repository: redis
-      tag: 5.0.3
+      tag: '7'
       pullPolicy: IfNotPresent
+    config: |
+      timeout 60
   viewBackup:
     enabled: true
     image:
@@ -92,18 +95,19 @@ love-manager:
 love-nginx:
   image:
     repository: nginx
-    tag: 1.13.1
+    tag: 1.25.1
     pullPolicy: Always
   ingress:
-    hostname: love.tu.lsst.org
+    hostname: tucson-teststand.lsst.codes
+    httpPath: /love
     annotations:
-      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
   imagePullSecrets:
   - name: nexus3-docker
   initContainers:
     frontend:
       image:
-        repository: ts-dockerhub.lsst.org/love-frontend
+        repository: ts-dockerhub.lsst.org/love-frontend-k8s
         pullPolicy: Always
     manager:
       image:
@@ -112,8 +116,7 @@ love-nginx:
       command:
       - /bin/sh
       - -c
-      - cp -Rv /usr/src/love/manager/static /usr/src/love-manager; cp -Rv /usr/src/love/manager/media
-        /usr/src/love-manager
+      - mkdir -p /usr/src/love-manager; cp -Rv /usr/src/love/manager/media /usr/src/love-manager; cp -Rv /usr/src/love/manager/static /usr/src/love-manager
   staticStore:
     name: love-nginx-static
     storageClass: rook-ceph-block
@@ -123,11 +126,11 @@ love-nginx:
     server {
       listen 80;
       server_name localhost;
-      location / {
+      location /love {
         root   /usr/src/love-frontend;
-        try_files $uri$args $uri$args/ $uri/ /index.html;
+        try_files $uri$args $uri$args/ $uri/ /love/index.html;
       }
-      location /manager {
+      location /love/manager {
           proxy_pass http://love-manager-service:8000;
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
@@ -135,18 +138,18 @@ love-nginx:
           proxy_set_header Host $host;
           proxy_redirect off;
       }
-      location /media {
+      location /love/media {
           alias /usr/src/love-manager/media;
       }
-      location /manager/static {
+      location /love/manager/static {
           alias /usr/src/love-manager/static;
       }
-      location /manager/media {
+      location /love/manager/media {
           alias /usr/src/love-manager/media;
       }
-      location /simcam {
-          proxy_pass http://simulation-gencam-service.calsys:5013;
-          proxy_redirect off;
+      location /love/simcam {
+          proxy_pass http://simulation-gencam-service.calsys:5013/;
+          proxy_set_header Host $host/love;
       }
     }
   loveConfig: |
@@ -156,7 +159,7 @@ love-nginx:
         "minSeverityNotification": "warning"
       },
       "camFeeds": {
-        "simcam": "/simcam"
+        "simcam": "/love/simcam"
       },
       "efd": {
         "defaultEfdInstance": "tucson_teststand_efd"
@@ -168,7 +171,7 @@ love-producer:
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
   env:
-    WEBSOCKET_HOST: love-nginx-service/manager/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/ws/subscription
   producers:
   - name: auxtel
     cscs:

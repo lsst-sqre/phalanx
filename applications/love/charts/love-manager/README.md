@@ -46,6 +46,7 @@ Helm chart for the LOVE manager service.
 | env.REDIS_HOST | string | `"love-manager-redis-service"` | The name of the redis service |
 | env.REMOTE_STORAGE | bool | `true` | Set the manager to use LFA storage |
 | env.SERVER_URL | string | `"love.lsst.local"` | The external URL from the NGINX server for LOVE |
+| env.URL_SUBPATH | string | `"/love"` | The Kubernetes sub-path for LOVE |
 | envSecretKeyName | string | `"love"` | The top-level secret key name that houses the rest of the secrets |
 | envSecrets.ADMIN_USER_PASS | string | `"admin-user-pass"` | The LOVE manager admin user password secret key name |
 | envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager cmd_user user password secret key name |
@@ -62,6 +63,7 @@ Helm chart for the LOVE manager service.
 | ports.node | int | `30000` | The port on the node for normal communcations |
 | readinessProbe | object | `{}` | Configuration for the LOVE manager pods readiness probe |
 | redis.affinity | object | `{}` | Affinity rules for the LOVE redis pods |
+| redis.config | string | `"timeout 60\n"` | Configuration specification for the redis service |
 | redis.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the redis image |
 | redis.image.repository | string | `"redis"` | The redis image to use |

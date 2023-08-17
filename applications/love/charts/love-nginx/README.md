@@ -12,7 +12,7 @@ Helm chart for the LOVE Nginx server.
 | image.tag | string | `"1.14.2"` | The tag to use for the NGINX image |
 | imagePullSecrets | list | `[]` | The list of pull secrets needed for the images. If this section is used, each object listed can have the following attributes defined: _name_ (The label identifying the pull-secret to use) |
 | ingress.annotations | object | `{}` | Annotations for the NGINX ingress |
-| ingress.className | string | `""` | Assign the Ingress class name |
+| ingress.className | string | `"nginx"` | Assign the Ingress class name |
 | ingress.hostname | string | `"love.local"` | Hostname for the NGINX ingress |
 | ingress.httpPath | string | `"/"` | Path name associated with the NGINX ingress |
 | ingress.pathType | string | `""` | Set the Kubernetes path type for the NGINX ingress |

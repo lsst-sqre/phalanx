@@ -17,6 +17,8 @@ env:
   LOVE_SITE: local
   # -- The external URL from the NGINX server for LOVE
   SERVER_URL: love.lsst.local
+  # -- The Kubernetes sub-path for LOVE
+  URL_SUBPATH: /love
   # -- Set the manager to use LFA storage
   REMOTE_STORAGE: true
   # -- Set the hostname for the Jira instance
@@ -152,6 +154,9 @@ redis:
   tolerations: []
   # -- Affinity rules for the LOVE redis pods
   affinity: {}
+  # -- Configuration specification for the redis service
+  config: |
+    timeout 60
 viewBackup:
   # -- Whether view backup is active
   enabled: false

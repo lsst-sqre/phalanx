@@ -22,7 +22,7 @@ ingress:
   # -- Set the Kubernetes path type for the NGINX ingress
   pathType: ""
   # -- Assign the Ingress class name
-  className: ""
+  className: nginx
   # -- Annotations for the NGINX ingress
   annotations: {}
 # -- Configuration specification for the NGINX service
