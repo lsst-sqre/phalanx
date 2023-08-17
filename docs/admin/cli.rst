@@ -2,7 +2,7 @@ Command-line interface
 ======================
 
 Many administrative actions for Phalanx environments are being moved into a Phalanx command-line tool.
-Its currently-available commands are summarized below.
+The commands for the :command:`phalanx` CLI are documented here.
 
 .. warning::
 
