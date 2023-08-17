@@ -7,12 +7,36 @@ from collections.abc import Iterable
 from .models.secrets import Secret
 
 __all__ = [
+    "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
     "VaultNotFoundError",
 ]
+
+
+class InvalidApplicationConfigError(Exception):
+    """Configuration for an application is invalid.
+
+    Parameters
+    ----------
+    name
+        Name of the application.
+    error
+        Error message.
+    environment
+        Name of the affected environment.
+    """
+
+    def __init__(
+        self, name: str, error: str, *, environment: str | None = None
+    ) -> None:
+        msg = f"Invalid configuration for application {name}"
+        if environment:
+            msg += f" in environment {environment}"
+        msg += f": {error}"
+        super().__init__(msg)
 
 
 class InvalidEnvironmentConfigError(Exception):
