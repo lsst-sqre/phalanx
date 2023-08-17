@@ -16,6 +16,7 @@ from pydantic import BaseModel, Extra, Field, SecretStr, validator
 
 from .gafaelfawr import Token
 
+# Including StaticSecrets in __all__ triggers a Sphinx automodsumm bug.
 __all__ = [
     "ConditionalMixin",
     "ConditionalSecretConfig",
@@ -32,7 +33,6 @@ __all__ = [
     "SimpleSecretGenerateRules",
     "SourceSecretGenerateRules",
     "StaticSecret",
-    "StaticSecrets",
 ]
 
 

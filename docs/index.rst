@@ -22,6 +22,7 @@ Phalanx is on GitHub at https://github.com/lsst-sqre/phalanx.
    admin/index
    applications/index
    environments/index
+   internals/index
 
 .. grid:: 3
 

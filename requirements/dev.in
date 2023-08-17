@@ -17,6 +17,7 @@ ruff
 types-PyYAML
 
 # Documentation
+autodoc_pydantic
 documenteer[guide]>=0.7.0,<1
 pydantic<2
 sphinx-click
