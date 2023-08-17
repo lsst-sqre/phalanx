@@ -13,12 +13,13 @@ instrument:
   name: HSC
   pipelines: (survey="SURVEY")=${PROMPT_PROTOTYPE_DIR}/pipelines/HSC/ApPipe.yaml
   skymap: hsc_rings_v1
-  calibRepo: s3://rubin-pp-users/central_repo/
+  calibRepo: s3://rubin:rubin-pp-users/central_repo/
 
 s3:
-  imageBucket: rubin-pp
+  imageBucket: rubin:rubin-pp
   endpointUrl: https://s3dfrgw.slac.stanford.edu
-  cred_file_auth: true
+  auth_env: true
+  disableBucketValidation: '1'
 
 imageNotifications:
   kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
@@ -45,9 +46,9 @@ knative:
 
 namespace: prompt-proto-service-hsc
 
-additionalVolumeMounts:
-  - mountPath: /app/s3/credentials
-    name: s3-credentials-file
-    subPath: credentials
+#additionalVolumeMounts:
+#  - mountPath: /app/s3/credentials
+#    name: s3-credentials-file
+#    subPath: credentials
 
 vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-hsc"

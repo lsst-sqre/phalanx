@@ -22,12 +22,18 @@ containerConcurrency: 1
 namespace: prompt-proto-service
 
 
+
+imageNotifications:
+  #imageTimeout: 120
+
 image:
   repository: ghcr.io/lsst-dm/prompt-proto-service
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+s3:
+  disableBucketValidation: '0'
 
 additionalVolumeMounts: []
 
