@@ -42,8 +42,6 @@ nublado2:
   enabled: true
 ook:
   enabled: false
-obstap:
-  enabled: true
 plot-navigator:
   enabled: true
 portal:
