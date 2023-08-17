@@ -11,3 +11,5 @@ dependencies:
 - name: csc
   alias: ccocps
   version: 1.0.0
+- name: uws-api-server
+  version: 1.5.0
