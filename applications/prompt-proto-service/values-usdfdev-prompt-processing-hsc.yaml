@@ -49,3 +49,5 @@ additionalVolumeMounts:
   - mountPath: /app/s3/credentials
     name: s3-credentials-file
     subPath: credentials
+
+vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-hsc"
