@@ -84,18 +84,36 @@ spec:
         volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
-        - name: "secrets"
+        - name: "user-secrets"
           mountPath: "/etc/secrets"
         {{- range $vol := .Values.workers.volumes }}
         - name: {{ $vol.name }}
           mountPath: {{ $vol.mountPath }}
         {{- end }}
+      initContainers:
+      - name: "secret-perm-fixer"
+        image: "busybox"
+        command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          cp /secrets/* /etc/secrets && \
+          chown {{ $.Values.workers.uid }}:{{ $.Values.workers.gid }} \
+           /etc/secrets/* && \
+          chmod 0600 /etc/secrets/*
+        volumeMounts:
+        - name: "secrets"
+          mountPath: "/secrets"
+        - name: "user-secrets"
+          mountPath: "/etc/secrets"
       volumes:
       - name: "tmp"
         emptyDir: {}
       - name: "secrets"
         secret:
           secretName: {{ include "rubintv.fullname" . }}-secret
+      - name: "user-secrets"
+        emptyDir: {}
       {{- range $vol := .Values.workers.volumes }}
       - name: {{ $vol.name | quote }}
         {{ with $vol.persistentVolumeClaim }}
