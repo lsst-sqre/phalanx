@@ -4,79 +4,34 @@ name: idfprod
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: false
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: true
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: true
-ingress-nginx:
-  enabled: true
-kubernetes-replicator:
-  enabled: false
-mobu:
-  enabled: true
-moneypenny:
-  enabled: false
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: true
-nublado2:
-  enabled: false
-ook:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: true
-postgres:
-  enabled: true
-sasquatch:
-  enabled: false
-production-tools:
-  enabled: false
-semaphore:
-  enabled: true
-sherlock:
-  enabled: true
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-squash-api:
-  enabled: false
-ssotap:
-  enabled: true
-strimzi:
-  enabled: false
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: true
-tap-schema:
-  enabled: true
-telegraf:
-  enabled: true
-telegraf-ds:
-  enabled: true
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: true
+applications:
+  datalinker:
+    enabled: true
+  hips:
+    enabled: true
+  mobu:
+    enabled: true
+  nublado:
+    enabled: true
+  portal:
+    enabled: true
+  postgres:
+    enabled: true
+  semaphore:
+    enabled: true
+  sherlock:
+    enabled: true
+  squareone:
+    enabled: true
+  ssotap:
+    enabled: true
+  tap:
+    enabled: true
+  tap-schema:
+    enabled: true
+  telegraf:
+    enabled: true
+  telegraf-ds:
+    enabled: true
+  vo-cutouts:
+    enabled: true

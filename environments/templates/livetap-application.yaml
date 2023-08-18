@@ -1,4 +1,4 @@
-{{- if .Values.livetap.enabled -}}
+{{- if .Values.applications.livetap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

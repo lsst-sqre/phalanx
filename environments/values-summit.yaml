@@ -3,77 +3,30 @@ fqdn: summit-lsp.lsst.codes
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: true
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: false
-exposurelog:
-  enabled: true
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: false
-ingress-nginx:
-  enabled: true
-kubernetes-replicator:
-  enabled: false
-mobu:
-  enabled: false
-moneypenny:
-  enabled: true
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: true
-noteburst:
-  enabled: false
-nublado:
-  enabled: true
-nublado2:
-  enabled: true
-ook:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: true
-postgres:
-  enabled: true
-sasquatch:
-  enabled: true
-production-tools:
-  enabled: false
-semaphore:
-  enabled: false
-sherlock:
-  enabled: false
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-squash-api:
-  enabled: false
-strimzi:
-  enabled: true
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: false
-tap-schema:
-  enabled: false
-telegraf:
-  enabled: true
-telegraf-ds:
-  enabled: true
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: false
+applications:
+  cachemachine:
+    enabled: true
+  exposurelog:
+    enabled: true
+  moneypenny:
+    enabled: true
+  narrativelog:
+    enabled: true
+  nublado:
+    enabled: true
+  nublado2:
+    enabled: true
+  portal:
+    enabled: true
+  postgres:
+    enabled: true
+  sasquatch:
+    enabled: true
+  squareone:
+    enabled: true
+  strimzi:
+    enabled: true
+  telegraf:
+    enabled: true
+  telegraf-ds:
+    enabled: true

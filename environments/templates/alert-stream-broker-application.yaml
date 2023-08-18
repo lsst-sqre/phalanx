@@ -1,4 +1,4 @@
-{{- if (index .Values "alert-stream-broker" "enabled") -}}
+{{- if (index .Values "applications" "alert-stream-broker" "enabled") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

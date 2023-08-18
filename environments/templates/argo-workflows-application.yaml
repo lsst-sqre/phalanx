@@ -1,4 +1,4 @@
-{{- if (index .Values "argo-workflows" "enabled") -}}
+{{- if (index .Values "applications" "argo-workflows" "enabled") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

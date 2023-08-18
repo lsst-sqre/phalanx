@@ -1,4 +1,4 @@
-{{- if .Values.postgres.enabled -}}
+{{- if .Values.applications.postgres.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

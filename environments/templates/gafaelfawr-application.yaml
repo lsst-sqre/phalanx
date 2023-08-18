@@ -1,4 +1,4 @@
-{{- if .Values.gafaelfawr.enabled -}}
+{{- if .Values.applications.gafaelfawr.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -73,6 +73,7 @@ argocd app create science-platform \
   --port-forward-namespace argocd \
   --helm-set repoUrl=$GIT_URL \
   --helm-set targetRevision=$GIT_BRANCH \
+  --values values.yaml \
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \
@@ -80,7 +81,7 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-if [ $(yq -r '."ingress-nginx".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '.applications."ingress-nginx".enabled' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing ingress-nginx..."
   argocd app sync ingress-nginx \
@@ -90,7 +91,7 @@ fi
 
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl, argocd's sync doesn't seem to wait for this to finish.
-if [ $(yq -r '."cert-manager".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '.applications."cert-manager".enabled' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing cert-manager..."
   argocd app sync cert-manager \
@@ -99,7 +100,7 @@ then
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
 fi
 
-if [ $(yq -r .postgres.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r .applications.postgres.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
 then
   echo "Syncing postgres..."
   argocd app sync postgres \
@@ -107,7 +108,7 @@ then
     --port-forward-namespace argocd
 fi
 
-if [ $(yq -r .gafaelfawr.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r .applications.gafaelfawr.enabled ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing gafaelfawr..."
   argocd app sync gafaelfawr \

@@ -1,4 +1,4 @@
-{{- if .Values.ssotap.enabled -}}
+{{- if .Values.applications.ssotap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

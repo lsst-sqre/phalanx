@@ -1,4 +1,4 @@
-{{- if .Values.noteburst.enabled -}}
+{{- if .Values.applications.noteburst.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

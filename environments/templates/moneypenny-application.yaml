@@ -1,4 +1,4 @@
-{{- if .Values.moneypenny.enabled -}}
+{{- if .Values.applications.moneypenny.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
