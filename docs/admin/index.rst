@@ -29,3 +29,9 @@ Administrators operate infrastructure, bootstrap infrastructure, and are involve
    :maxdepth: 2
 
    infrastructure/filestore/index
+
+.. toctree::
+   :caption: Reference
+   :maxdepth: 1
+
+   cli
