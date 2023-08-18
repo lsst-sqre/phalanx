@@ -1,7 +1,8 @@
-environment: idfdev
-fqdn: data-dev.lsst.cloud
-vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
+fqdn: data-dev.lsst.cloud
+name: idfdev
+vaultUrl: "https://vault.lsst.codes"
+vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
 
 alert-stream-broker:
   enabled: false
@@ -66,8 +67,6 @@ sqlproxy-cross-project:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true

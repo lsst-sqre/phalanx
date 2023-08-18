@@ -2,27 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: tap
-spec:
-  finalizers:
-    - kubernetes
+  name: "tap"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tap
-  namespace: argocd
+  name: "tap"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: tap
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "tap"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/tap
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/tap"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -33,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

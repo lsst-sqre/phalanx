@@ -12,11 +12,13 @@ coverage[toml]
 mypy
 pre-commit
 pytest
+pytest-cov
 ruff
 types-PyYAML
 
 # Documentation
 documenteer[guide]>=0.7.0,<1
 pydantic<2
+sphinx-click
 sphinx-diagrams
 sphinx-jinja

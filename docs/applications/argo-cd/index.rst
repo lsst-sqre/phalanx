@@ -9,7 +9,6 @@ It is itself a set of Kubernetes resources and running pods managed with Helm_.
 
 .. jinja:: argocd
    :file: applications/_summary.rst.jinja
-   :debug:
 
 Guides
 ======

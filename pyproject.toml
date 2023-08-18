@@ -130,7 +130,6 @@ ignore = [
     "FBT003",  # positional booleans are normal for Pydantic field defaults
     "G004",    # forbidding logging f-strings is appealing, but not our style
     "PD011",   # false positive with non-NumPY code that uses .values
-    "PLR0911", # way too strict of a function complexity constraint
     "PLR0913", # factory pattern uses constructors with many arguments
     "PLR2004", # too aggressive about magic values
     "RET505",  # disagree that omitting else always makes code more readable
@@ -161,7 +160,7 @@ target-version = "py311"
 ]
 
 [tool.ruff.isort]
-known-first-party = ["gafaelfawr", "tests"]
+known-first-party = ["phalanx", "tests"]
 split-on-trailing-comma = false
 
 [tool.ruff.flake8-bugbear]

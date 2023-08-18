@@ -2,24 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: plot-navigator
+  name: "plot-navigator"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: plot-navigator
-  namespace: argocd
+  name: "plot-navigator"
+  namespace: "argocd"
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: plot-navigator
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "plot-navigator"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/plot-navigator
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/plot-navigator"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -30,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

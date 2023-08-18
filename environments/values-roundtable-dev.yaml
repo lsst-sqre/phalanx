@@ -1,5 +1,6 @@
-environment: roundtable-dev
+name: roundtable-dev
 fqdn: roundtable-dev.lsst.cloud
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable-dev.lsst.cloud
 
 alert-stream-broker:
@@ -66,8 +67,6 @@ strimzi:
   enabled: true
 strimzi-access-operator:
   enabled: true
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: false
 tap-schema:

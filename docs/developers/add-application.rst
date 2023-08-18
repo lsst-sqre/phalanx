@@ -113,9 +113,6 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
       kind: Namespace
       metadata:
         name: <name>
-      spec:
-        finalizers:
-          - "kubernetes"
       ---
       apiVersion: argoproj.io/v1alpha1
       kind: Application
@@ -131,7 +128,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
         project: "default"
         source:
           path: "applications/<name>"
-          repoURL: {{ .Values.repoURL | quote }}
+          repoURL: {{ .Values.repoUrl | quote }}
           targetRevision: {{ .Values.targetRevision | quote }}
           helm:
             parameters:
@@ -143,7 +140,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
                 value: {{ .Values.vaultPathPrefix | quote }}
             valueFiles:
               - "values.yaml"
-              - 'values-{{ .Values.environment }}.yaml"
+              - "values-{{ .Values.name }}.yaml"
       {{- end -}}
 
    Replace every instance of ``<name>`` with the name of your application.

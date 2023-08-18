@@ -1,5 +1,6 @@
-environment: roundtable-prod
+name: roundtable-prod
 fqdn: roundtable.lsst.cloud
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
 
 alert-stream-broker:
@@ -63,8 +64,6 @@ sqlproxy-cross-project:
 strimzi:
   enabled: false
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: false

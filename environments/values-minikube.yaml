@@ -1,5 +1,6 @@
-environment: minikube
+name: minikube
 fqdn: minikube.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 
 alert-stream-broker:
@@ -61,8 +62,6 @@ squash-api:
 strimzi:
   enabled: false
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true

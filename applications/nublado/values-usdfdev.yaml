@@ -159,11 +159,6 @@ proxy:
       # which already configures a larger value.
       nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
-      # These are substantially shorter than the default timeouts (it's not
-      # clear why).
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "20"
-
 jupyterhub:
   hub:
     baseUrl: "/nb"

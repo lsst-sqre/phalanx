@@ -177,6 +177,8 @@ rest-proxy:
   ingress:
     enabled: true
     hostname: tucson-teststand.lsst.codes
+  configurationOverrides:
+    "access.control.allow.origin": http://love1.tu.lsst.org
   kafka:
     topics:
       - test.next-visit

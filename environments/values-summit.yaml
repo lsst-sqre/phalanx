@@ -1,5 +1,6 @@
-environment: summit
+name: summit
 fqdn: summit-lsp.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
 
 alert-stream-broker:
@@ -33,7 +34,7 @@ narrativelog:
 noteburst:
   enabled: false
 nublado:
-  enabled: false
+  enabled: true
 nublado2:
   enabled: true
 ook:
@@ -61,8 +62,6 @@ squash-api:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: false

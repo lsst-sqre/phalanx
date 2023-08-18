@@ -7,11 +7,36 @@ from collections.abc import Iterable
 from .models.secrets import Secret
 
 __all__ = [
+    "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
+    "VaultNotFoundError",
 ]
+
+
+class InvalidApplicationConfigError(Exception):
+    """Configuration for an application is invalid.
+
+    Parameters
+    ----------
+    name
+        Name of the application.
+    error
+        Error message.
+    environment
+        Name of the affected environment.
+    """
+
+    def __init__(
+        self, name: str, error: str, *, environment: str | None = None
+    ) -> None:
+        msg = f"Invalid configuration for application {name}"
+        if environment:
+            msg += f" in environment {environment}"
+        msg += f": {error}"
+        super().__init__(msg)
 
 
 class InvalidEnvironmentConfigError(Exception):
@@ -26,7 +51,7 @@ class InvalidEnvironmentConfigError(Exception):
     """
 
     def __init__(self, name: str, error: str) -> None:
-        msg = "Invalid configuration for environment {name}: {error}"
+        msg = f"Invalid configuration for environment {name}: {error}"
         super().__init__(msg)
 
 
@@ -76,4 +101,20 @@ class UnknownEnvironmentError(Exception):
 
     def __init__(self, name: str) -> None:
         msg = f"No configuration found for environment {name}"
+        super().__init__(msg)
+
+
+class VaultNotFoundError(Exception):
+    """Secret could not be found in Vault.
+
+    Parameters
+    ----------
+    url
+        Base URL of the Vault server.
+    path
+        Path that was not found.
+    """
+
+    def __init__(self, url: str, path: str) -> None:
+        msg = f"Vault secret {path} not found in server {url}"
         super().__init__(msg)

@@ -31,8 +31,8 @@ Rubin Observatory's telemetry service.
 | influxdb-staging.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments |
 | influxdb-staging.resources.limits.cpu | int | `8` |  |
 | influxdb-staging.resources.limits.memory | string | `"96Gi"` |  |
-| influxdb-staging.resources.requests.cpu | int | `1` |  |
-| influxdb-staging.resources.requests.memory | string | `"1Gi"` |  |
+| influxdb-staging.resources.requests.cpu | int | `8` |  |
+| influxdb-staging.resources.requests.memory | string | `"96Gi"` |  |
 | influxdb-staging.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"0s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.enabled | bool | `true` | Enable InfluxDB. |
@@ -70,8 +70,8 @@ Rubin Observatory's telemetry service.
 | influxdb2.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments. |
 | influxdb2.resources.limits.cpu | int | `8` |  |
 | influxdb2.resources.limits.memory | string | `"96Gi"` |  |
-| influxdb2.resources.requests.cpu | int | `1` |  |
-| influxdb2.resources.requests.memory | string | `"1Gi"` |  |
+| influxdb2.resources.requests.cpu | int | `8` |  |
+| influxdb2.resources.requests.memory | string | `"16Gi"` |  |
 | kafdrop.enabled | bool | `true` | Enable Kafdrop. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
 | kapacitor.enabled | bool | `true` | Enable Kapacitor. |
@@ -191,12 +191,12 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka. |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration. |
-| rest-proxy.configurationOverrides | object | `{"client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
+| rest-proxy.configurationOverrides | object | `{"access.control.allow.headers":"origin,content-type,accept,authorization","access.control.allow.methods":"GET,POST,PUT,DELETE","client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
 | rest-proxy.customEnv | string | `nil` | Kafka REST additional env variables |
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository. |
-| rest-proxy.image.tag | string | `"7.4.0"` | Kafka REST proxy image tag. |
+| rest-proxy.image.tag | string | `"7.4.1"` | Kafka REST proxy image tag. |
 | rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Ingress annotations. |
 | rest-proxy.ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | rest-proxy.ingress.hostname | string | `""` | Ingress hostname. |
@@ -279,7 +279,7 @@ Rubin Observatory's telemetry service.
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.2.0"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{}` | Node affinity for Kafka broker pod assignment. |
 | strimzi-kafka.kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |

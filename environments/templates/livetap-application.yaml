@@ -2,27 +2,24 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: livetap
-spec:
-  finalizers:
-    - kubernetes
+  name: "livetap"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: livetap
-  namespace: argocd
+  name: "livetap"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: livetap
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "livetap"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/livetap
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/livetap"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -33,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

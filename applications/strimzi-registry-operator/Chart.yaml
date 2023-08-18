@@ -1,9 +1,0 @@
-apiVersion: v2
-name: strimzi-registry-operator
-version: 1.1.0
-sources:
-  - https://github.com/lsst-sqre/strimzi-registry-operator
-dependencies:
-  - name: strimzi-registry-operator
-    version: 2.1.0
-    repository: https://lsst-sqre.github.io/charts/

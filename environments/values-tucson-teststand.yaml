@@ -1,5 +1,6 @@
-environment: tucson-teststand
+name: tucson-teststand
 fqdn: tucson-teststand.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 alert-stream-broker:
@@ -33,7 +34,7 @@ narrativelog:
 noteburst:
   enabled: false
 nublado:
-  enabled: false
+  enabled: true
 nublado2:
   enabled: true
 ook:
@@ -59,8 +60,6 @@ squash-api:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: false

@@ -1,0 +1,6 @@
+{
+  "admin.password": "$2b$15$kRdR2PlZ.tV5tavXViDlv.QB7FYk0HH8IMTiGk9spSashzIqgmcJ.",
+  "admin.passwordMtime": "2021-10-08T21:31:31Z",
+  "admin.plaintext_password": "6f80a0863ae18da19d53e99b9ce67f82f54bc6164f368b6863471002992f0063",
+  "dex.clientSecret": "some-random-secret"
+}

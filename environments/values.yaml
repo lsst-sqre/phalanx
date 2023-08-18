@@ -1,20 +1,33 @@
 # These four settings should be set in each environment values-*.yaml file.
 
+# -- Butler repository index to use for this environment
+# @default -- None, must be set
+butlerRepositoryIndex: ""
+
 # -- Name of the environment
 # @default -- None, must be set
-environment: ""
+name: ""
 
 # -- Fully-qualified domain name where the environment is running
 # @default -- None, must be set
 fqdn: ""
 
+# -- UUID of the 1Password item in which to find Vault tokens
+onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
+
+# -- URL of the repository for all applications
+repoUrl: https://github.com/lsst-sqre/phalanx.git
+
+# -- Revision of repository to use for all applications
+targetRevision: "main"
+
+# -- URL of Vault server for this environment
+# @default -- None, must be set
+vaultUrl: ""
+
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
 vaultPathPrefix: ""
-
-# -- Butler repository index to use for this environment
-# @default -- None, must be set
-butlerRepositoryIndex: ""
 
 alert-stream-broker:
   enabled: false
@@ -88,8 +101,6 @@ strimzi:
   enabled: false
 strimzi-access-operator:
   enabled: false
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: false
 tap-schema:
@@ -104,12 +115,3 @@ vault-secrets-operator:
   enabled: false
 vo-cutouts:
   enabled: false
-
-# -- URL of the repository for all applications
-repoURL: https://github.com/lsst-sqre/phalanx.git
-
-# -- Revision of repository to use for all applications
-targetRevision: "main"
-
-# -- UUID of the 1Password item in which to find Vault tokens
-onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"

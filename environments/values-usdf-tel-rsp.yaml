@@ -1,8 +1,7 @@
-environment: usdf-tel-rsp
+name: usdf-tel-rsp
 fqdn: usdf-tel-rsp.slac.stanford.edu
+vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-tel-rsp
-# butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
-repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
   enabled: false
@@ -64,8 +63,6 @@ strimzi:
   enabled: false
 strimzi-access-operator:
   enabled: false
-strimzi-registry-operator:
-  enabled: false
 tap:
   enabled: false
 tap-schema:
@@ -80,4 +77,3 @@ vault-secrets-operator:
   enabled: true
 vo-cutouts:
   enabled: false
-# comment to test pre-commit

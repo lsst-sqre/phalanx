@@ -1,8 +1,8 @@
-environment: usdfprod
+butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
 fqdn: usdf-rsp.slac.stanford.edu
+name: usdfprod
+vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-rsp
-# butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
-repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
   enabled: false
@@ -67,8 +67,6 @@ squash-api:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true

@@ -1,14 +1,15 @@
-environment: idfprod
-fqdn: data.lsst.cloud
-vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+fqdn: data.lsst.cloud
+name: idfprod
+vaultUrl: "https://vault.lsst.codes"
+vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
 
 alert-stream-broker:
   enabled: false
 argo-workflows:
   enabled: false
 cachemachine:
-  enabled: true
+  enabled: false
 cert-manager:
   enabled: true
 datalinker:
@@ -26,7 +27,7 @@ kubernetes-replicator:
 mobu:
   enabled: true
 moneypenny:
-  enabled: true
+  enabled: false
 monitoring:
   enabled: false
 narrativelog:
@@ -36,7 +37,7 @@ noteburst:
 nublado:
   enabled: true
 nublado2:
-  enabled: true
+  enabled: false
 ook:
   enabled: false
 plot-navigator:
@@ -64,8 +65,6 @@ ssotap:
 strimzi:
   enabled: false
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: true

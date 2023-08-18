@@ -10,4 +10,7 @@ bcrypt
 click
 cryptography
 GitPython
+hvac
+jinja2
 PyYAML
+safir

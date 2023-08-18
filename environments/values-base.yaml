@@ -1,5 +1,6 @@
-environment: base
+name: base
 fqdn: base-lsp.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 alert-stream-broker:
@@ -33,7 +34,7 @@ narrativelog:
 noteburst:
   enabled: false
 nublado:
-  enabled: false
+  enabled: true
 ook:
   enabled: false
 nublado2:
@@ -59,8 +60,6 @@ squash-api:
 strimzi:
   enabled: true
 strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
   enabled: false
 tap:
   enabled: false
