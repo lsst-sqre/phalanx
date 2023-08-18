@@ -70,3 +70,9 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    monitoring/index
    ook/index
    squarebot/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Prompt Processing
+
+   prompt-proto-service/index
