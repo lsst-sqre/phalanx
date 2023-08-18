@@ -1,4 +1,4 @@
-{{- if (index .Values "obsloctap" "enabled") -}}
+{{- if .Values.applications.obsloctap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

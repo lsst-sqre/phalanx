@@ -1,4 +1,4 @@
-{{- if .Values.mobu.enabled -}}
+{{- if .Values.applications.mobu.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

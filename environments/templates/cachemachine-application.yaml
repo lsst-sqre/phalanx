@@ -1,4 +1,4 @@
-{{- if .Values.cachemachine.enabled -}}
+{{- if .Values.applications.cachemachine.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -1,4 +1,4 @@
-{{- if .Values.datalinker.enabled -}}
+{{- if .Values.applications.datalinker.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

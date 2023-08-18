@@ -1,4 +1,4 @@
-{{- if .Values.sherlock.enabled -}}
+{{- if .Values.applications.sherlock.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -4,79 +4,52 @@ name: idfint
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
 
-alert-stream-broker:
-  enabled: true
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: true
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: true
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: true
-ingress-nginx:
-  enabled: true
-kubernetes-replicator:
-  enabled: false
-linters:
-  enabled: true
-mobu:
-  enabled: true
-moneypenny:
-  enabled: true
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: true
-nublado2:
-  enabled: true
-ook:
-  enabled: false
-plot-navigator:
-  enabled: true
-portal:
-  enabled: true
-postgres:
-  enabled: true
-sasquatch:
-  enabled: true
-ssotap:
-  enabled: true
-production-tools:
-  enabled: true
-semaphore:
-  enabled: true
-sherlock:
-  enabled: true
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-strimzi:
-  enabled: true
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: true
-tap-schema:
-  enabled: true
-telegraf:
-  enabled: true
-telegraf-ds:
-  enabled: true
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: true
+applications:
+  alert-stream-broker:
+    enabled: true
+  cachemachine:
+    enabled: true
+  datalinker:
+    enabled: true
+  hips:
+    enabled: true
+  linters:
+    enabled: true
+  mobu:
+    enabled: true
+  moneypenny:
+    enabled: true
+  nublado:
+    enabled: true
+  nublado2:
+    enabled: true
+  plot-navigator:
+    enabled: true
+  portal:
+    enabled: true
+  postgres:
+    enabled: true
+  sasquatch:
+    enabled: true
+  ssotap:
+    enabled: true
+  production-tools:
+    enabled: true
+  semaphore:
+    enabled: true
+  sherlock:
+    enabled: true
+  squareone:
+    enabled: true
+  strimzi:
+    enabled: true
+  tap:
+    enabled: true
+  tap-schema:
+    enabled: true
+  telegraf:
+    enabled: true
+  telegraf-ds:
+    enabled: true
+  vo-cutouts:
+    enabled: true

@@ -1,4 +1,4 @@
-{{- if .Values.tap.enabled -}}
+{{- if .Values.applications.tap.enabled -}}
 apiVersion: v1
 kind: Namespace
 metadata:
