@@ -148,7 +148,7 @@ class VaultClient:
 
         Returns
         -------
-        dict of pydantic.SecretStr
+        dict of pydantic.types.SecretStr
             Mapping from secret key to its secret from Vault.
 
         Raises
