@@ -13,15 +13,22 @@ from pydantic.tools import schema_of
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
+from .models.environments import EnvironmentConfig
 from .models.secrets import ConditionalSecretConfig, StaticSecret
 
 __all__ = [
     "help",
+    "main",
+    "environment",
+    "environment_schema",
+    "secrets",
     "secrets_audit",
     "secrets_list",
     "secrets_schema",
     "secrets_static_template",
     "secrets_vault_secrets",
+    "vault",
+    "vault_audit",
     "vault_create_read_approle",
     "vault_create_write_token",
 ]
@@ -124,6 +131,37 @@ def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
     # Fall through to the error case of no subcommand found.
     msg = f"Unknown help topic {topic} {subtopic}"
     raise click.UsageError(msg, ctx)
+
+
+@main.group()
+def environment() -> None:
+    """Commands for Phalanx environment configuration."""
+
+
+@environment.command("schema")
+@click.option(
+    "-o",
+    "--output",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to which to write schema.",
+)
+def environment_schema(*, output: Path | None) -> None:
+    """Generate schema for environment configuration.
+
+    The output is a JSON schema for the values-<environment>.yaml file for a
+    Phalanx environment. If the ``--output`` flag is not given, the schema is
+    printed to standard output.
+
+    Users normally don't need to run this command. It is used to update the
+    schema file in the Phalanx repository, which is used by a pre-commit hook
+    to validate environment configuration files before committing them.
+    """
+    json_schema = EnvironmentConfig.schema_json(indent=2)
+    if output:
+        output.write_text(json_schema)
+    else:
+        sys.stdout.write(json_schema)
 
 
 @main.group()
