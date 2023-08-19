@@ -16,7 +16,6 @@ applications:
   squareone: true
   ssotap: true
   tap: true
-  tap-schema: true
   telegraf: true
   telegraf-ds: true
   vo-cutouts: true

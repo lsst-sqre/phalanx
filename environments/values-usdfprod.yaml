@@ -26,4 +26,3 @@ applications:
   squareone: true
   strimzi: true
   tap: true
-  tap-schema: true
