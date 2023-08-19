@@ -21,7 +21,6 @@ applications:
   sqlproxy-cross-project: true
   strimzi: true
   tap: true
-  tap-schema: true
   telegraf: true
   telegraf-ds: true
   times-square: true
