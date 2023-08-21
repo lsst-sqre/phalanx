@@ -46,7 +46,7 @@ knative:
 
 namespace: prompt-proto-service-hsc
 
-#additionalVolumeMounts:
+# additionalVolumeMounts:
 #  - mountPath: /app/s3/credentials
 #    name: s3-credentials-file
 #    subPath: credentials
