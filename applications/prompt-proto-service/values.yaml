@@ -31,6 +31,9 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+instrument:
+  name: LATISS
+  
 s3:
   disableBucketValidation: '0'
 
