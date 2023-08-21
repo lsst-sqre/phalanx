@@ -1,8 +1,12 @@
 # prompt-proto-service
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.16.0](https://img.shields.io/badge/AppVersion-1.16.0-informational?style=flat-square)
+Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative.
 
-A Helm chart for Kubernetes
+**Homepage:** <https://prompt-proto-service.lsst.io/>
+
+## Source Code
+
+* <https://github.com/lsst-dm/prompt_prototype>
 
 ## Values
 
