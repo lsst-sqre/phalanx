@@ -39,14 +39,14 @@ argo-cd:
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
       
-  rbacConfig:
-    policy.csv: |
-      g, ytl@slac.stanford.edu, role:admin
-      g, ppascual@slac.stanford.edu, role:admin
-      g, pav@slac.stanford.edu, role:admin
-      g, reinking@slac.stanford.edu, role:admin
-      g, dspeck@slac.stanford.edu, role:admin
-    scopes: "[email]"
+    rbacConfig:
+      policy.csv: |
+        g, ytl@slac.stanford.edu, role:admin
+        g, ppascual@slac.stanford.edu, role:admin
+        g, pav@slac.stanford.edu, role:admin
+        g, reinking@slac.stanford.edu, role:admin
+        g, dspeck@slac.stanford.edu, role:admin
+      scopes: "[email]"
 
     helm.repositories: |
       - url: https://lsst-sqre.github.io/charts/
