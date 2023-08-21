@@ -1,7 +1,6 @@
 environment: usdfdev-alert-stream-broker
-fqdn: alert-stream-broker.slac.stanford.edu
+#fqdn: alert-stream-broker.slac.stanford.edu
 vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
-# butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 repoURL: https://github.com/lsst-sqre/phalanx.git
 
 alert-stream-broker:
@@ -9,7 +8,7 @@ alert-stream-broker:
 cert-manager:
   enabled: true
 ingress-nginx:
-  enabled: true
+  enabled: false
 strimzi:
   enabled: true
 strimzi-access-operator:
