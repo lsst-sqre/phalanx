@@ -8,8 +8,8 @@ controller:
       num_releases: 0
       num_weeklies: 3
       num_dailies: 2
-      cycle: 31
-      recommended_tag: "recommended_c0031"
+      cycle: 32
+      recommended_tag: "recommended_c0032"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
