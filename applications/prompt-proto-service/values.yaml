@@ -50,8 +50,6 @@ registry:
 
 namespace: prompt-proto-service
 
-
-
 # -- Override the base name for resources
 nameOverride: ""
 
