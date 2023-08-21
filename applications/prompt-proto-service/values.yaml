@@ -22,26 +22,26 @@ image:
   tag: latest
 
 instrument:
-  name: LATISS
+  name: ""
   pipelines: ""
-  skymap: latiss_v1
-  calibRepo: s3://rubin-summit-users/
+  skymap: ""
+  calibRepo: ""
 
 s3:
-  imageBucket: rubin-pp
-  endpointUrl: https://s3dfrgw.slac.stanford.edu
+  imageBucket: ""
+  endpointUrl: ""
   auth_env: true
 
 imageNotifications:
-  kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
-  topic: rubin-prompt-processing
+  kafkaClusterAddress: ""
+  topic: ""
   imageTimeout: '120'
 
 apdb:
-  ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
-  db: lsst-devl
-  user: rubin
-  namespace: pp_apdb
+  ip: ""
+  db: ""
+  user: ""
+  namespace: ""
 
 registry:
   ip: usdf-butler.slac.stanford.edu:5432
@@ -50,7 +50,6 @@ registry:
 
 namespace: prompt-proto-service
 
-vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"
 
 
 # -- Override the base name for resources
@@ -70,3 +69,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+vaultSecretsPath: ""
