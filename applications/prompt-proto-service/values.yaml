@@ -2,49 +2,68 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Annotations for the prompt-proto-service pod
+podAnnotations:
+  autoscaling.knative.dev/min-scale: "1"
+  autoscaling.knative.dev/max-scale: "10"
+  autoscaling.knative.dev/target-utilization-percentage: "80"
+  # Update this field if `make apply` by itself doesn't make a new revision.
+  revision: "1"
+
+knative:
+  ephemeralStorageRequest: "8Gi"
+  ephemeralStorageLimit: "20Gi"
+  timeout: 900
+
+image:
+  repository: ghcr.io/lsst-dm/prompt-proto-service
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: latest
+
+instrument:
+  name: LATISS
+  pipelines: ""
+  skymap: latiss_v1
+  calibRepo: s3://rubin-summit-users/
+
+s3:
+  imageBucket: rubin-pp
+  endpointUrl: https://s3dfrgw.slac.stanford.edu
+  auth_env: true
+
+imageNotifications:
+  kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+  topic: rubin-prompt-processing
+  imageTimeout: '120'
+
+apdb:
+  ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+  db: lsst-devl
+  user: rubin
+  namespace: pp_apdb
+
+registry:
+  ip: usdf-butler.slac.stanford.edu:5432
+  db: lsstdb1
+  user: rubin
+
+namespace: prompt-proto-service
+
+vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"
+
+
 # -- Override the base name for resources
 nameOverride: ""
 
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: "prompt-proto-service"
 
-# -- Annotations for the prompt processing service
-podAnnotations:
-  class: kpa.autoscaling.knative.dev
-
-# -- Knative settings
-knative:
-  ephemeralStorageRequest: "8Gi"
-  ephemeralStorageLimit: "20Gi"
-  timeout: 900
-
 containerConcurrency: 1
-
-namespace: prompt-proto-service
-
-imageNotifications:
-  imageTimeout: '120'
-
-image:
-  repository: ghcr.io/lsst-dm/prompt-proto-service
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
-
-instrument:
-  name: LATISS
-
-s3:
-  disableBucketValidation: '0'
 
 additionalVolumeMounts: []
 
 imagePullSecrets: []
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
 
 nodeSelector: {}
 
