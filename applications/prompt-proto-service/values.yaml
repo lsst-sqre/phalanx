@@ -33,7 +33,7 @@ image:
 
 instrument:
   name: LATISS
-  
+
 s3:
   disableBucketValidation: '0'
 
