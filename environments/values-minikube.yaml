@@ -49,6 +49,10 @@ sasquatch:
   enabled: false
 production-tools:
   enabled: false
+prompt-processing-hsc:
+  enabled: false
+prompt-processing-latiss:
+  enabled: false
 semaphore:
   enabled: false
 sherlock:
