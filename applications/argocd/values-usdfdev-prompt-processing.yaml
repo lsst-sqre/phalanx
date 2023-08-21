@@ -4,7 +4,7 @@ argo-cd:
     params:
       # -- Base href for `index.html` when running under a reverse proxy
       server.basehref: "/"
-      
+
   server:
     ingress:
       enabled: true
@@ -18,7 +18,7 @@ argo-cd:
     extraArgs:
       - "--basehref=/usdf-prompt-processing-dev/argo-cd"
       - "--insecure=true"
-    
+
     env:
       - name: HTTP_PROXY
         value: http://squid.slac.stanford.edu:3128
@@ -38,7 +38,7 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
-      
+
     rbacConfig:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin
