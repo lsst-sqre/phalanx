@@ -25,62 +25,62 @@ controller:
         mode: "rw"
         source:
           type: "nfs"
-          path: "/jhome"
+          serverPath: "/jhome"
           server: "nfs-jhome.cp.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/project"
+          serverPath: "/project"
           server: "nfs-project.cp.lsst.org"
       - containerPath: "/scratch"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/scratch"
+          serverPath: "/scratch"
           server: "nfs-scratch.cp.lsst.org"
       - containerPath: "/repo/LATISS"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/auxtel/repo/LATISS"
+          serverPath: "/auxtel/repo/LATISS"
           server: "nfs-auxtel.cp.lsst.org"
       - containerPath: "/repo/LSSTComCam"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/auxtel/repo/LSSTComCam"
+          serverPath: "/auxtel/repo/LSSTComCam"
           server: "comcam-archiver.cp.lsst.org"
       - containerPath: "/net/obs-env"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/obs-env"
+          serverPath: "/obs-env"
           server: "nfs-obsenv.cp.lsst.org"
       - containerPath: "/readonly/lsstdata/other"
         source:
           type: "nfs"
-          path: "/lsstdata"
+          serverPath: "/lsstdata"
           server: "comcam-archiver.cp.lsst.org"
       - containerPath: "/readonly/lsstdata/comcam"
         source:
           type: "nfs"
-          path: "/lsstdata"
+          serverPath: "/lsstdata"
           server: "comcam-archiver.cp.lsst.org"
       - containerPath: "/readonly/lsstdata/auxtel"
         source:
           type: "nfs"
-          path: "/auxtel/lsstdata"
+          serverPath: "/auxtel/lsstdata"
           server: "nfs-auxtel.cp.lsst.org"
       - containerPath: "/data/lsstdata/base/comcam"
         source:
           type: "nfs"
-          path: "/lsstdata/base/comcam"
+          serverPath: "/lsstdata/base/comcam"
           server: "comcam-archiver.cp.lsst.org"
       - containerPath: "/data/lsstdata/base/auxtel"
         source:
           type: "nfs"
-          path: "/lsstdata/base/auxtel"
+          serverPath: "/lsstdata/base/auxtel"
           server: "nfs-auxtel.cp.lsst.org"
 
 jupyterhub:
