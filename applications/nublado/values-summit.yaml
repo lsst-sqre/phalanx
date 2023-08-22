@@ -11,6 +11,7 @@ controller:
       cycle: 31
       recommended_tag: "recommended_c0031"
     lab:
+      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
