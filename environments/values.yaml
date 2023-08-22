@@ -30,188 +30,144 @@ vaultUrl: ""
 vaultPathPrefix: ""
 
 applications:
-  alert-stream-broker:
-    # -- Enable the alert-stream-broker application
-    enabled: false
+  # -- Enable the alert-stream-broker application
+  alert-stream-broker: false
 
-  argo-workflows:
-    # -- Enable the argo-workflows application
-    enabled: false
+  # -- Enable the argo-workflows application
+  argo-workflows: false
 
-  argocd:
-    # -- Enable the Argo CD application. This must be enabled for all
-    # environments and is present here only because it makes parsing easier
-    enabled: true
+  # -- Enable the Argo CD application. This must be enabled for all
+  # environments and is present here only because it makes parsing easier
+  argocd: true
 
-  cachemachine:
-    # -- Enable the cachemachine application (required by nublado2)
-    enabled: false
+  # -- Enable the cachemachine application (required by nublado2)
+  cachemachine: false
 
-  cert-manager:
-    # -- Enable the cert-manager application, required unless the environment
-    # makes separate arrangements to inject a current TLS certificate
-    enabled: true
+  # -- Enable the cert-manager application, required unless the environment
+  # makes separate arrangements to inject a current TLS certificate
+  cert-manager: true
 
-  datalinker:
-    # -- Eanble the datalinker application
-    enabled: false
+  # -- Eanble the datalinker application
+  datalinker: false
 
-  exposurelog:
-    # -- Enable the exposurelog application
-    enabled: false
+  # -- Enable the exposurelog application
+  exposurelog: false
 
-  gafaelfawr:
-    # -- Enable the Gafaelfawr application. This is required by Phalanx since
-    # most other applications use `GafaelfawrIngress`
-    enabled: true
+  # -- Enable the Gafaelfawr application. This is required by Phalanx since
+  # most other applications use `GafaelfawrIngress`
+  gafaelfawr: true
 
-  giftless:
-    # -- Enable the giftless application
-    enabled: false
+  # -- Enable the giftless application
+  giftless: false
 
-  hips:
-    # -- Enable the HiPS application
-    enabled: false
+  # -- Enable the HiPS application
+  hips: false
 
-  ingress-nginx:
-    # -- Enable the ingress-nginx application. This is required for all
-    # environments, but is still configurable because currently USDF uses an
-    # unsupported configuration with ingress-nginx deployed in a different
-    # cluster.
-    enabled: true
+  # -- Enable the ingress-nginx application. This is required for all
+  # environments, but is still configurable because currently USDF uses an
+  # unsupported configuration with ingress-nginx deployed in a different
+  # cluster.
+  ingress-nginx: true
 
-  kubernetes-replicator:
-    # -- Enable the kubernetes-replicator application
-    enabled: false
+  # -- Enable the kubernetes-replicator application
+  kubernetes-replicator: false
 
-  linters:
-    # -- Enable the linters application
-    enabled: false
+  # -- Enable the linters application
+  linters: false
 
-  livetap:
-    # -- Enable the livetap application
-    enabled: false
+  # -- Enable the livetap application
+  livetap: false
 
-  mobu:
-    # -- Enable the mobu application
-    enabled: false
+  # -- Enable the mobu application
+  mobu: false
 
-  moneypenny:
-    # -- Enable the moneypenny application (required by nublado2)
-    enabled: false
+  # -- Enable the moneypenny application (required by nublado2)
+  moneypenny: false
 
-  monitoring:
-    # -- Enable the monitoring application
-    enabled: false
+  # -- Enable the monitoring application
+  monitoring: false
 
-  narrativelog:
-    # -- Enable the narrativelog application
-    enabled: false
+  # -- Enable the narrativelog application
+  narrativelog: false
 
-  noteburst:
-    # -- Enable the noteburst application (required by times-square)
-    enabled: false
+  # -- Enable the noteburst application (required by times-square)
+  noteburst: false
 
-  nublado:
-    # -- Enable the nublado application (v3 of the Notebook Aspect)
-    enabled: false
+  # -- Enable the nublado application (v3 of the Notebook Aspect)
+  nublado: false
 
-  nublado2:
-    # -- Enable the nublado2 application (v2 of the Notebook Aspect, now
-    # deprecated). This should not be used for new environments.
-    enabled: false
+  # -- Enable the nublado2 application (v2 of the Notebook Aspect, now
+  # deprecated). This should not be used for new environments.
+  nublado2: false
 
-  ook:
-    # -- Enable the ook application
-    enabled: false
+  # -- Enable the ook application
+  ook: false
 
-  obsloctap:
-    # -- Enable the obsloctap application
-    enabled: false
+  # -- Enable the obsloctap application
+  obsloctap: false
 
-  plot-navigator:
-    # -- Enable the plot-navigator application
-    enabled: false
+  # -- Enable the plot-navigator application
+  plot-navigator: false
 
-  portal:
-    # -- Enable the portal application
-    enabled: false
+  # -- Enable the portal application
+  portal: false
 
-  postgres:
-    # -- Enable the in-cluster PostgreSQL server. Use of this server is
-    # discouraged in favor of using infrastructure SQL, but will remain
-    # supported for use cases such as minikube test deployments.
-    enabled: false
+  # -- Enable the in-cluster PostgreSQL server. Use of this server is
+  # discouraged in favor of using infrastructure SQL, but will remain
+  # supported for use cases such as minikube test deployments.
+  postgres: false
 
-  sasquatch:
-    # -- Enable the sasquatch application
-    enabled: false
+  # -- Enable the sasquatch application
+  sasquatch: false
 
-  ssotap:
-    # -- Enable the ssotap application
-    enabled: false
+  # -- Enable the ssotap application
+  ssotap: false
 
-  production-tools:
-    # -- Enable the production-tools application
-    enabled: false
+  # -- Enable the production-tools application
+  production-tools: false
 
-  semaphore:
-    # -- Enable the semaphore application
-    enabled: false
+  # -- Enable the semaphore application
+  semaphore: false
 
-  sherlock:
-    # -- Enable the sherlock application
-    enabled: false
+  # -- Enable the sherlock application
+  sherlock: false
 
-  sqlproxy-cross-project:
-    # -- Enable the sqlproxy-cross-project application
-    enabled: false
+  # -- Enable the sqlproxy-cross-project application
+  sqlproxy-cross-project: false
 
-  squarebot:
-    # -- Enable the squarebot application
-    enabled: false
+  # -- Enable the squarebot application
+  squarebot: false
 
-  squareone:
-    # -- Enable the squareone application
-    enabled: false
+  # -- Enable the squareone application
+  squareone: false
 
-  squash-api:
-    # -- Enable the squash-api application
-    enabled: false
+  # -- Enable the squash-api application
+  squash-api: false
 
-  strimzi:
-    # -- Enable the strimzi application
-    enabled: false
+  # -- Enable the strimzi application
+  strimzi: false
 
-  strimzi-access-operator:
-    # -- Enable the strimzi-access-operator application
-    enabled: false
+  # -- Enable the strimzi-access-operator application
+  strimzi-access-operator: false
 
-  tap:
-    # -- Enable the tap application
-    enabled: false
+  # -- Enable the tap application
+  tap: false
 
-  tap-schema:
-    # -- Enable the tap-schema application
-    enabled: false
+  # -- Enable the tap-schema application
+  tap-schema: false
 
-  telegraf:
-    # -- Enable the telegraf application
-    enabled: false
+  # -- Enable the telegraf application
+  telegraf: false
 
-  telegraf-ds:
-    # -- Enable the telegraf-ds application
-    enabled: false
+  # -- Enable the telegraf-ds application
+  telegraf-ds: false
 
-  times-square:
-    # -- Enable the times-square application
-    enabled: false
+  # -- Enable the times-square application
+  times-square: false
 
-  vault-secrets-operator:
-    # -- Enable the vault-secrets-operator application. This is required for
-    # all environments.
-    enabled: true
+  # -- Enable the vault-secrets-operator application. This is required for all
+  # environments.
+  vault-secrets-operator: true
 
-  vo-cutouts:
-    # -- Enable the vo-cutouts application
-    enabled: false
+  # -- Enable the vo-cutouts application
+  vo-cutouts: false

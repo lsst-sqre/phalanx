@@ -1,4 +1,4 @@
-{{- if .Values.applications.narrativelog.enabled -}}
+{{- if .Values.applications.narrativelog -}}
 apiVersion: v1
 kind: Namespace
 metadata:

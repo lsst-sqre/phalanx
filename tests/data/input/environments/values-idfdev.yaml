@@ -4,11 +4,7 @@ vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/data-dev.lsst.cloud
 
 applications:
-  mobu:
-    enabled: true
-  nublado:
-    enabled: true
-  portal:
-    enabled: true
-  postgres:
-    enabled: true
+  mobu: true
+  nublado: true
+  portal: true
+  postgres: true

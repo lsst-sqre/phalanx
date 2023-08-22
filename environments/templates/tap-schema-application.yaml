@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "tap-schema" "enabled") -}}
+{{- if (index .Values "applications" "tap-schema") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

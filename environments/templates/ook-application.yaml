@@ -1,4 +1,4 @@
-{{- if .Values.applications.ook.enabled -}}
+{{- if .Values.applications.ook -}}
 apiVersion: v1
 kind: Namespace
 metadata:

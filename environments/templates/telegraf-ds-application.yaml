@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "telegraf-ds" "enabled") -}}
+{{- if (index .Values "applications" "telegraf-ds") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

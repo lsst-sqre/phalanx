@@ -7,50 +7,27 @@ vaultPathPrefix: secret/rubin/usdf-rsp-dev
 applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
   # despite that configuration not being officially supported by Phalanx.
-  cert-manager:
-    enabled: false
-  ingress-nginx:
-    enabled: false
+  cert-manager: false
+  ingress-nginx: false
 
-  alert-stream-broker:
-    enabled: true
-  cachemachine:
-    enabled: true
-  datalinker:
-    enabled: true
-  livetap:
-    enabled: true
-  mobu:
-    enabled: true
-  moneypenny:
-    enabled: true
-  noteburst:
-    enabled: true
-  nublado:
-    enabled: true
-  nublado2:
-    enabled: true
-  obsloctap:
-    enabled: true
-  plot-navigator:
-    enabled: true
-  portal:
-    enabled: true
-  postgres:
-    enabled: true
-  sasquatch:
-    enabled: true
-  semaphore:
-    enabled: true
-  ssotap:
-    enabled: true
-  squareone:
-    enabled: true
-  strimzi:
-    enabled: true
-  tap:
-    enabled: true
-  tap-schema:
-    enabled: true
-  times-square:
-    enabled: true
+  alert-stream-broker: true
+  cachemachine: true
+  datalinker: true
+  livetap: true
+  mobu: true
+  moneypenny: true
+  noteburst: true
+  nublado: true
+  nublado2: true
+  obsloctap: true
+  plot-navigator: true
+  portal: true
+  postgres: true
+  sasquatch: true
+  semaphore: true
+  ssotap: true
+  squareone: true
+  strimzi: true
+  tap: true
+  tap-schema: true
+  times-square: true

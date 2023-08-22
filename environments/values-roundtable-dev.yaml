@@ -4,21 +4,12 @@ vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable-dev.lsst.cloud
 
 applications:
-  giftless:
-    enabled: true
-  kubernetes-replicator:
-    enabled: true
-  monitoring:
-    enabled: true
-  ook:
-    enabled: true
-  sasquatch:
-    enabled: true
-  squarebot:
-    enabled: true
-  squareone:
-    enabled: true
-  strimzi:
-    enabled: true
-  strimzi-access-operator:
-    enabled: true
+  giftless: true
+  kubernetes-replicator: true
+  monitoring: true
+  ook: true
+  sasquatch: true
+  squarebot: true
+  squareone: true
+  strimzi: true
+  strimzi-access-operator: true

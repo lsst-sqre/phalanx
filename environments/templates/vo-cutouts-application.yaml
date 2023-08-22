@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "vo-cutouts" "enabled") -}}
+{{- if (index .Values "applications" "vo-cutouts") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

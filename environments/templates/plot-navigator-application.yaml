@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "plot-navigator" "enabled") -}}
+{{- if (index .Values "applications" "plot-navigator") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

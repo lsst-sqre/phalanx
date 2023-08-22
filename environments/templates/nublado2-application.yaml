@@ -1,4 +1,4 @@
-{{- if .Values.applications.nublado2.enabled -}}
+{{- if .Values.applications.nublado2 -}}
 apiVersion: v1
 kind: Namespace
 metadata:
