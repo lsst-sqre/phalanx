@@ -27,19 +27,19 @@ controller:
         source:
           type: "nfs"
           serverPath: "/jhome"
-          server: "nfs-jhome.cp.lsst.org"
+          server: "nfs1.cp.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:
           type: "nfs"
           serverPath: "/project"
-          server: "nfs-project.cp.lsst.org"
+          server: "nfs1.cp.lsst.org"
       - containerPath: "/scratch"
         mode: "rw"
         source:
           type: "nfs"
           serverPath: "/scratch"
-          server: "nfs-scratch.cp.lsst.org"
+          server: "nfs1.cp.lsst.org"
       - containerPath: "/repo/LATISS"
         mode: "rw"
         source:
@@ -50,7 +50,7 @@ controller:
         mode: "rw"
         source:
           type: "nfs"
-          serverPath: "/auxtel/repo/LSSTComCam"
+          serverPath: "/repo/LSSTComCam"
           server: "comcam-archiver.cp.lsst.org"
       - containerPath: "/net/obs-env"
         mode: "rw"
@@ -62,7 +62,7 @@ controller:
         source:
           type: "nfs"
           serverPath: "/lsstdata"
-          server: "comcam-archiver.cp.lsst.org"
+          server: "nfs1.cp.lsst.org"
       - containerPath: "/readonly/lsstdata/comcam"
         source:
           type: "nfs"
@@ -81,7 +81,7 @@ controller:
       - containerPath: "/data/lsstdata/base/auxtel"
         source:
           type: "nfs"
-          serverPath: "/lsstdata/base/auxtel"
+          serverPath: "/auxtel/lsstdata/base/auxtel"
           server: "nfs-auxtel.cp.lsst.org"
 
 jupyterhub:
