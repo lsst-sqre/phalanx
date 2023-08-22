@@ -1,4 +1,4 @@
-{{- if .Values.applications.telegraf.enabled -}}
+{{- if .Values.applications.telegraf -}}
 apiVersion: v1
 kind: Namespace
 metadata:

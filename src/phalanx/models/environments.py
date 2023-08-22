@@ -12,7 +12,6 @@ from .secrets import Secret
 
 __all__ = [
     "Environment",
-    "EnvironmentApplicationConfig",
     "EnvironmentBaseConfig",
     "EnvironmentConfig",
     "EnvironmentDetails",
@@ -77,13 +76,6 @@ class EnvironmentBaseConfig(CamelCaseModel):
         return f"{self.vault_path}/write"
 
 
-class EnvironmentApplicationConfig(BaseModel):
-    """Configuration for a single application in an environment."""
-
-    enabled: bool
-    """Whether that application is enabled."""
-
-
 class EnvironmentConfig(EnvironmentBaseConfig):
     """Configuration for a Phalanx environment.
 
@@ -93,13 +85,13 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     :file:`values.yaml` and :file:`values-{environment}.yaml`.
     """
 
-    applications: dict[str, EnvironmentApplicationConfig]
-    """Per-application configuration."""
+    applications: dict[str, bool]
+    """List of applications and whether they are enabled."""
 
     @property
     def enabled_applications(self) -> list[str]:
         """Names of all applications enabled for this environment."""
-        return sorted(k for k, v in self.applications.items() if v.enabled)
+        return sorted(k for k, v in self.applications.items() if v)
 
 
 class Environment(EnvironmentBaseConfig):

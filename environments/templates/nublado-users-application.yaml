@@ -1,4 +1,4 @@
-{{- if (or .Values.applications.nublado.enabled .Values.applications.nublado2.enabled) -}}
+{{- if (or .Values.applications.nublado .Values.applications.nublado2) -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

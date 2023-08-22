@@ -17,34 +17,27 @@ vaultUrl: ""
 vaultPathPrefix: ""
 
 applications:
-  argocd:
-    # -- Enable the Argo CD application. This must be enabled for all
-    # environments and is present here only because it makes parsing easier
-    enabled: true
+  # -- Enable the Argo CD application. This must be enabled for all
+  # environments and is present here only because it makes parsing easier
+  argocd: true
 
-  gafaelfawr:
-    # -- Enable the Gafaelfawr application. This is required by Phalanx since
-    # most other applications use `GafaelfawrIngress`
-    enabled: true
+  # -- Enable the Gafaelfawr application. This is required by Phalanx since
+  # most other applications use `GafaelfawrIngress`
+  gafaelfawr: true
 
-  mobu:
-    # -- Enable the mobu application
-    enabled: false
+  # -- Enable the mobu application
+  mobu: false
 
-  nublado:
-    # -- Enable the nublado application
-    enabled: false
+  # -- Enable the nublado application
+  nublado: false
 
-  portal:
-    # -- Enable the portal application
-    enabled: false
+  # -- Enable the portal application
+  portal: false
 
-  postgres:
-    # -- Enable the in-cluster PostgreSQL server. Use of this server is
-    # discouraged in favor of using infrastructure SQL, but will remain
-    # supported for use cases such as minikube test deployments.
-    enabled: false
+  # -- Enable the in-cluster PostgreSQL server. Use of this server is
+  # discouraged in favor of using infrastructure SQL, but will remain
+  # supported for use cases such as minikube test deployments.
+  postgres: false
 
-  tap:
-    # -- Enable the tap application
-    enabled: false
+  # -- Enable the tap application
+  tap: false

@@ -1,4 +1,4 @@
-{{- if .Values.applications.giftless.enabled -}}
+{{- if .Values.applications.giftless -}}
 apiVersion: v1
 kind: Namespace
 metadata:

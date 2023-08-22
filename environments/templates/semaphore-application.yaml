@@ -1,4 +1,4 @@
-{{- if .Values.applications.semaphore.enabled -}}
+{{- if .Values.applications.semaphore -}}
 apiVersion: v1
 kind: Namespace
 metadata:

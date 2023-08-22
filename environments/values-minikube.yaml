@@ -7,19 +7,10 @@ vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 # of a GitHub Actions runner, since minikube is used for smoke testing of new
 # Helm configurations.
 applications:
-  datalinker:
-    enabled: true
-  gafaelfawr:
-    enabled: true
-  hips:
-    enabled: true
-  mobu:
-    enabled: true
-  postgres:
-    enabled: true
-  squareone:
-    enabled: true
-  tap:
-    enabled: true
-  tap-schema:
-    enabled: true
+  datalinker: true
+  hips: true
+  mobu: true
+  postgres: true
+  squareone: true
+  tap: true
+  tap-schema: true

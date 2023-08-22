@@ -4,29 +4,16 @@ vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 applications:
-  argo-workflows:
-    enabled: true
-  cachemachine:
-    enabled: true
-  exposurelog:
-    enabled: true
-  moneypenny:
-    enabled: true
-  narrativelog:
-    enabled: true
-  nublado:
-    enabled: true
-  nublado2:
-    enabled: true
-  portal:
-    enabled: true
-  sasquatch:
-    enabled: true
-  squareone:
-    enabled: true
-  strimzi:
-    enabled: true
-  telegraf:
-    enabled: true
-  telegraf-ds:
-    enabled: true
+  argo-workflows: true
+  cachemachine: true
+  exposurelog: true
+  moneypenny: true
+  narrativelog: true
+  nublado: true
+  nublado2: true
+  portal: true
+  sasquatch: true
+  squareone: true
+  strimzi: true
+  telegraf: true
+  telegraf-ds: true

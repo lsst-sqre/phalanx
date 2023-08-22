@@ -5,47 +5,25 @@ vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
 
 applications:
-  argo-workflows:
-    enabled: true
-  datalinker:
-    enabled: true
-  hips:
-    enabled: true
-  mobu:
-    enabled: true
-  noteburst:
-    enabled: true
-  nublado:
-    enabled: true
-  portal:
-    enabled: true
-  postgres:
-    enabled: true
-  sasquatch:
-    enabled: true
-  semaphore:
-    enabled: true
-  sherlock:
-    enabled: true
-  ssotap:
-    enabled: true
-  squareone:
-    enabled: true
-  sqlproxy-cross-project:
-    enabled: true
-  strimzi:
-    enabled: true
-  tap:
-    enabled: true
-  tap-schema:
-    enabled: true
-  telegraf:
-    enabled: true
-  telegraf-ds:
-    enabled: true
-  times-square:
-    enabled: true
-  vault-secrets-operator:
-    enabled: true
-  vo-cutouts:
-    enabled: true
+  argo-workflows: true
+  datalinker: true
+  hips: true
+  mobu: true
+  noteburst: true
+  nublado: true
+  portal: true
+  postgres: true
+  sasquatch: true
+  semaphore: true
+  sherlock: true
+  ssotap: true
+  squareone: true
+  sqlproxy-cross-project: true
+  strimzi: true
+  tap: true
+  tap-schema: true
+  telegraf: true
+  telegraf-ds: true
+  times-square: true
+  vault-secrets-operator: true
+  vo-cutouts: true

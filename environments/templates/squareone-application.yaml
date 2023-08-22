@@ -1,4 +1,4 @@
-{{- if .Values.applications.squareone.enabled -}}
+{{- if .Values.applications.squareone -}}
 apiVersion: v1
 kind: Namespace
 metadata:

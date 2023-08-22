@@ -4,21 +4,12 @@ vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roe
 
 applications:
-  cachemachine:
-    enabled: true
-  mobu:
-    enabled: true
-  moneypenny:
-    enabled: true
-  nublado2:
-    enabled: true
-  portal:
-    enabled: true
-  postgres:
-    enabled: true
-  squareone:
-    enabled: true
-  tap:
-    enabled: true
-  tap-schema:
-    enabled: true
+  cachemachine: true
+  mobu: true
+  moneypenny: true
+  nublado2: true
+  portal: true
+  postgres: true
+  squareone: true
+  tap: true
+  tap-schema: true

@@ -1,4 +1,4 @@
-{{- if .Values.applications.exposurelog.enabled -}}
+{{- if .Values.applications.exposurelog -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -1,4 +1,4 @@
-{{- if .Values.applications.squarebot.enabled -}}
+{{- if .Values.applications.squarebot -}}
 apiVersion: v1
 kind: Namespace
 metadata:
