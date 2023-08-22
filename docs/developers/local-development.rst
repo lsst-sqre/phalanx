@@ -11,7 +11,7 @@ If not, you can enable only the essential applications to develop with minikube.
 .. warning::
 
    This procedure may not create a fully-operational auth system since the ingress is different from the production system.
-   As well, this procedure does not create a TLS certificate.
+   This procedure also does not create a TLS certificate.
 
    Instead, the recommended pattern for developing an application in a Kubernetes cluster is to use a development environment.
    See :doc:`deploy-from-a-branch` for details.
@@ -25,10 +25,9 @@ Start minikube
 
 .. code-block:: sh
 
-  minikube start --driver=docker --cpus=4 --memory=8g --disk-size=100g  --kubernetes-version=1.21.5
+   minikube start --driver=docker --cpus=4 --memory=8g --disk-size=100g  --kubernetes-version=1.21.5
 
 The ``--kubernetes-version`` option can be used to specify the k8s version to use.
-
 
 Enable the Ingress controller
 -----------------------------
@@ -38,7 +37,6 @@ We recommend using the `minikube ingress addon <https://kubernetes.io/docs/tasks
 .. code-block:: sh
 
   minikube addons enable ingress
-
 
 Deploy the minikube environment
 ===============================

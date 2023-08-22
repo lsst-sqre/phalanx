@@ -22,11 +22,10 @@ Individual applications are documented in the :doc:`/applications/index` section
    :caption: Integration
    :name: dev-int-toc
 
-   chart-overview
-   add-application
+   write-a-helm-chart
    add-external-chart
-   add-a-onepassword-secret
-   update-a-onepassword-secret
+   define-secrets
+   add-application
 
 .. toctree::
    :maxdepth: 2
@@ -36,5 +35,14 @@ Individual applications are documented in the :doc:`/applications/index` section
 
    get-application-logs
    upgrade
+   update-a-onepassword-secret
    deploy-from-a-branch
    local-development
+
+.. toctree::
+   :maxdepth: 2
+   :titlesonly:
+   :caption: Reference
+   :name: dev-reference-toc
+
+   secrets-spec
