@@ -9,4 +9,4 @@ prompt-processing-hsc:
   enabled: true
 
 prompt-processing-latiss:
-  enabled: false
+  enabled: true
