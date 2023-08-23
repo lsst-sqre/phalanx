@@ -92,35 +92,38 @@ qserv:
   # @default -- `"mock-qserv:3306"` (the mock QServ)
   host: "mock-qserv:3306"
 
-  mock:
-    # -- Spin up a container to pretend to be QServ.
-    enabled: true
+mockdb:
+  # -- Spin up a container to pretend to be the database.
+  enabled: true
 
-    image:
-      # -- Mock QServ image to use
-      repository: "ghcr.io/lsst-sqre/lsst-tap-mock-qserv"
+  image:
+    # -- Mock database image to use
+    repository: "ghcr.io/lsst-sqre/lsst-tap-mock-qserv"
 
-      # -- Pull policy for the mock QServ image
-      pullPolicy: "IfNotPresent"
+    # -- Pull policy for the mock database image
+    pullPolicy: "IfNotPresent"
 
-      # -- Tag of mock QServ image to use
-      # @default -- The appVersion of the chart
-      tag: ""
+    # -- Tag of mock db image to use
+    # @default -- The appVersion of the chart
+    tag: ""
 
-    # -- Resource limits and requests for the mock QServ pod
-    resources: {}
+  # -- Port to connect to the mock-db on
+  port: 3306
 
-    # -- Annotations for the mock QServ pod
-    podAnnotations: {}
+  # -- Resource limits and requests for the mock db pod
+  resources: {}
 
-    # -- Node selection rules for the mock QServ pod
-    nodeSelector: {}
+  # -- Annotations for the mock db pod
+  podAnnotations: {}
 
-    # -- Tolerations for the mock QServ pod
-    tolerations: []
+  # -- Node selection rules for the mock db pod
+  nodeSelector: {}
 
-    # -- Affinity rules for the mock QServ pod
-    affinity: {}
+  # -- Tolerations for the mock db pod
+  tolerations: []
+
+  # -- Affinity rules for the mock db pod
+  affinity: {}
 
 tapSchema:
   image:
@@ -137,16 +140,16 @@ tapSchema:
   # -- Resource limits and requests for the TAP schema database pod
   resources: {}
 
-  # -- Annotations for the mock QServ pod
+  # -- Annotations for the TAP schema database pod
   podAnnotations: {}
 
-  # -- Node selection rules for the mock QServ pod
+  # -- Node selection rules for the TAP schema database pod
   nodeSelector: {}
 
-  # -- Tolerations for the mock QServ pod
+  # -- Tolerations for the TAP schema database pod
   tolerations: []
 
-  # -- Affinity rules for the mock QServ pod
+  # -- Affinity rules for the TAP schema database pod
   affinity: {}
 
 uws:

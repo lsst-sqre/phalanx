@@ -33,29 +33,30 @@ IVOA TAP service
 | ingress.anonymousAnnotations | object | `{}` | Additional annotations to use for endpoints that allow anonymous access, such as `/capabilities` and `/availability` |
 | ingress.authenticatedAnnotations | object | `{}` | Additional annotations to use for endpoints that are authenticated, such as `/sync`, `/async`, and `/tables` |
 | ingress.path | string | `""` | External path to the tap service, the path eventually gets rewritten by tomcat. |
+| mockdb.affinity | object | `{}` | Affinity rules for the mock db pod |
+| mockdb.enabled | bool | `true` | Spin up a container to pretend to be the database. |
+| mockdb.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock database image |
+| mockdb.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-mock-qserv"` | Mock database image to use |
+| mockdb.image.tag | string | The appVersion of the chart | Tag of mock db image to use |
+| mockdb.nodeSelector | object | `{}` | Node selection rules for the mock db pod |
+| mockdb.podAnnotations | object | `{}` | Annotations for the mock db pod |
+| mockdb.port | int | `3306` | Port to connect to the mock-db on |
+| mockdb.resources | object | `{}` | Resource limits and requests for the mock db pod |
+| mockdb.tolerations | list | `[]` | Tolerations for the mock db pod |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | qserv.host | string | `"mock-qserv:3306"` (the mock QServ) | QServ hostname:port to connect to |
-| qserv.mock.affinity | object | `{}` | Affinity rules for the mock QServ pod |
-| qserv.mock.enabled | bool | `true` | Spin up a container to pretend to be QServ. |
-| qserv.mock.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the mock QServ image |
-| qserv.mock.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-mock-qserv"` | Mock QServ image to use |
-| qserv.mock.image.tag | string | The appVersion of the chart | Tag of mock QServ image to use |
-| qserv.mock.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
-| qserv.mock.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
-| qserv.mock.resources | object | `{}` | Resource limits and requests for the mock QServ pod |
-| qserv.mock.tolerations | list | `[]` | Tolerations for the mock QServ pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
-| tapSchema.affinity | object | `{}` | Affinity rules for the mock QServ pod |
+| tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"2.0.2"` | Tag of TAP schema image |
-| tapSchema.nodeSelector | object | `{}` | Node selection rules for the mock QServ pod |
-| tapSchema.podAnnotations | object | `{}` | Annotations for the mock QServ pod |
+| tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
+| tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |
-| tapSchema.tolerations | list | `[]` | Tolerations for the mock QServ pod |
+| tapSchema.tolerations | list | `[]` | Tolerations for the TAP schema database pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |

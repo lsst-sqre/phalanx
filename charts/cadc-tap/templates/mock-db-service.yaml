@@ -1,17 +1,17 @@
-{{ if .Values.qserv.mock.enabled -}}
+{{ if .Values.mockdb.enabled -}}
 kind: Service
 apiVersion: v1
 metadata:
-  name: "mock-qserv"
+  name: "mock-db"
   labels:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 spec:
   type: ClusterIP
   ports:
     - protocol: "TCP"
-      port: 3306
-      targetPort: 3306
+      port: {{ .Values.mockdb.port }}
+      targetPort: {{ .Values.mockdb.port }}
   selector:
     {{- include "cadc-tap.selectorLabels" . | nindent 4 }}
-    app.kubernetes.io/component: "mock-qserv"
+    app.kubernetes.io/component: "mock-db"
 {{- end }}

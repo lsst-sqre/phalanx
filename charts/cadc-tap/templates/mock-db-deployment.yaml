@@ -1,8 +1,8 @@
-{{ if .Values.qserv.mock.enabled -}}
+{{ if .Values.mockdb.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "cadc-tap.fullname" . }}-mock-qserv
+  name: {{ template "cadc-tap.fullname" . }}-mock-db
   labels:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 spec:
@@ -10,37 +10,37 @@ spec:
   selector:
     matchLabels:
       {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: "mock-qserv"
+      app.kubernetes.io/component: "mock-db"
   template:
     metadata:
-      {{- with .Values.qserv.mock.podAnnotations }}
+      {{- with .Values.mockdb.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: "mock-qserv"
+        app.kubernetes.io/component: "mock-db"
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: "mock-qserv"
-          image: "{{ .Values.qserv.mock.image.repository }}:{{ .Values.qserv.mock.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.qserv.mock.image.pullPolicy | quote }}
+        - name: "mock-db"
+          image: "{{ .Values.mockdb.image.repository }}:{{ .Values.mockdb.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.mockdb.image.pullPolicy | quote }}
           ports:
-            - containerPort: 3306
-          {{- with .Values.qserv.mock.resources }}
+            - containerPort: {{ .Values.mockdb.port }}
+          {{- with .Values.mockdb.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.qserv.mock.nodeSelector }}
+      {{- with .Values.mockdb.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.qserv.mock.affinity }}
+      {{- with .Values.mockdb.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.qserv.mock.tolerations }}
+      {{- with .Values.mockdb.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
