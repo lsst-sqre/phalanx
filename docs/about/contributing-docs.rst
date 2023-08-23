@@ -9,29 +9,8 @@ This page provides the basic steps.
 Set up for documentation development
 ====================================
 
-Cloning phalanx
----------------
-
-Start by cloning Phalanx into your own editing environment.
-Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repository directly and create a ticket branch, per the `Data Management workflow guide`_.
-Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`__.
-
-Set up pre-commit
------------------
-
-Phalanx uses Pre-commit_ to lint files and, in some cases, automatically reformat files.
-Follow the instructions in :doc:`precommit-and-helm-docs`.
-
-Initialize the development environment
---------------------------------------
-
-From the ``phalanx`` directory, initialize your environment:
-
-.. code-block:: bash
-
-    make init
-
-This steps installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files (see :doc:`precommit-and-helm-docs`).
+Follow the steps at :ref:`about-dev-setup` to set up a Phalanx development environment.
+This installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files.
 
 Compiling the documentation
 ===========================

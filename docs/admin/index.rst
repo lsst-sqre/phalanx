@@ -2,14 +2,18 @@
 Administrators
 ##############
 
-Administrators operate infrastructure, bootstrap infrastructure, and are involved in the deployment, configuration, and Argo CD synchronization of applications.
+A Phalanx administrator is someone who is responsible for defining a Phalanx environment, installing Phalanx in that environment, and maintaining the resulting cluster.
+Administrators operate infrastructure, manage secrets, and are involved in the deployment, configuration, and Argo CD synchronization of applications.
 
 .. toctree::
-   :caption: Bootstrapping
+   :caption: Initial install
    :maxdepth: 1
    :name: bootstrapping-toc
 
-   bootstrapping
+   requirements
+   hostnames
+   secrets-setup
+   installation
 
 .. toctree::
    :caption: Procedures
@@ -17,10 +21,13 @@ Administrators operate infrastructure, bootstrap infrastructure, and are involve
 
    upgrade-windows
    sync-argo-cd
+   sync-secrets
+   audit-secrets
    update-pull-secret
 
 .. toctree::
    :caption: Troubleshooting
+   :maxdepth: 2
 
    troubleshooting
 
