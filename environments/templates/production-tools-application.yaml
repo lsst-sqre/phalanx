@@ -1,4 +1,4 @@
-{{- if (index .Values "production-tools" "enabled") -}}
+{{- if (index .Values "applications" "production-tools") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

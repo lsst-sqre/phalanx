@@ -1,4 +1,4 @@
-{{- if .Values.monitoring.enabled -}}
+{{- if .Values.applications.monitoring -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from enum import Enum
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
@@ -12,9 +12,9 @@ from .secrets import Secret
 
 __all__ = [
     "Environment",
+    "EnvironmentBaseConfig",
     "EnvironmentConfig",
     "EnvironmentDetails",
-    "EnvironmentVaultConfig",
     "GafaelfawrGitHubGroup",
     "GafaelfawrGitHubTeam",
     "GafaelfawrScope",
@@ -23,8 +23,14 @@ __all__ = [
 ]
 
 
-class EnvironmentVaultConfig(CamelCaseModel):
-    """Vault configuration for a specific environment."""
+class EnvironmentBaseConfig(CamelCaseModel):
+    """Configuration common to `EnviromentConfig` and `Environment`."""
+
+    name: str
+    """Name of the environment."""
+
+    fqdn: str
+    """Fully-qualified domain name of the environment."""
 
     vault_url: str
     """URL of Vault server for this environment."""
@@ -70,31 +76,26 @@ class EnvironmentVaultConfig(CamelCaseModel):
         return f"{self.vault_path}/write"
 
 
-class EnvironmentConfig(EnvironmentVaultConfig):
+class EnvironmentConfig(EnvironmentBaseConfig):
     """Configuration for a Phalanx environment.
 
-    This is a partial model for the environment :file:`values.yaml` file.
-    It cannot currently be used as a real model because enabled applications
-    are stored as a list rather than the data structure used in
-    :file:`values.yaml`.
+    This is a model for the :file:`values-{environment}.yaml` files for each
+    environment and is also used to validate those files. For the complete
+    configuration for an environment, initialize this model with the merger of
+    :file:`values.yaml` and :file:`values-{environment}.yaml`.
     """
 
-    name: str
-    """Name of the environment."""
+    applications: dict[str, bool]
+    """List of applications and whether they are enabled."""
 
-    fqdn: str
-    """Fully-qualified domain name of the environment."""
-
-    applications: list[str] = Field(
-        [], description="List of enabled applications"
-    )
+    @property
+    def enabled_applications(self) -> list[str]:
+        """Names of all applications enabled for this environment."""
+        return sorted(k for k, v in self.applications.items() if v)
 
 
-class Environment(EnvironmentVaultConfig):
+class Environment(EnvironmentBaseConfig):
     """A Phalanx environment and its associated settings."""
-
-    name: str
-    """Name of the environment."""
 
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""
@@ -165,7 +166,7 @@ class GafaelfawrScope(BaseModel):
         return result
 
 
-class EnvironmentDetails(BaseModel):
+class EnvironmentDetails(EnvironmentBaseConfig):
     """Full details about an environment, including auth and Argo CD.
 
     Used primarily for documentation generation, which needs details from the
@@ -174,15 +175,8 @@ class EnvironmentDetails(BaseModel):
     is needed.
     """
 
-    name: str
-    """Name of the environment."""
-
-    fqdn: str
-    """Fully-qualified domain name of the environment."""
-
-    applications: list[Application] = Field(
-        [], description="List of enabled applications"
-    )
+    applications: list[Application]
+    """List of enabled applications."""
 
     argocd_url: str | None
     """URL for the Argo CD UI."""

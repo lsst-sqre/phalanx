@@ -97,17 +97,15 @@ class ConfigStorage:
         """
         config = self.load_environment_config(environment_name)
         applications = [
-            self._load_application_config(a) for a in config.applications
+            self._load_application_config(a)
+            for a in config.enabled_applications
         ]
         instances = {
             a.name: self._resolve_application(a, environment_name)
             for a in applications
         }
         return Environment(
-            name=config.name,
-            vault_url=config.vault_url,
-            vault_path_prefix=config.vault_path_prefix,
-            applications=instances,
+            **config.dict(exclude={"applications"}), applications=instances
         )
 
     def load_environment_config(
@@ -136,31 +134,16 @@ class ConfigStorage:
         UnknownEnvironmentError
             Raised if the named environment has no configuration.
         """
-        values_name = f"values-{environment_name}.yaml"
-        values_path = self._path / "environments" / values_name
-        if not values_path.exists():
-            raise UnknownEnvironmentError(environment_name)
-        with values_path.open() as fh:
+        values_base = self._path / "environments"
+        with (values_base / "values.yaml").open() as fh:
             values = yaml.safe_load(fh)
-            environment = EnvironmentConfig.parse_obj(values)
-
-        # Eventually this will have more structure and will be parsed directly
-        # by Pydantic, but for now assume any key whose value is a dictionary
-        # with an enabled key is indicating an application that is or is not
-        # enabled.
-        applications = []
-        for key, value in values.items():
-            if isinstance(value, dict) and "enabled" in value:
-                if value["enabled"]:
-                    applications.append(key)
-
-        # For now, this is hard-coded, but we'll eventually figure it out from
-        # the Argo CD Application resource templates.
-        applications.append("argocd")
-
-        # Return the configuration.
-        environment.applications = sorted(applications)
-        return environment
+        env_values_path = values_base / f"values-{environment_name}.yaml"
+        if not env_values_path.exists():
+            raise UnknownEnvironmentError(environment_name)
+        with env_values_path.open() as fh:
+            env_values = yaml.safe_load(fh)
+            values = _merge_overrides(values, env_values)
+        return EnvironmentConfig.parse_obj(values)
 
     def load_phalanx_config(self) -> PhalanxConfig:
         """Load the full Phalanx configuration.
@@ -189,8 +172,8 @@ class ConfigStorage:
         enabled_applications = set()
         enabled_for: defaultdict[str, list[str]] = defaultdict(list)
         for environment in environments:
-            enabled_applications |= set(environment.applications)
-            for name in environment.applications:
+            for name in environment.enabled_applications:
+                enabled_applications.add(name)
                 enabled_for[name].append(environment.name)
         applications = {}
         for name in enabled_applications:
@@ -209,7 +192,7 @@ class ConfigStorage:
             name = environment.name
             details = self._build_environment_details(
                 environment,
-                [applications[a] for a in sorted(environment.applications)],
+                [applications[a] for a in environment.enabled_applications],
                 self._resolve_application(applications["argocd"], name),
                 self._resolve_application(applications["gafaelfawr"], name),
             )
@@ -305,8 +288,7 @@ class ConfigStorage:
 
         # Return the resulting model.
         return EnvironmentDetails(
-            name=config.name,
-            fqdn=config.fqdn,
+            **config.dict(exclude={"applications"}),
             applications=applications,
             argocd_url=argocd_url,
             argocd_rbac=argocd_rbac,

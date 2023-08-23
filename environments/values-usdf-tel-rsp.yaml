@@ -3,77 +3,10 @@ fqdn: usdf-tel-rsp.slac.stanford.edu
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-tel-rsp
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: false
-cert-manager:
-  enabled: false
-datalinker:
-  enabled: false
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: false
-ingress-nginx:
-  enabled: false
-kubernetes-replicator:
-  enabled: false
-mobu:
-  enabled: false
-moneypenny:
-  enabled: false
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: false
-nublado2:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: false
-postgres:
-  enabled: true
-sasquatch:
-  enabled: false
-production-tools:
-  enabled: false
-semaphore:
-  enabled: false
-sherlock:
-  enabled: false
-ssotap:
-  enabled: false
-squarebot:
-  enabled: false
-squareone:
-  enabled: false
-squash-api:
-  enabled: false
-strimzi:
-  enabled: false
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: false
-tap-schema:
-  enabled: false
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: false
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  ingress-nginx: false
+
+  postgres: true

@@ -3,13 +3,8 @@ fqdn: data-dev.lsst.cloud
 vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/data-dev.lsst.cloud
 
-gafaelfawr:
-  enabled: true
-mobu:
-  enabled: true
-nublado:
-  enabled: true
-portal:
-  enabled: true
-postgres:
-  enabled: true
+applications:
+  mobu: true
+  nublado: true
+  portal: true
+  postgres: true

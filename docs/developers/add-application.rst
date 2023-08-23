@@ -108,7 +108,7 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    .. code-block:: yaml
 
-      {{- if (index .Values "<name>" "enabled") -}}
+      {{- if (index .Values "applications" "<name>") -}}
       apiVersion: v1
       kind: Namespace
       metadata:
@@ -171,9 +171,10 @@ This is done by creating an Argo CD ``Application`` that manages your applicatio
 
    .. code-block:: yaml
 
-      <application>:
-        enabled: false
+      <application>: false
 
    Replace ``<application>`` with the name of your application.
    For the other environments, set ``enabled`` to ``true`` if your application should be deployed there.
+   If not, omit the entry for this application entirely.
+
    You almost certainly want to start in a development or integration environment and enable your new application in production environments only after it has been smoke-tested in less critical environments.

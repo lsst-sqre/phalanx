@@ -1,4 +1,4 @@
-{{- if (index .Values "ingress-nginx" "enabled") -}}
+{{- if (index .Values "applications" "ingress-nginx") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

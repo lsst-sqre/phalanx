@@ -87,21 +87,19 @@ The ``install.sh`` uses the locally checked out branch of your Phalanx repositor
 
 To conserve resources, you may want to deploy a subset of Phalanx applications in your local minikube cluster.
 You can do this by editing the `/environments/values-minikube.yaml <https://github.com/lsst-sqre/phalanx/blob/main/environments/values-minikube.yaml>`_ file.
-Set any application you do not want to deploy to ``enabled: false``.
+Set any application you do not want to deploy to ``false``.
 
 Commit any changes with Git into a development branch of the Phalanx repository.
 **You must also push this development branch to the GitHub origin,** ``https://github.com/lsst-sqre/phalanx.git``.
 The ``install.sh`` script uses your locally-checked out branch of Phalanx, but also requires that the branch be accessible from GitHub.
 
-**Application that must be disabled for local Minikube:**
-
-- ``ingress-nginx`` (conflicts with the minikube addon of Nginx Ingress Controller)
-
 **Minimal set of applications that should be enabled:**
 
-- ``vault-secrets-operator`` (for Vault secrets)
+- ``argocd``
 - ``gafaelfawr`` (for authentication)
-- ``postgresql`` (for gafaelfawr)
+- ``ingress-nginx`` (for Gafaelfawr)
+- ``postgresql`` (for Gafaelfawr)
+- ``vault-secrets-operator`` (for Vault secrets)
 
 Run the installer
 ------------------
@@ -111,7 +109,6 @@ Finally, run the installer for the minikube environment.
 .. code-block:: sh
 
   ./install.sh minikube $VAULT_TOKEN
-
 
 Access the Argo CD UI
 =====================
