@@ -61,26 +61,27 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
-      initContainers:
-      - name: "secret-perm-fixer"
-        image: "busybox"
-        command:
-        - "/bin/sh"
-        - "-c"
-        - |
-          cp /secrets/* /etc/secrets && \
-          chown {{ $.Values.workers.uid }}:{{ $.Values.workers.gid }} \
-           /etc/secrets/* && \
-          chmod 0600 /etc/secrets/*
-        volumeMounts:
-        - name: "secrets"
-          mountPath: "/secrets"
-        - name: "user-secrets"
-          mountPath: "/etc/secrets"
+            - name: "user-secrets"
+              mountPath: "/etc/secrets"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+      initContainers:
+        - name: "secret-perm-fixer-frontend"
+          image: "busybox"
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              cp /secrets/* /etc/secrets && \
+              chown 1000:1000 /etc/secrets/* && \
+              chmod 0600 /etc/secrets/*
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/secrets"
+            - name: "user-secrets"
+              mountPath: "/etc/secrets"
       volumes:
         - name: "tmp"
           emptyDir: {}
