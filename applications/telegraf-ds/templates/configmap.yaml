@@ -29,10 +29,11 @@ data:
         resource_include = [ "pods" ]
         insecure_skip_verify = true
         namespace = ""
-  {{ range $app := splitList "@" .Values.global.enabledServices }}
+  {{- range $app := splitList "@" .Values.global.enabledServices }}
     {{- if $app }}
       {{- $bucket := replace "-" "_" $app }}
       {{- $namespace := replace "_" "-" $app }}
+
       [[outputs.influxdb_v2]]
         urls = ["https://monitoring.lsst.codes"]
         token = "$INFLUX_TOKEN"
