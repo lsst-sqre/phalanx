@@ -61,12 +61,33 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+      initContainers:
+      - name: "secret-perm-fixer"
+        image: "busybox"
+        command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          cp /secrets/* /etc/secrets && \
+          chown {{ $.Values.workers.uid }}:{{ $.Values.workers.gid }} \
+           /etc/secrets/* && \
+          chmod 0600 /etc/secrets/*
+        volumeMounts:
+        - name: "secrets"
+          mountPath: "/secrets"
+        - name: "user-secrets"
+          mountPath: "/etc/secrets"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
         - name: "tmp"
+          emptyDir: {}
+        - name: "secrets"
+          secret:
+            secretName: {{ include "rubintv.fullname" . }}-secret
+        - name: "user-secrets"
           emptyDir: {}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
