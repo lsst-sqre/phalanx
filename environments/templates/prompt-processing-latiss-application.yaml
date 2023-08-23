@@ -18,11 +18,11 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/prompt-proto-service
+    path: applications/prompt-proto-service-latiss
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}-latiss.yaml
+        - values-{{ .Values.environment }}.yaml
 {{- end -}}
 
