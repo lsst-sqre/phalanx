@@ -11,7 +11,7 @@ It may also create TLS certificates via `Let's Encrypt <https://letsencrypt.org/
 ``cert-manager`` optionally creates a cluster issuer that uses the DNS solver and Route 53 for DNS.
 Set ``config.createIssuer`` to ``false`` for environments where cert-manager should be installed but not use a Route 53 cluster issuer.
 
-For more information on the options for TLS certificate management, see :ref:`hostnames`.
+For more information on the options for TLS certificate management, see :doc:`/admin/hostnames`.
 
 Using cert-manager
 ==================

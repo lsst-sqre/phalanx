@@ -1,7 +1,9 @@
 .. _1Password: https://1password.com/
+.. _1Password Connect: https://developer.1password.com/docs/connect/
 .. _Apache Avro: https://avro.apache.org/
 .. _Apache Kafka: https://kafka.apache.org/
 .. _Argo CD: https://argoproj.github.io/argo-cd/
+.. _check-jsonschema: https://check-jsonschema.readthedocs.io/en/latest/
 .. _CILogon: https://www.cilogon.org/home
 .. _ConfigMap: https://kubernetes.io/docs/concepts/configuration/configmap/
 .. _Confluent Schema Registry: https://docs.confluent.io/current/schema-registry/index.html
@@ -32,6 +34,7 @@
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
 .. _pre-commit: https://pre-commit.com
 .. _Roundtable: https://roundtable.lsst.io/
+.. _Ruff: https://beta.ruff.rs/docs/
 .. _Safir: https://safir.lsst.io/
 .. _Secret: https://kubernetes.io/docs/concepts/configuration/secret/
 .. _semantic versioning: https://semver.org/
@@ -46,3 +49,4 @@
 .. _Vault: https://www.vaultproject.io/
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
+.. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
