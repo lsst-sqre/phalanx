@@ -32,6 +32,10 @@ ingress:
   # such as `/sync`, `/async`, and `/tables`
   authenticatedAnnotations: {}
 
+  # -- External path to the tap service, the path eventually gets rewritten
+  # by tomcat.
+  path: ""
+
 # -- Resource limits and requests for the Gafaelfawr frontend pod
 resources: {}
 
@@ -78,6 +82,10 @@ config:
   # Java would determine it based on how much memory is available and black
   # maths.
   jvmMaxHeapSize: 4G
+
+  # -- Vault secret name, this is appended to the global path to find the
+  # vault secrets associated with this deployment.
+  vaultSecretName: ""
 
 qserv:
   # -- QServ hostname:port to connect to

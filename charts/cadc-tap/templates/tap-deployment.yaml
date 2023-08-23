@@ -56,12 +56,12 @@ spec:
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  name: cadc-tap
                   key: "AWS_SECRET_ACCESS_KEY"
             - name: AWS_ACCESS_KEY_ID
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "cadc-tap.fullname" . }}-secret
+                  name: cadc-tap
                   key: "AWS_ACCESS_KEY_ID"
             {{- end }}
             - name: DATALINK_PAYLOAD_URL
@@ -91,7 +91,7 @@ spec:
       volumes:
         - name: "google-creds"
           secret:
-            secretName: {{ template "cadc-tap.fullname" . }}-secret
+            secretName: cadc-tap
         - name: "tmp"
           emptyDir: {}
       {{- with .Values.nodeSelector }}
