@@ -18,7 +18,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: applications/prompt-proto-service
+    path: applications/prompt-proto-service-hsc
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
@@ -26,5 +26,5 @@ spec:
       #- name: "imageNotifications.imageTimeout"
       #  forceString: true
       valueFiles:
-        - values-{{ .Values.environment }}-hsc.yaml
+        - values-{{ .Values.environment }}.yaml
 {{- end -}}
