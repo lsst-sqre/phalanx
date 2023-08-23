@@ -1,0 +1,8 @@
+apiVersion: v2
+name: prompt-processing-latiss
+version: 1.0.0
+description: Deployment for prompt proto service for LATISS images
+dependencies:
+- name: prompt-proto-service
+  version: 1.0.0
+  # repository: "file://../../shared/charts/prompt-proto-service"
