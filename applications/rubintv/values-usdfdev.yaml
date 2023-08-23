@@ -9,6 +9,16 @@ frontend:
     value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
   - name: no_proxy
     value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+  - name: HTTP_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: HTTPS_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: SQUID_PROXY
+    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+  - name: NO_PROXY
+    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+  - name: S3_ENDPOINT_URL
+    value: "https://s3dfrgw.slac.stanford.edu"
   image:
     tag: tickets-DM-40149
     pullPolicy: Always
@@ -78,12 +88,3 @@ workers:
     limits:
       cpu: 2.0
       memory: "8Gi"
-  # credentialFile: google_write_creds
-  # vaultPrefixPath: secret/rubin/usdf-rubintv-broadcaster-cleanroom
-  # pullSecretsPath: ts/software/nexus3-docker
-  # rubinTvSecretsPath: ts/software/rubintv
-  # credentialSecretsPath: rubintv-broadcaster
-  # butlerSecret:
-  #   key: butler-secret
-  #   containerPath: /secrets
-  #   dbUser: rubin
