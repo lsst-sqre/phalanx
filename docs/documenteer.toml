@@ -20,11 +20,12 @@ extensions = [
 nitpicky = true
 nitpick_ignore = [
     # Ignore missing cross-references for modules that don't provide
-    # intersphinx.  The documentation itself should use double-quotes instead
+    # intersphinx. The documentation itself should use double-quotes instead
     # of single-quotes to not generate a reference, but automatic references
-    # are generated from the type signatures and can't be avoided.  These are
-    # intentionally listed specifically because I've caught documentation bugs
-    # by having Sphinx complain about a new symbol.
+    # are generated from the type signatures and can't be avoided. These are
+    # intentionally listed specifically rather than using regexes for the
+    # whole undocumented package because I've caught documentation bugs by
+    # having Sphinx complain about a new symbol.
     ["py:class", "pydantic.main.BaseModel"],
     ["py:class", "pydantic.types.SecretStr"],
     ["py:class", "pydantic.utils.Representation"],
@@ -60,4 +61,6 @@ ignore = [
     '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
+    # Sphinx linkcheck is apparently confused by html_extra_path.
+    '^\.\./schemas/[^/]+\.json$',
 ]
