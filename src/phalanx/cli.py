@@ -157,7 +157,7 @@ def environment_schema(*, output: Path | None) -> None:
     schema file in the Phalanx repository, which is used by a pre-commit hook
     to validate environment configuration files before committing them.
     """
-    json_schema = EnvironmentConfig.schema_json(indent=2)
+    json_schema = EnvironmentConfig.schema_json(indent=2) + "\n"
     if output:
         output.write_text(json_schema)
     else:
@@ -258,7 +258,7 @@ def secrets_schema(*, output: Path | None) -> None:
     # $id attribute will be at the top of the file, not at the bottom.
     schema = {"$id": "https://phalanx.lsst.io/schemas/secrets.json", **schema}
 
-    json_schema = json.dumps(schema, indent=2)
+    json_schema = json.dumps(schema, indent=2) + "\n"
     if output:
         output.write_text(json_schema)
     else:
