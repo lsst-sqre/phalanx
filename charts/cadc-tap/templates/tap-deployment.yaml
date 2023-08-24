@@ -29,11 +29,16 @@ spec:
             - name: CATALINA_OPTS
               value: >-
                 {{- if eq .Values.config.backend "pg" }}
+                -Dtapschemauser.username=TAP_SCHEMA
+                -Dtapschemauser.password=TAP_SCHEMA
+                -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtapschemauser.maxActive=100
                 -Dtap.username={{ .Values.config.pg.username }}
                 -Dtap.password=$pgpassword
-                -Dtap.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtap.url=jdbc:mysql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
+                -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
                 -Dtap.maxActive=100
+                -Dca.nrc.cadc.auth.Authenticator=ca.nrc.cadc.sample.AuthenticatorImpl
                 {{- end }}
 
                 {{- if eq .Values.config.backend "qserv" }}
@@ -43,18 +48,11 @@ spec:
                 -Dtap.url=jdbc:mysql://{{ .Values.config.qserv.host }}/
                 -Dtap.maxActive=100
                 {{- end }}
-
-                -Dtapschema.username=TAP_SCHEMA
-                -Dtapschema.password=TAP_SCHEMA
-                -Dtapschema.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtapschema.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
-                -Dtapschema.maxActive=100
                 -Duws.username=postgres
                 -Duws.driverClassName=org.postgresql.Driver
                 -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
                 -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
-                -Dca.nrc.cadc.auth.Authenticator=org.opencadc.tap.impl.AuthenticatorImpl
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}

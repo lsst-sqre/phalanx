@@ -8,6 +8,6 @@ sources:
 appVersion: "1.12"
 
 dependencies:
-- name: cadc-tap
-  version: 1.0.0
-  repository: "file://../../charts/cadc-tap/"
+  - name: cadc-tap
+    version: 1.0.0
+    repository: "file://../../charts/cadc-tap/"

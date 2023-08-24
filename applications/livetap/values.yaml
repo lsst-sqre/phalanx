@@ -24,6 +24,9 @@ cadc-tap:
     path: "live"
 
   config:
+    # -- What type of backend?
+    backend: "pg"
+
     # -- Name of GCS bucket in which to store results
     # @default -- None, must be set
     gcsBucket: "async-results.lsst.codes"
@@ -37,22 +40,28 @@ cadc-tap:
     # maths.
     jvmMaxHeapSize: 31G
 
-  pg:
-    # -- Postgres hostname:port to connect to
-    # @default -- `"mock-pg:5432"` (the mock pg)
-    host: "usdf-butler.slac.stanford.edu:5432"
+    # -- Vault secret name: the final key in the vault path
+    vaultSecretName: "livetap"
 
-    # -- Postgres database to connect to
-    database: "lsstdb1"
+    pg:
+      # -- Postgres hostname:port to connect to
+      # @default -- `"mock-pg:5432"` (the mock pg)
+      host: "usdf-butler.slac.stanford.edu:5432"
 
-    # -- Postgres username to use to connect
-    username: "rubin"
+      # -- Postgres database to connect to
+      database: "lsstdb1"
+
+      # -- Postgres username to use to connect
+      username: "rubin"
 
   mockdb:
     # -- Spin up a container to pretend to be postgres.
     enabled: false
 
   uws:
+    image:
+      repository: "ghcr.io/lsst-sqre/tap-postgres-uws"
+
     resources:
       requests:
         cpu: 0.25
