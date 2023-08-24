@@ -19,4 +19,5 @@ After you have reviewed this documentation, see the :doc:`/developers/index` sec
    :caption: Contributing
 
    local-environment-setup
+   pre-commit-and-testing
    contributing-docs

@@ -1,3 +1,5 @@
+.. _about-dev-setup:
+
 ############################################
 Setting up a Phalanx development environment
 ############################################
@@ -13,13 +15,8 @@ If you are contributing to Phalanx as either a developer or an environment admin
    If your pull request's "lint" step fails, it's likely because pre-commit wasn't enabled locally.
    This page shows you how to fix that.
 
-.. _about-dev-setup:
-
-Set up for development
-======================
-
 Clone phalanx
--------------
+=============
 
 Start by cloning Phalanx into your own editing environment.
 You will likely need to make changes to Phalanx and create pull requests, so you need to create a branch or fork of the repository to which you can push changes.
@@ -29,7 +26,7 @@ Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repositor
 Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`__.
 
 Create a Python virtual environment
------------------------------------
+===================================
 
 Phalanx comes with a Python command-line tool which depends on a variety of Python libraries.
 To ensure consistent behavior, those dependencies are pinned to specific versions.
@@ -40,7 +37,7 @@ virtualenvwrapper_ is one popular approach.
 Whenever you do Phalanx development, you will switch back to this virtualenv.
 
 Initialize the development environment
---------------------------------------
+======================================
 
 From the ``phalanx`` directory, initialize your environment:
 
@@ -63,58 +60,10 @@ See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#ins
 
 You are now ready to use the Phalanx command-line tool and make changes to Phalanx.
 
-What to expect when developing in Phalanx with pre-commit
-=========================================================
+Next steps
+==========
 
-Once pre-commit is installed, your Git commits in Phalanx are checked by the linters.
-If a linter "fails" the commit, you'll need to make the necessary changes and re-try the Git commit.
-
-Many linters make the required changes when "failing."
-For example, helm-docs updates the README files for Helm charts and black reformats Python files.
-For these cases, you only need to :command:`git add` the updated files for :command:`git commit` to be successful.
-
-Other linters, such as Ruff_ or check-jsonschema_, may point out issues that they do not fix.
-You'll need to manually resolve those issues before re-adding and committing.
-
-Linting all files
-=================
-
-Pre-commit normally runs only on changed files.
-To check all files (similar to how we run pre-commit in GitHub Actions):
-
-.. code-block:: sh
-
-   tox run -e lint
-
-By-passing pre-commit
-=====================
-
-In an emergency situation, it's possible to by-pass pre-commit when making git commits:
-
-.. code-block:: sh
-
-   git commit --no-verify
-
-Keep in mind that the pre-commit linters always run on GitHub Actions.
-Merging to Phalanx's default branch while the linters "fail" the repo may only be done by a repository administrator.
-
-Running tests
-=============
-
-After making changes to the Phalanx configuration, you may want to run the Phalanx test suite.
-This mostly tests the Python code, but it also contains some tests for the consistency of the Phalanx configuration.
-To do this, run:
-
-.. code-block:: sh
-
-   tox run -e py
-
-If you make changes that affect the Phalanx documentation, such as adding new applications (see :doc:`/developers/add-application`) or adding new environments (see :doc:`/admin/installation`), you may want to build the documentation locally to see if there are any errors.
-Any such errors must be resolved before changes can be merged.
-To do this, run:
-
-.. code-block:: sh
-
-   tox run -e docs
-
-This also allows you to preview the new documentation, which will be generated in :file:`docs/_build/html`.
+- Read about how pre-commit and Phalanx tests work: :doc:`pre-commit-and-testing`
+- Contribute changes to the documentation: :doc:`contributing-docs`
+- Add or make changes to Phalanx applications: :doc:`/developers/index`
+- Add or make changes to Phalanx environments: :doc:`/admin/index`
