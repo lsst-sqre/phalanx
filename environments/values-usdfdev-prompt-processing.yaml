@@ -7,6 +7,3 @@ repoURL: https://github.com/lsst-sqre/phalanx.git
 
 prompt-processing-hsc:
   enabled: true
-
-prompt-processing-latiss:
-  enabled: false
