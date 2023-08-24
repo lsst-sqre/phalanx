@@ -38,10 +38,10 @@ Create a parent Helm chart
 If you are deploying a new service (and not, for instance, adding an external chart to an existing Phalanx application), start by creating a new chart.
 For charts designed primarily to deploy an external chart, normally you want to use the empty Helm starter:
 
-.. code-block:: shell
+.. prompt:: bash
 
-   $ cd applications
-   $ helm create -p $(pwd)/../starters/empty <application>
+   cd applications
+   helm create -p $(pwd)/../starters/empty <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 By convention, the top-level chart has the same name as the underlying chart that it deploys.
