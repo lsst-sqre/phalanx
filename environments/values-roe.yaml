@@ -12,4 +12,3 @@ applications:
   postgres: true
   squareone: true
   tap: true
-  tap-schema: true

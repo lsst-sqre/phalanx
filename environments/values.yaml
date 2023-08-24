@@ -153,9 +153,6 @@ applications:
   # -- Enable the tap application
   tap: false
 
-  # -- Enable the tap-schema application
-  tap-schema: false
-
   # -- Enable the telegraf application
   telegraf: false
 
