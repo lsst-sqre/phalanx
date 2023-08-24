@@ -50,6 +50,13 @@ spec:
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            {{- if eq .Values.config.backend "pg" }}
+            - name: "pgpassword"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "pgpassword"
+            {{- end }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
             {{- if eq .Values.config.gcsBucketType "S3" }}

@@ -56,6 +56,10 @@ affinity: {}
 vaultSecretsPath: ""
 
 config:
+  # -- What type of backend are we connecting to?
+  # @default -- None, must be set to "pg" or "qserv"
+  backend: ""
+
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
