@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import subprocess
+import sys
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -48,6 +49,82 @@ class HelmStorage:
             cwd=application_path.parent,
         )
 
+    def dependency_update(self, application: str) -> None:
+        """Download chart dependencies for an application.
+
+        Tell Helm to update any third-party chart dependencies for an
+        application and store them in the :file:`charts` subdirectory. This is
+        a prerequisite for :command:`helm lint` or :command:`helm template`.
+
+        Assumes that remote repositories have already been refreshed with
+        `repo_update` and tells Helm to skip that.
+
+        Parameters
+        ----------
+        application
+            Application whose dependencies should be updated.
+        """
+        application_path = self._config.get_application_chart_path(application)
+        self._run_helm(
+            "dependency", "update", "--skip-refresh", cwd=application_path
+        )
+
+    def lint_application(
+        self, application: str, environment: str, values: dict[str, str]
+    ) -> bool:
+        """Lint an application chart with Helm.
+
+        Assumes that :command:`helm dependency update` has already been run to
+        download any third-party charts. Any output is sent to standard output
+        and standard error, and if Helm fails, a failure message will be
+        printed to standard error.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        environment
+            Name of the environment in which to lint that application chart,
+            used to select the :file:`values-{environment}.yaml` file to add.
+        values
+            Extra key/value pairs to set, reflecting the settings injected by
+            Argo CD.
+
+        Returns
+        -------
+        bool
+            Whether linting passed.
+        """
+        application_path = self._config.get_application_chart_path(application)
+        set_arg = ",".join(f"{k}={v}" for k, v in values.items())
+        try:
+            result = self._capture_helm(
+                "lint",
+                "--strict",
+                "--values",
+                "values.yaml",
+                "--values",
+                f"values-{environment}.yaml",
+                "--set",
+                set_arg,
+                cwd=application_path,
+            )
+        except HelmFailedError as e:
+            self._print_lint_output(e.stdout)
+            if e.stderr:
+                sys.stderr.write(e.stderr)
+            msg = (
+                f"Error: Application {application} in environment"
+                f" {environment} has errors\n"
+            )
+            sys.stderr.write(msg)
+            return False
+        else:
+            self._print_lint_output(result.stdout)
+            if result.stderr:
+                sys.stderr.write(result.stderr)
+            return True
+
     def repo_add(self, url: str) -> None:
         """Add a Helm chart repository to Helm's cache.
 
@@ -80,6 +157,65 @@ class HelmStorage:
         else:
             name = hostname
         self._run_helm("repo", "add", name, url)
+
+    def repo_update(self) -> None:
+        """Update Helm's cache of upstream repository indices."""
+        self._run_helm("repo", "update")
+
+    def _capture_helm(
+        self, command: str, *args: str, cwd: Path | None = None
+    ) -> subprocess.CompletedProcess:
+        """Run Helm, checking for errors and capturing the output.
+
+        Parameters
+        ----------
+        command
+            Helm subcommand to run.
+        *args
+            Arguments for that subcommand.
+        cwd
+            If provided, change working directories to this path before
+            running the Helm command.
+
+        Returns
+        -------
+        subprocess.CompletedProcess
+            Results of the process, containing the standard output and
+            standard error streams.
+
+        Raises
+        ------
+        HelmFailedError
+            Raised if Helm fails.
+        """
+        try:
+            result = subprocess.run(
+                ["helm", command, *args],
+                check=True,
+                cwd=cwd,
+                capture_output=True,
+                text=True,
+            )
+        except subprocess.CalledProcessError as e:
+            raise HelmFailedError(command, args, e) from e
+        return result
+
+    def _print_lint_output(self, output: str | None) -> None:
+        """Print filtered output from Helm's lint.
+
+        :command:`helm lint` has no apparent way to disable certain checks,
+        and there are some warnings that we will never care about.
+
+        Parameters
+        ----------
+        output
+            Raw output from :command:`helm lint`.
+        """
+        if not output:
+            return
+        for line in output.removesuffix("\n").split("\n"):
+            if "icon is recommended" not in line:
+                print(line)
 
     def _run_helm(
         self, command: str, *args: str, cwd: Path | None = None

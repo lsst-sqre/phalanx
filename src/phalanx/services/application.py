@@ -8,6 +8,7 @@ import jinja2
 import yaml
 
 from ..exceptions import ApplicationExistsError
+from ..models.environments import Environment
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
 from ..storage.helm import HelmStorage
@@ -112,6 +113,80 @@ class ApplicationService:
 
         # Add the documentation.
         self._create_application_docs(name, description)
+
+    def lint_application(self, application: str, env_name: str) -> bool:
+        """Lint an application with Helm.
+
+        Registers any required Helm repositories, refreshes them, downloads
+        dependencies, and runs :command:`helm lint` on the application chart,
+        configured for the given environment.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        env_name
+            Name of the environment.
+
+        Returns
+        -------
+        bool
+            Whether linting passed.
+        """
+        environment = self._config.load_environment(env_name)
+        self.add_helm_repositories(application)
+        self._helm.repo_update()
+        self._helm.dependency_update(application)
+        extra_values = self._build_injected_values(application, environment)
+        return self._helm.lint_application(application, env_name, extra_values)
+
+    def _build_injected_values(
+        self, application: str, environment: Environment
+    ) -> dict[str, str]:
+        """Construct extra injected Helm values.
+
+        To simulate the chart as it will be configured by Argo CD, we have to
+        add the values that are injected via the Argo CD application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        environment
+            Environment whose globals should be injected.
+
+        Returns
+        -------
+        dict of str
+            Dictionary of Helm settings to their (string) values.
+
+        Notes
+        -----
+        This is a bit of a hack, since it hard-codes the injected values
+        rather than reading them out of the ``Application`` object definition.
+        It therefore must be updated every time we inject a new type of value
+        into charts.
+
+        All globals that would be injected into any chart are injected here,
+        even if this chart doesn't use them. That should be harmless, although
+        it doesn't exactly simulate what Argo CD does.
+        """
+        enabled_apps = [a.name for a in environment.all_applications()]
+        values = {
+            "global.enabledServices": "@" + "@".join(enabled_apps),
+            "global.host": environment.fqdn,
+            "global.baseUrl": f"https://{environment.fqdn}",
+            "global.vaultSecretsPath": environment.vault_path_prefix,
+        }
+
+        # vault-secrets-operator gets the Vault host injected into it. Use the
+        # existence of its subchart configuration tree as a cue to inject the
+        # same thing here.
+        if application == "vault-secrets-operator":
+            key = "vault-secrets-operator.vault.address"
+            values[key] = str(environment.vault_url)
+
+        return values
 
     def _create_application_template(self, name: str) -> None:
         """Add the ``Application`` template and environment values setting.

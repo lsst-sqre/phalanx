@@ -24,6 +24,7 @@ __all__ = [
     "application",
     "application_add_helm_repos",
     "application_create",
+    "application_lint",
     "environment",
     "environment_schema",
     "secrets",
@@ -104,7 +105,7 @@ def application() -> None:
 def application_add_helm_repos(
     name: str | None = None, *, config: Path | None
 ) -> None:
-    """Add all third-party Helm repositories to Helm.
+    """Configure dependency Helm repositories in Helm.
 
     In order to perform other Helm operations, such as linting, all
     third-party Helm chart repositories used by Phalanx applications have to
@@ -164,6 +165,33 @@ def application_create(
     application_service.create_application(
         name, HelmStarter(starter), description
     )
+
+
+@application.command("lint")
+@click.argument("name")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_lint(
+    name: str, environment: str, *, config: Path | None
+) -> None:
+    """Lint the Helm chart for an application.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm chart for an application as configured for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    success = application_service.lint_application(name, environment)
+    if not success:
+        sys.exit(1)
 
 
 @main.group()

@@ -186,7 +186,7 @@ class ConfigStorage:
 
         Returns
         -------
-        pathlib.Path
+        Path
             Path to that application's chart.
         """
         return self._path / "applications" / application
@@ -229,6 +229,20 @@ class ConfigStorage:
             Path to that Helm starter template.
         """
         return self._path / "starters" / starter.value
+
+    def list_environments(self) -> list[str]:
+        """List all of the available environments.
+
+        Returns
+        -------
+        list of str
+            Names of all available environments.
+        """
+        environments_path = self._path / "environments"
+        return [
+            v.stem.removeprefix("values-")
+            for v in sorted(environments_path.glob("values-*.yaml"))
+        ]
 
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
@@ -316,11 +330,9 @@ class ConfigStorage:
         InvalidEnvironmentConfigError
             Raised if the configuration for an environment is invalid.
         """
-        environments_path = self._path / "environments"
-        environments = []
-        for values_path in sorted(environments_path.glob("values-*.yaml")):
-            environment_name = values_path.stem.removeprefix("values-")
-            environments.append(self.load_environment_config(environment_name))
+        environments = [
+            self.load_environment_config(e) for e in self.list_environments()
+        ]
 
         # Load the configurations of all applications.
         all_applications: set[str] = set()

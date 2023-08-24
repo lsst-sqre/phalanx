@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 from pathlib import Path
 
 import yaml
@@ -10,7 +11,11 @@ import yaml
 from phalanx.factory import Factory
 
 from ..support.cli import run_cli
-from ..support.data import phalanx_test_path, read_output_data
+from ..support.data import (
+    phalanx_test_path,
+    read_output_data,
+    read_output_json,
+)
 from ..support.helm import MockHelm
 
 
@@ -195,3 +200,60 @@ def test_create_prompt(tmp_path: Path) -> None:
     with (app_path / "Chart.yaml").open() as fh:
         chart = yaml.safe_load(fh)
     assert chart["description"] == "Some application"
+
+
+def test_lint(mock_helm: MockHelm) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = (
+                "==> Linting .\n"
+                "[INFO] Chart.yaml: icon is recommended\n"
+                "1 chart(s) linted, 0 chart(s) failed\n"
+            )
+        return subprocess.CompletedProcess(
+            returncode=0,
+            args=command,
+            stdout=output,
+            stderr=None,
+        )
+
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("application", "lint", "gafaelfawr", "idfdev")
+    assert result.output == (
+        "==> Linting .\n1 chart(s) linted, 0 chart(s) failed\n"
+    )
+    assert result.exit_code == 0
+
+    set_args = read_output_json("idfdev", "lint-set-values")
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "--strict",
+            "--values",
+            "values.yaml",
+            "--values",
+            "values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]
+
+    def callback_error(*command: str) -> subprocess.CompletedProcess:
+        return subprocess.CompletedProcess(
+            returncode=1,
+            args=command,
+            stdout="",
+            stderr="Some error\n",
+        )
+
+    mock_helm.set_capture_callback(callback_error)
+    result = run_cli("application", "lint", "gafaelfawr", "idfdev")
+    assert result.output == (
+        "Some error\n"
+        "Error: Application gafaelfawr in environment idfdev has errors\n"
+    )
+    assert result.exit_code == 1
