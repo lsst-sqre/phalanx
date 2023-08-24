@@ -16,5 +16,7 @@ A schema for the current model can be generated with the appropriate Phalanx com
 
    * - Schema
      - Command
-   * - `secrets.yaml files </schemas/secrets.json>`__
+   * - :download:`environment values files </extras/schemas/environment.json>`
+     - :command:`phalanx environment schema`
+   * - :download:`secrets.yaml files </extras/schemas/secrets.json>`
      - :command:`phalanx secrets schema`

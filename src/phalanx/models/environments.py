@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from enum import Enum
+from typing import ClassVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
@@ -30,10 +31,10 @@ class EnvironmentBaseConfig(CamelCaseModel):
     """Name of the environment."""
 
     fqdn: str
-    """Fully-qualified domain name of the environment."""
+    """Fully-qualified domain name."""
 
     vault_url: str
-    """URL of Vault server for this environment."""
+    """URL of Vault server."""
 
     vault_path_prefix: str
     """Prefix of Vault paths, including the Kv2 mount point."""
@@ -87,6 +88,40 @@ class EnvironmentConfig(EnvironmentBaseConfig):
 
     applications: dict[str, bool]
     """List of applications and whether they are enabled."""
+
+    butler_repository_index: str | None = None
+    """URL to Butler repository index."""
+
+    onepassword_uuid: str | None = None
+    """UUID of 1Password item in which to find Vault tokens.
+
+    This is used only by the old installer and will be removed once the new
+    secrets management and 1Password integration is deployed everywhere.
+    """
+
+    repo_url: str | None = None
+    """URL of the Git repository holding Argo CD configuration.
+
+    This is required in the merged values file that includes environment
+    overrides, but the environment override file doesn't need to set it, so
+    it's marked as optional for schema checking purposes to allow the override
+    file to be schema-checked independently.
+    """
+
+    target_revision: str | None = None
+    """Branch of the Git repository holding Argo CD configuration.
+
+    This is required in the merged values file that includes environment
+    overrides, but the environment override file doesn't need to set it, so
+    it's marked as optional for schema checking purposes to allow the override
+    file to be schema-checked independently.
+    """
+
+    class Config:
+        extra = Extra.forbid
+        schema_extra: ClassVar[dict[str, str]] = {
+            "$id": "https://phalanx.lsst.io/schemas/environment.json"
+        }
 
     @property
     def enabled_applications(self) -> list[str]:
