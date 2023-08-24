@@ -24,20 +24,20 @@ Start from a template
 If you are creating a Helm chart for a new web service, you can use the Helm chart starter that comes with Phalanx.
 Run:
 
-.. code-block:: shell
+.. prompt:: bash
 
-   $ cd applications
-   $ helm create -p $(pwd)/../starters/web-service <application>
+   cd applications
+   helm create -p $(pwd)/../starters/web-service <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 
 For any other type of chart, start with the empty Helm chart starter.
 You will then have to add all necessary resources.
 
-.. code-block:: shell
+.. prompt:: bash
 
-   $ cd applications
-   $ helm create -p $(pwd)/../starters/empty <application>
+   cd applications
+   helm create -p $(pwd)/../starters/empty <application>
 
 Write the Chart.yaml
 ====================
