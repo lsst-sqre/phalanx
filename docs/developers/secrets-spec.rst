@@ -22,6 +22,8 @@ The specification of the secret has the following keys:
     The Phalanx tools will look first in :file:`values-{environment}.yaml` and then in :file:`values.yaml` to see if this value is set.
     If this condition evaluates to false, the secret is not used in that environment.
 
+    True and false are evaluated similar to the rules in Python: boolean false values, empty strings, empty dictionaries, and empty lists are considered false, and all other values are considered true.
+
 ``copy`` (object, optional)
     If present, specifies that this secret is a copy of another secret.
     It has the following nested settings.
@@ -37,6 +39,7 @@ The specification of the secret has the following keys:
         It is interpreted the same as ``if`` at the top level.
         If the condition is false, the whole ``copy`` stanza will be ignored.
         If true, or if this ``if`` key is not present, either ``generate`` must be unset or must have an ``if`` condition that is false.
+        True and false are determined in the same as the top-level ``if`` directive.
 
 ``generate`` (object, optional)
     Specifies that this is a generated secret rather than a static secret.
@@ -55,6 +58,7 @@ The specification of the secret has the following keys:
         It is interpreted the same as ``if`` at the top level.
         If the condition is false, the whole ``generate`` stanza will be ignored (making this a static secret in that environment instead).
         If true, or if this ``if`` key is not present, either ``copy`` must be unset or must have an ``if`` condition that is false.
+        True and false are determined in the same as the top-level ``if`` directive.
 
 ``value`` (string, optional)
     In some cases, applications may need a value exposed as a secret that is not actually a secret.
