@@ -28,20 +28,32 @@ spec:
           env:
             - name: CATALINA_OPTS
               value: >-
-                -Dqservuser.jdbc.username=qsmaster
-                -Dqservuser.jdbc.password=
-                -Dqservuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.jdbc.url=jdbc:mysql://{{ .Values.qserv.host }}/
-                -Dqservuser.maxActive=100
-                -Dtapuser.jdbc.username=TAP_SCHEMA
-                -Dtapuser.jdbc.password=TAP_SCHEMA
-                -Dtapuser.jdbc.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dtapuser.jdbc.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
-                -Dtapuser.maxActive=100
+                {{- if eq .Values.config.backend "pg" }}
+                -Dtap.username={{ .Values.config.pg.username }}
+                -Dtap.password=$pgpassword
+                -Dtap.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtap.url=jdbc:mysql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
+                -Dtap.maxActive=100
+                {{- end }}
+
+                {{- if eq .Values.config.backend "qserv" }}
+                -Dtap.username=qsmaster
+                -Dtap.password=
+                -Dtap.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtap.url=jdbc:mysql://{{ .Values.config.qserv.host }}/
+                -Dtap.maxActive=100
+                {{- end }}
+
+                -Dtapschema.username=TAP_SCHEMA
+                -Dtapschema.password=TAP_SCHEMA
+                -Dtapschema.driverClassName=com.mysql.cj.jdbc.Driver
+                -Dtapschema.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
+                -Dtapschema.maxActive=100
+                -Duws.username=postgres
+                -Duws.driverClassName=org.postgresql.Driver
+                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
+                -Duws.maxActive=100
                 -Dca.nrc.cadc.reg.client.RegistryClient.local=true
-                -Duws.jdbc.username=postgres
-                -Duws.jdbc.driverClassName=org.postgresql.Driver
-                -Duws.jdbc.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
                 -Dca.nrc.cadc.auth.Authenticator=org.opencadc.tap.impl.AuthenticatorImpl
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}

@@ -15,12 +15,17 @@ IVOA TAP service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Gafaelfawr frontend pod |
+| config.backend | string | None, must be set to "pg" or "qserv" | What type of backend are we connecting to? |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"` | Datalink payload URL |
 | config.gafaelfawrHost | string | Value of `ingress.host` | Gafaelfawr hostname to get user information from a token |
 | config.gcsBucket | string | None, must be set | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | GCS | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | None, must be set | Base URL for results stored in GCS bucket |
 | config.jvmMaxHeapSize | string | `"4G"` | Java heap size, which will set the maximum size of the heap. Otherwise Java would determine it based on how much memory is available and black maths. |
+| config.pg.database | string | None, must be set if backend is pg | Database to connect to |
+| config.pg.host | string | None, must be set if backend is pg | Host to connect to |
+| config.pg.username | string | None, must be set if backend is pg | Username to connect with |
+| config.qserv.host | string | None, must be set if backend is qserv | Host to connect to |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |

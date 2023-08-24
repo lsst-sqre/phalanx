@@ -60,6 +60,24 @@ config:
   # @default -- None, must be set to "pg" or "qserv"
   backend: ""
 
+  pg:
+    # -- Host to connect to
+    # @default -- None, must be set if backend is pg
+    host: ""
+
+    # -- Database to connect to
+    # @default -- None, must be set if backend is pg
+    database: ""
+
+    # -- Username to connect with
+    # @default -- None, must be set if backend is pg
+    username: ""
+
+  qserv:
+    # -- Host to connect to
+    # @default -- None, must be set if backend is qserv
+    host: ""
+
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
