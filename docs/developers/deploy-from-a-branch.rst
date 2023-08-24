@@ -2,7 +2,7 @@
 Deploying from a branch for development
 #######################################
 
-When developing applications and their :doc:`Helm charts </developers/chart-overview>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
+When developing applications and their :doc:`Helm charts <write-a-helm-chart>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
 
 Some use cases include:
 
@@ -26,7 +26,7 @@ Start by creating a branch of the `phalanx repository`_ and editing your applica
 You can make many types of edits to the application.
 The most straightforward changes are updates to your application's Docker images or the Helm sub-charts the application depends on.
 See :doc:`upgrade`.
-You can also make changes to the Helm values by editing the application's defaults in its ``values.yaml`` file, or the values for the development environment in the corresponding ``values-<environment>.yaml`` file.
+You can also make changes to the Helm values by editing the application's defaults in its :file:`values.yaml` file, or the values for the development environment in the corresponding :file:`values-{environment}.yaml` file.
 Finally, you can also make changes to the Helm templates for Kubernetes resources.
 
 Commit your changes and push your branch to GitHub.
@@ -57,7 +57,7 @@ By default, Argo CD syncs your application from the default branch (``main``) of
 Change the application in Argo CD to instead sync from the branch you've pushed to GitHub:
 
 1. Open your application's page in your environment's Argo CD UI.
-   Generally the URL path for this page, relative to the environment's domain, is ``/argo-cd/applications/<application>``.
+   You can find that URL by going to the documentation page for your application under :doc:`the application list </applications/index>` and choosing the Argo CD link for the relevant environment.
 
 2. Click on the resource of type ``Application``.
    In the tree view this is the root node.
@@ -79,6 +79,9 @@ Change the application in Argo CD to instead sync from the branch you've pushed 
 
    .. image:: sync-button.jpg
 
+Once you have done this, the ``science-platform`` Argo CD application will show as out of sync.
+This is correct (you have manually modified it), and serves as a helpful reminder that this application is running from a branch.
+
 Updating the application's Helm chart
 =====================================
 
@@ -94,12 +97,12 @@ The fastest method for trying out changes to Kubernetes resources is to directly
 In your application's Argo CD page you can click on a specific resource (such as a ConfigMap_ or Deployment_) and click the :guilabel:`Edit` button on the live manifest.
 Make your changes, then click :guilabel:`Save`.
 
-Your application should show as out of sync.
-Click the :guilabel:`Sync` button to redeploy the resources to the Kubernetes cluster.
+Normally, these changes will immediately take effect.
+Sometimes if you change a ``ConfigMap`` you will need to restart the relevant deployments to pick up that change.
+For instructions on how to do that, see :ref:`branch-deploy-restart`.
 
-Note that some changes won't affect a running deployment.
-In some cases you many also need to restart Pods_ in Deployments_ to see changes take affect.
-See :ref:`branch-deploy-restart`.
+After you have made this type of manual edit, the application will show as out of sync, since its configuration in the Kubernetes cluster no longer matches its configuration in Phalanx.
+If you click the :guilabel:`Sync` button, it will revert your changes and again make the application match its Phalanx configuration.
 
 .. important::
 
@@ -130,11 +133,13 @@ Besides developing the Helm chart, you can also test branch builds of your appli
 To start, ensure that the Deployment_ is using development builds of your application's Docker images.
 The best way to do this is to edit the application's Helm chart for the application in the development environment and to :ref:`sync those changes <updating-and-resyncing-from-branch>`.
 For many applications you can set the ``appVersion`` in the field in the application's ``Chart.yaml`` file to the name of the development Docker tag (see also :doc:`upgrade`).
+You may instead change the ``image.tag`` setting in the :file:`values-{environment}.yaml` file for that environment.
 
 You should also ensure that the Deployment_ is always pulling new images, rather than caching them, by setting the ``imagePullPolicy`` to ``Always``.
 This is covered in :ref:`deploy-branch-prep`.
 
-When new Docker images for your application are available with the corresponding branch tag from a container repository, you will need to restart the deployments using those images. See :ref:`branch-deploy-restart`.
+When new Docker images for your application are available with the corresponding branch tag from a container repository, you will need to restart the deployments using those images.
+See :ref:`branch-deploy-restart`.
 
 .. _branch-deploy-restart:
 
@@ -142,20 +147,20 @@ Restarting a Deployment
 =======================
 
 Some changes won't affect a running Deployment_.
-For example, many Deployments_ only read ConfigMap_ or Secret_ resources when Pods_ initially start up.
+For example, many deployments only read ConfigMap_ or Secret_ resources when Pods_ initially start up.
 To realize an update, you'll see to restart the Pods_ in Deployments_.
 
-To restart a Deployment_, find the Deployment_ resources in your application's Argo CD page, click on the three-vertical-dots icon, and select :guilabel:`Restart` from the menu.
+To restart a deployment, find the ``Deployment`` resources in your application's Argo CD page, click on the three-vertical-dots icon, and select :guilabel:`Restart` from the menu.
 New pods will appear while old pods will shut down.
 
 .. figure:: restart-deployment.png
    :alt: Screenshot showing a Deployment in the Argo CD with its drop down menu, highlighting the Restart item.
 
-   The Deployment drop-down menu for accessing
-   Click on the three-vertical-dots to open the drop-down menu for a Deployment resource.
+   The ``Deployment`` drop-down menu.
+   Click on the three-vertical-dots to open the drop-down menu for a ``Deployment`` resource.
    Select the :guilabel:`Restart` item to restart the deployment.
 
-If the new pods fail to start up, they will show a "crash-loop backoff" status and the old pods will continue to operate.
+If the new pods fail to start, they will show a "crash-loop backoff" status and the old pods will continue to operate.
 You'll need to resolve the error with changes to the application's Docker image and/or Helm charts.
 After making fixes, you may need to restart the Deployment again.
 
@@ -165,22 +170,23 @@ Merging and switching the Argo CD Application to the default branch
 Once development and testing is complete, you should submit the pull request for review following the `Data Management workflow guide`_.
 Once your branch is merged, remember to reset your application's Argo CD ``Application`` resource to point back to the default branch (``main``).
 
-1. Open your application's page in your environment's Argo CD UI.
-   Generally the URL path for this page, relative to the environment's domain, is ``argo-cd/applications/<application name>``.
+#. Open your application's page in your environment's Argo CD UI.
+   You can find that URL by going to the documentation page for your application under :doc:`the application list </applications/index>` and choosing the Argo CD link for the relevant environment.
 
-2. Click on the resource of type ``Application``.
+#. Click on the resource of type ``Application``.
    In the tree view this is the root node.
 
-3. Click on the :guilabel:`Edit` button in the :guilabel:`Summary` pane:
+#. Click on the :guilabel:`Edit` button in the :guilabel:`Summary` pane:
 
    - Edit the :guilabel:`Target revision` field back to the default branch (``main``).
    - Finally, click on the :guilabel:`Save` button.
 
-4. In the application's page in Argo CD, click on the :guilabel:`Sync` button to redeploy the application from the default branch.
+#. In the application's page in Argo CD, click on the :guilabel:`Sync` button to redeploy the application from the default branch.
 
 Next steps
 ==========
 
-Follow this page, you have iterated on the development of your application and ultimately upgraded that application in a development environment.
+While following these instructions, you have iterated on the development of your application and ultimately upgraded that application in a development environment.
 The next step is to roll out this change to other environments.
-This activity is normally done by the administrators for each environment, see :doc:`/admin/sync-argo-cd`.
+This activity is normally done by the administrators for each environment.
+See :doc:`/admin/sync-argo-cd` for more details.

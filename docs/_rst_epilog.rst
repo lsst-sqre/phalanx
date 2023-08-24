@@ -23,6 +23,7 @@
 .. _IVOA: https://ivoa.net/documents/
 .. _Kubernetes: https://kubernetes.io/
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
+.. _Mend Renovate: https://www.mend.io/renovate/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _`lsst-sqre/phalanx`:
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/

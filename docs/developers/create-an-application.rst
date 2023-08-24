@@ -7,9 +7,6 @@ If the goal is to instead deploy an existing third-party application with its ow
 
 To be deployed in the Rubin Science Platform, an application must come in the form of one or more Docker images and a Helm chart (or Kustomize configuration, although no application currently uses that approach) that deploys those images in Kubernetes.
 
-After you have finished the steps here, add any secrets you need for your application: :doc:`add-a-onepassword-secret`.
-Once you have done that, add the application to Phalanx: :doc:`add-application`.
-
 Write the application
 =====================
 
@@ -39,8 +36,7 @@ If your image must be stored in a private container registry, the credentials fo
 
 If you use the FastAPI application template, a ``Dockerfile`` is be created as part of the new repository template, and a GitHub Actions workflow is set up in the new repository to build and push Docker images for tagged releases.
 
-If you use ``ghcr.io`` as your repository (which is the FastAPI template default) you can use GitHub's built-in ``GITHUB_TOKEN``; you don't need
-to create an additional secret.
+If you use ``ghcr.io`` as your repository (which is the FastAPI template default) you can use GitHub's built-in ``GITHUB_TOKEN``; you don't need to create an additional secret.
 If you are using Docker Hub you must create two secrets in your new GitHub repository, ``DOCKER_USERNAME`` and ``DOCKER_TOKEN``.
 ``DOCKER_USERNAME`` should be set to the Docker Hub username of the account that will be pushing the new Docker images.
 ``DOCKER_TOKEN`` should be set to a secret authentication token for that account.
@@ -49,6 +45,9 @@ We recommend creating a separate token for each GitHub repository for which you 
 If using Docker Hub You may need to have a Docker Pro or similar paid Docker Hub account.
 Alternately, you can contact SQuaRE to set up Docker image publication using our Docker account.
 
-The next step is to create secrets for your application: :doc:`add-a-onepassword-secret`.
+Next steps
+==========
 
-Finally, deploy your application by creating a Helm chart and an Argo CD Application in Phalanx: :doc:`add-application`.
+- Write a Helm chart for your application: :doc:`write-a-helm-chart`.
+- Define the secrets that your application will use: :doc:`define-secrets`.
+- Deploy your application with Phalanx: :doc:`add-application`.
