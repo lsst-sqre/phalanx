@@ -61,6 +61,4 @@ ignore = [
     '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
-    # Sphinx linkcheck is apparently confused by html_extra_path.
-    '^\.\./schemas/[^/]+\.json$',
 ]
