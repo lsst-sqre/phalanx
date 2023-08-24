@@ -37,7 +37,7 @@ To create a new Phalanx environment, take the following steps:
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
 
-   - :px-app-bootstrap:`argo-cd`
+   - :px-app-bootstrap:`argocd`
    - :px-app-bootstrap:`cachemachine`
    - :px-app-bootstrap:`gafaelfawr`
    - :px-app-bootstrap:`nublado2`
