@@ -23,7 +23,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "tap-server"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           env:
             - name: CATALINA_OPTS

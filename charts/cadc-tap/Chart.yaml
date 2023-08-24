@@ -6,4 +6,3 @@ sources:
   - https://github.com/lsst-sqre/tap-postgres
   - https://github.com/lsst-sqre/lsst-tap-service
   - https://github.com/opencadc/tap
-appVersion: 1.4.5

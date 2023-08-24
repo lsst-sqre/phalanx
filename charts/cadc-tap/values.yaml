@@ -19,7 +19,7 @@ image:
   pullPolicy: "IfNotPresent"
 
   # -- Tag of tap image to use
-  # @default -- The appVersion of the chart
+  # @default -- None, must be provided
   tag: ""
 
 # Settings for the ingress rules.
@@ -126,7 +126,7 @@ mockdb:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of mock db image to use
-    # @default -- The appVersion of the chart
+    # @default -- Version of TAP image
     tag: ""
 
   # -- Port to connect to the mock-db on
@@ -183,7 +183,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    # @default -- The appVersion of the chart
+    # @default -- Version of TAP image
     tag: ""
 
   # -- Resource limits and requests for the UWS database pod
