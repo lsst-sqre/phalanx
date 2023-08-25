@@ -9,8 +9,6 @@ spec:
   selector:
     matchLabels:
       {{- include "rubintv.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: "Recreate"
   template:
     metadata:
       {{- with .Values.frontend.podAnnotations }}
@@ -21,11 +19,15 @@ spec:
         {{- include "rubintv.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
+      {{- with .Values.workers.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}-frontend
+        - name: frontend
           env:
             - name: "ENVIRONMENT_URL"
-              value: {{ .Values.global.baseUrl }}
+              value: {{ .Values.global.baseUrl | quote }}
             - name: "SAFIR_PATH_PREFIX"
               value: {{ .Values.frontend.pathPrefix | quote }}
             - name: "AWS_SHARED_CREDENTIALS_FILE"
@@ -59,8 +61,6 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - name: "tmp"
-              mountPath: "/tmp"
             - name: "user-secrets"
               mountPath: "/etc/secrets"
       securityContext:
@@ -83,8 +83,6 @@ spec:
             - name: "user-secrets"
               mountPath: "/etc/secrets"
       volumes:
-        - name: "tmp"
-          emptyDir: {}
         - name: "secrets"
           secret:
             secretName: {{ include "rubintv.fullname" . }}-secret

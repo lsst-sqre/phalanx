@@ -9,8 +9,6 @@ spec:
   selector:
     matchLabels:
       {{- include "rubintv.selectorLabels" . | nindent 6 }}
-  strategy:
-    type: "Recreate"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,8 +19,12 @@ spec:
         {{- include "rubintv.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
+      {{- with .Values.workers.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
       containers:
-      - name: {{ .Chart.Name }}-worker
+      - name: worker
         env:
         - name: PGPASSFILE
           value: /etc/secrets/postgres-credentials.txt
@@ -93,7 +95,7 @@ spec:
         - "-c"
         - |
           cp /secrets/* /etc/secrets && \
-          chown {{ $.Values.workers.uid }}:{{ $.Values.workers.gid }} \
+          chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
            /etc/secrets/* && \
           chmod 0600 /etc/secrets/*
         volumeMounts:
@@ -118,8 +120,8 @@ spec:
       {{- end }}
       securityContext:
         runAsNonRoot: true
-        runAsUser: {{ $.Values.workers.uid }}
-        runAsGroup: {{ $.Values.workers.gid }}
+        runAsUser: {{ .Values.workers.uid }}
+        runAsGroup: {{ .Values.workers.gid }}
     {{- with .Values.workers.nodeSelector }}
     nodeSelector:
       {{- toYaml . | nindent 6 }}
