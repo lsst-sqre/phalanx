@@ -9,7 +9,7 @@ from hvac.exceptions import InvalidPath
 from pydantic import SecretStr
 
 from ..exceptions import VaultNotFoundError
-from ..models.environments import EnvironmentVaultConfig
+from ..models.environments import EnvironmentBaseConfig
 from ..models.vault import (
     VaultAppRole,
     VaultAppRoleMetadata,
@@ -148,7 +148,7 @@ class VaultClient:
 
         Returns
         -------
-        dict of pydantic.SecretStr
+        dict of pydantic.types.SecretStr
             Mapping from secret key to its secret from Vault.
 
         Raises
@@ -336,7 +336,7 @@ class VaultClient:
 class VaultStorage:
     """Create Vault clients for specific environments."""
 
-    def get_vault_client(self, env: EnvironmentVaultConfig) -> VaultClient:
+    def get_vault_client(self, env: EnvironmentBaseConfig) -> VaultClient:
         """Return a Vault client configured for the given environment.
 
         Parameters

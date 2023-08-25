@@ -32,38 +32,47 @@ No published Helm chart
 If the application has an existing, maintained Helm chart, but it's not published in a Helm repository, this is also a red flag, albeit a lesser one.
 In exceptional circumstances we can import such an external Helm chart into the `charts repository <https://github.com/lsst-sqre/charts/>`__, but we would prefer not to do this since keeping it up-to-date with upstream changes is very awkward.
 
+Create a parent Helm chart
+==========================
+
+If you are deploying a new service (and not, for instance, adding an external chart to an existing Phalanx application), start by creating a new chart.
+For charts designed primarily to deploy an external chart, normally you want to use the empty Helm starter:
+
+.. prompt:: bash
+
+   cd applications
+   helm create -p $(pwd)/../starters/empty <application>
+
+Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
+By convention, the top-level chart has the same name as the underlying chart that it deploys.
+Change this if the underlying chart name is too generic.
+
+Add the external chart as a dependency
+======================================
+
+Third-party charts are declared as dependencies.
+They are normal, published Helm charts that follow normal Helm semantic versioning conventions.
+The version of the third-party chart that is deployed by Argo CD is then set in the ``dependencies`` configuration in the top-level chart.
+
+Third-party charts should always be pinned to specific versions in ``dependencies``.
+This ensures deterministic cluster configuration and avoids inadvertently upgrading applications.
+
+These dependencies will be updated via automatically-created pull requests created by `Mend Renovate`_.
+
 .. _external-chart-config:
 
 Configure the external chart
 ============================
 
-Configuration mostly involves carefully reading the documentation of the upstream Helm chart and building a ``values.yaml`` file that configures it appropriately.
+Configuration mostly involves carefully reading the documentation of the upstream Helm chart and building a :file:`values.yaml` and :file:`values-{environment}.yaml` file that configures it appropriately.
+The first file contains the configuration appropriate for all Phalanx environments, and any defaults for per-environment settings.
+The second file contains the configuration for a specific environment.
+
 You may also need to add additional resources not created by the upstream Helm chart, particularly ``VaultSecret`` objects to create any secrets that it needs.
-See :doc:`add-a-onepassword-secret` for more about secrets.
+See :doc:`define-secrets` for more about secrets.
 
-If the required configuration for the chart is simple enough, you can reference the chart directly from Phalanx and put its configuration in the per-environment Phalanx ``values-*.yaml`` files.
-In this case, you can skip ahead to :doc:`add-application`, although still read the information below on what settings you may need to configure.
+Next steps
+==========
 
-If configuring the chart is sufficiently complex, if you want to provide additional Kubernetes resources that are not part of the upstream chart, or if there is substantial configuration that should be shared between all Rubin Science Platform environments, you may want to create a wrapper chart.
-This is a chart that lives in the `charts repository <https://github.com/lsst-sqre/charts/>`__ and includes the upstream chart as a subchart.
-The advantage of this approach is that you can provide a default ``values.yaml`` file that does all the shared configuration, and you can easily add new Kubernetes resources to the deployed namespace by putting them in the ``templates`` directory of the wrapper chart.
-The drawback is the additional complexity of adding yet another layer of chart and ``values.yaml`` files.
-Once the Phalanx configuration has also been added, there will be three layers of charts to reason about.
-
-Tell Argo CD about the upstream Helm repository
-===============================================
-
-Argo CD has to know about every Helm repository that contributes charts to the Rubin Science Platform.
-If upstream runs their own Helm chart repository, you will therefore need to add it to the Argo CD configuration.
-
-In the `Phalanx repository <https://github.com/lsst-sqre/phalanx>`__, check the ``argo-cd.config.helm.repositories`` configuration option in `any values file <https://github.com/lsst-sqre/phalanx/blob/main/applications/argocd/values-idfprod.yaml>`__ to see if the repository used by the upstream chart is already listed.
-If it is not, you will need to add a stanza like:
-
-.. code-block:: yaml
-
-   - url: https://kubernetes.github.io/ingress-nginx/
-     name: ingress-nginx
-
-to that configuration key for the ``values-*.yaml`` file for every environment in Phalanx that will deploy this application.
-(The example above is for the ``ingress-nginx`` chart; the URL and name will obviously vary.)
-Do that as a pull request, probably as part of your pull request to add your Argo CD application (see :doc:`add-application`).
+- Define the secrets needed by this application: :doc:`define-secrets`
+- Add the Argo CD application to appropriate environments: :doc:`add-application`

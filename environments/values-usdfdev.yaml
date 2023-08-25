@@ -4,83 +4,29 @@ name: usdfdev
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-rsp-dev
 
-alert-stream-broker:
-  enabled: true
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: true
-cert-manager:
-  enabled: false
-datalinker:
-  enabled: true
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: false
-ingress-nginx:
-  enabled: false
-kubernetes-replicator:
-  enabled: false
-livetap:
-  enabled: true
-mobu:
-  enabled: true
-moneypenny:
-  enabled: true
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: true
-nublado:
-  enabled: true
-nublado2:
-  enabled: true
-obsloctap:
-  enabled: true
-ook:
-  enabled: false
-plot-navigator:
-  enabled: true
-portal:
-  enabled: true
-postgres:
-  enabled: true
-sasquatch:
-  enabled: true
-production-tools:
-  enabled: false
-semaphore:
-  enabled: true
-sherlock:
-  enabled: false
-ssotap:
-  enabled: true
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-squash-api:
-  enabled: false
-strimzi:
-  enabled: true
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: true
-tap-schema:
-  enabled: true
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
-times-square:
-  enabled: true
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: false
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  ingress-nginx: false
+
+  alert-stream-broker: true
+  cachemachine: true
+  datalinker: true
+  livetap: true
+  mobu: true
+  moneypenny: true
+  noteburst: true
+  nublado: true
+  nublado2: true
+  obsloctap: true
+  plot-navigator: true
+  portal: true
+  postgres: true
+  sasquatch: true
+  semaphore: true
+  ssotap: true
+  squareone: true
+  strimzi: true
+  tap: true
+  times-square: true

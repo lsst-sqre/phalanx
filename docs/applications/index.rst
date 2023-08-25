@@ -40,7 +40,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    squareone/index
    ssotap/index
    tap/index
-   tap-schema/index
    times-square/index
    vo-cutouts/index
 

@@ -9,13 +9,10 @@ On the Rubin Science Platform, it is provided by `tap-postgres <https://github.c
 This service provides access to the Solar System tables that are created and served by the butler.
 
 The TAP data itself, apart from schema queries, comes from Postgres.
-The TAP schema is provided by the separate :px-app:`tap-schema` application.
-
-See :px-app-upgrade:`tap-schema` for information on how to update the TAP schema.
+The TAP schema is provided by images built from the `sdm_schemas <https://github.com/lsst/sdm_schemas/>`__ repository.
 
 .. jinja:: tap
    :file: applications/_summary.rst.jinja
-
 
 Guides
 ======

@@ -9,13 +9,10 @@ On the Rubin Science Platform, it is provided by `lsst-tap-service <https://gith
 The same service provides both TAP and ObsTAP_ schemas.
 
 The TAP data itself, apart from schema queries, comes from Qserv.
-The TAP schema is provided by the separate :px-app:`tap-schema` application.
-
-See :px-app-upgrade:`tap-schema` for information on how to update the TAP schema.
+The TAP schema is provided by images built from the `sdm_schemas <https://github.com/lsst/sdm_schemas/>`__ repository.
 
 .. jinja:: tap
    :file: applications/_summary.rst.jinja
-
 
 Guides
 ======

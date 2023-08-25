@@ -3,9 +3,6 @@ fqdn: minikube.lsst.cloud
 vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/minikube
 
-gafaelfawr:
-  enabled: true
-mobu:
-  enabled: true
-postgres:
-  enabled: true
+applications:
+  mobu: true
+  postgres: true

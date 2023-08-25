@@ -281,7 +281,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
-| strimzi-kafka.kafka.affinity | object | `{}` | Node affinity for Kafka broker pod assignment. |
+| strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | strimzi-kafka.kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
 | strimzi-kafka.kafka.config."log.retention.hours" | int | `72` | Number of days for a topic's data to be retained. |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka. |
@@ -318,7 +318,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
-| strimzi-kafka.zookeeper.affinity | object | `{}` | Node affinity for Zookeeper pod assignment. |
+| strimzi-kafka.zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
 | strimzi-kafka.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | strimzi-kafka.zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
 | strimzi-kafka.zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |

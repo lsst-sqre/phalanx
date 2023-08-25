@@ -1,4 +1,4 @@
-{{- if .Values.sasquatch.enabled -}}
+{{- if .Values.applications.sasquatch -}}
 apiVersion: v1
 kind: Namespace
 metadata:

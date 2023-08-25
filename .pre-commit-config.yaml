@@ -19,6 +19,9 @@ repos:
       - id: check-jsonschema
         files: "^applications/.*/secrets(-[^./-]+)?\\.yaml"
         args: ["--schemafile", "docs/extras/schemas/secrets.json"]
+      - id: check-jsonschema
+        files: "^environments/values(-[^./-]+)?\\.yaml"
+        args: ["--schemafile", "docs/extras/schemas/environment.json"]
       - id: check-metaschema
         files: "^docs/extras/schemas/.*\\.json"
 

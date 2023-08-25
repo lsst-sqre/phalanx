@@ -1,4 +1,4 @@
-{{- if (index .Values "kubernetes-replicator" "enabled") -}}
+{{- if (index .Values "applications" "kubernetes-replicator") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

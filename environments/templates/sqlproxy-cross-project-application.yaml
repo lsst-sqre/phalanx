@@ -1,4 +1,4 @@
-{{- if (index .Values "sqlproxy-cross-project" "enabled") -}}
+{{- if (index .Values "applications" "sqlproxy-cross-project") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -8,9 +8,10 @@ controller:
       num_releases: 0
       num_weeklies: 3
       num_dailies: 2
-      cycle: 31
-      recommended_tag: "recommended_c0031"
+      cycle: 32
+      recommended_tag: "recommended_c0032"
     lab:
+      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
@@ -25,53 +26,53 @@ controller:
         mode: "rw"
         source:
           type: "nfs"
-          path: "/jhome"
+          serverPath: "/jhome"
           server: "nfs-jhome.tu.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/project"
+          serverPath: "/project"
           server: "nfs-project.tu.lsst.org"
       - containerPath: "/scratch"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/scratch"
+          serverPath: "/scratch"
           server: "nfs-scratch.tu.lsst.org"
       - containerPath: "/datasets"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/lsstdata"
+          serverPath: "/lsstdata"
           server: "nfs-lsstdata.tu.lsst.org"
       - containerPath: "/repo/LATISS"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/auxtel/repo/LATISS"
+          serverPath: "/auxtel/repo/LATISS"
           server: "nfs-auxtel.tu.lsst.org"
       - containerPath: "/net/obs-env"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/obs-env"
+          serverPath: "/obs-env"
           server: "nfs-obsenv.tu.lsst.org"
       - containerPath: "/repo/LSSTComCam"
         mode: "rw"
         source:
           type: "nfs"
-          path: "/repo/LSSTComCam"
+          serverPath: "/repo/LSSTComCam"
           server: "comcam-archiver.tu.lsst.org"
       - containerPath: "/data/lsstdata/TTS/auxtel"
         source:
           type: "nfs"
-          path: "/auxtel/lsstdata/TTS/auxtel"
+          serverPath: "/auxtel/lsstdata/TTS/auxtel"
           server: "nfs-auxtel.tu.lsst.org"
       - containerPath: "/data/lsstdata/TTS/comcam"
         source:
           type: "nfs"
-          path: "/lsstdata/TTS/comcam"
+          serverPath: "/lsstdata/TTS/comcam"
           server: "comcam-archiver.tu.lsst.org"
 
 jupyterhub:

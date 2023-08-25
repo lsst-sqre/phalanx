@@ -29,89 +29,142 @@ vaultUrl: ""
 # @default -- None, must be set
 vaultPathPrefix: ""
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: false
-cert-manager:
-  enabled: false
-datalinker:
-  enabled: false
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: false
-giftless:
-  enabled: false
-hips:
-  enabled: false
-ingress-nginx:
-  enabled: false
-kubernetes-replicator:
-  enabled: false
-linters:
-  enabled: false
-livetap:
-  enabled: false
-mobu:
-  enabled: false
-moneypenny:
-  enabled: false
-monitoring:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: false
-nublado2:
-  enabled: false
-ook:
-  enabled: false
-obsloctap:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: false
-postgres:
-  enabled: false
-sasquatch:
-  enabled: false
-ssotap:
-  enabled: false
-production-tools:
-  enabled: false
-semaphore:
-  enabled: false
-sherlock:
-  enabled: false
-sqlproxy-cross-project:
-  enabled: false
-squarebot:
-  enabled: false
-squareone:
-  enabled: false
-squash-api:
-  enabled: false
-strimzi:
-  enabled: false
-strimzi-access-operator:
-  enabled: false
-tap:
-  enabled: false
-tap-schema:
-  enabled: false
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: false
-vo-cutouts:
-  enabled: false
+applications:
+  # -- Enable the alert-stream-broker application
+  alert-stream-broker: false
+
+  # -- Enable the argo-workflows application
+  argo-workflows: false
+
+  # -- Enable the Argo CD application. This must be enabled for all
+  # environments and is present here only because it makes parsing easier
+  argocd: true
+
+  # -- Enable the cachemachine application (required by nublado2)
+  cachemachine: false
+
+  # -- Enable the cert-manager application, required unless the environment
+  # makes separate arrangements to inject a current TLS certificate
+  cert-manager: true
+
+  # -- Eanble the datalinker application
+  datalinker: false
+
+  # -- Enable the exposurelog application
+  exposurelog: false
+
+  # -- Enable the Gafaelfawr application. This is required by Phalanx since
+  # most other applications use `GafaelfawrIngress`
+  gafaelfawr: true
+
+  # -- Enable the giftless application
+  giftless: false
+
+  # -- Enable the HiPS application
+  hips: false
+
+  # -- Enable the ingress-nginx application. This is required for all
+  # environments, but is still configurable because currently USDF uses an
+  # unsupported configuration with ingress-nginx deployed in a different
+  # cluster.
+  ingress-nginx: true
+
+  # -- Enable the kubernetes-replicator application
+  kubernetes-replicator: false
+
+  # -- Enable the linters application
+  linters: false
+
+  # -- Enable the livetap application
+  livetap: false
+
+  # -- Enable the mobu application
+  mobu: false
+
+  # -- Enable the moneypenny application (required by nublado2)
+  moneypenny: false
+
+  # -- Enable the monitoring application
+  monitoring: false
+
+  # -- Enable the narrativelog application
+  narrativelog: false
+
+  # -- Enable the noteburst application (required by times-square)
+  noteburst: false
+
+  # -- Enable the nublado application (v3 of the Notebook Aspect)
+  nublado: false
+
+  # -- Enable the nublado2 application (v2 of the Notebook Aspect, now
+  # deprecated). This should not be used for new environments.
+  nublado2: false
+
+  # -- Enable the ook application
+  ook: false
+
+  # -- Enable the obsloctap application
+  obsloctap: false
+
+  # -- Enable the plot-navigator application
+  plot-navigator: false
+
+  # -- Enable the portal application
+  portal: false
+
+  # -- Enable the in-cluster PostgreSQL server. Use of this server is
+  # discouraged in favor of using infrastructure SQL, but will remain
+  # supported for use cases such as minikube test deployments.
+  postgres: false
+
+  # -- Enable the sasquatch application
+  sasquatch: false
+
+  # -- Enable the ssotap application
+  ssotap: false
+
+  # -- Enable the production-tools application
+  production-tools: false
+
+  # -- Enable the semaphore application
+  semaphore: false
+
+  # -- Enable the sherlock application
+  sherlock: false
+
+  # -- Enable the sqlproxy-cross-project application
+  sqlproxy-cross-project: false
+
+  # -- Enable the squarebot application
+  squarebot: false
+
+  # -- Enable the squareone application
+  squareone: false
+
+  # -- Enable the squash-api application
+  squash-api: false
+
+  # -- Enable the strimzi application
+  strimzi: false
+
+  # -- Enable the strimzi-access-operator application
+  strimzi-access-operator: false
+
+  # -- Enable the tap application
+  tap: false
+
+  # -- Enable the telegraf application
+  telegraf: false
+
+  # -- Enable the telegraf-ds application
+  telegraf-ds: false
+
+  # -- Enable the times-square application
+  times-square: false
+
+  # -- Enable the vault-secrets-operator application. This is required for all
+  # environments.
+  vault-secrets-operator: true
+
+  # -- Enable the vo-cutouts application
+  vo-cutouts: false
