@@ -7,6 +7,10 @@ config:
       server: "10.22.240.130"
   ssotap: "ssotap"
 
+image:
+  tag: "suit-2023.2.0-test1"
+
+
 resources:
   limits:
     memory: "30Gi"
