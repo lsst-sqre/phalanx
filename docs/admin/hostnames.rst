@@ -3,7 +3,7 @@ Hostnames and TLS
 #################
 
 Phalanx environments must have one primary hostname.
-Some applications can be deployed under other hostnames, but only resources deployed under that hostname can be protected by its standard authentication system.
+Some applications can be deployed under other hostnames, but only resources deployed under the primary hostname can be protected by its standard authentication system.
 
 This external hostname must have a valid TLS certificate that is trusted by the stock configuration of standard CentOS, Debian, and Alpine containers.
 
