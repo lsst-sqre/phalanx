@@ -40,6 +40,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.models.vault
    :include-all-objects:
 
+.. automodapi:: phalanx.services.application
+   :include-all-objects:
+
 .. automodapi:: phalanx.services.secrets
    :include-all-objects:
 
@@ -47,6 +50,9 @@ This API is only intended for use within the Phalanx code itself.
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.config
+   :include-all-objects:
+
+.. automodapi:: phalanx.storage.helm
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.vault

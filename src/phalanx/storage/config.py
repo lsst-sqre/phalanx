@@ -13,9 +13,11 @@ from pydantic import ValidationError
 
 from ..constants import HELM_DOCLINK_ANNOTATION
 from ..exceptions import (
+    ApplicationExistsError,
     InvalidApplicationConfigError,
     InvalidSecretConfigError,
     UnknownEnvironmentError,
+    UnknownStarterError,
 )
 from ..models.applications import (
     Application,
@@ -76,6 +78,123 @@ class ConfigStorage:
 
     def __init__(self, path: Path) -> None:
         self._path = path
+
+    def add_application_setting(self, application: str, setting: str) -> None:
+        """Add the setting for a new application to the environments chart.
+
+        Adds a block for a new application to :file:`values.yaml` in the
+        environments directory in the correct alphabetical location.
+
+        Parameters
+        ----------
+        application
+            Name of the new application.
+        setting
+            Setting block for the new application. Indentation will be added.
+        """
+        key = re.compile(r" +(?P<application>[^:]+): +")
+        setting = "\n".join("  " + line for line in setting.split("\n"))
+
+        # Add the new setting in correct alphabetical order. This is the sort
+        # of operation that Python is very bad at, so this code is rather
+        # tedious and complicated.
+        #
+        # First, copy the old file to the new file until the start of the
+        # applications block is found. Then, capture each block of blank lines
+        # and comments leading up to the setting for an application. If that
+        # application sorts after the one we're adding, add our setting before
+        # that block to the new file, and then add that block and the rest of
+        # the file. If it sorts after, add the block to the new file and keep
+        # searching. If we fall off the end without finding a setting that
+        # sorts alphabetically after ours, add our setting to the end of the
+        # file.
+        #
+        # This makes a lot of assumptions about the structure of the
+        # values.yaml file that ideally we wouldn't make, but the alternative
+        # requires doing something complicated with ruamel.yaml and inserting
+        # a new setting in a specific order. There are no great solutions
+        # here if one cares about retaining the alphabetical ordering.
+        path = self._path / "environments" / "values.yaml"
+        path_new = path.parent / "values.yaml.new"
+        old_values = path.read_text().split("\n")
+        old_values.reverse()
+        with path_new.open("w") as new:
+            while old_values:
+                line = old_values.pop()
+                new.write(line + "\n")
+                if line.startswith("applications:"):
+                    break
+            found = False
+            first = True
+            block = ""
+            while old_values:
+                line = old_values.pop()
+                m = key.match(line)
+                if not m:
+                    block += line + "\n"
+                    continue
+                if m.group("application") == application:
+                    raise ApplicationExistsError(application)
+                if m.group("application") > application:
+                    if first:
+                        new.write(setting + "\n\n")
+                    else:
+                        new.write("\n" + setting + "\n")
+                    found = True
+                    block += line + "\n"
+                    break
+                new.write(block + line + "\n")
+                block = ""
+                first = False
+            if block:
+                new.write(block)
+            if found:
+                old_values.reverse()
+                new.write("\n".join(old_values))
+            else:
+                new.write(setting + "\n")
+        path_new.rename(path)
+
+    def get_application_chart_path(self, application: str) -> Path:
+        """Determine the path to an application Helm chart.
+
+        The application and path may not exist, since this function is also
+        used to generate the path to newly-created applications.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to that application's chart.
+        """
+        return self._path / "applications" / application
+
+    def get_starter_path(self, starter: str) -> Path:
+        """Determine the path to a Helm starter template.
+
+        Parameters
+        ----------
+        starter
+            Name of the Helm starter template.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to that Helm starter template.
+
+        Raises
+        ------
+        UnknownStarterError
+            Raised if the named Helm starter template does not exist.
+        """
+        path = self._path / "starters" / starter
+        if not path.is_dir():
+            raise UnknownStarterError(starter)
+        return path
 
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
@@ -209,6 +328,28 @@ class ConfigStorage:
             environments=environment_details,
             applications=sorted(applications.values(), key=lambda a: a.name),
         )
+
+    def write_application_template(self, name: str, template: str) -> None:
+        """Write the Argo CD application template for a new application.
+
+        Parameters
+        ----------
+        name
+            Name of the application.
+        template
+            Contents of the Argo CD application and namespace Helm template
+            for the new application.
+
+        Raises
+        ------
+        ApplicationExistsError
+            Raised if the application being created already exists.
+        """
+        template_name = f"{name}-application.yaml"
+        path = self._path / "environments" / "templates" / template_name
+        if path.exists():
+            raise ApplicationExistsError(name)
+        path.write_text(template)
 
     def _build_environment_details(
         self,
@@ -500,6 +641,7 @@ class ConfigStorage:
         instance = ApplicationInstance(
             name=application.name,
             environment=environment_name,
+            chart=application.chart,
             values=values,
         )
 

@@ -25,6 +25,8 @@ Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repositor
 
 Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`__.
 
+.. _about-venv:
+
 Create a Python virtual environment
 ===================================
 
@@ -47,7 +49,12 @@ From the ``phalanx`` directory, initialize your environment:
 
 This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs pre-commit_ (used to check and sometimes reformat your changes before committing them).
 
-**You will also need to install helm-docs separately.**
+Install helm-docs
+=================
+
+:command:`helm-docs` will be run automatically by pre-commit for any commit that changes an application or environment Helm chart.
+You therefore must have it installed on your PATH.
+
 See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.
 
 .. warning::
@@ -58,10 +65,23 @@ See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#ins
    The best (but possibly not the most convenient) way to make certain you have the same version is to run the same :command:`go install` command that GitHub Actions uses.
    However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
 
-You are now ready to use the Phalanx command-line tool and make changes to Phalanx.
+If you don't want to (or don't have access to) install helm-docs globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
+
+Install helm
+============
+
+Some Phalanx commands require Helm (v3 or later) to be available on your PATH.
+Any version of Helm after v3 should be okay.
+You therefore must have it installed on your PATH.
+
+See the `Helm installation guide <https://helm.sh/docs/intro/install/>`__ for more details.
+
+If you don't want to (or don't have access to) install helm globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
 
 Next steps
 ==========
+
+You are now ready to use the Phalanx command-line tool and make changes to Phalanx.
 
 - Read about how pre-commit and Phalanx tests work: :doc:`pre-commit-and-testing`
 - Contribute changes to the documentation: :doc:`contributing-docs`

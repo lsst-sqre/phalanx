@@ -1,0 +1,64 @@
+# Default values for <CHARTNAME>.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the <CHARTNAME> deployment
+  repository: "ghcr.io/lsst-sqre/<CHARTNAME>"
+
+  # -- Pull policy for the <CHARTNAME> image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of <CHARTNAME> deployment
+  enabled: false
+
+  # -- Minimum number of <CHARTNAME> deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of <CHARTNAME> deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of <CHARTNAME> deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the <CHARTNAME> deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the <CHARTNAME> deployment pod
+resources: {}
+
+# -- Node selection rules for the <CHARTNAME> deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the <CHARTNAME> deployment pod
+tolerations: []
+
+# -- Affinity rules for the <CHARTNAME> deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

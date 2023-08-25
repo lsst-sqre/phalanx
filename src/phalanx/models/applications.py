@@ -92,6 +92,9 @@ class ApplicationInstance(BaseModel):
     environment: str
     """Name of the environment for which the application is configured."""
 
+    chart: dict[str, Any]
+    """Parsed Helm :file:`Chart.yaml` file."""
+
     values: dict[str, Any]
     """Merged Helm values for the application in this environment."""
 
