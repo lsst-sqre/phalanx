@@ -4,6 +4,15 @@
 
 prompt-proto-service:
 
+  # -- Annotations for the prompt-proto-service pod
+  podAnnotations:
+    autoscaling.knative.dev/min-scale: "3"
+    autoscaling.knative.dev/max-scale: "100"
+    autoscaling.knative.dev/target-utilization-percentage: "60"
+    autoscaling.knative.dev/target-burst-capacity: "-1"
+    # Update this field if `make apply` by itself doesn't make a new revision.
+    revision: "1"
+
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: IfNotPresent
@@ -44,6 +53,8 @@ prompt-proto-service:
     ephemeralStorageRequest: "8Gi"
     ephemeralStorageLimit: "20Gi"
     timeout: 900
+    idleTimeout: 900
+    responseStartTimeout: 900
 
   # additionalVolumeMounts:
   #  - mountPath: /app/s3/credentials

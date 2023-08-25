@@ -3,18 +3,22 @@
 # Declare variables to be passed into your templates.
 
 prompt-proto-service:
+
   # -- Annotations for the prompt-proto-service pod
   podAnnotations:
     autoscaling.knative.dev/min-scale: "3"
     autoscaling.knative.dev/max-scale: "100"
-    autoscaling.knative.dev/target-utilization-percentage: "80"
+    autoscaling.knative.dev/target-utilization-percentage: "60"
+    autoscaling.knative.dev/target-burst-capacity: "-1"
     # Update this field if `make apply` by itself doesn't make a new revision.
-    revision: "33"
+    revision: "1"
 
   knative:
     ephemeralStorageRequest: "8Gi"
     ephemeralStorageLimit: "20Gi"
     timeout: 900
+    idleTimeout: 900
+    responseStartTimeout: 900
 
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
