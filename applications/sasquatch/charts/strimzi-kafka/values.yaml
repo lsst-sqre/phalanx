@@ -74,8 +74,17 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-  # -- Node affinity for Kafka broker pod assignment.
-  affinity: {}
+  # -- Affinity for Kafka pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - kafka
+        topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
@@ -89,8 +98,17 @@ zookeeper:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
 
-  # -- Node affinity for Zookeeper pod assignment.
-  affinity: {}
+  # -- Affinity for Zookeeper pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - zookeeper
+        topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Zookeeper pod assignment.
   tolerations: []
@@ -110,7 +128,7 @@ registry:
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
 superusers:
-  - kafka-admin
+- kafka-admin
 
 users:
   replicator:
