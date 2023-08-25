@@ -1,0 +1,28 @@
+{{- if (index .Values "prompt-processing-lsstcam" "enabled") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prompt-processing-lsstcam
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    syncOptions:
+    - CreateNamespace=true
+  destination:
+    namespace: prompt-proto-service-lsstcam
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prompt-proto-service-lsstcam
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}
+
