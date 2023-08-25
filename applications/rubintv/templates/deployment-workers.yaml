@@ -79,8 +79,6 @@ spec:
           readOnlyRootFilesystem: false
           # Sigh, but what can you do?
         volumeMounts:
-        - name: "tmp"
-          mountPath: "/tmp"
         - name: "user-secrets"
           mountPath: "/etc/secrets"
         {{- range $vol := .Values.workers.volumes }}
@@ -104,8 +102,6 @@ spec:
         - name: "user-secrets"
           mountPath: "/etc/secrets"
       volumes:
-      - name: "tmp"
-        emptyDir: {}
       - name: "secrets"
         secret:
           secretName: {{ include "rubintv.fullname" . }}-secret

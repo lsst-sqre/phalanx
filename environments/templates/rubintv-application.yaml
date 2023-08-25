@@ -1,4 +1,4 @@
-{{- if .Values.rubintv.enabled -}}
+{{- if .Values.applications.rubintv -}}
 apiVersion: v1
 kind: Namespace
 metadata:

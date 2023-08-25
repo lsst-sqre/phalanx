@@ -3,20 +3,6 @@ siteTag: "usdf-dev"
 frontend:
   debug: true
   env:
-  - name: http_proxy
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: https_proxy
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: no_proxy
-    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
-  - name: HTTP_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: HTTPS_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: SQUID_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: NO_PROXY
-    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   - name: S3_ENDPOINT_URL
     value: "https://s3dfrgw.slac.stanford.edu"
   image:
@@ -32,22 +18,6 @@ workers:
   uid: 15517
   gid: 4085
   env:
-  - name: http_proxy
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: https_proxy
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: squid_proxy
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: no_proxy
-    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
-  - name: HTTP_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: HTTPS_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: SQUID_PROXY
-    value: "http://sdfproxy.sdf.slac.stanford.edu:3128"
-  - name: NO_PROXY
-    value: ".sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
   - name: DEPLOY_BRANCH
     value: "deploy-rubintv-worker"
   - name: S3_ENDPOINT_URL
