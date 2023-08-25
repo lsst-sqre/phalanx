@@ -14,6 +14,9 @@ knative:
   ephemeralStorageRequest: "8Gi"
   ephemeralStorageLimit: "20Gi"
   timeout: 900
+  idleTimeout: 900
+  responseStartTimeout: 900
+
 
 image:
   repository: ghcr.io/lsst-dm/prompt-proto-service
@@ -47,8 +50,6 @@ registry:
   ip: usdf-butler.slac.stanford.edu:5432
   db: lsstdb1
   user: rubin
-
-namespace: prompt-proto-service
 
 # -- Override the base name for resources
 nameOverride: ""
