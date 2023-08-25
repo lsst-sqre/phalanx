@@ -6,7 +6,6 @@ vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 # The primary constraint on enabling applications is the low available memory
 # of a GitHub Actions runner, since minikube is used for smoke testing of new
 # Helm configurations.
-
 applications:
   datalinker: true
   hips: true
@@ -14,5 +13,3 @@ applications:
   postgres: true
   squareone: true
   tap: true
-  tap-schema: true
-
