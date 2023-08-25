@@ -8,11 +8,11 @@ prompt-proto-service:
     repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: AuxTel20230524-w_2023_20
+    tag: latest
 
   instrument:
     name: HSC
-    pipelines: (survey="SURVEY")=${PROMPT_PROTOTYPE_DIR}/pipelines/HSC/ApPipe.yaml
+    pipelines: (survey="SURVEY")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml]
     skymap: hsc_rings_v1
     calibRepo: s3://rubin:rubin-pp-users/central_repo/
 
@@ -44,8 +44,6 @@ prompt-proto-service:
     ephemeralStorageRequest: "8Gi"
     ephemeralStorageLimit: "20Gi"
     timeout: 900
-
-  namespace: prompt-proto-service-hsc
 
   # additionalVolumeMounts:
   #  - mountPath: /app/s3/credentials
