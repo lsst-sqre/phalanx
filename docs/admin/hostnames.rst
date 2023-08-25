@@ -7,7 +7,7 @@ Some applications can be deployed under other hostnames, but only resources depl
 
 This external hostname must have a valid TLS certificate that is trusted by the stock configuration of standard CentOS, Debian, and Alpine containers.
 
-There are supported two mechanisms to configure that TLS certificate:
+There are two supported mechanisms for configuring the TLS certificate:
 
 #. Configure Let's Encrypt to obtain a certificate via the DNS solver.
    Once this is configured, TLS will be handled automatically without further human intervention.
