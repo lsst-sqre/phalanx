@@ -44,7 +44,7 @@ Management tooling
 Installing Phalanx requires the following tools be available:
 
 - Python 3.11 or later.
-  Phalanx expects users of its tooling to use a venv_ and install Python packages from PIP, so its prerequisite Python modules need not be installed locally.
+  Phalanx expects users of its tooling to use a Python virtual environment (like venv_ or virtualenvwrapper_) and install Python packages with :command:`pip`, so its prerequisite Python modules need not be installed locally.
   See :doc:`/about/local-environment-setup` for details on how to set up a local environment suitable for running Phalanx tooling.
 
 - Helm v3 or later.
