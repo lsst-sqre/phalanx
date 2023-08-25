@@ -1,9 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      # -- Tag of TAP schema image
-      tag: "2.0.2"
-
   replicaCount: 2
 
   resources:

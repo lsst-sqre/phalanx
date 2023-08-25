@@ -1,7 +1,3 @@
 tapSchema:
   image:
     repository: "lsstsqre/tap-schema-idfprod-sso"
-
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "https://tap-files.lsst.codes"

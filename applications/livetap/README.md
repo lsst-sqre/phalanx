@@ -29,7 +29,6 @@ IVOA TAP service
 | cadc-tap.resources.limits.memory | string | `"32G"` |  |
 | cadc-tap.resources.requests.cpu | float | `2` |  |
 | cadc-tap.resources.requests.memory | string | `"2G"` |  |
-| cadc-tap.tapSchema.image.tag | string | `"2.0.2"` | Tag of TAP schema image |
 | cadc-tap.uws.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-uws"` |  |
 | cadc-tap.uws.resources.limits.cpu | float | `2` |  |
 | cadc-tap.uws.resources.limits.memory | string | `"4G"` |  |
