@@ -1,4 +1,4 @@
-.. px-app-bootstrap:: argo-cd
+.. px-app-bootstrap:: argocd
 
 #####################
 Bootstrapping Argo CD
