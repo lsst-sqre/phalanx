@@ -11,3 +11,8 @@ prompt-processing-hsc:
 prompt-processing-latiss:
   enabled: true
 
+prompt-processing-lsstcam:
+  enabled: false
+
+prompt-processing-lsstcomcam:
+  enabled: false
