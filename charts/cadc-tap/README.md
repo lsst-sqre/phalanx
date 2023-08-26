@@ -26,7 +26,10 @@ IVOA TAP service
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | tap image to use |
 | config.pg.image.tag | string | Latest release | Tag of tap image to use |
 | config.pg.username | string | None, must be set if backend is pg | Username to connect with |
-| config.qserv.host | string | None, must be set if backend is qserv | Host to connect to |
+| config.qserv.host | string | `"mock-qserv:3306"` (the mock QServ) | QServ hostname:port to connect to |
+| config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
+| config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | tap image to use |
+| config.qserv.image.tag | string | Latest release | Tag of tap image to use |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |
@@ -49,7 +52,6 @@ IVOA TAP service
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the TAP pod |
 | podAnnotations | object | `{}` | Annotations for the TAP pod |
-| qserv.host | string | `"mock-qserv:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | `{"limits":{"cpu":8,"memory":"32G"},"requests":{"cpu":2,"memory":"2G"}}` | Resource limits and requests for the TAP pod |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |

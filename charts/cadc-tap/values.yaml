@@ -80,9 +80,20 @@ config:
       tag: "1.12"
 
   qserv:
-    # -- Host to connect to
-    # @default -- None, must be set if backend is qserv
-    host: ""
+    # -- QServ hostname:port to connect to
+    # @default -- `"mock-qserv:3306"` (the mock QServ)
+    host: "mock-qserv:3306"
+
+    image:
+      # -- tap image to use
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+
+      # -- Pull policy for the tap image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of tap image to use
+      # @default -- Latest release
+      tag: "1.4.5"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -114,11 +125,6 @@ config:
   # -- Vault secret name, this is appended to the global path to find the
   # vault secrets associated with this deployment.
   vaultSecretName: ""
-
-qserv:
-  # -- QServ hostname:port to connect to
-  # @default -- `"mock-qserv:3306"` (the mock QServ)
-  host: "mock-qserv:3306"
 
 mockdb:
   # -- Spin up a container to pretend to be the database.
