@@ -23,8 +23,10 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "tap-server"
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- if eq .Values.config.backend "pg" }}
+          image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
+          imagePullPolicy: {{ .Values.config.pg.image.pullPolicy | quote }}
+          {{- end }}
           env:
             - name: CATALINA_OPTS
               value: >-

@@ -1,24 +1,4 @@
 cadc-tap:
-  tapSchema:
-    image:
-      # -- Tag of TAP schema image
-      tag: "2.1"
-
-  image:
-    repository: "ghcr.io/lsst-sqre/tap-postgres-service"
-    pullPolicy: "IfNotPresent"
-    tag: "1.12"
-
-  replicaCount: 2
-
-  resources:
-    requests:
-      cpu: 2.0
-      memory: "2G"
-    limits:
-      cpu: 8.0
-      memory: "32G"
-
   # Settings for the ingress rules.
   ingress:
     path: "ssotap"
@@ -26,22 +6,6 @@ cadc-tap:
   config:
     # -- What type of backend?
     backend: "pg"
-
-    # -- Name of GCS bucket in which to store results
-    # @default -- None, must be set
-    gcsBucket: "async-results.lsst.codes"
-
-    # -- Base URL for results stored in GCS bucket
-    # @default -- None, must be set
-    gcsBucketUrl: "https://tap-files.lsst.codes"
-
-    # -- Java heap size, which will set the maximum size of the heap. Otherwise
-    # Java would determine it based on how much memory is available and black
-    # maths.
-    jvmMaxHeapSize: 31G
-
-    # -- Vault secret name: the final key in the vault path
-    vaultSecretName: "ssotap"
 
     pg:
       # -- Postgres hostname:port to connect to
@@ -53,21 +17,8 @@ cadc-tap:
       # -- Postgres username to use to connect
       username: "dp03"
 
-  mockdb:
-    # -- Spin up a container to pretend to be postgres.
-    enabled: false
-
-  uws:
-    image:
-      repository: "ghcr.io/lsst-sqre/tap-postgres-uws"
-
-    resources:
-      requests:
-        cpu: 0.25
-        memory: "1G"
-      limits:
-        cpu: 2.0
-        memory: "4G"
+    # -- Vault secret name: the final key in the vault path
+    vaultSecretName: "ssotap"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

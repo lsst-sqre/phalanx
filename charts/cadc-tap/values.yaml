@@ -11,17 +11,6 @@ fullnameOverride: "cadc-tap"
 # -- Number of pods to start
 replicaCount: 1
 
-image:
-  # -- tap image to use
-  repository: "ghcr.io/lsst-sqre/lsst-tap-service"
-
-  # -- Pull policy for the tap image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of tap image to use
-  # @default -- None, must be provided
-  tag: ""
-
 # Settings for the ingress rules.
 ingress:
   # -- Additional annotations to use for endpoints that allow anonymous
@@ -36,19 +25,25 @@ ingress:
   # by tomcat.
   path: ""
 
-# -- Resource limits and requests for the Gafaelfawr frontend pod
-resources: {}
+# -- Resource limits and requests for the TAP pod
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 8.0
+    memory: "32G"
 
-# -- Annotations for the Gafaelfawr frontend pod
+# -- Annotations for the TAP pod
 podAnnotations: {}
 
-# -- Node selector rules for the Gafaelfawr frontend pod
+# -- Node selector rules for the TAP pod
 nodeSelector: {}
 
-# -- Tolerations for the Gafaelfawr frontend pod
+# -- Tolerations for the TAP pod
 tolerations: []
 
-# -- Affinity rules for the Gafaelfawr frontend pod
+# -- Affinity rules for the TAP pod
 affinity: {}
 
 # -- Path to the Vault secret (`secret/k8s_operator/<host>/tap`, for example)
@@ -73,6 +68,17 @@ config:
     # @default -- None, must be set if backend is pg
     username: ""
 
+    image:
+      # -- tap image to use
+      repository: "ghcr.io/lsst-sqre/tap-postgres-service"
+
+      # -- Pull policy for the tap image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of tap image to use
+      # @default -- Latest release
+      tag: "1.12"
+
   qserv:
     # -- Host to connect to
     # @default -- None, must be set if backend is qserv
@@ -89,12 +95,12 @@ config:
   gafaelfawrHost: ""
 
   # -- Name of GCS bucket in which to store results
-  # @default -- None, must be set
-  gcsBucket: ""
+  # @default -- The common GCS bucket
+  gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  # @default -- None, must be set
-  gcsBucketUrl: ""
+  # @default -- The common GCS bucket
+  gcsBucketUrl: "https://tap-files.lsst.codes"
 
   # -- GCS bucket type (GCS or S3)
   # @default -- GCS
@@ -103,7 +109,7 @@ config:
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
   # Java would determine it based on how much memory is available and black
   # maths.
-  jvmMaxHeapSize: 4G
+  jvmMaxHeapSize: 31G
 
   # -- Vault secret name, this is appended to the global path to find the
   # vault secrets associated with this deployment.
@@ -116,7 +122,7 @@ qserv:
 
 mockdb:
   # -- Spin up a container to pretend to be the database.
-  enabled: true
+  enabled: false
 
   image:
     # -- Mock database image to use
@@ -183,11 +189,17 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    # @default -- Version of TAP image
-    tag: ""
+    # @default -- Version of QServ TAP image
+    tag: "1.4.5"
 
   # -- Resource limits and requests for the UWS database pod
-  resources: {}
+  resources:
+    requests:
+      cpu: 0.25
+      memory: "1G"
+    limits:
+      cpu: 2.0
+      memory: "4G"
 
   # -- Annotations for the UWS databse pod
   podAnnotations: {}
