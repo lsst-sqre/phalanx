@@ -24,7 +24,7 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "mock-db"
-          image: "{{ .Values.mockdb.image.repository }}:{{ .Values.mockdb.image.tag | default .Values.image.tag }}"
+          image: "{{ .Values.mockdb.image.repository }}:{{ .Values.mockdb.image.tag | default .Values.config.qserv.image.tag }}"
           imagePullPolicy: {{ .Values.mockdb.image.pullPolicy | quote }}
           ports:
             - containerPort: {{ .Values.mockdb.port }}

@@ -101,10 +101,6 @@ config:
   # -- Datalink payload URL
   datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
 
-  # -- Gafaelfawr hostname to get user information from a token
-  # @default -- Value of `ingress.host`
-  gafaelfawrHost: ""
-
   # -- Name of GCS bucket in which to store results
   # @default -- The common GCS bucket
   gcsBucket: "async-results.lsst.codes"

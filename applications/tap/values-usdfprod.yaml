@@ -1,14 +1,12 @@
-tapSchema:
-  image:
-    repository: "lsstsqre/tap-schema-usdf-prod-tap"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-usdf-prod-tap"
 
-qserv:
-  host: "172.24.49.51:4040"
-  mock:
-    enabled: false
+  config:
+    qserv:
+      host: "172.24.49.51:4040"
 
-config:
-  gcsBucket: "rubin:rubin-qserv"
-  gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
-  gcsBucketType: "S3"
-  jvmMaxHeapSize: "31G"
+    gcsBucket: "rubin:rubin-qserv"
+    gcsBucketUrl: "https://s3dfrgw.slac.stanford.edu"
+    gcsBucketType: "S3"

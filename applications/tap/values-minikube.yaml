@@ -1,7 +1,7 @@
-tapSchema:
-  image:
-    repository: "lsstsqre/tap-schema-idfprod-tap"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfprod-tap"
 
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  mockdb:
+    enabled: true

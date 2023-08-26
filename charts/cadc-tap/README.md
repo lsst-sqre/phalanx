@@ -15,7 +15,6 @@ IVOA TAP service
 | affinity | object | `{}` | Affinity rules for the TAP pod |
 | config.backend | string | None, must be set to "pg" or "qserv" | What type of backend are we connecting to? |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"` | Datalink payload URL |
-| config.gafaelfawrHost | string | Value of `ingress.host` | Gafaelfawr hostname to get user information from a token |
 | config.gcsBucket | string | The common GCS bucket | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | GCS | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | The common GCS bucket | Base URL for results stored in GCS bucket |
