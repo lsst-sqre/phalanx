@@ -1,18 +1,10 @@
-environment: usdfdev-prompt-processing
 fqdn: k8s.slac.stanford.edu/usdf-prompt-processing-dev
 name: usdfdev-prompt-processing
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
-repoURL: https://github.com/lsst-sqre/phalanx.git
 
-prompt-processing-hsc:
-  enabled: true
-
-prompt-processing-latiss:
-  enabled: true
-
-prompt-processing-lsstcam:
-  enabled: false
-
-prompt-processing-lsstcomcam:
-  enabled: false
+applications:
+  prompt-processing-hsc: true
+  prompt-processing-latiss: true
+  prompt-processing-lsstcam: false
+  prompt-processing-lsstcomcam: false
