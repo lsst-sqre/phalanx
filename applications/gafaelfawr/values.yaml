@@ -271,7 +271,7 @@ config:
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
     "write:sasquatch": >-
-      "Write access to the Sasquatch telemetry service"
+      Write access to the Sasquatch telemetry service
     "user:token": >-
       Can create and modify user tokens
 
