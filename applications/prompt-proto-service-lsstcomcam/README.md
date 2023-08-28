@@ -1,4 +1,4 @@
-# prompt-processing-lsstcomcam
+# prompt-proto-service-lsstcomcam
 
 Deployment for prompt proto service for LSSTComCam images
 

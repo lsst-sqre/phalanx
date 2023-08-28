@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prompt-processing-hsc
+name: prompt-proto-service-hsc
 version: 1.0.0
 description: Deployment for prompt proto service for HSC images
 dependencies:

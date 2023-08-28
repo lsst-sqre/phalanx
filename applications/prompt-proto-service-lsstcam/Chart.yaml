@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prompt-processing-lsstcam
+name: prompt-proto-service-lsstcam
 version: 1.0.0
 description: Deployment for prompt proto service for LSSTCam images
 dependencies:

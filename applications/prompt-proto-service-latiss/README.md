@@ -1,4 +1,4 @@
-# prompt-processing-latiss
+# prompt-proto-service-latiss
 
 Deployment for prompt proto service for LATISS images
 

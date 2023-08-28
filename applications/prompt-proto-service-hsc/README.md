@@ -1,4 +1,4 @@
-# prompt-processing-hsc
+# prompt-proto-service-hsc
 
 Deployment for prompt proto service for HSC images
 

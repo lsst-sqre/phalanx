@@ -1,5 +1,5 @@
 apiVersion: v2
-name: prompt-processing-latiss
+name: prompt-proto-service-latiss
 version: 1.0.0
 description: Deployment for prompt proto service for LATISS images
 dependencies:
