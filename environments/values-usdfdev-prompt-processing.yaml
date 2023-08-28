@@ -5,7 +5,7 @@ vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
 
 applications:
   cert-manager: false
-  gafaelfawr: disabled
+  gafaelfawr: false
   ingress-nginx: false
   prompt-proto-service-hsc: true
   prompt-proto-service-latiss: true
