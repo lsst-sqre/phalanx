@@ -1,8 +1,8 @@
-{{- if (index .Values "applications"  "prompt-processing-hsc") -}}
+{{- if (index .Values "applications"  "prompt-proto-service-hsc") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prompt-processing-hsc
+  name: prompt-proto-service-hsc
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io

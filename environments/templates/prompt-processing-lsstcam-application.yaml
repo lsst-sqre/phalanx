@@ -1,8 +1,8 @@
-{{- if (index .Values "applications" "prompt-processing-lsstcam") -}}
+{{- if (index .Values "applications" "prompt-proto-service-lsstcam") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prompt-processing-lsstcam
+  name: prompt-proto-service-lsstcam
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
