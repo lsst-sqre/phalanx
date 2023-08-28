@@ -156,6 +156,7 @@ class IdentityProvider(Enum):
     CILOGON = "CILogon"
     GITHUB = "GitHub"
     OIDC = "OpenID Connect"
+    NONE = "None"
 
 
 class GafaelfawrGitHubTeam(BaseModel):
