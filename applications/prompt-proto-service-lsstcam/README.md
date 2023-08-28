@@ -1,7 +1,5 @@
 # prompt-proto-service-lsstcam
 
-![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square)
-
 Deployment for prompt proto service for LSSTCam images
 
 ## Values
