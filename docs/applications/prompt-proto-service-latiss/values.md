@@ -1,11 +1,11 @@
-```{px-app-values} cachemachine
+```{px-app-values} prompt-proto-service-latiss
 ```
 
-# Cachemachine Helm values reference
+# Prompt Proto Service LATISS Helm values reference
 
-Helm values reference table for the {px-app}`prompt-proto-service` application.
+Helm values reference table for the {px-app}`prompt-proto-service-latiss` application.
 
-```{include} ../../../applications/prompt-proto-service/README.md
+```{include} ../../../applications/prompt-proto-service-latiss/README.md
 ---
 start-after: "## Values"
 ---
