@@ -4,6 +4,9 @@ vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
 
 applications:
+  cert-manager: false
+  gafaelfawr: disabled
+  ingress-nginx: false
   prompt-proto-service-hsc: true
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
