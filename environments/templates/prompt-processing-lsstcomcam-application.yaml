@@ -1,4 +1,4 @@
-{{- if (index .Values "prompt-processing-lsstcam" "enabled") -}}
+{{- if (index .Values "applications" "prompt-processing-lsstcam") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
