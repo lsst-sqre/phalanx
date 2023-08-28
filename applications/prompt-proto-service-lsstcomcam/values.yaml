@@ -1,3 +1,4 @@
+# Default values for LSSTComCam prompt-proto-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -5,8 +6,8 @@ prompt-proto-service:
 
   # -- Annotations for the prompt-proto-service pod
   podAnnotations:
-    autoscaling.knative.dev/min-scale: "10"
-    autoscaling.knative.dev/max-scale: "600"
+    autoscaling.knative.dev/min-scale: "3"
+    autoscaling.knative.dev/max-scale: "30"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
     # Update this field if `make apply` by itself doesn't make a new revision.
@@ -53,4 +54,4 @@ prompt-proto-service:
     idleTimeout: 900
     responseStartTimeout: 900
 
-  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcam"
+  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcomcam"

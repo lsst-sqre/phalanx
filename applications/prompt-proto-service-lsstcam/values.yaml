@@ -1,3 +1,4 @@
+# Default values for LSSTCam prompt-proto-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -53,4 +54,4 @@ prompt-proto-service:
     idleTimeout: 900
     responseStartTimeout: 900
 
-  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcam"
+  vaultSecretsPath: ""
