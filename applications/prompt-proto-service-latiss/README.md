@@ -2,12 +2,6 @@
 
 Deployment for prompt proto service for LATISS images
 
-## Requirements
-
-| Repository | Name | Version |
-|------------|------|---------|
-| file://../../charts/prompt-proto-service | prompt-proto-service | 1.0.0 |
-
 ## Values
 
 | Key | Type | Default | Description |
