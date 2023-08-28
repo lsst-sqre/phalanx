@@ -1,7 +1,7 @@
 .. px-app:: giftless
 
 #########################
-Giftless — Git LFS server
+giftless — Git LFS server
 #########################
 
 Giftless, a Git LFS server provided by Datopian, is the Rubin Observatory provider of Git LFS services.
