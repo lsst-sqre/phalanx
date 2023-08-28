@@ -1,4 +1,4 @@
-fqdn: k8s.slac.stanford.edu/usdf-prompt-processing-dev
+fqdn: usdf-prompt-processing-dev.slac.stanford.edu
 name: usdfdev-prompt-processing
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
