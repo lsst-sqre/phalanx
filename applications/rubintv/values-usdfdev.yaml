@@ -29,10 +29,6 @@ workers:
     value: "s3://rubin-summit-users/data-repos.yaml"
   - name: DAF_BUTLER_REPOSITORY
     value: "/sdf/group/rubin/repo/ir2/butler.yaml"
-  envSecrets:
-  - name: ASTROMETRY_NET_API_KEY
-    secretName: rubintv-secret
-    secretKey: astrometry-net-api-key
   volumes:
   - name: sdf-group-rubin
     persistentVolumeClaim:
