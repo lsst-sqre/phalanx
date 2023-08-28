@@ -9,7 +9,7 @@ The advantage of the DNS solver is that it works behind firewalls and can provis
 The DNS solver uses an AWS service user with write access to Route 53 to answer Let's Encrypt challenges.
 
 In order to use ``cert-manager``, you must be hosting the DNS for the external hostname of the Science Platform installation in AWS Route 53.
-See :ref:`hostnames` for more information.
+See :doc:`/admin/hostnames` for more information.
 
 First, ensure that ``cert-manager`` is set up for the domain in which the cluster will be hosted.
 If this is a new domain, follow the instructions in :doc:`route53-setup`.

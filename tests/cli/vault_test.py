@@ -143,12 +143,12 @@ def test_create_write_token(
     else:
         display_name = vault_path
     lifetime = timedelta(days=int(VAULT_WRITE_TOKEN_LIFETIME[:-1]))
-    expires = current_datetime() + lifetime
 
     result = run_cli("vault", "create-write-token", "idfdev")
     assert result.exit_code == 0
     token = VaultToken.parse_obj(yaml.safe_load(result.output))
     assert token.display_name == display_name
+    expires = current_datetime() + lifetime
     assert expires - timedelta(seconds=5) <= token.expires <= expires
     assert token.policies == [f"{vault_path}/write"]
     token_metadata = mock_vault.lookup_accessor(token.accessor)

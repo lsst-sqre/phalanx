@@ -190,11 +190,17 @@ class ConfigStorage:
         environment_details = []
         for environment in environments:
             name = environment.name
+            if environment.applications.get("gafaelfawr", False):
+                gafaelfawr = self._resolve_application(
+                    applications["gafaelfawr"], name
+                )
+            else:
+                gafaelfawr = None
             details = self._build_environment_details(
                 environment,
                 [applications[a] for a in environment.enabled_applications],
                 self._resolve_application(applications["argocd"], name),
-                self._resolve_application(applications["gafaelfawr"], name),
+                gafaelfawr,
             )
             environment_details.append(details)
 
@@ -209,7 +215,7 @@ class ConfigStorage:
         config: EnvironmentConfig,
         applications: list[Application],
         argocd: ApplicationInstance,
-        gafaelfawr: ApplicationInstance,
+        gafaelfawr: ApplicationInstance | None,
     ) -> EnvironmentDetails:
         """Construct the details of an environment.
 
@@ -225,7 +231,8 @@ class ConfigStorage:
         argocd
             Argo CD application configuration.
         gafaelfawr
-            Gafaelfawr application configuration.
+            Gafaelfawr application configuration, if Gafaelfawr is enabled for
+            this environment.
 
         Returns
         -------
@@ -253,38 +260,44 @@ class ConfigStorage:
             ]
 
         # Type of identity provider used for Gafaelfawr.
-        if gafaelfawr.values["config"]["cilogon"]["clientId"]:
-            identity_provider = IdentityProvider.CILOGON
-        elif gafaelfawr.values["config"]["github"]["clientId"]:
-            identity_provider = IdentityProvider.GITHUB
-        elif gafaelfawr.values["config"]["oidc"]["clientId"]:
-            identity_provider = IdentityProvider.OIDC
+        if gafaelfawr:
+            if gafaelfawr.values["config"]["cilogon"]["clientId"]:
+                identity_provider = IdentityProvider.CILOGON
+            elif gafaelfawr.values["config"]["github"]["clientId"]:
+                identity_provider = IdentityProvider.GITHUB
+            elif gafaelfawr.values["config"]["oidc"]["clientId"]:
+                identity_provider = IdentityProvider.OIDC
+            else:
+                raise InvalidApplicationConfigError(
+                    "gafaelfawr",
+                    "Cannot determine identity provider",
+                    environment=config.name,
+                )
         else:
-            raise InvalidApplicationConfigError(
-                "gafaelfawr",
-                "Cannot determine identity provider",
-                environment=config.name,
-            )
+            identity_provider = IdentityProvider.NONE
 
         # Gafaelfawr scopes. Restructure the data to let Pydantic do most of
         # the parsing.
-        try:
-            group_mapping = gafaelfawr.values["config"]["groupMapping"]
-            gafaelfawr_scopes = []
-            for scope, groups in group_mapping.items():
-                raw = {"scope": scope, "groups": groups}
-                gafaelfawr_scope = GafaelfawrScope.parse_obj(raw)
-                gafaelfawr_scopes.append(gafaelfawr_scope)
-        except KeyError as e:
-            raise InvalidApplicationConfigError(
-                "gafaelfawr", "No config.groupMapping", environment=config.name
-            ) from e
-        except ValidationError as e:
-            raise InvalidApplicationConfigError(
-                "gafaelfawr",
-                "Invalid config.groupMapping",
-                environment=config.name,
-            ) from e
+        gafaelfawr_scopes = []
+        if gafaelfawr:
+            try:
+                group_mapping = gafaelfawr.values["config"]["groupMapping"]
+                for scope, groups in group_mapping.items():
+                    raw = {"scope": scope, "groups": groups}
+                    gafaelfawr_scope = GafaelfawrScope.parse_obj(raw)
+                    gafaelfawr_scopes.append(gafaelfawr_scope)
+            except KeyError as e:
+                raise InvalidApplicationConfigError(
+                    "gafaelfawr",
+                    "No config.groupMapping",
+                    environment=config.name,
+                ) from e
+            except ValidationError as e:
+                raise InvalidApplicationConfigError(
+                    "gafaelfawr",
+                    "Invalid config.groupMapping",
+                    environment=config.name,
+                ) from e
 
         # Return the resulting model.
         return EnvironmentDetails(
@@ -479,10 +492,8 @@ class ConfigStorage:
             Raised if the secret configuration has conflicting rules.
         """
         # Merge values with any environment overrides.
-        values = application.values
-        if environment_name in application.environment_values:
-            env_values = application.environment_values[environment_name]
-            values = _merge_overrides(values, env_values)
+        env_values = application.environment_values.get(environment_name, {})
+        values = _merge_overrides(application.values, env_values)
 
         # Create an initial application instance without secrets so that we
         # can use its class methods.

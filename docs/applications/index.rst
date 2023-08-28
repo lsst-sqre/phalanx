@@ -12,7 +12,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Cluster infrastructure
 
-   argo-cd/index
+   argocd/index
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
