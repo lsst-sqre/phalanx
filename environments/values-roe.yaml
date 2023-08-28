@@ -1,6 +1,6 @@
 name: roe
 fqdn: rsp.lsst.ac.uk
-vaultUrl: "https://vault.lsst.codes"
+vaultUrl: "https://vault.lsst.ac.uk"
 vaultPathPrefix: secret/k8s_operator/roe
 
 applications:
