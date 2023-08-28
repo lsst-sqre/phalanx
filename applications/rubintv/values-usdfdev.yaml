@@ -1,5 +1,8 @@
 siteTag: "usdf-dev"
 
+imagePullSecrets:
+- name: pull-secret
+
 frontend:
   debug: true
   env:
@@ -30,8 +33,6 @@ workers:
   - name: ASTROMETRY_NET_API_KEY
     secretName: rubintv-secret
     secretKey: astrometry-net-api-key
-  imagePullSecrets:
-  - name: pull-secret
   volumes:
   - name: sdf-group-rubin
     persistentVolumeClaim:

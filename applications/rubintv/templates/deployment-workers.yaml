@@ -19,7 +19,7 @@ spec:
         {{- include "rubintv.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
-      {{- with .Values.workers.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml . | nindent 8 }}
       {{- end }}

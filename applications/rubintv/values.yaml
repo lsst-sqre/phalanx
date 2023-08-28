@@ -10,6 +10,11 @@ fullnameOverride: ""
 # running.  Must be overridden at each site
 siteTag: ""
 
+# -- Image pull secrets.
+# @default -- See `values.yaml`
+imagePullSecrets: []
+# Each entry is of the form: { name: pull-secret-name }
+
 frontend:
   # -- If set to true, enable more verbose logging.
   debug: false
@@ -43,11 +48,6 @@ frontend:
 
   # -- Affinity rules for the rubintv frontend pod
   affinity: {}
-
-  # -- Image pull secrets.
-  # @default -- See `values.yaml`
-  imagePullSecrets: []
-  # Each entry is of the form: { name: pull-secret-name }
 
 workers:
   # -- how many replicas to use

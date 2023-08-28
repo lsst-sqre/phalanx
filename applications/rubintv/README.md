@@ -16,7 +16,6 @@ real-time display front end
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the rubintv image |
 | frontend.image.repository | string | `"ghcr.io/lsst-sqre/rubintv"` | rubintv frontend image to use |
 | frontend.image.tag | string | The appVersion of the chart | Tag of rubintv image to use |
-| frontend.imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | frontend.nodeSelector | object | `{}` | Node selector rules for the rubintv frontend pod |
 | frontend.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's frontend API routes. |
 | frontend.podAnnotations | object | `{}` | Annotations for the rubintv frontend pod |
@@ -26,6 +25,7 @@ real-time display front end
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |

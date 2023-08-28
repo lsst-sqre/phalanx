@@ -19,7 +19,7 @@ spec:
         {{- include "rubintv.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
-      {{- with .Values.workers.imagePullSecrets }}
+      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
       {{ toYaml . | nindent 8 }}
       {{- end }}
@@ -61,33 +61,16 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - name: "user-secrets"
+            - name: "secrets"
               mountPath: "/etc/secrets"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
-      initContainers:
-        - name: "secret-perm-fixer-frontend"
-          image: "busybox"
-          command:
-            - "/bin/sh"
-            - "-c"
-            - |
-              cp /secrets/* /etc/secrets && \
-              chown 1000:1000 /etc/secrets/* && \
-              chmod 0600 /etc/secrets/*
-          volumeMounts:
-            - name: "secrets"
-              mountPath: "/secrets"
-            - name: "user-secrets"
-              mountPath: "/etc/secrets"
       volumes:
         - name: "secrets"
           secret:
             secretName: {{ include "rubintv.fullname" . }}-secret
-        - name: "user-secrets"
-          emptyDir: {}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
