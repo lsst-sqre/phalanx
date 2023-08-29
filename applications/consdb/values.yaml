@@ -1,0 +1,74 @@
+# Default values for consdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the consdb deployment
+  repository: "ghcr.io/lsst-dm/consdb-hinfo"
+
+  # -- Pull policy for the consdb image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+db:
+  # -- database host
+  host: postgres.postgres
+  # -- database port
+  port: 5432
+  # -- database user
+  user: consdb
+  # -- database name
+  database: consdb
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of consdb deployment
+  enabled: false
+
+  # -- Minimum number of consdb deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of consdb deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of consdb deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the consdb deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the consdb deployment pod
+resources: {}
+
+# -- Node selection rules for the consdb deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the consdb deployment pod
+tolerations: []
+
+# -- Affinity rules for the consdb deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

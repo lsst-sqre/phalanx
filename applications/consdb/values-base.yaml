@@ -1,0 +1,30 @@
+environment:
+  PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
+  DATABASE_USER: "oods"
+  POSTGRES_URL: "postgresql://oods@postgresdb01.ls.lsst.org/butler"
+  DATABASE_URL: "postgresdb01.ls.lsst.org"
+  AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
+  S3_ENDPOINT_URL: "https://s3.ls.lsst.org"
+  KAFKA_REST: "https://base-lsp.lsst.codes/sasquatch-rest-proxy"
+
+config:
+  kafka:
+    storage:
+      storageClassName: rook-ceph-block
+      size: 1Ti
+    externalListener:
+      tls:
+        enabled: true
+      bootstrap:
+        loadBalancerIP: "139.229.153.65"
+        host: sasquatch-base-kafka-bootstrap.lsst.codes
+      brokers:
+        - loadBalancerIP: "139.229.153.66"
+          host: sasquatch-base-kafka-0.lsst.codes
+        - loadBalancerIP: "139.229.153.67"
+          host: sasquatch-base-kafka-1.lsst.codes
+        - loadBalancerIP: "139.229.153.68"
+          host: sasquatch-base-kafka-2.lsst.codes
+  zookeeper:
+    storage:
+      storageClassName: rook-ceph-block

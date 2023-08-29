@@ -1,0 +1,14 @@
+apiVersion: v2
+name: consdb-hinfo
+version: 1.0.0
+description: Consolidated Database of Image Metadata
+type: application
+appVersion: dm-37511
+home: consdb.lsst.io
+sources:
+  - https://github.com/lsst-dm/consdb
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-227"
+      title: "The Consolidated Database of Image Metadata "
+      url: "https://dmtn-227.lsst.io/"

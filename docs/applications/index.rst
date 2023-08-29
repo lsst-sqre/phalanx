@@ -40,6 +40,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    tap/index
    times-square/index
    vo-cutouts/index
+   consdb/index
 
 .. toctree::
    :maxdepth: 1

@@ -10,6 +10,7 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
+  consdb: false
   datalinker: true
   exposurelog: true
   livetap: true

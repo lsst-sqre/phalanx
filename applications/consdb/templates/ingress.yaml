@@ -1,0 +1,32 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "consdb"
+  labels:
+    {{- include "consdb.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+  loginRedirect: true
+template:
+  metadata:
+    name: "consdb"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    ingressClassName: "nginx"
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/consdb"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "consdb"
+                  port:
+                    number: 8080
