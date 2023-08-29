@@ -50,7 +50,7 @@ A few additional fields need to be filled out.
 Chart versioning
 ----------------
 
-For charts that deploy a Rubin-developed application, ``appVersion`` should be set to the version of that application to deploy.
+For charts that deploy a Rubin-developed application, set ``appVersion`` to the application's Docker image tag (which is typically the version tag).
 
 The chart also has a ``version`` field, which will be set to ``1.0.0``.
 This field does not need to be changed.
