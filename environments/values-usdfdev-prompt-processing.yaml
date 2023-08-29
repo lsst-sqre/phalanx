@@ -9,5 +9,5 @@ applications:
   ingress-nginx: false
   prompt-proto-service-hsc: true
   prompt-proto-service-latiss: true
-  prompt-proto-service-lsstcam: false
-  prompt-proto-service-lsstcomcam: false
+  prompt-proto-service-lsstcam: true
+  prompt-proto-service-lsstcomcam: true

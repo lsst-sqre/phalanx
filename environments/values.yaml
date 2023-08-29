@@ -126,6 +126,18 @@ applications:
   # -- Enable the production-tools application
   production-tools: false
 
+  # -- Enable the prompt-proto-service-hsc application
+  prompt-proto-service-hsc: false
+
+  # -- Enable the prompt-proto-service-latiss application
+  prompt-proto-service-latiss: false
+
+  # -- Enable the prompt-proto-service-lsstcam application
+  prompt-proto-service-lsstcam: false
+
+  # -- Enable the prompt-proto-service-lsstcomcam application
+  prompt-proto-service-lsstcomcam: false
+
   # -- Enable the semaphore application
   semaphore: false
 

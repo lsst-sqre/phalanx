@@ -5,7 +5,7 @@ usdfdev-prompt-processing — https://k8s.slac.stanford.edu/usdf-prompt-processi
 #######################################################
 
 ``usdfdev-prompt-processing`` is a development environment for Prompt Processing at the United States Data Facility (USDF) hosted at SLAC.
-The primary use of ``usdfdev`` is for testing and development of the USDF environment.
+The primary use of ``usdfdev-prompt-processing`` is for testing and development of the USDF Prompt Processing environment.
 
 .. jinja:: usdfdev-prompt-processing
    :file: environments/_summary.rst.jinja

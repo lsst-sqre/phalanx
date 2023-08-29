@@ -61,5 +61,4 @@ ignore = [
     '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
-    '^https://k8s.slac.stanford.edu/usdf-prompt-processing-dev',
 ]
