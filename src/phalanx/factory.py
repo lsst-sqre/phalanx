@@ -4,9 +4,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from .services.application import ApplicationService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.config import ConfigStorage
+from .storage.helm import HelmStorage
 from .storage.vault import VaultStorage
 
 __all__ = ["Factory"]
@@ -23,6 +25,18 @@ class Factory:
 
     def __init__(self, path: Path) -> None:
         self._path = path
+
+    def create_application_service(self) -> ApplicationService:
+        """Create service for manipulating Phalanx applications.
+
+        Returns
+        -------
+        ApplicationService
+            Service for manipulating applications.
+        """
+        config_storage = self.create_config_storage()
+        helm_storage = HelmStorage(config_storage)
+        return ApplicationService(self._path, config_storage, helm_storage)
 
     def create_config_storage(self) -> ConfigStorage:
         """Create storage layer for the Phalanx configuration.
