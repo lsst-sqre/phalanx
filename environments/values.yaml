@@ -141,9 +141,6 @@ applications:
   # -- Enable the squareone application
   squareone: false
 
-  # -- Enable the squash-api application
-  squash-api: false
-
   # -- Enable the strimzi application
   strimzi: false
 

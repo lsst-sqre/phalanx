@@ -37,7 +37,6 @@
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
-| applications.squash-api | bool | `false` | Enable the squash-api application |
 | applications.ssotap | bool | `false` | Enable the ssotap application |
 | applications.strimzi | bool | `false` | Enable the strimzi application |
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |

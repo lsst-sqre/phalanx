@@ -279,15 +279,15 @@ class ConfigStorage:
             environment_name = values_path.stem.removeprefix("values-")
             environments.append(self.load_environment_config(environment_name))
 
-        # Load the configurations of all enabled applications.
-        enabled_applications = set()
+        # Load the configurations of all applications.
+        all_applications: set[str] = set()
         enabled_for: defaultdict[str, list[str]] = defaultdict(list)
         for environment in environments:
             for name in environment.enabled_applications:
-                enabled_applications.add(name)
                 enabled_for[name].append(environment.name)
+            all_applications.update(environment.applications.keys())
         applications = {}
-        for name in enabled_applications:
+        for name in all_applications:
             application_config = self._load_application_config(name)
             application = Application(
                 active_environments=enabled_for[name],
