@@ -78,6 +78,11 @@ See the `Helm installation guide <https://helm.sh/docs/intro/install/>`__ for mo
 
 If you don't want to (or don't have access to) install helm globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
 
+.. warning::
+
+   The Python PyPI package ``helm`` is something entirely different and is not what Phalanx uses.
+   Don't try to install Helm from PyPI; follow the above instructions instead.
+
 Next steps
 ==========
 
