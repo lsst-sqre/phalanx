@@ -153,7 +153,7 @@ def application() -> None:
 @click.option(
     "-d",
     "--description",
-    required=True,
+    prompt="Short description",
     help="Short description of the new application.",
 )
 @click.option(
@@ -164,7 +164,7 @@ def application() -> None:
     help="Helm starter to use as the basis for the chart.",
 )
 def application_create(
-    name: str, starter: str, *, config: Path | None, description: str
+    name: str, *, starter: str, config: Path | None, description: str
 ) -> None:
     """Create a new application from a starter template.
 

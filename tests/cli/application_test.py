@@ -104,3 +104,29 @@ def test_create(tmp_path: Path) -> None:
         ("zzz-other-app", "Last new app"),
     ):
         assert environment.applications[app].chart["description"] == expected
+
+
+def test_create_prompt(tmp_path: Path) -> None:
+    config_path = tmp_path / "phalanx"
+    shutil.copytree(str(phalanx_test_path()), str(config_path))
+    (config_path / "docs").mkdir()
+    app_docs_path = config_path / "docs" / "applications"
+    app_docs_path.mkdir()
+
+    # Add an application, prompting for the description.
+    result = run_cli(
+        "application",
+        "create",
+        "aaa-new-app",
+        "--config",
+        str(config_path),
+        needs_config=False,
+        stdin="Some application\n",
+    )
+    assert result.output == "Short description: Some application\n"
+    assert result.exit_code == 0
+
+    app_path = config_path / "applications" / "aaa-new-app"
+    with (app_path / "Chart.yaml").open() as fh:
+        chart = yaml.safe_load(fh)
+    assert chart["description"] == "Some application"
