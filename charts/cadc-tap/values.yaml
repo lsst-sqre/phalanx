@@ -93,7 +93,7 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "1.4.5"
+      tag: "2.0.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
