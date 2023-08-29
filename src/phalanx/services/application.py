@@ -8,6 +8,7 @@ import jinja2
 import yaml
 
 from ..exceptions import ApplicationExistsError
+from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
 from ..storage.helm import HelmStorage
 
@@ -43,7 +44,7 @@ class ApplicationService:
         )
 
     def create_application(
-        self, name: str, starter: str, description: str
+        self, name: str, starter: HelmStarter, description: str
     ) -> None:
         """Create configuration for a new application.
 

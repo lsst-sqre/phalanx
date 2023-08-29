@@ -14,7 +14,6 @@ __all__ = [
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
     "UnknownEnvironmentError",
-    "UnknownStarterError",
     "UnresolvedSecretsError",
     "VaultNotFoundError",
 ]
@@ -143,20 +142,6 @@ class UnknownEnvironmentError(Exception):
 
     def __init__(self, name: str) -> None:
         msg = f"No configuration found for environment {name}"
-        super().__init__(msg)
-
-
-class UnknownStarterError(Exception):
-    """Specified Helm starter was not found.
-
-    Parameters
-    ----------
-    name
-        Name of the starter.
-    """
-
-    def __init__(self, name: str) -> None:
-        msg = f"No Helm starter named {name} found"
         super().__init__(msg)
 
 

@@ -28,6 +28,7 @@ def test_create(tmp_path: Path) -> None:
         "application",
         "create",
         "aaa-new-app",
+        "--starter",
         "empty",
         "--description",
         "First new app",
@@ -35,25 +36,25 @@ def test_create(tmp_path: Path) -> None:
         str(config_path),
         needs_config=False,
     )
-    assert result.exit_code == 0
     assert result.output == ""
+    assert result.exit_code == 0
     result = run_cli(
         "application",
         "create",
         "hips",
-        "web-service",
         "--description",
         "Some HiPS service",
         "--config",
         str(config_path),
         needs_config=False,
     )
-    assert result.exit_code == 0
     assert result.output == ""
+    assert result.exit_code == 0
     result = run_cli(
         "application",
         "create",
         "zzz-other-app",
+        "--starter",
         "empty",
         "--description",
         "Last new app",
@@ -61,8 +62,8 @@ def test_create(tmp_path: Path) -> None:
         str(config_path),
         needs_config=False,
     )
-    assert result.exit_code == 0
     assert result.output == ""
+    assert result.exit_code == 0
 
     # Check that the environments/values.yaml file was updated correctly.
     env_values = (config_path / "environments" / "values.yaml").read_text()

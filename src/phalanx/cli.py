@@ -14,6 +14,7 @@ from pydantic.tools import schema_of
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
 from .models.environments import EnvironmentConfig
+from .models.helm import HelmStarter
 from .models.secrets import ConditionalSecretConfig, StaticSecret
 
 __all__ = [
@@ -142,7 +143,6 @@ def application() -> None:
 
 @application.command("create")
 @click.argument("name")
-@click.argument("starter")
 @click.option(
     "-c",
     "--config",
@@ -155,6 +155,13 @@ def application() -> None:
     "--description",
     required=True,
     help="Short description of the new application.",
+)
+@click.option(
+    "-s",
+    "--starter",
+    type=click.Choice([s.value for s in HelmStarter]),
+    default=HelmStarter.WEB_SERVICE.value,
+    help="Helm starter to use as the basis for the chart.",
 )
 def application_create(
     name: str, starter: str, *, config: Path | None, description: str
@@ -170,7 +177,9 @@ def application_create(
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create_application(name, starter, description)
+    application_service.create_application(
+        name, HelmStarter(starter), description
+    )
 
 
 @main.group()

@@ -17,7 +17,6 @@ from ..exceptions import (
     InvalidApplicationConfigError,
     InvalidSecretConfigError,
     UnknownEnvironmentError,
-    UnknownStarterError,
 )
 from ..models.applications import (
     Application,
@@ -33,6 +32,7 @@ from ..models.environments import (
     IdentityProvider,
     PhalanxConfig,
 )
+from ..models.helm import HelmStarter
 from ..models.secrets import ConditionalSecretConfig, Secret
 
 __all__ = ["ConfigStorage"]
@@ -173,7 +173,7 @@ class ConfigStorage:
         """
         return self._path / "applications" / application
 
-    def get_starter_path(self, starter: str) -> Path:
+    def get_starter_path(self, starter: HelmStarter) -> Path:
         """Determine the path to a Helm starter template.
 
         Parameters
@@ -185,16 +185,8 @@ class ConfigStorage:
         -------
         pathlib.Path
             Path to that Helm starter template.
-
-        Raises
-        ------
-        UnknownStarterError
-            Raised if the named Helm starter template does not exist.
         """
-        path = self._path / "starters" / starter
-        if not path.is_dir():
-            raise UnknownStarterError(starter)
-        return path
+        return self._path / "starters" / starter.value
 
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
