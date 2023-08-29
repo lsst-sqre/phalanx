@@ -126,3 +126,11 @@ class ApplicationInstance(BaseModel):
                 return False
             values = values[key]
         return bool(values)
+
+    def all_static_secrets(self) -> list[Secret]:
+        """Return all static secrets for this instance of the application."""
+        return [
+            s
+            for s in self.secrets
+            if not (s.copy_rules or s.generate or s.value)
+        ]

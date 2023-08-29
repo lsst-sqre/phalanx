@@ -10,6 +10,7 @@ from pathlib import Path
 
 import bcrypt
 import click
+import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
@@ -22,6 +23,7 @@ from ..support.data import (
     read_input_static_secrets,
     read_output_data,
 )
+from ..support.onepassword import MockOnepasswordClient
 from ..support.vault import MockVaultClient
 
 
@@ -154,6 +156,35 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert "cilogon" not in after
     del gafaelfawr["cilogon"]
     assert after == gafaelfawr
+
+
+def test_sync_onepassword(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    input_path = phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+    _, base_vault_path = environment.vault_path_prefix.split("/", 1)
+
+    result = run_cli("secrets", "sync", "minikube")
+    assert result.exit_code == 0
+    assert result.output == read_output_data("minikube", "sync-output")
+
+    # Check that all static secrets were copied over correctly. A mapping to
+    # avoid periods in 1Password field names is required for one secret, so we
+    # have to reverse that.
+    with (input_path / "onepassword" / "minikube.yaml").open() as fh:
+        onepassword_secrets = yaml.safe_load(fh)
+    for application, values in onepassword_secrets.items():
+        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
+        for key, value in values.items():
+            assert value == vault[key]
 
 
 def test_sync_regenerate(

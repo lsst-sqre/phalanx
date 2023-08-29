@@ -1,0 +1,7 @@
+argocd:
+  "dex.clientSecret": some-dex-secret
+gafaelfawr:
+  github-client-secret: some-github-secret
+mobu:
+  ALERT_HOOK: https://example.com/alert-hook
+  app-alert-webhook: https://example.com/app-hook
