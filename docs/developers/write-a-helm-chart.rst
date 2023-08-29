@@ -87,7 +87,7 @@ Note that ``sources`` is an array of URLs:
    sources:
      - https://github.com/lsst-sqre/gafaelfawr
 
-If you used the web-service starter, this field will be prepoplated with the typical GitHub link for a SQuaRE application.
+If you used the web-service starter, this field will be pre-populated with the typical GitHub link for a SQuaRE application.
 
 phalanx.lsst.io/docs
 ^^^^^^^^^^^^^^^^^^^^
