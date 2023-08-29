@@ -22,15 +22,12 @@ Then, create the files for the new application, including the start of a Helm ch
 
 .. prompt:: bash
 
-   phalanx application create <application> <starter> --description <description>
+   phalanx application create <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 
-Replace ``<description>`` with a **short** description of the application.
-Keep it succinct, ideally just a few words, and do not add a period at the end.
-
-Replace ``<starter>`` with the name of the Helm chart starter to use.
-This is a template that is used to create the initial Helm chart.
+By default, this will create a Helm chart for a FastAPI web service.
+Use the ``--starter`` flag to specify a different Helm chart starter.
 There are two options:
 
 web-service
@@ -39,6 +36,9 @@ web-service
 empty
     Use this starter for any other type of application.
     This will create an empty Helm chart, to which you can add resources or external charts.
+
+You will be prompted for a short description of the application.
+Keep it succinct, ideally just a few words, and do not add a period at the end.
 
 Write the Chart.yaml
 ====================
@@ -51,11 +51,14 @@ Chart versioning
 ----------------
 
 For charts that deploy a Rubin-developed application, set ``appVersion`` to the application's Docker image tag (which is typically the version tag).
+For charts that do not deploy an application (for example, charts that are only used to manage subcharts as described in :doc:`add-external-chart`), delete the ``appVersion`` field.
 
-The chart also has a ``version`` field, which will be set to ``1.0.0``.
-This field does not need to be changed.
-The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as Helm charts.
-Their versions are therefore irrelevant, so we use ``1.0.0`` for all charts.
+.. note::
+
+   The chart also has a ``version`` field, which will be set to ``1.0.0``.
+   This field does not need to be changed.
+   The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as Helm charts.
+   Their versions are therefore irrelevant, so we use ``1.0.0`` for all charts.
 
 Source and documentation links
 ------------------------------
@@ -247,3 +250,5 @@ Next steps
 
 - Define the secrets needed by this application: :doc:`define-secrets`
 - Add the Argo CD application to appropriate environments: :doc:`add-application`
+
+Be aware that Phalanx tests will not pass until you have done both of these steps as well.

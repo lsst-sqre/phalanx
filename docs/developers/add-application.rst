@@ -21,6 +21,7 @@ This should explain the purpose of the application and which environments should
 The :file:`values.md` file generally does not need to be modified.
 
 Finally, add the new application to `docs/applications/index.rst <https://github.com/lsst-sqre/phalanx/blob/main/docs/applications/index.rst>`__ in the appropriate section.
+Please maintain the alphabetical sorting of each section.
 
 Configure other Phalanx applications
 ====================================
@@ -39,7 +40,8 @@ Finally, you need to tell Argo CD to deploy your application in some environment
    This should hold only the customization specific to that Rubin Science Platform environment.
    Any shared configuration should go into the defaults of your chart (:file:`values.yaml`).
 
-   If it is a third-party application repackaged as a Phalanx chart, you will need to add its configuration a little differently.  See :ref:`external-chart-config` for more discussion.
+   If there is no environment-specific configuration, you must still create this file.
+   In this case, leave it empty.
 
 #. Enable your application in one of the :file:`values-{environment}.yaml` files in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Do this by adding a key for your application under ``applications`` (in alphabetical order) with a value of ``true``.
