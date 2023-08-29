@@ -1,8 +1,8 @@
 .. px-app:: {{ name }}
 
-######################################
-{{ name }} - {{ description }}
-######################################
+{{ "#" * (name|length + description|length + 3) }}
+{{ name }} — {{ description }}
+{{ "#" * (name|length + description|length + 3) }}
 
 .. jinja:: {{ name }}
    :file: applications/_summary.rst.jinja
