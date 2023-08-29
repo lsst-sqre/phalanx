@@ -81,8 +81,8 @@ config:
 
   qserv:
     # -- QServ hostname:port to connect to
-    # @default -- `"mock-qserv:3306"` (the mock QServ)
-    host: "mock-qserv:3306"
+    # @default -- `"mock-db:3306"` (the mock QServ)
+    host: "mock-db:3306"
 
     image:
       # -- tap image to use

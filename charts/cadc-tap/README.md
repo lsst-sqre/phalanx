@@ -25,7 +25,7 @@ IVOA TAP service
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | tap image to use |
 | config.pg.image.tag | string | Latest release | Tag of tap image to use |
 | config.pg.username | string | None, must be set if backend is pg | Username to connect with |
-| config.qserv.host | string | `"mock-qserv:3306"` (the mock QServ) | QServ hostname:port to connect to |
+| config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the tap image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | tap image to use |
 | config.qserv.image.tag | string | Latest release | Tag of tap image to use |
