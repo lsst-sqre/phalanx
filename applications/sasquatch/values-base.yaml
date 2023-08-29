@@ -128,6 +128,9 @@ kafka-connect-manager:
       genericcamera:
         enabled: true
         topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
+      lsstcam:
+        enabled: true
+        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
 # This needs to follow the kafka-connect-manager configuration for the summit
 # environment where data is replicated from.
