@@ -41,7 +41,7 @@ Finally, you need to tell Argo CD to deploy your application in some environment
 
    If it is a third-party application repackaged as a Phalanx chart, you will need to add its configuration a little differently.  See :ref:`external-chart-config` for more discussion.
 
-#. Enable your application in one of the :file:`values-{enviornment}.yaml` files in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
+#. Enable your application in one of the :file:`values-{environment}.yaml` files in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Do this by adding a key for your application under ``applications`` (in alphabetical order) with a value of ``true``.
    This environment will be the first place your application is deployed.
 
