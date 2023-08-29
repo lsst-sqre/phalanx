@@ -33,7 +33,7 @@ class VaultService:
         self._templates = jinja2.Environment(
             loader=jinja2.PackageLoader("phalanx", "data"),
             undefined=jinja2.StrictUndefined,
-            autoescape=jinja2.select_autoescape(disabled_extensions=["tmpl"]),
+            autoescape=jinja2.select_autoescape(disabled_extensions=["jinja"]),
         )
 
     def audit(self, environment: str) -> str:
@@ -85,7 +85,7 @@ class VaultService:
         """
         config = self._config.load_environment_config(environment)
         vault_client = self._vault.get_vault_client(config)
-        template = self._templates.get_template("vault-read-policy.tmpl")
+        template = self._templates.get_template("vault-read-policy.hcl.jinja")
         policy = template.render({"path": config.vault_path})
         vault_client.create_policy(config.vault_read_policy, policy)
         approle = vault_client.get_approle(config.vault_read_approle)
@@ -124,7 +124,7 @@ class VaultService:
         tokens = self._find_write_tokens(vault_client, config)
         for token in tokens:
             vault_client.revoke_token(token.accessor)
-        template = self._templates.get_template("vault-write-policy.tmpl")
+        template = self._templates.get_template("vault-write-policy.hcl.jinja")
         policy = template.render({"path": config.vault_path})
         vault_client.create_policy(config.vault_write_policy, policy)
         return vault_client.create_token(
@@ -155,7 +155,7 @@ class VaultService:
 
         expected_policies = {config.vault_read_policy}
         errors = self._audit_policies(approle.policies, expected_policies)
-        template = self._templates.get_template("vault-read-policy.tmpl")
+        template = self._templates.get_template("vault-read-policy.hcl.jinja")
         expected = template.render({"path": config.vault_path})
         policy = vault_client.get_policy(config.vault_read_policy)
         if policy != expected:
@@ -194,7 +194,7 @@ class VaultService:
         if len(tokens) > 1:
             report = "Multiple write tokens found\n"
 
-        template = self._templates.get_template("vault-write-policy.tmpl")
+        template = self._templates.get_template("vault-write-policy.hcl.jinja")
         expected = template.render({"path": config.vault_path})
         policy = vault_client.get_policy(config.vault_write_policy)
 

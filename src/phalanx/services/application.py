@@ -39,7 +39,7 @@ class ApplicationService:
         self._templates = jinja2.Environment(
             loader=jinja2.PackageLoader("phalanx", "data"),
             undefined=jinja2.StrictUndefined,
-            autoescape=jinja2.select_autoescape(disabled_extensions=["tmpl"]),
+            autoescape=jinja2.select_autoescape(disabled_extensions=["jinja"]),
         )
 
     def create_application(
@@ -92,7 +92,7 @@ class ApplicationService:
         overlay = self._templates.overlay(
             variable_start_string="[[", variable_end_string="]]"
         )
-        template = overlay.get_template("application-template.tmpl")
+        template = overlay.get_template("application-template.yaml.jinja")
         application = template.render({"name": name})
         self._config.write_application_template(name, application)
         setting = f"# -- Enable the {name} application\n{name}: false"
@@ -123,9 +123,9 @@ class ApplicationService:
         if docs_path.exists():
             raise ApplicationExistsError(name)
         docs_path.mkdir()
-        template = self._templates.get_template("application-docs.tmpl")
+        template = self._templates.get_template("application-docs.rst.jinja")
         docs = template.render({"name": name, "description": description})
         (docs_path / "index.rst").write_text(docs)
-        template = self._templates.get_template("application-values.tmpl")
+        template = self._templates.get_template("application-values.md.jinja")
         values = template.render({"name": name})
         (docs_path / "values.md").write_text(values)

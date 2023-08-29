@@ -113,7 +113,7 @@ def test_create_read_approle(
     # Check the read policy against the proper expansion of the template.
     r = mock_vault.read_policy(approle.policies[0])
     seen_policy = r["rules"]
-    template = templates.get_template("vault-read-policy.tmpl")
+    template = templates.get_template("vault-read-policy.hcl.jinja")
     expected_policy = template.render({"path": vault_path})
     assert seen_policy == expected_policy
 
@@ -159,6 +159,6 @@ def test_create_write_token(
     # Check the write policy against the proper expansion of the template.
     r = mock_vault.read_policy(token.policies[0])
     seen_policy = r["rules"]
-    template = templates.get_template("vault-write-policy.tmpl")
+    template = templates.get_template("vault-write-policy.hcl.jinja")
     expected_policy = template.render({"path": vault_path})
     assert seen_policy == expected_policy
