@@ -127,7 +127,7 @@ Two aspects of writing a Helm chart are specific to Phalanx:
   ``global.vaultSecretsPath`` will be injected by Argo CD with the correct value for the environment in which your application is deployed.
   See :doc:`define-secrets` for more information about secrets.
 
-- Application providing a web API should be protected by Gafaelfawr and require an appropriate scope.
+- Applications providing a web API should be protected by Gafaelfawr and require an appropriate scope.
   This normally means using a ``GafaelfawrIngress`` object rather than an ``Ingress`` object.
   If you use the web service starter, this is set up for you by the template using a ``GafaelfawrIngress`` resource in ``templates/ingress.yaml``, but you will need to customize the scope required for access, and may need to add additional configuration.
   You will also need to customize the path under which your application should be served.
