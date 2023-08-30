@@ -34,4 +34,3 @@ Deployment for prompt proto service for LSSTComCam images
 | prompt-proto-service.s3.endpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` |  |
 | prompt-proto-service.s3.imageBucket | string | `"rubin:rubin-pp"` |  |
 | prompt-proto-service.vaultSecretsPath | string | `"secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcomcam"` |  |
-
