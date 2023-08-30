@@ -1,4 +1,4 @@
-# qserv-tap
+# tap
 
 IVOA TAP service
 

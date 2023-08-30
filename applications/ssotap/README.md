@@ -1,4 +1,4 @@
-# cadc-tap
+# ssotap
 
 IVOA TAP service
 

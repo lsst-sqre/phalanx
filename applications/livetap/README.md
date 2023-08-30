@@ -1,4 +1,4 @@
-# live-tap
+# livetap
 
 IVOA TAP service
 

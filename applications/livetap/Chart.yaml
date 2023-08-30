@@ -1,5 +1,5 @@
 apiVersion: v2
-name: live-tap
+name: livetap
 version: 1.0.0
 description: IVOA TAP service
 sources:
