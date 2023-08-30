@@ -26,12 +26,11 @@ Deployment for prompt proto service for LSSTCam images
 | prompt-proto-service.knative.responseStartTimeout | int | `900` |  |
 | prompt-proto-service.knative.timeout | int | `900` |  |
 | prompt-proto-service.podAnnotations | object | `{"autoscaling.knative.dev/max-scale":"600","autoscaling.knative.dev/min-scale":"10","autoscaling.knative.dev/target-burst-capacity":"-1","autoscaling.knative.dev/target-utilization-percentage":"60","revision":"1"}` | Annotations for the prompt-proto-service pod |
-| prompt-proto-service.registry.db | string | `"llstdb1"` |  |
+| prompt-proto-service.registry.db | string | `"lsstdb1"` |  |
 | prompt-proto-service.registry.ip | string | `"usdf-butler.slac.stanford.edu:5432"` |  |
 | prompt-proto-service.registry.user | string | `"rubin"` |  |
 | prompt-proto-service.s3.auth_env | bool | `true` |  |
 | prompt-proto-service.s3.disableBucketValidation | string | `"1"` |  |
 | prompt-proto-service.s3.endpointUrl | string | `"https://s3dfrgw.slac.stanford.edu"` |  |
 | prompt-proto-service.s3.imageBucket | string | `"rubin:rubin-pp"` |  |
-| prompt-proto-service.vaultSecretsPath | string | `"secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcam"` |  |
-
+| prompt-proto-service.vaultSecretsPath | string | `""` |  |
