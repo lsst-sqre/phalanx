@@ -4,4 +4,5 @@ vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
 
 applications:
+  kubernetes-replicator: true
   squareone: true
