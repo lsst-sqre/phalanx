@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "rubintv.fullname" . }}-workers
+  labels:
+    {{- include "rubintv.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.workers.replicas }}
+  selector:
+    matchLabels:
+      {{- include "rubintv.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rubintv.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+      - name: worker
+        env:
+        - name: PGPASSFILE
+          value: /etc/secrets/postgres-credentials.txt
+        - name: PGUSER
+          value: "rubin"
+        - name: AWS_SHARED_CREDENTIALS_FILE
+          value: /etc/secrets/aws-credentials.ini
+        - name: REDIS_HOST
+          value: {{include "rubintv.fullname" . }}-redis
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "rubintv.fullname" . }}-secret
+              key: "redis-password"
+        - name: "ENVIRONMENT_URL"
+          value: {{ .Values.global.baseUrl }}
+        - name: "SAFIR_PATH_PREFIX"
+          value: {{ .Values.workers.pathPrefix | quote }}
+        - name: "RUN_ARG"
+          value: "{{ .Values.workers.script }} {{ .Values.siteTag }}"
+        {{- if (not .Values.workers.debug) }}
+        - name: "SAFIR_PROFILE"
+          value: "production"
+        {{- end }}
+        {{- with .Values.workers.env }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        {{- if .Values.workers.envSecrets }}
+        {{- range $env := .Values.workers.envSecrets }}
+        - name: {{ $env.name }}
+          valueFrom:
+            secretKeyRef:
+              name: {{ $env.secretName }}
+              key: {{ $env.secretKey }}
+        {{- end }}
+        {{- end }}
+        image: "{{ .Values.workers.image.repository }}:{{ .Values.workers.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.workers.image.pullPolicy | quote }}
+        ports:
+          - name: "http"
+            containerPort: 8080
+            protocol: "TCP"
+        {{- with .Values.workers.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          readOnlyRootFilesystem: false
+          # Sigh, but what can you do?
+        volumeMounts:
+        - name: "user-secrets"
+          mountPath: "/etc/secrets"
+        {{- range $vol := .Values.workers.volumes }}
+        - name: {{ $vol.name }}
+          mountPath: {{ $vol.mountPath }}
+        {{- end }}
+      initContainers:
+      - name: "secret-perm-fixer"
+        image: "busybox"
+        command:
+        - "/bin/sh"
+        - "-c"
+        - |
+          cp /secrets/* /etc/secrets && \
+          chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
+           /etc/secrets/* && \
+          chmod 0600 /etc/secrets/*
+        volumeMounts:
+        - name: "secrets"
+          mountPath: "/secrets"
+        - name: "user-secrets"
+          mountPath: "/etc/secrets"
+      volumes:
+      - name: "secrets"
+        secret:
+          secretName: {{ include "rubintv.fullname" . }}-secret
+      - name: "user-secrets"
+        emptyDir: {}
+      {{- range $vol := .Values.workers.volumes }}
+      - name: {{ $vol.name | quote }}
+        {{ with $vol.persistentVolumeClaim }}
+        persistentVolumeClaim:
+          claimName: {{ .name | quote }}
+        {{- end }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: {{ .Values.workers.uid }}
+        runAsGroup: {{ .Values.workers.gid }}
+    {{- with .Values.workers.nodeSelector }}
+    nodeSelector:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.workers.affinity }}
+    affinity:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+    {{- with .Values.workers.tolerations }}
+    tolerations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}

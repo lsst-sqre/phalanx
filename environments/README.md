@@ -31,6 +31,7 @@
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
+| applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sherlock | bool | `false` | Enable the sherlock application |

@@ -54,6 +54,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    obsloctap/index
    plot-navigator/index
    production-tools/index
+   rubintv/index
    sasquatch/index
    strimzi/index
    strimzi-access-operator/index
