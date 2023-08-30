@@ -24,7 +24,7 @@ template:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "1800"
       nginx.ingress.kubernetes.io/rewrite-target: "/tap/$2"
       nginx.ingress.kubernetes.io/proxy-redirect-from: "http://$host/tap/"
-      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/ssotap/"
+      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/{{ .Values.ingress.path }}/"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
       {{- with .Values.ingress.authenticatedAnnotations }}
@@ -35,7 +35,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/api/ssotap(/|$)(.*)"
+            - path: "/api/{{ .Values.ingress.path }}(/|$)(.*)"
               pathType: "ImplementationSpecific"
               backend:
                 service:
