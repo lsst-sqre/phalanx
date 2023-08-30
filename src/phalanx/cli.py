@@ -14,11 +14,14 @@ from pydantic.tools import schema_of
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
 from .models.environments import EnvironmentConfig
+from .models.helm import HelmStarter
 from .models.secrets import ConditionalSecretConfig, StaticSecret
 
 __all__ = [
     "help",
     "main",
+    "application",
+    "application_create",
     "environment",
     "environment_schema",
     "secrets",
@@ -131,6 +134,52 @@ def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
     # Fall through to the error case of no subcommand found.
     msg = f"Unknown help topic {topic} {subtopic}"
     raise click.UsageError(msg, ctx)
+
+
+@main.group()
+def application() -> None:
+    """Commands for Phalanx application configuration."""
+
+
+@application.command("create")
+@click.argument("name")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "-d",
+    "--description",
+    prompt="Short description",
+    help="Short description of the new application.",
+)
+@click.option(
+    "-s",
+    "--starter",
+    type=click.Choice([s.value for s in HelmStarter]),
+    default=HelmStarter.WEB_SERVICE.value,
+    help="Helm starter to use as the basis for the chart.",
+)
+def application_create(
+    name: str, *, starter: str, config: Path | None, description: str
+) -> None:
+    """Create a new application from a starter template.
+
+    This command creates the framework for a new Phalanx application from the
+    named template (which must be one of the starter charts) and adds the
+    appropriate documentation stubs, Argo CD Application resource, and
+    environment configuration.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    application_service.create_application(
+        name, HelmStarter(starter), description
+    )
 
 
 @main.group()

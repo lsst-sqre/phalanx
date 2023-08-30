@@ -1,0 +1,11 @@
+apiVersion: v2
+name: rubintv
+version: 1.0.0
+description: real-time display front end
+sources:
+  - https://github.com/lsst-sqre/rubin-tv
+appVersion: 0.1.0
+dependencies:
+  - name: redis
+    version: 1.0.6
+    repository: https://lsst-sqre.github.io/charts/

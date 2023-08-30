@@ -1,0 +1,16 @@
+.. px-app:: {{ name }}
+
+{{ "#" * (name|length + description|length + 3) }}
+{{ name }} — {{ description }}
+{{ "#" * (name|length + description|length + 3) }}
+
+.. jinja:: {{ name }}
+   :file: applications/_summary.rst.jinja
+
+Guides
+======
+
+.. toctree::
+   :maxdepth: 1
+
+   values

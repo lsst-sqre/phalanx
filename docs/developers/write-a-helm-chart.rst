@@ -16,41 +16,49 @@ If you are using an external third-party chart to deploy part of the application
 Start from a template
 =====================
 
-.. warning::
+Ensure that your local Phalanx development environment is set up following the instructions in :doc:`/about/local-environment-setup`.
 
-   **Be sure you are using Helm v3.**
-   Helm v2 is not supported
-
-If you are creating a Helm chart for a new web service, you can use the Helm chart starter that comes with Phalanx.
-Run:
+Then, create the files for the new application, including the start of a Helm chart:
 
 .. prompt:: bash
 
-   cd applications
-   helm create -p $(pwd)/../starters/web-service <application>
+   phalanx application create <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 
-For any other type of chart, start with the empty Helm chart starter.
-You will then have to add all necessary resources.
+By default, this will create a Helm chart for a FastAPI web service.
+Use the ``--starter`` flag to specify a different Helm chart starter.
+There are two options:
 
-.. prompt:: bash
+web-service
+    Use this starter if the new Helm application is a web service, such as a new Safir_ FastAPI_ service.
 
-   cd applications
-   helm create -p $(pwd)/../starters/empty <application>
+empty
+    Use this starter for any other type of application.
+    This will create an empty Helm chart, to which you can add resources or external charts.
+
+You will be prompted for a short description of the application.
+Keep it succinct, ideally just a few words, and do not add a period at the end.
 
 Write the Chart.yaml
 ====================
 
+After the previous step, there will be a new Helm chart for your application in :file:`applications/{application}`.
+A basic :file:`Chart.yaml` was created by :command:`phalanx application create`.
+A few additional fields need to be filled out.
+
 Chart versioning
 ----------------
 
-The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as Helm charts.
-Their versions are therefore irrelevant.
-Therefore, the version of each chart (the ``version`` field in :file:`Chart.yaml`) should be set to ``1.0.0`` and then never changed.
-This will be done for you by the starter.
+For charts that deploy a Rubin-developed application, set ``appVersion`` to the application's Docker image tag (which is typically the version tag).
+For charts that do not deploy an application (for example, charts that are only used to manage subcharts as described in :doc:`add-external-chart`), delete the ``appVersion`` field.
 
-For charts that deploy a Rubin-developed application, ``appVersion`` should be set to the version of that application to deploy.
+.. note::
+
+   The chart also has a ``version`` field, which will be set to ``1.0.0``.
+   This field does not need to be changed.
+   The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as Helm charts.
+   Their versions are therefore irrelevant, so we use ``1.0.0`` for all charts.
 
 Source and documentation links
 ------------------------------
@@ -81,6 +89,8 @@ Note that ``sources`` is an array of URLs:
 
    sources:
      - https://github.com/lsst-sqre/gafaelfawr
+
+If you used the web-service starter, this field will be pre-populated with the typical GitHub link for a SQuaRE application.
 
 phalanx.lsst.io/docs
 ^^^^^^^^^^^^^^^^^^^^
@@ -117,10 +127,10 @@ Two aspects of writing a Helm chart are specific to Phalanx:
 - All secrets must come from ``VaultSecret`` resources, not Kubernetes ``Secret`` resources.
   You should use the value of the ``global.vaultSecretsPath`` configuration option followed by a slash and the name of your application.
   Phalanx's secret management requires that you use a Vault secret with exactly this name.
-  ``global.vaultSecretsPath`` will be injected by Argo CD with the correct value for the environment in which your application is deployed (see :ref:`add-argocd-application`).
+  ``global.vaultSecretsPath`` will be injected by Argo CD with the correct value for the environment in which your application is deployed.
   See :doc:`define-secrets` for more information about secrets.
 
-- Application providing a web API should be protected by Gafaelfawr and require an appropriate scope.
+- Applications providing a web API should be protected by Gafaelfawr and require an appropriate scope.
   This normally means using a ``GafaelfawrIngress`` object rather than an ``Ingress`` object.
   If you use the web service starter, this is set up for you by the template using a ``GafaelfawrIngress`` resource in ``templates/ingress.yaml``, but you will need to customize the scope required for access, and may need to add additional configuration.
   You will also need to customize the path under which your application should be served.
@@ -240,3 +250,5 @@ Next steps
 
 - Define the secrets needed by this application: :doc:`define-secrets`
 - Add the Argo CD application to appropriate environments: :doc:`add-application`
+
+Be aware that Phalanx tests will not pass until you have done both of these steps as well.

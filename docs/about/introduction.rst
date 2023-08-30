@@ -102,8 +102,12 @@ Phalanx includes applications that provide key functionality for other applicati
 ``cert-manager`` (TLS certificate management)
     Cert-manager acquires and renews TLS certificates from Let's Encrypt.
 
+``gafaelfawr``
+    Gafaelfawr is the authentication, access control, and identity management layer of Phalanx.
+    Phalanx applications rely on Gafaelfawr to authenticate the user and make most access control decisions, including rate limiting.
+
 ``ingress-nginx`` (ingress)
-    The ingress-nginx application routes traffic from the internet to individual applications, while also terminating TLS and integrating with Gafaelfawr, the auth handler.
+    The ingress-nginx application routes traffic from the internet to individual applications, while also terminating TLS and integrating with Gafaelfawr, the authentication and access control layer.
 
 ``vault-secrets-operator`` (secret configuration)
     Vault Secrets Operator bridges secrets in Vault_ with Kubernetes Secret_ resources.

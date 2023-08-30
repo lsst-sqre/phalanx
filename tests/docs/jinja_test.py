@@ -76,5 +76,10 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         )
         assert gafaelfawr.doc_links[0].to_rst() == expected
         assert gafaelfawr.active_environments == ["idfdev", "minikube"]
+
+        # Check that we have a context for the tap application even though
+        # it's not enabled by any environment.
+        assert contexts["tap"]
+        assert contexts["tap"]["app"].active_environments == []
     finally:
         os.chdir(str(cwd))

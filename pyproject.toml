@@ -135,6 +135,8 @@ ignore = [
     "RET505",  # disagree that omitting else always makes code more readable
     "S105",    # good idea but too many false positives on non-passwords
     "S106",    # good idea but too many false positives on non-passwords
+    "S603",    # impossible to write subprocess code without triggering this
+    "S607",    # searching for executables on PATH is often correct
     "SIM102",  # sometimes the formatting of nested if statements is clearer
     "SIM114",  # sometimes or conditions result in long lines and awkward code
     "SIM117",  # sometimes nested with contexts are clearer

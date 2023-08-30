@@ -2,11 +2,14 @@
 
 from __future__ import annotations
 
+import subprocess
 from collections.abc import Iterable
 
 from .models.secrets import Secret
 
 __all__ = [
+    "ApplicationExistsError",
+    "HelmFailedError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
@@ -14,6 +17,44 @@ __all__ = [
     "UnresolvedSecretsError",
     "VaultNotFoundError",
 ]
+
+
+class ApplicationExistsError(Exception):
+    """Application being created already exists.
+
+    Parameters
+    ----------
+    name
+        Name of the application.
+    """
+
+    def __init__(self, name: str) -> None:
+        msg = f"Application {name} already exists"
+        super().__init__(msg)
+
+
+class HelmFailedError(Exception):
+    """A Helm command failed.
+
+    Parameters
+    ----------
+    command
+        Subcommand being run.
+    args
+        Arguments to that subcommand.
+    exc
+        Exception reporting the failure.
+    """
+
+    def __init__(
+        self,
+        command: str,
+        args: Iterable[str],
+        exc: subprocess.CalledProcessError,
+    ) -> None:
+        args_str = " ".join(args)
+        msg = f"helm {command} {args_str} failed with status {exc.returncode}"
+        super().__init__(msg)
 
 
 class InvalidApplicationConfigError(Exception):

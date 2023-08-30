@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "rubintv.fullname" . }}-frontend
+  labels:
+    {{- include "rubintv.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "rubintv.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.frontend.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rubintv.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{ toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: frontend
+          env:
+            - name: "ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl | quote }}
+            - name: "SAFIR_PATH_PREFIX"
+              value: {{ .Values.frontend.pathPrefix | quote }}
+            - name: "AWS_SHARED_CREDENTIALS_FILE"
+              value: /etc/secrets/aws-credentials.ini
+            {{- if (not .Values.frontend.debug) }}
+            - name: "SAFIR_PROFILE"
+              value: "production"
+            {{- end }}
+            {{- with .Values.frontend.env }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+            timeoutSeconds: 10
+          {{- with .Values.frontend.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "secrets"
+              mountPath: "/etc/secrets"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "secrets"
+          secret:
+            secretName: {{ include "rubintv.fullname" . }}-secret
+      {{- with .Values.frontend.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.frontend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.frontend.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

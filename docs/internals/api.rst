@@ -34,10 +34,16 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.models.gafaelfawr
    :include-all-objects:
 
+.. automodapi:: phalanx.models.helm
+   :include-all-objects:
+
 .. automodapi:: phalanx.models.secrets
    :include-all-objects:
 
 .. automodapi:: phalanx.models.vault
+   :include-all-objects:
+
+.. automodapi:: phalanx.services.application
    :include-all-objects:
 
 .. automodapi:: phalanx.services.secrets
@@ -47,6 +53,9 @@ This API is only intended for use within the Phalanx code itself.
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.config
+   :include-all-objects:
+
+.. automodapi:: phalanx.storage.helm
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.vault

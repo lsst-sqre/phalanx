@@ -1,0 +1,7 @@
+apiVersion: v2
+name: <CHARTNAME>
+version: 1.0.0
+description: "Helm starter chart for a new RSP service"
+home: "https://github.com/lsst-sqre/<CHARTNAME>"
+type: application
+appVersion: "0.1.0"

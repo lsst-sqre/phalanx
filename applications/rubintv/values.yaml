@@ -1,0 +1,203 @@
+# Default values for rubintv.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- A special tag for letting the scripts know where they are
+# running.  Must be overridden at each site
+siteTag: ""
+
+# -- Image pull secrets.
+# @default -- See `values.yaml`
+imagePullSecrets: []
+# Each entry is of the form: { name: pull-secret-name }
+
+frontend:
+  # -- If set to true, enable more verbose logging.
+  debug: false
+
+  # -- Prefix for rubintv's frontend API routes.
+  pathPrefix: "/rubintv"
+
+  # -- Settings for rubintv OCI image
+  image:
+    # -- rubintv frontend image to use
+    repository: "ghcr.io/lsst-sqre/rubintv"
+
+    # -- Pull policy for the rubintv image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of rubintv image to use
+    # @default -- The appVersion of the chart
+    tag: ""
+
+  # -- Resource limits and requests for the rubintv frontend pod
+  resources: {}
+
+  # -- Annotations for the rubintv frontend pod
+  podAnnotations: {}
+
+  # -- Node selector rules for the rubintv frontend pod
+  nodeSelector: {}
+
+  # -- Tolerations for the rubintv frontend pod
+  tolerations: []
+
+  # -- Affinity rules for the rubintv frontend pod
+  affinity: {}
+
+workers:
+  # -- how many replicas to use
+  replicas: 5
+
+  # -- If set to true, enable more verbose logging.
+  debug: false
+
+  # -- Prefix for the (internal) worker API routes
+  pathPrefix: "/"
+
+  # -- UID to run as (site-dependent because of filesystem access; must
+  # be specified)
+  uid: null
+
+  # -- GID to run as (site-dependent as above)
+  gid: null
+
+  # -- Settings for OCI image for worker pods
+  image:
+    # -- The Docker registry name for the container image.
+    repository: ts-dockerhub.lsst.org/rubintv-broadcaster
+
+    # -- The tag of the container image to use.
+    tag: develop
+
+    # -- The policy to apply when pulling an image for deployment.
+    pullPolicy: IfNotPresent
+
+  # -- Script that runs in RUN_ARG.  This dynamic mechanism needs to be
+  # replaced with something less scary, but there is resistance to that,
+  # at least while iterating.
+  script: slac/rubintv/workerPod1.py
+
+  # -- This section holds a list of key, value pairs for environmental
+  # variables (name: key, value: value).
+  env: []
+  # do not specify RUN_ARG: it is taken care of by the chart using
+  # _script_, above.
+
+  # -- This section holds specifications for secret injection.
+  # @default -- See `values.yaml`
+  envSecrets: []
+  # Each object in envSecrets must look like:
+  # { name: name-of-environment-variable,
+  #   secretName: name-of-secret-to-consult,
+  #   secretKey: key within that secret to use
+  # }
+
+  # -- Image pull secrets.
+  # @default -- See `values.yaml`
+  imagePullSecrets: []
+  # Each entry is of the form: { name: pull-secret-name }
+
+  # -- Volumes for the rubintv worker pods
+  # @default -- See `values.yaml`
+  volumes: []
+  # Each list item must have the following form:
+  # { name: volume-name,
+  #   accessMode: one of "ReadOnly", "ReadWriteOnce", "ReadWriteMany",
+  #   mountPath: path-mounted-in-container,
+  #   persistentVolumeClaim: {
+  #     name: pvc-name,
+  #     storageClass: pvc-storage-class,
+  #     capacity: size-as-string-of-pvc (e.g. "1Gi")
+  #   }
+  # }
+  # It is planned to implement "nfs" as an alternative to
+  # "PersistentVolumeClaim" but that has not yet been done.
+
+  # -- Resource limits and requests for the rubintv worker pods
+  resources: {}
+
+  # -- Annotations for the rubintv worker pods
+  podAnnotations: {}
+
+  # -- Node selector rules for the rubintv worker pods
+  nodeSelector: {}
+
+  # -- Tolerations for the rubintv worker pods
+  tolerations: []
+
+  # -- Affinity rules for the rubintv worker pods
+  affinity: {}
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+redis:
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "rubintv-secret"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+    requests:
+      cpu: "100m"
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

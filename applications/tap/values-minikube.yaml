@@ -1,7 +1,27 @@
-tapSchema:
-  image:
-    repository: "lsstsqre/tap-schema-idfprod-tap"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfprod-tap"
 
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "https://tap-files.lsst.codes"
+  mockdb:
+    enabled: true
+
+  config:
+    jvmMaxHeapSize: 4G
+
+  resources:
+    requests:
+      cpu: 0
+      memory: 0
+    limits:
+      cpu: 0
+      memory: 0
+
+  uws:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 0
+        memory: 0

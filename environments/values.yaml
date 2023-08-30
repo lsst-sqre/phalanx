@@ -117,6 +117,9 @@ applications:
   # supported for use cases such as minikube test deployments.
   postgres: false
 
+  # -- Enable the rubintv application
+  rubintv: false
+
   # -- Enable the sasquatch application
   sasquatch: false
 
@@ -152,9 +155,6 @@ applications:
 
   # -- Enable the squareone application
   squareone: false
-
-  # -- Enable the squash-api application
-  squash-api: false
 
   # -- Enable the strimzi application
   strimzi: false
