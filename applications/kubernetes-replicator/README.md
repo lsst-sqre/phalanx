@@ -12,12 +12,6 @@ Kafka secret replicator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| kubernetes-replicator.podSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| kubernetes-replicator.podSecurityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| kubernetes-replicator.podSecurityContext.readOnlyRootFilesystem | bool | `true` |  |
-| kubernetes-replicator.securityContext.runAsGroup | int | `1000` |  |
-| kubernetes-replicator.securityContext.runAsNonRoot | bool | `true` |  |
-| kubernetes-replicator.securityContext.runAsUser | int | `1000` |  |
 | kubernetes-replicator.serviceAccount.annotations | object | `{}` |  |
 | kubernetes-replicator.serviceAccount.create | bool | `true` |  |
 | kubernetes-replicator.serviceAccount.name | string | `nil` |  |
