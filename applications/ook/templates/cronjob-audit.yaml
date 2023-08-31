@@ -10,8 +10,10 @@ metadata:
 spec:
   schedule: {{ .Values.audit.schedule | quote }}
   concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      backoffLimit: 0
       ttlSecondsAfterFinished: {{ .Values.audit.ttlSecondsAfterFinished }}
       template:
         metadata:
