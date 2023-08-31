@@ -5,6 +5,7 @@ vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
 
 applications:
   kubernetes-replicator: true
+  ook: true
   sasquatch: true
   squareone: true
   strimzi: true

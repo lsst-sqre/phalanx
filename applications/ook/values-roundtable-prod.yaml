@@ -1,0 +1,4 @@
+audit:
+  enabled: true
+  schedule: "30 2 * * *"
+  reingest: true
