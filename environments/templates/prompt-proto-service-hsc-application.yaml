@@ -22,9 +22,7 @@ spec:
     repoURL: {{ .Values.repoURL }}
     targetRevision: {{ .Values.targetRevision }}
     helm:
-      #parameters:
-      #- name: "imageNotifications.imageTimeout"
-      #  forceString: true
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}
