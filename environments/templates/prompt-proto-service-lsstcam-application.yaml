@@ -23,5 +23,6 @@ spec:
     targetRevision: {{ .Values.targetRevision }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}
