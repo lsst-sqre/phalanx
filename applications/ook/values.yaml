@@ -102,6 +102,10 @@ config:
     # -- Kafka topic name for ingest events
     ingest: "lsst.square-events.ook.ingest"
 
+  algolia:
+    # -- Name of the Algolia index for documents
+    documents_index: "documents_dev"
+
 audit:
   # -- Enable the audit job
   enabled: true

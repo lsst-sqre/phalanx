@@ -3,6 +3,8 @@ image:
 
 config:
   logLevel: "DEBUG"
+  algolia:
+    documentIndex: "ook_documents_test"
 
 audit:
   enabled: true

@@ -22,6 +22,7 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | audit.schedule | string | `"15 2 * * *"` | Cron schedule string for ook audit job (UTC) |
 | audit.tolerations | list | `[]` | Tolerations for Ook audit pods |
 | audit.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
+| config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.registryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Cluster URL for the Confluent Schema Registry |
 | config.subjectCompatibility | string | `"FORWARD"` | Schema subject compatibility. |

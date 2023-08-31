@@ -13,4 +13,4 @@ data:
   OOK_SUBJECT_SUFFIX: {{ .Values.config.subjectSuffix | quote }}
   OOK_SUBJECT_COMPATIBILITY: {{ .Values.config.subjectCompatibility | quote }}
   OOK_INGEST_KAFKA_TOPIC: {{ .Values.config.topics.ingest | quote }}
-  ALGOLIA_DOCUMENT_INDEX: "ook_documents_test"
+  ALGOLIA_DOCUMENT_INDEX: {{ .Values.config.algolia.documentIndex | quote }}
