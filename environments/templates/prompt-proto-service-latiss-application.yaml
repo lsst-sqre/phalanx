@@ -1,0 +1,27 @@
+{{- if (index .Values "applications" "prompt-proto-service-latiss") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prompt-proto-service-latiss
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    syncOptions:
+    - CreateNamespace=true
+  destination:
+    namespace: prompt-proto-service-latiss
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prompt-proto-service-latiss
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - values-{{ .Values.environment }}.yaml
+{{- end -}}
