@@ -7,5 +7,5 @@ sources:
 appVersion: 0.2.0
 dependencies:
   - name: chronograf
-    version: 1.2.5
+    version: 1.2.6
     repository: https://helm.influxdata.com/
