@@ -13,17 +13,17 @@ dependencies:
   - name: influxdb
     alias: influxdb
     condition: influxdb.enabled
-    version: 4.12.4
+    version: 4.12.5
     repository: https://helm.influxdata.com/
   - name: influxdb
     alias: influxdb-staging
     condition: influxdb-staging.enabled
-    version: 4.12.4
+    version: 4.12.5
     repository: https://helm.influxdata.com/
   - name: influxdb
     alias: source-influxdb
     condition: source-influxdb.enabled
-    version: 4.12.4
+    version: 4.12.5
     repository: https://helm.influxdata.com/
   - name: influxdb2
     condition: influxdb2.enabled
