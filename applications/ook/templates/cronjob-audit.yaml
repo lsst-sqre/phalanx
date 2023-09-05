@@ -1,0 +1,139 @@
+{{- if .Values.audit.enabled -}}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "ook.fullname" . }}-audit
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "audit"
+    app.kubernetes.io/part-of: "ook"
+spec:
+  schedule: {{ .Values.audit.schedule | quote }}
+  concurrencyPolicy: "Forbid"
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: {{ .Values.audit.ttlSecondsAfterFinished }}
+      template:
+        metadata:
+          {{- with .Values.audit.podAnnotations }}
+          annotations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "ook.selectorLabels" . | nindent 12 }}
+            app.kubernetes.io/component: "audit"
+            app.kubernetes.io/part-of: "ook"
+        spec:
+          restartPolicy: "Never"
+          automountServiceAccountToken: false
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          serviceAccountName: {{ include "ook.serviceAccountName" . }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command:
+                - "ook"
+                - "audit"
+                {{- if .Values.audit.reingest }}
+                - "--reingest"
+                {{- end }}
+              resources:
+                {{- toYaml .Values.resources | nindent 16 }}
+              envFrom:
+                - configMapRef:
+                    name: {{ include "ook.fullname" . }}
+              env:
+                # Writeable directory for concatenating certs. See "tmp" volume.
+                - name: "KAFKA_CERT_TEMP_DIR"
+                  value: "/tmp/kafka_certs"
+                # From KafkaAccess
+                - name: "KAFKA_BOOTSTRAP_SERVERS"
+                  valueFrom:
+                      secretKeyRef:
+                        name: {{ template "ook.fullname" . }}-kafka
+                        key: "bootstrapServers"
+                - name: "KAFKA_SECURITY_PROTOCOL"
+                  value: "SSL"
+                # From replicated KafkaUser secret
+                - name: "KAFKA_SSL_CLUSTER_CAFILE"
+                  value: "/etc/kafkacluster/ca.crt"
+                - name: "KAFKA_SSL_CLIENT_CAFILE"
+                  value: "/etc/kafkauser/ca.crt"
+                - name: "KAFKA_SSL_CLIENT_CERTFILE"
+                  value: "/etc/kafkauser/user.crt"
+                - name: "KAFKA_SSL_CLIENT_KEYFILE"
+                  value: "/etc/kafkauser/user.key"
+                # From Vault secrets
+                - name: "ALGOLIA_APP_ID"
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "ook.fullname" . }}
+                      key: "ALGOLIA_APP_ID"
+                - name: "ALGOLIA_API_KEY"
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "ook.fullname" . }}
+                      key: "ALGOLIA_API_KEY"
+                - name: "OOK_GITHUB_APP_ID"
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "ook.fullname" . }}
+                      key: "OOK_GITHUB_APP_ID"
+                - name: "OOK_GITHUB_APP_PRIVATE_KEY"
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "ook.fullname" . }}
+                      key: "OOK_GITHUB_APP_PRIVATE_KEY"
+              securityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - "all"
+                readOnlyRootFilesystem: true
+              volumeMounts:
+                - name: "{{ template "ook.fullname" . }}"
+                  mountPath: "/etc/kafkacluster/ca.crt"
+                  subPath: "ca.crt"
+                - name: "kafka-user"
+                  mountPath: "/etc/kafkauser/ca.crt"
+                  subPath: "ca.crt"
+                - name: "kafka-user"
+                  mountPath: "/etc/kafkauser/user.crt"
+                  subPath: "user.crt"
+                - name: "kafka-user"
+                  mountPath: "/etc/kafkauser/user.key"
+                  subPath: "user.key"
+                - name: "tmp"
+                  mountPath: "/tmp/kafka_certs"
+          {{with .Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.affinity }}
+          affinity:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumes:
+            - name: "kafka-user"
+              secret:
+                secretName: {{ template "ook.fullname" . }}-kafka-user
+            - name: "{{ template "ook.fullname" . }}"
+              secret:
+                secretName: {{ template "ook.fullname" . }}
+            - name: "tmp"
+              emptyDir: {}
+{{- end }}

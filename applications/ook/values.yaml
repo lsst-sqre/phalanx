@@ -101,3 +101,35 @@ config:
   topics:
     # -- Kafka topic name for ingest events
     ingest: "lsst.square-events.ook.ingest"
+
+  algolia:
+    # -- Name of the Algolia index for documents
+    documents_index: "documents_dev"
+
+audit:
+  # -- Enable the audit job
+  enabled: true
+
+  # -- Cron schedule string for ook audit job (UTC)
+  schedule: "15 2 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Reingest missing documents
+  reingest: true
+
+  # -- Resource limits and requests for Ook audit pods
+  resources: {}
+
+  # -- Annotations for Ook audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook audit pods
+  tolerations: []
+
+  # -- Affinity rules for Ook audit pods
+  affinity: {}

@@ -11,14 +11,11 @@ applications:
   ingress-nginx: false
 
   alert-stream-broker: true
-  cachemachine: true
   datalinker: true
   livetap: true
   mobu: true
-  moneypenny: true
   noteburst: true
   nublado: true
-  nublado2: true
   obsloctap: true
   plot-navigator: true
   portal: true
