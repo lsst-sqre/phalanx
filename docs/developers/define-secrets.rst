@@ -264,9 +264,10 @@ To sync multiple environments at once:
 Create static secrets in 1Password (new)
 ========================================
 
-.. note::
+.. warning::
 
    This section only applies to Phalanx environments run by SQuaRE that have been converted to the new 1Password setup that is currently under development.
+   Most SQuaRE environments should continue to use the instructions in :ref:`dev-add-onepassword`.
 
 For SQuaRE-run Phalanx environments, static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service.
 Such secrets are things for external cloud services where we don't automatically provision accounts and password.
@@ -278,11 +279,6 @@ This step may have to be done for you by a Phalanx environment administrator dep
 
    This document only covers creating a 1Password-backed secret for the first time for an application.
    If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
-
-.. warning::
-
-   This is the new process for storing secrets in 1Password that is currently under development.
-   Most environments should continue to use the instrutions in :ref:`dev-add-onepassword`.
 
 1. Open the 1Password vault
 ---------------------------
