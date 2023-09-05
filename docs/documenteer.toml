@@ -55,6 +55,7 @@ ignore = [
     '^https://data-int.lsst.cloud',
     '^https://data.lsst.cloud',
     '^https://data-dev.lsst.eu',
+    '^https://k8s.slac.stanford.edu',
     '^https://rsp.lsst.ac.uk',
     '^https://roundtable-dev.lsst.cloud',
     '^https://roundtable.lsst.cloud',
