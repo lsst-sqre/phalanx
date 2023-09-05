@@ -14,23 +14,22 @@ repos:
           - -c=.yamllint.yml
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.23.3
+    rev: 0.26.3
     hooks:
       - id: check-jsonschema
-        files: "^applications/.*/secrets(-[^./-]+)?\\.yaml"
-        args: ["--schemafile", "docs/extras/schemas/secrets.json"]
+        files: ^applications/.*/secrets(-[^./-]+)?\.yaml
+        args: [--schemafile, docs/extras/schemas/secrets.json]
       - id: check-jsonschema
-        files: "^environments/values(-[^./-]+)?\\.yaml"
-        args: ["--schemafile", "docs/extras/schemas/environment.json"]
+        files: ^environments/values(-[^./-]+)?\.yaml
+        args: [--schemafile, docs/extras/schemas/environment.json]
       - id: check-metaschema
-        files: "^docs/extras/schemas/.*\\.json"
+        files: ^docs/extras/schemas/.*\.json
 
   - repo: https://github.com/norwoodj/helm-docs
     rev: v1.11.0
     hooks:
       - id: helm-docs
         args:
-          - --chart-search-root=environments
           - --chart-search-root=applications
           # The `../` makes it relative to the chart-search-root set above
           - --template-files=../helm-docs.md.gotmpl
@@ -42,7 +41,7 @@ repos:
           - --template-files=../helm-docs.md.gotmpl
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.280
+    rev: v0.0.287
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -53,7 +52,7 @@ repos:
       - id: black
 
   - repo: https://github.com/adamchainz/blacken-docs
-    rev: 1.15.0
+    rev: 1.16.0
     hooks:
       - id: blacken-docs
         additional_dependencies: [black==23.7.0]

@@ -1,10 +1,10 @@
 # rubintv
 
-real-time display front end
+Real-time display front end
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/rubin-tv>
+* <https://github.com/lsst-sqre/rubintv>
 
 ## Values
 
