@@ -9,7 +9,7 @@ from pathlib import Path
 import yaml
 from pydantic import SecretStr
 
-from ..exceptions import UnresolvedSecretsError
+from ..exceptions import NoOnepasswordConfigError, UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import (
@@ -159,8 +159,30 @@ class SecretsService:
         environment = self._config.load_environment(env_name)
         return environment.all_secrets()
 
+    def save_onepassword_secrets(self, env_name: str, path: Path) -> None:
+        """Generate JSON files of the 1Password secrets for an environment.
+
+        One file per application with secrets will be written to the provided
+        path. Each file will be named after the application with ``.json``
+        appended, and will contain the secret values for that application.
+        Secrets that are required but have no known value will be written as
+        null.
+        """
+        environment = self._config.load_environment(env_name)
+        onepassword_secrets = self._get_onepassword_secrets(environment)
+        if not onepassword_secrets:
+            msg = f"Environment {env_name} not configured to use 1Password"
+            raise NoOnepasswordConfigError(msg)
+        for app_name, values in onepassword_secrets.items():
+            app_secrets = {
+                k: v.value.get_secret_value() if v.value else None
+                for k, v in values.items()
+            }
+            with (path / f"{app_name}.json").open("w") as fh:
+                json.dump(app_secrets, fh, indent=2)
+
     def save_vault_secrets(self, env_name: str, path: Path) -> None:
-        """Generate JSON files containing the Vault secrets for an environment.
+        """Generate JSON files of the Vault secrets for an environment.
 
         One file per application with secrets will be written to the provided
         path. Each file will be named after the application with ``.json``

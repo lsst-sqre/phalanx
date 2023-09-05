@@ -90,6 +90,34 @@ def test_list_path_failure() -> None:
         os.chdir(str(cwd))
 
 
+def test_onepassword_secrets(
+    factory: Factory,
+    tmp_path: Path,
+    mock_onepassword: MockOnepasswordClient,
+) -> None:
+    input_path = phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    with (input_path / "onepassword" / "minikube.yaml").open() as fh:
+        expected = yaml.safe_load(fh)
+
+    result = run_cli(
+        "secrets", "onepassword-secrets", "minikube", str(tmp_path)
+    )
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    expected_files = {f"{k}.json" for k in expected}
+    output_files = {p.name for p in tmp_path.iterdir()}
+    assert expected_files == output_files
+    for path in tmp_path.iterdir():
+        with path.open() as fh:
+            assert json.load(fh) == expected[path.stem]
+
+
 def test_schema() -> None:
     result = run_cli("secrets", "schema", needs_config=False)
     assert result.exit_code == 0

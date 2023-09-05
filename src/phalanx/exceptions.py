@@ -116,6 +116,10 @@ class InvalidSecretConfigError(Exception):
         super().__init__(msg)
 
 
+class NoOnepasswordConfigError(Exception):
+    """Environment does not use 1Password."""
+
+
 class NoOnepasswordCredentialsError(Exception):
     """1Password is configured, but no credentials were supplied."""
 
