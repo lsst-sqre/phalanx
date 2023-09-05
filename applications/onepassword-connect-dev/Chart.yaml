@@ -1,0 +1,17 @@
+apiVersion: v2
+description: 1Password API server (dev)
+name: onepassword-connect-dev
+type: application
+version: 1.0.0
+
+dependencies:
+  - name: connect
+    version: 1.14.0
+    repository: https://1password.github.io/connect-helm-charts/
+    alias: idfdev
+
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-079"
+      title: "Secrets management for Phalanx"
+      url: "https://sqr-079.lsst.io/"
