@@ -43,7 +43,7 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: kapacitor
     condition: kapacitor.enabled
-    version: 1.4.6
+    version: 1.4.7
     repository: https://helm.influxdata.com/
   - name: kafdrop
     condition: kafdrop.enabled
