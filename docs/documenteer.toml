@@ -27,6 +27,7 @@ nitpick_ignore = [
     # whole undocumented package because I've caught documentation bugs by
     # having Sphinx complain about a new symbol.
     ["py:class", "pydantic.main.BaseModel"],
+    ["py:class", "pydantic.networks.AnyHttpUrl"],
     ["py:class", "pydantic.types.SecretStr"],
     ["py:class", "pydantic.utils.Representation"],
 ]

@@ -27,6 +27,7 @@ __all__ = [
     "secrets",
     "secrets_audit",
     "secrets_list",
+    "secrets_onepassword_secrets",
     "secrets_schema",
     "secrets_static_template",
     "secrets_vault_secrets",
@@ -274,6 +275,35 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     secrets = secrets_service.list_secrets(environment)
     for secret in secrets:
         print(secret.application, secret.key)
+
+
+@secrets.command("onepassword-secrets")
+@click.argument("environment")
+@click.argument("output", type=click.Path(path_type=Path))
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def secrets_onepassword_secrets(
+    environment: str, output: Path, *, config: Path | None
+) -> None:
+    """Write the 1Password secrets for the given environment.
+
+    One JSON file per application with secrets will be created in the output
+    directory, containing the secrets for that application. If the value of a
+    secret is not known, it will be written as null.
+
+    The environment variable OP_CONNECT_TOKEN must be set to the 1Password
+    Connect token for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    secrets_service = factory.create_secrets_service()
+    secrets_service.save_onepassword_secrets(environment, output)
 
 
 @secrets.command("schema")

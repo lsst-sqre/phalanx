@@ -242,9 +242,8 @@ class Secret(SecretConfig):
 class ResolvedSecret(BaseModel):
     """A secret that has been resolved for a given application instance.
 
-    Secret resolution means that the configuration has been translated into
-    either a secret value or knowledge that the secret is a static secret that
-    must come from elsewhere.
+    Secret resolution means that the configuration has been translated into a
+    secret value.
     """
 
     key: str

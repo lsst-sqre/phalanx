@@ -158,8 +158,8 @@ See the `vault-secrets-operator documentation <https://github.com/ricoberger/vau
 
 .. _dev-add-onepassword:
 
-Create static secrets in 1Password
-==================================
+Create static secrets in 1Password (current)
+============================================
 
 .. note::
 
@@ -260,6 +260,60 @@ To sync multiple environments at once:
 .. code-block:: sh
 
    ./update_all_secrets.sh
+
+Create static secrets in 1Password (new)
+========================================
+
+.. note::
+
+   This section only applies to Phalanx environments run by SQuaRE that have been converted to the new 1Password setup that is currently under development.
+
+For SQuaRE-run Phalanx environments, static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service.
+Such secrets are things for external cloud services where we don't automatically provision accounts and password.
+When we manually create such a secret, we store it in 1Password.
+
+This step may have to be done for you by a Phalanx environment administrator depending on how permissions in Vault and any underlying secrets store are handled for your environment.
+
+.. note::
+
+   This document only covers creating a 1Password-backed secret for the first time for an application.
+   If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
+
+.. warning::
+
+   This is the new process for storing secrets in 1Password that is currently under development.
+   Most environments should continue to use the instrutions in :ref:`dev-add-onepassword`.
+
+1. Open the 1Password vault
+---------------------------
+
+In one password, access the **LSST IT** 1Password team and open the vault for the environment to which you're adding a secret.
+If your application will be deployed in multiple environments, you will need to repeat this process for each environment.
+
+The name of the 1Password vault for a given environment is configured in the ``onepassword.vaultTitle`` key in the :file:`values-{environment}.yaml` file in :file:`environments` for that environment.
+
+2. Create the new item
+----------------------
+
+Each application should have one entry in the 1Password vault.
+Each field in that entry is one Phalanx secret for that application.
+The value of the field is the value of the secret.
+
+For a new application, create a new 1Password item of type :guilabel:`Server`.
+Delete all of the pre-defined fields.
+
+Then, create a field for each static secret for that application, and set the value to the value of that secret in that environemnt.
+The field names should match the secret keys for the application.
+Change the field type to password so that the value isn't displayed any time someone opens the 1Password entry.
+
+Do not use sections.
+Phalanx requires all of the secret entries be top-level fields outside of any section.
+
+3. Sync 1Password items into Vault
+----------------------------------
+
+To sync the new 1Password items into Vault, follow the instructions in :doc:`/admin/sync-secrets`.
+This must be done using a Phalanx configuration that includes your new application and the secret configuration for it that you created above.
 
 Next steps
 ==========

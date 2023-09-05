@@ -11,6 +11,9 @@
       "title": "Fqdn",
       "type": "string"
     },
+    "onepassword": {
+      "$ref": "#/definitions/OnepasswordConfig"
+    },
     "vaultUrl": {
       "title": "Vaulturl",
       "type": "string"
@@ -51,5 +54,29 @@
     "applications"
   ],
   "additionalProperties": false,
-  "$id": "https://phalanx.lsst.io/schemas/environment.json"
+  "$id": "https://phalanx.lsst.io/schemas/environment.json",
+  "definitions": {
+    "OnepasswordConfig": {
+      "title": "OnepasswordConfig",
+      "description": "Configuration for 1Password static secrets source.",
+      "type": "object",
+      "properties": {
+        "connectUrl": {
+          "title": "Connecturl",
+          "minLength": 1,
+          "maxLength": 65536,
+          "format": "uri",
+          "type": "string"
+        },
+        "vaultTitle": {
+          "title": "Vaulttitle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "connectUrl",
+        "vaultTitle"
+      ]
+    }
+  }
 }

@@ -13,6 +13,7 @@ __all__ = [
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
+    "NoOnepasswordCredentialsError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
     "VaultNotFoundError",
@@ -112,6 +113,18 @@ class InvalidSecretConfigError(Exception):
     def __init__(self, application: str, key: str, error: str) -> None:
         name = f"{application}/{key}"
         msg = f"Invalid configuration for secret {name}: {error}"
+        super().__init__(msg)
+
+
+class NoOnepasswordConfigError(Exception):
+    """Environment does not use 1Password."""
+
+
+class NoOnepasswordCredentialsError(Exception):
+    """1Password is configured, but no credentials were supplied."""
+
+    def __init__(self) -> None:
+        msg = "No 1Password Connect credentials (OP_CONNECT_TOKEN) set"
         super().__init__(msg)
 
 

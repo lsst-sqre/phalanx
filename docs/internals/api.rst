@@ -58,6 +58,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.storage.helm
    :include-all-objects:
 
+.. automodapi:: phalanx.storage.onepassword
+   :include-all-objects:
+
 .. automodapi:: phalanx.storage.vault
    :include-all-objects:
 

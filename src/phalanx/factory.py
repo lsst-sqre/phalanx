@@ -9,6 +9,7 @@ from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.config import ConfigStorage
 from .storage.helm import HelmStorage
+from .storage.onepassword import OnepasswordStorage
 from .storage.vault import VaultStorage
 
 __all__ = ["Factory"]
@@ -57,8 +58,11 @@ class Factory:
             Service for manipulating secrets.
         """
         config_storage = self.create_config_storage()
+        onepassword_storage = OnepasswordStorage()
         vault_storage = VaultStorage()
-        return SecretsService(config_storage, vault_storage)
+        return SecretsService(
+            config_storage, onepassword_storage, vault_storage
+        )
 
     def create_vault_service(self) -> VaultService:
         """Create service for managing Vault tokens and policies.
