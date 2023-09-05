@@ -44,6 +44,9 @@ To create a new Phalanx environment, take the following steps:
    - :px-app-bootstrap:`portal`
    - :px-app-bootstrap:`squareone`
 
+#. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``phinx.linkcheck.ignore``.
+   The Argo CD URL of your environment will be unreachable, so you need to tell Sphinx valid link checking to ignore it.
+
 #. Generate the secrets for the new environment and store them in Vault with `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__.
    You will need the write key for the Vault enclave you are using for this environment.
    If you are using 1Password as a source of secrets, you will also need the access token for the 1Password Connect server.
