@@ -30,7 +30,6 @@ repos:
     hooks:
       - id: helm-docs
         args:
-          - --chart-search-root=environments
           - --chart-search-root=applications
           # The `../` makes it relative to the chart-search-root set above
           - --template-files=../helm-docs.md.gotmpl
