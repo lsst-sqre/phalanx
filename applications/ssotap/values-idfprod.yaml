@@ -1,34 +1,4 @@
-tap_schema:
-  image:
-    repository: "lsstsqre/tap-schema-idfprod-sso"
-
-resources:
-  requests:
-    cpu: 2.0
-    memory: "2G"
-  limits:
-    cpu: 8.0
-    memory: "32G"
-
-replicaCount: 2
-
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
-  jvmMaxHeapSize: "31G"
-
-pg:
-  mock:
-    enabled: false
-  database: "dp03_catalogs"
-  host: "usdf-pg-catalogs.slac.stanford.edu:5432"
-  username: "dp03"
-
-uws:
-  resources:
-    requests:
-      cpu: 0.25
-      memory: "1G"
-    limits:
-      cpu: 2.0
-      memory: "4G"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfprod-sso"

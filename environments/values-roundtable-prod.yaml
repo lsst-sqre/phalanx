@@ -1,78 +1,12 @@
-environment: roundtable-prod
+name: roundtable-prod
 fqdn: roundtable.lsst.cloud
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: false
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: false
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: false
-ingress-nginx:
-  enabled: true
-kubernetes-replicator:
-  enabled: false
-mobu:
-  enabled: false
-moneypenny:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: false
-nublado2:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: false
-postgres:
-  enabled: false
-sasquatch:
-  enabled: false
-production-tools:
-  enabled: false
-semaphore:
-  enabled: false
-sherlock:
-  enabled: false
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-squash-api:
-  enabled: false
-sqlproxy-cross-project:
-  enabled: false
-strimzi:
-  enabled: false
-strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
-  enabled: false
-tap:
-  enabled: false
-tap-schema:
-  enabled: false
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: false
+applications:
+  kubernetes-replicator: true
+  ook: true
+  sasquatch: true
+  squareone: true
+  strimzi: true
+  strimzi-access-operator: true

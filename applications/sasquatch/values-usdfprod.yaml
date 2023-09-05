@@ -23,6 +23,15 @@ influxdb:
     enabled: true
     size: 15Ti
 
+source-influxdb:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: usdf-rsp.slac.stanford.edu
+  persistence:
+    enabled: true
+    size: 15Ti
+
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
@@ -30,71 +39,73 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       maintel:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
       mtmount:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTMount"
+        tasksMax: "8"
       comcam:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
       latiss:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTM1M3"
+        tasksMax: "8"
       m2:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*OCPS"
       test:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*Test"
       pmd:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*PMD"
       calsys:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
       mtaircompressor:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTAirCompressor"
       genericcamera:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
       gis:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*GIS"
       lasertracker:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*LaserTracker"
 
 kafdrop:

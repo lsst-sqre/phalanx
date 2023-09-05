@@ -6,15 +6,3 @@ kubernetes-replicator:
     privileges:
       - apiGroups: ["", "apps", "extensions"]
         resources: ["secrets", "configmaps"]
-
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-
-  podSecurityContext:
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    readOnlyRootFilesystem: true

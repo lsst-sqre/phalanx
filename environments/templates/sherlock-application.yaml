@@ -1,28 +1,25 @@
-{{- if .Values.sherlock.enabled -}}
+{{- if .Values.applications.sherlock -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sherlock
-spec:
-  finalizers:
-    - kubernetes
+  name: "sherlock"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sherlock
-  namespace: argocd
+  name: "sherlock"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: sherlock
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "sherlock"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/sherlock
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/sherlock"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -33,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

@@ -6,7 +6,7 @@ redis:
 
 config:
   logLevel: "DEBUG"
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  internalDatabase: true
 
   # Session length and token expiration (in minutes).
   issuer:
@@ -38,10 +38,9 @@ config:
     - "mainetti"
 
   groupMapping:
-    "admin:token": "lsst"
-    "user:token": "lsst"
-    "exec:admin": "lsst"
-    "read:all":
+    "admin:token":
+      - "lsst"
+    "exec:admin":
       - "lsst"
     "exec:internal-tools":
       - "lsst"
@@ -49,9 +48,11 @@ config:
       - "lsst"
     "exec:portal":
       - "lsst"
-    "read:tap":
+    "read:all":
       - "lsst"
     "read:image":
+      - "lsst"
+    "read:tap":
       - "lsst"
 
   # Allow access by GitHub team.

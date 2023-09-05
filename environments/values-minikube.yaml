@@ -1,76 +1,15 @@
-environment: minikube
+name: minikube
 fqdn: minikube.lsst.codes
+vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 
-alert-stream-broker:
-  enabled: false
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: true
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: true
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: true
-ingress-nginx:
-  enabled: true
-kubernetes-replicator:
-  enabled: false
-mobu:
-  enabled: true
-moneypenny:
-  enabled: true
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: true
-nublado:
-  enabled: false
-nublado2:
-  enabled: false
-plot-navigator:
-  enabled: false
-portal:
-  enabled: false
-postgres:
-  enabled: true
-sasquatch:
-  enabled: false
-production-tools:
-  enabled: false
-semaphore:
-  enabled: false
-sherlock:
-  enabled: false
-squarebot:
-  enabled: false
-squareone:
-  enabled: true
-squash-api:
-  enabled: false
-strimzi:
-  enabled: false
-strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
-  enabled: false
-tap:
-  enabled: true
-tap-schema:
-  enabled: true
-telegraf:
-  enabled: false
-telegraf-ds:
-  enabled: false
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: false
+# The primary constraint on enabling applications is the low available memory
+# of a GitHub Actions runner, since minikube is used for smoke testing of new
+# Helm configurations.
+applications:
+  datalinker: true
+  hips: true
+  mobu: true
+  postgres: true
+  squareone: true
+  tap: true

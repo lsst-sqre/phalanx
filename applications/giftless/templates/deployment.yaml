@@ -1,0 +1,200 @@
+# Note that this creates two nearly-identical deployments, one named
+# "giftless" and one named "giftless-rw".  The only real difference
+# between them is that their configuration configmaps and secrets are
+# different: one has the configuration for read-only access to the Git
+# LFS server, and other has configuration for read-write access.  It is
+# possible that we might in future want to further split the
+# configuration in order to allow, for instance, different numbers of
+# processes and threads for the read-write and the read-only servers, on
+# the grounds that our Git LFS usage is read-mostly.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "giftless.fullname" . }}
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "giftless.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: "Recreate"
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "giftless.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - "uwsgi"
+            - "--http"
+            - ":5000"
+            - "-M"
+            - "-T"
+            - "--die-on-term"
+            - "--threads"
+            - "{{- .Values.server.threads }}"
+            - "-p"
+            - "{{- .Values.server.processes }}"
+            - "--manage-script-name"
+            - "--callable"
+            - "app"
+          env:
+            - name: GIFTLESS_CONFIG_FILE
+              value: "/etc/giftless/giftless.conf.yaml"
+            {{- if .Values.server.debug }}
+            - name: GIFTLESS_DEBUG
+              value: "true"
+            {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 5000
+              protocol: "TCP"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "giftless-config"
+              mountPath: "/etc/giftless"
+            - name: "giftless-secret"
+              mountPath: "/etc/secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "giftless-config"
+          configMap:
+            name:  {{ include "giftless.fullname" .  | quote }}
+        - name: "giftless-secret"
+          secret:
+            secretName: {{ include "giftless.fullname" .  | quote }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "giftless.fullname" . }}-rw
+  labels:
+    {{- include "giftless-rw.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "giftless-rw.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: "Recreate"
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        {{- include "giftless-rw.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          command:
+            - "uwsgi"
+            - "--http"
+            - ":5000"
+            - "-M"
+            - "-T"
+            - "--die-on-term"
+            - "--threads"
+            - "{{- .Values.server.threads }}"
+            - "-p"
+            - "{{- .Values.server.processes }}"
+            - "--manage-script-name"
+            - "--callable"
+            - "app"
+          env:
+            - name: GIFTLESS_CONFIG_FILE
+              value: "/etc/giftless/giftless.conf.yaml"
+            {{- if .Values.server.debug }}
+            - name: GIFTLESS_DEBUG
+              value: "true"
+            {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 5000
+              protocol: "TCP"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "giftless-config"
+              mountPath: "/etc/giftless"
+            - name: "giftless-secret"
+              mountPath: "/etc/secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "giftless-config"
+          configMap:
+            name:  {{ template "giftless.fullname" . }}-rw
+        - name: "giftless-secret"
+          secret:
+            secretName: {{ include "giftless.fullname" .  | quote }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

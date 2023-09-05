@@ -1,0 +1,52 @@
+# These four settings should be set in each environment values-*.yaml file.
+
+# -- Name of the environment
+# @default -- None, must be set
+name: ""
+
+# -- Fully-qualified domain name where the environment is running
+# @default -- None, must be set
+fqdn: ""
+
+# -- URL of Vault server for this environment
+# @default -- None, must be set
+vaultUrl: ""
+
+# -- Prefix for Vault secrets for this environment
+# @default -- None, must be set
+vaultPathPrefix: ""
+
+applications:
+  # -- Enable the aaa-new-app application
+  aaa-new-app: false
+
+  # -- Enable the Argo CD application. This must be enabled for all
+  # environments and is present here only because it makes parsing easier
+  argocd: true
+
+  # -- Enable the Gafaelfawr application. This is required by Phalanx since
+  # most other applications use `GafaelfawrIngress`
+  gafaelfawr: true
+
+  # -- Enable the hips application
+  hips: false
+
+  # -- Enable the mobu application
+  mobu: false
+
+  # -- Enable the nublado application
+  nublado: false
+
+  # -- Enable the portal application
+  portal: false
+
+  # -- Enable the in-cluster PostgreSQL server. Use of this server is
+  # discouraged in favor of using infrastructure SQL, but will remain
+  # supported for use cases such as minikube test deployments.
+  postgres: false
+
+  # -- Enable the tap application
+  tap: false
+
+  # -- Enable the zzz-other-app application
+  zzz-other-app: false

@@ -9,3 +9,4 @@ spec:
   scopes:
     - "admin:token"
     - "exec:admin"
+    - "exec:notebook"

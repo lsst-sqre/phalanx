@@ -1,18 +1,46 @@
 [project]
 title = "Phalanx"
-copyright = "2020-2022 Association of Universities for Research in Astronomy, Inc. (AURA)"
+copyright = "2020-2023 Association of Universities for Research in Astronomy, Inc. (AURA)"
 base_url = "https://phalanx.lsst.io"
 github_url = "https://github.com/lsst-sqre/phalanx"
 github_default_branch = "main"
 version = "Current"
 
 [sphinx]
-rst_epilog_file = "_rst_epilog.rst"
+disable_primary_sidebars = [
+  "internals/api",
+]
 extensions = [
+  "sphinx_click",
   "sphinx_diagrams",
   "sphinx_jinja",
+  "sphinxcontrib.autodoc_pydantic",
   "phalanx.docs.crossref",
 ]
+nitpicky = true
+nitpick_ignore = [
+    # Ignore missing cross-references for modules that don't provide
+    # intersphinx. The documentation itself should use double-quotes instead
+    # of single-quotes to not generate a reference, but automatic references
+    # are generated from the type signatures and can't be avoided. These are
+    # intentionally listed specifically rather than using regexes for the
+    # whole undocumented package because I've caught documentation bugs by
+    # having Sphinx complain about a new symbol.
+    ["py:class", "pydantic.main.BaseModel"],
+    ["py:class", "pydantic.types.SecretStr"],
+    ["py:class", "pydantic.utils.Representation"],
+]
+nitpick_ignore_regex = [
+    # Bug in Sphinx
+    ["py:obj", "SecretGenerateType\\..*"],
+]
+python_api_dir = "internals/api"
+rst_epilog_file = "_rst_epilog.rst"
+
+[sphinx.intersphinx.projects]
+python = "https://docs.python.org/3/"
+safir = "https://safir.lsst.io/"
+sphinx = "https://www.sphinx-doc.org/en/master/"
 
 [sphinx.linkcheck]
 ignore = [
@@ -29,8 +57,9 @@ ignore = [
     '^https://rsp.lsst.ac.uk',
     '^https://roundtable-dev.lsst.cloud',
     '^https://roundtable.lsst.cloud',
+    '^https://usdf-prompt-processing-dev.slac.stanford.edu',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',
-    '^https://github.com/lsst-sqre/phalanx/blob/main/applications/strimzi/values.yaml',
+    '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
 ]

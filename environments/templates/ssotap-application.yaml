@@ -1,28 +1,25 @@
-{{- if .Values.ssotap.enabled -}}
+{{- if .Values.applications.ssotap -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: ssotap
-spec:
-  finalizers:
-    - kubernetes
+  name: "ssotap"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ssotap
-  namespace: argocd
+  name: "ssotap"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: ssotap
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "ssotap"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/ssotap
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/ssotap"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -33,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

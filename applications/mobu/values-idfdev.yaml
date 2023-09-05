@@ -1,23 +1,6 @@
 config:
   debug: true
   autostart:
-    - name: "nublado2"
-      count: 1
-      users:
-        - username: "bot-mobu-user"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunner"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
-        restart: true
     - name: "weekly"
       count: 1
       users:
@@ -34,7 +17,6 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
-          url_prefix: "/n3"
           use_cachemachine: false
         restart: true
     - name: "tutorial"
@@ -52,11 +34,10 @@ config:
           image:
             image_class: "latest-weekly"
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "main"
+          repo_branch: "prod"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
           use_cachemachine: false
-          url_prefix: "/n3"
         restart: true
     - name: "tap"
       count: 1

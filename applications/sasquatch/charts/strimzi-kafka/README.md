@@ -8,9 +8,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 |-----|------|---------|-------------|
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | connect.enabled | bool | `true` | Enable Kafka Connect. |
-| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.2.0"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
-| kafka.affinity | object | `{}` | Node affinity for Kafka broker pod assignment. |
+| kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
 | kafka.config."log.retention.hours" | int | `72` | Number of days for a topic's data to be retained. |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka. |
@@ -32,8 +32,13 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
+| mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
+| mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster to replicate from. |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern. |
+| mirrormaker2.sourceConnect.enabled | bool | `false` | Whether to deploy another Connect cluster for topics replicated from the source cluster. Requires the sourceRegistry enabled. |
+| mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster. |
+| mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
@@ -42,7 +47,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
-| zookeeper.affinity | object | `{}` | Node affinity for Zookeeper pod assignment. |
+| zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
 | zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
 | zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |

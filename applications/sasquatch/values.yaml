@@ -42,6 +42,7 @@ influxdb:
   config:
     data:
       cache-max-memory-size: 0
+      # Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
       trace-logging-enabled: true
     http:
@@ -66,8 +67,8 @@ influxdb:
     #   init.iql: |+
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 96Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
@@ -129,8 +130,71 @@ influxdb-staging:
     #   init.iql: |+
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 96Gi
+      cpu: 8
+    limits:
+      memory: 96Gi
+      cpu: 8
+
+source-influxdb:
+  # -- Enable InfluxDB staging deployment.
+  enabled: false
+  # -- InfluxDB image tag.
+  image:
+    tag: "1.8.10"
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
+    size: 1Ti
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: sasquatch
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    className: "nginx"
+    path: /source-influxdb(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
+    http:
+      enabled: true
+      flux-enabled: true
+      auth-enabled: true
+      max-row-limit: 0
+    coordinator:
+      write-timeout: "1h"
+      max-concurrent-queries: 0
+      query-timeout: "0s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+    logging:
+      level: "debug"
+  initScripts:
+    # -- Enable InfluxDB custom initialization script.
+    enabled: false
+    # scripts:
+    # # -- InfluxDB custom initialization script.
+    #   init.iql: |+
+  resources:
+    requests:
+      memory: 96Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
@@ -179,14 +243,20 @@ influxdb2:
         influx bucket create --name telegraf-kafka-consumer --org default
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 16Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
 
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
+
+# -- Override source-kafka-connect-manager configuration.
+source-kafka-connect-manager:
+  enabled: false
+  env:
+    kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
 # -- Override telegraf-kafka-consumer configuration.
 telegraf-kafka-consumer:

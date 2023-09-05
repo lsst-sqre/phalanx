@@ -1,0 +1,89 @@
+controller:
+  config:
+    images:
+      source:
+        type: "docker"
+        registry: "ts-dockerhub.lsst.org"
+        repository: "sal-sciplat-lab"
+      num_releases: 0
+      num_weeklies: 3
+      num_dailies: 2
+      cycle: 32
+      recommended_tag: "recommended_c0032"
+    lab:
+      pullSecret: "pull-secret"
+      extraAnnotations:
+        k8s.v1.cni.cncf.io/networks: "kube-system/dds"
+      env:
+        DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        LSST_DDS_INTERFACE: net1
+        LSST_DDS_PARTITION_PREFIX: tucson
+        LSST_SITE: tucson
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+        PGUSER: "oods"
+      volumes:
+      - containerPath: "/home"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/jhome"
+          server: "nfs-jhome.tu.lsst.org"
+      - containerPath: "/project"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/project"
+          server: "nfs-project.tu.lsst.org"
+      - containerPath: "/scratch"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/scratch"
+          server: "nfs-scratch.tu.lsst.org"
+      - containerPath: "/datasets"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/lsstdata"
+          server: "nfs-lsstdata.tu.lsst.org"
+      - containerPath: "/repo/LATISS"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/auxtel/repo/LATISS"
+          server: "nfs-auxtel.tu.lsst.org"
+      - containerPath: "/net/obs-env"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/obs-env"
+          server: "nfs-obsenv.tu.lsst.org"
+      - containerPath: "/repo/LSSTComCam"
+        mode: "rw"
+        source:
+          type: "nfs"
+          serverPath: "/repo/LSSTComCam"
+          server: "comcam-archiver.tu.lsst.org"
+      - containerPath: "/data/lsstdata/TTS/auxtel"
+        source:
+          type: "nfs"
+          serverPath: "/auxtel/lsstdata/TTS/auxtel"
+          server: "nfs-auxtel.tu.lsst.org"
+      - containerPath: "/data/lsstdata/TTS/comcam"
+        source:
+          type: "nfs"
+          serverPath: "/lsstdata/TTS/comcam"
+          server: "comcam-archiver.tu.lsst.org"
+
+jupyterhub:
+  cull:
+    users: false
+    removeNamedServers: false
+    timeout: 432000
+    every: 300
+    maxAge: 2160000
+  hub:
+    baseUrl: "/n3"
+    db:
+      upgrade: true
+      url: "postgresql://nublado3@postgresdb01.tu.lsst.org/nublado3"

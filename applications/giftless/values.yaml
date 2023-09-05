@@ -1,0 +1,68 @@
+# Default values for giftless.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Resource limits and requests for the giftless frontend pod
+resources: {}
+
+# -- Annotations for the giftless frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the giftless frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the giftless frontend pod
+tolerations: []
+
+# -- Affinity rules for the giftless frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+image:
+  # -- Giftless image to use
+  repository: docker.io/datopian/giftless
+  # -- Pull policy for the giftless image
+  pullPolicy: "IfNotPresent"
+  # -- Tag of giftless image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+ingress:
+  # -- FQDNs of giftless ingresses
+  # @default -- Must be overridden in environment-specific values file
+  hostname:
+    # -- FQDN for the read-only giftless ingress
+    # @default -- Must be overridden in environment-specific values file
+    readonly: ""
+    # -- FQDN for the read-write giftless ingress
+    # @default -- Must be overridden in environment-specific values file
+    readwrite: ""
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+server:
+  # -- Turn on debugging mode
+  debug: false
+  # -- Number of processes for server
+  processes: 2
+  # -- Number of threads per process
+  threads: 2
+
+# -- Configuration for giftless server
+config:
+  # -- Project name for GCS LFS Object bucket
+  # @default -- Must be overridden in environment-specific values file
+  projectName: ""
+  # -- Bucket name for GCS LFS Object bucket
+  # @default -- Must be overridden in environment-specific values file
+  bucketName: ""
+
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

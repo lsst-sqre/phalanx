@@ -40,7 +40,11 @@ spec:
           - name: KAFKA_CONNECT_NAME
             value: influxdb-sink-{{ $key }}
           - name: KAFKA_CONNECT_INFLUXDB_URL
+            {{- if $value.connectInfluxUrl }}
+            value: {{ $value.connectInfluxUrl | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.connectInfluxUrl | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_DATABASE
             {{- if $value.connectInfluxDb }}
             value: {{ $value.connectInfluxDb | quote }}
@@ -58,7 +62,11 @@ spec:
                 name: sasquatch
                 key: influxdb-password
           - name: KAFKA_CONNECT_TASKS_MAX
+            {{- if $value.tasksMax }}
+            value: {{ $value.tasksMax | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.tasksMax | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_TOPIC_REGEX
             value: {{ $value.topicsRegex | quote }}
           - name: KAFKA_CONNECT_CHECK_INTERVAL
@@ -74,6 +82,10 @@ spec:
             {{- if $value.tags }}
           - name: KAFKA_CONNECT_INFLUXDB_TAGS
             value: {{ $value.tags | quote }}
+            {{- end }}
+            {{- if $value.removePrefix }}
+          - name: KAFKA_CONNECT_INFLUXDB_REMOVE_PREFIX
+            value: {{ $value.removePrefix | quote }}
             {{- end }}
           - name: KAFKA_CONNECT_ERROR_POLICY
             value: {{ $.Values.influxdbSink.connectInfluxErrorPolicy | quote }}
@@ -154,7 +166,11 @@ spec:
                 name: sasquatch
                 key: influxdb-password
           - name: KAFKA_CONNECT_TASKS_MAX
+            {{- if $value.tasksMax }}
+            value: {{ $value.tasksMax | quote }}
+            {{- else }}
             value: {{ $.Values.influxdbSink.tasksMax | quote }}
+            {{- end }}
           - name: KAFKA_CONNECT_TOPIC_REGEX
             value: {{ $value.topicsRegex | quote }}
           - name: KAFKA_CONNECT_CHECK_INTERVAL

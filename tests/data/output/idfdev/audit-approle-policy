@@ -1,0 +1,5 @@
+Problems with read AppRole (data-dev.lsst.cloud):
+• Missing policy phalanx/data-dev.lsst.cloud/read
+• Unexpected policy something
+• Policy phalanx/data-dev.lsst.cloud/read doesn't have expected contents
+No write token (data-dev.lsst.cloud)

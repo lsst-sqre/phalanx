@@ -13,27 +13,37 @@ dependencies:
   - name: influxdb
     alias: influxdb
     condition: influxdb.enabled
-    version: 4.12.1
+    version: 4.12.5
     repository: https://helm.influxdata.com/
   - name: influxdb
     alias: influxdb-staging
     condition: influxdb-staging.enabled
-    version: 4.12.1
+    version: 4.12.5
+    repository: https://helm.influxdata.com/
+  - name: influxdb
+    alias: source-influxdb
+    condition: source-influxdb.enabled
+    version: 4.12.5
     repository: https://helm.influxdata.com/
   - name: influxdb2
     condition: influxdb2.enabled
     version: 2.1.1
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
+    alias: kafka-connect-manager
     condition: kafka-connect-manager.enabled
+    version: 1.0.0
+  - name: kafka-connect-manager
+    alias: source-kafka-connect-manager
+    condition: source-kafka-connect-manager.enabled
     version: 1.0.0
   - name: chronograf
     condition: chronograf.enabled
-    version: 1.2.5
+    version: 1.2.6
     repository: https://helm.influxdata.com/
   - name: kapacitor
     condition: kapacitor.enabled
-    version: 1.4.6
+    version: 1.4.7
     repository: https://helm.influxdata.com/
   - name: kafdrop
     condition: kafdrop.enabled

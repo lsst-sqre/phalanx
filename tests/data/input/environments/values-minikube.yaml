@@ -1,0 +1,8 @@
+name: minikube
+fqdn: minikube.lsst.cloud
+vaultUrl: https://vault.lsst.codes/
+vaultPathPrefix: secret/phalanx/minikube
+
+applications:
+  mobu: true
+  postgres: true

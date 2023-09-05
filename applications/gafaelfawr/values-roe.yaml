@@ -3,7 +3,7 @@ redis:
     enabled: false
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  internalDatabase: true
 
   github:
     clientId: "10172b4db1b67ee31620"

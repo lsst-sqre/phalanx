@@ -12,7 +12,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Cluster infrastructure
 
-   argo-cd/index
+   argocd/index
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
@@ -40,7 +40,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    squareone/index
    ssotap/index
    tap/index
-   tap-schema/index
    times-square/index
    vo-cutouts/index
 
@@ -55,10 +54,10 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    obsloctap/index
    plot-navigator/index
    production-tools/index
+   rubintv/index
    sasquatch/index
    strimzi/index
    strimzi-access-operator/index
-   strimzi-registry-operator/index
    telegraf/index
    telegraf-ds/index
 
@@ -66,5 +65,17 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Roundtable
 
+   giftless/index
    kubernetes-replicator/index
+   monitoring/index
+   ook/index
    squarebot/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Prompt Processing
+
+   prompt-proto-service-hsc/index
+   prompt-proto-service-latiss/index
+   prompt-proto-service-lsstcam/index
+   prompt-proto-service-lsstcomcam/index

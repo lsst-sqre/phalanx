@@ -1,28 +1,25 @@
-{{- if .Values.telegraf.enabled -}}
+{{- if (index .Values "applications" "telegraf-ds") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: telegraf-ds
-spec:
-  finalizers:
-    - kubernetes
+  name: "telegraf-ds"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: telegraf-ds
-  namespace: argocd
+  name: "telegraf-ds"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: telegraf-ds
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "telegraf-ds"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/telegraf-ds
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/telegraf-ds"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.enabledServices"
@@ -32,6 +29,6 @@ spec:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
-        - values.yaml
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

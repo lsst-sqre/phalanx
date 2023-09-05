@@ -1,0 +1,64 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+prompt-proto-service:
+
+  # -- Annotations for the prompt-proto-service pod
+  podAnnotations:
+    autoscaling.knative.dev/min-scale: "3"
+    autoscaling.knative.dev/max-scale: "100"
+    autoscaling.knative.dev/target-utilization-percentage: "60"
+    autoscaling.knative.dev/target-burst-capacity: "-1"
+    # Update this field if `make apply` by itself doesn't make a new revision.
+    revision: "1"
+
+  image:
+    repository: ghcr.io/lsst-dm/prompt-proto-service
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+
+  instrument:
+    name: HSC
+    pipelines: (survey="SURVEY")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml]
+    skymap: hsc_rings_v1
+    calibRepo: s3://rubin:rubin-pp-users/central_repo/
+
+  s3:
+    imageBucket: rubin:rubin-pp
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    auth_env: true
+    disableBucketValidation: '1'
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing
+    imageTimeout: '120'
+
+  apdb:
+    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    db: lsst-devl
+    user: rubin
+    namespace: pp_apdb
+
+  registry:
+    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    db: ppcentralbutler
+    user: pp
+
+  knative:
+    minScale: 3
+    maxScale: 100
+    ephemeralStorageRequest: "8Gi"
+    ephemeralStorageLimit: "20Gi"
+    timeout: 900
+    idleTimeout: 900
+    responseStartTimeout: 900
+
+  # additionalVolumeMounts:
+  #  - mountPath: /app/s3/credentials
+  #    name: s3-credentials-file
+  #    subPath: credentials
+
+
+  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-hsc"

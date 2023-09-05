@@ -74,8 +74,17 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-  # -- Node affinity for Kafka broker pod assignment.
-  affinity: {}
+  # -- Affinity for Kafka pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - kafka
+        topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
@@ -89,8 +98,17 @@ zookeeper:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
 
-  # -- Node affinity for Zookeeper pod assignment.
-  affinity: {}
+  # -- Affinity for Zookeeper pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - zookeeper
+        topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Zookeeper pod assignment.
   tolerations: []
@@ -99,7 +117,7 @@ connect:
   # -- Enable Kafka Connect.
   enabled: true
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.2.0
+  image: ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1
   # -- Number of Kafka Connect replicas to run.
   replicas: 3
 
@@ -110,7 +128,7 @@ registry:
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
 superusers:
-  - kafka-admin
+- kafka-admin
 
 users:
   replicator:
@@ -145,3 +163,20 @@ mirrormaker2:
     bootstrapServer: ""
     # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
     topicsPattern: "registry-schemas, lsst.sal.*"
+  replication:
+    policy:
+      # -- Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used.
+      # @default -- ""
+      separator: ""
+      # -- Replication policy.
+      # @default -- IdentityReplicationPolicy
+      class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+  sourceRegistry:
+    # -- Whether to deploy another Schema Registry for the schemas replicated from the source cluster.
+    enabled: false
+    # -- Name of the topic Schema Registry topic replicated from the source cluster
+    schemaTopic: "source.registry-schemas"
+  sourceConnect:
+    # -- Whether to deploy another Connect cluster for topics replicated from the source cluster.
+    # Requires the sourceRegistry enabled.
+    enabled: false

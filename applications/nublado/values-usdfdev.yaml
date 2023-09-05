@@ -3,7 +3,7 @@ controller:
     safir:
       logLevel: "DEBUG"
     fileserver:
-      enabled: true
+      enabled: false
       timeout: 21600
 
     images:
@@ -25,7 +25,7 @@ controller:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        HUB_ROUTE: "/n3/hub"
+        HUB_ROUTE: "/nb/hub"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
         S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
@@ -159,14 +159,9 @@ proxy:
       # which already configures a larger value.
       nginx.ingress.kubernetes.io/proxy-body-size: "50m"
 
-      # These are substantially shorter than the default timeouts (it's not
-      # clear why).
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "30"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "20"
-
 jupyterhub:
   hub:
-    baseUrl: "/n3"
+    baseUrl: "/nb"
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
   cull:

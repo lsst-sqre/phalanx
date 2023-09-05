@@ -34,6 +34,13 @@ influxdb:
   ingress:
     enabled: true
     hostname: data-int.lsst.cloud
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 2
+    limits:
+      memory: 16Gi
+      cpu: 2
 
 kafka-connect-manager:
   influxdbSink:

@@ -6,7 +6,7 @@ redis:
     storageClass: "wekafs--sdf-k8s01"
 
 config:
-  databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  internalDatabase: true
 
   oidcServer:
     enabled: true
@@ -219,6 +219,6 @@ config:
   - "frossie"
   - "jonathansick"
   - "rra"
-  - "simonkrughoff"
   - "ytl"
   - "ppascual"
+  - "pav"

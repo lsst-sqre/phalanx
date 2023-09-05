@@ -1,10 +1,8 @@
 apiVersion: v2
 name: <CHARTNAME>
 version: 1.0.0
-description: |
-  Helm starter chart for a new RSP service.
-home: "https://github.com/lsst-sqre/<CHARTNAME>"
+description: "Helm starter chart for a new RSP service"
+sources:
+  - "https://github.com/lsst-sqre/<CHARTNAME>"
 type: application
-
-# The default version tag of the <CHARTNAME> Docker image.
-appVersion: "1.0.0"
+appVersion: "0.1.0"

@@ -65,7 +65,7 @@ In Phalanx, the word *application* specifically refers to a Helm chart located i
 That Helm chart directory includes the Kubernetes templates and Docker image references to deploy the application, as well as values files to configure the application for each environment.
 
 Argo CD
-=======
+========
 
 `Argo CD`_ manages the Kubernetes deployments of each application's Helm chart from the Phalanx repository.
 Each environment runs its own instance of Argo CD (as Argo CD is itself an application in Phalanx).
@@ -102,8 +102,12 @@ Phalanx includes applications that provide key functionality for other applicati
 ``cert-manager`` (TLS certificate management)
     Cert-manager acquires and renews TLS certificates from Let's Encrypt.
 
+``gafaelfawr``
+    Gafaelfawr is the authentication, access control, and identity management layer of Phalanx.
+    Phalanx applications rely on Gafaelfawr to authenticate the user and make most access control decisions, including rate limiting.
+
 ``ingress-nginx`` (ingress)
-    The ingress-nginx application routes traffic from the internet to individual applications, while also terminating TLS and integrating with Gafaelfawr, the auth handler.
+    The ingress-nginx application routes traffic from the internet to individual applications, while also terminating TLS and integrating with Gafaelfawr, the authentication and access control layer.
 
 ``vault-secrets-operator`` (secret configuration)
     Vault Secrets Operator bridges secrets in Vault_ with Kubernetes Secret_ resources.

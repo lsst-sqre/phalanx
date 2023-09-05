@@ -1,0 +1,5 @@
+apiVersion: v2
+name: <CHARTNAME>
+version: 1.0.0
+description: "Helm starter chart for a new RSP service"
+type: application

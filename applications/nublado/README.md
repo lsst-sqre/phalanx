@@ -50,6 +50,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| hub.internalDatabase | bool | `true` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
 | hub.timeout.spawn | int | `600` | Timeout for the Kubernetes spawn process in seconds. (Allow long enough to pull uncached images if needed.) |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
@@ -69,7 +70,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"0.3.1"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"0.3.2"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |

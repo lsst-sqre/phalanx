@@ -1,0 +1,31 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "squareone.fullname" . }}-times-square
+  labels:
+    {{- include "squareone.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  loginRedirect: true
+template:
+  metadata:
+    name: {{ template "squareone.fullname" . }}-times-square
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/times-square"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "squareone.fullname" . }}
+                  port:
+                    number: 80

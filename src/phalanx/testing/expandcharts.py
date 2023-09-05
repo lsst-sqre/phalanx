@@ -14,13 +14,14 @@ import shutil
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from git import DiffIndex, Repo
+from git import DiffIndex
+from git.repo import Repo
 
 if TYPE_CHECKING:
-    from typing import List, Sequence
+    from collections.abc import Sequence
 
 
-def get_changed_charts() -> List[str]:
+def get_changed_charts() -> list[str]:
     """Get a list of charts that have changed relative to main."""
     repo = Repo(str(Path.cwd()))
 
@@ -29,7 +30,10 @@ def get_changed_charts() -> List[str]:
         if (path / "Chart.yaml").exists():
             diff = repo.head.commit.diff("origin/main", paths=[str(path)])
             for change_type in DiffIndex.change_type:
-                if any(diff.iter_change_type(change_type)):  # type: ignore
+                changes = diff.iter_change_type(
+                    change_type  # type: ignore[arg-type]
+                )
+                if any(changes):
                     print("Found changed chart", path.name)
                     charts.append(path.name)
                     break
@@ -37,7 +41,7 @@ def get_changed_charts() -> List[str]:
     return charts
 
 
-def get_environments() -> List[str]:
+def get_environments() -> list[str]:
     """Get the list of supported environments."""
     science_platform_path = Path.cwd() / "environments"
 
@@ -74,6 +78,7 @@ def expand_chart(chart: str, environments: Sequence[str]) -> None:
 
 
 def main() -> None:
+    """Entry point for expand-charts command."""
     expanded_path = Path.cwd() / "applications-expanded"
     if expanded_path.exists():
         shutil.rmtree(expanded_path)

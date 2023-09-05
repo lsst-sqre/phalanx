@@ -1,0 +1,9 @@
+argo-cd:
+  controller:
+    args:
+      repoServerTimeoutSeconds: "180"
+
+  server:
+    ingress:
+      hosts:
+        - "minikube.lsst.codes"

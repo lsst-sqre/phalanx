@@ -1,0 +1,47 @@
+{{ if .Values.mockdb.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "cadc-tap.fullname" . }}-mock-db
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "mock-db"
+  template:
+    metadata:
+      {{- with .Values.mockdb.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "mock-db"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "mock-db"
+          image: "{{ .Values.mockdb.image.repository }}:{{ .Values.mockdb.image.tag | default .Values.config.qserv.image.tag }}"
+          imagePullPolicy: {{ .Values.mockdb.image.pullPolicy | quote }}
+          ports:
+            - containerPort: {{ .Values.mockdb.port }}
+          {{- with .Values.mockdb.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.mockdb.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mockdb.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mockdb.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

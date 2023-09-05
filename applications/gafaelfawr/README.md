@@ -17,7 +17,7 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.33.7"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.33.10"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
@@ -32,7 +32,7 @@ Authentication and identity system
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
 | config.cilogon.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
-| config.databaseUrl | string | None, must be set if `cloudsql.enabled` is not true | URL for the PostgreSQL database |
+| config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` | URL for the PostgreSQL database nor `config.internalDatabase` are true |
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
 | config.forgerock.url | string | ForgeRock Identity Management support is disabled | If set, obtain the GIDs for groups from this ForgeRock Identity Management server. |
@@ -40,6 +40,7 @@ Authentication and identity system
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. See [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes. |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
+| config.internalDatabase | bool | `false` | Whether to use the PostgreSQL server internal to the Kubernetes cluster |
 | config.knownScopes | object | See the `values.yaml` file | Names and descriptions of all scopes in use. This is used to populate the new token creation page. Only scopes listed here will be options when creating a new token. See [DMTN-235](https://dmtn-235.lsst.io/). |
 | config.ldap.addUserGroup | bool | `false` | Whether to synthesize a user private group for each user with a GID equal to their UID |
 | config.ldap.emailAttr | string | `"mail"` | Attribute containing the user's email address |
@@ -79,6 +80,7 @@ Authentication and identity system
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the Gafaelfawr image |
 | image.repository | string | `"ghcr.io/lsst-sqre/gafaelfawr"` | Gafaelfawr image to use |
 | image.tag | string | The appVersion of the chart | Tag of Gafaelfawr image to use |
+| ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
 | maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
 | maintenance.maintenanceSchedule | string | `"5 * * * *"` | Cron schedule string for Gafaelfawr periodic maintenance (in UTC) |

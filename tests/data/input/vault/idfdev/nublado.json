@@ -1,0 +1,6 @@
+{
+  "cryptkeeper_key": "411820d5a6cc6c3bcd73c1fbd61f9c9eb06454272825345ba0cbe0304fef4168",
+  "crypto_key": "59d636b6428cde68710166611187371e58ea3ff7a9e07e75b2286fc08f7763c8",
+  "hub_db_password": "2e188c579b159d59f83e478203261c91fe2f5db3858111bc318f0f9d5dbe055e",
+  "slack_webhook": "https://hooks.slack.com/app-slack-hook"
+}

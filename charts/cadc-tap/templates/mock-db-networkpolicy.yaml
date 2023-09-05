@@ -1,0 +1,25 @@
+{{ if .Values.mockdb.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "cadc-tap.fullname" . }}-mock-db
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "cadc-tap.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "mock-db"
+  policyTypes:
+    - Ingress
+    # Deny all outbound access; databases doesn't need to talk to anything.
+    - Egress
+  ingress:
+    # Allow inbound access to allow the TAP service to connect.
+    - from:
+        - podSelector:
+            matchLabels:
+              {{- include "cadc-tap.selectorLabels" . | nindent 14 }}
+              app.kubernetes.io/component: "server"
+      ports:
+        - protocol: "TCP"
+          port: {{ .Values.mockdb.port }}
+{{- end }}

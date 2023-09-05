@@ -1,29 +1,27 @@
-{{- if (index .Values "strimzi-access-operator" "enabled") -}}
+{{- if (index .Values "applications" "strimzi-access-operator") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: strimzi-access-operator
-spec:
-  finalizers:
-    - kubernetes
+  name: "strimzi-access-operator"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: strimzi-access-operator
-  namespace: argocd
+  name: "strimzi-access-operator"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: strimzi-access-operator
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "strimzi-access-operator"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/strimzi-access-operator
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/strimzi-access-operator"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
-        - values-{{ .Values.environment }}.yaml
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

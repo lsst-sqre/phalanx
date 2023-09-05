@@ -1,0 +1,7 @@
+name: usdfdev-prompt-processing
+fqdn: usdf-prompt-processing-dev.slac.stanford.edu
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
+
+applications:
+  gafaelfawr: false

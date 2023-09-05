@@ -1,7 +1,29 @@
 strimzi-kafka:
+  mirrormaker2:
+    enabled: true
+    source:
+      bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
+      topicsPattern: "lsst.sal.*, registry-schemas"
+    replication:
+      policy:
+        separator: "."
+        class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
+    sourceRegistry:
+      enabled: true
+      schemaTopic: source.registry-schemas
+    sourceConnect:
+      enabled: true
+    resources:
+      requests:
+        cpu: 2
+        memory: 4Gi
+      limits:
+        cpu: 4
+        memory: 8Gi
   kafka:
     storage:
       storageClassName: rook-ceph-block
+      size: 1Ti
     externalListener:
       tls:
         enabled: true
@@ -38,6 +60,15 @@ influxdb-staging:
     enabled: true
     hostname: base-lsp.lsst.codes
 
+source-influxdb:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
+    size: 10Ti
+  ingress:
+    enabled: true
+    hostname: base-lsp.lsst.codes
+
 
 kafka-connect-manager:
   influxdbSink:
@@ -46,55 +77,146 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+        topicsRegex: "lsst.sal.ATAOS|lsst.sal.ATDome|lsst.sal.ATDomeTrajectory|lsst.sal.ATHexapod|lsst.sal.ATPneumatics|lsst.sal.ATPtg|lsst.sal.ATMCS"
       maintel:
         enabled: true
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+        topicsRegex: "lsst.sal.MTAOS|lsst.sal.MTDome|lsst.sal.MTDomeTrajectory|lsst.sal.MTPtg"
       mtmount:
         enabled: true
-        topicsRegex: ".*MTMount"
+        topicsRegex: "lsst.sal.MTMount"
+        tasksMax: "8"
       comcam:
         enabled: true
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
+        topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast"
+        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.ESS|lsst.sal.WeatherForecast"
       latiss:
         enabled: true
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+        topicsRegex: "lsst.sal.ATCamera|lsst.sal.ATHeaderService|lsst.sal.ATOODS|lsst.sal.ATSpectrograph"
       m1m3:
         enabled: true
-        topicsRegex: ".*MTM1M3"
+        topicsRegex: "lsst.sal.MTM1M3"
+        tasksMax: "8"
       m2:
         enabled: true
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+        topicsRegex: "lsst.sal.MTHexapod|lsst.sal.MTM2|lsst.sal.MTRotator"
       obssys:
         enabled: true
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: "lsst.sal.Scheduler|lsst.sal.Script|lsst.sal.ScriptQueue|lsst.sal.Watcher"
       ocps:
         enabled: true
-        topicsRegex: ".*OCPS"
+        topicsRegex: "lsst.sal.OCPS"
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
-        topicsRegex: ".*PMD"
+        topicsRegex: "lsst.sal.PMD"
       calsys:
         enabled: true
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+        topicsRegex: "lsst.sal.ATMonochromator|lsst.sal.ATWhiteLight|lsst.sal.CBP|lsst.sal.Electrometer|lsst.sal.FiberSpectrograph|lsst.sal.LinearStage|lsst.sal.TunableLaser"
       mtaircompressor:
         enabled: true
-        topicsRegex: ".*MTAirCompressor"
+        topicsRegex: "lsst.sal.MTAirCompressor"
       authorize:
         enabled: true
-        topicsRegex: ".*Authorize"
+        topicsRegex: "lsst.sal.Authorize"
       lasertracker:
         enabled: true
-        topicsRegex: ".*LaserTracker"
+        topicsRegex: "lsst.sal.LaserTracker"
       genericcamera:
         enabled: true
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
+        topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
+      lsstcam:
+        enabled: true
+        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
+
+# This needs to follow the kafka-connect-manager configuration for the summit
+# environment where data is replicated from.
+# We need to remove the "source." prefix from the topic name before writing to InfluxDB.
+source-kafka-connect-manager:
+  enabled: true
+  influxdbSink:
+    connectInfluxUrl: "http://sasquatch-influxdb-staging.sasquatch:8086"
+    connectInfluxDb: "efd"
+    connectors:
+      source-auxtel:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATAOS|source.lsst.sal.ATDome|source.lsst.sal.ATDomeTrajectory|source.lsst.sal.ATHexapod|source.lsst.sal.ATPneumatics|source.lsst.sal.ATPtg|source.lsst.sal.ATMCS"
+        removePrefix: "source."
+      source-maintel:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTAOS|source.lsst.sal.MTDome|source.lsst.sal.MTDomeTrajectory|source.lsst.sal.MTPtg"
+        removePrefix: "source."
+      source-mtmount:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTMount"
+        removePrefix: "source."
+      source-comcam:
+        enabled: true
+        topicsRegex: "source.lsst.sal.CCCamera|source.lsst.sal.CCHeaderService|source.lsst.sal.CCOODS"
+        removePrefix: "source."
+      source-eas:
+        enabled: true
+        topicsRegex: "source.lsst.sal.DIMM|source.lsst.sal.DSM|source.lsst.sal.ESS|source.lsst.sal.WeatherForecast"
+        removePrefix: "source."
+      source-latiss:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATCamera|source.lsst.sal.ATHeaderService|source.lsst.sal.ATOODS|source.lsst.sal.ATSpectrograph"
+        removePrefix: "source."
+      source-m1m3:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTM1M3"
+        removePrefix: "source."
+      source-m2:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTHexapod|source.lsst.sal.MTM2|source.lsst.sal.MTRotator"
+        removePrefix: "source."
+      source-obssys:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Scheduler|source.lsst.sal.Script|source.lsst.sal.ScriptQueue|source.lsst.sal.Watcher"
+        removePrefix: "source."
+      source-ocps:
+        enabled: true
+        topicsRegex: "source.lsst.sal.OCPS"
+        removePrefix: "source."
+      source-test:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Test"
+        removePrefix: "source."
+      source-pmd:
+        enabled: true
+        topicsRegex: "source.lsst.sal.PMD"
+        removePrefix: "source."
+      source-calsys:
+        enabled: true
+        topicsRegex: "source.lsst.sal.ATMonochromator|source.lsst.sal.ATWhiteLight|source.lsst.sal.CBP|source.lsst.sal.Electrometer|source.lsst.sal.FiberSpectrograph|source.lsst.sal.LinearStage|source.lsst.sal.TunableLaser"
+        removePrefix: "source."
+      source-mtaircompressor:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTAirCompressor"
+        removePrefix: "source."
+      source-authorize:
+        enabled: true
+        topicsRegex: "source.lsst.sal.Authorize"
+        removePrefix: "source."
+      source-genericcamera:
+        enabled: true
+        topicsRegex: "source.lsst.sal.GCHeaderService|source.lsst.sal.GenericCamera"
+        removePrefix: "source."
+      source-gis:
+        enabled: true
+        topicsRegex: "source.lsst.sal.GIS"
+        removePrefix: "source."
+      source-mtvms:
+        enabled: true
+        topicsRegex: "source.lsst.sal.MTVMS"
+        removePrefix: "source."
+      source-lasertracker:
+        enabled: true
+        topicsRegex: "source.lsst.sal.LaserTracker"
+        removePrefix: "source."
 
 kafdrop:
   ingress:
