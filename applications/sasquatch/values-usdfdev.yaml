@@ -1,6 +1,6 @@
 strimzi-kafka:
   mirrormaker2:
-    enabled: true
+    enabled: false
     source:
       bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
