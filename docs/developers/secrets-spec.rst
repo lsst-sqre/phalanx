@@ -69,4 +69,11 @@ The specification of the secret has the following keys:
 
     ``value`` must not be set if either ``copy`` or ``generate`` are set and either do not have an ``if`` condition or have a true ``if`` condition.
 
+``onepassword`` (object, optional)
+    Configuration describing how the secret is stored in 1Password in the cases where it is a static secret and 1Password is used as the static secrets store.
+
+    ``encoded`` (bool, optional, default: false)
+        If set to true, the secret stored in 1Password has an extra layer of base64-encoding that must be removed when retrieving the secret.
+        This is used for secrets that contain embedded newlines that must be preserved, since 1Password doesn't support newlines in field values.
+
 These files will be syntax-checked against a YAML schema in CI tests for the Phalanx repository.

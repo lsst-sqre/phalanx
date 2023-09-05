@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-import json
 import os
 import re
+from base64 import b64decode
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -19,6 +19,8 @@ from phalanx.models.gafaelfawr import Token
 
 from ..support.cli import run_cli
 from ..support.data import (
+    assert_json_dirs_match,
+    output_path,
     phalanx_test_path,
     read_input_static_secrets,
     read_output_data,
@@ -95,14 +97,12 @@ def test_onepassword_secrets(
     tmp_path: Path,
     mock_onepassword: MockOnepasswordClient,
 ) -> None:
-    input_path = phalanx_test_path()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("minikube")
     assert environment.onepassword
     vault_title = environment.onepassword.vault_title
     mock_onepassword.load_test_data(vault_title, "minikube")
-    with (input_path / "onepassword" / "minikube.yaml").open() as fh:
-        expected = yaml.safe_load(fh)
+    expected_path = output_path() / "minikube" / "onepassword"
 
     result = run_cli(
         "secrets", "onepassword-secrets", "minikube", str(tmp_path)
@@ -110,12 +110,7 @@ def test_onepassword_secrets(
     assert result.exit_code == 0
     assert result.output == ""
 
-    expected_files = {f"{k}.json" for k in expected}
-    output_files = {p.name for p in tmp_path.iterdir()}
-    assert expected_files == output_files
-    for path in tmp_path.iterdir():
-        with path.open() as fh:
-            assert json.load(fh) == expected[path.stem]
+    assert_json_dirs_match(tmp_path, expected_path)
 
 
 def test_schema() -> None:
@@ -204,15 +199,17 @@ def test_sync_onepassword(
     assert result.exit_code == 0
     assert result.output == read_output_data("minikube", "sync-output")
 
-    # Check that all static secrets were copied over correctly. A mapping to
-    # avoid periods in 1Password field names is required for one secret, so we
-    # have to reverse that.
+    # Check that all static secrets were copied over correctly.
     with (input_path / "onepassword" / "minikube.yaml").open() as fh:
         onepassword_secrets = yaml.safe_load(fh)
-    for application, values in onepassword_secrets.items():
-        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
+    for app_name, values in onepassword_secrets.items():
+        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{app_name}")
+        application = environment.applications[app_name]
         for key, value in values.items():
-            assert value == vault[key]
+            if application.secrets[key].onepassword.encoded:
+                assert b64decode(value.encode()).decode() == vault[key]
+            else:
+                assert value == vault[key]
 
 
 def test_sync_regenerate(
@@ -279,11 +276,4 @@ def test_vault_secrets(
     assert result.exit_code == 0
     assert result.output == ""
 
-    expected_files = {p.name for p in vault_input_path.iterdir()}
-    output_files = {p.name for p in tmp_path.iterdir()}
-    assert expected_files == output_files
-    for expected_path in vault_input_path.iterdir():
-        with expected_path.open() as fh:
-            expected = json.load(fh)
-        with (tmp_path / expected_path.name).open() as fh:
-            assert expected == json.load(fh)
+    assert_json_dirs_match(tmp_path, vault_input_path)
