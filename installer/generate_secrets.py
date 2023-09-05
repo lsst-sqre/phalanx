@@ -5,7 +5,6 @@ import json
 import logging
 import os
 import secrets
-import yaml
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -32,85 +31,31 @@ class SecretGenerator:
         will be regenerated.
     """
 
-    def __init__(self, environment, regenerate, environments_conf):
+    def __init__(self, environment, regenerate):
         self.secrets = defaultdict(dict)
         self.environment = environment
         self.regenerate = regenerate
-        self.environments_conf = environments_conf
 
     def generate(self):
         """Generate secrets for each component based on the `secrets`
         attribute, and regenerating secrets if applicable when the
         `regenerate` attribute is `True`.
         """
-        
-        self._argocd()
-        self._argo_sso_secret()
         self._pull_secret()
         self._rsp_alerts()
         self._butler_secret()
-
-        try:
-            if environments_conf["postgres"]["enabled"]:
-                self._postgres()
-        except KeyError:
-            logging.debug("postgres not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["tap"]["enabled"]:
-                self._tap()
-        except KeyError:
-            logging.debug("tap not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["nublado"]["enabled"]:
-                self._nublado()
-        except KeyError:
-            logging.debug("nublado not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["nublado2"]["enabled"]:
-                self._nublado2()
-        except KeyError:
-            logging.debug("nublado2 not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["mobu"]["enabled"]:
-                self._mobu()
-        except KeyError:
-            logging.debug("mobu not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["gafaelfawr"]["enabled"]:
-                self._gafaelfawr()
-        except KeyError:
-            logging.debug("gafaelfawr not enabled in environment config so not creating secret.")
-        
-        try:
-            if environments_conf["portal"]["enabled"]:
-                self._portal()
-        except KeyError:
-            logging.debug("portal not enabled in environment config so not creating secret.")  
-    
-        try:
-            if environments_conf["vo-cutouts"]["enabled"]:
-                self._vo_cutouts()
-        except KeyError:
-            logging.debug("vo_cutouts not enabled in environment config so not creating secret.")  
-
-        try:
-            if environments_conf["telegraf"]["enabled"]:
-                self._telegraf()
-        except KeyError:
-            logging.debug("telegraf not enabled in environment config so not creating secret.")
-
-        try:
-            if environments_conf["sherlock"]["enabled"]:
-                self._sherlock()
-        except KeyError:
-            logging.debug("sherlock not enabled in environment config so not creating secret.")
-
-        
+        self._argo_sso_secret()
+        self._postgres()
+        self._tap()
+        self._nublado()
+        self._nublado2()
+        self._mobu()
+        self._gafaelfawr()
+        self._argocd()
+        self._portal()
+        self._vo_cutouts()
+        self._telegraf()
+        self._sherlock()
 
         self.input_field("cert-manager", "enabled", "Use cert-manager? (y/n):")
         use_cert_manager = self.secrets["cert-manager"]["enabled"]
@@ -611,18 +556,10 @@ if __name__ == "__main__":
     else:
         logging.basicConfig()
 
-    absolute_path = os.path.dirname(__file__)
-    environments_folder_path = absolute_path.replace("installer", "environments")
-
-    conf_file = environments_folder_path + "/values-" + args.environment + ".yaml"
-    environments_conf = yaml.safe_load(Path(conf_file).read_text())
-
-
     if args.op:
         sg = OnePasswordSecretGenerator(args.environment, args.regenerate)
     else:
-        sg = SecretGenerator(args.environment, args.regenerate, environments_conf)
-
+        sg = SecretGenerator(args.environment, args.regenerate)
 
     sg.load()
     sg.generate()
