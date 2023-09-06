@@ -42,6 +42,11 @@ dependencies:
     version: 1.2.6
     repository: https://helm.influxdata.com/
   - name: kapacitor
+    alias: source-kapacitor
+    condition: source-kapacitor.enabled
+    version: 1.4.7
+    repository: https://helm.influxdata.com/
+  - name: kapacitor
     condition: kapacitor.enabled
     version: 1.4.7
     repository: https://helm.influxdata.com/
