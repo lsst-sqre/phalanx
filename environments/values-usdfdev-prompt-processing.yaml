@@ -11,3 +11,4 @@ applications:
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: true
   prompt-proto-service-lsstcomcam: true
+  vault-secrets-operator: false
