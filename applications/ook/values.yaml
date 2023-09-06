@@ -133,3 +133,32 @@ audit:
 
   # -- Affinity rules for Ook audit pods
   affinity: {}
+
+ingestUpdated:
+  # -- Enable the ingest-updated job
+  enabled: false
+
+  # -- Time window to look for updated documents (e.g. 1h, 2d, 3w). This must
+  # be set to a value greater than the cron schedule for the ingest-updated job.
+  window: "2d"
+
+  # -- Cron schedule string for ook audit job (UTC)
+  schedule: "15 3 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Resource limits and requests for Ook audit pods
+  resources: {}
+
+  # -- Annotations for Ook audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook audit pods
+  tolerations: []
+
+  # -- Affinity rules for Ook audit pods
+  affinity: {}
