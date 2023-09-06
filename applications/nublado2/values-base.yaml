@@ -14,7 +14,6 @@ jupyterhub:
     extraAnnotations:
       k8s.v1.cni.cncf.io/networks: "kube-system/dds"
   hub:
-    baseUrl: "/n2"
     db:
       upgrade: true
       url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
