@@ -82,7 +82,7 @@ kafka-connect-manager:
       test:
         enabled: true
         repairerConnector: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
         repairerConnector: true
