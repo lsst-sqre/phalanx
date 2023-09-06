@@ -98,6 +98,16 @@ Rubin Observatory's telemetry service.
 | source-influxdb.resources.requests.memory | string | `"96Gi"` |  |
 | source-influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | source-kafka-connect-manager | object | `{"enabled":false,"env":{"kafkaConnectUrl":"http://sasquatch-source-connect-api.sasquatch:8083"}}` | Override source-kafka-connect-manager configuration. |
+| source-kapacitor.enabled | bool | `false` | Enable Kapacitor. |
+| source-kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
+| source-kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
+| source-kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.6"}` | Kapacitor image tag. |
+| source-kapacitor.influxURL | string | `"http://sasquatch-influxdb-staging.sasquatch:8086"` | InfluxDB connection URL. |
+| source-kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
+| source-kapacitor.resources.limits.cpu | int | `4` |  |
+| source-kapacitor.resources.limits.memory | string | `"16Gi"` |  |
+| source-kapacitor.resources.requests.cpu | int | `1` |  |
+| source-kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
