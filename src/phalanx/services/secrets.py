@@ -9,7 +9,7 @@ from pathlib import Path
 import yaml
 from pydantic import SecretStr
 
-from ..exceptions import UnresolvedSecretsError
+from ..exceptions import NoOnepasswordConfigError, UnresolvedSecretsError
 from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import (
@@ -19,6 +19,7 @@ from ..models.secrets import (
     StaticSecrets,
 )
 from ..storage.config import ConfigStorage
+from ..storage.onepassword import OnepasswordStorage
 from ..storage.vault import VaultClient, VaultStorage
 from ..yaml import YAMLFoldedString
 
@@ -32,14 +33,20 @@ class SecretsService:
     ----------
     config_storage
         Storage object for the Phalanx configuration.
+    onepassword_storage
+        Storage object for 1Password.
     vault_storage
         Storage object for Vault.
     """
 
     def __init__(
-        self, config_storage: ConfigStorage, vault_storage: VaultStorage
+        self,
+        config_storage: ConfigStorage,
+        onepassword_storage: OnepasswordStorage,
+        vault_storage: VaultStorage,
     ) -> None:
         self._config = config_storage
+        self._onepassword = onepassword_storage
         self._vault = vault_storage
 
     def audit(
@@ -62,6 +69,8 @@ class SecretsService:
             Audit report as a text document.
         """
         environment = self._config.load_environment(env_name)
+        if not static_secrets:
+            static_secrets = self._get_onepassword_secrets(environment)
         vault_client = self._vault.get_vault_client(environment)
 
         # Retrieve all the current secrets from Vault and resolve all of the
@@ -123,12 +132,11 @@ class SecretsService:
         dict
             YAML template the user can fill out, as a string.
         """
-        secrets = self.list_secrets(env_name)
+        environment = self._config.load_environment(env_name)
         template: defaultdict[str, dict[str, dict[str, str | None]]]
         template = defaultdict(dict)
-        for secret in secrets:
-            static = not (secret.copy_rules or secret.generate or secret.value)
-            if static:
+        for application in environment.all_applications():
+            for secret in application.all_static_secrets():
                 template[secret.application][secret.key] = {
                     "description": YAMLFoldedString(secret.description),
                     "value": None,
@@ -151,8 +159,30 @@ class SecretsService:
         environment = self._config.load_environment(env_name)
         return environment.all_secrets()
 
+    def save_onepassword_secrets(self, env_name: str, path: Path) -> None:
+        """Generate JSON files of the 1Password secrets for an environment.
+
+        One file per application with secrets will be written to the provided
+        path. Each file will be named after the application with ``.json``
+        appended, and will contain the secret values for that application.
+        Secrets that are required but have no known value will be written as
+        null.
+        """
+        environment = self._config.load_environment(env_name)
+        onepassword_secrets = self._get_onepassword_secrets(environment)
+        if not onepassword_secrets:
+            msg = f"Environment {env_name} not configured to use 1Password"
+            raise NoOnepasswordConfigError(msg)
+        for app_name, values in onepassword_secrets.items():
+            app_secrets = {
+                k: v.value.get_secret_value() if v.value else None
+                for k, v in values.items()
+            }
+            with (path / f"{app_name}.json").open("w") as fh:
+                json.dump(app_secrets, fh, indent=2)
+
     def save_vault_secrets(self, env_name: str, path: Path) -> None:
-        """Generate JSON files containing the Vault secrets for an environment.
+        """Generate JSON files of the Vault secrets for an environment.
 
         One file per application with secrets will be written to the provided
         path. Each file will be named after the application with ``.json``
@@ -207,6 +237,8 @@ class SecretsService:
             Whether to delete unknown Vault secrets.
         """
         environment = self._config.load_environment(env_name)
+        if not static_secrets:
+            static_secrets = self._get_onepassword_secrets(environment)
         vault_client = self._vault.get_vault_client(environment)
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets()
@@ -274,6 +306,38 @@ class SecretsService:
                 vault_client.store_application_secret(application, values)
                 for key in sorted(to_delete):
                     print("Deleted Vault secret for", application, key)
+
+    def _get_onepassword_secrets(
+        self, environment: Environment
+    ) -> StaticSecrets | None:
+        """Get static secrets for an environment from 1Password.
+
+        Parameters
+        ----------
+        environment
+            Environment for which to get static secrets.
+
+        Returns
+        -------
+        dict of StaticSecret or None
+            Static secrets for this environment retrieved from 1Password, or
+            `None` if this environment doesn't use 1Password.
+
+        Raises
+        ------
+        NoOnepasswordCredentialsError
+            Raised if the environment uses 1Password but no 1Password
+            credentials were available in the environment.
+        """
+        if not environment.onepassword:
+            return None
+        onepassword = self._onepassword.get_onepassword_client(environment)
+        query = {}
+        for application in environment.all_applications():
+            query[application.name] = [
+                s.key for s in application.all_static_secrets()
+            ]
+        return onepassword.get_secrets(query)
 
     def _resolve_secrets(
         self,

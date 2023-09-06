@@ -72,7 +72,6 @@ jupyterhub:
     every: 300
     maxAge: 2160000
   hub:
-    baseUrl: "/n3"
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.ls.lsst.org/nublado3"

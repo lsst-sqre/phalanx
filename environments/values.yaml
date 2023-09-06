@@ -100,6 +100,9 @@ applications:
   # deprecated). This should not be used for new environments.
   nublado2: false
 
+  # -- Enable the onepassword-connect-dev application
+  onepassword-connect-dev: false
+
   # -- Enable the ook application
   ook: false
 

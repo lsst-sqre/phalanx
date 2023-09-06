@@ -253,6 +253,11 @@ chronograf:
     PUBLIC_URL: https://base-lsp.lsst.codes
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/base.json
 
+source-kapacitor:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
+
 kapacitor:
   persistence:
     storageClass: rook-ceph-block

@@ -1,6 +1,9 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
 fqdn: data-dev.lsst.cloud
 name: idfdev
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password/idfdev"
+  vaultTitle: "RSP data-dev.lsst.cloud"
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
 

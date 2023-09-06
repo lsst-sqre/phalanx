@@ -19,6 +19,13 @@ So, if you want to make any changes to a ``VaultSecret``'s data, you'll need to:
 2. Run the `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__ script, as described in :ref:`dev-add-onepassword`.
 3. Wait a few minutes for automatic reconciliation
 
+.. note::
+
+   In the future, you will be able to run :command:`phalanx secrets sync` instead of :command:`installer/update_secrets.sh` to update the secrets in Vault.
+   This support is currently being developed.
+
+These steps may have to be done for you by a Phalanx environment administrator depending on how permissions in Vault and any underlying secrets store are handled for your environment.
+
 Forcing reconciliation
 ======================
 
