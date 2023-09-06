@@ -279,7 +279,7 @@ Rubin Observatory's telemetry service.
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | strimzi-kafka.kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
@@ -301,7 +301,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
-| strimzi-kafka.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| strimzi-kafka.kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
