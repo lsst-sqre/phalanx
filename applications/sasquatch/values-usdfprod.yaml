@@ -57,7 +57,7 @@ kafka-connect-manager:
       eas:
         enabled: true
         repairerConnector: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast|.*WeatherStation"
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
       latiss:
         enabled: true
         repairerConnector: true
