@@ -103,6 +103,10 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: true
         topicsRegex: ".*GIS"
+      mtvms:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTVMS"
       lasertracker:
         enabled: true
         repairerConnector: true
