@@ -53,4 +53,6 @@ prompt-proto-service:
     idleTimeout: 900
     responseStartTimeout: 900
 
+  fullnameOverride: "prompt-proto-service-lsstcomcam"
+
   vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcomcam"

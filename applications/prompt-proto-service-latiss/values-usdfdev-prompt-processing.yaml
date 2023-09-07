@@ -52,4 +52,6 @@ prompt-proto-service:
     db: lsstdb1
     user: rubin
 
+  fullnameOverride: "prompt-proto-service-latiss"
+
   vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"
