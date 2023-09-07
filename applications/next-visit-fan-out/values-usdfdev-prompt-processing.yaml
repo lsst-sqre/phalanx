@@ -1,0 +1,23 @@
+# Default values for usdf dev next visit fan out.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+knative:
+  hscUrl: http://prompt-proto-service.prompt-proto-service/next-visit
+  latissUrl: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
+  lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service/next-visit
+  lsstcamUrl: http://prompt-proto-service.prompt-proto-service/next-visit
+
+kafka:
+  schemaRegistryUrl: http://10.99.65.182:8081
+  sasquatchAddress: 10.96.224.141:9094
+  consumerGroup: test-group-3
+  nextVisitTopic: test.next-visit
+
+image:
+  repository: us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: v1.70
+
+vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/next-visit-fan-out"

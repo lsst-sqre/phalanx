@@ -7,6 +7,7 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+  next-visit-fan-out: true
   prompt-proto-service-hsc: true
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: true

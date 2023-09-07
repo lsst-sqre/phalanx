@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "next-visit-fan-out.fullname" . }}
+  labels:
+    {{- include "next-visit-fan-out.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "next-visit-fan-out.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "next-visit-fan-out.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: LATISS_KNATIVE_SERVING_URL
+              value: {{ .Values.knative.latissUrl }}
+            - name: HSC_KNATIVE_SERVING_URL
+              value: {{ .Values.knative.hscUrl }}
+            - name: LSST_CAM_KNATIVE_SERVING_URL
+              value: {{ .Values.knative.lsstcamUrl }}
+            - name: DETECTOR_CONFIG_FILE
+              value: {{ .Values.detectorConfigFile }}
+            - name: KAFKA_SCHEMA_REGISTRY_URL
+              value: {{ .Values.kafka.schemaRegistryUrl }}
+            - name: KAFKA_CLUSTER
+              value: {{ .Values.kafka.sasquatchAddress }}
+            - name: CONSUMER_GROUP
+              value: {{ .Values.kafka.consumerGroup }}
+            - name: NEXT_VISIT_TOPIC
+              value: {{ .Values.kafka.nextVisitTopic }}
+            - name: OFFSET
+              value: {{ .Values.kafka.offset }}
+            - name: SASL_MECHANISM
+              value: {{ .Values.kafka.saslMechamism }}
+            - name: SECURITY_PROTOCOL
+              value: {{ .Values.kafka.securityProtocol }}
+            - name: SASL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  key: kafka_pp_sasl_username
+                  name: {{ template "next-visit-fan-out.fullname" . }}-secrets
+            - name: SASL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: kafka_pp_sasl_password
+                  name: {{ template "next-visit-fan-out.fullname" . }}-secrets
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+      volumes:
+        - name: kafka-sasl-prompt-prompt-processing
+          secret:
+            secretName: kafka-sasl-prompt-prompt-processing
