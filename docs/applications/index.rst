@@ -76,6 +76,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Prompt Processing
 
+   next-visit-fan-out/index
    prompt-proto-service-hsc/index
    prompt-proto-service-latiss/index
    prompt-proto-service-lsstcam/index
