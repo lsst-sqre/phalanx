@@ -15,9 +15,9 @@ kafka:
   nextVisitTopic: test.next-visit
 
 image:
-  repository: us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout
+  repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v1.70
+  tag: v1.0.1
 
 vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/next-visit-fan-out"
