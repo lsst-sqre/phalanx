@@ -1,0 +1,17 @@
+{{ if .Values.mockdb.enabled -}}
+kind: Service
+apiVersion: v1
+metadata:
+  name: "mock-db"
+  labels:
+    {{- include "cadc-tap.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: {{ .Values.mockdb.port }}
+      targetPort: {{ .Values.mockdb.port }}
+  selector:
+    {{- include "cadc-tap.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: "mock-db"
+{{- end }}

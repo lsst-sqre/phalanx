@@ -1,0 +1,231 @@
+# Default values for cadc-tap.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: "cadc-tap"
+
+# -- Number of pods to start
+replicaCount: 1
+
+# Settings for the ingress rules.
+ingress:
+  # -- Additional annotations to use for endpoints that allow anonymous
+  # access, such as `/capabilities` and `/availability`
+  anonymousAnnotations: {}
+
+  # -- Additional annotations to use for endpoints that are authenticated,
+  # such as `/sync`, `/async`, and `/tables`
+  authenticatedAnnotations: {}
+
+  # -- External path to the tap service, the path eventually gets rewritten
+  # by tomcat.
+  path: ""
+
+# -- Resource limits and requests for the TAP pod
+resources:
+  requests:
+    cpu: 2.0
+    memory: "2G"
+  limits:
+    cpu: 8.0
+    memory: "32G"
+
+# -- Annotations for the TAP pod
+podAnnotations: {}
+
+# -- Node selector rules for the TAP pod
+nodeSelector: {}
+
+# -- Tolerations for the TAP pod
+tolerations: []
+
+# -- Affinity rules for the TAP pod
+affinity: {}
+
+# -- Path to the Vault secret (`secret/k8s_operator/<host>/tap`, for example)
+# @default -- None, must be set
+vaultSecretsPath: ""
+
+config:
+  # -- What type of backend are we connecting to?
+  # @default -- None, must be set to "pg" or "qserv"
+  backend: ""
+
+  pg:
+    # -- Host to connect to
+    # @default -- None, must be set if backend is pg
+    host: ""
+
+    # -- Database to connect to
+    # @default -- None, must be set if backend is pg
+    database: ""
+
+    # -- Username to connect with
+    # @default -- None, must be set if backend is pg
+    username: ""
+
+    image:
+      # -- tap image to use
+      repository: "ghcr.io/lsst-sqre/tap-postgres-service"
+
+      # -- Pull policy for the tap image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of tap image to use
+      # @default -- Latest release
+      tag: "1.12"
+
+  qserv:
+    # -- QServ hostname:port to connect to
+    # @default -- `"mock-db:3306"` (the mock QServ)
+    host: "mock-db:3306"
+
+    image:
+      # -- tap image to use
+      repository: "ghcr.io/lsst-sqre/lsst-tap-service"
+
+      # -- Pull policy for the tap image
+      pullPolicy: "IfNotPresent"
+
+      # -- Tag of tap image to use
+      # @default -- Latest release
+      tag: "2.0.0"
+
+  # -- Address to a MySQL database containing TAP schema data
+  tapSchemaAddress: "cadc-tap-schema-db:3306"
+
+  # -- Datalink payload URL
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
+
+  # -- Name of GCS bucket in which to store results
+  # @default -- The common GCS bucket
+  gcsBucket: "async-results.lsst.codes"
+
+  # -- Base URL for results stored in GCS bucket
+  # @default -- The common GCS bucket
+  gcsBucketUrl: "https://tap-files.lsst.codes"
+
+  # -- GCS bucket type (GCS or S3)
+  # @default -- GCS
+  gcsBucketType: "GCS"
+
+  # -- Java heap size, which will set the maximum size of the heap. Otherwise
+  # Java would determine it based on how much memory is available and black
+  # maths.
+  jvmMaxHeapSize: 31G
+
+  # -- Vault secret name, this is appended to the global path to find the
+  # vault secrets associated with this deployment.
+  vaultSecretName: ""
+
+mockdb:
+  # -- Spin up a container to pretend to be the database.
+  enabled: false
+
+  image:
+    # -- Mock database image to use
+    repository: "ghcr.io/lsst-sqre/lsst-tap-mock-qserv"
+
+    # -- Pull policy for the mock database image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of mock db image to use
+    # @default -- Version of TAP image
+    tag: ""
+
+  # -- Port to connect to the mock-db on
+  port: 3306
+
+  # -- Resource limits and requests for the mock db pod
+  resources: {}
+
+  # -- Annotations for the mock db pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the mock db pod
+  nodeSelector: {}
+
+  # -- Tolerations for the mock db pod
+  tolerations: []
+
+  # -- Affinity rules for the mock db pod
+  affinity: {}
+
+tapSchema:
+  image:
+    # -- TAP schema image to ue. This must be overridden by each environment
+    # with the TAP schema for that environment.
+    repository: "lsstsqre/tap-schema-mock"
+
+    # -- Pull policy for the TAP schema image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of TAP schema image
+    tag: "2.1"
+
+  # -- Resource limits and requests for the TAP schema database pod
+  resources: {}
+
+  # -- Annotations for the TAP schema database pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the TAP schema database pod
+  nodeSelector: {}
+
+  # -- Tolerations for the TAP schema database pod
+  tolerations: []
+
+  # -- Affinity rules for the TAP schema database pod
+  affinity: {}
+
+uws:
+  image:
+    # -- UWS database image to use
+    repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
+
+    # -- Pull policy for the UWS database image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of UWS database image to use
+    # @default -- Version of QServ TAP image
+    tag: "1.4.5"
+
+  # -- Resource limits and requests for the UWS database pod
+  resources:
+    requests:
+      cpu: 0.25
+      memory: "1G"
+    limits:
+      cpu: 2.0
+      memory: "4G"
+
+  # -- Annotations for the UWS databse pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the UWS database pod
+  nodeSelector: {}
+
+  # -- Tolerations for the UWS database pod
+  tolerations: []
+
+  # -- Affinity rules for the UWS database pod
+  affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

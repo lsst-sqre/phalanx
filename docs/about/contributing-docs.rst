@@ -2,36 +2,15 @@
 Contributing to the documentation
 #################################
 
-This documentation is a Sphinx_ project hosted out of the ``docs`` directory of the `phalanx repository`_ on GitHub.
+This documentation is a Sphinx_ project hosted out of the :file:`docs` directory of the `phalanx repository`_ on GitHub.
 You can contribute to this documentation by editing the source files in a clone of this repository and submitting a pull request on GitHub.
 This page provides the basic steps.
 
 Set up for documentation development
 ====================================
 
-Cloning phalanx
----------------
-
-Start by cloning Phalanx into your own editing environment.
-Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repository directly and create a ticket branch, per the `Data Management workflow guide`_.
-Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`__.
-
-Set up pre-commit
------------------
-
-Phalanx uses Pre-commit_ to lint files and, in some cases, automatically reformat files.
-Follow the instructions in :doc:`precommit-and-helm-docs`.
-
-Initialize the development environment
---------------------------------------
-
-From the ``phalanx`` directory, initialize your environment:
-
-.. code-block:: bash
-
-    make init
-
-This steps installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files (see :doc:`precommit-and-helm-docs`).
+Follow the steps at :ref:`about-dev-setup` to set up a Phalanx development environment.
+This installs tox_, the tooling for builds with isolated Python environments, and pre-commit_, a tool for linting and formatting files.
 
 Compiling the documentation
 ===========================
@@ -64,9 +43,9 @@ Submitting a pull request and sharing documentation drafts
 
 Members of the `lsst-sqre/phalanx`_ repository should submit pull requests following the `Data Management workflow guide`_.
 Note that GitHub Actions builds the documentation and uploads a draft edition of the documentation to the web.
-You can find your branch's development edition at https://phalanx.lsst.io/v.
+You can find your branch's development edition at `the list of available versions <https://phalanx.lsst.io/v/index.html>`__.
 
-If you are submitting a GitHub pull request from a fork, the documentation will build as a check, however the draft won't upload for public staging.
+If you are submitting a GitHub pull request from a fork, the documentation will build as a check, but the draft won't upload for public staging.
 
 More information on writing documentation
 =========================================

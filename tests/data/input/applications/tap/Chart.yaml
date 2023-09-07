@@ -1,0 +1,8 @@
+apiVersion: v2
+name: cadc-tap
+version: 1.0.0
+description: IVOA TAP service
+sources:
+  - https://github.com/lsst-sqre/lsst-tap-service
+  - https://github.com/opencadc/tap
+appVersion: 1.4.5

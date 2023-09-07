@@ -1,0 +1,21 @@
+Updated Vault secret for argocd admin.plaintext_password
+Updated Vault secret for argocd server.secretkey
+Updated Vault secret for argocd admin.password
+Updated Vault secret for argocd admin.passwordMtime
+Updated Vault secret for gafaelfawr bootstrap-token
+Updated Vault secret for gafaelfawr database-password
+Updated Vault secret for gafaelfawr redis-password
+Updated Vault secret for gafaelfawr session-secret
+Updated Vault secret for gafaelfawr signing-key
+Updated Vault secret for gafaelfawr slack-webhook
+Updated Vault secret for nublado aws-credentials.ini
+Updated Vault secret for nublado butler-gcs-idf-creds.json
+Updated Vault secret for nublado butler-hmac-idf-creds.json
+Updated Vault secret for nublado cryptkeeper_key
+Updated Vault secret for nublado crypto_key
+Updated Vault secret for nublado hub_db_password
+Updated Vault secret for nublado postgres-credentials.txt
+Updated Vault secret for nublado proxy_token
+Created Vault secret for portal
+Updated Vault secret for postgres nublado3_password
+Updated Vault secret for postgres root_password

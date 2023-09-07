@@ -1,0 +1,70 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ include "giftless.fullname" . }}
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+config:
+  baseUrl: "https://{{ .Values.ingress.hostname.readonly }}"
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+    name: {{ include "giftless.fullname" . }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readonly | quote }}
+        secretName: tls
+    rules:
+      - host: {{ .Values.ingress.hostname.readonly | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ include "giftless.fullname" . }}
+                  port:
+                    number: 5000
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "giftless.fullname" . }}-rw
+  labels:
+    {{- include "giftless.labels" . | nindent 4 }}
+config:
+  baseUrl: "https://{{ .Values.ingress.hostname.readwrite }}"
+  scopes:
+    all:
+      - "write:git-lfs"
+template:
+  metadata:
+    name: {{ template "giftless.fullname" . }}-rw
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ .Values.ingress.hostname.readwrite | quote }}
+        secretName: tls-rw
+    rules:
+      - host: {{ .Values.ingress.hostname.readwrite | quote }}
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ template "giftless.fullname" . }}-rw
+                  port:
+                    number: 5000

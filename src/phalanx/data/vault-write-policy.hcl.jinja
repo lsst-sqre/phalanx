@@ -1,0 +1,21 @@
+path "secret/data/{{ path }}" {
+  capabilities = ["create", "delete", "read", "update"]
+}
+path "secret/data/{{ path }}/+" {
+  capabilities = ["create", "delete", "read", "update"]
+}
+path "secret/metadata/{{ path }}" {
+  capabilities = ["delete", "list", "read", "update"]
+}
+path "secret/metadata/{{ path }}/+" {
+  capabilities = ["delete", "list", "read", "update"]
+}
+path "secret/delete/{{ path }}/+" {
+  capabilities = ["update"]
+}
+path "secret/destroy/{{ path }}/+" {
+  capabilities = ["update"]
+}
+path "secret/undelete/{{ path }}/+" {
+  capabilities = ["update"]
+}

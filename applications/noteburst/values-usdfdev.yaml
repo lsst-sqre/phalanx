@@ -1,0 +1,15 @@
+image:
+  pullPolicy: Always
+
+config:
+  logLevel: "DEBUG"
+  worker:
+    workerCount: 1
+    identities:
+      - username: "bot-noteburst01"
+      - username: "bot-noteburst02"
+
+# Use SSD for Redis storage.
+redis:
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"

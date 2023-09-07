@@ -1,0 +1,30 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "nublado-controller-files"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  delegate:
+    internal:
+      service: "nublado"
+      scopes: []
+template:
+  metadata:
+    name: "nublado-controller-files"
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/files"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80

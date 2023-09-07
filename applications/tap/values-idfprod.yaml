@@ -1,28 +1,8 @@
-resources:
-  requests:
-    cpu: 2.0
-    memory: "2G"
-  limits:
-    cpu: 8.0
-    memory: "32G"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfprod-tap"
 
-replicaCount: 2
-
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
-  jvmMaxHeapSize: "31G"
-
-qserv:
-  host: "10.140.1.211:4040"
-  mock:
-    enabled: false
-
-uws:
-  resources:
-    requests:
-      cpu: 0.25
-      memory: "1G"
-    limits:
-      cpu: 2.0
-      memory: "4G"
+  config:
+    qserv:
+      host: "10.140.1.211:4040"

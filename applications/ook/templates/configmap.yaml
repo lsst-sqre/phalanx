@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "ook.fullname" . }}
+  labels:
+    {{- include "ook.labels" . | nindent 4 }}
+data:
+  SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  SAFIR_PATH_PREFIX: {{ .Values.ingress.path | quote }}
+  SAFIR_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  SAFIR_PROFILE: "production"
+  OOK_REGISTRY_URL: {{ .Values.config.registryUrl | quote }}
+  OOK_SUBJECT_SUFFIX: {{ .Values.config.subjectSuffix | quote }}
+  OOK_SUBJECT_COMPATIBILITY: {{ .Values.config.subjectCompatibility | quote }}
+  OOK_INGEST_KAFKA_TOPIC: {{ .Values.config.topics.ingest | quote }}
+  ALGOLIA_DOCUMENT_INDEX: {{ .Values.config.algolia.documentIndex | quote }}

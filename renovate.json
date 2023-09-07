@@ -1,9 +1,17 @@
 {
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
-  "prConcurrentLimit": 5,
+  "configMigration": true,
+  "packageRules": [
+    {
+      "matchPackageNames": ["lsstsqre/tap-schema-mock"],
+      "allowedVersions": "<10"
+    }
+  ],
+  "rebaseWhen": "conflicted",
   "schedule": [
     "before 6am on Monday"
-  ]
+  ],
+  "timezone": "America/Los_Angeles"
 }

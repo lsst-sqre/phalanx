@@ -1,0 +1,45 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: ook
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  template:
+      secret:
+        metadata:
+          annotations:
+            replicator.v1.mittwald.de/replication-allowed: "true"
+            replicator.v1.mittwald.de/replication-allowed-namespaces: "ook"
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "ook"
+          patternType: literal
+        operations:
+          - "Read"
+        host: "*"
+      - resource:
+          type: topic
+          name: "lsst.square-events.ook.ingest"
+          patternType: literal
+        operations:
+          - "Describe"
+          - "Read"
+          - "Write"
+        host: "*"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.app.mention"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+        host: "*"

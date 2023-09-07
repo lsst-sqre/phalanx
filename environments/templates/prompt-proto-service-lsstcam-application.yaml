@@ -1,0 +1,28 @@
+{{- if (index .Values "applications" "prompt-proto-service-lsstcam") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prompt-proto-service-lsstcam
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: argocd
+    syncOptions:
+    - CreateNamespace=true
+  destination:
+    namespace: prompt-proto-service-lsstcam
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: applications/prompt-proto-service-lsstcam
+    repoURL: {{ .Values.repoURL }}
+    targetRevision: {{ .Values.targetRevision }}
+    helm:
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

@@ -47,3 +47,18 @@ spec:
                 port:
                   number: 8080
           {{- end }}
+    {{- $context := . }}
+    {{- with $context.Values.ingress.additionalHosts }}
+    {{- range . }}
+    - host: {{ . | quote }}
+      http:
+        paths:
+          - path: "/auth"
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ template "gafaelfawr.fullname" $context }}
+                port:
+                  number: 8080
+    {{- end }}
+    {{- end }}

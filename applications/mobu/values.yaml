@@ -30,15 +30,11 @@ config:
   # and disable structured JSON logging.
   debug: false
 
-  # -- If set to true, do not configure mobu to send alerts to Slack.
-  disableSlackAlerts: false
+  # -- Whether to send alerts and status to Slack.
+  slackAlerts: true
 
   # -- Prefix for mobu's API routes.
   pathPrefix: "/mobu"
-
-  # -- Whether to use cachemachine. Set to false on environments using the
-  # Nublado lab controller.
-  useCachemachine: true
 
 # -- Resource limits and requests for the mobu frontend pod
 resources: {}

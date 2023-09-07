@@ -5,7 +5,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: "3.3.1"
+  version: "3.5.1"
   # -- Number of Kafka broker replicas to run.
   replicas: 3
   storage:
@@ -26,6 +26,19 @@ kafka:
     replica.fetch.max.bytes: 10485760
     # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
     replica.lag.time.max.ms: 120000
+
+  listeners:
+    plain:
+      # -- Whether internal plaintext listener is enabled.
+      enabled: true
+
+    tls:
+      # -- Whether internal TLS listener is enabled.
+      enabled: true
+
+    external:
+      # -- Whether external listener is enabled.
+      enabled: true
 
   externalListener:
     tls:
@@ -61,6 +74,21 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
+  # -- Affinity for Kafka pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - kafka
+        topologyKey: "kubernetes.io/hostname"
+
+  # -- Tolerations for Kafka broker pod assignment.
+  tolerations: []
+
 zookeeper:
   # -- Number of Zookeeper replicas to run.
   replicas: 3
@@ -70,9 +98,26 @@ zookeeper:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
 
+  # -- Affinity for Zookeeper pod assignment.
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: "app.kubernetes.io/name"
+            operator: In
+            values:
+            - zookeeper
+        topologyKey: "kubernetes.io/hostname"
+
+  # -- Tolerations for Zookeeper pod assignment.
+  tolerations: []
+
 connect:
+  # -- Enable Kafka Connect.
+  enabled: true
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: lsstsqre/strimzi-0.34.0-kafka-3.3.1:1.1.0
+  image: ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655
   # -- Number of Kafka Connect replicas to run.
   replicas: 3
 
@@ -83,7 +128,32 @@ registry:
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
 superusers:
-  - kafka-admin
+- kafka-admin
+
+users:
+  replicator:
+    # -- Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters)
+    enabled: false
+
+  tsSalKafka:
+    # -- Enable user ts-salkafka.
+    enabled: true
+
+  kafdrop:
+    # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
+    enabled: true
+
+  telegraf:
+    # -- Enable user telegraf (deployed by parent Sasquatch chart)
+    enabled: true
+
+  promptProcessing:
+    # -- Enable user prompt-processing
+    enabled: true
+
+  kafkaConnectManager:
+    # -- Enable user kafka-connect-manager
+    enabled: true
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster.
@@ -93,3 +163,20 @@ mirrormaker2:
     bootstrapServer: ""
     # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
     topicsPattern: "registry-schemas, lsst.sal.*"
+  replication:
+    policy:
+      # -- Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used.
+      # @default -- ""
+      separator: ""
+      # -- Replication policy.
+      # @default -- IdentityReplicationPolicy
+      class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+  sourceRegistry:
+    # -- Whether to deploy another Schema Registry for the schemas replicated from the source cluster.
+    enabled: false
+    # -- Name of the topic Schema Registry topic replicated from the source cluster
+    schemaTopic: "source.registry-schemas"
+  sourceConnect:
+    # -- Whether to deploy another Connect cluster for topics replicated from the source cluster.
+    # Requires the sourceRegistry enabled.
+    enabled: false

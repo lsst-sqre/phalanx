@@ -10,6 +10,8 @@ strimzi-registry-operator:
   operatorNamespace: sasquatch
 
 influxdb:
+  # -- Enable InfluxDB.
+  enabled: true
   # -- InfluxDB image tag.
   image:
     tag: "1.8.10"
@@ -40,6 +42,7 @@ influxdb:
   config:
     data:
       cache-max-memory-size: 0
+      # Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
       trace-logging-enabled: true
     http:
@@ -64,14 +67,142 @@ influxdb:
     #   init.iql: |+
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 96Gi
+      cpu: 8
+    limits:
+      memory: 96Gi
+      cpu: 8
+
+influxdb-staging:
+  # -- Enable InfluxDB staging deployment.
+  enabled: false
+  # -- InfluxDB image tag.
+  image:
+    tag: "1.8.10"
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
+    size: 1Ti
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: sasquatch
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    className: "nginx"
+    path: /influxdb-staging(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
+    http:
+      enabled: true
+      flux-enabled: true
+      auth-enabled: true
+      max-row-limit: 0
+    coordinator:
+      write-timeout: "1h"
+      max-concurrent-queries: 0
+      query-timeout: "0s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+    logging:
+      level: "debug"
+  initScripts:
+    # -- Enable InfluxDB custom initialization script.
+    enabled: false
+    # scripts:
+    # # -- InfluxDB custom initialization script.
+    #   init.iql: |+
+  resources:
+    requests:
+      memory: 96Gi
+      cpu: 8
+    limits:
+      memory: 96Gi
+      cpu: 8
+
+source-influxdb:
+  # -- Enable InfluxDB staging deployment.
+  enabled: false
+  # -- InfluxDB image tag.
+  image:
+    tag: "1.8.10"
+  persistence:
+    # -- Enable persistent volume claim.
+    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    enabled: true
+    # -- Persistent volume size.
+    # @default 1Ti for teststand deployments
+    size: 1Ti
+  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+  setDefaultUser:
+    enabled: true
+    user:
+      existingSecret: sasquatch
+  # -- InfluxDB ingress configuration.
+  # @default -- disabled
+  ingress:
+    enabled: false
+    tls: false
+    hostname: ""
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /$2
+    className: "nginx"
+    path: /source-influxdb(/|$)(.*)
+  # -- Override InfluxDB configuration.
+  # See https://docs.influxdata.com/influxdb/v1.8/administration/config
+  config:
+    data:
+      cache-max-memory-size: 0
+      wal-fsync-delay: "100ms"
+      trace-logging-enabled: true
+    http:
+      enabled: true
+      flux-enabled: true
+      auth-enabled: true
+      max-row-limit: 0
+    coordinator:
+      write-timeout: "1h"
+      max-concurrent-queries: 0
+      query-timeout: "0s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+    logging:
+      level: "debug"
+  initScripts:
+    # -- Enable InfluxDB custom initialization script.
+    enabled: false
+    # scripts:
+    # # -- InfluxDB custom initialization script.
+    #   init.iql: |+
+  resources:
+    requests:
+      memory: 96Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
 
 influxdb2:
   enabled: false
+  image:
+    tag: 2.7.1-alpine
   adminUser:
     # -- Admin default organization.
     organization: "default"
@@ -112,14 +243,20 @@ influxdb2:
         influx bucket create --name telegraf-kafka-consumer --org default
   resources:
     requests:
-      memory: 1Gi
-      cpu: 1
+      memory: 16Gi
+      cpu: 8
     limits:
       memory: 96Gi
       cpu: 8
 
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
+
+# -- Override source-kafka-connect-manager configuration.
+source-kafka-connect-manager:
+  enabled: false
+  env:
+    kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
 # -- Override telegraf-kafka-consumer configuration.
 telegraf-kafka-consumer:
@@ -130,10 +267,12 @@ rest-proxy:
   enabled: false
 
 chronograf:
+  # -- Enable Chronograf.
+  enabled: true
   # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"
-    tag: 1.10.1
+    tag: 1.9.4
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
@@ -155,6 +294,32 @@ chronograf:
   envFromSecret: "sasquatch"
   resources:
     requests:
+      memory: 4Gi
+      cpu: 1
+    limits:
+      memory: 64Gi
+      cpu: 4
+
+source-kapacitor:
+  # -- Enable Kapacitor.
+  enabled: false
+  # -- Kapacitor image tag.
+  image:
+    repository: kapacitor
+    tag: 1.6.6
+  # -- Chronograf data persistence configuration.
+  persistence:
+    enabled: true
+    size: 100Gi
+  # -- InfluxDB connection URL.
+  influxURL: http://sasquatch-influxdb-staging.sasquatch:8086
+  # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
+  existingSecret: sasquatch
+  # -- Kapacitor environment variables.
+  envVars:
+    KAPACITOR_SLACK_ENABLED: true
+  resources:
+    requests:
       memory: 1Gi
       cpu: 1
     limits:
@@ -162,6 +327,8 @@ chronograf:
       cpu: 4
 
 kapacitor:
+  # -- Enable Kapacitor.
+  enabled: true
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
@@ -185,6 +352,10 @@ kapacitor:
       memory: 16Gi
       cpu: 4
 
+kafdrop:
+  # -- Enable Kafdrop.
+  enabled: true
+
 bucketmapper:
   # -- image for monitoring-related cronjobs
   image:
@@ -192,6 +363,10 @@ bucketmapper:
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
     tag: 0.1.23
+
+squareEvents:
+  # -- Enable the Square Events subchart with topic and user configurations.
+  enabled: false
 
 global:
   # -- Base URL for the environment

@@ -18,7 +18,14 @@ alert-stream-broker:
           host: alert-stream-int-broker-1.lsst.cloud
         - ip: "35.238.84.221"
           host: alert-stream-int-broker-2.lsst.cloud
+        # - ip: "35.184.182.182"
+        #   host: alert-stream-int-broker-3.lsst.cloud
+        # - ip: "35.232.191.72"
+        #   host: alert-stream-int-broker-4.lsst.cloud
+        # - ip: "34.27.122.46"
+        #   host: alert-stream-int-broker-5.lsst.cloud
 
+    replicas: 3
 
     storage:
       size: 1500Gi
@@ -83,7 +90,7 @@ alert-stream-schema-registry:
 alert-stream-simulator:
   clusterPort: 9092 # internal TLS listener
   replayTopicName: "alerts-simulated"
-  replayTopicPartitions: 60
+  replayTopicPartitions: 300
   staticTopicName: "alerts-static"
   image:
     tag: v1.2.1

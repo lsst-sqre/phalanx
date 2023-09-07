@@ -178,6 +178,10 @@ jupyterhub:
       enabled: false
 
 config:
+  # -- Whether to use the cluster-internal PostgreSQL server instead of an
+  # external server. This is not used directly by the Nublado chart, but
+  # controls how the database password is managed.
+  internalDatabase: true
   # -- base_url must be set in each instantiation of this chart to the URL of
   # the primary ingress.  It's used to construct API requests to the
   # authentication service (which should go through the ingress).
@@ -200,13 +204,13 @@ config:
   sizes:
     - name: Small
       cpu: 1
-      ram: 3072M
+      ram: 4096M
     - name: Medium
       cpu: 2
-      ram: 6144M
+      ram: 8192M
     - name: Large
       cpu: 4
-      ram: 12288M
+      ram: 16384M
   # -- Volumes to use for a particular instance
   volumes: []
   # -- Where to mount volumes for a particular instance

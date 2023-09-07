@@ -1,0 +1,164 @@
+# Default values for squarebot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#
+# Global parameters will be set by parameters injected by Argo CD and should
+# not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+# -- Number of API pods to run
+replicaCount: 1
+
+image:
+  # -- Squarebot image repository
+  repository: ghcr.io/lsst-sqre/ook
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Tag of the image
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+serviceAccount:
+  # -- Specifies whether a service account should be created
+  create: true
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+  # The name of the service account to use.
+  # @default -- Generated using the fullname template
+  name: ""
+
+# -- Annotations for API and worker pods
+podAnnotations: {}
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Path prefix where Squarebot is hosted
+  path: "/ook"
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config:
+  # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  logLevel: "INFO"
+
+  # -- Cluster URL for the Confluent Schema Registry
+  registryUrl: "http://sasquatch-schema-registry.sasquatch:8081"
+
+  # -- Schema subject suffix. Should be empty for production but can be set
+  # to a value to create unique subjects in the Confluent Schema Registry
+  # for testing.
+  subjectSuffix: ""
+
+  # -- Schema subject compatibility.
+  subjectCompatibility: "FORWARD"
+
+  topics:
+    # -- Kafka topic name for ingest events
+    ingest: "lsst.square-events.ook.ingest"
+
+  algolia:
+    # -- Name of the Algolia index for documents
+    documents_index: "documents_dev"
+
+audit:
+  # -- Enable the audit job
+  enabled: true
+
+  # -- Cron schedule string for ook audit job (UTC)
+  schedule: "15 2 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Reingest missing documents
+  reingest: true
+
+  # -- Resource limits and requests for Ook audit pods
+  resources: {}
+
+  # -- Annotations for Ook audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook audit pods
+  tolerations: []
+
+  # -- Affinity rules for Ook audit pods
+  affinity: {}
+
+ingestUpdated:
+  # -- Enable the ingest-updated job
+  enabled: false
+
+  # -- Time window to look for updated documents (e.g. 1h, 2d, 3w). This must
+  # be set to a value greater than the cron schedule for the ingest-updated job.
+  window: "2d"
+
+  # -- Cron schedule string for ook audit job (UTC)
+  schedule: "15 3 * * *"
+
+  # -- Time (second) to keep a finished job before cleaning up
+  ttlSecondsAfterFinished: 86400
+
+  # -- Resource limits and requests for Ook audit pods
+  resources: {}
+
+  # -- Annotations for Ook audit pods
+  podAnnotations: {}
+
+  # -- Node selection rules for Ook audit pods
+  nodeSelector: {}
+
+  # -- Tolerations for Ook audit pods
+  tolerations: []
+
+  # -- Affinity rules for Ook audit pods
+  affinity: {}

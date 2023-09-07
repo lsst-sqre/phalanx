@@ -1,0 +1,23 @@
+{{- if .Values.applications.nublado -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "fileservers"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "fileservers"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "fileservers"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/fileservers"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+{{- end -}}

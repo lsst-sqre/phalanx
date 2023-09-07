@@ -113,6 +113,9 @@ config:
   # -- Toggle to enable the GitHub App functionality
   enableGitHubApp: "False"
 
+  # -- GitHub organizations that can sync repos to Times Square (comma-separated).
+  githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
   # on Google Cloud
@@ -123,7 +126,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.6"
+    tag: "1.33.10"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

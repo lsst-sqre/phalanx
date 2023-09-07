@@ -14,6 +14,7 @@ jupyterhub:
     extraAnnotations:
       k8s.v1.cni.cncf.io/networks: "kube-system/dds"
   hub:
+    baseUrl: "/n2"
     db:
       upgrade: true
       url: "postgresql://jovyan@postgresdb01.ls.lsst.org/jupyterhub"
@@ -49,6 +50,19 @@ config:
       nfs:
         path: /lsstdata
         server: nfs-lsstdata.ls.lsst.org
+    - name: auxtel-butler
+      nfs:
+        path: /auxtel/repo/LATISS
+        server: nfs-auxtel.ls.lsst.org
+    - name: auxtel-oods
+      nfs:
+        path: /auxtel/lsstdata/BTS/auxtel
+        server: nfs-auxtel.ls.lsst.org
+        readOnly: true
+    - name: obs-env
+      nfs:
+        path: /obs-env
+        server: nfs-obsenv.ls.lsst.org
   volume_mounts:
     - name: home
       mountPath: /home
@@ -58,3 +72,10 @@ config:
       mountPath: /project
     - name: scratch
       mountPath: /scratch
+    - name: auxtel-butler
+      mountPath: /repo/LATISS
+    - name: auxtel-oods
+      mountPath: /data/lsstdata/BTS/auxtel
+      readOnly: true
+    - name: obs-env
+      mountPath: /net/obs-env

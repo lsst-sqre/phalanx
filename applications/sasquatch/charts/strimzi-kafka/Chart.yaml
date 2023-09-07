@@ -2,4 +2,4 @@ apiVersion: v2
 name: strimzi-kafka
 version: 1.0.0
 description: A subchart to deploy Strimzi Kafka components for Sasquatch.
-appVersion: 3.1.1
+appVersion: 0.36.1

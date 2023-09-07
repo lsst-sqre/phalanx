@@ -34,20 +34,60 @@ config:
 
       ## Data documentation
 
+      ### DP0.3
+
+      <CardGroup>
+        <a href="https://dp0-3.lsst.io/">
+          <Card>
+            ### Data Preview 0.3 (DP0.3)
+
+            DP0.3 provides a catalog of solar system objects from a
+            simulated LSST ten-year wide-fast-deep survey by the Solar System
+            Science Collaboration.
+          </Card>
+        </a>
+
+        <a href="https://dp0-3.lsst.io/tutorials-dp0-3/index.html">
+          <Card>
+            ### DP0.3 Tutorials
+
+            Tutorials for exploring the DP0.3 solar system object dataset on
+            the Rubin Science Platform.
+          </Card>
+        </a>
+
+        <a href="https://dm.lsst.org/sdm_schemas/browser/dp03.html">
+          <Card>
+            ### DP0.3 Catalog Schema
+
+            Schema reference for the DP0.3 catalog dataset available through
+            the Table Access Protocol (TAP) service.
+          </Card>
+        </a>
+      </CardGroup>
+
+      ### DP0.2
+
       <CardGroup>
         <a href="https://dp0-2.lsst.io/">
           <Card>
             ### Data Preview 0.2 (DP0.2)
 
             DP0.2 is the second phase of the Data Preview 0 program using
-            precursor data (simulated images from the DESC DC2 data
-            challenge). For the first time, all the derived data products
-            have been generated “in-house” on an early version of the Rubin
-            processing infrastructure using version 23.0 of the LSST Science
-            Pipelines. As a result, the data model is significantly
-            different from the DP0.1 dataset.
+            simulated images from the DESC DC2 data challenge processed with
+            version 23.0 of the LSST Science Pipelines.
           </Card>
         </a>
+
+        <a href="https://dp0-2.lsst.io/tutorials-examples/index.html">
+          <Card>
+            ### DP0.2 Tutorials
+
+            Tutorials for exploring the DP0.2 dataset on the Rubin Science
+            Platform.
+          </Card>
+        </a>
+
 
         <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
           <Card>

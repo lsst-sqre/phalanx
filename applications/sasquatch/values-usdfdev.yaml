@@ -1,6 +1,6 @@
 strimzi-kafka:
   mirrormaker2:
-    enabled: true
+    enabled: false
     source:
       bootstrapServer: sasquatch-base-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
@@ -11,6 +11,9 @@ strimzi-kafka:
       limits:
         cpu: 4
         memory: 8Gi
+  users:
+    replicator:
+      enabled: true
 
 influxdb:
   ingress:
@@ -96,14 +99,30 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.example"
         topicsRegex: "lsst.example.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+        tags: band,instrument
       lsstrubintv:
         enabled: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.rubintv"
         topicsRegex: "lsst.rubintv.*"
         tags: image_type,observation_reason,science_program,filter,disperser
-
+      lsstcamera:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.camera"
+        topicsRegex: "lsst.camera.*"
+      lsstverify:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.verify"
+        topicsRegex: "lsst.verify.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+      lsstlf:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.lf"
+        topicsRegex: "lsst.lf.*"
+        tags: benchmark_env,module,benchmark_type
 
 kafdrop:
   ingress:
@@ -124,6 +143,9 @@ rest-proxy:
       - lsst.debug
       - lsst.example
       - lsst.rubintv
+      - lsst.camera
+      - lsst.verify
+      - lsst.lf
 
 chronograf:
   ingress:

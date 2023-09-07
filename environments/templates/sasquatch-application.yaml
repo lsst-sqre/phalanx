@@ -1,28 +1,25 @@
-{{- if .Values.sasquatch.enabled -}}
+{{- if .Values.applications.sasquatch -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: sasquatch
-spec:
-  finalizers:
-    - kubernetes
+  name: "sasquatch"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sasquatch
-  namespace: argocd
+  name: "sasquatch"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: sasquatch
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "sasquatch"
+    server: "https://kubernetes.default.svc"
+  project: "default"
   source:
-    path: applications/sasquatch
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/sasquatch"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"
@@ -33,5 +30,5 @@ spec:
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

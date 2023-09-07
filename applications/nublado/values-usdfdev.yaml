@@ -1,0 +1,170 @@
+controller:
+  config:
+    safir:
+      logLevel: "DEBUG"
+    fileserver:
+      enabled: false
+      timeout: 21600
+
+    images:
+      source:
+        type: "docker"
+        registry: "docker-registry.slac.stanford.edu"
+        repository: "lsstsqre/sciplat-lab"
+      recommendedTag: "recommended"
+      numReleases: 1
+      numWeeklies: 2
+      numDailies: 3
+
+    lab:
+      pullSecret: "pull-secret"
+
+      homedirSchema: "initialThenUsername"
+
+      env:
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        HUB_ROUTE: "/nb/hub"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        PGUSER: "rubin"
+        S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+        http_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+        https_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
+        no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+
+      files:
+        # Add rubin_users group (there is not yet a simpler way to do this).
+        /etc/group:
+          contents: |
+            root:x:0:
+            bin:x:1:
+            daemon:x:2:
+            sys:x:3:
+            adm:x:4:
+            tty:x:5:
+            disk:x:6:
+            lp:x:7:
+            mem:x:8:
+            kmem:x:9:
+            wheel:x:10:
+            cdrom:x:11:
+            mail:x:12:
+            man:x:15:
+            dialout:x:18:
+            floppy:x:19:
+            games:x:20:
+            utmp:x:22:
+            tape:x:33:
+            utempter:x:35:
+            video:x:39:
+            ftp:x:50:
+            lock:x:54:
+            tss:x:59:
+            audio:x:63:
+            dbus:x:81:
+            screen:x:84:
+            nobody:x:99:
+            users:x:100:
+            systemd-journal:x:190:
+            systemd-network:x:192:
+            cgred:x:997:
+            ssh_keys:x:998:
+            input:x:999:
+            rubin_users:x:4085:
+
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+
+      volumes:
+        - containerPath: "/home"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-home"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/project"
+          subPath: "g"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-group-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/sdf/group/rubin"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-group-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/sdf/data/rubin"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-data-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/scratch"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "sdf-scratch"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/fs/ddn/sdf/group/rubin"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "fs-ddn-sdf-group-rubin"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+        - containerPath: "/fs/ddn/sdf/group/lsst"
+          mode: "rw"
+          source:
+            type: "persistentVolumeClaim"
+            storageClassName: "fs-ddn-sdf-group-lsst"
+            accessModes:
+              - "ReadWriteMany"
+            resources:
+              requests:
+                storage: "1Gi"
+
+proxy:
+  ingress:
+    annotations:
+      # proxy-body-size is temporary until USDF uses our normal ingress-nginx,
+      # which already configures a larger value.
+      nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+
+jupyterhub:
+  hub:
+    baseUrl: "/nb"
+    db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
+  cull:
+    timeout: 432000
+    every: 300
+    maxAge: 2160000

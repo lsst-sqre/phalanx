@@ -1,11 +1,8 @@
-{{- if (index .Values "sqlproxy-cross-project" "enabled") -}}
+{{- if (index .Values "applications" "sqlproxy-cross-project") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
   name: "sqlproxy-cross-project"
-spec:
-  finalizers:
-    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -21,10 +18,10 @@ spec:
   project: "default"
   source:
     path: "applications/sqlproxy-cross-project"
-    repoURL: {{ .Values.repoURL | quote }}
+    repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}

@@ -9,7 +9,7 @@ The advantage of the DNS solver is that it works behind firewalls and can provis
 The DNS solver uses an AWS service user with write access to Route 53 to answer Let's Encrypt challenges.
 
 In order to use ``cert-manager``, you must be hosting the DNS for the external hostname of the Science Platform installation in AWS Route 53.
-See :ref:`hostnames` for more information.
+See :doc:`/admin/hostnames` for more information.
 
 First, ensure that ``cert-manager`` is set up for the domain in which the cluster will be hosted.
 If this is a new domain, follow the instructions in :doc:`route53-setup`.
@@ -20,6 +20,9 @@ Select **CNAME** from the lower drop-down menu and then **IP address or other va
 
 For example, if the cluster name is ``data-dev.lsst.cloud``, create a CNAME record at ``_acme-challenge.data-dev.lsst.cloud`` whose value is ``_acme-challenge.tls.lsst.cloud``.
 In the Route 53 console, the name of the record you create in the ``lsst.cloud`` hosted zone will be ``_acme-challenge.data-dev`` (yes, including the period).
+
+This will need to be done for each hostname served by this instance of the RSP.
+See :doc:`add-new-hostname` for a shorter version of these instructions to follow for each new hostname added.
 
 Add the following to the ``values-*.yaml`` file for an environment:
 

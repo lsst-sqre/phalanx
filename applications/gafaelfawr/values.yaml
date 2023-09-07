@@ -36,8 +36,12 @@ tolerations: []
 affinity: {}
 
 config:
+  # -- Whether to use the PostgreSQL server internal to the Kubernetes cluster
+  internalDatabase: false
+
   # -- URL for the PostgreSQL database
-  # @default -- None, must be set if `cloudsql.enabled` is not true
+  # @default -- None, must be set if neither `cloudsql.enabled`
+  # nor `config.internalDatabase` are true
   databaseUrl: ""
 
   # -- Choose from the text form of Python logging levels
@@ -267,13 +271,19 @@ config:
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
     "write:sasquatch": >-
-      "Write access to the Sasquatch telemetry service"
+      Write access to the Sasquatch telemetry service
     "user:token": >-
       Can create and modify user tokens
 
   # -- Defines a mapping of scopes to groups that provide that scope. See
   # [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes.
   groupMapping: {}
+
+ingress:
+  # -- Defines additional FQDNs for Gafaelfawr.  This doesn't work for
+  # cookie or browser authentication, but for token-based services like
+  # git-lfs or the webdav server it does.
+  additionalHosts: []
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
@@ -287,7 +297,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.6"
+    tag: "1.33.10"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

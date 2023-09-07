@@ -1,3 +1,4 @@
+{{- if .Values.connect.enabled }}
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaConnect
 metadata:
@@ -79,3 +80,4 @@ spec:
     consumerByteRate: 1073741824
     requestPercentage: 90
     controllerMutationRate: 1000
+{{- end }}

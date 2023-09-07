@@ -15,3 +15,4 @@ data:
   TS_REDIS_QUEUE_URL: {{ required "config.redisQueueUrl must be set" .Values.config.redisQueueUrl | quote }}
   TS_ENABLE_GITHUB_APP: {{ .Values.config.enableGitHubApp | quote }}
   TS_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
+  TS_GITHUB_ORGS: {{ .Values.config.githubOrgs | quote }}

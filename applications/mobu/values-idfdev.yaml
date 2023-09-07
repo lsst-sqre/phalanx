@@ -1,22 +1,43 @@
-image:
-  tag: "tickets-DM-38425"
-  pullPolicy: "Always"
-
 config:
-  useCachemachine: false
   debug: true
   autostart:
-    - name: "python"
+    - name: "weekly"
       count: 1
       users:
-        - username: "bot-mobu-user"
-      scopes: ["exec:notebook"]
+        - username: "bot-mobu-weekly"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
       business:
-        type: "JupyterPythonLoop"
+        type: "NotebookRunner"
         options:
           image:
             image_class: "latest-weekly"
-            size: "Small"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          use_cachemachine: false
+        restart: true
+    - name: "tutorial"
+      count: 1
+      users:
+        - username: "bot-mobu-tutorial"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
+          repo_branch: "prod"
+          max_executions: 1
+          working_directory: "notebooks/tutorial-notebooks"
+          use_cachemachine: false
         restart: true
     - name: "tap"
       count: 1

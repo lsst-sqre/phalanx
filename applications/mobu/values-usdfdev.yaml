@@ -1,2 +1,55 @@
 config:
-  disableSlackAlerts: true
+  debug: true
+  autostart:
+    - name: "firefighter"
+      count: 1
+      users:
+        - username: "bot-mobu01"
+          uidnumber: 45692
+          gidnumber: 1126
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          use_cachemachine: false
+        restart: true
+    - name: "weekly"
+      count: 1
+      users:
+        - username: "bot-mobu02"
+          uidnumber: 45693
+          gidnumber: 1126
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          use_cachemachine: false
+        restart: true
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu03"
+          uidnumber: 45694
+          gidnumber: 1126
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQueryRunner"
+        options:
+          query_set: "dp0.2"
+        restart: true

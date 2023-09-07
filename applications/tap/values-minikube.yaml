@@ -1,3 +1,27 @@
-config:
-  gcsBucket: "async-results.lsst.codes"
-  gcsBucketUrl: "http://async-results.lsst.codes"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-idfprod-tap"
+
+  mockdb:
+    enabled: true
+
+  config:
+    jvmMaxHeapSize: 4G
+
+  resources:
+    requests:
+      cpu: 0
+      memory: 0
+    limits:
+      cpu: 0
+      memory: 0
+
+  uws:
+    resources:
+      requests:
+        cpu: 0
+        memory: 0
+      limits:
+        cpu: 0
+        memory: 0

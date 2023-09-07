@@ -24,7 +24,7 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           env:
-            {{- if (not .Values.config.disableSlackAlerts) }}
+            {{- if .Values.config.slackAlerts }}
             - name: "ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
@@ -42,10 +42,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
-            {{- if (not .Values.config.useCachemachine) }}
-            - name: "USE_CACHEMACHINE"
-              value: "false"
-            {{- end }}
             - name: "SAFIR_PATH_PREFIX"
               value: {{ .Values.config.pathPrefix | quote }}
             {{- if (not .Values.config.debug) }}

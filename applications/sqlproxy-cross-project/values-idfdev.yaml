@@ -2,7 +2,7 @@ fullnameOverride: sqlproxy-butler-int
 
 config:
   ipAddressType: "PUBLIC"
-  instanceConnectionName: "science-platform-int-dc5d:us-central1:butler-registry-int-72f9812d"
+  instanceConnectionName: "panda-dev-1a74:us-central1:butler-registry-dev-6a359345"
   serviceAccount: "sqlproxy-butler-int@science-platform-dev-7696.iam.gserviceaccount.com"
 
 resources:

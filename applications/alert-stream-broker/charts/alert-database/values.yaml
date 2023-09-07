@@ -10,7 +10,7 @@ fullnameOverride: ""
 ingester:
   image:
     repository: lsstdm/alert_database_ingester
-    tag: v2.0.1
+    tag: v2.0.2
     imagePullPolicy: IfNotPresent
 
   kafka:

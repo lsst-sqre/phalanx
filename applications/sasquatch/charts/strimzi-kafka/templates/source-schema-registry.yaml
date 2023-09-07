@@ -1,0 +1,60 @@
+{{- if .Values.mirrormaker2.sourceRegistry.enabled }}
+---
+apiVersion: roundtable.lsst.codes/v1beta1
+kind: StrimziSchemaRegistry
+metadata:
+  name: {{ .Values.cluster.name }}-source-schema-registry
+spec:
+  listener: tls
+  compatibilityLevel: none
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: {{ .Values.cluster.name }}-source-schema-registry
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    # Official docs on authorizations required for the Schema Registry:
+    # https://docs.confluent.io/current/schema-registry/security/index.html#authorizing-access-to-the-schemas-topic
+    type: simple
+    acls:
+      # Allow Read, Write and DescribeConfigs operations on the
+      # schemas topic
+      - resource:
+          type: topic
+          name: {{ .Values.mirrormaker2.sourceRegistry.schemaTopic }}
+          patternType: literal
+        operation: Read
+        type: allow
+      - resource:
+          type: topic
+          name: {{ .Values.mirrormaker2.sourceRegistry.schemaTopic }}
+          patternType: literal
+        operation: Write
+        type: allow
+      - resource:
+          type: topic
+          name: {{ .Values.mirrormaker2.sourceRegistry.schemaTopic }}
+          patternType: literal
+        operation: DescribeConfigs
+        type: allow
+      # Allow all operations on the schema-registry* group
+      - resource:
+          type: group
+          name: schema-registry
+          patternType: prefix
+        operation: All
+        type: allow
+      # Allow Describe on the __consumer_offsets topic
+      # (The official docs also mention DescribeConfigs?)
+      - resource:
+          type: topic
+          name: "__consumer_offsets"
+          patternType: literal
+        operation: Describe
+        type: allow
+{{- end }}

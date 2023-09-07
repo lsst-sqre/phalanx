@@ -1,8 +1,9 @@
 #!/bin/bash -e
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [VAULT_TOKEN_LEASE_DURATION]"
 ENVIRONMENT=${1:?$USAGE}
 export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_ADDR=https://vault.lsst.codes
+export VAULT_TOKEN_LEASE_DURATION=${4:-31536000}
+export VAULT_ADDR=`yq -r .vaultUrl ../environments/values-$ENVIRONMENT.yaml`
 VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
 ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
 
@@ -18,7 +19,7 @@ kubectl create ns vault-secrets-operator || true
 kubectl create secret generic vault-secrets-operator \
   --namespace vault-secrets-operator \
   --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
-  --from-literal=VAULT_TOKEN_LEASE_DURATION=31536000 \
+  --from-literal=VAULT_TOKEN_LEASE_DURATION=$VAULT_TOKEN_LEASE_DURATION \
   --dry-run=client -o yaml | kubectl apply -f -
 
 echo "Set up docker pull secret for vault-secrets-operator..."
@@ -28,7 +29,6 @@ kubectl create secret generic pull-secret -n vault-secrets-operator \
     --type=kubernetes.io/dockerconfigjson \
     --dry-run=client -o yaml | kubectl apply -f -
 
-
 echo "Update / install vault-secrets-operator..."
 # ArgoCD depends on pull-secret, which depends on vault-secrets-operator.
 helm dependency update ../applications/vault-secrets-operator
@@ -36,6 +36,7 @@ helm upgrade vault-secrets-operator ../applications/vault-secrets-operator \
   --install \
   --values ../applications/vault-secrets-operator/values.yaml \
   --values ../applications/vault-secrets-operator/values-$ENVIRONMENT.yaml \
+  --set vault-secrets-operator.vault.address="$VAULT_ADDR" \
   --create-namespace \
   --namespace vault-secrets-operator \
   --timeout 5m \
@@ -70,8 +71,9 @@ argocd app create science-platform \
   --revision $GIT_BRANCH \
   --port-forward \
   --port-forward-namespace argocd \
-  --helm-set repoURL=$GIT_URL \
+  --helm-set repoUrl=$GIT_URL \
   --helm-set targetRevision=$GIT_BRANCH \
+  --values values.yaml \
   --values values-$ENVIRONMENT.yaml
 
 argocd app sync science-platform \
@@ -79,7 +81,7 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-if [ $(yq -r '."ingress-nginx".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '.applications."ingress-nginx"' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing ingress-nginx..."
   argocd app sync ingress-nginx \
@@ -89,7 +91,7 @@ fi
 
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl, argocd's sync doesn't seem to wait for this to finish.
-if [ $(yq -r '."cert-manager".enabled' ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r '.applications."cert-manager"' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing cert-manager..."
   argocd app sync cert-manager \
@@ -98,7 +100,7 @@ then
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
 fi
 
-if [ $(yq -r .postgres.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r .applications.postgres ../environments/values-$ENVIRONMENT.yaml) == "true" ];
 then
   echo "Syncing postgres..."
   argocd app sync postgres \
@@ -106,7 +108,7 @@ then
     --port-forward-namespace argocd
 fi
 
-if [ $(yq -r .gafaelfawr.enabled ../environments/values-$ENVIRONMENT.yaml) == "true" ];
+if [ $(yq -r .applications.gafaelfawr ../environments/values-$ENVIRONMENT.yaml) != "false" ];
 then
   echo "Syncing gafaelfawr..."
   argocd app sync gafaelfawr \

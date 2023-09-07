@@ -1,0 +1,17 @@
+apiVersion: v2
+name: squarebot
+version: 1.0.0
+appVersion: "0.7.0"
+description: Squarebot feeds events from services like Slack and GitHub into the SQuaRE Events Kafka message bus running on Roundtable. Backend apps like Templatebot can subscribe to these events and take domain-specific action.
+type: application
+home: https://squarebot.lsst.io/
+sources:
+  - https://github.com/lsst-sqre/squarebot
+maintainers:
+  - name: jonathansick
+    url: https://github.com/jonathansick
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-075"
+      title: "Shared Pydantic schemas as the basis for Kafka/Avro messages in SQuaRE Roundtable"
+      url: "https://sqr-076.lsst.io/"

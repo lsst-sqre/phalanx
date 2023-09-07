@@ -35,11 +35,13 @@ config:
   quota:
     default:
       notebook:
-        cpu: 9.0
-        memory: 27
+        cpu: 8.0
+        memory: 32
 
   # Allow access by GitHub team.
   groupMapping:
+    "admin:jupyterlab":
+      - "g_admins"
     "admin:provision":
       - "g_admins"
     "exec:admin":

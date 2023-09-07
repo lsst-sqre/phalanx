@@ -61,8 +61,9 @@ spec:
                    },
                    "tap" : {
                       "additional": {
-                          "services": [ {
-                               "label": "LSST RSP",
+                          "services": [
+                            {
+                               "label": "LSST DP0.2 DC2",
                                "value": "{{ .Values.global.baseUrl }}/api/tap",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
@@ -71,7 +72,28 @@ spec:
                                {{- end }}
                                "centerWP": "62;-37;EQ_J2000",
                                "fovDeg": 10
-                          } ]
+                            }
+                            {{- if .Values.config.ssotap }}
+                            ,
+                            {
+                               "label": "LSST DP0.3 SSO",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.ssotap}}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
+                               "fovDeg": 10
+                            }
+                            {{- end }}
+                            {{- if .Values.config.livetap }}
+                            ,
+                            {
+                               "label": "LSST Live ObsCore",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.livetap }}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
+                               "fovDeg": 10
+                            }
+                            {{- end }}
+                          ]
                       }
                    },
                    "hips": {

@@ -1,0 +1,78 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.interaction"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 4
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.app.mention"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 16
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.message.channels"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 16
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.message.groups"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 16
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.message.im"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 16
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.message.mpim"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 16
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes

@@ -193,6 +193,8 @@ data:
   gafaelfawr.yaml: |
     {{- if .Values.cloudsql.enabled }}
     databaseUrl: "postgresql://gafaelfawr@cloud-sql-proxy/gafaelfawr"
+    {{- else if .Values.config.internalDatabase }}
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
     {{- else }}
     databaseUrl: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     {{- end }}
@@ -208,6 +210,8 @@ data:
   gafaelfawr.yaml: |
     {{- if .Values.cloudsql.enabled }}
     databaseUrl: "postgresql://gafaelfawr@localhost/gafaelfawr"
+    {{- else if .Values.config.internalDatabase }}
+    databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
     {{- else }}
     databaseUrl: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
     {{- end }}

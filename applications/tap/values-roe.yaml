@@ -1,4 +1,12 @@
-qserv:
-  host: "192.41.122.228:30040"
-  mock:
-    enabled: false
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "stvoutsin/tap-schema-roe"
+
+  config:
+    gcsBucket: "async"
+    gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
+    gcsBucketType: "S3"
+
+    qserv:
+      host: "192.41.122.79:30040"

@@ -1,75 +1,30 @@
-environment: idfint
-fqdn: data-int.lsst.cloud
-vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
+fqdn: data-int.lsst.cloud
+name: idfint
+vaultUrl: "https://vault.lsst.codes"
+vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
 
-alert-stream-broker:
-  enabled: true
-argo-workflows:
-  enabled: false
-cachemachine:
-  enabled: false
-cert-manager:
-  enabled: true
-datalinker:
-  enabled: true
-exposurelog:
-  enabled: false
-gafaelfawr:
-  enabled: true
-hips:
-  enabled: true
-ingress-nginx:
-  enabled: true
-linters:
-  enabled: true
-mobu:
-  enabled: true
-moneypenny:
-  enabled: false
-narrativelog:
-  enabled: false
-noteburst:
-  enabled: false
-nublado:
-  enabled: true
-nublado2:
-  enabled: false
-obstap:
-  enabled: true
-plot-navigator:
-  enabled: true
-portal:
-  enabled: true
-postgres:
-  enabled: true
-sasquatch:
-  enabled: true
-ssotap:
-  enabled: true
-production-tools:
-  enabled: true
-semaphore:
-  enabled: true
-sherlock:
-  enabled: true
-squareone:
-  enabled: true
-strimzi:
-  enabled: true
-strimzi-registry-operator:
-  enabled: false
-tap:
-  enabled: true
-tap-schema:
-  enabled: true
-telegraf:
-  enabled: true
-telegraf-ds:
-  enabled: true
-times-square:
-  enabled: false
-vault-secrets-operator:
-  enabled: true
-vo-cutouts:
-  enabled: true
+applications:
+  alert-stream-broker: true
+  cachemachine: true
+  datalinker: true
+  hips: true
+  linters: true
+  mobu: true
+  moneypenny: true
+  nublado: true
+  nublado2: true
+  plot-navigator: true
+  portal: true
+  postgres: true
+  sasquatch: true
+  ssotap: true
+  production-tools: true
+  semaphore: true
+  sherlock: true
+  squareone: true
+  strimzi: true
+  tap: true
+  telegraf: true
+  telegraf-ds: true
+  vo-cutouts: true

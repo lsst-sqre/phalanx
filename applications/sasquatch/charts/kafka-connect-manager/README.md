@@ -6,12 +6,13 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| enabled | bool | `true` | Enable Kafka Connect Manager. |
 | env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
 | env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
 | env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"lsstsqre/kafkaconnect"` |  |
-| image.tag | string | `"1.1.0"` |  |
+| image.repository | string | `"ghcr.io/lsst-sqre/kafkaconnect"` |  |
+| image.tag | string | `"1.3.1"` |  |
 | influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
 | influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
 | influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
@@ -20,10 +21,12 @@ A subchart to deploy the Kafka connectors used by Sasquatch.
 | influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| influxdbSink.connectors | object | `{"test":{"enabled":false,"tags":"","topicsRegex":".*Test"}}` | Connector instances to deploy. |
+| influxdbSink.connectors | object | `{"test":{"enabled":false,"removePrefix":"source.","repairerConnector":false,"tags":"","topicsRegex":"source.lsst.sal.Test"}}` | Connector instances to deploy. |
 | influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
+| influxdbSink.connectors.test.removePrefix | string | `"source."` | Remove prefix from topic name. |
+| influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
 | influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
-| influxdbSink.connectors.test.topicsRegex | string | `".*Test"` | Regex to select topics from Kafka. |
+| influxdbSink.connectors.test.topicsRegex | string | `"source.lsst.sal.Test"` | Regex to select topics from Kafka. |
 | influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
 | influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |

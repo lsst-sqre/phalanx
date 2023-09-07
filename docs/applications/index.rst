@@ -12,8 +12,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Cluster infrastructure
 
-   argo-cd/index
-   argo-workflows/index
+   argocd/index
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
@@ -28,12 +27,12 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    datalinker/index
    hips/index
    linters/index
+   livetap/index
    mobu/index
    moneypenny/index
    noteburst/index
    nublado/index
    nublado2/index
-   obstap/index
    portal/index
    semaphore/index
    sherlock/index
@@ -41,7 +40,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    squareone/index
    ssotap/index
    tap/index
-   tap-schema/index
    times-square/index
    vo-cutouts/index
 
@@ -49,13 +47,36 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: RSP+
 
+   argo-workflows/index
    alert-stream-broker/index
    exposurelog/index
    narrativelog/index
+   obsloctap/index
    plot-navigator/index
    production-tools/index
+   rubintv/index
    sasquatch/index
    strimzi/index
-   strimzi-registry-operator/index
+   strimzi-access-operator/index
    telegraf/index
    telegraf-ds/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Roundtable
+
+   giftless/index
+   kubernetes-replicator/index
+   monitoring/index
+   onepassword-connect-dev/index
+   ook/index
+   squarebot/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Prompt Processing
+
+   prompt-proto-service-hsc/index
+   prompt-proto-service-latiss/index
+   prompt-proto-service-lsstcam/index
+   prompt-proto-service-lsstcomcam/index

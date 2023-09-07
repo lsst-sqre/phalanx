@@ -7,7 +7,7 @@ from onepasswordconnectsdk import new_client_from_environment
 
 
 class VaultKeyRetriever:
-    def __init__(self):
+    def __init__(self) -> None:
         self.op = new_client_from_environment()
         vault_keys = self.op.get_item(
             os.environ["VAULT_DOC_UUID"], "RSP-Vault"
@@ -23,6 +23,7 @@ class VaultKeyRetriever:
         for e in self.vault_keys:
             if env_key in e:
                 return e[env_key][key_type]["id"]
+        return None
 
 
 if __name__ == "__main__":

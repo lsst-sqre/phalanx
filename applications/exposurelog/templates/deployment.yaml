@@ -103,6 +103,13 @@ spec:
             readOnly: true
             server: {{ .Values.config.nfs_server_2 }}
         {{- end }}
+        {{- if .Values.config.nfs_path_3 }}
+        - name: volume3
+          nfs:
+            path: {{ .Values.config.nfs_path_3 }}
+            readOnly: true
+            server: {{ .Values.config.nfs_server_3 }}
+        {{- end }}
         - name: tmp
           emptyDir: {}
       {{- with .Values.nodeSelector }}

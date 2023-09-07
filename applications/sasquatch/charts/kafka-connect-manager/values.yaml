@@ -1,8 +1,12 @@
 # Default values for kafka-connect-manager.
 # See also https://kafka-connect-manager.lsst.io
+
+# -- Enable Kafka Connect Manager.
+enabled: true
+
 image:
-  repository: lsstsqre/kafkaconnect
-  tag: 1.1.0
+  repository: ghcr.io/lsst-sqre/kafkaconnect
+  tag: 1.3.1
   pullPolicy: IfNotPresent
 
 influxdbSink:
@@ -33,10 +37,14 @@ influxdbSink:
     test:
       # -- Whether this connector instance is deployed.
       enabled: false
+      # -- Whether to deploy a repairer connector in addition to the original connector instance.
+      repairerConnector: false
       # -- Regex to select topics from Kafka.
-      topicsRegex: ".*Test"
+      topicsRegex: "source.lsst.sal.Test"
       # -- Fields in the Avro payload that are treated as InfluxDB tags.
       tags: ""
+      # -- Remove prefix from topic name.
+      removePrefix: "source."
 
 # The s3Sink connector assumes Parquet format with Snappy compression
 # and a time based partitioner.

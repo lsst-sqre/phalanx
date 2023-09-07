@@ -10,7 +10,7 @@ spec:
     email: {{ required "config.email must be set" .Values.config.email | quote }}
     server: "https://acme-v02.api.letsencrypt.org/directory"
     privateKeySecretRef:
-      name: {{ include "cert-manager.fullname" . }}-letsencrypt
+      name: "cert-manager-letsencrypt"
     solvers:
       - dns01:
           cnameStrategy: "Follow"
@@ -19,6 +19,6 @@ spec:
             accessKeyID: {{ required "config.route53.awsAccessKeyId must be set" .Values.config.route53.awsAccessKeyId | quote }}
             hostedZoneID: {{ required "config.route53.hostedZone must be set" .Values.config.route53.hostedZone | quote }}
             secretAccessKeySecretRef:
-              name: {{ include "cert-manager.fullname" . }}
+              name: "cert-manager"
               key: "aws-secret-access-key"
 {{- end }}

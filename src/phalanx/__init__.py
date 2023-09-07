@@ -1,6 +1,4 @@
-"""The phalanx package provides support tooling for Phalanx, SQuaRE's
-application deployment platform.
-"""
+"""Support tooling for Phalanx, SQuaRE's application development platform."""
 
 __all__ = ["__version__"]
 

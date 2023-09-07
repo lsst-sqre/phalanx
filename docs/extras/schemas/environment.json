@@ -1,0 +1,82 @@
+{
+  "title": "EnvironmentConfig",
+  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "fqdn": {
+      "title": "Fqdn",
+      "type": "string"
+    },
+    "onepassword": {
+      "$ref": "#/definitions/OnepasswordConfig"
+    },
+    "vaultUrl": {
+      "title": "Vaulturl",
+      "type": "string"
+    },
+    "vaultPathPrefix": {
+      "title": "Vaultpathprefix",
+      "type": "string"
+    },
+    "applications": {
+      "title": "Applications",
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "butlerRepositoryIndex": {
+      "title": "Butlerrepositoryindex",
+      "type": "string"
+    },
+    "onepasswordUuid": {
+      "title": "Onepassworduuid",
+      "type": "string"
+    },
+    "repoUrl": {
+      "title": "Repourl",
+      "type": "string"
+    },
+    "targetRevision": {
+      "title": "Targetrevision",
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "fqdn",
+    "vaultUrl",
+    "vaultPathPrefix",
+    "applications"
+  ],
+  "additionalProperties": false,
+  "$id": "https://phalanx.lsst.io/schemas/environment.json",
+  "definitions": {
+    "OnepasswordConfig": {
+      "title": "OnepasswordConfig",
+      "description": "Configuration for 1Password static secrets source.",
+      "type": "object",
+      "properties": {
+        "connectUrl": {
+          "title": "Connecturl",
+          "minLength": 1,
+          "maxLength": 65536,
+          "format": "uri",
+          "type": "string"
+        },
+        "vaultTitle": {
+          "title": "Vaulttitle",
+          "type": "string"
+        }
+      },
+      "required": [
+        "connectUrl",
+        "vaultTitle"
+      ]
+    }
+  }
+}

@@ -1,6 +1,7 @@
 jupyterhub:
 
   hub:
+    baseUrl: "/n2"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
@@ -61,9 +62,6 @@ config:
     - name: fs-ddn-sdf-group-rubin
       persistentVolumeClaim:
         claimName: fs-ddn-sdf-group-rubin
-    - name: fs-nfs
-      persistentVolumeClaim:
-        claimName: fs-nfs
     - name: sdf-scratch
       persistentVolumeClaim:
         claimName: sdf-scratch
@@ -85,8 +83,6 @@ config:
       mountPath: /sdf/data/rubin
     - name: sdf-scratch
       mountPath: /scratch
-    - name: fs-nfs
-      mountPath: /fs/nfs
     - name: fs-ddn-sdf-group-rubin
       mountPath: /fs/ddn/sdf/group/rubin
     - name: fs-ddn-sdf-group-lsst
@@ -401,18 +397,6 @@ config:
         namespace: "{{ user_namespace }}"
       spec:
         storageClassName: sdf-scratch
-        accessModes:
-          - ReadWriteMany
-        resources:
-          requests:
-            storage: 1Gi
-    - apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: fs-nfs
-        namespace: "{{ user_namespace }}"
-      spec:
-        storageClassName: fs-nfs
         accessModes:
           - ReadWriteMany
         resources:

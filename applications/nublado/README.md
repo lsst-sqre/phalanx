@@ -14,6 +14,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
+| controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
+| controller.config.fileserver.image | string | `"ghcr.io/lsst-sqre/worblehat"` | Image for fileserver container |
+| controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user fileservers |
+| controller.config.fileserver.pullPolicy | string | `"IfNotPresent"` | Pull policy for fileserver container |
+| controller.config.fileserver.tag | string | `"0.1.0"` | Tag for fileserver container |
+| controller.config.fileserver.timeout | int | `3600` | Timeout for user fileservers, in seconds |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -28,7 +34,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | object | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Names must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI prefixes for memory are supported. `large`) |
-| controller.config.lab.volumes | object | `{}` | Volumes that should be mounted in lab pods. Currently this only supports NFS volumes and must specify `containerPath`, `server`, `serverPath`, and `mode` where mode is one of `ro` or `rw`. |
+| controller.config.lab.volumes | list | `[]` | Volumes that should be mounted in lab pods. This supports NFS, HostPath, and PVC volume types (differentiated in source.type) |
 | controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
 | controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
@@ -44,48 +50,38 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| hub.internalDatabase | bool | `true` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
 | hub.timeout.spawn | int | `600` | Timeout for the Kubernetes spawn process in seconds. (Allow long enough to pull uncached images if needed.) |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
-| jupyterhub.cull.enabled | bool | `true` |  |
-| jupyterhub.cull.every | int | `600` |  |
-| jupyterhub.cull.maxAge | int | `5184000` |  |
-| jupyterhub.cull.removeNamedServers | bool | `true` |  |
-| jupyterhub.cull.timeout | int | `2592000` |  |
-| jupyterhub.cull.users | bool | `true` |  |
-| jupyterhub.hub.authenticatePrometheus | bool | `false` |  |
-| jupyterhub.hub.baseUrl | string | `"/nb"` |  |
-| jupyterhub.hub.containerSecurityContext.allowPrivilegeEscalation | bool | `false` |  |
-| jupyterhub.hub.containerSecurityContext.runAsGroup | int | `768` |  |
-| jupyterhub.hub.containerSecurityContext.runAsUser | int | `768` |  |
-| jupyterhub.hub.db.password | string | `"true"` |  |
-| jupyterhub.hub.db.type | string | `"postgres"` |  |
-| jupyterhub.hub.db.url | string | `"postgresql://jovyan@postgres.postgres/jupyterhub"` |  |
-| jupyterhub.hub.existingSecret | string | `"nublado-secret"` |  |
-| jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.key | string | `"hub.config.CryptKeeper.keys"` |  |
-| jupyterhub.hub.extraEnv.JUPYTERHUB_CRYPT_KEY.valueFrom.secretKeyRef.name | string | `"nublado-secret"` |  |
-| jupyterhub.hub.extraVolumeMounts[0].mountPath | string | `"/usr/local/etc/jupyterhub/jupyterhub_config.d"` |  |
-| jupyterhub.hub.extraVolumeMounts[0].name | string | `"hub-config"` |  |
-| jupyterhub.hub.extraVolumeMounts[1].mountPath | string | `"/etc/gafaelfawr"` |  |
-| jupyterhub.hub.extraVolumeMounts[1].name | string | `"hub-gafaelfawr-token"` |  |
-| jupyterhub.hub.extraVolumes[0].configMap.name | string | `"hub-config"` |  |
-| jupyterhub.hub.extraVolumes[0].name | string | `"hub-config"` |  |
-| jupyterhub.hub.extraVolumes[1].name | string | `"hub-gafaelfawr-token"` |  |
-| jupyterhub.hub.extraVolumes[1].secret.secretName | string | `"hub-gafaelfawr-token"` |  |
-| jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` |  |
-| jupyterhub.hub.image.tag | string | `"0.2.0"` |  |
-| jupyterhub.hub.loadRoles.self.scopes[0] | string | `"admin:servers!user"` |  |
-| jupyterhub.hub.loadRoles.self.scopes[1] | string | `"read:metrics"` |  |
-| jupyterhub.hub.loadRoles.server.scopes[0] | string | `"inherit"` |  |
-| jupyterhub.hub.networkPolicy.enabled | bool | `false` |  |
-| jupyterhub.hub.resources.limits.cpu | string | `"900m"` |  |
-| jupyterhub.hub.resources.limits.memory | string | `"1Gi"` |  |
-| jupyterhub.ingress.enabled | bool | `false` |  |
-| jupyterhub.prePuller.continuous.enabled | bool | `false` |  |
-| jupyterhub.prePuller.hook.enabled | bool | `false` |  |
-| jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` |  |
-| jupyterhub.proxy.service.type | string | `"ClusterIP"` |  |
-| jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` |  |
-| jupyterhub.scheduling.userScheduler.enabled | bool | `false` |  |
-| jupyterhub.singleuser.cloudMetadata.blockWithIptables | bool | `false` |  |
-| jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` |  |
-| jupyterhub.singleuser.defaultUrl | string | `"/lab"` |  |
+| jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
+| jupyterhub.cull.every | int | 600 (10 minutes) | How frequently to check for idle labs in seconds |
+| jupyterhub.cull.maxAge | int | 5184000 (60 days) | Maximum age of a lab regardless of activity |
+| jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
+| jupyterhub.cull.timeout | int | 2592000 (30 days) | Default idle timeout before the lab is automatically deleted in seconds |
+| jupyterhub.cull.users | bool | `true` | Whether to log out the server when culling their lab |
+| jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
+| jupyterhub.hub.baseUrl | string | `"/nb"` | Base URL on which JupyterHub listens |
+| jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":768,"runAsUser":768}` | Security context for JupyterHub container |
+| jupyterhub.hub.db.password | string | Comes from nublado-secret | Database password (not used) |
+| jupyterhub.hub.db.type | string | `"postgres"` | Type of database to use |
+| jupyterhub.hub.db.url | string | Use the in-cluster PostgreSQL installed by Phalanx | URL of PostgreSQL server |
+| jupyterhub.hub.existingSecret | string | `"nublado-secret"` | Existing secret to use for private keys |
+| jupyterhub.hub.extraEnv | object | Gets `JUPYTERHUB_CRYPT_KEY` from `nublado-secret` | Additional environment variables to set |
+| jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
+| jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
+| jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` | Image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"0.3.2"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
+| jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
+| jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |
+| jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress |
+| jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
+| jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
+| jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
+| jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
+| jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
+| jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
+| jupyterhub.singleuser.cloudMetadata.blockWithIptables | bool | `false` | Whether to configure iptables to block cloud metadata endpoints. This is unnecessary in our environments (they are blocked by cluster configuration) and thus is disabled to reduce complexity. |
+| jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` | Start command for labs |
+| jupyterhub.singleuser.defaultUrl | string | `"/lab"` | Default URL prefix for lab endpoints |
+| proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |

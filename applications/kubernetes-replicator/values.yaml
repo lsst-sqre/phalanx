@@ -1,0 +1,8 @@
+kubernetes-replicator:
+  serviceAccount:
+    create: true
+    annotations: {}
+    name:
+    privileges:
+      - apiGroups: ["", "apps", "extensions"]
+        resources: ["secrets", "configmaps"]

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "squarebot.fullname" . }}
+  labels:
+    {{- include "squarebot.labels" . | nindent 4 }}
+data:
+  SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  SAFIR_PATH_PREFIX: {{ .Values.ingress.path | quote }}
+  SAFIR_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  SAFIR_PROFILE: "production"
+  SQUAREBOT_REGISTRY_URL: {{ .Values.config.registryUrl | quote }}
+  SQUAREBOT_SUBJECT_SUFFIX: {{ .Values.config.subjectSuffix | quote }}
+  SQUAREBOT_SUBJECT_COMPATIBILITY: {{ .Values.config.subjectCompatibility | quote }}
+  SQUAREBOT_TOPIC_APP_MENTION: {{ .Values.config.topics.slackAppMention | quote }}
+  SQUAREBOT_TOPIC_MESSAGE_CHANNELS: {{ .Values.config.topics.slackMessageChannels | quote }}
+  SQUAREBOT_TOPIC_MESSAGE_GROUPS: {{ .Values.config.topics.slackMessageGroups | quote }}
+  SQUAREBOT_TOPIC_MESSAGE_IM: {{ .Values.config.topics.slackMessageIm | quote }}
+  SQUAREBOT_TOPIC_MESSAGE_MPIM: {{ .Values.config.topics.slackMessageMpim | quote }}
+  SQUAREBOT_TOPIC_MESSAGE_INTERACTION: {{ .Values.config.topics.slackInteraction | quote }}

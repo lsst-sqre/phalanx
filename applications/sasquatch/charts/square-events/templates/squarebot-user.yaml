@@ -1,0 +1,73 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: squarebot
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  template:
+      secret:
+        metadata:
+          annotations:
+            replicator.v1.mittwald.de/replication-allowed: "true"
+            replicator.v1.mittwald.de/replication-allowed-namespaces: "squarebot"
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.app.mention"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.channels"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.groups"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.im"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.mpim"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.interaction"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"

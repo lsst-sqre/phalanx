@@ -15,6 +15,7 @@ config:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           max_executions: 1
+          use_cachemachine: false
         restart: true
     - name: "quickbeam"
       count: 1
@@ -32,6 +33,7 @@ config:
           repo_branch: "prod"
           idle_time: 900
           delete_lab: false
+          use_cachemachine: false
         restart: true
     - name: "tutorial"
       count: 1
@@ -49,6 +51,7 @@ config:
           repo_branch: "prod"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
+          use_cachemachine: false
         restart: true
     - name: "tap"
       count: 1

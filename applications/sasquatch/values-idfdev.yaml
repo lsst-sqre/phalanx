@@ -13,33 +13,56 @@ strimzi-kafka:
           host: sasquatch-dev-kafka-1.lsst.cloud
         - loadBalancerIP: "35.184.86.132"
           host: sasquatch-dev-kafka-2.lsst.cloud
+  users:
+    replicator:
+      enabled: true
 
 influxdb:
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 2
+    limits:
+      memory: 16Gi
+      cpu: 2
 
 influxdb2:
-  enabled: false
+  enabled: true
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 2
+    limits:
+      memory: 16Gi
+      cpu: 2
+
 
 telegraf-kafka-consumer:
-  enabled: false
+  enabled: true
+  image:
+    tag: "refreshregex"
   kafkaConsumers:
     test:
       enabled: true
       replicaCount: 1
+      refresh_interval: "60s"
       topicRegexps: |
         [ ".*Test" ]
     atmcs:
       enabled: true
       replicaCount: 1
+      refresh_interval: "60s"
       topicRegexps: |
         [ ".*ATMCS" ]
 
 kafdrop:
+  cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
@@ -55,6 +78,7 @@ rest-proxy:
     topicPrefixes:
       - test
       - lsst.dm
+      - lsst.Test
 
 chronograf:
   ingress:

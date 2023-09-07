@@ -18,5 +18,6 @@ After you have reviewed this documentation, see the :doc:`/developers/index` sec
    :maxdepth: 1
    :caption: Contributing
 
-   precommit-and-helm-docs
+   local-environment-setup
+   pre-commit-and-testing
    contributing-docs

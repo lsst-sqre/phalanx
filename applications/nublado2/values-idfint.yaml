@@ -1,5 +1,6 @@
 jupyterhub:
   hub:
+    baseUrl: "/n2"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
@@ -43,16 +44,16 @@ config:
   sizes:
     - name: Small
       cpu: 1
-      ram: 3072M
+      ram: 4096M
     - name: Medium
       cpu: 2
-      ram: 6144M
+      ram: 8192M
     - name: Large
       cpu: 4
-      ram: 12288M
+      ram: 16384M
     - name: Huge
       cpu: 8
-      ram: 24576M
+      ram: 32768M
   volumes:
     - name: home
       nfs:
