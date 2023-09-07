@@ -60,5 +60,6 @@ prompt-proto-service:
   #    name: s3-credentials-file
   #    subPath: credentials
 
+  fullnameOverride: "prompt-proto-service-hsc"
 
   vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-hsc"
