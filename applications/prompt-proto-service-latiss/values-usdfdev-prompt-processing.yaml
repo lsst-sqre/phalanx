@@ -21,7 +21,7 @@ prompt-proto-service:
 
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: AuxTel20230524-w_2023_20
 
@@ -51,5 +51,7 @@ prompt-proto-service:
     ip: usdf-butler.slac.stanford.edu:5432
     db: lsstdb1
     user: rubin
+
+  fullnameOverride: "prompt-proto-service-latiss"
 
   vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"

@@ -2,7 +2,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: prompt-proto-service
+  name: {{ include "prompt-proto-service.fullname" . }}
 spec:
   template:
     metadata:
@@ -58,12 +58,12 @@ spec:
         - name: PSQL_REGISTRY_PASS
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secrets
               key: registry_password
         - name: PSQL_APDB_PASS
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secrets
               key: apdb_password
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
@@ -71,12 +71,12 @@ spec:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secrets
               key: s3_access_key
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secrets
               key: s3_secret_key
         {{- end }}
         {{- if .Values.s3.cred_file_auth }}

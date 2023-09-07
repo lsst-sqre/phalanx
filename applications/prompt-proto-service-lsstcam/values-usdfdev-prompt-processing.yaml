@@ -14,7 +14,7 @@ prompt-proto-service:
 
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
@@ -52,5 +52,7 @@ prompt-proto-service:
     timeout: 900
     idleTimeout: 900
     responseStartTimeout: 900
+
+  fullnameOverride: "prompt-proto-service-lsstcam"
 
   vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-lsstcam"
