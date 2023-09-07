@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 knative:
-  hscUrl: http://prompt-proto-service.prompt-proto-service/next-visit
+  hscUrl: http://prompt-proto-service.prompt-proto-service-hsc/next-visit
   latissUrl: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
-  lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service/next-visit
-  lsstcamUrl: http://prompt-proto-service.prompt-proto-service/next-visit
+  lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit
+  lsstcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit
 
 kafka:
   schemaRegistryUrl: http://10.99.65.182:8081
