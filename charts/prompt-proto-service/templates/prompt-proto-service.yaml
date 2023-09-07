@@ -2,7 +2,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: prompt-proto-service
+  name: {{ include "prompt-proto-service.fullname" . }}
 spec:
   template:
     metadata:
