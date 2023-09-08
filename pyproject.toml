@@ -98,6 +98,20 @@ init_typed = true
 warn_required_dynamic_aliases = true
 warn_untyped_fields = true
 
+[tool.pytest.ini_options]
+# The python_files setting is not for test detection (pytest will pick up any
+# test files named *_test.py without this setting) but to enable special
+# assert processing in any non-test supporting files under tests. We
+# conventionally put test support functions under tests.support and may
+# sometimes use assert in test fixtures in conftest.py, and pytest only
+# enables magical assert processing (showing a full diff on assert failures
+# with complex data structures rather than only the assert message) in files
+# listed in python_files.
+python_files = [
+    "tests/*.py",
+    "tests/*/*.py"
+]
+
 # The rule used with Ruff configuration is to disable every lint that has
 # legitimate exceptions that are not dodgy code, rather than cluttering code
 # with noqa markers. This is therefore a reiatively relaxed configuration that

@@ -9,11 +9,44 @@ from typing import Any
 import yaml
 
 __all__ = [
+    "assert_json_dirs_match",
+    "output_path",
     "phalanx_test_path",
     "read_input_static_secrets",
     "read_output_data",
     "read_output_json",
 ]
+
+
+def assert_json_dirs_match(left: Path, right: Path) -> None:
+    """Assert that two directories full of JSON files match.
+
+    Parameters
+    ----------
+    left
+        One tree of JSON files.
+    right
+        Another tree of JSON files.
+    """
+    left_files = {p.name for p in left.iterdir()}
+    right_files = {p.name for p in right.iterdir()}
+    assert left_files == right_files
+    for left_path in left.iterdir():
+        with left_path.open() as fh:
+            left_json = json.load(fh)
+        with (right / left_path.name).open() as fh:
+            assert left_json == json.load(fh)
+
+
+def output_path() -> Path:
+    """Return path to Phalanx test output.
+
+    Returns
+    -------
+    Path
+        Path to test output data.
+    """
+    return Path(__file__).parent.parent / "data" / "output"
 
 
 def phalanx_test_path() -> Path:
@@ -22,7 +55,7 @@ def phalanx_test_path() -> Path:
     Returns
     -------
     Path
-        Path to test input data.  The directory will contain test data in the
+        Path to test input data. The directory will contain test data in the
         layout of a Phalanx repository to test information gathering and
         analysis.
     """
@@ -67,8 +100,7 @@ def read_output_data(environment: str, filename: str) -> str:
     str
         Contents of the file.
     """
-    base_path = Path(__file__).parent.parent / "data" / "output"
-    return (base_path / environment / filename).read_text()
+    return (output_path() / environment / filename).read_text()
 
 
 def read_output_json(environment: str, filename: str) -> Any:
@@ -87,8 +119,7 @@ def read_output_json(environment: str, filename: str) -> Any:
     Any
         Contents of the file.
     """
-    base_path = Path(__file__).parent.parent / "data" / "output"
-    data = (base_path / environment / (filename + ".json")).read_text()
+    data = (output_path() / environment / (filename + ".json")).read_text()
     return json.loads(data)
 
 
@@ -109,6 +140,5 @@ def write_output_json(environment: str, filename: str, data: Any) -> None:
     data
         Data to write.
     """
-    base_path = Path(__file__).parent.parent / "data" / "output"
-    with (base_path / environment / (filename + ".json")).open("w") as f:
+    with (output_path() / environment / (filename + ".json")).open("w") as f:
         json.dump(data, f, indent=2)
