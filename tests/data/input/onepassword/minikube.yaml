@@ -3,5 +3,5 @@ argocd:
 gafaelfawr:
   github-client-secret: some-github-secret
 mobu:
-  ALERT_HOOK: https://example.com/alert-hook
+  ALERT_HOOK: aHR0cHM6Ly9leGFtcGxlLmNvbS9hbGVydC1ob29r
   app-alert-webhook: https://example.com/app-hook

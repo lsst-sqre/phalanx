@@ -168,9 +168,9 @@ class Environment(EnvironmentBaseConfig):
 
     def all_secrets(self) -> list[Secret]:
         """Return all secrets regardless of application."""
-        secrets = []
+        secrets: list[Secret] = []
         for application in self.all_applications():
-            secrets.extend(application.secrets)
+            secrets.extend(application.secrets.values())
         return secrets
 
 
