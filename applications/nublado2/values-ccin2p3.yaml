@@ -47,12 +47,16 @@ config:
     - name: throng
       hostPath:
         path: /pbs/throng
-
+    - name: sps
+      hostPath:
+        path: /sps/lsst
   volume_mounts:
     - name: home
       mountPath: /pbs/home
     - name: throng
       mountPath: /pbs/throng
+    - name: sps
+      mountPath: /sps/lsst
 
   user_resources_template: |
     - apiVersion: v1
