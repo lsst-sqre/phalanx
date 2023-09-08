@@ -43,6 +43,7 @@ applications:
   butler: false
 
   # -- Enable the calsys control system application
+  calsys: false
 
   # -- Enable the cert-manager application, required unless the environment
   # makes separate arrangements to inject a current TLS certificate

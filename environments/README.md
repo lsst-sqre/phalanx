@@ -9,6 +9,7 @@
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
 | applications.auxtel | bool | `false` | Enable the auxtel control system application |
 | applications.butler | bool | `false` | Enable the butler application |
+| applications.calsys | bool | `false` | Enable the calsys control system application |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
