@@ -157,6 +157,34 @@
       "default": null,
       "description": "Branch of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
       "title": "Git repository branch"
+    },
+    "controlSystemAppNamespace": {
+      "title": "Controlsystemappnamespace",
+      "type": "string"
+    },
+    "controlSystemImageTag": {
+      "title": "Controlsystemimagetag",
+      "type": "string"
+    },
+    "controlSystemSiteTag": {
+      "title": "Controlsystemsitetag",
+      "type": "string"
+    },
+    "controlSystemTopicName": {
+      "title": "Controlsystemtopicname",
+      "type": "string"
+    },
+    "controlSystemKafkaBrokerAddress": {
+      "title": "Controlsystemkafkabrokeraddress",
+      "type": "string"
+    },
+    "controlSystemSchemaRegistryUrl": {
+      "title": "Controlsystemschemaregistryurl",
+      "type": "string"
+    },
+    "controlSystemS3EndpointUrl": {
+      "title": "Controlsystems3endpointurl",
+      "type": "string"
     }
   },
   "required": [

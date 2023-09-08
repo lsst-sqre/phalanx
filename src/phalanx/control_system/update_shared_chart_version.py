@@ -1,3 +1,5 @@
+"""Script for updating shared chart versions."""
+
 import argparse
 import pathlib
 
@@ -32,6 +34,13 @@ def shared_chart(appdir: pathlib.Path, shared_dir: str) -> bool:
 
 
 def main(opts: argparse.Namespace) -> None:
+    """Execute shared chart version update.
+
+    Parameters
+    ----------
+    opts: `argparse.Namespace`
+        The command-line options.
+    """
     print(
         f"Updating {opts.app_type} apps Helm chart "
         f"to version {opts.chart_version}"
@@ -53,13 +62,12 @@ def main(opts: argparse.Namespace) -> None:
             if dependency["name"] == DIR_MAP[opts.app_type]:
                 dependency["version"] = opts.chart_version
 
-        # print(appdir, values)
-
         with chart.open("w") as ofile:
             yaml.dump(values, ofile, sort_keys=False)
 
 
 def run() -> None:
+    """Script run function."""
     description = [
         "Update version for apps using the csc or shared Helm chart"
     ]
