@@ -1,6 +1,8 @@
 name: Dependency Update
 
 "on":
+  schedule:
+    - cron: "0 12 * * 1"
   workflow_dispatch: {}
 
 jobs:
@@ -11,12 +13,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Omit pre-commit updates for now until neophile looks only at releases
+      # so that it doesn't pick up an old helm-docs release.
       - name: Run neophile
         uses: lsst-sqre/run-neophile@v1
         with:
           python-version: "3.11"
           mode: pr
-          types: pre-commit
+          types: python
           app-id: ${{ secrets.NEOPHILE_APP_ID }}
           app-secret: ${{ secrets.NEOPHILE_PRIVATE_KEY }}
 
