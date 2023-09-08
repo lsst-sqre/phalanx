@@ -22,10 +22,10 @@ take place in a separate maintenance window as defined by site policy:
    document and in actuality, we use ``/n3``).  Run for some time
    allowing users to test the new spawner while still using nublado v2
    by default
-#. Switch nubladov3 to the default route and nubladov2 to an alternate
+#. Switch nublado v3 to the default route and nublado v2 to an alternate
    route (e.g. ``/n2``).  Again, run for some time, keeping an eye out
    for any problems.
-#. Once satisfied with the performance of nubladov3, disable the
+#. Once satisfied with the performance of nublado v3, disable the
    ``nublado2``, ``cachemachine``, and ``moneypenny`` applications (the
    functionality of the latter two are subsumed in nublado v3).
 
@@ -271,8 +271,8 @@ that maintenance window will be disruptive and will destroy any user
 sessions spawned via ``/n2``.  Hopefully that will be none or at least
 very few.
 
-Turn off nubladov2
-""""""""""""""""""
+Turn off nublado v2
+"""""""""""""""""""
 
 Delete the entries ``cachemachine: true``, ``moneypenny: true``, and
 ``nublado2: true`` from your instance-specific values file in
