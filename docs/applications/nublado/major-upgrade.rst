@@ -78,7 +78,7 @@ Enable the application
 """"""""""""""""""""""
 
 In the values file for your installation in the top-level Phalanx
-``environments`` directory, set `nublado: true`.
+``environments`` directory, set ``nublado: true``.
 
 Configure nublado v3
 """"""""""""""""""""
@@ -170,8 +170,8 @@ advance of the maintenance window.
 Communicate to user base
 """"""""""""""""""""""""
 
-Let your users know that `/nb` will refer to the new spawner, and that
-the old one will be available for a while at `/n2`, as well as the
+Let your users know that ``/nb`` will refer to the new spawner, and that
+the old one will be available for a while at ``/n2``, as well as the
 timeframe for these changes (presumably, at the end of the next
 maintenance window).  Announce that that maintenance window will be
 disruptive and will destroy any existing user sessions.
