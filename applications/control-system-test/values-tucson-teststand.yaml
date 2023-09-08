@@ -15,3 +15,8 @@ test42:
     pullPolicy: Always
   env:
     RUN_ARG: 42
+
+integration-testing:
+  enabled: true
+  envEfd: tucson_teststand_efd
+  s3Bucket: rubinobs-lfa-tuc

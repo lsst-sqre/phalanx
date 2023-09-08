@@ -1,0 +1,54 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: shutdown-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20230327"
+  entrypoint: run-tests
+  onExit: save-reports
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: shutdown
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Shutdown.list"
+          - name: jobname
+            value: shutdown
+
+  - name: save-reports
+    container:
+      image: alpine:latest
+      volumeMounts:
+        - name: testreports
+          mountPath: {{ .Values.reportLocation }}
+    outputs:
+      artifacts:
+      - name: integration-test-reports
+        archive:
+          none: {}
+        path: {{ .Values.reportLocation }}/
+        s3:
+          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}

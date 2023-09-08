@@ -1,0 +1,55 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: integration-test-job-template
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  entrypoint: inttest-template
+  imagePullSecrets:
+  - name: nexus3-docker
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  templates:
+  - name: inttest-template
+    inputs:
+      parameters:
+      - name: integrationtest
+        value: "-A Run-Robot.list"
+      - name: jobname
+        value: "myjob"
+    outputs:
+      parameters:
+      - name: job-name
+        valueFrom:
+          jsonPath: '{.metadata.name}'
+    metadata:
+      labels:
+        argocd.argoproj.io/instance: integration-testing
+    securityContext:
+      runAsUser: 73006
+      runAsGroup: 73006
+      fsGroup: 73006
+    container:
+      name: test-{{ printf "{{inputs.parameters.jobname}}" }}
+      {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystemImageTag }}
+      image: "ts-dockerhub.lsst.org/integrationtests:{{ $imageTag }}"
+      imagePullPolicy: Always
+      envFrom:
+        - configMapRef:
+          name: csc-env-config
+        - secretRef:
+          name: ts-salkafka
+      env:
+      - name: ENV_EFD
+        value: {{ .Values.envEfd }}
+      - name: RUN_ARG
+        value: {{ printf "'{{inputs.parameters.integrationtest}}'" }}
+      volumeMounts:
+      - name: testreports
+        mountPath: {{ .Values.reportLocation }}
+        readOnly: false

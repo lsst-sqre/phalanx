@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: cleanup-reports-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  entrypoint: cleanup-reports
+  templates:
+  - name: cleanup-reports
+    container:
+      image: alpine:latest
+      command: [sh, -c]
+      args: ["rm /pvc/*.*"]
+      volumeMounts:
+        - name: testreports
+          mountPath: /pvc

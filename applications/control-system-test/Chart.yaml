@@ -8,3 +8,6 @@ dependencies:
 - name: csc
   alias: test42
   version: 1.0.0
+- name: integration-testing
+  version: 1.0.0
+  condition: integration-testing.enabled

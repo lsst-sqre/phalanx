@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: integration-test-controller-configmap
+  labels:
+    # Note that this label is required for the informer to detect this ConfigMap.
+    workflows.argoproj.io/configmap-type: Parameter
+data:
+  artifactRepository: |    # However, all nested maps must be strings
+    s3:
+      endpoint: {{ $.Values.global.controlSystemS3EndpointUrl }}
+      bucket: {{ .Values.s3Bucket }}
+      insecure: false
+      accessKeySecret:
+        name: lfa
+        key: aws-access-key-id
+      secretKeySecret:
+        name: lfa
+        key: aws-secret-access-key
