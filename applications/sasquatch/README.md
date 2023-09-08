@@ -217,7 +217,7 @@ Rubin Observatory's telemetry service.
 | rest-proxy.kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | rest-proxy.nodeSelector | object | `{}` | Node selector configuration. |
 | rest-proxy.podAnnotations | object | `{}` | Pod annotations. |
-| rest-proxy.replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
+| rest-proxy.replicaCount | int | `3` | Number of Kafka REST proxy pods to run in the deployment. |
 | rest-proxy.resources.limits.cpu | int | `2` | Kafka REST proxy cpu limits |
 | rest-proxy.resources.limits.memory | string | `"4Gi"` | Kafka REST proxy memory limits |
 | rest-proxy.resources.requests.cpu | int | `1` | Kafka REST proxy cpu requests |
