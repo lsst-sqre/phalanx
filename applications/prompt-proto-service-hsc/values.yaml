@@ -23,43 +23,35 @@ prompt-proto-service:
     name: HSC
     pipelines: (survey="SURVEY")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml]
     skymap: hsc_rings_v1
-    calibRepo: s3://rubin:rubin-pp-users/central_repo/
+    calibRepo: ""
 
   s3:
-    imageBucket: rubin:rubin-pp
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    imageBucket: ""
+    endpointUrl: ""
     auth_env: true
-    disableBucketValidation: '1'
+    disableBucketValidation: ""
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing
+    kafkaClusterAddress: ""
+    topic: ""
     imageTimeout: '120'
 
   apdb:
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    ip: ""
     db: lsst-devl
     user: rubin
     namespace: pp_apdb
 
   registry:
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    ip: ""
     db: ppcentralbutler
     user: pp
 
   knative:
-    minScale: 3
-    maxScale: 100
     ephemeralStorageRequest: "8Gi"
     ephemeralStorageLimit: "20Gi"
     timeout: 900
     idleTimeout: 900
     responseStartTimeout: 900
-
-  # additionalVolumeMounts:
-  #  - mountPath: /app/s3/credentials
-  #    name: s3-credentials-file
-  #    subPath: credentials
-
 
   vaultSecretsPath: ""

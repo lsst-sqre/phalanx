@@ -47,9 +47,9 @@ apdb:
   namespace: ""
 
 registry:
-  ip: usdf-butler.slac.stanford.edu:5432
-  db: lsstdb1
-  user: rubin
+  ip: ""
+  db: ""
+  user: ""
 
 # -- Override the base name for resources
 nameOverride: ""
