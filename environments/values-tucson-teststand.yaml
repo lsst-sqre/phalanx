@@ -22,6 +22,6 @@ applications:
   telegraf: true
   telegraf-ds: true
 
-controlSystemImageTag: c0030
+controlSystemImageTag: k0001
 controlSystemSiteTag: tucson
 controlSystemS3EndpointUrl: https://s3.tu.lsst.org
