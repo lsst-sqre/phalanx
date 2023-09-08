@@ -1,6 +1,3 @@
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 prompt-proto-service:
 
   image:
@@ -26,6 +23,8 @@ prompt-proto-service:
 
   registry:
     ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    db: ppcentralbutler
+    user: pp
 
   fullnameOverride: "prompt-proto-service-hsc"
 
