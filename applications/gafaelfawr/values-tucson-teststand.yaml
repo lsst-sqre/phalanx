@@ -39,6 +39,9 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
@@ -52,6 +55,9 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
     "exec:portal":
       - github:
           organization: "lsst-sqre"
@@ -65,6 +71,9 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
     "read:image":
       - github:
           organization: "lsst-sqre"
@@ -78,6 +87,9 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
     "read:tap":
       - github:
           organization: "lsst-sqre"
@@ -91,10 +103,16 @@ config:
       - github:
           organization: "rubin-summit"
           team: "rsp-access"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
     "write:sasquatch":
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
 
   initialAdmins:
     - "afausti"
