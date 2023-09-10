@@ -35,12 +35,6 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
-      - github:
-          organization: "lsst-ts"
           team: "tts-access"
     "exec:notebook":
       - github:
@@ -49,12 +43,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
-      - github:
-          organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
       - github:
           organization: "lsst-ts"
           team: "tts-access"
@@ -67,12 +55,6 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
-      - github:
-          organization: "lsst-ts"
           team: "tts-access"
     "read:image":
       - github:
@@ -83,12 +65,6 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
-      - github:
-          organization: "lsst-ts"
           team: "tts-access"
     "read:tap":
       - github:
@@ -97,12 +73,6 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "friends"
-      - github:
-          organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
       - github:
           organization: "lsst-ts"
           team: "tts-access"
@@ -121,4 +91,3 @@ config:
     - "frossie"
     - "jonathansick"
     - "rra"
-    - "simonkrughoff"
