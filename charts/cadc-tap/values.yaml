@@ -192,7 +192,7 @@ uws:
 
     # -- Tag of UWS database image to use
     # @default -- Version of QServ TAP image
-    tag: "1.4.5"
+    tag: "2.0.0"
 
   # -- Resource limits and requests for the UWS database pod
   resources:
