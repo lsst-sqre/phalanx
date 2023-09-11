@@ -9,4 +9,3 @@ applications:
   ingress-nginx: false
   strimzi: true
   strimzi-access-operator: false
-  strimzi-registry-operator: true
