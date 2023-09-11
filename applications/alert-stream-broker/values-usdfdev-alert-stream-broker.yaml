@@ -4,9 +4,9 @@ alert-stream-broker:
 
   zookeeper:
     storage:
-        size: 1000Gi
-        storageClassName: wekafs--sdf-k8s01
-        
+      size: 1000Gi
+      storageClassName: wekafs--sdf-k8s01
+
   kafka:
 
     version: 3.4.0
@@ -25,10 +25,10 @@ alert-stream-broker:
       tls:
         enabled: false
       bootstrap:
-         host: usdf-alert-stream-dev.lsst.cloud
-         ip: "134.79.23.215"
-         annotations:
-           metallb.universe.tf/address-pool: 'sdf-dmz'
+        host: usdf-alert-stream-dev.lsst.cloud
+        ip: "134.79.23.215"
+        annotations:
+          metallb.universe.tf/address-pool: 'sdf-dmz'
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
           ip: "134.79.23.214"
@@ -54,7 +54,7 @@ alert-stream-broker:
           ip: "134.79.23.219"
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
-        
+
     storage:
       size: 2500Gi
       storageClassName: wekafs--sdf-k8s01

@@ -46,9 +46,9 @@ spec:
             {{- if .Values.kafka.externalListener.bootstrap.ip }}
             loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.ip }}
             {{- end }}
-      
+
             {{- with .Values.kafka.externalListener.bootstrap.annotations }}
-            annotations: 
+            annotations:
               {{- toYaml . | nindent 14 }}
             {{- end }}
 

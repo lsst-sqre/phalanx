@@ -16,3 +16,4 @@ Confluent Schema Registry for managing schema versions for the Alert Stream
 | schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
+| tls | bool | `true` |  |

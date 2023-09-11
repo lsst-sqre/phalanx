@@ -43,7 +43,7 @@ spec:
             {{- if eq .Values.ingester.logLevel "verbose" }}
             - "--verbose"
             {{- end }}
-        
+
           env:
           {{- if .Values.ingester.gcp.outsideGCP }}
           - name: GOOGLE_APPLICATION_CREDENTIALS
