@@ -6,7 +6,7 @@ prompt-proto-service:
     autoscaling.knative.dev/max-scale: "600"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
-    # Update this field if `make apply` by itself doesn't make a new revision.
+    # Update this field if using latest or static image tag in dev
     revision: "1"
 
   image:
