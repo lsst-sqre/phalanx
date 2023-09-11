@@ -64,7 +64,6 @@ config:
     - "frossie"
     - "jsick"
     - "rra"
-    - "simonkrughoff"
 
 cloudsql:
   enabled: true
