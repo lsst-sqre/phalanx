@@ -54,7 +54,7 @@ love-manager:
     enabled: true
     minReplicas: 2
     maxReplicas: 25
-    targetCPUUtilizationPercentage: 50
+    targetCPUUtilizationPercentage: 75
   resources:
     requests:
       cpu: 250m
