@@ -1,17 +1,12 @@
-environment: usdfdev-alert-stream-broker
-#fqdn: alert-stream-broker.slac.stanford.edu
+fqdn: k8s.slac.stanford.edu
+name: usdfdev-alert-stream-broker
+vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
-repoURL: https://github.com/lsst-sqre/phalanx.git
 
-alert-stream-broker:
-  enabled: true
-cert-manager:
-  enabled: true
-ingress-nginx:
-  enabled: false
-strimzi:
-  enabled: true
-strimzi-access-operator:
-  enabled: false
-strimzi-registry-operator:
-  enabled: true
+applications:
+  alert-stream-broker: true
+  cert-manager: true
+  ingress-nginx: false
+  strimzi: true
+  strimzi-access-operator: false
+  strimzi-registry-operator: true
