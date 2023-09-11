@@ -22,12 +22,14 @@ take place in a separate maintenance window as defined by site policy:
    document and in actuality, we use ``/n3``).  Run for some time
    allowing users to test the new spawner while still using nublado v2
    by default
-#. Switch nublado v3 to the default route and nublado v2 to an alternate
-   route (e.g. ``/n2``).  Again, run for some time, keeping an eye out
-   for any problems.
+#. Switch nublado v3 to ``/nb`` and nublado v2 to an alternate route
+   (e.g. ``/n2``).  Again, run for some time, keeping an eye out for any
+   problems.
 #. Once satisfied with the performance of nublado v3, disable the
    ``nublado2``, ``cachemachine``, and ``moneypenny`` applications (the
    functionality of the latter two are subsumed in nublado v3).
+#. Once every environment is migrated, delete the ``nublado2``,
+   ``cachemachine``, and ``moneypenny`` applications from Phalanx.
 
 Enable nublado v3
 -----------------
@@ -93,7 +95,6 @@ Note that if you do share persistent storage between nublado versions,
 the step about communicating with your users (below) goes from
 "important" to "critical".
 
-
 Create an alternate route
 """""""""""""""""""""""""
 
@@ -112,18 +113,23 @@ If you are using the same storage for users regardless of which spawner
 they're coming in as, which you very likely are, in addition to the new
 route, you need to do your utmost to make it extremely clear that if
 they are testing the new route, it is vital to make sure that their labs
-are shut down before changing from one route to the other.  If they do
-not do this, it will at best create confusion as open notebooks will be
-saved every five minutes by each environment, thus bafflingly reverting
-changes, and at worst it will cause full-scale corruption of the files
-the user has open.
+from the previous route are shut down before changing from one route to
+the other.  If they do not do this, it will at best create confusion as
+open notebooks will be saved every five minutes by each environment,
+thus bafflingly reverting changes, and at worst it will cause full-scale
+corruption of the files the user has open.
 
 
 Silence Mobu complaints
 """""""""""""""""""""""
 
-Turn off ``mobu`` if you're using it, so that it doesn't complain
-about the service outage.
+Turn off ``mobu`` for notebooks if you're using it, so that it doesn't
+complain about the service outage.  The easiest way to do this is, as an
+administrator, is to issue an HTTP ``DELETE`` against
+``/mobu/flocks/<flockname>``.  Note that none of the silencing/disabling
+steps require any changes to Phalanx; they are all being performed in
+the ArgoCD UI or the Kubernetes CLI, and will be undone by a sync at the
+end of the maintenance window.
 
 Disable logins
 """"""""""""""
@@ -134,13 +140,11 @@ the ``hub`` deployment from nublado v2.
 Remove user sessions
 """"""""""""""""""""
 
-Remove any user sessions.  This is not, strictly speaking, necessary,
-but if you have a user with a running v2 installation who decides to use
-the v3 endpoint, they will risk the file corruption mentioned above.
-You can do this by deleting the namespace objects in the
-``nublado-users`` application (which will also clean up anything within
-those namespaces) or by executing something like ``kubectl get ns | grep
-nublado2- | awk '{print $1}' | xargs kubectl delete ns``.
+Remove any user sessions.  You can do this by deleting the namespace
+objects in the ``nublado-users`` application (which will also clean up
+anything within those namespaces) or by executing something like
+``kubectl get ns | grep nublado2- | awk '{print $1}' | xargs kubectl
+delete ns``.
 
 Bring up applications
 """""""""""""""""""""
@@ -153,11 +157,12 @@ Bring up applications
    you find errors, troubleshoot them.  Only proceed once you have the
    new spawner correctly spawning and shutting down labs.
 #. Synchronize the ``nublado2`` application.  This will reenable the
-   default spawner.  At this point users will start returning (whether
-   or not you call an all-clear, which you should not yet; users don't
-   pay attention to such things).
-#. Re-enable mobu, if you disabled it.  Wait to make sure it's correctly
-   running notebooks, or test a few yourself.
+   default spawner at ``/nb``.  At this point users will start returning
+   (whether or not you call an all-clear, which you should not yet;
+   users don't pay attention to such things).
+#. Re-enable mobu, if you disabled any of its flocks, by syncing the
+   ``mobu`` application.  Wait to make sure it's correctly running
+   notebooks, or test a few yourself.
 
 Make nublado v3 the default
 ---------------------------
@@ -180,11 +185,11 @@ If you are using the same storage for users regardless of which spawner
 they're coming in as, which you very likely are, in addition to the new
 route, you need to do your utmost to make it extremely clear that if
 they intend to use both routes, it is vital to make sure that their labs
-are shut down before changing from one route to the other.  If they do
-not do this, it will at best create confusion as open notebooks will be
-saved every five minutes by each environment, thus bafflingly reverting
-changes, and at worst it will cause full-scale corruption of the files
-the user has open.
+from the previous route are shut down before changing from one route to
+the other.  If they do not do this, it will at best create confusion as
+open notebooks will be saved every five minutes by each environment,
+thus bafflingly reverting changes, and at worst it will cause full-scale
+corruption of the files the user has open.
 
 Change mobu configuration
 """""""""""""""""""""""""
@@ -218,8 +223,14 @@ During the deployment window:
 Silence Mobu complaints
 """""""""""""""""""""""
 
-Turn off ``mobu`` if you're using it, so that it doesn't complain
-about the service outage.
+Turn off ``mobu`` for notebooks if you're using it, so that it doesn't
+complain about the service outage.  The easiest way to do this is, as an
+administrator, is to issue an HTTP ``DELETE`` against
+``/mobu/flocks/<flockname>``.  Note that none of the silencing/disabling
+steps require any changes to Phalanx; they are all being performed in
+the ArgoCD UI or the Kubernetes CLI, and will be undone by a sync at the
+end of the maintenance window.
+
 
 Disable logins
 """"""""""""""
@@ -231,14 +242,11 @@ and ``nublado`` applications.
 Remove user sessions
 """"""""""""""""""""
 
-Remove any user sessions.  This is not, strictly speaking, necessary,
-but if you have a user with a running installation who decides to use
-the other endpoint, they will risk the file corruption mentioned above.
-You can do this by deleting the namespace objects in the
-``nublado-users`` application (which will also clean up anything within
-those namespaces) or by executing something like ``for i in '' 2; do
-kubectl get ns | grep nublado${i}- | awk '{print $1}' | xargs kubectl
-delete ns; done``.
+Remove any user sessions.  You can do this by deleting the namespace
+objects in the ``nublado-users`` application (which will also clean up
+anything within those namespaces) or by executing something like ``for i
+in '' 2; do kubectl get ns | grep nublado${i}- | awk '{print $1}' |
+xargs kubectl delete ns; done``.
 
 Bring up applications
 """""""""""""""""""""
@@ -252,11 +260,12 @@ Bring up applications
    nublado v3 spawner on the default route ``/nb``.  At this point users
    will start returning (whether or not you call an all-clear, which you
    should not yet; users don't pay attention to such things).
-#. Re-enable mobu, if you disabled it.  Wait to make sure it's correctly
-   running notebooks, or test a few yourself.
+#. Re-enable mobu, if you disabled it, by resynchronizing it from the
+   ArgoCD UI.  Wait to make sure it's correctly running notebooks, or
+   test a few yourself.
 
-Remove nublado v2
------------------
+Disable nublado v2
+------------------
 
 Pre-deployment Preparation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -290,24 +299,19 @@ During the deployment window:
    with a namespace called ``nublado2-<username>`` and remove only those
    namespaces.  From the CLI, it's easier: ``kubectl get ns | grep
    nublado2- | awk '{print $1}' | xargs kubectl delete ns``.
-#. Delete the values files for your installation from Phalanx's
+#. Delete the values files for your environment from Phalanx's
    ``applications/nublado2``, ``applications/cachemachine``, and
    ``applications/moneypenny``.
-#. If you're feeling ambitious, you can remove the ``jupyterhub``
-   database and ``jovyan`` user from your Postgres instance (or ask your
-   DBA to do so), and remove the ``nublado2``, ``cachemachine``, and
-   ``moneypenny`` entries from your instance's Vault envlave.  In
-   practice we have not been doing this, because the resources consumed
-   are minimal.
 
 When Migration Is Complete For All Sites
 -----------------------------------------
 
-Once all sites are running nublado v3, and none are still running
-nublado v2, ``applications/nublado``, ``applications/moneypenny``, and
-``applications/cachemachine`` can all be deleted from Phalanx.
-
-If you didn't do it before, this might be a good time to remove those
-keys from your vault enclave and remove the ``jupyterhub`` database and
-``jovyan`` user from your postgres instantiation at each site (again, if
-you don't, it's not the end of the world).
+#. Once all sites are running nublado v3, and none are still running
+   nublado v2, the directories ``applications/nublado2``,
+   ``applications/moneypenny``, and ``applications/cachemachine`` can all
+   be deleted from Phalanx.
+#. Remove the ``nublado2`` secret from the vault enclave for all
+   environments.
+#. Remove the ``jupyterhub`` database and ``jovyan`` user from the
+   postgres instance for each environment (or have the site DBA do it if
+   it's a database you don't manage).
