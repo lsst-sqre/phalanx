@@ -56,7 +56,6 @@ config:
     - "frossie"
     - "jonathansick"
     - "rra"
-    - "simonkrughoff"
 
   errorFooter: |
     To report problems or ask for help, please open an issue in the
