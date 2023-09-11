@@ -10,6 +10,7 @@ import pytest
 from phalanx.factory import Factory
 
 from .support.data import phalanx_test_path
+from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
 
 
@@ -17,6 +18,12 @@ from .support.vault import MockVaultClient, patch_vault
 def factory() -> Factory:
     """Create a factory pointing at the test data."""
     return Factory(phalanx_test_path())
+
+
+@pytest.fixture
+def mock_onepassword() -> Iterator[MockOnepasswordClient]:
+    """Mock out the 1Password Connect client API."""
+    yield from patch_onepassword()
 
 
 @pytest.fixture

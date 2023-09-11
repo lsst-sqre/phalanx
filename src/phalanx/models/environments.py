@@ -5,7 +5,7 @@ from __future__ import annotations
 from enum import Enum
 from typing import ClassVar
 
-from pydantic import BaseModel, Extra
+from pydantic import AnyHttpUrl, BaseModel, Extra, validator
 from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
@@ -20,8 +20,19 @@ __all__ = [
     "GafaelfawrGitHubTeam",
     "GafaelfawrScope",
     "IdentityProvider",
+    "OnepasswordConfig",
     "PhalanxConfig",
 ]
+
+
+class OnepasswordConfig(CamelCaseModel):
+    """Configuration for 1Password static secrets source."""
+
+    connect_url: AnyHttpUrl
+    """URL to the 1Password Connect API server."""
+
+    vault_title: str
+    """Title of the 1Password vault from which to retrieve secrets."""
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
@@ -33,11 +44,24 @@ class EnvironmentBaseConfig(CamelCaseModel):
     fqdn: str
     """Fully-qualified domain name."""
 
+    onepassword: OnepasswordConfig | None = None
+    """Configuration for using 1Password as a static secrets source."""
+
     vault_url: str
     """URL of Vault server."""
 
     vault_path_prefix: str
     """Prefix of Vault paths, including the Kv2 mount point."""
+
+    @validator("onepassword", pre=True)
+    def _validate_onepassword(cls, v: dict[str, str]) -> dict[str, str] | None:
+        if not v:
+            return v
+        if not isinstance(v, dict):
+            raise TypeError("onepassword is not a dictionary")
+        if v["connectUrl"] == "":
+            return None
+        return v
 
     @property
     def vault_path(self) -> str:
@@ -144,9 +168,9 @@ class Environment(EnvironmentBaseConfig):
 
     def all_secrets(self) -> list[Secret]:
         """Return all secrets regardless of application."""
-        secrets = []
+        secrets: list[Secret] = []
         for application in self.all_applications():
-            secrets.extend(application.secrets)
+            secrets.extend(application.secrets.values())
         return secrets
 
 

@@ -7,6 +7,7 @@ applications:
   giftless: true
   kubernetes-replicator: true
   monitoring: true
+  onepassword-connect-dev: true
   ook: true
   sasquatch: true
   squarebot: true

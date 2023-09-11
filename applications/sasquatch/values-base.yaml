@@ -90,7 +90,7 @@ kafka-connect-manager:
         topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       eas:
         enabled: true
-        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.ESS|lsst.sal.WeatherForecast"
+        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: "lsst.sal.ATCamera|lsst.sal.ATHeaderService|lsst.sal.ATOODS|lsst.sal.ATSpectrograph"
@@ -159,7 +159,7 @@ source-kafka-connect-manager:
         removePrefix: "source."
       source-eas:
         enabled: true
-        topicsRegex: "source.lsst.sal.DIMM|source.lsst.sal.DSM|source.lsst.sal.ESS|source.lsst.sal.WeatherForecast"
+        topicsRegex: "source.lsst.sal.DIMM|source.lsst.sal.DSM|source.lsst.sal.ESS|source.lsst.sal.HVAC|source.lsst.sal.WeatherForecast"
         removePrefix: "source."
       source-latiss:
         enabled: true
@@ -252,6 +252,11 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://base-lsp.lsst.codes
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/base.json
+
+source-kapacitor:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
 
 kapacitor:
   persistence:

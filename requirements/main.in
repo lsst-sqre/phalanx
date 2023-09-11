@@ -12,5 +12,6 @@ cryptography
 GitPython
 hvac
 jinja2
+onepasswordconnectsdk
 PyYAML
-safir
+safir>=4.4.0

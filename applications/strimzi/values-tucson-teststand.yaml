@@ -6,4 +6,4 @@ strimzi-kafka-operator:
       memory: "512Mi"
   watchNamespaces:
     - "sasquatch"
-  logLevel: "DEBUG"
+  logLevel: "INFO"

@@ -30,6 +30,7 @@ __all__ = [
     "SecretCopyRules",
     "SecretGenerateRules",
     "SecretGenerateType",
+    "SecretOnepasswordConfig",
     "SimpleSecretGenerateRules",
     "SourceSecretGenerateRules",
     "StaticSecret",
@@ -164,6 +165,19 @@ ConditionalSecretGenerateRules = (
 )
 
 
+class SecretOnepasswordConfig(BaseModel):
+    """Configuration for how a static secret is stored in 1Password."""
+
+    encoded: bool = False
+    """Whether the 1Password copy of the secret is encoded in base64.
+
+    1Password doesn't support newlines in secrets, so secrets that contain
+    significant newlines have to be encoded when storing them in 1Password.
+    This flag indicates that this has been done, and therefore when retrieving
+    the secret from 1Password, its base64-encoding must be undone.
+    """
+
+
 class SecretConfig(BaseModel):
     """Specification for an application secret."""
 
@@ -178,6 +192,9 @@ class SecretConfig(BaseModel):
 
     generate: SecretGenerateRules | None = None
     """Rules for how the secret should be generated."""
+
+    onepassword: SecretOnepasswordConfig = SecretOnepasswordConfig()
+    """Configuration for how the secret is stored in 1Password."""
 
     value: SecretStr | None = None
     """Secret value."""
@@ -242,9 +259,8 @@ class Secret(SecretConfig):
 class ResolvedSecret(BaseModel):
     """A secret that has been resolved for a given application instance.
 
-    Secret resolution means that the configuration has been translated into
-    either a secret value or knowledge that the secret is a static secret that
-    must come from elsewhere.
+    Secret resolution means that the configuration has been translated into a
+    secret value.
     """
 
     key: str

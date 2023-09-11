@@ -7,4 +7,4 @@ strimzi-kafka-operator:
   watchNamespaces:
     - "sasquatch"
     - "alert-stream-broker"
-  logLevel: "DEBUG"
+  logLevel: "INFO"

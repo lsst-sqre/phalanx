@@ -10,6 +10,7 @@ import click
 import yaml
 from pydantic import BaseModel
 from pydantic.tools import schema_of
+from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
@@ -27,6 +28,7 @@ __all__ = [
     "secrets",
     "secrets_audit",
     "secrets_list",
+    "secrets_onepassword_secrets",
     "secrets_schema",
     "secrets_static_template",
     "secrets_vault_secrets",
@@ -108,32 +110,7 @@ def main() -> None:
 @click.pass_context
 def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
     """Show help for any command."""
-    if not topic:
-        if not ctx.parent:
-            raise RuntimeError("help called without topic or parent")
-        click.echo(ctx.parent.get_help())
-        return
-    if topic not in main.commands:
-        raise click.UsageError(f"Unknown help topic {topic}", ctx)
-    if not subtopic:
-        ctx.info_name = topic
-        click.echo(main.commands[topic].get_help(ctx))
-        return
-
-    # Subtopic handling. This requires some care with typing, since the
-    # commands attribute (although present) is not documented, and the
-    # get_command method is only available on MultiCommands.
-    group = main.commands[topic]
-    if isinstance(group, click.MultiCommand):
-        command = group.get_command(ctx, subtopic)
-        if command:
-            ctx.info_name = f"{topic} {subtopic}"
-            click.echo(command.get_help(ctx))
-            return
-
-    # Fall through to the error case of no subcommand found.
-    msg = f"Unknown help topic {topic} {subtopic}"
-    raise click.UsageError(msg, ctx)
+    display_help(main, ctx, topic, subtopic)
 
 
 @main.group()
@@ -274,6 +251,35 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     secrets = secrets_service.list_secrets(environment)
     for secret in secrets:
         print(secret.application, secret.key)
+
+
+@secrets.command("onepassword-secrets")
+@click.argument("environment")
+@click.argument("output", type=click.Path(path_type=Path))
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def secrets_onepassword_secrets(
+    environment: str, output: Path, *, config: Path | None
+) -> None:
+    """Write the 1Password secrets for the given environment.
+
+    One JSON file per application with secrets will be created in the output
+    directory, containing the secrets for that application. If the value of a
+    secret is not known, it will be written as null.
+
+    The environment variable OP_CONNECT_TOKEN must be set to the 1Password
+    Connect token for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    secrets_service = factory.create_secrets_service()
+    secrets_service.save_onepassword_secrets(environment, output)
 
 
 @secrets.command("schema")

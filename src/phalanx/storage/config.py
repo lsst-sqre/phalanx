@@ -670,12 +670,13 @@ class ConfigStorage:
                 description=config.description,
                 copy_rules=copy,
                 generate=generate,
+                onepassword=config.onepassword,
                 value=config.value,
             )
             required_secrets.append(secret)
 
         # Add the secrets to the new instance and return it.
-        instance.secrets = sorted(
-            required_secrets, key=lambda s: (s.application, s.key)
-        )
+        instance.secrets = {
+            s.key: s for s in sorted(required_secrets, key=lambda s: s.key)
+        }
         return instance

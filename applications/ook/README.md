@@ -35,6 +35,15 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | image.repository | string | `"ghcr.io/lsst-sqre/ook"` | Squarebot image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
+| ingestUpdated.affinity | object | `{}` | Affinity rules for Ook audit pods |
+| ingestUpdated.enabled | bool | `false` | Enable the ingest-updated job |
+| ingestUpdated.nodeSelector | object | `{}` | Node selection rules for Ook audit pods |
+| ingestUpdated.podAnnotations | object | `{}` | Annotations for Ook audit pods |
+| ingestUpdated.resources | object | `{}` | Resource limits and requests for Ook audit pods |
+| ingestUpdated.schedule | string | `"15 3 * * *"` | Cron schedule string for ook audit job (UTC) |
+| ingestUpdated.tolerations | list | `[]` | Tolerations for Ook audit pods |
+| ingestUpdated.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
+| ingestUpdated.window | string | `"2d"` | Time window to look for updated documents (e.g. 1h, 2d, 3w). This must be set to a value greater than the cron schedule for the ingest-updated job. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.path | string | `"/ook"` | Path prefix where Squarebot is hosted |
 | nameOverride | string | `""` | Override the base name for resources |

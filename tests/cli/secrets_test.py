@@ -2,14 +2,15 @@
 
 from __future__ import annotations
 
-import json
 import os
 import re
+from base64 import b64decode
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
+import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
@@ -18,10 +19,13 @@ from phalanx.models.gafaelfawr import Token
 
 from ..support.cli import run_cli
 from ..support.data import (
+    assert_json_dirs_match,
+    output_path,
     phalanx_test_path,
     read_input_static_secrets,
     read_output_data,
 )
+from ..support.onepassword import MockOnepasswordClient
 from ..support.vault import MockVaultClient
 
 
@@ -86,6 +90,27 @@ def test_list_path_failure() -> None:
         assert "Cannot locate root of Phalanx configuration" in result.output
     finally:
         os.chdir(str(cwd))
+
+
+def test_onepassword_secrets(
+    factory: Factory,
+    tmp_path: Path,
+    mock_onepassword: MockOnepasswordClient,
+) -> None:
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    expected_path = output_path() / "minikube" / "onepassword"
+
+    result = run_cli(
+        "secrets", "onepassword-secrets", "minikube", str(tmp_path)
+    )
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    assert_json_dirs_match(tmp_path, expected_path)
 
 
 def test_schema() -> None:
@@ -156,6 +181,37 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert after == gafaelfawr
 
 
+def test_sync_onepassword(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    input_path = phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+    _, base_vault_path = environment.vault_path_prefix.split("/", 1)
+
+    result = run_cli("secrets", "sync", "minikube")
+    assert result.exit_code == 0
+    assert result.output == read_output_data("minikube", "sync-output")
+
+    # Check that all static secrets were copied over correctly.
+    with (input_path / "onepassword" / "minikube.yaml").open() as fh:
+        onepassword_secrets = yaml.safe_load(fh)
+    for app_name, values in onepassword_secrets.items():
+        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{app_name}")
+        application = environment.applications[app_name]
+        for key, value in values.items():
+            if application.secrets[key].onepassword.encoded:
+                assert b64decode(value.encode()).decode() == vault[key]
+            else:
+                assert value == vault[key]
+
+
 def test_sync_regenerate(
     factory: Factory, mock_vault: MockVaultClient
 ) -> None:
@@ -220,11 +276,4 @@ def test_vault_secrets(
     assert result.exit_code == 0
     assert result.output == ""
 
-    expected_files = {p.name for p in vault_input_path.iterdir()}
-    output_files = {p.name for p in tmp_path.iterdir()}
-    assert expected_files == output_files
-    for expected_path in vault_input_path.iterdir():
-        with expected_path.open() as fh:
-            expected = json.load(fh)
-        with (tmp_path / expected_path.name).open() as fh:
-            assert expected == json.load(fh)
+    assert_json_dirs_match(tmp_path, vault_input_path)

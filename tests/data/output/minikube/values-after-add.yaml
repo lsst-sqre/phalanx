@@ -8,6 +8,15 @@ name: ""
 # @default -- None, must be set
 fqdn: ""
 
+onepassword:
+  # -- URL to the 1Password server for this environment, if 1Password is used
+  # for static secrets.
+  # @default -- Do not use 1Password.
+  connectUrl: ""
+
+  # -- Title of the 1Password vault to use for static secrets.
+  vaultTitle: ""
+
 # -- URL of Vault server for this environment
 # @default -- None, must be set
 vaultUrl: ""

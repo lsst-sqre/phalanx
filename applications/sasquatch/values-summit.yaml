@@ -88,7 +88,7 @@ kafka-connect-manager:
         topicsRegex: ".*OCPS"
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
         repairerConnector: false

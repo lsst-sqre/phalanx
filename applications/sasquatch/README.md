@@ -9,9 +9,9 @@ Rubin Observatory's telemetry service.
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.1.23"}` | image for monitoring-related cronjobs |
+| bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.2.0"}` | image for monitoring-related cronjobs |
 | bucketmapper.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
-| bucketmapper.image.tag | string | `"0.1.23"` | tag for rubin-influx-tools |
+| bucketmapper.image.tag | string | `"0.2.0"` | tag for rubin-influx-tools |
 | chronograf.enabled | bool | `true` | Enable Chronograf. |
 | chronograf.env | object | `{"BASE_PATH":"/chronograf","CUSTOM_AUTO_REFRESH":"1s=1000","HOST_PAGE_DISABLED":true}` | Chronograf environment variables. |
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
@@ -98,6 +98,16 @@ Rubin Observatory's telemetry service.
 | source-influxdb.resources.requests.memory | string | `"96Gi"` |  |
 | source-influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | source-kafka-connect-manager | object | `{"enabled":false,"env":{"kafkaConnectUrl":"http://sasquatch-source-connect-api.sasquatch:8083"}}` | Override source-kafka-connect-manager configuration. |
+| source-kapacitor.enabled | bool | `false` | Enable Kapacitor. |
+| source-kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
+| source-kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
+| source-kapacitor.image | object | `{"repository":"kapacitor","tag":"1.6.6"}` | Kapacitor image tag. |
+| source-kapacitor.influxURL | string | `"http://sasquatch-influxdb-staging.sasquatch:8086"` | InfluxDB connection URL. |
+| source-kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
+| source-kapacitor.resources.limits.cpu | int | `4` |  |
+| source-kapacitor.resources.limits.memory | string | `"16Gi"` |  |
+| source-kapacitor.resources.requests.cpu | int | `1` |  |
+| source-kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
@@ -207,7 +217,7 @@ Rubin Observatory's telemetry service.
 | rest-proxy.kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | rest-proxy.nodeSelector | object | `{}` | Node selector configuration. |
 | rest-proxy.podAnnotations | object | `{}` | Pod annotations. |
-| rest-proxy.replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
+| rest-proxy.replicaCount | int | `3` | Number of Kafka REST proxy pods to run in the deployment. |
 | rest-proxy.resources.limits.cpu | int | `2` | Kafka REST proxy cpu limits |
 | rest-proxy.resources.limits.memory | string | `"4Gi"` | Kafka REST proxy memory limits |
 | rest-proxy.resources.requests.cpu | int | `1` | Kafka REST proxy cpu requests |
@@ -279,7 +289,7 @@ Rubin Observatory's telemetry service.
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.35.1-kafka-3.4.0:1.3.1"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | strimzi-kafka.kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
@@ -301,7 +311,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
-| strimzi-kafka.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| strimzi-kafka.kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
