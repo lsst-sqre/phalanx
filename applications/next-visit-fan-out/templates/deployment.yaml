@@ -49,12 +49,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   key: kafka_pp_sasl_username
-                  name: {{ .Values.global.vaultSecretsPath }}-secrets
+                  name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: SASL_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: kafka_pp_sasl_password
-                  name: {{ .Values.global.vaultSecretsPath }}-secrets
+                  name: {{ template "next-visit-fan-out.fullname" . }}-secret
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
