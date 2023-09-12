@@ -1,9 +1,5 @@
-# Default values for next-visit-fan-out.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 knative:
-  hscUrl: http://prompt-proto-service.prompt-proto-service-hsc/next-visit
+  hscUrl: 'http://prompt-proto-service.prompt-proto-service-hsc/next-visit'
   latissUrl: http://prompt-proto-service.prompt-proto-service-latiss/next-visit
   lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit
   lsstcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit
@@ -26,20 +22,34 @@ image:
 nameOverride: ""
 fullnameOverride: ""
 
-namespace: next-visit-fan-out
-
 podAnnotations:
   prometheus.io/scrape: 'true'
   prometheus.io/port: '8000'
 
+
+# -- Resource limits and requests for the next-visit-fan-out deployment pod
 resources: {}
-# We usually recommend not to specify default resources and to leave this as a conscious
-# choice for the user. This also increases chances charts run on environments with little
-# resources, such as Minikube. If you do want to specify resources, uncomment the following
-# lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-# limits:
-#   cpu: 100m
-#   memory: 128Mi
-# requests:
-#   cpu: 100m
-#   memory: 128Mi
+
+# -- Node selection rules for the next-visit-fan-out deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the next-visit-fan-out deployment pod
+tolerations: []
+
+# -- Affinity rules for the next-visit-fan-out deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

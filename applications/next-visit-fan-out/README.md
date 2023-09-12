@@ -1,13 +1,17 @@
 # next-visit-fan-out
 
-A Helm chart for Kubernetes
+Application to poll next visit events from kafka, fan out/duplicate the message, and send to knative.
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| affinity | object | `{}` | Affinity rules for the next-visit-fan-out deployment pod |
 | detectorConfigFile | string | `"detector.yaml"` |  |
 | fullnameOverride | string | `""` |  |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout"` |  |
 | image.tag | string | `""` |  |
@@ -19,8 +23,9 @@ A Helm chart for Kubernetes
 | knative.lsstcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit"` |  |
 | knative.lsstcomcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit"` |  |
 | nameOverride | string | `""` |  |
-| namespace | string | `"next-visit-fan-out"` |  |
+| nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
 | podAnnotations."prometheus.io/port" | string | `"8000"` |  |
 | podAnnotations."prometheus.io/scrape" | string | `"true"` |  |
 | replicaCount | int | `1` |  |
-| resources | object | `{}` |  |
+| resources | object | `{}` | Resource limits and requests for the next-visit-fan-out deployment pod |
+| tolerations | list | `[]` | Tolerations for the next-visit-fan-out deployment pod |

@@ -46,17 +46,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "next-visit-fan-out.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "next-visit-fan-out.name" . }}
+app.kubernetes.io/name: "next-visit-fan-out"
 app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "next-visit-fan-out.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
-{{- default (include "next-visit-fan-out.fullname" .) .Values.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.serviceAccount.name }}
-{{- end }}
 {{- end }}
