@@ -19,6 +19,8 @@ schemaTopic: registry-schemas
 # -- Hostname for an ingress which sends traffic to the Schema Registry.
 hostname: alert-schemas-int.lsst.cloud
 
+tls: true
+
 # -- Configuration for the Job which injects the most recent alert_packet
 # schema into the Schema Registry
 schemaSync:

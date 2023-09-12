@@ -1,0 +1,155 @@
+alert-stream-broker:
+  cluster:
+    name: "alert-broker"
+
+  zookeeper:
+    storage:
+      size: 1000Gi
+      storageClassName: wekafs--sdf-k8s01
+
+  kafka:
+
+    version: 3.4.0
+    # -- Encoding version for messages, see
+    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+    logMessageFormatVersion: 3.4
+    # -- Version of the protocol for inter-broker communication, see
+    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
+    interBrokerProtocolVersion: 3.4
+
+    replicas: 6
+
+    # Addresses based on the state as of 2021-12-02; these were assigned by
+    # Google and now we're pinning them.
+    externalListener:
+      tls:
+        enabled: false
+      bootstrap:
+        host: usdf-alert-stream-dev.lsst.cloud
+        ip: "134.79.23.215"
+        annotations:
+          metallb.universe.tf/address-pool: 'sdf-dmz'
+      brokers:
+        - host: usdf-alert-stream-dev-broker-0.lsst.cloud
+          ip: "134.79.23.214"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-1.lsst.cloud
+          ip: "134.79.23.216"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-2.lsst.cloud
+          ip: "134.79.23.218"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-3.lsst.cloud
+          ip: "134.79.23.220"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-4.lsst.cloud
+          ip: "134.79.23.217"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+        - host: usdf-alert-stream-dev-broker-5.lsst.cloud
+          ip: "134.79.23.219"
+          annotations:
+            metallb.universe.tf/address-pool: 'sdf-dmz'
+
+    storage:
+      size: 2500Gi
+      storageClassName: wekafs--sdf-k8s01
+
+  vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/alert-stream-broker"
+
+  users:
+    # A user for development purposes by the Rubin team, with access to all
+    # topics in readonly mode.
+    - username: "rubin-devel-idfint"
+      readonlyTopics: ["*"]
+      groups: ["rubin-devel-idfint"]
+
+    # A user used by the Rubin team but with similar access to the community
+    # broker users.
+    - username: "rubin-communitybroker-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["rubin-communitybroker-idfint"]
+
+    # The actual community broker users
+    - username: "alerce-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["alerce-idfint"]
+
+    - username: "ampel-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["ampel-idfint"]
+
+    - username: "antares-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["antares-idfint"]
+
+    - username: "babamul-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["babamul-idfint"]
+
+    - username: "fink-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["fink-idfint"]
+
+    - username: "lasair-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["lasair-idfint"]
+
+    - username: "pittgoogle-idfint"
+      readonlyTopics: ["alerts-simulated"]
+      groups: ["pittgoogle-idfint"]
+
+alert-stream-schema-registry:
+  hostname: "usdf-alert-schemas-dev.slac.stanford.edu"
+  schemaTopic: "registry-schemas"
+  tls: false
+
+alert-stream-simulator:
+  clusterPort: 9092 # internal TLS listener
+  replayTopicName: "alerts-simulated"
+  replayTopicPartitions: 400
+  replayTopicReplicas: 1
+  staticTopicName: "alerts-static"
+  image:
+    tag: v1.2.1
+
+alert-database:
+  ingester:
+    image:
+      tag: v2.0.2
+
+    logLevel: verbose
+
+    schemaRegistryURL: https://usdf-alert-schemas-dev.slac.stanford.edu
+
+    serviceAccountName: alert-database-writer
+
+    kafka:
+      cluster: alert-broker
+      port: 9092
+      topic: alerts-simulated
+
+    gcp:
+      serviceAccountName: alertdb-writer
+      projectID: science-platform-int-dc5d
+      outsideGCP: true
+
+  server:
+    serviceAccountName: alert-database-reader
+
+    gcp:
+      serviceAccountName: alertdb-reader
+      projectID: science-platform-int-dc5d
+
+  ingress:
+    enabled: false
+
+  storage:
+    gcp:
+      project: science-platform-int-dc5d
+      alertBucket: rubin-alertdb-int-us-central1-packets
+      schemaBucket: rubin-alertdb-int-us-central1-schemas

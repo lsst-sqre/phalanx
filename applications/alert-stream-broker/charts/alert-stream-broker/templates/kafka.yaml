@@ -46,8 +46,10 @@ spec:
             {{- if .Values.kafka.externalListener.bootstrap.ip }}
             loadBalancerIP: {{ .Values.kafka.externalListener.bootstrap.ip }}
             {{- end }}
-            {{- if .Values.kafka.externalListener.bootstrap.annotations }}
-            annotations: {{ .Values.kafka.externalListener.bootstrap.annotations }}
+
+            {{- with .Values.kafka.externalListener.bootstrap.annotations }}
+            annotations:
+              {{- toYaml . | nindent 14 }}
             {{- end }}
 
           {{- if .Values.kafka.externalListener.brokers }}
@@ -56,6 +58,7 @@ spec:
             - broker: {{ $idx }}
               loadBalancerIP: {{ $broker.ip }}
               advertisedHost: {{ $broker.host }}
+              annotations: {{ toYaml $broker.annotations | nindent 16 }}
             {{- end }}
           {{- end }}
 
@@ -123,6 +126,17 @@ spec:
                         values: [{{ $affinity.value }}]
               {{- end }}
         {{- end }}
+
+        affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key:  "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                    - kafka
+              topologyKey: "kubernetes.io/hostname"
 
   zookeeper:
     replicas: {{ .Values.zookeeper.replicas }}

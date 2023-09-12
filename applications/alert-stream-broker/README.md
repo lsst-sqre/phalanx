@@ -16,6 +16,7 @@ Alert transmission to community brokers
 | strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| alert-database.ingester.gcp.outsideGCP | bool | `true` |  |
 | alert-database.ingester.gcp.projectID | string | `""` | Project ID which has the above GCP IAM service account |
 | alert-database.ingester.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.ingester.image.imagePullPolicy | string | `"IfNotPresent"` |  |
@@ -91,6 +92,7 @@ Alert transmission to community brokers
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | alert-stream-schema-registry.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
+| alert-stream-schema-registry.tls | bool | `true` |  |
 | alert-stream-simulator.clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-stream-simulator.clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
 | alert-stream-simulator.fullnameOverride | string | `""` | Explicitly sets the full name used for the deployment and job (includes the release name). |
