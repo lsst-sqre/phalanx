@@ -30,7 +30,7 @@ spec:
               imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
               envFrom:
               - configMapRef:
-                name: csc-env-config
+                  name: csc-env-config
               env:
                 - name: PGHOST
                   value: {{ .Values.env.DB_HOST | quote }}
@@ -49,7 +49,7 @@ spec:
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.namespace }}-secrets
+                      name: love-secrets
                       key: {{ .Values.database.envSecrets.POSTGRES_PASSWORD }}
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:

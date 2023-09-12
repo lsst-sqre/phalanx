@@ -30,9 +30,9 @@ spec:
           tty: true
           envFrom:
           - configMapRef:
-            name: csc-env-config
+              name: csc-env-config
           - secretRef:
-            name: ts-salkafka
+              name: ts-salkafka
           {{- if or (or .Values.env .Values.envSecrets) .Values.butlerSecret }}
           env:
           {{- range $env_var, $env_value := .Values.env }}

@@ -42,7 +42,7 @@ spec:
           - mountPath: /usr/src
             name: {{ .Values.staticStore.name }}
       containers:
-      - name: {{ include "love-nginx.fullname" . }}
+      - name: {{ include "love-nginx.name" . }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:

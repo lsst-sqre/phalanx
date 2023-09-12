@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: csc-env-configfile
+  name: csc-env-config
 data:
     LSST_SITE: {{ $.Values.global.controlSystemSiteTag }}
-    LSST_TOPIC_NAME: {{ $.Values.global.controlSystemTopicName }}
+    LSST_TOPIC_SUBNAME: {{ $.Values.global.controlSystemTopicName }}
     LSST_KAFKA_BROKER_ADDR: {{ $.Values.global.controlSystemKafkaBrokerAddress }}
     LSST_SCHEMA_REGISTRY_URL: {{ $.Values.global.controlSystemSchemaRegistryUrl }}
     S3_ENDPOINT_URL: {{ $.Values.global.controlSystemS3EndpointUrl }}

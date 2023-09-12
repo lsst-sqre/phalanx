@@ -73,5 +73,5 @@ Selector labels
 csc: {{ include "chart.name" . }}
 csc-name: {{ include "csc.name" . }}
 csc-class: {{ include "csc.class" . }}
-csc-is-primary: {{ .Values.isPrimary }}
+csc-is-primary: {{ .Values.isPrimary | quote }}
 {{- end -}}

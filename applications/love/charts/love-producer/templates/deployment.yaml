@@ -31,9 +31,9 @@ spec:
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
-            name: csc-env-config
+              name: csc-env-config
           - secretRef:
-            name: ts-salkafka
+              name: ts-salkafka
           env:
             - name: LOVE_CSC_PRODUCER
               value: {{ $csc | quote }}
