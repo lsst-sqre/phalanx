@@ -6,6 +6,6 @@ data:
     LSST_SITE: {{ $.Values.global.controlSystemSiteTag }}
     LSST_TOPIC_SUBNAME: {{ $.Values.global.controlSystemTopicName }}
     LSST_KAFKA_BROKER_ADDR: {{ $.Values.global.controlSystemKafkaBrokerAddress }}
+    LSST_KAFKA_SECURITY_USERNAME: ts-salkafka
     LSST_SCHEMA_REGISTRY_URL: {{ $.Values.global.controlSystemSchemaRegistryUrl }}
     S3_ENDPOINT_URL: {{ $.Values.global.controlSystemS3EndpointUrl }}
-    TS_SALKAFKA_USERNAME: ts-salkafka

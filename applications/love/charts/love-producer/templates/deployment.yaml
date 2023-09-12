@@ -32,11 +32,14 @@ spec:
           envFrom:
           - configMapRef:
               name: csc-env-config
-          - secretRef:
-              name: ts-salkafka
           env:
             - name: LOVE_CSC_PRODUCER
               value: {{ $csc | quote }}
+            - name: LSST_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ts-salkafka
+                  key: ts-salkafka-password
           {{- range $env_var, $env_value := $.Values.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}

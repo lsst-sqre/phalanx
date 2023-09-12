@@ -42,13 +42,16 @@ spec:
       envFrom:
         - configMapRef:
           name: csc-env-config
-        - secretRef:
-          name: ts-salkafka
       env:
       - name: ENV_EFD
         value: {{ .Values.envEfd }}
       - name: RUN_ARG
         value: {{ printf "'{{inputs.parameters.integrationtest}}'" }}
+      - name: LSST_SASL_PLAIN_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: ts-salkafka
+            key: ts-salkafka-password
       volumeMounts:
       - name: testreports
         mountPath: {{ .Values.reportLocation }}
