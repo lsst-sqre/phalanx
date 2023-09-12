@@ -36,7 +36,7 @@ config:
     url: ldap://ccidm01.in2p3.fr
     groupBaseDn: cn=groups,cn=account,dc=cc,dc=in2p3,dc=fr
     groupObjectClass: posixGroup
-    groupMemberAttr: memberOf
+    groupMemberAttr: memberUid
     userBaseDn: cn=users,cn=accounts,dc=cc,dc=in2p3,dc=fr
     userSearchAttr: uid
     addUserGroup: false
