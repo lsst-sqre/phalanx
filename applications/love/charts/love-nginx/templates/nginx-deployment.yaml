@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "love-nginx.fullname" . }}
+  name: {{ include "love-nginx.name" . }}
   namespace: {{ $.Values.global.controlSystemAppNamespace }}
   labels:
     {{- include "love-nginx.labels" . | nindent 4 }}

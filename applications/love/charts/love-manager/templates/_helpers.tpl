@@ -15,8 +15,8 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- if contains .Release.Name $name }}
+{{- $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
@@ -43,7 +43,7 @@ Selector labels
 */}}
 {{- define "love-manager.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "love-manager.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "love-manager.name" . }}
 {{- end }}
 
 {{/*
@@ -82,8 +82,8 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- printf "%s-database" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- if contains .Release.Name $name }}
+{{- printf "%s-database" $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s-database" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
@@ -116,8 +116,8 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- printf "%s-redis" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- if contains .Release.Name $name }}
+{{- printf "%s-redis" $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s-redis" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}
@@ -150,8 +150,8 @@ If release name contains chart name it will be used as a full name.
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if contains $name .Release.Name }}
-{{- printf "%s-view-backup" .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- if contains .Release.Name $name }}
+{{- printf "%s-view-backup" $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
 {{- printf "%s-%s-view-backup" .Release.Name $name | trunc 63 | trimSuffix "-" }}
 {{- end }}

@@ -43,5 +43,5 @@ Selector labels
 */}}
 {{- define "love-nginx.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "love-nginx.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app.kubernetes.io/instance: {{ include "love-nginx.name" . }}
 {{- end }}

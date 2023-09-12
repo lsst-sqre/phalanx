@@ -27,7 +27,7 @@ If release name contains chart name it will be used as a full name.
 Create app name from release and producer name.
 */}}
 {{- define "love-producer.appName" -}}
-{{ printf "%s-%s" .Release.Name .Producer | trunc 63 | trimSuffix "-" }}
+{{ printf "%s-producer-%s" .Release.Name .Producer | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*

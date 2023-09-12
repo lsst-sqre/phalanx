@@ -1,5 +1,5 @@
 {{- range $producer := .Values.producers }}
-{{ $appName := printf "%s-%s" $.Release.Name $producer.name | trunc 63 | trimSuffix "-" }}
+{{ $appName := printf "%s-producer-%s" $.Release.Name $producer.name | trunc 63 | trimSuffix "-" }}
 ---
 apiVersion: apps/v1
 kind: Deployment

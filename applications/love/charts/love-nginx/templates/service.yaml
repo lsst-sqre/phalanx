@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "love-nginx.fullname" . }}-service
+  name: {{ include "love-nginx.name" . }}-service
   namespace: {{ $.Values.global.controlSystemAppNamespace }}
 spec:
   selector:
-    app.kubernetes.io/instance: {{ include "love-nginx.fullname" . }}
+    app.kubernetes.io/instance: {{ include "love-nginx.name" . }}
   type: {{ .Values.serviceType }}
   ports:
     - port: {{ .Values.ports.container }}
