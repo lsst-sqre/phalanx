@@ -1,4 +1,0 @@
-name: csc
-apiVersion: v2
-version: 1.0.0
-description: A Helm chart for deploying the Control System CSCs.

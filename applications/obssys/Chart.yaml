@@ -5,21 +5,28 @@ description: Deployment for the Observatory System CSCs
 dependencies:
 - name: csc_collector
   version: 1.0.0
+  repository: "file://../../charts/csc_collector"
 - name: csc
   alias: atqueue
   version: 1.0.0
+  repository: "file://../../charts/csc"
 - name: csc
   alias: atscheduler
   version: 1.0.0
+  repository: "file://../../charts/csc"
 - name: csc
   alias: authorize
   version: 1.0.0
+  repository: "file://../../charts/csc"
 - name: csc
   alias: mtqueue
   version: 1.0.0
+  repository: "file://../../charts/csc"
 - name: csc
   alias: mtscheduler
   version: 1.0.0
+  repository: "file://../../charts/csc"
 - name: csc
   alias: watcher
   version: 1.0.0
+  repository: "file://../../charts/csc"
