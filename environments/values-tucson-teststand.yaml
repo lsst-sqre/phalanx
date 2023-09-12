@@ -23,5 +23,6 @@ applications:
   telegraf-ds: true
 
 controlSystemImageTag: k0001
+controlSystemKafkaBrokerAddress: sasquatch-tts-kafka-bootstrap.lsst.codes:9094
 controlSystemSiteTag: tucson
 controlSystemS3EndpointUrl: https://s3.tu.lsst.org
