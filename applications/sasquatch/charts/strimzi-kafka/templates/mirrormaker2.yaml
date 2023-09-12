@@ -8,6 +8,8 @@ metadata:
 spec:
   version: {{ .Values.kafka.version | quote }}
   replicas: 1
+  autoRestart:
+    enabled: true
   # In the unidirectional (active/passive) replication scenario
   # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
   connectCluster: "target"
