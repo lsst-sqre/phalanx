@@ -8,6 +8,7 @@ dependencies:
   repository: "file://../../charts/csc_collector"
 - name: hexapod-sim
   version: 1.0.0
+  condition: hexapod-sim.enabled
 - name: csc
   alias: ataos
   version: 1.0.0

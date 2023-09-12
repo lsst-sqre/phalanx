@@ -17,7 +17,7 @@ Deployment for the Auxiliary Telescope CSCs
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
-| hexapod-sim.enabled | bool | `false` | Flag to enable the given CSC application |
+| hexapod-sim.enabled | bool | `false` |  |
 | hexapod-sim.image | object | `{"pullPolicy":"Always","repository":"ts-dockerhub.lsst.org/hexapod_simulator","tag":"latest"}` | This section holds the configuration of the container image |
 | hexapod-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |
 | hexapod-sim.image.repository | string | `"ts-dockerhub.lsst.org/hexapod_simulator"` | The Docker registry name of the container image |

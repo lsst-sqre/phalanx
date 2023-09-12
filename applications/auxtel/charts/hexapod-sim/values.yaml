@@ -1,5 +1,3 @@
-# -- Flag to enable the given CSC application
-enabled: false
 # -- This is the namespace in which the hexapod controller simulator will be placed
 namespace: auxtel
 # -- This section holds the configuration of the container image

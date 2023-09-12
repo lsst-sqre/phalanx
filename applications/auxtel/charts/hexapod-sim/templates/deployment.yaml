@@ -1,29 +1,27 @@
-{{- if .Values.enabled -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ include "hexapod-sim.name" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ include "hexapod-sim.name" . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Release.Name }}
-      app.kubernetes.io/instance: {{ $.Release.Name }}
+      app: {{ include "hexapod-sim.name" . }}
+      app.kubernetes.io/instance: {{ include "hexapod-sim.name" . }}
   template:
     metadata:
       labels:
-        app: {{ .Release.Name }}
-        app.kubernetes.io/instance: {{ $.Release.Name }}
+        app: {{ include "hexapod-sim.name" . }}
+        app.kubernetes.io/instance: {{ include "hexapod-sim.name" . }}
     spec:
       containers:
-        - name: {{ .Release.Name }}
+        - name: {{ include "hexapod-sim.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           stdin: true
           tty: true
       imagePullSecrets:
         - name: nexus3-docker
-{{- end -}}
