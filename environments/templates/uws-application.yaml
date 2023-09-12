@@ -1,4 +1,12 @@
 {{- if (index .Values "applications" "uws") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uws
+spec:
+  finalizers:
+    - kubernetes
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
