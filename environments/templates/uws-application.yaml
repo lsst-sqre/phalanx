@@ -39,5 +39,5 @@ spec:
           value: {{ .Values.controlSystemS3EndpointUrl | quote }}
       valueFiles:
         - "values.yaml"
-        - "values-{{ .Values.environment }}.yaml"
+        - "values-{{ .Values.name }}.yaml"
 {{- end -}}
