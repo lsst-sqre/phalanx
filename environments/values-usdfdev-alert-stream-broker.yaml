@@ -10,3 +10,4 @@ applications:
   ingress-nginx: false
   strimzi: true
   strimzi-access-operator: false
+  vault-secrets-operator: false
