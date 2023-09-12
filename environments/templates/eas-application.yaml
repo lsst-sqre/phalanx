@@ -1,4 +1,4 @@
-{{- if .Values.eas.enabled -}}
+{{- if (index .Values "applications" "eas") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

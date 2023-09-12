@@ -1,4 +1,4 @@
-{{- if (index .Values "strimzi-registry-operator" "enabled") -}}
+{{- if (index .Values "applications" "control-system-test") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

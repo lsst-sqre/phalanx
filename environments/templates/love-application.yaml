@@ -1,4 +1,4 @@
-{{- if .Values.love.enabled -}}
+{{- if (index .Values "applications" "love") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

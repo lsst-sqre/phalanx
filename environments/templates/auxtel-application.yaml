@@ -1,4 +1,4 @@
-{{- if .Values.auxtel.enabled -}}
+{{- if (index .Values "applications" "auxtel") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

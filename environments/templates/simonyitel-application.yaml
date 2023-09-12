@@ -1,4 +1,4 @@
-{{- if .Values.simonyitel.enabled -}}
+{{- if (index .Values "applications" "simonyitel") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
