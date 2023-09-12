@@ -1,4 +1,0 @@
-{
-  "ALERT_HOOK": "https://example.com/alert-hook",
-  "app-alert-webhook": "https://example.com/app-hook"
-}

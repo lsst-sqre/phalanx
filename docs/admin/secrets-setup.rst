@@ -135,7 +135,7 @@ To create a template for that YAML file, run:
 Replace ``<environment>`` with the name of the environment.
 This will print a template for the required static secrets to standard output.
 
-Then, store this file in a secure location and fill in the ``value`` keys with the appropriate values.
+Then, store this file in a secure location and fill in the ``value`` keys and, if necessary, the ``pull-secret`` block with the appropriate values.
 You will provide this file to :command:`phalanx` when performing secret sync or audit operations (see :doc:`sync-secrets`) with the ``--secrets`` command-line flag.
 
 Static secrets from 1Password
@@ -143,11 +143,14 @@ Static secrets from 1Password
 
 .. warning::
 
-   The 1Password support described here is not yet implemented.
+   The 1Password support described here is not yet tested.
    Currently, the only supported mechanism to provide static secrets to the new command-line tool is to use a template file.
 
 Static secrets may be stored in a 1Password vault.
 In this case, each application with static secrets should have an entry in this 1Password vault.
+
+Application secrets
+"""""""""""""""""""
 
 All entries should be of type :menuselection:`Server` with all of the pre-defined sections deleted.
 Each key and value pair within that entry corresponds to one secret for the application, with the key matching the key of that secret.
@@ -161,9 +164,24 @@ To see what secrets must be provided in 1Password, generate the same YAML templa
 
 Replace ``<environment>`` with the name of your environment.
 
-The top-level key is the name of the application and should be the name of a 1Password vault entry.
+The keys under applications are the names of applications and should be the name of a 1Password vault entry.
 The next-level key should be used as the key of a field in that entry.
 Fill in the value with the value of that secret.
+
+.. _admin-onepassword-pull-secret:
+
+Pull secret
+"""""""""""
+
+If the environment needs a pull secret, create a 1Password item of type :menuselection:`Server` and title ``pull-secret``.
+Delete all of the pre-defined sections.
+Then, for each Docker registry used by that environment that requires a pull secret, create a section whose name is the FQDN of the registry.
+Within that section, add two fields with labels ``username`` and ``password`` and containing the Basic Auth credentials for that registry.
+
+This will be transformed into a Vault entry in the correct format for generating a ``Secret`` resource in Kubernetes that can be used as a pull secret.
+
+Configuring 1Password support
+"""""""""""""""""""""""""""""
 
 In :file:`values-{environment}.yaml` for your environment, in the Phalanx :file:`environments` directory, add the setting ``onePasswordConnectServer``, setting it to the URL of the `1Password Connect`_ server for that 1Password vault.
 
@@ -176,6 +194,10 @@ Finally, you can simply maintain static secrets directly in Vault.
 
 If you do not provide any other source of static secrets for an environment, and the static secret already exists in Vault, the :command:`phalanx secrets` command will use that existing value.
 Therefore, if you wish, you may manually set the secrets directly in Vault (or use some other Vault integration beyond the scope of this document) and not provide Phalanx with any other static secrets source.
+
+If you take this approach with an environment that requires a pull secret, you will need to create a Vault secret with the name ``pull-secret`` containing one key named ``.dockerconfigjson``.
+The contents of that key must be the JSON-serialized authentication information for the Docker registries that require authentication.
+See `Pull an image from a private registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`__ in the Kubernetes documentation for more details about the correct format.
 
 Syncing secrets
 ===============

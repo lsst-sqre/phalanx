@@ -1,7 +1,20 @@
-argocd:
-  "dex.clientSecret": some-dex-secret
-gafaelfawr:
-  github-client-secret: some-github-secret
-mobu:
-  ALERT_HOOK: aHR0cHM6Ly9leGFtcGxlLmNvbS9hbGVydC1ob29r
-  app-alert-webhook: https://example.com/app-hook
+applications:
+  argocd:
+    "dex.clientSecret":
+      value: some-dex-secret
+  gafaelfawr:
+    github-client-secret:
+      value: some-github-secret
+  mobu:
+    ALERT_HOOK:
+      value: aHR0cHM6Ly9leGFtcGxlLmNvbS9hbGVydC1ob29r
+    app-alert-webhook:
+      value: https://example.com/app-hook
+pull-secret:
+  registries:
+    ghcr.io:
+      username: token
+      password: some-github-token
+    hub.docker.com:
+      username: sqrereadonly
+      password: docker-password
