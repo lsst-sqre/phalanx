@@ -38,7 +38,23 @@ dependencies:
   version: 1.0.0
   repository: "file://../../charts/csc"
 - name: csc
+  alias: atmcs
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: atmcs-sim
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
   alias: atoods
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: atpneumatics
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: atpneumatics-sim
   version: 1.0.0
   repository: "file://../../charts/csc"
 - name: csc

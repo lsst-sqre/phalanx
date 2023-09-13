@@ -60,6 +60,12 @@ athexapod-sim:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
 
+atmcs-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atmcs_sim
+    pullPolicy: Always
+
 atoods:
   enabled: true
   image:
@@ -137,6 +143,12 @@ atoods:
           directoriesEmptyForMoreThan:
               <<: *interval
               days: 2
+
+atpneumatics-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/at_pneumatics_sim
+    pullPolicy: Always
 
 atptg:
   enabled: true
