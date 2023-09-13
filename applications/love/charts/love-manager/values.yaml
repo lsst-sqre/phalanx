@@ -164,7 +164,7 @@ viewBackup:
     # -- The view backup image to use
     repository: lsstts/love-view-backup
     # -- The tag to use for the view backup image
-    tag: develop
+    tag:
     # -- The pull policy to use for the view backup image
     pullPolicy: IfNotPresent
   # -- Place to specify additional environment variables for the view backup job

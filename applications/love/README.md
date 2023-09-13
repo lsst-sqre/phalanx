@@ -91,7 +91,7 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.viewBackup.env | object | `{}` | Place to specify additional environment variables for the view backup job |
 | love-manager.viewBackup.image.pullPolicy | string | `"IfNotPresent"` | The pull policy to use for the view backup image |
 | love-manager.viewBackup.image.repository | string | `"lsstts/love-view-backup"` | The view backup image to use |
-| love-manager.viewBackup.image.tag | string | `"develop"` | The tag to use for the view backup image |
+| love-manager.viewBackup.image.tag | string | `nil` | The tag to use for the view backup image |
 | love-manager.viewBackup.nodeSelector | object | `{}` | Node selection rules for the LOVE view backup pods |
 | love-manager.viewBackup.resources | object | `{}` | Resource specifications for the LOVE view backup pods |
 | love-manager.viewBackup.restartPolicy | string | `"Never"` | The restart policy type for the view backup cronjob |
