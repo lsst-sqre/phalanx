@@ -192,5 +192,3 @@ watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
-  env:
-    RUN_ARG: --state enabled
