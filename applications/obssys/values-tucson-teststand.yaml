@@ -37,13 +37,13 @@ atqueue:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
     readOnly: false
-    server: auxtel-archiver.tu.lsst.org
-    serverPath: /repo/LATISS
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/repo/LATISS
   - name: auxtel-gen3-oods
     containerPath: /data/lsstdata/TTS/auxtel
     readOnly: true
-    server: auxtel-archiver.tu.lsst.org
-    serverPath: /lsstdata/TTS/auxtel
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/lsstdata/TTS/auxtel
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam
     readOnly: false
@@ -129,13 +129,13 @@ mtqueue:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
     readOnly: false
-    server: auxtel-archiver.tu.lsst.org
-    serverPath: /repo/LATISS
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/repo/LATISS
   - name: auxtel-gen3-oods
     containerPath: /data/lsstdata/TTS/auxtel
     readOnly: true
-    server: auxtel-archiver.tu.lsst.org
-    serverPath: /lsstdata/TTS/auxtel
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/lsstdata/TTS/auxtel
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam
     readOnly: false
