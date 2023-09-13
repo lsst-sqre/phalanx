@@ -79,6 +79,14 @@ dependencies:
   version: 1.0.0
   repository: "file://../../charts/csc"
 - name: csc
+  alias: m2-ess106
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: m2-ess106-sim
+  version: 1.0.0
+  repository: "file://../../charts/csc"
+- name: csc
   alias: mtdome-ess01
   version: 1.0.0
   repository: "file://../../charts/csc"

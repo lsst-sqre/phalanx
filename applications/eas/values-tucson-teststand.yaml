@@ -87,6 +87,15 @@ dsm2-sim:
     CSC_INDEX: 2
     RUN_ARG: --simulate 2 --state enabled
 
+m2-ess106-sim:
+  enabled: true
+  classifier: ess106
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 106 --simulate
+
 mtdome-ess01-sim:
   enabled: true
   classifier: ess101

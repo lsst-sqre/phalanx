@@ -199,6 +199,7 @@ love-producer:
       dimm2: DIMM:2
       dsm1: DSM:1
       dsm2: DSM:2
+      m2ess106: ESS:106
       mtdomeess01: ESS:101
       mtdomeess02: ESS:102
       mtdomeess03: ESS:103
