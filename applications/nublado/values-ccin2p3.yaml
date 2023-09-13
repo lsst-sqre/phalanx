@@ -18,12 +18,12 @@ controller:
     lab:
       pullSecret: "pull-secret"
       homedirSchema: "initialThenUsername"
-    env:
+      env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-    sizes:
+      sizes:
         small:
           cpu: 1.0
           memory: 4Gi
@@ -33,7 +33,7 @@ controller:
         large:
           cpu: 4.0
           memory: 16Gi  
-    initContainers:
+      initContainers:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
@@ -43,8 +43,7 @@ controller:
               source:
                 type: hostPath
                 path: "/pbs/home"
-
-    volumes:
+      volumes:
         - containerPath: "/pbs/home"
           mode: "rw"
           source:
