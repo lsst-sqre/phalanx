@@ -9,14 +9,13 @@ controller:
     images:
       source:
         type: "docker"
-        registry: "docker.io"
+        registry: "ghcr.io"
         repository: "lsstsqre/sciplat-lab"
       recommendedTag: "recommended"
       numReleases: 1
       numWeeklies: 2
       numDailies: 3
     lab:
-      pullSecret: "pull-secret"
       homedirSchema: "initialThenUsername"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
