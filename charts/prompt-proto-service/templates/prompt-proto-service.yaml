@@ -116,7 +116,7 @@ spec:
       - name: central-repo-file
         secret:
           secretName: {{ template "prompt-proto-service.fullname" . }}-secrets
-          key: central-repo-file
+          key: central_repo_file
       {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
