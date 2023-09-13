@@ -125,12 +125,16 @@ mtaircompressor1-sim:
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
     pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate --state disabled
 
 mtaircompressor2-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtaircompressor
     pullPolicy: Always
+  env:
+    RUN_ARG: 2 --simulate --state disabled
 
 mtaos:
   enabled: true
@@ -215,6 +219,7 @@ mtmount-sim:
     RUN_ARG: --simulate
 
 mtptg:
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
@@ -222,6 +227,7 @@ mtptg:
     TELESCOPE: MT
 
 mtrotator-sim:
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always
