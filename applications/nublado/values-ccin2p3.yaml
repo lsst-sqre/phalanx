@@ -9,7 +9,7 @@ controller:
     images:
       source:
         type: "docker"
-        registry: "ghcr.io"
+        registry: "docker.io"
         repository: "lsstsqre/sciplat-lab"
       recommendedTag: "recommended"
       numReleases: 1
