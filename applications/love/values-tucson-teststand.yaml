@@ -29,7 +29,7 @@ love-commander:
     secretName: lfa
     secretKey: aws-secret-access-key
   service:
-    use: true
+    enabled: true
     port: 5000
     type: ClusterIP
 
