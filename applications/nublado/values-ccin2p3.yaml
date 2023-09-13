@@ -33,7 +33,7 @@ controller:
         large:
           cpu: 4.0
           memory: 16Gi  
-      initContainers:
+    initContainers:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
@@ -44,16 +44,7 @@ controller:
                 type: hostPath
                 path: "/pbs/home"
 
-      secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "aws-credentials.ini"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-gcs-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "butler-hmac-idf-creds.json"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
-      volumes:
+    volumes:
         - containerPath: "/pbs/home"
           mode: "rw"
           source:
