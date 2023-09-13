@@ -1,0 +1,40 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    repository: ghcr.io/lsst-dm/prompt-proto-service
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: w_2023_36
+
+  instrument:
+    pipelines: (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml],(survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml], (survey="spec")=[] (survey="spec_with_rotation")=[] (survey="spec_bright")=[] (survey="spec_bright_with_rotation")=[] (survey="spec_pole")=[] (survey="spec_pole_with_rotation")=[] (survey="")=[]
+    calibRepo: /app/butler
+
+  s3:
+    imageBucket: rubin-summit
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing-prod
+
+  apdb:
+    ip: usdf-prompt-processing.slac.stanford.edu:5432
+
+  registry:
+    ip: usdf-butler.slac.stanford.edu:5432
+    centralRepoFile: true
+
+  logLevel: lsst.resources=DEBUG
+
+  knative:
+    ephemeralStorageRequest: "50Gi"
+    ephemeralStorageLimit: "50Gi"
+
+  fullnameOverride: "prompt-proto-service-latiss"
+
+  #vaultSecretsPath: "secret/rubin/usdf-prompt-processing-prod/prompt-proto-service-latiss"

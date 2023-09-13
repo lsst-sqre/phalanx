@@ -85,6 +85,8 @@ spec:
         {{- end }}
         - name: LOCAL_REPOS
           value: "/tmp-butler"
+        - name: SERVICE_LOG_LEVELS
+          value: {{ .Values.logLevel }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
@@ -107,12 +109,13 @@ spec:
       {{- if .Values.s3.cred_file_auth }}
       - name: s3-credentials-file
         secret:
-          secretName: s3-credentials-file
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secrets
+          key: s3-credentials-file
       {{- end }}
       {{- if .Values.registry.centralRepoFile }}
       - name: central-repo-file
         secret:
-          secretName: prompt-proto-service-secrets
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secrets
           key: central-repo-file
       {{- end }}
       enableServiceLinks: false
