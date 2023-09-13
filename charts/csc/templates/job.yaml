@@ -147,7 +147,7 @@ spec:
           emptyDir: {}
         - name: {{ include "chart.name" $ }}-raw-{{ $values.name }}
           secret:
-            secretName: {{ $.Values.namespace }}-{{ or $values.secretName $values.name }}
+            secretName: {{ or $values.secretName $values.name }}
             defaultMode: 0600
       {{- end }}
       {{- end }}
