@@ -37,4 +37,6 @@ prompt-proto-service:
 
   fullnameOverride: "prompt-proto-service-latiss"
 
-  #vaultSecretsPath: "secret/rubin/usdf-prompt-processing-prod/prompt-proto-service-latiss"
+  additionalVolumeMounts:
+    - mountPath: /app/butler/
+      name: central-repo-file
