@@ -20,10 +20,10 @@ from phalanx.models.gafaelfawr import Token
 from ..support.cli import run_cli
 from ..support.data import (
     assert_json_dirs_match,
-    output_path,
     phalanx_test_path,
     read_input_static_secrets,
     read_output_data,
+    read_output_json,
 )
 from ..support.onepassword import MockOnepasswordClient
 from ..support.vault import MockVaultClient
@@ -102,15 +102,20 @@ def test_onepassword_secrets(
     assert environment.onepassword
     vault_title = environment.onepassword.vault_title
     mock_onepassword.load_test_data(vault_title, "minikube")
-    expected_path = output_path() / "minikube" / "onepassword"
+    output_path = tmp_path / "static-secrets.yaml"
 
     result = run_cli(
-        "secrets", "onepassword-secrets", "minikube", str(tmp_path)
+        "secrets", "onepassword-secrets", "minikube", "-o", str(output_path)
     )
     assert result.exit_code == 0
     assert result.output == ""
 
-    assert_json_dirs_match(tmp_path, expected_path)
+    output = output_path.read_text()
+    assert output == read_output_data("minikube", "onepassword-secrets.yaml")
+
+    result = run_cli("secrets", "onepassword-secrets", "minikube")
+    assert result.exit_code == 0
+    assert result.output == output
 
 
 def test_schema() -> None:
@@ -148,11 +153,12 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
 
     # Check that all static secrets were copied over correctly.
     static_secrets = read_input_static_secrets("idfdev")
-    for application, values in static_secrets.items():
+    for application, values in static_secrets.applications.items():
         vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
         for key, value in values.items():
             if key in vault:
-                assert value == vault[key]
+                assert value.value
+                assert value.value.get_secret_value() == vault[key]
 
     # Check generated or copied secrets.
     argocd = _get_app_secret(mock_vault, f"{base_vault_path}/argocd")
@@ -160,8 +166,9 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     gafaelfawr = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
     assert Fernet(gafaelfawr["session-secret"].encode())
     assert "-----BEGIN PRIVATE KEY-----" in gafaelfawr["signing-key"]
-    webhook = static_secrets["mobu"]["app-alert-webhook"]
-    assert gafaelfawr["slack-webhook"] == webhook
+    webhook = static_secrets.applications["mobu"]["app-alert-webhook"]
+    assert webhook.value
+    assert gafaelfawr["slack-webhook"] == webhook.value.get_secret_value()
     nublado = _get_app_secret(mock_vault, f"{base_vault_path}/nublado")
     assert re.match("^[0-9a-f]{64}$", nublado["proxy_token"])
     postgres = _get_app_secret(mock_vault, f"{base_vault_path}/postgres")
@@ -202,14 +209,20 @@ def test_sync_onepassword(
     # Check that all static secrets were copied over correctly.
     with (input_path / "onepassword" / "minikube.yaml").open() as fh:
         onepassword_secrets = yaml.safe_load(fh)
-    for app_name, values in onepassword_secrets.items():
+    for app_name, values in onepassword_secrets["applications"].items():
         vault = _get_app_secret(mock_vault, f"{base_vault_path}/{app_name}")
         application = environment.applications[app_name]
-        for key, value in values.items():
+        for key, secret in values.items():
+            value = secret["value"]
             if application.secrets[key].onepassword.encoded:
                 assert b64decode(value.encode()).decode() == vault[key]
             else:
                 assert value == vault[key]
+
+    # Check that the pull secret is correct.
+    pull_secret = read_output_json("minikube", "pull-secret")
+    vault = _get_app_secret(mock_vault, f"{base_vault_path}/pull-secret")
+    assert vault == pull_secret
 
 
 def test_sync_regenerate(
@@ -237,11 +250,12 @@ def test_sync_regenerate(
 
     # Check that all static secrets were copied over correctly.
     static_secrets = read_input_static_secrets("idfdev")
-    for application, values in static_secrets.items():
+    for application, values in static_secrets.applications.items():
         vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
         for key, value in values.items():
             if key in vault:
-                assert value == vault[key]
+                assert value.value
+                assert value.value.get_secret_value() == vault[key]
 
     # Don't recheck all the details that match the regular sync test. Just
     # check that some secrets that would have been left alone without

@@ -42,6 +42,9 @@ registry:
   ip: ""
   db: ""
   user: ""
+  centralRepoFile: false
+
+logLevel: lsst.resources=DEBUG
 
 knative:
   ephemeralStorageRequest: "20Gi"

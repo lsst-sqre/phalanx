@@ -8,6 +8,8 @@ from typing import Any
 
 import yaml
 
+from phalanx.models.secrets import StaticSecrets
+
 __all__ = [
     "assert_json_dirs_match",
     "output_path",
@@ -62,7 +64,7 @@ def phalanx_test_path() -> Path:
     return Path(__file__).parent.parent / "data" / "input"
 
 
-def read_input_static_secrets(environment: str) -> dict[str, dict[str, str]]:
+def read_input_static_secrets(environment: str) -> StaticSecrets:
     """Read test output data as YAML and return the parsed format.
 
     Parameters
@@ -77,11 +79,7 @@ def read_input_static_secrets(environment: str) -> dict[str, dict[str, str]]:
     """
     secrets_path = phalanx_test_path() / "secrets" / f"{environment}.yaml"
     with secrets_path.open() as fh:
-        data = yaml.safe_load(fh)
-    for secrets in data.values():
-        for key in secrets:
-            secrets[key] = secrets[key]["value"]
-    return data
+        return StaticSecrets.parse_obj(yaml.safe_load(fh))
 
 
 def read_output_data(environment: str, filename: str) -> str:
@@ -142,3 +140,4 @@ def write_output_json(environment: str, filename: str, data: Any) -> None:
     """
     with (output_path() / environment / (filename + ".json")).open("w") as f:
         json.dump(data, f, indent=2)
+        f.write("\n")

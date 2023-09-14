@@ -10,7 +10,7 @@ from onepasswordconnectsdk.client import FailedToRetrieveItemException
 
 from ..exceptions import NoOnepasswordCredentialsError
 from ..models.environments import EnvironmentBaseConfig
-from ..models.secrets import StaticSecret, StaticSecrets
+from ..models.secrets import PullSecret, StaticSecret, StaticSecrets
 
 __all__ = ["OnepasswordClient", "OnepasswordStorage"]
 
@@ -69,10 +69,11 @@ class OnepasswordClient:
                         "opvault": self._vault_id,
                     }
         response = load_dict(self._onepassword, request)
-        result: StaticSecrets = defaultdict(dict)
+        applications: defaultdict[str, dict[str, StaticSecret]]
+        applications = defaultdict(dict)
         for key, value in response.items():
             application, secret = key
-            result[application][secret] = StaticSecret(value=value)
+            applications[application][secret] = StaticSecret(value=value)
 
         # Separately handle the secret field names that contain periods, since
         # that conflicts with the syntax used by load_dict.
@@ -82,14 +83,47 @@ class OnepasswordClient:
             for field in item.fields:
                 if field.label == secret:
                     static_secret = StaticSecret(value=field.value)
-                    result[application][secret] = static_secret
+                    applications[application][secret] = static_secret
                     found = True
                     break
             if not found:
                 msg = f"Item {application} has no field {secret}"
                 raise FailedToRetrieveItemException(msg)
 
-        return result
+        # Return the static secrets.
+        return StaticSecrets(
+            applications=applications, pull_secret=self._get_pull_secret()
+        )
+
+    def _get_pull_secret(self) -> PullSecret | None:
+        """Get the pull secret for an environment from 1Password.
+
+        Returns
+        -------
+        dict of StaticSecret
+            The constructed pull secret in a form suitable for adding to
+            Vault, or `None` if there is no pull secret for this environment.
+        """
+        try:
+            item = self._onepassword.get_item("pull-secret", self._vault_id)
+        except FailedToRetrieveItemException:
+            return None
+
+        # Extract the usernames and passwords from the 1Password item.
+        secrets: defaultdict[str, dict[str, str]] = defaultdict(dict)
+        section = {s.id: s.label for s in item.sections}
+        for field in item.fields:
+            if field.label not in ("username", "password"):
+                continue
+            section_id = field.section.id if field.section else None
+            registry = section[section_id]
+            if field.label == "username":
+                secrets[registry]["username"] = field.value
+            elif field.label == "password":
+                secrets[registry]["password"] = field.value
+
+        # Return the result converted to the appropriate model.
+        return PullSecret.parse_obj({"registries": secrets})
 
 
 class OnepasswordStorage:

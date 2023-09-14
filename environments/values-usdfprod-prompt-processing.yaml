@@ -1,15 +1,15 @@
 fqdn: k8s.slac.stanford.edu
-name: usdfdev-prompt-processing
+name: usdfprod-prompt-processing
 vaultUrl: "https://vault.slac.stanford.edu"
-vaultPathPrefix: secret/rubin/usdf-prompt-processing-dev
+vaultPathPrefix: secret/rubin/usdf-prompt-processing
 
 applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
   next-visit-fan-out: true
-  prompt-proto-service-hsc: true
+  prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
-  prompt-proto-service-lsstcam: true
-  prompt-proto-service-lsstcomcam: true
+  prompt-proto-service-lsstcam: false
+  prompt-proto-service-lsstcomcam: false
   vault-secrets-operator: false

@@ -43,6 +43,7 @@ prompt-proto-service:
     ip: ""
     db: lsstdb1
     user: rubin
+    centralRepoFile: false
 
   knative:
     ephemeralStorageRequest: "20Gi"
@@ -50,5 +51,3 @@ prompt-proto-service:
     timeout: 900
     idleTimeout: 900
     responseStartTimeout: 900
-
-  vaultSecretsPath: ""
