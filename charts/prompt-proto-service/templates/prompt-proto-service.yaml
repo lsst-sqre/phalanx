@@ -83,6 +83,8 @@ spec:
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /app/s3/credentials
         {{- end }}
+        - name: PGPASSFILE
+          value: /app/pgsql/.pgpass
         - name: LOCAL_REPOS
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
@@ -90,6 +92,9 @@ spec:
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
+        - mountPath: /app/pgsql
+          name: pgpass-credentials-file
+          readOnly: true
         {{- if .Values.s3.cred_file_auth }}
         - mountPath: /app/s3/
           name: s3-credentials-file
@@ -114,6 +119,13 @@ spec:
       - name: ephemeral
         emptyDir:
           sizeLimit: {{ .Values.knative.ephemeralStorageLimit }}
+      - name: pgpass-credentials-file
+        secret:
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secret
+          items:
+          - key: pgpass_file
+            path: .pgpass
+          defaultMode: 0400  # PostgreSQL refuses to read group- or world-readable files
       {{- if .Values.s3.cred_file_auth }}
       - name: s3-credentials-file
         secret:
