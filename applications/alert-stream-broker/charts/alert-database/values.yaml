@@ -39,6 +39,7 @@ ingester:
     serviceAccountName: ""
     # -- Project ID which has the above GCP IAM service account
     projectID: ""
+    outsideGCP: true
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
   # service account!) which is used by the alert database ingester.

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from base64 import b64decode
 from collections import defaultdict
 from pathlib import Path
 
@@ -333,11 +334,23 @@ class SecretsService:
             return None
         onepassword = self._onepassword.get_onepassword_client(environment)
         query = {}
+        encoded = {}
         for application in environment.all_applications():
-            query[application.name] = [
-                s.key for s in application.all_static_secrets()
-            ]
-        return onepassword.get_secrets(query)
+            static_secrets = application.all_static_secrets()
+            query[application.name] = [s.key for s in static_secrets]
+            encoded[application.name] = {
+                s.key for s in static_secrets if s.onepassword.encoded
+            }
+        result = onepassword.get_secrets(query)
+
+        # Fix any secrets that were encoded in base64 in 1Password.
+        for app_name, secrets in encoded.items():
+            for key in secrets:
+                secret = result[app_name][key]
+                if secret.value:
+                    value = secret.value.get_secret_value().encode()
+                    secret.value = SecretStr(b64decode(value).decode())
+        return result
 
     def _resolve_secrets(
         self,

@@ -10,14 +10,6 @@ podAnnotations:
   # Update this field if `make apply` by itself doesn't make a new revision.
   revision: "1"
 
-knative:
-  ephemeralStorageRequest: "8Gi"
-  ephemeralStorageLimit: "20Gi"
-  timeout: 900
-  idleTimeout: 900
-  responseStartTimeout: 900
-
-
 image:
   repository: ghcr.io/lsst-dm/prompt-proto-service
   pullPolicy: IfNotPresent
@@ -47,9 +39,19 @@ apdb:
   namespace: ""
 
 registry:
-  ip: usdf-butler.slac.stanford.edu:5432
-  db: lsstdb1
-  user: rubin
+  ip: ""
+  db: ""
+  user: ""
+  centralRepoFile: false
+
+logLevel: lsst.resources=DEBUG
+
+knative:
+  ephemeralStorageRequest: "20Gi"
+  ephemeralStorageLimit: "20Gi"
+  timeout: 900
+  idleTimeout: 900
+  responseStartTimeout: 900
 
 # -- Override the base name for resources
 nameOverride: ""

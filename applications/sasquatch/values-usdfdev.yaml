@@ -29,58 +29,58 @@ kafka-connect-manager:
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
     connectors:
       auxtel:
-        enabled: true
+        enabled: false
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       maintel:
-        enabled: true
+        enabled: false
         topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
       mtmount:
-        enabled: true
+        enabled: false
         topicsRegex: ".*MTMount"
       comcam:
-        enabled: true
+        enabled: false
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
-        enabled: true
+        enabled: false
         topicsRegex: ".*DIMM|.*DSM|.*WeatherForecast|.*WeatherStation"
       latiss:
-        enabled: true
+        enabled: false
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
-        enabled: true
+        enabled: false
         topicsRegex: ".*MTM1M3"
       m2:
-        enabled: true
+        enabled: false
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
-        enabled: true
+        enabled: false
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
-        enabled: true
+        enabled: false
         topicsRegex: ".*OCPS"
       test:
-        enabled: true
+        enabled: false
         topicsRegex: ".*Test"
       pmd:
-        enabled: true
+        enabled: false
         topicsRegex: ".*PMD"
       calsys:
-        enabled: true
+        enabled: false
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
       mtaircompressor:
-        enabled: true
+        enabled: false
         topicsRegex: ".*MTAirCompressor"
       authorize:
-        enabled: true
+        enabled: false
         topicsRegex: ".*Authorize"
       lasertracker:
-        enabled: true
+        enabled: false
         topicsRegex: ".*LaserTracker"
       genericcamera:
-        enabled: true
+        enabled: false
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
       gis:
-        enabled: true
+        enabled: false
         topicsRegex: ".*GIS"
       lsstdm:
         enabled: true

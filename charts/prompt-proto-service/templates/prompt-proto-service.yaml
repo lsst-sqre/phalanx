@@ -2,7 +2,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: prompt-proto-service
+  name: {{ include "prompt-proto-service.fullname" . }}
 spec:
   template:
     metadata:
@@ -58,12 +58,12 @@ spec:
         - name: PSQL_REGISTRY_PASS
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: registry_password
         - name: PSQL_APDB_PASS
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: apdb_password
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
@@ -71,12 +71,12 @@ spec:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: s3_access_key
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: prompt-proto-service-secrets
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: s3_secret_key
         {{- end }}
         {{- if .Values.s3.cred_file_auth }}
@@ -85,10 +85,11 @@ spec:
         {{- end }}
         - name: LOCAL_REPOS
           value: "/tmp-butler"
+        - name: SERVICE_LOG_LEVELS
+          value: {{ .Values.logLevel }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
-          readOnly: false
           {{- with .Values.additionalVolumeMounts }}
           {{- toYaml . | nindent 8 }}
           {{- end }}
@@ -108,13 +109,16 @@ spec:
       {{- if .Values.s3.cred_file_auth }}
       - name: s3-credentials-file
         secret:
-          secretName: s3-credentials-file
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secret
+          key: s3-credentials-file
       {{- end }}
       {{- if .Values.registry.centralRepoFile }}
       - name: central-repo-file
         secret:
-          secretName: prompt-proto-service-secrets
-          key: central-repo-file
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secret
+          items:
+          - key: central_repo_file
+            path: butler.yaml
       {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}

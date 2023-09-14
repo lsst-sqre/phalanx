@@ -9,9 +9,9 @@ Rubin Observatory's telemetry service.
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.1.23"}` | image for monitoring-related cronjobs |
+| bucketmapper.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":"0.2.0"}` | image for monitoring-related cronjobs |
 | bucketmapper.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
-| bucketmapper.image.tag | string | `"0.1.23"` | tag for rubin-influx-tools |
+| bucketmapper.image.tag | string | `"0.2.0"` | tag for rubin-influx-tools |
 | chronograf.enabled | bool | `true` | Enable Chronograf. |
 | chronograf.env | object | `{"BASE_PATH":"/chronograf","CUSTOM_AUTO_REFRESH":"1s=1000","HOST_PAGE_DISABLED":true}` | Chronograf environment variables. |
 | chronograf.envFromSecret | string | `"sasquatch"` | Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret. |
@@ -217,7 +217,7 @@ Rubin Observatory's telemetry service.
 | rest-proxy.kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | rest-proxy.nodeSelector | object | `{}` | Node selector configuration. |
 | rest-proxy.podAnnotations | object | `{}` | Pod annotations. |
-| rest-proxy.replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
+| rest-proxy.replicaCount | int | `3` | Number of Kafka REST proxy pods to run in the deployment. |
 | rest-proxy.resources.limits.cpu | int | `2` | Kafka REST proxy cpu limits |
 | rest-proxy.resources.limits.memory | string | `"4Gi"` | Kafka REST proxy memory limits |
 | rest-proxy.resources.requests.cpu | int | `1` | Kafka REST proxy cpu requests |

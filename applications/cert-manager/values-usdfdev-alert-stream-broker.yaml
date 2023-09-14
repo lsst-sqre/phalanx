@@ -1,0 +1,9 @@
+config:
+  route53:
+    awsAccessKeyId: AKIAQSJOS2SFL5I4TYND
+    hostedZone: Z0567328105IEHEMIXLCO
+
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: secret/rubin/usdf-alert-stream-broker-dev

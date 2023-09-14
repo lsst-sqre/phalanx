@@ -7,6 +7,7 @@ Archival database of alerts sent through the alert stream.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| ingester.gcp.outsideGCP | bool | `true` |  |
 | ingester.gcp.projectID | string | `""` | Project ID which has the above GCP IAM service account |
 | ingester.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | ingester.image.imagePullPolicy | string | `"IfNotPresent"` |  |

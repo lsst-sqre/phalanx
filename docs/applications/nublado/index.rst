@@ -19,5 +19,6 @@ Guides
 
    bootstrap
    upgrade
+   major-upgrade
    troubleshoot
    values

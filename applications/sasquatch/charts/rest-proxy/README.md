@@ -27,7 +27,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | nodeSelector | object | `{}` | Node selector configuration. |
 | podAnnotations | object | `{}` | Pod annotations. |
-| replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
+| replicaCount | int | `3` | Number of Kafka REST proxy pods to run in the deployment. |
 | resources.limits.cpu | int | `2` | Kafka REST proxy cpu limits |
 | resources.limits.memory | string | `"4Gi"` | Kafka REST proxy memory limits |
 | resources.requests.cpu | int | `1` | Kafka REST proxy cpu requests |

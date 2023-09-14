@@ -1,7 +1,3 @@
-# Default values for LATISS prompt-proto-service.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 prompt-proto-service:
 
   # -- Annotations for the prompt-proto-service pod
@@ -10,21 +6,15 @@ prompt-proto-service:
     autoscaling.knative.dev/max-scale: "100"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
-    # Update this field if `make apply` by itself doesn't make a new revision.
+    # Update this field if using latest or static image tag in dev
     revision: "1"
 
-  knative:
-    ephemeralStorageRequest: "8Gi"
-    ephemeralStorageLimit: "20Gi"
-    timeout: 900
-    idleTimeout: 900
-    responseStartTimeout: 900
 
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: AuxTel20230524-w_2023_20
+    tag: latest
 
   instrument:
     name: LATISS
@@ -33,24 +23,31 @@ prompt-proto-service:
     calibRepo: s3://rubin-summit-users/
 
   s3:
-    imageBucket: rubin-pp
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    imageBucket: ""
+    endpointUrl: ""
     auth_env: true
+    disableBucketValidation: '0'
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing
+    kafkaClusterAddress: ""
+    topic: ""
     imageTimeout: '120'
 
   apdb:
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    ip: ""
     db: lsst-devl
     user: rubin
     namespace: pp_apdb
 
   registry:
-    ip: usdf-butler.slac.stanford.edu:5432
+    ip: ""
     db: lsstdb1
     user: rubin
+    centralRepoFile: false
 
-  vaultSecretsPath: ""
+  knative:
+    ephemeralStorageRequest: "20Gi"
+    ephemeralStorageLimit: "20Gi"
+    timeout: 900
+    idleTimeout: 900
+    responseStartTimeout: 900

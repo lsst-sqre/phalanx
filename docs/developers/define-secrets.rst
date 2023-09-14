@@ -36,6 +36,11 @@ This is done with the ``copy`` directive.
 Secrets may be conditional on specific Helm chart settings by using ``if``; in this case, the secret doesn't need to exist unless that Helm setting is true.
 It's also possible for the generate or copy rules to be conditional, meaning that the secret is only generated or copied if some condition is set, and otherwise may be a static secret.
 
+Secrets that contain newlines cannot be stored in 1Password as-is, since 1Password field values don't support newlines.
+Mark these secrets by setting ``onepassword.encoded`` to ``true``, since they will be stored in 1Password with an additional layer of base64 encoding.
+(You do not need to do this with GCE service account credentials.
+Although their normal form contains newlines, they are encoded in JSON, so the newlines are not significant and may be stripped.)
+
 For a full specification of the contents of this file, see :doc:`secrets-spec`.
 
 Examples
@@ -99,7 +104,7 @@ This is the Gafaelfawr database password, which is a static secret when using an
        if: config.internalDatabase
        type: password
 
-Finally, here is an example of a secret that is copied from another application.
+Here is an example of a secret that is copied from another application.
 This is the matching definition of the Gafaelfawr database password in the in-cluster PostgreSQL server, which is copied from the Gafaelfawr application if Gafaelfawr is using the in-cluster database.
 
 .. code-block:: yaml
@@ -111,6 +116,17 @@ This is the matching definition of the Gafaelfawr database password in the in-cl
      copy:
        application: gafaelfawr
        key: database-password
+
+Finally, here is an example of a static secret that needs an additional layer of base64 encoding when stored in 1Password because its value contains newlines:
+
+.. code-block:: yaml
+   :caption: applications/nublado/secrets-idfdev.yaml
+
+   "postgres-credentials.txt":
+     description: >-
+       PostgreSQL credentials in its pgpass format for the Butler database.
+     onepassword:
+       encoded: true
 
 .. _secret-definition-legacy:
 
@@ -304,6 +320,16 @@ Change the field type to password so that the value isn't displayed any time som
 
 Do not use sections.
 Phalanx requires all of the secret entries be top-level fields outside of any section.
+
+Newlines will be converted to spaces when pasting the secret value.
+If newlines need to be preserved, be sure to mark the secret with ``onepassword.encoded`` set to ``true`` in :file:`secrets.yaml`, and then encode the secret in base64 before pasting it into 1Password.
+To encode the secret, save it to a file with the correct newlines, and then use a command such as:
+
+.. prompt:: bash
+
+   base64 -w0 < /path/to/secret; echo ''
+
+This will generate a base64-encoded version of the secret on one line, suitable for cutting and pasting into the 1Password field.
 
 3. Sync 1Password items into Vault
 ----------------------------------

@@ -362,7 +362,7 @@ bucketmapper:
     # -- repository for rubin-influx-tools
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
-    tag: 0.1.23
+    tag: 0.2.0
 
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations.
