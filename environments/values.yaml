@@ -90,6 +90,9 @@ applications:
   # -- Enable the narrativelog application
   narrativelog: false
 
+  # -- Enable the next-visit-fan-out application
+  next-visit-fan-out: false
+
   # -- Enable the noteburst application (required by times-square)
   noteburst: false
 

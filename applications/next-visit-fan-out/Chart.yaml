@@ -1,0 +1,7 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Application to poll next visit events from kafka, fan out/duplicate the
+  message, and send to knative.
+name: next-visit-fan-out
+type: application
+version: 1.0.0
