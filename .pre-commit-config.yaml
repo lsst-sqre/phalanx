@@ -41,7 +41,7 @@ repos:
           - --template-files=../helm-docs.md.gotmpl
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.287
+    rev: v0.0.289
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]

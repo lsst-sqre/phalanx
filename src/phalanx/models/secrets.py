@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import secrets
+from base64 import b64encode
 from datetime import UTC, datetime
 from enum import Enum
 from typing import Any, Literal
@@ -14,6 +16,8 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from pydantic import BaseModel, Extra, Field, SecretStr, validator
 
+from ..constants import PULL_SECRET_DESCRIPTION
+from ..yaml import YAMLFoldedString
 from .gafaelfawr import Token
 
 # Including StaticSecrets in __all__ triggers a Sphinx automodsumm bug.
@@ -24,7 +28,9 @@ __all__ = [
     "ConditionalSecretGenerateRules",
     "ConditionalSimpleSecretGenerateRules",
     "ConditionalSourceSecretGenerateRules",
-    "ResolvedSecret",
+    "PullSecret",
+    "RegistryPullSecret",
+    "ResolvedSecrets",
     "Secret",
     "SecretConfig",
     "SecretCopyRules",
@@ -34,6 +40,7 @@ __all__ = [
     "SimpleSecretGenerateRules",
     "SourceSecretGenerateRules",
     "StaticSecret",
+    "StaticSecrets",
 ]
 
 
@@ -256,32 +263,135 @@ class Secret(SecretConfig):
     """Application of the secret."""
 
 
-class ResolvedSecret(BaseModel):
-    """A secret that has been resolved for a given application instance.
+class RegistryPullSecret(BaseModel):
+    """Pull secret for a specific Docker Repository."""
+
+    username: str = Field(
+        ..., title="Username", description="HTTP Basic Auth username"
+    )
+
+    password: SecretStr = Field(
+        ..., title="Password", description="HTTP Basic Auth password"
+    )
+
+    class Config:
+        extra = Extra.forbid
+
+
+class PullSecret(BaseModel):
+    """Specification for a Docker pull secret."""
+
+    description: YAMLFoldedString = Field(
+        YAMLFoldedString(PULL_SECRET_DESCRIPTION),
+        title="Description of pull secret",
+        description=(
+            "Description of the pull secret for humans reading the YAML file"
+        ),
+    )
+
+    registries: dict[str, RegistryPullSecret] = Field(
+        {},
+        title="Pull secret by registry",
+        description="Pull secrets for each registry that needs one",
+    )
+
+    class Config:
+        extra = Extra.forbid
+
+    def to_dockerconfigjson(self) -> str:
+        """Convert to the serialized format used by Docker."""
+        docker_config = {}
+        for registry, data in self.registries.items():
+            password = data.password.get_secret_value()
+            auth = b64encode(f"{data.username}:{password}".encode()).decode()
+            docker_config[registry] = {
+                "auth": auth,
+                "username": data.username,
+                "password": password,
+            }
+        return json.dumps({"auths": docker_config})
+
+
+class ResolvedSecrets(BaseModel):
+    """All resolved secrets for a given Phalanx environment.
 
     Secret resolution means that the configuration has been translated into a
     secret value.
     """
 
-    key: str
-    """Key of the secret."""
+    applications: dict[str, dict[str, SecretStr]] = Field(
+        {},
+        title="Secrets by application and key",
+        description=(
+            "Mapping of application to secret key to that resolved secret"
+        ),
+    )
 
-    application: str
-    """Application for which the secret is required."""
-
-    value: SecretStr
-    """Value of the secret."""
+    pull_secret: PullSecret | None = Field(
+        None,
+        title="Pull secret",
+        description="Pull secret for the environment, if needed",
+    )
 
 
 class StaticSecret(BaseModel):
     """Value of a static secret provided in a YAML file."""
 
-    description: str | None = None
-    """Description of the secret (ignored)."""
+    description: YAMLFoldedString | None = Field(
+        None,
+        title="Description of secret",
+        description="Intended for human writers and ignored by tools",
+    )
 
-    value: SecretStr | None
-    """Value of the secret, or `None` if it's not known."""
+    value: SecretStr | None = Field(
+        None,
+        title="Value of secret",
+        description="Value of the secret, or `None` if it's not known",
+    )
+
+    class Config:
+        extra = Extra.forbid
 
 
-StaticSecrets = dict[str, dict[str, StaticSecret]]
-"""Data type for static secrets from a YAML file."""
+class StaticSecrets(BaseModel):
+    """Model for the YAML file containing static secrets.
+
+    This doubles as the model used to pass static secrets around internally,
+    in which case the description fields of the `StaticSecret` members are
+    ignored.
+    """
+
+    applications: dict[str, dict[str, StaticSecret]] = Field(
+        {},
+        title="Secrets by application and key",
+        description=(
+            "Mapping of application to secret key to that static secret"
+        ),
+    )
+
+    pull_secret: PullSecret | None = Field(
+        None,
+        title="Pull secret",
+        description="Pull secret for this environment, if any is needed",
+        alias="pull-secret",
+    )
+
+    class Config:
+        allow_population_by_field_name = True
+        extra = Extra.forbid
+
+    def for_application(self, application: str) -> dict[str, StaticSecret]:
+        """Return any known secrets for an application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        dict of StaticSecret
+            Mapping of secret keys to `StaticSecret` objects. If the
+            application has no static secrets, returns an empty dictionary.
+        """
+        return self.applications.get(application, {})

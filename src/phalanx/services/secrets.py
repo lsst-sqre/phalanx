@@ -11,12 +11,13 @@ import yaml
 from pydantic import SecretStr
 
 from ..exceptions import NoOnepasswordConfigError, UnresolvedSecretsError
-from ..models.applications import ApplicationInstance
 from ..models.environments import Environment
 from ..models.secrets import (
-    ResolvedSecret,
+    PullSecret,
+    ResolvedSecrets,
     Secret,
     SourceSecretGenerateRules,
+    StaticSecret,
     StaticSecrets,
 )
 from ..storage.config import ConfigStorage
@@ -89,17 +90,12 @@ class SecretsService:
         missing = []
         mismatch = []
         unknown = []
-        for app_name, values in resolved.items():
-            for key, value in values.items():
+        for app_name, values in resolved.applications.items():
+            for key, secret in values.items():
                 if key not in vault_secrets.get(app_name, {}):
                     missing.append(f"{app_name} {key}")
                     continue
-                if value.value:
-                    expected = value.value.get_secret_value()
-                else:
-                    expected = None
-                vault = vault_secrets[app_name][key].get_secret_value()
-                if expected != vault:
+                if secret != vault_secrets[app_name][key]:
                     mismatch.append(f"{app_name} {key}")
                 del vault_secrets[app_name][key]
         unknown = [f"{a} {k}" for a, lv in vault_secrets.items() for k in lv]
@@ -134,15 +130,38 @@ class SecretsService:
             YAML template the user can fill out, as a string.
         """
         environment = self._config.load_environment(env_name)
-        template: defaultdict[str, dict[str, dict[str, str | None]]]
-        template = defaultdict(dict)
+        template: defaultdict[str, dict[str, StaticSecret]] = defaultdict(dict)
         for application in environment.all_applications():
             for secret in application.all_static_secrets():
-                template[secret.application][secret.key] = {
-                    "description": YAMLFoldedString(secret.description),
-                    "value": None,
-                }
-        return yaml.dump(template, width=72)
+                template[secret.application][secret.key] = StaticSecret(
+                    description=YAMLFoldedString(secret.description),
+                    value=None,
+                )
+        static_secrets = StaticSecrets(
+            applications=template, pull_secret=PullSecret()
+        )
+        return yaml.dump(static_secrets.dict(by_alias=True), width=70)
+
+    def get_onepassword_static_secrets(self, env_name: str) -> StaticSecrets:
+        """Retrieve static secrets for an environment from 1Password.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+
+        Returns
+        -------
+        StaticSecrets
+            Static secrets for that environment with secret values retrieved
+            from 1Password.
+        """
+        environment = self._config.load_environment(env_name)
+        onepassword_secrets = self._get_onepassword_secrets(environment)
+        if not onepassword_secrets:
+            msg = f"Environment {env_name} not configured to use 1Password"
+            raise NoOnepasswordConfigError(msg)
+        return onepassword_secrets
 
     def list_secrets(self, env_name: str) -> list[Secret]:
         """List all required secrets for the given environment.
@@ -159,28 +178,6 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         return environment.all_secrets()
-
-    def save_onepassword_secrets(self, env_name: str, path: Path) -> None:
-        """Generate JSON files of the 1Password secrets for an environment.
-
-        One file per application with secrets will be written to the provided
-        path. Each file will be named after the application with ``.json``
-        appended, and will contain the secret values for that application.
-        Secrets that are required but have no known value will be written as
-        null.
-        """
-        environment = self._config.load_environment(env_name)
-        onepassword_secrets = self._get_onepassword_secrets(environment)
-        if not onepassword_secrets:
-            msg = f"Environment {env_name} not configured to use 1Password"
-            raise NoOnepasswordConfigError(msg)
-        for app_name, values in onepassword_secrets.items():
-            app_secrets = {
-                k: v.value.get_secret_value() if v.value else None
-                for k, v in values.items()
-            }
-            with (path / f"{app_name}.json").open("w") as fh:
-                json.dump(app_secrets, fh, indent=2)
 
     def save_vault_secrets(self, env_name: str, path: Path) -> None:
         """Generate JSON files of the Vault secrets for an environment.
@@ -254,34 +251,27 @@ class SecretsService:
         )
 
         # Replace any Vault secrets that are incorrect.
-        for application, values in resolved.items():
-            if application not in vault_secrets:
-                to_store = {k: v.value for k, v in values.items()}
-                vault_client.store_application_secret(application, to_store)
-                print("Created Vault secret for", application)
-                continue
-            vault_app_secrets = vault_secrets[application]
-            for key, value in values.items():
-                expected = value.value.get_secret_value()
-                if key in vault_app_secrets:
-                    seen = vault_app_secrets[key].get_secret_value()
-                else:
-                    seen = None
-                if expected != seen:
-                    vault_client.update_application_secret(
-                        application, key, value.value
-                    )
-                    print("Updated Vault secret for", application, key)
+        self._sync_application_secrets(vault_client, vault_secrets, resolved)
+        if resolved.pull_secret and resolved.pull_secret.registries:
+            pull_secret = resolved.pull_secret
+            self._sync_pull_secret(vault_client, vault_secrets, pull_secret)
 
         # Optionally delete any unrecognized Vault secrets.
         if delete:
-            self._clean_vault_secrets(vault_client, vault_secrets, resolved)
+            self._clean_vault_secrets(
+                vault_client,
+                vault_secrets,
+                resolved,
+                has_pull_secret=resolved.pull_secret is not None,
+            )
 
     def _clean_vault_secrets(
         self,
         vault_client: VaultClient,
         vault_secrets: dict[str, dict[str, SecretStr]],
-        resolved: dict[str, dict[str, ResolvedSecret]],
+        resolved: ResolvedSecrets,
+        *,
+        has_pull_secret: bool,
     ) -> None:
         """Delete any unrecognized Vault secrets.
 
@@ -293,13 +283,17 @@ class SecretsService:
             Current secrets in Vault for this environment.
         resolved
             Resolved secrets for this environment.
+        has_pull_secret
+            Whether there should be a pull secret for this environment.
         """
         for application, values in vault_secrets.items():
-            if application not in resolved:
+            if application not in resolved.applications:
+                if application == "pull-secret" and has_pull_secret:
+                    continue
                 print("Deleted Vault secret for", application)
                 vault_client.delete_application_secret(application)
                 continue
-            expected = resolved[application]
+            expected = resolved.applications[application]
             to_delete = set(values.keys()) - set(expected.keys())
             if to_delete:
                 for key in to_delete:
@@ -346,7 +340,7 @@ class SecretsService:
         # Fix any secrets that were encoded in base64 in 1Password.
         for app_name, secrets in encoded.items():
             for key in secrets:
-                secret = result[app_name][key]
+                secret = result.applications[app_name][key]
                 if secret.value:
                     value = secret.value.get_secret_value().encode()
                     secret.value = SecretStr(b64decode(value).decode())
@@ -360,7 +354,7 @@ class SecretsService:
         vault_secrets: dict[str, dict[str, SecretStr]],
         static_secrets: StaticSecrets | None = None,
         regenerate: bool = False,
-    ) -> dict[str, dict[str, ResolvedSecret]]:
+    ) -> ResolvedSecrets:
         """Resolve the secrets for a Phalanx environment.
 
         Resolving secrets is the process where the secret configuration is
@@ -383,8 +377,8 @@ class SecretsService:
 
         Returns
         -------
-        dict
-            Resolved secrets by application and secret key.
+        ResolvedSecrets
+            Resolved secrets.
 
         Raises
         ------
@@ -392,55 +386,53 @@ class SecretsService:
             Raised if some secrets could not be resolved.
         """
         if not static_secrets:
-            static_secrets = {}
-        resolved: defaultdict[str, dict[str, ResolvedSecret]]
-        resolved = defaultdict(dict)
+            static_secrets = StaticSecrets()
+        resolved: defaultdict[str, dict[str, SecretStr]] = defaultdict(dict)
         unresolved = list(secrets)
         left = len(unresolved)
         while unresolved:
             secrets = unresolved
             unresolved = []
             for config in secrets:
-                vault_values = vault_secrets.get(config.application, {})
-                static_values = static_secrets.get(config.application, {})
+                app_name = config.application
+                vault_values = vault_secrets.get(app_name, {})
+                static_values = static_secrets.for_application(app_name)
                 static_value = None
                 if config.key in static_values:
                     static_value = static_values[config.key].value
                 secret = self._resolve_secret(
                     config=config,
-                    instance=environment.applications[config.application],
                     resolved=resolved,
                     current_value=vault_values.get(config.key),
                     static_value=static_value,
                     regenerate=regenerate,
                 )
                 if secret:
-                    resolved[secret.application][secret.key] = secret
+                    resolved[config.application][config.key] = secret
                 else:
                     unresolved.append(config)
             if len(unresolved) >= left:
                 raise UnresolvedSecretsError(unresolved)
             left = len(unresolved)
-        return resolved
+        return ResolvedSecrets(
+            applications=resolved, pull_secret=static_secrets.pull_secret
+        )
 
     def _resolve_secret(
         self,
         *,
         config: Secret,
-        instance: ApplicationInstance,
-        resolved: dict[str, dict[str, ResolvedSecret]],
+        resolved: dict[str, dict[str, SecretStr]],
         current_value: SecretStr | None,
         static_value: SecretStr | None,
         regenerate: bool = False,
-    ) -> ResolvedSecret | None:
+    ) -> SecretStr | None:
         """Resolve a single secret.
 
         Parameters
         ----------
         config
             Configuration of the secret.
-        instance
-            Application instance owning this secret.
         resolved
             Other secrets for that environment that have already been
             resolved.
@@ -453,7 +445,7 @@ class SecretsService:
 
         Returns
         -------
-        ResolvedSecret or None
+        SecretStr or None
             Resolved value of the secret, or `None` if the secret cannot yet
             be resolved (because, for example, the secret from which it is
             copied has not yet been resolved).
@@ -473,25 +465,79 @@ class SecretsService:
             other = resolved.get(application, {}).get(config.copy_rules.key)
             if not other:
                 return None
-            value = other.value
+            value = other
         elif config.generate:
             if current_value and not regenerate:
                 value = current_value
             elif isinstance(config.generate, SourceSecretGenerateRules):
                 other_key = config.generate.source
                 other = resolved.get(config.application, {}).get(other_key)
-                if not (other and other.value):
+                if not other:
                     return None
-                value = config.generate.generate(other.value)
+                value = config.generate.generate(other)
             else:
                 value = config.generate.generate()
         else:
             value = static_value or current_value
 
         # Return the resolved secret.
-        if value:
-            return ResolvedSecret(
-                key=config.key, application=config.application, value=value
-            )
-        else:
-            return None
+        return value
+
+    def _sync_application_secrets(
+        self,
+        vault_client: VaultClient,
+        vault_secrets: dict[str, dict[str, SecretStr]],
+        resolved: ResolvedSecrets,
+    ) -> None:
+        """Sync the application secrets for an environment to Vault.
+
+        Changes made to Vault will be reported to standard output. This will
+        not delete any stray secrets in Vault, only add any missing ones.
+
+        Parameters
+        ----------
+        vault_client
+            Client for talking to Vault for this environment.
+        vault_secrets
+            Current secrets in Vault for this environment.
+        resolved
+            Resolved secrets for this environment.
+        """
+        for application, values in resolved.applications.items():
+            if application not in vault_secrets:
+                vault_client.store_application_secret(application, values)
+                print("Created Vault secret for", application)
+                continue
+            vault_app_secrets = vault_secrets[application]
+            for key, secret in values.items():
+                if secret != vault_app_secrets.get(key):
+                    vault_client.update_application_secret(
+                        application, key, secret
+                    )
+                    print("Updated Vault secret for", application, key)
+
+    def _sync_pull_secret(
+        self,
+        vault_client: VaultClient,
+        vault_secrets: dict[str, dict[str, SecretStr]],
+        pull_secret: PullSecret,
+    ) -> None:
+        """Sync the pull secret for an environment to Vault.
+
+        Parameters
+        ----------
+        vault_client
+            Client for talking to Vault for this environment.
+        vault_secrets
+            Current secrets in Vault for this environment.
+        pull_secret
+            Pull secret for the environment.
+        """
+        value = SecretStr(pull_secret.to_dockerconfigjson())
+        secret = {".dockerconfigjson": value}
+        if "pull-secret" not in vault_secrets:
+            vault_client.store_application_secret("pull-secret", secret)
+            print("Created Vault secret for pull-secret")
+        elif secret != vault_secrets["pull-secret"]:
+            vault_client.store_application_secret("pull-secret", secret)
+            print("Updated Vault secret for pull-secret")
