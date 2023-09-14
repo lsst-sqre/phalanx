@@ -61,6 +61,7 @@ controller:
 
 jupyterhub:
   hub:
+    baseUrl: "/n3"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
