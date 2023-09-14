@@ -26,6 +26,7 @@ Deployment for prompt proto service for LATISS images
 | prompt-proto-service.knative.responseStartTimeout | int | `900` |  |
 | prompt-proto-service.knative.timeout | int | `900` |  |
 | prompt-proto-service.podAnnotations | object | `{"autoscaling.knative.dev/max-scale":"100","autoscaling.knative.dev/min-scale":"3","autoscaling.knative.dev/target-burst-capacity":"-1","autoscaling.knative.dev/target-utilization-percentage":"60","revision":"1"}` | Annotations for the prompt-proto-service pod |
+| prompt-proto-service.registry.centralRepoFile | bool | `false` |  |
 | prompt-proto-service.registry.db | string | `"lsstdb1"` |  |
 | prompt-proto-service.registry.ip | string | `""` |  |
 | prompt-proto-service.registry.user | string | `"rubin"` |  |
@@ -33,4 +34,3 @@ Deployment for prompt proto service for LATISS images
 | prompt-proto-service.s3.disableBucketValidation | string | `"0"` |  |
 | prompt-proto-service.s3.endpointUrl | string | `""` |  |
 | prompt-proto-service.s3.imageBucket | string | `""` |  |
-| prompt-proto-service.vaultSecretsPath | string | `""` |  |
