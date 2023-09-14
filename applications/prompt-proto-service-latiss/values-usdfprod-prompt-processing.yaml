@@ -47,3 +47,4 @@ prompt-proto-service:
   additionalVolumeMounts:
     - mountPath: /app/butler/
       name: central-repo-file
+      subPath: butler.yaml
