@@ -45,6 +45,5 @@ prompt-proto-service:
   fullnameOverride: "prompt-proto-service-latiss"
 
   additionalVolumeMounts:
-    - mountPath: /app/butler/butler.yaml
+    - mountPath: /app/butler/
       name: central-repo-file
-      subPath: butler.yaml
