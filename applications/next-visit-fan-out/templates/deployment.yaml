@@ -61,4 +61,4 @@ spec:
       volumes:
         - name: kafka-sasl-prompt-prompt-processing
           secret:
-            secretName: kafka-sasl-prompt-prompt-processing
+            secretName: {{ template "next-visit-fan-out.fullname" . }}-secret
