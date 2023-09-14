@@ -41,6 +41,15 @@ influxdb2:
     enabled: true
     hostname: summit-lsp.lsst.codes
 
+source-influxdb:
+  enabled: true
+  persistence:
+    storageClass: rook-ceph-block
+    size: 1Ti
+  ingress:
+    enabled: true
+    hostname: summit-lsp.lsst.codes
+
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
