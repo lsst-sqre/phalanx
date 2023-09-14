@@ -43,7 +43,3 @@ prompt-proto-service:
     ephemeralStorageLimit: "50Gi"
 
   fullnameOverride: "prompt-proto-service-latiss"
-
-  additionalVolumeMounts:
-    - mountPath: /app/butler/
-      name: central-repo-file

@@ -90,6 +90,14 @@ spec:
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
+        {{- if .Values.s3.cred_file_auth }}
+        - mountPath: /app/s3/
+          name: s3-credentials-file
+        {{- end }}
+        {{- if .Values.registry.centralRepoFile }}
+        - mountPath: {{ .Values.instrument.calibRepo }}
+          name: central-repo-file
+        {{- end }}
           {{- with .Values.additionalVolumeMounts }}
           {{- toYaml . | nindent 8 }}
           {{- end }}
