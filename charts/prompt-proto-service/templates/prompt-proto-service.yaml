@@ -116,7 +116,9 @@ spec:
       - name: central-repo-file
         secret:
           secretName: {{ template "prompt-proto-service.fullname" . }}-secret
-          key: central_repo_file
+          items:
+          - key: central_repo_file
+            path: butler.yaml
       {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
