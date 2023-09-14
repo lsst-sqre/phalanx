@@ -30,7 +30,7 @@ If you are using the FastAPI template, tagging in this fashion is required since
 Create the Docker image
 =======================
 
-The Docker image can be stored in any container registry that is usable by Kubernetes, but for Rubin-developed applications using the FastAPI template, we usually push `GitHub Container Registry (ghcr.io) <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>`__.
+The Docker image can be stored in any container registry that is usable by Kubernetes, but for Rubin-developed applications using the FastAPI template, we usually push to the `GitHub Container Registry (ghcr.io) <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>`__.
 The Google Artifact Registry hosts the Science Platform images and may eventually be used more widely.
 
 If your image must be stored in a private container registry, the credentials for that registry must be added to the pull secret.
