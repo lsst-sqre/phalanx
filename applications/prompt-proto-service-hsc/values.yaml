@@ -49,5 +49,3 @@ prompt-proto-service:
     timeout: 900
     idleTimeout: 900
     responseStartTimeout: 900
-
-  vaultSecretsPath: ""

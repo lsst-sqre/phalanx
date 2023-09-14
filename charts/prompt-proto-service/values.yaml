@@ -44,7 +44,7 @@ registry:
   user: ""
   centralRepoFile: false
 
-logLevel: lsst.resources=DEBUG
+logLevel: ""
 
 knative:
   ephemeralStorageRequest: "20Gi"
@@ -70,5 +70,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-vaultSecretsPath: ""

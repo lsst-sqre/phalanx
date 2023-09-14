@@ -31,5 +31,3 @@ prompt-proto-service:
     user: pp
 
   fullnameOverride: "prompt-proto-service-hsc"
-
-  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-hsc"

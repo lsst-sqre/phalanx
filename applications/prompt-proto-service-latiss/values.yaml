@@ -45,6 +45,8 @@ prompt-proto-service:
     user: rubin
     centralRepoFile: false
 
+  logLevel: ""
+
   knative:
     ephemeralStorageRequest: "20Gi"
     ephemeralStorageLimit: "20Gi"
