@@ -33,4 +33,3 @@ Deployment for prompt proto service for HSC images
 | prompt-proto-service.s3.disableBucketValidation | string | `"0"` |  |
 | prompt-proto-service.s3.endpointUrl | string | `""` |  |
 | prompt-proto-service.s3.imageBucket | string | `""` |  |
-| prompt-proto-service.vaultSecretsPath | string | `""` |  |
