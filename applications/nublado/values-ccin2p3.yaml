@@ -1,4 +1,3 @@
-
 controller:
   config:
     safir:
@@ -43,7 +42,7 @@ controller:
                 type: hostPath
                 path: "/pbs/home"
       volumes:
-        - containerPath: "/pbs/home"
+        - containerPath: "/home"
           mode: "rw"
           source:
             type: hostPath
