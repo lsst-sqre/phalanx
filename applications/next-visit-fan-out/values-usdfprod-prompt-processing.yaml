@@ -1,0 +1,16 @@
+knative:
+  latissUrl: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
+  lsstcomcamUrl: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
+  lsstcamUrl: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
+
+kafka:
+  schemaRegistryUrl: http://10.106.41.77:8081
+  sasquatchAddress: 10.104.21.0:9094
+  consumerGroup: next-visit-fan-out-1
+  nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
+
+image:
+  repository: ghcr.io/lsst-dm/next_visit_fan_out
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: v1.0.1
