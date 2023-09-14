@@ -45,6 +45,13 @@ spec:
                   name: "nublado-secret"
                   key: "slack-webhook"
             {{- end }}
+            {{- if .Values.controller.config.lab.kafkaSecret }}
+            - name: LSST_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kafka-secret
+                  key: ts-salkafka-password
+            {{- end }}
           ports:
             - name: "http"
               containerPort: 8080

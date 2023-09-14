@@ -58,6 +58,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.nodeSelector | object | `{}` | Node selector rules for user lab pods |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
 | controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
+| controller.config.lab.kafkaSecret | bool | `false` | Add the Kafka secret to the user pods |
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. `large` with `small` as the default) |
