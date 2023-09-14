@@ -11,7 +11,14 @@ prompt-proto-service:
     tag: w_2023_36
 
   instrument:
-    pipelines: (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml],(survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml], (survey="spec")=[] (survey="spec_with_rotation")=[] (survey="spec_bright")=[] (survey="spec_bright_with_rotation")=[] (survey="spec_pole")=[] (survey="spec_pole_with_rotation")=[] (survey="")=[]
+    pipelines: >-
+      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,
+      ${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,
+      ${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml]
+      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml,
+      ${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/SingleFrame.yaml,
+      ${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/Isr.yaml]
+      (survey="spec")=[] (survey="spec_with_rotation")=[] (survey="spec_bright")=[] (survey="spec_bright_with_rotation")=[] (survey="spec_pole")=[] (survey="spec_pole_with_rotation")=[] (survey="")=[]
     calibRepo: /app/butler
 
   s3:
