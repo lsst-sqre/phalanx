@@ -98,9 +98,9 @@ spec:
         - mountPath: {{ .Values.instrument.calibRepo }}
           name: central-repo-file
         {{- end }}
-          {{- with .Values.additionalVolumeMounts }}
-          {{- toYaml . | nindent 8 }}
-          {{- end }}
+        {{- with .Values.additionalVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         readinessProbe:
           successThreshold: 1
           tcpSocket:
