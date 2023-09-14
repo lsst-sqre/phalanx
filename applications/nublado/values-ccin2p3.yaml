@@ -32,7 +32,7 @@ controller:
           cpu: 4.0
           memory: 16Gi  
       volumes:
-        - containerPath: "/pbs/home"
+        - containerPath: "/home"
           mode: "rw"
           source:
             type: hostPath
