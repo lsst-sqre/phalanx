@@ -7,7 +7,6 @@ applications:
   cachemachine: true
   datalinker: true
   moneypenny: true
-  nublado: false
   nublado2: true
   portal: true
   postgres: true
