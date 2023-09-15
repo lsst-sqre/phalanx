@@ -25,9 +25,9 @@ data:
 
     [[outputs.influxdb]]
       urls = [
-        "http://sasquatch-influxdb.sasquatch:80"
+        "http://sasquatch-influxdb.sasquatch:8086"
       ]
-      database = "telegraf-kafka-consumer-v1"
+      database = {{ $.Values.influxdb.database | quote }}
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
 

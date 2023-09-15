@@ -70,6 +70,10 @@ kafkaConsumers:
     topicRegexps: |
       [ ".*Test" ]
 
+influxdb:
+  # -- Name of the InfluxDB v1 database to write to.
+  database: "telegraf-kafka-consumer-v1"
+
 influxdb2:
   # -- Name of the InfluxDB v2 bucket to write to.
   bucket: "telegraf-kafka-consumer"

@@ -26,6 +26,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository. |
 | image.tag | string | `"avrounions"` | Telegraf image tag. |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
+| influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
 | influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |

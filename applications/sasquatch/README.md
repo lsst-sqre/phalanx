@@ -353,6 +353,7 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository. |
 | telegraf-kafka-consumer.image.tag | string | `"avrounions"` | Telegraf image tag. |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
+| telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
 | telegraf-kafka-consumer.influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
