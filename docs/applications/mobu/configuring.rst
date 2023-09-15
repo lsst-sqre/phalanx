@@ -21,7 +21,7 @@ Here is a simple configuration with a single flock that tests the Notebook Aspec
        users:
          - username: "bot-mobu-user"
        scopes: ["exec:notebook"]
-       business: 
+       business:
          type: "JupyterPythonLoop"
          restart: true
          options:
@@ -72,7 +72,7 @@ Here is a more complex example that runs a set of notebooks as a test:
          - "exec:portal"
          - "read:image"
          - "read:tap"
-       business: 
+       business:
          type: "NotebookRunner"
          options:
            repo_url: "https://github.com/lsst-sqre/system-test.git"
@@ -105,7 +105,7 @@ Here is a different example that runs multiple monkeys in a flock:
          - "exec:portal"
          - "read:image"
          - "read:tap"
-       business: 
+       business:
          type: "NotebookRunner"
          options:
            repo_url: "https://github.com/lsst-sqre/system-test.git"
@@ -132,7 +132,7 @@ Here is an example of testing the TAP application:
            uidnumber: 74775
            gidnumber: 74775
        scopes: ["read:tap"]
-       business: 
+       business:
          type: "TAPQueryRunner"
          restart: true
          options:
