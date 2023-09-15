@@ -51,13 +51,11 @@ telegraf-kafka-consumer:
     test:
       enabled: true
       replicaCount: 1
-      refresh_interval: "60s"
       topicRegexps: |
         [ ".*Test" ]
     atmcs:
       enabled: true
       replicaCount: 1
-      refresh_interval: "60s"
       topicRegexps: |
         [ ".*ATMCS" ]
 

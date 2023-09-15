@@ -335,14 +335,20 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.zookeeper.tolerations | list | `[]` | Tolerations for Zookeeper pod assignment. |
 | telegraf-kafka-consumer.affinity | object | `{}` | Affinity for pod assignment. |
 | telegraf-kafka-consumer.args | list | `[]` | Arguments passed to the Telegraf agent containers. |
-| telegraf-kafka-consumer.enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB2. |
+| telegraf-kafka-consumer.enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB v1 and v2. |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf-kafka-consumer.env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | telegraf-kafka-consumer.env[1].name | string | `"INFLUXDB_TOKEN"` |  |
-| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB admin token. |
+| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB v2 admin token. |
 | telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
+| telegraf-kafka-consumer.env[2].name | string | `"INFLUXDB_USER"` |  |
+| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
+| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
+| telegraf-kafka-consumer.env[3].name | string | `"INFLUXDB_PASSWORD"` |  |
+| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
+| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | telegraf-kafka-consumer.image.pullPolicy | string | IfNotPresent | Image pull policy. |
 | telegraf-kafka-consumer.image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository. |
 | telegraf-kafka-consumer.image.tag | string | `"refreshregex"` | Telegraf image tag. |
@@ -351,7 +357,6 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | telegraf-kafka-consumer.kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
-| telegraf-kafka-consumer.kafkaConsumers.test.topicRefreshInterval | string | `"60s"` | Default interval for refreshing topics to check for new or removed regexp matches |
 | telegraf-kafka-consumer.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-kafka-consumer.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | telegraf-kafka-consumer.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods. |

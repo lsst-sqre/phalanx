@@ -23,6 +23,14 @@ data:
       quiet = false
       round_interval = true
 
+    [[outputs.influxdb]]
+      urls = [
+        "http://sasquatch-influxdb.sasquatch:80"
+      ]
+      database = "telegraf-kafka-consumer-v1"
+      username = "${INFLUXDB_USER}"
+      password = "${INFLUXDB_PASSWORD}"
+
     [[outputs.influxdb_v2]]
       bucket = {{ $.Values.influxdb2.bucket | quote }}
       token = "$INFLUXDB_TOKEN"
@@ -44,7 +52,6 @@ data:
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
-      topic_refresh_interval = {{ default "60s" $value.topicRefreshInterval |  quote }}
       topic_regexps = {{ $value.topicRegexps }}
       offset = "newest"
       consumer_fetch_default = "20MB"

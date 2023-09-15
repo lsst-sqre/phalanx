@@ -8,14 +8,20 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity for pod assignment. |
 | args | list | `[]` | Arguments passed to the Telegraf agent containers. |
-| enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB2. |
+| enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB v1 and v2. |
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
 | env[0].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | env[1].name | string | `"INFLUXDB_TOKEN"` |  |
-| env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB admin token. |
+| env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB v2 admin token. |
 | env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
+| env[2].name | string | `"INFLUXDB_USER"` |  |
+| env[2].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
+| env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
+| env[3].name | string | `"INFLUXDB_PASSWORD"` |  |
+| env[3].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
+| env[3].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | image.pullPolicy | string | IfNotPresent | Image pull policy. |
 | image.repo | string | `"lsstsqre/telegraf"` | Telegraf image repository. |
 | image.tag | string | `"refreshregex"` | Telegraf image tag. |
@@ -24,7 +30,6 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
-| kafkaConsumers.test.topicRefreshInterval | string | `"60s"` | Default interval for refreshing topics to check for new or removed regexp matches |
 | kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods. |

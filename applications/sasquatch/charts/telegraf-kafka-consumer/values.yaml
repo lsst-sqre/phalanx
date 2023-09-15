@@ -1,7 +1,8 @@
 ## Default values.yaml for Telegraf Kafka Consumer
 
 # -- Enable Telegraf Kafka Consumer.
-# Note that the default configuration is meant to work with InfluxDB2.
+# Note that the default configuration is meant to work with InfluxDB v1
+# and v2.
 enabled: false
 
 image:
@@ -37,8 +38,21 @@ env:
     valueFrom:
       secretKeyRef:
         name: sasquatch
-        # -- InfluxDB admin token.
+        # -- InfluxDB v2 admin token.
         key: admin-token
+  - name: INFLUXDB_USER
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # -- InfluxDB v1 user
+        key: influxdb-user
+  - name: INFLUXDB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # -- InfluxDB v1 password
+        key: influxdb-password
+
 
 # -- Name of the secret with values to be added to the environment.
 envFromSecret: ""
@@ -55,9 +69,6 @@ kafkaConsumers:
     # -- List of regular expressions to specify the Kafka topics consumed by this agent.
     topicRegexps: |
       [ ".*Test" ]
-    # -- Default interval for refreshing topics to check for new or
-    # removed regexp matches
-    topicRefreshInterval: "60s"
 
 influxdb2:
   # -- Name of the InfluxDB v2 bucket to write to.
