@@ -4,7 +4,7 @@ knative:
   lsstcamUrl: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
 
 kafka:
-  schemaRegistryUrl: http://10.106.41.77:8081
+  schemaRegistryUrl: http://10.96.98.30:8081
   sasquatchAddress: 10.104.21.0:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
