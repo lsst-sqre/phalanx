@@ -6,6 +6,7 @@ help:
 	@echo "make linkcheck - Check for broken links in documentation"
 	@echo "make update - Update pinned dependencies and run make init"
 	@echo "make update-deps - Update pinned dependencies"
+	@echo "make update-deps-no-hashes - Pin dependencies without hashes"
 
 .PHONY: clean
 clean:
@@ -42,4 +43,15 @@ update-deps:
 	    --output-file requirements/main.txt requirements/main.in
 	pip-compile --upgrade --resolver=backtracking --build-isolation \
 	    --generate-hashes --allow-unsafe				\
+	    --output-file requirements/dev.txt requirements/dev.in
+
+# Useful for testing against a Git version of Safir.
+.PHONY: update-deps-no-hashes
+update-deps-no-hashes:
+	pip install --upgrade pip-tools pip setuptools
+	pip-compile --upgrade --resolver=backtracking --build-isolation \
+	    --allow-unsafe						\
+	    --output-file requirements/main.txt requirements/main.in
+	pip-compile --upgrade --resolver=backtracking --build-isolation \
+	    --allow-unsafe						\
 	    --output-file requirements/dev.txt requirements/dev.in
