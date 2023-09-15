@@ -27,7 +27,6 @@ Here is a simple configuration with a single flock that tests the Notebook Aspec
          options:
            max_executions: 1
            code: "print(1+1)"
-       restart: true
 
 Important points to note here:
 
