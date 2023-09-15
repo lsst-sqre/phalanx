@@ -46,7 +46,7 @@ influxdb2:
 telegraf-kafka-consumer:
   enabled: true
   image:
-    tag: "refreshregex"
+    tag: "avrounions"
   kafkaConsumers:
     test:
       enabled: true

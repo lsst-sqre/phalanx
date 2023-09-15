@@ -9,7 +9,7 @@ image:
   # -- Telegraf image repository.
   repo: "lsstsqre/telegraf"
   # -- Telegraf image tag.
-  tag: "refreshregex"
+  tag: "avrounions"
   # -- Image pull policy.
   # @default -- IfNotPresent
   pullPolicy: "Always"
