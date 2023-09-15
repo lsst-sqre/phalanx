@@ -52,9 +52,9 @@ telegraf-kafka-consumer:
       enabled: true
       replicaCount: 1
       topicRegexps: |
-        [ ".*Test" ]
+        [ "lsst.Test.*" ]
     atmcs:
-      enabled: true
+      enabled: false
       replicaCount: 1
       topicRegexps: |
         [ ".*ATMCS" ]
