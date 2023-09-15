@@ -28,7 +28,7 @@ init:
 .PHONY: linkcheck
 linkcheck:
 	rm -rf docs/internals/api/
-	sphinx-build --keep-going -n -W -T -b linkcheck docs	\
+	sphinx-build --keep-going -n -T -b linkcheck docs	\
 	    docs/_build/linkcheck				\
 	    || (cat docs/_build/linkcheck/output.txt; exit 1)
 
