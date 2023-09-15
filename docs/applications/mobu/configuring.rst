@@ -21,10 +21,12 @@ Here is a simple configuration with a single flock that tests the Notebook Aspec
        users:
          - username: "bot-mobu-user"
        scopes: ["exec:notebook"]
-       business: "JupyterPythonLoop"
-       options:
-         jupyter:
-           image_size: "Small"
+       business: 
+         type: "JupyterPythonLoop"
+         restart: true
+         options:
+           max_executions: 1
+           code: "print(1+1)"
        restart: true
 
 Important points to note here:
@@ -44,9 +46,9 @@ Important points to note here:
   Here, the required scope is ``exec:notebook``, which allows spawning Notebooks.
   More scopes would be needed if the monkey were running notebooks that interacted with other applications.
 
-* The ``business`` key specifies the type of test to perform.
+* The ``business.type`` key specifies the type of test to perform.
   Here, ``JupyterPythonLoop`` just runs a small bit of Python through the Jupyter lab API after spawning a lab pod.
-  ``options.jupyter`` specifies additional options for the chosen business and are business-specific.
+  ``options.code`` can be used to specify the Python code to be run in the loop.
   See the full mobu documentation for more details.
 
 * ``restart: true`` tells mobu to shut down and respawn the pod if there is any failure.
@@ -71,12 +73,13 @@ Here is a more complex example that runs a set of notebooks as a test:
          - "exec:portal"
          - "read:image"
          - "read:tap"
-       business: "NotebookRunner"
-       options:
-         repo_url: "https://github.com/lsst-sqre/system-test.git"
-         repo_branch: "prod"
-         max_executions: 1
-       restart: true
+       business: 
+         type: "NotebookRunner"
+         options:
+           repo_url: "https://github.com/lsst-sqre/system-test.git"
+           repo_branch: "prod"
+           max_executions: 1
+         restart: true
 
 Here, note that the UID and primary GID for the user are specified, so this example will work in deployments that do not use Firestore and synthesized user private groups.
 
@@ -103,12 +106,13 @@ Here is a different example that runs multiple monkeys in a flock:
          - "exec:portal"
          - "read:image"
          - "read:tap"
-       business: "NotebookRunner"
-       options:
-         repo_url: "https://github.com/lsst-sqre/system-test.git"
-         repo_branch: "prod"
-         max_executions: 1
-       restart: true
+       business: 
+         type: "NotebookRunner"
+         options:
+           repo_url: "https://github.com/lsst-sqre/system-test.git"
+           repo_branch: "prod"
+           max_executions: 1
+         restart: true
 
 This is almost identical except that it specifies five monkeys and provides a specification for creating the users instead of specifying each user.
 The users will be assigned consecutive UIDs and GIDs starting with the specified ``uid_start`` and ``gid_start``.
@@ -129,11 +133,12 @@ Here is an example of testing the TAP application:
            uidnumber: 74775
            gidnumber: 74775
        scopes: ["read:tap"]
-       business: "TAPQueryRunner"
-       restart: true
-       options:
-         tap_sync: true
-         tap_query_set: "dp0.2"
+       business: 
+         type: "TAPQueryRunner"
+         restart: true
+         options:
+           sync: true
+           query_set: "dp0.2"
 
-Note that ``business`` is set to ``TAPQueryRunner`` instead.
-``options.tap_sync`` can choosen between sync and async queries, and ``options.tap_query_set`` can be used to specify the query set to run.
+Note that ``business.type`` is set to ``TAPQueryRunner`` instead.
+``options.sync`` can choosen between sync and async queries, and ``options.query_set`` can be used to specify the query set to run.
