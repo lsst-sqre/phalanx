@@ -42,6 +42,9 @@ data:
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
       avro_timestamp = "private_efdStamp"
+      avro_fields = [
+          "private_efdStamp","band"
+      ]
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
