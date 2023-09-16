@@ -97,15 +97,12 @@ spec:
         - name: "podinfo"
           downwardAPI:
             items:
-              - path: "annotations"
-                fieldRef:
-                  fieldPath: "metadata.annotations"
-              - path: "labels"
-                fieldRef:
-                  fieldPath: "metadata.labels"
               - path: "name"
                 fieldRef:
                   fieldPath: "metadata.name"
+              - path: "namespace"
+                fieldRef:
+                  fieldPath: "metadata.namespace"
               - path: "uid"
                 fieldRef:
                   fieldPath: "metadata.uid"
