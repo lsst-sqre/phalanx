@@ -356,9 +356,13 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
 | telegraf-kafka-consumer.influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | Avro fields to be treated as fields.  If not specified, anything that comes in that is not marked as a tag. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | telegraf-kafka-consumer.kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
+| telegraf-kafka-consumer.kafkaConsumers.test.tags | list | `[]` | Avro fields to be treated as tags |
+| telegraf-kafka-consumer.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field that contains the timestamp |
 | telegraf-kafka-consumer.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| telegraf-kafka-consumer.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: for Rubin, "nullable" is usually the right choice. |
 | telegraf-kafka-consumer.nodeSelector | object | `{}` | Node labels for pod assignment. |
 | telegraf-kafka-consumer.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods. |
 | telegraf-kafka-consumer.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods. |

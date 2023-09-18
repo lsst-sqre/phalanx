@@ -29,9 +29,13 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
 | influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| kafkaConsumers.test.fields | list | `[]` | Avro fields to be treated as fields.  If not specified, anything that comes in that is not marked as a tag. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
+| kafkaConsumers.test.tags | list | `[]` | Avro fields to be treated as tags |
+| kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field that contains the timestamp |
 | kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: for Rubin, "nullable" is usually the right choice. |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |
 | podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods. |
 | podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods. |

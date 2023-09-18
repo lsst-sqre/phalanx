@@ -66,6 +66,15 @@ kafkaConsumers:
     interval: "1s"
     # -- Default data flushing interval to InfluxDB.
     flush_interval: "1s"
+    # -- Union mode: for Rubin, "nullable" is usually the right choice.
+    union_mode: "nullable"
+    # -- Avro field that contains the timestamp
+    timestamp_field: "private_efdStamp"
+    # -- Avro fields to be treated as tags
+    tags: []
+    # -- Avro fields to be treated as fields.  If not specified,
+    # anything that comes in that is not marked as a tag.
+    fields: []
     # -- List of regular expressions to specify the Kafka topics consumed by this agent.
     topicRegexps: |
       [ ".*Test" ]

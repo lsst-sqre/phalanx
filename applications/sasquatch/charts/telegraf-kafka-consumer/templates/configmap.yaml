@@ -41,10 +41,15 @@ data:
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
-      avro_timestamp = "private_efdStamp"
-      avro_fields = [
-          "private_efdStamp","band"
-      ]
+      avro_timestamp = {{ $value.timestamp_field | quote }}
+      avro_union_mode = {{ $value.union_mode | quote }}
+      avro_field_separator = "_"
+      {{- with $value.fields }}
+      avro_fields = {{- toYaml . }}
+      {{- end }}
+      {{- with $value.tags }}
+      avro_tags = {{- toYaml . }}
+      {{- end }}
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
