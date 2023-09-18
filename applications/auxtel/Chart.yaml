@@ -16,10 +16,12 @@ dependencies:
 - name: csc
   alias: atdome
   version: 1.0.0
+  condition: atdome.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atdome-sim
   version: 1.0.0
+  condition: atdome-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atdometrajectory
@@ -32,18 +34,22 @@ dependencies:
 - name: csc
   alias: athexapod
   version: 1.0.0
+  condition: athexapod.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: athexapod-sim
   version: 1.0.0
+  condition: athexapod-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atmcs
   version: 1.0.0
+  condition: atmcs.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atmcs-sim
   version: 1.0.0
+  condition: atmcs-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atoods
@@ -52,10 +58,12 @@ dependencies:
 - name: csc
   alias: atpneumatics
   version: 1.0.0
+  condition: atpneumatics.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atpneumatics-sim
   version: 1.0.0
+  condition: atpneumatics-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atptg
@@ -64,8 +72,10 @@ dependencies:
 - name: csc
   alias: atspectrograph
   version: 1.0.0
+  condition: atspectrograph.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: atspectrograph-sim
   version: 1.0.0
+  condition: atspectrograph-sim.enabled
   repository: "file://../../charts/csc"

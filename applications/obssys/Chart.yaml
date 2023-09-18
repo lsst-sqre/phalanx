@@ -17,6 +17,7 @@ dependencies:
 - name: csc
   alias: authorize
   version: 1.0.0
+  condition: authorize.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtqueue

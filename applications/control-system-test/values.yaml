@@ -7,6 +7,7 @@ csc_collector:
   secrets: []
 
 integration-testing:
+  # -- Enable the integration testing system
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

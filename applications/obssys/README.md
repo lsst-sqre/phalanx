@@ -6,6 +6,7 @@ Deployment for the Observatory System CSCs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| authorize.enabled | bool | `false` | Enable the Authorize CSC |
 | csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystemAppNamespace | string | Set by ArgoCD | Application namespacce for the control system deployment |

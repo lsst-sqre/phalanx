@@ -9,7 +9,6 @@ csc_collector:
     key: ts/software/lfa
 
 love-commander:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/love-commander
     pullPolicy: Always

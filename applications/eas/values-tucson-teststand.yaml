@@ -151,7 +151,6 @@ tma-ess105-sim:
     RUN_ARG: 105 --simulate
 
 weatherforecast:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/weatherforecast
     pullPolicy: Always

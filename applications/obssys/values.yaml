@@ -6,6 +6,10 @@ csc_collector:
   # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
   secrets: []
 
+authorize:
+  # -- Enable the Authorize CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

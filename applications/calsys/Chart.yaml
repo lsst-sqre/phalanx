@@ -9,8 +9,10 @@ dependencies:
 - name: csc
   alias: gcheaderservice1
   version: 1.0.0
+  condition: gcheaderservice1.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: simulation-gencam
   version: 1.0.0
+  condition: simulation-gencam.enabled
   repository: "file://../../charts/csc"

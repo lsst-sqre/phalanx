@@ -7,6 +7,47 @@ csc_collector:
   secrets: []
 
 hexapod-sim:
+  # -- Enable the hexapod controller simulator
+  enabled: false
+
+atdome:
+  # -- Enable the ATDome CSC
+  enabled: false
+
+atdome-sim:
+  # -- Enable the ATDome simulator CSC
+  enabled: false
+
+athexapod:
+  # -- Enable the ATHexapod CSC
+  enabled: false
+
+athexapod-sim:
+  # -- Enable the ATHexapod simulator CSC
+  enabled: false
+
+atmcs:
+  # -- Enable the ATMCS CSC
+  enabled: false
+
+atmcs-sim:
+  # -- Enable the ATMCS simulator CSC
+  enabled: false
+
+atpneumatics:
+  # -- Enable the ATPneumatics CSC
+  enabled: false
+
+atpneumatics-sim:
+  # -- Enable the ATPneumatics simulator CSC
+  enabled: false
+
+atspectrograph:
+  # -- Enable the ATSpectrograph CSC
+  enabled: false
+
+atspectrograph-sim:
+  # -- Enable the ATSpectograph simulator CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

@@ -137,7 +137,6 @@ mtaircompressor2-sim:
     RUN_ARG: 2 --simulate --state disabled
 
 mtaos:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
@@ -182,7 +181,6 @@ mtdome-sim:
     RUN_ARG: --simulate 1
 
 mtdometrajectory:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
@@ -219,7 +217,6 @@ mtmount-sim:
     RUN_ARG: --simulate
 
 mtptg:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always

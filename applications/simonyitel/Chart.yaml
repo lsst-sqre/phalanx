@@ -9,34 +9,42 @@ dependencies:
 - name: csc
   alias: ccheaderservice
   version: 1.0.0
+  condition: ccheaderservice.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: ccoods
   version: 1.0.0
+  condition: ccoods.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: lasertracker1
   version: 1.0.0
+  condition: lasertracker1.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: lasertracker1-sim
   version: 1.0.0
+  condition: lasertracker1-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtaircompressor1
   version: 1.0.0
+  condition: mtaircompressor1.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtaircompressor1-sim
   version: 1.0.0
+  condition: mtaircompressor1-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtaircompressor2
   version: 1.0.0
+  condition: mtaircompressor2.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtaircompressor2-sim
   version: 1.0.0
+  condition: mtaircompressor2-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtaos
@@ -45,50 +53,76 @@ dependencies:
 - name: csc
   alias: mtcamhexapod
   version: 1.0.0
+  condition: mtcamhexapod.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtcamhexapod-sim
   version: 1.0.0
+  condition: mtcamhexapod-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtdome
   version: 1.0.0
+  condition: mtdome.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtdome-sim
   version: 1.0.0
+  condition: mtdome-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtdometrajectory
   version: 1.0.0
   repository: "file://../../charts/csc"
 - name: csc
+  alias: mtheaderservice
+  version: 1.0.0
+  condition: mtheaderservice.enabled
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: mtm1m3
+  version: 1.0.0
+  condition: mtm1m3.enabled
+  repository: "file://../../charts/csc"
+- name: csc
   alias: mtm1m3-sim
   version: 1.0.0
+  condition: mtm1m3-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtm2
   version: 1.0.0
+  condition: mtm2.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtm2-sim
   version: 1.0.0
+  condition: mtm2-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtm2hexapod
   version: 1.0.0
+  condition: mtm2hexapod.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtm2hexapod-sim
   version: 1.0.0
+  condition: mtm2hexapod-sim.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtmount
   version: 1.0.0
+  condition: mtmount.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtmount-sim
   version: 1.0.0
+  condition: mtmount-sim.enabled
+  repository: "file://../../charts/csc"
+- name: csc
+  alias: mtoods
+  version: 1.0.0
+  condition: mtoods.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtptg
@@ -97,8 +131,10 @@ dependencies:
 - name: csc
   alias: mtrotator
   version: 1.0.0
+  condition: mtrotator.enabled
   repository: "file://../../charts/csc"
 - name: csc
   alias: mtrotator-sim
   version: 1.0.0
+  condition: mtrotator-sim.enabled
   repository: "file://../../charts/csc"

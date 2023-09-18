@@ -6,6 +6,134 @@ csc_collector:
   # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
   secrets: []
 
+auxtel-ess01:
+  # -- Enable the ESS:201 CSC
+  enabled: false
+
+auxtel-ess01-sim:
+  # -- Enable the ESS:201 simulator CSC
+  enabled: false
+
+auxtel-ess02:
+  # -- Enable the ESS:202 CSC
+  enabled: false
+
+auxtel-ess02-sim:
+  # -- Enable the ESS:202 simulator CSC
+  enabled: false
+
+auxtel-ess03:
+  # -- Enable the ESS:203 CSC
+  enabled: false
+
+auxtel-ess03-sim:
+  # -- Enable the ESS:203 simulator CSC
+  enabled: false
+
+auxtel-ess04:
+  # -- Enable the ESS:204 CSC
+  enabled: false
+
+auxtel-ess04-sim:
+  # -- Enable the ESS:204 simulator CSC
+  enabled: false
+
+calibhill-ess01:
+  # -- Enable the ESS:301 CSC
+  enabled: false
+
+calibhill-ess01-sim:
+  # -- Enable the ESS:301 simulator CSC
+  enabled: false
+
+dimm1:
+  # -- Enable the DIMM:1 CSC
+  enabled: false
+
+dimm1-sim:
+  # -- Enable the DIMM:1 simulator CSC
+  enabled: false
+
+dimm2:
+  # -- Enable the DIMM:2 CSC
+  enabled: false
+
+dimm2-sim:
+  # -- Enable the DIMM:2 simulator CSC
+  enabled: false
+
+dsm1:
+  # -- Enable the DSM:1 CSC
+  enabled: false
+
+dsm1-sim:
+  # -- Enable the DSM:1 simulator CSC
+  enabled: false
+
+dsm2:
+  # -- Enable the DSM:2 CSC
+  enabled: false
+
+dsm2-sim:
+  # -- Enable the DSM:2 simulator CSC
+  enabled: false
+
+m2-ess106:
+  # -- Enable the ESS:106 CSC
+  enabled: false
+
+m2-ess106-sim:
+  # -- Enable the ESS:106 simulator CSC
+  enabled: false
+
+mtdome-ess01:
+  # -- Enable the ESS:101 CSC
+  enabled: false
+
+mtdome-ess01-sim:
+  # -- Enable the ESS:101 simulator CSC
+  enabled: false
+
+mtdome-ess02:
+  # -- Enable the ESS:102 CSC
+  enabled: false
+
+mtdome-ess02-sim:
+  # -- Enable the ESS:102 simulator CSC
+  enabled: false
+
+mtdome-ess03:
+  # -- Enable the ESS:103 CSC
+  enabled: false
+
+mtdome-ess03-sim:
+  # -- Enable the ESS:103 simulator CSC
+  enabled: false
+
+tma-ess01:
+  # -- Enable the ESS:1 CSC
+  enabled: false
+
+tma-ess01-sim:
+  # -- Enable the ESS:1 simulator CSC
+  enabled: false
+
+tma-ess104:
+  # -- Enable the ESS:104 CSC
+  enabled: false
+
+tma-ess104-sim:
+  # -- Enable the ESS:104 simulator CSC
+  enabled: false
+
+tma-ess105:
+  # -- Enable the ESS:105 CSC
+  enabled: false
+
+tma-ess105-sim:
+  # -- Enable the ESS:105 simulator CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

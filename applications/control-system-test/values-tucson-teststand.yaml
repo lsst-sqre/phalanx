@@ -9,7 +9,6 @@ csc_collector:
     key: ts/software/lfa
 
 test42:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/test
     pullPolicy: Always

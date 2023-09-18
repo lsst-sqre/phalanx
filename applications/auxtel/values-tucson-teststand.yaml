@@ -11,7 +11,6 @@ csc_collector:
     key: butler-secret
 
 ataos:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
@@ -25,13 +24,11 @@ atdome-sim:
     RUN_ARG: --simulate
 
 atdometrajectory:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
 
 atheaderservice:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/headerservice
     tag: ts-v3.1.11_c0029
@@ -67,7 +64,6 @@ atmcs-sim:
     pullPolicy: Always
 
 atoods:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
@@ -151,7 +147,6 @@ atpneumatics-sim:
     pullPolicy: Always
 
 atptg:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always

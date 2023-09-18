@@ -17,7 +17,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
-| integration-testing.enabled | bool | `false` |  |
+| integration-testing.enabled | bool | `false` | Enable the integration testing system |
 | integration-testing.envEfd | string | `nil` | The Name of the EFD instance. |
 | integration-testing.image.tag | string | `nil` | The image tag for the Integration Test runner container |
 | integration-testing.persistentVolume.claimName | string | `"saved-reports"` | PVC name for saving the reports |

@@ -6,6 +6,98 @@ csc_collector:
   # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
   secrets: []
 
+ccheaderservice:
+  # -- Enable the CCHeaderService CSC
+  enabled: false
+
+ccoods:
+  # -- Enable the CCOODS CSC
+  enabled: false
+
+lasertracker1:
+  # -- Enable the LaserTracker:1 CSC
+  enabled: false
+
+lasertracker1-sim:
+  # -- Enable the LaserTracker:1 simulator CSC
+  enabled: false
+
+mtaircompressor1:
+  # -- Enable the MTAirCompressor:1 CSC
+  enabled: false
+
+mtaircompressor1-sim:
+  # -- Enable the MTAirCompressor:1 simulator CSC
+  enabled: false
+
+mtaircompressor2:
+  # -- Enable the MTAirCompressor:2 CSC
+  enabled: false
+
+mtaircompressor2-sim:
+  # -- Enable the MTAirCompressor:2 simulator CSC
+  enabled: false
+
+mtcamhexapod:
+  # -- Enable the MTHexapod:1 CSC
+  enabled: false
+
+mtcamhexapod-sim:
+  # -- Enable the MTHexapod:1 simulator CSC
+  enabled: false
+
+mtdome:
+  # -- Enable the MTDome CSC
+  enabled: false
+
+mtdome-sim:
+  # -- Enable the MTDome simulator CSC
+  enabled: false
+
+mtheaderservice:
+  # -- Enable the MTHeaderService CSC
+  enabled: false
+
+m1m3:
+  # -- Enable the MTM1M3 hardware simulator CSC
+  enabled: false
+
+m1m3-sim:
+  # -- Enable the MTM1M3 simulator CSC
+  enabled: false
+
+mtm2:
+  # -- Enable the MTM2 CSC
+  enabled: false
+
+mtm2-sim:
+  # -- Enable the MTM2 simulator CSC
+  enabled: false
+
+mtm2hexapod:
+  # -- Enable the MTHexapod:2 CSC
+  enabled: false
+
+mtm2hexapod-sim:
+  # -- Enable the MTHexapod:2 simulator CSC
+  enabled: false
+
+mtmount:
+  # -- Enable the MTMount CSC
+  enabled: false
+
+mtmount-sim:
+  # -- Enable the MTMount simulator CSC
+  enabled: false
+
+mtrotator:
+  # -- Enable the MTRotator CSC
+  enabled: false
+
+mtrotator-sim:
+  # -- Enable the MTRotator simulator CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
