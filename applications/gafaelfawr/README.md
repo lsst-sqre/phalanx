@@ -49,6 +49,7 @@ Authentication and identity system
 | config.ldap.groupBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
 | config.ldap.groupObjectClass | string | `"posixGroup"` | Object class containing group information |
+| config.ldap.groupSearchByDn | bool | `false` | Whether to search for group membership by user DN rather than bare usernames. Most LDAP servers use full DNs for group membership, so normally this should be set to true, but it requires `userBaseDn` also be set. |
 | config.ldap.kerberosConfig | string | Use anonymous binds | Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file. If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set either this or `userDn`, not both. |
 | config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
 | config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
