@@ -46,8 +46,7 @@ influxdb2:
 telegraf-kafka-consumer:
   enabled: true
   image:
-    repo: "library/telegraf"
-    tag: "latest"
+    tag: "avrounions"
   kafkaConsumers:
     test:
       enabled: true
