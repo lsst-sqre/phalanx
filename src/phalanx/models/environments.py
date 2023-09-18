@@ -3,9 +3,16 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import ClassVar
 
-from pydantic import AnyHttpUrl, BaseModel, Extra, validator
+from pydantic import (
+    AnyHttpUrl,
+    BaseModel,
+    ConfigDict,
+    GetJsonSchemaHandler,
+    field_validator,
+)
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import CoreSchema
 from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
@@ -53,14 +60,21 @@ class EnvironmentBaseConfig(CamelCaseModel):
     vault_path_prefix: str
     """Prefix of Vault paths, including the Kv2 mount point."""
 
-    @validator("onepassword", pre=True)
-    def _validate_onepassword(cls, v: dict[str, str]) -> dict[str, str] | None:
+    @field_validator("onepassword", mode="before")
+    @classmethod
+    def _validate_onepassword(
+        cls, v: dict[str, str] | None
+    ) -> dict[str, str] | None:
         if not v:
             return v
         if not isinstance(v, dict):
-            raise TypeError("onepassword is not a dictionary")
-        if v["connectUrl"] == "":
+            raise ValueError("onepassword is not a dictionary")  # noqa: TRY004
+
+        # The validator is called multiple times, before and after alias
+        # resolution, so needs to handle both possible spellings.
+        if not v.get("connectUrl") and not v.get("connect_url"):
             return None
+
         return v
 
     @property
@@ -141,11 +155,16 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     file to be schema-checked independently.
     """
 
-    class Config:
-        extra = Extra.forbid
-        schema_extra: ClassVar[dict[str, str]] = {
-            "$id": "https://phalanx.lsst.io/schemas/environment.json"
-        }
+    model_config = ConfigDict(extra="forbid")
+
+    @classmethod
+    def __get_pydantic_json_schema__(
+        cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
+    ) -> JsonSchemaValue:
+        schema = handler(core_schema)
+        schema = handler.resolve_ref_schema(schema)
+        schema["$id"] = "https://phalanx.lsst.io/schemas/environment.json"
+        return schema
 
     @property
     def enabled_applications(self) -> list[str]:
@@ -159,8 +178,7 @@ class Environment(EnvironmentBaseConfig):
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
     def all_applications(self) -> list[ApplicationInstance]:
         """Return all enabled applications in sorted order."""

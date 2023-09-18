@@ -79,7 +79,7 @@ def read_input_static_secrets(environment: str) -> StaticSecrets:
     """
     secrets_path = phalanx_test_path() / "secrets" / f"{environment}.yaml"
     with secrets_path.open() as fh:
-        return StaticSecrets.parse_obj(yaml.safe_load(fh))
+        return StaticSecrets.model_validate(yaml.safe_load(fh))
 
 
 def read_output_data(environment: str, filename: str) -> str:

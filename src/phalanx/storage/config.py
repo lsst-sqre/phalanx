@@ -216,7 +216,8 @@ class ConfigStorage:
             for a in applications
         }
         return Environment(
-            **config.dict(exclude={"applications"}), applications=instances
+            **config.model_dump(exclude={"applications"}),
+            applications=instances,
         )
 
     def load_environment_config(
@@ -254,7 +255,7 @@ class ConfigStorage:
         with env_values_path.open() as fh:
             env_values = yaml.safe_load(fh)
             values = _merge_overrides(values, env_values)
-        return EnvironmentConfig.parse_obj(values)
+        return EnvironmentConfig.model_validate(values)
 
     def load_phalanx_config(self) -> PhalanxConfig:
         """Load the full Phalanx configuration.
@@ -291,7 +292,7 @@ class ConfigStorage:
             application_config = self._load_application_config(name)
             application = Application(
                 active_environments=enabled_for[name],
-                **application_config.dict(),
+                **application_config.model_dump(),
             )
             applications[name] = application
 
@@ -417,7 +418,7 @@ class ConfigStorage:
                 group_mapping = gafaelfawr.values["config"]["groupMapping"]
                 for scope, groups in group_mapping.items():
                     raw = {"scope": scope, "groups": groups}
-                    gafaelfawr_scope = GafaelfawrScope.parse_obj(raw)
+                    gafaelfawr_scope = GafaelfawrScope.model_validate(raw)
                     gafaelfawr_scopes.append(gafaelfawr_scope)
             except KeyError as e:
                 raise InvalidApplicationConfigError(
@@ -434,7 +435,7 @@ class ConfigStorage:
 
         # Return the resulting model.
         return EnvironmentDetails(
-            **config.dict(exclude={"applications"}),
+            **config.model_dump(exclude={"applications"}),
             applications=applications,
             argocd_url=argocd_url,
             argocd_rbac=argocd_rbac,
@@ -552,7 +553,7 @@ class ConfigStorage:
             with secrets_path.open("r") as fh:
                 raw_secrets = yaml.safe_load(fh)
             secrets = {
-                k: ConditionalSecretConfig.parse_obj(s)
+                k: ConditionalSecretConfig.model_validate(s)
                 for k, s in raw_secrets.items()
             }
 
@@ -563,7 +564,7 @@ class ConfigStorage:
             with path.open("r") as fh:
                 raw_secrets = yaml.safe_load(fh)
             environment_secrets[env_name] = {
-                k: ConditionalSecretConfig.parse_obj(s)
+                k: ConditionalSecretConfig.model_validate(s)
                 for k, s in raw_secrets.items()
             }
 

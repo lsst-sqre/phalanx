@@ -7,20 +7,19 @@ import secrets
 from base64 import b64encode
 from datetime import UTC, datetime
 from enum import Enum
-from typing import Any, Literal
+from typing import Literal, Self
 
 import bcrypt
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from pydantic import BaseModel, Extra, Field, SecretStr, validator
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
 from ..constants import PULL_SECRET_DESCRIPTION
 from ..yaml import YAMLFoldedString
 from .gafaelfawr import Token
 
-# Including StaticSecrets in __all__ triggers a Sphinx automodsumm bug.
 __all__ = [
     "ConditionalMixin",
     "ConditionalSecretConfig",
@@ -67,9 +66,7 @@ class SecretCopyRules(BaseModel):
     key: str
     """Secret key from which the secret should be copied."""
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
 
 class ConditionalSecretCopyRules(SecretCopyRules, ConditionalMixin):
@@ -98,9 +95,7 @@ class SimpleSecretGenerateRules(BaseModel):
     ]
     """Type of secret."""
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     def generate(self) -> SecretStr:
         """Generate a new secret following these rules."""
@@ -206,9 +201,7 @@ class SecretConfig(BaseModel):
     value: SecretStr | None = None
     """Secret value."""
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
 
 class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
@@ -223,30 +216,20 @@ class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
     generate: ConditionalSecretGenerateRules | None = None
     """Rules for how the secret should be generated."""
 
-    @validator("generate")
-    def _validate_generate(
-        cls,
-        v: ConditionalSecretGenerateRules | None,
-        values: dict[str, Any],
-    ) -> ConditionalSecretGenerateRules | None:
-        has_copy = "copy" in values and "condition" not in values["copy"]
-        if v and has_copy:
-            msg = "both copy and generate may not be set for the same secret"
+    @model_validator(mode="after")
+    def _validate_generate(self) -> Self:
+        has_copy = self.copy_rules and not self.copy_rules.condition
+        has_generate = self.generate and not self.generate.condition
+        if has_copy and has_generate:
+            msg = (
+                "both copy and generate may not be set unconditionally for the"
+                " same secret"
+            )
             raise ValueError(msg)
-        return v
-
-    @validator("value")
-    def _validate_value(
-        cls, v: SecretStr | None, values: dict[str, Any]
-    ) -> SecretStr | None:
-        has_copy = values.get("copy") and "condition" not in values["copy"]
-        has_generate = (
-            values.get("generate") and "condition" not in values["generate"]
-        )
-        if v and (has_copy or has_generate):
+        if (has_copy or has_generate) and self.value:
             msg = "value may not be set if copy or generate is set"
             raise ValueError(msg)
-        return v
+        return self
 
 
 class Secret(SecretConfig):
@@ -274,8 +257,7 @@ class RegistryPullSecret(BaseModel):
         ..., title="Password", description="HTTP Basic Auth password"
     )
 
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra="forbid")
 
 
 class PullSecret(BaseModel):
@@ -294,9 +276,7 @@ class PullSecret(BaseModel):
         title="Pull secret by registry",
         description="Pull secrets for each registry that needs one",
     )
-
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra="forbid")
 
     def to_dockerconfigjson(self) -> str:
         """Convert to the serialized format used by Docker."""
@@ -349,8 +329,7 @@ class StaticSecret(BaseModel):
         description="Value of the secret, or `None` if it's not known",
     )
 
-    class Config:
-        extra = Extra.forbid
+    model_config = ConfigDict(extra="forbid")
 
 
 class StaticSecrets(BaseModel):
@@ -376,9 +355,7 @@ class StaticSecrets(BaseModel):
         alias="pull-secret",
     )
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     def for_application(self, application: str) -> dict[str, StaticSecret]:
         """Return any known secrets for an application.

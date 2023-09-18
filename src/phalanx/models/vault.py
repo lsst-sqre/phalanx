@@ -36,7 +36,7 @@ class VaultAppRole(VaultAppRoleMetadata):
 
     def to_yaml(self) -> str:
         """Format the data in YAML."""
-        return yaml.dump(self.dict())
+        return yaml.dump(self.model_dump())
 
 
 class VaultTokenMetadata(BaseModel):
@@ -63,4 +63,4 @@ class VaultToken(VaultTokenMetadata):
 
     def to_yaml(self) -> str:
         """Format the data in YAML."""
-        return yaml.dump(self.dict())
+        return yaml.dump(self.model_dump())

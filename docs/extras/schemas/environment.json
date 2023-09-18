@@ -1,71 +1,12 @@
 {
-  "title": "EnvironmentConfig",
-  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
-  "type": "object",
-  "properties": {
-    "name": {
-      "title": "Name",
-      "type": "string"
-    },
-    "fqdn": {
-      "title": "Fqdn",
-      "type": "string"
-    },
-    "onepassword": {
-      "$ref": "#/definitions/OnepasswordConfig"
-    },
-    "vaultUrl": {
-      "title": "Vaulturl",
-      "type": "string"
-    },
-    "vaultPathPrefix": {
-      "title": "Vaultpathprefix",
-      "type": "string"
-    },
-    "applications": {
-      "title": "Applications",
-      "type": "object",
-      "additionalProperties": {
-        "type": "boolean"
-      }
-    },
-    "butlerRepositoryIndex": {
-      "title": "Butlerrepositoryindex",
-      "type": "string"
-    },
-    "onepasswordUuid": {
-      "title": "Onepassworduuid",
-      "type": "string"
-    },
-    "repoUrl": {
-      "title": "Repourl",
-      "type": "string"
-    },
-    "targetRevision": {
-      "title": "Targetrevision",
-      "type": "string"
-    }
-  },
-  "required": [
-    "name",
-    "fqdn",
-    "vaultUrl",
-    "vaultPathPrefix",
-    "applications"
-  ],
-  "additionalProperties": false,
-  "$id": "https://phalanx.lsst.io/schemas/environment.json",
-  "definitions": {
+  "$defs": {
     "OnepasswordConfig": {
-      "title": "OnepasswordConfig",
       "description": "Configuration for 1Password static secrets source.",
-      "type": "object",
       "properties": {
         "connectUrl": {
-          "title": "Connecturl",
-          "minLength": 1,
-          "maxLength": 65536,
           "format": "uri",
+          "minLength": 1,
+          "title": "Connecturl",
           "type": "string"
         },
         "vaultTitle": {
@@ -76,7 +17,105 @@
       "required": [
         "connectUrl",
         "vaultTitle"
-      ]
+      ],
+      "title": "OnepasswordConfig",
+      "type": "object"
     }
-  }
+  },
+  "$id": "https://phalanx.lsst.io/schemas/environment.json",
+  "additionalProperties": false,
+  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
+  "properties": {
+    "name": {
+      "title": "Name",
+      "type": "string"
+    },
+    "fqdn": {
+      "title": "Fqdn",
+      "type": "string"
+    },
+    "onepassword": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OnepasswordConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "vaultUrl": {
+      "title": "Vaulturl",
+      "type": "string"
+    },
+    "vaultPathPrefix": {
+      "title": "Vaultpathprefix",
+      "type": "string"
+    },
+    "applications": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "title": "Applications",
+      "type": "object"
+    },
+    "butlerRepositoryIndex": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Butlerrepositoryindex"
+    },
+    "onepasswordUuid": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Onepassworduuid"
+    },
+    "repoUrl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Repourl"
+    },
+    "targetRevision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Targetrevision"
+    }
+  },
+  "required": [
+    "name",
+    "fqdn",
+    "vaultUrl",
+    "vaultPathPrefix",
+    "applications"
+  ],
+  "title": "EnvironmentConfig",
+  "type": "object"
 }

@@ -140,7 +140,7 @@ class SecretsService:
         static_secrets = StaticSecrets(
             applications=template, pull_secret=PullSecret()
         )
-        return yaml.dump(static_secrets.dict(by_alias=True), width=70)
+        return yaml.dump(static_secrets.model_dump(by_alias=True), width=70)
 
     def get_onepassword_static_secrets(self, env_name: str) -> StaticSecrets:
         """Retrieve static secrets for an environment from 1Password.
