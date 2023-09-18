@@ -93,7 +93,7 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "2.0.0"
+      tag: "2.0.1"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -192,7 +192,7 @@ uws:
 
     # -- Tag of UWS database image to use
     # @default -- Version of QServ TAP image
-    tag: "1.4.5"
+    tag: "2.0.1"
 
   # -- Resource limits and requests for the UWS database pod
   resources:
