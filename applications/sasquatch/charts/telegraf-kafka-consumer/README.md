@@ -34,6 +34,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
 | kafkaConsumers.test.tags | list | `[]` | Avro fields to be treated as tags |
 | kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field that contains the timestamp |
+| kafkaConsumers.test.timestamp_format | string | `"unix_ms"` | Timestamp format: for Rubin, "unix_ms" is usually correct. |
 | kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: for Rubin, "nullable" is usually the right choice. |
 | nodeSelector | object | `{}` | Node labels for pod assignment. |

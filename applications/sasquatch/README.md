@@ -361,6 +361,7 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.tags | list | `[]` | Avro fields to be treated as tags |
 | telegraf-kafka-consumer.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field that contains the timestamp |
+| telegraf-kafka-consumer.kafkaConsumers.test.timestamp_format | string | `"unix_ms"` | Timestamp format: for Rubin, "unix_ms" is usually correct. |
 | telegraf-kafka-consumer.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
 | telegraf-kafka-consumer.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: for Rubin, "nullable" is usually the right choice. |
 | telegraf-kafka-consumer.nodeSelector | object | `{}` | Node labels for pod assignment. |

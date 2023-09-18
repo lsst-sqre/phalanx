@@ -68,6 +68,8 @@ kafkaConsumers:
     flush_interval: "1s"
     # -- Union mode: for Rubin, "nullable" is usually the right choice.
     union_mode: "nullable"
+    # -- Timestamp format: for Rubin, "unix_ms" is usually correct.
+    timestamp_format: "unix_ms"
     # -- Avro field that contains the timestamp
     timestamp_field: "private_efdStamp"
     # -- Avro fields to be treated as tags
