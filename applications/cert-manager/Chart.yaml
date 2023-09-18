@@ -7,5 +7,5 @@ sources:
   - https://github.com/cert-manager/cert-manager
 dependencies:
   - name: cert-manager
-    version: v1.12.4
+    version: v1.13.0
     repository: https://charts.jetstack.io
