@@ -4,14 +4,14 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "34.173.210.129"
+        loadBalancerIP: "34.72.64.180"
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
-        - loadBalancerIP: "34.173.20.18"
+        - loadBalancerIP: "34.66.20.239"
           host: sasquatch-dev-kafka-0.lsst.cloud
-        - loadBalancerIP: "34.69.251.153"
+        - loadBalancerIP: "35.192.19.206"
           host: sasquatch-dev-kafka-1.lsst.cloud
-        - loadBalancerIP: "35.184.86.132"
+        - loadBalancerIP: "34.71.207.19"
           host: sasquatch-dev-kafka-2.lsst.cloud
   users:
     replicator:
@@ -46,18 +46,16 @@ influxdb2:
 telegraf-kafka-consumer:
   enabled: true
   image:
-    tag: "refreshregex"
+    tag: "avrounions"
   kafkaConsumers:
     test:
       enabled: true
       replicaCount: 1
-      refresh_interval: "60s"
       topicRegexps: |
-        [ ".*Test" ]
+        [ "lsst.Test.*" ]
     atmcs:
-      enabled: true
+      enabled: false
       replicaCount: 1
-      refresh_interval: "60s"
       topicRegexps: |
         [ ".*ATMCS" ]
 

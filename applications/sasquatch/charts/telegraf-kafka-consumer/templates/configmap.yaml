@@ -23,6 +23,14 @@ data:
       quiet = false
       round_interval = true
 
+    [[outputs.influxdb]]
+      urls = [
+        "http://sasquatch-influxdb.sasquatch:8086"
+      ]
+      database = {{ $.Values.influxdb.database | quote }}
+      username = "${INFLUXDB_USER}"
+      password = "${INFLUXDB_PASSWORD}"
+
     [[outputs.influxdb_v2]]
       bucket = {{ $.Values.influxdb2.bucket | quote }}
       token = "$INFLUXDB_TOKEN"
@@ -33,8 +41,24 @@ data:
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
-      avro_timestamp = "private_efdStamp"
-      avro_timestamp_format = "unix"
+      {{- with $value.union_mode }}
+      avro_union_mode = {{- $value.union_mode | quote }}
+      {{- end }}
+      {{- with $value.timestamp_field }}
+      avro_timestamp = {{- $value.timestamp_field | quote }}
+      {{- end }}
+      {{- with $value.timestamp_format }}
+      avro_timestamp_format = {{- $value.timestamp_format | quote }}
+      {{- end }}
+      {{- with $value.union_field_separator }}
+      avro_field_separator = {{- $value.union_field_separator | quote }}
+      {{- end }}
+      {{- with $value.fields }}
+      avro_fields = {{- toYaml . }}
+      {{- end }}
+      {{- with $value.tags }}
+      avro_tags = {{- toYaml . }}
+      {{- end }}
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]
@@ -44,7 +68,6 @@ data:
       sasl_mechanism = "SCRAM-SHA-512"
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
-      topic_refresh_interval = {{ default "60s" $value.topicRefreshInterval |  quote }}
       topic_regexps = {{ $value.topicRegexps }}
       offset = "newest"
       consumer_fetch_default = "20MB"
