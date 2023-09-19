@@ -5,7 +5,7 @@ description: Rubin Science Platform Portal Aspect
 sources:
   - https://github.com/lsst/suit
   - https://github.com/Caltech-IPAC/firefly
-appVersion: "suit-2023.1.5"
+appVersion: "suit-2023.2.2"
 
 dependencies:
   - name: redis
