@@ -41,10 +41,18 @@ data:
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
-      avro_timestamp = {{ $value.timestamp_field | quote }}
-      avro_timestamp_format = {{ $value.timestamp_format | quote }}
-      avro_union_mode = {{ $value.union_mode | quote }}
-      avro_field_separator = "_"
+      {{- with $value.union_mode }}
+      avro_union_mode = {{- $value.union_mode | quote }}
+      {{- end }}
+      {{- with $value.timestamp_field }}
+      avro_timestamp = {{- $value.timestamp_field | quote }}
+      {{- end }}
+      {{- with $value.timestamp_format }}
+      avro_timestamp_format = {{- $value.timestamp_format | quote }}
+      {{- end }}
+      {{- with $value.union_field_separator }}
+      avro_field_separator = {{- $value.union_field_separator | quote }}
+      {{- end }}
       {{- with $value.fields }}
       avro_fields = {{- toYaml . }}
       {{- end }}

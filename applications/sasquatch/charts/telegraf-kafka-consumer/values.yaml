@@ -66,18 +66,57 @@ kafkaConsumers:
     interval: "1s"
     # -- Default data flushing interval to InfluxDB.
     flush_interval: "1s"
-    # -- Union mode: for Rubin, "nullable" is usually the right choice.
+    # -- Union field separator: if a single Avro field is flattened into more
+    # than one InfluxDB field (e.g. an array "a", with four members,
+    # would yield "a0", "a1", "a2", "a3"; if the field separator were
+    # "_", these would be "a_0"..."a_3".  The default of the empty
+    # string preserves the behavior of streamreactor.
+    union_field_separator: ""
+    # -- Union mode: this can be one of "flatten", "nullable", or
+    # "any".
+    # If empty, the default is "flatten".  When "flatten" is
+    # set, then if you have an Avro union type of '[ "int", "float" ]'
+    # for field "a", and you have union_field_separator set to "_", then
+    # measurements of "a" will go into Telegraf fields "a_int" and
+    # "a_float" depending on their type.  This keeps InfluxDB happy with
+    # your data even when the same Avro field has multiple types (see
+    # below).
+    # One common use of Avro union types is to mark fields as optional
+    # by specifying '[ "null", "<type>" ]' as the union type.  If this is
+    # set to "nullable", the plugin will not change the field name by adding
+    # the type, but will silently discard fields whose values are null.
+    # However, the measurement will still contain any other fields.
+    # The last possible value is "any".  With this value, the plugin will
+    # not change the field name and will just put in whatever value it
+    # receives.
+    # WARNING: if you use "nullable" with more than one non-null type, or
+    # if you use "any", and Telegraf is feeding InfluxDB, InfluxDB will
+    # associate that field with the first type it sees for a given
+    # its value.  If it receives another measurement with a different
+    # type in that field, it will discard that entire measurement.  Be
+    # sure you know what you're doing if you use the "any" type, or
+    # "nullable" with more than one non-null type.
+    # For Rubin, "nullable" is usually the right choice.
     union_mode: "nullable"
     # -- Timestamp format: for Rubin, "unix_ms" is usually correct.
+    # Other possible values are "unix" (the default if unset),
+    # "unix_us", and "unix_ns".  Avro only supports millis and micros,
+    # although those are both simply type aliases to long integers.
     timestamp_format: "unix_ms"
-    # -- Avro field that contains the timestamp
+    # -- Avro field to be used as the InfluxDB timestamp (optional).  If
+    # unspecified or set to the empty string, Telegraf will use the time
+    # it received the measurement.
     timestamp_field: "private_efdStamp"
-    # -- Avro fields to be treated as tags
+    # -- List of Avro fields to be recorded as InfluxDB tags.  The Avro
+    # fields specified as tags will be converted to strings before
+    # ingestion into InfluxDB.
     tags: []
-    # -- Avro fields to be treated as fields.  If not specified,
-    # anything that comes in that is not marked as a tag.
+    # -- List of Avro fields to be recorded as InfluxDB tags.  If not
+    # specified, any Avro field that is not marked as a tag will become
+    # an InfluxDB field.
     fields: []
-    # -- List of regular expressions to specify the Kafka topics consumed by this agent.
+    # -- List of regular expressions to specify the Kafka topics
+    # consumed by this agent.
     topicRegexps: |
       [ ".*Test" ]
 
