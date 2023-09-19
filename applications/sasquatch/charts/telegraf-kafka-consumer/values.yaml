@@ -111,7 +111,7 @@ kafkaConsumers:
     # fields specified as tags will be converted to strings before
     # ingestion into InfluxDB.
     tags: []
-    # -- List of Avro fields to be recorded as InfluxDB tags.  If not
+    # -- List of Avro fields to be recorded as InfluxDB fields.  If not
     # specified, any Avro field that is not marked as a tag will become
     # an InfluxDB field.
     fields: []

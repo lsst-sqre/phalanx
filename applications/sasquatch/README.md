@@ -356,7 +356,7 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
 | telegraf-kafka-consumer.influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
-| telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
+| telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | telegraf-kafka-consumer.kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
