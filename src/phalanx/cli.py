@@ -8,7 +8,7 @@ from pathlib import Path
 
 import click
 import yaml
-from pydantic.tools import schema_of
+from pydantic import TypeAdapter
 from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
@@ -84,7 +84,7 @@ def _load_static_secrets(path: Path) -> StaticSecrets:
         `~phalanx.models.secrets.StaticSecret`.
     """
     with path.open() as fh:
-        return StaticSecrets.parse_obj(yaml.safe_load(fh))
+        return StaticSecrets.model_validate(yaml.safe_load(fh))
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
@@ -172,7 +172,8 @@ def environment_schema(*, output: Path | None) -> None:
     schema file in the Phalanx repository, which is used by a pre-commit hook
     to validate environment configuration files before committing them.
     """
-    json_schema = EnvironmentConfig.schema_json(indent=2) + "\n"
+    schema = EnvironmentConfig.model_json_schema()
+    json_schema = json.dumps(schema, indent=2) + "\n"
     if output:
         output.write_text(json_schema)
     else:
@@ -276,7 +277,7 @@ def secrets_onepassword_secrets(
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets = secrets_service.get_onepassword_static_secrets(environment)
-    secrets_dict = secrets.dict(by_alias=True, exclude_none=True)
+    secrets_dict = secrets.model_dump(by_alias=True, exclude_none=True)
     secrets_yaml = yaml.dump(secrets_dict, width=70)
     if output:
         output.write_text(secrets_yaml)
@@ -303,19 +304,17 @@ def secrets_schema(*, output: Path | None) -> None:
     schema file in the Phalanx repository, which is used by a pre-commit hook
     to validate secrets.yaml files before committing them.
     """
-    schema = schema_of(
-        dict[str, ConditionalSecretConfig],
-        title="Phalanx application secret definitions",
-    )
+    config_type = TypeAdapter(dict[str, ConditionalSecretConfig])
+    schema = config_type.json_schema()
 
-    # Pydantic v1 doesn't have any way that I can find to add attributes to
-    # the top level of a schema that isn't generated from a model, and the
+    # Pydantic doesn't have any way that I can find to add attributes to the
+    # top level of a schema that isn't generated from a model, and the
     # top-level secrets schema is a dict, so manually add in the $id attribute
-    # pointing to the canonical URL. Do this in a slightly odd way so that the
-    # $id attribute will be at the top of the file, not at the bottom.
-    schema = {"$id": "https://phalanx.lsst.io/schemas/secrets.json", **schema}
+    # pointing to the canonical URL and override the title.
+    schema["$id"] = "https://phalanx.lsst.io/schemas/secrets.json"
+    schema["title"] = "Phalanx application secret definitions"
 
-    json_schema = json.dumps(schema, indent=2) + "\n"
+    json_schema = json.dumps(schema, indent=2, sort_keys=True) + "\n"
     if output:
         output.write_text(json_schema)
     else:

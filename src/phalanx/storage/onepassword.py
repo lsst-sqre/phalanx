@@ -123,7 +123,7 @@ class OnepasswordClient:
                 secrets[registry]["password"] = field.value
 
         # Return the result converted to the appropriate model.
-        return PullSecret.parse_obj({"registries": secrets})
+        return PullSecret.model_validate({"registries": secrets})
 
 
 class OnepasswordStorage:

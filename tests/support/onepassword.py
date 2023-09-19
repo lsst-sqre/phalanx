@@ -52,7 +52,7 @@ class MockOnepasswordClient:
         """
         data_path = phalanx_test_path() / "onepassword" / f"{environment}.yaml"
         with data_path.open() as fh:
-            secrets = StaticSecrets.parse_obj(yaml.safe_load(fh))
+            secrets = StaticSecrets.model_validate(yaml.safe_load(fh))
         self._data[vault] = {}
         for title, values in secrets.applications.items():
             fields = [Field(label=k, value=v.value) for k, v in values.items()]
@@ -65,7 +65,7 @@ class MockOnepasswordClient:
                 reference = FieldSection(id=registry)
                 fields.extend(
                     Field(label=k, value=v, section=reference)
-                    for k, v in auth.dict().items()
+                    for k, v in auth.model_dump().items()
                 )
             self._data[vault]["pull-secret"] = Item(
                 title="pull-secret", fields=fields, sections=sections

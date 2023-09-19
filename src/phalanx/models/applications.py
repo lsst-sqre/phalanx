@@ -29,7 +29,7 @@ class DocLink(BaseModel):
     title: str
     """Title of the document."""
 
-    id: str | None
+    id: str | None = None
     """Identifier of the document."""
 
     def to_rst(self) -> str:

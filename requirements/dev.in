@@ -18,8 +18,7 @@ types-PyYAML
 
 # Documentation
 autodoc_pydantic
-documenteer[guide]>=0.7.0,<1
-pydantic<2
+documenteer[guide]>=1.0.0a7
 sphinx-click
 sphinx-diagrams
 sphinx-jinja

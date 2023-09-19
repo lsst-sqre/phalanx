@@ -9,9 +9,11 @@ functions to make this easier.
 from __future__ import annotations
 
 from collections import defaultdict
+from typing import Any
 
 import yaml
-from pydantic import SecretStr
+from pydantic import GetCoreSchemaHandler, SecretStr
+from pydantic_core import CoreSchema, core_schema
 from yaml.representer import Representer
 
 __all__ = ["YAMLFoldedString"]
@@ -21,6 +23,12 @@ class YAMLFoldedString(str):
     """A string that will be folded when encoded in YAML."""
 
     __slots__ = ()
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source_type: Any, handler: GetCoreSchemaHandler
+    ) -> CoreSchema:
+        return core_schema.no_info_after_validator_function(cls, handler(str))
 
 
 def _folded_string_representer(

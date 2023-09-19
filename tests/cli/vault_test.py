@@ -102,7 +102,7 @@ def test_create_read_approle(
 
     result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
-    approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
+    approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
 
     # Check that the AppRole was created with the right RoleID and policies.
     assert approle.policies == [f"{vault_path}/read"]
@@ -125,7 +125,7 @@ def test_create_read_approle(
     # old one.
     result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
-    new_approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
+    new_approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
     r = mock_vault.list_secret_id_accessors(role_name)
     assert r["data"]["keys"] == [new_approle.secret_id_accessor]
 
@@ -146,7 +146,7 @@ def test_create_write_token(
 
     result = run_cli("vault", "create-write-token", "idfdev")
     assert result.exit_code == 0
-    token = VaultToken.parse_obj(yaml.safe_load(result.output))
+    token = VaultToken.model_validate(yaml.safe_load(result.output))
     assert token.display_name == display_name
     expires = current_datetime() + lifetime
     assert expires - timedelta(seconds=5) <= token.expires <= expires
