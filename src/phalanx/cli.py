@@ -475,6 +475,16 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
 @vault.command("create-read-approle")
 @click.argument("environment")
 @click.option(
+    "--as-secret",
+    type=str,
+    default=None,
+    help=(
+        "Output the credentials as a Kubernetes Secret for"
+        " vault-secrets-operator, with the provided name, suitable for passing"
+        " to kubectl apply."
+    ),
+)
+@click.option(
     "-c",
     "--config",
     type=click.Path(path_type=Path),
@@ -482,7 +492,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     help="Path to root of Phalanx configuration.",
 )
 def vault_create_read_approle(
-    environment: str, *, config: Path | None
+    environment: str, as_secret: str | None, *, config: Path | None
 ) -> None:
     """Create a new Vault read AppRole.
 
@@ -499,7 +509,10 @@ def vault_create_read_approle(
     factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_approle = vault_service.create_read_approle(environment)
-    sys.stdout.write(vault_approle.to_yaml())
+    if as_secret:
+        sys.stdout.write(vault_approle.to_kubernetes_secret(as_secret))
+    else:
+        sys.stdout.write(vault_approle.to_yaml())
 
 
 @vault.command("create-write-token")

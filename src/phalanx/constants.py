@@ -11,6 +11,7 @@ from datetime import timedelta
 __all__ = [
     "HELM_DOCLINK_ANNOTATION",
     "PULL_SECRET_DESCRIPTION",
+    "VAULT_SECRET_TEMPLATE",
     "VAULT_WRITE_TOKEN_LIFETIME",
     "VAULT_WRITE_TOKEN_WARNING_LIFETIME",
 ]
@@ -25,6 +26,19 @@ PULL_SECRET_DESCRIPTION = (
     " credentials for that registry."
 )
 """Description to put in the static secrets YAML file for ``pull-secret``."""
+
+VAULT_SECRET_TEMPLATE = """\
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {name}
+  namespace: vault-secrets-operator
+data:
+  VAULT_ROLE_ID: {role_id}
+  VAULT_SECRET_ID: {secret_id}
+type: Opaque
+"""
+"""Template for a ``Secret`` containing AppRole credentials."""
 
 VAULT_WRITE_TOKEN_LIFETIME = "3650d"
 """Default lifetime to set for Vault write tokens."""

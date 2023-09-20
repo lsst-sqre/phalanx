@@ -3,13 +3,14 @@
 from __future__ import annotations
 
 import re
+from base64 import b64encode
 from datetime import datetime, timedelta
 
 import jinja2
 import yaml
 from safir.datetime import current_datetime
 
-from phalanx.constants import VAULT_WRITE_TOKEN_LIFETIME
+from phalanx.constants import VAULT_SECRET_TEMPLATE, VAULT_WRITE_TOKEN_LIFETIME
 from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
@@ -122,12 +123,25 @@ def test_create_read_approle(
     assert r["data"]["keys"] == [approle.secret_id_accessor]
 
     # Recreating the AppRole should result in a new SecretID and delete the
-    # old one.
-    result = run_cli("vault", "create-read-approle", "idfdev")
+    # old one. Pass in the --as-secret flag and check that the result is
+    # formatted like a secret.
+    result = run_cli(
+        "vault",
+        "create-read-approle",
+        "idfdev",
+        "--as-secret",
+        "vault-credentials",
+    )
     assert result.exit_code == 0
-    new_approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
-    r = mock_vault.list_secret_id_accessors(role_name)
-    assert r["data"]["keys"] == [new_approle.secret_id_accessor]
+    secret = yaml.safe_load(result.output)
+    r = mock_vault.read_role_id(role_name)
+    role_id = r["data"]["role_id"]
+    expected = VAULT_SECRET_TEMPLATE.format(
+        name="vault-credentials",
+        role_id=b64encode(role_id.encode()).decode(),
+        secret_id=secret["data"]["VAULT_SECRET_ID"],
+    )
+    assert result.output == expected
 
 
 def test_create_write_token(
