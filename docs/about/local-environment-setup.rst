@@ -66,6 +66,7 @@ See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#ins
    However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
 
 If you don't want to (or don't have access to) install helm-docs globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
+To see which binary is most appropriate for a Linux system, run ``uname -a``.
 
 Install helm
 ============
