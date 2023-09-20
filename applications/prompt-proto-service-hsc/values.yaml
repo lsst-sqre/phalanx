@@ -1,6 +1,7 @@
 prompt-proto-service:
 
   # -- Annotations for the prompt-proto-service pod
+  # @default -- See the `values.yaml` file.
   podAnnotations:
     autoscaling.knative.dev/min-scale: "3"
     autoscaling.knative.dev/max-scale: "100"
@@ -10,42 +11,90 @@ prompt-proto-service:
     revision: "1"
 
   image:
+    # -- Image to use in the PP deployment
     repository: ghcr.io/lsst-dm/prompt-proto-service
+    # -- Pull policy for the PP image
+    # @default -- `IfNotPresent` in prod, `Always` in dev
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    # -- Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
   instrument:
+    # -- The "short" name of the instrument
     name: HSC
+    # -- Machine-readable string describing which pipeline(s) should be run for which visits.
+    # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_prototype/blob/main/python/activator/config.py) for examples.
+    # @default -- None, must be set
     pipelines: ""
+    # -- Skymap to use with the instrument
     skymap: hsc_rings_v1
+    # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
+    # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
+    # @default -- None, must be set
     calibRepo: ""
 
   s3:
+    # -- Bucket containing the incoming raw images
+    # @default -- None, must be set
     imageBucket: ""
+    # -- S3 endpoint containing `imageBucket`
+    # @default -- None, must be set
     endpointUrl: ""
+    # -- If set, get S3 credentials from this application's Vault secret.
     auth_env: true
+    # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: '0'
 
   imageNotifications:
+    # -- Hostname and port of the Kafka provider
+    # @default -- None, must be set
     kafkaClusterAddress: ""
+    # -- Topic where raw image arrival notifications appear
+    # @default -- None, must be set
     topic: ""
+    # -- Timeout to wait after expected script completion for raw image arrival (seconds).
     imageTimeout: '120'
 
   apdb:
+    # -- IP address or hostname and port of the APDB
+    # @default -- None, must be set
     ip: ""
+    # -- PostgreSQL database name for the APDB
     db: lsst-devl
+    # -- Database user for the APDB
     user: rubin
+    # -- Database namespace for the APDB
     namespace: pp_apdb
 
   registry:
+    # -- IP address or hostname and port of the Butler registry database
+    # @default -- None, must be set
     ip: ""
+    # -- PostgreSQL database name for the Butler registry database
+    # @default -- None, must be set
     db: ""
+    # -- Database user for the Butler registry database
+    # @default -- None, must be set
     user: ""
+    # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
+    centralRepoFile: false
+
+  # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
+  # @default -- log prompt_prototype at DEBUG, other LSST code at INFO, and third-party code at WARNING.
+  logLevel: ""
 
   knative:
+    # -- The storage space reserved for each container (mostly local Butler).
     ephemeralStorageRequest: "20Gi"
+    # -- The maximum storage space allowed for each container (mostly local Butler).
     ephemeralStorageLimit: "20Gi"
+    # -- Maximum time that a container can respond to a next_visit request (seconds).
     timeout: 900
+    # -- Maximum time that a container can send nothing to the fanout service (seconds).
     idleTimeout: 900
+    # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).
     responseStartTimeout: 900
+
+  # -- Kubernetes YAML configs for extra container volume(s).
+  # Any volumes required by other config options are automatically handled by the Helm chart.
+  additionalVolumeMounts: []

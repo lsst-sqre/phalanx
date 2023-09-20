@@ -39,6 +39,11 @@ repos:
           - --chart-search-root=environments
           # The `../` makes it relative to the chart-search-root set above
           - --template-files=../helm-docs.md.gotmpl
+      - id: helm-docs
+        args:
+          - --chart-search-root=charts
+          # The `../` makes it relative to the chart-search-root set above
+          - --template-files=../helm-docs.md.gotmpl
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.0.289
