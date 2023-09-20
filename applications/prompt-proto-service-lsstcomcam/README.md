@@ -1,6 +1,12 @@
 # prompt-proto-service-lsstcomcam
 
-Deployment for prompt proto service for LSSTComCam images
+Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative. This deployment handles LSSTComCam images.
+
+**Homepage:** <https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst>
+
+## Source Code
+
+* <https://github.com/lsst-dm/prompt_prototype>
 
 ## Values
 
