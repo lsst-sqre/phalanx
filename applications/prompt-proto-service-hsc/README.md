@@ -16,6 +16,7 @@ Prompt Proto Service is an event driven service for processing camera images.  T
 | prompt-proto-service.apdb.db | string | `"lsst-devl"` | PostgreSQL database name for the APDB |
 | prompt-proto-service.apdb.ip | string | None, must be set | IP address or hostname and port of the APDB |
 | prompt-proto-service.apdb.namespace | string | `"pp_apdb"` | Database namespace for the APDB |
+| prompt-proto-service.apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | prompt-proto-service.apdb.user | string | `"rubin"` | Database user for the APDB |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-proto-service"` | Image to use in the PP deployment |

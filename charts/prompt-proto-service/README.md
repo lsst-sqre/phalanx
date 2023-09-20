@@ -17,6 +17,7 @@ Prompt Proto Service is an event driven service for processing camera images.  T
 | apdb.db | string | `""` | PostgreSQL database name for the APDB |
 | apdb.ip | string | None, must be set | IP address or hostname and port of the APDB |
 | apdb.namespace | string | `""` | Database namespace for the APDB |
+| apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | apdb.user | string | `""` | Database user for the APDB |
 | containerConcurrency | int | `1` |  |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |

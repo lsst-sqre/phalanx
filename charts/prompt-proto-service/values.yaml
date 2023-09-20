@@ -58,6 +58,9 @@ imageNotifications:
   imageTimeout: '120'
 
 apdb:
+  # -- URL to the APDB, in any form recognized by SQLAlchemy
+  # @default -- None, must be set
+  url: ""
   # -- IP address or hostname and port of the APDB
   # @default -- None, must be set
   ip: ""

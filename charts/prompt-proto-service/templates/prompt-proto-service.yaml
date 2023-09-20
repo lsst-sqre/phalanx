@@ -68,6 +68,8 @@ spec:
           value: {{ .Values.apdb.db }}
         - name: USER_APDB
           value: {{ .Values.apdb.user }}
+        - name: URL_APDB
+          value: {{ .Values.apdb.url }}
         - name: NAMESPACE_APDB
           value: {{ .Values.apdb.namespace }}
         - name: IP_REGISTRY

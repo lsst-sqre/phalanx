@@ -24,6 +24,7 @@ prompt-proto-service:
     topic: rubin-prompt-processing
 
   apdb:
+    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
     ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
 
   registry:
