@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+from base64 import b64encode
 from datetime import datetime
 
 import yaml
 from pydantic import BaseModel
+
+from ..constants import VAULT_SECRET_TEMPLATE
 
 __all__ = [
     "VaultAppRole",
@@ -33,6 +36,27 @@ class VaultAppRole(VaultAppRoleMetadata):
 
     secret_id_accessor: str
     """Accessor for the AppRole authentication credentials."""
+
+    def to_kubernetes_secret(self, name: str) -> str:
+        """Format the data as a secret for vault-secrets-operator.
+
+        Parameters
+        ----------
+        name
+            Name of the secret to create.
+
+        Returns
+        -------
+        str
+            YAML creating a Kubernetes ``Secret`` resource for
+            vault-secrets-operator_, suitable for passing to :command:`kubectl
+            apply`.
+        """
+        role_id = b64encode(self.role_id.encode()).decode()
+        secret_id = b64encode(self.secret_id.encode()).decode()
+        return VAULT_SECRET_TEMPLATE.format(
+            name=name, role_id=role_id, secret_id=secret_id
+        )
 
     def to_yaml(self) -> str:
         """Format the data in YAML."""
