@@ -61,26 +61,26 @@ apdb:
   # -- URL to the APDB, in any form recognized by SQLAlchemy
   # @default -- None, must be set
   url: ""
-  # -- IP address or hostname and port of the APDB
+  # -- IP address or hostname and port of the APDB (deprecated for apdb.url)
   # @default -- None, must be set
-  ip: ""
-  # -- PostgreSQL database name for the APDB
-  db: ""
-  # -- Database user for the APDB
-  user: ""
+  ip: ""  # TODO: remove on DM-40839
+  # -- PostgreSQL database name for the APDB (deprecated for apdb.url)
+  db: ""  # TODO: remove on DM-40839
+  # -- Database user for the APDB (deprecated for apdb.url)
+  user: ""  # TODO: remove on DM-40839
   # -- Database namespace for the APDB
   namespace: ""
 
 registry:
-  # -- IP address or hostname and port of the Butler registry database
+  # -- IP address or hostname and port of the Butler registry database (deprecated)
   # @default -- None, must be set
-  ip: ""
-  # -- PostgreSQL database name for the Butler registry database
+  ip: ""  # TODO: remove on DM-40839
+  # -- PostgreSQL database name for the Butler registry database (deprecated)
   # @default -- None, must be set
-  db: ""
-  # -- Database user for the Butler registry database
+  db: ""  # TODO: remove on DM-40839
+  # -- Database user for the Butler registry database (deprecated)
   # @default -- None, must be set
-  user: ""
+  user: ""  # TODO: remove on DM-40839
   # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
   centralRepoFile: false
 

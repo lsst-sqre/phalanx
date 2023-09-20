@@ -24,9 +24,9 @@ prompt-proto-service:
 
   apdb:
     url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432  # TODO: remove on DM-40839
 
-  registry:
+  registry:  # TODO: remove on DM-40839
     ip: usdf-butler.slac.stanford.edu:5432
 
   fullnameOverride: "prompt-proto-service-lsstcomcam"
