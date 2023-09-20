@@ -47,8 +47,6 @@ spec:
           value: {{ .Values.instrument.pipelines }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
-        - name: PUBSUB_VERIFICATION_TOKEN
-          value: rubin-prompt-proto-main
         - name: IMAGE_BUCKET
           value: {{ .Values.s3.imageBucket }}
         - name: BUCKET_TOPIC
