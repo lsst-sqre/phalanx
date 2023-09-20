@@ -18,7 +18,7 @@ Deployment for prompt proto service for HSC images
 | prompt-proto-service.imageNotifications.topic | string | `""` |  |
 | prompt-proto-service.instrument.calibRepo | string | `""` |  |
 | prompt-proto-service.instrument.name | string | `"HSC"` |  |
-| prompt-proto-service.instrument.pipelines | string | `"(survey=\"SURVEY\")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml]"` |  |
+| prompt-proto-service.instrument.pipelines | string | `""` |  |
 | prompt-proto-service.instrument.skymap | string | `"hsc_rings_v1"` |  |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"20Gi"` |  |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"20Gi"` |  |
