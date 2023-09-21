@@ -338,7 +338,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.zookeeper.tolerations | list | `[]` | Tolerations for Zookeeper pod assignment. |
 | telegraf-kafka-consumer.affinity | object | `{}` | Affinity for pod assignment. |
 | telegraf-kafka-consumer.args | list | `[]` | Arguments passed to the Telegraf agent containers. |
-| telegraf-kafka-consumer.enabled | bool | `false` | Enable Telegraf Kafka Consumer. Note that the default configuration is meant to work with InfluxDB v1 and v2. |
+| telegraf-kafka-consumer.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf-kafka-consumer.env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
