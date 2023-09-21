@@ -141,7 +141,7 @@ telegraf-kafka-consumer:
       interval: "1s"
       flush_interval: "1s"
       union_mode: "nullable"
-      timestamp_format: "unix_ms"
+      timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
