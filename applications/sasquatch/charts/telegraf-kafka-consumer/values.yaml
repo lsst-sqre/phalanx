@@ -59,6 +59,9 @@ kafkaConsumers:
   test:
     # -- Enable the Telegraf Kafka consumer.
     enabled: false
+    # -- Number of Telegraf Kafka consumer replicas.
+    # Increase this value to increase the consumer throughput.
+    replicaCount: 1
     # -- Data collection interval for the Kafka consumer.
     interval: "1s"
     # -- Default data flushing interval to InfluxDB.

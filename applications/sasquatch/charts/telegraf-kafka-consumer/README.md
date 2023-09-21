@@ -32,6 +32,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
 | kafkaConsumers.test.interval | string | `"1s"` | Data collection interval for the Kafka consumer. |
+| kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
 | kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
 | kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
 | kafkaConsumers.test.timestamp_format | string | `"unix_ms"` | Timestamp format: for Rubin, "unix_ms" is usually correct. Other possible values are "unix" (the default if unset), "unix_us", and "unix_ns".  Avro only supports millis and micros, although those are both simply type aliases to long integers. |
