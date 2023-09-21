@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from base64 import b64encode
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import jinja2
 import yaml
@@ -15,7 +16,11 @@ from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
 from ..support.cli import run_cli
-from ..support.data import read_output_data
+from ..support.data import (
+    assert_json_dirs_match,
+    phalanx_test_path,
+    read_output_data,
+)
 from ..support.vault import MockVaultClient
 
 
@@ -90,6 +95,24 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
     result = run_cli("vault", "audit", "idfdev")
     assert result.exit_code == 0
     assert result.output == ""
+
+
+def test_copy_secrets(
+    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+) -> None:
+    input_path = phalanx_test_path()
+    vault_input_path = input_path / "vault" / "idfdev"
+    old_path = "secret/k8s_operator/data-dev.lsst.cloud"
+    mock_vault.load_test_data(old_path, "idfdev")
+
+    result = run_cli("vault", "copy-secrets", "idfdev", old_path)
+    assert result.exit_code == 0
+    assert result.output == ""
+    result = run_cli("secrets", "vault-secrets", "idfdev", str(tmp_path))
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    assert_json_dirs_match(tmp_path, vault_input_path)
 
 
 def test_create_read_approle(

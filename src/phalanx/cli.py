@@ -33,6 +33,7 @@ __all__ = [
     "secrets_vault_secrets",
     "vault",
     "vault_audit",
+    "vault_copy_secrets",
     "vault_create_read_approle",
     "vault_create_write_token",
 ]
@@ -470,6 +471,37 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     if report:
         sys.stdout.write(report)
         sys.exit(1)
+
+
+@vault.command("copy-secrets")
+@click.argument("environment")
+@click.argument("old-prefix")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_copy_secrets(
+    environment: str, old_prefix: str, *, config: Path | None
+) -> None:
+    """Copy secrets for an environment from another Vault path prefix.
+
+    Copy secrets for an environment from another Vault path prefix in the same
+    Vault server, overwriting any secrets that already exist with the same
+    name. This command is intended primarily for changing the Vault path
+    prefix for an environment without regenerating its secrets.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the old path and write access to the currently configured Vault
+    path for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    vault_service = factory.create_vault_service()
+    vault_service.copy_secrets(environment, old_prefix)
 
 
 @vault.command("create-read-approle")
