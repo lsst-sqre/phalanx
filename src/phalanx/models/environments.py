@@ -100,9 +100,10 @@ class EnvironmentBaseConfig(CamelCaseModel):
         """Display name of the Vault write token for this environment.
 
         Unlike AppRole names, this could include a slash, but use the same
-        name as the AppRole for consistency and simplicity.
+        base name as the AppRole for consistency and simplicity. Vault always
+        prepends ``token-``, which we strip off when creating the token.
         """
-        return self.vault_read_approle
+        return f"token-{self.vault_read_approle}"
 
     @property
     def vault_read_policy(self) -> str:

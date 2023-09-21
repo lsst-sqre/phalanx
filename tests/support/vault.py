@@ -81,7 +81,8 @@ class MockVaultClient:
         Parameters
         ----------
         display_name
-            Display name of the token.
+            Display name of the token. Simulate the (weird) behavior of Vault
+            and add ``token-`` to the start of this name.
         policies
             Policies to set for the token.
         ttl
@@ -97,7 +98,7 @@ class MockVaultClient:
         else:
             expires = current_datetime() + timedelta(days=int(ttl[:-1]))
         token = VaultToken(
-            display_name=display_name,
+            display_name=f"token-{display_name}",
             token=f"s.{os.urandom(16).hex()}",
             accessor=os.urandom(16).hex(),
             policies=policies,
