@@ -69,10 +69,8 @@ kafkaConsumers:
     # -- Union field separator: if a single Avro field is flattened into more
     # than one InfluxDB field (e.g. an array "a", with four members,
     # would yield "a0", "a1", "a2", "a3"; if the field separator were
-    # "_", these would be "a_0"..."a_3".  The default of the empty
-    # string preserves the behavior of streamreactor.
+    # "_", these would be "a_0"..."a_3".
     union_field_separator: ""
-    #@default -- "" (empty string)
     # -- Union mode: this can be one of "flatten", "nullable", or
     # "any".
     # If empty, the default is "flatten".  When "flatten" is
@@ -99,7 +97,6 @@ kafkaConsumers:
     # "nullable" with more than one non-null type.
     # For Rubin, "nullable" is usually the right choice.
     union_mode: "nullable"
-    #@default -- "flatten"
     # -- Timestamp format. Possible values are "unix" (the default if unset), "unix_ms",
     # "unix_us", and "unix_ns".
     # At Rubin, use "unix" timestamp format for SAL timestamps.
