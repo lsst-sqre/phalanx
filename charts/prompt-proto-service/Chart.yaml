@@ -4,6 +4,11 @@ version: 1.0.0
 appVersion: "0.1.0"
 description: Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative.
 type: application
-home: https://prompt-proto-service.lsst.io/
+home: https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst
 sources:
   - https://github.com/lsst-dm/prompt_prototype
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-219"
+      title: "Proposal and Prototype for Prompt Processing"
+      url: "https://dmtn-219.lsst.io/"

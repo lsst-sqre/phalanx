@@ -12,6 +12,30 @@ spec:
       {{- end }}
     spec:
       containerConcurrency: {{ .Values.containerConcurrency }}
+      initContainers:
+      - name: init-copy-pgpass
+        # Make a copy of the read-only secret so we can change owner
+        image: busybox
+        command: ["sh", "-c", "cp -L /app/pg-mount/.pgpass /app/pgsql/"]
+        volumeMounts:
+        - mountPath: /app/pg-mount
+          name: pgpass-mount
+          readOnly: true
+        - mountPath: /app/pgsql
+          name: pgpass-credentials-file
+      - name: init-chown-pgpass
+        image: busybox
+        command: ["sh", "-c", "chown 1000:1000 /app/pgsql/.pgpass"]  # lsst account created by main image
+        volumeMounts:
+        - mountPath: /app/pgsql
+          name: pgpass-credentials-file
+      - name: init-chmod-pgpass
+        image: busybox
+        # PostgreSQL refuses to read group- or world-readable files
+        command: ["sh", "-c", "chmod u=r,go-rwx /app/pgsql/.pgpass"]
+        volumeMounts:
+        - mountPath: /app/pgsql
+          name: pgpass-credentials-file
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
@@ -23,8 +47,6 @@ spec:
           value: {{ .Values.instrument.pipelines }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
-        - name: PUBSUB_VERIFICATION_TOKEN
-          value: rubin-prompt-proto-main
         - name: IMAGE_BUCKET
           value: {{ .Values.s3.imageBucket }}
         - name: BUCKET_TOPIC
@@ -37,30 +59,32 @@ spec:
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
           value: {{ .Values.s3.disableBucketValidation | quote }}
-        - name: IP_APDB
+        - name: IP_APDB  # TODO: remove on DM-40839
           # Need explicit port for make_pgpass.py
           value: {{ .Values.apdb.ip }}
-        - name: DB_APDB
+        - name: DB_APDB  # TODO: remove on DM-40839
           value: {{ .Values.apdb.db }}
-        - name: USER_APDB
+        - name: USER_APDB  # TODO: remove on DM-40839
           value: {{ .Values.apdb.user }}
+        - name: URL_APDB
+          value: {{ .Values.apdb.url }}
         - name: NAMESPACE_APDB
           value: {{ .Values.apdb.namespace }}
-        - name: IP_REGISTRY
+        - name: IP_REGISTRY  # TODO: remove on DM-40839
           # Need explicit port for make_pgpass.py
           value: {{ .Values.registry.ip }}
-        - name: DB_REGISTRY
+        - name: DB_REGISTRY  # TODO: remove on DM-40839
           value: {{ .Values.registry.db }}
-        - name: USER_REGISTRY
+        - name: USER_REGISTRY  # TODO: remove on DM-40839
           value: {{ .Values.registry.user }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
-        - name: PSQL_REGISTRY_PASS
+        - name: PSQL_REGISTRY_PASS  # TODO: remove on DM-40839
           valueFrom:
             secretKeyRef:
               name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: registry_password
-        - name: PSQL_APDB_PASS
+        - name: PSQL_APDB_PASS  # TODO: remove on DM-40839
           valueFrom:
             secretKeyRef:
               name: {{ template "prompt-proto-service.fullname" . }}-secret
@@ -83,6 +107,8 @@ spec:
         - name: AWS_SHARED_CREDENTIALS_FILE
           value: /app/s3/credentials
         {{- end }}
+        - name: PGPASSFILE
+          value: /app/pgsql/.pgpass
         - name: LOCAL_REPOS
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
@@ -90,9 +116,20 @@ spec:
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
-          {{- with .Values.additionalVolumeMounts }}
-          {{- toYaml . | nindent 8 }}
-          {{- end }}
+        - mountPath: /app/pgsql
+          name: pgpass-credentials-file
+          readOnly: true
+        {{- if .Values.s3.cred_file_auth }}
+        - mountPath: /app/s3/
+          name: s3-credentials-file
+        {{- end }}
+        {{- if .Values.registry.centralRepoFile }}
+        - mountPath: {{ .Values.instrument.calibRepo }}
+          name: central-repo-file
+        {{- end }}
+        {{- with .Values.additionalVolumeMounts }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
         readinessProbe:
           successThreshold: 1
           tcpSocket:
@@ -106,6 +143,17 @@ spec:
       - name: ephemeral
         emptyDir:
           sizeLimit: {{ .Values.knative.ephemeralStorageLimit }}
+      - name: pgpass-mount
+        # Temporary mount for .pgpass; cannot be read directly because it's owned by root
+        secret:
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secret
+          items:
+          - key: pgpass_file
+            path: .pgpass
+          defaultMode: 0400  # Minimal permissions, as extra protection
+      - name: pgpass-credentials-file
+        emptyDir:
+          sizeLimit: 10Ki  # Just a text file!
       {{- if .Values.s3.cred_file_auth }}
       - name: s3-credentials-file
         secret:
