@@ -19,7 +19,6 @@ from phalanx.models.gafaelfawr import Token
 
 from ..support.cli import run_cli
 from ..support.data import (
-    assert_json_dirs_match,
     phalanx_test_path,
     read_input_static_secrets,
     read_output_data,
@@ -275,19 +274,3 @@ def test_sync_regenerate(
     mtime = datetime.fromisoformat(argocd["admin.passwordMtime"])
     now = current_datetime()
     assert now - timedelta(seconds=5) <= mtime <= now
-
-
-def test_vault_secrets(
-    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
-) -> None:
-    input_path = phalanx_test_path()
-    vault_input_path = input_path / "vault" / "idfdev"
-    config_storage = factory.create_config_storage()
-    environment = config_storage.load_environment("idfdev")
-    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
-
-    result = run_cli("secrets", "vault-secrets", "idfdev", str(tmp_path))
-    assert result.exit_code == 0
-    assert result.output == ""
-
-    assert_json_dirs_match(tmp_path, vault_input_path)

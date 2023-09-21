@@ -30,12 +30,12 @@ __all__ = [
     "secrets_onepassword_secrets",
     "secrets_schema",
     "secrets_static_template",
-    "secrets_vault_secrets",
     "vault",
     "vault_audit",
     "vault_copy_secrets",
     "vault_create_read_approle",
     "vault_create_write_token",
+    "vault_export_secrets",
 ]
 
 
@@ -411,35 +411,6 @@ def secrets_sync(
     )
 
 
-@secrets.command("vault-secrets")
-@click.argument("environment")
-@click.argument("output", type=click.Path(path_type=Path))
-@click.option(
-    "-c",
-    "--config",
-    type=click.Path(path_type=Path),
-    default=None,
-    help="Path to root of Phalanx configuration.",
-)
-def secrets_vault_secrets(
-    environment: str, output: Path, *, config: Path | None
-) -> None:
-    """Write the Vault secrets for the given environment.
-
-    One JSON file per application with secrets will be created in the output
-    directory, containing the secrets for that application. If the value of a
-    secret is not known, it will be written as null.
-
-    The environment variable VAULT_TOKEN must be set to a token with read
-    access to the Vault data for the given environment.
-    """
-    if not config:
-        config = _find_config()
-    factory = Factory(config)
-    secrets_service = factory.create_secrets_service()
-    secrets_service.save_vault_secrets(environment, output)
-
-
 @main.group()
 def vault() -> None:
     """Vault management commands."""
@@ -580,3 +551,32 @@ def vault_create_write_token(
     vault_service = factory.create_vault_service()
     vault_token = vault_service.create_write_token(environment, lifetime)
     sys.stdout.write(vault_token.to_yaml())
+
+
+@vault.command("export-secrets")
+@click.argument("environment")
+@click.argument("output", type=click.Path(path_type=Path))
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_export_secrets(
+    environment: str, output: Path, *, config: Path | None
+) -> None:
+    """Write the Vault secrets for the given environment.
+
+    One JSON file per application with secrets will be created in the output
+    directory, containing the secrets for that application. If the value of a
+    secret is not known, it will be written as null.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the Vault data for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    vault_service = factory.create_vault_service()
+    vault_service.export_secrets(environment, output)

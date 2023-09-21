@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import json
 from base64 import b64decode
 from collections import defaultdict
-from pathlib import Path
 
 import yaml
 from pydantic import SecretStr
@@ -178,35 +176,6 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         return environment.all_secrets()
-
-    def save_vault_secrets(self, env_name: str, path: Path) -> None:
-        """Generate JSON files of the Vault secrets for an environment.
-
-        One file per application with secrets will be written to the provided
-        path. Each file will be named after the application with ``.json``
-        appended, and will contain the secret values for that application.
-        Secrets that are required but have no known value will be written as
-        null.
-
-        Parameters
-        ----------
-        env_name
-            Name of the environment.
-        path
-            Output path.
-        """
-        environment = self._config.load_environment(env_name)
-        vault_client = self._vault.get_vault_client(environment)
-        vault_secrets = vault_client.get_environment_secrets()
-        for app_name, values in vault_secrets.items():
-            app_secrets: dict[str, str | None] = {}
-            for key, secret in values.items():
-                if secret:
-                    app_secrets[key] = secret.get_secret_value()
-                else:
-                    app_secrets[key] = None
-            with (path / f"{app_name}.json").open("w") as fh:
-                json.dump(app_secrets, fh, indent=2)
 
     def sync(
         self,
