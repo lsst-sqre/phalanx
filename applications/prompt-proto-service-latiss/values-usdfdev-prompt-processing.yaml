@@ -29,5 +29,3 @@ prompt-proto-service:
     ip: usdf-butler.slac.stanford.edu:5432
 
   fullnameOverride: "prompt-proto-service-latiss"
-
-  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"
