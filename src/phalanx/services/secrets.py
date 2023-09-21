@@ -77,12 +77,15 @@ class SecretsService:
         # secrets.
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets()
-        resolved = self._resolve_secrets(
-            secrets=secrets,
-            environment=environment,
-            vault_secrets=vault_secrets,
-            static_secrets=static_secrets,
-        )
+        try:
+            resolved = self._resolve_secrets(
+                secrets=secrets,
+                environment=environment,
+                vault_secrets=vault_secrets,
+                static_secrets=static_secrets,
+            )
+        except UnresolvedSecretsError as e:
+            return "Unresolved secrets:\n• " + "\n• ".join(e.secrets) + "\n"
 
         # Compare the resolved secrets to the Vault data.
         missing = []
