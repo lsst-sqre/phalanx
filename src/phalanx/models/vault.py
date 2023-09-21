@@ -72,8 +72,8 @@ class VaultTokenMetadata(BaseModel):
     accessor: str
     """Accessor for the token, used to get metadata or revoke it."""
 
-    expires: datetime
-    """When the token expires."""
+    expires: datetime | None
+    """When the token expires, if it does."""
 
     policies: list[str]
     """Policies applied to this token."""
