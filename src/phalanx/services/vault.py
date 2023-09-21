@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import jinja2
 from safir.datetime import current_datetime, format_datetime_for_logging
 
@@ -159,6 +162,35 @@ class VaultService:
         return vault_client.create_token(
             config.vault_write_token, [config.vault_write_policy], lifetime
         )
+
+    def export_secrets(self, env_name: str, path: Path) -> None:
+        """Generate JSON files of the Vault secrets for an environment.
+
+        One file per application with secrets will be written to the provided
+        path. Each file will be named after the application with ``.json``
+        appended, and will contain the secret values for that application.
+        Secrets that are required but have no known value will be written as
+        null.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+        path
+            Output path.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+        vault_secrets = vault_client.get_environment_secrets()
+        for app_name, values in vault_secrets.items():
+            app_secrets: dict[str, str | None] = {}
+            for key, secret in values.items():
+                if secret:
+                    app_secrets[key] = secret.get_secret_value()
+                else:
+                    app_secrets[key] = None
+            with (path / f"{app_name}.json").open("w") as fh:
+                json.dump(app_secrets, fh, indent=2)
 
     def _audit_read_approle(
         self, vault_client: VaultClient, config: EnvironmentConfig
