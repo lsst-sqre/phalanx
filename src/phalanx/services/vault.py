@@ -60,6 +60,35 @@ class VaultService:
             report += result
         return report
 
+    def copy_secrets(self, environment: str, old_path: str) -> None:
+        """Copy all Vault secrets from an old path.
+
+        Only copies secrets one level below the old path, not recursively.
+        Must be called with credentials capable of reading secrets from the
+        old path and writing them to the default path for the environment.
+        Any existing secrets in Vault for the environment with the same
+        application names as in the old path will be overwritten.
+
+        Parameters
+        ----------
+        environment
+            Name of the environment.
+        old_path
+            Old path in Vault from which to copy secrets for that environment.
+
+        Raises
+        ------
+        VaultNotFoundError
+            Raised if the old path does not exist.
+        """
+        config = self._config.load_environment_config(environment)
+        new_vault_client = self._vault.get_vault_client(config)
+        old_vault_client = self._vault.get_vault_client(config, old_path)
+        secrets = old_vault_client.list_application_secrets()
+        for name in secrets:
+            secret = old_vault_client.get_application_secret(name)
+            new_vault_client.store_application_secret(name, secret)
+
     def create_read_approle(self, environment: str) -> VaultAppRole:
         """Create a new Vault read AppRole for the given environment.
 

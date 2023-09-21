@@ -336,17 +336,24 @@ class VaultClient:
 class VaultStorage:
     """Create Vault clients for specific environments."""
 
-    def get_vault_client(self, env: EnvironmentBaseConfig) -> VaultClient:
+    def get_vault_client(
+        self, env: EnvironmentBaseConfig, path_prefix: str | None = None
+    ) -> VaultClient:
         """Return a Vault client configured for the given environment.
 
         Parameters
         ----------
         env
             Phalanx environment.
+        path_prefix
+            Path prefix within Vault for application secrets. If given, this
+            overrides the path prefix in the environment configuration.
 
         Returns
         -------
         VaultClient
             Vault client configured to manage secrets for that environment.
         """
-        return VaultClient(env.vault_url, env.vault_path_prefix)
+        if not path_prefix:
+            path_prefix = env.vault_path_prefix
+        return VaultClient(env.vault_url, path_prefix)

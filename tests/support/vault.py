@@ -43,7 +43,6 @@ class MockVaultClient:
         self._approles: dict[str, VaultAppRoleMetadata] = {}
         self._data: defaultdict[str, dict[str, dict[str, str]]]
         self._data = defaultdict(dict)
-        self._paths: dict[str, str] = {}
         self._policies: dict[str, str] = {}
         self._tokens: list[VaultToken] = []
         self._secret_ids: defaultdict[str, list[tuple[str, str]]]
@@ -63,12 +62,11 @@ class MockVaultClient:
             Name of the environment for which to load Vault test data.
         """
         _, app_path = path.split("/", 1)
-        self._paths[app_path] = environment
         data_path = phalanx_test_path() / "vault" / environment
         for app_data_path in data_path.iterdir():
             application = app_data_path.stem
             with app_data_path.open() as fh:
-                self._data[environment][application] = json.load(fh)
+                self._data[app_path][application] = json.load(fh)
 
     def create(
         self,
@@ -158,8 +156,7 @@ class MockVaultClient:
             New value for the secret.
         """
         base_path, application = path.rsplit("/", 1)
-        environment = self._paths[base_path]
-        self._data[environment][application] = secret
+        self._data[base_path][application] = secret
 
     def delete_latest_version_of_secret(self, path: str) -> None:
         """Delete the latest version of a Vault secret.
@@ -175,10 +172,9 @@ class MockVaultClient:
             Raised if the provided Vault path does not exist.
         """
         base_path, application = path.rsplit("/", 1)
-        environment = self._paths[base_path]
-        if application not in self._data[environment]:
+        if application not in self._data[base_path]:
             raise InvalidPath(f"Unknown Vault path {path}")
-        del self._data[environment][application]
+        del self._data[base_path][application]
 
     def destroy_secret_id_accessor(
         self, role_name: str, secret_id_accessor: str
@@ -280,8 +276,7 @@ class MockVaultClient:
         dict
             Reply matching the Vault client reply structure.
         """
-        environment = self._paths[path]
-        return {"data": {"keys": list(self._data[environment].keys())}}
+        return {"data": {"keys": list(self._data[path].keys())}}
 
     def lookup_accessor(self, accessor: str) -> dict[str, Any]:
         """Look up a token by accessor.
@@ -332,10 +327,9 @@ class MockVaultClient:
             Raised if the provided Vault path does not exist.
         """
         base_path, application = path.rsplit("/", 1)
-        environment = self._paths[base_path]
-        if application not in self._data[environment]:
+        if application not in self._data[base_path]:
             raise InvalidPath(f"Unknown Vault path {path}")
-        self._data[environment][application].update(secret)
+        self._data[base_path][application].update(secret)
 
     def read_policy(self, name: str) -> dict[str, Any]:
         """Read a Vault policy.
@@ -432,10 +426,9 @@ class MockVaultClient:
         """
         assert raise_on_deleted_version
         base_path, application = path.rsplit("/", 1)
-        environment = self._paths[base_path]
-        if application not in self._data[environment]:
+        if application not in self._data[base_path]:
             raise InvalidPath(f"Unknown Vault path {path}")
-        values = self._data[environment][application]
+        values = self._data[base_path][application]
         return {"data": {"data": values.copy()}}
 
     def revoke_accessor(self, accessor: str) -> None:
