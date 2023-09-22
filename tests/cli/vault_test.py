@@ -176,9 +176,9 @@ def test_create_write_token(
     environment = config_storage.load_environment_config("idfdev")
     _, vault_path = environment.vault_path_prefix.split("/", 1)
     if "/" in vault_path:
-        _, display_name = vault_path.rsplit("/", 1)
+        display_name = "token-" + vault_path.rsplit("/", 1)[1]
     else:
-        display_name = vault_path
+        display_name = "token-" + vault_path
     lifetime = timedelta(days=int(VAULT_WRITE_TOKEN_LIFETIME[:-1]))
 
     result = run_cli("vault", "create-write-token", "idfdev")

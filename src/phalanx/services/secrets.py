@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from base64 import b64decode
 from collections import defaultdict
+from dataclasses import dataclass, field
 
 import yaml
 from pydantic import SecretStr
@@ -23,7 +24,38 @@ from ..storage.onepassword import OnepasswordStorage
 from ..storage.vault import VaultClient, VaultStorage
 from ..yaml import YAMLFoldedString
 
-__all__ = ["SecretsService"]
+__all__ = [
+    "SecretsAuditReport",
+    "SecretsService",
+]
+
+
+@dataclass
+class SecretsAuditReport:
+    """Results of auditing secrets against the contents of Vault."""
+
+    missing: list[str] = field(default_factory=list)
+    """Secrets missing from Vault."""
+
+    mismatch: list[str] = field(default_factory=list)
+    """Secrets that are incorrect in Vault."""
+
+    unknown: list[str] = field(default_factory=list)
+    """Unexpected secrets in Vault."""
+
+    def to_text(self) -> str:
+        """Format as a textual report for output."""
+        report = ""
+        if self.missing:
+            secrets = "\n• ".join(sorted(self.missing))
+            report += "Missing secrets:\n• " + secrets + "\n"
+        if self.mismatch:
+            secrets = "\n• ".join(sorted(self.mismatch))
+            report += "Incorrect secrets:\n• " + secrets + "\n"
+        if self.unknown:
+            secrets = "\n• ".join(sorted(self.unknown))
+            report += "Unknown secrets in Vault:\n• " + secrets + "\n"
+        return report
 
 
 class SecretsService:
@@ -72,42 +104,29 @@ class SecretsService:
         if not static_secrets:
             static_secrets = self._get_onepassword_secrets(environment)
         vault_client = self._vault.get_vault_client(environment)
+        pull_secret = static_secrets.pull_secret if static_secrets else None
 
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets()
-        resolved = self._resolve_secrets(
-            secrets=secrets,
-            environment=environment,
-            vault_secrets=vault_secrets,
-            static_secrets=static_secrets,
-        )
+        try:
+            resolved = self._resolve_secrets(
+                secrets=secrets,
+                environment=environment,
+                vault_secrets=vault_secrets,
+                static_secrets=static_secrets,
+            )
+        except UnresolvedSecretsError as e:
+            return "Unresolved secrets:\n• " + "\n• ".join(e.secrets) + "\n"
 
         # Compare the resolved secrets to the Vault data.
-        missing = []
-        mismatch = []
-        unknown = []
-        for app_name, values in resolved.applications.items():
-            for key, secret in values.items():
-                if key not in vault_secrets.get(app_name, {}):
-                    missing.append(f"{app_name} {key}")
-                    continue
-                if secret != vault_secrets[app_name][key]:
-                    mismatch.append(f"{app_name} {key}")
-                del vault_secrets[app_name][key]
-        unknown = [f"{a} {k}" for a, lv in vault_secrets.items() for k in lv]
+        report = self._audit_secrets(resolved, vault_secrets, pull_secret)
 
         # Generate the textual report.
-        report = ""
-        if missing:
-            report += "Missing secrets:\n• " + "\n• ".join(missing) + "\n"
-        if mismatch:
-            report += "Incorrect secrets:\n• " + "\n• ".join(mismatch) + "\n"
-        if unknown:
-            unknown_str = "\n• ".join(unknown)
-            report += "Unknown secrets in Vault:\n• " + unknown_str + "\n"
-        return report
+        return report.to_text()
+
+        # Generate the textual report.
 
     def generate_static_template(self, env_name: str) -> str:
         """Generate a template for providing static secrets.
@@ -233,6 +252,62 @@ class SecretsService:
                 resolved,
                 has_pull_secret=resolved.pull_secret is not None,
             )
+
+    def _audit_secrets(
+        self,
+        resolved: ResolvedSecrets,
+        vault_secrets: dict[str, dict[str, SecretStr]],
+        pull_secret: PullSecret | None,
+    ) -> SecretsAuditReport:
+        """Compare resolved secrets with the contents of Vault.
+
+        Parameters
+        ----------
+        resolved
+            Resolved secrets for an environment.
+        vault_secrets
+            Vault secrets for that environment.
+        pull_secret
+            Pull secret for the environment, if one is needed.
+
+        Returns
+        -------
+        SecretsAuditReport
+            Audit report.
+        """
+        missing = []
+        mismatch = []
+        for app_name, values in resolved.applications.items():
+            for key, secret in values.items():
+                if key not in vault_secrets.get(app_name, {}):
+                    missing.append(f"{app_name} {key}")
+                    continue
+                if secret != vault_secrets[app_name][key]:
+                    mismatch.append(f"{app_name} {key}")
+                del vault_secrets[app_name][key]
+        unknown = [
+            f"{a} {k}"
+            for a, lv in vault_secrets.items()
+            for k in lv
+            if a != "pull-secret"
+        ]
+
+        # The pull-secret has to be handled separately.
+        if pull_secret:
+            if "pull-secret" in vault_secrets:
+                value = SecretStr(pull_secret.to_dockerconfigjson())
+                expected = {".dockerconfigjson": value}
+                if expected != vault_secrets["pull-secret"]:
+                    mismatch.append("pull-secret")
+            else:
+                missing.append("pull-secret")
+        elif "pull-secret" in vault_secrets:
+            unknown.append("pull-secret")
+
+        # Return the report.
+        return SecretsAuditReport(
+            missing=missing, mismatch=mismatch, unknown=unknown
+        )
 
     def _clean_vault_secrets(
         self,

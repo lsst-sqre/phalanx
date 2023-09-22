@@ -263,7 +263,9 @@ class VaultService:
         policies = {config.vault_write_policy}
         for token in tokens:
             errors = []
-            if token.expires < now:
+            if not token.expires:
+                errors.append("Token expiration missing")
+            elif token.expires < now:
                 expiration = format_datetime_for_logging(token.expires)
                 errors.append(f"Token expired at {expiration}")
             elif token.expires < now + VAULT_WRITE_TOKEN_WARNING_LIFETIME:

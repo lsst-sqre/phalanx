@@ -99,7 +99,9 @@ class VaultClient:
         Parameters
         ----------
         display_name
-            Display name of the token.
+            Display name of the token. This must begin with ``token-``, which
+            is stripped off when creating the token since it will be added by
+            Vault.
         policies
             Policies to assign to that token.
         lifetime
@@ -110,6 +112,7 @@ class VaultClient:
         VaultToken
             Newly-created Vault token.
         """
+        display_name = display_name.removeprefix("token-")
         token = self._vault.auth.token.create(
             display_name=display_name, policies=policies, ttl=lifetime
         )

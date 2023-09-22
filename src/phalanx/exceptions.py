@@ -138,9 +138,8 @@ class UnresolvedSecretsError(Exception):
     """
 
     def __init__(self, secrets: Iterable[Secret]) -> None:
-        names = [f"{u.application}/{u.key}" for u in secrets]
-        names_str = ", ".join(names)
-        msg = f"Some secrets could not be resolved: {names_str}"
+        self.secrets = [f"{u.application}/{u.key}" for u in secrets]
+        msg = f'Some secrets could not be resolved: {", ".join(self.secrets)}'
         super().__init__(msg)
 
 

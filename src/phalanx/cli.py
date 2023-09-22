@@ -457,7 +457,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
 def vault_copy_secrets(
     environment: str, old_prefix: str, *, config: Path | None
 ) -> None:
-    """Copy secrets for an environment from another Vault path prefix.
+    """Copy secrets from another Vault path prefix.
 
     Copy secrets for an environment from another Vault path prefix in the same
     Vault server, overwriting any secrets that already exist with the same
