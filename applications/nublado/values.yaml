@@ -282,6 +282,14 @@ proxy:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
+# Configuration for Nublado secrets management.
+secrets:
+  # -- Whether to use the new secrets management mechanism. If enabled, the
+  # Vault nublado secret will be split into a nublado secret for JupyterHub
+  # and a nublado-lab-secret secret used as a source for secret values for the
+  # user's lab.
+  templateSecrets: false
+
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:

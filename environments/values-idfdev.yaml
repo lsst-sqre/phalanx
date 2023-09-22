@@ -5,7 +5,7 @@ onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password/idfdev"
   vaultTitle: "RSP data-dev.lsst.cloud"
 vaultUrl: "https://vault.lsst.codes"
-vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
+vaultPathPrefix: secret/phalanx/idfdev
 
 applications:
   argo-workflows: true
