@@ -24,6 +24,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    sync-secrets
    audit-secrets
    update-pull-secret
+   migrating-secrets
 
 .. toctree::
    :caption: Troubleshooting
