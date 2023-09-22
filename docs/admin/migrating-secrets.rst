@@ -61,7 +61,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
 
    .. prompt:: bash
 
-      $ phalanx vault create-read-approle --as-secret vault-credentials <environment> | kubectl apply -f -
+      phalanx vault create-read-approle --as-secret vault-credentials <environment> | kubectl apply -f -
 
    You can instead run the command without the pipeline (``|``) to inspect the ``Secret`` resource first and then pass it to :command:`kubectl apply` yourself.
    Just be aware that every time you run :command:`phalanx vault create-read-approle`, it creates a new AppRole SecretID and invalidates the old one.
@@ -80,7 +80,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
 
    .. prompt:: bash
 
-      $ phalanx vault create-write-token <environment>
+      phalanx vault create-write-token <environment>
 
    The new token will be printed to standard output along with some metadata about it.
 
@@ -97,7 +97,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
 
    .. prompt:: bash
 
-      $ phalanx vault audit <environment>
+      phalanx vault audit <environment>
 
    This command will print diagnostics if it finds any problems.
 
@@ -110,7 +110,7 @@ Update secrets
 
    .. prompt:: bash
 
-      $ phalanx vault copy-secrets <environment> <old-path>
+      phalanx vault copy-secrets <environment> <old-path>
 
    Replace ``<old-path>`` with the old path that you just changed in ``vaultPathPrefix`` in the previous step.
    That old path will be something like :samp:`secret/k8s_operator/{fqdn}` for environments that use the SQuaRE Vault server.
@@ -127,7 +127,7 @@ Update secrets
 
    .. prompt:: bash
 
-      $ phalanx secrets static-template <environment> > static-secrets.yaml
+      phalanx secrets static-template <environment> > static-secrets.yaml
 
    You may want to put the output file somewhere outside of your checkout of Phalanx.
 
@@ -150,7 +150,7 @@ Update secrets
 
    .. prompt:: bash
 
-      $ vault kv get <vault-path>/nublado
+      vault kv get <vault-path>/nublado
 
    Replace ``<vault-path>`` with the value of ``vaultPathPrefix`` in :file:`environments/values-{environment}.yaml` for your environment.
 
@@ -161,7 +161,7 @@ Update secrets
 
    .. prompt:: bash
 
-      $ phalanx secrets audit <environment>
+      phalanx secrets audit <environment>
 
    If you are using a static secrets file, add the ``--secrets`` flag pointing to that file.
 
@@ -188,7 +188,7 @@ Switch to the new secrets tree
 
    .. prompt:: bash
 
-      $ phalanx secrets sync <environment>
+      phalanx secrets sync <environment>
 
    If you are using a static secrets file, add the ``--secrets`` flag pointing to that file.
    This will fix any secrets that are missing or incorrect in Vault.
@@ -208,6 +208,6 @@ Switch to the new secrets tree
 
    .. prompt:: bash
 
-      $ phalanx secrets sync --delete <environment>
+      phalanx secrets sync --delete <environment>
 
    If you are using a static secrets file, add the ``--secrets`` flag pointing to that file.
