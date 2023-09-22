@@ -70,3 +70,6 @@ jupyterhub:
   hub:
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
+
+secrets:
+  templateSecrets: true
