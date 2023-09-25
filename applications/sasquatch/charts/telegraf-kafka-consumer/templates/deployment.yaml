@@ -4,7 +4,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sasquatch-telegraf-kafka-consumer-{{ $key }}
+  name: sasquatch-telegraf-{{ $key }}
   labels:
     app: sasquatch-telegraf-kafka-consumer
 spec:
@@ -74,6 +74,6 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: sasquatch-telegraf-kafka-consumer-{{ $key }}
+          name: sasquatch-telegraf-{{ $key }}
 {{- end }}
 {{- end }}

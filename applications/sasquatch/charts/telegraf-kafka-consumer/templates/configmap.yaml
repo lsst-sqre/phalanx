@@ -4,9 +4,9 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: sasquatch-telegraf-kafka-consumer-{{ $key }}
+  name: sasquatch-telegraf-{{ $key }}
   labels:
-    app: sasquatch-telegraf-kafka-consumer
+    app: sasquatch-telegraf-kakfa-consumer
 data:
   telegraf.conf: |+
     [agent]
@@ -30,14 +30,6 @@ data:
       database = {{ $.Values.influxdb.database | quote }}
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
-
-    [[outputs.influxdb_v2]]
-      bucket = {{ $.Values.influxdb2.bucket | quote }}
-      token = "$INFLUXDB_TOKEN"
-      organization = "default"
-      urls = [
-        "http://sasquatch-influxdb2.sasquatch:80"
-      ]
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"

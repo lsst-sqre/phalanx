@@ -259,8 +259,7 @@ source-kafka-connect-manager:
     kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
 # -- Override telegraf-kafka-consumer configuration.
-telegraf-kafka-consumer:
-  enabled: false
+telegraf-kafka-consumer: {}
 
 # -- Override rest-proxy configuration.
 rest-proxy:

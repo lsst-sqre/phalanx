@@ -1,8 +1,5 @@
-## Default values.yaml for Telegraf Kafka Consumer
-
-# -- Enable Telegraf Kafka Consumer.
-# Note that the default configuration is meant to work with InfluxDB v1
-# and v2.
+## Default values.yaml for the Telegraf Kafka Consumer subchart.
+# -- Wether the Telegraf Kafka Consumer is enabled
 enabled: false
 
 image:
@@ -62,6 +59,9 @@ kafkaConsumers:
   test:
     # -- Enable the Telegraf Kafka consumer.
     enabled: false
+    # -- Number of Telegraf Kafka consumer replicas.
+    # Increase this value to increase the consumer throughput.
+    replicaCount: 1
     # -- Data collection interval for the Kafka consumer.
     interval: "1s"
     # -- Default data flushing interval to InfluxDB.
@@ -69,8 +69,7 @@ kafkaConsumers:
     # -- Union field separator: if a single Avro field is flattened into more
     # than one InfluxDB field (e.g. an array "a", with four members,
     # would yield "a0", "a1", "a2", "a3"; if the field separator were
-    # "_", these would be "a_0"..."a_3".  The default of the empty
-    # string preserves the behavior of streamreactor.
+    # "_", these would be "a_0"..."a_3".
     union_field_separator: ""
     # -- Union mode: this can be one of "flatten", "nullable", or
     # "any".
@@ -98,11 +97,10 @@ kafkaConsumers:
     # "nullable" with more than one non-null type.
     # For Rubin, "nullable" is usually the right choice.
     union_mode: "nullable"
-    # -- Timestamp format: for Rubin, "unix_ms" is usually correct.
-    # Other possible values are "unix" (the default if unset),
-    # "unix_us", and "unix_ns".  Avro only supports millis and micros,
-    # although those are both simply type aliases to long integers.
-    timestamp_format: "unix_ms"
+    # -- Timestamp format. Possible values are "unix" (the default if unset), "unix_ms",
+    # "unix_us", and "unix_ns".
+    # At Rubin, use "unix" timestamp format for SAL timestamps.
+    timestamp_format: "unix"
     # -- Avro field to be used as the InfluxDB timestamp (optional).  If
     # unspecified or set to the empty string, Telegraf will use the time
     # it received the measurement.
