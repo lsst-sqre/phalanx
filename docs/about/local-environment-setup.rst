@@ -49,6 +49,8 @@ From the ``phalanx`` directory, initialize your environment:
 
 This step populates your virtual environment with Phalanx's dependencies, installs tox_ (used for testing and other build steps), and installs pre-commit_ (used to check and sometimes reformat your changes before committing them).
 
+.. _about-helm-docs:
+
 Install helm-docs
 =================
 
@@ -56,6 +58,8 @@ Install helm-docs
 You therefore must have it installed on your PATH.
 
 See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.
+Also, not mentioned on that page, you can download a binary release from the `releases page <https://github.com/norwoodj/helm-docs/releases>`__.
+To see which binary is most appropriate for a Linux system, run ``uname -m``.
 
 .. warning::
 
@@ -64,9 +68,11 @@ See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#ins
 
    The best (but possibly not the most convenient) way to make certain you have the same version is to run the same :command:`go install` command that GitHub Actions uses.
    However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
+   Alternately, find the binary release matching the desired version in the releases page and download that version.
 
 If you don't want to (or don't have access to) install helm-docs globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
-To see which binary is most appropriate for a Linux system, run ``uname -a``.
+
+.. _about-helm:
 
 Install helm
 ============
