@@ -5,7 +5,7 @@ Write a Helm chart for an application
 Argo CD manages applications in the Rubin Science Platform through a set of Helm charts.
 Which Helm charts to deploy in a given environment is controlled by the :file:`values.yaml` and :file:`values-{environment}.yaml` files in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
 
-The `/applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__ directory defines templates in its :file:`templates` directory and values to resolve those templates in :file:`values.yaml` and :file:`values-{environment}.yaml` files to customize the application for each environment.
+The `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__ directory defines templates in its :file:`templates` directory and values to resolve those templates in :file:`values.yaml` and :file:`values-{environment}.yaml` files to customize the application for each environment.
 For first-party charts, the :file:`templates` directory is generally richly populated.
 
 Here are instructions for writing a Helm chart for a newly-developed application.
@@ -32,6 +32,7 @@ There are two options:
 
 web-service
     Use this starter if the new Helm application is a web service, such as a new Safir_ FastAPI_ service.
+    This is the default.
 
 empty
     Use this starter for any other type of application.
@@ -57,8 +58,8 @@ For charts that do not deploy an application (for example, charts that are only 
 
    The chart also has a ``version`` field, which will be set to ``1.0.0``.
    This field does not need to be changed.
-   The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as Helm charts.
-   Their versions are therefore irrelevant, so we use ``1.0.0`` for all charts.
+   The top level of charts defined in the :file:`applications` directory are used only by Argo CD and are never published as stand-alone Helm charts.
+   Their versions are therefore irrelevant, so we use ``1.0.0`` for all such charts.
 
 Source and documentation links
 ------------------------------
@@ -82,7 +83,7 @@ sources
 ^^^^^^^
 
 Use ``sources`` to link to the Git repositories related to the application.
-Note that ``sources`` is an array of URLs:
+Note that ``sources`` is an array of URLs, although often you will only have one URL in that list:
 
 .. code-block:: yaml
    :caption: Chart.yaml
@@ -110,11 +111,9 @@ Documents are technotes and change-controlled documents:
          title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science platform"
          url: "https://sqr-062.lsst.io/"
 
-.. note::
-
-   The value of ``phalanx.lsst.io/docs`` is a YAML-formatted string (hence the ``|`` symbol).
-   The ``id`` field is optional, but can be set to the document's handle.
-   The ``title`` and ``url`` fields are required.
+The value of ``phalanx.lsst.io/docs`` is a YAML-formatted string (hence the ``|`` symbol).
+The ``id`` field is optional, but can be set to the document's handle.
+The ``title`` and ``url`` fields are required.
 
 Write the Kubernetes resource templates
 =======================================
@@ -132,7 +131,7 @@ Two aspects of writing a Helm chart are specific to Phalanx:
 
 - Applications providing a web API should be protected by Gafaelfawr and require an appropriate scope.
   This normally means using a ``GafaelfawrIngress`` object rather than an ``Ingress`` object.
-  If you use the web service starter, this is set up for you by the template using a ``GafaelfawrIngress`` resource in ``templates/ingress.yaml``, but you will need to customize the scope required for access, and may need to add additional configuration.
+  If you use the web service starter, this is set up for you by the template using a ``GafaelfawrIngress`` resource in :file:`templates/ingress.yaml`, but you will need to customize the scope required for access, and may need to add additional configuration.
   You will also need to customize the path under which your application should be served.
   See the `Gafaelfawr documentation <https://gafaelfawr.lsst.io/user-guide/gafaelfawringress.html>`__ for more details.
 
@@ -145,7 +144,7 @@ If your container image is built through GitHub Actions and stored at ghcr.io (t
 There is therefore no need for a pull secret.
 
 If your container image is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub.
-Strongly consider moving your container image to be hosted by GitHub instead.
+Strongly consider moving your container image to the GitHub Container Registry (ghcr.io) instead.
 
 If your container image is pulled from a private repository, you may need authentication and therefore a pull secret.
 
@@ -174,6 +173,19 @@ Then, add the following ``VaultSecret`` to your application templates to put a c
 
 Replace ``<application>`` with the name of your application.
 
+The pull secret itself is managed globally for the environment, usually by the environment administrator.
+See :doc:`/admin/update-pull-secret` for details on how to modify the pul secret if necessary.
+
+.. _dev-deployment-restart:
+
+Restarting deployments when config maps change
+----------------------------------------------
+
+If your application is configured using a ``ConfigMap`` resource, you normally should arrange to restart the application when the ``ConfigMap`` changes.
+The easiest way to do this is to add a checksum of the config map to the annotations of the deployment, thus forcing a change to the deployment that will trigger a restart.
+
+For more details, see `Automatically roll deployments <https://helm.sh/docs/howto/charts_tips_and_tricks/#automatically-roll-deployments>`__ in the Helm documentation.
+
 Write the values.yaml file
 ==========================
 
@@ -189,6 +201,8 @@ These are ``global.baseUrl``, ``global.host``, and ``global.vaultSecretsPath`` a
 
 These should be mentioned for documentation purposes at the bottom of your :file:`values.yaml` file with empty defaults.
 This is done automatically for you by the :ref:`chart starters <dev-chart-starters>`.
+
+.. _dev-helm-docs:
 
 Documentation
 -------------
