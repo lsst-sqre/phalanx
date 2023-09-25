@@ -54,6 +54,9 @@ config:
   # -- S3 Endpoint URL
   s3EndpointUrl: "https://storage.googleapis.com"
 
+  # -- Whether to use the new secrets management scheme
+  separateSecrets: false
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
 

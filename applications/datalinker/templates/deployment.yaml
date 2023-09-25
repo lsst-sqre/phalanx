@@ -85,7 +85,7 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-            - name: "butler-secret"
+            - name: "secrets"
               mountPath: "/etc/butler/secrets"
             - name: "tmp"
               mountPath: "/tmp"
@@ -102,8 +102,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: "butler-secret"
+        - name: "secrets"
           secret:
-            secretName: {{ template "datalinker.fullname" . }}-butler-secret
+            secretName: {{ template "datalinker.fullname" . }}
         - name: "tmp"
           emptyDir: {}

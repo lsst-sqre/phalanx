@@ -17,6 +17,7 @@ IVOA DataLink-based service and data discovery
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of datalinker deployment pods |
 | config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE rubin is the default |
 | config.s3EndpointUrl | string | `"https://storage.googleapis.com"` | S3 Endpoint URL |
+| config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.storageBackend | string | `"GCS"` | Storage backend to use: either GCS or S3 GCS is the default |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
