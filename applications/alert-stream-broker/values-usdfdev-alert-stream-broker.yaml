@@ -110,7 +110,7 @@ alert-stream-broker:
       readonlyTopics: ["alerts-simulated"]
       groups: ["pittgoogle-idfint"]
 
-  testTopicName: "alerts-stream-test"
+  testTopicName: "alert-stream-test"
   testTopicPartitions: 20
   testTopicReplicas: 1
 
