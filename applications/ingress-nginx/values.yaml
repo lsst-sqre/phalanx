@@ -2,6 +2,10 @@
 # https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 ingress-nginx:
   controller:
+    # -- Allow Ingress resources to add NGINX configuration snippets. This
+    # is required by Gafaelfawr.
+    allowSnippetAnnotations: true
+
     config:
       # -- Put the complete path in `X-Forwarded-For`, not just the last hop,
       # so that the client IP will be exposed to Gafaelfawr
@@ -11,7 +15,7 @@ ingress-nginx:
       # to allow table uploads)
       proxy-body-size: "100m"
 
-      # -- Redirect all non-SSL access to SSL.
+      # -- Redirect all non-SSL access to SSL
       ssl-redirect: "true"
 
       # -- Enable the `X-Forwarded-For` processing
@@ -36,6 +40,10 @@ ingress-nginx:
           return 403;
         }
 
+    metrics:
+      # -- Enable metrics reporting via Prometheus
+      enabled: true
+
     service:
       # -- Force traffic routing policy to Local so that the external IP in
       # `X-Forwarded-For` will be correct
@@ -48,14 +56,9 @@ ingress-nginx:
       gafaelfawr.lsst.io/ingress: "true"
       hub.jupyter.org/network-access-proxy-http: "true"
 
-    metrics:
-      # -- Enable metrics reporting via Prometheus
-      enabled: true
-
 vaultCertificate:
-  # -- Whether to store ingress TLS certificate via
-  # vault-secrets-operator.  Typically "squareone" owns it instead in an
-  # RSP.
+  # -- Whether to store ingress TLS certificate via vault-secrets-operator.
+  # Typically the `squareone` application owns it instead in an RSP.
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not
