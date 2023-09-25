@@ -5,6 +5,9 @@ Installing a Phalanx environment
 Each separate installation of Phalanx is called an environment.
 An environment has a hostname, Vault server and path to its secrets, and a set of Phalanx applications that should be installed in that environment.
 
+Before starting this process, you should set up the required secrets for your new environment.
+See :doc:`secrets-setup` for details.
+
 Creating an environment
 =======================
 
@@ -17,7 +20,7 @@ To create a new Phalanx environment, take the following steps:
 #. Create a new :file:`values-{environment}.yaml` file in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
    Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
-   (See :doc:`secrets-setup` for more information about the latter two settings.)
+   See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
    Enable the applications this environment should include.
 
 #. Decide on your approach to TLS certificates.
@@ -46,16 +49,17 @@ To create a new Phalanx environment, take the following steps:
 #. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``phinx.linkcheck.ignore``.
    The Argo CD URL of your environment will be unreachable, so you need to tell Sphinx valid link checking to ignore it.
 
-#. Generate the secrets for the new environment and store them in Vault with `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__.
-   You will need the write key for the Vault enclave you are using for this environment.
-   If you are using 1Password as a source of secrets, you will also need the access token for the 1Password Connect server.
-   (For SQuaRE-managed deployments, this is in the ``SQuaRE Integration Access Token: Argo`` 1Password item in the SQuaRE vault.)
-
 Installing Phalanx
 ==================
 
 Once you have defined a Phalanx environment, follow these steps to install it.
 These can be run repeatedly to reinstall Phalanx over an existing deployment.
+
+.. warning::
+
+   The installer has not been updated to work with the new secrets management system yet, and the way it initializes Vault Secrets Operator is incorrect for the new system and will not work.
+   This is currently being worked on, but in the meantime you will have to make changes to the installation script to use :command:`phalanx vault create-read-approle --as-secret vault-credentials` and skip the attempt to create a Vault read token secret obtained from 1Password.
+   Hopefully this will be fixed shortly.
 
 .. rst-class:: open
 
