@@ -20,6 +20,5 @@ Guides
 
    bootstrap
    pruning
-   updating-recommended
    gar
    values
