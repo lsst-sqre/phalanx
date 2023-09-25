@@ -17,7 +17,7 @@ The easiest way to start a new FastAPI_ application written in Python and intend
 On the LSSTC Slack, send the message ``create project`` to ``@sqrbot-jr``.
 Select ``FastAPI application (Safir)`` from the list of project types.
 This will create a new GitHub repository with the basic framework of a FastAPI_ application that will work well inside the Rubin Science Platform.
-The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logger to database handling.
+The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logging to database handling.
 
 Any Python application destined for the RSP must regularly update its dependencies to pick up any security fixes and make new releases with those updated dependencies.
 If you use the template as described above, GitHub Actions CI will warn you when application dependencies are out of date.
@@ -41,6 +41,7 @@ If you use the FastAPI application template, a ``Dockerfile`` is be created as p
 
 If you use ``ghcr.io`` as your repository (which is the FastAPI template default) you can use GitHub's built-in ``GITHUB_TOKEN`` to push new images.
 You don't need to create an additional secret in GitHub Actions.
+
 If you are using Docker Hub you must create two secrets in your new GitHub repository, ``DOCKER_USERNAME`` and ``DOCKER_TOKEN``.
 ``DOCKER_USERNAME`` should be set to the Docker Hub username of the account that will be pushing the new Docker images.
 ``DOCKER_TOKEN`` should be set to a secret authentication token for that account.
