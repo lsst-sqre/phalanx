@@ -34,6 +34,7 @@ nitpick_ignore = [
 nitpick_ignore_regex = [
     # Bug in Sphinx
     ["py:obj", "SecretGenerateType\\..*"],
+    ["py:obj", ".*all fields"],
 ]
 python_api_dir = "internals/api"
 rst_epilog_file = "_rst_epilog.rst"
