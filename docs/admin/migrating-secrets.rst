@@ -2,7 +2,7 @@
 Migrating to the new secrets management system
 ##############################################
 
-We introduced a new command-line-driven secrets management system for Phalanx environments in September of 2021.
+We introduced a new command-line-driven secrets management system for Phalanx environments in September of 2023.
 This page documents how to migrate to the new system from the older scripts in :file:`installer`.
 
 These instructions assume that, if you are using 1Password for static secrets, you have already set up a 1Password vault and corresponding :px-app:`1Password Connect server <onepassword-connect-dev>` for this environment, but that vault may be empty.

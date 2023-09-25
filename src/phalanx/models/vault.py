@@ -48,9 +48,8 @@ class VaultAppRole(VaultAppRoleMetadata):
         Returns
         -------
         str
-            YAML creating a Kubernetes ``Secret`` resource for
-            vault-secrets-operator_, suitable for passing to :command:`kubectl
-            apply`.
+            YAML creating a Kubernetes ``Secret`` resource for `Vault Secrets
+            Operator`_, suitable for passing to :command:`kubectl apply`.
         """
         role_id = b64encode(self.role_id.encode()).decode()
         secret_id = b64encode(self.secret_id.encode()).decode()

@@ -36,4 +36,3 @@ For other deployments that use the normal Rubin Notebook Aspect images, a reason
        }
 
 This prepulls the latest release, the latest two weeklies, and the latest three dailies, as well as the image tagged ``recommended``.
-However, also see :ref:`prepull-recommended` for information on how to ensure cachemachine knows the correct tag and description for the recommended image.
