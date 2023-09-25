@@ -41,15 +41,10 @@ See :doc:`hostnames` for more information.
 Management tooling
 ==================
 
-Installing Phalanx requires the following tools be available:
+First, follow the instructions in :doc:`/about/local-environment-setup`.
+This setup is also required to install or maintain a Phalanx environment.
 
-- Python 3.11 or later.
-  Phalanx expects users of its tooling to use a Python virtual environment (like venv_ or virtualenvwrapper_) and install Python packages with :command:`pip`.
-  Its prerequisite Python modules will be installed as part of setting up a development environment and do not need to be separately installed on the system.
-  See :doc:`/about/local-environment-setup` for details on how to set up a local environment suitable for running Phalanx tooling.
-
-- Helm v3 or later.
-  (See the `Helm installation instructions <https://helm.sh/docs/intro/install/>`__.)
+For installing an environment, you will also need the following tools:
 
 - Argo CD's command-line tool.
   It may be necessary to update this regularly to match the version of Argo CD that Phalanx, since Argo CD tends to break backward compatibility for its command-line API.
