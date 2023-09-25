@@ -18,6 +18,13 @@ strimzi-kafka:
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: tucson-teststand.lsst.codes
+      path: /schema-registry(/|$)(.*)
 
 influxdb:
   persistence:

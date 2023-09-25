@@ -39,6 +39,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.sourceConnect.enabled | bool | `false` | Whether to deploy another Connect cluster for topics replicated from the source cluster. Requires the sourceRegistry enabled. |
 | mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster. |
 | mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
+| registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource. |
+| registry.ingress.enabled | bool | `false` | Whether to enable ingress for the Schema Registry. |
+| registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |

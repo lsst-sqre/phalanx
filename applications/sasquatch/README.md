@@ -320,6 +320,9 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.mirrormaker2.sourceConnect.enabled | bool | `false` | Whether to deploy another Connect cluster for topics replicated from the source cluster. Requires the sourceRegistry enabled. |
 | strimzi-kafka.mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster. |
 | strimzi-kafka.mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
+| strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource. |
+| strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable ingress for the Schema Registry. |
+| strimzi-kafka.registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | strimzi-kafka.users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |

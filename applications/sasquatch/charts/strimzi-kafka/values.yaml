@@ -122,6 +122,13 @@ connect:
   replicas: 3
 
 registry:
+  ingress:
+    # -- Whether to enable ingress for the Schema Registry.
+    enabled: false
+    # -- Hostname for the Schema Registry.
+    hostname: ""
+    # -- Annotations that will be added to the Ingress resource.
+    annotations: {}
   # -- Name of the topic used by the Schema Registry
   schemaTopic: registry-schemas
 
