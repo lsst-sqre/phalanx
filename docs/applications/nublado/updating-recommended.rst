@@ -5,40 +5,41 @@ Updating the recommended Notebook Aspect image
 The ``recommended`` tag for JupyterLab images is usually a recent weekly image.
 The image tagged ``recommended`` is guaranteed by SQuaRE to be compatible with other services and materials, such as tutorial or system testing notebooks, that we make available on RSP deployments.
 
-Because this process requires quite a bit of checking and sign-off from multiple stakeholders, it is possible that approving a new recommended version may take more than the two weeks (for most deployments) it takes for a weekly image to roll off the default list of images to pull.
-This can cause the RSP JupyterHub options form to display empty parentheses rather than the correct target version when a user requests a lab container.
-
-This document explains the process for moving the ``recommended`` tag, and how to circumvent that display bug by changing nublado's ``values-<instance>.yaml`` for the appropriate instance when moving the ``recommended`` tag.
+This document explains the process for moving the ``recommended`` tag, and how to make an image that is *not* tagged ``recommended`` the default image, which is sometimes required, particularly in Telescope and Site environments.
 
 Tagging a new container version
 --------------------------------
 
-When a new version is to be approved (after passing through its prior QA and sign-off gates), the ``recommended`` tag must be updated to point to the new version.
+When a new version has been approved (after passing through its prior QA and sign-off gates), the ``recommended`` tag must be updated to point to the new version.
 
 To do this, run the GitHub retag workflow for the `sciplat-lab <https://github.com/lsst-sqre/sciplat-lab>`__ repository, as follows:
 
 #. Go to `the retag workflow page <https://github.com/lsst-sqre/sciplat-lab/actions/workflows/retag.yaml>`__.
-#. Click on :guilabel:`Run workflow`.
+#. Click :guilabel:`Run workflow`.
 #. Enter the tag of the image to promote to recommended under :guilabel:`Docker tag of input container`.
-   This will be a tag like ``w_2022_40``.
+   This will be a tag like ``w_2023_40``.
 #. Enter ``recommended`` under :guilabel:`Additional value to tag container with`.
-#. Click on the :guilabel:`Run workflow` submit button.
+#. Do not change the field :guilabel:`fully-qualified URI for output Docker image`.
+#. Click the :guilabel:`Run workflow` submit button.
 
-Don't change the URIs.
+.. _different-default:
 
-.. _prepull-recommended:
+Changing the environment default image to some tag other than "recommended"
+---------------------------------------------------------------------------
 
-Changing the recommended image to some tag other than "recommended"
--------------------------------------------------------------------
+Tags are global per container image repository (that is, ``docker.io/sciplat-lab:recommended``, for instance, refers to the same image in all environments).
+It is quite often the case that Telescope and Site, in particular, needs the image that is recommended by default for a given environment to vary, because their environments may not be running the same XML cycle.
 
-Because tags are global per repository, it is quite often the case that Telescope and Site, in particular, want the recommended image for a given instance to be different per instance, because the instances may not be running the same XML cycle.
+To change the default image to a new tag, you must do the following.
+Locate the JupyterLab Controller configuration for the environment you're working with.
+This will be in the Phalanx GitHub repository at ``/applications/nublado/`` and will be the ``values-<instance>.yaml`` file there.
+In that file, you should find the key ``controller.config.images.recommendedTag``.
+If you do not find it, then that environment is currently using ``recommended`` as its default image.
 
-Inside the JupyterLab Controller configuration for a given instance, you should find the key ``controller.config.images.recommendedTag``.  If you do not find it, then that instance is currently running ``recommended``.
-
-Set this tag to whatever string represents the correct image for that instance.
+Set this key (creating it if necessary) to whatever string represents the correct recommended-by-default image for that instance.
+For instance, for a Telescope and Site environment, this will likely look something like ``recommended_c0032``.
+Create a pull request against `Phalanx <https://github.com/lsst-sqre/phalanx>`__ that updates the tag.
 Once this change is merged, sync the nublado application (using Argo CD) in the affected environments.
 
 You do not have to wait for a maintenance window to do this, since the change is low risk, although it will result in a very brief outage for Notebook Aspect lab spawning while the JupyterLab Controller is restarted.
-
 It may take a few minutes for the image pulling to complete, but after that interval, the menu will be correct again.
-
