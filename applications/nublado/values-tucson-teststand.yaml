@@ -20,12 +20,11 @@ controller:
         LSST_DDS_INTERFACE: net1
         LSST_DDS_PARTITION_PREFIX: tucson
         LSST_TOPIC_SUBNAME: sal
-        LSST_KAFKA_SECURITY_USERNAME: ts-salkafka
+        LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
         LSST_KAFKA_BROKER_ADDR: sasquatch-kafka-brokers.sasquatch:9092
         LSST_SCHEMA_REGISTRY_URL: http://sasquatch-schema-registry.sasquatch:8081
         PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
         PGUSER: "oods"
-      kafkaSecret: true
       initContainers:
         - name: "inithome"
           image:

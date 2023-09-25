@@ -294,9 +294,6 @@ controller:
       # that key.
       secrets: []
 
-      # -- Add the Kafka secret to the user pods
-      kafkaSecret: false
-
       # -- Available lab sizes. Names must be chosen from `fine`,
       # `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`,
       # `gargantuan`, and `colossal` in that order. Each should specify the
