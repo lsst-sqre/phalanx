@@ -26,6 +26,9 @@ kafka:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: standard
 
+  # -- Enable Prometheus to scrape metrics.
+  prometheusScrapingEnabled: false
+
   # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
@@ -84,6 +87,18 @@ kafka:
         value: ok
         effect: NoSchedule
 
+# -- Kafka JMX Exporter for more detailed diagnostic metrics.
+kafkaExporter:
+  # -- Enable Kafka exporter.
+  enabled: false
+  # -- Consumer groups to monitor
+  groupRegex: ".*"
+  # -- Kafka topics to monitor
+  topicRegex: ".*"
+    # -- Enable Sarama logging
+  enableSaramaLogging: false
+  # -- Log level for Sarama logging
+  logLevel: warning
 
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.

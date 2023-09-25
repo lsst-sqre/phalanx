@@ -19,6 +19,8 @@ alert-stream-broker:
 
     replicas: 6
 
+    prometheusScrapingEnabled: true
+
     # Addresses based on the state as of 2021-12-02; these were assigned by
     # Google and now we're pinning them.
     externalListener:
@@ -58,6 +60,11 @@ alert-stream-broker:
     storage:
       size: 2500Gi
       storageClassName: wekafs--sdf-k8s01
+
+  kafkaExporter:
+    enabled: true
+    enableSaramaLogging: true
+    logLevel: info
 
   vaultSecretsPath: "secret/rubin/usdf-alert-stream-broker-dev/alert-stream-broker"
 

@@ -3,7 +3,31 @@ kind: Kafka
 metadata:
   name: {{ .Values.cluster.name }}
 spec:
+  {{- if .Values.kafkaExporter.enabled }}
+  kafkaExporter:
+    groupRegex: {{ .Values.kafkaExporter.groupRegex }}
+    topicRegex: {{ .Values.kafkaExporter.topicRegex }}
+    enableSaramaLogging: {{ .Values.kafkaExporter.enableSaramaLogging }}
+    logging: {{ .Values.kafkaExporter.logLevel }}
+    template:
+      deployment:
+        metadata:
+          annotations:
+            prometheus.io/scrape: 'true'
+      pod:
+        metadata:
+          annotations:
+            prometheus.io/scrape: 'true'
+  {{- end }}
+
   kafka:
+    {{- if .Values.kafka.prometheusScrapingEnabled }}
+    template:
+      pod:
+        metadata:
+          annotations:
+            prometheus.io/scrape: 'true'
+    {{- end }}
     version: {{ .Values.kafka.version }}
     replicas: {{ .Values.kafka.replicas }}
     listeners:

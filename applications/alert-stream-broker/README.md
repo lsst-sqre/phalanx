@@ -65,10 +65,17 @@ Alert transmission to community brokers
 | alert-stream-broker.kafka.logMessageFormatVersion | float | `3.2` | Encoding version for messages, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
 | alert-stream-broker.kafka.nodePool.affinities | list | `[{"key":"kafka","value":"ok"}]` | List of node affinities to set for the broker's nodes. The key should be a label key, and the value should be a label value, and then the broker will prefer running Kafka and Zookeeper on nodes with those key-value pairs. |
 | alert-stream-broker.kafka.nodePool.tolerations | list | `[{"effect":"NoSchedule","key":"kafka","value":"ok"}]` | List of taint tolerations when scheduling the broker's pods onto nodes. The key should be a taint key, the value should be a taint value, and effect should be a taint effect that can be tolerated (ignored) when scheduling the broker's Kafka and Zookeeper pods. |
+| alert-stream-broker.kafka.prometheusScrapingEnabled | bool | `false` | Enable Prometheus to scrape metrics. |
 | alert-stream-broker.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | alert-stream-broker.kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | alert-stream-broker.kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | alert-stream-broker.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| alert-stream-broker.kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
+| alert-stream-broker.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging |
+| alert-stream-broker.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter. |
+| alert-stream-broker.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
+| alert-stream-broker.kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
+| alert-stream-broker.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-broker.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
