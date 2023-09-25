@@ -24,6 +24,7 @@ To see the logs for your application, use Argo CD:
 Here is what that selection will look like:
 
 .. image:: logs-menu-selection.png
+   :alt: Screenshot showing where Logs appears in the deployment menu.
 
 This will bring up Argo CD's built-in log viewer.
 
@@ -33,11 +34,12 @@ Using the Argo CD log viewer
 You can configure its behavior with the icons along the top above the log lines.
 
 .. image:: logs-controls.png
+   :alt: Screenshot showing the control bar at the top of the logs pane in Argo CD.
 
-The icon with the forward-pointing arrow (the fourth from the left in the above image) toggles whether to "tail" the logs (continuously show new log messages as they appear).
-This lets you see new log messages as they happen, but will force the window to keep scrolling to the bottom.
+The icon with the downward arrow in a circle (second leftmost one) toggles whether to constantly scroll to the bottom of the window when new log lines appear.
+Turn this off if you need time to examine one log line.
 
-The icon with the three lines with the middle line offset (the third from the left) controls which container you're looking at.
+The first drop-down menu allows you to select which container's logs to view.
 If your application has multiple containers in its pods (if, for example, it has a sidecar container such as a Cloud SQL Auth Proxy), you may have to select the container with the interesting application logs.
 By default, the alphabetically first container is shown.
 
