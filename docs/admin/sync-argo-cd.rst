@@ -24,10 +24,7 @@ Sync the application
 
 Out-of-date applications will show as yellow in Argo CD.
 Click on the application to see its current resources and more details about its status.
-
 If the update was made recently, you may have to click :guilabel:`Refresh` first.
-If the update was to a chart whose version is not pinned, click on the small arrow next to :guilabel:`Refresh` and select :guilabel:`Hard Refresh`.
-(You will need to click directly on the small arrow, to the pixel, to see this option.)
 
 To review the changes before applying them, select :guilabel:`App Diff`.
 
