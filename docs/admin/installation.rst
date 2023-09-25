@@ -30,8 +30,8 @@ To create a new Phalanx environment, take the following steps:
 
 #. Decide on your approach to user home directory storage.
    The Notebook Aspect (the ``nublado`` application) requires a POSIX file system.
-   The most frequently used method of providing that file system is NFS mounts, but you may instead want to use a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
-   Either way, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
+   The most frequently used method of providing that file system is NFS mounts, but you may instead want to use persistent volume claims or a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
+   Whatever storage you choose, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
 
 #. For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
    Customization will vary from application to application.
@@ -40,7 +40,6 @@ To create a new Phalanx environment, take the following steps:
    - :px-app-bootstrap:`argocd`
    - :px-app-bootstrap:`cachemachine`
    - :px-app-bootstrap:`gafaelfawr`
-   - :px-app-bootstrap:`nublado2`
    - :px-app-bootstrap:`portal`
    - :px-app-bootstrap:`squareone`
 
