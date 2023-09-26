@@ -1,5 +1,8 @@
 name: minikube
 fqdn: minikube.lsst.codes
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP minikube.lsst.codes"
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 

@@ -5,7 +5,8 @@ Migrating to the new secrets management system
 We introduced a new command-line-driven secrets management system for Phalanx environments in September of 2023.
 This page documents how to migrate to the new system from the older scripts in :file:`installer`.
 
-These instructions assume that, if you are using 1Password for static secrets, you have already set up a 1Password vault and corresponding :px-app:`1Password Connect server <onepassword-connect-dev>` for this environment, but that vault may be empty.
+These instructions assume that, if you are using 1Password for static secrets, you have already set up a 1Password vault and enabled the :px-app:`1Password Connect server <onepassword-connect>` for this environment.
+If you have not yet done this, see :doc:`/applications/onepassword-connect/add-new-environment`.
 
 In all :command:`phalanx` commands listed below, replace ``<environment>`` with the short identifier of your environment.
 
@@ -155,7 +156,7 @@ Update secrets
    Replace ``<vault-path>`` with the value of ``vaultPathPrefix`` in :file:`environments/values-{environment}.yaml` for your environment.
 
 #. If you are using 1Password as the source for static secrets, set ``OP_CONNECT_TOKEN`` to the 1Password Connect token for this environment.
-   For SQuaRE-managed environments, this can be found in the :guilabel:`RSP 1Password tokens` item in the :guilabel:`SQuaRE` 1Password vault.
+   For SQuaRE-managed environments, this can be found in the ``RSP 1Password tokens`` item in the SQuaRE 1Password vault.
 
 #. Check what secrets are missing or incorrect and fix them.
 

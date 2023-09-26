@@ -27,7 +27,7 @@
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.nublado2 | bool | `false` | Enable the nublado2 application (v2 of the Notebook Aspect, now deprecated). This should not be used for new environments. |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
-| applications.onepassword-connect-dev | bool | `false` | Enable the onepassword-connect-dev application |
+| applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
 | applications.portal | bool | `false` | Enable the portal application |

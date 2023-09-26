@@ -7,6 +7,9 @@ Phalanx does, however, come with tools to manage one specific approach to using 
 
 This document explains the basic structure of how secrets must be stored in Vault, describes the tools for managing that structure, and describes the optional tools for managing Vault authentication credentials and paths for one specific Vault design.
 
+If you are setting up an environment that will be running a 1Password Connect server for itself, you will need to take special bootstrapping steps.
+See :px-app-bootstrap:`onepassword-connect` for more information.
+
 .. note::
 
    We are in the middle of a migration from an old secrets management system that sometimes used multiple secrets per application and sometimes pointed multiple applications at the same secret, to a new system that always uses one secret per application.
@@ -173,13 +176,11 @@ This will be transformed into a Vault entry in the correct format for generating
 Configuring 1Password support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-In :file:`values-{environment}.yaml` for your environment, in the Phalanx :file:`environments` directory, add the setting ``onePasswordConnectServer``, setting it to the URL of the `1Password Connect`_ server for that 1Password vault.
+For an environment to use 1Password as a static secrets source, there must be a 1Password Connect server that serves the secrets for that environment from a 1Password vault.
+See :doc:`/applications/onepassword-connect/add-new-environment` for details on how to enable a new 1Password Connect server for your environment using Phalanx.
 
-When running :command:`phalanx secrets` to sync or audit secrets, you will need to set ``OP_CONNECT_TOKEN`` to a read token for that 1Password Connect server.
-
-Phalanx can manage your 1Password Connect server as well, but it should run in a separate cluster than the environment that it provides secrets for.
-SQuaRE-run environments use 1Password Connect servers running in the Roundtable clusters.
-See :px-app:`onepassword-connect-dev` for details on how to set up a new 1Password Connect server using Phalanx.
+When running :command:`phalanx secrets` to sync or audit secrets, you will need to set ``OP_CONNECT_TOKEN`` to the read token for that 1Password Connect server.
+For SQuaRE-run environments, you can get that secret from the 1Password item ``RSP 1Password tokens`` in the SQuaRE 1Password vault.
 
 Static secrets from Vault
 -------------------------
