@@ -43,12 +43,6 @@ This approach is being replaced with a `Vault AppRole`_ that has read access to 
 
 .. _Vault AppRole: https://developer.hashicorp.com/vault/docs/auth/approle
 
-.. warning::
-
-   The current Phalanx installer only supports Vault read tokens, not Vault AppRoles.
-   Support for Vault AppRoles will be added in the future.
-   In the meantime, the Vault bootstrapping process in `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__ will need to be modified when installing environments that use Vault AppRoles.
-
 Phalanx does not strictly require either of those approaches; any authentication approach that `Vault Secrets Operator`_ supports may be used as long as :px-app:`vault-secrets-operator` is configured accordingly for that environment.
 However, the standard installation process only supports AppRoles, and tooling is provided to manage those roles.
 
