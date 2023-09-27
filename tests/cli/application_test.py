@@ -91,7 +91,7 @@ def test_create(tmp_path: Path) -> None:
     (apps_path / "zzz-other-app" / "values-minikube.yaml").write_text("")
 
     # Load the environment, make sure the new apps are enabled, and check that
-    # the chart descriptions are correct.
+    # the chart metadata is correct.
     factory = Factory(config_path)
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("minikube")
@@ -104,6 +104,17 @@ def test_create(tmp_path: Path) -> None:
         ("zzz-other-app", "Last new app"),
     ):
         assert environment.applications[app].chart["description"] == expected
+        assert environment.applications[app].chart["version"] == "1.0.0"
+
+    # Charts created from the empty starter should not have appVersion. Charts
+    # using the web-service starter should, set to 0.1.0.
+    assert "appVersion" not in environment.applications["aaa-new-app"].chart
+    assert "appVersion" not in environment.applications["zzz-other-app"].chart
+    assert environment.applications["hips"].chart["appVersion"] == "0.1.0"
+
+    # Charts using the web-service starter should have a default sources.
+    expected = "https://github.com/lsst-sqre/hips"
+    assert environment.applications["hips"].chart["sources"][0] == expected
 
 
 def test_create_prompt(tmp_path: Path) -> None:
