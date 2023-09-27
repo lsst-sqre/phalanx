@@ -97,10 +97,9 @@ The fastest method for trying out changes to Kubernetes resources is to directly
 In your application's Argo CD page you can click on a specific resource (such as a ConfigMap_ or Deployment_) and click the :guilabel:`Edit` button on the live manifest.
 Make your changes, then click :guilabel:`Save`.
 
-Normally, these changes will immediately take effect.
-Sometimes if you change a ``ConfigMap`` you will need to restart the relevant deployments to pick up that change.
+Changes made to a ``ConfigMap`` are often not automatically applied, since pods usually read their ``ConfigMap`` on startup and never again.
+If you change a ``ConfigMap``, you may therefore have to restart the relevant deployments to pick up that change.
 For instructions on how to do that, see :ref:`branch-deploy-restart`.
-(However, see :ref:`dev-deployment-restart` for a better way.)
 
 After you have made this type of manual edit, the application will show as out of sync, since its configuration in the Kubernetes cluster no longer matches its configuration in Phalanx.
 If you click the :guilabel:`Sync` button, it will revert your changes and again make the application match its Phalanx configuration.
