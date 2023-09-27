@@ -183,8 +183,7 @@ Once your branch is merged, remember to reset your application's Argo CD ``Appli
 
 #. In the application's page in Argo CD, click on the :guilabel:`Sync` button to redeploy the application from the default branch.
 
-You can also find your application in the ``science-platform`` Argo CD application and sync it from there to reset the default branch and any other settings you changed.
-Either approach works; use whichever you find more convenient.
+Alternatively, you can find the application in the ``science-platform`` Argo CD application and sync it from there to reset the default branch and any other settings you changed.
 
 Next steps
 ==========
