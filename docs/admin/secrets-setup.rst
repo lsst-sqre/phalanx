@@ -18,10 +18,10 @@ Basic Vault structure
 =====================
 
 Every Phalanx environment must have a corresponding "path" inside the Vault database.
-Conventionally, this is :samp:`secrets/phalanx/{environment}`, where the initial ``secrets`` component is the mount point for the KV2 secrets engine.
+Conventionally, this is :samp:`secrets/phalanx/{environment}`, where the initial ``secrets`` component is the mount point for the KV v2 secrets engine.
 However, it can be anything you choose if, for instance, you have an existing Vault with its own conventions.
 
-This must be a KVv2 secrets store.
+This must be a KV v2 secrets store.
 Phalanx currently does not support other secrets engines.
 
 Under that path, Phalanx expects one Vault secret per application, plus optionally an additional secret named ``pull-secret``.
