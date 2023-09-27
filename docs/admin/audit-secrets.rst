@@ -4,7 +4,7 @@ Audit secrets for an environment
 
 To check that all of the necessary secrets for an environment named ``<environment>`` are in Vault and appear to have the proper form, run:
 
-.. code-block::
+.. prompt:: bash
 
    phalanx secrets audit <environment>
 

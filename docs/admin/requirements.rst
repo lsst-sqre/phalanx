@@ -38,6 +38,8 @@ Without such an enforcement layer, all users and applications in the Phalanx clu
 You will also need to manage TLS certificates for the public hostname or hostnames of your Phalanx environment, although Phalanx may be able to automate this for you.
 See :doc:`hostnames` for more information.
 
+.. _admin-tooling:
+
 Management tooling
 ==================
 
