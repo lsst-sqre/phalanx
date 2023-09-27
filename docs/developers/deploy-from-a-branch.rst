@@ -14,7 +14,7 @@ Through this process it is possible to develop an application in a fairly tight 
 .. seealso::
 
    This page focuses on using a development environment to iteratively develop and test changes to an application, ultimately yielding a applicatino upgrade in Phalanx.
-   You can achieve the same result, without the iterative deployment testing, following the steps in :doc:`upgrade`.
+   You can achieve the same result without the iterative deployment testing by following the steps in :doc:`upgrade`.
 
 .. _deploy-branch-prep:
 
@@ -97,8 +97,8 @@ The fastest method for trying out changes to Kubernetes resources is to directly
 In your application's Argo CD page you can click on a specific resource (such as a ConfigMap_ or Deployment_) and click the :guilabel:`Edit` button on the live manifest.
 Make your changes, then click :guilabel:`Save`.
 
-Normally, these changes will immediately take effect.
-Sometimes if you change a ``ConfigMap`` you will need to restart the relevant deployments to pick up that change.
+Changes made to a ``ConfigMap`` are often not automatically applied, since pods usually read their ``ConfigMap`` on startup and never again.
+If you change a ``ConfigMap``, you may therefore have to restart the relevant deployments to pick up that change.
 For instructions on how to do that, see :ref:`branch-deploy-restart`.
 
 After you have made this type of manual edit, the application will show as out of sync, since its configuration in the Kubernetes cluster no longer matches its configuration in Phalanx.
@@ -132,8 +132,8 @@ Besides developing the Helm chart, you can also test branch builds of your appli
 
 To start, ensure that the Deployment_ is using development builds of your application's Docker images.
 The best way to do this is to edit the application's Helm chart for the application in the development environment and to :ref:`sync those changes <updating-and-resyncing-from-branch>`.
-For many applications you can set the ``appVersion`` in the field in the application's ``Chart.yaml`` file to the name of the development Docker tag (see also :doc:`upgrade`).
-You may instead change the ``image.tag`` setting in the :file:`values-{environment}.yaml` file for that environment.
+For development changes, you should usually override just the ``image.tag`` setting in the :file:`values-{environment}.yaml` file for that environment, which makes it clear that this change is temporary.
+Save changes to the ``appVersion`` in :file:`Chart.yaml` for new releases.
 
 You should also ensure that the Deployment_ is always pulling new images, rather than caching them, by setting the ``imagePullPolicy`` to ``Always``.
 This is covered in :ref:`deploy-branch-prep`.
@@ -182,6 +182,8 @@ Once your branch is merged, remember to reset your application's Argo CD ``Appli
    - Finally, click on the :guilabel:`Save` button.
 
 #. In the application's page in Argo CD, click on the :guilabel:`Sync` button to redeploy the application from the default branch.
+
+Alternatively, you can find the application in the ``science-platform`` Argo CD application and sync it from there to reset the default branch and any other settings you changed.
 
 Next steps
 ==========
