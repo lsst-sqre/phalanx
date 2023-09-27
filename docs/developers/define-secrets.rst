@@ -127,8 +127,7 @@ Finally, here is an example of a static secret that needs an additional layer of
 Define VaultSecret resources
 ============================
 
-The Phalanx secrets tooling will ensure that the secret is in Vault, but you must still create or update a ``VaultSecret`` resource in your application's deployment (typically in its Helm chart) to tell `Vault Secrets Operator`_ how to create a ``Secret`` that your application can use.
-(See :doc:`write-a-helm-chart` for more details on creating a Helm chart for an application.)
+The Phalanx secrets tooling will ensure that the secret is in Vault, but you must still create or update a ``VaultSecret`` resource in your application's deployment, typically in its Helm chart, to tell `Vault Secrets Operator`_ how to create a ``Secret`` that your application can use.
 
 A typical ``VaultSecret`` Helm template for an application looks like this (replace ``myapp`` with your application's name):
 
@@ -168,6 +167,8 @@ See the `vault-secrets-operator documentation <https://github.com/ricoberger/vau
 
    The ``index`` function can retrieve secrets whose names are not valid identifiers (because, for instance, they contain a dash), and ``>-`` quoting avoids the conflict between two layers of quotes.
    This also works for other characters not allowed in identifiers, such as periods.
+
+See :doc:`write-a-helm-chart` for more details on creating a Helm chart for an application.
 
 .. _dev-add-onepassword:
 
