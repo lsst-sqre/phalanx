@@ -31,7 +31,6 @@ atdometrajectory:
 atheaderservice:
   image:
     repository: ts-dockerhub.lsst.org/headerservice
-    tag: ts-v3.1.11_c0029
     pullPolicy: Always
   env:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
