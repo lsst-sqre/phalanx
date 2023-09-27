@@ -1,6 +1,6 @@
 # next-visit-fan-out
 
-Application to poll next visit events from kafka, fan out/duplicate the message, and send to knative.
+Poll next visit events from Kafka, duplicate them, and send them to all applications that need to receive them.
 
 ## Values
 

@@ -1,7 +1,9 @@
 apiVersion: v2
 name: prompt-proto-service-lsstcam
 version: 1.0.0
-description: Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative. This deployment handles LSSTCam images.
+description: >-
+  Prompt Proto Service is an event driven service for processing camera
+  images. This instance of the service handles LSSTCam images.
 home: https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst
 sources:
   - https://github.com/lsst-dm/prompt_prototype
