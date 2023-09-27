@@ -20,7 +20,7 @@ We will use ``exposurelog`` as the model for the remainder of this document.
 Add the database to the deployment
 ==================================
 
-Go to the ``/applications/postgres/templates`` directory and edit ``deployment.yaml`` to add an entry for the new database.
+Go to the `applications/postgres/templates <https://github.com/lsst-sqre/phalanx/tree/main/applications/postgres/templates>`__ directory and edit :file:`deployment.yaml` to add an entry for the new database.
 You should copy an existing entry to get the syntax correct, and then change the names.
 The result should look like this:
 
@@ -38,58 +38,50 @@ The result should look like this:
          key: "exposurelog_password"
    {{- end }}
 
-Add the database to Phalanx installer
-=====================================
+Add the secret for the database
+===============================
 
-Add a password entry to Phalanx's installer, so the next time a new cluster is deployed or an extant cluster is redeployed, the password will be created.
-This belongs in ``installer/generate_secrets.py`` in the ``_postgres()`` method.
+Both the ``postgres`` Phalanx application and any applications that talk to that database need to share a secret for the database password.
 
-Typically, we use passwords that are ASCII representations of random 32-byte hexadecimal sequences.
-The passwords for all the non-root PostgreSQL users already look like that, so copying an existing line and changing the name to reflect your application is usually correct:
-
-.. code-block:: python
-   :caption: /installer/generate_secrets.py
-
-   self._set_generated("postgres", "exposurelog_password", secrets.token_hex(32))
-
-Finally, edit the ``postgres`` ``values-<environment>.yaml`` files for the environments that need this database and add a section for your new database with appropriate ``user`` and ``db`` entries:
+Pick one of the applications that uses the database as the primary owner for that password.
+Add a new entry to :file:`secrets.yaml` for that password.
+For example, the entry for the database password in the ``exposurelog`` application looks like this:
 
 .. code-block:: yaml
-   :caption: /applications/postgres/values-<environment>.yaml
+   :caption: applications/exposurelog/secrets.yaml
+
+   database-password:
+     description: "Password for the exposurelog database."
+     generate:
+       type: password
+
+Then, add an entry to `applications/postgres/secrets.yaml <https://github.com/lsst-sqre/phalanx/blob/main/applications/postgres/secrets.yaml>`__ that copies this secret into a ``postgres`` application secret.
+For example:
+
+.. code-block:: yaml
+   :caption: applications/postgres/secrets.yaml
+
+   exposurelog_password:
+     description: "Password for the exposurelog database."
+     if: exposurelog_db
+     copy:
+       application: exposurelog
+       key: exposurelog_password
+
+If any other applications also need to use the same database, add a similar entry to their :file:`secrets.yaml` files with a ``copy`` directive.
+
+Generate the new secret and update the Vault secrets to include it by following the :doc:`standard secrets sync process </admin/sync-secrets>`.
+
+Finally, edit the ``postgres`` :file:`values-{environment}.yaml` files for the environments that need this database and add a section for your new database with appropriate ``user`` and ``db`` entries:
+
+.. code-block:: yaml
+   :caption: applications/postgres/values-<environment>.yaml
 
    exposurelog_db:
      user: "exposurelog"
      db: "exposurelog"
 
 Now start the PR and review process.
-
-Manually add the secret to Vault
-================================
-
-Since you have already added generation of the password to the installer, you could just generate new secrets for each environment and push them into Vault.
-That, however, would require that you restart everything with randomly-generated passwords, and that's a fairly disruptive operation, so you probably are better off manually injecting just your new password.
-
-.. rst-class:: open
-
-#. Consult 1Password and retrieve the appropriate vault write token for the instance you're working with from ``vault_keys.json``.
-
-#. Set up your environment:
-
-   .. code-block:: bash
-
-      export VAULT_ADDR=vault.lsst.codes
-      export VAULT_TOKEN=<retrieved-token>
-
-#. Generate and store a new random password:
-
-   .. code-block:: bash
-
-      vault kv patch secret/k8s_operator/<instance>/postgres \
-          <database-name>_password=$(openssl rand -hex 32)
-
-#. Delete the ``postgres`` ``Secret`` from the ``postgres`` namespace to force Vault Secrets Operator to recreate it.
-
-#. Repeat for each environment where you need the new database.
 
 Restart with new values
 =======================
