@@ -2,7 +2,7 @@ prompt-proto-service:
 
   podAnnotations:
     # Update this field if using latest or static image tag in dev
-    revision: "1"
+    revision: "12"
 
   image:
     repository: ghcr.io/lsst-dm/prompt-proto-service
