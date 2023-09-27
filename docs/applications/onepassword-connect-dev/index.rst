@@ -1,7 +1,7 @@
 .. px-app:: onepassword-connect-dev
 
 ####################################################
-onepassword-connect-dev - 1Password API server (dev)
+onepassword-connect-dev — 1Password API server (dev)
 ####################################################
 
 1Password Connect provides API access to a 1Password vault.
