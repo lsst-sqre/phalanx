@@ -1,6 +1,6 @@
 # prompt-proto-service-hsc
 
-Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative. This deployment handles HSC images.
+Prompt Proto Service is an event driven service for processing camera images. This instance of the service handles HSC images.
 
 **Homepage:** <https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst>
 

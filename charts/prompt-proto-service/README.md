@@ -1,6 +1,6 @@
 # prompt-proto-service
 
-Prompt Proto Service is an event driven service for processing camera images.  The service runs on knative.
+Event-driven processing of camera images
 
 **Homepage:** <https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst>
 
