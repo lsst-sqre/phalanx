@@ -88,9 +88,10 @@ class VaultService:
         new_vault_client = self._vault.get_vault_client(config)
         old_vault_client = self._vault.get_vault_client(config, old_path)
         secrets = old_vault_client.list_application_secrets()
-        for name in secrets:
+        for name in sorted(secrets):
             secret = old_vault_client.get_application_secret(name)
             new_vault_client.store_application_secret(name, secret)
+            print("Copied Vault secret for", name)
 
     def create_read_approle(self, environment: str) -> VaultAppRole:
         """Create a new Vault read AppRole for the given environment.
