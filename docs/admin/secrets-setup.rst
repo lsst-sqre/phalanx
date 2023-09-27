@@ -9,7 +9,7 @@ This document explains the basic structure of how secrets must be stored in Vaul
 
 .. note::
 
-   We are in the middle of a migration from an old secrets management system that sometimes used multiple secrest per application and sometimes pointed multiple applications at the same secret, to a new system that always uses one secret per application.
+   We are in the middle of a migration from an old secrets management system that sometimes used multiple secrets per application and sometimes pointed multiple applications at the same secret, to a new system that always uses one secret per application.
    New enviroments should use the new system, but be aware that you will see remnants of the old system lingering in application configuration.
 
    For documentation of how to convert an existing environment to the new secrets management system, see :doc:`migrating-secrets`.
