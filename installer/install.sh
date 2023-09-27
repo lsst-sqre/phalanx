@@ -1,25 +1,27 @@
 #!/bin/bash -e
-USAGE="Usage: ./install.sh ENVIRONMENT VAULT_TOKEN [VAULT_TOKEN_LEASE_DURATION]"
+USAGE="Usage: ./install.sh ENVIRONMENT VAULT_ROLE_ID VAULT_SECRET_ID"
 ENVIRONMENT=${1:?$USAGE}
-export VAULT_TOKEN=${2:?$USAGE}
-export VAULT_TOKEN_LEASE_DURATION=${4:-31536000}
-export VAULT_ADDR=`yq -r .vaultUrl ../environments/values-$ENVIRONMENT.yaml`
-VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-$ENVIRONMENT.yaml`
-ARGOCD_PASSWORD=`vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer`
+config="../environments/values-${ENVIRONMENT}.yaml"
+VAULT_ROLE_ID=${2:?$USAGE}
+VAULT_SECRET_ID=${3:?$USAGE}
+export VAULT_ADDR=$(yq -r .vaultUrl "$config")
+export VAULT_TOKEN=$(vault write auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID" | grep 'token ' | awk '{ print $2 }')
+VAULT_PATH_PREFIX=$(yq -r .vaultPathPrefix "$config")
+ARGOCD_PASSWORD=$(vault kv get --field=admin.plaintext_password $VAULT_PATH_PREFIX/argocd)
 
-GIT_URL=`git config --get remote.origin.url`
+GIT_URL=$(git config --get remote.origin.url)
 # Github runs in a detached head state, but sets GITHUB_REF,
 # extract the branch from it.  If we're there, use that branch.
 # git branch --show-current will return empty in deatached head.
-GIT_BRANCH=${GITHUB_HEAD_REF:-`git branch --show-current`}
+GIT_BRANCH=${GITHUB_HEAD_REF:-$(git branch --show-current)}
 
 echo "Set VAULT_TOKEN in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
 kubectl create ns vault-secrets-operator || true
-kubectl create secret generic vault-secrets-operator \
+kubectl create secret generic vault-credentials \
   --namespace vault-secrets-operator \
-  --from-literal=VAULT_TOKEN=$VAULT_TOKEN \
-  --from-literal=VAULT_TOKEN_LEASE_DURATION=$VAULT_TOKEN_LEASE_DURATION \
+  --from-literal=VAULT_ROLE_ID=$VAULT_ROLE_ID \
+  --from-literal=VAULT_SECRET_ID=$VAULT_SECRET_ID \
   --dry-run=client -o yaml | kubectl apply -f -
 
 echo "Set up docker pull secret for vault-secrets-operator..."
@@ -81,8 +83,7 @@ argocd app sync science-platform \
   --port-forward-namespace argocd
 
 echo "Syncing critical early applications"
-if [ $(yq -r '.applications."ingress-nginx"' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
-then
+if [ $(yq -r '.applications."ingress-nginx"' "$config") != "false" ]; then
   echo "Syncing ingress-nginx..."
   argocd app sync ingress-nginx \
     --port-forward \
@@ -91,8 +92,7 @@ fi
 
 # Wait for the cert-manager's webhook to finish deploying by running
 # kubectl, argocd's sync doesn't seem to wait for this to finish.
-if [ $(yq -r '.applications."cert-manager"' ../environments/values-$ENVIRONMENT.yaml) != "false" ];
-then
+if [ $(yq -r '.applications."cert-manager"' "$config") != "false" ]; then
   echo "Syncing cert-manager..."
   argocd app sync cert-manager \
     --port-forward \
@@ -100,16 +100,14 @@ then
     kubectl -n cert-manager rollout status deploy/cert-manager-webhook
 fi
 
-if [ $(yq -r .applications.postgres ../environments/values-$ENVIRONMENT.yaml) == "true" ];
-then
+if [ $(yq -r .applications.postgres "$config") == "true" ]; then
   echo "Syncing postgres..."
   argocd app sync postgres \
     --port-forward \
     --port-forward-namespace argocd
 fi
 
-if [ $(yq -r .applications.gafaelfawr ../environments/values-$ENVIRONMENT.yaml) != "false" ];
-then
+if [ $(yq -r .applications.gafaelfawr "$config") != "false" ]; then
   echo "Syncing gafaelfawr..."
   argocd app sync gafaelfawr \
     --port-forward \
@@ -124,4 +122,4 @@ argocd app sync -l "argocd.argoproj.io/instance=science-platform" \
 echo "You can now check on your argo cd installation by running:"
 echo "kubectl port-forward service/argocd-server -n argocd 8080:443"
 echo "For the ArgoCD admin password:"
-echo "vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer"
+echo "vault kv get --field=admin.plaintext_password $VAULT_PATH_PREFIX/argocd"

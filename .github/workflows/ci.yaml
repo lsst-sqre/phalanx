@@ -86,6 +86,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: make init
+
       - name: Filter paths
         uses: dorny/paths-filter@v2
         id: filter
@@ -124,14 +132,13 @@ jobs:
           sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.7.10/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
-          sudo pip install -r installer/requirements.txt
 
       - name: Run installer
         timeout-minutes: 15
         if: steps.filter.outputs.minikube == 'true'
         run: |
           cd installer
-          ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }}
+          ./install.sh minikube "${{ secrets.MINIKUBE_VAULT_ROLE_ID }}" "${{ secrets.MINIKUBE_VAULT_SECRET_ID }}"
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'

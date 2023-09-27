@@ -58,19 +58,25 @@ Installing Phalanx
 Once you have defined a Phalanx environment, follow these steps to install it.
 These can be run repeatedly to reinstall Phalanx over an existing deployment.
 
-.. warning::
+#. Create a Vault AppRole that will be used by Vault Secrets Operator.
 
-   The installer has not been updated to work with the new secrets management system yet, and the way it initializes Vault Secrets Operator is incorrect for the new system and will not work.
-   This is currently being worked on, but in the meantime you will have to make changes to the installation script to use :command:`phalanx vault create-read-approle --as-secret vault-credentials` and skip the attempt to create a Vault read token secret obtained from 1Password.
-   Hopefully this will be fixed shortly.
+   .. prompt:: bash
 
-.. rst-class:: open
+      phalanx vault create-read-approle <environment>
 
-#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/main/installer/requirements.txt>`__.
+   Be aware that this will invalidate any existing AppRole for that environment.
 
 #. Run the installer script at `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
+
+   .. prompt:: bash
+
+      installer/install.sh <enviornment> <vault-role-id> <vault-secret-id>
+
+   ``<vault-role-id>`` and ``<vault-secret-id>`` are the Role ID and Secret ID of the Vault AppRole created in the previous step.
+
    Debug any problems.
    The most common source of problems are errors or missing configuration in the :file:`values-{environment}.yaml` files you created for each application.
+   You can safely run the installer repeatedly as you debug and fix issues.
 
 #. If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address.
    Then, set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).
