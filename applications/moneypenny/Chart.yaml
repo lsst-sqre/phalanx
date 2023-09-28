@@ -6,7 +6,7 @@ sources:
   - https://github.com/lsst-sqre/moneypenny
   - https://github.com/lsst-sqre/farthing
   - https://github.com/lsst-sqre/inituserhome
-version: 1.0.2
+version: 1.0.0
 annotations:
   phalanx.lsst.io/docs: |
     - id: "SQR-052"

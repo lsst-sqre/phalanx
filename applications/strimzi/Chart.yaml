@@ -1,7 +1,7 @@
 apiVersion: v2
 name: strimzi
 type: application
-version: 0.1.0
+version: 1.0.0
 description: Strimzi Kafka Operator
 home: https://strimzi.io
 appVersion: "0.26.0"
