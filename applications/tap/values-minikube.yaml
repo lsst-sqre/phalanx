@@ -2,26 +2,28 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfprod-tap"
+    resources:
+      limits:
+        memory: 500M
 
   mockdb:
     enabled: true
+    resources:
+      limits:
+        memory: 500M
 
   config:
-    jvmMaxHeapSize: 4G
+    jvmMaxHeapSize: 2G
 
   resources:
     requests:
-      cpu: 0
-      memory: 0
+      cpu: 0.01
+      memory: 500M
     limits:
-      cpu: 0
-      memory: 0
+      memory: 2G
 
   uws:
     resources:
       requests:
-        cpu: 0
-        memory: 0
-      limits:
-        cpu: 0
-        memory: 0
+        cpu: 0.01
+        memory: 500M

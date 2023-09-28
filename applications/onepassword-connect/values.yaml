@@ -1,14 +1,11 @@
-# Default values for onepassword-connect-dev.
+# Default values for onepassword-connect.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-idfdev:
+connect:
   connect:
-    # -- Name of the Kubernetes Deployment
-    applicationName: "connect-idfdev"
-
     # -- Name of secret containing the 1Password credentials
-    credentialsName: "idfdev-secret"
+    credentialsName: "onepassword-connect-secret"
 
     # -- Name of key inside secret containing 1Password credentials
     credentialsKey: "op-session"

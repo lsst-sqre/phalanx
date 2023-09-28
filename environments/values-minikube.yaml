@@ -1,13 +1,17 @@
 name: minikube
 fqdn: minikube.lsst.codes
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP minikube.lsst.codes"
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/minikube.lsst.codes
 
 # The primary constraint on enabling applications is the low available memory
 # of a GitHub Actions runner, since minikube is used for smoke testing of new
-# Helm configurations.
+# Helm configurations. minikube also doesn't have access to data, at least
+# currently, which substantially limits the applications that can be
+# meaningfully deployed.
 applications:
-  datalinker: true
   hips: true
   mobu: true
   postgres: true

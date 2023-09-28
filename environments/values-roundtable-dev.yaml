@@ -1,16 +1,16 @@
 name: roundtable-dev
 fqdn: roundtable-dev.lsst.cloud
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP roundtable-dev.lsst.cloud"
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable-dev.lsst.cloud
-onepassword:
-  connectUrl: https://roundtable-dev.lsst.cloud/1password
-  vaultTitle: "RSP roundtable-dev.lsst.cloud"
 
 applications:
   giftless: true
   kubernetes-replicator: true
   monitoring: true
-  onepassword-connect-dev: true
+  onepassword-connect: true
   ook: true
   sasquatch: true
   squarebot: true
