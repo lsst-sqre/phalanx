@@ -142,6 +142,9 @@ Static secrets from 1Password
 Static secrets may be stored in a 1Password vault.
 In this case, each application with static secrets should have an entry in this 1Password vault.
 
+The 1Password vault must be served by a 1Password Connect server so that the Phalanx tooling can access the secrets.
+See :px-app:`onepassword-connect` for more details on how this is done.
+
 Application secrets
 ^^^^^^^^^^^^^^^^^^^
 

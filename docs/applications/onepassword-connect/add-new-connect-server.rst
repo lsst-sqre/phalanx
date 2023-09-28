@@ -2,10 +2,11 @@
 Add a new 1Password Connect server
 ##################################
 
-This document describes how to set up a new 1Password Connect server to push secrets from 1Password to Vault for one or more Phalanx environments.
+This document describes how to set up a new 1Password Connect server to provide static secrets for one or more Phalanx environments.
+See :ref:`admin-static-secrets` for more background.
 
 SQuaRE-run Phalanx environments already have 1Password Connect servers set up.
-The one in the :px-env:`roundtable-dev <roundtable-dev>` environment serves the vaults for development environments, and one in the :px-env:`roundtable-prod <roundtable-prod>` environment serves the vaults for production environments.
+The one in the :px-env:`roundtable-dev` environment serves the vaults for development environments, and one in the :px-env:`roundtable-prod` environment serves the vaults for production environments.
 
 When following these instructions, you will be creating a new `Secrets Automation workflow <https://developer.1password.com/docs/connect/get-started/>`__.
 You will need to have permissions to create that workflow for the vault for your environment.
@@ -63,7 +64,7 @@ In the following steps, you'll deploy the new 1Password Connect server.
 #. Encode the contents of that file in base64.
 
    .. tab-set::
-   
+
       .. tab-item:: Linux
 
          .. prompt:: bash
