@@ -30,8 +30,8 @@ argo-cd:
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
-        clientID: $oidc.clientId
-        clientSecret: $oidc.clientSecret
+        clientID: usdf-rsp-prod-argocd
+        clientSecret: $dex.clientSecret
         # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
