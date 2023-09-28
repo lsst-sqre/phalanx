@@ -62,9 +62,19 @@ In the following steps, you'll deploy the new 1Password Connect server.
 
 #. Encode the contents of that file in base64.
 
-   .. prompt:: bash
+   .. tab-set::
+   
+      .. tab-item:: Linux
 
-      base64 -w0 < 1password-credentials.json; echo ''
+         .. prompt:: bash
+
+            base64 -w0 < 1password-credentials.json; echo ''
+
+      .. tab-item:: macOS
+
+         .. prompt:: bash
+
+            base64 -i 1password-credentials.json; echo ''
 
    This is the static secret required by the 1Password Connect server.
 
