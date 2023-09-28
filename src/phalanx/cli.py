@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -121,7 +122,10 @@ def application() -> None:
     "-d",
     "--description",
     prompt="Short description",
-    help="Short description of the new application.",
+    help=(
+        "Short description of the new application. Must start with capital"
+        " letter and, with the application name, be less than 80 characters."
+    ),
 )
 @click.option(
     "-s",
@@ -142,6 +146,10 @@ def application_create(
     """
     if not config:
         config = _find_config()
+    if len(name) + 3 + len(description) > 80:
+        raise click.UsageError("Name plus description is too long")
+    if not re.match("[A-Z0-9]", description):
+        raise click.UsageError("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
     application_service.create_application(
