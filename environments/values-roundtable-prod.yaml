@@ -2,6 +2,8 @@ name: roundtable-prod
 fqdn: roundtable.lsst.cloud
 vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
+onepassword:
+  vaultTitle: "RSP roundtable-dev.lsst.cloud"
 
 applications:
   kubernetes-replicator: true
