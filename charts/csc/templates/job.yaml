@@ -126,7 +126,7 @@ spec:
       {{- if .Values.entrypoint }}
         - name: entrypoint
           configMap:
-            name: {{ .Release.Name }}-entrypoint
+            name: {{ include "chart.name" $ }}-entrypoint
             defaultMode: 0755
             items:
               - key: .startup.sh
@@ -135,7 +135,7 @@ spec:
       {{- if .Values.configfile }}
         - name: configfile
           configMap:
-            name: {{ .Release.Name }}-configfile
+            name: {{ include "chart.name" $ }}-configfile
             items:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
