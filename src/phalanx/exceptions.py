@@ -116,6 +116,24 @@ class InvalidSecretConfigError(Exception):
         super().__init__(msg)
 
 
+class MissingOnepasswordSecretsError(Exception):
+    """Secrets are missing from 1Password.
+
+    Parameters
+    ----------
+    secrets
+        List of strings identifying missing secrets. These will either be a
+        bare application name, indicating the entire application item is
+        missing from 1Password, or the application name followed by a space,
+        indicating the 1Password item doesn't have that field.
+    """
+
+    def __init__(self, secrets: Iterable[str]) -> None:
+        self.secrets = list(secrets)
+        msg = f'Missing 1Password items or fields: {", ".join(self.secrets)}'
+        super().__init__(msg)
+
+
 class NoOnepasswordConfigError(Exception):
     """Environment does not use 1Password."""
 

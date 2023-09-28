@@ -5,10 +5,13 @@ from __future__ import annotations
 import os
 from collections import defaultdict
 
-from onepasswordconnectsdk import load_dict, new_client
+from onepasswordconnectsdk import new_client
 from onepasswordconnectsdk.client import FailedToRetrieveItemException
 
-from ..exceptions import NoOnepasswordCredentialsError
+from ..exceptions import (
+    MissingOnepasswordSecretsError,
+    NoOnepasswordCredentialsError,
+)
 from ..models.environments import EnvironmentBaseConfig
 from ..models.secrets import PullSecret, StaticSecret, StaticSecrets
 
@@ -55,40 +58,43 @@ class OnepasswordClient:
         dict of dict
             Retrieved static secrets as a dictionary of applications to secret
             keys to `~phalanx.models.secrets.StaticSecret` objects.
+
+        Raises
+        ------
+        MissingOnepasswordSecretsError
+            Raised if any of the items or fields expected to be in 1Password
+            are not present.
         """
-        request: dict[tuple[str, str], dict[str, str]] = {}
-        extra = []
-        for application, secrets in query.items():
-            for secret in secrets:
-                if "." in secret:
-                    extra.append((application, secret))
-                else:
-                    request[(application, secret)] = {
-                        "opitem": application,
-                        "opfield": f".{secret}",
-                        "opvault": self._vault_id,
-                    }
-        response = load_dict(self._onepassword, request)
         applications: defaultdict[str, dict[str, StaticSecret]]
         applications = defaultdict(dict)
-        for key, value in response.items():
-            application, secret = key
-            applications[application][secret] = StaticSecret(value=value)
 
-        # Separately handle the secret field names that contain periods, since
-        # that conflicts with the syntax used by load_dict.
-        for application, secret in extra:
-            item = self._onepassword.get_item(application, self._vault_id)
-            found = False
-            for field in item.fields:
-                if field.label == secret:
-                    static_secret = StaticSecret(value=field.value)
-                    applications[application][secret] = static_secret
-                    found = True
-                    break
-            if not found:
-                msg = f"Item {application} has no field {secret}"
-                raise FailedToRetrieveItemException(msg)
+        # This method originally used the load_dict bulk query interface, but
+        # the onepasswordconnectsdk Python library appears to turn that into
+        # separate queries per item anyway, it can't handle fields whose names
+        # contain periods, and it means we don't know what items are missing
+        # for error reporting. It seems better to do the work directly.
+        not_found = []
+        for application, secrets in query.items():
+            try:
+                item = self._onepassword.get_item(application, self._vault_id)
+            except FailedToRetrieveItemException:
+                not_found.append(application)
+                continue
+            for secret in secrets:
+                found = False
+                for field in item.fields:
+                    if field.label == secret:
+                        static_secret = StaticSecret(value=field.value)
+                        applications[application][secret] = static_secret
+                        found = True
+                        break
+                if not found:
+                    not_found.append(f"{application} {secret}")
+
+        # If any secrets weren't found, raise an exception with the list of
+        # secrets that weren't found.
+        if not_found:
+            raise MissingOnepasswordSecretsError(not_found)
 
         # Return the static secrets.
         return StaticSecrets(

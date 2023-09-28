@@ -9,7 +9,11 @@ from dataclasses import dataclass, field
 import yaml
 from pydantic import SecretStr
 
-from ..exceptions import NoOnepasswordConfigError, UnresolvedSecretsError
+from ..exceptions import (
+    MissingOnepasswordSecretsError,
+    NoOnepasswordConfigError,
+    UnresolvedSecretsError,
+)
 from ..models.environments import Environment
 from ..models.secrets import (
     PullSecret,
@@ -102,7 +106,11 @@ class SecretsService:
         """
         environment = self._config.load_environment(env_name)
         if not static_secrets:
-            static_secrets = self._get_onepassword_secrets(environment)
+            try:
+                static_secrets = self._get_onepassword_secrets(environment)
+            except MissingOnepasswordSecretsError as e:
+                heading = "Missing static secrets from 1Password:"
+                return f"{heading}\n• " + "\n• ".join(e.secrets) + "\n"
         vault_client = self._vault.get_vault_client(environment)
         pull_secret = static_secrets.pull_secret if static_secrets else None
 
@@ -364,6 +372,9 @@ class SecretsService:
 
         Raises
         ------
+        MissingOnepasswordSecretsError
+            Raised if any of the items or fields expected to be in 1Password
+            are not present.
         NoOnepasswordCredentialsError
             Raised if the environment uses 1Password but no 1Password
             credentials were available in the environment.
@@ -375,6 +386,8 @@ class SecretsService:
         encoded = {}
         for application in environment.all_applications():
             static_secrets = application.all_static_secrets()
+            if not static_secrets:
+                continue
             query[application.name] = [s.key for s in static_secrets]
             encoded[application.name] = {
                 s.key for s in static_secrets if s.onepassword.encoded

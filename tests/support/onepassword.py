@@ -37,6 +37,19 @@ class MockOnepasswordClient:
         self._data: dict[str, dict[str, Item]] = {}
         self._uuids: dict[str, str] = {}
 
+    def create_empty_test_vault(self, vault: str) -> None:
+        """Create an empty 1Password vault for testing.
+
+        This method is not part of the 1Password Connect API. It is intended
+        for use by the test suite to set up a test.
+
+        Parameters
+        ----------
+        vault
+            Name of the 1Password vault.
+        """
+        self._data[vault] = {}
+
     def load_test_data(self, vault: str, environment: str) -> None:
         """Load 1Password test data for the given environment.
 
