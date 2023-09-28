@@ -1,6 +1,6 @@
 apiVersion: v2
 name: telegraf
-version: 1.0.1
+version: 1.0.0
 description: Application telemetry collection service
 home: https://www.influxdata.com/time-series-platform/telegraf/
 sources:
