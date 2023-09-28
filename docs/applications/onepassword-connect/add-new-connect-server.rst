@@ -31,7 +31,7 @@ In the following steps, you will create a 1Password Secrets Automation workflow 
 
 #. Next, 1Password wants you to create an access token for at least one environment.
    This is the token that will be used by the Phalanx command-line tool to access secrets for that environment.
-   It will have access to one and only one vault.
+   It will have access to one and only one 1Password vault.
 
    Under :guilabel:`Token Name`, enter the name of the environment the token should have access to.
    Leave :guilabel:`Expires After` set to ``Never``.
