@@ -117,6 +117,35 @@ def test_create(tmp_path: Path) -> None:
     assert environment.applications["hips"].chart["sources"][0] == expected
 
 
+def test_create_errors(tmp_path: Path) -> None:
+    config_path = tmp_path / "phalanx"
+    shutil.copytree(str(phalanx_test_path()), str(config_path))
+    result = run_cli(
+        "application",
+        "create",
+        "some-really-long-app-name-please-do-not-do-this",
+        "--description",
+        "Some really long description on top of the app name",
+        "--config",
+        str(config_path),
+        needs_config=False,
+    )
+    assert "Name plus description is too long" in result.output
+    assert result.exit_code == 2
+    result = run_cli(
+        "application",
+        "create",
+        "app",
+        "--description",
+        "lowercase description",
+        "--config",
+        str(config_path),
+        needs_config=False,
+    )
+    assert "Description must start with capital letter" in result.output
+    assert result.exit_code == 2
+
+
 def test_create_prompt(tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
     shutil.copytree(str(phalanx_test_path()), str(config_path))

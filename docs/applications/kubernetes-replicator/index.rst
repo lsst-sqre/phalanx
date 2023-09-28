@@ -1,7 +1,7 @@
 .. px-app:: kubernetes-replicator
 
 #################################################
-kubernetes-replicator - Cross-namespace resources
+kubernetes-replicator — Cross-namespace resources
 #################################################
 
 kubernetes-replicator is a Kubernetes operator that replicates resources across namespaces.

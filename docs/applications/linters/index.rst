@@ -1,8 +1,8 @@
 .. px-app:: linters
 
-######################################
-linters - automated chechking of DNS
-######################################
+####################################
+linters — Automated chechking of DNS
+####################################
 
 Linters provides a way to automatically and repeatedly check things in ops, such as if DNS entries
 are pointing to IP addresses that we are using, or are they dangling.  We use the route53 API
