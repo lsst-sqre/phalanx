@@ -215,9 +215,19 @@ Newlines will be converted to spaces when pasting the secret value.
 If newlines need to be preserved, be sure to mark the secret with ``onepassword.encoded`` set to ``true`` in :file:`secrets.yaml`, and then encode the secret in base64 before pasting it into 1Password.
 To encode the secret, save it to a file with the correct newlines, and then use a command such as:
 
-.. prompt:: bash
+.. tab-set::
 
-   base64 -w0 < /path/to/secret; echo ''
+   .. tab-item:: Linux
+
+      .. prompt:: bash
+
+         base64 -w0 < /path/to/secret; echo ''
+
+   .. tab-item:: macOS
+
+      .. prompt:: bash
+
+         base64 -i /path/to/secret; echo ''
 
 This will generate a base64-encoded version of the secret on one line, suitable for cutting and pasting into the 1Password field.
 
