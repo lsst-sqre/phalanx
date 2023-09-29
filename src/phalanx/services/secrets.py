@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import binascii
 from base64 import b64decode
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -10,6 +11,7 @@ import yaml
 from pydantic import SecretStr
 
 from ..exceptions import (
+    MalformedOnepasswordSecretError,
     MissingOnepasswordSecretsError,
     NoOnepasswordConfigError,
     UnresolvedSecretsError,
@@ -355,6 +357,37 @@ class SecretsService:
                 for key in sorted(to_delete):
                     print("Deleted Vault secret for", application, key)
 
+    def _decode_base64_secret(
+        self, application: str, key: str, value: SecretStr
+    ) -> SecretStr:
+        """Decode a secret value that was encoded in base64.
+
+        Parameters
+        ----------
+        application
+            Name of the application owning the secret, for error reporting.
+        key
+            Key of the secret, for error reporting.
+        value
+            Value of the secret.
+
+        Returns
+        -------
+        pydantic.SecretStr or None
+            Decoded value of the secret.
+
+        Raises
+        ------
+        MalformedOnepasswordSecretError
+            Raised if the secret could not be decoded.
+        """
+        try:
+            secret = value.get_secret_value()
+            return SecretStr(b64decode(secret.encode()).decode())
+        except (binascii.Error, UnicodeDecodeError) as e:
+            msg = "value could not be base64-decoded to a valid secret string"
+            raise MalformedOnepasswordSecretError(application, key, msg) from e
+
     def _get_onepassword_secrets(
         self, environment: Environment
     ) -> StaticSecrets | None:
@@ -373,6 +406,8 @@ class SecretsService:
 
         Raises
         ------
+        MalformedOnepasswordSecretError
+            Raised if the secret could not be decoded.
         MissingOnepasswordSecretsError
             Raised if any of the items or fields expected to be in 1Password
             are not present.
@@ -400,8 +435,9 @@ class SecretsService:
             for key in secrets:
                 secret = result.applications[app_name][key]
                 if secret.value:
-                    value = secret.value.get_secret_value().encode()
-                    secret.value = SecretStr(b64decode(value).decode())
+                    secret.value = self._decode_base64_secret(
+                        app_name, key, secret.value
+                    )
         return result
 
     def _resolve_secrets(

@@ -116,6 +116,28 @@ class InvalidSecretConfigError(Exception):
         super().__init__(msg)
 
 
+class MalformedOnepasswordSecretError(Exception):
+    """A secret stored in 1Password was malformed.
+
+    The most common cause of this error is that the secret was marked as
+    encoded in base64 but couldn't be decoded.
+
+    Parameters
+    ----------
+    application
+        Name of the application.
+    key
+        Secret key.
+    error
+        Error message.
+    """
+
+    def __init__(self, application: str, key: str, error: str) -> None:
+        name = f"{application}/{key}"
+        msg = f"Value of secret {name} is malformed: {error}"
+        super().__init__(msg)
+
+
 class MissingOnepasswordSecretsError(Exception):
     """Secrets are missing from 1Password.
 

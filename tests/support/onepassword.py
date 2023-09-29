@@ -97,7 +97,9 @@ class MockOnepasswordClient:
         Returns
         -------
         Item
-            Corresponding item.
+            Corresponding item. This is the exact item that is stored in the
+            mock, so tests can mutate it to affect future calls to `get_item`
+            if they wish.
 
         Raises
         ------
