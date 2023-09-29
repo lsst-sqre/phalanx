@@ -194,6 +194,16 @@ Switch to the new secrets tree
    If you are using a static secrets file, add the ``--secrets`` flag pointing to that file.
    This will fix any secrets that are missing or incorrect in Vault.
 
+#. Some Phalanx applications need to know whether the old or new secrets layout is in use.
+   On your working branch, add the necessary settings for those applications to their :file:`values-{environment}.yaml` files for your environment.
+   Applications to review:
+
+   - :px-app:`datalinker` (``config.separateSecrets``)
+   - :px-app:`nublado` (``secrets.templateSecrets``)
+   - :px-app:`obsloctap` (``config.separateSecrets``)
+   - :px-app:`plot-navigator` (``config.separateSecrets``)
+   - :px-app:`production-tools` (``config.separateSecrets``)
+
 #. You're now ready to test the new secrets tree.
    You can do this on a branch that contains the changes you made above.
 
