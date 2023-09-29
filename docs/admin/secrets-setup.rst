@@ -81,6 +81,7 @@ This normally requires a Vault admin or provisioner token or some equivalent.
     The output includes the new Vault token, which you should save somewhere secure where you store other secrets.
     (The running Phalanx environment does not need and should not have access to this token.)
     You will later set the environment variable ``VAULT_TOKEN`` to this token when running other :command:`phalanx` commands.
+    For SQuaRE-managed environments, always update the ``Phalanx Vault write tokens`` 1Password item in the SQuaRE 1Password vault after running this command.
 
 :samp:`phalanx vault audit {environment}`
     Check the authentication credentials created by the previous two commands in the given environment for any misconfiguration.
