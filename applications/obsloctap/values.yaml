@@ -16,7 +16,6 @@ ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
-
 config:
   # -- Additional volumes to attach
   volumes: []
@@ -27,6 +26,8 @@ config:
   # -- PersistentVolumeClaims to create.
   persistentVolumeClaims: []
 
+  # -- Whether to use the new secrets management scheme
+  separateSecrets: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

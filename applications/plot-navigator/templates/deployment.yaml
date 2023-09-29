@@ -14,13 +14,11 @@ spec:
       labels:
         {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
     spec:
-      imagePullSecrets:
-        - name: "pull-secret"
       volumes:
         # butler-secrets-raw is the secrets we get from vault
         - name: "butler-secrets-raw"
           secret:
-            secretName: "butler-secret"
+            secretName: {{ include "plot-navigator.fullname" . }}
         # butler-secrets are the copied and chmoded versions
         - name: "butler-secrets"
           emptyDir: {}

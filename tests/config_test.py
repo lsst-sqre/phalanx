@@ -10,10 +10,7 @@ _ALLOW_NO_SECRETS = (
     "giftless",
     "linters",
     "monitoring",
-    "obsloctap",
     "next-visit-fan-out",
-    "plot-navigator",
-    "production-tools",
 )
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
