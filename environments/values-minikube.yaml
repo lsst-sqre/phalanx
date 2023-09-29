@@ -16,4 +16,3 @@ applications:
   mobu: true
   postgres: true
   squareone: true
-  tap: true
