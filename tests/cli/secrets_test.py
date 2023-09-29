@@ -61,6 +61,27 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert result.output == read_output_data("idfdev", "secrets-audit")
 
 
+def test_audit_onepassword_missing(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    """Check reporting of missing 1Password secrets."""
+    phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.create_empty_test_vault(vault_title)
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+
+    result = run_cli("secrets", "audit", "minikube")
+    assert result.exit_code == 0
+    assert result.output == read_output_data(
+        "minikube", "audit-missing-output"
+    )
+
+
 def test_list() -> None:
     result = run_cli("secrets", "list", "idfdev")
     assert result.exit_code == 0
