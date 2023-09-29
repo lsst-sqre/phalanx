@@ -52,7 +52,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
    If you are using some other Vault server with its own path conventions, you can skip this step, although it is easier to do the migration if you can set up the new secrets in a new Vault path without having to change the old Vault path.
 
 #. Set the ``VAULT_TOKEN`` environment variable to a token with access to create new AppRoles and tokens and to list token accessors and secret IDs.
-   If you are using the SQuaRE Vault server, use the admin token.
+   If you are using the SQuaRE Vault server, use the admin token from the ``Phalanx Vault admin credentials`` 1Password item in the SQuaRE 1Password vault.
    This environment variable will be used for multiple following commands.
    You will be told when you can clear it again.
 
@@ -85,7 +85,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
 
    The new token will be printed to standard output along with some metadata about it.
 
-   For SQuaRE-managed environments, save that token in the ``SQuaRE`` 1Password vault (**not** the vault for the RSP environment) in the item named ``RSP Vault write tokens``.
+   For SQuaRE-managed environments, save that token in the ``SQuaRE`` 1Password vault (**not** the vault for the RSP environment) in the item named ``Phalanx Vault write tokens``.
    Add a key for the short environment identifier and set the value to the newly-created write token.
    Don't forget to mark it as a password using the icon on the right.
    Then, add a key under the :guilabel:`Accessors` heading for the environment and set the value to the token accessor.
