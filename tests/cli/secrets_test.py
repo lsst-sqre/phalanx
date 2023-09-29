@@ -4,16 +4,18 @@ from __future__ import annotations
 
 import os
 import re
-from base64 import b64decode
+from base64 import b64decode, b64encode
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
+import pytest
 import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
+from phalanx.exceptions import MalformedOnepasswordSecretError
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
 
@@ -243,6 +245,56 @@ def test_sync_onepassword(
     pull_secret = read_output_json("minikube", "pull-secret")
     vault = _get_app_secret(mock_vault, f"{base_vault_path}/pull-secret")
     assert vault == pull_secret
+
+
+def test_sync_onepassword_errors(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+
+    # Find a secret that's supposed to be encoded and change it to have an
+    # invalid base64 string.
+    app_name = None
+    key = None
+    for application in environment.applications.values():
+        for secret in application.secrets.values():
+            if secret.onepassword.encoded:
+                app_name = application.name
+                key = secret.key
+                break
+    assert app_name
+    assert key
+    vault_id = mock_onepassword.get_vault_by_title(vault_title).id
+    item = mock_onepassword.get_item(app_name, vault_id)
+    for field in item.fields:
+        if field.label == key:
+            field.value = "invalid base64"
+
+    # sync should throw an exception containing the application and key.
+    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
+        run_cli("secrets", "sync", "minikube")
+    assert app_name in str(excinfo.value)
+    assert key in str(excinfo.value)
+
+    # Instead set the secret to a value that is valid base64, but of binary
+    # data that cannot be decoded to a string.
+    for field in item.fields:
+        if field.label == key:
+            field.value = b64encode("ää".encode("iso-8859-1")).decode()
+
+    # sync should throw an exception containing the application and key.
+    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
+        run_cli("secrets", "sync", "minikube")
+    assert app_name in str(excinfo.value)
+    assert key in str(excinfo.value)
 
 
 def test_sync_regenerate(
