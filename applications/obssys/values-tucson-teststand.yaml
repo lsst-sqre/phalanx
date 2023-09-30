@@ -27,11 +27,11 @@ atqueue:
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
   butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
+    containerPath: &abS-cP /home/saluser/.lsst
     dbUser: oods
   secretPermFixer:
   - name: butler-secret
-    containerPath: *bS-cP
+    containerPath: *abS-cP
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -117,11 +117,11 @@ mtqueue:
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
   butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
+    containerPath: &mbS-cP /home/saluser/.lsst
     dbUser: oods
   secretPermFixer:
   - name: butler-secret
-    containerPath: *bS-cP
+    containerPath: *mbS-cP
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS

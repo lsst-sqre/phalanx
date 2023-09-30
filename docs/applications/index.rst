@@ -83,3 +83,16 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    prompt-proto-service-latiss/index
    prompt-proto-service-lsstcam/index
    prompt-proto-service-lsstcomcam/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Rubin Observatory Control System
+
+   auxtel/index
+   calsys/index
+   control-system-test/index
+   eas/index
+   love/index
+   obssys/index
+   simonyitel/index
+   uws/index

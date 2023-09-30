@@ -159,32 +159,88 @@
       "title": "Git repository branch"
     },
     "controlSystemAppNamespace": {
-      "title": "Controlsystemappnamespace",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemappnamespace"
     },
     "controlSystemImageTag": {
-      "title": "Controlsystemimagetag",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemimagetag"
     },
     "controlSystemSiteTag": {
-      "title": "Controlsystemsitetag",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemsitetag"
     },
     "controlSystemTopicName": {
-      "title": "Controlsystemtopicname",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemtopicname"
     },
     "controlSystemKafkaBrokerAddress": {
-      "title": "Controlsystemkafkabrokeraddress",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemkafkabrokeraddress"
     },
     "controlSystemSchemaRegistryUrl": {
-      "title": "Controlsystemschemaregistryurl",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemschemaregistryurl"
     },
     "controlSystemS3EndpointUrl": {
-      "title": "Controlsystems3endpointurl",
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystems3Endpointurl"
     }
   },
   "required": [
