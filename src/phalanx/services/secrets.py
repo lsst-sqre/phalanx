@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 import yaml
 from pydantic import SecretStr
 
+from ..constants import ONEPASSWORD_ENCODED_WARNING
 from ..exceptions import (
     MalformedOnepasswordSecretError,
     MissingOnepasswordSecretsError,
@@ -137,8 +138,6 @@ class SecretsService:
         # Generate the textual report.
         return report.to_text()
 
-        # Generate the textual report.
-
     def generate_static_template(self, env_name: str) -> str:
         """Generate a template for providing static secrets.
 
@@ -158,17 +157,21 @@ class SecretsService:
             YAML template the user can fill out, as a string.
         """
         environment = self._config.load_environment(env_name)
+        warning = ONEPASSWORD_ENCODED_WARNING
         template: defaultdict[str, dict[str, StaticSecret]] = defaultdict(dict)
         for application in environment.all_applications():
             for secret in application.all_static_secrets():
-                template[secret.application][secret.key] = StaticSecret(
+                static_secret = StaticSecret(
                     description=YAMLFoldedString(secret.description),
                     value=None,
                 )
+                if secret.onepassword.encoded:
+                    static_secret.warning = YAMLFoldedString(warning)
+                template[secret.application][secret.key] = static_secret
         static_secrets = StaticSecrets(
             applications=template, pull_secret=PullSecret()
         )
-        return yaml.dump(static_secrets.model_dump(by_alias=True), width=70)
+        return yaml.dump(static_secrets.to_template(), width=70)
 
     def get_onepassword_static_secrets(self, env_name: str) -> StaticSecrets:
         """Retrieve static secrets for an environment from 1Password.
@@ -251,7 +254,9 @@ class SecretsService:
 
         # Replace any Vault secrets that are incorrect.
         self._sync_application_secrets(vault_client, vault_secrets, resolved)
+        has_pull_secret = False
         if resolved.pull_secret and resolved.pull_secret.registries:
+            has_pull_secret = True
             pull_secret = resolved.pull_secret
             self._sync_pull_secret(vault_client, vault_secrets, pull_secret)
 
@@ -261,7 +266,7 @@ class SecretsService:
                 vault_client,
                 vault_secrets,
                 resolved,
-                has_pull_secret=resolved.pull_secret is not None,
+                has_pull_secret=has_pull_secret,
             )
 
     def _audit_secrets(
@@ -304,7 +309,7 @@ class SecretsService:
         ]
 
         # The pull-secret has to be handled separately.
-        if pull_secret:
+        if pull_secret and pull_secret.registries:
             if "pull-secret" in vault_secrets:
                 value = SecretStr(pull_secret.to_dockerconfigjson())
                 expected = {".dockerconfigjson": value}

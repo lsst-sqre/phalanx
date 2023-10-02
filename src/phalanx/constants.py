@@ -10,6 +10,7 @@ from datetime import timedelta
 
 __all__ = [
     "HELM_DOCLINK_ANNOTATION",
+    "ONEPASSWORD_ENCODED_WARNING",
     "PULL_SECRET_DESCRIPTION",
     "VAULT_SECRET_TEMPLATE",
     "VAULT_WRITE_TOKEN_LIFETIME",
@@ -18,6 +19,12 @@ __all__ = [
 
 HELM_DOCLINK_ANNOTATION = "phalanx.lsst.io/docs"
 """Annotation in :file:`Chart.yaml` for application documentation links."""
+
+ONEPASSWORD_ENCODED_WARNING = (
+    "If you store this secret in a 1Password item, encode it with base64"
+    " first."
+)
+"""Warning to add to secrets that must be encoded in 1Password."""
 
 PULL_SECRET_DESCRIPTION = (
     "Pull secrets for Docker registries. Each key under registries is the name"

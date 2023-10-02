@@ -8,7 +8,7 @@ from base64 import b64encode
 from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
-from typing import Literal, Self
+from typing import Any, Literal, Self
 
 import bcrypt
 import yaml
@@ -301,6 +301,7 @@ class PullSecret(BaseModel):
         title="Pull secret by registry",
         description="Pull secrets for each registry that needs one",
     )
+
     model_config = ConfigDict(extra="forbid")
 
     def to_dockerconfigjson(self) -> str:
@@ -346,6 +347,15 @@ class StaticSecret(BaseModel):
         None,
         title="Description of secret",
         description="Intended for human writers and ignored by tools",
+    )
+
+    warning: YAMLFoldedString | None = Field(
+        None,
+        title="Warning for humans",
+        description=(
+            "Any warnings humans need to know about when filling out this"
+            " secret"
+        ),
     )
 
     value: SecretStr | None = Field(
@@ -414,3 +424,22 @@ class StaticSecrets(BaseModel):
             application has no static secrets, returns an empty dictionary.
         """
         return self.applications.get(application, {})
+
+    def to_template(self) -> dict[str, Any]:
+        """Export the model in a suitable form for the template.
+
+        The static secrets template should always include the ``value`` field
+        even though it will be `None`, should not include ``warning`` if it is
+        unset, and should always include the `PullSecret` fields even though
+        they are defaults. The parameters to `~pydantic.BaseModel.model_dict`
+        aren't up to specifying this, hence this custom serializer.
+
+        Returns
+        -------
+        dict
+            Dictionary suitable for dumping as YAML to make a template.
+        """
+        result = self.model_dump(by_alias=True, exclude_unset=True)
+        if self.pull_secret:
+            result["pull-secret"] = self.pull_secret.model_dump()
+        return result
