@@ -1,7 +1,6 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 fqdn: data.lsst.cloud
 name: idfprod
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
 
 applications:

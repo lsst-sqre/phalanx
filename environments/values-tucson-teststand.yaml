@@ -1,6 +1,5 @@
 name: tucson-teststand
 fqdn: tucson-teststand.lsst.codes
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 applications:

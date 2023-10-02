@@ -8,6 +8,7 @@ from pydantic import (
     AnyHttpUrl,
     BaseModel,
     ConfigDict,
+    Field,
     GetJsonSchemaHandler,
     field_validator,
 )
@@ -35,30 +36,59 @@ __all__ = [
 class OnepasswordConfig(CamelCaseModel):
     """Configuration for 1Password static secrets source."""
 
-    connect_url: AnyHttpUrl
-    """URL to the 1Password Connect API server."""
+    connect_url: AnyHttpUrl = Field(
+        ...,
+        title="1Password Connect URL",
+        description="URL to the 1Password Connect API server",
+    )
 
-    vault_title: str
-    """Title of the 1Password vault from which to retrieve secrets."""
+    vault_title: str = Field(
+        ...,
+        title="1Password vault title",
+        description=(
+            "Title of the 1Password vault from which to retrieve secrets"
+        ),
+    )
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
     """Configuration common to `EnviromentConfig` and `Environment`."""
 
-    name: str
-    """Name of the environment."""
+    name: str = Field(..., title="Name", description="Name of the environment")
 
-    fqdn: str
-    """Fully-qualified domain name."""
+    fqdn: str = Field(
+        ...,
+        title="Domain name",
+        description=(
+            "Fully-qualified domain name on which the environment listens"
+        ),
+    )
 
-    onepassword: OnepasswordConfig | None = None
-    """Configuration for using 1Password as a static secrets source."""
+    onepassword: OnepasswordConfig | None = Field(
+        None,
+        title="1Password configuration",
+        description=(
+            "Configuration for using 1Password as a static secrets source"
+        ),
+    )
 
-    vault_url: str
-    """URL of Vault server."""
+    vault_url: AnyHttpUrl | None = Field(
+        None,
+        title="Vault server URL",
+        description=(
+            "URL of the Vault server. This is required in the merged values"
+            " file that includes environment overrides, but the environment"
+            " override file doesn't need to set it, so it's marked as"
+            " optional for schema checking purposes to allow the override"
+            " file to be schema-checked independently."
+        ),
+    )
 
-    vault_path_prefix: str
-    """Prefix of Vault paths, including the Kv2 mount point."""
+    vault_path_prefix: str = Field(
+        ...,
+        title="Vault path prefix",
+        description="Prefix of Vault paths, including the KV v2 mount point",
+    )
 
     @field_validator("onepassword", mode="before")
     @classmethod
@@ -125,36 +155,41 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     :file:`values.yaml` and :file:`values-{environment}.yaml`.
     """
 
-    applications: dict[str, bool]
-    """List of applications and whether they are enabled."""
+    applications: dict[str, bool] = Field(
+        ...,
+        title="Enabled applications",
+        description="List of applications and whether they are enabled",
+    )
 
-    butler_repository_index: str | None = None
-    """URL to Butler repository index."""
+    butler_repository_index: str | None = Field(
+        None,
+        title="Butler repository index URL",
+        description="URL to Butler repository index",
+    )
 
-    onepassword_uuid: str | None = None
-    """UUID of 1Password item in which to find Vault tokens.
+    repo_url: str | None = Field(
+        None,
+        title="URL of Git repository",
+        description=(
+            "URL of the Git repository holding Argo CD configuration. This is"
+            " required in the merged values file that includes environment"
+            " overrides, but the environment override file doesn't need to"
+            " set it, so it's marked as optional for schema checking purposes"
+            " to allow the override file to be schema-checked independently."
+        ),
+    )
 
-    This is used only by the old installer and will be removed once the new
-    secrets management and 1Password integration is deployed everywhere.
-    """
-
-    repo_url: str | None = None
-    """URL of the Git repository holding Argo CD configuration.
-
-    This is required in the merged values file that includes environment
-    overrides, but the environment override file doesn't need to set it, so
-    it's marked as optional for schema checking purposes to allow the override
-    file to be schema-checked independently.
-    """
-
-    target_revision: str | None = None
-    """Branch of the Git repository holding Argo CD configuration.
-
-    This is required in the merged values file that includes environment
-    overrides, but the environment override file doesn't need to set it, so
-    it's marked as optional for schema checking purposes to allow the override
-    file to be schema-checked independently.
-    """
+    target_revision: str | None = Field(
+        None,
+        title="Git repository branch",
+        description=(
+            "Branch of the Git repository holding Argo CD configuration. This"
+            " is required in the merged values file that includes environment"
+            " overrides, but the environment override file doesn't need to set"
+            " it, so it's marked as optional for schema checking purposes to"
+            " allow the override file to be schema-checked independently."
+        ),
+    )
 
     model_config = ConfigDict(extra="forbid")
 

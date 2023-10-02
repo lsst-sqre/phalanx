@@ -56,8 +56,7 @@
 | butlerRepositoryIndex | string | None, must be set | Butler repository index to use for this environment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
-| onepasswordUuid | string | `"dg5afgiadsffeklfr6jykqymeu"` | UUID of the 1Password item in which to find Vault tokens |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
-| vaultUrl | string | None, must be set | URL of Vault server for this environment |
+| vaultUrl | string | `"https://vault.lsst.codes/"` | URL of Vault server for this environment |

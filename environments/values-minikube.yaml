@@ -3,7 +3,6 @@ fqdn: minikube.lsst.codes
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP minikube.lsst.codes"
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/phalanx/minikube
 
 # The primary constraint on enabling applications is the low available memory

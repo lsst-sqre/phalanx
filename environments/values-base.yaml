@@ -1,6 +1,5 @@
 name: base
 fqdn: base-lsp.lsst.codes
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 applications:

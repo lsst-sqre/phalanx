@@ -4,13 +4,15 @@
       "description": "Configuration for 1Password static secrets source.",
       "properties": {
         "connectUrl": {
+          "description": "URL to the 1Password Connect API server",
           "format": "uri",
           "minLength": 1,
-          "title": "Connecturl",
+          "title": "1Password Connect URL",
           "type": "string"
         },
         "vaultTitle": {
-          "title": "Vaulttitle",
+          "description": "Title of the 1Password vault from which to retrieve secrets",
+          "title": "1Password vault title",
           "type": "string"
         }
       },
@@ -27,11 +29,13 @@
   "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
   "properties": {
     "name": {
+      "description": "Name of the environment",
       "title": "Name",
       "type": "string"
     },
     "fqdn": {
-      "title": "Fqdn",
+      "description": "Fully-qualified domain name on which the environment listens",
+      "title": "Domain name",
       "type": "string"
     },
     "onepassword": {
@@ -43,21 +47,36 @@
           "type": "null"
         }
       ],
-      "default": null
+      "default": null,
+      "description": "Configuration for using 1Password as a static secrets source",
+      "title": "1Password configuration"
     },
     "vaultUrl": {
-      "title": "Vaulturl",
-      "type": "string"
+      "anyOf": [
+        {
+          "format": "uri",
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "URL of the Vault server. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "Vault server URL"
     },
     "vaultPathPrefix": {
-      "title": "Vaultpathprefix",
+      "description": "Prefix of Vault paths, including the KV v2 mount point",
+      "title": "Vault path prefix",
       "type": "string"
     },
     "applications": {
       "additionalProperties": {
         "type": "boolean"
       },
-      "title": "Applications",
+      "description": "List of applications and whether they are enabled",
+      "title": "Enabled applications",
       "type": "object"
     },
     "butlerRepositoryIndex": {
@@ -70,19 +89,8 @@
         }
       ],
       "default": null,
-      "title": "Butlerrepositoryindex"
-    },
-    "onepasswordUuid": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Onepassworduuid"
+      "description": "URL to Butler repository index",
+      "title": "Butler repository index URL"
     },
     "repoUrl": {
       "anyOf": [
@@ -94,7 +102,8 @@
         }
       ],
       "default": null,
-      "title": "Repourl"
+      "description": "URL of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "URL of Git repository"
     },
     "targetRevision": {
       "anyOf": [
@@ -106,13 +115,13 @@
         }
       ],
       "default": null,
-      "title": "Targetrevision"
+      "description": "Branch of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "Git repository branch"
     }
   },
   "required": [
     "name",
     "fqdn",
-    "vaultUrl",
     "vaultPathPrefix",
     "applications"
   ],

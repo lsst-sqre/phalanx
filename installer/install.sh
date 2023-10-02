@@ -13,7 +13,11 @@ GIT_URL=$(git config --get remote.origin.url)
 GIT_BRANCH=${GITHUB_HEAD_REF:-$(git branch --show-current)}
 
 echo "Logging on to Vault..."
-export VAULT_ADDR=$(yq -r .vaultUrl "$config")
+if grep '^vaultUrl:' "$config" >/dev/null; then
+    export VAULT_ADDR=$(yq -r .vaultUrl "$config")
+else
+    export VAULT_ADDR=$(yq -r .vaultUrl ../environments/values.yaml)
+fi
 export VAULT_TOKEN=$(vault write auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID" | grep 'token ' | awk '{ print $2 }')
 VAULT_PATH_PREFIX=$(yq -r .vaultPathPrefix "$config")
 ARGOCD_PASSWORD=$(vault kv get --field=admin.plaintext_password $VAULT_PATH_PREFIX/argocd)

@@ -3,7 +3,6 @@ fqdn: roundtable.lsst.cloud
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP roundtable.lsst.cloud"
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
 
 applications:
