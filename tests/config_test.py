@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+import re
+from collections.abc import Iterator
 from pathlib import Path
+from typing import Literal
 
 import yaml
 
@@ -15,22 +18,27 @@ _ALLOW_NO_SECRETS = (
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
+def all_charts(
+    parent: Literal["applications", "charts"],
+) -> Iterator[Path]:
+    """Iterate through all chart paths."""
+    root_path = Path(__file__).parent.parent / parent
+    for candidate in root_path.iterdir():
+        if not candidate.is_dir():
+            continue
+        yield candidate
+
+
 def test_application_version() -> None:
     """All application charts should have version 1.0.0."""
-    applications_path = Path(__file__).parent.parent / "applications"
-    for application in applications_path.iterdir():
-        if not application.is_dir():
-            continue
+    for application in all_charts("applications"):
         chart = yaml.safe_load((application / "Chart.yaml").read_text())
         assert (
             chart["version"] == "1.0.0"
         ), f"Chart for application {application.name} has incorrect version"
 
     # Check the same thing for shared charts.
-    Path(__file__).parent.parent / "charts"
-    for shared_chart in applications_path.iterdir():
-        if not shared_chart.is_dir():
-            continue
+    for shared_chart in all_charts("charts"):
         chart = yaml.safe_load((shared_chart / "Chart.yaml").read_text())
         assert (
             chart["version"] == "1.0.0"
@@ -39,9 +47,8 @@ def test_application_version() -> None:
 
 def test_secrets_defined() -> None:
     """Any application with a VaultSecret should have secrets.yaml."""
-    applications_path = Path(__file__).parent.parent / "applications"
-    for application in applications_path.iterdir():
-        if not application.is_dir() or application.name in _ALLOW_NO_SECRETS:
+    for application in all_charts("applications"):
+        if application.name in _ALLOW_NO_SECRETS:
             continue
         if list(application.glob("secrets*.yaml")):
             continue
@@ -62,3 +69,25 @@ def test_secrets_defined() -> None:
                     " resource but has no secrets.yaml configuration"
                 )
                 raise AssertionError(msg)
+
+
+def test_shared_subcharts() -> None:
+    """Check references to shared subcharts."""
+    available = [c.name for c in all_charts("charts")]
+    for application in all_charts("applications"):
+        chart = yaml.safe_load((application / "Chart.yaml").read_text())
+        chart.get("dependencies")
+        for dependency in chart.get("dependencies", []):
+            if not re.match("file:", dependency.get("repository", "")):
+                continue
+            name = application.name
+            version = dependency.get("version")
+            repository = dependency["repository"]
+            m = re.match(r"file://[.][.]/[.][.]/charts/([^/]+)$", repository)
+            assert m, f"Incorrect shared chart URL in {name}: {repository}"
+            assert (
+                m.group(1) in available
+            ), f"Missing shared chart dependency {m.group(1)} in {name}"
+            assert (
+                dependency["version"] == "1.0.0"
+            ), f"Incorrect shared chart version in {name}: {version} != 1.0.0"
