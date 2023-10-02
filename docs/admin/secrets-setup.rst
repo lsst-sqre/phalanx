@@ -32,7 +32,7 @@ The name of each secret other than ``pull-secret`` matches the name of the appli
 So, for example, all secrets for Gafaelfawr for a given environment may be stored as key/value pairs in the secret named :samp:`secrets/phalanx/{environment}/gafaelfawr`.
 
 This path is configured for each environment via the ``vaultPathPrefix`` setting in the environment :file:`values-{environment}.yaml` file.
-The URL to the Vault server is set via the ``vaultUrl`` setting in the same file.
+The URL to the Vault server is set via the ``vaultUrl`` setting in the same file and defaults to the SQuaRE-run Vault server.
 
 Vault credentials
 =================

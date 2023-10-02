@@ -359,4 +359,6 @@ class VaultStorage:
         """
         if not path_prefix:
             path_prefix = env.vault_path_prefix
-        return VaultClient(env.vault_url, path_prefix)
+        if not env.vault_url:
+            raise ValueError("vaultUrl not set for this environment")
+        return VaultClient(str(env.vault_url), path_prefix)

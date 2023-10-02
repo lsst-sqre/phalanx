@@ -12,9 +12,6 @@ name: ""
 # @default -- None, must be set
 fqdn: ""
 
-# -- UUID of the 1Password item in which to find Vault tokens
-onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
-
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
 
@@ -22,8 +19,7 @@ repoUrl: https://github.com/lsst-sqre/phalanx.git
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
-# @default -- None, must be set
-vaultUrl: ""
+vaultUrl: "https://vault.lsst.codes/"
 
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set

@@ -4,7 +4,6 @@ name: idfdev
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP data-dev.lsst.cloud"
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/phalanx/idfdev
 
 applications:

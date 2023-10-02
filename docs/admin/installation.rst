@@ -23,6 +23,7 @@ To create a new Phalanx environment, take the following steps:
 #. Create a new :file:`values-{environment}.yaml` file in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
    Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
+   You may omit ``vaultUrl`` for SQuaRE-managed environments.
    See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
    Enable the applications this environment should include.
 
