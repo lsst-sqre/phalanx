@@ -7,9 +7,11 @@ import secrets
 from base64 import b64encode
 from datetime import UTC, datetime
 from enum import Enum
+from pathlib import Path
 from typing import Literal, Self
 
 import bcrypt
+import yaml
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
@@ -356,6 +358,23 @@ class StaticSecrets(BaseModel):
     )
 
     model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @classmethod
+    def from_path(cls, path: Path) -> Self:
+        """Load static secrets from a file on disk.
+
+        Parameters
+        ----------
+        path
+            Path to the file.
+
+        Returns
+        -------
+        StaticSecrets
+            Parsed static secrets.
+        """
+        with path.open() as fh:
+            return cls.model_validate(yaml.safe_load(fh))
 
     def for_application(self, application: str) -> dict[str, StaticSecret]:
         """Return any known secrets for an application.

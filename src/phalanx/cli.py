@@ -71,24 +71,6 @@ def _find_config() -> Path:
     return current
 
 
-def _load_static_secrets(path: Path) -> StaticSecrets:
-    """Load static secrets from a file.
-
-    Parameters
-    ----------
-    path
-        Path to the file.
-
-    Returns
-    -------
-    dict of dict
-        Map from application to secret key to
-        `~phalanx.models.secrets.StaticSecret`.
-    """
-    with path.open() as fh:
-        return StaticSecrets.model_validate(yaml.safe_load(fh))
-
-
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(message="%(version)s")
 def main() -> None:
@@ -224,9 +206,7 @@ def secrets_audit(
     """
     if not config:
         config = _find_config()
-    static_secrets = None
-    if secrets:
-        static_secrets = _load_static_secrets(secrets)
+    static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     sys.stdout.write(secrets_service.audit(environment, static_secrets))
@@ -409,9 +389,7 @@ def secrets_sync(
     """
     if not config:
         config = _find_config()
-    static_secrets = None
-    if secrets:
-        static_secrets = _load_static_secrets(secrets)
+    static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets_service.sync(
