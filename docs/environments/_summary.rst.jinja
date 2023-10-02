@@ -36,18 +36,17 @@
           {% for scope_groups in env.gafaelfawr_scopes %}
           * - ``{{ scope_groups.scope }}``
             - - {{ scope_groups.groups_as_rst()[0] }}
-            {% if scope_groups.groups|length > 1 %}
-            {% for group in scope_groups.groups_as_rst()[1:] %}
+            {%- if scope_groups.groups|length > 1 %}
+            {%- for group in scope_groups.groups_as_rst()[1:] %}
               - {{ group }}
             {%- endfor %}
             {%- endif %}
           {%- endfor %}
-   {% endif %}
+   {%- endif %}
    {% if env.argocd_rbac %}
    * - Argo CD RBAC
      - .. csv-table::
-
           {% for line in env.argocd_rbac_csv %}
           {{ line }}
           {%- endfor %}
-   {% endif %}
+   {%- endif %}
