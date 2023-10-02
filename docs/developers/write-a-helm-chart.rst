@@ -11,6 +11,9 @@ For first-party charts, the :file:`templates` directory is generally richly popu
 Here are instructions for writing a Helm chart for a newly-developed application.
 If you are using an external third-party chart to deploy part of the application, also see :doc:`add-external-chart`.
 
+In some cases where there is a lot of internal duplication between multiple Phalanx applications, those applications should share a subchart that encapsulates that duplication.
+See :doc:`shared-charts` if you think that may be the case for your application.
+
 .. _dev-chart-starters:
 
 Start from a template
