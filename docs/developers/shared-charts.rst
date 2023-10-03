@@ -28,7 +28,7 @@ For example, the ``version`` field of every chart should be set to ``1.0.0``, si
 Usually, the easiest way to create a shared subchart is to start by writing a regular application chart for one instance of the application following the instructions in :doc:`write-a-helm-chart`.
 Then, copy that application chart into a subdirectory in the :file:`charts` directory, remove all the parts that don't make sense to share between applications, and add any additional :file:`values.yaml` settings that will be required to customize the instantiation of this chart for different applications.
 
-Shared charts do not have :file:`values-{environment}.yaml` files and are not aware of Phalanx environemnts.
+Shared charts do not have :file:`values-{environment}.yaml` files and are not aware of Phalanx environments.
 Any per-environment settings must be handled in the parent charts that use this subchart and passed down as regular :file:`values.yaml` overrides.
 
 Shared charts do not have :file:`secrets.yaml` files.
