@@ -69,7 +69,7 @@ charts directory
 
 :bdg-link-primary-line:`Browse charts/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/charts>`
 
-This directory contains shared charts used by multiple Phalanx applications, but not generally useful enough to warrant separate publication in a proper Helm chart repository.
+This directory contains Helm charts shared by multiple Phalanx applications that are not generally useful enough to warrant separate publication in a proper Helm chart repository.
 
 In some cases, several Phalanx applications should use common Helm templates to avoid duplication.
 The best way to do this within Helm is to use a subchart.
