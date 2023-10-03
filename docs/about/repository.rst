@@ -59,10 +59,25 @@ installer directory
 :bdg-link-primary-line:`Browse installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
 
 This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
-The arguments to this are the name of the environment, the FQDN, and the read key for Vault (see :ref:`secrets` for more details on Vault).
+The arguments to this are the name of the environment, the Vault RoleID, and the Vault SecretID (see :ref:`secrets` for more details on Vault).
 This installer script is the entry point for setting up a new environment.
 It can also be run on an existing environment to update it.
 See the :ref:`environment bootstrapping documentation <bootstrapping-toc>` for details.
+
+charts directory
+----------------
+
+:bdg-link-primary-line:`Browse charts/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/charts>`
+
+This directory contains Helm charts shared by multiple Phalanx applications that are not generally useful enough to warrant separate publication in a proper Helm chart repository.
+
+In some cases, several Phalanx applications should use common Helm templates to avoid duplication.
+The best way to do this within Helm is to use a subchart.
+This can be done by publishing a separate Helm chart using the `charts repository <https://github.com/lsst-sqre/charts>`__, but publication as a Helm chart implies that the chart may be useful outside of Phalanx.
+Sometimes these shared subcharts are merely artifacts of code organization and deduplication within Phalanx, and should not have an independent existence outside of Phalanx.
+In those cases, they're maintained in the :file:`charts` directory.
+
+See :doc:`/developers/shared-charts` for details.
 
 docs directory
 --------------

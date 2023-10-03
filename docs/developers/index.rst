@@ -24,6 +24,7 @@ Individual applications are documented in the :doc:`/applications/index` section
 
    write-a-helm-chart
    add-external-chart
+   shared-charts
    define-secrets
    add-application
 

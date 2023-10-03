@@ -1,7 +1,6 @@
 apiVersion: v2
 name: production-tools
 version: 1.0.0
-dependencies:
 description: A collection of utility pages for monitoring data processing.
 sources:
   - https://github.com/lsst-dm/production_tools
