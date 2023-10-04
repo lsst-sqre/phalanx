@@ -133,7 +133,7 @@ kafka-connect-manager:
         topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
 telegraf-kafka-consumer:
-  enabled: true
+  enabled: false
   kafkaConsumers:
     auxtel:
       enabled: true
