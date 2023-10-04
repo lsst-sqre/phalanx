@@ -19,7 +19,7 @@ Use the tox_ ``docs`` environment for compiling the documentation:
 
 .. code-block:: bash
 
-   tox -e docs
+   tox run -e docs
 
 The built documentation is located in the ``docs/_build/html`` directory.
 
@@ -36,7 +36,7 @@ Links in the documentation are validated in the GitHub Actions workflow, but you
 
 .. code-block:: bash
 
-   tox -e docs-linkcheck
+   tox run -e docs-linkcheck
 
 Submitting a pull request and sharing documentation drafts
 ==========================================================
