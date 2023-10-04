@@ -89,6 +89,10 @@ registry:
 logLevel: ""
 
 knative:
+    # -- The memory requested for the activator.
+  memoryRequest: "4Gi"
+    # -- The memory limit for the activator.
+  memoryLimit: "32Gi"
     # -- The storage space reserved for each container (mostly local Butler).
   ephemeralStorageRequest: "20Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
