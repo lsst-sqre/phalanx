@@ -120,6 +120,11 @@ connect:
   image: ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655
   # -- Number of Kafka Connect replicas to run.
   replicas: 3
+  config:
+    # -- Set the converter for the message key
+    key.converter: io.confluent.connect.avro.AvroConverter
+    # -- Enable converted schemas for the message key
+    key.converter.schemas.enable: true
 
 registry:
   ingress:

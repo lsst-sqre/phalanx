@@ -385,7 +385,9 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
-| strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect. |
+| strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
+| strimzi-kafka.connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
+| strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
