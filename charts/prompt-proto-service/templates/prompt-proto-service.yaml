@@ -168,6 +168,16 @@ spec:
           - key: central_repo_file
             path: butler.yaml
       {{- end }}
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key:  "serving.knative.dev/service"
+                  operator: In
+                  values:
+                  - {{ template "prompt-proto-service.fullname" . }}
+            topologyKey: "kubernetes.io/hostname"
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
       idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
