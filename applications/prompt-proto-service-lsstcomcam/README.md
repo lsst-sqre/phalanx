@@ -30,6 +30,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
+| prompt-proto-service.knative.memoryLimit | string | `"32Gi"` | The memory limit for the activator. |
+| prompt-proto-service.knative.memoryRequest | string | `"4Gi"` | The memory requested for the activator. |
 | prompt-proto-service.knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
 | prompt-proto-service.knative.timeout | int | `900` | Maximum time that a container can respond to a next_visit request (seconds). |
 | prompt-proto-service.logLevel | string | log prompt_prototype at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |

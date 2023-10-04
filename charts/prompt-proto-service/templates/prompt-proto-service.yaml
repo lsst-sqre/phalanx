@@ -137,9 +137,11 @@ spec:
         resources:
           requests:
             cpu: 1
+            memory: {{ .Values.knative.memoryRequest }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
           limits:
             cpu: 1
+            memory: {{ .Values.knative.memoryLimit }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
       volumes:
       - name: ephemeral
