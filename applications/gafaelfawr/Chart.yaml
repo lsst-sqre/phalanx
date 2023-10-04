@@ -5,7 +5,7 @@ description: Authentication and identity system
 home: https://gafaelfawr.lsst.io/
 sources:
   - https://github.com/lsst-sqre/gafaelfawr
-appVersion: 9.3.1
+appVersion: 9.4.0
 
 dependencies:
   - name: redis
