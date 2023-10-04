@@ -1,6 +1,6 @@
 # ssotap
 
-IVOA TAP service
+IVOA TAP service for Solar System Objects
 
 ## Source Code
 
