@@ -136,8 +136,10 @@ spec:
             port: 0
         resources:
           requests:
+            cpu: 1
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
           limits:
+            cpu: 1
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
       volumes:
       - name: ephemeral
