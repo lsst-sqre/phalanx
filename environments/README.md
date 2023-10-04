@@ -41,6 +41,7 @@
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sherlock | bool | `false` | Enable the sherlock application |
+| applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
