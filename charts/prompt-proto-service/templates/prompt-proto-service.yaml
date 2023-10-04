@@ -171,13 +171,15 @@ spec:
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
                 - key:  "serving.knative.dev/service"
                   operator: In
                   values:
                   - {{ template "prompt-proto-service.fullname" . }}
-            topologyKey: "kubernetes.io/hostname"
+              topologyKey: "kubernetes.io/hostname"
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
       idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
