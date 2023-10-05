@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "siav2.fullname" . }}-config
+  name: siav2-config
   labels:
     {{- include "siav2.labels" . | nindent 4 }}
 data:

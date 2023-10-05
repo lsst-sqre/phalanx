@@ -50,7 +50,7 @@ spec:
       volumes:
       - name: config-volume
         configMap:
-          name: {{ template "siav2.fullname" . }}-config
+          name: siav2-config
       securityContext:
         runAsNonRoot: true
         runAsUser: 8675309
