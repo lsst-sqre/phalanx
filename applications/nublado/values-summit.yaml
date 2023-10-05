@@ -21,6 +21,17 @@ controller:
         LSST_SITE: "summit"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
         PGUSER: "oods"
+      initContainers:
+      - name: "initdir"
+        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+        privileged: true
+        volumes:
+        - containerPath: "/home"
+          mode: "rw"
+          source:
+            serverPath: "/jhome"
+            server: "nfs1.cp.lsst.org"
+            type: "nfs"
       volumes:
       - containerPath: "/home"
         mode: "rw"
