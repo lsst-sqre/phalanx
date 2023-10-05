@@ -21,6 +21,7 @@ spec:
         {{- end }}
       labels:
         {{- include "siav2.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "server"
     spec:
       automountServiceAccountToken: false
       containers:
@@ -39,7 +40,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/api/sia2/availability"
+              path: "/api/siav2/availability"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
