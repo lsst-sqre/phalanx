@@ -101,6 +101,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
       phalanx vault audit <environment>
 
    This command will print diagnostics if it finds any problems.
+   You will still need ``VAULT_TOKEN`` set to a privileged token to run this command.
 
 Update secrets
 ==============
