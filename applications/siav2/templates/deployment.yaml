@@ -11,12 +11,14 @@ spec:
   selector:
     matchLabels:
       {{- include "siav2.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "server"
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "siav2.selectorLabels" . | nindent 8 }}
     spec:
@@ -37,14 +39,21 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/"
+              path: "/api/sia2/availability"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: {{ template "siav2.fullname" . }}-config
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 8675309
+        runAsGroup: 8675309
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

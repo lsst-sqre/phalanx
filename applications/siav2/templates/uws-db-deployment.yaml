@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "siav2-uws-db"
+  labels:
+    {{- include "siav2.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "siav2.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "siav2-uws-db"
+  template:
+    metadata:
+      {{- with .Values.uws.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "siav2.labels" . | nindent 8 }}
+        app.kubernetes.io/component: "siav2-uws-db"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "uws"
+          image: "{{ .Values.uws.image.repository }}:{{ .Values.uws.image.tag }}"
+          imagePullPolicy: {{ .Values.uws.image.pullPolicy | quote }}
+          ports:
+            - containerPort: 5432
+          {{- with .Values.uws.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: "data"
+              mountPath: "/var/lib/postgresql/data"
+      volumes:
+        - name: "data"
+          emptyDir: {}
+      {{- with .Values.uws.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.uws.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.uws.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -62,3 +62,36 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+uws:
+  image:
+    # -- UWS database image to use
+    repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
+
+    # -- Pull policy for the UWS database image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of UWS database image to use
+    # @default -- Version of QServ TAP image
+    tag: "2.1.0"
+
+  # -- Resource limits and requests for the UWS database pod
+  resources:
+    requests:
+      cpu: 0.25
+      memory: "1Gi"
+    limits:
+      cpu: 2.0
+      memory: "4Gi"
+
+  # -- Annotations for the UWS databse pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the UWS database pod
+  nodeSelector: {}
+
+  # -- Tolerations for the UWS database pod
+  tolerations: []
+
+  # -- Affinity rules for the UWS database pod
+  affinity: {}
