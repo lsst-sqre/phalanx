@@ -3,7 +3,7 @@ fqdn: roundtable.lsst.cloud
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP roundtable.lsst.cloud"
-vaultPathPrefix: secret/k8s_operator/roundtable.lsst.cloud
+vaultPathPrefix: secret/phalanx/roundtable-prod
 
 applications:
   kubernetes-replicator: true
@@ -13,3 +13,4 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  squarebot: true
