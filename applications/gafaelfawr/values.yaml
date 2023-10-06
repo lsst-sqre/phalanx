@@ -21,7 +21,14 @@ image:
   tag: ""
 
 # -- Resource limits and requests for the Gafaelfawr frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "300Mi"
+  requests:
+    cpu: "100m"
+    memory: "150Mi"
 
 # -- Annotations for the Gafaelfawr frontend pod
 podAnnotations: {}
@@ -312,7 +319,14 @@ cloudsql:
   serviceAccount: ""
 
   # -- Resource limits and requests for the Cloud SQL Proxy pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
 
   # -- Annotations for the Cloud SQL Proxy pod
   podAnnotations: {}
@@ -334,7 +348,14 @@ maintenance:
   maintenanceSchedule: "5 * * * *"
 
   # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "300Mi"
+    requests:
+      cpu: "100m"
+      memory: "150Mi"
 
   # -- Annotations for Gafaelfawr maintenance and audit pods
   podAnnotations: {}
@@ -350,7 +371,14 @@ maintenance:
 
 operator:
   # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "300Mi"
+    requests:
+      cpu: "10m"
+      memory: "150Mi"
 
   # -- Annotations for the token management pod
   podAnnotations: {}
@@ -398,8 +426,10 @@ redis:
   resources:
     limits:
       cpu: "1"
+      memory: "20Mi"
     requests:
-      cpu: "100m"
+      cpu: "50m"
+      memory: "6Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}
