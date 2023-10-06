@@ -1,5 +1,7 @@
 strimzi-kafka:
   kafka:
+    config:
+      auto.create.topics.enable: false
     storage:
       storageClassName: rook-ceph-block
     externalListener:
