@@ -347,11 +347,19 @@ maintenance:
   # -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
   maintenanceSchedule: "5 * * * *"
 
+  # -- How long the job is allowed to run before it will be terminated
+  # @default -- 300 (5 minutes)
+  deadlineSeconds: 300
+
+  # -- How long to keep old jobs around before deleting them
+  # @default -- 86400 (1 day)
+  cleanupSeconds: 86400
+
   # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "100m"
+      cpu: "1"
       memory: "300Mi"
     requests:
       cpu: "100m"
