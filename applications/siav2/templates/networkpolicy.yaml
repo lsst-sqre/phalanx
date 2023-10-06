@@ -6,6 +6,7 @@ spec:
   podSelector:
     matchLabels:
       {{- include "siav2.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "server"
   policyTypes:
     - Ingress
   ingress:

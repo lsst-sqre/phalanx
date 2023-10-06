@@ -17,7 +17,7 @@ spec:
         - podSelector:
             matchLabels:
               {{- include "siav2.selectorLabels" . | nindent 14 }}
-              app.kubernetes.io/component: "siav2-uws-db"
+              app.kubernetes.io/component: "server"
       ports:
         - protocol: "TCP"
           port: 5432
