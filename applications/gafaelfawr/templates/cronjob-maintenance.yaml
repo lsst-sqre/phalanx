@@ -9,6 +9,8 @@ spec:
   concurrencyPolicy: "Forbid"
   jobTemplate:
     spec:
+      activeDeadlineSeconds: {{ .Values.maintenance.deadlineSeconds }}
+      ttlSecondsAfterFinished: {{ .Values.maintenance.cleanupSeconds }}
       template:
         metadata:
           {{- with .Values.maintenance.podAnnotations }}

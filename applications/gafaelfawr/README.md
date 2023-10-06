@@ -83,6 +83,8 @@ Authentication and identity system
 | ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
 | maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
+| maintenance.cleanupSeconds | int | 86400 (1 day) | How long to keep old jobs around before deleting them |
+| maintenance.deadlineSeconds | int | 300 (5 minutes) | How long the job is allowed to run before it will be terminated |
 | maintenance.maintenanceSchedule | string | `"5 * * * *"` | Cron schedule string for Gafaelfawr periodic maintenance (in UTC) |
 | maintenance.nodeSelector | object | `{}` | Node selection rules for Gafaelfawr maintenance and audit pods |
 | maintenance.podAnnotations | object | `{}` | Annotations for Gafaelfawr maintenance and audit pods |
