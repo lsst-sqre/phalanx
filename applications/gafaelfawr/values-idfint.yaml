@@ -11,7 +11,7 @@ config:
   cilogon:
     clientId: "cilogon:/client_id/6b3f86ecfe74f14afa81b73a76be0868"
     enrollmentUrl: "https://id-int.lsst.cloud/registry/co_petitions/start/coef:10"
-    test: true
+    test: false
     usernameClaim: "username"
 
   ldap:
