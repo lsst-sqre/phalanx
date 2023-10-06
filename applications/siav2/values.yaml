@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the siav2 deployment
-  repository: "ghcr.io/lsst-sqre/siav2"
+  repository: "docker.io/cbanek/siav2"
 
   # -- Pull policy for the siav2 image
   pullPolicy: "IfNotPresent"
