@@ -43,6 +43,29 @@ class ApplicationService:
             autoescape=jinja2.select_autoescape(disabled_extensions=["jinja"]),
         )
 
+    def add_helm_repositories(self, application: str | None = None) -> None:
+        """Add all Helm repositories used by any application to Helm's cache.
+
+        To perform other Helm operations, such as downloading third-party
+        charts in order to run :command:`helm lint`, all third-party Helm
+        chart repositories have to be added to Helm's cache. This does that
+        for every application in the Phalanx configuration.
+
+        Consistent names for the Helm repositories are used so that this
+        command can be run repeatedly.
+
+        Parameters
+        ----------
+        application
+            If given, only add Helm repositories required by this application.
+        """
+        if application:
+            repo_urls = self._config.get_dependency_repositories(application)
+        else:
+            repo_urls = self._config.get_all_dependency_repositories()
+        for url in sorted(repo_urls):
+            self._helm.repo_add(url)
+
     def create_application(
         self, name: str, starter: HelmStarter, description: str
     ) -> None:

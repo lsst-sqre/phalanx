@@ -155,6 +155,24 @@ class ConfigStorage:
                 new.write(setting + "\n")
         path_new.rename(path)
 
+    def get_all_dependency_repositories(self) -> set[str]:
+        """List the URLs of all referenced third-party Helm repositories.
+
+        Returns
+        -------
+        set of str
+            URLs of third-party Helm repositories referenced by some
+            application chart.
+        """
+        repo_urls = set()
+        for app_path in (self._path / "applications").iterdir():
+            chart_path = app_path / "Chart.yaml"
+            if not chart_path.exists():
+                continue
+            urls = self.get_dependency_repositories(app_path.name)
+            repo_urls.update(urls)
+        return repo_urls
+
     def get_application_chart_path(self, application: str) -> Path:
         """Determine the path to an application Helm chart.
 
@@ -172,6 +190,30 @@ class ConfigStorage:
             Path to that application's chart.
         """
         return self._path / "applications" / application
+
+    def get_dependency_repositories(self, application: str) -> set[str]:
+        """Return URLs for dependency Helm repositories for this application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        set of str
+            URLs of Helm repositories used by dependencies of this
+            application's chart.
+        """
+        path = self.get_application_chart_path(application) / "Chart.yaml"
+        chart = yaml.safe_load(path.read_text())
+        repo_urls = set()
+        for dependency in chart.get("dependencies", []):
+            if "repository" in dependency:
+                repository = dependency["repository"]
+                if not repository.startswith("file:"):
+                    repo_urls.add(repository)
+        return repo_urls
 
     def get_starter_path(self, starter: HelmStarter) -> Path:
         """Determine the path to a Helm starter template.

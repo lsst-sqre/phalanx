@@ -22,6 +22,7 @@ __all__ = [
     "help",
     "main",
     "application",
+    "application_add_helm_repos",
     "application_create",
     "environment",
     "environment_schema",
@@ -89,6 +90,32 @@ def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
 @main.group()
 def application() -> None:
     """Commands for Phalanx application configuration."""
+
+
+@application.command("add-helm-repos")
+@click.argument("name", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_add_helm_repos(
+    name: str | None = None, *, config: Path | None
+) -> None:
+    """Add all third-party Helm repositories to Helm.
+
+    In order to perform other Helm operations, such as linting, all
+    third-party Helm chart repositories used by Phalanx applications have to
+    be added to the local Helm cache. This command does that for every Phalanx
+    application.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    application_service.add_helm_repositories(name)
 
 
 @application.command("create")

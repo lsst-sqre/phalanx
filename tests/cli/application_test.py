@@ -11,6 +11,31 @@ from phalanx.factory import Factory
 
 from ..support.cli import run_cli
 from ..support.data import phalanx_test_path, read_output_data
+from ..support.helm import MockHelm
+
+
+def test_add_helm_repos(mock_helm: MockHelm) -> None:
+    result = run_cli("application", "add-helm-repos", "argocd")
+    assert result.output == ""
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"]
+    ]
+
+    mock_helm.reset_mock()
+    result = run_cli("application", "add-helm-repos")
+    assert result.output == ""
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"],
+        [
+            "repo",
+            "add",
+            "jupyterhub",
+            "https://jupyterhub.github.io/helm-chart/",
+        ],
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+    ]
 
 
 def test_create(tmp_path: Path) -> None:

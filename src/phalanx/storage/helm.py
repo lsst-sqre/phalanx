@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import subprocess
 from pathlib import Path
+from urllib.parse import urlparse
 
 from ..exceptions import HelmFailedError
 from ..models.helm import HelmStarter
@@ -46,6 +47,39 @@ class HelmStorage:
             application,
             cwd=application_path.parent,
         )
+
+    def repo_add(self, url: str) -> None:
+        """Add a Helm chart repository to Helm's cache.
+
+        Used primarily to enable Helm linting and templating, since both
+        require any third-party chart repositories be added first.
+
+        Annoyingly, Helm requires you to name repositories, but chart
+        configurations don't include repository names. Automating adding Helm
+        repositories therefore requires making up a name. This uses some
+        arbitrary heuristics that produce consistent names and hopefully won't
+        produce conflicts.
+
+        Parameters
+        ----------
+        url
+            Chart repository to add.
+
+        Raises
+        ------
+        ValueError
+            Raised if the Helm repository URL is invalid.
+        """
+        hostname = urlparse(url).hostname
+        if not hostname:
+            raise ValueError(f"Invalid Helm repository URL {url}")
+        if hostname.endswith("github.io"):
+            name = hostname.split(".", 1)[0]
+        elif "." in hostname:
+            name = hostname.split(".")[-2]
+        else:
+            name = hostname
+        self._run_helm("repo", "add", name, url)
 
     def _run_helm(
         self, command: str, *args: str, cwd: Path | None = None
