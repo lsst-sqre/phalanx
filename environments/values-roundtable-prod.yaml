@@ -13,3 +13,4 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  squarebot: true
