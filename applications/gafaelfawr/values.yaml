@@ -351,7 +351,7 @@ maintenance:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "100m"
+      cpu: "1"
       memory: "300Mi"
     requests:
       cpu: "100m"
