@@ -13,14 +13,15 @@ data:
     tomcat.connector.keepAliveTimeout=120000
     tomcat.connector.secure=false
     tomcat.connector.scheme=http
-    tomcat.connector.proxyName=localhost
+    tomcat.connector.proxyName={{ .Values.global.host }}
     tomcat.connector.proxyPort=8080
 
     # database connection pools for uws
     org.opencadc.sia2.uws.maxActive=5
     org.opencadc.sia2.uws.username=postgres
     org.opencadc.sia2.uws.password=
-    org.opencadc.sia2.uws.url=jdbc:postgresql://siav2-uws-db/uws
+    org.opencadc.sia2.uws.url=jdbc:postgresql://siav2-uws-db/
+    org.opencadc.sia2.uws.db=uws
 
     # authentication provider
     # ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
