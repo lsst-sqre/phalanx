@@ -44,6 +44,8 @@ jobs:
           python-version: ${{ matrix.python }}
           tox-envs: "typing,py,coverage-report"
           cache-key-prefix: test
+        env:
+          COLUMNS: 120
 
   helm:
     runs-on: ubuntu-latest

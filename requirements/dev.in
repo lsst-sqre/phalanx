@@ -13,6 +13,7 @@ mypy
 pre-commit
 pytest
 pytest-cov
+pytest-pretty
 ruff
 types-PyYAML
 
