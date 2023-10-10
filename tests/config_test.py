@@ -9,6 +9,8 @@ from typing import Literal
 
 import yaml
 
+from phalanx.factory import Factory
+
 _ALLOW_NO_SECRETS = (
     "giftless",
     "linters",
@@ -43,6 +45,19 @@ def test_application_version() -> None:
         assert (
             chart["version"] == "1.0.0"
         ), f"Shared chart {shared_chart.name} has incorrect version"
+
+
+def test_enviroments() -> None:
+    """Ensure applications don't have configs for unknown environments."""
+    factory = Factory(Path.cwd())
+    config_storage = factory.create_config_storage()
+    environments = set(config_storage.list_environments())
+    for path in all_charts("applications"):
+        app_envs = set(config_storage.get_application_environments(path.name))
+        if not app_envs <= environments:
+            unknown = ", ".join(sorted(app_envs - environments))
+            msg = f"{path.name} configured for unknown environments: {unknown}"
+            raise AssertionError(msg)
 
 
 def test_secrets_defined() -> None:
