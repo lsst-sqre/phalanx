@@ -169,7 +169,7 @@ def application_create(
 
 @application.command("lint")
 @click.argument("name")
-@click.argument("environment")
+@click.argument("environment", required=False)
 @click.option(
     "-c",
     "--config",
@@ -178,7 +178,7 @@ def application_create(
     help="Path to root of Phalanx configuration.",
 )
 def application_lint(
-    name: str, environment: str, *, config: Path | None
+    name: str, environment: str | None = None, *, config: Path | None
 ) -> None:
     """Lint the Helm chart for an application.
 

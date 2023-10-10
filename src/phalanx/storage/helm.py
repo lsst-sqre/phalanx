@@ -110,7 +110,7 @@ class HelmStorage:
                 cwd=application_path,
             )
         except HelmFailedError as e:
-            self._print_lint_output(e.stdout)
+            self._print_lint_output(application, environment, e.stdout)
             if e.stderr:
                 sys.stderr.write(e.stderr)
             msg = (
@@ -120,7 +120,7 @@ class HelmStorage:
             sys.stderr.write(msg)
             return False
         else:
-            self._print_lint_output(result.stdout)
+            self._print_lint_output(application, environment, result.stdout)
             if result.stderr:
                 sys.stderr.write(result.stderr)
             return True
@@ -200,21 +200,36 @@ class HelmStorage:
             raise HelmFailedError(command, args, e) from e
         return result
 
-    def _print_lint_output(self, output: str | None) -> None:
+    def _print_lint_output(
+        self, application: str, environment: str, output: str | None
+    ) -> None:
         """Print filtered output from Helm's lint.
 
         :command:`helm lint` has no apparent way to disable certain checks,
-        and there are some warnings that we will never care about.
+        and there are some warnings that we will never care about. It also
+        doesn't have very useful output formatting.
 
         Parameters
         ----------
+        application
+            Name of the application.
+        environment
+            Name of the environment in which to lint that application chart,
         output
             Raw output from :command:`helm lint`.
         """
         if not output:
             return
         for line in output.removesuffix("\n").split("\n"):
-            if "icon is recommended" not in line:
+            if "icon is recommended" in line:
+                continue
+            if line == "":
+                continue
+            if "1 chart(s) linted" in line:
+                continue
+            if "==> Linting ." in line:
+                print(f"==> Linting {application} (environment {environment})")
+            else:
                 print(line)
 
     def _run_helm(

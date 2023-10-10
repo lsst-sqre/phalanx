@@ -191,6 +191,34 @@ class ConfigStorage:
         """
         return self._path / "applications" / application
 
+    def get_application_environments(self, application: str) -> list[str]:
+        """List all environments for which an application is configured.
+
+        This is based entirely on the presence of
+        :file:`values-{environment}.yaml` configuration files in the
+        application directory, not on which environments enable the
+        application. This is intentional since this is used to constrain which
+        environments are linted, and we want to lint applications in
+        environments that aren't currently enabled to ensure they've not
+        bitrotted.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        list of str
+            List of environment names for which that application is
+            configured.
+        """
+        path = self.get_application_chart_path(application)
+        return [
+            v.stem.removeprefix("values-")
+            for v in sorted(path.glob("values-*.yaml"))
+        ]
+
     def get_dependency_repositories(self, application: str) -> set[str]:
         """Return URLs for dependency Helm repositories for this application.
 

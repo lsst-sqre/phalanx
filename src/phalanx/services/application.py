@@ -114,7 +114,7 @@ class ApplicationService:
         # Add the documentation.
         self._create_application_docs(name, description)
 
-    def lint_application(self, application: str, env_name: str) -> bool:
+    def lint_application(self, app_name: str, env_name: str | None) -> bool:
         """Lint an application with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
@@ -123,22 +123,33 @@ class ApplicationService:
 
         Parameters
         ----------
-        application
+        app_name
             Name of the application.
         env_name
-            Name of the environment.
+            Name of the environment. If not given, lint all environments for
+            which this application has a configuration.
 
         Returns
         -------
         bool
             Whether linting passed.
         """
-        environment = self._config.load_environment(env_name)
-        self.add_helm_repositories(application)
+        self.add_helm_repositories(app_name)
         self._helm.repo_update()
-        self._helm.dependency_update(application)
-        extra_values = self._build_injected_values(application, environment)
-        return self._helm.lint_application(application, env_name, extra_values)
+        self._helm.dependency_update(app_name)
+        if env_name:
+            environments = [self._config.load_environment(env_name)]
+        else:
+            env_names = self._config.get_application_environments(app_name)
+            environments = [
+                self._config.load_environment(e) for e in env_names
+            ]
+        success = True
+        for environment in environments:
+            name = environment.name
+            values = self._build_injected_values(app_name, environment)
+            success &= self._helm.lint_application(app_name, name, values)
+        return success
 
     def _build_injected_values(
         self, application: str, environment: Environment
@@ -238,3 +249,27 @@ class ApplicationService:
         template = self._templates.get_template("application-values.md.jinja")
         values = template.render({"name": name})
         (docs_path / "values.md").write_text(values)
+
+    def _lint_application_environment(
+        self, application: str, environment: Environment
+    ) -> bool:
+        """Lint an application Helm chart for a specific environment.
+
+        Output is printed to standard output and standard error.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        environment
+            Environment to use for linting.
+
+        Returns
+        -------
+        bool
+            Whether the lint passes.
+        """
+        extra_values = self._build_injected_values(application, environment)
+        return self._helm.lint_application(
+            application, environment.name, extra_values
+        )

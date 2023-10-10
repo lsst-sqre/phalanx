@@ -5,6 +5,7 @@ from __future__ import annotations
 import shutil
 import subprocess
 from pathlib import Path
+from unittest.mock import ANY
 
 import yaml
 
@@ -209,6 +210,7 @@ def test_lint(mock_helm: MockHelm) -> None:
             output = (
                 "==> Linting .\n"
                 "[INFO] Chart.yaml: icon is recommended\n"
+                "\n"
                 "1 chart(s) linted, 0 chart(s) failed\n"
             )
         return subprocess.CompletedProcess(
@@ -218,13 +220,13 @@ def test_lint(mock_helm: MockHelm) -> None:
             stderr=None,
         )
 
+    # Lint a single application that will succeed, and check that the icon
+    # line is filtered out of the output.
     mock_helm.set_capture_callback(callback)
     result = run_cli("application", "lint", "gafaelfawr", "idfdev")
-    assert result.output == (
-        "==> Linting .\n1 chart(s) linted, 0 chart(s) failed\n"
-    )
+    expected = "==> Linting gafaelfawr (environment idfdev)\n"
+    assert result.output == expected
     assert result.exit_code == 0
-
     set_args = read_output_json("idfdev", "lint-set-values")
     assert mock_helm.call_args_list == [
         ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
@@ -242,6 +244,40 @@ def test_lint(mock_helm: MockHelm) -> None:
         ],
     ]
 
+    # Lint the same application for both environmments. We won't bother to
+    # check the --set flag for the second environment. The important part is
+    # that we call helm lint twice, but all of the setup is only called once.
+    mock_helm.reset_mock()
+    result = run_cli("application", "lint", "gafaelfawr")
+    expected += "==> Linting gafaelfawr (environment minikube)\n"
+    assert result.output == expected
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "--strict",
+            "--values",
+            "values.yaml",
+            "--values",
+            "values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+        [
+            "lint",
+            "--strict",
+            "--values",
+            "values.yaml",
+            "--values",
+            "values-minikube.yaml",
+            "--set",
+            ANY,
+        ],
+    ]
+
     def callback_error(*command: str) -> subprocess.CompletedProcess:
         return subprocess.CompletedProcess(
             returncode=1,
@@ -250,6 +286,7 @@ def test_lint(mock_helm: MockHelm) -> None:
             stderr="Some error\n",
         )
 
+    mock_helm.reset_mock()
     mock_helm.set_capture_callback(callback_error)
     result = run_cli("application", "lint", "gafaelfawr", "idfdev")
     assert result.output == (
