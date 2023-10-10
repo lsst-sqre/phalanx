@@ -119,14 +119,15 @@ class HelmStorage:
         try:
             result = self._capture_helm(
                 "lint",
+                application,
                 "--strict",
                 "--values",
-                "values.yaml",
+                f"{application}/values.yaml",
                 "--values",
-                f"values-{environment}.yaml",
+                f"{application}/values-{environment}.yaml",
                 "--set",
                 set_arg,
-                cwd=application_path,
+                cwd=application_path.parent,
             )
         except HelmFailedError as e:
             self._print_lint_output(application, environment, e.stdout)
@@ -309,7 +310,7 @@ class HelmStorage:
                 continue
             if "1 chart(s) linted" in line:
                 continue
-            if "==> Linting ." in line:
+            if line.startswith("==> Linting"):
                 print(f"==> Linting {application} (environment {environment})")
             else:
                 print(line)

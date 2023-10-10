@@ -28,31 +28,34 @@
   ],
   [
     "lint",
+    "argocd",
     "--strict",
     "--values",
-    "values.yaml",
+    "argocd/values.yaml",
     "--values",
-    "values-idfdev.yaml",
+    "argocd/values-idfdev.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
   ],
   [
     "lint",
+    "argocd",
     "--strict",
     "--values",
-    "values.yaml",
+    "argocd/values.yaml",
     "--values",
-    "values-minikube.yaml",
+    "argocd/values-minikube.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.vaultSecretsPath=secret/phalanx/minikube"
   ],
   [
     "lint",
+    "argocd",
     "--strict",
     "--values",
-    "values.yaml",
+    "argocd/values.yaml",
     "--values",
-    "values-usdfdev-prompt-processing.yaml",
+    "argocd/values-usdfdev-prompt-processing.yaml",
     "--set",
     "global.enabledServices=@argocd,global.host=usdf-prompt-processing-dev.slac.stanford.edu,global.baseUrl=https://usdf-prompt-processing-dev.slac.stanford.edu,global.vaultSecretsPath=secret/rubin/usdf-prompt-processing-dev"
   ],
@@ -63,21 +66,23 @@
   ],
   [
     "lint",
+    "gafaelfawr",
     "--strict",
     "--values",
-    "values.yaml",
+    "gafaelfawr/values.yaml",
     "--values",
-    "values-idfdev.yaml",
+    "gafaelfawr/values-idfdev.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
   ],
   [
     "lint",
+    "gafaelfawr",
     "--strict",
     "--values",
-    "values.yaml",
+    "gafaelfawr/values.yaml",
     "--values",
-    "values-minikube.yaml",
+    "gafaelfawr/values-minikube.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.vaultSecretsPath=secret/phalanx/minikube"
   ],
@@ -87,17 +92,13 @@
     "--skip-refresh"
   ],
   [
-    "dependency",
-    "update",
-    "--skip-refresh"
-  ],
-  [
     "lint",
+    "nublado",
     "--strict",
     "--values",
-    "values.yaml",
+    "nublado/values.yaml",
     "--values",
-    "values-idfdev.yaml",
+    "nublado/values-idfdev.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
   ],
@@ -108,11 +109,12 @@
   ],
   [
     "lint",
+    "portal",
     "--strict",
     "--values",
-    "values.yaml",
+    "portal/values.yaml",
     "--values",
-    "values-idfdev.yaml",
+    "portal/values-idfdev.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
   ],
@@ -123,27 +125,24 @@
   ],
   [
     "lint",
+    "postgres",
     "--strict",
     "--values",
-    "values.yaml",
+    "postgres/values.yaml",
     "--values",
-    "values-idfdev.yaml",
+    "postgres/values-idfdev.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
   ],
   [
     "lint",
+    "postgres",
     "--strict",
     "--values",
-    "values.yaml",
+    "postgres/values.yaml",
     "--values",
-    "values-minikube.yaml",
+    "postgres/values-minikube.yaml",
     "--set",
     "global.enabledServices=@argocd@gafaelfawr@mobu@postgres,global.host=minikube.lsst.cloud,global.baseUrl=https://minikube.lsst.cloud,global.vaultSecretsPath=secret/phalanx/minikube"
-  ],
-  [
-    "dependency",
-    "update",
-    "--skip-refresh"
   ]
 ]

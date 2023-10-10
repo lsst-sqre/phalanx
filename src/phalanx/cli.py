@@ -201,7 +201,12 @@ def application_lint(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
-def application_lint_all(*, config: Path | None) -> None:
+@click.option(
+    "--git",
+    is_flag=True,
+    help="Only lint applications changed relative to origin/main.",
+)
+def application_lint_all(*, config: Path | None, git: bool = False) -> None:
     """Lint the Helm charts for every application and environment.
 
     Update and download any third-party dependency charts and then lint the
@@ -211,7 +216,7 @@ def application_lint_all(*, config: Path | None) -> None:
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    if not application_service.lint_all():
+    if not application_service.lint_all(git=git):
         sys.exit(1)
 
 

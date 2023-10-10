@@ -5,10 +5,13 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 from contextlib import suppress
+from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 import yaml
+from git import Diff
+from git.repo import Repo
 from pydantic import ValidationError
 
 from ..constants import HELM_DOCLINK_ANNOTATION
@@ -65,6 +68,60 @@ def _merge_overrides(
         else:
             new[key] = value
     return new
+
+
+@dataclass
+class _ApplicationChange:
+    """Holds the analysis of a diff affecting a Phalanx application chart."""
+
+    application: str
+    """Name of the affected application."""
+
+    path: str
+    """Path of changed file relative to the top of the chart."""
+
+    is_delete: bool
+    """Whether this change is a file deletion."""
+
+    @classmethod
+    def from_diff(cls, diff: Diff) -> Self:
+        """Create a change based on a Git diff.
+
+        Parameters
+        ----------
+        diff
+            One Git diff affecting a single file.
+
+        Returns
+        -------
+        _ApplicationChange
+            Corresponding parsed change.
+
+        Raises
+        ------
+        ValueError
+            Raised if this is not a change to an application chart.
+        """
+        full_path = diff.b_path or diff.a_path
+        if not full_path:
+            raise ValueError("Not a change to an application")
+        m = re.match("applications/([^/]+)/(.+)", full_path)
+        if not m:
+            raise ValueError("Not a change to an application")
+        return cls(
+            application=m.group(1),
+            path=m.group(2),
+            is_delete=diff.change_type == "D",
+        )
+
+    @property
+    def affects_all_envs(self) -> bool:
+        """Whether this change may affect any environment."""
+        if self.path in ("Chart.yaml", "values.yaml"):
+            return True
+        if self.path.startswith(("crds/", "templates/")):
+            return True
+        return False
 
 
 class ConfigStorage:
@@ -243,6 +300,38 @@ class ConfigStorage:
                     repo_urls.add(repository)
         return repo_urls
 
+    def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
+        """Get all modified application and environment pairs.
+
+        Parameters
+        ----------
+        branch
+            Git branch against which to compare to see what modifications
+            have been made.
+
+        Returns
+        -------
+        dict of list of str
+            Dictionary of all modified applications to the list of
+            environments configured for that application that may have been
+            affected.
+        """
+        result: defaultdict[str, list[str]] = defaultdict(list)
+        repo = Repo(str(self._path))
+        diffs = repo.head.commit.diff(branch, paths=["applications"], R=True)
+        for diff in diffs:
+            try:
+                change = _ApplicationChange.from_diff(diff)
+            except ValueError:
+                continue
+            if change.affects_all_envs:
+                envs = self.get_application_environments(change.application)
+                result[change.application] = envs
+            if not change.is_delete:
+                if m := re.match("values-([^.]+).yaml$", change.path):
+                    result[change.application].append(m.group(1))
+        return result
+
     def get_starter_path(self, starter: HelmStarter) -> Path:
         """Determine the path to a Helm starter template.
 
@@ -257,6 +346,20 @@ class ConfigStorage:
             Path to that Helm starter template.
         """
         return self._path / "starters" / starter.value
+
+    def list_application_environments(self) -> dict[str, list[str]]:
+        """List all available applications and their environments.
+
+        Returns
+        -------
+        dict of list of str
+            Dictionary of all applications to lists of environments for which
+            that application has a configuration.
+        """
+        return {
+            a: self.get_application_environments(a)
+            for a in self.list_applications()
+        }
 
     def list_applications(self) -> list[str]:
         """List all available applications.

@@ -155,12 +155,18 @@ class ApplicationService:
             success &= self._helm.lint_application(app_name, name, values)
         return success
 
-    def lint_all(self) -> bool:
+    def lint_all(self, *, git: bool = False) -> bool:
         """Lint all applications with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
         dependencies, and runs :command:`helm lint` on every combination of
         application chart and configured environment.
+
+        Parameters
+        ----------
+        git
+            Whether to only lint application and environment pairs that may
+            have been affected by Git changes relative to the main branch.
 
         Returns
         -------
@@ -169,16 +175,22 @@ class ApplicationService:
         """
         self.add_helm_repositories()
         self._helm.repo_update()
-        environments = {
-            e: self._config.load_environment(e)
-            for e in self._config.list_environments()
-        }
+        if git:
+            to_lint = self._config.get_modified_applications("origin/main")
+        else:
+            to_lint = self._config.list_application_environments()
+        environments: dict[str, Environment] = {}
         success = True
-        for app_name in self._config.list_applications():
+        for app_name, app_envs in sorted(to_lint.items()):
+            if not app_envs:
+                continue
             self._helm.dependency_update(app_name, quiet=True)
-            app_envs = self._config.get_application_environments(app_name)
             for env_name in app_envs:
-                environment = environments[env_name]
+                if env_name in environments:
+                    environment = environments[env_name]
+                else:
+                    environment = self._config.load_environment(env_name)
+                    environments[env_name] = environment
                 values = self._build_injected_values(app_name, environment)
                 success &= self._helm.lint_application(
                     app_name, env_name, values

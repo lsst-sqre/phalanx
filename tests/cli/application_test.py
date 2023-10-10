@@ -8,6 +8,8 @@ from pathlib import Path
 from unittest.mock import ANY
 
 import yaml
+from git.repo import Repo
+from git.util import Actor
 
 from phalanx.factory import Factory
 
@@ -234,11 +236,12 @@ def test_lint(mock_helm: MockHelm) -> None:
         ["dependency", "update", "--skip-refresh"],
         [
             "lint",
+            "gafaelfawr",
             "--strict",
             "--values",
-            "values.yaml",
+            "gafaelfawr/values.yaml",
             "--values",
-            "values-idfdev.yaml",
+            "gafaelfawr/values-idfdev.yaml",
             "--set",
             ",".join(set_args),
         ],
@@ -258,21 +261,23 @@ def test_lint(mock_helm: MockHelm) -> None:
         ["dependency", "update", "--skip-refresh"],
         [
             "lint",
+            "gafaelfawr",
             "--strict",
             "--values",
-            "values.yaml",
+            "gafaelfawr/values.yaml",
             "--values",
-            "values-idfdev.yaml",
+            "gafaelfawr/values-idfdev.yaml",
             "--set",
             ",".join(set_args),
         ],
         [
             "lint",
+            "gafaelfawr",
             "--strict",
             "--values",
-            "values.yaml",
+            "gafaelfawr/values.yaml",
             "--values",
-            "values-minikube.yaml",
+            "gafaelfawr/values-minikube.yaml",
             "--set",
             ANY,
         ],
@@ -301,6 +306,53 @@ def test_lint_all(mock_helm: MockHelm) -> None:
     assert result.output == ""
     assert result.exit_code == 0
     expected_calls = read_output_json("idfdev", "lint-all-calls")
+    assert mock_helm.call_args_list == expected_calls
+
+
+def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
+    upstream_path = tmp_path / "upstream"
+    shutil.copytree(str(phalanx_test_path()), str(upstream_path))
+    upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
+    upstream_repo.index.add(["applications", "environments"])
+    actor = Actor("Someone", "someone@example.com")
+    upstream_repo.index.commit("Initial commit", author=actor, committer=actor)
+    change_path = tmp_path / "change"
+    repo = Repo.clone_from(str(upstream_path), str(change_path))
+
+    # Now, make a few changes that should trigger linting.
+    #
+    # - argocd (only idfdev)
+    # - gafaelfawr (values change so all environments)
+    # - portal (templates deletion so all environments)
+    # - postgres (irrelevant change, no linting)
+    path = change_path / "applications" / "argocd" / "values-idfdev.yaml"
+    with path.open("a") as fh:
+        fh.write("foo: bar\n")
+    path = change_path / "applications" / "gafaelfawr" / "values.yaml"
+    with path.open("a") as fh:
+        fh.write("foo: bar\n")
+    repo.index.remove(
+        "applications/portal/templates/vault-secrets.yaml", working_tree=True
+    )
+    repo.index.remove(
+        "applications/postgres/values-idfdev.yaml", working_tree=True
+    )
+    repo.index.add(["applications"])
+    repo.index.commit("Some changes", author=actor, committer=actor)
+
+    # Okay, now we can run the lint and check the helm commands that were run
+    # against the expected output.
+    result = run_cli(
+        "application",
+        "lint-all",
+        "--git",
+        "--config",
+        str(change_path),
+        needs_config=False,
+    )
+    assert result.output == ""
+    assert result.exit_code == 0
+    expected_calls = read_output_json("idfdev", "lint-git-calls")
     assert mock_helm.call_args_list == expected_calls
 
 
