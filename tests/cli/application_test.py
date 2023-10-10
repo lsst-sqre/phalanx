@@ -294,3 +294,39 @@ def test_lint(mock_helm: MockHelm) -> None:
         "Error: Application gafaelfawr in environment idfdev has errors\n"
     )
     assert result.exit_code == 1
+
+
+def test_template(mock_helm: MockHelm) -> None:
+    test_path = phalanx_test_path()
+
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("application", "template", "gafaelfawr", "idfdev")
+    expected = "this is some template\n"
+    assert result.output == expected
+    assert result.exit_code == 0
+    set_args = read_output_json("idfdev", "lint-set-values")
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "template",
+            "gafaelfawr",
+            str(test_path / "applications" / "gafaelfawr"),
+            "--include-crds",
+            "--values",
+            "gafaelfawr/values.yaml",
+            "--values",
+            "gafaelfawr/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]

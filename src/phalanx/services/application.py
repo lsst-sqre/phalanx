@@ -44,7 +44,9 @@ class ApplicationService:
             autoescape=jinja2.select_autoescape(disabled_extensions=["jinja"]),
         )
 
-    def add_helm_repositories(self, application: str | None = None) -> None:
+    def add_helm_repositories(
+        self, application: str | None = None, *, quiet: bool = False
+    ) -> None:
         """Add all Helm repositories used by any application to Helm's cache.
 
         To perform other Helm operations, such as downloading third-party
@@ -59,15 +61,17 @@ class ApplicationService:
         ----------
         application
             If given, only add Helm repositories required by this application.
+        quiet
+            Whether to suppress Helm's standard output.
         """
         if application:
             repo_urls = self._config.get_dependency_repositories(application)
         else:
             repo_urls = self._config.get_all_dependency_repositories()
         for url in sorted(repo_urls):
-            self._helm.repo_add(url)
+            self._helm.repo_add(url, quiet=quiet)
 
-    def create_application(
+    def create(
         self, name: str, starter: HelmStarter, description: str
     ) -> None:
         """Create configuration for a new application.
@@ -114,7 +118,7 @@ class ApplicationService:
         # Add the documentation.
         self._create_application_docs(name, description)
 
-    def lint_application(self, app_name: str, env_name: str | None) -> bool:
+    def lint(self, app_name: str, env_name: str | None) -> bool:
         """Lint an application with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
@@ -150,6 +154,37 @@ class ApplicationService:
             values = self._build_injected_values(app_name, environment)
             success &= self._helm.lint_application(app_name, name, values)
         return success
+
+    def template(self, app_name: str, env_name: str) -> str:
+        """Expand the templates of an application chart.
+
+        Run :command:`helm template` for an application chart, passing in the
+        appropriate parameters for that environment.
+
+        Parameters
+        ----------
+        app_name
+            Name of the application.
+        env_name
+            Name of the environment. If not given, lint all environments for
+            which this application has a configuration.
+
+        Returns
+        -------
+        str
+            Output from :command:`helm template`.
+
+        Raises
+        ------
+        HelmFailedError
+            Raised if Helm fails.
+        """
+        self.add_helm_repositories(app_name, quiet=True)
+        self._helm.repo_update(quiet=True)
+        self._helm.dependency_update(app_name, quiet=True)
+        environment = self._config.load_environment(env_name)
+        values = self._build_injected_values(app_name, environment)
+        return self._helm.template_application(app_name, env_name, values)
 
     def _build_injected_values(
         self, application: str, environment: Environment

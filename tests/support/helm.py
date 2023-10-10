@@ -92,7 +92,13 @@ class MockHelm:
         """Clear the list of previous calls."""
         self.call_args_list = []
 
-    def run(self, command: str, *args: str, cwd: Path | None = None) -> None:
+    def run(
+        self,
+        command: str,
+        *args: str,
+        cwd: Path | None = None,
+        quiet: bool = False,
+    ) -> None:
         """Mock running a Helm command.
 
         Parameters
@@ -105,6 +111,8 @@ class MockHelm:
             If provided, the caller is requesting to change working
             directories to this path before running the Helm command.
             (Currently ignored.)
+        quiet
+            Whether to suppress Helm's standard output. (Currently ignored.)
         """
         self.call_args_list.append([command, *args])
 

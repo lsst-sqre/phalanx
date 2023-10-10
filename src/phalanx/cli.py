@@ -25,6 +25,7 @@ __all__ = [
     "application_add_helm_repos",
     "application_create",
     "application_lint",
+    "application_template",
     "environment",
     "environment_schema",
     "secrets",
@@ -162,9 +163,7 @@ def application_create(
         raise click.UsageError("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create_application(
-        name, HelmStarter(starter), description
-    )
+    application_service.create(name, HelmStarter(starter), description)
 
 
 @application.command("lint")
@@ -189,9 +188,35 @@ def application_lint(
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    success = application_service.lint_application(name, environment)
+    success = application_service.lint(name, environment)
     if not success:
         sys.exit(1)
+
+
+@application.command("template")
+@click.argument("name")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_template(
+    name: str, environment: str, *, config: Path | None
+) -> None:
+    """Expand the chart of an application for an environment.
+
+    Print the expanded Kubernetes resources for an application as configured
+    for the given environment to standard output. This is intended for testing
+    and debugging purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    sys.stdout.write(application_service.template(name, environment))
 
 
 @main.group()

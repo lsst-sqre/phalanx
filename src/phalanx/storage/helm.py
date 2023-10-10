@@ -49,7 +49,9 @@ class HelmStorage:
             cwd=application_path.parent,
         )
 
-    def dependency_update(self, application: str) -> None:
+    def dependency_update(
+        self, application: str, *, quiet: bool = False
+    ) -> None:
         """Download chart dependencies for an application.
 
         Tell Helm to update any third-party chart dependencies for an
@@ -63,10 +65,16 @@ class HelmStorage:
         ----------
         application
             Application whose dependencies should be updated.
+        quiet
+            Whether to suppress Helm's standard output.
         """
         application_path = self._config.get_application_chart_path(application)
         self._run_helm(
-            "dependency", "update", "--skip-refresh", cwd=application_path
+            "dependency",
+            "update",
+            "--skip-refresh",
+            cwd=application_path,
+            quiet=quiet,
         )
 
     def lint_application(
@@ -125,7 +133,7 @@ class HelmStorage:
                 sys.stderr.write(result.stderr)
             return True
 
-    def repo_add(self, url: str) -> None:
+    def repo_add(self, url: str, *, quiet: bool = False) -> None:
         """Add a Helm chart repository to Helm's cache.
 
         Used primarily to enable Helm linting and templating, since both
@@ -141,6 +149,8 @@ class HelmStorage:
         ----------
         url
             Chart repository to add.
+        quiet
+            Whether to suppress Helm's standard output.
 
         Raises
         ------
@@ -156,11 +166,72 @@ class HelmStorage:
             name = hostname.split(".")[-2]
         else:
             name = hostname
-        self._run_helm("repo", "add", name, url)
+        self._run_helm("repo", "add", name, url, quiet=quiet)
 
-    def repo_update(self) -> None:
-        """Update Helm's cache of upstream repository indices."""
-        self._run_helm("repo", "update")
+    def repo_update(self, *, quiet: bool = False) -> None:
+        """Update Helm's cache of upstream repository indices.
+
+        Parameters
+        ----------
+        quiet
+            Whether to suppress Helm's standard output.
+        """
+        self._run_helm("repo", "update", quiet=quiet)
+
+    def template_application(
+        self, application: str, environment: str, values: dict[str, str]
+    ) -> str:
+        """Expand an application chart into its Kubernetes resources.
+
+        Runs :command:`helm template` to expand a chart into its Kubernetes
+        resources for a given environment. Assumes that :command:`helm
+        dependency update` has already been run to download any third-party
+        charts. Any output to standard error is passed along.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        environment
+            Name of the environment in which to lint that application chart,
+            used to select the :file:`values-{environment}.yaml` file to add.
+        values
+            Extra key/value pairs to set, reflecting the settings injected by
+            Argo CD.
+
+        Returns
+        -------
+        str
+            Kubernetes resources created by the chart.
+
+        Raises
+        ------
+        HelmFailedError
+            Raised if Helm fails.
+        """
+        application_path = self._config.get_application_chart_path(application)
+        set_arg = ",".join(f"{k}={v}" for k, v in values.items())
+        try:
+            result = self._capture_helm(
+                "template",
+                application,
+                str(application_path),
+                "--include-crds",
+                "--values",
+                f"{application}/values.yaml",
+                "--values",
+                f"{application}/values-{environment}.yaml",
+                "--set",
+                set_arg,
+                cwd=application_path.parent,
+            )
+        except HelmFailedError as e:
+            if e.stderr:
+                sys.stderr.write(e.stderr)
+            raise
+        if result.stderr:
+            sys.stderr.write(result.stderr)
+        return result.stdout
 
     def _capture_helm(
         self, command: str, *args: str, cwd: Path | None = None
@@ -233,7 +304,11 @@ class HelmStorage:
                 print(line)
 
     def _run_helm(
-        self, command: str, *args: str, cwd: Path | None = None
+        self,
+        command: str,
+        *args: str,
+        cwd: Path | None = None,
+        quiet: bool = False,
     ) -> None:
         """Run Helm, checking for errors.
 
@@ -254,7 +329,9 @@ class HelmStorage:
         HelmFailedError
             Raised if Helm fails.
         """
+        cmdline = ["helm", command, *args]
+        stdout = subprocess.DEVNULL if quiet else None
         try:
-            subprocess.run(["helm", command, *args], check=True, cwd=cwd)
+            subprocess.run(cmdline, check=True, stdout=stdout, cwd=cwd)
         except subprocess.CalledProcessError as e:
             raise HelmFailedError(command, args, e) from e
