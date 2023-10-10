@@ -186,7 +186,7 @@ class ConfigStorage:
 
         Returns
         -------
-        Path
+        pathlib.Path
             Path to that application's chart.
         """
         return self._path / "applications" / application
