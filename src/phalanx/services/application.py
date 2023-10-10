@@ -155,6 +155,36 @@ class ApplicationService:
             success &= self._helm.lint_application(app_name, name, values)
         return success
 
+    def lint_all(self) -> bool:
+        """Lint all applications with Helm.
+
+        Registers any required Helm repositories, refreshes them, downloads
+        dependencies, and runs :command:`helm lint` on every combination of
+        application chart and configured environment.
+
+        Returns
+        -------
+        bool
+            Whether linting passed.
+        """
+        self.add_helm_repositories()
+        self._helm.repo_update()
+        environments = {
+            e: self._config.load_environment(e)
+            for e in self._config.list_environments()
+        }
+        success = True
+        for app_name in self._config.list_applications():
+            self._helm.dependency_update(app_name, quiet=True)
+            app_envs = self._config.get_application_environments(app_name)
+            for env_name in app_envs:
+                environment = environments[env_name]
+                values = self._build_injected_values(app_name, environment)
+                success &= self._helm.lint_application(
+                    app_name, env_name, values
+                )
+        return success
+
     def template(self, app_name: str, env_name: str) -> str:
         """Expand the templates of an application chart.
 
@@ -284,27 +314,3 @@ class ApplicationService:
         template = self._templates.get_template("application-values.md.jinja")
         values = template.render({"name": name})
         (docs_path / "values.md").write_text(values)
-
-    def _lint_application_environment(
-        self, application: str, environment: Environment
-    ) -> bool:
-        """Lint an application Helm chart for a specific environment.
-
-        Output is printed to standard output and standard error.
-
-        Parameters
-        ----------
-        application
-            Name of the application.
-        environment
-            Environment to use for linting.
-
-        Returns
-        -------
-        bool
-            Whether the lint passes.
-        """
-        extra_values = self._build_injected_values(application, environment)
-        return self._helm.lint_application(
-            application, environment.name, extra_values
-        )

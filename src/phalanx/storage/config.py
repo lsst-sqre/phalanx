@@ -258,6 +258,17 @@ class ConfigStorage:
         """
         return self._path / "starters" / starter.value
 
+    def list_applications(self) -> list[str]:
+        """List all available applications.
+
+        Returns
+        -------
+        list of str
+            Names of all applications.
+        """
+        path = self._path / "applications"
+        return sorted(v.name for v in path.iterdir() if v.is_dir())
+
     def list_environments(self) -> list[str]:
         """List all of the available environments.
 
@@ -266,10 +277,10 @@ class ConfigStorage:
         list of str
             Names of all available environments.
         """
-        environments_path = self._path / "environments"
+        path = self._path / "environments"
         return [
             v.stem.removeprefix("values-")
-            for v in sorted(environments_path.glob("values-*.yaml"))
+            for v in sorted(path.glob("values-*.yaml"))
         ]
 
     def load_environment(self, environment_name: str) -> Environment:

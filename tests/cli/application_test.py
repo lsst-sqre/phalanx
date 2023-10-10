@@ -296,6 +296,14 @@ def test_lint(mock_helm: MockHelm) -> None:
     assert result.exit_code == 1
 
 
+def test_lint_all(mock_helm: MockHelm) -> None:
+    result = run_cli("application", "lint-all")
+    assert result.output == ""
+    assert result.exit_code == 0
+    expected_calls = read_output_json("idfdev", "lint-all-calls")
+    assert mock_helm.call_args_list == expected_calls
+
+
 def test_template(mock_helm: MockHelm) -> None:
     test_path = phalanx_test_path()
 

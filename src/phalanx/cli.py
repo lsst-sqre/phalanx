@@ -25,6 +25,7 @@ __all__ = [
     "application_add_helm_repos",
     "application_create",
     "application_lint",
+    "application_lint_all",
     "application_template",
     "environment",
     "environment_schema",
@@ -188,8 +189,29 @@ def application_lint(
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    success = application_service.lint(name, environment)
-    if not success:
+    if not application_service.lint(name, environment):
+        sys.exit(1)
+
+
+@application.command("lint-all")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_lint_all(*, config: Path | None) -> None:
+    """Lint the Helm charts for every application and environment.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm charts for each application and environment combination.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    if not application_service.lint_all():
         sys.exit(1)
 
 

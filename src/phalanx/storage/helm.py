@@ -104,6 +104,17 @@ class HelmStorage:
             Whether linting passed.
         """
         application_path = self._config.get_application_chart_path(application)
+
+        # helm lint complains about any chart without a templates directory,
+        # but many of our charts are wrappers around third-party charts and
+        # intentionally don't have such a directory. To silence the warning,
+        # create an empty templates directory if needed. Git ignores empty
+        # directories, so this is essentially a no-op in a Git checkout.
+        if not (application_path / "templates").exists():
+            (application_path / "templates").mkdir()
+
+        # Run helm lint with the appropriate flag for the environment in which
+        # the chart is being linted.
         set_arg = ",".join(f"{k}={v}" for k, v in values.items())
         try:
             result = self._capture_helm(

@@ -52,11 +52,11 @@ def test_enviroments() -> None:
     factory = Factory(Path.cwd())
     config_storage = factory.create_config_storage()
     environments = set(config_storage.list_environments())
-    for path in all_charts("applications"):
-        app_envs = set(config_storage.get_application_environments(path.name))
+    for app_name in config_storage.list_applications():
+        app_envs = set(config_storage.get_application_environments(app_name))
         if not app_envs <= environments:
             unknown = ", ".join(sorted(app_envs - environments))
-            msg = f"{path.name} configured for unknown environments: {unknown}"
+            msg = f"{app_name} configured for unknown environments: {unknown}"
             raise AssertionError(msg)
 
 
