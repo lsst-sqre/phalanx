@@ -29,8 +29,8 @@ Simple Image Access v2 service
 | tolerations | list | `[]` | Tolerations for the siav2 deployment pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
-| uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | Version of QServ TAP image | Tag of UWS database image to use |
+| uws.image.repository | string | `"library/postgres"` | UWS database image to use |
+| uws.image.tag | string | `"16.0"` | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | `{"limits":{"cpu":2,"memory":"4Gi"},"requests":{"cpu":0.25,"memory":"1Gi"}}` | Resource limits and requests for the UWS database pod |

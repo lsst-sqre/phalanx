@@ -14,6 +14,7 @@ spec:
     metadata:
       {{- with .Values.uws.podAnnotations }}
       annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/uws-configmap.yaml") . | sha256sum }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -25,6 +26,9 @@ spec:
         - name: "uws"
           image: "{{ .Values.uws.image.repository }}:{{ .Values.uws.image.tag }}"
           imagePullPolicy: {{ .Values.uws.image.pullPolicy | quote }}
+          env:
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust
           ports:
             - containerPort: 5432
           {{- with .Values.uws.resources }}
@@ -34,9 +38,14 @@ spec:
           volumeMounts:
             - name: "data"
               mountPath: "/var/lib/postgresql/data"
+            - name: "init-scripts"
+              mountPath: "/docker-entrypoint-initdb.d/"
       volumes:
         - name: "data"
           emptyDir: {}
+        - name: "init-scripts"
+          configMap:
+            name: siav2-uws-configmap
       {{- with .Values.uws.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

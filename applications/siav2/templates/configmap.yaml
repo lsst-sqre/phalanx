@@ -21,7 +21,6 @@ data:
     org.opencadc.sia2.uws.username=postgres
     org.opencadc.sia2.uws.password=
     org.opencadc.sia2.uws.url=jdbc:postgresql://siav2-uws-db/
-    org.opencadc.sia2.uws.db=uws
 
     # authentication provider
     # ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager

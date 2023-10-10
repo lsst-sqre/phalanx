@@ -66,14 +66,13 @@ global:
 uws:
   image:
     # -- UWS database image to use
-    repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
+    repository: "library/postgres"
 
     # -- Pull policy for the UWS database image
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    # @default -- Version of QServ TAP image
-    tag: "2.1.0"
+    tag: "16.0"
 
   # -- Resource limits and requests for the UWS database pod
   resources:
