@@ -56,22 +56,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: azure/setup-helm@v3
+        with:
+          # Used to query GitHub for the latest Helm release.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.11"
-
-      - name: Install test dependencies
-        run: make init
-
-      - name: Expand modified charts
-        run: expand-charts
-
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
-
-      - name: Run chart-testing (lint)
-        run: ct lint --all --config ct.yaml
+          tox-envs: phalanx-lint-change
+          cache-key-prefix: test
 
   # The minikube job always runs, but it quickly does nothing if no files that
   # would affect minikube were changed.  This unfortunately requires a lot of
