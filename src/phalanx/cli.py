@@ -205,9 +205,21 @@ def application_lint(
 @click.option(
     "--git",
     is_flag=True,
-    help="Only lint applications changed relative to origin/main.",
+    help="Only lint applications changed relative to a Git branch.",
 )
-def application_lint_all(*, config: Path | None, git: bool = False) -> None:
+@click.option(
+    "--git-branch",
+    type=str,
+    metavar="BRANCH",
+    default="origin/main",
+    show_default=True,
+    show_envvar=True,
+    envvar="GITHUB_BASE_REF",
+    help="Base Git branch against which to compare.",
+)
+def application_lint_all(
+    *, config: Path | None, git: bool = False, git_branch: str
+) -> None:
     """Lint the Helm charts for every application and environment.
 
     Update and download any third-party dependency charts and then lint the
@@ -217,7 +229,8 @@ def application_lint_all(*, config: Path | None, git: bool = False) -> None:
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    if not application_service.lint_all(git=git):
+    changes_vs_branch = git_branch if git else None
+    if not application_service.lint_all(changes_vs_branch=changes_vs_branch):
         sys.exit(1)
 
 
