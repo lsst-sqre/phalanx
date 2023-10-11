@@ -59,7 +59,7 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     result = run_cli(
         "secrets", "audit", "--secrets", str(secrets_path), "idfdev"
     )
-    assert result.exit_code == 0
+    assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "secrets-audit")
 
 
@@ -78,7 +78,7 @@ def test_audit_onepassword_missing(
     mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
 
     result = run_cli("secrets", "audit", "minikube")
-    assert result.exit_code == 0
+    assert result.exit_code == 1
     assert result.output == read_output_data(
         "minikube", "audit-missing-output"
     )
