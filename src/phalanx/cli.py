@@ -111,10 +111,12 @@ def application_add_helm_repos(
 ) -> None:
     """Configure dependency Helm repositories in Helm.
 
-    In order to perform other Helm operations, such as linting, all
-    third-party Helm chart repositories used by Phalanx applications have to
-    be added to the local Helm cache. This command does that for every Phalanx
-    application.
+    Add all third-party Helm chart repositories used by Phalanx applications
+    to the local Helm cache.
+
+    This will also be done as necessary by lint commands, so using this
+    command is not necessary. It is provided as a convenience for helping to
+    manage your local Helm configuration.
     """
     if not config:
         config = _find_config()
