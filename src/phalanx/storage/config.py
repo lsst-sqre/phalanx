@@ -533,7 +533,7 @@ class ConfigStorage:
         values_path = base_path / "values.yaml"
         if values_path.exists():
             with values_path.open("r") as fh:
-                values = yaml.safe_load(fh)
+                values = yaml.safe_load(fh) or {}
         else:
             values = {}
 
