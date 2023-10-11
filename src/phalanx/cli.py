@@ -209,7 +209,10 @@ def secrets_audit(
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    sys.stdout.write(secrets_service.audit(environment, static_secrets))
+    report = secrets_service.audit(environment, static_secrets)
+    if report:
+        sys.stdout.write(report)
+        sys.exit(1)
 
 
 @secrets.command("list")
