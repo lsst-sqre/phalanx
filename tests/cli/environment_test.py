@@ -6,6 +6,7 @@ import subprocess
 from pathlib import Path
 
 from ..support.cli import run_cli
+from ..support.data import phalanx_test_path
 from ..support.helm import MockHelm
 
 
@@ -113,3 +114,30 @@ def test_schema() -> None:
         / "environment.json"
     )
     assert result.output == current.read_text()
+
+
+def test_template(mock_helm: MockHelm) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("environment", "template", "idfdev")
+    assert result.output == "this is some template\n"
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        [
+            "template",
+            "science-platform",
+            str(phalanx_test_path() / "environments"),
+            "--include-crds",
+            "--values",
+            "environments/values.yaml",
+            "--values",
+            "environments/values-idfdev.yaml",
+        ],
+    ]

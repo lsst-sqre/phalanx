@@ -44,3 +44,26 @@ class EnvironmentService:
         for environment in self._config.list_environments():
             success &= self._helm.lint_environment(environment)
         return success
+
+    def template(self, environment: str) -> str:
+        """Expand the templates of the top-level chart.
+
+        Run :command:`helm template` for a top-level chart, passing in the
+        appropriate parameters for the given environment.
+
+        Parameters
+        ----------
+        environment
+            Environment for which to expand the top-level chart.
+
+        Returns
+        -------
+        str
+            Output from :command:`helm template`.
+
+        Raises
+        ------
+        HelmFailedError
+            Raised if Helm fails.
+        """
+        return self._helm.template_environment(environment)

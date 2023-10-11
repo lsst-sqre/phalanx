@@ -289,6 +289,49 @@ class HelmStorage:
             sys.stderr.write(result.stderr)
         return result.stdout
 
+    def template_environment(self, environment: str) -> str:
+        """Expand the top-level chart into its Kubernetes resources.
+
+        Runs :command:`helm template` to expand the top-level chart into its
+        Kubernetes resources for a given environment. Any output to standard
+        error is passed along.
+
+        Parameters
+        ----------
+        environment
+            Name of the environment for which to expand the chart.
+
+        Returns
+        -------
+        str
+            Kubernetes resources created by the chart.
+
+        Raises
+        ------
+        HelmFailedError
+            Raised if Helm fails.
+        """
+        path = self._config.get_environment_chart_path()
+        try:
+            result = self._capture_helm(
+                "template",
+                "science-platform",
+                str(path),
+                "--include-crds",
+                "--values",
+                "environments/values.yaml",
+                "--values",
+                f"environments/values-{environment}.yaml",
+                cwd=path.parent,
+            )
+        except HelmFailedError as e:
+            if e.stderr:
+                sys.stderr.write(e.stderr)
+            raise
+        if result.stderr:
+            sys.stderr.write(result.stderr)
+        return result.stdout
+
     def _capture_helm(
         self, command: str, *args: str, cwd: Path | None = None
     ) -> subprocess.CompletedProcess:

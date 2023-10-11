@@ -369,8 +369,7 @@ def test_template(mock_helm: MockHelm) -> None:
 
     mock_helm.set_capture_callback(callback)
     result = run_cli("application", "template", "gafaelfawr", "idfdev")
-    expected = "this is some template\n"
-    assert result.output == expected
+    assert result.output == "this is some template\n"
     assert result.exit_code == 0
     set_args = read_output_json("idfdev", "lint-set-values")
     assert mock_helm.call_args_list == [

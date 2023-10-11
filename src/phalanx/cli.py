@@ -30,6 +30,7 @@ __all__ = [
     "environment",
     "environment_lint",
     "environment_schema",
+    "environment_template",
     "secrets",
     "secrets_audit",
     "secrets_list",
@@ -316,6 +317,29 @@ def environment_schema(*, output: Path | None) -> None:
         output.write_text(json_schema)
     else:
         sys.stdout.write(json_schema)
+
+
+@environment.command("template")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_template(environment: str, *, config: Path | None) -> None:
+    """Expand the top-level chart for an environment.
+
+    Print the expanded Kubernetes resources for the top-level chart configured
+    for the given environment. This is intended for testing and debugging
+    purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    sys.stdout.write(environment_service.template(environment))
 
 
 @main.group()
