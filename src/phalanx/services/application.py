@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from pathlib import Path
 
 import jinja2
@@ -45,7 +46,7 @@ class ApplicationService:
         )
 
     def add_helm_repositories(
-        self, application: str | None = None, *, quiet: bool = False
+        self, applications: Iterable[str] | None = None, *, quiet: bool = False
     ) -> None:
         """Add all Helm repositories used by any application to Helm's cache.
 
@@ -59,13 +60,17 @@ class ApplicationService:
 
         Parameters
         ----------
-        application
-            If given, only add Helm repositories required by this application.
+        applications
+            If given, only add Helm repositories required by these
+            applications.
         quiet
             Whether to suppress Helm's standard output.
         """
-        if application:
-            repo_urls = self._config.get_dependency_repositories(application)
+        if applications:
+            repo_urls = set()
+            for application in applications:
+                urls = self._config.get_dependency_repositories(application)
+                repo_urls.update(urls)
         else:
             repo_urls = self._config.get_all_dependency_repositories()
         for url in sorted(repo_urls):
@@ -138,7 +143,7 @@ class ApplicationService:
         bool
             Whether linting passed.
         """
-        self.add_helm_repositories(app_name)
+        self.add_helm_repositories([app_name])
         self._helm.repo_update()
         self._helm.dependency_update(app_name)
         if env_name:
@@ -173,12 +178,12 @@ class ApplicationService:
         bool
             Whether linting passed.
         """
-        self.add_helm_repositories()
-        self._helm.repo_update()
         if changes_vs_branch:
             to_lint = self._config.get_modified_applications(changes_vs_branch)
         else:
             to_lint = self._config.list_application_environments()
+        self.add_helm_repositories(to_lint.keys())
+        self._helm.repo_update()
         environments: dict[str, Environment] = {}
         success = True
         for app_name, app_envs in sorted(to_lint.items()):
@@ -221,7 +226,7 @@ class ApplicationService:
         HelmFailedError
             Raised if Helm fails.
         """
-        self.add_helm_repositories(app_name, quiet=True)
+        self.add_helm_repositories([app_name], quiet=True)
         self._helm.repo_update(quiet=True)
         self._helm.dependency_update(app_name, quiet=True)
         environment = self._config.load_environment(env_name)

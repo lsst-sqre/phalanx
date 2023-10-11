@@ -119,7 +119,7 @@ def application_add_helm_repos(
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.add_helm_repositories(name)
+    application_service.add_helm_repositories([name] if name else None)
 
 
 @application.command("create")

@@ -8,12 +8,6 @@
   [
     "repo",
     "add",
-    "jupyterhub",
-    "https://jupyterhub.github.io/helm-chart/"
-  ],
-  [
-    "repo",
-    "add",
     "lsst-sqre",
     "https://lsst-sqre.github.io/charts/"
   ],
