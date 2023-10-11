@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from .services.application import ApplicationService
+from .services.environment import EnvironmentService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
 from .storage.config import ConfigStorage
@@ -48,6 +49,18 @@ class Factory:
             Storage service for loading the Phalanx configuration.
         """
         return ConfigStorage(self._path)
+
+    def create_environment_service(self) -> EnvironmentService:
+        """Create service for manipulating Phalanx environments.
+
+        Returns
+        -------
+        EnvironmentService
+            Service for manipulating environments.
+        """
+        config_storage = self.create_config_storage()
+        helm_storage = HelmStorage(config_storage)
+        return EnvironmentService(config_storage, helm_storage)
 
     def create_secrets_service(self) -> SecretsService:
         """Create service for manipulating Phalanx secrets.

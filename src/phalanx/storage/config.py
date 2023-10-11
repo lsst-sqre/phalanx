@@ -300,6 +300,16 @@ class ConfigStorage:
                     repo_urls.add(repository)
         return repo_urls
 
+    def get_environment_chart_path(self) -> Path:
+        """Determine the path to the top-level environment chart.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to the top-level environment chart.
+        """
+        return self._path / "environments"
+
     def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
         """Get all modified application and environment pairs.
 

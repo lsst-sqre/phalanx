@@ -28,6 +28,7 @@ __all__ = [
     "application_lint_all",
     "application_template",
     "environment",
+    "environment_lint",
     "environment_schema",
     "secrets",
     "secrets_audit",
@@ -249,6 +250,32 @@ def application_template(
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""
+
+
+@environment.command("lint")
+@click.argument("environment", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_lint(
+    environment: str | None = None, *, config: Path | None, git: bool = False
+) -> None:
+    """Lint the top-level Helm chart for an environment.
+
+    Lint the parent Argo CD Helm chart that installs the Argo CD applications
+    for an environment. If the environment is not given, lints the
+    instantiation of that chart for each environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    if not environment_service.lint(environment):
+        sys.exit(1)
 
 
 @environment.command("schema")

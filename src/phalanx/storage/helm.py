@@ -145,6 +145,50 @@ class HelmStorage:
                 sys.stderr.write(result.stderr)
             return True
 
+    def lint_environment(self, environment: str) -> bool:
+        """Lint the top-level chart for an environment with Helm.
+
+        Any output is sent to standard output and standard error, and if Helm
+        fails, a failure message will be printed to standard error.
+
+        Parameters
+        ----------
+        environment
+            Name of the environment.
+
+        Returns
+        -------
+        bool
+            Whether linting passed.
+        """
+        path = self._config.get_environment_chart_path()
+        try:
+            result = self._capture_helm(
+                "lint",
+                path.name,
+                "--strict",
+                "--values",
+                f"{path.name}/values.yaml",
+                "--values",
+                f"{path.name}/values-{environment}.yaml",
+                cwd=path.parent,
+            )
+        except HelmFailedError as e:
+            self._print_lint_output(None, environment, e.stdout)
+            if e.stderr:
+                sys.stderr.write(e.stderr)
+            msg = (
+                f"Error: Top-level chart for environment {environment} has"
+                " errors\n"
+            )
+            sys.stderr.write(msg)
+            return False
+        else:
+            self._print_lint_output(None, environment, result.stdout)
+            if result.stderr:
+                sys.stderr.write(result.stderr)
+            return True
+
     def repo_add(self, url: str, *, quiet: bool = False) -> None:
         """Add a Helm chart repository to Helm's cache.
 
@@ -284,7 +328,7 @@ class HelmStorage:
         return result
 
     def _print_lint_output(
-        self, application: str, environment: str, output: str | None
+        self, application: str | None, environment: str, output: str | None
     ) -> None:
         """Print filtered output from Helm's lint.
 
@@ -295,7 +339,7 @@ class HelmStorage:
         Parameters
         ----------
         application
-            Name of the application.
+            Name of the application, or `None` if linting the top-level chart.
         environment
             Name of the environment in which to lint that application chart,
         output
@@ -303,6 +347,10 @@ class HelmStorage:
         """
         if not output:
             return
+        if application:
+            prelude = f"==> Linting {application} (environment {environment})"
+        else:
+            prelude = f"==> Linting top-level chart for {environment}"
         for line in output.removesuffix("\n").split("\n"):
             if "icon is recommended" in line:
                 continue
@@ -311,7 +359,7 @@ class HelmStorage:
             if "1 chart(s) linted" in line:
                 continue
             if line.startswith("==> Linting"):
-                print(f"==> Linting {application} (environment {environment})")
+                print(prelude)
             else:
                 print(line)
 
