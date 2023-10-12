@@ -25,7 +25,7 @@ prompt-proto-service:
       (survey="spec_pole")=[]
       (survey="spec_pole_with_rotation")=[]
       (survey="")=[]
-    calibRepo: /app/butler
+    calibRepo: s3://rubin-summit-users
 
   s3:
     imageBucket: rubin-summit
@@ -41,7 +41,6 @@ prompt-proto-service:
 
   registry:
     ip: usdf-butler.slac.stanford.edu:5432  # TODO: remove on DM-40839
-    centralRepoFile: true
 
   logLevel: lsst.resources=DEBUG
 
