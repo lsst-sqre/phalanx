@@ -163,7 +163,7 @@ class ApplicationService:
                 success &= self._helm.lint_application(app_name, env, values)
         return success
 
-    def lint_all(self, *, changes_vs_branch: str | None = None) -> bool:
+    def lint_all(self, *, only_changes_from_branch: str | None = None) -> bool:
         """Lint all applications with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
@@ -172,17 +172,21 @@ class ApplicationService:
 
         Parameters
         ----------
-        changes_vs_branch
+        only_changes_from_branch
             If given, only lint application and environment pairs that may
             have been affected by Git changes relative to the given branch.
+            In other words, assume all application chart configurations
+            identical to the given branch are uninteresting, and only lint the
+            ones that have changed.
 
         Returns
         -------
         bool
             Whether linting passed.
         """
-        if changes_vs_branch:
-            to_lint = self._config.get_modified_applications(changes_vs_branch)
+        if only_changes_from_branch:
+            branch = only_changes_from_branch
+            to_lint = self._config.get_modified_applications(branch)
         else:
             to_lint = self._config.list_application_environments()
         self.add_helm_repositories(to_lint.keys())

@@ -245,8 +245,8 @@ def application_lint_all(
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    changes_vs_branch = git_branch if git else None
-    if not application_service.lint_all(changes_vs_branch=changes_vs_branch):
+    branch = git_branch if git else None
+    if not application_service.lint_all(only_changes_from_branch=branch):
         sys.exit(1)
 
 
