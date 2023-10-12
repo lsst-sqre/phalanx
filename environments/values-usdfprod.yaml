@@ -10,13 +10,10 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
-  cachemachine: true
   datalinker: true
   livetap: true
   mobu: true
-  moneypenny: true
   nublado: true
-  nublado2: true
   plot-navigator: true
   portal: true
   postgres: true
