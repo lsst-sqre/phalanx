@@ -434,7 +434,7 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "20Mi"
+      memory: "40Mi"
     requests:
       cpu: "50m"
       memory: "6Mi"
