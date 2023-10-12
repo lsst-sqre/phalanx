@@ -46,6 +46,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.services.application
    :include-all-objects:
 
+.. automodapi:: phalanx.services.environment
+   :include-all-objects:
+
 .. automodapi:: phalanx.services.secrets
    :include-all-objects:
 

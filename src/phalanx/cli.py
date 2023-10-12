@@ -22,9 +22,15 @@ __all__ = [
     "help",
     "main",
     "application",
+    "application_add_helm_repos",
     "application_create",
+    "application_lint",
+    "application_lint_all",
+    "application_template",
     "environment",
+    "environment_lint",
     "environment_schema",
+    "environment_template",
     "secrets",
     "secrets_audit",
     "secrets_list",
@@ -91,6 +97,34 @@ def application() -> None:
     """Commands for Phalanx application configuration."""
 
 
+@application.command("add-helm-repos")
+@click.argument("name", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_add_helm_repos(
+    name: str | None = None, *, config: Path | None
+) -> None:
+    """Configure dependency Helm repositories in Helm.
+
+    Add all third-party Helm chart repositories used by Phalanx applications
+    to the local Helm cache.
+
+    This will also be done as necessary by lint commands, so using this
+    command is not necessary. It is provided as a convenience for helping to
+    manage your local Helm configuration.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    application_service.add_helm_repositories([name] if name else None)
+
+
 @application.command("create")
 @click.argument("name")
 @click.option(
@@ -134,14 +168,143 @@ def application_create(
         raise click.UsageError("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create_application(
-        name, HelmStarter(starter), description
-    )
+    application_service.create(name, HelmStarter(starter), description)
+
+
+@application.command("lint")
+@click.argument("applications", metavar="APPLICATION ...", nargs=-1)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    default=None,
+    help="Only lint this environment.",
+)
+def application_lint(
+    applications: list[str],
+    *,
+    environment: str | None = None,
+    config: Path | None,
+) -> None:
+    """Lint the Helm charts for applications.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm chart for the given applications. If no environment is specified,
+    each chart is linted for all environments for which it has a
+    configuration.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    if not application_service.lint(applications, environment):
+        sys.exit(1)
+
+
+@application.command("lint-all")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--git",
+    is_flag=True,
+    help="Only lint applications changed relative to a Git branch.",
+)
+@click.option(
+    "--git-branch",
+    type=str,
+    metavar="BRANCH",
+    default="origin/main",
+    show_default=True,
+    show_envvar=True,
+    envvar="GITHUB_BASE_REF",
+    help="Base Git branch against which to compare.",
+)
+def application_lint_all(
+    *, config: Path | None, git: bool = False, git_branch: str
+) -> None:
+    """Lint the Helm charts for every application and environment.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm charts for each application and environment combination.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    branch = git_branch if git else None
+    if not application_service.lint_all(only_changes_from_branch=branch):
+        sys.exit(1)
+
+
+@application.command("template")
+@click.argument("name")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_template(
+    name: str, environment: str, *, config: Path | None
+) -> None:
+    """Expand the chart of an application for an environment.
+
+    Print the expanded Kubernetes resources for an application as configured
+    for the given environment to standard output. This is intended for testing
+    and debugging purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    sys.stdout.write(application_service.template(name, environment))
 
 
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""
+
+
+@environment.command("lint")
+@click.argument("environment", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_lint(
+    environment: str | None = None, *, config: Path | None, git: bool = False
+) -> None:
+    """Lint the top-level Helm chart for an environment.
+
+    Lint the parent Argo CD Helm chart that installs the Argo CD applications
+    for an environment. If the environment is not given, lints the
+    instantiation of that chart for each environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    if not environment_service.lint(environment):
+        sys.exit(1)
 
 
 @environment.command("schema")
@@ -169,6 +332,29 @@ def environment_schema(*, output: Path | None) -> None:
         output.write_text(json_schema)
     else:
         sys.stdout.write(json_schema)
+
+
+@environment.command("template")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_template(environment: str, *, config: Path | None) -> None:
+    """Expand the top-level chart for an environment.
+
+    Print the expanded Kubernetes resources for the top-level chart configured
+    for the given environment. This is intended for testing and debugging
+    purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    sys.stdout.write(environment_service.template(environment))
 
 
 @main.group()

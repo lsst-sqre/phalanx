@@ -10,6 +10,7 @@ import pytest
 from phalanx.factory import Factory
 
 from .support.data import phalanx_test_path
+from .support.helm import MockHelm, patch_helm
 from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
 
@@ -18,6 +19,12 @@ from .support.vault import MockVaultClient, patch_vault
 def factory() -> Factory:
     """Create a factory pointing at the test data."""
     return Factory(phalanx_test_path())
+
+
+@pytest.fixture
+def mock_helm() -> Iterator[MockHelm]:
+    """Mock out Helm commands."""
+    yield from patch_helm()
 
 
 @pytest.fixture

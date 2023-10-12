@@ -59,6 +59,8 @@ class HelmFailedError(Exception):
         args_str = " ".join(args)
         msg = f"helm {command} {args_str} failed with status {exc.returncode}"
         super().__init__(msg)
+        self.stdout = exc.stdout
+        self.stderr = exc.stderr
 
 
 class InvalidApplicationConfigError(Exception):

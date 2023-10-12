@@ -3,14 +3,47 @@
 from __future__ import annotations
 
 import shutil
+import subprocess
 from pathlib import Path
+from unittest.mock import ANY
 
 import yaml
+from git.repo import Repo
+from git.util import Actor
 
 from phalanx.factory import Factory
 
 from ..support.cli import run_cli
-from ..support.data import phalanx_test_path, read_output_data
+from ..support.data import (
+    phalanx_test_path,
+    read_output_data,
+    read_output_json,
+)
+from ..support.helm import MockHelm
+
+
+def test_add_helm_repos(mock_helm: MockHelm) -> None:
+    result = run_cli("application", "add-helm-repos", "argocd")
+    assert result.output == ""
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"]
+    ]
+
+    mock_helm.reset_mock()
+    result = run_cli("application", "add-helm-repos")
+    assert result.output == ""
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"],
+        [
+            "repo",
+            "add",
+            "jupyterhub",
+            "https://jupyterhub.github.io/helm-chart/",
+        ],
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+    ]
 
 
 def test_create(tmp_path: Path) -> None:
@@ -170,3 +203,204 @@ def test_create_prompt(tmp_path: Path) -> None:
     with (app_path / "Chart.yaml").open() as fh:
         chart = yaml.safe_load(fh)
     assert chart["description"] == "Some application"
+
+
+def test_lint(mock_helm: MockHelm) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = (
+                "==> Linting .\n"
+                "[INFO] Chart.yaml: icon is recommended\n"
+                "\n"
+                "1 chart(s) linted, 0 chart(s) failed\n"
+            )
+        return subprocess.CompletedProcess(
+            returncode=0,
+            args=command,
+            stdout=output,
+            stderr=None,
+        )
+
+    # Lint a single application that will succeed, and check that the icon
+    # line is filtered out of the output.
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
+    expected = "==> Linting gafaelfawr (environment idfdev)\n"
+    assert result.output == expected
+    assert result.exit_code == 0
+    set_args = read_output_json("idfdev", "lint-set-values")
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "gafaelfawr",
+            "--strict",
+            "--values",
+            "gafaelfawr/values.yaml",
+            "--values",
+            "gafaelfawr/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]
+
+    # Lint both gafaelfawr and portal for all configured environmments. We
+    # won't bother to check the --set flag again. The important part is that
+    # we call helm lint twice, but all of the setup is only called once.
+    mock_helm.reset_mock()
+    result = run_cli("application", "lint", "gafaelfawr", "portal")
+    expected += (
+        "==> Linting gafaelfawr (environment minikube)\n"
+        "==> Linting portal (environment idfdev)\n"
+    )
+    assert result.output == expected
+    assert result.exit_code == 0
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "gafaelfawr",
+            "--strict",
+            "--values",
+            "gafaelfawr/values.yaml",
+            "--values",
+            "gafaelfawr/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+        [
+            "lint",
+            "gafaelfawr",
+            "--strict",
+            "--values",
+            "gafaelfawr/values.yaml",
+            "--values",
+            "gafaelfawr/values-minikube.yaml",
+            "--set",
+            ANY,
+        ],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "portal",
+            "--strict",
+            "--values",
+            "portal/values.yaml",
+            "--values",
+            "portal/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]
+
+    def callback_error(*command: str) -> subprocess.CompletedProcess:
+        return subprocess.CompletedProcess(
+            returncode=1,
+            args=command,
+            stdout="",
+            stderr="Some error\n",
+        )
+
+    mock_helm.reset_mock()
+    mock_helm.set_capture_callback(callback_error)
+    result = run_cli("application", "lint", "gafaelfawr", "--env", "idfdev")
+    assert result.output == (
+        "Some error\n"
+        "Error: Application gafaelfawr in environment idfdev has errors\n"
+    )
+    assert result.exit_code == 1
+
+
+def test_lint_all(mock_helm: MockHelm) -> None:
+    result = run_cli("application", "lint-all")
+    assert result.output == ""
+    assert result.exit_code == 0
+    expected_calls = read_output_json("idfdev", "lint-all-calls")
+    assert mock_helm.call_args_list == expected_calls
+
+
+def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
+    upstream_path = tmp_path / "upstream"
+    shutil.copytree(str(phalanx_test_path()), str(upstream_path))
+    upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
+    upstream_repo.index.add(["applications", "environments"])
+    actor = Actor("Someone", "someone@example.com")
+    upstream_repo.index.commit("Initial commit", author=actor, committer=actor)
+    change_path = tmp_path / "change"
+    repo = Repo.clone_from(str(upstream_path), str(change_path))
+
+    # Now, make a few changes that should trigger linting.
+    #
+    # - argocd (only idfdev)
+    # - gafaelfawr (values change so all environments)
+    # - portal (templates deletion so all environments)
+    # - postgres (irrelevant change, no linting)
+    path = change_path / "applications" / "argocd" / "values-idfdev.yaml"
+    with path.open("a") as fh:
+        fh.write("foo: bar\n")
+    path = change_path / "applications" / "gafaelfawr" / "values.yaml"
+    with path.open("a") as fh:
+        fh.write("foo: bar\n")
+    repo.index.remove(
+        "applications/portal/templates/vault-secrets.yaml", working_tree=True
+    )
+    repo.index.remove(
+        "applications/postgres/values-idfdev.yaml", working_tree=True
+    )
+    repo.index.add(["applications"])
+    repo.index.commit("Some changes", author=actor, committer=actor)
+
+    # Okay, now we can run the lint and check the helm commands that were run
+    # against the expected output.
+    result = run_cli(
+        "application",
+        "lint-all",
+        "--git",
+        "--config",
+        str(change_path),
+        needs_config=False,
+    )
+    assert result.output == ""
+    assert result.exit_code == 0
+    expected_calls = read_output_json("idfdev", "lint-git-calls")
+    assert mock_helm.call_args_list == expected_calls
+
+
+def test_template(mock_helm: MockHelm) -> None:
+    test_path = phalanx_test_path()
+
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "template":
+            output = "this is some template\n"
+        return subprocess.CompletedProcess(
+            returncode=0, args=command, stdout=output, stderr=None
+        )
+
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("application", "template", "gafaelfawr", "idfdev")
+    assert result.output == "this is some template\n"
+    assert result.exit_code == 0
+    set_args = read_output_json("idfdev", "lint-set-values")
+    assert mock_helm.call_args_list == [
+        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        ["repo", "update"],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "template",
+            "gafaelfawr",
+            str(test_path / "applications" / "gafaelfawr"),
+            "--include-crds",
+            "--values",
+            "gafaelfawr/values.yaml",
+            "--values",
+            "gafaelfawr/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]

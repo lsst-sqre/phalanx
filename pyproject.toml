@@ -21,7 +21,6 @@ classifiers = [
 requires-python = ">=3.11"
 
 [project.scripts]
-expand-charts = "phalanx.testing.expandcharts:main"
 phalanx = "phalanx.cli:main"
 
 [project.urls]
