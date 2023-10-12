@@ -4,6 +4,13 @@ replicaCount: 2
 redis:
   persistence:
     storageClass: "wekafs--sdf-k8s01"
+  resources:
+    limits:
+      cpu: "1"
+      memory: "200Mi"
+    requests:
+      cpu: "50m"
+      memory: "200Mi"
 
 config:
   internalDatabase: true
