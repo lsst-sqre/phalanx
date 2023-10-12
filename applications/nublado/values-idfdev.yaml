@@ -68,8 +68,11 @@ controller:
             server: "10.87.86.26"
 jupyterhub:
   hub:
+    image:
+      tag: "0.4.0"
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
+      upgrade: true
 
 secrets:
   templateSecrets: true
