@@ -172,8 +172,7 @@ def application_create(
 
 
 @application.command("lint")
-@click.argument("name")
-@click.argument("environment", required=False)
+@click.argument("applications", metavar="APPLICATION ...", nargs=-1)
 @click.option(
     "-c",
     "--config",
@@ -181,19 +180,33 @@ def application_create(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    default=None,
+    help="Only lint this environment.",
+)
 def application_lint(
-    name: str, environment: str | None = None, *, config: Path | None
+    applications: list[str],
+    *,
+    environment: str | None = None,
+    config: Path | None,
 ) -> None:
-    """Lint the Helm chart for an application.
+    """Lint the Helm charts for applications.
 
     Update and download any third-party dependency charts and then lint the
-    Helm chart for an application as configured for the given environment.
+    Helm chart for the given applications. If no environment is specified,
+    each chart is linted for all environments for which it has a
+    configuration.
     """
     if not config:
         config = _find_config()
     factory = Factory(config)
     application_service = factory.create_application_service()
-    if not application_service.lint(name, environment):
+    if not application_service.lint(applications, environment):
         sys.exit(1)
 
 

@@ -225,7 +225,7 @@ def test_lint(mock_helm: MockHelm) -> None:
     # Lint a single application that will succeed, and check that the icon
     # line is filtered out of the output.
     mock_helm.set_capture_callback(callback)
-    result = run_cli("application", "lint", "gafaelfawr", "idfdev")
+    result = run_cli("application", "lint", "gafaelfawr", "-e", "idfdev")
     expected = "==> Linting gafaelfawr (environment idfdev)\n"
     assert result.output == expected
     assert result.exit_code == 0
@@ -247,12 +247,15 @@ def test_lint(mock_helm: MockHelm) -> None:
         ],
     ]
 
-    # Lint the same application for both environmments. We won't bother to
-    # check the --set flag for the second environment. The important part is
-    # that we call helm lint twice, but all of the setup is only called once.
+    # Lint both gafaelfawr and portal for all configured environmments. We
+    # won't bother to check the --set flag again. The important part is that
+    # we call helm lint twice, but all of the setup is only called once.
     mock_helm.reset_mock()
-    result = run_cli("application", "lint", "gafaelfawr")
-    expected += "==> Linting gafaelfawr (environment minikube)\n"
+    result = run_cli("application", "lint", "gafaelfawr", "portal")
+    expected += (
+        "==> Linting gafaelfawr (environment minikube)\n"
+        "==> Linting portal (environment idfdev)\n"
+    )
     assert result.output == expected
     assert result.exit_code == 0
     assert mock_helm.call_args_list == [
@@ -281,6 +284,18 @@ def test_lint(mock_helm: MockHelm) -> None:
             "--set",
             ANY,
         ],
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "portal",
+            "--strict",
+            "--values",
+            "portal/values.yaml",
+            "--values",
+            "portal/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
     ]
 
     def callback_error(*command: str) -> subprocess.CompletedProcess:
@@ -293,7 +308,7 @@ def test_lint(mock_helm: MockHelm) -> None:
 
     mock_helm.reset_mock()
     mock_helm.set_capture_callback(callback_error)
-    result = run_cli("application", "lint", "gafaelfawr", "idfdev")
+    result = run_cli("application", "lint", "gafaelfawr", "--env", "idfdev")
     assert result.output == (
         "Some error\n"
         "Error: Application gafaelfawr in environment idfdev has errors\n"

@@ -123,7 +123,7 @@ class ApplicationService:
         # Add the documentation.
         self._create_application_docs(name, description)
 
-    def lint(self, app_name: str, env_name: str | None) -> bool:
+    def lint(self, app_names: list[str], env_name: str | None) -> bool:
         """Lint an application with Helm.
 
         Registers any required Helm repositories, refreshes them, downloads
@@ -132,8 +132,8 @@ class ApplicationService:
 
         Parameters
         ----------
-        app_name
-            Name of the application.
+        app_names
+            Names of the applications to lint.
         env_name
             Name of the environment. If not given, lint all environments for
             which this application has a configuration.
@@ -143,21 +143,24 @@ class ApplicationService:
         bool
             Whether linting passed.
         """
-        self.add_helm_repositories([app_name])
+        self.add_helm_repositories(app_names)
         self._helm.repo_update()
-        self._helm.dependency_update(app_name)
+        environments: dict[str, Environment] = {}
         if env_name:
-            environments = [self._config.load_environment(env_name)]
-        else:
-            env_names = self._config.get_application_environments(app_name)
-            environments = [
-                self._config.load_environment(e) for e in env_names
-            ]
+            environments[env_name] = self._config.load_environment(env_name)
         success = True
-        for environment in environments:
-            name = environment.name
-            values = self._build_injected_values(app_name, environment)
-            success &= self._helm.lint_application(app_name, name, values)
+        for app_name in app_names:
+            self._helm.dependency_update(app_name)
+            if env_name:
+                app_envs = [env_name]
+            else:
+                app_envs = self._config.get_application_environments(app_name)
+            for env in app_envs:
+                if env not in environments:
+                    environments[env] = self._config.load_environment(env)
+                environment = environments[env]
+                values = self._build_injected_values(app_name, environment)
+                success &= self._helm.lint_application(app_name, env, values)
         return success
 
     def lint_all(self, *, changes_vs_branch: str | None = None) -> bool:
