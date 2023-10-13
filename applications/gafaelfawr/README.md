@@ -24,6 +24,7 @@ Authentication and identity system
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
+| config.cadcBaseUuid | string | Disabled | Whether to support the `/auth/cadc/userinfo` route. If set, this UUID is used as the namespace to generate UUID v5 `sub` claims returned by this route to meet the needs of CADC authentication code. |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |

@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-41186"
+  pullPolicy: "Always"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -29,6 +33,9 @@ config:
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
     enabled: true
+
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "db8626e0-3b93-45c0-89ab-3058b0ed39fe"
 
   # User quota settings for services.
   quota:

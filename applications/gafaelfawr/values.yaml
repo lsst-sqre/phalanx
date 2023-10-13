@@ -74,6 +74,12 @@ config:
   # `slack-webhook` secret must also be set.
   slackAlerts: false
 
+  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
+  # is used as the namespace to generate UUID v5 `sub` claims returned by this
+  # route to meet the needs of CADC authentication code.
+  # @default -- Disabled
+  cadcBaseUuid: ""
+
   github:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
     # or `config.oidc.clientId` must be set.
