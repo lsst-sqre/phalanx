@@ -73,6 +73,9 @@ jupyterhub:
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
       upgrade: true
-
+cloudsql:
+  enabled: true
+  instanceConnectionName: "FIXME"
+  serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 secrets:
   templateSecrets: true

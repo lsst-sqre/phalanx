@@ -13,6 +13,17 @@ JupyterHub and custom spawner for the Rubin Science Platform
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| cloudsql.affinity | object | `{}` | Affinity rules for the Cloud SQL Proxy pod |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a separate service, because shoehorning it into Zero to Jupyterhub's extraContainers looks messy, and it's not necessary that it be very performant. |
+| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
+| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.tag | string | `"1.33.11"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
+| cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
+| cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
+| cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
+| cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
 | controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
 | controller.config.fileserver.image | string | `"ghcr.io/lsst-sqre/worblehat"` | Image for fileserver container |
