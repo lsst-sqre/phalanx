@@ -6,9 +6,16 @@ metadata:
     {{- include "siav2.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  delegate:
+    internal:
+      scopes:
+      - read:tap
+      service: siav2
+    useAuthorization: true
+  loginRedirect: true
   scopes:
     all:
-      - "read:image"
+    - read:image
   loginRedirect: true
 template:
   metadata:

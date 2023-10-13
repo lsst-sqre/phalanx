@@ -6,7 +6,7 @@ metadata:
     {{- include "siav2.labels" . | nindent 4 }}
 data:
   cadc-registry.properties: |
-    ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}/auth/openid
+    ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}/auth/cadc
   catalina.properties: |
     # tomcat properties
     tomcat.connector.connectionTimeout=20000
@@ -23,7 +23,8 @@ data:
     org.opencadc.sia2.uws.url=jdbc:postgresql://siav2-uws-db/
 
     # authentication provider
-    # ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
+    ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
+    #ca.nrc.cadc.auth.PrincipalExtractor.allowBasicATP=true
   sia2.properties: |
     # TAP service
     org.opencadc.sia2.queryService = {{ .Values.global.baseUrl }}/api/tap
