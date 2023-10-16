@@ -462,7 +462,9 @@ pyhcl==0.4.5 \
 pyjwt[crypto]==2.8.0 \
     --hash=sha256:57e28d156e3d5c10088e0c68abb90bfac3df82b40a71bd0daa20c65ccd5c23de \
     --hash=sha256:59127c392cc44c2da5bb3192169a91f429924e17aff6534d70fdc02ab3e04320
-    # via gidgethub
+    # via
+    #   gidgethub
+    #   pyjwt
 python-dateutil==2.8.2 \
     --hash=sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86 \
     --hash=sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9
@@ -526,7 +528,9 @@ requests==2.31.0 \
 rfc3986[idna2008]==1.5.0 \
     --hash=sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835 \
     --hash=sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97
-    # via httpx
+    # via
+    #   httpx
+    #   rfc3986
 safir==5.0.0a2 \
     --hash=sha256:a13ac781a345d67ae43fd8a0a2434904e5dfca9f9321c15547e4d18b50144fe4 \
     --hash=sha256:c8ab7f043e0e65ccda4fef2a15697802224b2c42876991c1a12d0b41115d0bc5
