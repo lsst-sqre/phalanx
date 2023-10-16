@@ -11,6 +11,7 @@ controller:
       cycle: 33
       recommended_tag: "recommended_c0033"
     lab:
+      application: "nublado-users"
       pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
