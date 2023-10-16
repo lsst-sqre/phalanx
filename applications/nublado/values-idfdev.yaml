@@ -19,6 +19,7 @@ controller:
       numWeeklies: 2
       numDailies: 3
     lab:
+      application: "nublado-users"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
