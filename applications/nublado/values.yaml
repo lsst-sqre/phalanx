@@ -97,6 +97,9 @@ controller:
       aliasTags: []
 
     lab:
+      # -- ArgcoCD application in which to collect user lab objects.
+      # @default -- See `values.yaml`
+      application: "nublado-users"
       # -- Environment variables to set for every user lab.
       # @default -- See `values.yaml`
       env:
