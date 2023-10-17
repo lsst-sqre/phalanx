@@ -70,7 +70,7 @@ controller:
 jupyterhub:
   hub:
     image:
-      tag: "tickets-DM-41198B"
+      tag: "0.4.1"
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
