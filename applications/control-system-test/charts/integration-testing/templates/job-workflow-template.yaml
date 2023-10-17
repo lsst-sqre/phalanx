@@ -47,7 +47,7 @@ spec:
         value: {{ .Values.envEfd }}
       - name: RUN_ARG
         value: {{ printf "'{{inputs.parameters.integrationtest}}'" }}
-      - name: LSST_SASL_PLAIN_PASSWORD
+      - name: LSST_KAFKA_SECURITY_PASSWORD
         valueFrom:
           secretKeyRef:
             name: ts-salkafka
