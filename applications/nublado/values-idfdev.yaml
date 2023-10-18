@@ -19,6 +19,7 @@ controller:
       numWeeklies: 2
       numDailies: 3
     lab:
+      application: "nublado-users"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
@@ -69,10 +70,15 @@ controller:
 jupyterhub:
   hub:
     image:
-      tag: "0.4.0"
+      tag: "0.4.1"
     db:
-      url: "postgresql://nublado3@postgres.postgres/nublado3"
+      url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-
+hub:
+  internalDatabase: false
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
+  serviceAccount: "nublado@science-platform-dev-7696.iam.gserviceaccount.com"
 secrets:
   templateSecrets: true

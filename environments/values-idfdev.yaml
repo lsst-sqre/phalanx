@@ -14,7 +14,6 @@ applications:
   noteburst: true
   nublado: true
   portal: true
-  postgres: true
   sasquatch: true
   semaphore: true
   sherlock: true
