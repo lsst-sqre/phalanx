@@ -8,10 +8,11 @@ prompt-proto-service:
     repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: AuxTel20230524-w_2023_20
+    tag: latest
 
   instrument:
-    calibRepo: s3://rubin-summit-users/
+    pipelines: (survey="SURVEY")=[${PROMPT_PROTOTYPE_DIR}/pipelines/${RUBIN_INSTRUMENT}/ApPipe.yaml]
+    calibRepo: s3://rubin-pp-users/central_repo/
 
   s3:
     imageBucket: rubin-pp
@@ -26,6 +27,8 @@ prompt-proto-service:
     ip: usdf-prompt-processing-dev.slac.stanford.edu:5432  # TODO: remove on DM-40839
 
   registry:  # TODO: remove on DM-40839
-    ip: usdf-butler.slac.stanford.edu:5432
+    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
+    db: ppcentralbutler
+    user: pp
 
   fullnameOverride: "prompt-proto-service-latiss"
