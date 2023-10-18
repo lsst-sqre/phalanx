@@ -1,6 +1,6 @@
 strimzi-kafka:
   mirrormaker2:
-    enabled: true
+    enabled: false
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
       topicsPattern: "lsst.sal.*, registry-schemas"
@@ -9,10 +9,10 @@ strimzi-kafka:
         separator: "."
         class: "org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
     sourceRegistry:
-      enabled: true
+      enabled: false
       schemaTopic: source.registry-schemas
     sourceConnect:
-      enabled: true
+      enabled: false
     resources:
       requests:
         cpu: 2
@@ -61,7 +61,7 @@ influxdb-staging:
     hostname: base-lsp.lsst.codes
 
 source-influxdb:
-  enabled: true
+  enabled: false
   persistence:
     storageClass: rook-ceph-block
     size: 10Ti
@@ -320,7 +320,7 @@ telegraf-kafka-consumer:
 # environment where data is replicated from.
 # We need to remove the "source." prefix from the topic name before writing to InfluxDB.
 source-kafka-connect-manager:
-  enabled: true
+  enabled: false
   influxdbSink:
     connectInfluxUrl: "http://sasquatch-influxdb-staging.sasquatch:8086"
     connectInfluxDb: "efd"
@@ -438,7 +438,7 @@ chronograf:
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/base.json
 
 source-kapacitor:
-  enabled: true
+  enabled: false
   persistence:
     storageClass: rook-ceph-block
 
