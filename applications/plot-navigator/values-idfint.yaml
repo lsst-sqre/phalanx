@@ -3,3 +3,5 @@ environment:
   PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://storage.googleapis.com"
+config:
+  separateSecrets: true

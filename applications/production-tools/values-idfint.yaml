@@ -3,3 +3,5 @@ environment:
   LOG_BUCKET: "drp-us-central1-logging"
   LOG_PREFIX: "Panda-RubinLog"
   WEB_CONCURRENCY: "4"
+config:
+  separateSecrets: true

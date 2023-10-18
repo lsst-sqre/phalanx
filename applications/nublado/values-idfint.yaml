@@ -102,3 +102,6 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
+
+secrets:
+  templateSecrets: true

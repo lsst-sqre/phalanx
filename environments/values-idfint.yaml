@@ -1,6 +1,9 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 fqdn: data-int.lsst.cloud
 name: idfint
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP data-int.lsst.cloud"
 vaultPathPrefix: secret/phalanx/idfint
 
 applications:
