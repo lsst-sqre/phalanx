@@ -47,7 +47,7 @@ class ApplicationService:
 
     def add_helm_repositories(
         self, applications: Iterable[str] | None = None, *, quiet: bool = False
-    ) -> None:
+    ) -> bool:
         """Add all Helm repositories used by any application to Helm's cache.
 
         To perform other Helm operations, such as downloading third-party
@@ -65,6 +65,13 @@ class ApplicationService:
             applications.
         quiet
             Whether to suppress Helm's standard output.
+
+        Returns
+        -------
+        bool
+            Whether any Helm repositories were added. If there were none, the
+            caller should not call :command:`helm update`, because it fails
+            if there are no repositories.
         """
         if applications:
             repo_urls = set()
@@ -75,6 +82,7 @@ class ApplicationService:
             repo_urls = self._config.get_all_dependency_repositories()
         for url in sorted(repo_urls):
             self._helm.repo_add(url, quiet=quiet)
+        return bool(repo_urls)
 
     def create(
         self, name: str, starter: HelmStarter, description: str
@@ -143,8 +151,8 @@ class ApplicationService:
         bool
             Whether linting passed.
         """
-        self.add_helm_repositories(app_names)
-        self._helm.repo_update()
+        if self.add_helm_repositories(app_names):
+            self._helm.repo_update()
         environments: dict[str, Environment] = {}
         if env_name:
             environments[env_name] = self._config.load_environment(env_name)
@@ -189,8 +197,8 @@ class ApplicationService:
             to_lint = self._config.get_modified_applications(branch)
         else:
             to_lint = self._config.list_application_environments()
-        self.add_helm_repositories(to_lint.keys())
-        self._helm.repo_update()
+        if self.add_helm_repositories(to_lint.keys()):
+            self._helm.repo_update()
         environments: dict[str, Environment] = {}
         success = True
         for app_name, app_envs in sorted(to_lint.items()):

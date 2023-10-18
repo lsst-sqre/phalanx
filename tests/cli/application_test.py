@@ -316,6 +316,42 @@ def test_lint(mock_helm: MockHelm) -> None:
     assert result.exit_code == 1
 
 
+def test_lint_no_repos(mock_helm: MockHelm) -> None:
+    def callback(*command: str) -> subprocess.CompletedProcess:
+        output = None
+        if command[0] == "lint":
+            output = "==> Linting .\n"
+        return subprocess.CompletedProcess(
+            returncode=0,
+            args=command,
+            stdout=output,
+            stderr=None,
+        )
+
+    # Lint a single application that has no dependency charts, and make sure
+    # we don't try to run repo update, which may fail.
+    mock_helm.set_capture_callback(callback)
+    result = run_cli("application", "lint", "postgres", "-e", "idfdev")
+    expected = "==> Linting postgres (environment idfdev)\n"
+    assert result.output == expected
+    assert result.exit_code == 0
+    set_args = read_output_json("idfdev", "lint-set-values")
+    assert mock_helm.call_args_list == [
+        ["dependency", "update", "--skip-refresh"],
+        [
+            "lint",
+            "postgres",
+            "--strict",
+            "--values",
+            "postgres/values.yaml",
+            "--values",
+            "postgres/values-idfdev.yaml",
+            "--set",
+            ",".join(set_args),
+        ],
+    ]
+
+
 def test_lint_all(mock_helm: MockHelm) -> None:
     result = run_cli("application", "lint-all")
     assert result.output == ""
