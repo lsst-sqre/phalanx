@@ -23,6 +23,9 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst-ts"
+          team: "integration-testing-team"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
