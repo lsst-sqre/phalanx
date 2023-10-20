@@ -67,6 +67,7 @@
 | controlSystemAppNamespace | string | None, must be set | Application namespacce for the control system deployment |
 | controlSystemImageTag | string | None, must be set | Image tag for the control system deployment |
 | controlSystemKafkaBrokerAddress | string | `"sasquatch-kafka-brokers.sasquatch:9092"` | Kafka broker address for the control system deployment |
+| controlSystemKafkaTopicReplicationFactor | int | `3` | Kafka topic replication factor for control system topics |
 | controlSystemS3EndpointUrl | string | None, must be set: "" | S3 endpoint (LFA) for the control system deployment |
 | controlSystemSchemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL for the control system deployment |
 | controlSystemSiteTag | string | None, must be set | Site tag for the control system deployment |

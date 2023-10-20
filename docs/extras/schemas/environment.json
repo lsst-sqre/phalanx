@@ -218,6 +218,18 @@
       "default": null,
       "title": "Controlsystemkafkabrokeraddress"
     },
+    "controlSystemKafkaTopicReplicationFactor": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Controlsystemkafkatopicreplicationfactor"
+    },
     "controlSystemSchemaRegistryUrl": {
       "anyOf": [
         {

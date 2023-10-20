@@ -233,6 +233,9 @@ controlSystemTopicName: sal
 # -- Kafka broker address for the control system deployment
 controlSystemKafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
 
+# -- Kafka topic replication factor for control system topics
+controlSystemKafkaTopicReplicationFactor: 3
+
 # -- Schema registry URL for the control system deployment
 controlSystemSchemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
 

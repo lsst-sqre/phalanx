@@ -254,6 +254,9 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     control_system_kafka_broker_address: str | None = None
     """The Kafka broker address for the control system components."""
 
+    control_system_kafka_topic_replication_factor: int | None = None
+    """The Kafka topic replication factor for control system components."""
+
     control_system_schema_registry_url: str | None = None
     """The Schema Registry URL for the control system components."""
 
