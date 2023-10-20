@@ -181,6 +181,8 @@ kafka-connect-manager:
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
+  image:
+    tag: 4.0.0
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
