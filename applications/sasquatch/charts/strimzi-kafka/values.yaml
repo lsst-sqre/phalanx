@@ -8,6 +8,8 @@ kafka:
   version: "3.5.1"
   # -- Number of Kafka broker replicas to run.
   replicas: 3
+  # -- Number of down brokers that the system can tolerate.
+  disruption_tolerance: 0
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers.
     size: 500Gi

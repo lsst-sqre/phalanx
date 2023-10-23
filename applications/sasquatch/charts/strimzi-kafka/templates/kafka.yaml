@@ -92,9 +92,9 @@ spec:
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
-      transaction.state.log.min.isr: {{ .Values.kafka.replicas }}
+      transaction.state.log.min.isr: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
       default.replication.factor: {{ .Values.kafka.replicas }}
-      min.insync.replicas: {{ .Values.kafka.replicas }}
+      min.insync.replicas: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
       {{- range $key, $value := .Values.kafka.config }}
       {{ $key }}: {{ $value }}
       {{- end }}

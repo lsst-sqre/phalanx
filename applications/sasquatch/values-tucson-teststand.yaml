@@ -1,5 +1,6 @@
 strimzi-kafka:
   kafka:
+    disruption_tolerance: 1
     config:
       auto.create.topics.enable: false
     storage:

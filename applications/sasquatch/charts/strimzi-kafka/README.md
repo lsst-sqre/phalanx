@@ -19,6 +19,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained. |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition. |
 | kafka.config."replica.lag.time.max.ms" | int | `120000` | Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect. |
+| kafka.disruption_tolerance | int | `0` | Number of down brokers that the system can tolerate. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource. |
 | kafka.externalListener.bootstrap.host | string | `""` | Name used for TLS hostname verification. |
 | kafka.externalListener.bootstrap.loadBalancerIP | string | `""` | The loadbalancer is requested with the IP address specified in this field. This feature depends on whether the underlying cloud provider supports specifying the loadBalancerIP when a load balancer is created. This field is ignored if the cloud provider does not support the feature. Once the IP address is provisioned this option make it possible to pin the IP address. We can request the same IP next time it is provisioned. This is important because it lets us configure a DNS record, associating a hostname with that pinned IP address. |
