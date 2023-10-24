@@ -23,9 +23,11 @@ Simple Image Access v2 service
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the siav2 deployment pod |
+| obsCoreTable | string | `"ivoa.ObsCore"` | ObsCore table on the TAP service to query |
 | podAnnotations | object | `{}` | Annotations for the siav2 deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the siav2 deployment pod |
+| tapService | string | `"tap"` | Local TAP service endpoint to query |
 | tolerations | list | `[]` | Tolerations for the siav2 deployment pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |

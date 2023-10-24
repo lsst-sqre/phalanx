@@ -94,3 +94,9 @@ uws:
 
   # -- Affinity rules for the UWS database pod
   affinity: {}
+
+# -- Local TAP service endpoint to query
+tapService: "tap"
+
+# -- ObsCore table on the TAP service to query
+obsCoreTable: "ivoa.ObsCore"

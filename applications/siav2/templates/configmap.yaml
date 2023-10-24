@@ -27,6 +27,7 @@ data:
     #ca.nrc.cadc.auth.PrincipalExtractor.allowBasicATP=true
   sia2.properties: |
     # TAP service
-    org.opencadc.sia2.queryService = {{ .Values.global.baseUrl }}/api/tap
+    org.opencadc.sia2.queryService = {{ .Values.global.baseUrl }}/api/{{ .Values.tapService }}
+    org.opencadc.sia2.table = {{ .Values.obsCoreTable }}
   war-rename.conf: |
     mv sia2.war api#siav2.war
