@@ -39,7 +39,7 @@ alert-stream-broker:
         - key: kafka
           value: ok
           effect: NoSchedule
-  vaultSecretsPath: "secret/k8s_operator/data-int.lsst.cloud/alert-stream-broker"
+  vaultSecretsPath: "secret/phalanx/idfint/alert-stream-broker"
 
   users:
     # A user for development purposes by the Rubin team, with access to all
