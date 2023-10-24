@@ -1,8 +1,6 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 fqdn: data-int.lsst.cloud
 name: idfint
-# FIXME undo this change when we merge everything
-targetRevision: "tickets/DM-41237"
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP data-int.lsst.cloud"
