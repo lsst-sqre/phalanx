@@ -89,12 +89,14 @@ controller:
 
 jupyterhub:
   hub:
+    image:
+      tag: "0.4.1"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
     db:
-      url: "postgresql://nublado3@postgres.postgres/nublado3"
-
+      url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+      upgrade: true
   cull:
     enabled: true
     users: false
@@ -103,5 +105,11 @@ jupyterhub:
     every: 300
     maxAge: 2160000
 
+hub:
+  internalDatabase: false
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+  serviceAccount: "nublado@science-platform-int-dc5d.iam.gserviceaccount.com"
 secrets:
   templateSecrets: true
