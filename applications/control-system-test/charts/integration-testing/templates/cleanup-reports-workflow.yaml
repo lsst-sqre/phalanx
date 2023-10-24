@@ -23,7 +23,7 @@ spec:
     container:
       image: alpine:latest
       command: [sh, -c]
-      args: ["rm /pvc/*.*"]
+      args: ["rm -f /pvc/*.* /pvc/STATE_FAILED"]
       volumeMounts:
         - name: testreports
           mountPath: /pvc
