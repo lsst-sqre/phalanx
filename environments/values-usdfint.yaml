@@ -1,0 +1,25 @@
+butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
+fqdn: usdf-rsp-int.slac.stanford.edu
+name: usdfint
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: secret/rubin/usdf-rsp-int
+
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  ingress-nginx: false
+
+  datalinker: true
+  livetap: true
+  mobu: true
+  nublado: true
+  plot-navigator: true
+  portal: true
+  postgres: true
+  sasquatch: true
+  semaphore: true
+  ssotap: true
+  squareone: true
+  strimzi: true
+  tap: true

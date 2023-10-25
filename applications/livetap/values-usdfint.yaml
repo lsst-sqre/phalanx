@@ -1,0 +1,4 @@
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstsqre/tap-schema-usdf-prod-livetap"
