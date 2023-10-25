@@ -9,7 +9,7 @@ appVersion: 9.4.0
 
 dependencies:
   - name: redis
-    version: 1.0.8
+    version: 1.0.9
     repository: https://lsst-sqre.github.io/charts/
 
 annotations:
