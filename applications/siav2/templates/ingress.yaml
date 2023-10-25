@@ -5,6 +5,7 @@ metadata:
   labels:
     {{- include "siav2.labels" . | nindent 4 }}
 config:
+  authType: basic
   baseUrl: {{ .Values.global.baseUrl | quote }}
   delegate:
     internal:
@@ -12,11 +13,10 @@ config:
       - read:tap
       service: siav2
     useAuthorization: true
-  loginRedirect: true
+  loginRedirect: false
   scopes:
     all:
     - read:image
-  loginRedirect: true
 template:
   metadata:
     name: "siav2"
