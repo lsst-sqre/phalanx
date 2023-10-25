@@ -8,6 +8,7 @@ Helm chart for Integration Testing Workflows.
 |-----|------|---------|-------------|
 | envEfd | string | `nil` | The Name of the EFD instance. |
 | image.tag | string | `nil` | The image tag for the Integration Test runner container |
+| jobLabelName | string | `"control-system-test"` | Label for jobs to get them to appear in application |
 | persistentVolume.claimName | string | `"saved-reports"` | PVC name for saving the reports |
 | persistentVolume.storage | string | `"1Gi"` | Storage size request for the PVC |
 | reportLocation | string | `"/home/saluser/robotframework_EFD/Reports"` | Container location of the RobotFramework reports |

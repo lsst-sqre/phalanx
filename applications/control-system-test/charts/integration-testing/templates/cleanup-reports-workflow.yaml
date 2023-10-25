@@ -10,6 +10,8 @@ spec:
   artifactRepositoryRef:
     configMap: integration-test-controller-configmap
     key: artifactRepository
+  ttlStrategy:
+    secondsAfterCompletion: 1800
   volumes:
   - name: testreports
     persistentVolumeClaim:
@@ -20,6 +22,9 @@ spec:
   entrypoint: cleanup-reports
   templates:
   - name: cleanup-reports
+    metadata:
+      labels:
+        argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
     container:
       image: alpine:latest
       command: [sh, -c]

@@ -16,3 +16,5 @@ persistentVolume:
   claimName: saved-reports
   # -- Storage size request for the PVC
   storage: 1Gi
+# -- Label for jobs to get them to appear in application
+jobLabelName: control-system-test

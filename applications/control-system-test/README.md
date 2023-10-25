@@ -20,6 +20,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | integration-testing.enabled | bool | `false` | Enable the integration testing system |
 | integration-testing.envEfd | string | `nil` | The Name of the EFD instance. |
 | integration-testing.image.tag | string | `nil` | The image tag for the Integration Test runner container |
+| integration-testing.jobLabelName | string | `"control-system-test"` | Label for jobs to get them to appear in application |
 | integration-testing.persistentVolume.claimName | string | `"saved-reports"` | PVC name for saving the reports |
 | integration-testing.persistentVolume.storage | string | `"1Gi"` | Storage size request for the PVC |
 | integration-testing.reportLocation | string | `"/home/saluser/robotframework_EFD/Reports"` | Container location of the RobotFramework reports |

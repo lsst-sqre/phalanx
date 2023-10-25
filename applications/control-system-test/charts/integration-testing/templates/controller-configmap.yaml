@@ -8,7 +8,7 @@ metadata:
 data:
   artifactRepository: |    # However, all nested maps must be strings
     s3:
-      endpoint: {{ $.Values.global.controlSystemS3EndpointUrl }}
+      endpoint: {{ $.Values.global.controlSystemS3EndpointUrl | trimPrefix "https://" }}
       bucket: {{ .Values.s3Bucket }}
       insecure: false
       accessKeySecret:
