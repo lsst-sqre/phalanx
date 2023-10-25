@@ -19,8 +19,8 @@ jupyterhub:
       nginx.ingress.kubernetes.io/auth-signin: "https://data-int.lsst.cloud/login"
 config:
   base_url: "https://data-int.lsst.cloud"
-  butler_secret_path: "secret/k8s_operator/data-int.lsst.cloud/butler-secret"
-  pull_secret_path: "secret/k8s_operator/data-int.lsst.cloud/pull-secret"
+  butler_secret_path: "secret/phalanx/idfint/butler-secret"
+  pull_secret_path: "secret/phalanx/idfint/pull-secret"
   cachemachine_image_policy: "desired"
   lab_environment:
     PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
