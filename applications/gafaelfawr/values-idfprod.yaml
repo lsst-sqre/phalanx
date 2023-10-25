@@ -26,6 +26,9 @@ config:
   firestore:
     project: "rsp-firestore-stable-e8eb"
 
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "5f0eb655-0e72-4948-a6a5-a94c0be9019f"
+
   # User quota settings for services.
   quota:
     default:

@@ -18,6 +18,9 @@ config:
   oidcServer:
     enabled: true
 
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "efa0a347-b648-4948-a987-055efbf6802a"
+
   oidc:
     clientId: rubin-usdf-rsp-dev
     audience: "rubin-usdf-rsp-dev"
