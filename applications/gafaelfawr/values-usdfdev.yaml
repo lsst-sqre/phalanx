@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-41186"
+  pullPolicy: "Always"
+
 replicaCount: 2
 
 # Use the CSI storage class so that we can use snapshots.
@@ -17,6 +21,9 @@ config:
 
   oidcServer:
     enabled: true
+
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "efa0a347-b648-4948-a987-055efbf6802a"
 
   oidc:
     clientId: rubin-usdf-rsp-dev
