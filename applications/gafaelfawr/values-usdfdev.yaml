@@ -1,7 +1,3 @@
-image:
-  tag: "tickets-DM-41186"
-  pullPolicy: "Always"
-
 replicaCount: 2
 
 # Use the CSI storage class so that we can use snapshots.

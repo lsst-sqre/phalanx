@@ -11,6 +11,9 @@ config:
   oidcServer:
     enabled: true
 
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "82c6fc76-b7d3-4368-92a9-6a468dfa23dc"
+
   oidc:
     clientId: vcluster--usdf-rsp-int
     audience: "vcluster--usdf-rsp-int"
