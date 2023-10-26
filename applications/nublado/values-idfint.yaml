@@ -90,7 +90,7 @@ controller:
 jupyterhub:
   hub:
     image:
-      tag: "0.4.1"
+      tag: "0.5.0"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
