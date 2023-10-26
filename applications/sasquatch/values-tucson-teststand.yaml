@@ -5,6 +5,7 @@ strimzi-kafka:
       auto.create.topics.enable: false
       log.retention.hours: 24
       offsets.retention.minutes: 1440
+      min.compaction.lag.ms: 86400000
     storage:
       storageClassName: rook-ceph-block
     externalListener:
