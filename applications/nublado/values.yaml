@@ -304,7 +304,7 @@ jupyterhub:
       name: ghcr.io/lsst-sqre/rsp-restspawner
 
       # -- Tag of image to use for JupyterHub
-      tag: 0.3.2
+      tag: 0.5.0
 
     # -- Resource limits and requests
     resources:
