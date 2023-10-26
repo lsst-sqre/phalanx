@@ -35,11 +35,11 @@ spec:
                 - name: PGHOST
                   value: {{ .Values.env.DB_HOST | quote }}
                 - name: PGPORT
-                  value: {{ .Values.database.port | quote }}
+                  value: {{ .Values.env.DB_PORT | quote }}
                 - name: PGDATABASE
-                  value: {{ .Values.database.env.POSTGRES_DB | quote }}
+                  value: {{ .Values.env.DB_NAME | quote }}
                 - name: PGUSER
-                  value: {{ .Values.database.env.POSTGRES_USER | quote }}
+                  value: {{ .Values.env.DB_USER | quote }}
                 - name: LOVE_SITE
                   value: {{ .Values.env.LOVE_SITE | quote }}
                 {{- range $env_var, $env_value := .Values.viewBackup.env }}
@@ -50,7 +50,7 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: love-secrets
-                      key: {{ .Values.database.envSecrets.POSTGRES_PASSWORD }}
+                      key: {{ .Values.envSecrets.DB_PASS }}
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:

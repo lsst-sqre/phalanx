@@ -12,22 +12,6 @@ Helm chart for the LOVE manager service.
 | autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
 | autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
-| database.affinity | object | `{}` | Affinity rules for the LOVE database pods |
-| database.env.POSTGRES_DB | string | `"postgres"` | Define the database type |
-| database.env.POSTGRES_USER | string | `"postgres"` | Define the database user |
-| database.envSecrets.POSTGRES_PASSWORD | string | `"db-pass"` | The database password secret key name |
-| database.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the database image |
-| database.image.repository | string | `"postgres"` | The database image to use |
-| database.image.tag | string | `"12.0"` | The tag to use for the database image |
-| database.nodeSelector | object | `{}` | Node selection rules for the LOVE database pods |
-| database.port | int | `5432` | The database port number |
-| database.resources | object | `{}` | Resource specifications for the LOVE database pods |
-| database.storage.accessMode | string | `"ReadWriteMany"` | The access mode for the database storage |
-| database.storage.claimSize | string | `"2Gi"` | The size of the database storage request |
-| database.storage.name | string | `"love-manager-database"` | Label for the database storage point |
-| database.storage.path | string | `"/var/lib/postgresql/data"` | Path within the running container |
-| database.storage.storageClass | string | `"local-store"` | The storage class to request the disk allocation from |
-| database.tolerations | list | `[]` | Toleration specifications for the LOVE database pods |
 | env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |
 | env.AUTH_LDAP_2_SERVER_URI | string | `"ldap://ipa2.lsst.local"` | Set the URI for the 2nd LDAP server |
 | env.AUTH_LDAP_3_SERVER_URI | string | `"ldap://ipa3.lsst.local"` | Set the URI for the 3rd LDAP server |
@@ -35,9 +19,9 @@ Helm chart for the LOVE manager service.
 | env.COMMANDER_PORT | int | `5000` | Port number for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
 | env.DB_ENGINE | string | `"postgresql"` | The type of database engine being used for the LOVE manager |
 | env.DB_HOST | string | `"love-manager-database-service"` | The name of the database service |
-| env.DB_NAME | string | `"postgres"` | The name of the database being used for the LOVE manager. Must match `database.env.POSTGRES_DB` |
-| env.DB_PORT | int | `5432` | The port for the database Must match `database.port` |
-| env.DB_USER | string | `"postgres"` | The database user needed for access from the LOVE manager. Must match `database.env.POSTGRES_USER` |
+| env.DB_NAME | string | `"love"` | The name of the database being used for the LOVE manager. |
+| env.DB_PORT | int | `5432` | The port for the database |
+| env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager. |
 | env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
 | env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
 | env.LOVE_PRODUCER_WEBSOCKET_HOST | string | `"love-service/manager/ws/subscription"` | The URL path for the LOVE producer websocket host |
@@ -50,7 +34,7 @@ Helm chart for the LOVE manager service.
 | envSecretKeyName | string | `"love"` | The top-level secret key name that houses the rest of the secrets |
 | envSecrets.ADMIN_USER_PASS | string | `"admin-user-pass"` | The LOVE manager admin user password secret key name |
 | envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager cmd_user user password secret key name |
-| envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. Must match `database.envSecrets.POSTGRES_PASSWORD` |
+| envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. |
 | envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager process connection password secret key name |
 | envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
 | envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager secret secret key name |

@@ -42,6 +42,7 @@ love-manager:
     AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
     AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
     AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+    DB_HOST: postgresdb01.tu.lsst.org
     REDIS_CONFIG_EXPIRY: 5
     REDIS_CONFIG_CAPACITY: 5000
     LOVE_SITE: tucson
@@ -66,17 +67,6 @@ love-manager:
       port: 8000
     initialDelaySeconds: 20
     periodSeconds: 10
-  database:
-    image:
-      repository: postgres
-      tag: '15.0'
-      pullPolicy: IfNotPresent
-    storage:
-      name: love-manager-database
-      path: /var/lib/postgresql
-      storageClass: rook-ceph-block
-      accessMode: ReadWriteOnce
-      claimSize: 2Gi
   redis:
     image:
       repository: redis
