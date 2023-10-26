@@ -85,6 +85,10 @@ global:
   # @default -- Set by ArgoCD
   controlSystemKafkaBrokerAddress: ""
 
+  # -- Kafka topic replication factor for control system topics
+  # @default -- Set by ArgoCD
+  controlSystemKafkaTopicReplicationFactor: ""
+
   # -- Schema registry URL for the control system deployment
   # @default -- Set by ArgoCD
   controlSystemSchemaRegistryUrl: ""

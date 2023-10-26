@@ -10,6 +10,7 @@ Deployment for the Test CSCs and Integration Testing Workflows
 | global.controlSystemAppNamespace | string | Set by ArgoCD | Application namespacce for the control system deployment |
 | global.controlSystemImageTag | string | Set by ArgoCD | Image tag for the control system deployment |
 | global.controlSystemKafkaBrokerAddress | string | Set by ArgoCD | Kafka broker address for the control system deployment |
+| global.controlSystemKafkaTopicReplicationFactor | string | Set by ArgoCD | Kafka topic replication factor for control system topics |
 | global.controlSystemS3EndpointUrl | string | Set by ArgoCD | S3 endpoint (LFA) for the control system deployment |
 | global.controlSystemSchemaRegistryUrl | string | Set by ArgoCD | Schema registry URL for the control system deployment |
 | global.controlSystemSiteTag | string | Set by ArgoCD | Site tag for the control system deployment |
