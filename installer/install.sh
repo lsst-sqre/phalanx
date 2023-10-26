@@ -20,15 +20,15 @@ else
 fi
 export VAULT_TOKEN=$(vault write auth/approle/login role_id="$VAULT_ROLE_ID" secret_id="$VAULT_SECRET_ID" | grep 'token ' | awk '{ print $2 }')
 VAULT_PATH_PREFIX=$(yq -r .vaultPathPrefix "$config")
-ARGOCD_PASSWORD=$(vault kv get --field=admin.plaintext_password $VAULT_PATH_PREFIX/argocd)
+ARGOCD_PASSWORD=$(vault kv get --field=admin.plaintext_password "$VAULT_PATH_PREFIX"/argocd)
 
 echo "Putting Vault credentials in a secret for vault-secrets-operator..."
 # The namespace may not exist already, but don't error if it does.
 kubectl create ns vault-secrets-operator || true
 kubectl create secret generic vault-credentials \
   --namespace vault-secrets-operator \
-  --from-literal=VAULT_ROLE_ID=$VAULT_ROLE_ID \
-  --from-literal=VAULT_SECRET_ID=$VAULT_SECRET_ID \
+  --from-literal=VAULT_ROLE_ID="$VAULT_ROLE_ID" \
+  --from-literal=VAULT_SECRET_ID="$VAULT_SECRET_ID" \
   --dry-run=client -o yaml | kubectl apply -f -
 
 # Argo CD depends a Vault-created secret for its credentials, so
@@ -67,15 +67,15 @@ argocd login \
 
 echo "Creating the top-level Argo CD application..."
 argocd app create science-platform \
-  --repo $GIT_URL \
+  --repo "$GIT_URL" \
   --path environments --dest-namespace default \
   --dest-server https://kubernetes.default.svc \
   --upsert \
-  --revision $GIT_BRANCH \
+  --revision "$GIT_BRANCH" \
   --port-forward \
   --port-forward-namespace argocd \
-  --helm-set repoUrl=$GIT_URL \
-  --helm-set targetRevision=$GIT_BRANCH \
+  --helm-set repoUrl="$GIT_URL" \
+  --helm-set targetRevision="$GIT_BRANCH" \
   --values values.yaml \
   --values values-$ENVIRONMENT.yaml
 
