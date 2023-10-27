@@ -14,12 +14,9 @@ env:
 envSecrets:
   PROCESS_CONNECTION_PASS: process-connection-pass
 # -- (obj) This sections sets the list of producers to use.
-# The producers are collected into producer groups and a CSC producers
-# will be assigned to a given container.
 # The producers should be specified like:
-# _name_: The top-level name for the producer group.
-# _cscs_: Map of _CSC name:index_
-# Example: ataos: ATAOS:0
+# _name_: The identifying name for the CSC producer
+# _csc_: _CSC name:index_
 # The following attributes are optional
 # _resources_ (A resource object specification)
 # _nodeSelector_ (A node selector object specification)

@@ -121,7 +121,7 @@ Deployment for the LSST Operators Visualization Environment
 | love-producer.image.repository | string | `"lsstts/love-producer"` | The LOVE producer image to use |
 | love-producer.image.tag | string | `nil` |  |
 | love-producer.nodeSelector | object | `{}` | Node selection rules applied to all LOVE producer pods |
-| love-producer.producers | obj | `[]` | This sections sets the list of producers to use. The producers are collected into producer groups and a CSC producers will be assigned to a given container. The producers should be specified like: _name_: The top-level name for the producer group. _cscs_: Map of _CSC name:index_ Example: ataos: ATAOS:0 The following attributes are optional _resources_ (A resource object specification) _nodeSelector_ (A node selector object specification) _tolerations_ (A list of tolerations) _affinity_ (An affinity object specification) |
+| love-producer.producers | obj | `[]` | This sections sets the list of producers to use. The producers should be specified like: _name_: The identifying name for the CSC producer _csc_: _CSC name:index_ The following attributes are optional _resources_ (A resource object specification) _nodeSelector_ (A node selector object specification) _tolerations_ (A list of tolerations) _affinity_ (An affinity object specification) |
 | love-producer.replicaCount | int | `1` | Set the replica count for the LOVE producers |
 | love-producer.resources | object | `{}` | Resource specifications applied to all LOVE producer pods |
 | love-producer.tolerations | list | `[]` | Toleration specifications applied to all LOVE producer pods |

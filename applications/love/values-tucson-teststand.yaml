@@ -161,79 +161,121 @@ love-producer:
     pullPolicy: Always
   env:
     WEBSOCKET_HOST: love-nginx-service/love/manager/ws/subscription
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 300Mi
   producers:
-  - name: auxtel
-    cscs:
-      ataos: ATAOS:0
-      atdome: ATDome:0
-      atdometrajectory: ATDomeTrajectory:0
-      athexapod: ATHexapod:0
-      atmcs: ATMCS:0
-      atpneumatics: ATPneumatics:0
-      atptg: ATPtg:0
-  - name: comcam
-    cscs:
-      cccamera: CCCamera:0
-      ccheaderservice: CCHeaderService:0
-      ccocps: OCPS:2
-      ccoods: CCOODS:0
-  - name: eas
-    cscs:
-      auxteless01: ESS:201
-      auxteless02: ESS:202
-      auxteless03: ESS:203
-      auxteless04: ESS:204
-      calibhilless01: ESS:301
-      dimm1: DIMM:1
-      dimm2: DIMM:2
-      dsm1: DSM:1
-      dsm2: DSM:2
-      m2ess106: ESS:106
-      mtdomeess01: ESS:101
-      mtdomeess02: ESS:102
-      mtdomeess03: ESS:103
-      tmaess01: ESS:1
-      tmaess104: ESS:104
-      tmaess105: ESS:105
-      weatherforecast: WeatherForecast:0
-  - name: genericcamera
-    cscs:
-      gcheaderservice1: GCHeaderService:1
-      genericcamera1: GenericCamera:1
-  - name: latiss
-    cscs:
-      atcamera: ATCamera:0
-      atheaderservice: ATHeaderService:0
-      atocps: OCPS:1
-      atoods: ATOODS:0
-      atspectrograph: ATSpectrograph:0
+  - name: ataos
+    csc: ATAOS:0
+  - name: atcamera
+    csc: ATCamera:0
+  - name: atdome
+    csc: ATDome:0
+  - name: atdometrajectory
+    csc: ATDomeTrajectory:0
+  - name: atheaderservice
+    csc: ATHeaderService:0
+  - name: athexapod
+    csc: ATHexapod:0
+  - name: atmcs
+    csc: ATMCS:0
+  - name: atocps
+    csc: OCPS:1
+  - name: atoods
+    csc: ATOODS:0
+  - name: atpneumatics
+    csc: ATPneumatics:0
+  - name: atptg
+    csc: ATPtg:0
+  - name: atscheduler
+    csc: Scheduler:2
+  - name: atscriptqueue
+    csc: ScriptQueue:2
+  - name: atspectrograph
+    csc: ATSpectrograph:0
+  - name: authorize
+    csc: Authorize:0
+  - name: auxteless01
+    csc: ESS:201
+  - name: auxteless02
+    csc: ESS:202
+  - name: auxteless03
+    csc: ESS:203
+  - name: auxteless04
+    csc: ESS:204
+  - name: calibhilless01
+    csc: ESS:301
+  - name: camerahexapod
+    csc: MTHexapod:1
+  - name: cccamera
+    csc: CCCamera:0
+  - name: ccheaderservice
+    csc: CCHeaderService:0
+  - name: ccoods
+    csc: CCOODS:0
+  - name: ccocps
+    csc: OCPS:2
+  - name: dimm1
+    csc: DIMM:1
+  - name: dimm2
+    csc: DIMM:2
+  - name: dsm1
+    csc: DSM:1
+  - name: dsm2
+    csc: DSM:2
+  - name: gcheaderservice1
+    csc: GCHeaderService:1
+  - name: genericcamera1
+    csc: GenericCamera:1
+  - name: lasertracker1
+    csc: LaserTracker:1
+  - name: love
+    csc: LOVE:0
+  - name: m2ess106
+    csc: ESS:106
+  - name: m2hexapod
+    csc: MTHexapod:2
+  - name: mtaircompressor1
+    csc: MTAirCompressor:1
+  - name: mtaircompressor2
+    csc: MTAirCompressor:2
+  - name: mtaos
+    csc: MTAOS:0
+  - name: mtdome
+    csc: MTDome:0
+  - name: mtdomeess01
+    csc: ESS:101
+  - name: mtdomeess02
+    csc: ESS:102
+  - name: mtdomeess03
+    csc: ESS:103
+  - name: mtdometrajectory
+    csc: MTDomeTrajectory:0
   - name: mtm1m3
-    cscs:
-      mtm1m3: MTM1M3:0
+    csc: MTM1M3:0
   - name: mtm2
-    cscs:
-      mtm2: MTM2:0
-  - name: obssys
-    cscs:
-      atscheduler: Scheduler:2
-      atscriptqueue: ScriptQueue:2
-      authorize: Authorize:0
-      love: LOVE:0
-      mtscheduler: Scheduler:1
-      mtscriptqueue: ScriptQueue:1
-      watcher: Watcher:0
-  - name: simonyitel
-    cscs:
-      camerahexapod: MTHexapod:1
-      m2hexapod: MTHexapod:2
-      mtaos: MTAOS:0
-      mtdome: MTDome:0
-      mtdometrajectory: MTDomeTrajectory:0
-      mtmount: MTMount:0
-      mtptg: MTPtg:0
-      mtrotator: MTRotator:0
-  - name: simonyitel-support
-    cscs:
-      lasertracker1: LaserTracker:1
-      mtaircompressor1: MTAirCompressor:1
-      mtaircompressor2: MTAirCompressor:2
+    csc: MTM2:0
+  - name: mtmount
+    csc: MTMount:0
+  - name: mtptg
+    csc: MTPtg:0
+  - name: mtrotator
+    csc: MTRotator:0
+  - name: mtscheduler
+    csc: Scheduler:1
+  - name: mtscriptqueue
+    csc: ScriptQueue:1
+  - name: tmaess01
+    csc: ESS:1
+  - name: tmaess104
+    csc: ESS:104
+  - name: tmaess105
+    csc: ESS:105
+  - name: watcher
+    csc: Watcher:0
+  - name: weatherforecast
+    csc: WeatherForecast:0

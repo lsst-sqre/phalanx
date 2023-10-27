@@ -24,8 +24,7 @@ spec:
         app.kubernetes.io/instance: {{ $appName }}
     spec:
       containers:
-        {{- range $cName, $csc := $producer.cscs }}
-        - name: {{ $cName }}
+        - name: {{ $producer.name }}
           {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystemImageTag }}
           image: "{{ $.Values.image.repository }}:{{ $imageTag }}"
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
@@ -34,7 +33,7 @@ spec:
               name: csc-env-config
           env:
             - name: LOVE_CSC_PRODUCER
-              value: {{ $csc | quote }}
+              value: {{ $producer.csc | quote }}
             - name: LSST_KAFKA_SECURITY_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -61,7 +60,6 @@ spec:
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
-        {{- end }}
       imagePullSecrets:
         - name: nexus3-docker
       {{- if or $.Values.nodeSelector $producer.nodeSelector }}
