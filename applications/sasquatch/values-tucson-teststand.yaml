@@ -3,9 +3,9 @@ strimzi-kafka:
     disruption_tolerance: 1
     config:
       auto.create.topics.enable: false
-      log.retention.hours: 24
-      offsets.retention.minutes: 1440
-      min.compaction.lag.ms: 86400000
+      log.retention.hours: 12
+      offsets.retention.minutes: 720
+      log.cleaner.min.compaction.lag.ms: 43200000
     storage:
       storageClassName: rook-ceph-block
     externalListener:
