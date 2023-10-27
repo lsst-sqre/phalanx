@@ -7,6 +7,7 @@ metadata:
     workflows.argoproj.io/configmap-type: Parameter
 data:
   artifactRepository: |    # However, all nested maps must be strings
+    archiveLogs: true
     s3:
       endpoint: {{ $.Values.global.controlSystemS3EndpointUrl | trimPrefix "https://" }}
       bucket: {{ .Values.s3Bucket }}
