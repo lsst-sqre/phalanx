@@ -21,6 +21,11 @@ ingress-nginx:
       # -- Enable the `X-Forwarded-For` processing
       use-forwarded-headers: "true"
 
+      # -- Disable HTTP/2, since it interferes with keepalive for auth
+      # subrequests. We don't use TLS internally anyway, so we can't use
+      # HTTP/2 effectively.
+      use-http2: "false"
+
       # -- Add additional per-server configuration used by Gafaelfawr to
       # report errors from the authorization layer
       # @default -- See `values.yaml`
