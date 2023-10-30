@@ -7,6 +7,7 @@
 | applications.alert-stream-broker | bool | `false` | Enable the alert-stream-broker application |
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
+| applications.butler | bool | `false` | Enable the butler application |
 | applications.cachemachine | bool | `false` | Enable the cachemachine application (required by nublado2) |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |

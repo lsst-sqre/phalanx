@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Server for Butler data abstraction service
+name: butler
+sources:
+- https://github.com/lsst-sqre/butler
+type: application
+version: 1.0.0
