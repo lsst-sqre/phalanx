@@ -14,7 +14,7 @@ image:
   repository: "gcr.io/cloudsql-docker/gce-proxy"
 
   # -- Tag of Cloud SQL Proxy image to use
-  tag: "1.33.12"
+  tag: "1.33.13"
 
   # -- Pull policy for the Cloud SQL Proxy image
   pullPolicy: "IfNotPresent"
