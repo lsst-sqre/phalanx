@@ -19,6 +19,7 @@ applications:
   postgres: true
   sasquatch: true
   semaphore: true
+  siav2: true
   ssotap: true
   squareone: true
   strimzi: true
