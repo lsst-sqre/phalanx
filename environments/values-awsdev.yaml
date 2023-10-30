@@ -1,0 +1,30 @@
+#butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
+fqdn: rsp-aws.burwood.io
+name: awsdev
+vaultPathPrefix: secret/rsp
+vaultUrl: "http://k8s-vault-vaultlb-7ae40bb2e8-ae3d6f7a83dfba3a.elb.us-east-1.amazonaws.com:8200"
+
+applications:
+  alert-stream-broker: false
+  cachemachine: false
+  datalinker: false
+  hips: false
+  linters: false
+  mobu: false
+  moneypenny: false
+  nublado: true
+  nublado2: false
+  plot-navigator: false
+  portal: false
+  postgres: true
+  sasquatch: false
+  ssotap: false
+  production-tools: false
+  semaphore: false
+  sherlock: false
+  squareone: false
+  strimzi: false
+  tap: false
+  telegraf: false
+  telegraf-ds: false
+  vo-cutouts: false

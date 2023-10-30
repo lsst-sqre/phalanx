@@ -1,0 +1,26 @@
+argo-cd:
+  server:
+    ingress:
+      hosts:
+        - "rsp-aws.burwood.io"
+
+    config:
+      url: "https://rsp-aws.burwood.io/argo-cd"
+      dex.config: |
+        connectors:
+          # Auth using Google.
+          # See https://dexidp.io/docs/connectors/google/
+          - type: google
+            id: google
+            name: Google
+            config:
+              clientID: 176818997517-o2tu9978r099fnsnh1acd608gkmopfhu.apps.googleusercontent.com
+              clientSecret: $dex.clientSecret
+              hostedDomains:
+                - lsst.cloud
+              redirectURI: https://rsp-aws.burwood.io/argo-cd/api/dex/callback
+
+    rbacConfig:
+      policy.csv: |
+        g, dspeck@lsst.cloud, role:admin
+      scopes: "[email]"
