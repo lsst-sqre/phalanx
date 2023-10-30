@@ -1,0 +1,51 @@
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+
+config:
+  logLevel: "DEBUG"
+  slackAlerts: true
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: false
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 4.0
+        memory: 16
+
+  groupMapping:
+    "admin:jupyterlab":
+      - "g_admins"
+    "admin:provision":
+      - "g_admins"
+    "exec:admin":
+      - "g_admins"
+    "exec:internal-tools":
+      - "g_users"
+    "exec:notebook":
+      - "g_users"
+    "exec:portal":
+      - "g_users"
+    "read:image":
+      - "g_users"
+    "read:tap":
+      - "g_users"
+    "write:sasquatch":
+      - "g_admins"
+
+  initialAdmins:
+    - "adam"
+    - "afausti"
+    - "cbanek"
+    - "dspeck"
+    - "frossie"
+    - "jsick"
+    - "rra"
+
+cloudsql:
+  enabled: false
