@@ -3,6 +3,6 @@ appVersion: 0.1.0
 description: Server for Butler data abstraction service
 name: butler
 sources:
-- https://github.com/lsst-sqre/butler
+- https://github.com/lsst/daf_butler
 type: application
 version: 1.0.0

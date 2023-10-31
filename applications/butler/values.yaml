@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the butler deployment
-  repository: "ghcr.io/lsst-sqre/butler"
+  repository: "ghcr.io/lsst/daf_butler"
 
   # -- Pull policy for the butler image
   pullPolicy: "IfNotPresent"
