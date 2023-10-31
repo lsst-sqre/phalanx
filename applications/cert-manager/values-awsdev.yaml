@@ -1,0 +1,4 @@
+config:
+  route53:
+    awsAccessKeyId: "AKIA2SESZJLT5WD5W6FO"
+    hostedZone: "Z08535852XY2EEQGS6WVZ"
