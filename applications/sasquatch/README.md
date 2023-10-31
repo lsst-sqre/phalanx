@@ -206,7 +206,7 @@ Rubin Observatory's telemetry service.
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository. |
-| rest-proxy.image.tag | string | `"7.4.1"` | Kafka REST proxy image tag. |
+| rest-proxy.image.tag | string | `"7.5.1"` | Kafka REST proxy image tag. |
 | rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Ingress annotations. |
 | rest-proxy.ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | rest-proxy.ingress.hostname | string | `""` | Ingress hostname. |
