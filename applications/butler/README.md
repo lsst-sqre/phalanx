@@ -15,6 +15,7 @@ Server for Butler data abstraction service
 | autoscaling.maxReplicas | int | `100` | Maximum number of butler deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of butler deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of butler deployment pods |
+| config.configUri | string | `""` | URI to the file specifying the DirectButler configuration to be used by the butler server |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

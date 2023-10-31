@@ -50,6 +50,8 @@ spec:
               value: "/opt/lsst/butler/secrets/butler-gcs-creds.json"
             - name: S3_ENDPOINT_URL
               value: "https://storage.googleapis.com"
+            - name: BUTLER_SERVER_CONFIG_URI
+              value: {{ .Values.config.configUri | quote }}
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/opt/lsst/butler/secrets"

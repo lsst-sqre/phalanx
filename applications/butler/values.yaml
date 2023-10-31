@@ -62,3 +62,8 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+config:
+  # -- URI to the file specifying the DirectButler configuration to be used
+  # by the butler server
+  configUri: ""
