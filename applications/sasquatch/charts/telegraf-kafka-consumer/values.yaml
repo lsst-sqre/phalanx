@@ -4,9 +4,9 @@ enabled: false
 
 image:
   # -- Telegraf image repository.
-  repo: "lsstsqre/telegraf"
+  repo: "quay.io/influxdb/telegraf-nightly:latest"
   # -- Telegraf image tag.
-  tag: "avrounions"
+  tag: "latest"
   # -- Image pull policy.
   # @default -- IfNotPresent
   pullPolicy: "Always"
