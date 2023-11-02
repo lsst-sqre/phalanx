@@ -1,7 +1,10 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 fqdn: data.lsst.cloud
 name: idfprod
-vaultPathPrefix: secret/k8s_operator/data.lsst.cloud
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP data.lsst.cloud"
+vaultPathPrefix: secret/phalanx/idfprod
 
 applications:
   datalinker: true
@@ -9,7 +12,6 @@ applications:
   mobu: true
   nublado: true
   portal: true
-  postgres: true
   semaphore: true
   sherlock: true
   siav2: true
