@@ -94,7 +94,7 @@ hub:
   internalDatabase: false
 cloudsql:
   enabled: true
-  instanceConnectionName: "science-platform-stable-0c29612b:us-central1:science-platform-int-8f439af2"
-  serviceAccount: "nublado@science-platform-stable-0c29612b.iam.gserviceaccount.com"
+  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+  serviceAccount: "nublado@science-platform-stable-6994.iam.gserviceaccount.com"
 secrets:
   templateSecrets: true
