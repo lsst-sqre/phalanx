@@ -164,6 +164,7 @@ jupyterhub:
     baseUrl: "/nb"
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
+      upgrade: true
   cull:
     timeout: 432000
     every: 300
