@@ -11,7 +11,10 @@ prompt-proto-service:
     tag: latest
 
   instrument:
-    pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml]
+    pipelines: >-
+      (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
     calibRepo: s3://rubin-pp-users/central_repo/
 
   s3:
