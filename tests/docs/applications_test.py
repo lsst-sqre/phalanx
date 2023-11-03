@@ -23,3 +23,22 @@ def test_descriptions() -> None:
         description = m.group(1)
         m = re.match("[A-Z0-9]", description)
         assert m, f"Description must start with capital letter in {index_path}"
+
+
+def test_applications_index() -> None:
+    """Ensure all applications are mentioned in the index."""
+    doc_root = Path(__file__).parent.parent.parent / "docs" / "applications"
+    seen = set()
+    with (doc_root / "index.rst").open() as fh:
+        for line in fh:
+            if m := re.match("^   ([^/]+)/index$", line):
+                seen.add(m.group(1))
+    root_path = Path(__file__).parent.parent.parent / "applications"
+    for application in root_path.iterdir():
+        if not application.is_dir():
+            continue
+        if application.name in ("fileservers", "nublado-users"):
+            continue
+        assert (
+            application.name in seen
+        ), f"{application.name} not lined in docs/applications/index.rst"
