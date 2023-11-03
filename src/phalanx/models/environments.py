@@ -64,6 +64,12 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
+    butler_repository_index: str | None = Field(
+        None,
+        title="Butler repository index URL",
+        description="URL to Butler repository index",
+    )
+
     onepassword: OnepasswordConfig | None = Field(
         None,
         title="1Password configuration",
@@ -153,18 +159,16 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     environment and is also used to validate those files. For the complete
     configuration for an environment, initialize this model with the merger of
     :file:`values.yaml` and :file:`values-{environment}.yaml`.
+
+    Fields listed here are not available to application linting. If the field
+    value has to be injected during linting, the field needs to be defined in
+    `EnvironmentBaseConfig` instead.
     """
 
     applications: dict[str, bool] = Field(
         ...,
         title="Enabled applications",
         description="List of applications and whether they are enabled",
-    )
-
-    butler_repository_index: str | None = Field(
-        None,
-        title="Butler repository index URL",
-        description="URL to Butler repository index",
     )
 
     repo_url: str | None = Field(

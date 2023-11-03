@@ -26,7 +26,7 @@
   },
   "$id": "https://phalanx.lsst.io/schemas/environment.json",
   "additionalProperties": false,
-  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
+  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.\n\nFields listed here are not available to application linting. If the field\nvalue has to be injected during linting, the field needs to be defined in\n`EnvironmentBaseConfig` instead.",
   "properties": {
     "name": {
       "description": "Name of the environment",
@@ -37,6 +37,19 @@
       "description": "Fully-qualified domain name on which the environment listens",
       "title": "Domain name",
       "type": "string"
+    },
+    "butlerRepositoryIndex": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "URL to Butler repository index",
+      "title": "Butler repository index URL"
     },
     "onepassword": {
       "anyOf": [
@@ -78,19 +91,6 @@
       "description": "List of applications and whether they are enabled",
       "title": "Enabled applications",
       "type": "object"
-    },
-    "butlerRepositoryIndex": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "description": "URL to Butler repository index",
-      "title": "Butler repository index URL"
     },
     "repoUrl": {
       "anyOf": [
