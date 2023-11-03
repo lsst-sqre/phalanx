@@ -36,6 +36,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    portal/index
    semaphore/index
    sherlock/index
+   siav2/index
    sqlproxy-cross-project/index
    squareone/index
    ssotap/index
