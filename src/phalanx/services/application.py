@@ -286,6 +286,9 @@ class ApplicationService:
             "global.baseUrl": f"https://{environment.fqdn}",
             "global.vaultSecretsPath": environment.vault_path_prefix,
         }
+        if environment.butler_repository_index:
+            butler_index = environment.butler_repository_index
+            values["global.butlerRepositoryIndex"] = butler_index
 
         # vault-secrets-operator gets the Vault host injected into it. Use the
         # existence of its subchart configuration tree as a cue to inject the
