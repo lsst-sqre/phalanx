@@ -6,6 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   slackAlerts: true
+  internalDatabase: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
