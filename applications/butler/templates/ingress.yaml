@@ -9,7 +9,14 @@ config:
   scopes:
     all:
       - "read:image"
-  loginRedirect: true
+  loginRedirect: false
+  # Butler needs a delegated token so that we can query Gafaelfawr for the
+  # user's group membership
+  delegate:
+    internal:
+      service: "butler"
+      scopes: []
+
 template:
   metadata:
     name: "butler"
@@ -22,7 +29,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/butler"
+            - path: "/api/butler"
               pathType: "Prefix"
               backend:
                 service:
