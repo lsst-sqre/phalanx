@@ -91,6 +91,11 @@ atscheduler:
     readOnly: false
     server: nfs-scratch.tu.lsst.org
     serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.tu.lsst.org
+    serverPath: /obs-env
 
 authorize:
   enabled: true
@@ -181,6 +186,11 @@ mtscheduler:
     readOnly: false
     server: nfs-scratch.tu.lsst.org
     serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.tu.lsst.org
+    serverPath: /obs-env
 
 watcher:
   namespace: *ns
