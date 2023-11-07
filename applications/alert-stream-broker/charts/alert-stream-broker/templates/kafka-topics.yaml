@@ -1,0 +1,13 @@
+apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+kind: KafkaTopic
+metadata:
+  name: "{{ .Values.testTopicName }}"
+  labels:
+    strimzi.io/cluster: "{{ .Values.clusterName }}"
+spec:
+  partitions: {{ .Values.testTopicPartitions }}
+  replicas: {{ .Values.testTopicReplicas }}
+  config:
+    cleanup.policy: "delete"
+    retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+    retention.bytes: {{ .Values.maxBytesRetained }}

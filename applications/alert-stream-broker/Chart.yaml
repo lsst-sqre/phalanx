@@ -7,7 +7,7 @@ sources:
   - https://github.com/lsst-dm/alert-stream-simulator
 dependencies:
   - name: alert-stream-broker
-    version: 2.5.1
+    version: 2.5.2
 
   # The schema registry is bundled together in the same application as the
   # Kafka broker because Strimzi Registry Operator expects everything (the
