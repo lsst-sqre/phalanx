@@ -88,7 +88,7 @@ prompt-proto-service:
 
   knative:
     # -- The memory requested for the activator.
-    memoryRequest: "4Gi"
+    memoryRequest: "2Gi"
     # -- The memory limit for the activator.
     memoryLimit: "32Gi"
     # -- The storage space reserved for each container (mostly local Butler).
