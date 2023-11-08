@@ -49,7 +49,7 @@
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sherlock | bool | `false` | Enable the sherlock application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
-  applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
+| applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |

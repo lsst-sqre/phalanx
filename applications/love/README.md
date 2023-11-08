@@ -22,6 +22,8 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
 | love-manager.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
 | love-manager.autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
+| love-manager.autoscaling.scaleDownPolicy | object | `{}` | Policy for scaling down manager pods |
+| love-manager.autoscaling.scaleUpPolicy | object | `{}` | Policy for scaling up manager pods |
 | love-manager.autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
 | love-manager.autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
 | love-manager.env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |

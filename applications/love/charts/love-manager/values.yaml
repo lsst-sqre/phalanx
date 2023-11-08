@@ -82,6 +82,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # -- (int) The percentage of memory utilization that will trigger the scaling
   targetMemoryUtilizationPercentage: ""
+  # -- Policy for scaling up manager pods
+  scaleUpPolicy: {}
+  # -- Policy for scaling down manager pods
+  scaleDownPolicy: {}
 # -- Resource specifications for the LOVE manager pods
 resources: {}
 # -- Node selection rules for the LOVE manager pods

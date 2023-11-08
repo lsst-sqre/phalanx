@@ -10,6 +10,8 @@ Helm chart for the LOVE manager service.
 | autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
 | autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
 | autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
+| autoscaling.scaleDownPolicy | object | `{}` | Policy for scaling down manager pods |
+| autoscaling.scaleUpPolicy | object | `{}` | Policy for scaling up manager pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
 | autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
 | env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |

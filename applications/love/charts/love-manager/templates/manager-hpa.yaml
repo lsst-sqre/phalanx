@@ -29,4 +29,19 @@ spec:
           type: Utilization
           averageUtilization: {{ .Values.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
+  {{- if or .Values.autoscaling.scaleUpPolicy .Values.autoscaling.scaleDownPolicy }}
+  behavior:
+  {{- if .Values.autoscaling.scaleUpPolicy }}
+    scaleUp:
+    {{- with .Values.autoscaling.scaleUpPolicy }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.autoscaling.scaleDownPolicy }}
+    scaleDown:
+    {{- with .Values.autoscaling.scaleDownPolicy }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
 {{- end }}
