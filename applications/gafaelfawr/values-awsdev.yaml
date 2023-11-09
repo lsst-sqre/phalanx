@@ -7,6 +7,7 @@ config:
   logLevel: "DEBUG"
   slackAlerts: true
   internalDatabase: true
+  databaseUrl: 10.100.79.45
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
