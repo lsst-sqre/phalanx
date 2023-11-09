@@ -1,7 +1,7 @@
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
-    storageClass: "standard-rwo"
+    storageClass: "gp2"
 
 config:
   logLevel: "DEBUG"
