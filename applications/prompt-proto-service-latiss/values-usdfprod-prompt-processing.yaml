@@ -8,7 +8,7 @@ prompt-proto-service:
     repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: w_2023_44
+    tag: d_2023_11_06
 
   instrument:
     pipelines: >-
@@ -19,6 +19,7 @@ prompt-proto-service:
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
       (survey="spec")=[]
+      (survey="spec-survey")=[]
       (survey="spec_with_rotation")=[]
       (survey="spec_bright")=[]
       (survey="spec_bright_with_rotation")=[]
