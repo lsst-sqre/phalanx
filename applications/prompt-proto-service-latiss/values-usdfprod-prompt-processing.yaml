@@ -19,7 +19,6 @@ prompt-proto-service:
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
       (survey="spec")=[]
-      (survey="spec-survey")=[]
       (survey="spec_with_rotation")=[]
       (survey="spec_bright")=[]
       (survey="spec_bright_with_rotation")=[]
