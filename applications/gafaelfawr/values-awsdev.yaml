@@ -13,6 +13,9 @@ config:
   oidcServer:
     enabled: false
 
+  github:
+    clientId: "28533755f1b95f5f9c49"
+
   # User quota settings for services.
   quota:
     default:
