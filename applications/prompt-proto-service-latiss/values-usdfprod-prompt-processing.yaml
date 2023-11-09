@@ -18,7 +18,14 @@ prompt-proto-service:
       (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/ApPipe.yaml,
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
       ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
-      (survey="spec")=[] (survey="spec_with_rotation")=[] (survey="spec_bright")=[] (survey="spec_bright_with_rotation")=[] (survey="spec_pole")=[] (survey="spec_pole_with_rotation")=[] (survey="")=[]
+      (survey="spec")=[]
+      (survey="spec-survey")=[]
+      (survey="spec_with_rotation")=[]
+      (survey="spec_bright")=[]
+      (survey="spec_bright_with_rotation")=[]
+      (survey="spec_pole")=[]
+      (survey="spec_pole_with_rotation")=[]
+      (survey="")=[]
     calibRepo: /app/butler
 
   s3:
