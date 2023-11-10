@@ -2,9 +2,11 @@
 
 Run the schedview pre-night briefing dashboard.
 
+**Homepage:** <https://schedview.lsst.io/>
+
 ## Source Code
 
-* <https://github.com/lsst-sqre/schedview_prenight>
+* <https://github.com/lsst/schedview>
 
 ## Values
 
