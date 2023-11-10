@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the schedview_prenight deployment
-  repository: "ghcr.io/lsst-sqre/schedview_prenight"
+  repository: "ghcr.io/lsst/schedview"
 
   # -- Pull policy for the schedview_prenight image
   pullPolicy: "IfNotPresent"

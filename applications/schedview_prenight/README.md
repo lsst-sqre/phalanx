@@ -21,7 +21,7 @@ Run the schedview pre-night briefing dashboard.
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the schedview_prenight image |
-| image.repository | string | `"ghcr.io/lsst-sqre/schedview_prenight"` | Image to use in the schedview_prenight deployment |
+| image.repository | string | `"ghcr.io/lsst/schedview"` | Image to use in the schedview_prenight deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the schedview_prenight deployment pod |
