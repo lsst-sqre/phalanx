@@ -1,0 +1,34 @@
+{{- if (index .Values "applications" "schedview_prenight") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "schedview_prenight"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "schedview_prenight"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "schedview_prenight"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/schedview_prenight"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

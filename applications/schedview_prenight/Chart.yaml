@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Run the schedview pre-night briefing dashboard.
+name: schedview_prenight
+sources:
+- https://github.com/lsst-sqre/schedview_prenight
+type: application
+version: 1.0.0
