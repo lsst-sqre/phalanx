@@ -72,8 +72,9 @@ class MockHelm:
         """
         self.call_args_list.append([command, *args])
         if self._callback:
-            callback = self._callback
-            result = callback(command, *args)
+            # https://github.com/python/mypy/issues/708 (which despite being
+            # closed is not fixed for protocols as of mypy 1.7.0)
+            result = self._callback(command, *args)  # type: ignore[misc]
             if result.returncode != 0:
                 exc = subprocess.CalledProcessError(
                     returncode=result.returncode,
