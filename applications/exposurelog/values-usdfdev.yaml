@@ -1,0 +1,6 @@
+config:
+  site_id: usdfdev
+  butler_uri_1: s3://rubin-summit-users/butler.yaml
+db:
+  host: usdf-summitdb.slac.stanford.edu
+  user: usdf
