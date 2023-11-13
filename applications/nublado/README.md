@@ -2,12 +2,11 @@
 
 JupyterHub and custom spawner for the Rubin Science Platform
 
-**Homepage:** <https://github.com/lsst-sqre/jupyterlab-controller>
+**Homepage:** <https://nublado.lsst.io/>
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/jupyterlab-controller>
-* <https://github.com/lsst-sqre/rsp-restspawner>
+* <https://github.com/lsst-sqre/nublado>
 
 ## Values
 

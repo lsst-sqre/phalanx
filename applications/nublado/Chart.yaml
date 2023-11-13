@@ -3,9 +3,8 @@ name: nublado
 version: 1.0.0
 description: JupyterHub and custom spawner for the Rubin Science Platform
 sources:
-  - https://github.com/lsst-sqre/jupyterlab-controller
-  - https://github.com/lsst-sqre/rsp-restspawner
-home: https://github.com/lsst-sqre/jupyterlab-controller
+  - https://github.com/lsst-sqre/nublado
+home: https://nublado.lsst.io/
 appVersion: 0.9.0
 
 dependencies:
