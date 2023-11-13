@@ -382,7 +382,7 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
 | telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | telegraf-kafka-consumer.image.pullPolicy | string | IfNotPresent | Image pull policy. |
-| telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly:latest"` | Telegraf image repository. |
+| telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly"` | Telegraf image repository. |
 | telegraf-kafka-consumer.image.tag | string | `"latest"` | Telegraf image tag. |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
