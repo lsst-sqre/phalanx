@@ -118,7 +118,7 @@ Rubin Observatory's telemetry service.
 | kafdrop.host | string | Defaults to localhost. | The hostname to report for the RMI registry (used for JMX). |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository. |
-| kafdrop.image.tag | string | `"4.0.0"` | Kafdrop image version. |
+| kafdrop.image.tag | string | `"4.0.1"` | Kafdrop image version. |
 | kafdrop.ingress.annotations | object | `{}` | Ingress annotations. |
 | kafdrop.ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | kafdrop.ingress.hostname | string | `""` | Ingress hostname. |

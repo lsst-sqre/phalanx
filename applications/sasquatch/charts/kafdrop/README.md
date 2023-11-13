@@ -16,7 +16,7 @@ A subchart to deploy the Kafdrop UI for Sasquatch.
 | host | string | Defaults to localhost. | The hostname to report for the RMI registry (used for JMX). |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository. |
-| image.tag | string | `"4.0.0"` | Kafdrop image version. |
+| image.tag | string | `"4.0.1"` | Kafdrop image version. |
 | ingress.annotations | object | `{}` | Ingress annotations. |
 | ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | ingress.hostname | string | `""` | Ingress hostname. |
