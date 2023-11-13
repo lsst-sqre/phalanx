@@ -1,6 +1,6 @@
 # ook
 
-Ook is the librarian service for Rubin Observatory. Ook indexes documentation content into the Algolia search engine that powers the Rubin Observatory documentation portal, www.lsst.io.
+Ook is the librarian service for Rubin Observatory. Ook indexes documentation content into the Algolia search engine that powers the Rubin Observatory documentation portal, lsst.io.
 
 **Homepage:** <https://ook.lsst.io/>
 

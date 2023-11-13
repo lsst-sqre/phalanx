@@ -2,7 +2,10 @@ apiVersion: v2
 name: ook
 version: 1.0.0
 appVersion: "0.9.0"
-description: Ook is the librarian service for Rubin Observatory. Ook indexes documentation content into the Algolia search engine that powers the Rubin Observatory documentation portal, www.lsst.io.
+description: >
+  Ook is the librarian service for Rubin Observatory. Ook indexes
+  documentation content into the Algolia search engine that powers the Rubin
+  Observatory documentation portal, lsst.io.
 type: application
 home: https://ook.lsst.io/
 sources:

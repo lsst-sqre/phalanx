@@ -2,10 +2,6 @@
 
 Simple Image Access v2 service
 
-## Source Code
-
-* <https://github.com/lsst-sqre/siav2>
-
 ## Values
 
 | Key | Type | Default | Description |
