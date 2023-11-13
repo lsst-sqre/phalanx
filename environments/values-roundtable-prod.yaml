@@ -6,6 +6,7 @@ onepassword:
 vaultPathPrefix: secret/phalanx/roundtable-prod
 
 applications:
+  giftless: true
   kubernetes-replicator: true
   onepassword-connect: true
   ook: true

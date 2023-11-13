@@ -14,8 +14,8 @@ data:
         options:
           storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
           storage_options:
-            account_key_file: "/etc/secret/giftless-gcp-key.json"
-            project_name: {{ .Values.config.projectName | quote }}
+            account_key_file: "/etc/secret/giftless-gcp-key-ro.json"
+            project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
 ---
 apiVersion: v1
@@ -34,6 +34,6 @@ data:
         options:
           storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
           storage_options:
-            account_key_file: "/etc/secret/giftless-gcp-key.json"
-            project_name: {{ .Values.config.projectName | quote }}
+            account_key_file: "/etc/secret/giftless-gcp-key-rw.json"
+            project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}

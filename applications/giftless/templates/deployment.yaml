@@ -30,7 +30,6 @@ spec:
       labels:
         {{- include "giftless.selectorLabels" . | nindent 8 }}
     spec:
-      automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
           command:
@@ -70,6 +69,7 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
+          serviceAccountName: "git-lfs-ro"
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
@@ -126,7 +126,6 @@ spec:
       labels:
         {{- include "giftless-rw.selectorLabels" . | nindent 8 }}
     spec:
-      automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
           command:
@@ -166,6 +165,7 @@ spec:
               drop:
                 - ALL
             readOnlyRootFilesystem: true
+          serviceAccountName: "git-lfs-rw"
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"

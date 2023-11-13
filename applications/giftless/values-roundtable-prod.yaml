@@ -1,0 +1,11 @@
+server:
+  debug: true
+ingress:
+  hostname:
+    readonly: "git-lfs.lsst.cloud"
+    readwrite: "git-lfs-rw.lsst.cloud"
+config:
+  storageProjectName: "data-curation-prod-fbdb"
+  bucketName: "rubin-us-central1-git-lfs"
+  serviceAccountReadonly: "git_lfs_rw@roundtable-prod-f6fd.iam.gserviceaccount.com"
+  serviceAccountReadwrite: "git_lfs_rw@roundtable-prod-f6fd.iam.gserviceaccount.com"

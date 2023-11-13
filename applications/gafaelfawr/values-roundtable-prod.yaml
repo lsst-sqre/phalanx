@@ -23,6 +23,13 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+    "write:git-lfs":
+      - github:
+          organization: "lsst"
+          team: "data-management"
+      - github:
+          organization: "lsst"
+          team: "simulations"
 
   initialAdmins:
     - "afausti"

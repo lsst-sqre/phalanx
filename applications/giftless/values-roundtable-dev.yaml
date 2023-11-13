@@ -5,5 +5,7 @@ ingress:
     readonly: "git-lfs-dev.lsst.cloud"
     readwrite: "git-lfs-dev-rw.lsst.cloud"
 config:
-  projectName: "plasma-geode-127520"
-  bucketName: "rubin-gitlfs-experimental"
+  storageProjectName: "data-curation-prod-fbdb"
+  bucketName: "rubin-us-central1-git-lfs-dev"
+  serviceAccountReadonly: "git_lfs_rw@roundtable-dev-abe2.iam.gserviceaccount.com"
+  serviceAccountReadwrite: "git_lfs_rw@roundtable-dev-abe2.iam.gserviceaccount.com"

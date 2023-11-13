@@ -11,9 +11,11 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the giftless frontend pod |
-| config | object | `{"bucketName":"","projectName":""}` | Configuration for giftless server |
-| config.bucketName | string | Must be overridden in environment-specific values file | Bucket name for GCS LFS Object bucket |
-| config.projectName | string | Must be overridden in environment-specific values file | Project name for GCS LFS Object bucket |
+| config | object | `{"bucketName":"","serviceAccountReadonly":"","serviceAccountReadwrite":"","storageProjectName":""}` | Configuration for giftless server |
+| config.bucketName | string | Must be overridden in environment-specific values file | Bucket name for GCS LFS Object Storage bucket |
+| config.serviceAccountReadonly | string | Must be overridden in environment-specific values file | Read-only service account name for GCS LFS Object Storage bucket |
+| config.serviceAccountReadwrite | string | Must be overridden in environment-specific values file | Read-write service account name for GCS LFS Object Storage bucket |
+| config.storageProjectName | string | Must be overridden in environment-specific values file | Project name for GCS LFS Object Storage bucket |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the giftless image |
