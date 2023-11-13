@@ -6,11 +6,12 @@ metadata:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
   00_nublado.py: |
-    import rsp_restspawner
+    import rubin.nublado.authenticator
+    import rubin.nublado.spawner
 
     # Use our authenticator and spawner.
-    c.JupyterHub.authenticator_class = "rsp_restspawner.GafaelfawrAuthenticator"
-    c.JupyterHub.spawner_class = "rsp_restspawner.RSPRestSpawner"
+    c.JupyterHub.authenticator_class = "rubin.nublado.authenticator.GafaelfawrAuthenticator"
+    c.JupyterHub.spawner_class = "rubin.nublado.spawner.RSPRestSpawner"
 
     # Set internal Hub API URL.
     c.JupyterHub.hub_connect_url = (
@@ -39,4 +40,4 @@ data:
     c.Spawner.http_timeout = {{ .Values.hub.timeout.startup }}
 
     # Configure the URL to the lab controller.
-    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.safir.pathPrefix }}"
+    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"

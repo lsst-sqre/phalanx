@@ -2,11 +2,10 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   config:
-    safir:
-      logLevel: "DEBUG"
+    logLevel: "DEBUG"
     fileserver:
       enabled: true
-      timeout: 43200
+      idleTimeout: 43200  # 12 hours
     images:
       source:
         type: "google"
@@ -14,12 +13,7 @@ controller:
         projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
-      recommendedTag: "recommended"
-      numReleases: 1
-      numWeeklies: 2
-      numDailies: 3
     lab:
-      application: "nublado-users"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
@@ -29,16 +23,16 @@ controller:
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
       initContainers:
         - name: "initdir"
-          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+          image:
+            repository: "ghcr.io/lsst-sqre/initdir"
+            tag: "0.0.4"
           privileged: true
           volumes:
             - containerPath: "/home"
-              mode: "rw"
               source:
                 type: nfs
                 serverPath: "/share1/home"
                 server: "10.87.86.26"
-
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -50,19 +44,16 @@ controller:
           secretKey: "postgres-credentials.txt"
       volumes:
         - containerPath: "/home"
-          mode: "rw"
           source:
             type: nfs
             serverPath: "/share1/home"
             server: "10.87.86.26"
         - containerPath: "/project"
-          mode: "rw"
           source:
             type: nfs
             serverPath: "/share1/project"
             server: "10.87.86.26"
         - containerPath: "/scratch"
-          mode: "rw"
           source:
             type: nfs
             serverPath: "/share1/scratch"
@@ -71,7 +62,6 @@ jupyterhub:
   hub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-      upgrade: true
 hub:
   internalDatabase: false
 cloudsql:

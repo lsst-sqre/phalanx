@@ -9,10 +9,6 @@ controller:
         projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
-      recommendedTag: "recommended"
-      numReleases: 1
-      numWeeklies: 2
-      numDailies: 3
     lab:
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
@@ -24,7 +20,6 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-
       sizes:
         small:
           cpu: 1.0
@@ -37,11 +32,12 @@ controller:
           memory: 16Gi
       initContainers:
         - name: "initdir"
-          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+          image:
+            repository: "ghcr.io/lsst-sqre/initdir"
+            tag: "0.0.4"
           privileged: true
           volumes:
             - containerPath: "/home"
-              mode: "rw"
               source:
                 serverPath: "/share1/home"
                 server: "10.13.105.122"
@@ -57,19 +53,16 @@ controller:
           secretKey: "postgres-credentials.txt"
       volumes:
         - containerPath: "/home"
-          mode: "rw"
           source:
             serverPath: "/share1/home"
             server: "10.13.105.122"
             type: "nfs"
         - containerPath: "/project"
-          mode: "rw"
           source:
             serverPath: "/share1/project"
             server: "10.13.105.122"
             type: "nfs"
         - containerPath: "/scratch"
-          mode: "rw"
           source:
             serverPath: "/share1/scratch"
             server: "10.13.105.122"

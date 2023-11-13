@@ -17,7 +17,7 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: {{ .Values.controller.config.safir.pathPrefix | quote }}
+            - path: {{ .Values.controller.config.pathPrefix | quote }}
               pathType: "Prefix"
               backend:
                 service:

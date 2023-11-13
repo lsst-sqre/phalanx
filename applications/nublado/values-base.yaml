@@ -11,8 +11,6 @@ controller:
       cycle: 34
       recommended_tag: "recommended_c0034"
     lab:
-      application: "nublado-users"
-      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
@@ -23,61 +21,57 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
       initContainers:
-      - name: "initdir"
-        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
-        privileged: true
-        volumes:
+        - name: "initdir"
+          image:
+            repository: "ghcr.io/lsst-sqre/initdir"
+            tag: "0.0.4"
+          privileged: true
+          volumes:
+            - containerPath: "/home"
+              source:
+                serverPath: "/rsphome"
+                server: "nfs-rsphome.ls.lsst.org"
+                type: "nfs"
+      pullSecret: "pull-secret"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      volumes:
         - containerPath: "/home"
-          mode: "rw"
           source:
+            type: "nfs"
             serverPath: "/rsphome"
             server: "nfs-rsphome.ls.lsst.org"
+        - containerPath: "/project"
+          source:
             type: "nfs"
-      secrets:
-      - secretName: "nublado-lab-secret"
-        secretKey: "postgres-credentials.txt"
-      volumes:
-      - containerPath: "/home"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/rsphome"
-          server: "nfs-rsphome.ls.lsst.org"
-      - containerPath: "/project"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/project"
-          server: "nfs-project.ls.lsst.org"
-      - containerPath: "/scratch"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/scratch"
-          server: "nfs-scratch.ls.lsst.org"
-      - containerPath: "/datasets"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata"
-          server: "nfs-lsstdata.ls.lsst.org"
-      - containerPath: "/repo/LATISS"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/repo/LATISS"
-          server: "nfs-auxtel.ls.lsst.org"
-      - containerPath: "/net/obs-env"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/obs-env"
-          server: "nfs-obsenv.ls.lsst.org"
-      - containerPath: "/data/lsstdata/BTS/auxtel"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/lsstdata/BTS/auxtel"
-          server: "nfs-auxtel.ls.lsst.org"
+            serverPath: "/project"
+            server: "nfs-project.ls.lsst.org"
+        - containerPath: "/scratch"
+          source:
+            type: "nfs"
+            serverPath: "/scratch"
+            server: "nfs-scratch.ls.lsst.org"
+        - containerPath: "/datasets"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata"
+            server: "nfs-lsstdata.ls.lsst.org"
+        - containerPath: "/repo/LATISS"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/repo/LATISS"
+            server: "nfs-auxtel.ls.lsst.org"
+        - containerPath: "/net/obs-env"
+          source:
+            type: "nfs"
+            serverPath: "/obs-env"
+            server: "nfs-obsenv.ls.lsst.org"
+        - containerPath: "/data/lsstdata/BTS/auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata/BTS/auxtel"
+            server: "nfs-auxtel.ls.lsst.org"
 
 jupyterhub:
   cull:

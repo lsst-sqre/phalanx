@@ -13,7 +13,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cloudsql.affinity | object | `{}` | Affinity rules for the Cloud SQL Proxy pod |
-| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a separate service, because shoehorning it into Zero to Jupyterhub's extraContainers looks messy, and it's not necessary that it be very performant. |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.tag | string | `"1.33.15"` | Cloud SQL Auth Proxy tag to use |
@@ -24,12 +24,16 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
+| controller.config.fileserver.application | string | `"fileservers"` | ArgcoCD application in which to collect user file servers |
+| controller.config.fileserver.creationTimeout | int | `120` | Timeout to wait for Kubernetes to create file servers, in seconds |
 | controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
-| controller.config.fileserver.image | string | `"ghcr.io/lsst-sqre/worblehat"` | Image for fileserver container |
+| controller.config.fileserver.idleTimeout | int | `3600` | Timeout for idle user fileservers, in seconds |
+| controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
+| controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
+| controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
 | controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user fileservers |
-| controller.config.fileserver.pullPolicy | string | `"IfNotPresent"` | Pull policy for fileserver container |
-| controller.config.fileserver.tag | string | `"0.1.0"` | Tag for fileserver container |
-| controller.config.fileserver.timeout | int | `3600` | Timeout for user fileservers, in seconds |
+| controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
+| controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |
@@ -38,19 +42,24 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
-| controller.config.lab.application | string | See `values.yaml` | ArgcoCD application in which to collect user lab objects. |
-| controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab. |
+| controller.config.lab.application | string | `"nublado-users"` | ArgoCD application in which to collect user lab objects |
+| controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
+| controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
-| controller.config.lab.initcontainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image reference), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with `allowPrivilegeEscalation` true. Otherwise it will, run as UID 1000. |
+| controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
+| controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
+| controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
+| controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
-| controller.config.lab.sizes | object | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Names must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI prefixes for memory are supported. `large`) |
-| controller.config.lab.volumes | list | `[]` | Volumes that should be mounted in lab pods. This supports NFS, HostPath, and PVC volume types (differentiated in source.type) |
-| controller.config.safir.logLevel | string | `"INFO"` | Level of Python logging |
-| controller.config.safir.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
+| controller.config.lab.sizes | object | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Names must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. `large` with `small` as the default) |
+| controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
+| controller.config.lab.volumes | list | `[]` | Volumes that should be mounted in lab pods. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
+| controller.config.logLevel | string | `"INFO"` | Level of Python logging |
+| controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |
 | controller.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the nublado image |
-| controller.image.repository | string | `"ghcr.io/lsst-sqre/jupyterlab-controller"` | nublado image to use |
+| controller.image.repository | string | `"ghcr.io/lsst-sqre/nublado-controller"` | nublado image to use |
 | controller.image.tag | string | The appVersion of the chart | Tag of nublado image to use |
 | controller.ingress.annotations | object | `{}` | Additional annotations to add for the lab controller pod ingress |
 | controller.nodeSelector | object | `{}` | Node selector rules for the lab controller pod |
@@ -80,12 +89,12 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraEnv | object | Gets `JUPYTERHUB_CRYPT_KEY` from `nublado-secret` | Additional environment variables to set |
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
-| jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"0.5.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"4.0.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |
-| jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress |
+| jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
