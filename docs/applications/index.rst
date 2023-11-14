@@ -23,6 +23,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Rubin Science Platform
 
+   butler/index
    cachemachine/index
    datalinker/index
    hips/index

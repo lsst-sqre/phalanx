@@ -1,0 +1,38 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "butler"
+  labels:
+    {{- include "butler.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+  loginRedirect: false
+  # Butler needs a delegated token so that we can query Gafaelfawr for the
+  # user's group membership
+  delegate:
+    internal:
+      service: "butler"
+      scopes: []
+
+template:
+  metadata:
+    name: "butler"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/api/butler"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "butler"
+                  port:
+                    number: 8080

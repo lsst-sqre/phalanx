@@ -36,6 +36,9 @@ applications:
   # environments and is present here only because it makes parsing easier
   argocd: true
 
+  # -- Enable the butler application
+  butler: false
+
   # -- Enable the cachemachine application (required by nublado2)
   cachemachine: false
 
