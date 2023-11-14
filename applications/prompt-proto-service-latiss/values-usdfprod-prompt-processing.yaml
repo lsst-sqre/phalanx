@@ -5,19 +5,18 @@ prompt-proto-service:
     revision: "12"
 
   image:
-    repository: ghcr.io/lsst-dm/prompt-proto-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: d_2023_11_06
 
   instrument:
     pipelines: >-
-      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/ApPipe.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
-      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/ApPipe.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
+      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
       (survey="spec")=[]
       (survey="spec-survey")=[]
       (survey="spec_with_rotation")=[]
