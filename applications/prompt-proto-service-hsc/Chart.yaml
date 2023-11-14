@@ -4,9 +4,9 @@ version: 1.0.0
 description: >-
   Prompt Proto Service is an event driven service for processing camera
   images. This instance of the service handles HSC images.
-home: https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst
+home: https://github.com/lsst-dm/prompt_processing/blob/main/doc/playbook.rst
 sources:
-  - https://github.com/lsst-dm/prompt_prototype
+  - https://github.com/lsst-dm/prompt_processing
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-219"

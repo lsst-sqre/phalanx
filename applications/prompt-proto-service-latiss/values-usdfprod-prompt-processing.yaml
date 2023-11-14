@@ -12,12 +12,12 @@ prompt-proto-service:
 
   instrument:
     pipelines: >-
-      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/ApPipe.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
-      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/ApPipe.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROTOTYPE_DIR}/pipelines/LATISS/Isr.yaml]
+      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
       (survey="spec")=[]
       (survey="spec-survey")=[]
       (survey="spec_with_rotation")=[]

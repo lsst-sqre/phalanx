@@ -4,9 +4,9 @@ version: 1.0.0
 appVersion: "0.1.0"
 description: Event-driven processing of camera images
 type: application
-home: https://github.com/lsst-dm/prompt_prototype/blob/main/doc/playbook.rst
+home: https://github.com/lsst-dm/prompt_processing/blob/main/doc/playbook.rst
 sources:
-  - https://github.com/lsst-dm/prompt_prototype
+  - https://github.com/lsst-dm/prompt_processing
 annotations:
   phalanx.lsst.io/docs: |
     - id: "DMTN-219"

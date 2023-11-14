@@ -11,7 +11,7 @@ prompt-proto-service:
     tag: latest
 
   instrument:
-    pipelines: (survey="SURVEY")=[${PROMPT_PROTOTYPE_DIR}/pipelines/HSC/ApPipe.yaml]
+    pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
     calibRepo: s3://rubin:rubin-pp-users/central_repo/
 
   s3:
