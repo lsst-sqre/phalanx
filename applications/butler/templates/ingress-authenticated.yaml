@@ -29,7 +29,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/api/butler"
+            - path: {{ .Values.config.pathPrefix | quote }}
               pathType: "Prefix"
               backend:
                 service:
