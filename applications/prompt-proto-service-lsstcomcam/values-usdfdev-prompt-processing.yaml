@@ -5,7 +5,7 @@ prompt-proto-service:
     revision: "1"
 
   image:
-    repository: ghcr.io/lsst-dm/prompt-proto-service
+    repository: ghcr.io/lsst-dm/prompt-service
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest

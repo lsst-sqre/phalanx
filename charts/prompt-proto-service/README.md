@@ -22,7 +22,7 @@ Event-driven processing of camera images
 | containerConcurrency | int | `1` |  |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
-| image.repository | string | `"ghcr.io/lsst-dm/prompt-proto-service"` | Image to use in the PP deployment |
+| image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
 | imageNotifications.imageTimeout | string | `"120"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
