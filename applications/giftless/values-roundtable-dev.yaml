@@ -1,3 +1,7 @@
+image:
+  pullPolicy: "Always"
+  repository: "ghcr.io/lsst-sqre/giftless"
+  tag: "ajt-dev"
 server:
   debug: true
 ingress:
