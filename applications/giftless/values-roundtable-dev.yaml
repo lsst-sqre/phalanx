@@ -1,6 +1,6 @@
 image:
   pullPolicy: "Always"
-  repository: "ghcr.io/lsst-sqre/giftless"
+  repository: "docker.io/lsstsqre/giftless"
   tag: "ajt-dev"
 server:
   debug: true
