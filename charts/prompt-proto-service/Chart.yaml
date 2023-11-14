@@ -12,3 +12,6 @@ annotations:
     - id: "DMTN-219"
       title: "Proposal and Prototype for Prompt Processing"
       url: "https://dmtn-219.lsst.io/"
+    - id: "DMTN-260"
+      title: "Failure Modes and Error Handling for Prompt Processing"
+      url: "https://dmtn-260.lsst.io/"
