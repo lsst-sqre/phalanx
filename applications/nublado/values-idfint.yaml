@@ -30,16 +30,16 @@ controller:
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
       sizes:
-        small:
+        - size: small
           cpu: 1.0
           memory: 4Gi
-        medium:
+        - size: medium
           cpu: 2.0
           memory: 8Gi
-        large:
+        - size: large
           cpu: 4.0
           memory: 16Gi
-        huge:
+        - size: huge
           cpu: 8.0
           memory: 32Gi
       initContainers:
