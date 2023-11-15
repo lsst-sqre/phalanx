@@ -11,5 +11,5 @@ ingress:
 config:
   storageProjectName: "data-curation-prod-fbdb"
   bucketName: "rubin-us-central1-git-lfs"
-  serviceAccountReadonly: "git_lfs_rw@roundtable-prod-f6fd.iam.gserviceaccount.com"
-  serviceAccountReadwrite: "git_lfs_rw@roundtable-prod-f6fd.iam.gserviceaccount.com"
+  serviceAccountReadonly: "git-lfs-rw@roundtable-prod-f6fd.iam.gserviceaccount.com"
+  serviceAccountReadwrite: "git-lfs-rw@roundtable-prod-f6fd.iam.gserviceaccount.com"
