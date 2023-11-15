@@ -67,3 +67,8 @@ config:
   # -- URI to the file specifying the DirectButler configuration to be used
   # by the butler server
   configUri: ""
+
+  # -- The prefix of the path portion of the URL where the Butler service will
+  # be exposed.  For example, if the service should be exposed at
+  # `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler`
+  pathPrefix: "/api/butler"
