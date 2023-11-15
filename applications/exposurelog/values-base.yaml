@@ -4,5 +4,26 @@ config:
   nfs_server_1: nfs-auxtel.ls.lsst.org
   butler_uri_1: /volume_1
 
-db:
+exposurelog_db:
   host: postgresdb01.ls.lsst.org
+
+envSecrets:
+  - name: PGPASSWORD
+    secretName: exposurelog
+    secretKey: exposurelog_password
+  # - name: AWS_ACCESS_KEY_ID
+  #   secretName: lfa
+  #   secretKey: aws-access-key-id
+  # - name: AWS_SECRET_ACCESS_KEY
+  #   secretName: lfa
+  #   secretKey: aws-secret-access-key
+  # - name: MYS3_ACCESS_KEY
+  #   secretName: lfa
+  #   secretKey: aws-access-key-id
+  # - name: MYS3_SECRET_KEY
+  #   secretName: lfa
+  #   secretKey: aws-secret-access-key
+
+env:
+  S3_ENDPOINT_URL: https://s3.ls.lsst.org
+  PGUSER: exposurelog

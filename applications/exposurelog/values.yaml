@@ -20,7 +20,7 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
-db:
+exposurelog_db:
   # -- database host
   host: postgres.postgres
   # -- database port
@@ -61,6 +61,9 @@ config:
   # Specify a non-blank value if and only if the corresponding
   # nfs_path_3 is not blank.
   nfs_server_3: ""
+
+  # -- Username for the butler.
+  butler_user: ""
 
   # -- URI for butler registry 1 (required).  Format:
   # * For a volume mounted using `nfs_path_1` (see above):
@@ -152,3 +155,14 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+# -- This section holds specifications for secret injection.
+# If this section is used, each object listed must have the following attributes defined:
+# _name_ (The label for the secret),
+# _secretName_ (The name of the vault store reference. Uses the _namespace_ attribute to construct the full name),
+# _secretKey_ (The key in the vault store containing the necessary secret)
+envSecrets: []
+# _dbUser_ (The username for the Butler backend database)
+butlerSecret: {}
+# -- This section holds a set of key, value pairs for environmental variables (ENV_VAR: value)
+env: {}

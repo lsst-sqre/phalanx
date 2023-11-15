@@ -56,27 +56,31 @@ spec:
             - name: BUTLER_URI_2
               value: {{ .Values.config.butler_uri_2 | quote }}
             - name: EXPOSURELOG_DB_USER
-              value: {{ .Values.db.user | quote }}
-            - name: PGUSER
-              value: {{ .Values.db.user | quote }}
+              value: {{ .Values.exposurelog_db.user | quote }}
             - name: EXPOSURELOG_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: exposurelog
                   key: exposurelog_password
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: exposurelog
-                  key: exposurelog_password
             - name: EXPOSURELOG_DB_HOST
-              value: {{ .Values.db.host | quote }}
+              value: {{ .Values.exposurelog_db.host | quote }}
             - name: EXPOSURELOG_DB_PORT
-              value: {{ .Values.db.port | quote }}
+              value: {{ .Values.exposurelog_db.port | quote }}
             - name: EXPOSURELOG_DB_DATABASE
-              value: {{ .Values.db.database | quote }}
+              value: {{ .Values.exposurelog_db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
+          {{- range $env_var, $env_value := .Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- range $env := .Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+          {{- end }}
           volumeMounts:
             {{- if .Values.config.nfs_path_1 }}
             - name: volume1
