@@ -56,6 +56,7 @@ argo-cd:
         g, rra@slac.stanford.edu, role:admin
         g, fritzm@slac.stanford.edu, role:admin
         g, cslater@slac.stanford.edu, role:admin
+        g, neilsen@slac.stanford.edu, role:admin
       scopes: "[email]"
 
       helm.repositories: |
