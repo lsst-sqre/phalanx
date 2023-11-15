@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "schedview_prenight"
+  name: "schedview-prenight"
   labels:
-    {{- include "schedview_prenight.labels" . | nindent 4 }}
+    {{- include "schedview-prenight.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
@@ -12,7 +12,7 @@ config:
   loginRedirect: true
 template:
   metadata:
-    name: "schedview_prenight"
+    name: "schedview-prenight"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -22,10 +22,10 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/schedview_prenight"
+            - path: "/schedview-prenight"
               pathType: "Prefix"
               backend:
                 service:
-                  name: "schedview_prenight"
+                  name: "schedview-prenight"
                   port:
                     number: 8080

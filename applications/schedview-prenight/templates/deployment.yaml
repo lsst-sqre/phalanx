@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "schedview_prenight"
+  name: "schedview-prenight"
   labels:
-    {{- include "schedview_prenight.labels" . | nindent 4 }}
+    {{- include "schedview-prenight.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "schedview_prenight.selectorLabels" . | nindent 6 }}
+      {{- include "schedview-prenight.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "schedview_prenight.selectorLabels" . | nindent 8 }}
+        {{- include "schedview-prenight.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       containers:

@@ -125,8 +125,8 @@ applications:
   # -- Enable the sasquatch application
   sasquatch: false
 
-  # -- Enable the schedview_prenight application
-  schedview_prenight: false
+  # -- Enable the schedview-prenight application
+  schedview-prenight: false
 
   # -- Enable the siav2 application
   siav2: false

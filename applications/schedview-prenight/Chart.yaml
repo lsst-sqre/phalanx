@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: tickets-PREOPS-4508
 description: Run the schedview pre-night briefing dashboard.
-name: schedview_prenight
+name: schedview-prenight
 sources:
 - https://github.com/lsst/schedview
 home: https://schedview.lsst.io/

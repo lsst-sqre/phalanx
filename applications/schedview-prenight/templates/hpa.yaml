@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: "schedview_prenight"
+  name: "schedview-prenight"
   labels:
-    {{- include "schedview_prenight.labels" . | nindent 4 }}
+    {{- include "schedview-prenight.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: "schedview_prenight"
+    name: "schedview-prenight"
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

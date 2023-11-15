@@ -1,23 +1,23 @@
-{{- if (index .Values "applications" "schedview_prenight") -}}
+{{- if (index .Values "applications" "schedview-prenight") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "schedview_prenight"
+  name: "schedview-prenight"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "schedview_prenight"
+  name: "schedview-prenight"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "schedview_prenight"
+    namespace: "schedview-prenight"
     server: "https://kubernetes.default.svc"
   project: "default"
   source:
-    path: "applications/schedview_prenight"
+    path: "applications/schedview-prenight"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
