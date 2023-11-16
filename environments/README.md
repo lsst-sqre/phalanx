@@ -40,6 +40,7 @@
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
+| applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sherlock | bool | `false` | Enable the sherlock application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |

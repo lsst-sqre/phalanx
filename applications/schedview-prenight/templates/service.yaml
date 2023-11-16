@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "schedview-prenight"
+  labels:
+    {{- include "schedview-prenight.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "schedview-prenight.selectorLabels" . | nindent 4 }}

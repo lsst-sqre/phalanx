@@ -15,3 +15,4 @@ applications:
   mobu: true
   postgres: true
   squareone: true
+  schedview-prenight: true
