@@ -144,8 +144,8 @@ love-nginx:
   loveConfig: |
     {
       "alarms": {
-        "minSeveritySound": "serious",
-        "minSeverityNotification": "warning"
+        "minSeveritySound": "mute",
+        "minSeverityNotification": "mute"
       },
       "camFeeds": {
         "simcam": "/love/simcam"
