@@ -1,7 +1,7 @@
 image:
   pullPolicy: "Always"
   repository: "docker.io/lsstsqre/giftless"
-  tag: "ajt-dev"
+  tag: "ajt-test-b"
 server:
   debug: true
 ingress:
