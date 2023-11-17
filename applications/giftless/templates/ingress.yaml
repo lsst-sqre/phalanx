@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ include "giftless.fullname" . }}
+  name: {{ include "giftless.fullname" . }}-ro
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 config:
@@ -15,7 +15,7 @@ template:
       {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
-    name: {{ include "giftless.fullname" . }}
+    name: {{ include "giftless.fullname" . }}-ro
   spec:
     tls:
       - hosts:
@@ -29,7 +29,7 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: {{ include "giftless.fullname" . }}
+                  name: {{ include "giftless.fullname" . }}-ro
                   port:
                     number: 5000
 ---
