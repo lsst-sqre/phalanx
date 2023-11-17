@@ -16,6 +16,7 @@ data:
           storage_options:
             project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
+            serviceaccount_email: {{ .Values.config.serviceAccountReadonly }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -35,3 +36,4 @@ data:
           storage_options:
             project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
+            serviceaccount_email: {{ .Values.config.serviceAccountReadwrite }}

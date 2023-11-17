@@ -1,5 +1,5 @@
 # Note that this creates two nearly-identical deployments, one named
-# "giftless" and one named "giftless-rw".  The only real difference
+# "giftless-ro" and one named "giftless-rw".  The only real difference
 # between them is that their configuration configmaps and
 # serviceaccounts are different: one has the configuration for read-only
 # access to the Git LFS server, and other has configuration for
@@ -11,7 +11,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "giftless.fullname" . }}
+  name: {{ include "giftless.fullname" . }}-ro
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 spec:
