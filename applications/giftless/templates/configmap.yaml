@@ -37,3 +37,5 @@ data:
             project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
             serviceaccount_email: {{ .Values.config.serviceAccountReadwrite }}
+            noverify_upload: true
+
