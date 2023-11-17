@@ -106,6 +106,7 @@ spec:
       offsets.topic.replication.factor: 3
       transaction.state.log.replication.factor: 3
       transaction.state.log.min.isr: 2
+      message.max.bytes: 4194304 # 8 Megabytes. For testing purposes only.
       log.message.format.version: {{ .Values.kafka.logMessageFormatVersion }}
       inter.broker.protocol.version: {{ .Values.kafka.interBrokerProtocolVersion }}
       ssl.client.auth: required
