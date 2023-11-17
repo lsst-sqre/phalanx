@@ -46,7 +46,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
-| controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
+| controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumeMounts` (similar to the main `volumeMountss` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
 | controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
 | controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
@@ -54,7 +54,8 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
 | controller.config.lab.sizes | list | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. `large` with `small` as the default) |
 | controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
-| controller.config.lab.volumes | list | `[]` | Volumes that should be mounted in lab pods. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
+| controller.config.lab.volumeMounts | list | `[]` | Volumes that should be mounted in lab pods. |
+| controller.config.lab.volumes | list | `[]` | Volumes that will be in lab pods or init containers. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
 | controller.config.logLevel | string | `"INFO"` | Level of Python logging |
 | controller.config.pathPrefix | string | `"/nublado"` | Path prefix that will be routed to the controller |
 | controller.googleServiceAccount | string | None, must be set when using Google Artifact Registry | If Google Artifact Registry is used as the image source, the Google service account that has an IAM binding to the `nublado-controller` Kubernetes service account and has the Artifact Registry reader role |

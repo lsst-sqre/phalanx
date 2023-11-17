@@ -26,52 +26,64 @@ controller:
             repository: "ghcr.io/lsst-sqre/initdir"
             tag: "0.0.4"
           privileged: true
-          volumes:
+          volumeMounts:
             - containerPath: "/home"
-              source:
-                serverPath: "/rsphome"
-                server: "nfs-rsphome.ls.lsst.org"
-                type: "nfs"
+              volumeName: "home"
       pullSecret: "pull-secret"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       volumes:
-        - containerPath: "/home"
+        - name: "home"
           source:
             type: "nfs"
             serverPath: "/rsphome"
             server: "nfs-rsphome.ls.lsst.org"
-        - containerPath: "/project"
+        - name: "project"
           source:
             type: "nfs"
             serverPath: "/project"
             server: "nfs-project.ls.lsst.org"
-        - containerPath: "/scratch"
+        - name: "scratch"
           source:
             type: "nfs"
             serverPath: "/scratch"
             server: "nfs-scratch.ls.lsst.org"
-        - containerPath: "/datasets"
+        - name: "datasets"
           source:
             type: "nfs"
             serverPath: "/lsstdata"
             server: "nfs-lsstdata.ls.lsst.org"
-        - containerPath: "/repo/LATISS"
+        - name: "latiss"
           source:
             type: "nfs"
             serverPath: "/auxtel/repo/LATISS"
             server: "nfs-auxtel.ls.lsst.org"
-        - containerPath: "/net/obs-env"
+        - name: "obs-env"
           source:
             type: "nfs"
             serverPath: "/obs-env"
             server: "nfs-obsenv.ls.lsst.org"
-        - containerPath: "/data/lsstdata/BTS/auxtel"
+        - name: "auxtel"
           source:
             type: "nfs"
             serverPath: "/auxtel/lsstdata/BTS/auxtel"
             server: "nfs-auxtel.ls.lsst.org"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/datasets"
+          volumeName: "datasets"
+        - containerPath: "/repo/LATISS"
+          volumeName: "latiss"
+        - containerPath: "/net/obs-env"
+          volumeName: "obs-env"
+        - containerPath: "/data/lsstdata/BTS/auxtel"
+          volumeName: "auxtel"
 
 jupyterhub:
   cull:

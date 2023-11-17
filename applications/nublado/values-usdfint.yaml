@@ -66,7 +66,7 @@ controller:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       volumes:
-        - containerPath: "/home"
+        - name: "sdf-home"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-home"
@@ -75,8 +75,7 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/project"
-          subPath: "g"
+        - name: "sdf-group-rubin"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-group-rubin"
@@ -85,16 +84,7 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/sdf/group/rubin"
-          source:
-            type: "persistentVolumeClaim"
-            storageClassName: "sdf-group-rubin"
-            accessModes:
-              - "ReadWriteMany"
-            resources:
-              requests:
-                storage: "1Gi"
-        - containerPath: "/sdf/data/rubin"
+        - name: "sdf-data-rubin"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-data-rubin"
@@ -103,7 +93,7 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/scratch"
+        - name: "sdf-scratch"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "sdf-scratch"
@@ -112,7 +102,7 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/fs/ddn/sdf/group/rubin"
+        - name: "fs-ddn-sdf-group-rubin"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "fs-ddn-sdf-group-rubin"
@@ -121,7 +111,7 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - containerPath: "/fs/ddn/sdf/group/lsst"
+        - name: "fs-ddn-sdf-group-lsst"
           source:
             type: "persistentVolumeClaim"
             storageClassName: "fs-ddn-sdf-group-lsst"
@@ -130,6 +120,22 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "sdf-home"
+        - containerPath: "/project"
+          subPath: "g"
+          volumeName: "sdf-group-rubin"
+        - containerPath: "/sdf/group/rubin"
+          volumeName: "sdf-group-rubin"
+        - containerPath: "/sdf/data/rubin"
+          volumeName: "sdf-data-rubin"
+        - containerPath: "/scratch"
+          volumeName: "sdf-scratch"
+        - containerPath: "/fs/ddn/sdf/group/rubin"
+          volumeName: "fs-ddn-sdf-group-rubin"
+        - containerPath: "/fs/ddn/sdf/group/lsst"
+          volumeName: "fs-ddn-sdf-group-lsst"
 
 proxy:
   ingress:

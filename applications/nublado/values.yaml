@@ -174,9 +174,10 @@ controller:
 
       # -- Containers run as init containers with each user pod. Each should
       # set `name`, `image` (a Docker image and pull policy specification),
-      # and `privileged`, and may contain `volumes` (similar to the main
-      # `volumes` configuration). If `privileged` is true, the container will
-      # run as root with all capabilities. Otherwise it will run as the user.
+      # and `privileged`, and may contain `volumeMounts` (similar to the main
+      # `volumeMountss` configuration). If `privileged` is true, the container
+      # will run as root with all capabilities. Otherwise it will run as the
+      # user.
       initContainers: []
 
       # -- Prefix for namespaces for user labs. To this will be added a dash
@@ -277,16 +278,23 @@ controller:
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
 
-      # -- Volumes that should be mounted in lab pods. This supports NFS,
-      # HostPath, and PVC volume types (differentiated in source.type).
+      # -- Volumes that will be in lab pods or init containers. This supports
+      # NFS, HostPath, and PVC volume types (differentiated in source.type).
       volumes: []
       # volumes:
-      # - containerPath: "/project"
-      #   readOnly: true
+      # - name: "project"
       #   source:
       #     type: nfs
+      #     readOnly: true
       #     serverPath: "/share1/project"
       #     server: "10.87.86.26"
+
+      # -- Volumes that should be mounted in lab pods.
+      volumeMounts: []
+      # volumeMounts:
+      # - containerPath: "/project"
+      #   readOnly: true
+      #   volumeName: "project"
 
 # JupyterHub configuration handled directly by this chart rather than by Zero
 # to JupyterHub.

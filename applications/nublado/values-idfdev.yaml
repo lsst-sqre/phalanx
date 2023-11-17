@@ -27,12 +27,9 @@ controller:
             repository: "ghcr.io/lsst-sqre/initdir"
             tag: "0.0.4"
           privileged: true
-          volumes:
+          volumeMounts:
             - containerPath: "/home"
-              source:
-                type: nfs
-                serverPath: "/share1/home"
-                server: "10.87.86.26"
+              volumeName: "home"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -43,21 +40,28 @@ controller:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       volumes:
-        - containerPath: "/home"
+        - name: "home"
           source:
             type: nfs
             serverPath: "/share1/home"
             server: "10.87.86.26"
-        - containerPath: "/project"
+        - name: "project"
           source:
             type: nfs
             serverPath: "/share1/project"
             server: "10.87.86.26"
-        - containerPath: "/scratch"
+        - name: "scratch"
           source:
             type: nfs
             serverPath: "/share1/scratch"
             server: "10.87.86.26"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
 jupyterhub:
   hub:
     db:
