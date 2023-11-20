@@ -346,7 +346,7 @@ class SecretsService:
         has_pull_secret
             Whether there should be a pull secret for this environment.
         """
-        for application, values in vault_secrets.items():
+        for application, values in sorted(vault_secrets.items()):
             if application not in resolved.applications:
                 if application == "pull-secret" and has_pull_secret:
                     continue
