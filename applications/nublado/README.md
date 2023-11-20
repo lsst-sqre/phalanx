@@ -26,6 +26,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
 | controller.config.fileserver.application | string | `"fileservers"` | ArgcoCD application in which to collect user file servers |
 | controller.config.fileserver.creationTimeout | int | `120` | Timeout to wait for Kubernetes to create file servers, in seconds |
+| controller.config.fileserver.deleteTimeout | int | 60 (1 minute) | Timeout for deleting a user's file server from Kubernetes, in seconds |
 | controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
 | controller.config.fileserver.idleTimeout | int | `3600` | Timeout for idle user fileservers, in seconds |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
@@ -43,6 +44,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
 | controller.config.lab.application | string | `"nublado-users"` | ArgoCD application in which to collect user lab objects |
+| controller.config.lab.deleteTimeout | int | 60 (1 minute) | Timeout for deleting a user's lab resources from Kubernetes in seconds |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |

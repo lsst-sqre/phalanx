@@ -59,6 +59,11 @@ controller:
       # -- Timeout to wait for Kubernetes to create file servers, in seconds
       creationTimeout: 120
 
+      # -- Timeout for deleting a user's file server from Kubernetes, in
+      # seconds
+      # @default -- 60 (1 minute)
+      deleteTimeout: 60
+
       # -- Timeout for idle user fileservers, in seconds
       idleTimeout: 3600
 
@@ -125,6 +130,11 @@ controller:
     lab:
       # -- ArgoCD application in which to collect user lab objects
       application: "nublado-users"
+
+      # -- Timeout for deleting a user's lab resources from Kubernetes in
+      # seconds
+      # @default -- 60 (1 minute)
+      deleteTimeout: 60
 
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
