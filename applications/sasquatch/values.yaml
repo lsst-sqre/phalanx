@@ -53,7 +53,7 @@ influxdb:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -116,7 +116,7 @@ influxdb-staging:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -179,7 +179,7 @@ source-influxdb:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
