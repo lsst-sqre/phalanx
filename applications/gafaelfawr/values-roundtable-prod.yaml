@@ -18,6 +18,10 @@ config:
   oidcServer:
     enabled: false
 
+  knownScopes:
+    "write:git-lfs": >-
+      Can write objects to Git LFS storage bucket
+
   groupMapping:
     "exec:admin":
       - github:
