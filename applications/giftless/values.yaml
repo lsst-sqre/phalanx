@@ -55,12 +55,18 @@ server:
 
 # -- Configuration for giftless server
 config:
-  # -- Project name for GCS LFS Object bucket
+  # -- Project name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
-  projectName: ""
-  # -- Bucket name for GCS LFS Object bucket
+  storageProjectName: ""
+  # -- Bucket name for GCS LFS Object Storage bucket
   # @default -- Must be overridden in environment-specific values file
   bucketName: ""
+  # -- Read-only service account name for GCS LFS Object Storage bucket
+  # @default -- Must be overridden in environment-specific values file
+  serviceAccountReadonly: ""
+  # -- Read-write service account name for GCS LFS Object Storage bucket
+  # @default -- Must be overridden in environment-specific values file
+  serviceAccountReadwrite: ""
 
 global:
   # -- Base path for Vault secrets

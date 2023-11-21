@@ -1,3 +1,7 @@
+image:
+  pullPolicy: "Always"
+  repository: "docker.io/lsstsqre/giftless"
+  tag: "ajt-dev"
 server:
   debug: true
 ingress:
@@ -5,5 +9,7 @@ ingress:
     readonly: "git-lfs-dev.lsst.cloud"
     readwrite: "git-lfs-dev-rw.lsst.cloud"
 config:
-  projectName: "plasma-geode-127520"
-  bucketName: "rubin-gitlfs-experimental"
+  storageProjectName: "data-curation-prod-fbdb"
+  bucketName: "rubin-us-central1-git-lfs-dev"
+  serviceAccountReadonly: "git-lfs-ro@roundtable-dev-abe2.iam.gserviceaccount.com"
+  serviceAccountReadwrite: "git-lfs-rw@roundtable-dev-abe2.iam.gserviceaccount.com"
