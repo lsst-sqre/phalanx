@@ -11,10 +11,10 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
-| kafka.config."log.retention.bytes" | string | `"429496729600"` | Maximum retained number of bytes for a topic's data. |
-| kafka.config."log.retention.hours" | int | `72` | Number of days for a topic's data to be retained. |
+| kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
+| kafka.config."log.retention.hours" | int | `48` | Number of days for a topic's data to be retained. |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka. |
-| kafka.config."offsets.retention.minutes" | int | `4320` | Number of minutes for a consumer group's offsets to be retained. |
+| kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained. |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition. |
 | kafka.config."replica.lag.time.max.ms" | int | `120000` | Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource. |
