@@ -45,3 +45,8 @@ config:
 
   errorFooter: |
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.
+
+ingress:
+  additionalHosts:
+    - "git-lfs.lsst.cloud"
+    - "git-lfs-rw.lsst.cloud"
