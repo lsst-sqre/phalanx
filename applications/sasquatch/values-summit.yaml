@@ -58,6 +58,7 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*MTMount"
+        tasksMax: "8"
       comcam:
         enabled: true
         repairerConnector: false
@@ -74,6 +75,7 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*MTM1M3"
+        tasksMax: "8"
       m2:
         enabled: true
         repairerConnector: false
