@@ -288,7 +288,6 @@ chronograf:
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
-    CUSTOM_AUTO_REFRESH: "1s=1000"
   # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
   envFromSecret: "sasquatch"
   resources:
