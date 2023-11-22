@@ -3,12 +3,9 @@ fqdn: summit-lsp.lsst.codes
 vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
 
 applications:
-  cachemachine: true
   exposurelog: true
-  moneypenny: true
   narrativelog: true
   nublado: true
-  nublado2: true
   portal: true
   postgres: true
   sasquatch: true
