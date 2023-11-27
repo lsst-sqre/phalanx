@@ -7,5 +7,5 @@ sources:
   - https://github.com/mittwald/kubernetes-replicator
 dependencies:
   - name: kubernetes-replicator
-    version: 2.9.1
+    version: 2.9.2
     repository: https://helm.mittwald.de
