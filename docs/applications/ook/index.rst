@@ -5,7 +5,7 @@ ook — Documentation indexing
 ############################
 
 Ook is the librarian service for Rubin Observatory.
-Ook indexes documentation content into the Algolia search engine that powers the Rubin Observatory documentation portal, https://lsst.io.
+Ook indexes documentation content into the Algolia search engine that powers the Rubin Observatory documentation portal, https://www.lsst.io.
 
 .. jinja:: ook
    :file: applications/_summary.rst.jinja
