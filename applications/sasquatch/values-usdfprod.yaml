@@ -19,18 +19,30 @@ influxdb:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
   persistence:
     enabled: true
     size: 15Ti
+  config:
+    coordinator:
+      query-timeout: "300s"
 
 source-influxdb:
   enabled: true
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
   persistence:
     enabled: true
     size: 15Ti
+  config:
+    coordinator:
+      query-timeout: "300s"
 
 kafka-connect-manager:
   influxdbSink:
