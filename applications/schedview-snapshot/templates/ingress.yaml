@@ -8,7 +8,7 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "read:image"
+      - "exec:portal"
   loginRedirect: true
 template:
   metadata:

@@ -1,8 +1,9 @@
 apiVersion: v2
-appVersion: 0.1.0
-description: Dashboard for examination of scheduler snapshots.
+appVersion: u-neilsen-preops-4603
+description: Dashboard for examination of scheduler snapshots
 name: schedview-snapshot
 sources:
-- https://github.com/lsst-sqre/schedview-snapshot
+- https://github.com/lsst/schedview
+home: https://schedview.lsst.io/
 type: application
 version: 1.0.0

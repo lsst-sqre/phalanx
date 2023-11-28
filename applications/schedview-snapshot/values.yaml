@@ -7,10 +7,10 @@ replicaCount: 1
 
 image:
   # -- Image to use in the schedview-snapshot deployment
-  repository: "ghcr.io/lsst-sqre/schedview-snapshot"
+  repository: "ghcr.io/lsst/schedview"
 
   # -- Pull policy for the schedview-snapshot image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""

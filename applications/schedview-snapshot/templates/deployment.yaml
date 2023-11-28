@@ -31,16 +31,22 @@ spec:
             readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: BOKEH_ALLOW_WS_ORIGIN
+              value: {{ .Values.global.host }}
           ports:
             - name: "http"
               containerPort: 8080
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/"
+              path: "/schedview-snapshot"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -57,3 +63,11 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      command:
+        - /bin/bash
+        - -c
+        - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
+
