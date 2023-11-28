@@ -30,16 +30,16 @@ controller:
         - containerPath: "/home"
           mode: "rw"
           source:
-            serverPath: "/jhome"
-            server: "nfs-jhome.ls.lsst.org"
+            serverPath: "/rsphome"
+            server: "nfs-rsphome.ls.lsst.org"
             type: "nfs"
       volumes:
       - containerPath: "/home"
         mode: "rw"
         source:
           type: "nfs"
-          serverPath: "/jhome"
-          server: "nfs-jhome.ls.lsst.org"
+          serverPath: "/rsphome"
+          server: "nfs-rsphome.ls.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:

@@ -199,6 +199,12 @@ config:
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
 
+    # -- Whether to search for group membership by user DN rather than bare
+    # usernames. Most LDAP servers use full DNs for group membership, so
+    # normally this should be set to true, but it requires `userBaseDn` also
+    # be set.
+    groupSearchByDn: false
+
     # -- Base DN for the LDAP search to find a user's entry
     # @default -- Get user metadata from the upstream authentication provider
     userBaseDn: ""
