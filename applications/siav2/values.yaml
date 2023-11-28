@@ -7,13 +7,13 @@ replicaCount: 1
 
 image:
   # -- Image to use in the siav2 deployment
-  repository: "docker.io/cbanek/siav2"
+  repository: "ghcr.io/lsst-sqre/dal-siav2"
 
   # -- Pull policy for the siav2 image
   pullPolicy: "IfNotPresent"
 
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "0.0.3"
 
 ingress:
   # -- Additional annotations for the ingress rule

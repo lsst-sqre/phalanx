@@ -15,8 +15,8 @@ Simple Image Access v2 service
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the siav2 image |
-| image.repository | string | `"docker.io/cbanek/siav2"` | Image to use in the siav2 deployment |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.repository | string | `"ghcr.io/lsst-sqre/dal-siav2"` | Image to use in the siav2 deployment |
+| image.tag | string | `"0.0.3"` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the siav2 deployment pod |
 | obsCoreTable | string | `"ivoa.ObsCore"` | ObsCore table on the TAP service to query |
