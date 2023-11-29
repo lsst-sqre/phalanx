@@ -48,7 +48,7 @@ spec:
             - name: tmp
               mountPath: /tmp
             - name: slashdatcache
-              mountPath: /.cache         
+              mountPath: /.cache
           command:
             - /bin/bash
             - -c
