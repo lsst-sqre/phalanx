@@ -37,7 +37,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/"
+              path: "/schedview-prenight"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
