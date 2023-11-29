@@ -47,6 +47,8 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            - name: slashdatcache
+              mountPath: /.cache         
           command:
             - /bin/bash
             - -c
@@ -70,5 +72,5 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
-
-
+        - name: slashdatcache
+          emptyDir: {}
