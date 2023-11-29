@@ -10,7 +10,7 @@ image:
   repository: "ghcr.io/lsst/schedview"
 
   # -- Pull policy for the schedview-prenight image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
