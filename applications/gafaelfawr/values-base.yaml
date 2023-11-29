@@ -35,6 +35,7 @@ config:
     "admin:provision":
       - "sqre"
     "exec:admin":
+      - "k8s-manke"
       - "sqre"
     "exec:internal-tools":
       - "rsp-bts"
