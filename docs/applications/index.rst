@@ -59,6 +59,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    rubintv/index
    sasquatch/index
    schedview-prenight/index
+   schedview-snapshot/index
    strimzi/index
    strimzi-access-operator/index
    telegraf/index

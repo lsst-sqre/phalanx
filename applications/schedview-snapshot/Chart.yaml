@@ -1,7 +1,7 @@
 apiVersion: v2
 appVersion: v0.10.0
-description: Run the schedview pre-night briefing dashboard.
-name: schedview-prenight
+description: Dashboard for examination of scheduler snapshots
+name: schedview-snapshot
 sources:
 - https://github.com/lsst/schedview
 home: https://schedview.lsst.io/

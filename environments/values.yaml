@@ -131,6 +131,9 @@ applications:
   # -- Enable the schedview-prenight application
   schedview-prenight: false
 
+  # -- Enable the schedview-snapshot application
+  schedview-snapshot: false
+
   # -- Enable the siav2 application
   siav2: false
 

@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "schedview-prenight"
+  name: "schedview-snapshot"
   labels:
-    {{- include "schedview-prenight.labels" . | nindent 4 }}
+    {{- include "schedview-snapshot.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "schedview-prenight.selectorLabels" . | nindent 6 }}
+      {{- include "schedview-snapshot.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "schedview-prenight.selectorLabels" . | nindent 8 }}
+        {{- include "schedview-snapshot.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       containers:
@@ -40,13 +40,19 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/schedview-prenight"
+              path: "/schedview-snapshot"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            - name: slashdatcache
+              mountPath: /.cache
+          command:
+            - /bin/bash
+            - -c
+            - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -65,4 +71,6 @@ spec:
       {{- end }}
       volumes:
         - name: tmp
+          emptyDir: {}
+        - name: slashdatcache
           emptyDir: {}

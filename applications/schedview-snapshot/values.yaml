@@ -1,4 +1,4 @@
-# Default values for schedview-prenight.
+# Default values for schedview-snapshot.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -6,10 +6,10 @@
 replicaCount: 1
 
 image:
-  # -- Image to use in the schedview-prenight deployment
+  # -- Image to use in the schedview-snapshot deployment
   repository: "ghcr.io/lsst/schedview"
 
-  # -- Pull policy for the schedview-prenight image
+  # -- Pull policy for the schedview-snapshot image
   pullPolicy: "Always"
 
   # -- Overrides the image tag whose default is the chart appVersion.
@@ -20,32 +20,32 @@ ingress:
   annotations: {}
 
 autoscaling:
-  # -- Enable autoscaling of schedview-prenight deployment
+  # -- Enable autoscaling of schedview-snapshot deployment
   enabled: false
 
-  # -- Minimum number of schedview-prenight deployment pods
+  # -- Minimum number of schedview-snapshot deployment pods
   minReplicas: 1
 
-  # -- Maximum number of schedview-prenight deployment pods
+  # -- Maximum number of schedview-snapshot deployment pods
   maxReplicas: 100
 
-  # -- Target CPU utilization of schedview-prenight deployment pods
+  # -- Target CPU utilization of schedview-snapshot deployment pods
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
-# -- Annotations for the schedview-prenight deployment pod
+# -- Annotations for the schedview-snapshot deployment pod
 podAnnotations: {}
 
-# -- Resource limits and requests for the schedview-prenight deployment pod
+# -- Resource limits and requests for the schedview-snapshot deployment pod
 resources: {}
 
-# -- Node selection rules for the schedview-prenight deployment pod
+# -- Node selection rules for the schedview-snapshot deployment pod
 nodeSelector: {}
 
-# -- Tolerations for the schedview-prenight deployment pod
+# -- Tolerations for the schedview-snapshot deployment pod
 tolerations: []
 
-# -- Affinity rules for the schedview-prenight deployment pod
+# -- Affinity rules for the schedview-snapshot deployment pod
 affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
