@@ -20,7 +20,7 @@ controller:
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "base"
         LSST_SITE: "base"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
       initContainers:
       - name: "initdir"
@@ -33,6 +33,11 @@ controller:
             serverPath: "/rsphome"
             server: "nfs-rsphome.ls.lsst.org"
             type: "nfs"
+      secrets:
+      - secretName: "nublado-lab-secret"
+        secretKey: "aws-credentials.ini"
+      - secretName: "nublado-lab-secret"
+        secretKey: "postgres-credentials.txt"
       volumes:
       - containerPath: "/home"
         mode: "rw"
