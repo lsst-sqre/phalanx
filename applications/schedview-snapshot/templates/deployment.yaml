@@ -47,6 +47,10 @@ spec:
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+          command:
+            - /bin/bash
+            - -c
+            - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -66,8 +70,5 @@ spec:
       volumes:
         - name: tmp
           emptyDir: {}
-      command:
-        - /bin/bash
-        - -c
-        - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
+
 
