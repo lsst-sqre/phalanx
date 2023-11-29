@@ -31,6 +31,9 @@ spec:
             readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: BOKEH_ALLOW_WS_ORIGIN
+              value: {{ .Values.global.host }}
           ports:
             - name: "http"
               containerPort: 8080
