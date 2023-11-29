@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: tickets-preops-4603
+appVersion: tickets-preops-4606
 description: Dashboard for examination of scheduler snapshots
 name: schedview-snapshot
 sources:
