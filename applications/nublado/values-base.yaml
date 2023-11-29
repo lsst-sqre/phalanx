@@ -35,8 +35,6 @@ controller:
             type: "nfs"
       secrets:
       - secretName: "nublado-lab-secret"
-        secretKey: "aws-credentials.ini"
-      - secretName: "nublado-lab-secret"
         secretKey: "postgres-credentials.txt"
       volumes:
       - containerPath: "/home"
