@@ -15,7 +15,7 @@ metadata:
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.server.readonly.replicas }}
   selector:
     matchLabels:
       {{- include "giftless.selectorLabels" . | nindent 6 }}
@@ -42,9 +42,9 @@ spec:
             - "-T"
             - "--die-on-term"
             - "--threads"
-            - "{{- .Values.server.threads }}"
+            - "{{- .Values.server.readonly.threads }}"
             - "-p"
-            - "{{- .Values.server.processes }}"
+            - "{{- .Values.server.readonly.processes }}"
             - "--manage-script-name"
             - "--callable"
             - "app"
@@ -106,7 +106,7 @@ metadata:
   labels:
     {{- include "giftless-rw.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.server.readwrite.replicas }}
   selector:
     matchLabels:
       {{- include "giftless-rw.selectorLabels" . | nindent 6 }}
@@ -133,9 +133,9 @@ spec:
             - "-T"
             - "--die-on-term"
             - "--threads"
-            - "{{- .Values.server.threads }}"
+            - "{{- .Values.server.readwrite.threads }}"
             - "-p"
-            - "{{- .Values.server.processes }}"
+            - "{{- .Values.server.readwrite.processes }}"
             - "--manage-script-name"
             - "--callable"
             - "app"

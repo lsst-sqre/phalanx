@@ -1,9 +1,11 @@
 image:
   pullPolicy: "Always"
   repository: "docker.io/lsstsqre/giftless"
-  tag: "ajt-dev"
+  tag: "upstream-master"
 server:
   debug: true
+  readonly:
+    replicas: 3
 ingress:
   hostname:
     readonly: "git-lfs.lsst.cloud"
