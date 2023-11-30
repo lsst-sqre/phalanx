@@ -25,7 +25,7 @@ frontend:
   # -- Settings for rubintv OCI image
   image:
     # -- rubintv frontend image to use
-    repository: "ghcr.io/lsst-sqre/rubintv"
+    repository: "ghcr.io/lsst-ts/rubintv"
 
     # -- Pull policy for the rubintv image
     pullPolicy: "IfNotPresent"

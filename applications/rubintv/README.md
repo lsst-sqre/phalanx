@@ -12,9 +12,9 @@ Real-time display front end
 |-----|------|---------|-------------|
 | frontend.affinity | object | `{}` | Affinity rules for the rubintv frontend pod |
 | frontend.debug | bool | `false` | If set to true, enable more verbose logging. |
-| frontend.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-sqre/rubintv","tag":""}` | Settings for rubintv OCI image |
+| frontend.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-ts/rubintv","tag":""}` | Settings for rubintv OCI image |
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the rubintv image |
-| frontend.image.repository | string | `"ghcr.io/lsst-sqre/rubintv"` | rubintv frontend image to use |
+| frontend.image.repository | string | `"ghcr.io/lsst-ts/rubintv"` | rubintv frontend image to use |
 | frontend.image.tag | string | The appVersion of the chart | Tag of rubintv image to use |
 | frontend.nodeSelector | object | `{}` | Node selector rules for the rubintv frontend pod |
 | frontend.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's frontend API routes. |
