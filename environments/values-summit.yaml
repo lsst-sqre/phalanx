@@ -18,6 +18,7 @@ applications:
   rubintv-dev: true
   sasquatch: true
   sasquatch-backpack: true
+  schedview-snapshot: true
   squareone: true
   strimzi: true
   telegraf: true
