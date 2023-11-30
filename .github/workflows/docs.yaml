@@ -39,6 +39,7 @@ jobs:
               - "docs/**"
               - "applications/*/Chart.yaml"
               - "applications/*/values.yaml"
+              - "applications/argocd/values-*.yaml"
               - "applications/gafaelfawr/values-*.yaml"
               - "environments/values-*.yaml"
               - "src/phalanx/**"
