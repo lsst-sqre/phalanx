@@ -12,6 +12,7 @@ controller:
         registry: "docker-registry.slac.stanford.edu"
         repository: "lsstsqre/sciplat-lab"
       recommendedTag: "recommended"
+      pin: ["w_2023_47"]
       numReleases: 1
       numWeeklies: 2
       numDailies: 3
