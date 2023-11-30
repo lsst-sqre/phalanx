@@ -16,6 +16,7 @@ applications:
   nublado: true
   portal: true
   sasquatch: true
+  schedview-snapshot: true
   semaphore: true
   sherlock: true
   siav2: true
