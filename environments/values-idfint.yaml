@@ -8,14 +8,11 @@ vaultPathPrefix: secret/phalanx/idfint
 
 applications:
   alert-stream-broker: true
-  cachemachine: true
   datalinker: true
   hips: true
   linters: true
   mobu: true
-  moneypenny: true
   nublado: true
-  nublado2: true
   plot-navigator: true
   portal: true
   postgres: true
