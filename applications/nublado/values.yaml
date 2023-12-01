@@ -1,6 +1,15 @@
 # Default values for Nublado.
 
 controller:
+  # -- Affinity rules for the Nublado controller
+  affinity: {}
+
+  # -- If Google Artifact Registry is used as the image source, the Google
+  # service account that has an IAM binding to the `nublado-controller`
+  # Kubernetes service account and has the Artifact Registry reader role
+  # @default -- None, must be set when using Google Artifact Registry
+  googleServiceAccount: ""
+
   image:
     # -- Nublado controller image to use
     repository: "ghcr.io/lsst-sqre/nublado-controller"
@@ -12,8 +21,9 @@ controller:
     # @default -- The appVersion of the chart
     tag: ""
 
-  # -- Affinity rules for the Nublado controller
-  affinity: {}
+  ingress:
+    # -- Additional annotations to add for the Nublado controller ingress
+    annotations: {}
 
   # -- Node selector rules for the Nublado controller
   nodeSelector: {}
@@ -31,22 +41,12 @@ controller:
       cpu: "0.05"
       memory: "120Mi"
 
-  # -- Tolerations for the Nublado controller
-  tolerations: []
-
-  ingress:
-    # -- Additional annotations to add for the Nublado controller ingress
-    annotations: {}
-
-  # -- If Google Artifact Registry is used as the image source, the Google
-  # service account that has an IAM binding to the `nublado-controller`
-  # Kubernetes service account and has the Artifact Registry reader role
-  # @default -- None, must be set when using Google Artifact Registry
-  googleServiceAccount: ""
-
   # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
   # set in the corresponding Nublado Vault secret.
   slackAlerts: false
+
+  # -- Tolerations for the Nublado controller
+  tolerations: []
 
   # Passed as YAML to the lab controller.
   config:
@@ -516,28 +516,26 @@ jupyterhub:
       enabled: false
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
-  # Cloud.
+  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
+  # Google Cloud
   enabled: false
+
+  # -- Affinity rules for the Cloud SQL Auth Proxy pod
+  affinity: {}
 
   image:
     # -- Cloud SQL Auth Proxy image to use
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
-    # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.15"
-
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.33.14"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
-
-  # -- The Google service account that has an IAM binding to the `gafaelfawr`
-  # Kubernetes service account and has the `cloudsql.client` role
-  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
-  serviceAccount: ""
 
   # -- Resource limits and requests for the Cloud SQL Proxy pod
   # @default -- See `values.yaml`
@@ -549,17 +547,20 @@ cloudsql:
       cpu: "5m"
       memory: "7Mi"
 
-  # -- Annotations for the Cloud SQL Proxy pod
+  # -- Annotations for the Cloud SQL Auth Proxy pod
   podAnnotations: {}
 
-  # -- Node selection rules for the Cloud SQL Proxy pod
+  # -- Node selection rules for the Cloud SQL Auth Proxy pod
   nodeSelector: {}
 
-  # -- Tolerations for the Cloud SQL Proxy pod
-  tolerations: []
+  # -- The Google service account that has an IAM binding to the
+  # `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client`
+  # role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
 
-  # -- Affinity rules for the Cloud SQL Proxy pod
-  affinity: {}
+  # -- Tolerations for the Cloud SQL Auth Proxy pod
+  tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
