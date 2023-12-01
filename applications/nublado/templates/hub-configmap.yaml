@@ -6,6 +6,9 @@ metadata:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
   00_nublado.py: |
+    # It's not clear whether explicitly importing the spawner and
+    # authenticator modules is required or if JupyterHub will do this for us
+    # anyway, but it can't hurt.
     import rubin.nublado.authenticator
     import rubin.nublado.spawner
 
@@ -31,12 +34,12 @@ data:
     # Use JupyterLab by default.
     c.Spawner.default_url = "/lab"
 
-    # Allow ten minutes for the lab to spawn in case it needs to be pulled.
-    c.Spawner.start_timeout = {{ .Values.hub.timeout.spawn }}
+    # How long to wait for Kubernetes to start the lab. This must match the
+    # corresponding setting in the Nublado controller.
+    c.Spawner.start_timeout = {{ .Values.controller.config.lab.spawnTimeout }}
 
-    # Allow 90 seconds for JupyterLab to start. For reasons we do not yet
-    # understand, it is often glacially slow and sometimes takes over 60
-    # seconds.
+    # How long to wait for the JupyterLab process to respond to network
+    # connections after the pod has started running.
     c.Spawner.http_timeout = {{ .Values.hub.timeout.startup }}
 
     # Configure the URL to the lab controller.
