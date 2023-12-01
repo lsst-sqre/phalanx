@@ -6,15 +6,10 @@ metadata:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
   00_nublado.py: |
-    # It's not clear whether explicitly importing the spawner and
-    # authenticator modules is required or if JupyterHub will do this for us
-    # anyway, but it can't hurt.
-    import rubin.nublado.authenticator
-    import rubin.nublado.spawner
-
-    # Use our authenticator and spawner.
-    c.JupyterHub.authenticator_class = "rubin.nublado.authenticator.GafaelfawrAuthenticator"
-    c.JupyterHub.spawner_class = "rubin.nublado.spawner.RSPRestSpawner"
+    # Use our authenticator and spawner. Both register custom entry points,
+    # so the full module and class name is not required.
+    c.JupyterHub.authenticator_class = "gafaelfawr"
+    c.JupyterHub.spawner_class = "nublado"
 
     # Set internal Hub API URL.
     c.JupyterHub.hub_connect_url = (
@@ -43,4 +38,4 @@ data:
     c.Spawner.http_timeout = {{ .Values.hub.timeout.startup }}
 
     # Configure the URL to the lab controller.
-    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"
+    c.NubladoSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"
