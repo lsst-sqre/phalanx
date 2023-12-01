@@ -11,7 +11,6 @@ controller:
       cycle: null
       recommended_tag: "recommended_k0001"
     lab:
-      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
@@ -25,6 +24,12 @@ controller:
         LSST_SCHEMA_REGISTRY_URL: http://sasquatch-schema-registry.sasquatch:8081
         PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
         PGUSER: "oods"
+      pullSecret: "pull-secret"
+      secrets:
+      - secretName: "kafka-secret"
+        secretKey: "kafka_credentials.txt"
+      - secretName: "nublado-lab-secret"
+        secretKey: "postgres-credentials.txt"
       initContainers:
         - name: "inithome"
           image:
@@ -34,11 +39,6 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
-      secrets:
-        - secretName: "kafka-secret"
-          secretKey: "ts-salkafka-password"
-        - secretName: "nublado-lab-secret"
-          secretKey: "postgres-credentials.txt"
       volumes:
         - name: "home"
           source:
