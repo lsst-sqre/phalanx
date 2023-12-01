@@ -4,7 +4,7 @@ Real-time display front end
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/rubintv>
+* <https://github.com/lsst-ts/rubintv>
 
 ## Values
 
