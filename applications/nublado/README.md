@@ -38,6 +38,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
 | controller.config.fileserver.tolerations | list | `[]` | Tolerations for user file server pods |
+| controller.config.fileserver.volumeMounts | list | `[]` | Volumes that should be made available via WebDAV |
 | controller.config.images.aliasTags | list | `[]` | Additional tags besides `recommendedTag` that should be recognized as aliases. |
 | controller.config.images.cycle | string | `nil` | Restrict images to this SAL cycle, if given. |
 | controller.config.images.numDailies | int | `3` | Number of most-recent dailies to prepull. |

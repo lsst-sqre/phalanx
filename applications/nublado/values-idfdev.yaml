@@ -5,7 +5,9 @@ controller:
     logLevel: "DEBUG"
     fileserver:
       enabled: true
-      idleTimeout: 43200  # 12 hours
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
     images:
       source:
         type: "google"
