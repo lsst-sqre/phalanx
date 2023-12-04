@@ -2,11 +2,12 @@
 Kubernetes kubelet nodeStatusMaxImages setting for Nublado
 ##########################################################
 
+The image prepuller in the :px-app:`nublado` application requires Kubernetes to keep track of a number of images and ensure each of those images are present on every node.  This is required in order to provide a pleasant user experience, because the ``sciplat-lab`` images are large and typically take 3-5 minutes to pull and unpack when they are not already present on a node.
+The default Kubernetes settings can in some circumstances result in the :px-app:`nublado` failing to display images in its spawner menu, as well as the image prepuller running continuously.
+
 Setting nodeStatusMaxImages
 ===========================
 
-The image prepuller in the :px-app:`nublado` application requires Kubernetes to keep track of a number of images and ensure each of those images are present on every node.  This is required in order to provide a pleasant user experience, because the ``sciplat-lab`` images are large and typically take 3-5 minutes to pull and unpack when they are not already present on a node.
-The default Kubernetes settings can in some circumstances result in the :px-app:`nublado` failing to display images in its spawner menu, as well as the image prepuller running continuously.
 The solution, described here, is to set the ``nodeStatusMaxImages`` in the Kubernetes cluster's `kubelet config`_.
 
 .. _`kubelet config`: https://kubernetes.io/docs/reference/config-api/kubelet-config.v1beta1/
