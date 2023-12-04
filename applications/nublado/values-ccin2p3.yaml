@@ -35,17 +35,14 @@ controller:
           memory: 16Gi  
       volumes:
         - containerPath: "/pbs/home"
-          mode: "rw"
           source:
             type: "hostPath"
             path: "/pbs/home"
         - containerPath: "/pbs/throng"
-          mode: "rw"
           source:
             type: "hostPath"
             path: "/pbs/throng"
         - containerPath: "/sps"
-          mode: "rw"
           source:
             type: "hostPath"
             path: "/sps"
