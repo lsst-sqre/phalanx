@@ -18,6 +18,15 @@ When this happens, you may need to recreate the persistent volume.
 
 **Solution:** :ref:`recreate-postgres-pvc`
 
+Spawner menu missing images, nublado stuck pulling the same image
+=================================================================
+**Symptoms: **When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
+Instead, the menu is missing one or more images.
+The same image or set of images is pulled again each on each prepuller loop the nublado lab controller attempts.
+
+**Solution:** :doc:`infrastructure/kubernetes-node-status-max-images`
+
+
 Spawner menu missing images, cachemachine stuck pulling the same image
 ======================================================================
 
@@ -26,14 +35,7 @@ Instead, the menu is either empty or missing the right number of images of diffe
 The cachemachine application is continuously creating a ``DaemonSet`` for the same image without apparent forward progress.
 Querying the cachemachine ``/available`` API shows either nothing in ``images`` or not everything that was expected.
 
-**Cause:** Cachemachine is responsible for generating the menu used for spawning new JupyterLab instances.
-The list of available images is pulled from the list of images that are already cached on every non-cordoned node to ensure that spawning will be quick.
-If the desired types of images are not present on each node, cachemachine will create a ``DaemonSet`` for that image to attempt to start a pod using that image on every node, which will cache it.
-If this fails to change the reported images available on each node, it will keep retrying.
-
-The most common cause of this problem is a Kubernetes limitation.
-By default, the Kubernetes list node API only returns the "first" (which usually means oldest) 50 cached images.
-If more than 50 images are cached, images may go missing from that list even though they are cached, leading cachemachine to think they aren't cached and omitting them from the spawner menu.
+**Cause:** This is the same problem as above, but with the older (cachemachine+moneypenny)-based infrastructure rather than nublado v3.  The solution is the same: :doc:`infrastructure/kubernetes-node-status-max-images`.
 
 **Solution:** :doc:`/applications/cachemachine/pruning`
 
