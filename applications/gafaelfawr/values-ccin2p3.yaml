@@ -68,8 +68,8 @@ config:
       #      kdc             = ccidm04.in2p3.fr:88
       #    }
 
-      [appdefaults]
-        encrypt = true
+      #[appdefaults]
+      #  encrypt = true
   
 
   oidcServer:
