@@ -105,7 +105,7 @@ config:
           tss:x:59:
           cgred:x:997:
           screen:x:84:
-          jovyan:x:768:{{ user }}{% for g in groups %}
+          {{ user }}{% for g in groups %}
           {{ g.name }}:x:{{ g.id }}:{{ user if g.id != gid else "" }}{% endfor %}
     - apiVersion: v1
       kind: ConfigMap
