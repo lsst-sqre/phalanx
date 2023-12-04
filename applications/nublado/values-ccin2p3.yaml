@@ -16,7 +16,7 @@ controller:
       numDailies: 3
     lab:
       homedirSchema: "initialThenUsername"
-      homedirPrefix: "/pbs"
+      homedirPrefix: "/pbs/home"
       homedirSuffix: "rsp_home"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
