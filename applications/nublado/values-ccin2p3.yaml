@@ -33,7 +33,6 @@ controller:
           memory: 16Gi  
       volumes:
         - containerPath: "/pbs/home"
-          subPath: "rsp_home"
           mode: "rw"
           source:
             type: hostPath
