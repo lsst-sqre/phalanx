@@ -49,10 +49,6 @@ controller:
           source:
             type: hostPath
             path: "/sps"
-      volume_mounts:
-        - name: home
-          volumeName: 
-          subPath: "rsp_home"
 jupyterhub:
   hub:
     baseUrl: "/n3"
