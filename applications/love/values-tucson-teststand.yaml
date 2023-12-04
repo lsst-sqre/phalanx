@@ -33,40 +33,83 @@ love-commander:
     type: ClusterIP
 
 love-manager:
-  image:
-    repository: ts-dockerhub.lsst.org/love-manager
-    pullPolicy: Always
-  env:
-    SERVER_URL: tucson-teststand.lsst.codes
-    OLE_API_HOSTNAME: tucson-teststand.lsst.codes
-    AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
-    AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
-    AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
-    DB_HOST: postgresdb01.tu.lsst.org
-    REDIS_CONFIG_EXPIRY: 5
-    REDIS_CONFIG_CAPACITY: 5000
-    LOVE_SITE: tucson
-    LOVE_PRODUCER_WEBSOCKET_HOST: love-nginx-service/love/manager/ws/subscription
-  envSecrets:
-    AUTHLIST_USER_PASS: authlist-user-pass
-    AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
-  autoscaling:
-    enabled: true
-    minReplicas: 2
-    maxReplicas: 25
-    targetCPUUtilizationPercentage: 75
-  resources:
-    requests:
-      cpu: 250m
-      memory: 500Mi
-    limits:
-      cpu: 750m
-      memory: 1000Mi
-  readinessProbe:
-    tcpSocket:
-      port: 8000
-    initialDelaySeconds: 20
-    periodSeconds: 10
+  manager:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        DB_HOST: postgresdb01.tu.lsst.org
+        LOVE_SITE: tucson
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
+    producers:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        DB_HOST: postgresdb01.tu.lsst.org
+        LOVE_SITE: tucson
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
   redis:
     image:
       repository: redis
@@ -120,7 +163,16 @@ love-nginx:
         try_files $uri$args $uri$args/ $uri/ /love/index.html;
       }
       location /love/manager {
-          proxy_pass http://love-manager-service:8000;
+          client_max_body_size 5M;
+          proxy_pass http://love-manager-frontend-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/producers {
+          proxy_pass http://love-manager-producers-service:8000;
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
           proxy_set_header Connection "upgrade";
@@ -151,7 +203,12 @@ love-nginx:
         "simcam": "/love/simcam"
       },
       "efd": {
-        "defaultEfdInstance": "tucson_teststand_efd"
+        "defaultEfdInstance": "tucson_teststand_efd",
+        "urlStatus": "https://tucson-teststand.lsst.codes/influxdb/health"
+      },
+      "sal": {
+          "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [0, 1, 2]
       }
     }
 
@@ -160,7 +217,7 @@ love-producer:
     repository: ts-dockerhub.lsst.org/love-producer
     pullPolicy: Always
   env:
-    WEBSOCKET_HOST: love-nginx-service/love/manager/ws/subscription
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   resources:
     requests:
       cpu: 10m

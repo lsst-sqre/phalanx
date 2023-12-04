@@ -1,0 +1,47 @@
+{{- if .Values.manager.producers.autoscaling.enabled }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ include "love-manager-producers.fullname" . }}
+  labels:
+    {{- include "love-manager-producers.labels" . | nindent 4 }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "love-manager-producers.fullname" . }}
+  minReplicas: {{ .Values.manager.producers.autoscaling.minReplicas }}
+  maxReplicas: {{ .Values.manager.producers.autoscaling.maxReplicas }}
+  metrics:
+    {{- if .Values.manager.producers.autoscaling.targetCPUUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.manager.producers.autoscaling.targetCPUUtilizationPercentage }}
+    {{- end }}
+    {{- if .Values.manager.producers.autoscaling.targetMemoryUtilizationPercentage }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.manager.producers.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- end }}
+  {{- if or .Values.manager.producers.autoscaling.scaleUpPolicy .Values.manager.producers.autoscaling.scaleDownPolicy }}
+  behavior:
+  {{- if .Values.manager.producers.autoscaling.scaleUpPolicy }}
+    scaleUp:
+    {{- with .Values.manager.producers.autoscaling.scaleUpPolicy }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.manager.producers.autoscaling.scaleDownPolicy }}
+    scaleDown:
+    {{- with .Values.manager.producers.autoscaling.scaleDownPolicy }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}
+  {{- end }}
+{{- end }}

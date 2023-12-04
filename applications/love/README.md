@@ -18,48 +18,104 @@ Deployment for the LSST Operators Visualization Environment
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
-| love-manager.affinity | object | `{}` | Affinity rules for the LOVE manager pods |
-| love-manager.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
-| love-manager.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
-| love-manager.autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
-| love-manager.autoscaling.scaleDownPolicy | object | `{}` | Policy for scaling down manager pods |
-| love-manager.autoscaling.scaleUpPolicy | object | `{}` | Policy for scaling up manager pods |
-| love-manager.autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
-| love-manager.autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
-| love-manager.env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |
-| love-manager.env.AUTH_LDAP_2_SERVER_URI | string | `"ldap://ipa2.lsst.local"` | Set the URI for the 2nd LDAP server |
-| love-manager.env.AUTH_LDAP_3_SERVER_URI | string | `"ldap://ipa3.lsst.local"` | Set the URI for the 3rd LDAP server |
-| love-manager.env.COMMANDER_HOSTNAME | string | `"love-commander-service"` | Label for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
-| love-manager.env.COMMANDER_PORT | int | `5000` | Port number for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
-| love-manager.env.DB_ENGINE | string | `"postgresql"` | The type of database engine being used for the LOVE manager |
-| love-manager.env.DB_HOST | string | `"love-manager-database-service"` | The name of the database service |
-| love-manager.env.DB_NAME | string | `"love"` | The name of the database being used for the LOVE manager. |
-| love-manager.env.DB_PORT | int | `5432` | The port for the database |
-| love-manager.env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager. |
-| love-manager.env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
-| love-manager.env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
-| love-manager.env.LOVE_PRODUCER_WEBSOCKET_HOST | string | `"love-service/manager/ws/subscription"` | The URL path for the LOVE producer websocket host |
-| love-manager.env.LOVE_SITE | string | `"local"` | The site tag where LOVE is being run |
-| love-manager.env.OLE_API_HOSTNAME | string | `"site.lsst.local"` | Set the URL for the OLE instance |
-| love-manager.env.REDIS_HOST | string | `"love-manager-redis-service"` | The name of the redis service |
-| love-manager.env.REMOTE_STORAGE | bool | `true` | Set the manager to use LFA storage |
-| love-manager.env.SERVER_URL | string | `"love.lsst.local"` | The external URL from the NGINX server for LOVE |
-| love-manager.env.URL_SUBPATH | string | `"/love"` | The Kubernetes sub-path for LOVE |
 | love-manager.envSecretKeyName | string | `"love"` | The top-level secret key name that houses the rest of the secrets |
-| love-manager.envSecrets.ADMIN_USER_PASS | string | `"admin-user-pass"` | The LOVE manager admin user password secret key name |
-| love-manager.envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager cmd_user user password secret key name |
-| love-manager.envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. |
-| love-manager.envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager process connection password secret key name |
-| love-manager.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
-| love-manager.envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager secret secret key name |
-| love-manager.envSecrets.USER_USER_PASS | string | `"user-user-pass"` | The LOVE manager user user password secret key name |
-| love-manager.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the LOVE manager image |
-| love-manager.image.repository | string | `"lsstts/love-manager"` | The LOVE manager image to use |
-| love-manager.image.tag | string | `nil` |  |
-| love-manager.nodeSelector | object | `{}` | Node selection rules for the LOVE manager pods |
-| love-manager.ports.container | int | `8000` | The port on the container for normal communications |
-| love-manager.ports.node | int | `30000` | The port on the node for normal communcations |
-| love-manager.readinessProbe | object | `{}` | Configuration for the LOVE manager pods readiness probe |
+| love-manager.manager.frontend.affinity | object | `{}` | Affinity rules for the LOVE manager frontend pods |
+| love-manager.manager.frontend.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
+| love-manager.manager.frontend.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
+| love-manager.manager.frontend.autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
+| love-manager.manager.frontend.autoscaling.scaleDownPolicy | object | `{}` | Policy for scaling down manager pods |
+| love-manager.manager.frontend.autoscaling.scaleUpPolicy | object | `{}` | Policy for scaling up manager pods |
+| love-manager.manager.frontend.autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
+| love-manager.manager.frontend.autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
+| love-manager.manager.frontend.env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |
+| love-manager.manager.frontend.env.AUTH_LDAP_2_SERVER_URI | string | `"ldap://ipa2.lsst.local"` | Set the URI for the 2nd LDAP server |
+| love-manager.manager.frontend.env.AUTH_LDAP_3_SERVER_URI | string | `"ldap://ipa3.lsst.local"` | Set the URI for the 3rd LDAP server |
+| love-manager.manager.frontend.env.COMMANDER_HOSTNAME | string | `"love-commander-service"` | Label for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
+| love-manager.manager.frontend.env.COMMANDER_PORT | int | `5000` | Port number for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
+| love-manager.manager.frontend.env.DB_ENGINE | string | `"postgresql"` | The type of database engine being used for the LOVE manager frontend |
+| love-manager.manager.frontend.env.DB_HOST | string | `"love-manager-database-service"` | The name of the database service |
+| love-manager.manager.frontend.env.DB_NAME | string | `"love"` | The name of the database being used for the LOVE manager frontend |
+| love-manager.manager.frontend.env.DB_PORT | int | `5432` | The port for the database service |
+| love-manager.manager.frontend.env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager frontend |
+| love-manager.manager.frontend.env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
+| love-manager.manager.frontend.env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
+| love-manager.manager.frontend.env.LOVE_PRODUCER_WEBSOCKET_HOST | string | `"love-service/manager/ws/subscription"` | The URL path for the LOVE producer websocket host |
+| love-manager.manager.frontend.env.LOVE_SITE | string | `"local"` | The site tag where LOVE is being run |
+| love-manager.manager.frontend.env.OLE_API_HOSTNAME | string | `"site.lsst.local"` | Set the URL for the OLE instance |
+| love-manager.manager.frontend.env.REDIS_CONFIG_CAPACITY | int | `5000` | The connection capacity for the redis service |
+| love-manager.manager.frontend.env.REDIS_CONFIG_EXPIRY | int | `5` | The expiration time for the redis service |
+| love-manager.manager.frontend.env.REDIS_HOST | string | `"love-manager-redis-service"` | The name of the redis service |
+| love-manager.manager.frontend.env.REMOTE_STORAGE | bool | `true` | Set the manager to use LFA storage |
+| love-manager.manager.frontend.env.SERVER_URL | string | `"love.lsst.local"` | The external URL from the NGINX server for LOVE |
+| love-manager.manager.frontend.env.URL_SUBPATH | string | `"/love"` | The Kubernetes sub-path for LOVE |
+| love-manager.manager.frontend.envSecrets.ADMIN_USER_PASS | string | `"admin-user-pass"` | The LOVE manager frontend admin user password secret key name |
+| love-manager.manager.frontend.envSecrets.AUTHLIST_USER_PASS | string | `"authlist-user-pass"` | The LOVE manager frontend authlist_user password secret key name |
+| love-manager.manager.frontend.envSecrets.AUTH_LDAP_BIND_PASSWORD | string | `"auth-ldap-bind-password"` | The LOVE manager frontend LDAP binding password secret key name |
+| love-manager.manager.frontend.envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager frontend cmd_user user password secret key name |
+| love-manager.manager.frontend.envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. Must match `database.envSecrets.POSTGRES_PASSWORD` |
+| love-manager.manager.frontend.envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager frontend process connection password secret key name |
+| love-manager.manager.frontend.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
+| love-manager.manager.frontend.envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager frontend secret secret key name |
+| love-manager.manager.frontend.envSecrets.USER_USER_PASS | string | `"user-user-pass"` | The LOVE manager frontend user user password secret key name |
+| love-manager.manager.frontend.image.nexus3 | string | `""` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
+| love-manager.manager.frontend.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the LOVE manager frontend image |
+| love-manager.manager.frontend.image.repository | string | `"lsstts/love-manager"` | The LOVE manager frontend image to use |
+| love-manager.manager.frontend.nodeSelector | object | `{}` | Node selection rules for the LOVE manager frontend pods |
+| love-manager.manager.frontend.ports.container | int | `8000` | The port on the container for normal communications |
+| love-manager.manager.frontend.ports.node | int | `30000` | The port on the node for normal communcations |
+| love-manager.manager.frontend.readinessProbe | object | `{}` | Configuration for the LOVE manager frontend pods readiness probe |
+| love-manager.manager.frontend.replicas | int | `1` | Set the default number of LOVE manager frontend pod replicas |
+| love-manager.manager.frontend.resources | object | `{}` | Resource specifications for the LOVE manager frontend pods |
+| love-manager.manager.frontend.tolerations | list | `[]` | Toleration specifications for the LOVE manager frontend pods |
+| love-manager.manager.producers.affinity | object | `{}` | Affinity rules for the LOVE manager producers pods |
+| love-manager.manager.producers.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
+| love-manager.manager.producers.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
+| love-manager.manager.producers.autoscaling.minReplicas | int | `1` | The allowed minimum number of replicas |
+| love-manager.manager.producers.autoscaling.scaleDownPolicy | object | `{}` | Policy for scaling down manager pods |
+| love-manager.manager.producers.autoscaling.scaleUpPolicy | object | `{}` | Policy for scaling up manager pods |
+| love-manager.manager.producers.autoscaling.targetCPUUtilizationPercentage | int | `80` | The percentage of CPU utilization that will trigger the scaling |
+| love-manager.manager.producers.autoscaling.targetMemoryUtilizationPercentage | int | `""` | The percentage of memory utilization that will trigger the scaling |
+| love-manager.manager.producers.env.AUTH_LDAP_1_SERVER_URI | string | `"ldap://ipa1.lsst.local"` | Set the URI for the 1st LDAP server |
+| love-manager.manager.producers.env.AUTH_LDAP_2_SERVER_URI | string | `"ldap://ipa2.lsst.local"` | Set the URI for the 2nd LDAP server |
+| love-manager.manager.producers.env.AUTH_LDAP_3_SERVER_URI | string | `"ldap://ipa3.lsst.local"` | Set the URI for the 3rd LDAP server |
+| love-manager.manager.producers.env.COMMANDER_HOSTNAME | string | `"love-commander-service"` | Label for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
+| love-manager.manager.producers.env.COMMANDER_PORT | int | `5000` | Port number for the LOVE commander service. Must match the one spcified in the LOVE commander chart |
+| love-manager.manager.producers.env.DB_ENGINE | string | `"postgresql"` | The type of database engine being used for the LOVE manager producers |
+| love-manager.manager.producers.env.DB_HOST | string | `"love-manager-database-service"` | The name of the database service |
+| love-manager.manager.producers.env.DB_NAME | string | `"love"` | The name of the database being used for the LOVE manager producers |
+| love-manager.manager.producers.env.DB_PORT | int | `5432` | The port for the database service |
+| love-manager.manager.producers.env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager producers |
+| love-manager.manager.producers.env.HEARTBEAT_QUERY_COMMANDER | bool | `false` | Have the LOVE producer managers not query commander |
+| love-manager.manager.producers.env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
+| love-manager.manager.producers.env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
+| love-manager.manager.producers.env.LOVE_SITE | string | `"local"` | The site tag where LOVE is being run |
+| love-manager.manager.producers.env.OLE_API_HOSTNAME | string | `"site.lsst.local"` | Set the URL for the OLE instance |
+| love-manager.manager.producers.env.REDIS_CONFIG_CAPACITY | int | `5000` | The connection capacity for the redis service |
+| love-manager.manager.producers.env.REDIS_CONFIG_EXPIRY | int | `5` | The expiration time for the redis service |
+| love-manager.manager.producers.env.REDIS_HOST | string | `"love-manager-redis-service"` | The name of the redis service |
+| love-manager.manager.producers.env.REMOTE_STORAGE | bool | `true` | Set the manager to use LFA storage |
+| love-manager.manager.producers.env.SERVER_URL | string | `"love.lsst.local"` | The external URL from the NGINX server for LOVE |
+| love-manager.manager.producers.env.URL_SUBPATH | string | `"/love"` | The Kubernetes sub-path for LOVE |
+| love-manager.manager.producers.envSecrets.ADMIN_USER_PASS | string | `"admin-user-pass"` | The LOVE manager producers admin user password secret key name |
+| love-manager.manager.producers.envSecrets.AUTHLIST_USER_PASS | string | `"authlist-user-pass"` | The LOVE manager producers authlist_user password secret key name |
+| love-manager.manager.producers.envSecrets.AUTH_LDAP_BIND_PASSWORD | string | `"auth-ldap-bind-password"` | The LOVE manager producers LDAP binding password secret key name |
+| love-manager.manager.producers.envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager producers cmd_user user password secret key name |
+| love-manager.manager.producers.envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. Must match `database.envSecrets.POSTGRES_PASSWORD` |
+| love-manager.manager.producers.envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager producers process connection password secret key name |
+| love-manager.manager.producers.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
+| love-manager.manager.producers.envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager producers secret secret key name |
+| love-manager.manager.producers.envSecrets.USER_USER_PASS | string | `"user-user-pass"` | The LOVE manager producers user user password secret key name |
+| love-manager.manager.producers.image.nexus3 | string | `""` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
+| love-manager.manager.producers.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the LOVE manager producers image |
+| love-manager.manager.producers.image.repository | string | `"lsstts/love-manager"` | The LOVE manager producers image to use |
+| love-manager.manager.producers.nodeSelector | object | `{}` | Node selection rules for the LOVE manager producers pods |
+| love-manager.manager.producers.ports.container | int | `8000` | The port on the container for normal communications |
+| love-manager.manager.producers.ports.node | int | `30000` | The port on the node for normal communcations |
+| love-manager.manager.producers.readinessProbe | object | `{}` | Configuration for the LOVE manager producers pods readiness probe |
+| love-manager.manager.producers.replicas | int | `1` | Set the default number of LOVE manager producers pod replicas |
+| love-manager.manager.producers.resources | object | `{}` | Resource specifications for the LOVE manager producers pods |
+| love-manager.manager.producers.tolerations | list | `[]` | Toleration specifications for the LOVE manager producers pods |
+| love-manager.namespace | string | `"love"` | The overall namespace for the application |
 | love-manager.redis.affinity | object | `{}` | Affinity rules for the LOVE redis pods |
 | love-manager.redis.config | string | `"timeout 60\n"` | Configuration specification for the redis service |
 | love-manager.redis.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name |
@@ -70,15 +126,14 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.redis.port | int | `6379` | The redis port number |
 | love-manager.redis.resources | object | `{}` | Resource specifications for the LOVE redis pods |
 | love-manager.redis.tolerations | list | `[]` | Toleration specifications for the LOVE redis pods |
-| love-manager.replicas | int | `1` | Set the default number of LOVE manager pod replicas |
-| love-manager.resources | object | `{}` | Resource specifications for the LOVE manager pods |
-| love-manager.tolerations | list | `[]` | Toleration specifications for the LOVE manager pods |
+| love-manager.secret_path | string | `"lsst.local"` | The site-specific path to find Vault secrets |
 | love-manager.viewBackup.affinity | object | `{}` | Affinity rules for the LOVE view backup pods |
 | love-manager.viewBackup.enabled | bool | `false` | Whether view backup is active |
 | love-manager.viewBackup.env | object | `{}` | Place to specify additional environment variables for the view backup job |
+| love-manager.viewBackup.image.nexus3 | string | `""` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
 | love-manager.viewBackup.image.pullPolicy | string | `"IfNotPresent"` | The pull policy to use for the view backup image |
 | love-manager.viewBackup.image.repository | string | `"lsstts/love-view-backup"` | The view backup image to use |
-| love-manager.viewBackup.image.tag | string | `nil` | The tag to use for the view backup image |
+| love-manager.viewBackup.image.tag | string | `"develop"` | The tag to use for the view backup image |
 | love-manager.viewBackup.nodeSelector | object | `{}` | Node selection rules for the LOVE view backup pods |
 | love-manager.viewBackup.resources | object | `{}` | Resource specifications for the LOVE view backup pods |
 | love-manager.viewBackup.restartPolicy | string | `"Never"` | The restart policy type for the view backup cronjob |

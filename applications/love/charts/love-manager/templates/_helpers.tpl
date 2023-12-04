@@ -24,6 +24,20 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Manager frontend fullname
+*/}}
+{{- define "love-manager-frontend.fullname" -}}
+{{ include "love-manager.fullname" . }}-frontend
+{{- end }}
+
+{{/*
+Manager producers fullname
+*/}}
+{{- define "love-manager-producers.fullname" -}}
+{{ include "love-manager.fullname" . }}-producers
+{{- end }}
+
+{{/*
 Create chart name and version as used by the chart label.
 */}}
 {{- define "love-manager.chart" -}}
@@ -39,11 +53,43 @@ helm.sh/chart: {{ include "love-manager.chart" . }}
 {{- end }}
 
 {{/*
-Selector labels
+Manager Frontend Common labels
+*/}}
+{{- define "love-manager-frontend.labels" -}}
+helm.sh/chart: {{ include "love-manager.chart" . }}
+{{ include "love-manager-frontend.selectorLabels" . }}
+{{- end }}
+
+{{/*
+Manager Producers Common labels
+*/}}
+{{- define "love-manager-producers.labels" -}}
+helm.sh/chart: {{ include "love-manager.chart" . }}
+{{ include "love-manager-producers.selectorLabels" . }}
+{{- end }}
+
+{{/*
+Common Selector labels
 */}}
 {{- define "love-manager.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "love-manager.name" . }}
-app.kubernetes.io/instance: {{ include "love-manager.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Manager Frontend Selector labels
+*/}}
+{{- define "love-manager-frontend.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "love-manager.name" . }}
+app.kubernetes.io/instance: {{ include "love-manager.name" . }}-frontend
+{{- end }}
+
+{{/*
+Manager Producers Selector labels
+*/}}
+{{- define "love-manager-producers.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "love-manager.name" . }}
+app.kubernetes.io/instance: {{ include "love-manager.name" . }}-producers
 {{- end }}
 
 {{/*

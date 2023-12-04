@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "love-manager-producers.fullname" . }}
+  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  labels:
+    {{- include "love-manager-producers.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "love-manager-producers.selectorLabels" . | nindent 6 }}
+  {{- if not .Values.manager.producers.autoscaling.enabled }}
+  replicas: {{ .Values.manager.producers.replicas }}
+  {{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "love-manager-producers.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "love-manager-producers.fullname" . }}
+        {{- $imageTag := .Values.manager.producers.image.tag | default $.Values.global.controlSystemImageTag }}
+        image: "{{ .Values.manager.producers.image.repository }}:{{ $imageTag }}"
+        imagePullPolicy: {{ .Values.manager.producers.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.manager.producers.ports.container }}
+        env:
+        {{- $data := dict "env" .Values.manager.producers.env "secretName" "" }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- if .Values.manager.producers.envSecrets }}
+        {{- $data := dict "secretName" .Values.envSecretKeyName "env" .Values.manager.producers.envSecrets }}
+        {{- include "helpers.envFromList" $data | indent 10 }}
+        {{- end }}
+        {{- with $.Values.manager.producers.resources }}
+        resources:
+          {{- toYaml $.Values.manager.producers.resources | nindent 10 }}
+        {{- end }}
+        {{- with $.Values.manager.producers.readinessProbe }}
+        readinessProbe:
+          {{- toYaml $.Values.manager.producers.readinessProbe | nindent 10 }}
+        {{- end }}
+      imagePullSecrets:
+        - name: nexus3-docker
+      {{- with $.Values.manager.producers.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.manager.producers.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.manager.producers.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}

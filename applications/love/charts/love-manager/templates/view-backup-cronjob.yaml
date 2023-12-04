@@ -3,7 +3,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: {{ include "love-manager.view-backup.fullname" . }}
-  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  namespace: {{ .Values.namespace }}
   labels:
     {{- include "love-manager.view-backup.labels" . | nindent 4 }}
 spec:
@@ -25,23 +25,19 @@ spec:
         spec:
           containers:
             - name: {{ include "love-manager.view-backup.fullname" . }}
-              {{- $imageTag := .Values.viewBackup.image.tag | default $.Values.global.controlSystemImageTag }}
-              image: "{{ .Values.viewBackup.image.repository }}:{{ $imageTag }}"
+              image: "{{ .Values.viewBackup.image.repository }}:{{ .Values.viewBackup.image.tag }}"
               imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
-              envFrom:
-              - configMapRef:
-                  name: csc-env-config
               env:
                 - name: PGHOST
-                  value: {{ .Values.env.DB_HOST | quote }}
+                  value: {{ .Values.manager.frontend.env.DB_HOST | quote }}
                 - name: PGPORT
-                  value: {{ .Values.env.DB_PORT | quote }}
+                  value: {{ .Values.manager.frontend.env.DB_PORT | quote }}
                 - name: PGDATABASE
-                  value: {{ .Values.env.DB_NAME | quote }}
+                  value: {{ .Values.manager.frontend.env.DB_NAME | quote }}
                 - name: PGUSER
-                  value: {{ .Values.env.DB_USER | quote }}
+                  value: {{ .Values.manager.frontend.env.DB_USER | quote }}
                 - name: LOVE_SITE
-                  value: {{ .Values.env.LOVE_SITE | quote }}
+                  value: {{ .Values.manager.frontend.env.LOVE_SITE | quote }}
                 {{- range $env_var, $env_value := .Values.viewBackup.env }}
                 - name: {{ $env_var }}
                   value: {{ $env_value | quote }}
@@ -49,25 +45,27 @@ spec:
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: love-secrets
-                      key: {{ .Values.envSecrets.DB_PASS }}
+                      name: {{ .Values.namespace }}-secrets
+                      key: {{ .Values.manager.frontend.envSecrets.DB_PASS }}
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: lfa
+                      name: {{ .Values.namespace }}-lfa
                       key: aws-access-key-id
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: lfa
+                      name: {{ .Values.namespace }}-lfa
                       key: aws-secret-access-key
               {{- with $.Values.viewBackup.resources }}
               resources:
                 {{- toYaml $.Values.viewBackup.resources | nindent 16 }}
               {{- end }}
           restartPolicy: {{ .Values.viewBackup.restartPolicy }}
+          {{- if $.Values.viewBackup.image.nexus3 }}
           imagePullSecrets:
-            - name: nexus3-docker
+            - name: {{ $.Values.namespace }}-{{ $.Values.viewBackup.image.nexus3 }}
+          {{- end }}
           {{- with $.Values.nodeSelector }}
           nodeSelector:
             {{- toYaml $ | nindent 12 }}
