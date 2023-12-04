@@ -5,12 +5,15 @@ from __future__ import annotations
 import os
 from collections import defaultdict
 
-from onepasswordconnectsdk import load_dict, new_client
+from onepasswordconnectsdk import new_client
 from onepasswordconnectsdk.client import FailedToRetrieveItemException
 
-from ..exceptions import NoOnepasswordCredentialsError
+from ..exceptions import (
+    MissingOnepasswordSecretsError,
+    NoOnepasswordCredentialsError,
+)
 from ..models.environments import EnvironmentBaseConfig
-from ..models.secrets import StaticSecret, StaticSecrets
+from ..models.secrets import PullSecret, StaticSecret, StaticSecrets
 
 __all__ = ["OnepasswordClient", "OnepasswordStorage"]
 
@@ -55,41 +58,78 @@ class OnepasswordClient:
         dict of dict
             Retrieved static secrets as a dictionary of applications to secret
             keys to `~phalanx.models.secrets.StaticSecret` objects.
+
+        Raises
+        ------
+        MissingOnepasswordSecretsError
+            Raised if any of the items or fields expected to be in 1Password
+            are not present.
         """
-        request: dict[tuple[str, str], dict[str, str]] = {}
-        extra = []
+        applications: defaultdict[str, dict[str, StaticSecret]]
+        applications = defaultdict(dict)
+
+        # This method originally used the load_dict bulk query interface, but
+        # the onepasswordconnectsdk Python library appears to turn that into
+        # separate queries per item anyway, it can't handle fields whose names
+        # contain periods, and it means we don't know what items are missing
+        # for error reporting. It seems better to do the work directly.
+        not_found = []
         for application, secrets in query.items():
+            try:
+                item = self._onepassword.get_item(application, self._vault_id)
+            except FailedToRetrieveItemException:
+                not_found.append(application)
+                continue
             for secret in secrets:
-                if "." in secret:
-                    extra.append((application, secret))
-                else:
-                    request[(application, secret)] = {
-                        "opitem": application,
-                        "opfield": f".{secret}",
-                        "opvault": self._vault_id,
-                    }
-        response = load_dict(self._onepassword, request)
-        result: StaticSecrets = defaultdict(dict)
-        for key, value in response.items():
-            application, secret = key
-            result[application][secret] = StaticSecret(value=value)
+                found = False
+                for field in item.fields:
+                    if field.label == secret:
+                        static_secret = StaticSecret(value=field.value)
+                        applications[application][secret] = static_secret
+                        found = True
+                        break
+                if not found:
+                    not_found.append(f"{application} {secret}")
 
-        # Separately handle the secret field names that contain periods, since
-        # that conflicts with the syntax used by load_dict.
-        for application, secret in extra:
-            item = self._onepassword.get_item(application, self._vault_id)
-            found = False
-            for field in item.fields:
-                if field.label == secret:
-                    static_secret = StaticSecret(value=field.value)
-                    result[application][secret] = static_secret
-                    found = True
-                    break
-            if not found:
-                msg = f"Item {application} has no field {secret}"
-                raise FailedToRetrieveItemException(msg)
+        # If any secrets weren't found, raise an exception with the list of
+        # secrets that weren't found.
+        if not_found:
+            raise MissingOnepasswordSecretsError(not_found)
 
-        return result
+        # Return the static secrets.
+        return StaticSecrets(
+            applications=applications, pull_secret=self._get_pull_secret()
+        )
+
+    def _get_pull_secret(self) -> PullSecret | None:
+        """Get the pull secret for an environment from 1Password.
+
+        Returns
+        -------
+        dict of StaticSecret
+            The constructed pull secret in a form suitable for adding to
+            Vault, or `None` if there is no pull secret for this environment.
+        """
+        try:
+            item = self._onepassword.get_item("pull-secret", self._vault_id)
+        except FailedToRetrieveItemException:
+            return None
+
+        # Extract the usernames and passwords from the 1Password item.
+        secrets: defaultdict[str, dict[str, str]] = defaultdict(dict)
+        section = {s.id: s.label for s in item.sections}
+        for field in item.fields:
+            if field.label not in ("username", "password"):
+                continue
+            section_id = field.section.id if field.section else None
+            registry = section[section_id]
+            if field.label == "username":
+                secrets[registry]["username"] = field.value
+            elif field.label == "password":
+                secrets[registry]["password"] = field.value
+
+        # Return the result converted to the appropriate model.
+        return PullSecret.model_validate({"registries": secrets})
 
 
 class OnepasswordStorage:

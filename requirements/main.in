@@ -13,5 +13,10 @@ GitPython
 hvac
 jinja2
 onepasswordconnectsdk
+pydantic>2
 PyYAML
-safir
+safir>=5.0.0a1
+
+# Uncomment this, change the branch, comment out safir above, and run make
+# update-deps-no-hashes to test against an unreleased version of Safir.
+# safir @ git+https://github.com/lsst-sqre/safir@main

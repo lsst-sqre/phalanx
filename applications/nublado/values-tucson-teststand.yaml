@@ -19,8 +19,22 @@ controller:
         LSST_DDS_INTERFACE: net1
         LSST_DDS_PARTITION_PREFIX: tucson
         LSST_SITE: tucson
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+      initContainers:
+      - name: "initdir"
+        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+        privileged: true
+        volumes:
+        - containerPath: "/home"
+          mode: "rw"
+          source:
+            serverPath: "/jhome"
+            server: "nfs-jhome.tu.lsst.org"
+            type: "nfs"
+      secrets:
+      - secretName: "nublado-lab-secret"
+        secretKey: "postgres-credentials.txt"
       volumes:
       - containerPath: "/home"
         mode: "rw"

@@ -3,9 +3,17 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import ClassVar
 
-from pydantic import AnyHttpUrl, BaseModel, Extra, validator
+from pydantic import (
+    AnyHttpUrl,
+    BaseModel,
+    ConfigDict,
+    Field,
+    GetJsonSchemaHandler,
+    field_validator,
+)
+from pydantic.json_schema import JsonSchemaValue
+from pydantic_core import CoreSchema
 from safir.pydantic import CamelCaseModel
 
 from .applications import Application, ApplicationInstance
@@ -28,39 +36,81 @@ __all__ = [
 class OnepasswordConfig(CamelCaseModel):
     """Configuration for 1Password static secrets source."""
 
-    connect_url: AnyHttpUrl
-    """URL to the 1Password Connect API server."""
+    connect_url: AnyHttpUrl = Field(
+        ...,
+        title="1Password Connect URL",
+        description="URL to the 1Password Connect API server",
+    )
 
-    vault_title: str
-    """Title of the 1Password vault from which to retrieve secrets."""
+    vault_title: str = Field(
+        ...,
+        title="1Password vault title",
+        description=(
+            "Title of the 1Password vault from which to retrieve secrets"
+        ),
+    )
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
     """Configuration common to `EnviromentConfig` and `Environment`."""
 
-    name: str
-    """Name of the environment."""
+    name: str = Field(..., title="Name", description="Name of the environment")
 
-    fqdn: str
-    """Fully-qualified domain name."""
+    fqdn: str = Field(
+        ...,
+        title="Domain name",
+        description=(
+            "Fully-qualified domain name on which the environment listens"
+        ),
+    )
 
-    onepassword: OnepasswordConfig | None = None
-    """Configuration for using 1Password as a static secrets source."""
+    butler_repository_index: str | None = Field(
+        None,
+        title="Butler repository index URL",
+        description="URL to Butler repository index",
+    )
 
-    vault_url: str
-    """URL of Vault server."""
+    onepassword: OnepasswordConfig | None = Field(
+        None,
+        title="1Password configuration",
+        description=(
+            "Configuration for using 1Password as a static secrets source"
+        ),
+    )
 
-    vault_path_prefix: str
-    """Prefix of Vault paths, including the Kv2 mount point."""
+    vault_url: AnyHttpUrl | None = Field(
+        None,
+        title="Vault server URL",
+        description=(
+            "URL of the Vault server. This is required in the merged values"
+            " file that includes environment overrides, but the environment"
+            " override file doesn't need to set it, so it's marked as"
+            " optional for schema checking purposes to allow the override"
+            " file to be schema-checked independently."
+        ),
+    )
 
-    @validator("onepassword", pre=True)
-    def _validate_onepassword(cls, v: dict[str, str]) -> dict[str, str] | None:
+    vault_path_prefix: str = Field(
+        ...,
+        title="Vault path prefix",
+        description="Prefix of Vault paths, including the KV v2 mount point",
+    )
+
+    @field_validator("onepassword", mode="before")
+    @classmethod
+    def _validate_onepassword(
+        cls, v: dict[str, str] | None
+    ) -> dict[str, str] | None:
         if not v:
             return v
         if not isinstance(v, dict):
-            raise TypeError("onepassword is not a dictionary")
-        if v["connectUrl"] == "":
+            raise ValueError("onepassword is not a dictionary")  # noqa: TRY004
+
+        # The validator is called multiple times, before and after alias
+        # resolution, so needs to handle both possible spellings.
+        if not v.get("connectUrl") and not v.get("connect_url"):
             return None
+
         return v
 
     @property
@@ -86,9 +136,10 @@ class EnvironmentBaseConfig(CamelCaseModel):
         """Display name of the Vault write token for this environment.
 
         Unlike AppRole names, this could include a slash, but use the same
-        name as the AppRole for consistency and simplicity.
+        base name as the AppRole for consistency and simplicity. Vault always
+        prepends ``token-``, which we strip off when creating the token.
         """
-        return self.vault_read_approle
+        return f"token-{self.vault_read_approle}"
 
     @property
     def vault_read_policy(self) -> str:
@@ -108,44 +159,52 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     environment and is also used to validate those files. For the complete
     configuration for an environment, initialize this model with the merger of
     :file:`values.yaml` and :file:`values-{environment}.yaml`.
+
+    Fields listed here are not available to application linting. If the field
+    value has to be injected during linting, the field needs to be defined in
+    `EnvironmentBaseConfig` instead.
     """
 
-    applications: dict[str, bool]
-    """List of applications and whether they are enabled."""
+    applications: dict[str, bool] = Field(
+        ...,
+        title="Enabled applications",
+        description="List of applications and whether they are enabled",
+    )
 
-    butler_repository_index: str | None = None
-    """URL to Butler repository index."""
+    repo_url: str | None = Field(
+        None,
+        title="URL of Git repository",
+        description=(
+            "URL of the Git repository holding Argo CD configuration. This is"
+            " required in the merged values file that includes environment"
+            " overrides, but the environment override file doesn't need to"
+            " set it, so it's marked as optional for schema checking purposes"
+            " to allow the override file to be schema-checked independently."
+        ),
+    )
 
-    onepassword_uuid: str | None = None
-    """UUID of 1Password item in which to find Vault tokens.
+    target_revision: str | None = Field(
+        None,
+        title="Git repository branch",
+        description=(
+            "Branch of the Git repository holding Argo CD configuration. This"
+            " is required in the merged values file that includes environment"
+            " overrides, but the environment override file doesn't need to set"
+            " it, so it's marked as optional for schema checking purposes to"
+            " allow the override file to be schema-checked independently."
+        ),
+    )
 
-    This is used only by the old installer and will be removed once the new
-    secrets management and 1Password integration is deployed everywhere.
-    """
+    model_config = ConfigDict(extra="forbid")
 
-    repo_url: str | None = None
-    """URL of the Git repository holding Argo CD configuration.
-
-    This is required in the merged values file that includes environment
-    overrides, but the environment override file doesn't need to set it, so
-    it's marked as optional for schema checking purposes to allow the override
-    file to be schema-checked independently.
-    """
-
-    target_revision: str | None = None
-    """Branch of the Git repository holding Argo CD configuration.
-
-    This is required in the merged values file that includes environment
-    overrides, but the environment override file doesn't need to set it, so
-    it's marked as optional for schema checking purposes to allow the override
-    file to be schema-checked independently.
-    """
-
-    class Config:
-        extra = Extra.forbid
-        schema_extra: ClassVar[dict[str, str]] = {
-            "$id": "https://phalanx.lsst.io/schemas/environment.json"
-        }
+    @classmethod
+    def __get_pydantic_json_schema__(
+        cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
+    ) -> JsonSchemaValue:
+        schema = handler(core_schema)
+        schema = handler.resolve_ref_schema(schema)
+        schema["$id"] = "https://phalanx.lsst.io/schemas/environment.json"
+        return schema
 
     @property
     def enabled_applications(self) -> list[str]:
@@ -159,8 +218,7 @@ class Environment(EnvironmentBaseConfig):
     applications: dict[str, ApplicationInstance]
     """Applications enabled for that environment, by name."""
 
-    class Config:
-        allow_population_by_field_name = True
+    model_config = ConfigDict(populate_by_name=True)
 
     def all_applications(self) -> list[ApplicationInstance]:
         """Return all enabled applications in sorted order."""
@@ -168,9 +226,9 @@ class Environment(EnvironmentBaseConfig):
 
     def all_secrets(self) -> list[Secret]:
         """Return all secrets regardless of application."""
-        secrets = []
+        secrets: list[Secret] = []
         for application in self.all_applications():
-            secrets.extend(application.secrets)
+            secrets.extend(application.secrets.values())
         return secrets
 
 

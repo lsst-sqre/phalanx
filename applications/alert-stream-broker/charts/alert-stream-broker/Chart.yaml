@@ -1,6 +1,6 @@
 apiVersion: v2
 name: alert-stream-broker
-version: 2.5.1
+version: 2.5.2
 description: Kafka broker cluster for distributing alerts
 maintainers:
   - name: bsmart

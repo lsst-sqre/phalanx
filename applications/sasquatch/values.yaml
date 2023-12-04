@@ -53,7 +53,7 @@ influxdb:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -116,7 +116,7 @@ influxdb-staging:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -179,7 +179,7 @@ source-influxdb:
     coordinator:
       write-timeout: "1h"
       max-concurrent-queries: 0
-      query-timeout: "0s"
+      query-timeout: "60s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -259,8 +259,7 @@ source-kafka-connect-manager:
     kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
 # -- Override telegraf-kafka-consumer configuration.
-telegraf-kafka-consumer:
-  enabled: false
+telegraf-kafka-consumer: {}
 
 # -- Override rest-proxy configuration.
 rest-proxy:
@@ -272,7 +271,7 @@ chronograf:
   # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"
-    tag: 1.9.4
+    tag: 1.10.2
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
@@ -289,7 +288,6 @@ chronograf:
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
-    CUSTOM_AUTO_REFRESH: "1s=1000"
   # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
   envFromSecret: "sasquatch"
   resources:
@@ -306,7 +304,7 @@ source-kapacitor:
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
-    tag: 1.6.6
+    tag: 1.7.1
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
@@ -332,7 +330,7 @@ kapacitor:
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
-    tag: 1.6.6
+    tag: 1.7.1
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
@@ -362,7 +360,7 @@ bucketmapper:
     # -- repository for rubin-influx-tools
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
-    tag: 0.1.23
+    tag: 0.2.0
 
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations.

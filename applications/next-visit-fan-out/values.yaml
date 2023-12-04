@@ -1,0 +1,55 @@
+knative:
+  hscUrl: 'http://prompt-proto-service.prompt-proto-service-hsc/next-visit'
+  latissUrl: http://prompt-proto-service.prompt-proto-service-latiss/next-visit
+  lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit
+  lsstcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit
+
+detectorConfigFile: detector.yaml
+
+kafka:
+  offset: latest
+  saslMechamism: SCRAM-SHA-512
+  securityProtocol: SASL_PLAINTEXT
+
+replicaCount: 1
+
+image:
+  repository: us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations:
+  prometheus.io/scrape: 'true'
+  prometheus.io/port: '8000'
+
+
+# -- Resource limits and requests for the next-visit-fan-out deployment pod
+resources: {}
+
+# -- Node selection rules for the next-visit-fan-out deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the next-visit-fan-out deployment pod
+tolerations: []
+
+# -- Affinity rules for the next-visit-fan-out deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

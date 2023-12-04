@@ -1,47 +1,46 @@
 .. list-table::
 
    * - View on GitHub
-     - :bdg-link-primary-line:`/applications/{{ app.name }} <https://github.com/lsst-sqre/phalanx/tree/main/applications/{{app.name}}>`
+     - :bdg-link-primary-line:`applications/{{ app.name }} <https://github.com/lsst-sqre/phalanx/tree/main/applications/{{app.name}}>`
        :bdg-link-primary-line:`Application template <https://github.com/lsst-sqre/phalanx/blob/main/environments/templates/{{app.name}}-application.yaml>`
-   {% if app.homepage %}
+   {%- if app.homepage %}
    * - Homepage
      - {{ app.homepage }}
-   {% endif %}
-   {% if app.source_urls %}
+   {%- endif %}
+   {%- if app.source_urls %}
    * - Source
-   {% if app.source_urls|length == 1 %}
+   {%- if app.source_urls|length == 1 %}
      - {{ app.source_urls[0] }}
-   {% else %}
+   {%- else %}
      - - {{ app.source_urls[0] }}
-     {% for source_url in app.source_urls[1:] %}
+     {%- for source_url in app.source_urls[1:] %}
        - {{ source_url }}
-     {% endfor %}
-   {% endif %}
-   {% endif %}
-   {% if app.doc_links %}
+     {%- endfor %}
+   {%- endif %}
+   {%- endif %}
+   {%- if app.doc_links %}
    * - Related docs
-   {% if app.doc_links|length == 1 %}
+   {%- if app.doc_links|length == 1 %}
      - {{ app.doc_links[0].to_rst() }}
-   {% else %}
+   {%- else %}
      - - {{ app.doc_links[0].to_rst() }}
-     {% for doc_link in app.doc_links[1:] %}
+     {%- for doc_link in app.doc_links[1:] %}
        - {{ doc_link.to_rst() }}
-     {% endfor %}
-   {% endif %}
-   {% endif %}
+     {%- endfor %}
+   {%- endif %}
+   {%- endif %}
    * - Type
      - Helm_
    * - Namespace
      - {{ app.namespace }}
    * - Environments
      - .. list-table::
-
           {% for env_name in app.active_environments %}
           * - :px-env:`{{ env_name }}`
             - `values <https://github.com/lsst-sqre/phalanx/blob/main/applications/{{ app.name }}/values-{{ env_name }}.yaml>`__
-            {% if envs[env_name].argocd_url %}
+            {%- if envs[env_name].argocd_url %}
             - `Argo CD <{{ envs[env_name].argocd_url }}/applications/{{ app.name }}>`__
-            {% else %}
+            {%- else %}
             -
-            {% endif %}
-          {% endfor %}
+            {%- endif %}
+          {%- endfor %}

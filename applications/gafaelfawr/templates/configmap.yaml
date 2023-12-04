@@ -27,6 +27,9 @@
     {{- if .Values.config.slackAlerts }}
     slackWebhookFile: "/etc/gafaelfawr/secrets/slack-webhook"
     {{- end }}
+    {{- if .Values.config.cadcBaseUuid }}
+    cadcBaseUuid: {{ .Values.config.cadcBaseUuid | quote }}
+    {{- end }}
 
     {{- if .Values.config.github.clientId }}
 
@@ -125,6 +128,7 @@
       {{- end }}
       groupObjectClass: {{ .Values.config.ldap.groupObjectClass | quote }}
       groupMemberAttr: {{ .Values.config.ldap.groupMemberAttr | quote }}
+      groupSearchByDn: {{ .Values.config.ldap.groupSearchByDn }}
       {{- if .Values.config.ldap.userBaseDn }}
       userBaseDn: {{ .Values.config.ldap.userBaseDn | quote }}
       userSearchAttr: {{ .Values.config.ldap.userSearchAttr | quote }}

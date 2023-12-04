@@ -12,9 +12,6 @@ name: ""
 # @default -- None, must be set
 fqdn: ""
 
-# -- UUID of the 1Password item in which to find Vault tokens
-onepasswordUuid: "dg5afgiadsffeklfr6jykqymeu"
-
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git
 
@@ -22,8 +19,7 @@ repoUrl: https://github.com/lsst-sqre/phalanx.git
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
-# @default -- None, must be set
-vaultUrl: ""
+vaultUrl: "https://vault.lsst.codes/"
 
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
@@ -39,6 +35,9 @@ applications:
   # -- Enable the Argo CD application. This must be enabled for all
   # environments and is present here only because it makes parsing easier
   argocd: true
+
+  # -- Enable the butler application
+  butler: false
 
   # -- Enable the cachemachine application (required by nublado2)
   cachemachine: false
@@ -90,6 +89,9 @@ applications:
   # -- Enable the narrativelog application
   narrativelog: false
 
+  # -- Enable the next-visit-fan-out application
+  next-visit-fan-out: false
+
   # -- Enable the noteburst application (required by times-square)
   noteburst: false
 
@@ -100,8 +102,8 @@ applications:
   # deprecated). This should not be used for new environments.
   nublado2: false
 
-  # -- Enable the onepassword-connect-dev application
-  onepassword-connect-dev: false
+  # -- Enable the onepassword-connect application
+  onepassword-connect: false
 
   # -- Enable the ook application
   ook: false
@@ -125,6 +127,15 @@ applications:
 
   # -- Enable the sasquatch application
   sasquatch: false
+
+  # -- Enable the schedview-prenight application
+  schedview-prenight: false
+
+  # -- Enable the schedview-snapshot application
+  schedview-snapshot: false
+
+  # -- Enable the siav2 application
+  siav2: false
 
   # -- Enable the ssotap application
   ssotap: false

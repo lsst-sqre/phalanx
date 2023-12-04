@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import jinja2
 from safir.datetime import current_datetime, format_datetime_for_logging
 
@@ -59,6 +62,36 @@ class VaultService:
         if result:
             report += result
         return report
+
+    def copy_secrets(self, environment: str, old_path: str) -> None:
+        """Copy all Vault secrets from an old path.
+
+        Only copies secrets one level below the old path, not recursively.
+        Must be called with credentials capable of reading secrets from the
+        old path and writing them to the default path for the environment.
+        Any existing secrets in Vault for the environment with the same
+        application names as in the old path will be overwritten.
+
+        Parameters
+        ----------
+        environment
+            Name of the environment.
+        old_path
+            Old path in Vault from which to copy secrets for that environment.
+
+        Raises
+        ------
+        VaultNotFoundError
+            Raised if the old path does not exist.
+        """
+        config = self._config.load_environment_config(environment)
+        new_vault_client = self._vault.get_vault_client(config)
+        old_vault_client = self._vault.get_vault_client(config, old_path)
+        secrets = old_vault_client.list_application_secrets()
+        for name in sorted(secrets):
+            secret = old_vault_client.get_application_secret(name)
+            new_vault_client.store_application_secret(name, secret)
+            print("Copied Vault secret for", name)
 
     def create_read_approle(self, environment: str) -> VaultAppRole:
         """Create a new Vault read AppRole for the given environment.
@@ -131,6 +164,35 @@ class VaultService:
             config.vault_write_token, [config.vault_write_policy], lifetime
         )
 
+    def export_secrets(self, env_name: str, path: Path) -> None:
+        """Generate JSON files of the Vault secrets for an environment.
+
+        One file per application with secrets will be written to the provided
+        path. Each file will be named after the application with ``.json``
+        appended, and will contain the secret values for that application.
+        Secrets that are required but have no known value will be written as
+        null.
+
+        Parameters
+        ----------
+        env_name
+            Name of the environment.
+        path
+            Output path.
+        """
+        environment = self._config.load_environment(env_name)
+        vault_client = self._vault.get_vault_client(environment)
+        vault_secrets = vault_client.get_environment_secrets()
+        for app_name, values in vault_secrets.items():
+            app_secrets: dict[str, str | None] = {}
+            for key, secret in values.items():
+                if secret:
+                    app_secrets[key] = secret.get_secret_value()
+                else:
+                    app_secrets[key] = None
+            with (path / f"{app_name}.json").open("w") as fh:
+                json.dump(app_secrets, fh, indent=2)
+
     def _audit_read_approle(
         self, vault_client: VaultClient, config: EnvironmentConfig
     ) -> str | None:
@@ -202,7 +264,9 @@ class VaultService:
         policies = {config.vault_write_policy}
         for token in tokens:
             errors = []
-            if token.expires < now:
+            if not token.expires:
+                errors.append("Token expiration missing")
+            elif token.expires < now:
                 expiration = format_datetime_for_logging(token.expires)
                 errors.append(f"Token expired at {expiration}")
             elif token.expires < now + VAULT_WRITE_TOKEN_WARNING_LIFETIME:

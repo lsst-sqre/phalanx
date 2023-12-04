@@ -1,8 +1,21 @@
 apiVersion: v2
 name: prompt-proto-service-latiss
 version: 1.0.0
-description: Deployment for prompt proto service for LATISS images
+description: >-
+  Prompt Proto Service is an event driven service for processing camera
+  images. This instance of the service handles LATISS images.
+home: https://github.com/lsst-dm/prompt_processing/blob/main/doc/playbook.rst
+sources:
+  - https://github.com/lsst-dm/prompt_processing
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "DMTN-219"
+      title: "Proposal and Prototype for Prompt Processing"
+      url: "https://dmtn-219.lsst.io/"
+    - id: "DMTN-260"
+      title: "Failure Modes and Error Handling for Prompt Processing"
+      url: "https://dmtn-260.lsst.io/"
 dependencies:
-- name: prompt-proto-service
-  version: 1.0.0
-  repository: "file://../../charts/prompt-proto-service"
+  - name: prompt-proto-service
+    version: 1.0.0
+    repository: "file://../../charts/prompt-proto-service"

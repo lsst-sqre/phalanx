@@ -17,7 +17,7 @@ The easiest way to start a new FastAPI_ application written in Python and intend
 On the LSSTC Slack, send the message ``create project`` to ``@sqrbot-jr``.
 Select ``FastAPI application (Safir)`` from the list of project types.
 This will create a new GitHub repository with the basic framework of a FastAPI_ application that will work well inside the Rubin Science Platform.
-The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logger to database handling.
+The template uses Safir_ to simplify and regularize many parts of your FastAPI_ application, from logging to database handling.
 
 Any Python application destined for the RSP must regularly update its dependencies to pick up any security fixes and make new releases with those updated dependencies.
 If you use the template as described above, GitHub Actions CI will warn you when application dependencies are out of date.
@@ -30,13 +30,18 @@ If you are using the FastAPI template, tagging in this fashion is required since
 Create the Docker image
 =======================
 
-The Docker image can be stored in any container registry that is usable by Kubernetes, but for Rubin-developed applications using the FastAPI template, we usually push `GitHub Container Registry (ghcr.io) <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>`__.
+The Docker image can be stored in any container registry that is usable by Kubernetes, but for Rubin-developed applications using the FastAPI template, we usually push to the `GitHub Container Registry (ghcr.io) <https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry>`__.
 The Google Artifact Registry hosts the Science Platform images and may eventually be used more widely.
+
 If your image must be stored in a private container registry, the credentials for that registry must be added to the pull secret.
+This is normally done by the environment administrator as part of secret setup for the Phalanx environment.
+See :doc:`/admin/secrets-setup` for more details.
 
 If you use the FastAPI application template, a ``Dockerfile`` is be created as part of the new repository template, and a GitHub Actions workflow is set up in the new repository to build and push Docker images for tagged releases.
 
-If you use ``ghcr.io`` as your repository (which is the FastAPI template default) you can use GitHub's built-in ``GITHUB_TOKEN``; you don't need to create an additional secret.
+If you use ``ghcr.io`` as your repository (which is the FastAPI template default) you can use GitHub's built-in ``GITHUB_TOKEN`` to push new images.
+You don't need to create an additional secret in GitHub Actions.
+
 If you are using Docker Hub you must create two secrets in your new GitHub repository, ``DOCKER_USERNAME`` and ``DOCKER_TOKEN``.
 ``DOCKER_USERNAME`` should be set to the Docker Hub username of the account that will be pushing the new Docker images.
 ``DOCKER_TOKEN`` should be set to a secret authentication token for that account.

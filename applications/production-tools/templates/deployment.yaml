@@ -29,7 +29,7 @@ spec:
         # butler-secrets-raw is the secrets we get from vault
         - name: "butler-secrets-raw"
           secret:
-            secretName: "butler-secret"
+            secretName: {{ include "production-tools.fullname" . }}
         # butler-secrets are the copied and chmoded versions
         - name: "butler-secrets"
           emptyDir: {}

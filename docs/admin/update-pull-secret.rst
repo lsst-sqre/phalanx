@@ -1,44 +1,26 @@
-#############################################################
-Updating the Docker pull secret stored in 1Password and Vault
-#############################################################
+###########################################
+Updating the pull secret for an environment
+###########################################
 
-The pull secret, present in each RSP instance, and shared by many
-applications there, is notoriously tricky to format correctly.
+To update the pull secret for an environment, follow these steps:
 
-The recommended way to update it is to edit the pull secret in 1Password
-and then deploy it with the ``installer/update-secrets.sh`` script;
-however, this only works (at the time of writing, 20 May 2022) on Linux
-systems with the 1Password 1.x CLI installed.
+#. Update the pull secret in your static secrets source.
+   If you are using a :ref:`YAML file for secrets <admin-secrets-yaml>`, edit the ``pull-secret`` section to add new registries or make any necessary changes.
+   If you are using :ref:`1Password <admin-onepassword-pull-secret>`, follow the same instructions as creating the pull secret originally, but change the 1Password item as needed instead of making a new one.
 
-If you need to update the pull secret manually for an environment, here
-are the important things to know:
+   If you are storing your static secrets directly in Vault, you are on your own.
+   You will need to modify the ``.dockerconfigjson`` key of the ``pull-secret`` secret for the environment, maintaining the correct encoding.
+   See `Pull an image from a private registry <https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/>`__ in the Kubernetes documentation for more details about the correct format.
 
-You will first set the necessary environment variables:
+#. If you are storing static secrets anywhere other than Vault, synchronize secets for your environment.
 
-* ``VAULT_ADDR`` must be set to ``https://vault.lsst.codes``
-* ``VAULT_TOKEN`` must be set to the appropriate write token for the RSP
-  instance.
+   .. prompt:: bash
 
-Then you will construct the updated secret.  Just create a legal JSON
-object.  The trick is, this value must be represented to Vault as a
-*string*.  The easiest way to do this is:
+      phalanx secrets sync <environment>
 
-#. Ensure the secret doesn't, itself, have any single quotes in it.  If
-   it does, replace each single quote with ``'\''``
-#. Copy the secret you've created into your paste buffer
-#. Type ``vault kv patch secret/k8s_operator/<environment>/pull-secret
-   .dockerconfigjson='``  (*nota bene*: that ends with a single quote)
-#. Paste the secret into the command line
-#. Type ``'`` and press Enter.
+   Replace ``<environment>`` with the short identifier of your environment.
 
-That will avoid the pain and hassle of multiple layers of quoting in
-JSON objects, by handing the secret value as a (possibly multi-line)
-string literal to Vault.
+   This should update the ``pull-secret`` secret in Vault.
 
-Then restart the ``vault-secrets-operator`` deployment and watch the pod
-logs to make sure that pull-secret was correctly updated.
-
-If you mess up, remember that our vault secrets are versioned, and you
-can pull earlier versions of the secret with ``vault kv get secret
-<path> -version <version>``; this (and the above technique) should let
-you get back to a less-broken state.
+:px-app:`vault-secrets-operator` should then pick up the changes within a minute and update the ``pull-secret`` secret for any application that needs one.
+If you want to make that process go faster, restart the vault-secrets-operator pod.

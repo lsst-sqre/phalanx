@@ -5,6 +5,12 @@ Installing a Phalanx environment
 Each separate installation of Phalanx is called an environment.
 An environment has a hostname, Vault server and path to its secrets, and a set of Phalanx applications that should be installed in that environment.
 
+Before starting this process, you should set up the required secrets for your new environment.
+See :doc:`secrets-setup` for details.
+
+If you are setting up an environment that will be running a 1Password Connect server for itself, you will need to take special bootstrapping steps.
+See :px-app-bootstrap:`onepassword-connect` for more information.
+
 Creating an environment
 =======================
 
@@ -17,7 +23,8 @@ To create a new Phalanx environment, take the following steps:
 #. Create a new :file:`values-{environment}.yaml` file in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
    Start with a template copied from an existing environment that's similar to the new environment.
    Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
-   (See :doc:`secrets-setup` for more information about the latter two settings.)
+   You may omit ``vaultUrl`` for SQuaRE-managed environments.
+   See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
    Enable the applications this environment should include.
 
 #. Decide on your approach to TLS certificates.
@@ -30,8 +37,8 @@ To create a new Phalanx environment, take the following steps:
 
 #. Decide on your approach to user home directory storage.
    The Notebook Aspect (the ``nublado`` application) requires a POSIX file system.
-   The most frequently used method of providing that file system is NFS mounts, but you may instead want to use a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
-   Either way, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
+   The most frequently used method of providing that file system is NFS mounts, but you may instead want to use persistent volume claims or a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
+   Whatever storage you choose, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
 
 #. For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
    Customization will vary from application to application.
@@ -40,17 +47,11 @@ To create a new Phalanx environment, take the following steps:
    - :px-app-bootstrap:`argocd`
    - :px-app-bootstrap:`cachemachine`
    - :px-app-bootstrap:`gafaelfawr`
-   - :px-app-bootstrap:`nublado2`
    - :px-app-bootstrap:`portal`
    - :px-app-bootstrap:`squareone`
 
 #. Add the URL of your new environment to :file:`docs/documenteer.toml` under ``phinx.linkcheck.ignore``.
    The Argo CD URL of your environment will be unreachable, so you need to tell Sphinx valid link checking to ignore it.
-
-#. Generate the secrets for the new environment and store them in Vault with `installer/update_secrets.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/update_secrets.sh>`__.
-   You will need the write key for the Vault enclave you are using for this environment.
-   If you are using 1Password as a source of secrets, you will also need the access token for the 1Password Connect server.
-   (For SQuaRE-managed deployments, this is in the ``SQuaRE Integration Access Token: Argo`` 1Password item in the SQuaRE vault.)
 
 Installing Phalanx
 ==================
@@ -58,13 +59,25 @@ Installing Phalanx
 Once you have defined a Phalanx environment, follow these steps to install it.
 These can be run repeatedly to reinstall Phalanx over an existing deployment.
 
-.. rst-class:: open
+#. Create a Vault AppRole that will be used by Vault Secrets Operator.
 
-#. Create a virtual environment with the tools you will need from the installer's `requirements.txt <https://github.com/lsst-sqre/phalanx/blob/main/installer/requirements.txt>`__.
+   .. prompt:: bash
+
+      phalanx vault create-read-approle <environment>
+
+   Be aware that this will invalidate any existing AppRole for that environment.
 
 #. Run the installer script at `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
+
+   .. prompt:: bash
+
+      installer/install.sh <enviornment> <vault-role-id> <vault-secret-id>
+
+   ``<vault-role-id>`` and ``<vault-secret-id>`` are the Role ID and Secret ID of the Vault AppRole created in the previous step.
+
    Debug any problems.
    The most common source of problems are errors or missing configuration in the :file:`values-{environment}.yaml` files you created for each application.
+   You can safely run the installer repeatedly as you debug and fix issues.
 
 #. If the installation is using a dynamically-assigned IP address, while the installer is running, wait until the ingress-nginx-controller service comes up and has an external IP address.
    Then, set the A record for your endpoint to that address (or set an A record with that IP address for the ingress and a CNAME from the endpoint to the A record).

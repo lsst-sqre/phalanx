@@ -2,23 +2,23 @@ butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.ya
 fqdn: data-dev.lsst.cloud
 name: idfdev
 onepassword:
-  connectUrl: "https://roundtable-dev.lsst.cloud/1password/idfdev"
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP data-dev.lsst.cloud"
-vaultUrl: "https://vault.lsst.codes"
-vaultPathPrefix: secret/k8s_operator/data-dev.lsst.cloud
+vaultPathPrefix: secret/phalanx/idfdev
 
 applications:
   argo-workflows: true
+  butler: true
   datalinker: true
   hips: true
   mobu: true
   noteburst: true
   nublado: true
   portal: true
-  postgres: true
   sasquatch: true
   semaphore: true
   sherlock: true
+  siav2: true
   ssotap: true
   squareone: true
   sqlproxy-cross-project: true

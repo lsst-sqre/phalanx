@@ -16,6 +16,7 @@ Alert transmission to community brokers
 | strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.watchNamespace | string | `"alert-stream-broker"` |  |
 | alert-database.fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
+| alert-database.ingester.gcp.outsideGCP | bool | `true` |  |
 | alert-database.ingester.gcp.projectID | string | `""` | Project ID which has the above GCP IAM service account |
 | alert-database.ingester.gcp.serviceAccountName | string | `""` | Name of a service account which has credentials granting access to the alert database's backing storage buckets. |
 | alert-database.ingester.image.imagePullPolicy | string | `"IfNotPresent"` |  |
@@ -49,6 +50,8 @@ Alert transmission to community brokers
 | alert-database.storage.gcp.project | string | `""` | Name of a GCP project that has a bucket for database storage |
 | alert-database.storage.gcp.schemaBucket | string | `""` | Name of a Google Cloud Storage bucket in GCP with schema data |
 | alert-stream-broker.cluster.name | string | `"alert-broker"` | Name used for the Kafka broker, and used by Strimzi for many annotations. |
+| alert-stream-broker.clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
+| alert-stream-broker.clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
 | alert-stream-broker.fullnameOverride | string | `""` | Override for the full name used for Kubernetes resources; by default one will be created based on the chart name and helm release name. |
 | alert-stream-broker.kafka.config | object | `{"log.retention.bytes":"42949672960","log.retention.hours":168,"offsets.retention.minutes":1440}` | Configuration overrides for the Kafka server. |
 | alert-stream-broker.kafka.config."log.retention.bytes" | string | `"42949672960"` | Maximum retained number of bytes for a broker's data. This is a string to avoid YAML type conversion issues for large numbers. |
@@ -64,18 +67,31 @@ Alert transmission to community brokers
 | alert-stream-broker.kafka.logMessageFormatVersion | float | `3.2` | Encoding version for messages, see https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str. |
 | alert-stream-broker.kafka.nodePool.affinities | list | `[{"key":"kafka","value":"ok"}]` | List of node affinities to set for the broker's nodes. The key should be a label key, and the value should be a label value, and then the broker will prefer running Kafka and Zookeeper on nodes with those key-value pairs. |
 | alert-stream-broker.kafka.nodePool.tolerations | list | `[{"effect":"NoSchedule","key":"kafka","value":"ok"}]` | List of taint tolerations when scheduling the broker's pods onto nodes. The key should be a taint key, the value should be a taint value, and effect should be a taint effect that can be tolerated (ignored) when scheduling the broker's Kafka and Zookeeper pods. |
+| alert-stream-broker.kafka.prometheusScrapingEnabled | bool | `false` | Enable Prometheus to scrape metrics. |
 | alert-stream-broker.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | alert-stream-broker.kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | alert-stream-broker.kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | alert-stream-broker.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| alert-stream-broker.kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
+| alert-stream-broker.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging |
+| alert-stream-broker.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter. |
+| alert-stream-broker.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
+| alert-stream-broker.kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
+| alert-stream-broker.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| alert-stream-broker.maxBytesRetained | string | `"24000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
+| alert-stream-broker.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | alert-stream-broker.nameOverride | string | `""` |  |
+| alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
 | alert-stream-broker.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-broker.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| alert-stream-broker.testTopicName | string | `"alert-stream-test"` | Name of the topic which will be used to send test alerts. |
+| alert-stream-broker.testTopicPartitions | int | `8` |  |
+| alert-stream-broker.testTopicReplicas | int | `2` |  |
 | alert-stream-broker.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | alert-stream-broker.tls.subject.organization | string | `"Vera C. Rubin Observatory"` | Organization to use in the 'Subject' field of the broker's TLS certificate. |
-| alert-stream-broker.users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alerts-simulated"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
+| alert-stream-broker.users | list | `[{"groups":["rubin-testing"],"readonlyTopics":["alert-stream","alerts-simulated","alert-stream-test"],"username":"rubin-testing"}]` | A list of users that should be created and granted access.  Passwords for these users are not generated automatically; they are expected to be stored as 1Password secrets which are replicated into Vault. Each username should have a "{{ $username }}-password" secret associated with it. |
 | alert-stream-broker.users[0].groups | list | `["rubin-testing"]` | A list of string prefixes for groups that the user should get admin access to, allowing them to create, delete, describe, etc consumer groups. Note that these are prefix-matched, not just literal exact matches. |
-| alert-stream-broker.users[0].readonlyTopics | list | `["alert-stream","alerts-simulated"]` | A list of topics that the user should get read-only access to. |
+| alert-stream-broker.users[0].readonlyTopics | list | `["alert-stream","alerts-simulated","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
 | alert-stream-broker.users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | alert-stream-broker.vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
 | alert-stream-broker.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
@@ -91,6 +107,7 @@ Alert transmission to community brokers
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | alert-stream-schema-registry.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
+| alert-stream-schema-registry.tls | bool | `true` |  |
 | alert-stream-simulator.clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
 | alert-stream-simulator.clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
 | alert-stream-simulator.fullnameOverride | string | `""` | Explicitly sets the full name used for the deployment and job (includes the release name). |

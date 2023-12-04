@@ -12,7 +12,15 @@ from onepasswordconnectsdk.client import (
     FailedToRetrieveItemException,
     FailedToRetrieveVaultException,
 )
-from onepasswordconnectsdk.models import Field, Item, Vault
+from onepasswordconnectsdk.models import (
+    Field,
+    FieldSection,
+    Item,
+    Section,
+    Vault,
+)
+
+from phalanx.models.secrets import StaticSecrets
 
 from .data import phalanx_test_path
 
@@ -29,6 +37,19 @@ class MockOnepasswordClient:
         self._data: dict[str, dict[str, Item]] = {}
         self._uuids: dict[str, str] = {}
 
+    def create_empty_test_vault(self, vault: str) -> None:
+        """Create an empty 1Password vault for testing.
+
+        This method is not part of the 1Password Connect API. It is intended
+        for use by the test suite to set up a test.
+
+        Parameters
+        ----------
+        vault
+            Name of the 1Password vault.
+        """
+        self._data[vault] = {}
+
     def load_test_data(self, vault: str, environment: str) -> None:
         """Load 1Password test data for the given environment.
 
@@ -44,11 +65,24 @@ class MockOnepasswordClient:
         """
         data_path = phalanx_test_path() / "onepassword" / f"{environment}.yaml"
         with data_path.open() as fh:
-            data = yaml.safe_load(fh)
-            self._data[vault] = {}
-            for title, values in data.items():
-                fields = [Field(label=k, value=v) for k, v in values.items()]
-                self._data[vault][title] = Item(title=title, fields=fields)
+            secrets = StaticSecrets.model_validate(yaml.safe_load(fh))
+        self._data[vault] = {}
+        for title, values in secrets.applications.items():
+            fields = [Field(label=k, value=v.value) for k, v in values.items()]
+            self._data[vault][title] = Item(title=title, fields=fields)
+        if secrets.pull_secret and secrets.pull_secret.registries:
+            fields = []
+            sections = []
+            for registry, auth in secrets.pull_secret.registries.items():
+                sections.append(Section(id=registry, label=registry))
+                reference = FieldSection(id=registry)
+                fields.extend(
+                    Field(label=k, value=v, section=reference)
+                    for k, v in auth.model_dump().items()
+                )
+            self._data[vault]["pull-secret"] = Item(
+                title="pull-secret", fields=fields, sections=sections
+            )
 
     def get_item(self, title: str, vault_id: str) -> Item:
         """Get an item from a 1Password vault.
@@ -63,7 +97,9 @@ class MockOnepasswordClient:
         Returns
         -------
         Item
-            Corresponding item.
+            Corresponding item. This is the exact item that is stored in the
+            mock, so tests can mutate it to affect future calls to `get_item`
+            if they wish.
 
         Raises
         ------

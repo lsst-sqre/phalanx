@@ -21,7 +21,14 @@ image:
   tag: ""
 
 # -- Resource limits and requests for the Gafaelfawr frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "300Mi"
+  requests:
+    cpu: "100m"
+    memory: "150Mi"
 
 # -- Annotations for the Gafaelfawr frontend pod
 podAnnotations: {}
@@ -66,6 +73,12 @@ config:
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
   slackAlerts: false
+
+  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
+  # is used as the namespace to generate UUID v5 `sub` claims returned by this
+  # route to meet the needs of CADC authentication code.
+  # @default -- Disabled
+  cadcBaseUuid: ""
 
   github:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
@@ -186,6 +199,12 @@ config:
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
 
+    # -- Whether to search for group membership by user DN rather than bare
+    # usernames. Most LDAP servers use full DNs for group membership, so
+    # normally this should be set to true, but it requires `userBaseDn` also
+    # be set.
+    groupSearchByDn: false
+
     # -- Base DN for the LDAP search to find a user's entry
     # @default -- Get user metadata from the upstream authentication provider
     userBaseDn: ""
@@ -297,7 +316,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.10"
+    tag: "1.33.14"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -312,7 +331,14 @@ cloudsql:
   serviceAccount: ""
 
   # -- Resource limits and requests for the Cloud SQL Proxy pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
 
   # -- Annotations for the Cloud SQL Proxy pod
   podAnnotations: {}
@@ -333,8 +359,23 @@ maintenance:
   # -- Cron schedule string for Gafaelfawr periodic maintenance (in UTC)
   maintenanceSchedule: "5 * * * *"
 
+  # -- How long the job is allowed to run before it will be terminated
+  # @default -- 300 (5 minutes)
+  deadlineSeconds: 300
+
+  # -- How long to keep old jobs around before deleting them
+  # @default -- 86400 (1 day)
+  cleanupSeconds: 86400
+
   # -- Resource limits and requests for Gafaelfawr maintenance and audit pods
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "300Mi"
+    requests:
+      cpu: "100m"
+      memory: "150Mi"
 
   # -- Annotations for Gafaelfawr maintenance and audit pods
   podAnnotations: {}
@@ -350,7 +391,14 @@ maintenance:
 
 operator:
   # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "300Mi"
+    requests:
+      cpu: "10m"
+      memory: "150Mi"
 
   # -- Annotations for the token management pod
   podAnnotations: {}
@@ -398,8 +446,10 @@ redis:
   resources:
     limits:
       cpu: "1"
+      memory: "40Mi"
     requests:
-      cpu: "100m"
+      cpu: "50m"
+      memory: "6Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

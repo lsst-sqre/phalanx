@@ -1,0 +1,64 @@
+# Default values for schedview-prenight.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the schedview-prenight deployment
+  repository: "ghcr.io/lsst/schedview"
+
+  # -- Pull policy for the schedview-prenight image
+  pullPolicy: "Always"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of schedview-prenight deployment
+  enabled: false
+
+  # -- Minimum number of schedview-prenight deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of schedview-prenight deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of schedview-prenight deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the schedview-prenight deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the schedview-prenight deployment pod
+resources: {}
+
+# -- Node selection rules for the schedview-prenight deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the schedview-prenight deployment pod
+tolerations: []
+
+# -- Affinity rules for the schedview-prenight deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

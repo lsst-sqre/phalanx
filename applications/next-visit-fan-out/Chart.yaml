@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: >-
+  Poll next visit events from Kafka, duplicate them, and send them to all
+  applications that need to receive them.
+name: next-visit-fan-out
+type: application
+version: 1.0.0

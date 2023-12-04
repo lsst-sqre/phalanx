@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "giftless.fullname" . }}
+  name: {{ template "giftless.fullname" . }}-ro
   labels:
     {{- include "giftless.labels" . | nindent 4 }}
 data:
@@ -14,9 +14,9 @@ data:
         options:
           storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
           storage_options:
-            account_key_file: "/etc/secret/giftless-gcp-key.json"
-            project_name: {{ .Values.config.projectName | quote }}
+            project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
+            serviceaccount_email: {{ .Values.config.serviceAccountReadonly }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -34,6 +34,8 @@ data:
         options:
           storage_class: "giftless.storage.google_cloud:GoogleCloudStorage"
           storage_options:
-            account_key_file: "/etc/secret/giftless-gcp-key.json"
-            project_name: {{ .Values.config.projectName | quote }}
+            project_name: {{ .Values.config.storageProjectName | quote }}
             bucket_name: {{ .Values.config.bucketName | quote }}
+            serviceaccount_email: {{ .Values.config.serviceAccountReadwrite }}
+            noverify_upload: true
+

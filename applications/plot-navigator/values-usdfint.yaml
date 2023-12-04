@@ -1,0 +1,26 @@
+environment:
+  DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
+  PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
+  PGUSER: "rubin"
+  AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
+  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+  BUTLER_DEFAULT_REPO: "/repo/main"
+
+config:
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin

@@ -3,38 +3,46 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
 import click
 import yaml
-from pydantic import BaseModel
-from pydantic.tools import schema_of
+from pydantic import TypeAdapter
+from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
 from .models.environments import EnvironmentConfig
 from .models.helm import HelmStarter
-from .models.secrets import ConditionalSecretConfig, StaticSecret
+from .models.secrets import ConditionalSecretConfig, StaticSecrets
 
 __all__ = [
     "help",
     "main",
     "application",
+    "application_add_helm_repos",
     "application_create",
+    "application_lint",
+    "application_lint_all",
+    "application_template",
     "environment",
+    "environment_lint",
     "environment_schema",
+    "environment_template",
     "secrets",
     "secrets_audit",
     "secrets_list",
     "secrets_onepassword_secrets",
     "secrets_schema",
     "secrets_static_template",
-    "secrets_vault_secrets",
     "vault",
     "vault_audit",
+    "vault_copy_secrets",
     "vault_create_read_approle",
     "vault_create_write_token",
+    "vault_export_secrets",
 ]
 
 
@@ -69,34 +77,6 @@ def _find_config() -> Path:
     return current
 
 
-def _load_static_secrets(path: Path) -> dict[str, dict[str, StaticSecret]]:
-    """Load static secrets from a file.
-
-    Parameters
-    ----------
-    path
-        Path to the file.
-
-    Returns
-    -------
-    dict of dict
-        Map from application to secret key to
-        `~phalanx.models.secrets.StaticSecret`.
-    """
-    with path.open() as fh:
-        static_secrets = yaml.safe_load(fh)
-
-    # Pydantic can't parse a dictionary with arbitrary keys directly, so use a
-    # workaround: define a model with one attribute that corresponds to the
-    # nested dictionary we're expecting, and then parse the file contents with
-    # a synthetic top-level key matching that attribute.
-    class _StaticSecrets(BaseModel):
-        secrets: dict[str, dict[str, StaticSecret]]
-
-    model = _StaticSecrets.parse_obj({"secrets": static_secrets})
-    return model.secrets
-
-
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(message="%(version)s")
 def main() -> None:
@@ -109,37 +89,40 @@ def main() -> None:
 @click.pass_context
 def help(ctx: click.Context, topic: str | None, subtopic: str | None) -> None:
     """Show help for any command."""
-    if not topic:
-        if not ctx.parent:
-            raise RuntimeError("help called without topic or parent")
-        click.echo(ctx.parent.get_help())
-        return
-    if topic not in main.commands:
-        raise click.UsageError(f"Unknown help topic {topic}", ctx)
-    if not subtopic:
-        ctx.info_name = topic
-        click.echo(main.commands[topic].get_help(ctx))
-        return
-
-    # Subtopic handling. This requires some care with typing, since the
-    # commands attribute (although present) is not documented, and the
-    # get_command method is only available on MultiCommands.
-    group = main.commands[topic]
-    if isinstance(group, click.MultiCommand):
-        command = group.get_command(ctx, subtopic)
-        if command:
-            ctx.info_name = f"{topic} {subtopic}"
-            click.echo(command.get_help(ctx))
-            return
-
-    # Fall through to the error case of no subcommand found.
-    msg = f"Unknown help topic {topic} {subtopic}"
-    raise click.UsageError(msg, ctx)
+    display_help(main, ctx, topic, subtopic)
 
 
 @main.group()
 def application() -> None:
     """Commands for Phalanx application configuration."""
+
+
+@application.command("add-helm-repos")
+@click.argument("name", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_add_helm_repos(
+    name: str | None = None, *, config: Path | None
+) -> None:
+    """Configure dependency Helm repositories in Helm.
+
+    Add all third-party Helm chart repositories used by Phalanx applications
+    to the local Helm cache.
+
+    This will also be done as necessary by lint commands, so using this
+    command is not necessary. It is provided as a convenience for helping to
+    manage your local Helm configuration.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    application_service.add_helm_repositories([name] if name else None)
 
 
 @application.command("create")
@@ -155,7 +138,10 @@ def application() -> None:
     "-d",
     "--description",
     prompt="Short description",
-    help="Short description of the new application.",
+    help=(
+        "Short description of the new application. Must start with capital"
+        " letter and, with the application name, be less than 80 characters."
+    ),
 )
 @click.option(
     "-s",
@@ -176,16 +162,149 @@ def application_create(
     """
     if not config:
         config = _find_config()
+    if len(name) + 3 + len(description) > 80:
+        raise click.UsageError("Name plus description is too long")
+    if not re.match("[A-Z0-9]", description):
+        raise click.UsageError("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create_application(
-        name, HelmStarter(starter), description
-    )
+    application_service.create(name, HelmStarter(starter), description)
+
+
+@application.command("lint")
+@click.argument("applications", metavar="APPLICATION ...", nargs=-1)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "-e",
+    "--environment",
+    "--env",
+    type=str,
+    metavar="ENV",
+    default=None,
+    help="Only lint this environment.",
+)
+def application_lint(
+    applications: list[str],
+    *,
+    environment: str | None = None,
+    config: Path | None,
+) -> None:
+    """Lint the Helm charts for applications.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm chart for the given applications. If no environment is specified,
+    each chart is linted for all environments for which it has a
+    configuration.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    if not application_service.lint(applications, environment):
+        sys.exit(1)
+
+
+@application.command("lint-all")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--git",
+    is_flag=True,
+    help="Only lint applications changed relative to a Git branch.",
+)
+@click.option(
+    "--git-branch",
+    type=str,
+    metavar="BRANCH",
+    default="origin/main",
+    show_default=True,
+    show_envvar=True,
+    envvar="GITHUB_BASE_REF",
+    help="Base Git branch against which to compare.",
+)
+def application_lint_all(
+    *, config: Path | None, git: bool = False, git_branch: str
+) -> None:
+    """Lint the Helm charts for every application and environment.
+
+    Update and download any third-party dependency charts and then lint the
+    Helm charts for each application and environment combination.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    branch = git_branch if git else None
+    if not application_service.lint_all(only_changes_from_branch=branch):
+        sys.exit(1)
+
+
+@application.command("template")
+@click.argument("name")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_template(
+    name: str, environment: str, *, config: Path | None
+) -> None:
+    """Expand the chart of an application for an environment.
+
+    Print the expanded Kubernetes resources for an application as configured
+    for the given environment to standard output. This is intended for testing
+    and debugging purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    application_service = factory.create_application_service()
+    sys.stdout.write(application_service.template(name, environment))
 
 
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""
+
+
+@environment.command("lint")
+@click.argument("environment", required=False)
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_lint(
+    environment: str | None = None, *, config: Path | None, git: bool = False
+) -> None:
+    """Lint the top-level Helm chart for an environment.
+
+    Lint the parent Argo CD Helm chart that installs the Argo CD applications
+    for an environment. If the environment is not given, lints the
+    instantiation of that chart for each environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    if not environment_service.lint(environment):
+        sys.exit(1)
 
 
 @environment.command("schema")
@@ -207,11 +326,35 @@ def environment_schema(*, output: Path | None) -> None:
     schema file in the Phalanx repository, which is used by a pre-commit hook
     to validate environment configuration files before committing them.
     """
-    json_schema = EnvironmentConfig.schema_json(indent=2) + "\n"
+    schema = EnvironmentConfig.model_json_schema()
+    json_schema = json.dumps(schema, indent=2) + "\n"
     if output:
         output.write_text(json_schema)
     else:
         sys.stdout.write(json_schema)
+
+
+@environment.command("template")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def environment_template(environment: str, *, config: Path | None) -> None:
+    """Expand the top-level chart for an environment.
+
+    Print the expanded Kubernetes resources for the top-level chart configured
+    for the given environment. This is intended for testing and debugging
+    purposes; normally, charts should be installed with Argo CD.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    environment_service = factory.create_environment_service()
+    sys.stdout.write(environment_service.template(environment))
 
 
 @main.group()
@@ -249,12 +392,13 @@ def secrets_audit(
     """
     if not config:
         config = _find_config()
-    static_secrets = None
-    if secrets:
-        static_secrets = _load_static_secrets(secrets)
+    static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    sys.stdout.write(secrets_service.audit(environment, static_secrets))
+    report = secrets_service.audit(environment, static_secrets)
+    if report:
+        sys.stdout.write(report)
+        sys.exit(1)
 
 
 @secrets.command("list")
@@ -279,7 +423,6 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
 
 @secrets.command("onepassword-secrets")
 @click.argument("environment")
-@click.argument("output", type=click.Path(path_type=Path))
 @click.option(
     "-c",
     "--config",
@@ -287,14 +430,22 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@click.option(
+    "-o",
+    "--output",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to which to write 1Password secrets.",
+)
 def secrets_onepassword_secrets(
     environment: str, output: Path, *, config: Path | None
 ) -> None:
     """Write the 1Password secrets for the given environment.
 
-    One JSON file per application with secrets will be created in the output
-    directory, containing the secrets for that application. If the value of a
-    secret is not known, it will be written as null.
+    The resulting YAML file will be in the same format as that generated by
+    ``static-template`` (without the secret descriptions) and is suitable as
+    the value of the ``--secrets`` flag to other commands. If the ``--output``
+    flag is not given, the YAML will be written to standard output.
 
     The environment variable OP_CONNECT_TOKEN must be set to the 1Password
     Connect token for the given environment.
@@ -303,7 +454,13 @@ def secrets_onepassword_secrets(
         config = _find_config()
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    secrets_service.save_onepassword_secrets(environment, output)
+    secrets = secrets_service.get_onepassword_static_secrets(environment)
+    secrets_dict = secrets.model_dump(by_alias=True, exclude_none=True)
+    secrets_yaml = yaml.dump(secrets_dict, width=70)
+    if output:
+        output.write_text(secrets_yaml)
+    else:
+        sys.stdout.write(secrets_yaml)
 
 
 @secrets.command("schema")
@@ -325,19 +482,17 @@ def secrets_schema(*, output: Path | None) -> None:
     schema file in the Phalanx repository, which is used by a pre-commit hook
     to validate secrets.yaml files before committing them.
     """
-    schema = schema_of(
-        dict[str, ConditionalSecretConfig],
-        title="Phalanx application secret definitions",
-    )
+    config_type = TypeAdapter(dict[str, ConditionalSecretConfig])
+    schema = config_type.json_schema()
 
-    # Pydantic v1 doesn't have any way that I can find to add attributes to
-    # the top level of a schema that isn't generated from a model, and the
+    # Pydantic doesn't have any way that I can find to add attributes to the
+    # top level of a schema that isn't generated from a model, and the
     # top-level secrets schema is a dict, so manually add in the $id attribute
-    # pointing to the canonical URL. Do this in a slightly odd way so that the
-    # $id attribute will be at the top of the file, not at the bottom.
-    schema = {"$id": "https://phalanx.lsst.io/schemas/secrets.json", **schema}
+    # pointing to the canonical URL and override the title.
+    schema["$id"] = "https://phalanx.lsst.io/schemas/secrets.json"
+    schema["title"] = "Phalanx application secret definitions"
 
-    json_schema = json.dumps(schema, indent=2) + "\n"
+    json_schema = json.dumps(schema, indent=2, sort_keys=True) + "\n"
     if output:
         output.write_text(json_schema)
     else:
@@ -423,43 +578,12 @@ def secrets_sync(
     """
     if not config:
         config = _find_config()
-    static_secrets = None
-    if secrets:
-        static_secrets = _load_static_secrets(secrets)
+    static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets_service.sync(
         environment, static_secrets, regenerate=regenerate, delete=delete
     )
-
-
-@secrets.command("vault-secrets")
-@click.argument("environment")
-@click.argument("output", type=click.Path(path_type=Path))
-@click.option(
-    "-c",
-    "--config",
-    type=click.Path(path_type=Path),
-    default=None,
-    help="Path to root of Phalanx configuration.",
-)
-def secrets_vault_secrets(
-    environment: str, output: Path, *, config: Path | None
-) -> None:
-    """Write the Vault secrets for the given environment.
-
-    One JSON file per application with secrets will be created in the output
-    directory, containing the secrets for that application. If the value of a
-    secret is not known, it will be written as null.
-
-    The environment variable VAULT_TOKEN must be set to a token with read
-    access to the Vault data for the given environment.
-    """
-    if not config:
-        config = _find_config()
-    factory = Factory(config)
-    secrets_service = factory.create_secrets_service()
-    secrets_service.save_vault_secrets(environment, output)
 
 
 @main.group()
@@ -495,8 +619,49 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
         sys.exit(1)
 
 
+@vault.command("copy-secrets")
+@click.argument("environment")
+@click.argument("old-prefix")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_copy_secrets(
+    environment: str, old_prefix: str, *, config: Path | None
+) -> None:
+    """Copy secrets from another Vault path prefix.
+
+    Copy secrets for an environment from another Vault path prefix in the same
+    Vault server, overwriting any secrets that already exist with the same
+    name. This command is intended primarily for changing the Vault path
+    prefix for an environment without regenerating its secrets.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the old path and write access to the currently configured Vault
+    path for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    vault_service = factory.create_vault_service()
+    vault_service.copy_secrets(environment, old_prefix)
+
+
 @vault.command("create-read-approle")
 @click.argument("environment")
+@click.option(
+    "--as-secret",
+    type=str,
+    default=None,
+    help=(
+        "Output the credentials as a Kubernetes Secret for"
+        " vault-secrets-operator, with the provided name, suitable for passing"
+        " to kubectl apply."
+    ),
+)
 @click.option(
     "-c",
     "--config",
@@ -505,7 +670,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     help="Path to root of Phalanx configuration.",
 )
 def vault_create_read_approle(
-    environment: str, *, config: Path | None
+    environment: str, as_secret: str | None, *, config: Path | None
 ) -> None:
     """Create a new Vault read AppRole.
 
@@ -522,7 +687,10 @@ def vault_create_read_approle(
     factory = Factory(config)
     vault_service = factory.create_vault_service()
     vault_approle = vault_service.create_read_approle(environment)
-    sys.stdout.write(vault_approle.to_yaml())
+    if as_secret:
+        sys.stdout.write(vault_approle.to_kubernetes_secret(as_secret))
+    else:
+        sys.stdout.write(vault_approle.to_yaml())
 
 
 @vault.command("create-write-token")
@@ -558,3 +726,32 @@ def vault_create_write_token(
     vault_service = factory.create_vault_service()
     vault_token = vault_service.create_write_token(environment, lifetime)
     sys.stdout.write(vault_token.to_yaml())
+
+
+@vault.command("export-secrets")
+@click.argument("environment")
+@click.argument("output", type=click.Path(path_type=Path))
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def vault_export_secrets(
+    environment: str, output: Path, *, config: Path | None
+) -> None:
+    """Write the Vault secrets for the given environment.
+
+    One JSON file per application with secrets will be created in the output
+    directory, containing the secrets for that application. If the value of a
+    secret is not known, it will be written as null.
+
+    The environment variable VAULT_TOKEN must be set to a token with read
+    access to the Vault data for the given environment.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    vault_service = factory.create_vault_service()
+    vault_service.export_secrets(environment, output)

@@ -1,7 +1,7 @@
 # Default values for kafka REST proxy
 
 # -- Number of Kafka REST proxy pods to run in the deployment.
-replicaCount: 1
+replicaCount: 3
 
 image:
   # -- Kafka REST proxy image repository.
@@ -9,7 +9,7 @@ image:
   # -- Image pull policy.
   pullPolicy: IfNotPresent
   # -- Kafka REST proxy image tag.
-  tag: 7.4.1
+  tag: 7.5.2
 
 service:
   # -- Kafka REST proxy service port

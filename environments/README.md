@@ -7,6 +7,7 @@
 | applications.alert-stream-broker | bool | `false` | Enable the alert-stream-broker application |
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
+| applications.butler | bool | `false` | Enable the butler application |
 | applications.cachemachine | bool | `false` | Enable the cachemachine application (required by nublado2) |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
@@ -22,11 +23,12 @@
 | applications.moneypenny | bool | `false` | Enable the moneypenny application (required by nublado2) |
 | applications.monitoring | bool | `false` | Enable the monitoring application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
+| applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.nublado2 | bool | `false` | Enable the nublado2 application (v2 of the Notebook Aspect, now deprecated). This should not be used for new environments. |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
-| applications.onepassword-connect-dev | bool | `false` | Enable the onepassword-connect-dev application |
+| applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
 | applications.portal | bool | `false` | Enable the portal application |
@@ -38,8 +40,11 @@
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
+| applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
+| applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.sherlock | bool | `false` | Enable the sherlock application |
+| applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
@@ -55,8 +60,7 @@
 | butlerRepositoryIndex | string | None, must be set | Butler repository index to use for this environment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
-| onepasswordUuid | string | `"dg5afgiadsffeklfr6jykqymeu"` | UUID of the 1Password item in which to find Vault tokens |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
-| vaultUrl | string | None, must be set | URL of Vault server for this environment |
+| vaultUrl | string | `"https://vault.lsst.codes/"` | URL of Vault server for this environment |

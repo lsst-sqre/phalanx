@@ -15,11 +15,11 @@ kafka:
     storageClassName: ""
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
-    offsets.retention.minutes: 4320
+    offsets.retention.minutes: 2880
     # -- Number of days for a topic's data to be retained.
-    log.retention.hours: 72
-    # -- Maximum retained number of bytes for a topic's data.
-    log.retention.bytes: "429496729600"
+    log.retention.hours: 48
+    # -- How much disk space Kafka will ensure is available, set to 70% of the data partition size
+    log.retention.bytes: "350000000000"
     # -- The largest record batch size allowed by Kafka.
     message.max.bytes: 10485760
     # -- The number of bytes of messages to attempt to fetch for each partition.
@@ -122,6 +122,13 @@ connect:
   replicas: 3
 
 registry:
+  ingress:
+    # -- Whether to enable ingress for the Schema Registry.
+    enabled: false
+    # -- Hostname for the Schema Registry.
+    hostname: ""
+    # -- Annotations that will be added to the Ingress resource.
+    annotations: {}
   # -- Name of the topic used by the Schema Registry
   schemaTopic: registry-schemas
 

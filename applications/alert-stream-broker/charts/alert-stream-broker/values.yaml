@@ -26,6 +26,9 @@ kafka:
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: standard
 
+  # -- Enable Prometheus to scrape metrics.
+  prometheusScrapingEnabled: false
+
   # -- Configuration overrides for the Kafka server.
   config:
     # -- Number of minutes for a consumer group's offsets to be retained.
@@ -84,6 +87,18 @@ kafka:
         value: ok
         effect: NoSchedule
 
+# -- Kafka JMX Exporter for more detailed diagnostic metrics.
+kafkaExporter:
+  # -- Enable Kafka exporter.
+  enabled: false
+  # -- Consumer groups to monitor
+  groupRegex: ".*"
+  # -- Kafka topics to monitor
+  topicRegex: ".*"
+    # -- Enable Sarama logging
+  enableSaramaLogging: false
+  # -- Log level for Sarama logging
+  logLevel: warning
 
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
@@ -99,7 +114,7 @@ users:
   -  # -- The username for the user that should be created.
     username: rubin-testing
     # -- A list of topics that the user should get read-only access to.
-    readonlyTopics: ["alert-stream", "alerts-simulated"]
+    readonlyTopics: ["alert-stream", "alerts-simulated", "alert-stream-test"]
     # -- A list of string prefixes for groups that the user should get admin
     # access to, allowing them to create, delete, describe, etc consumer
     # groups. Note that these are prefix-matched, not just literal exact
@@ -133,3 +148,29 @@ vaultSecretsPath: ""
 fullnameOverride: ""
 
 nameOverride: ""
+
+# -- Name of the topic which will be used to send test alerts.
+testTopicName: alert-stream-test
+
+# -- Integer ID to use in the prefix of alert data packets. This should be a
+# valid Confluent Schema Registry ID associated with the schema used.
+schemaID: 1
+
+# -- Name of a Strimzi Kafka cluster to connect to.
+clusterName: alert-broker
+
+# -- Port to connect to on the Strimzi Kafka cluster. It should be an internal
+# TLS listener.
+clusterPort: 9092
+
+# -- Maximum amount of time to save simulated alerts in the replay topic, in
+# milliseconds. Default is 7 days.
+maxMillisecondsRetained: "604800000"
+
+# -- Maximum number of bytes for the replay topic, per partition, per replica.
+# Default is 100GB, but should be lower to not fill storage.
+maxBytesRetained: "24000000000"
+
+testTopicPartitions: 8
+
+testTopicReplicas: 2

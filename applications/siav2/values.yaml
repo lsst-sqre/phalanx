@@ -1,0 +1,102 @@
+# Default values for siav2.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the siav2 deployment
+  repository: "ghcr.io/lsst-sqre/dal-siav2"
+
+  # -- Pull policy for the siav2 image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: "0.0.3"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of siav2 deployment
+  enabled: false
+
+  # -- Minimum number of siav2 deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of siav2 deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of siav2 deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the siav2 deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the siav2 deployment pod
+resources: {}
+
+# -- Node selection rules for the siav2 deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the siav2 deployment pod
+tolerations: []
+
+# -- Affinity rules for the siav2 deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+uws:
+  image:
+    # -- UWS database image to use
+    repository: "library/postgres"
+
+    # -- Pull policy for the UWS database image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of UWS database image to use
+    tag: "16.1"
+
+  # -- Resource limits and requests for the UWS database pod
+  resources:
+    requests:
+      cpu: 0.25
+      memory: "1Gi"
+    limits:
+      cpu: 2.0
+      memory: "4Gi"
+
+  # -- Annotations for the UWS databse pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the UWS database pod
+  nodeSelector: {}
+
+  # -- Tolerations for the UWS database pod
+  tolerations: []
+
+  # -- Affinity rules for the UWS database pod
+  affinity: {}
+
+# -- Local TAP service endpoint to query
+tapService: "tap"
+
+# -- ObsCore table on the TAP service to query
+obsCoreTable: "ivoa.ObsCore"

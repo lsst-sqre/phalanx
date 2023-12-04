@@ -1,0 +1,5 @@
+replicaCount: 3
+config:
+  siteName: "Rubin Science Platform"
+  semaphoreUrl: "https://usdf-rsp-int.slac.stanford.edu/semaphore"
+  timesSquareUrl: "https://usdf-rsp-int.slac.stanford.edu/times-square/api"

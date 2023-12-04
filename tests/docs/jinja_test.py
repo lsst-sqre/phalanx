@@ -69,7 +69,7 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         assert gafaelfawr.homepage == chart["home"]
         assert gafaelfawr.source_urls == chart["sources"]
         docs = yaml.safe_load(chart["annotations"][HELM_DOCLINK_ANNOTATION])
-        assert [d.dict() for d in gafaelfawr.doc_links] == docs
+        assert [d.model_dump() for d in gafaelfawr.doc_links] == docs
         expected = (
             "`DMTN-234: RSP identity management design"
             " <https://dmtn-234.lsst.io/>`__"

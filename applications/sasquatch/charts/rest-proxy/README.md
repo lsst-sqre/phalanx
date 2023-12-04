@@ -16,7 +16,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository. |
-| image.tag | string | `"7.4.1"` | Kafka REST proxy image tag. |
+| image.tag | string | `"7.5.2"` | Kafka REST proxy image tag. |
 | ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Ingress annotations. |
 | ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | ingress.hostname | string | `""` | Ingress hostname. |
@@ -27,7 +27,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | kafka.topics | string | `nil` | List of Kafka topics to create via Strimzi. Alternatively topics can be created using the REST Proxy v3 API. |
 | nodeSelector | object | `{}` | Node selector configuration. |
 | podAnnotations | object | `{}` | Pod annotations. |
-| replicaCount | int | `1` | Number of Kafka REST proxy pods to run in the deployment. |
+| replicaCount | int | `3` | Number of Kafka REST proxy pods to run in the deployment. |
 | resources.limits.cpu | int | `2` | Kafka REST proxy cpu limits |
 | resources.limits.memory | string | `"4Gi"` | Kafka REST proxy memory limits |
 | resources.requests.cpu | int | `1` | Kafka REST proxy cpu requests |

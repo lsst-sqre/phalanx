@@ -4,6 +4,7 @@ jupyterhub:
     annotations:
       nginx.ingress.kubernetes.io/auth-signin: "https://summit-lsp.lsst.codes/login"
   hub:
+    baseUrl: /n2
     db:
       upgrade: true
       url: "postgresql://jovyan@postgresdb01.cp.lsst.org/jupyterhub"

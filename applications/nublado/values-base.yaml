@@ -8,9 +8,10 @@ controller:
       num_releases: 0
       num_weeklies: 3
       num_dailies: 2
-      cycle: 32
-      recommended_tag: "recommended_c0032"
+      cycle: 34
+      recommended_tag: "recommended_c0034"
     lab:
+      application: "nublado-users"
       pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
@@ -19,15 +20,29 @@ controller:
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "base"
         LSST_SITE: "base"
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+      initContainers:
+      - name: "initdir"
+        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+        privileged: true
+        volumes:
+        - containerPath: "/home"
+          mode: "rw"
+          source:
+            serverPath: "/rsphome"
+            server: "nfs-rsphome.ls.lsst.org"
+            type: "nfs"
+      secrets:
+      - secretName: "nublado-lab-secret"
+        secretKey: "postgres-credentials.txt"
       volumes:
       - containerPath: "/home"
         mode: "rw"
         source:
           type: "nfs"
-          serverPath: "/jhome"
-          server: "nfs-jhome.ls.lsst.org"
+          serverPath: "/rsphome"
+          server: "nfs-rsphome.ls.lsst.org"
       - containerPath: "/project"
         mode: "rw"
         source:

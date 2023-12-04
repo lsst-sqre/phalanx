@@ -3,18 +3,24 @@
 from __future__ import annotations
 
 import re
+from base64 import b64encode
 from datetime import datetime, timedelta
+from pathlib import Path
 
 import jinja2
 import yaml
 from safir.datetime import current_datetime
 
-from phalanx.constants import VAULT_WRITE_TOKEN_LIFETIME
+from phalanx.constants import VAULT_SECRET_TEMPLATE, VAULT_WRITE_TOKEN_LIFETIME
 from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
 from ..support.cli import run_cli
-from ..support.data import read_output_data
+from ..support.data import (
+    assert_json_dirs_match,
+    phalanx_test_path,
+    read_output_data,
+)
 from ..support.vault import MockVaultClient
 
 
@@ -91,6 +97,24 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
     assert result.output == ""
 
 
+def test_copy_secrets(
+    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+) -> None:
+    input_path = phalanx_test_path()
+    vault_input_path = input_path / "vault" / "idfdev"
+    old_path = "secret/k8s_operator/data-dev.lsst.cloud"
+    mock_vault.load_test_data(old_path, "idfdev")
+
+    result = run_cli("vault", "copy-secrets", "idfdev", old_path)
+    assert result.exit_code == 0
+    assert result.output == read_output_data("idfdev", "copy-output")
+    result = run_cli("vault", "export-secrets", "idfdev", str(tmp_path))
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    assert_json_dirs_match(tmp_path, vault_input_path)
+
+
 def test_create_read_approle(
     factory: Factory,
     mock_vault: MockVaultClient,
@@ -102,7 +126,7 @@ def test_create_read_approle(
 
     result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
-    approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
+    approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
 
     # Check that the AppRole was created with the right RoleID and policies.
     assert approle.policies == [f"{vault_path}/read"]
@@ -122,12 +146,25 @@ def test_create_read_approle(
     assert r["data"]["keys"] == [approle.secret_id_accessor]
 
     # Recreating the AppRole should result in a new SecretID and delete the
-    # old one.
-    result = run_cli("vault", "create-read-approle", "idfdev")
+    # old one. Pass in the --as-secret flag and check that the result is
+    # formatted like a secret.
+    result = run_cli(
+        "vault",
+        "create-read-approle",
+        "idfdev",
+        "--as-secret",
+        "vault-credentials",
+    )
     assert result.exit_code == 0
-    new_approle = VaultAppRole.parse_obj(yaml.safe_load(result.output))
-    r = mock_vault.list_secret_id_accessors(role_name)
-    assert r["data"]["keys"] == [new_approle.secret_id_accessor]
+    secret = yaml.safe_load(result.output)
+    r = mock_vault.read_role_id(role_name)
+    role_id = r["data"]["role_id"]
+    expected = VAULT_SECRET_TEMPLATE.format(
+        name="vault-credentials",
+        role_id=b64encode(role_id.encode()).decode(),
+        secret_id=secret["data"]["VAULT_SECRET_ID"],
+    )
+    assert result.output == expected
 
 
 def test_create_write_token(
@@ -139,14 +176,14 @@ def test_create_write_token(
     environment = config_storage.load_environment_config("idfdev")
     _, vault_path = environment.vault_path_prefix.split("/", 1)
     if "/" in vault_path:
-        _, display_name = vault_path.rsplit("/", 1)
+        display_name = "token-" + vault_path.rsplit("/", 1)[1]
     else:
-        display_name = vault_path
+        display_name = "token-" + vault_path
     lifetime = timedelta(days=int(VAULT_WRITE_TOKEN_LIFETIME[:-1]))
 
     result = run_cli("vault", "create-write-token", "idfdev")
     assert result.exit_code == 0
-    token = VaultToken.parse_obj(yaml.safe_load(result.output))
+    token = VaultToken.model_validate(yaml.safe_load(result.output))
     assert token.display_name == display_name
     expires = current_datetime() + lifetime
     assert expires - timedelta(seconds=5) <= token.expires <= expires
@@ -162,3 +199,19 @@ def test_create_write_token(
     template = templates.get_template("vault-write-policy.hcl.jinja")
     expected_policy = template.render({"path": vault_path})
     assert seen_policy == expected_policy
+
+
+def test_export_secrets(
+    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
+) -> None:
+    input_path = phalanx_test_path()
+    vault_input_path = input_path / "vault" / "idfdev"
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("idfdev")
+    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
+
+    result = run_cli("vault", "export-secrets", "idfdev", str(tmp_path))
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    assert_json_dirs_match(tmp_path, vault_input_path)

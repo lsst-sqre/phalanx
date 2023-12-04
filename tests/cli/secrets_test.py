@@ -2,18 +2,20 @@
 
 from __future__ import annotations
 
-import json
 import os
 import re
+from base64 import b64decode, b64encode
 from datetime import datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
+import pytest
 import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
+from phalanx.exceptions import MalformedOnepasswordSecretError
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
 
@@ -22,6 +24,7 @@ from ..support.data import (
     phalanx_test_path,
     read_input_static_secrets,
     read_output_data,
+    read_output_json,
 )
 from ..support.onepassword import MockOnepasswordClient
 from ..support.vault import MockVaultClient
@@ -56,8 +59,29 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     result = run_cli(
         "secrets", "audit", "--secrets", str(secrets_path), "idfdev"
     )
-    assert result.exit_code == 0
+    assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "secrets-audit")
+
+
+def test_audit_onepassword_missing(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    """Check reporting of missing 1Password secrets."""
+    phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.create_empty_test_vault(vault_title)
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+
+    result = run_cli("secrets", "audit", "minikube")
+    assert result.exit_code == 1
+    assert result.output == read_output_data(
+        "minikube", "audit-missing-output"
+    )
 
 
 def test_list() -> None:
@@ -95,27 +119,25 @@ def test_onepassword_secrets(
     tmp_path: Path,
     mock_onepassword: MockOnepasswordClient,
 ) -> None:
-    input_path = phalanx_test_path()
     config_storage = factory.create_config_storage()
     environment = config_storage.load_environment("minikube")
     assert environment.onepassword
     vault_title = environment.onepassword.vault_title
     mock_onepassword.load_test_data(vault_title, "minikube")
-    with (input_path / "onepassword" / "minikube.yaml").open() as fh:
-        expected = yaml.safe_load(fh)
+    output_path = tmp_path / "static-secrets.yaml"
 
     result = run_cli(
-        "secrets", "onepassword-secrets", "minikube", str(tmp_path)
+        "secrets", "onepassword-secrets", "minikube", "-o", str(output_path)
     )
     assert result.exit_code == 0
     assert result.output == ""
 
-    expected_files = {f"{k}.json" for k in expected}
-    output_files = {p.name for p in tmp_path.iterdir()}
-    assert expected_files == output_files
-    for path in tmp_path.iterdir():
-        with path.open() as fh:
-            assert json.load(fh) == expected[path.stem]
+    output = output_path.read_text()
+    assert output == read_output_data("minikube", "onepassword-secrets.yaml")
+
+    result = run_cli("secrets", "onepassword-secrets", "minikube")
+    assert result.exit_code == 0
+    assert result.output == output
 
 
 def test_schema() -> None:
@@ -153,11 +175,12 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
 
     # Check that all static secrets were copied over correctly.
     static_secrets = read_input_static_secrets("idfdev")
-    for application, values in static_secrets.items():
+    for application, values in static_secrets.applications.items():
         vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
         for key, value in values.items():
             if key in vault:
-                assert value == vault[key]
+                assert value.value
+                assert value.value.get_secret_value() == vault[key]
 
     # Check generated or copied secrets.
     argocd = _get_app_secret(mock_vault, f"{base_vault_path}/argocd")
@@ -165,8 +188,9 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     gafaelfawr = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
     assert Fernet(gafaelfawr["session-secret"].encode())
     assert "-----BEGIN PRIVATE KEY-----" in gafaelfawr["signing-key"]
-    webhook = static_secrets["mobu"]["app-alert-webhook"]
-    assert gafaelfawr["slack-webhook"] == webhook
+    webhook = static_secrets.applications["mobu"]["app-alert-webhook"]
+    assert webhook.value
+    assert gafaelfawr["slack-webhook"] == webhook.value.get_secret_value()
     nublado = _get_app_secret(mock_vault, f"{base_vault_path}/nublado")
     assert re.match("^[0-9a-f]{64}$", nublado["proxy_token"])
     postgres = _get_app_secret(mock_vault, f"{base_vault_path}/postgres")
@@ -204,15 +228,73 @@ def test_sync_onepassword(
     assert result.exit_code == 0
     assert result.output == read_output_data("minikube", "sync-output")
 
-    # Check that all static secrets were copied over correctly. A mapping to
-    # avoid periods in 1Password field names is required for one secret, so we
-    # have to reverse that.
+    # Check that all static secrets were copied over correctly.
     with (input_path / "onepassword" / "minikube.yaml").open() as fh:
         onepassword_secrets = yaml.safe_load(fh)
-    for application, values in onepassword_secrets.items():
-        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
-        for key, value in values.items():
-            assert value == vault[key]
+    for app_name, values in onepassword_secrets["applications"].items():
+        vault = _get_app_secret(mock_vault, f"{base_vault_path}/{app_name}")
+        application = environment.applications[app_name]
+        for key, secret in values.items():
+            value = secret["value"]
+            if application.secrets[key].onepassword.encoded:
+                assert b64decode(value.encode()).decode() == vault[key]
+            else:
+                assert value == vault[key]
+
+    # Check that the pull secret is correct.
+    pull_secret = read_output_json("minikube", "pull-secret")
+    vault = _get_app_secret(mock_vault, f"{base_vault_path}/pull-secret")
+    assert vault == pull_secret
+
+
+def test_sync_onepassword_errors(
+    factory: Factory,
+    mock_onepassword: MockOnepasswordClient,
+    mock_vault: MockVaultClient,
+) -> None:
+    phalanx_test_path()
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment("minikube")
+    assert environment.onepassword
+    vault_title = environment.onepassword.vault_title
+    mock_onepassword.load_test_data(vault_title, "minikube")
+    mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
+
+    # Find a secret that's supposed to be encoded and change it to have an
+    # invalid base64 string.
+    app_name = None
+    key = None
+    for application in environment.applications.values():
+        for secret in application.secrets.values():
+            if secret.onepassword.encoded:
+                app_name = application.name
+                key = secret.key
+                break
+    assert app_name
+    assert key
+    vault_id = mock_onepassword.get_vault_by_title(vault_title).id
+    item = mock_onepassword.get_item(app_name, vault_id)
+    for field in item.fields:
+        if field.label == key:
+            field.value = "invalid base64"
+
+    # sync should throw an exception containing the application and key.
+    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
+        run_cli("secrets", "sync", "minikube")
+    assert app_name in str(excinfo.value)
+    assert key in str(excinfo.value)
+
+    # Instead set the secret to a value that is valid base64, but of binary
+    # data that cannot be decoded to a string.
+    for field in item.fields:
+        if field.label == key:
+            field.value = b64encode("ää".encode("iso-8859-1")).decode()
+
+    # sync should throw an exception containing the application and key.
+    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
+        run_cli("secrets", "sync", "minikube")
+    assert app_name in str(excinfo.value)
+    assert key in str(excinfo.value)
 
 
 def test_sync_regenerate(
@@ -240,11 +322,12 @@ def test_sync_regenerate(
 
     # Check that all static secrets were copied over correctly.
     static_secrets = read_input_static_secrets("idfdev")
-    for application, values in static_secrets.items():
+    for application, values in static_secrets.applications.items():
         vault = _get_app_secret(mock_vault, f"{base_vault_path}/{application}")
         for key, value in values.items():
             if key in vault:
-                assert value == vault[key]
+                assert value.value
+                assert value.value.get_secret_value() == vault[key]
 
     # Don't recheck all the details that match the regular sync test. Just
     # check that some secrets that would have been left alone without
@@ -264,26 +347,3 @@ def test_sync_regenerate(
     mtime = datetime.fromisoformat(argocd["admin.passwordMtime"])
     now = current_datetime()
     assert now - timedelta(seconds=5) <= mtime <= now
-
-
-def test_vault_secrets(
-    factory: Factory, tmp_path: Path, mock_vault: MockVaultClient
-) -> None:
-    input_path = phalanx_test_path()
-    vault_input_path = input_path / "vault" / "idfdev"
-    config_storage = factory.create_config_storage()
-    environment = config_storage.load_environment("idfdev")
-    mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
-
-    result = run_cli("secrets", "vault-secrets", "idfdev", str(tmp_path))
-    assert result.exit_code == 0
-    assert result.output == ""
-
-    expected_files = {p.name for p in vault_input_path.iterdir()}
-    output_files = {p.name for p in tmp_path.iterdir()}
-    assert expected_files == output_files
-    for expected_path in vault_input_path.iterdir():
-        with expected_path.open() as fh:
-            expected = json.load(fh)
-        with (tmp_path / expected_path.name).open() as fh:
-            assert expected == json.load(fh)

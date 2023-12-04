@@ -1,4 +1,4 @@
-Problems with write token (data-dev.lsst.cloud):
-• Missing policy phalanx/data-dev.lsst.cloud/write
+Problems with write token (token-idfdev):
+• Missing policy phalanx/idfdev/write
 • Unexpected policy something
-• Policy phalanx/data-dev.lsst.cloud/write doesn't have expected contents
+• Policy phalanx/idfdev/write doesn't have expected contents

@@ -2,21 +2,26 @@
 
 from __future__ import annotations
 
+import json
 import secrets
+from base64 import b64encode
 from datetime import UTC, datetime
 from enum import Enum
-from typing import Any, Literal
+from pathlib import Path
+from typing import Any, Literal, Self
 
 import bcrypt
+import yaml
 from cryptography.fernet import Fernet
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
-from pydantic import BaseModel, Extra, Field, SecretStr, validator
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, model_validator
 
+from ..constants import PULL_SECRET_DESCRIPTION
+from ..yaml import YAMLFoldedString
 from .gafaelfawr import Token
 
-# Including StaticSecrets in __all__ triggers a Sphinx automodsumm bug.
 __all__ = [
     "ConditionalMixin",
     "ConditionalSecretConfig",
@@ -24,15 +29,19 @@ __all__ = [
     "ConditionalSecretGenerateRules",
     "ConditionalSimpleSecretGenerateRules",
     "ConditionalSourceSecretGenerateRules",
-    "ResolvedSecret",
+    "PullSecret",
+    "RegistryPullSecret",
+    "ResolvedSecrets",
     "Secret",
     "SecretConfig",
     "SecretCopyRules",
     "SecretGenerateRules",
     "SecretGenerateType",
+    "SecretOnepasswordConfig",
     "SimpleSecretGenerateRules",
     "SourceSecretGenerateRules",
     "StaticSecret",
+    "StaticSecrets",
 ]
 
 
@@ -53,15 +62,19 @@ class ConditionalMixin(BaseModel):
 class SecretCopyRules(BaseModel):
     """Rules for copying a secret value from another secret."""
 
-    application: str
-    """Application from which the secret should be copied."""
+    application: str = Field(
+        ...,
+        title="Application",
+        description="Application from which the secret should be copied",
+    )
 
-    key: str
-    """Secret key from which the secret should be copied."""
+    key: str = Field(
+        ...,
+        title="Key",
+        description="Secret key from which the secret should be copied",
+    )
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
 
 class ConditionalSecretCopyRules(SecretCopyRules, ConditionalMixin):
@@ -87,12 +100,9 @@ class SimpleSecretGenerateRules(BaseModel):
         SecretGenerateType.gafaelfawr_token,
         SecretGenerateType.fernet_key,
         SecretGenerateType.rsa_private_key,
-    ]
-    """Type of secret."""
+    ] = Field(..., title="Secret type", description="Type of secret")
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     def generate(self) -> SecretStr:
         """Generate a new secret following these rules."""
@@ -129,15 +139,16 @@ class SourceSecretGenerateRules(BaseModel):
     type: Literal[
         SecretGenerateType.bcrypt_password_hash,
         SecretGenerateType.mtime,
-    ]
-    """Type of secret."""
+    ] = Field(..., title="Secret type", description="Type of secret")
 
-    source: str
-    """Key of secret on which this secret is based.
-
-    This may only be set by secrets of type ``bcrypt-password-hash`` or
-    ``mtime``.
-    """
+    source: str = Field(
+        ...,
+        title="Source key",
+        description=(
+            "Key of secret on which this secret is based. This may only be"
+            " set by secrets of type `bcrypt-password-hash` or `mtime`."
+        ),
+    )
 
     def generate(self, source: SecretStr) -> SecretStr:
         match self.type:
@@ -164,27 +175,54 @@ ConditionalSecretGenerateRules = (
 )
 
 
+class SecretOnepasswordConfig(BaseModel):
+    """Configuration for how a static secret is stored in 1Password."""
+
+    encoded: bool = Field(
+        False,
+        title="Is base64-encoded",
+        description=(
+            "Whether the 1Password copy of the secret is encoded in base64."
+            " 1Password doesn't support newlines in secrets, so secrets that"
+            " contain significant newlines have to be encoded when storing"
+            " them in 1Password. This flag indicates that this has been done,"
+            " and therefore when retrieving the secret from 1Password, its"
+            " base64-encoding must be undone."
+        ),
+    )
+
+
 class SecretConfig(BaseModel):
     """Specification for an application secret."""
 
-    description: str
-    """Description of the secret."""
+    description: str = Field(
+        ..., title="Description", description="Description of the secret"
+    )
 
     copy_rules: SecretCopyRules | None = Field(
         None,
+        title="Copy rules",
         description="Rules for where the secret should be copied from",
         alias="copy",
     )
 
-    generate: SecretGenerateRules | None = None
-    """Rules for how the secret should be generated."""
+    generate: SecretGenerateRules | None = Field(
+        None,
+        title="Generation rules",
+        description="Rules for how the secret should be generated",
+    )
 
-    value: SecretStr | None = None
-    """Secret value."""
+    onepassword: SecretOnepasswordConfig = Field(
+        default_factory=SecretOnepasswordConfig,
+        title="1Password configuration",
+        description="Configuration for how the secret is stored in 1Password",
+    )
 
-    class Config:
-        allow_population_by_field_name = True
-        extra = Extra.forbid
+    value: SecretStr | None = Field(
+        None, title="Value", description="Fixed value of secret"
+    )
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
 
 class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
@@ -192,37 +230,31 @@ class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
 
     copy_rules: ConditionalSecretCopyRules | None = Field(
         None,
+        title="Copy rules",
         description="Rules for where the secret should be copied from",
         alias="copy",
     )
 
-    generate: ConditionalSecretGenerateRules | None = None
-    """Rules for how the secret should be generated."""
+    generate: ConditionalSecretGenerateRules | None = Field(
+        None,
+        title="Generation rules",
+        description="Rules for how the secret should be generated",
+    )
 
-    @validator("generate")
-    def _validate_generate(
-        cls,
-        v: ConditionalSecretGenerateRules | None,
-        values: dict[str, Any],
-    ) -> ConditionalSecretGenerateRules | None:
-        has_copy = "copy" in values and "condition" not in values["copy"]
-        if v and has_copy:
-            msg = "both copy and generate may not be set for the same secret"
+    @model_validator(mode="after")
+    def _validate_generate(self) -> Self:
+        has_copy = self.copy_rules and not self.copy_rules.condition
+        has_generate = self.generate and not self.generate.condition
+        if has_copy and has_generate:
+            msg = (
+                "both copy and generate may not be set unconditionally for the"
+                " same secret"
+            )
             raise ValueError(msg)
-        return v
-
-    @validator("value")
-    def _validate_value(
-        cls, v: SecretStr | None, values: dict[str, Any]
-    ) -> SecretStr | None:
-        has_copy = values.get("copy") and "condition" not in values["copy"]
-        has_generate = (
-            values.get("generate") and "condition" not in values["generate"]
-        )
-        if v and (has_copy or has_generate):
+        if (has_copy or has_generate) and self.value:
             msg = "value may not be set if copy or generate is set"
             raise ValueError(msg)
-        return v
+        return self
 
 
 class Secret(SecretConfig):
@@ -239,32 +271,175 @@ class Secret(SecretConfig):
     """Application of the secret."""
 
 
-class ResolvedSecret(BaseModel):
-    """A secret that has been resolved for a given application instance.
+class RegistryPullSecret(BaseModel):
+    """Pull secret for a specific Docker Repository."""
+
+    username: str = Field(
+        ..., title="Username", description="HTTP Basic Auth username"
+    )
+
+    password: SecretStr = Field(
+        ..., title="Password", description="HTTP Basic Auth password"
+    )
+
+    model_config = ConfigDict(extra="forbid")
+
+
+class PullSecret(BaseModel):
+    """Specification for a Docker pull secret."""
+
+    description: YAMLFoldedString = Field(
+        YAMLFoldedString(PULL_SECRET_DESCRIPTION),
+        title="Description of pull secret",
+        description=(
+            "Description of the pull secret for humans reading the YAML file"
+        ),
+    )
+
+    registries: dict[str, RegistryPullSecret] = Field(
+        {},
+        title="Pull secret by registry",
+        description="Pull secrets for each registry that needs one",
+    )
+
+    model_config = ConfigDict(extra="forbid")
+
+    def to_dockerconfigjson(self) -> str:
+        """Convert to the serialized format used by Docker."""
+        docker_config = {}
+        for registry, data in self.registries.items():
+            password = data.password.get_secret_value()
+            auth = b64encode(f"{data.username}:{password}".encode()).decode()
+            docker_config[registry] = {
+                "auth": auth,
+                "username": data.username,
+                "password": password,
+            }
+        return json.dumps({"auths": docker_config})
+
+
+class ResolvedSecrets(BaseModel):
+    """All resolved secrets for a given Phalanx environment.
 
     Secret resolution means that the configuration has been translated into a
     secret value.
     """
 
-    key: str
-    """Key of the secret."""
+    applications: dict[str, dict[str, SecretStr]] = Field(
+        {},
+        title="Secrets by application and key",
+        description=(
+            "Mapping of application to secret key to that resolved secret"
+        ),
+    )
 
-    application: str
-    """Application for which the secret is required."""
-
-    value: SecretStr
-    """Value of the secret."""
+    pull_secret: PullSecret | None = Field(
+        None,
+        title="Pull secret",
+        description="Pull secret for the environment, if needed",
+    )
 
 
 class StaticSecret(BaseModel):
     """Value of a static secret provided in a YAML file."""
 
-    description: str | None = None
-    """Description of the secret (ignored)."""
+    description: YAMLFoldedString | None = Field(
+        None,
+        title="Description of secret",
+        description="Intended for human writers and ignored by tools",
+    )
 
-    value: SecretStr | None
-    """Value of the secret, or `None` if it's not known."""
+    warning: YAMLFoldedString | None = Field(
+        None,
+        title="Warning for humans",
+        description=(
+            "Any warnings humans need to know about when filling out this"
+            " secret"
+        ),
+    )
+
+    value: SecretStr | None = Field(
+        None,
+        title="Value of secret",
+        description="Value of the secret, or `None` if it's not known",
+    )
+
+    model_config = ConfigDict(extra="forbid")
 
 
-StaticSecrets = dict[str, dict[str, StaticSecret]]
-"""Data type for static secrets from a YAML file."""
+class StaticSecrets(BaseModel):
+    """Model for the YAML file containing static secrets.
+
+    This doubles as the model used to pass static secrets around internally,
+    in which case the description fields of the `StaticSecret` members are
+    ignored.
+    """
+
+    applications: dict[str, dict[str, StaticSecret]] = Field(
+        {},
+        title="Secrets by application and key",
+        description=(
+            "Mapping of application to secret key to that static secret"
+        ),
+    )
+
+    pull_secret: PullSecret | None = Field(
+        None,
+        title="Pull secret",
+        description="Pull secret for this environment, if any is needed",
+        alias="pull-secret",
+    )
+
+    model_config = ConfigDict(populate_by_name=True, extra="forbid")
+
+    @classmethod
+    def from_path(cls, path: Path) -> Self:
+        """Load static secrets from a file on disk.
+
+        Parameters
+        ----------
+        path
+            Path to the file.
+
+        Returns
+        -------
+        StaticSecrets
+            Parsed static secrets.
+        """
+        with path.open() as fh:
+            return cls.model_validate(yaml.safe_load(fh))
+
+    def for_application(self, application: str) -> dict[str, StaticSecret]:
+        """Return any known secrets for an application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        dict of StaticSecret
+            Mapping of secret keys to `StaticSecret` objects. If the
+            application has no static secrets, returns an empty dictionary.
+        """
+        return self.applications.get(application, {})
+
+    def to_template(self) -> dict[str, Any]:
+        """Export the model in a suitable form for the template.
+
+        The static secrets template should always include the ``value`` field
+        even though it will be `None`, should not include ``warning`` if it is
+        unset, and should always include the `PullSecret` fields even though
+        they are defaults. The parameters to `~pydantic.BaseModel.model_dict`
+        aren't up to specifying this, hence this custom serializer.
+
+        Returns
+        -------
+        dict
+            Dictionary suitable for dumping as YAML to make a template.
+        """
+        result = self.model_dump(by_alias=True, exclude_unset=True)
+        if self.pull_secret:
+            result["pull-secret"] = self.pull_secret.model_dump()
+        return result

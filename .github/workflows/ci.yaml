@@ -44,6 +44,8 @@ jobs:
           python-version: ${{ matrix.python }}
           tox-envs: "typing,py,coverage-report"
           cache-key-prefix: test
+        env:
+          COLUMNS: 120
 
   helm:
     runs-on: ubuntu-latest
@@ -54,22 +56,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: azure/setup-helm@v3
+        with:
+          # Used to query GitHub for the latest Helm release.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.11"
-
-      - name: Install test dependencies
-        run: make init
-
-      - name: Expand modified charts
-        run: expand-charts
-
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.4.0
-
-      - name: Run chart-testing (lint)
-        run: ct lint --all --config ct.yaml
+          tox-envs: phalanx-lint-change
+          cache-key-prefix: test
 
   # The minikube job always runs, but it quickly does nothing if no files that
   # would affect minikube were changed.  This unfortunately requires a lot of
@@ -124,14 +120,13 @@ jobs:
           sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.7.10/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
-          sudo pip install -r installer/requirements.txt
 
       - name: Run installer
         timeout-minutes: 15
         if: steps.filter.outputs.minikube == 'true'
         run: |
           cd installer
-          ./install.sh minikube ${{ secrets.MINIKUBE_VAULT_KEY }}
+          ./install.sh minikube "${{ secrets.MINIKUBE_VAULT_ROLE_ID }}" "${{ secrets.MINIKUBE_VAULT_SECRET_ID }}"
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'

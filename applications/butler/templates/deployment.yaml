@@ -1,0 +1,115 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "butler"
+  labels:
+    {{- include "butler.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "butler.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "butler.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: "/opt/lsst/butler/secrets/aws-credentials.ini"
+            - name: PGPASSFILE
+              value: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/opt/lsst/butler/secrets/butler-gcs-creds.json"
+            - name: S3_ENDPOINT_URL
+              value: "https://storage.googleapis.com"
+            - name: BUTLER_SERVER_CONFIG_URI
+              value: {{ .Values.config.configUri | quote }}
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+              readOnly: true
+      volumes:
+        # butler-secrets-raw pulls in the secrets from the vault as files.
+        # These files are owned by root and group/world readable.
+        # This volume is not used directly by the container running the actual
+        # Butler application.
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: {{ include "butler.fullname" . }}
+        # Postgres will not use a pgpass file (postgres-credentials.txt in the
+        # vault) if it is group/world writeable or owned by a different user.
+        # So the initContainers below copies the files from butler-secrets-raw
+        # to butlet-secrets, changing the owner and permissions.
+        # This volume is the one used by the container running the actual
+        # Butler application.
+        - name: "butler-secrets"
+          emptyDir: {}
+      initContainers:
+        # To deal with the Postgres file permission issued mentioned above,
+        # copy the secrets from butler-secrets-raw to butler-secrets.
+        # This initContainer definition is borrowed from obsloctap's
+        # deployment.yaml.
+        - name: fix-secret-permissions
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              cp -RL /tmp/butler-secrets-raw/* /opt/lsst/butler/secrets/
+              chmod 0400 /opt/lsst/butler/secrets/*
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+            - name: "butler-secrets-raw"
+              mountPath: "/tmp/butler-secrets-raw"
+              readOnly: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

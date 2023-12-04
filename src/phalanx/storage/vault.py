@@ -99,7 +99,9 @@ class VaultClient:
         Parameters
         ----------
         display_name
-            Display name of the token.
+            Display name of the token. This must begin with ``token-``, which
+            is stripped off when creating the token since it will be added by
+            Vault.
         policies
             Policies to assign to that token.
         lifetime
@@ -110,6 +112,7 @@ class VaultClient:
         VaultToken
             Newly-created Vault token.
         """
+        display_name = display_name.removeprefix("token-")
         token = self._vault.auth.token.create(
             display_name=display_name, policies=policies, ttl=lifetime
         )
@@ -336,17 +339,26 @@ class VaultClient:
 class VaultStorage:
     """Create Vault clients for specific environments."""
 
-    def get_vault_client(self, env: EnvironmentBaseConfig) -> VaultClient:
+    def get_vault_client(
+        self, env: EnvironmentBaseConfig, path_prefix: str | None = None
+    ) -> VaultClient:
         """Return a Vault client configured for the given environment.
 
         Parameters
         ----------
         env
             Phalanx environment.
+        path_prefix
+            Path prefix within Vault for application secrets. If given, this
+            overrides the path prefix in the environment configuration.
 
         Returns
         -------
         VaultClient
             Vault client configured to manage secrets for that environment.
         """
-        return VaultClient(env.vault_url, env.vault_path_prefix)
+        if not path_prefix:
+            path_prefix = env.vault_path_prefix
+        if not env.vault_url:
+            raise ValueError("vaultUrl not set for this environment")
+        return VaultClient(str(env.vault_url), path_prefix)

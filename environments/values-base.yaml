@@ -1,16 +1,12 @@
 name: base
 fqdn: base-lsp.lsst.codes
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 applications:
   argo-workflows: true
-  cachemachine: true
   exposurelog: true
-  moneypenny: true
   narrativelog: true
   nublado: true
-  nublado2: true
   portal: true
   sasquatch: true
   squareone: true

@@ -23,6 +23,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Rubin Science Platform
 
+   butler/index
    cachemachine/index
    datalinker/index
    hips/index
@@ -36,6 +37,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    portal/index
    semaphore/index
    sherlock/index
+   siav2/index
    sqlproxy-cross-project/index
    squareone/index
    ssotap/index
@@ -56,6 +58,8 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    production-tools/index
    rubintv/index
    sasquatch/index
+   schedview-prenight/index
+   schedview-snapshot/index
    strimzi/index
    strimzi-access-operator/index
    telegraf/index
@@ -68,7 +72,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    giftless/index
    kubernetes-replicator/index
    monitoring/index
-   onepassword-connect-dev/index
+   onepassword-connect/index
    ook/index
    squarebot/index
 
@@ -76,6 +80,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Prompt Processing
 
+   next-visit-fan-out/index
    prompt-proto-service-hsc/index
    prompt-proto-service-latiss/index
    prompt-proto-service-lsstcam/index

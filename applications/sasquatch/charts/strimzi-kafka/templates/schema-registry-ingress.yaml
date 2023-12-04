@@ -1,0 +1,25 @@
+{{- if .Values.registry.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sasquatch-schema-registry
+  labels:
+    name: sasquatch-schema-registry
+  annotations:
+    {{- with .Values.registry.ingress.annotations }}
+    {{ toYaml . | indent 4 }}
+    {{- end }}
+spec:
+  ingressClassName: "nginx"
+  rules:
+    - host: {{ .Values.registry.ingress.hostname | quote }}
+      http:
+        paths:
+          - path: {{ .Values.registry.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name: sasquatch-schema-registry
+                port:
+                  number: 8081
+{{- end }}

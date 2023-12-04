@@ -1,0 +1,16 @@
+{{- if .Values.cloudsql.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: "cloud-sql-proxy"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: "TCP"
+      port: 5432
+      targetPort: "http"
+  selector:
+    app.kubernetes.io/component: "cloud-sql-proxy"
+{{- end }}

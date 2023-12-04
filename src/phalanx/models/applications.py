@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from .secrets import ConditionalSecretConfig, Secret
 
@@ -29,7 +29,7 @@ class DocLink(BaseModel):
     title: str
     """Title of the document."""
 
-    id: str | None
+    id: str | None = None
     """Identifier of the document."""
 
     def to_rst(self) -> str:
@@ -98,8 +98,21 @@ class ApplicationInstance(BaseModel):
     values: dict[str, Any]
     """Merged Helm values for the application in this environment."""
 
-    secrets: list[Secret] = []
-    """Secrets required for this application in this environment."""
+    secrets: dict[str, Secret] = Field(
+        {},
+        title="Required secrets",
+        description=(
+            "Secrets required for this application in this environment."
+        ),
+    )
+
+    def all_static_secrets(self) -> list[Secret]:
+        """Return all static secrets for this instance of the application."""
+        return [
+            s
+            for s in self.secrets.values()
+            if not (s.copy_rules or s.generate or s.value)
+        ]
 
     def is_values_setting_true(self, setting: str) -> bool:
         """Determine whether a given Helm values setting is true.
@@ -126,11 +139,3 @@ class ApplicationInstance(BaseModel):
                 return False
             values = values[key]
         return bool(values)
-
-    def all_static_secrets(self) -> list[Secret]:
-        """Return all static secrets for this instance of the application."""
-        return [
-            s
-            for s in self.secrets
-            if not (s.copy_rules or s.generate or s.value)
-        ]

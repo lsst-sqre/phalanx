@@ -1,0 +1,9 @@
+strimzi-kafka-operator:
+  resources:
+    limits:
+      memory: "1Gi"
+    requests:
+      memory: "512Mi"
+  watchNamespaces:
+    - "alert-stream-broker"
+  logLevel: "DEBUG"

@@ -15,13 +15,16 @@ SQuaRE environments
 
 In the case of environments managed by SQuaRE, the process for gated updates to environments is canonically defined in :sqr:`056`, but also summarized here.
 
-The sequence for rolling out updates is:
+The sequence for rolling out weekly updates is:
 
-* ``data-dev.lsst.cloud``
-* ``data-int.lsst.cloud``
-* ``tucson-teststand.lsst.codes``
-* ``data.lsst.cloud``
-* ``base-lsp.lsst.codes``
-* ``summit-lsp.lsst.codes``
+* :px-env:`idfdev`
+* :px-env:`idfint`
+* :px-env:`idfprod`
+
+The sequence for rolling out monthly updates to Telescope and Site environments is:
+
+* :px-env:`tucson-teststand`
+* :px-env:`base`
+* :px-env:`summit`
 
 See :sqr:`056` for the change coordination and upgrade windows (as relevant) for each environment.

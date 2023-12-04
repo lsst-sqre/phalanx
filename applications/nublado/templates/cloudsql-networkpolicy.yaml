@@ -1,0 +1,26 @@
+{{- if .Values.cloudsql.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "cloud-sql-proxy"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    # This policy controls inbound and outbound access to the Cloud SQL Proxy.
+    matchLabels:
+      {{- include "nublado.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "cloud-sql-proxy"
+  policyTypes:
+    - Ingress
+  ingress:
+    # Allow inbound access to the Cloud SQL Proxy from the Hub.
+    - from:
+        - podSelector:
+            matchLabels:
+              app: "jupyterhub"
+              component: "hub"
+      ports:
+        - protocol: "TCP"
+          port: 5432
+{{- end }}

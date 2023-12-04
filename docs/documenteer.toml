@@ -34,6 +34,7 @@ nitpick_ignore = [
 nitpick_ignore_regex = [
     # Bug in Sphinx
     ["py:obj", "SecretGenerateType\\..*"],
+    ["py:obj", ".*all fields"],
 ]
 python_api_dir = "internals/api"
 rst_epilog_file = "_rst_epilog.rst"
@@ -62,6 +63,7 @@ ignore = [
     '^https://usdf-prompt-processing-dev.slac.stanford.edu',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',
+    '^https://usdf-rsp-int.slac.stanford.edu',
     '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
 ]

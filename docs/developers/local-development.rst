@@ -41,37 +41,27 @@ We recommend using the `minikube ingress addon <https://kubernetes.io/docs/tasks
 Deploy the minikube environment
 ===============================
 
-Requirements
-------------
+Setup
+-----
+
+Start by following the normal instructions in :doc:`/about/local-environment-setup` and :ref:`admin-tooling`.
+Then, take these additional steps.
 
 #. Install `kubectl <https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/>`__ and make sure it is configured to access minikube.
 
-#. Install `Argo CD CLI <https://argo-cd.readthedocs.io/en/stable/cli_installation/#mac>`__.
+#. Open Phalanx's ``installer/`` directory and install its Python dependencies in the virtualenv you set up in the previous step.
 
-#. Install `Helm 3 <https://helm.sh/docs/intro/install/>`__.
+   .. prompt:: bash
 
-#. Install `Vault <https://developer.hashicorp.com/vault/tutorials/getting-started/getting-started-install>`__.
+     cd installer
+     pip install -r requirements.txt
 
-#. Clone the `Phalanx repository`_.
+#. Lastly, set the environment variables for Vault access:
 
-Open Phalanx's ``installer/`` directory:
+   .. prompt:: bash
 
-.. code-block:: sh
-
-  cd installer
-
-Install the Python dependencies (using a virtual environment is ideal):
-
-.. code-block:: sh
-
-  pip install -r requirements.txt
-
-Lastly, set the environment variables for Vault access:
-
-.. code-block:: sh
-
-   export VAULT_ADDR="https://vault.lsst.codes"
-   export VAULT_TOKEN="<read key for minikube>"
+      export VAULT_ADDR="https://vault.lsst.codes"
+      export VAULT_TOKEN="<read key for minikube>"
 
 The Vault read key for minikube is accessible from the ``vault_keys_json`` item in the LSST IT/RSP-Vault 1Password Vault.
 The key itself is under the ``k8s_operator/minikube.lsst.codes`` → ``read`` → ``id`` field.
@@ -104,7 +94,7 @@ Run the installer
 
 Finally, run the installer for the minikube environment.
 
-.. code-block:: sh
+.. prompt:: bash
 
   ./install.sh minikube $VAULT_TOKEN
 
@@ -113,20 +103,20 @@ Access the Argo CD UI
 
 Add the following line to ``/etc/hosts``.
 
-.. code-block:: sh
+.. code-block::
 
   127.0.0.1 minikube.lsst.codes
 
 On a new terminal, use ``minikube tunnel`` to route traffic from the host to the application in minikube.
 
-.. code-block:: sh
+.. prompt:: bash
 
   minikube tunnel
 
 Access the Argo CD UI on ``http://minikube.lsst.codes/argo-cd``.
 The minikube Argo CD admin password can be retrieved from Vault.
 
-.. code-block:: sh
+.. prompt:: bash
 
   VAULT_PATH_PREFIX=`yq -r .vaultPathPrefix ../environments/values-minikube.yaml`
   vault kv get --field=argocd.admin.plaintext_password $VAULT_PATH_PREFIX/installer

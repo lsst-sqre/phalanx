@@ -1,0 +1,64 @@
+# Default values for schedview-snapshot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the schedview-snapshot deployment
+  repository: "ghcr.io/lsst/schedview"
+
+  # -- Pull policy for the schedview-snapshot image
+  pullPolicy: "Always"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of schedview-snapshot deployment
+  enabled: false
+
+  # -- Minimum number of schedview-snapshot deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of schedview-snapshot deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of schedview-snapshot deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the schedview-snapshot deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the schedview-snapshot deployment pod
+resources: {}
+
+# -- Node selection rules for the schedview-snapshot deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the schedview-snapshot deployment pod
+tolerations: []
+
+# -- Affinity rules for the schedview-snapshot deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

@@ -97,6 +97,9 @@ controller:
       aliasTags: []
 
     lab:
+      # -- ArgcoCD application in which to collect user lab objects.
+      # @default -- See `values.yaml`
+      application: "nublado-users"
       # -- Environment variables to set for every user lab.
       # @default -- See `values.yaml`
       env:
@@ -282,6 +285,14 @@ proxy:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
+# Configuration for Nublado secrets management.
+secrets:
+  # -- Whether to use the new secrets management mechanism. If enabled, the
+  # Vault nublado secret will be split into a nublado secret for JupyterHub
+  # and a nublado-lab-secret secret used as a source for secret values for the
+  # user's lab.
+  templateSecrets: false
+
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
   hub:
@@ -293,7 +304,7 @@ jupyterhub:
       name: ghcr.io/lsst-sqre/rsp-restspawner
 
       # -- Tag of image to use for JupyterHub
-      tag: 0.3.2
+      tag: 0.5.0
 
     # -- Resource limits and requests
     resources:
@@ -445,6 +456,55 @@ jupyterhub:
       # -- Whether to spawn placeholder pods representing fake users to force
       # autoscaling in advance of running out of resources
       enabled: false
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
+  # Cloud. This will be run as a separate service, because shoehorning
+  # it into Zero to Jupyterhub's extraContainers looks messy, and it's
+  # not necessary that it be very performant.
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.33.14"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `gafaelfawr`
+  # Kubernetes service account and has the `cloudsql.client` role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
+
+  # -- Resource limits and requests for the Cloud SQL Proxy pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
+
+  # -- Annotations for the Cloud SQL Proxy pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Cloud SQL Proxy pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Cloud SQL Proxy pod
+  tolerations: []
+
+  # -- Affinity rules for the Cloud SQL Proxy pod
+  affinity: {}
+
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

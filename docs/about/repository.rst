@@ -12,7 +12,7 @@ Key directories
 applications directory
 ----------------------
 
-:bdg-link-primary-line:`Browse /applications/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/applications>`
+:bdg-link-primary-line:`Browse applications/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/applications>`
 
 Every Phalanx application has its own sub-directory within :file:`applications` named after the application itself (commonly the name is also used as a Kubernetes Namespace_).
 A Phalanx application is itself a Helm_ chart.
@@ -36,14 +36,14 @@ See the `Helm documentation on chart dependencies. <https://helm.sh/docs/topics/
 environments directory
 ----------------------
 
-:bdg-link-primary-line:`Browse /environments/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/environments>`
+:bdg-link-primary-line:`Browse environments/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/environments>`
 
 The :file:`environments` directory is where environments are defined (an environment is a distinct Kubernetes cluster).
 
 The :file:`environments/templates` directory contains a Helm template per application, like this one for the ``noteburst`` application:
 
 .. literalinclude:: ../../environments/templates/noteburst-application.yaml
-   :caption: /environments/templates/noteburst-application.yaml
+   :caption: environments/templates/noteburst-application.yaml
 
 The template defines a Kubernetes Namespace_ and an Argo CD ``Application`` for each Phalanx application.
 ``Application`` resources direct Argo CD to deploy and synchronize the corresponding application Helm chart from the Phalanx :file:`applications` directory.
@@ -56,18 +56,33 @@ Each environment then has a file named :file:`values-{environment}.yaml` that de
 installer directory
 -------------------
 
-:bdg-link-primary-line:`Browse /installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
+:bdg-link-primary-line:`Browse installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
 
 This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
-The arguments to this are the name of the environment, the FQDN, and the read key for Vault (see :ref:`secrets` for more details on Vault).
+The arguments to this are the name of the environment, the Vault RoleID, and the Vault SecretID (see :ref:`secrets` for more details on Vault).
 This installer script is the entry point for setting up a new environment.
 It can also be run on an existing environment to update it.
 See the :ref:`environment bootstrapping documentation <bootstrapping-toc>` for details.
 
+charts directory
+----------------
+
+:bdg-link-primary-line:`Browse charts/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/charts>`
+
+This directory contains Helm charts shared by multiple Phalanx applications that are not generally useful enough to warrant separate publication in a proper Helm chart repository.
+
+In some cases, several Phalanx applications should use common Helm templates to avoid duplication.
+The best way to do this within Helm is to use a subchart.
+This can be done by publishing a separate Helm chart using the `charts repository <https://github.com/lsst-sqre/charts>`__, but publication as a Helm chart implies that the chart may be useful outside of Phalanx.
+Sometimes these shared subcharts are merely artifacts of code organization and deduplication within Phalanx, and should not have an independent existence outside of Phalanx.
+In those cases, they're maintained in the :file:`charts` directory.
+
+See :doc:`/developers/shared-charts` for details.
+
 docs directory
 --------------
 
-:bdg-link-primary-line:`Browse /docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/docs>`
+:bdg-link-primary-line:`Browse docs/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/docs>`
 
 This directory contains the Sphinx_ documentation that you are reading now.
 See :doc:`contributing-docs`.
@@ -75,7 +90,7 @@ See :doc:`contributing-docs`.
 src directory
 -------------
 
-:bdg-link-primary-line:`Browse /src/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/src>`
+:bdg-link-primary-line:`Browse src/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/src>`
 
 This directory contains the source of the Phalanx command-line tool (see :doc:`/admin/cli`).
 The Python dependencies for that command-line tool are managed in the :file:`requirements` directory.
@@ -83,7 +98,7 @@ The Python dependencies for that command-line tool are managed in the :file:`req
 starters directory
 ------------------
 
-:bdg-link-primary-line:`Browse /starters/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/starters>`
+:bdg-link-primary-line:`Browse starters/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/starters>`
 
 This directory contains templates for contributing new applications to Phalanx.
 See :doc:`/developers/write-a-helm-chart`.
@@ -91,7 +106,7 @@ See :doc:`/developers/write-a-helm-chart`.
 tests directory
 ---------------
 
-:bdg-link-primary-line:`Browse /tests/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/tests>`
+:bdg-link-primary-line:`Browse tests/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/tests>`
 
 This directory primarily contains tests for the Phalanx command-line tool.
 However, it also contains some tests written in Python that check the consistency of the Phalanx configuration, and therefore runs for all changes, not just those that change the source of the command-line tool.

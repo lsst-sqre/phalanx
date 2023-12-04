@@ -44,8 +44,9 @@ For charts designed primarily to deploy an external chart, normally you want to 
    helm create -p $(pwd)/../starters/empty <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
-By convention, the top-level chart has the same name as the underlying chart that it deploys.
-Change this if the underlying chart name is too generic.
+
+If the purpose of your application is to deploy only one upstream chart, normally you should name the application the same as the chart it deploys.
+Change this if the underlying chart name is too generic, if you're deploying a collection of upstream charts, or if the upstream chart is only in support of an application defined directly in the :file:`templates` directory.
 
 Add the external chart as a dependency
 ======================================
@@ -58,6 +59,7 @@ Third-party charts should always be pinned to specific versions in ``dependencie
 This ensures deterministic cluster configuration and avoids inadvertently upgrading applications.
 
 These dependencies will be updated via automatically-created pull requests created by `Mend Renovate`_.
+You are responsible for merging those PRs against the `phalanx repository`_ if your application is the only one using that chart.
 
 .. _external-chart-config:
 
@@ -70,6 +72,10 @@ The second file contains the configuration for a specific environment.
 
 You may also need to add additional resources not created by the upstream Helm chart, particularly ``VaultSecret`` objects to create any secrets that it needs.
 See :doc:`define-secrets` for more about secrets.
+
+Even though you're just setting configuration for an upstream chart that has its own documentation, please add helm-docs_ documentation comments to all settings that Phalanx may modify in :file:`values.yaml`.
+See :ref:`dev-helm-docs` for information on how to write those comments.
+The Phalanx application is a new level of configuration and simplification that hides the details of the underlying chart, and it should get its own documentation.
 
 Next steps
 ==========

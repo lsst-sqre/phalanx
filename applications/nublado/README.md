@@ -2,17 +2,27 @@
 
 JupyterHub and custom spawner for the Rubin Science Platform
 
-**Homepage:** <https://github.com/lsst-sqre/jupyterlab-controller>
+**Homepage:** <https://nublado.lsst.io/>
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/jupyterlab-controller>
-* <https://github.com/lsst-sqre/rsp-restspawner>
+* <https://github.com/lsst-sqre/nublado>
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| cloudsql.affinity | object | `{}` | Affinity rules for the Cloud SQL Proxy pod |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a separate service, because shoehorning it into Zero to Jupyterhub's extraContainers looks messy, and it's not necessary that it be very performant. |
+| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
+| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.tag | string | `"1.33.14"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
+| cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
+| cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
+| cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
+| cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the lab controller pod |
 | controller.config.fileserver.enabled | bool | `false` | Enable fileserver management |
 | controller.config.fileserver.image | string | `"ghcr.io/lsst-sqre/worblehat"` | Image for fileserver container |
@@ -28,6 +38,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.images.pin | list | `[]` | List of additional image tags to prepull. Listing the image tagged as recommended here is recommended when using a Docker image source to ensure its name can be expanded properly in the menu. |
 | controller.config.images.recommendedTag | string | `"recommended"` | Tag marking the recommended image (shown first in the menu) |
 | controller.config.images.source | object | None, must be specified | Source for prepulled images. For Docker, set `type` to `docker`, `registry` to the hostname and `repository` to the name of the repository. For Google Artifact Repository, set `type` to `google`, `location` to the region, `projectId` to the Google project, `repository` to the name of the repository, and `image` to the name of the image. |
+| controller.config.lab.application | string | See `values.yaml` | ArgcoCD application in which to collect user lab objects. |
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab. |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.initcontainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image reference), and `privileged`, and may contain `volumes` (similar to the main `volumes` configuration). If `privileged` is true, the container will run as root with `allowPrivilegeEscalation` true. Otherwise it will, run as UID 1000. |
@@ -70,7 +81,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/rsp-restspawner"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"0.3.2"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"0.5.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |
@@ -85,3 +96,4 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.singleuser.cmd | string | `"/opt/lsst/software/jupyterlab/runlab.sh"` | Start command for labs |
 | jupyterhub.singleuser.defaultUrl | string | `"/lab"` | Default URL prefix for lab endpoints |
 | proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |

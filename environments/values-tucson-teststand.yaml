@@ -1,16 +1,12 @@
 name: tucson-teststand
 fqdn: tucson-teststand.lsst.codes
-vaultUrl: "https://vault.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 applications:
   argo-workflows: true
-  cachemachine: true
   exposurelog: true
-  moneypenny: true
   narrativelog: true
   nublado: true
-  nublado2: true
   portal: true
   sasquatch: true
   squareone: true

@@ -1,5 +1,0 @@
-bcrypt
-cryptography
-onepasswordconnectsdk
-pyyaml
-yq

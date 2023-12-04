@@ -29,7 +29,7 @@ Configure other Phalanx applications
 If the application needs to listen on hostnames other than the normal cluster-wide hostname, you will need to configure :px-app:`cert-manager` so that it can generate a TLS certificate for that hostname.
 See :doc:`/applications/cert-manager/add-new-hostname` for more details.
 
-If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml#L36>`__.
+If your application exposes Prometheus endpoints, you will want to configure these in the `telegraf application's prometheus_config <https://github.com/lsst-sqre/phalanx/blob/main/applications/telegraf/values.yaml>`__.
 
 Enable the application for some environment
 ===========================================

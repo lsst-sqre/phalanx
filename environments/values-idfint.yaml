@@ -1,23 +1,23 @@
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
 fqdn: data-int.lsst.cloud
 name: idfint
-vaultUrl: "https://vault.lsst.codes"
-vaultPathPrefix: secret/k8s_operator/data-int.lsst.cloud
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP data-int.lsst.cloud"
+vaultPathPrefix: secret/phalanx/idfint
 
 applications:
   alert-stream-broker: true
-  cachemachine: true
   datalinker: true
   hips: true
   linters: true
   mobu: true
-  moneypenny: true
   nublado: true
-  nublado2: true
   plot-navigator: true
   portal: true
   postgres: true
   sasquatch: true
+  siav2: true
   ssotap: true
   production-tools: true
   semaphore: true

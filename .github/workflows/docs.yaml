@@ -41,6 +41,7 @@ jobs:
               - "applications/*/values.yaml"
               - "applications/gafaelfawr/values-*.yaml"
               - "environments/values-*.yaml"
+              - "src/phalanx/**"
 
       - name: Install graphviz
         if: steps.filter.outputs.docs == 'true'

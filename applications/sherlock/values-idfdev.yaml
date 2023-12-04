@@ -1,9 +1,9 @@
 resources:
   requests:
     cpu: 2.0
-    memory: "2G"
+    memory: "2Gi"
   limits:
     cpu: 4.0
-    memory: "4G"
+    memory: "4Gi"
 
 publishUrl: "https://status.lsst.codes/api/data-dev"

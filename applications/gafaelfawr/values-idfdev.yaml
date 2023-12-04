@@ -30,6 +30,9 @@ config:
   oidcServer:
     enabled: true
 
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "db8626e0-3b93-45c0-89ab-3058b0ed39fe"
+
   # User quota settings for services.
   quota:
     default:
@@ -64,7 +67,6 @@ config:
     - "frossie"
     - "jsick"
     - "rra"
-    - "simonkrughoff"
 
 cloudsql:
   enabled: true

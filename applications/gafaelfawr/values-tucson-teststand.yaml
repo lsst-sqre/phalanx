@@ -35,10 +35,7 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
+          team: "tts-access"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
@@ -48,10 +45,7 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
+          team: "tts-access"
     "exec:portal":
       - github:
           organization: "lsst-sqre"
@@ -61,10 +55,7 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
+          team: "tts-access"
     "read:image":
       - github:
           organization: "lsst-sqre"
@@ -74,10 +65,7 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
+          team: "tts-access"
     "read:tap":
       - github:
           organization: "lsst-sqre"
@@ -87,14 +75,14 @@ config:
           team: "friends"
       - github:
           organization: "lsst-ts"
-          team: "base-access"
-      - github:
-          organization: "rubin-summit"
-          team: "rsp-access"
+          team: "tts-access"
     "write:sasquatch":
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst-ts"
+          team: "tts-access"
 
   initialAdmins:
     - "afausti"
@@ -103,4 +91,3 @@ config:
     - "frossie"
     - "jonathansick"
     - "rra"
-    - "simonkrughoff"

@@ -1,55 +1,34 @@
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 prompt-proto-service:
 
-  # -- Annotations for the prompt-proto-service pod
   podAnnotations:
-    autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "100"
-    autoscaling.knative.dev/target-utilization-percentage: "60"
-    autoscaling.knative.dev/target-burst-capacity: "-1"
-    # Update this field if `make apply` by itself doesn't make a new revision.
+    # Update this field if using latest or static image tag in dev
     revision: "1"
 
-  knative:
-    ephemeralStorageRequest: "8Gi"
-    ephemeralStorageLimit: "20Gi"
-    timeout: 900
-    idleTimeout: 900
-    responseStartTimeout: 900
-
   image:
-    repository: ghcr.io/lsst-dm/prompt-proto-service
-    pullPolicy: IfNotPresent
+    repository: ghcr.io/lsst-dm/prompt-service
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: AuxTel20230524-w_2023_20
+    tag: latest
 
   instrument:
-    name: LATISS
-    pipelines: ""
-    skymap: latiss_v1
-    calibRepo: s3://rubin-summit-users/
+    pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml]
+    calibRepo: s3://rubin-pp-users/central_repo/
 
   s3:
     imageBucket: rubin-pp
     endpointUrl: https://s3dfrgw.slac.stanford.edu
-    auth_env: true
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing
-    imageTimeout: '120'
 
   apdb:
+    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu/lsst-devl
+    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432  # TODO: remove on DM-40839
+
+  registry:  # TODO: remove on DM-40839
     ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
-    db: lsst-devl
-    user: rubin
-    namespace: pp_apdb
+    db: ppcentralbutler
+    user: pp
 
-  registry:
-    ip: usdf-butler.slac.stanford.edu:5432
-    db: lsstdb1
-    user: rubin
-
-  vaultSecretsPath: "secret/rubin/usdf-prompt-processing-dev/prompt-proto-service-latiss"
+  fullnameOverride: "prompt-proto-service-latiss"

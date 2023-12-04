@@ -1,13 +1,12 @@
 apiVersion: v2
 name: ssotap
 version: 1.0.0
-description: IVOA TAP service
+description: IVOA TAP service for Solar System Objects
 sources:
   - https://github.com/lsst-sqre/tap-postgres
   - https://github.com/opencadc/tap
-appVersion: "1.12"
 
 dependencies:
   - name: cadc-tap
     version: 1.0.0
-    repository: "file://../../charts/cadc-tap/"
+    repository: "file://../../charts/cadc-tap"

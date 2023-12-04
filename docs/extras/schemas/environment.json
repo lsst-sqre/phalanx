@@ -1,82 +1,130 @@
 {
-  "title": "EnvironmentConfig",
-  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.",
-  "type": "object",
-  "properties": {
-    "name": {
-      "title": "Name",
-      "type": "string"
-    },
-    "fqdn": {
-      "title": "Fqdn",
-      "type": "string"
-    },
-    "onepassword": {
-      "$ref": "#/definitions/OnepasswordConfig"
-    },
-    "vaultUrl": {
-      "title": "Vaulturl",
-      "type": "string"
-    },
-    "vaultPathPrefix": {
-      "title": "Vaultpathprefix",
-      "type": "string"
-    },
-    "applications": {
-      "title": "Applications",
-      "type": "object",
-      "additionalProperties": {
-        "type": "boolean"
-      }
-    },
-    "butlerRepositoryIndex": {
-      "title": "Butlerrepositoryindex",
-      "type": "string"
-    },
-    "onepasswordUuid": {
-      "title": "Onepassworduuid",
-      "type": "string"
-    },
-    "repoUrl": {
-      "title": "Repourl",
-      "type": "string"
-    },
-    "targetRevision": {
-      "title": "Targetrevision",
-      "type": "string"
-    }
-  },
-  "required": [
-    "name",
-    "fqdn",
-    "vaultUrl",
-    "vaultPathPrefix",
-    "applications"
-  ],
-  "additionalProperties": false,
-  "$id": "https://phalanx.lsst.io/schemas/environment.json",
-  "definitions": {
+  "$defs": {
     "OnepasswordConfig": {
-      "title": "OnepasswordConfig",
       "description": "Configuration for 1Password static secrets source.",
-      "type": "object",
       "properties": {
         "connectUrl": {
-          "title": "Connecturl",
-          "minLength": 1,
-          "maxLength": 65536,
+          "description": "URL to the 1Password Connect API server",
           "format": "uri",
+          "minLength": 1,
+          "title": "1Password Connect URL",
           "type": "string"
         },
         "vaultTitle": {
-          "title": "Vaulttitle",
+          "description": "Title of the 1Password vault from which to retrieve secrets",
+          "title": "1Password vault title",
           "type": "string"
         }
       },
       "required": [
         "connectUrl",
         "vaultTitle"
-      ]
+      ],
+      "title": "OnepasswordConfig",
+      "type": "object"
     }
-  }
+  },
+  "$id": "https://phalanx.lsst.io/schemas/environment.json",
+  "additionalProperties": false,
+  "description": "Configuration for a Phalanx environment.\n\nThis is a model for the :file:`values-{environment}.yaml` files for each\nenvironment and is also used to validate those files. For the complete\nconfiguration for an environment, initialize this model with the merger of\n:file:`values.yaml` and :file:`values-{environment}.yaml`.\n\nFields listed here are not available to application linting. If the field\nvalue has to be injected during linting, the field needs to be defined in\n`EnvironmentBaseConfig` instead.",
+  "properties": {
+    "name": {
+      "description": "Name of the environment",
+      "title": "Name",
+      "type": "string"
+    },
+    "fqdn": {
+      "description": "Fully-qualified domain name on which the environment listens",
+      "title": "Domain name",
+      "type": "string"
+    },
+    "butlerRepositoryIndex": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "URL to Butler repository index",
+      "title": "Butler repository index URL"
+    },
+    "onepassword": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/OnepasswordConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Configuration for using 1Password as a static secrets source",
+      "title": "1Password configuration"
+    },
+    "vaultUrl": {
+      "anyOf": [
+        {
+          "format": "uri",
+          "minLength": 1,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "URL of the Vault server. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "Vault server URL"
+    },
+    "vaultPathPrefix": {
+      "description": "Prefix of Vault paths, including the KV v2 mount point",
+      "title": "Vault path prefix",
+      "type": "string"
+    },
+    "applications": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "description": "List of applications and whether they are enabled",
+      "title": "Enabled applications",
+      "type": "object"
+    },
+    "repoUrl": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "URL of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "URL of Git repository"
+    },
+    "targetRevision": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Branch of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "Git repository branch"
+    }
+  },
+  "required": [
+    "name",
+    "fqdn",
+    "vaultPathPrefix",
+    "applications"
+  ],
+  "title": "EnvironmentConfig",
+  "type": "object"
 }

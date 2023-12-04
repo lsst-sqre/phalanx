@@ -17,13 +17,14 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.33.10"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.33.14"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
-| cloudsql.resources | object | `{}` | Resource limits and requests for the Cloud SQL Proxy pod |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
+| config.cadcBaseUuid | string | Disabled | Whether to support the `/auth/cadc/userinfo` route. If set, this UUID is used as the namespace to generate UUID v5 `sub` claims returned by this route to meet the needs of CADC authentication code. |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
@@ -48,6 +49,7 @@ Authentication and identity system
 | config.ldap.groupBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
 | config.ldap.groupObjectClass | string | `"posixGroup"` | Object class containing group information |
+| config.ldap.groupSearchByDn | bool | `false` | Whether to search for group membership by user DN rather than bare usernames. Most LDAP servers use full DNs for group membership, so normally this should be set to true, but it requires `userBaseDn` also be set. |
 | config.ldap.kerberosConfig | string | Use anonymous binds | Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file. If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set either this or `userDn`, not both. |
 | config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
 | config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
@@ -83,17 +85,19 @@ Authentication and identity system
 | ingress.additionalHosts | list | `[]` | Defines additional FQDNs for Gafaelfawr.  This doesn't work for cookie or browser authentication, but for token-based services like git-lfs or the webdav server it does. |
 | maintenance.affinity | object | `{}` | Affinity rules for Gafaelfawr maintenance and audit pods |
 | maintenance.auditSchedule | string | `"30 3 * * *"` | Cron schedule string for Gafaelfawr data consistency audit (in UTC) |
+| maintenance.cleanupSeconds | int | 86400 (1 day) | How long to keep old jobs around before deleting them |
+| maintenance.deadlineSeconds | int | 300 (5 minutes) | How long the job is allowed to run before it will be terminated |
 | maintenance.maintenanceSchedule | string | `"5 * * * *"` | Cron schedule string for Gafaelfawr periodic maintenance (in UTC) |
 | maintenance.nodeSelector | object | `{}` | Node selection rules for Gafaelfawr maintenance and audit pods |
 | maintenance.podAnnotations | object | `{}` | Annotations for Gafaelfawr maintenance and audit pods |
-| maintenance.resources | object | `{}` | Resource limits and requests for Gafaelfawr maintenance and audit pods |
+| maintenance.resources | object | See `values.yaml` | Resource limits and requests for Gafaelfawr maintenance and audit pods |
 | maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | operator.affinity | object | `{}` | Affinity rules for the token management pod |
 | operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
 | operator.podAnnotations | object | `{}` | Annotations for the token management pod |
-| operator.resources | object | `{}` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
+| operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
 | operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
@@ -109,5 +113,5 @@ Authentication and identity system
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
-| resources | object | `{}` | Resource limits and requests for the Gafaelfawr frontend pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |
