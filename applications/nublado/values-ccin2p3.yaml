@@ -44,10 +44,10 @@ controller:
       #           path: "/pbs/home"
       #           type: "hostPath" 
       volumes:
-        - containerPath: "/pbs/home"
+        - containerPath: "/home"
           source:
-            type: "hostPath"
-            path: "/pbs/home"
+            type: "emptyDir"
+            #path: "/pbs/home"
         - containerPath: "/pbs/throng"
           source:
             type: "hostPath"
