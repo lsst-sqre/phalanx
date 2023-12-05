@@ -1,4 +1,0 @@
-config:
-  gcsProject: "bogus"
-  gcsBucket: "bogus"
-  serviceAccount: "bogus"
