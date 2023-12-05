@@ -37,6 +37,8 @@ controller:
         - name: "initdir"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
+          command: [ "/bin/bash", "-c", "--" ]
+          args: [ "while true; do sleep 30; done;" ]
           volumes:
             - containerPath: "/pbs/home"
               mode: "rw"
