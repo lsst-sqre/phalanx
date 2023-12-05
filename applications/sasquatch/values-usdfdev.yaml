@@ -60,7 +60,7 @@ kafka-connect-manager:
         topicsRegex: ".*OCPS"
       test:
         enabled: false
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: false
         topicsRegex: ".*PMD"

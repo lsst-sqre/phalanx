@@ -47,7 +47,7 @@ kafka-connect-manager:
     connectors:
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
 
 kafdrop:
   ingress:
