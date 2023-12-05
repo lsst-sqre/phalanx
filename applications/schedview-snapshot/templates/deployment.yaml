@@ -40,7 +40,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/schedview-snapshot"
+              path: "/schedview-snapshot/dashboard"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
