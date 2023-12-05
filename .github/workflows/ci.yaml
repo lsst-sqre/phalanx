@@ -89,12 +89,12 @@ jobs:
           filters: |
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/*/Chart.yaml"
-              - "applications/*/templates/**"
-              - "applications/*/values.yaml"
-              - "applications/*/values-minikube.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values-minikube.yaml"
               - "environments/Chart.yaml"
-              - "environments/templates/**"
+              - "environments/templates/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}*"
               - "environments/values-minikube.yaml"
               - "installer/**"
 
