@@ -16,7 +16,7 @@ controller:
       numDailies: 3
     lab:
       homedirSchema: "initialThenUsername"
-      homedirPrefix: "/pbs/home"
+      #homedirPrefix: "/pbs/home"
       homedirSuffix: "rsp_home_3"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
@@ -38,13 +38,13 @@ controller:
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
           volumes:
-            - containerPath: "/pbs/home"
+            - containerPath: "/home"
               mode: "rw"
               source:
                 path: "/data/rsp/home"
                 type: "hostPath" 
       volumes:
-        - containerPath: "/pbs/home"
+        - containerPath: "/home"
           source:
             type: "hostPath"
             path: "/data/rsp/home"
