@@ -41,7 +41,7 @@ controller:
             - containerPath: "/pbs/home"
               mode: "rw"
               source:
-                serverPath: "/pbs/home"
+                path: "/pbs/home"
                 type: "hostPath" 
       volumes:
         - containerPath: "/pbs/home"
