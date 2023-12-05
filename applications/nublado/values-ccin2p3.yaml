@@ -34,7 +34,7 @@ controller:
           cpu: 4.0
           memory: 16Gi
       initContainers:
-        - name: "initdir"
+        - name: "homecreation"
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: false
           volumes:
