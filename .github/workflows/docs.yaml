@@ -14,8 +14,6 @@ name: Docs
       - "renovate/**"
       - "tickets/**"
       - "u/**"
-    tags:
-      - "*"
   workflow_dispatch: {}
 
 jobs:
@@ -39,9 +37,12 @@ jobs:
               - "docs/**"
               - "applications/*/Chart.yaml"
               - "applications/*/values.yaml"
+              - "applications/argocd/values-*.yaml"
               - "applications/gafaelfawr/values-*.yaml"
               - "environments/values-*.yaml"
               - "src/phalanx/**"
+            docsSpecific:
+              - "docs/**"
 
       - name: Install graphviz
         if: steps.filter.outputs.docs == 'true'
@@ -54,10 +55,10 @@ jobs:
           python-version: "3.11"
           tox-envs: docs
 
-      # Only attempt documentation uploads for tagged releases and pull
-      # requests from ticket branches in the same repository. This avoids
-      # version clutter in the docs and failures when a PR doesn't have access
-      # to secrets.
+      # Upload docs:
+      # - on pushes to main if *any* documentation content might have changed
+      # - on workflow dispatches if any documentation content might have changed
+      # - on pushes to tickets/ branches if docs/ directory content changed
       - name: Upload to LSST the Docs
         uses: lsst-sqre/ltd-upload@v1
         with:
@@ -66,7 +67,6 @@ jobs:
           username: ${{ secrets.LTD_USERNAME }}
           password: ${{ secrets.LTD_PASSWORD }}
         if: >-
-          steps.filter.outputs.docs == 'true'
-          && github.event_name != 'merge_group'
-          && (github.event_name != 'pull_request'
-              || startsWith(github.head_ref, 'tickets/'))
+          (github.event_name == 'push' && github.head_ref == 'main' && steps.filter.outputs.docs == 'true')
+          || (github.event_name == 'workflow_dispatch' && steps.filter.outputs.docs == 'true')
+          || (github.event_name == 'pull_request' && startsWith(github.head_ref, 'tickets/') && steps.filter.outputs.docSpecific == 'true')
