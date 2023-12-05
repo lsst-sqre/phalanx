@@ -44,7 +44,7 @@ controller:
                 path: "/pbs/home"
                 type: "hostPath" 
       volumes:
-        - containerPath: "/home"
+        - containerPath: "/pbs/home"
           source:
             type: "hostPath"
             path: "/pbs/home"
