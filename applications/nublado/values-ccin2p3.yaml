@@ -38,13 +38,13 @@ controller:
           image: "ghcr.io/lsst-sqre/initdir:0.0.4"
           privileged: true
           volumes:
-            - containerPath: "/pbs/home"
+            - containerPath: "/home"
               mode: "rw"
               source:
                 path: "/pbs/home"
                 type: "hostPath" 
       volumes:
-        - containerPath: "/pbs/home"
+        - containerPath: "/home"
           source:
             type: "hostPath"
             path: "/pbs/home"
