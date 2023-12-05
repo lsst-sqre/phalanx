@@ -17,7 +17,7 @@ controller:
     lab:
       homedirSchema: "initialThenUsername"
       homedirPrefix: "/pbs/home"
-      homedirSuffix: "rsp_home"
+      #homedirSuffix: "rsp_home"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         NO_ACTIVITY_TIMEOUT: "432000"
@@ -44,10 +44,10 @@ controller:
       #           path: "/pbs/home"
       #           type: "hostPath" 
       volumes:
-        - containerPath: "/home"
+        - containerPath: "/pbs/home"
           source:
-            type: "emptyDir"
-            #path: "/pbs/home"
+            type: "hostPath"
+            path: "/pbs/home"
         - containerPath: "/pbs/throng"
           source:
             type: "hostPath"
