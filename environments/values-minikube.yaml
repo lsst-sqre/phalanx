@@ -11,7 +11,6 @@ vaultPathPrefix: secret/phalanx/minikube
 # currently, which substantially limits the applications that can be
 # meaningfully deployed.
 applications:
-  hips: true
   mobu: true
   postgres: true
   squareone: true

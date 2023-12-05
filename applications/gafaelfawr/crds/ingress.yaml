@@ -172,6 +172,13 @@ spec:
                             - true
                       required:
                         - anonymous
+                username:
+                  type: string
+                  description: >-
+                    Restrict access to this ingress to the given username. All
+                    other users, regardless of their scopes, will receive 403
+                    errors. The user's token must still satisfy any scope
+                    constraints.
             template:
               type: object
               description: "The template used to create the ingress."
