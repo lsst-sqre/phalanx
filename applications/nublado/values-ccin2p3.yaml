@@ -32,7 +32,17 @@ controller:
           memory: 8Gi
         large:
           cpu: 4.0
-          memory: 16Gi  
+          memory: 16Gi
+      initContainers:
+        - name: "initdir"
+          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+          privileged: true
+          volumes:
+            - containerPath: "/pbs/home"
+              mode: "rw"
+              source:
+                serverPath: "/pbs/home"
+                type: "hostPath" 
       volumes:
         - containerPath: "/pbs/home"
           source:
