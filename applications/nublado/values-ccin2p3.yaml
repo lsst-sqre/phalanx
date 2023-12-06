@@ -35,7 +35,7 @@ controller:
           memory: 16Gi
       initContainers:
         - name: "homecreation"
-          image: "gabrimaine/initdir:0.0.5"
+          image: "registry.hub.docker.com/gabrimaine/initdir:0.0.5"
           privileged: false
           volumes:
             - containerPath: "/pbs/home"
