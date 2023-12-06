@@ -29,6 +29,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled. |
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled. |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
+| kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
@@ -54,6 +55,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
+| zookeeper.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
 | zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |

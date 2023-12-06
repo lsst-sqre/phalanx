@@ -29,6 +29,10 @@ kafka:
     # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
     replica.lag.time.max.ms: 120000
 
+  metricsConfig:
+    # -- Whether metric configuration is enabled.
+    enabled: false
+
   listeners:
     plain:
       # -- Whether internal plaintext listener is enabled.
@@ -99,6 +103,10 @@ zookeeper:
     size: 100Gi
     # -- Name of a StorageClass to use when requesting persistent volumes.
     storageClassName: ""
+
+  metricsConfig:
+    # -- Whether metric configuration is enabled.
+    enabled: false
 
   # -- Affinity for Zookeeper pod assignment.
   affinity:

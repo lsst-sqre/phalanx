@@ -407,6 +407,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled. |
 | strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled. |
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
+| strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
@@ -432,6 +433,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | strimzi-kafka.zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
+| strimzi-kafka.zookeeper.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | strimzi-kafka.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | strimzi-kafka.zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
 | strimzi-kafka.zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |

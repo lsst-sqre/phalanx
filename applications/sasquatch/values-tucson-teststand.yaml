@@ -19,9 +19,13 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-1.lsst.codes
         - loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
+    metricsConfig:
+      enabled: true
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+    metricsConfig:
+      enabled: true
   users:
     tsSalKafka:
       enabled: true
