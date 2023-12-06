@@ -29,10 +29,10 @@ controller:
           memory: 4Gi
         medium:
           cpu: 2.0
-          memory: 8Gi
-        large:
-          cpu: 4.0
           memory: 16Gi
+        large:
+          cpu: 8.0
+          memory: 32Gi
       initContainers:
         - name: "homecreation"
           image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1_beta"
