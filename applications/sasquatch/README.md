@@ -154,12 +154,12 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | kafka-connect-manager.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | kafka-connect-manager.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| kafka-connect-manager.influxdbSink.connectors | object | `{"test":{"enabled":false,"removePrefix":"source.","repairerConnector":false,"tags":"","topicsRegex":"source.lsst.sal.Test"}}` | Connector instances to deploy. |
-| kafka-connect-manager.influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
-| kafka-connect-manager.influxdbSink.connectors.test.removePrefix | string | `"source."` | Remove prefix from topic name. |
-| kafka-connect-manager.influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
-| kafka-connect-manager.influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
-| kafka-connect-manager.influxdbSink.connectors.test.topicsRegex | string | `"source.lsst.sal.Test"` | Regex to select topics from Kafka. |
+| kafka-connect-manager.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| kafka-connect-manager.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| kafka-connect-manager.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| kafka-connect-manager.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| kafka-connect-manager.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| kafka-connect-manager.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
 | kafka-connect-manager.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | kafka-connect-manager.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
 | kafka-connect-manager.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
@@ -240,12 +240,12 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | source-kafka-connect-manager.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | source-kafka-connect-manager.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| source-kafka-connect-manager.influxdbSink.connectors | object | `{"test":{"enabled":false,"removePrefix":"source.","repairerConnector":false,"tags":"","topicsRegex":"source.lsst.sal.Test"}}` | Connector instances to deploy. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.removePrefix | string | `"source."` | Remove prefix from topic name. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.topicsRegex | string | `"source.lsst.sal.Test"` | Regex to select topics from Kafka. |
+| source-kafka-connect-manager.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
 | source-kafka-connect-manager.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | source-kafka-connect-manager.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
 | source-kafka-connect-manager.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
