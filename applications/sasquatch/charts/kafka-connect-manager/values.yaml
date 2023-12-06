@@ -34,17 +34,17 @@ influxdbSink:
   excludedTopicsRegex: ""
   # -- Connector instances to deploy.
   connectors:
-    test:
+    example:
       # -- Whether this connector instance is deployed.
       enabled: false
       # -- Whether to deploy a repairer connector in addition to the original connector instance.
       repairerConnector: false
       # -- Regex to select topics from Kafka.
-      topicsRegex: "source.lsst.sal.Test"
+      topicsRegex: "example.topic"
       # -- Fields in the Avro payload that are treated as InfluxDB tags.
       tags: ""
       # -- Remove prefix from topic name.
-      removePrefix: "source."
+      removePrefix: ""
 
 # The s3Sink connector assumes Parquet format with Snappy compression
 # and a time based partitioner.
