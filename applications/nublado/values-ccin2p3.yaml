@@ -36,7 +36,7 @@ controller:
       initContainers:
         - name: "homecreation"
           image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1"
-          privileged: false
+          privileged: true
           volumes:
             - containerPath: "/sps/lsst/users"
               mode: "rw"
