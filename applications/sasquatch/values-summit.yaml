@@ -33,7 +33,7 @@ influxdb:
     hostname: summit-lsp.lsst.codes
 
 influxdb2:
-  enabled: true
+  enabled: false
   persistence:
     storageClass: rook-ceph-block
     size: 5Ti
