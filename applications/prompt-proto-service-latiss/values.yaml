@@ -32,7 +32,7 @@ prompt-proto-service:
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
-    calibRepo: s3://rubin-summit-users/
+    calibRepo: ""
 
   s3:
     # -- Bucket containing the incoming raw images
