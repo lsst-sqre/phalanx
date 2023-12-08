@@ -14,11 +14,8 @@ Event-driven processing of camera images
 |-----|------|---------|-------------|
 | additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | affinity | object | `{}` |  |
-| apdb.db | string | `""` | PostgreSQL database name for the APDB (deprecated for apdb.url) |
-| apdb.ip | string | None, must be set | IP address or hostname and port of the APDB (deprecated for apdb.url) |
 | apdb.namespace | string | `""` | Database namespace for the APDB |
 | apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
-| apdb.user | string | `""` | Database user for the APDB (deprecated for apdb.url) |
 | containerConcurrency | int | `1` |  |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
@@ -42,9 +39,6 @@ Event-driven processing of camera images
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
 | registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
-| registry.db | string | None, must be set | PostgreSQL database name for the Butler registry database (deprecated) |
-| registry.ip | string | None, must be set | IP address or hostname and port of the Butler registry database (deprecated) |
-| registry.user | string | None, must be set | Database user for the Butler registry database (deprecated) |
 | s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
 | s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
