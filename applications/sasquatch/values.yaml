@@ -199,56 +199,6 @@ source-influxdb:
       memory: 96Gi
       cpu: 8
 
-influxdb2:
-  enabled: false
-  image:
-    tag: 2.7.1-alpine
-  adminUser:
-    # -- Admin default organization.
-    organization: "default"
-    # -- Admin default bucket.
-    bucket: "default"
-    # -- Get admin-password/admin-token keys from secret.
-    existingSecret: sasquatch
-  persistence:
-    # -- Enable persistent volume claim.
-    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
-    enabled: true
-    # -- Persistent volume size.
-    # @default 1Ti for teststand deployments.
-    size: 1Ti
-  ingress:
-    # -- InfluxDB2 ingress configuration
-    enabled: false
-    hostname: ""
-    annotations:
-      nginx.ingress.kubernetes.io/rewrite-target: /api/v2/$2
-    className: "nginx"
-    path: /influxdb2(/|$)(.*)
-  env:
-    - name: INFLUXD_STORAGE_WAL_FSYNC_DELAY
-      value: "100ms"
-    - name: INFLUXD_HTTP_IDLE_TIMEOUT
-      value: "0"
-    - name: INFLUXD_FLUX_LOG_ENABLED
-      value: "true"
-    - name: INFLUXD_LOG_LEVEL
-      value: "debug"
-  initScripts:
-    # -- InfluxDB2 initialization scripts
-    enabled: true
-    scripts:
-      init.sh: |+
-        #!/bin/bash
-        influx bucket create --name telegraf-kafka-consumer --org default
-  resources:
-    requests:
-      memory: 16Gi
-      cpu: 8
-    limits:
-      memory: 96Gi
-      cpu: 8
-
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
 

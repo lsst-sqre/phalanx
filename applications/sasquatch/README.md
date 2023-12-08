@@ -46,32 +46,6 @@ Rubin Observatory's telemetry service.
 | influxdb.resources.requests.cpu | int | `8` |  |
 | influxdb.resources.requests.memory | string | `"96Gi"` |  |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
-| influxdb2.adminUser.bucket | string | `"default"` | Admin default bucket. |
-| influxdb2.adminUser.existingSecret | string | `"sasquatch"` | Get admin-password/admin-token keys from secret. |
-| influxdb2.adminUser.organization | string | `"default"` | Admin default organization. |
-| influxdb2.enabled | bool | `false` |  |
-| influxdb2.env[0].name | string | `"INFLUXD_STORAGE_WAL_FSYNC_DELAY"` |  |
-| influxdb2.env[0].value | string | `"100ms"` |  |
-| influxdb2.env[1].name | string | `"INFLUXD_HTTP_IDLE_TIMEOUT"` |  |
-| influxdb2.env[1].value | string | `"0"` |  |
-| influxdb2.env[2].name | string | `"INFLUXD_FLUX_LOG_ENABLED"` |  |
-| influxdb2.env[2].value | string | `"true"` |  |
-| influxdb2.env[3].name | string | `"INFLUXD_LOG_LEVEL"` |  |
-| influxdb2.env[3].value | string | `"debug"` |  |
-| influxdb2.image.tag | string | `"2.7.1-alpine"` |  |
-| influxdb2.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/api/v2/$2"` |  |
-| influxdb2.ingress.className | string | `"nginx"` |  |
-| influxdb2.ingress.enabled | bool | `false` | InfluxDB2 ingress configuration |
-| influxdb2.ingress.hostname | string | `""` |  |
-| influxdb2.ingress.path | string | `"/influxdb2(/|$)(.*)"` |  |
-| influxdb2.initScripts.enabled | bool | `true` | InfluxDB2 initialization scripts |
-| influxdb2.initScripts.scripts."init.sh" | string | `"#!/bin/bash\ninflux bucket create --name telegraf-kafka-consumer --org default\n"` |  |
-| influxdb2.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
-| influxdb2.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments. |
-| influxdb2.resources.limits.cpu | int | `8` |  |
-| influxdb2.resources.limits.memory | string | `"96Gi"` |  |
-| influxdb2.resources.requests.cpu | int | `8` |  |
-| influxdb2.resources.requests.memory | string | `"16Gi"` |  |
 | kafdrop.enabled | bool | `true` | Enable Kafdrop. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
 | kapacitor.enabled | bool | `true` | Enable Kapacitor. |
@@ -343,21 +317,17 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[1].name | string | `"INFLUXDB_TOKEN"` |  |
-| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB v2 admin token. |
+| telegraf-kafka-consumer.env[1].name | string | `"INFLUXDB_USER"` |  |
+| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
 | telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[2].name | string | `"INFLUXDB_USER"` |  |
-| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
+| telegraf-kafka-consumer.env[2].name | string | `"INFLUXDB_PASSWORD"` |  |
+| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
 | telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[3].name | string | `"INFLUXDB_PASSWORD"` |  |
-| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
-| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | telegraf-kafka-consumer.image.pullPolicy | string | IfNotPresent | Image pull policy. |
 | telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly:latest"` | Telegraf image repository. |
 | telegraf-kafka-consumer.image.tag | string | `"latest"` | Telegraf image tag. |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
-| telegraf-kafka-consumer.influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |

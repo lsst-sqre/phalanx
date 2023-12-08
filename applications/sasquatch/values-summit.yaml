@@ -39,15 +39,6 @@ influxdb:
       memory: 128Gi
       cpu: 16
 
-influxdb2:
-  enabled: false
-  persistence:
-    storageClass: rook-ceph-block
-    size: 5Ti
-  ingress:
-    enabled: true
-    hostname: summit-lsp.lsst.codes
-
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
