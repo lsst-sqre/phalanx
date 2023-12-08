@@ -37,10 +37,6 @@ prompt-proto-service:
 
   apdb:
     url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
-    ip: usdf-prompt-processing.slac.stanford.edu:5432  # TODO: remove on DM-40839
-
-  registry:
-    ip: usdf-butler.slac.stanford.edu:5432  # TODO: remove on DM-40839
 
   logLevel: lsst.resources=DEBUG
 
