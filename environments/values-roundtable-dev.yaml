@@ -1,10 +1,13 @@
-name: roundtable-dev
-fqdn: roundtable-dev.lsst.cloud
+name: "roundtable-dev"
+fqdn: "roundtable-dev.lsst.cloud"
+gcp:
+  projectId: "roundtable-dev-abe2"
+  region: "us-central1"
+  clusterName: "roundtable-dev"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP roundtable-dev.lsst.cloud"
-vaultUrl: "https://vault.lsst.codes"
-vaultPathPrefix: secret/phalanx/roundtable-dev
+vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
   giftless: true

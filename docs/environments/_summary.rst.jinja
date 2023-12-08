@@ -4,8 +4,24 @@
      - ``{{ env.name }}``
    * - Root domain
      - `{{ env.fqdn }} <https://{{ env.fqdn }}>`__
+   * - Identity provider
+     - {{ env.identity_provider.value }}
    * - Argo CD
      - {% if env.argocd_url %}{{ env.argocd_url }}{% else %}N/A{% endif %}
+   {%- if env.gcp %}
+   * - Google console
+     - - `Log Explorer <https://console.cloud.google.com/logs/query?project={{ env.gcp.project_id }}>`__
+       - `Google Kubernetes Engine <https://console.cloud.google.com/kubernetes/clusters/details/{{ env.gcp.region }}/{{ env.gcp.cluster_name }}/details?project={{ env.gcp.project_id }}>`__
+   * - Google Cloud Platform
+     - .. list-table::
+
+          * - Project ID
+            - {{ env.gcp.project_id }}
+          * - Region
+            - {{ env.gcp.region }}
+          * - Cluster name
+            - {{ env.gcp.cluster_name }}
+   {%- endif %}
    * - Applications
      - .. list-table::
 
@@ -25,9 +41,7 @@
             -
             {%- endif %}
           {% endfor %}
-   * - Identity provider
-     - {{ env.identity_provider.value }}
-   {% if env.gafaelfawr_scopes %}
+   {%- if env.gafaelfawr_scopes %}
    * - Gafaelfawr groups
      - .. list-table::
 
@@ -43,7 +57,7 @@
             {%- endif %}
           {%- endfor %}
    {%- endif %}
-   {% if env.argocd_rbac %}
+   {%- if env.argocd_rbac %}
    * - Argo CD RBAC
      - .. csv-table::
           {% for line in env.argocd_rbac_csv %}
