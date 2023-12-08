@@ -1,10 +1,10 @@
 config:
   debug: true
   autostart:
-    - name: "weekly"
+    - name: "recommended"
       count: 1
       users:
-        - username: "bot-mobu-weekly"
+        - username: "bot-mobu-recommended"
       scopes:
         - "exec:notebook"
         - "exec:portal"
@@ -13,8 +13,6 @@ config:
       business:
         type: "NotebookRunner"
         options:
-          image:
-            image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
           use_cachemachine: false
@@ -31,8 +29,6 @@ config:
       business:
         type: "NotebookRunner"
         options:
-          image:
-            image_class: "latest-weekly"
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
           repo_branch: "prod"
           max_executions: 1
