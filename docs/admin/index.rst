@@ -36,6 +36,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    :caption: Infrastructure
    :maxdepth: 2
 
+   infrastructure/google/index
    infrastructure/filestore/index
    infrastructure/kubernetes-node-status-max-images
 
