@@ -165,7 +165,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "2.1.4"
+    tag: "2.1.6"
 
   # -- Resource limits and requests for the TAP schema database pod
   resources: {}
