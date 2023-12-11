@@ -64,3 +64,13 @@
           {{ line }}
           {%- endfor %}
    {%- endif %}
+{%- if env.gcp %}
+
+To obtain Kubernetes admin credentials for this cluster, run:
+
+.. prompt:: bash
+
+   gcloud container clusters get-credentials {{ env.gcp.cluster_name }} --project {{ env.gcp.project_id }} --region {{ env.gcp.region }}
+
+For details on how to set up :command:`gcloud` and the necessarily plugins, see :doc:`/admin/infrastructure/google/credentials`.
+{%- endif %}

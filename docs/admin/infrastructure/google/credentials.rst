@@ -27,16 +27,10 @@ You will only have to follow this process once on each machine from which you wa
 
 The final step has an example :command:`gcloud` command, but it assumes that you are getting credentials for your default project.
 Rubin uses multiple Google Cloud Platform projects for different environments, so you may have to provide the project ID as well.
-Here is the full command to run:
-
-.. prompt:: bash
-
-   gcloud container clusters get-credentials <cluster-name> --project <project-id> --region <region>
-
-You can get the cluster name, project ID, and region of a Phalanx environment hosted on Google Cloud Platform from its :doc:`environments page </environments>`.
+For the full command to run, see the bottom of the relevant :doc:`environments page </environments>`.
 
 .. note::
 
-   If the control plane credentials of the Kubernetes cluster are rotated, you will have to re-run the above command to refresh your credentials.
    The Kubernetes control plane credentials eventually expire and have to be rotated.
-   If you discover that your credentials are no longer working, try running the above command again to refresh your credentials and see if the problem persists.
+   If the control plane credentials of the Kubernetes cluster are rotated, you will have to re-run the :command:`gcloud` command to refresh your credentials.
+   If you discover that your credentials are no longer working, try that command and see if the problem persists.
