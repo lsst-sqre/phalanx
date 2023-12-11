@@ -27,7 +27,7 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: influxdb2
     condition: influxdb2.enabled
-    version: 2.1.1
+    version: 2.1.2
     repository: https://helm.influxdata.com/
   - name: kafka-connect-manager
     alias: kafka-connect-manager
