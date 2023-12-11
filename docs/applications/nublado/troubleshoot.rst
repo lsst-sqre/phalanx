@@ -32,3 +32,10 @@ Recovery may require manually clearing the user's entry in the session database 
 
 In some cases you may also need to remove the user from the spawner table.
 To do this, run ``select * from spawners`` and find the pod with the user's name in it, and then delete that row.
+
+.. _nublado_node_status_max_images:
+
+Prepuller is running continuously and/or expected menu items are missing
+========================================================================
+
+``nodeStatusMaxImages`` should be increased or disabled: :doc:`/admin/infrastructure/kubernetes-node-status-max-images`

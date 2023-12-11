@@ -37,6 +37,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    :maxdepth: 2
 
    infrastructure/filestore/index
+   infrastructure/kubernetes-node-status-max-images
 
 .. toctree::
    :caption: Reference
