@@ -522,9 +522,9 @@ rfc3986[idna2008]==1.5.0 \
     # via
     #   httpx
     #   rfc3986
-safir==5.0.0a5 \
-    --hash=sha256:6a38dbdcfc63ea0261d25cefde0defc9f445a7da2a2612cd864d22bf1f292180 \
-    --hash=sha256:73348465c732fb89ddbd3b73cb8dcaa1294611c49d5db225e1d2a8205558f29b
+safir==5.1.0 \
+    --hash=sha256:0e4162b3b1fca558b037c06d7221b96996d7a55c92108e2e28e744d224c0076d \
+    --hash=sha256:e04019e7e914aefc5ce1a9ca73c227eb3a84255d952bcd4cf3746e11cf7b1a15
     # via -r requirements/main.in
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
@@ -551,9 +551,9 @@ structlog==23.2.0 \
     --hash=sha256:16a167e87b9fa7fae9a972d5d12805ef90e04857a93eba479d4be3801a6a1482 \
     --hash=sha256:334666b94707f89dbc4c81a22a8ccd34449f0201d5b1ee097a030b577fa8c858
     # via safir
-typing-extensions==4.8.0 \
-    --hash=sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0 \
-    --hash=sha256:df8e4339e9cb77357558cbdbceca33c303714cf861d1eef15e1070055ae8b7ef
+typing-extensions==4.9.0 \
+    --hash=sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783 \
+    --hash=sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd
     # via
     #   fastapi
     #   pydantic
