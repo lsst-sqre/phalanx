@@ -55,7 +55,7 @@ spec:
                 -Dqservuser.username=qsmaster
                 -Dqservuser.password=
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/
+                -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/?useCursorFetch=true
                 -Dqservuser.maxActive=100
                 -Dca.nrc.cadc.auth.Authenticator=org.opencadc.tap.impl.AuthenticatorImpl
                 {{- end }}

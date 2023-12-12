@@ -77,7 +77,7 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "1.14.0"
+      tag: "1.14.1"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -93,7 +93,7 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "2.1.0"
+      tag: "2.1.1"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
