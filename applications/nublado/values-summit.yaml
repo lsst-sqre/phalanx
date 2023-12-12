@@ -8,8 +8,8 @@ controller:
       num_releases: 0
       num_weeklies: 3
       num_dailies: 2
-      cycle: 33
-      recommended_tag: "recommended_c0033"
+      cycle: 34
+      recommended_tag: "recommended_c0034"
     lab:
       pullSecret: "pull-secret"
       extraAnnotations:
