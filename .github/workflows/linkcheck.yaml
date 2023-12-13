@@ -48,5 +48,5 @@ jobs:
       - name: Check links
         uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           tox-envs: docs-linkcheck

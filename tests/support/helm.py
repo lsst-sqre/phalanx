@@ -5,9 +5,8 @@ from __future__ import annotations
 import subprocess
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Protocol
 from unittest.mock import patch
-
-from typing_extensions import Protocol
 
 from phalanx.exceptions import HelmFailedError
 from phalanx.storage.helm import HelmStorage
