@@ -2,9 +2,8 @@
 Getting GKE Kubernetes credentials
 ##################################
 
-In order to use the standard Kubernetes administrative command :command:`kubectl` or other commands built on the same protocol (such as Helm_ or the Phalanx installer), you must first have stored authentication credentials for the target Kubernetes cluster.
-Google provides a mechanism to obtain those credentials using the :command:`gcloud` command.
-Here are the steps:
+To use the standard Kubernetes administrative command :command:`kubectl` or other commands built on the same protocol (such as Helm_ or the Phalanx installer), you must have authentication credentials stored for the target Kubernetes cluster.
+Google provides a mechanism to obtain those credentials using the :command:`gcloud` command:
 
 #. Ensure you have a Google account with access to the Google Cloud Platform project where your target Kubernetes cluster is running.
    For Phalanx environments run by SQuaRE, this access must be via an ``lsst.cloud`` Google account that is used only for Rubin activities.
