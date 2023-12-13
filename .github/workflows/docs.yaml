@@ -52,7 +52,7 @@ jobs:
         if: steps.filter.outputs.docs == 'true'
         uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           tox-envs: docs
 
       # Upload docs:

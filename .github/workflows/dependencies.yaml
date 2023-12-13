@@ -18,7 +18,7 @@ jobs:
       - name: Run neophile
         uses: lsst-sqre/run-neophile@v1
         with:
-          python-version: "3.11"
+          python-version: "3.12"
           mode: pr
           types: python
           app-id: ${{ secrets.NEOPHILE_APP_ID }}
