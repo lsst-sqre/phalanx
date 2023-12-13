@@ -24,6 +24,7 @@ __all__ = [
     "EnvironmentBaseConfig",
     "EnvironmentConfig",
     "EnvironmentDetails",
+    "GCPMetadata",
     "GafaelfawrGitHubGroup",
     "GafaelfawrGitHubTeam",
     "GafaelfawrScope",
@@ -31,6 +32,35 @@ __all__ = [
     "OnepasswordConfig",
     "PhalanxConfig",
 ]
+
+
+class GCPMetadata(CamelCaseModel):
+    """Google Cloud Platform hosting metadata.
+
+    Holds information about where in Google Cloud Platform this Phalanx
+    environment is hosted. This supports generating documentation that
+    includes this metadata, making it easier for administrators to know what
+    options to pass to :command:`gcloud` to do things such as get Kubernetes
+    credentials.
+    """
+
+    project_id: str = Field(
+        ...,
+        title="GCP project ID",
+        description="Project ID of GCP project hosting this environment",
+    )
+
+    region: str = Field(
+        ...,
+        title="GCP region",
+        description="GCP region in which this environment is hosted",
+    )
+
+    cluster_name: str = Field(
+        ...,
+        title="Kubernetes cluster name",
+        description="Name of the GKE cluster hosting this environment",
+    )
 
 
 class OnepasswordConfig(CamelCaseModel):
@@ -68,6 +98,16 @@ class EnvironmentBaseConfig(CamelCaseModel):
         None,
         title="Butler repository index URL",
         description="URL to Butler repository index",
+    )
+
+    gcp: GCPMetadata | None = Field(
+        None,
+        title="GCP hosting metadata",
+        description=(
+            "If this environment is hosted on Google Cloud Platform,"
+            " metadata about the hosting project, location, and other details."
+            " Used to generate additional environment documentation."
+        ),
     )
 
     onepassword: OnepasswordConfig | None = Field(

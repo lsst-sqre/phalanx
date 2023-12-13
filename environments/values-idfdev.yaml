@@ -1,10 +1,14 @@
+name: "idfdev"
+fqdn: "data-dev.lsst.cloud"
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
-fqdn: data-dev.lsst.cloud
-name: idfdev
+gcp:
+  projectId: "science-platform-dev-7696"
+  region: "us-central1"
+  clusterName: "science-platform-dev"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP data-dev.lsst.cloud"
-vaultPathPrefix: secret/phalanx/idfdev
+vaultPathPrefix: "secret/phalanx/idfdev"
 
 applications:
   argo-workflows: true
