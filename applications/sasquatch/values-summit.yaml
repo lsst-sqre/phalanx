@@ -48,76 +48,76 @@ kafka-connect-manager:
     connectors:
       auxtel:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       maintel:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
       mtmount:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTMount"
         tasksMax: "8"
       comcam:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
       latiss:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       m1m3:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTM1M3"
         tasksMax: "8"
       m2:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       obssys:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       ocps:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*OCPS"
       test:
         enabled: true
         topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*PMD"
       calsys:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
       mtaircompressor:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTAirCompressor"
       genericcamera:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
       gis:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*GIS"
       mtvms:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*MTVMS"
       lasertracker:
         enabled: true
-        repairerConnector: true
+        repairerConnector: false
         topicsRegex: ".*LaserTracker"
 
 telegraf-kafka-consumer:
