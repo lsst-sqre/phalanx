@@ -37,7 +37,7 @@ spec:
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "rubintv.fullname" . }}-secret
+              name: {{ include "rubintv.fullname" . }}-secrets
               key: "redis-password"
         - name: "ENVIRONMENT_URL"
           value: {{ .Values.global.baseUrl }}
@@ -104,7 +104,7 @@ spec:
       volumes:
       - name: "secrets"
         secret:
-          secretName: {{ include "rubintv.fullname" . }}-secret
+          secretName: {{ include "rubintv.fullname" . }}-secrets
       - name: "user-secrets"
         emptyDir: {}
       {{- range $vol := .Values.workers.volumes }}
