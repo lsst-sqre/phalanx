@@ -20,16 +20,15 @@ Google provides a mechanism to obtain those credentials using the :command:`gclo
 
 #. `Install kubectl and the GKE auth plugin <https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl>`__.
    As part of that installation, you will run the :command:`gcloud` command that obtains credentials usable by :command:`kubectl` and other privileged Kubernetes commands.
-   See below for assistance with the precise :command:`gcloud` command to run.
-
-You will only have to follow this process once on each machine from which you want to use Kubernetes.
 
 The final step has an example :command:`gcloud` command, but it assumes that you are getting credentials for your default project.
 Rubin uses multiple Google Cloud Platform projects for different environments, so you may have to provide the project ID as well.
 For the full command to run, see the bottom of the relevant :doc:`environments page </environments>`.
 
+Once you have followed this process on a system, the credentials will remain valid unless the Kubernetes control plane credentials are rotated.
+
 .. note::
 
-   The Kubernetes control plane credentials eventually expire and have to be rotated.
+   The Kubernetes control plane credentials eventually expire and have to periodically be rotated.
    If the control plane credentials of the Kubernetes cluster are rotated, you will have to re-run the :command:`gcloud` command to refresh your credentials.
    If you discover that your credentials are no longer working, try that command and see if the problem persists.
