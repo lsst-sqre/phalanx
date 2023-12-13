@@ -34,6 +34,10 @@ prompt-proto-service:
   imageNotifications:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing-prod
+    # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
+    # and files can take up to 20 seconds to arrive. Scheduler delay associated
+    # with CWFS engineering data, should not apply to other cameras.
+    imageTimeout: '110'
 
   apdb:
     url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
