@@ -8,7 +8,7 @@ config:
   ssotap: "ssotap"
 
 image:
-  tag: "suit_2023.3.0"
+  tag: "suit-2023.3.0-try2"
 
 
 resources:
