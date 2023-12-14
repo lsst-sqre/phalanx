@@ -52,8 +52,8 @@ influxdb:
       max-row-limit: 0
     coordinator:
       write-timeout: "1h"
-      max-concurrent-queries: 0
-      query-timeout: "60s"
+      max-concurrent-queries: 1000
+      query-timeout: "30s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
@@ -178,8 +178,8 @@ source-influxdb:
       max-row-limit: 0
     coordinator:
       write-timeout: "1h"
-      max-concurrent-queries: 0
-      query-timeout: "60s"
+      max-concurrent-queries: 1000
+      query-timeout: "30s"
       log-queries-after: "15s"
     continuous_queries:
       enabled: false
