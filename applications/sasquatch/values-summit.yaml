@@ -31,6 +31,13 @@ influxdb:
   ingress:
     enabled: true
     hostname: summit-lsp.lsst.codes
+  resources:
+    requests:
+      memory: 128Gi
+      cpu: 16
+    limits:
+      memory: 128Gi
+      cpu: 16
 
 influxdb2:
   enabled: false
