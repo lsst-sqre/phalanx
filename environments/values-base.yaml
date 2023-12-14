@@ -8,6 +8,7 @@ applications:
   narrativelog: true
   nublado: true
   portal: true
+  rubintv: true
   sasquatch: true
   squareone: true
   strimzi: true
