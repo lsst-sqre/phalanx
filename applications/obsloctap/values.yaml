@@ -29,6 +29,12 @@ config:
   # -- Whether to use the new secrets management scheme
   separateSecrets: false
 
+  # -- limit for obsplan query
+  obsplanLimit: 1000
+
+  # -- time span, if a time is provided in the query how man hours to look back
+  obsplanTimeSpan: 24
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

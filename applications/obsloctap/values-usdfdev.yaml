@@ -5,6 +5,8 @@ environment:
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
   EFD: "usdf-efd"
+  database_schema: "obsloctap_dev"
+
 
 config:
   volumes:
@@ -27,3 +29,9 @@ config:
 
 image:
   pullPolicy: Always
+
+
+controller:
+  config:
+    safir:
+      logLevel: "DEBUG"
