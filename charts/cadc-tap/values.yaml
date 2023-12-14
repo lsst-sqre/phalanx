@@ -99,7 +99,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.1.6/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   # @default -- The common GCS bucket
