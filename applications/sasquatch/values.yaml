@@ -199,6 +199,9 @@ source-influxdb:
       memory: 96Gi
       cpu: 8
 
+# -- Override influxdb-enterprise configuration.
+influxdb-enterprise: {}
+
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
 

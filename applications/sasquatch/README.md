@@ -22,6 +22,7 @@ Rubin Observatory's telemetry service.
 | chronograf.resources.limits.memory | string | `"64Gi"` |  |
 | chronograf.resources.requests.cpu | int | `1` |  |
 | chronograf.resources.requests.memory | string | `"4Gi"` |  |
+| influxdb-enterprise | object | `{}` | Override influxdb-enterprise configuration. |
 | influxdb-staging.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"60s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb-staging.enabled | bool | `false` | Enable InfluxDB staging deployment. |
 | influxdb-staging.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
@@ -86,6 +87,49 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer configuration. |
+| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` |  |
+| influxdb-enterprise.bootstrap.ddldml | object | `{}` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].key | string | `"influxdb.influxdata.com/component"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].operator | string | `"In"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"data"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
+| influxdb-enterprise.data.env | object | `{}` |  |
+| influxdb-enterprise.data.flux.enabled | bool | `true` |  |
+| influxdb-enterprise.data.https.enabled | bool | `false` |  |
+| influxdb-enterprise.data.https.insecure | bool | `true` |  |
+| influxdb-enterprise.data.https.secret.name | string | `"influxdb-tls"` |  |
+| influxdb-enterprise.data.https.useCertManager | bool | `false` |  |
+| influxdb-enterprise.data.image | object | `{}` |  |
+| influxdb-enterprise.data.persistence.enabled | bool | `false` |  |
+| influxdb-enterprise.data.replicas | int | `1` |  |
+| influxdb-enterprise.data.resources | object | `{}` |  |
+| influxdb-enterprise.data.service.type | string | `"ClusterIP"` |  |
+| influxdb-enterprise.fullnameOverride | string | `""` |  |
+| influxdb-enterprise.imagePullSecrets | list | `[]` |  |
+| influxdb-enterprise.license.secret.key | string | `"json"` |  |
+| influxdb-enterprise.license.secret.name | string | `"influxdb-enterprise-license"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].key | string | `"influxdb.influxdata.com/component"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].operator | string | `"In"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"meta"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
+| influxdb-enterprise.meta.env | object | `{}` |  |
+| influxdb-enterprise.meta.https.enabled | bool | `false` |  |
+| influxdb-enterprise.meta.https.insecure | bool | `true` |  |
+| influxdb-enterprise.meta.https.secret.name | string | `"influxdb-tls"` |  |
+| influxdb-enterprise.meta.https.useCertManager | bool | `false` |  |
+| influxdb-enterprise.meta.image | object | `{}` |  |
+| influxdb-enterprise.meta.persistence.enabled | bool | `false` |  |
+| influxdb-enterprise.meta.podDisruptionBudget.minAvailable | int | `2` |  |
+| influxdb-enterprise.meta.replicas | int | `3` |  |
+| influxdb-enterprise.meta.resources | object | `{}` |  |
+| influxdb-enterprise.meta.service.type | string | `"ClusterIP"` |  |
+| influxdb-enterprise.meta.sharedSecret.secretName | string | `"influxdb-enterprise-shared-secret"` |  |
+| influxdb-enterprise.nameOverride | string | `""` |  |
+| influxdb-enterprise.serviceAccount.annotations | object | `{}` |  |
+| influxdb-enterprise.serviceAccount.create | bool | `false` |  |
+| influxdb-enterprise.serviceAccount.name | string | `""` |  |
 | kafdrop.affinity | object | `{}` | Affinity configuration. |
 | kafdrop.cmdArgs | string | `"--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"` | Command line arguments to Kafdrop. |
 | kafdrop.existingSecret | string | `""` | Existing k8s secrect use to set kafdrop environment variables. Set SCHEMAREGISTRY_AUTH for basic auth credentials in the form username:password |
