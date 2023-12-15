@@ -15,7 +15,6 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
-          use_cachemachine: false
         restart: true
     - name: "tutorial"
       count: 1
@@ -33,7 +32,6 @@ config:
           repo_branch: "prod"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
-          use_cachemachine: false
         restart: true
     - name: "tap"
       count: 1
@@ -41,7 +39,7 @@ config:
         - username: "bot-mobu-tap"
       scopes: ["read:tap"]
       business:
-        type: "TAPQueryRunner"
+        type: "TAPQuerySetRunner"
         options:
           query_set: "dp0.2"
         restart: true
