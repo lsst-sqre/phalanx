@@ -123,6 +123,12 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.lf"
         topicsRegex: "lsst.lf.*"
         tags: benchmark_env,module,benchmark_type
+      lsstprompt:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.prompt"
+        topicsRegex: "lsst.prompt.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,group
 
 kafdrop:
   ingress:
@@ -146,6 +152,7 @@ rest-proxy:
       - lsst.camera
       - lsst.verify
       - lsst.lf
+      - lsst.prompt
 
 chronograf:
   ingress:
