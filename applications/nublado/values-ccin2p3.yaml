@@ -16,7 +16,7 @@ controller:
       numDailies: 3
     lab:
       homedirSchema: "username"
-      homedirPrefix: "/sps/lsst/users"
+      homedirPrefix: "/pbs/throng/lsst/users"
       homedirSuffix: "rsp_home"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
@@ -35,7 +35,7 @@ controller:
           memory: 32Gi
       initContainers:
         - name: "homecreation"
-          image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1"
+          #          image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1"
           privileged: true
           volumes:
             - containerPath: "/pbs/home"
