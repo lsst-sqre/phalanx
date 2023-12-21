@@ -1,7 +1,7 @@
 image:
   pullPolicy: "Always"
   repository: "docker.io/lsstsqre/giftless"
-  tag: "upstream-master"
+  tag: "tickets-dm-42009"
 server:
   debug: true
   readonly:
