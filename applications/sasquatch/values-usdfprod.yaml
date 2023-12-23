@@ -44,6 +44,43 @@ source-influxdb:
     coordinator:
       query-timeout: "300s"
 
+influxdb-enterprise:
+  enabled: true
+  meta:
+    service:
+      type: LoadBalancer
+      annotations:
+        metallb.universe.tf/address-pool: sdf-services
+    persistence:
+      # -- Enable InfluxDB Enterprise meta pod persistence
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    # -- InfluxDB Enterprise meta pod resources
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 2
+      limits:
+        memory: 4Gi
+        cpu: 4
+  data:
+    replicas: 2
+    # -- Enable InfluxDB Enterprise data pod persistence
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      storageClass: zfs--rubin-efd
+      size: 30Ti
+    # -- InfluxDB Enterprise data pod resources
+    resources:
+      requests:
+        memory: 192Gi
+        cpu: 8
+      limits:
+        memory: 192Gi
+        cpu: 8
+
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit

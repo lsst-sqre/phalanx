@@ -85,9 +85,6 @@ strimzi-kafka:
 influxdb:
   enabled: false
 
-influxdb2:
-  enabled: false
-
 telegraf-kafka-consumer:
   enabled: false
 
