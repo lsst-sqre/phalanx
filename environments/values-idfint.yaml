@@ -12,6 +12,7 @@ vaultPathPrefix: "secret/phalanx/idfint"
 
 applications:
   alert-stream-broker: true
+  butler: true
   datalinker: true
   hips: true
   linters: true
