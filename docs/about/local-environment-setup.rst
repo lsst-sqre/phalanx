@@ -23,7 +23,7 @@ You will likely need to make changes to Phalanx and create pull requests, so you
 
 Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repository directly and create a ticket branch, per the `Data Management workflow guide`_.
 
-Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/get-started/quickstart/fork-a-repo>`__.
+Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo>`__.
 
 .. _about-venv:
 

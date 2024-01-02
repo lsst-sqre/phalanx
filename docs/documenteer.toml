@@ -66,4 +66,5 @@ ignore = [
     '^https://usdf-rsp-int.slac.stanford.edu',
     '^https://usdf-tel-rsp.slac.stanford.edu',
     '^https://github.com/orgs/',
+    '^https://console.cloud.google.com/',
 ]

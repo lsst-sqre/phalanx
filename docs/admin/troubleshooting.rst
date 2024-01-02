@@ -20,27 +20,12 @@ When this happens, you may need to recreate the persistent volume.
 
 Spawner menu missing images, nublado stuck pulling the same image
 =================================================================
-**Symptoms: **When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
+
+**Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
 Instead, the menu is missing one or more images.
 The same image or set of images is pulled again each on each prepuller loop the nublado lab controller attempts.
 
 **Solution:** :doc:`infrastructure/kubernetes-node-status-max-images`
-
-
-Spawner menu missing images, cachemachine stuck pulling the same image
-======================================================================
-
-**Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
-Instead, the menu is either empty or missing the right number of images of different classes.
-The cachemachine application is continuously creating a ``DaemonSet`` for the same image without apparent forward progress.
-Querying the cachemachine ``/available`` API shows either nothing in ``images`` or not everything that was expected.
-
-**Cause:** This is the same problem as above, but with the older (cachemachine+moneypenny)-based infrastructure rather than nublado v3.  The solution is the same: :doc:`infrastructure/kubernetes-node-status-max-images`.
-
-**Solution:** :doc:`/applications/cachemachine/pruning`
-
-If this doesn't work, another possibility is that there is a node that cachemachine thinks is available for JupyterLab images but which is not eligible for its ``DaemonSet``.
-This would be a bug in cachemachine, which should ignore cordoned nodes, but it's possible there is a new iteration of node state or a new rule for where ``DaemonSets`` are allowed to run that it does not know about.
 
 Spawning a notebook fails with a pending error
 ==============================================

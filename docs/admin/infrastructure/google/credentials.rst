@@ -16,14 +16,14 @@ Google provides a mechanism to obtain those credentials using the :command:`gclo
 
    If you have access to multiple Google Cloud Platform projects, you will be asked to select one as your default project.
    You may wish to choose the project for the Phalanx environment you use most often.
-   You can find the project ID of a Phalanx project hosted on GKE in its :doc:`environments page </environments>`.
+   You can find the project ID of a Phalanx project hosted on GKE in its :doc:`environments page </environments/index>`.
 
 #. `Install kubectl and the GKE auth plugin <https://cloud.google.com/kubernetes-engine/docs/how-to/cluster-access-for-kubectl>`__.
    As part of that installation, you will run the :command:`gcloud` command that obtains credentials usable by :command:`kubectl` and other privileged Kubernetes commands.
 
 The final step has an example :command:`gcloud` command, but it assumes that you are getting credentials for your default project.
 Rubin uses multiple Google Cloud Platform projects for different environments, so you may have to provide the project ID as well.
-For the full command to run, see the bottom of the relevant :doc:`environments page </environments>`.
+For the full command to run, see the bottom of the relevant :doc:`environments page </environments/index>`.
 
 Once you have followed this process on a system, the credentials will remain valid unless the Kubernetes control plane credentials are rotated.
 
