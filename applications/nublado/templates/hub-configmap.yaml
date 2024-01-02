@@ -6,12 +6,10 @@ metadata:
     {{- include "nublado.labels" . | nindent 4 }}
 data:
   00_nublado.py: |
-    import rubin.nublado.authenticator
-    import rubin.nublado.spawner
-
-    # Use our authenticator and spawner.
-    c.JupyterHub.authenticator_class = "rubin.nublado.authenticator.GafaelfawrAuthenticator"
-    c.JupyterHub.spawner_class = "rubin.nublado.spawner.RSPRestSpawner"
+    # Use our authenticator and spawner. Both register custom entry points,
+    # so the full module and class name is not required.
+    c.JupyterHub.authenticator_class = "gafaelfawr"
+    c.JupyterHub.spawner_class = "nublado"
 
     # Set internal Hub API URL.
     c.JupyterHub.hub_connect_url = (
@@ -31,13 +29,13 @@ data:
     # Use JupyterLab by default.
     c.Spawner.default_url = "/lab"
 
-    # Allow ten minutes for the lab to spawn in case it needs to be pulled.
-    c.Spawner.start_timeout = {{ .Values.hub.timeout.spawn }}
+    # How long to wait for Kubernetes to start the lab. This must match the
+    # corresponding setting in the Nublado controller.
+    c.Spawner.start_timeout = {{ .Values.controller.config.lab.spawnTimeout }}
 
-    # Allow 90 seconds for JupyterLab to start. For reasons we do not yet
-    # understand, it is often glacially slow and sometimes takes over 60
-    # seconds.
+    # How long to wait for the JupyterLab process to respond to network
+    # connections after the pod has started running.
     c.Spawner.http_timeout = {{ .Values.hub.timeout.startup }}
 
     # Configure the URL to the lab controller.
-    c.RSPRestSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"
+    c.NubladoSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"

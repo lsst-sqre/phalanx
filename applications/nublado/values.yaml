@@ -1,35 +1,8 @@
 # Default values for Nublado.
 
 controller:
-  image:
-    # -- nublado image to use
-    repository: ghcr.io/lsst-sqre/nublado-controller
-
-    # -- Pull policy for the nublado image
-    pullPolicy: IfNotPresent
-
-    # -- Tag of nublado image to use
-    # @default -- The appVersion of the chart
-    tag: ""
-
-  # -- Affinity rules for the lab controller pod
+  # -- Affinity rules for the Nublado controller
   affinity: {}
-
-  # -- Node selector rules for the lab controller pod
-  nodeSelector: {}
-
-  # -- Annotations for the lab controller pod
-  podAnnotations: {}
-
-  # -- Resource limits and requests for the lab controller pod
-  resources: {}
-
-  # -- Tolerations for the lab controller pod
-  tolerations: []
-
-  ingress:
-    # -- Additional annotations to add for the lab controller pod ingress
-    annotations: {}
 
   # -- If Google Artifact Registry is used as the image source, the Google
   # service account that has an IAM binding to the `nublado-controller`
@@ -37,9 +10,43 @@ controller:
   # @default -- None, must be set when using Google Artifact Registry
   googleServiceAccount: ""
 
+  image:
+    # -- Nublado controller image to use
+    repository: "ghcr.io/lsst-sqre/nublado-controller"
+
+    # -- Pull policy for the controller image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of Nublado controller image to use
+    # @default -- The appVersion of the chart
+    tag: ""
+
+  ingress:
+    # -- Additional annotations to add for the Nublado controller ingress
+    annotations: {}
+
+  # -- Node selector rules for the Nublado controller
+  nodeSelector: {}
+
+  # -- Annotations for the Nublado controller
+  podAnnotations: {}
+
+  # -- Resource limits and requests for the Nublado controller
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.25"
+      memory: "200Mi"
+    requests:
+      cpu: "0.05"
+      memory: "120Mi"
+
   # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
   # set in the corresponding Nublado Vault secret.
   slackAlerts: false
+
+  # -- Tolerations for the Nublado controller
+  tolerations: []
 
   # Passed as YAML to the lab controller.
   config:
@@ -50,10 +57,13 @@ controller:
     pathPrefix: "/nublado"
 
     fileserver:
-      # -- Enable fileserver management
+      # -- Enable user file servers
       enabled: false
 
-      # -- ArgcoCD application in which to collect user file servers
+      # -- Affinity rules for user file server pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect user file servers
       application: "fileservers"
 
       # -- Timeout to wait for Kubernetes to create file servers, in seconds
@@ -69,16 +79,19 @@ controller:
 
       image:
         # -- File server image to use
-        repository: ghcr.io/lsst-sqre/worblehat
+        repository: "ghcr.io/lsst-sqre/worblehat"
 
         # -- Pull policy for file server image
-        pullPolicy: IfNotPresent
+        pullPolicy: "IfNotPresent"
 
         # -- Tag of file server image to use
-        tag: 0.1.0
+        tag: "0.1.0"
 
-      # -- Namespace for user fileservers
-      namespace: fileservers
+      # -- Namespace for user file servers
+      namespace: "fileservers"
+
+      # -- Node selector rules for user file server pods
+      nodeSelector: {}
 
       # -- Path prefix for user file servers
       pathPrefix: "/files"
@@ -88,10 +101,13 @@ controller:
       resources:
         requests:
           cpu: 0.1
-          memory: 1Gi
+          memory: "1Gi"
         limits:
           cpu: 1
-          memory: 10Gi
+          memory: "10Gi"
+
+      # -- Tolerations for user file server pods
+      tolerations: []
 
     images:
       # -- Source for prepulled images. For Docker, set `type` to `docker`,
@@ -128,7 +144,10 @@ controller:
       aliasTags: []
 
     lab:
-      # -- ArgoCD application in which to collect user lab objects
+      # -- Affinity rules for user lab pods
+      affinity: {}
+
+      # -- Argo CD application in which to collect user lab objects
       application: "nublado-users"
 
       # -- Timeout for deleting a user's lab resources from Kubernetes in
@@ -193,6 +212,9 @@ controller:
       # -- Prefix for namespaces for user labs. To this will be added a dash
       # (`-`) and the user's username.
       namespacePrefix: "nublado"
+
+      # -- Node selector rules for user lab pods
+      nodeSelector: {}
 
       nss:
         # -- Base `/etc/passwd` file for lab containers
@@ -274,19 +296,22 @@ controller:
       # @default -- See `values.yaml` (specifies `small`, `medium`, and
       # `large` with `small` as the default)
       sizes:
-        - size: small
+        - size: "small"
           cpu: 1.0
-          memory: 4Gi
-        - size: medium
+          memory: "4Gi"
+        - size: "medium"
           cpu: 2.0
-          memory: 8Gi
-        - size: large
+          memory: "8Gi"
+        - size: "large"
           cpu: 4.0
-          memory: 16Gi
+          memory: "16Gi"
 
       # -- How long to wait for Kubernetes to spawn a lab in seconds. This
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
+
+      # -- Tolerations for user lab pods
+      tolerations: []
 
       # -- Volumes that will be in lab pods or init containers. This supports
       # NFS, HostPath, and PVC volume types (differentiated in source.type).
@@ -315,10 +340,6 @@ hub:
   internalDatabase: true
 
   timeout:
-    # -- Timeout for the Kubernetes spawn process in seconds. (Allow long
-    # enough to pull uncached images if needed.)
-    spawn: 600
-
     # -- Timeout for JupyterLab to start. Currently this sometimes takes over
     # 60 seconds for reasons we don't understand.
     startup: 90
@@ -358,8 +379,8 @@ jupyterhub:
     # -- Resource limits and requests
     resources:
       limits:
-        cpu: 900m
-        memory: 1Gi  # Should support about 200 users
+        cpu: "900m"
+        memory: "1Gi"  # Should support about 200 users
 
     db:
       # -- Type of database to use
@@ -434,30 +455,17 @@ jupyterhub:
       # controller does its own prepulling)
       enabled: false
 
-  singleuser:
-    cloudMetadata:
-      # -- Whether to configure iptables to block cloud metadata endpoints.
-      # This is unnecessary in our environments (they are blocked by cluster
-      # configuration) and thus is disabled to reduce complexity.
-      blockWithIptables: false
-
-    # -- Start command for labs
-    cmd: "/opt/lsst/software/jupyterlab/runlab.sh"
-
-    # -- Default URL prefix for lab endpoints
-    defaultUrl: "/lab"
-
   proxy:
     service:
       # -- Only expose the proxy to the cluster, overriding the default of
       # exposing the proxy directly to the Internet
-      type: ClusterIP
+      type: "ClusterIP"
 
     chp:
       networkPolicy:
         # -- Enable access to the proxy from other namespaces, since we put
         # each user's lab environment in its own namespace
-        interNamespaceAccessLabels: accept
+        interNamespaceAccessLabels: "accept"
 
         # This currently causes Minikube deployment in GH-actions to fail.
         # We want it sometime but it's not critical; it will help with
@@ -508,28 +516,26 @@ jupyterhub:
       enabled: false
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google
-  # Cloud.
+  # -- Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on
+  # Google Cloud
   enabled: false
+
+  # -- Affinity rules for the Cloud SQL Auth Proxy pod
+  affinity: {}
 
   image:
     # -- Cloud SQL Auth Proxy image to use
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
-    # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.15"
-
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.33.14"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
   instanceConnectionName: ""
-
-  # -- The Google service account that has an IAM binding to the `gafaelfawr`
-  # Kubernetes service account and has the `cloudsql.client` role
-  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
-  serviceAccount: ""
 
   # -- Resource limits and requests for the Cloud SQL Proxy pod
   # @default -- See `values.yaml`
@@ -541,17 +547,20 @@ cloudsql:
       cpu: "5m"
       memory: "7Mi"
 
-  # -- Annotations for the Cloud SQL Proxy pod
+  # -- Annotations for the Cloud SQL Auth Proxy pod
   podAnnotations: {}
 
-  # -- Node selection rules for the Cloud SQL Proxy pod
+  # -- Node selection rules for the Cloud SQL Auth Proxy pod
   nodeSelector: {}
 
-  # -- Tolerations for the Cloud SQL Proxy pod
-  tolerations: []
+  # -- The Google service account that has an IAM binding to the
+  # `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client`
+  # role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
 
-  # -- Affinity rules for the Cloud SQL Proxy pod
-  affinity: {}
+  # -- Tolerations for the Cloud SQL Auth Proxy pod
+  tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
