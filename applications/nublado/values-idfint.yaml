@@ -4,6 +4,9 @@ controller:
   config:
     fileserver:
       enabled: true
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
     images:
       source:
         type: "google"
@@ -43,10 +46,10 @@ controller:
           cpu: 8.0
           memory: 32Gi
       initContainers:
-        - name: "initdir"
+        - name: "inithome"
           image:
-            repository: "ghcr.io/lsst-sqre/initdir"
-            tag: "0.0.4"
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

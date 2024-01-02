@@ -5,7 +5,9 @@ controller:
     logLevel: "DEBUG"
     fileserver:
       enabled: true
-      idleTimeout: 43200  # 12 hours
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
     images:
       source:
         type: "google"
@@ -22,10 +24,10 @@ controller:
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
       initContainers:
-        - name: "initdir"
+        - name: "inithome"
           image:
-            repository: "ghcr.io/lsst-sqre/initdir"
-            tag: "0.0.4"
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"

@@ -109,6 +109,13 @@ controller:
       # -- Tolerations for user file server pods
       tolerations: []
 
+      # -- Volumes that should be made available via WebDAV
+      volumeMounts: []
+      # volumeMounts:
+      # - containerPath: "/project"
+      #   readOnly: true
+      #   volumeName: "project"
+
     images:
       # -- Source for prepulled images. For Docker, set `type` to `docker`,
       # `registry` to the hostname and `repository` to the name of the
