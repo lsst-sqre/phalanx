@@ -24,6 +24,13 @@ Run InfluxDB Enterprise on Kubernetes
 | data.https.secret.name | string | `"influxdb-tls"` |  |
 | data.https.useCertManager | bool | `false` |  |
 | data.image | object | `{}` |  |
+| data.ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"300"` |  |
+| data.ingress.annotations."nginx.ingress.kubernetes.io/proxy-send-timeout" | string | `"300"` |  |
+| data.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| data.ingress.className | string | `"nginx"` |  |
+| data.ingress.enabled | bool | `false` |  |
+| data.ingress.hostname | string | `""` |  |
+| data.ingress.path | string | `"/influxdb-enterprise-data(/|$)(.*)"` |  |
 | data.persistence.enabled | bool | `false` |  |
 | data.replicas | int | `1` |  |
 | data.resources | object | `{}` |  |

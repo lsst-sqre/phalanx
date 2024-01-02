@@ -66,6 +66,9 @@ influxdb-enterprise:
         cpu: 4
   data:
     replicas: 2
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
     # -- Enable InfluxDB Enterprise data pod persistence
     persistence:
       enabled: true
