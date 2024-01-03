@@ -51,6 +51,9 @@ influxdb-enterprise:
       type: LoadBalancer
       annotations:
         metallb.universe.tf/address-pool: sdf-services
+    ingress:
+      enabled: true
+      hostname: usdf-rsp.slac.stanford.edu
     persistence:
       # -- Enable InfluxDB Enterprise meta pod persistence
       enabled: true

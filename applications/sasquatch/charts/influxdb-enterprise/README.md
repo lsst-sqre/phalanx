@@ -50,6 +50,13 @@ Run InfluxDB Enterprise on Kubernetes
 | meta.https.secret.name | string | `"influxdb-tls"` |  |
 | meta.https.useCertManager | bool | `false` |  |
 | meta.image | object | `{}` |  |
+| meta.ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"300"` |  |
+| meta.ingress.annotations."nginx.ingress.kubernetes.io/proxy-send-timeout" | string | `"300"` |  |
+| meta.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| meta.ingress.className | string | `"nginx"` |  |
+| meta.ingress.enabled | bool | `false` |  |
+| meta.ingress.hostname | string | `""` |  |
+| meta.ingress.path | string | `"/influxdb-enterprise-meta(/|$)(.*)"` |  |
 | meta.persistence.enabled | bool | `false` |  |
 | meta.podDisruptionBudget.minAvailable | int | `2` |  |
 | meta.replicas | int | `3` |  |
