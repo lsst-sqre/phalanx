@@ -20,7 +20,6 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            {{- range $repositoryLabel := .Values.config.repositoryLabels }}
             # For direct end-user use of the Butler client library, the
             # Butler() convenience constructor must be able to load a
             # configuration file via unauthenticated HTTP.  This exists for
@@ -28,6 +27,7 @@ template:
             # to the existence of the Butler server -- they are passed the URI
             # for a repository root on the filesystem or HTTP, from which a
             # configuration file is loaded.
+            {{- range $repositoryLabel := .Values.config.repositoryLabels }}
             - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}/butler.yaml"
               pathType: "Exact"
               backend:
