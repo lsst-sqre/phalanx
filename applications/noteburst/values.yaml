@@ -118,7 +118,7 @@ config:
     tokenScopes: "exec:notebook,read:image,read:tap,read:alertdb"
 
     # -- Nublado image stream to select: "recommended", "weekly" or "reference"
-    imageSelector: "weekly"
+    imageSelector: "recommended"
 
     # -- Nublado image reference, applicable when imageSelector is "reference"
     imageReference: ""
