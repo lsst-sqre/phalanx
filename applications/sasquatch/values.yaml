@@ -200,7 +200,8 @@ source-influxdb:
       cpu: 8
 
 # -- Override influxdb-enterprise configuration.
-influxdb-enterprise: {}
+influxdb-enterprise:
+  enabled: false
 
 # -- Override kafka-connect-manager configuration.
 kafka-connect-manager: {}
