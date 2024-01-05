@@ -22,7 +22,7 @@ Rubin Observatory's telemetry service.
 | chronograf.resources.limits.memory | string | `"64Gi"` |  |
 | chronograf.resources.requests.cpu | int | `1` |  |
 | chronograf.resources.requests.memory | string | `"4Gi"` |  |
-| influxdb-enterprise | object | `{}` | Override influxdb-enterprise configuration. |
+| influxdb-enterprise | object | `{"enabled":false}` | Override influxdb-enterprise configuration. |
 | influxdb-staging.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"60s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb-staging.enabled | bool | `false` | Enable InfluxDB staging deployment. |
 | influxdb-staging.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
