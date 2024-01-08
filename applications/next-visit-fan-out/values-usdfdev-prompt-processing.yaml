@@ -6,7 +6,7 @@ knative:
 
 kafka:
   schemaRegistryUrl: http://10.96.181.159:8081
-  sasquatchAddress: 10.100.226.209:9094
+  sasquatchAddress: 10.109.65.243:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit
 
