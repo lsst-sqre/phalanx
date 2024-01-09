@@ -38,8 +38,6 @@ influxdb:
 
 telegraf-kafka-consumer:
   enabled: true
-  image:
-    tag: "avrounions"
   kafkaConsumers:
     test:
       enabled: true

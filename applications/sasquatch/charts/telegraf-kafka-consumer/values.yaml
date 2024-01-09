@@ -4,7 +4,7 @@ enabled: false
 
 image:
   # -- Telegraf image repository.
-  repo: "quay.io/influxdb/telegraf-nightly:latest"
+  repo: "quay.io/influxdb/telegraf-nightly"
   # -- Telegraf image tag.
   tag: "latest"
   # -- Image pull policy.
