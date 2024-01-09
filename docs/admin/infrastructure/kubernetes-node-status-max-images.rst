@@ -34,3 +34,17 @@ Second, these images, because the prepuller incorrectly believes they are not re
 Fortunately there is a simple fix: increase the kubelet ``nodeStatusMaxImages`` setting.  The default value of 50 should either be increased to something large enough that it's implausible that that many images would fit into ephemeral storage, or set to ``-1`` to remove the cap entirely.  While disabling the cap could, in theory, make node status extremely large (which is the reason the cap exists in the first place), in practice it has never proven problematic in a Phalanx deployment.  Those deployments have had at most hundreds, rather than thousands or millions, of container images on any given node, so the size of the status document has always remained modest.
 
 Should you go the route of choosing a larger positive value for ``nodeStatusMaxImages`` a reasonable rule of thumb is to pick a number one-third of the size of each node's ephemeral storage in gigabytes.  Thus if you had a terabyte of ephemeral storage, a ``nodeStatusMaxImages`` of ``350`` would be a good starting guess.  This value is also dependent on how broadly mixed your workload is, and how large the images for the other aspects of your workload are, which is why disabling the cap entirely is the initial recommendation.
+
+Pruning cached images
+=====================
+
+If you cannot change the behavior of the Kubernetes node API, you may need to trim the node image cache so that the total number of images is under 50.
+If you have direct administrative access to the Kubernetes node, you can do that with the following steps:
+
+#. Download `purge <https://github.com/lsst-sqre/imagepurger/blob/main/node-script/purge>`__.
+
+#. Run it on each node, using an account allowed to use the Docker socket (thus, probably in group ``docker``).
+   You may want to run it with ``-x`` first to see what it's going to do.
+   If you want output during the actual run, run it with ``-v``.
+
+Unfortunately, this will only temporarily solve the problem, so you will either need to do this repeatedly or find a way to change the API configuration to return more cached images.

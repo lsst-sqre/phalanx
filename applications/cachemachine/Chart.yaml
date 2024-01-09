@@ -1,7 +1,0 @@
-apiVersion: v2
-name: cachemachine
-version: 1.0.0
-description: JupyterLab image prepuller
-sources:
-  - https://github.com/lsst-sqre/cachemachine
-appVersion: 1.2.2

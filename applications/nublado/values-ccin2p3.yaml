@@ -1,0 +1,55 @@
+controller:
+  config:
+    images:
+      source:
+        type: "docker"
+        registry: "registry.hub.docker.com"
+        repository: "lsstsqre/sciplat-lab"
+    lab:
+      env:
+        AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+        AUTO_REPO_BRANCH: "prod"
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"
+        CULL_KERNEL_CONNECTED: "True"
+        CULL_KERNEL_INTERVAL: "300"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        CULL_TERMINAL_INTERVAL: "300"
+        NO_ACTIVITY_TIMEOUT: "432000"
+      homedirPrefix: "/homedirs"
+      homedirSchema: "initialThenUsername"
+      homedirSuffix: "rsp_home"
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.0"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      pullSecret: "pull-secret"
+      volumes:
+        - name: "home"
+          source:
+            type: "hostPath"
+            path: "/pbs/home"
+      volumeMounts:
+        - containerMount: "/home"
+          volumeName: "home"
+
+proxy:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "50s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+
+jupyterhub:
+  hub:
+    db:
+      upgrade: true
+  cull:
+    timeout: 432000
+    every: 300
+    maxAge: 2160000

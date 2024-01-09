@@ -18,25 +18,14 @@ When this happens, you may need to recreate the persistent volume.
 
 **Solution:** :ref:`recreate-postgres-pvc`
 
-Spawner menu missing images, nublado stuck pulling the same image
+Spawner menu missing images, Nublado stuck pulling the same image
 =================================================================
 
 **Symptoms:** When a user goes to the spawner page for the Notebook Aspect, the expected menu of images is not available.
 Instead, the menu is missing one or more images.
-The same image or set of images is pulled again each on each prepuller loop the nublado lab controller attempts.
+The same image or set of images is pulled again each on each prepuller loop the Nublado controller attempts.
 
 **Solution:** :doc:`infrastructure/kubernetes-node-status-max-images`
-
-Spawning a notebook fails with a pending error
-==============================================
-
-**Symptoms:** When a user tries to spawn a new notebook, the spawn fails with an error saying that the user's lab is already pending spawn or is pending deletion.
-
-**Cause:** If the spawning of the lab fails or if the deletion of a lab fails, sometimes JupyterHub can give up on making further progress but still remember that the lab is supposedly still running.
-In this case, JupyterHub may not recover without assistance.
-You may need to delete the record for the affected user, and also make sure the user's lab namespace (visible in Argo CD under the ``nublado-users`` application) has been deleted.
-
-**Solution:** :ref:`nublado2-clear-session-database`
 
 User gets permission denied from applications
 =============================================
@@ -62,16 +51,6 @@ You need privileged access to the filestore
 If you need to do something that spans users or should create root-owned files, you will need some way of accessing the filestore-presented filesystem with privilege.
 
 **Solution:** :doc:`infrastructure/filestore/privileged-access`
-
-User pods don't spawn, reporting "permission denied" from Moneypenny
-====================================================================
-
-**Symptoms:** A user pod fails to spawn, and the error message says that Moneypenny did not have permission to execute.
-
-**Cause:** The ``gafaelfawr-token`` VaultSecret in the ``nublado2`` namespace is out of date.
-This happened because the ``gafaelfawr-redis`` pod restarted and either it lacked persistent storage (at the T&S sites, as of July 2022), or because that storage had been lost.
-
-**Solution:** :doc:`/applications/gafaelfawr/recreate-token`
 
 Login fails with "bad verification code" error
 ==============================================
