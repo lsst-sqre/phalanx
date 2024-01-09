@@ -399,7 +399,7 @@ jupyterhub:
 
       # -- URL of PostgreSQL server
       # @default -- Use the in-cluster PostgreSQL installed by Phalanx
-      url: "postgresql://jovyan@postgres.postgres/jupyterhub"
+      url: "postgresql://nublado3@postgres.postgres/jupyterhub"
 
     # -- Security context for JupyterHub container
     containerSecurityContext:

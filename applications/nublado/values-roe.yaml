@@ -1,0 +1,45 @@
+controller:
+  config:
+    images:
+      source:
+        type: "docker"
+        registry: "registry.hub.docker.com"
+        repository: "lsstsqre/sciplat-lab"
+    lab:
+      env:
+        AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
+        AUTO_REPO_BRANCH: "prod"
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.0"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      pullSecret: "pull-secret"
+      volumes:
+        - name: "data"
+          source:
+            serverPath: "/data"
+            server: "192.41.122.33"
+            type: "nfs"
+        - name: "home"
+          source:
+            serverPath: "/jhome"
+            server: "192.41.122.33"
+            type: "nfs"
+        - name: "datasets"
+          source:
+            serverPath: "/datasets"
+            server: "192.41.122.33"
+            type: "nfs"
+      volumeMounts:
+        - containerPath: "/data"
+          volumeName: "data"
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/datasets"
+          volumeName: "datasets"

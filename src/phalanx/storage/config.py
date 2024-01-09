@@ -313,6 +313,10 @@ class ConfigStorage:
     def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
         """Get all modified application and environment pairs.
 
+        Application and environment pairs that have been deleted do not count
+        as modified, since we don't want to attempt to lint deleted
+        configurations.
+
         Parameters
         ----------
         branch
@@ -336,8 +340,9 @@ class ConfigStorage:
                 continue
             if change.affects_all_envs:
                 envs = self.get_application_environments(change.application)
-                result[change.application] = envs
-            if not change.is_delete:
+                if envs:
+                    result[change.application] = envs
+            elif not change.is_delete:
                 if m := re.match("values-([^.]+).yaml$", change.path):
                     result[change.application].append(m.group(1))
         return result

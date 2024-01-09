@@ -39,9 +39,6 @@ applications:
   # -- Enable the butler application
   butler: false
 
-  # -- Enable the cachemachine application (required by nublado2)
-  cachemachine: false
-
   # -- Enable the cert-manager application, required unless the environment
   # makes separate arrangements to inject a current TLS certificate
   cert-manager: true
@@ -80,9 +77,6 @@ applications:
   # -- Enable the mobu application
   mobu: false
 
-  # -- Enable the moneypenny application (required by nublado2)
-  moneypenny: false
-
   # -- Enable the monitoring application
   monitoring: false
 
@@ -97,10 +91,6 @@ applications:
 
   # -- Enable the nublado application (v3 of the Notebook Aspect)
   nublado: false
-
-  # -- Enable the nublado2 application (v2 of the Notebook Aspect, now
-  # deprecated). This should not be used for new environments.
-  nublado2: false
 
   # -- Enable the onepassword-connect application
   onepassword-connect: false

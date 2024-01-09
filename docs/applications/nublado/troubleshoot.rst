@@ -1,8 +1,16 @@
 .. px-app-troubleshooting:: nublado
 
 #######################
-Troubleshooting nublado
+Troubleshooting Nublado
 #######################
+
+Check image prepulling status
+=============================
+
+Nublado will attempt to prepull all configured images to each node that it believes is allowed to run Nublado lab images.
+To see the status of that prepulling, go to the ``/nublado/spawner/v1/prepulls`` route of the relevant environment.
+
+In the resulting JSON document, ``config`` shows the current operative configuration, ``images`` shows the prepull status of the various images, and ``nodes`` shows the prepull status by node.
 
 .. _nublado-clear-session-database:
 
@@ -33,9 +41,8 @@ Recovery may require manually clearing the user's entry in the session database 
 In some cases you may also need to remove the user from the spawner table.
 To do this, run ``select * from spawners`` and find the pod with the user's name in it, and then delete that row.
 
-.. _nublado_node_status_max_images:
-
 Prepuller is running continuously and/or expected menu items are missing
 ========================================================================
 
-``nodeStatusMaxImages`` should be increased or disabled: :doc:`/admin/infrastructure/kubernetes-node-status-max-images`
+The Kubernetes control plane configuration variable ``nodeStatusMaxImages`` should be increased or disabled.
+See :doc:`/admin/infrastructure/kubernetes-node-status-max-images`.

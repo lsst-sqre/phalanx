@@ -8,7 +8,6 @@
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
 | applications.butler | bool | `false` | Enable the butler application |
-| applications.cachemachine | bool | `false` | Enable the cachemachine application (required by nublado2) |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
@@ -20,13 +19,11 @@
 | applications.linters | bool | `false` | Enable the linters application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.mobu | bool | `false` | Enable the mobu application |
-| applications.moneypenny | bool | `false` | Enable the moneypenny application (required by nublado2) |
 | applications.monitoring | bool | `false` | Enable the monitoring application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
-| applications.nublado2 | bool | `false` | Enable the nublado2 application (v2 of the Notebook Aspect, now deprecated). This should not be used for new environments. |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
 | applications.ook | bool | `false` | Enable the ook application |
