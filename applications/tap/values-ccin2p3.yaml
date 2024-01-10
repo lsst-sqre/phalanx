@@ -4,7 +4,7 @@ cadc-tap:
       repository: "lsstsqre/tap-schema-idfprod-tap"
 
   config:
-    gcsBucket: "async-results.lsst.codes"
+    gcsBucket: "lsstrsp:async-results.lsst.codes"
     gcsBucketUrl: "https://ccs3rubin.in2p3.fr:8080"
     gcsBucketType: "S3"
 
