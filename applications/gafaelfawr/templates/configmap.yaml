@@ -162,7 +162,6 @@
     oidcServer:
       issuer: "https://{{ .Values.global.host }}"
       keyId: "gafaelfawr"
-      audience: "https://{{ .Values.global.host }}"
       keyFile: "/etc/gafaelfawr/secrets/signing-key"
       secretsFile: "/etc/gafaelfawr/secrets/oidc-server-secrets"
     {{- end }}
