@@ -17,29 +17,13 @@ In the resulting JSON document, ``config`` shows the current operative configura
 Clear session database entry
 ============================
 
-Sometimes JupyterHub and its session database will get into an inconsistent state where it thinks a pod is already running but cannot shut it down.
-The typical symptom of this is that spawns for that user fail with an error saying that the user's lab is already pending spawn or pending deletion, but the user cannot connect to their pod.
+Historically, we sometimes saw JupyterHub get into an inconsistent state where it thought a pod was already running and couldn't be shut down.
+We haven't seen this problem since switching to the Nublado controller, but it may still be possible for the JupyterHub session database to get out of sync.
 
-Recovery may require manually clearing the user's entry in the session database as follows:
+If JupyterHub keeps telling a user that their lab is already spawning or shutting down, but doesn't allow them to connect to the lab or shut it down, following the instructions on `deleting a user session <https://nublado.lsst.io/admin/delete-user-session.html>`__ may fix the problem.
 
-#. Remove the user's lab namespace, if it exists.
-
-#. Remove the user from the session database.
-   First, connect to the database:
-
-   .. code-block:: shell
-
-      pod=$(kubectl get pods -n postgres | grep postgres | awk '{print $1}')
-      kubectl exec -it -n postgres ${pod} -- psql -U jovyan jupyterhub
-
-   Then, at the PostgreSQL prompt:
-
-   .. code-block:: sql
-
-      delete from users where name='<user-to-remove>'
-
-In some cases you may also need to remove the user from the spawner table.
-To do this, run ``select * from spawners`` and find the pod with the user's name in it, and then delete that row.
+If it does, investigate how JupyterHub was able to get stuck.
+This indicates some sort of bug in Nublado.
 
 Prepuller is running continuously and/or expected menu items are missing
 ========================================================================
