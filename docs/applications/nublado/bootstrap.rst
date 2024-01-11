@@ -12,7 +12,7 @@ GKE deployments
 When deploying Nublado on Google Kubernetes Engine, using Google Artifact Registry as the image source is strongly recommended.
 This will result in better image selection menus, allow use of container streaming for faster start-up times, and avoid the need to maintain a pull secret.
 
-For setup instructions for using GAR with Nublado, see `Set up Google Artifact Registry in the Nublado documentation <https://nublado.lsst.io/admin/setup-gar.htl>`__.
+For setup instructions for using GAR with Nublado, see `Set up Google Artifact Registry in the Nublado documentation <https://nublado.lsst.io/admin/setup-gar.html>`__.
 For more details about the benefits of using GAR, see the `relevant Nublado documentation page <https://nublado.lsst.io/admin/gar.html>`__.
 
 Telescope and Site deployments
