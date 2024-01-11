@@ -63,6 +63,13 @@ atqueue:
     readOnly: true
     server: nfs-obsenv.tu.lsst.org
     serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
 
 atscheduler:
   namespace: *ns
@@ -96,6 +103,13 @@ atscheduler:
     readOnly: true
     server: nfs-obsenv.tu.lsst.org
     serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
 
 authorize:
   enabled: true
@@ -158,6 +172,13 @@ mtqueue:
     readOnly: true
     server: nfs-obsenv.tu.lsst.org
     serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
 
 mtscheduler:
   namespace: *ns
@@ -191,6 +212,13 @@ mtscheduler:
     readOnly: true
     server: nfs-obsenv.tu.lsst.org
     serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
 
 watcher:
   namespace: *ns
