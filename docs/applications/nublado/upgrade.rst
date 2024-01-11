@@ -8,8 +8,9 @@ Most of the time, upgrading Nublado can be done simply by syncing the applicatio
 There will be a brief outage for spawning new pods, but users with existing pods should be able to continue working.
 
 Occasionally, new versions of JupyterHub will require a schema update.
-We do not routinely enable automatic schema updates currently, so JupyterHub will refuse to start if a database schema update is required.
-To enable schema updates, add:
+Automatic schema updates are off by default, so JupyterHub will refuse to start if a database schema update is required.
+
+To enable schema updates, add the following to :file:`values-{environment}.yaml` for the ``nublado`` application:
 
 .. code-block:: yaml
 
@@ -18,7 +19,10 @@ To enable schema updates, add:
        db:
          upgrade: true
 
-(The ``jupyterhub`` and ``hub`` keys probably already exist in the ``values-<environment>.yaml`` file, so just add the ``db.upgrade`` setting in the correct spot.)
-Then, JupyterHub will automatically upgrade its database when the new version starts.
-You can then remove this configuration again if you're worried about automatic updates misbehaving later.
-Alternatively, if there's a schema update, it's probably a pretty major upgrade to JupyterHub, and it may be a better idea to shut down the Hub, remove all user namespaces, and then connect to the database and drop all tables; when the Hub is restarted, the correct schema will be generated.  Obviously this will boot all users from the running system, but that may be appropriate for major upgrades.
+(The ``jupyterhub`` and ``hub`` keys probably already exist, so just add the ``db.upgrade`` setting in the correct spot.)
+JupyterHub will then automatically upgrade its database when it is restarted running the new version.
+
+You can then this configuration afterwards if you're worried about applying a schema update without being aware that you're doing so.
+
+Alternately, for major upgrades to JupyterHub, you can choose to start from an empty database.
+To do this, follow the instructions in the `Nublado documentation on wiping the database <https://nublado.lsst.io/admin/wipe-database.html>`__.
