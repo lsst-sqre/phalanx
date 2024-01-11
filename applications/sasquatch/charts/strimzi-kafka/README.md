@@ -7,6 +7,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
+| cluster.releaseLabel | string | `"site-prom"` | Site wide label required for gathering Prometheus metrics if they are enabled. |
 | connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
 | connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
 | connect.enabled | bool | `true` | Enable Kafka Connect. |

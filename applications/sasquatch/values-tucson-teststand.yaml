@@ -1,4 +1,6 @@
 strimzi-kafka:
+  cluster:
+    releaseLabel: pillan-prom
   kafka:
     disruption_tolerance: 1
     config:

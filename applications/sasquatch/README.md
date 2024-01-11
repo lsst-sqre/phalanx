@@ -385,6 +385,7 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
+| strimzi-kafka.cluster.releaseLabel | string | `"site-prom"` | Site wide label required for gathering Prometheus metrics if they are enabled. |
 | strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
 | strimzi-kafka.connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
 | strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |

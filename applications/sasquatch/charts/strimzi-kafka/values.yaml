@@ -2,6 +2,8 @@
 cluster:
   # -- Name used for the Kafka cluster, and used by Strimzi for many annotations.
   name: sasquatch
+  # -- Site wide label required for gathering Prometheus metrics if they are enabled.
+  releaseLabel: "site-prom"
 
 kafka:
   # -- Version of Kafka to deploy.
