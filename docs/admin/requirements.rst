@@ -7,7 +7,7 @@ In order to install a Phalanx environment, the following prerequisites must be i
 Deployment environment
 ======================
 
-Phalanx can only be installed in environments that meet the following reuqirements:
+Phalanx can only be installed in environments that meet the following requirements:
 
 - Phalanx is a Kubernetes deployment platform that installs within a Kubernetes cluster.
   The oldest version of Kubernetes known to work is 1.23.
