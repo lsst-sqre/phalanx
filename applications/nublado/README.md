@@ -25,7 +25,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Auth Proxy pod |
 | controller.affinity | object | `{}` | Affinity rules for the Nublado controller |
 | controller.config.fileserver.affinity | object | `{}` | Affinity rules for user file server pods |
-| controller.config.fileserver.application | string | `"fileservers"` | Argo CD application in which to collect user file servers |
+| controller.config.fileserver.application | string | `"nublado-fileservers"` | Argo CD application in which to collect user file servers |
 | controller.config.fileserver.creationTimeout | int | `120` | Timeout to wait for Kubernetes to create file servers, in seconds |
 | controller.config.fileserver.deleteTimeout | int | 60 (1 minute) | Timeout for deleting a user's file server from Kubernetes, in seconds |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
@@ -33,7 +33,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
 | controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
-| controller.config.fileserver.namespace | string | `"fileservers"` | Namespace for user file servers |
+| controller.config.fileserver.namespace | string | `"nublado-fileservers"` | Namespace for user file servers |
 | controller.config.fileserver.nodeSelector | object | `{}` | Node selector rules for user file server pods |
 | controller.config.fileserver.pathPrefix | string | `"/files"` | Path prefix for user file servers |
 | controller.config.fileserver.resources | object | See `values.yaml` | Resource requests and limits for user file servers |
