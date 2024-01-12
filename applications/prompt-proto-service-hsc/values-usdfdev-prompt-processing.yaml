@@ -13,6 +13,7 @@ prompt-proto-service:
   instrument:
     pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
     calibRepo: s3://rubin:rubin-pp-users/central_repo/
+    calibRepoPguser: hsc_prompt
 
   s3:
     imageBucket: rubin:rubin-pp

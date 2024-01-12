@@ -15,6 +15,7 @@ prompt-proto-service:
       (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
     calibRepo: s3://rubin-pp-users/central_repo/
+    calibRepoPguser: latiss_prompt
 
   s3:
     imageBucket: rubin-pp

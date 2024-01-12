@@ -54,7 +54,7 @@ spec:
         - name: IMAGE_TIMEOUT
           value: {{ .Values.imageNotifications.imageTimeout | quote }}
         - name: PGUSER
-          value: rubin
+          value: {{ .Values.instrument.calibRepoPguser }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION

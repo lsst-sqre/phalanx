@@ -33,6 +33,10 @@ prompt-proto-service:
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
     calibRepo: ""
+    # -- Postgres username to access the shared butler repo for calibrations, templates, and pipeline outputs.
+    # If `registry.centralRepoFile` is set, a local redirect is used and its config may override this config.
+    # @default -- None, must be set
+    calibRepoPguser: ""
 
   s3:
     # -- Bucket containing the incoming raw images
