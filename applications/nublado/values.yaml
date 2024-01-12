@@ -88,7 +88,7 @@ controller:
         tag: "0.1.0"
 
       # -- Namespace for user file servers
-      namespace: "nublado-fileservers"
+      namespace: "fileservers"
 
       # -- Node selector rules for user file server pods
       nodeSelector: {}

@@ -1,8 +1,13 @@
+{{/*
+     The namespace is fileservers even though the Argo CD application is
+     nublado-fileservers, since otherwise we have a conflict with the
+     lab namespace for a user with the username fileservers.
+*/}}
 {{- if .Values.applications.nublado -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "nublado-fileservers"
+  name: "fileservers"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -13,7 +18,7 @@ metadata:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "nublado-fileservers"
+    namespace: "fileservers"
     server: "https://kubernetes.default.svc"
   project: "default"
   source:
