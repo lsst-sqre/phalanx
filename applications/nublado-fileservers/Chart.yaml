@@ -1,3 +1,3 @@
 apiVersion: v2
-name: fileservers
+name: nublado-fileservers
 version: 1.0.0

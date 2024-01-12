@@ -64,7 +64,7 @@ controller:
       affinity: {}
 
       # -- Argo CD application in which to collect user file servers
-      application: "fileservers"
+      application: "nublado-fileservers"
 
       # -- Timeout to wait for Kubernetes to create file servers, in seconds
       creationTimeout: 120
@@ -88,7 +88,7 @@ controller:
         tag: "0.1.0"
 
       # -- Namespace for user file servers
-      namespace: "fileservers"
+      namespace: "nublado-fileservers"
 
       # -- Node selector rules for user file server pods
       nodeSelector: {}
