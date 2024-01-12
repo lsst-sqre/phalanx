@@ -16,6 +16,13 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
+
   registry:
     ingress:
       enabled: true

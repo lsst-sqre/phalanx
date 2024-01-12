@@ -1,7 +1,17 @@
 # Default values for Sasquatch.
 
-# -- Override strimzi-kafka configuration.
-strimzi-kafka: {}
+# -- Override strimzi-kafka subchart configuration.
+strimzi-kafka:
+  kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
+  connect:
+    enabled: true
 
 # -- strimzi-registry-operator configuration.
 strimzi-registry-operator:

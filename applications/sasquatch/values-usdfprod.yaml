@@ -1,4 +1,12 @@
 strimzi-kafka:
+  kafka:
+    listeners:
+      tls:
+        enabled: true
+      plain:
+        enabled: true
+      external:
+        enabled: true
   mirrormaker2:
     enabled: true
     source:
@@ -13,6 +21,14 @@ strimzi-kafka:
         memory: 8Gi
   users:
     replicator:
+      enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
+    promptProcessing:
       enabled: true
 
 influxdb:
