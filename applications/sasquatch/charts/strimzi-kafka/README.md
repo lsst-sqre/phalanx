@@ -36,6 +36,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
+| kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
+| kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
+| kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
 | mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |

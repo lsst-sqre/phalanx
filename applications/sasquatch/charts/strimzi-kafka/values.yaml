@@ -97,6 +97,14 @@ kafka:
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
 
+kafkaExporter:
+  # -- Enable Kafka exporter
+  enabled: false
+  # -- Kafka topics to monitor
+  topicRegex: ".*"
+  # -- Consumer groups to monitor
+  groupRegex: ".*"
+
 zookeeper:
   # -- Number of Zookeeper replicas to run.
   replicas: 3

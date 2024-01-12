@@ -155,3 +155,8 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
+  {{- if .Values.kafkaExporter.enabled }}
+  kafkaExporter:
+    topicRegex: {{ .Values.kafkaExporter.topicRegex }}
+    groupRegex: {{ .Values.kafkaExporter.groupRegex }}
+  {{- end }}

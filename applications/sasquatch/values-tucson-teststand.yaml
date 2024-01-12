@@ -23,6 +23,8 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-2.lsst.codes
     metricsConfig:
       enabled: true
+  kafkaExporter:
+    enabled: true
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
