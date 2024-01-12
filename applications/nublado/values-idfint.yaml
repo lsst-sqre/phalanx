@@ -32,24 +32,11 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-      sizes:
-        - size: small
-          cpu: 1.0
-          memory: 4Gi
-        - size: medium
-          cpu: 2.0
-          memory: 8Gi
-        - size: large
-          cpu: 4.0
-          memory: 16Gi
-        - size: huge
-          cpu: 8.0
-          memory: 32Gi
       initContainers:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "4.0.0"
+            tag: "4.0.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -63,6 +50,19 @@ controller:
           secretKey: "butler-hmac-idf-creds.json"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+      sizes:
+        - size: small
+          cpu: 1.0
+          memory: 4Gi
+        - size: medium
+          cpu: 2.0
+          memory: 8Gi
+        - size: large
+          cpu: 4.0
+          memory: 16Gi
+        - size: huge
+          cpu: 8.0
+          memory: 32Gi
       volumes:
         - name: "home"
           source:
