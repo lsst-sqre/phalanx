@@ -157,24 +157,7 @@ meta:
   podDisruptionBudget:
     # maxUnavailable: 2
     minAvailable: 2
-  https:
-    # If you need to debug the data nodes registration with the meta nodes, we recommend
-    # that you comment out the active curl command in the data-configmap and uncomment the following
-    # line, which has -v / debugging enabled.
-    enabled: false
-    # The `useCertManager` option, when set to true, will
-    # automatically create the certificate resources for you.
-    # You do not need to set the secret.name when using this flag.
-    useCertManager: false
-    secret:
-      name: influxdb-tls
-      # crt: tls.crt
-      # key: tls.key
-      # ca: ca.crt
-      # caSecret: secret-name # only use if different from the above
-    insecure: true
-  ## Additional data container environment variables e.g.:
-  ##   INFLUXDB_HTTP_FLUX_ENABLED: "true"
+  ## Additional data container environment variables.
   env: {}
   resources: {}
 
@@ -264,24 +247,22 @@ data:
     # annotations:
     # accessMode: ReadWriteOnce
     # size: 8Gi
-  https:
-    # If you need to debug the data nodes registration with the meta nodes, we recommend
-    # that you comment out the active curl command in the data-configmap and uncomment the following
-    # line, which has -v / debugging enabled.
-    enabled: false
-    # The `useCertManager` option, when set to true, will
-    # automatically create the certificate resources for you.
-    # You do not need to set the secret.name when using this flag.
-    useCertManager: false
-    secret:
-      name: influxdb-tls
-      # crt: tls.crt
-      # key: tls.key
-      # ca: ca.crt
-      # caSecret: secret-name # only use if different from the above
-    insecure: true
-  flux:
-    enabled: true
+  config:
+    data:
+      trace-logging-enabled: true
+    anti_entropy:
+      enabled: false
+    http:
+      flux-enabled: true
+      auth-enabled: true
+    cluster:
+      max-concurrent-queries: 1000
+      query-timeout: "300s"
+      log-queries-after: "15s"
+    continuous_queries:
+      enabled: false
+    logging:
+      level: "debug"
   ## Additional data container environment variables e.g.:
   ##   INFLUXDB_HTTP_FLUX_ENABLED: "true"
   env: {}
