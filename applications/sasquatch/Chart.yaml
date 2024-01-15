@@ -36,6 +36,10 @@ dependencies:
     alias: source-kafka-connect-manager
     condition: source-kafka-connect-manager.enabled
     version: 1.0.0
+  - name: kafka-connect-manager
+    alias: kafka-connect-manager-enterprise
+    condition: kafka-connect-manager-enterprise.enabled
+    version: 1.0.0
   - name: chronograf
     condition: chronograf.enabled
     version: 1.2.6
