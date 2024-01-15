@@ -10,17 +10,15 @@ data:
     bind-address = ":8088"
     reporting-disabled = false
 
-    {{ if .Values.data.https.enabled }}
-    https-enabled = true
-
-    https-certificate = "/var/run/secrets/tls/tls.crt"
-    https-private-key = "/var/run/secrets/tls/tls.key"
-
-    {{ end }}
-
-    {{ if .Values.data.flux.enabled }}
-    flux-enabled = true
-    {{ end }}
+    [http]
+      {{- range $key, $value := index .Values.data.config.http }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end }}
+      {{- end }}
 
     [enterprise]
       {{ if .Values.license.key }}
@@ -31,29 +29,8 @@ data:
       license-path = "/var/run/secrets/influxdb/license.json"
       {{ end }}
 
-    [cluster]
-    {{ if .Values.data.https.enabled }}
-    https-enabled = true
-
-    https-certificate = "/var/run/secrets/tls/tls.crt"
-    https-private-key = "/var/run/secrets/tls/tls.key"
-
-    {{ if .Values.data.https.insecure }}
-    https-insecure-tls = true
-    {{ end }}
-    {{ end }}
-
     [meta]
       dir = "/var/lib/influxdb/meta"
-
-      {{ if and .Values.meta.https.enabled }}
-      meta-tls-enabled = true
-
-      {{ if .Values.meta.https.insecure }}
-      meta-insecure-tls = true
-      {{ end }}
-
-      {{ end }}
 
     [hinted-handoff]
       dir = "/var/lib/influxdb/hh"
@@ -61,6 +38,55 @@ data:
     [data]
       dir = "/var/lib/influxdb/data"
       wal-dir = "/var/lib/influxdb/wal"
+      {{- range $key, $value := index .Values.data.config.data }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end }}
+      {{- end }}
+
+    [anti-entropy]
+      {{- range $key, $value := index .Values.data.config.anti_entropy }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end }}
+      {{- end }}
+
+    [cluster]
+      {{- range $key, $value := index .Values.data.config.cluster }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end  }}
+      {{- end }}
+
+    [continuous_queries]
+      {{- range $key, $value := index .Values.data.config.continuous_queries }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end  }}
+      {{- end }}
+
+    [logging]
+      {{- range $key, $value := index .Values.data.config.logging }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value }}
+      {{- end  }}
+      {{- end }}
+
 
   entrypoint.pl: |+
     #!/usr/bin/env perl
@@ -90,11 +116,7 @@ data:
     $SIG{KILL} = sub { kill 'KILL', $pid };
 
     # Register data node with meta leader
-    {{ if .Values.meta.https.enabled }}
-    my $protocol = "https";
-    {{ else }}
     my $protocol = "http";
-    {{ end }}
     my $meta_service = $ENV{RELEASE_NAME} . "-meta";
 
     # We're not going to define an exit strategy for failure here.
@@ -102,9 +124,7 @@ data:
     while (true) {
       # There's no LWP/Simple available in our images, so forking out to curl 😥
       print "\n\n\nREGISTER WITH META SERVICE\n\n\n";
-      $exit_code = system('curl', {{ if .Values.meta.https.insecure }}'-k',{{ end }} '-XPOST', '--silent', '--fail', '--retry', '5', '--retry-delay', '0', "-Faddr=$ENV{INFLUXDB_HOSTNAME}:8088", "$protocol://$meta_service:8091/add-data");
-      # $exit_code = system('curl', {{ if .Values.meta.https.insecure }}'-k',{{ end }} '-XPOST', '-v', '--silent', '--fail', '--retry', '5', '--retry-delay', '0', "-Faddr=$ENV{INFLUXDB_HOSTNAME}:8088", "$protocol://$meta_service:8091/add-data");
-
+      $exit_code = system('curl', '-XPOST', '--silent', '--fail', '--retry', '5', '--retry-delay', '0', "-Faddr=$ENV{INFLUXDB_HOSTNAME}:8088", "$protocol://$meta_service:8091/add-data");
 
       if ($exit_code == 0) {
         $| = 1;
