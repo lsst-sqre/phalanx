@@ -26,6 +26,7 @@ prompt-proto-service:
       (survey="spec_pole_with_rotation")=[]
       (survey="")=[]
     calibRepo: s3://rubin-summit-users
+    calibRepoPguser: rubin
 
   s3:
     imageBucket: rubin-summit

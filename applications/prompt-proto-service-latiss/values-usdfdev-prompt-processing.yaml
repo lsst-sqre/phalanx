@@ -14,11 +14,13 @@ prompt-proto-service:
     pipelines: >-
       (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-    calibRepo: s3://rubin-pp-users/central_repo/
+    calibRepo: s3://rubin:rubin-pp-users/central_repo/
+    calibRepoPguser: latiss_prompt
 
   s3:
-    imageBucket: rubin-pp
+    imageBucket: rubin:rubin-pp
     endpointUrl: https://s3dfrgw.slac.stanford.edu
+    disableBucketValidation: '1'
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
