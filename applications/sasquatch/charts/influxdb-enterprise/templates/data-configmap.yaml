@@ -34,6 +34,14 @@ data:
 
     [hinted-handoff]
       dir = "/var/lib/influxdb/hh"
+      {{- range $key, $value := index .Values.data.config.hintedHandoff }}
+      {{- $tp := typeOf $value }}
+      {{- if eq $tp "string" }}
+      {{ $key }} = {{ $value | quote }}
+      {{- else }}
+      {{ $key }} = {{ $value | int }}
+      {{- end }}
+      {{- end }}
 
     [data]
       dir = "/var/lib/influxdb/data"
@@ -48,7 +56,7 @@ data:
       {{- end }}
 
     [anti-entropy]
-      {{- range $key, $value := index .Values.data.config.anti_entropy }}
+      {{- range $key, $value := index .Values.data.config.antiEntropy }}
       {{- $tp := typeOf $value }}
       {{- if eq $tp "string" }}
       {{ $key }} = {{ $value | quote }}
@@ -68,7 +76,7 @@ data:
       {{- end }}
 
     [continuous_queries]
-      {{- range $key, $value := index .Values.data.config.continuous_queries }}
+      {{- range $key, $value := index .Values.data.config.continuousQueries }}
       {{- $tp := typeOf $value }}
       {{- if eq $tp "string" }}
       {{ $key }} = {{ $value | quote }}
