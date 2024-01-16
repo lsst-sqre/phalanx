@@ -71,7 +71,7 @@ Alert transmission to community brokers
 | alert-stream-broker.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | alert-stream-broker.kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | alert-stream-broker.kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
-| alert-stream-broker.kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
+| alert-stream-broker.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
 | alert-stream-broker.kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
 | alert-stream-broker.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging |
 | alert-stream-broker.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter. |
