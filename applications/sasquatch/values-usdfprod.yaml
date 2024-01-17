@@ -104,6 +104,7 @@ influxdb-enterprise:
         cpu: 8
 
 kafka-connect-manager:
+  enabled: false
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
