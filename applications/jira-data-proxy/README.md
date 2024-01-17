@@ -19,7 +19,7 @@ Jira API read-only proxy for Times Square users.
 | config.logLevel | string | `"info"` | Logging level |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
-| global.vaultSecretsPathPrefix | string | Set by Argo CD | Base path for Vault secrets |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the jira-data-proxy image |
 | image.repository | string | `"ghcr.io/lsst-sqre/jira-data-proxy"` | Image to use in the jira-data-proxy deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |

@@ -71,4 +71,4 @@ global:
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPathPrefix: ""
+  vaultSecretsPath: ""
