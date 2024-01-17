@@ -84,7 +84,7 @@ Rubin Observatory's telemetry service.
 | source-kapacitor.resources.requests.cpu | int | `1` |  |
 | source-kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
-| strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
+| strimzi-kafka | object | `{"connect":{"enabled":true},"kafka":{"listeners":{"external":{"enabled":true},"plain":{"enabled":true},"tls":{"enabled":true}}}}` | Override strimzi-kafka subchart configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer configuration. |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` |  |
@@ -320,7 +320,7 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
-| strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
+| strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect. |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
@@ -336,9 +336,9 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.externalListener.brokers | list | `[]` | Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification. The format is a list of maps. |
 | strimzi-kafka.kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | strimzi-kafka.kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| strimzi-kafka.kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled. |
-| strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled. |
-| strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled. |
+| strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled. |
+| strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled. |
+| strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
@@ -357,12 +357,12 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
-| strimzi-kafka.users.kafkaConnectManager.enabled | bool | `true` | Enable user kafka-connect-manager |
-| strimzi-kafka.users.promptProcessing.enabled | bool | `true` | Enable user prompt-processing |
-| strimzi-kafka.users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
-| strimzi-kafka.users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| strimzi-kafka.users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
+| strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
+| strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
+| strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
+| strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
+| strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | strimzi-kafka.zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
 | strimzi-kafka.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | strimzi-kafka.zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |

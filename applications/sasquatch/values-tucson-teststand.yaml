@@ -18,6 +18,15 @@ strimzi-kafka:
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+  users:
+    tsSalKafka:
+      enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
   registry:
     ingress:
       enabled: true

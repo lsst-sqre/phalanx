@@ -7,7 +7,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
-| connect.enabled | bool | `true` | Enable Kafka Connect. |
+| connect.enabled | bool | `false` | Enable Kafka Connect. |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
@@ -23,9 +23,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.externalListener.brokers | list | `[]` | Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification. The format is a list of maps. |
 | kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled. |
-| kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled. |
-| kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled. |
+| kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled. |
+| kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled. |
+| kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
@@ -44,12 +44,12 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
-| users.kafkaConnectManager.enabled | bool | `true` | Enable user kafka-connect-manager |
-| users.promptProcessing.enabled | bool | `true` | Enable user prompt-processing |
-| users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
-| users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
+| users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
+| users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
+| users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
+| users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
+| users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
 | zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |

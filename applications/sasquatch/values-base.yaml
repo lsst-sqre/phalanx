@@ -43,6 +43,14 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
+    tsSalKafka:
+      enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
 
 influxdb:
   persistence:

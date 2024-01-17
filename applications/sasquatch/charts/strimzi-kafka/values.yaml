@@ -30,15 +30,15 @@ kafka:
   listeners:
     plain:
       # -- Whether internal plaintext listener is enabled.
-      enabled: true
+      enabled: false
 
     tls:
       # -- Whether internal TLS listener is enabled.
-      enabled: true
+      enabled: false
 
     external:
       # -- Whether external listener is enabled.
-      enabled: true
+      enabled: false
 
   externalListener:
     tls:
@@ -115,7 +115,7 @@ zookeeper:
 
 connect:
   # -- Enable Kafka Connect.
-  enabled: true
+  enabled: false
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
   image: ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655
   # -- Number of Kafka Connect replicas to run.
@@ -139,28 +139,28 @@ superusers:
 
 users:
   replicator:
-    # -- Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters)
+    # -- Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters)
     enabled: false
 
   tsSalKafka:
-    # -- Enable user ts-salkafka.
-    enabled: true
+    # -- Enable user ts-salkafka, used at the telescope environments
+    enabled: false
 
   kafdrop:
     # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
-    enabled: true
+    enabled: false
 
   telegraf:
     # -- Enable user telegraf (deployed by parent Sasquatch chart)
-    enabled: true
+    enabled: false
 
   promptProcessing:
     # -- Enable user prompt-processing
-    enabled: true
+    enabled: false
 
   kafkaConnectManager:
     # -- Enable user kafka-connect-manager
-    enabled: true
+    enabled: false
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster.
