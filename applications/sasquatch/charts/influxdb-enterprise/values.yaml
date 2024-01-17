@@ -253,7 +253,7 @@ data:
       wal-fsync-delay: "100ms"
       cache-max-memory-size: 0
     antiEntropy:
-      enabled: false
+      enabled: true
     http:
       flux-enabled: true
       auth-enabled: true

@@ -17,7 +17,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"data"` |  |
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
-| data.config.antiEntropy.enabled | bool | `false` |  |
+| data.config.antiEntropy.enabled | bool | `true` |  |
 | data.config.cluster.log-queries-after | string | `"15s"` |  |
 | data.config.cluster.max-concurrent-queries | int | `1000` |  |
 | data.config.cluster.query-timeout | string | `"300s"` |  |
