@@ -274,7 +274,6 @@ chronograf:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
-
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
@@ -286,3 +285,6 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://usdf-rsp.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
+
+kapacitor:
+  influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
