@@ -222,6 +222,10 @@ source-kafka-connect-manager:
   env:
     kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
+# -- Override kafka-connect-manager-enterprise configuration.
+kafka-connect-manager-enterprise:
+  enabled: false
+
 # -- Override telegraf-kafka-consumer configuration.
 telegraf-kafka-consumer: {}
 

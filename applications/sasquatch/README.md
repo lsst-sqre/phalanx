@@ -49,6 +49,7 @@ Rubin Observatory's telemetry service.
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
 | kafdrop.enabled | bool | `true` | Enable Kafdrop. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
+| kafka-connect-manager-enterprise | object | `{"enabled":false}` | Override kafka-connect-manager-enterprise configuration. |
 | kapacitor.enabled | bool | `true` | Enable Kapacitor. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
@@ -94,12 +95,15 @@ Rubin Observatory's telemetry service.
 | influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"data"` |  |
 | influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
 | influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
-| influxdb-enterprise.data.config.anti_entropy.enabled | bool | `false` |  |
+| influxdb-enterprise.data.config.antiEntropy.enabled | bool | `true` |  |
 | influxdb-enterprise.data.config.cluster.log-queries-after | string | `"15s"` |  |
 | influxdb-enterprise.data.config.cluster.max-concurrent-queries | int | `1000` |  |
 | influxdb-enterprise.data.config.cluster.query-timeout | string | `"300s"` |  |
-| influxdb-enterprise.data.config.continuous_queries.enabled | bool | `false` |  |
+| influxdb-enterprise.data.config.continuousQueries.enabled | bool | `false` |  |
+| influxdb-enterprise.data.config.data.cache-max-memory-size | int | `0` |  |
 | influxdb-enterprise.data.config.data.trace-logging-enabled | bool | `true` |  |
+| influxdb-enterprise.data.config.data.wal-fsync-delay | string | `"100ms"` |  |
+| influxdb-enterprise.data.config.hintedHandoff.max-size | int | `107374182400` |  |
 | influxdb-enterprise.data.config.http.auth-enabled | bool | `true` |  |
 | influxdb-enterprise.data.config.http.flux-enabled | bool | `true` |  |
 | influxdb-enterprise.data.config.logging.level | string | `"debug"` |  |
@@ -232,6 +236,67 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner. |
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka. |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
+| kafka-connect-manager-enterprise.enabled | bool | `true` | Enable Kafka Connect Manager. |
+| kafka-connect-manager-enterprise.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
+| kafka-connect-manager-enterprise.env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
+| kafka-connect-manager-enterprise.env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
+| kafka-connect-manager-enterprise.image.pullPolicy | string | `"IfNotPresent"` |  |
+| kafka-connect-manager-enterprise.image.repository | string | `"ghcr.io/lsst-sqre/kafkaconnect"` |  |
+| kafka-connect-manager-enterprise.image.tag | string | `"1.3.1"` |  |
+| kafka-connect-manager-enterprise.influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
+| kafka-connect-manager-enterprise.influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxErrorPolicy | string | `"NOOP"` | Error policy, see connector documetation for details. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
+| kafka-connect-manager-enterprise.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
+| kafka-connect-manager-enterprise.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
+| kafka-connect-manager-enterprise.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
+| kafka-connect-manager-enterprise.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
+| kafka-connect-manager-enterprise.jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table. |
+| kafka-connect-manager-enterprise.jdbcSink.autoEvolve | string | `"false"` | Whether to automatically add columns in the table schema. |
+| kafka-connect-manager-enterprise.jdbcSink.batchSize | string | `"3000"` | Specifies how many records to attempt to batch together for insertion into the destination table. |
+| kafka-connect-manager-enterprise.jdbcSink.connectionUrl | string | `"jdbc:postgresql://localhost:5432/mydb"` | Database connection URL. |
+| kafka-connect-manager-enterprise.jdbcSink.dbTimezone | string | `"UTC"` | Name of the JDBC timezone that should be used in the connector when inserting time-based values. |
+| kafka-connect-manager-enterprise.jdbcSink.enabled | bool | `false` | Whether the JDBC Sink connector is deployed. |
+| kafka-connect-manager-enterprise.jdbcSink.insertMode | string | `"insert"` | The insertion mode to use. Supported modes are: `insert`, `upsert` and `update`. |
+| kafka-connect-manager-enterprise.jdbcSink.maxRetries | string | `"10"` | The maximum number of times to retry on errors before failing the task. |
+| kafka-connect-manager-enterprise.jdbcSink.name | string | `"postgres-sink"` | Name of the connector to create. |
+| kafka-connect-manager-enterprise.jdbcSink.retryBackoffMs | string | `"3000"` | The time in milliseconds to wait following an error before a retry attempt is made. |
+| kafka-connect-manager-enterprise.jdbcSink.tableNameFormat | string | `"${topic}"` | A format string for the destination table name. |
+| kafka-connect-manager-enterprise.jdbcSink.tasksMax | string | `"10"` | Number of Kafka Connect tasks. |
+| kafka-connect-manager-enterprise.jdbcSink.topicRegex | string | `".*"` | Regex for selecting topics. |
+| kafka-connect-manager-enterprise.s3Sink.behaviorOnNullValues | string | `"fail"` | How to handle records with a null value (for example, Kafka tombstone records). Valid options are ignore and fail. |
+| kafka-connect-manager-enterprise.s3Sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
+| kafka-connect-manager-enterprise.s3Sink.enabled | bool | `false` | Whether the Amazon S3 Sink connector is deployed. |
+| kafka-connect-manager-enterprise.s3Sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
+| kafka-connect-manager-enterprise.s3Sink.flushSize | string | `"1000"` | Number of records written to store before invoking file commits. |
+| kafka-connect-manager-enterprise.s3Sink.locale | string | `"en-US"` | The locale to use when partitioning with TimeBasedPartitioner. |
+| kafka-connect-manager-enterprise.s3Sink.name | string | `"s3-sink"` | Name of the connector to create. |
+| kafka-connect-manager-enterprise.s3Sink.partitionDurationMs | string | `"3600000"` | The duration of a partition in milliseconds, used by TimeBasedPartitioner. Default is 1h for an hourly based partitioner. |
+| kafka-connect-manager-enterprise.s3Sink.pathFormat | string | `"'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"` | Pattern used to format the path in the S3 object name. |
+| kafka-connect-manager-enterprise.s3Sink.rotateIntervalMs | string | `"600000"` | The time interval in milliseconds to invoke file commits. Set to 10 minutes by default. |
+| kafka-connect-manager-enterprise.s3Sink.s3BucketName | string | `""` | s3 bucket name. The bucket must already exist at the s3 provider. |
+| kafka-connect-manager-enterprise.s3Sink.s3PartRetries | int | `3` | Maximum number of retry attempts for failed requests. Zero means no retries. |
+| kafka-connect-manager-enterprise.s3Sink.s3PartSize | int | `5242880` | The Part Size in S3 Multi-part Uploads. Valid Values: [5242880,…,2147483647] |
+| kafka-connect-manager-enterprise.s3Sink.s3Region | string | `"us-east-1"` | s3 region |
+| kafka-connect-manager-enterprise.s3Sink.s3RetryBackoffMs | int | `200` | How long to wait in milliseconds before attempting the first retry of a failed S3 request. |
+| kafka-connect-manager-enterprise.s3Sink.s3SchemaCompatibility | string | `"NONE"` | s3 schema compatibility |
+| kafka-connect-manager-enterprise.s3Sink.schemaCacheConfig | int | `5000` | The size of the schema cache used in the Avro converter. |
+| kafka-connect-manager-enterprise.s3Sink.storeUrl | string | `""` | The object storage connection URL, for non-AWS s3 providers. |
+| kafka-connect-manager-enterprise.s3Sink.tasksMax | int | `1` | Number of Kafka Connect tasks. |
+| kafka-connect-manager-enterprise.s3Sink.timestampExtractor | string | `"Record"` | The extractor determines how to obtain a timestamp from each record. |
+| kafka-connect-manager-enterprise.s3Sink.timestampField | string | `""` | The record field to be used as timestamp by the timestamp extractor. Only applies if timestampExtractor is set to RecordField. |
+| kafka-connect-manager-enterprise.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner. |
+| kafka-connect-manager-enterprise.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka. |
+| kafka-connect-manager-enterprise.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration. |
 | rest-proxy.configurationOverrides | object | `{"access.control.allow.headers":"origin,content-type,accept,authorization","access.control.allow.methods":"GET,POST,PUT,DELETE","client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
 | rest-proxy.customEnv | string | `nil` | Kafka REST additional env variables |

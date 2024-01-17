@@ -17,12 +17,15 @@ Run InfluxDB Enterprise on Kubernetes
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"data"` |  |
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
 | data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
-| data.config.anti_entropy.enabled | bool | `false` |  |
+| data.config.antiEntropy.enabled | bool | `true` |  |
 | data.config.cluster.log-queries-after | string | `"15s"` |  |
 | data.config.cluster.max-concurrent-queries | int | `1000` |  |
 | data.config.cluster.query-timeout | string | `"300s"` |  |
-| data.config.continuous_queries.enabled | bool | `false` |  |
+| data.config.continuousQueries.enabled | bool | `false` |  |
+| data.config.data.cache-max-memory-size | int | `0` |  |
 | data.config.data.trace-logging-enabled | bool | `true` |  |
+| data.config.data.wal-fsync-delay | string | `"100ms"` |  |
+| data.config.hintedHandoff.max-size | int | `107374182400` |  |
 | data.config.http.auth-enabled | bool | `true` |  |
 | data.config.http.flux-enabled | bool | `true` |  |
 | data.config.logging.level | string | `"debug"` |  |

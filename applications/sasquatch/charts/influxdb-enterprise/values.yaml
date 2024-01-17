@@ -250,8 +250,10 @@ data:
   config:
     data:
       trace-logging-enabled: true
-    anti_entropy:
-      enabled: false
+      wal-fsync-delay: "100ms"
+      cache-max-memory-size: 0
+    antiEntropy:
+      enabled: true
     http:
       flux-enabled: true
       auth-enabled: true
@@ -259,7 +261,9 @@ data:
       max-concurrent-queries: 1000
       query-timeout: "300s"
       log-queries-after: "15s"
-    continuous_queries:
+    hintedHandoff:
+      max-size: 107374182400
+    continuousQueries:
       enabled: false
     logging:
       level: "debug"

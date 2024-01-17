@@ -104,6 +104,7 @@ influxdb-enterprise:
         cpu: 8
 
 kafka-connect-manager:
+  enabled: false
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
     # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
@@ -183,6 +184,87 @@ kafka-connect-manager:
         repairerConnector: false
         topicsRegex: ".*LaserTracker"
 
+kafka-connect-manager-enterprise:
+  enabled: true
+  influxdbSink:
+    connectInfluxUrl: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+    connectInfluxDb: "efd"
+    connectors:
+      enterprise-auxtel:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
+      enterprise-maintel:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+      enterprise-mtmount:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTMount"
+        tasksMax: "8"
+      enterprise-comcam:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
+      enterprise-eas:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
+      enterprise-latiss:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
+      enterprise-m1m3:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTM1M3"
+        tasksMax: "8"
+      enterprise-m2:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+      enterprise-obssys:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+      enterprise-ocps:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*OCPS"
+      enterprise-test:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: "lsst.sal.Test"
+      enterprise-pmd:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*PMD"
+      enterprise-calsys:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+      enterprise-mtaircompressor:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTAirCompressor"
+      enterprise-genericcamera:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*GCHeaderService|.*GenericCamera"
+      enterprise-gis:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*GIS"
+      enterprise-mtvms:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTVMS"
+      enterprise-lasertracker:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*LaserTracker"
+
 kafdrop:
   ingress:
     enabled: true
@@ -192,7 +274,6 @@ chronograf:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
-
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
@@ -204,3 +285,6 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://usdf-rsp.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfprod.json
+
+kapacitor:
+  influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
