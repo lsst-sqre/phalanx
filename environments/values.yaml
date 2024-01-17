@@ -65,6 +65,9 @@ applications:
   # cluster.
   ingress-nginx: true
 
+  # -- Enable the jira-data-proxy application
+  jira-data-proxy: false
+
   # -- Enable the kubernetes-replicator application
   kubernetes-replicator: false
 

@@ -49,6 +49,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    argo-workflows/index
    alert-stream-broker/index
    exposurelog/index
+   jira-data-proxy/index
    narrativelog/index
    obsloctap/index
    plot-navigator/index

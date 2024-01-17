@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "tickets-DM-42460"
+description: Jira API read-only proxy for Times Square users.
+name: jira-data-proxy
+sources:
+  - https://github.com/lsst-sqre/jira-data-proxy
+type: application
+version: 1.0.0

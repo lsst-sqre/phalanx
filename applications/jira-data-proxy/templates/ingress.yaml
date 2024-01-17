@@ -1,0 +1,31 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "jira-data-proxy"
+  labels:
+    {{- include "jira-data-proxy.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  loginRedirect: false # endpoint is for API use only
+template:
+  metadata:
+    name: "jira-data-proxy"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "jira-data-proxy"
+                  port:
+                    number: 8080
