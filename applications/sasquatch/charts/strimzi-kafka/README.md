@@ -10,7 +10,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | cluster.releaseLabel | string | `"site-prom"` | Site wide label required for gathering Prometheus metrics if they are enabled. |
 | connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
 | connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
-| connect.enabled | bool | `true` | Enable Kafka Connect. |
+| connect.enabled | bool | `false` | Enable Kafka Connect. |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
