@@ -4,3 +4,4 @@ description: Publish observing schedule
 version: 1.0.0
 sources:
   - https://github.com/lsst-dm/obsloctap
+appVersion: ""

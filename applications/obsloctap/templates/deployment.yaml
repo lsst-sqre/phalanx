@@ -39,35 +39,20 @@ spec:
           emptyDir: {}
       # Have to fix permissions on the pgpass file.
       # init container pattern borrowed from vo-cutouts.
-      initContainers:
-        - name: fix-secret-permissions
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: Always
-          command:
-            - "/bin/bash"
-            - "-c"
-            - |
-              cp -RL /home/worker/secrets-raw/* /home/worker/.lsst/
-              chmod 0400 /home/worker/.lsst/*
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-          volumeMounts:
-            - name: "butler-secrets"
-              mountPath: "/home/worker/.lsst"
-            - name: "butler-secrets-raw"
-              mountPath: "/home/worker/secrets-raw"
-              readOnly: true
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
-                - all
+                - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/home/worker/.lsst/"
+            - name: "butler-secrets-raw"
+              mountPath: "/home/worker/secrets-raw/"
+              readOnly: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -79,25 +64,16 @@ spec:
               path: /obsloctap
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+              mountPath: "/tmp"
           volumeMounts:
             - name: butler-secrets
               mountPath: "/home/worker/.lsst/"
-            - name: "cache-dir"
-              mountPath: "/home/worker/cache"
-            - name: "tmp"
-              mountPath: "/tmp"
           env:
-            - name: "LOG_CACHE_DIR"
-              value: "/home/worker/cache"
-            - name: "PGPASSFILE"
-              value: "/home/worker/.lsst/postgres-credentials.txt"
-            - name: "AWS_SHARED_CREDENTIALS_FILE"
-              value: "/home/worker/.lsst/aws-credentials.ini"
-            - name: "S3_ENDPOINT_URL"
-              value: "https://storage.googleapis.com"
-            - name: "SCRIPT_NAME"
-              value: "/obsloctap"
+            - name: "PGPASS"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "password"
 {{- range $key, $value := .Values.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
