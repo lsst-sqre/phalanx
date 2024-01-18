@@ -241,8 +241,8 @@ class ApplicationService:
         HelmFailedError
             Raised if Helm fails.
         """
-        self.add_helm_repositories([app_name], quiet=True)
-        self._helm.repo_update(quiet=True)
+        if self.add_helm_repositories([app_name], quiet=True):
+            self._helm.repo_update(quiet=True)
         self._helm.dependency_update(app_name, quiet=True)
         environment = self._config.load_environment(env_name)
         values = self._build_injected_values(app_name, environment)
