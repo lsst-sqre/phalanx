@@ -6,8 +6,9 @@ environment:
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
   EFD: "usdf-efd"
   database_schema: "obsloctap_dev"
-  SECRET_PATH: "secret/rubin/usdf-butler/postgres"
-
+  vaultUrl: "https://vault.slac.stanford.edu"
+  vaultPathPrefix: secret/rubin/usdf-butler/postgres
+  obsloctapVaultPrefix: secret/rubin/usdf-butler/postgres
 
 config:
   volumes:

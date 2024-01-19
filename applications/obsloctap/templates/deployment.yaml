@@ -26,13 +26,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        # butler-secrets-raw is the secrets we get from vault
-        - name: "butler-secrets-raw"
-          secret:
-            secretName: {{ include "obsloctap.fullname" . }}
-        # butler-secrets are the copied and chmoded versions
-        - name: "butler-secrets"
-          emptyDir: {}
         - name: "cache-dir"
           emptyDir: {}
         - name: "tmp"
@@ -47,12 +40,6 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          volumeMounts:
-            - name: "butler-secrets"
-              mountPath: "/home/worker/.lsst/"
-            - name: "butler-secrets-raw"
-              mountPath: "/home/worker/secrets-raw/"
-              readOnly: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -64,12 +51,28 @@ spec:
               path: /obsloctap
               port: http
           resources:
-              mountPath: "/tmp"
+              {{- toYaml .Values.resources | nindent 12 }}
+
           volumeMounts:
             - name: butler-secrets
               mountPath: "/home/worker/.lsst/"
           env:
-            - name: "PGPASS"
+            - name: "database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "database"
+            - name: "database_user"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "username"
+            - name: "database_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "url"
+            - name: "database_password"
               valueFrom:
                 secretKeyRef:
                   name: obsloctap-postgres

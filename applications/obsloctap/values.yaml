@@ -7,7 +7,7 @@ image:
 
   # -- Tag of obsloctap image to use
   # @default -- The appVersion of the chart
-  tag: ""
+  tag: "tickets-dm-38824"
 
 # -- Environment variables (e.g. butler configuration/auth parms) for panel
 environment: {}
