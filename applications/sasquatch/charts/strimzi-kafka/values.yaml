@@ -104,6 +104,12 @@ kafkaExporter:
   topicRegex: ".*"
   # -- Consumer groups to monitor
   groupRegex: ".*"
+  # -- Logging level
+  logging: info
+  # -- Enable Sarama logging for pod
+  enableSaramaLogging: false
+  # -- Resource specification for Kafka exporter
+  resources: {}
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.

@@ -159,6 +159,10 @@ spec:
   kafkaExporter:
     topicRegex: {{ .Values.kafkaExporter.topicRegex }}
     groupRegex: {{ .Values.kafkaExporter.groupRegex }}
-    logging: debug
-    enableSaramaLogging: true
+    logging: {{ .Values.kafkaExporter.logging }}
+    enableSaramaLogging: {{ .Values.kafkaExporter.enableSaramaLogging }}
+    {{- with .Values.kafkaExporter.resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
   {{- end }}
