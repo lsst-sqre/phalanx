@@ -390,12 +390,14 @@ maintenance:
   affinity: {}
 
 operator:
-  # -- Resource limits and requests for the Gafaelfawr Kubernetes operator
+  # -- Resource limits and requests for the Gafaelfawr Kubernetes operator.
+  # The limits are artificially higher since the operator pod is also where we
+  # manually run `gafaelfawr audit --fix`, which requires more CPU and memory.
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "100m"
-      memory: "300Mi"
+      cpu: "500m"
+      memory: "500Mi"
     requests:
       cpu: "10m"
       memory: "150Mi"
