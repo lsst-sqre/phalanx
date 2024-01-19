@@ -25,6 +25,14 @@ strimzi-kafka:
       enabled: true
   kafkaExporter:
     enabled: true
+    enableSaramaLogging: true
+    resources:
+      requests:
+        cpu: 200m
+        memory: 64Mi
+      limits:
+        cpu: 500m
+        memory: 128Mi
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
