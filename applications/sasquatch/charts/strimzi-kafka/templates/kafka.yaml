@@ -159,4 +159,6 @@ spec:
   kafkaExporter:
     topicRegex: {{ .Values.kafkaExporter.topicRegex }}
     groupRegex: {{ .Values.kafkaExporter.groupRegex }}
+    logging: debug
+    enableSaramaLogging: true
   {{- end }}
