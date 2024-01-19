@@ -97,7 +97,7 @@ Authentication and identity system
 | operator.affinity | object | `{}` | Affinity rules for the token management pod |
 | operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
 | operator.podAnnotations | object | `{}` | Annotations for the token management pod |
-| operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
+| operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator. The limits are artificially higher since the operator pod is also where we manually run `gafaelfawr audit --fix`, which requires more CPU and memory. |
 | operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
