@@ -9,6 +9,13 @@ config:
   scopes:
     all:
       - "read:image"
+  # Request a delegated token to use for making calls to Butler server with the
+  # end-user's credentials.
+  delegate:
+    internal:
+      service: "datalinker"
+      scopes:
+        - "read:image"
 template:
   metadata:
     name: {{ include "datalinker.fullname" . }}-image
