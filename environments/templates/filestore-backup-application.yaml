@@ -1,4 +1,4 @@
-{{- if .Values.applications.filestore-backup -}}
+{{- if (index .Values "applications" "filestore-backup") -}}
 apiVersion: v1
 kind: Namespace
 metadata:

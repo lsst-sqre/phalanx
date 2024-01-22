@@ -25,7 +25,7 @@ affinity: {}
 # be set in the individual environment values files.
 image:
   # -- Filestore-Backup image to use
-  repository: ghcr.io/lsst-sqre/rubin-google-filestore-tool
+  repository: ghcr.io/lsst-sqre/rubin-google-filestore-tools
   # -- Pull policy for the filestore-backup image
   pullPolicy: "IfNotPresent"
   # -- Tag of filestore-backup image to use

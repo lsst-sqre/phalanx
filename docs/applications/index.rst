@@ -25,6 +25,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
    butler/index
    datalinker/index
+   filestore-backup/index
    hips/index
    linters/index
    livetap/index
