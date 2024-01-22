@@ -1,5 +1,116 @@
 {
   "$defs": {
+    "ControlSystemConfig": {
+      "description": "Configuration for the Control System.",
+      "properties": {
+        "appNamespace": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Set the namespace for the control system components. Each control system application consists of many components that need to know what namespace to which they belong.",
+          "title": "Application Namespace"
+        },
+        "imageTag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The image tag to use for control system images.",
+          "title": "Image Tag"
+        },
+        "siteTag": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The tag that tells the control system component where it is running.",
+          "title": "Site Tag"
+        },
+        "topicName": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Kafka identifier for control system topics.",
+          "title": "Topic Identifier"
+        },
+        "kafkaBrokerAddress": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Kafka broker address for the control system components.",
+          "title": "Kafka Broker Address"
+        },
+        "kafkaTopicReplicationFactor": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Kafka topic replication factor for control system components.",
+          "title": "Kafka Topic Replication Factor"
+        },
+        "schemaRegistryUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The Schema Registry URL for the control system components.",
+          "title": "Schema Registry URL"
+        },
+        "s3EndpointUrl": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "The S3 URL for the environment specific LFA.",
+          "title": "S3 Endpoint URL"
+        }
+      },
+      "title": "ControlSystemConfig",
+      "type": "object"
+    },
     "GCPMetadata": {
       "description": "Google Cloud Platform hosting metadata.\n\nHolds information about where in Google Cloud Platform this Phalanx\nenvironment is hosted. This supports generating documentation that\nincludes this metadata, making it easier for administrators to know what\noptions to pass to :command:`gcloud` to do things such as get Kubernetes\ncredentials.",
       "properties": {
@@ -158,101 +269,16 @@
       "description": "Branch of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
       "title": "Git repository branch"
     },
-    "controlSystemAppNamespace": {
+    "controlSystem": {
       "anyOf": [
         {
-          "type": "string"
+          "$ref": "#/$defs/ControlSystemConfig"
         },
         {
           "type": "null"
         }
       ],
-      "default": null,
-      "title": "Controlsystemappnamespace"
-    },
-    "controlSystemImageTag": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemimagetag"
-    },
-    "controlSystemSiteTag": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemsitetag"
-    },
-    "controlSystemTopicName": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemtopicname"
-    },
-    "controlSystemKafkaBrokerAddress": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemkafkabrokeraddress"
-    },
-    "controlSystemKafkaTopicReplicationFactor": {
-      "anyOf": [
-        {
-          "type": "integer"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemkafkatopicreplicationfactor"
-    },
-    "controlSystemSchemaRegistryUrl": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystemschemaregistryurl"
-    },
-    "controlSystemS3EndpointUrl": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Controlsystems3Endpointurl"
+      "default": null
     }
   },
   "required": [

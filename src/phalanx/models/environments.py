@@ -192,6 +192,71 @@ class EnvironmentBaseConfig(CamelCaseModel):
         return f"{self.vault_path}/write"
 
 
+class ControlSystemConfig(CamelCaseModel):
+    """Configuration for the Control System."""
+
+    app_namespace: str | None = Field(
+        None,
+        title="Application Namespace",
+        description=(
+            "Set the namespace for the control system components. Each control"
+            " system application consists of many components that need to know"
+            " what namespace to which they belong."
+        ),
+    )
+
+    image_tag: str | None = Field(
+        None,
+        title="Image Tag",
+        description=("The image tag to use for control system images."),
+    )
+
+    site_tag: str | None = Field(
+        None,
+        title="Site Tag",
+        description=(
+            "The tag that tells the control system component where it is"
+            " running."
+        ),
+    )
+
+    topic_name: str | None = Field(
+        None,
+        title="Topic Identifier",
+        description="The Kafka identifier for control system topics.",
+    )
+
+    kafka_broker_address: str | None = Field(
+        None,
+        title="Kafka Broker Address",
+        description=(
+            "The Kafka broker address for the control system components."
+        ),
+    )
+
+    kafka_topic_replication_factor: int | None = Field(
+        None,
+        title="Kafka Topic Replication Factor",
+        description=(
+            "The Kafka topic replication factor for control system components."
+        ),
+    )
+
+    schema_registry_url: str | None = Field(
+        None,
+        title="Schema Registry URL",
+        description=(
+            "The Schema Registry URL for the control system components."
+        ),
+    )
+
+    s3_endpoint_url: str | None = Field(
+        None,
+        title="S3 Endpoint URL",
+        description="The S3 URL for the environment specific LFA.",
+    )
+
+
 class EnvironmentConfig(EnvironmentBaseConfig):
     """Configuration for a Phalanx environment.
 
@@ -235,33 +300,7 @@ class EnvironmentConfig(EnvironmentBaseConfig):
         ),
     )
 
-    control_system_app_namespace: str | None = None
-    """Set the namespace for the control system components.
-
-    Each control system application consists of many components that need to
-    know what namespace to which they belong.
-    """
-
-    control_system_image_tag: str | None = None
-    """The image tag to use for control system containers."""
-
-    control_system_site_tag: str | None = None
-    """The tag that tells the control system component where it is running."""
-
-    control_system_topic_name: str | None = None
-    """The Kafka identifier for control system topics."""
-
-    control_system_kafka_broker_address: str | None = None
-    """The Kafka broker address for the control system components."""
-
-    control_system_kafka_topic_replication_factor: int | None = None
-    """The Kafka topic replication factor for control system components."""
-
-    control_system_schema_registry_url: str | None = None
-    """The Schema Registry URL for the control system components."""
-
-    control_system_s3_endpoint_url: str | None = None
-    """The S3 URL for the environment specific LFA."""
+    control_system: ControlSystemConfig | None = None
 
     model_config = ConfigDict(extra="forbid")
 

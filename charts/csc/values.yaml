@@ -72,7 +72,7 @@ annotations: {}
 # _containerPath_ (The path in the container where the secret files will be stored)
 # _secretName_ (OPTIONAL: The secret name if different from _name_)
 # _specialInstructions_ (OPTIONAL: This allows for optional instructions to be used when fixing permissions)
-secretPermFixer: {}
+secretPermFixer: []
 service:
   # -- (bool) This sets the use of a Service API for the application
   use: false

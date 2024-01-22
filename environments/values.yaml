@@ -213,32 +213,14 @@ applications:
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
-# The following settings are used for the control system
-
-# -- Application namespacce for the control system deployment
-# @default -- None, must be set
-controlSystemAppNamespace: ""
-
-# -- Image tag for the control system deployment
-# @default -- None, must be set
-controlSystemImageTag: ""
-
-# -- Site tag for the control system deployment
-# @default -- None, must be set
-controlSystemSiteTag: ""
-
-# -- Topic name tag for the control system deployment
-controlSystemTopicName: sal
-
-# -- Kafka broker address for the control system deployment
-controlSystemKafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-
-# -- Kafka topic replication factor for control system topics
-controlSystemKafkaTopicReplicationFactor: 3
-
-# -- Schema registry URL for the control system deployment
-controlSystemSchemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
-
-# -- S3 endpoint (LFA) for the control system deployment
-# @default -- None, must be set: ""
-controlSystemS3EndpointUrl: ""
+# -- Configuration particular to the control system
+# If this section is used, it can have the following parameters:
+# _appNamespace_ (Set the namespace for the control system components)
+# _imageTag_ (The image tag to use for control system images)
+# _siteTag_ (The tag that tells the control system component where it is running)
+# _topicName_ (The Kafka identifier for control system topics)
+# _kafkaBrokerAddress_ (The Kafka broker address)
+# _kafkaTopicReplicationFactor_ (The Kafka topic replication factor)
+# _schemaRegistryUrl_ (The Schema Registry URL)
+# _s3EndpointUrl_ (The S3 URL for the environment specific LFA)
+controlSystem: null

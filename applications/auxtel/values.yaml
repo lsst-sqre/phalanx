@@ -65,34 +65,35 @@ global:
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
 
-  # -- Application namespacce for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemAppNamespace: ""
+  controlSystem:
+    # -- Application namespace for the control system deployment
+    # @default -- Set by ArgoCD
+    appNamespace: ""
 
-  # -- Image tag for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemImageTag: ""
+    # -- Image tag for the control system deployment
+    # @default -- Set by ArgoCD
+    imageTag: ""
 
-  # -- Site tag for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemSiteTag: ""
+    # -- Site tag for the control system deployment
+    # @default -- Set by ArgoCD
+    siteTag: ""
 
-  # -- Topic name tag for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemTopicName: ""
+    # -- Topic name tag for the control system deployment
+    # @default -- Set by ArgoCD
+    topicName: ""
 
-  # -- Kafka broker address for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemKafkaBrokerAddress: ""
+    # -- Kafka broker address for the control system deployment
+    # @default -- Set by ArgoCD
+    kafkaBrokerAddress: ""
 
-  # -- Kafka topic replication factor for control system topics
-  # @default -- Set by ArgoCD
-  controlSystemKafkaTopicReplicationFactor: ""
+    # -- Kafka topic replication factor for control system topics
+    # @default -- Set by ArgoCD
+    kafkaTopicReplicationFactor: ""
 
-  # -- Schema registry URL for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemSchemaRegistryUrl: ""
+    # -- Schema registry URL for the control system deployment
+    # @default -- Set by ArgoCD
+    schemaRegistryUrl: ""
 
-  # -- S3 endpoint (LFA) for the control system deployment
-  # @default -- Set by ArgoCD
-  controlSystemS3EndpointUrl: ""
+    # -- S3 endpoint (LFA) for the control system deployment
+    # @default -- Set by ArgoCD
+    s3EndpointUrl: ""

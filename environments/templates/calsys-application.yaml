@@ -31,22 +31,22 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
-        - name: "global.controlSystemAppNamespace"
+        - name: "global.controlSystem.appNamespace"
           value: "calsys"
-        - name: "global.controlSystemImageTag"
-          value: {{ .Values.controlSystemImageTag | quote }}
-        - name: "global.controlSystemSiteTag"
-          value: {{ .Values.controlSystemSiteTag | quote }}
-        - name: "global.controlSystemTopicName"
-          value: {{ .Values.controlSystemTopicName | quote }}
-        - name: "global.controlSystemKafkaBrokerAddress"
-          value: {{ .Values.controlSystemKafkaBrokerAddress | quote }}
-        - name: "global.controlSystemKafkaTopicReplicationFactor"
-          value: {{ .Values.controlSystemKafkaTopicReplicationFactor | quote }}
-        - name: "global.controlSystemSchemaRegistryUrl"
-          value: {{ .Values.controlSystemSchemaRegistryUrl | quote }}
-        - name: "global.controlSystemS3EndpointUrl"
-          value: {{ .Values.controlSystemS3EndpointUrl | quote }}
+        - name: "global.controlSystem.imageTag"
+          value: {{ .Values.controlSystem.imageTag | quote }}
+        - name: "global.controlSystem.siteTag"
+          value: {{ .Values.controlSystem.siteTag | quote }}
+        - name: "global.controlSystem.topicName"
+          value: {{ .Values.controlSystem.topicName | quote }}
+        - name: "global.controlSystem.kafkaBrokerAddress"
+          value: {{ .Values.controlSystem.kafkaBrokerAddress | quote }}
+        - name: "global.controlSystem.kafkaTopicReplicationFactor"
+          value: {{ .Values.controlSystem.kafkaTopicReplicationFactor | quote }}
+        - name: "global.controlSystem.schemaRegistryUrl"
+          value: {{ .Values.controlSystem.schemaRegistryUrl | quote }}
+        - name: "global.controlSystem.s3EndpointUrl"
+          value: {{ .Values.controlSystem.s3EndpointUrl | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"

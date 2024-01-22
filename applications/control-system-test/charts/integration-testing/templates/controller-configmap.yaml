@@ -9,7 +9,7 @@ data:
   artifactRepository: |    # However, all nested maps must be strings
     archiveLogs: true
     s3:
-      endpoint: {{ $.Values.global.controlSystemS3EndpointUrl | trimPrefix "https://" }}
+      endpoint: {{ $.Values.global.controlSystem.s3EndpointUrl | trimPrefix "https://" }}
       bucket: {{ .Values.s3Bucket }}
       insecure: false
       accessKeySecret:

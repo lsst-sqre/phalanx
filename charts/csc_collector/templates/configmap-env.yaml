@@ -3,10 +3,10 @@ kind: ConfigMap
 metadata:
   name: csc-env-config
 data:
-    LSST_SITE: {{ $.Values.global.controlSystemSiteTag }}
-    LSST_TOPIC_SUBNAME: {{ $.Values.global.controlSystemTopicName }}
-    LSST_KAFKA_BROKER_ADDR: {{ $.Values.global.controlSystemKafkaBrokerAddress }}
-    LSST_KAFKA_REPLICATION_FACTOR: {{ $.Values.global.controlSystemKafkaTopicReplicationFactor | quote }}
+    LSST_SITE: {{ $.Values.global.controlSystem.siteTag }}
+    LSST_TOPIC_SUBNAME: {{ $.Values.global.controlSystem.topicName }}
+    LSST_KAFKA_BROKER_ADDR: {{ $.Values.global.controlSystem.kafkaBrokerAddress }}
+    LSST_KAFKA_REPLICATION_FACTOR: {{ $.Values.global.controlSystem.kafkaTopicReplicationFactor | quote }}
     LSST_KAFKA_SECURITY_USERNAME: ts-salkafka
-    LSST_SCHEMA_REGISTRY_URL: {{ $.Values.global.controlSystemSchemaRegistryUrl }}
-    S3_ENDPOINT_URL: {{ $.Values.global.controlSystemS3EndpointUrl }}
+    LSST_SCHEMA_REGISTRY_URL: {{ $.Values.global.controlSystem.schemaRegistryUrl }}
+    S3_ENDPOINT_URL: {{ $.Values.global.controlSystem.s3EndpointUrl }}

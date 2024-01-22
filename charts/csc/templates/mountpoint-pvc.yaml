@@ -5,7 +5,7 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "chart.name" . }}-{{ $values.name }}-pvc
-  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
   {{- if $values.ids }}
   annotations:
     {{- if $values.ids.uid }}

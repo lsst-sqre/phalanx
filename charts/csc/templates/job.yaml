@@ -2,7 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: {{ include "chart.name" . }}
-  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
   labels:
     {{- include "csc.labels" . | nindent 4 }}
   {{- with .Values.annotations }}
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: {{ include "csc.class" . }}
-          {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystemImageTag }}
+          {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystem.imageTag }}
           image: "{{ .Values.image.repository }}:{{ $imageTag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           stdin: true
