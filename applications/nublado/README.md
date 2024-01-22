@@ -54,6 +54,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumeMounts` (similar to the main `volumeMountss` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
+| controller.config.lab.installTsSalKafkaSecret | bool | `false` | Flag to put T&S SAL Kafka secrets into pod. |
 | controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
 | controller.config.lab.nodeSelector | object | `{}` | Node selector rules for user lab pods |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
