@@ -1,8 +1,6 @@
 extends: default
 
-ignore:
-  - templates
-  - shared/charts
+ignore: templates
 
 rules:
   line-length: disable
