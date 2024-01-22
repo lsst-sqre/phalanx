@@ -11,6 +11,7 @@
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
+| applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.giftless | bool | `false` | Enable the giftless application |
 | applications.hips | bool | `false` | Enable the HiPS application |

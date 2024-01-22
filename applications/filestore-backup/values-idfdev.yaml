@@ -1,0 +1,8 @@
+tool:
+  instance: "fshare-instance-dev"
+  zone: "b"
+  backup:
+    debug: true
+  purge:
+    debug: true
+    keep: 3
