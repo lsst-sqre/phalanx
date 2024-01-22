@@ -294,7 +294,7 @@ controller:
       # that key.
       secrets: []
 
-      # -- Available lab sizes. Names must be chosen from `fine`,
+      # -- Available lab sizes. Sizes must be chosen from `fine`,
       # `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`,
       # `gargantuan`, and `colossal` in that order. Each should specify the
       # maximum CPU equivalents and memory. SI suffixes for memory are
