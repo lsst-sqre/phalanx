@@ -286,6 +286,9 @@ class ApplicationService:
             "global.baseUrl": f"https://{environment.fqdn}",
             "global.vaultSecretsPath": environment.vault_path_prefix,
         }
+        if environment.gcp:
+            values["global.gcpProjectId"] = environment.gcp.project_id
+            values["global.gcpRegion"] = environment.gcp.region
         if environment.butler_repository_index:
             butler_index = environment.butler_repository_index
             values["global.butlerRepositoryIndex"] = butler_index

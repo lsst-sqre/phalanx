@@ -2,5 +2,7 @@
   "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres",
   "global.host=data-dev.lsst.cloud",
   "global.baseUrl=https://data-dev.lsst.cloud",
-  "global.vaultSecretsPath=secret/phalanx/idfdev"
+  "global.vaultSecretsPath=secret/phalanx/idfdev",
+  "global.gcpProjectId=science-platform-dev-7696",
+  "global.gcpRegion=us-central1"
 ]
