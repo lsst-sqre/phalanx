@@ -5,11 +5,11 @@ description: Deployment for the LSST Operators Visualization Environment
 dependencies:
 - name: csc_collector
   version: 1.0.0
-  repository: "file://../../charts/csc_collector"
+  repository: file://../../charts/csc_collector
 - name: csc
   alias: love-commander
   version: 1.0.0
-  repository: "file://../../charts/csc"
+  repository: file://../../charts/csc
 - name: love-manager
   version: 1.0.0
 - name: love-nginx

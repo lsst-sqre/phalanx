@@ -5,21 +5,21 @@ description: Deployment for the UWS and DM OCPS CSCs
 dependencies:
 - name: csc_collector
   version: 1.0.0
-  repository: "file://../../charts/csc_collector"
+  repository: file://../../charts/csc_collector
 - name: csc
   alias: atocps
   version: 1.0.0
   condition: atocps.enabled
-  repository: "file://../../charts/csc"
+  repository: file://../../charts/csc
 - name: csc
   alias: ccocps
   version: 1.0.0
   condition: ccocps.enabled
-  repository: "file://../../charts/csc"
+  repository: file://../../charts/csc
 - name: csc
   alias: mtocps
   version: 1.0.0
   condition: mtocps.enabled
-  repository: "file://../../charts/csc"
+  repository: file://../../charts/csc
 - name: uws-api-server
   version: 1.5.0
