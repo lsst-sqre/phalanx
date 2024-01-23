@@ -1,4 +1,4 @@
-tool:
+config:
   instance: "fshare-instance-dev"
   zone: "b"
   backup:

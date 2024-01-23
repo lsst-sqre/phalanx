@@ -26,32 +26,41 @@ affinity: {}
 image:
   # -- Filestore-Backup image to use
   repository: ghcr.io/lsst-sqre/rubin-google-filestore-tools
+
   # -- Pull policy for the filestore-backup image
   pullPolicy: "IfNotPresent"
+
   # -- Tag of filestore-backup image to use
   # @default -- The appVersion of the chart
   tag: ""
 
-tool:
+config:
   # -- Filestore instance (e.g. "fshare-instance-dev")
-  # @default -- Must be overridden in environment-specific values file
+  # @default -- None, must be set
   instance: ""
+
   # -- Zone for Filestore instance (e.g. "b" from "us-central1-b")
-  # @default -- Must be overridden in environment-specific values file
+  # @default -- None, must be set
   zone: ""
+
   # -- File Share name for filestore instance.  Always "share1" unless
   # storage is on an Enterprise tier
   fileShare: "share1"
   backup:
     # -- Turn on debugging mode
     debug: false
-    # -- Backup schedule
+
+    # -- Backup schedule, in Unix cron job format
+    # @default -- fields are minute hour day-of-month month day-of-week
     schedule: "0 10 * * *"
   purge:
     # -- Turn on debugging mode
     debug: false
-    # -- purge schedule
+
+    # -- Purge schedule, in Unix cron job format:
+    # @default -- fields are minute hour day-of-month month day-of-week
     schedule: "45 10 * * *"
+
     # -- Number of backups to keep when purging
     keep: 6
 
@@ -59,9 +68,12 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
   # -- GCP Project ID
   # @default -- Set by Argo CD
+
   gcpProjectId: ""
+
   # -- GCP Region
   # @default -- Set by Argo CD
   gcpRegion: ""
