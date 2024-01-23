@@ -1,0 +1,38 @@
+{{- if (index .Values.applications.rsp "filestore-backup") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "filestore-backup"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "filestore-backup"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "filestore-backup"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/rsp/filestore-backup"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.gcpProjectId"
+          value: {{ .Values.gcp.projectId }}
+        - name: "global.gcpRegion"
+          value: {{ .Values.gcp.region }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

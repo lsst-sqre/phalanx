@@ -13,6 +13,14 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfdev"
 
 applications:
+  infrastructure:
+    cert-manager: true
+    gafaelfawr: true
+    ingress-nginx: true
+    mobu: true
+    strimzi: true
+    vault-secrets-operator: true
+
   argo-workflows: true
   butler: true
   datalinker: true
@@ -30,7 +38,6 @@ applications:
   ssotap: true
   squareone: true
   sqlproxy-cross-project: true
-  strimzi: true
   tap: true
   telegraf: true
   telegraf-ds: true

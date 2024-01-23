@@ -192,11 +192,11 @@ fi
 # Argo CD depends a Vault-created secret for its credentials, so
 # vault-secrets-operator has to be installed first.
 echo "Updating or installing vault-secrets-operator..."
-helm dependency update ../applications/vault-secrets-operator
-helm upgrade vault-secrets-operator ../applications/vault-secrets-operator \
+helm dependency update ../applications/infrastructure/vault-secrets-operator
+helm upgrade vault-secrets-operator ../applications/infrastructure/vault-secrets-operator \
   --install \
-  --values ../applications/vault-secrets-operator/values.yaml \
-  --values "../applications/vault-secrets-operator/values-$ENVIRONMENT.yaml" \
+  --values ../applications/infrastructure/vault-secrets-operator/values.yaml \
+  --values "../applications/infrastructure/vault-secrets-operator/values-$ENVIRONMENT.yaml" \
   --set "vault-secrets-operator.vault.address=$VAULT_ADDR" \
   --create-namespace \
   --namespace vault-secrets-operator \
@@ -204,16 +204,19 @@ helm upgrade vault-secrets-operator ../applications/vault-secrets-operator \
   --wait
 
 echo "Updating or installing Argo CD using Helm..."
-helm dependency update ../applications/argocd
-helm upgrade argocd ../applications/argocd \
+helm dependency update ../applications/infrastructure/argocd
+helm upgrade argocd ../applications/infrastructure/argocd \
   --install \
-  --values ../applications/argocd/values.yaml \
-  --values "../applications/argocd/values-$ENVIRONMENT.yaml" \
+  --values ../applications/infrastructure/argocd/values.yaml \
+  --values "../applications/infrastructure/argocd/values-$ENVIRONMENT.yaml" \
   --set "global.vaultSecretsPath=$VAULT_PATH_PREFIX" \
   --create-namespace \
   --namespace argocd \
   --timeout 5m \
   --wait
+
+echo "Create the infrastructure project..."
+kubectl apply -f ../environments/templates/infrastructure/infrastructure-project.yaml
 
 echo "Logging in to Argo CD..."
 argocd login \
@@ -242,16 +245,16 @@ argocd app sync science-platform \
   --port-forward \
   --port-forward-namespace argocd
 
-if [ "$(yq -r '.applications."ingress-nginx"' "$config")" != "false" ]; then
+if [ "$(yq -r '.applications.infrastructure."ingress-nginx"' "$config")" != "false" ]; then
   echo "Syncing ingress-nginx..."
-  argocd app sync ingress-nginx \
+  argocd app sync --project infrastructure ingress-nginx \
     --port-forward \
     --port-forward-namespace argocd
 fi
 
-if [ "$(yq -r '.applications."cert-manager"' "$config")" != "false" ]; then
+if [ "$(yq -r '.applications.infrastructure."cert-manager"' "$config")" != "false" ]; then
   echo "Syncing cert-manager..."
-  argocd app sync cert-manager \
+  argocd app sync --project infrastructure cert-manager \
     --port-forward \
     --port-forward-namespace argocd && \
 
@@ -260,16 +263,16 @@ if [ "$(yq -r '.applications."cert-manager"' "$config")" != "false" ]; then
   kubectl -n cert-manager rollout status deploy/cert-manager-webhook
 fi
 
-if [ "$(yq -r .applications.postgres "$config")" == "true" ]; then
+if [ "$(yq -r .applications.infrastructure.postgres "$config")" == "true" ]; then
   echo "Syncing postgres..."
-  argocd app sync postgres \
+  argocd app sync --project infrastructure postgres \
     --port-forward \
     --port-forward-namespace argocd
 fi
 
-if [ "$(yq -r .applications.gafaelfawr "$config")" != "false" ]; then
+if [ "$(yq -r .applications.infrastructure.gafaelfawr "$config")" != "false" ]; then
   echo "Syncing gafaelfawr..."
-  argocd app sync gafaelfawr \
+  argocd app sync --project infrastructure gafaelfawr \
     --port-forward \
     --port-forward-namespace argocd
 fi

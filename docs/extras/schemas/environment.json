@@ -266,7 +266,14 @@
     },
     "applications": {
       "additionalProperties": {
-        "type": "boolean"
+	"anyOf": [
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "object"
+	  }
+	]
       },
       "description": "List of applications and whether they are enabled",
       "title": "Enabled applications",

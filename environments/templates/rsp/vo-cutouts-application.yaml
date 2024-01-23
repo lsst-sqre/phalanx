@@ -1,0 +1,38 @@
+{{- if (index .Values.applications.rsp "vo-cutouts") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "vo-cutouts"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "vo-cutouts"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "vo-cutouts"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/rsp/vo-cutouts"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.butlerRepositoryIndex"
+          value: {{ .Values.butlerRepositoryIndex | quote }}
+        - name: "global.butlerServerRepositories"
+          value: {{ .Values.butlerServerRepositories | toJson | b64enc }}
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

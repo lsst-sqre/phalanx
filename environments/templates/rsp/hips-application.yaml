@@ -1,0 +1,32 @@
+{{- if (index .Values.applications.rsp "hips") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "hips"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "hips"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "hips"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/rsp/hips"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

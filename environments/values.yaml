@@ -32,204 +32,226 @@ vaultUrl: "https://vault.lsst.codes/"
 vaultPathPrefix: ""
 
 applications:
-  # -- Enable the alert-stream-broker application
-  alert-stream-broker: false
+  # -- Project infrastructure
+  infrastructure:
 
-  # -- Enable the argo-workflows application
-  argo-workflows: false
+    # -- Enable the Argo CD application. This must be enabled for all
+    # environments and is present here only because it makes parsing easier
+    argocd: true
 
-  # -- Enable the Argo CD application. This must be enabled for all
-  # environments and is present here only because it makes parsing easier
-  argocd: true
+    # -- Enable the cert-manager application, required unless the environment
+    # makes separate arrangements to inject a current TLS certificate
+    cert-manager: true
 
-  # -- Enable the auxtel control system application
-  auxtel: false
+    # -- Enable the ingress-nginx application. This is required for all
+    # environments, but is still configurable because currently USDF uses an
+    # unsupported configuration with ingress-nginx deployed in a different
+    # cluster.
+    ingress-nginx: true
 
-  # -- Enable the butler application
-  butler: false
+    # -- Enable the Gafaelfawr application. This is required by Phalanx since
+    # most other applications use `GafaelfawrIngress`
+    gafaelfawr: true
 
-  # -- Enable the calsys control system application
-  calsys: false
+    # -- Enable the mobu application
+    mobu: false
 
-  # -- Enable the cert-manager application, required unless the environment
-  # makes separate arrangements to inject a current TLS certificate
-  cert-manager: true
+    # -- Enable the in-cluster PostgreSQL server. Use of this server is
+    # discouraged in favor of using infrastructure SQL, but will remain
+    # supported for use cases such as minikube test deployments.
+    postgres: false
 
-  # -- Enable the checkerboard application
-  checkerboard: false
+    # -- Enable the strimzi application
+    strimzi: false
 
-  # -- Enable the control-system-test application
-  control-system-test: false
+    # -- Enable the strimzi-access-operator application
+    strimzi-access-operator: false
 
-  # -- Eanble the datalinker application
-  datalinker: false
+    # -- Enable the vault-secrets-operator application. This is required for all
+    # environments.
+    vault-secrets-operator: true
 
-  # -- Enable the eas control system application
-  eas: false
+  # -- Project monitoring
+  monitoring:
 
-  # -- Enable the exposurelog application
-  exposurelog: false
+    # -- Enable the linters application
+    linters: false
 
-  # -- Enable the filestore-backup application
-  filestore-backup: false
+    # -- Enable the sasquatch application
+    sasquatch: false
 
-  # -- Enable the Gafaelfawr application. This is required by Phalanx since
-  # most other applications use `GafaelfawrIngress`
-  gafaelfawr: true
+    # -- Enable the sherlock application
+    sherlock: false
 
-  # -- Enable the giftless application
-  giftless: false
+    # -- Enable the telegraf application
+    telegraf: false
 
-  # -- Enable the HiPS application
-  hips: false
+    # -- Enable the telegraf-ds application
+    telegraf-ds: false
 
-  # -- Enable the ingress-nginx application. This is required for all
-  # environments, but is still configurable because currently USDF uses an
-  # unsupported configuration with ingress-nginx deployed in a different
-  # cluster.
-  ingress-nginx: true
+  # -- Project Prompt Processing
+  prompt:
 
-  # -- Enable the jira-data-proxy application
-  jira-data-proxy: false
+    # -- Enable the next-visit-fan-out application
+    next-visit-fan-out: false
 
-  # -- Enable the kubernetes-replicator application
-  kubernetes-replicator: false
+    # -- Enable the prompt-proto-service-hsc application
+    prompt-proto-service-hsc: false
 
-  # -- Enable the linters application
-  linters: false
+    # -- Enable the prompt-proto-service-latiss application
+    prompt-proto-service-latiss: false
 
-  # -- Enable the livetap application
-  livetap: false
+    # -- Enable the prompt-proto-service-lsstcam application
+    prompt-proto-service-lsstcam: false
 
-  # -- Enable the love control system application
-  love: false
+    # -- Enable the prompt-proto-service-lsstcomcam application
+    prompt-proto-service-lsstcomcam: false
 
-  # -- Enable the mobu application
-  mobu: false
+  # -- Project RSP (Rubin Science Platform)
+  rsp:
 
-  # -- Enable the monitoring application
-  monitoring: false
+    # -- Enable the butler application
+    butler: false
 
-  # -- Enable the narrativelog application
-  narrativelog: false
+    # -- Eanble the datalinker application
+    datalinker: false
 
-  # -- Enable the next-visit-fan-out application
-  next-visit-fan-out: false
+    # -- Enable the filestore-backup application
+    filestore-backup: false
 
-  # -- Enable the noteburst application (required by times-square)
-  noteburst: false
+    # -- Enable the HiPS application
+    hips: false
 
-  # -- Enable the nublado application (v3 of the Notebook Aspect)
-  nublado: false
+    # -- Enable the jira-data-proxy application
+    jira-data-proxy: false
 
-  # -- Enable the obssys control system application
-  obssys: false
+    # -- Enable the livetap application
+    livetap: false
 
-  # -- Enable the onepassword-connect application
-  onepassword-connect: false
+    # -- Enable the noteburst application (required by times-square)
+    noteburst: false
 
-  # -- Enable the ook application
-  ook: false
+    # -- Enable the nublado application (v3 of the Notebook Aspect)
+    nublado: false
 
-  # -- Enable the obsloctap application
-  obsloctap: false
+    # -- Enable the portal application
+    portal: false
 
-  # -- Enable the plot-navigator application
-  plot-navigator: false
+    # -- Enable the semaphore application
+    semaphore: false
 
-  # -- Enable the portal application
-  portal: false
+    # -- Enable the siav2 application
+    siav2: false
 
-  # -- Enable the in-cluster PostgreSQL server. Use of this server is
-  # discouraged in favor of using infrastructure SQL, but will remain
-  # supported for use cases such as minikube test deployments.
-  postgres: false
+    # -- Enable the sqlproxy-cross-project application
+    sqlproxy-cross-project: false
 
-  # -- Enable the rubintv application
-  rubintv: false
+    # -- Enable the squareone application
+    squareone: false
 
-  # -- Enable the sasquatch application
-  sasquatch: false
+    # -- Enable the ssotap application
+    ssotap: false
 
-  # -- Enable the schedview-prenight application
-  schedview-prenight: false
+    # -- Enable the tap application
+    tap: false
 
-  # -- Enable the schedview-snapshot application
-  schedview-snapshot: false
+    # -- Enable the times-square application
+    times-square: false
 
-  # -- Enable the siav2 application
-  siav2: false
+    # -- Enable the vo-cutouts application
+    vo-cutouts: false
 
-  # -- Enable the simonyitel control system application
-  simonyitel: false
+  # -- Project Rubin (Additional Rubin Services)
+  rubin:
 
-  # -- Enable the sqrbot-sr application
-  sqrbot-sr: false
+    # -- Enable the alert-stream-broker application
+    alert-stream-broker: false
 
-  # -- Enable the ssotap application
-  ssotap: false
+    # -- Enable the exposurelog application
+    exposurelog: false
 
-  # -- Enable the production-tools application
-  production-tools: false
+    # -- Enable the narrativelog application
+    narrativelog: false
 
-  # -- Enable the prompt-proto-service-hsc application
-  prompt-proto-service-hsc: false
+    # -- Enable the obsloctap application
+    obsloctap: false
 
-  # -- Enable the prompt-proto-service-latiss application
-  prompt-proto-service-latiss: false
+    # -- Enable the plot-navigator application
+    plot-navigator: false
 
-  # -- Enable the prompt-proto-service-lsstcam application
-  prompt-proto-service-lsstcam: false
+    # -- Enable the production-tools application
+    production-tools: false
 
-  # -- Enable the prompt-proto-service-lsstcomcam application
-  prompt-proto-service-lsstcomcam: false
+    # -- Enable the rubintv application
+    rubintv: false
 
-  # -- Enable the semaphore application
-  semaphore: false
+    # -- Enable the schedview-prenight application
+    schedview-prenight: false
 
-  # -- Enable the sherlock application
-  sherlock: false
+    # -- Enable the schedview-snapshot application
+    schedview-snapshot: false
 
-  # -- Enable the sqlproxy-cross-project application
-  sqlproxy-cross-project: false
+  # -- Project roundtable
+  roundtable:
 
-  # -- Enable the squarebot application
-  squarebot: false
+    # -- Enable the checkerboard application
+    checkerboard: false
 
-  # -- Enable the squareone application
-  squareone: false
+    # -- Enable the giftless application
+    giftless: false
 
-  # -- Enable the strimzi application
-  strimzi: false
+    # -- Enable the kubernetes-replicator application
+    kubernetes-replicator: false
 
-  # -- Enable the strimzi-access-operator application
-  strimzi-access-operator: false
+    # -- Enable the monitoring application
+    monitoring: false
 
-  # -- Enable the tap application
-  tap: false
+    # -- Enable the onepassword-connect application
+    onepassword-connect: false
 
-  # -- Enable the telegraf application
-  telegraf: false
+    # -- Enable the ook application
+    ook: false
 
-  # -- Enable the telegraf-ds application
-  telegraf-ds: false
+    # -- Enable the sqrbot-sr application
+    sqrbot-sr: false
 
-  # -- Enable the times-square application
-  times-square: false
+    # -- Enable the squarebot application
+    squarebot: false
 
-  # -- Enable the unfurlbot application
-  unfurlbot: false
+    # -- Enable the unfurlbot application
+    unfurlbot: false
 
-  # -- Enable the uws application. This includes the dmocps control system
-  # application.
-  uws: false
+  # -- Project telescope
+  telescope:
 
-  # -- Enable the vault-secrets-operator application. This is required for all
-  # environments.
-  vault-secrets-operator: true
+    # -- Enable the argo-workflows application
+    argo-workflows: false
 
-  # -- Enable the vo-cutouts application
-  vo-cutouts: false
+    # -- Enable the auxtel control system application
+    auxtel: false
+
+    # -- Enable the calsys control system application
+    calsys: false
+
+    # -- Enable the control-system-test application
+    control-system-test: false
+
+    # -- Enable the eas control system application
+    eas: false
+
+    # -- Enable the love control system application
+    love: false
+
+    # -- Enable the obssys control system application
+    obssys: false
+
+    # -- Enable the simonyitel control system application
+    simonyitel: false
+
+    # -- Enable the uws application. This includes the dmocps control system
+    # application.
+    uws: false
+
 
 # The following settings are used for the control system
 controlSystem:

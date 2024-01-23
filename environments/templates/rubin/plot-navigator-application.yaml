@@ -1,0 +1,34 @@
+{{- if (index .Values.applications.rubin "plot-navigator") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "plot-navigator"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "plot-navigator"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "plot-navigator"
+    server: "https://kubernetes.default.svc"
+  project: "rubin"
+  source:
+    path: "applications/rubin/plot-navigator"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

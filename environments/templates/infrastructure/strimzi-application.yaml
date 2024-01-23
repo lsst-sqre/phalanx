@@ -1,0 +1,26 @@
+{{- if (index .Values.applications.infrastructure "strimzi") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "strimzi"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "strimzi"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "strimzi"
+    server: "https://kubernetes.default.svc"
+  project: "infrastructure"
+  source:
+    path: "applications/infrastructure/strimzi"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      valueFiles:
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
