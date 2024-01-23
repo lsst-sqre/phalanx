@@ -235,6 +235,17 @@
       "title": "Vault path prefix",
       "type": "string"
     },
+    "controlSystem": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ControlSystemConfig"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
     "applications": {
       "additionalProperties": {
         "type": "boolean"
@@ -268,17 +279,6 @@
       "default": null,
       "description": "Branch of the Git repository holding Argo CD configuration. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
       "title": "Git repository branch"
-    },
-    "controlSystem": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/ControlSystemConfig"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null
     }
   },
   "required": [

@@ -297,6 +297,33 @@ class ApplicationService:
             key = "vault-secrets-operator.vault.address"
             values[key] = str(environment.vault_url)
 
+        if environment.control_system:
+            extras = {
+                "appNamespace": environment.control_system.app_namespace,
+                "imageTag": environment.control_system.image_tag,
+                "siteTag": environment.control_system.site_tag,
+                "topicName": environment.control_system.topic_name,
+                "kafkaBrokerAddress": (
+                    environment.control_system.kafka_broker_address
+                ),
+                "kafkaTopicReplicationFactor": (
+                    str(
+                        environment.control_system.kafka_topic_replication_factor
+                    )
+                ),
+                "schemaRegistryUrl": (
+                    environment.control_system.schema_registry_url
+                ),
+                "s3EndpointUrl": environment.control_system.s3_endpoint_url,
+            }
+            values.update(
+                {
+                    f"global.controlSystem.{k}": v
+                    for k, v in extras.items()
+                    if v is not None
+                }
+            )
+
         return values
 
     def _create_application_template(self, name: str) -> None:

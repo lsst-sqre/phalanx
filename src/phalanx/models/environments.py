@@ -20,6 +20,7 @@ from .applications import Application, ApplicationInstance
 from .secrets import Secret
 
 __all__ = [
+    "ControlSystemConfig",
     "Environment",
     "EnvironmentBaseConfig",
     "EnvironmentConfig",
@@ -79,117 +80,6 @@ class OnepasswordConfig(CamelCaseModel):
             "Title of the 1Password vault from which to retrieve secrets"
         ),
     )
-
-
-class EnvironmentBaseConfig(CamelCaseModel):
-    """Configuration common to `EnviromentConfig` and `Environment`."""
-
-    name: str = Field(..., title="Name", description="Name of the environment")
-
-    fqdn: str = Field(
-        ...,
-        title="Domain name",
-        description=(
-            "Fully-qualified domain name on which the environment listens"
-        ),
-    )
-
-    butler_repository_index: str | None = Field(
-        None,
-        title="Butler repository index URL",
-        description="URL to Butler repository index",
-    )
-
-    gcp: GCPMetadata | None = Field(
-        None,
-        title="GCP hosting metadata",
-        description=(
-            "If this environment is hosted on Google Cloud Platform,"
-            " metadata about the hosting project, location, and other details."
-            " Used to generate additional environment documentation."
-        ),
-    )
-
-    onepassword: OnepasswordConfig | None = Field(
-        None,
-        title="1Password configuration",
-        description=(
-            "Configuration for using 1Password as a static secrets source"
-        ),
-    )
-
-    vault_url: AnyHttpUrl | None = Field(
-        None,
-        title="Vault server URL",
-        description=(
-            "URL of the Vault server. This is required in the merged values"
-            " file that includes environment overrides, but the environment"
-            " override file doesn't need to set it, so it's marked as"
-            " optional for schema checking purposes to allow the override"
-            " file to be schema-checked independently."
-        ),
-    )
-
-    vault_path_prefix: str = Field(
-        ...,
-        title="Vault path prefix",
-        description="Prefix of Vault paths, including the KV v2 mount point",
-    )
-
-    @field_validator("onepassword", mode="before")
-    @classmethod
-    def _validate_onepassword(
-        cls, v: dict[str, str] | None
-    ) -> dict[str, str] | None:
-        if not v:
-            return v
-        if not isinstance(v, dict):
-            raise ValueError("onepassword is not a dictionary")  # noqa: TRY004
-
-        # The validator is called multiple times, before and after alias
-        # resolution, so needs to handle both possible spellings.
-        if not v.get("connectUrl") and not v.get("connect_url"):
-            return None
-
-        return v
-
-    @property
-    def vault_path(self) -> str:
-        """Vault path without the initial Kv2 mount point."""
-        _, path = self.vault_path_prefix.split("/", 1)
-        return path
-
-    @property
-    def vault_read_approle(self) -> str:
-        """Name of the Vault read AppRole for this environment."""
-        # AppRole names cannot contain /, so we'll use only the final
-        # component of the path for the AppRole name.
-        vault_path = self.vault_path
-        if "/" in vault_path:
-            _, approle_name = vault_path.rsplit("/", 1)
-            return approle_name
-        else:
-            return vault_path
-
-    @property
-    def vault_write_token(self) -> str:
-        """Display name of the Vault write token for this environment.
-
-        Unlike AppRole names, this could include a slash, but use the same
-        base name as the AppRole for consistency and simplicity. Vault always
-        prepends ``token-``, which we strip off when creating the token.
-        """
-        return f"token-{self.vault_read_approle}"
-
-    @property
-    def vault_read_policy(self) -> str:
-        """Name of the Vault read policy for this environment."""
-        return f"{self.vault_path}/read"
-
-    @property
-    def vault_write_policy(self) -> str:
-        """Name of the Vault write policy for this environment."""
-        return f"{self.vault_path}/write"
 
 
 class ControlSystemConfig(CamelCaseModel):
@@ -257,6 +147,119 @@ class ControlSystemConfig(CamelCaseModel):
     )
 
 
+class EnvironmentBaseConfig(CamelCaseModel):
+    """Configuration common to `EnviromentConfig` and `Environment`."""
+
+    name: str = Field(..., title="Name", description="Name of the environment")
+
+    fqdn: str = Field(
+        ...,
+        title="Domain name",
+        description=(
+            "Fully-qualified domain name on which the environment listens"
+        ),
+    )
+
+    butler_repository_index: str | None = Field(
+        None,
+        title="Butler repository index URL",
+        description="URL to Butler repository index",
+    )
+
+    gcp: GCPMetadata | None = Field(
+        None,
+        title="GCP hosting metadata",
+        description=(
+            "If this environment is hosted on Google Cloud Platform,"
+            " metadata about the hosting project, location, and other details."
+            " Used to generate additional environment documentation."
+        ),
+    )
+
+    onepassword: OnepasswordConfig | None = Field(
+        None,
+        title="1Password configuration",
+        description=(
+            "Configuration for using 1Password as a static secrets source"
+        ),
+    )
+
+    vault_url: AnyHttpUrl | None = Field(
+        None,
+        title="Vault server URL",
+        description=(
+            "URL of the Vault server. This is required in the merged values"
+            " file that includes environment overrides, but the environment"
+            " override file doesn't need to set it, so it's marked as"
+            " optional for schema checking purposes to allow the override"
+            " file to be schema-checked independently."
+        ),
+    )
+
+    vault_path_prefix: str = Field(
+        ...,
+        title="Vault path prefix",
+        description="Prefix of Vault paths, including the KV v2 mount point",
+    )
+
+    control_system: ControlSystemConfig | None = None
+
+    @field_validator("onepassword", mode="before")
+    @classmethod
+    def _validate_onepassword(
+        cls, v: dict[str, str] | None
+    ) -> dict[str, str] | None:
+        if not v:
+            return v
+        if not isinstance(v, dict):
+            raise ValueError("onepassword is not a dictionary")  # noqa: TRY004
+
+        # The validator is called multiple times, before and after alias
+        # resolution, so needs to handle both possible spellings.
+        if not v.get("connectUrl") and not v.get("connect_url"):
+            return None
+
+        return v
+
+    @property
+    def vault_path(self) -> str:
+        """Vault path without the initial Kv2 mount point."""
+        _, path = self.vault_path_prefix.split("/", 1)
+        return path
+
+    @property
+    def vault_read_approle(self) -> str:
+        """Name of the Vault read AppRole for this environment."""
+        # AppRole names cannot contain /, so we'll use only the final
+        # component of the path for the AppRole name.
+        vault_path = self.vault_path
+        if "/" in vault_path:
+            _, approle_name = vault_path.rsplit("/", 1)
+            return approle_name
+        else:
+            return vault_path
+
+    @property
+    def vault_write_token(self) -> str:
+        """Display name of the Vault write token for this environment.
+
+        Unlike AppRole names, this could include a slash, but use the same
+        base name as the AppRole for consistency and simplicity. Vault always
+        prepends ``token-``, which we strip off when creating the token.
+        """
+        return f"token-{self.vault_read_approle}"
+
+    @property
+    def vault_read_policy(self) -> str:
+        """Name of the Vault read policy for this environment."""
+        return f"{self.vault_path}/read"
+
+    @property
+    def vault_write_policy(self) -> str:
+        """Name of the Vault write policy for this environment."""
+        return f"{self.vault_path}/write"
+
+
 class EnvironmentConfig(EnvironmentBaseConfig):
     """Configuration for a Phalanx environment.
 
@@ -299,8 +302,6 @@ class EnvironmentConfig(EnvironmentBaseConfig):
             " allow the override file to be schema-checked independently."
         ),
     )
-
-    control_system: ControlSystemConfig | None = None
 
     model_config = ConfigDict(extra="forbid")
 
