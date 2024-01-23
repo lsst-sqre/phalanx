@@ -27,6 +27,6 @@ Jira API read-only proxy for Times Square users.
 | ingress.path | string | `"/jira-data-proxy"` | Path prefix where jira-data-proxy is served |
 | nodeSelector | object | `{}` | Node selection rules for the jira-data-proxy deployment pod |
 | podAnnotations | object | `{}` | Annotations for the jira-data-proxy deployment pod |
-| replicaCount | int | `1` | Number of web deployment pods to start |
+| replicaCount | int | `2` | Number of web deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the jira-data-proxy deployment pod |
 | tolerations | list | `[]` | Tolerations for the jira-data-proxy deployment pod |
