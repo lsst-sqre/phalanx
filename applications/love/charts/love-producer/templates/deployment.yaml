@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: {{ $producer.name }}
-          {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystemImageTag }}
+          {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystem.imageTag }}
           image: "{{ $.Values.image.repository }}:{{ $imageTag }}"
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           envFrom:

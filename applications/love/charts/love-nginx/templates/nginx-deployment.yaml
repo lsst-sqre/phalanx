@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "love-nginx.name" . }}
-  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
   labels:
     {{- include "love-nginx.labels" . | nindent 4 }}
 spec:
@@ -21,7 +21,7 @@ spec:
       {{- end }}
       initContainers:
       - name: love-frontend
-        {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystemImageTag }}
+        {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}
         image: "{{ .Values.initContainers.frontend.image.repository }}:{{ $feImageTag }}"
         imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
         command: ["/bin/sh", "-c", "mkdir -p /usr/src/love-frontend; cp -Rv /usr/src/love/ /usr/src/love-frontend"]
@@ -29,7 +29,7 @@ spec:
           - mountPath: /usr/src
             name: {{ .Values.staticStore.name }}
       - name: love-manager-static
-        {{- $mgImageTag := .Values.initContainers.manager.image.tag | default $.Values.global.controlSystemImageTag }}
+        {{- $mgImageTag := .Values.initContainers.manager.image.tag | default $.Values.global.controlSystem.imageTag }}
         image: "{{ .Values.initContainers.manager.image.repository }}:{{ $mgImageTag }}"
         imagePullPolicy: {{ .Values.initContainers.manager.image.pullPolicy }}
         {{- with .Values.initContainers.manager.command }}

@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "love-manager-frontend.fullname" . }}
-  namespace: {{ $.Values.global.controlSystemAppNamespace }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
   labels:
     {{- include "love-manager-frontend.labels" . | nindent 4 }}
 spec:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: {{ include "love-manager-frontend.fullname" . }}
-        {{- $imageTag := .Values.manager.frontend.image.tag | default $.Values.global.controlSystemImageTag }}
+        {{- $imageTag := .Values.manager.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}
         image: "{{ .Values.manager.frontend.image.repository }}:{{ $imageTag }}"
         imagePullPolicy: {{ .Values.manager.frontend.image.pullPolicy }}
         ports:
