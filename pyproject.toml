@@ -24,7 +24,6 @@ requires-python = ">=3.11"
 
 [project.scripts]
 phalanx = "phalanx.cli:main"
-update-shared-chart-version = "phalanx.control_system.update_shared_chart_version:run"
 
 [project.urls]
 Homepage = "https://phalanx.lsst.io"
