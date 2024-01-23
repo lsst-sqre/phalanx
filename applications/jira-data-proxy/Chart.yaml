@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-42460"
+appVersion: "1.0.0"
 description: Jira API read-only proxy for Times Square users.
 name: jira-data-proxy
 sources:

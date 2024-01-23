@@ -10,7 +10,7 @@ config:
   jiraUrl: "https://jira.lsstcorp.org/"
 
 # -- Number of web deployment pods to start
-replicaCount: 1
+replicaCount: 2
 
 image:
   # -- Image to use in the jira-data-proxy deployment
