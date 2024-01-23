@@ -29,7 +29,7 @@
     "--values",
     "argocd/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
+    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "dependency",
@@ -45,7 +45,7 @@
     "--values",
     "gafaelfawr/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
+    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ],
   [
     "lint",
@@ -72,6 +72,6 @@
     "--values",
     "portal/values-idfdev.yaml",
     "--set",
-    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev"
+    "global.enabledServices=@argocd@gafaelfawr@mobu@nublado@portal@postgres,global.host=data-dev.lsst.cloud,global.baseUrl=https://data-dev.lsst.cloud,global.vaultSecretsPath=secret/phalanx/idfdev,global.gcpProjectId=science-platform-dev-7696,global.gcpRegion=us-central1"
   ]
 ]

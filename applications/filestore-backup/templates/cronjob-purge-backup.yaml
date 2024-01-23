@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: purge-backup
+  labels:
+    {{- include "filestore-backup.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.config.purge.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: "filestore-backup"
+          {{- with .Values.tolerations }}
+          tolerations: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          affinity: {{ toYaml . | nindent 12 }}
+          {{- end }}
+          containers:
+          - name: purge-backup
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              capabilities:
+                drop:
+                  - all
+              readOnlyRootFilesystem: true
+            env:
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_PROJECT"
+                value: {{ .Values.global.gcpProjectId | quote }}
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_ZONE"
+                value: "{{ .Values.global.gcpRegion }}-{{ .Values.config.zone }}"
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_INSTANCE"
+                value: {{ .Values.config.instance | quote }}
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_SHARE_NAME"
+                value: {{ .Values.config.fileShare | quote }}
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_KEEP_BACKUPS"
+                value: {{ .Values.config.purge.keep | quote }}
+              {{- with .Values.config.purge.debug }}
+              - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_DEBUG"
+                value: "true"
+              {{- end }}
+            command: [ "purge_backup" ]
