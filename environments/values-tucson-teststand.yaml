@@ -24,9 +24,5 @@ applications:
 
 controlSystem:
   imageTag: k0001
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
-  kafkaTopicReplicationFactor: 3
-  schemaRegistryUrl: http://sasquatch-schema-registry.sasquatch:8081
   siteTag: tucson
   s3EndpointUrl: https://s3.tu.lsst.org
-  topicName: sal

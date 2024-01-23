@@ -64,7 +64,14 @@
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |
 | butlerRepositoryIndex | string | None, must be set | Butler repository index to use for this environment |
-| controlSystem | string | `nil` | Configuration particular to the control system If this section is used, it can have the following parameters: _appNamespace_ (Set the namespace for the control system components) _imageTag_ (The image tag to use for control system images) _siteTag_ (The tag that tells the control system component where it is running) _topicName_ (The Kafka identifier for control system topics) _kafkaBrokerAddress_ (The Kafka broker address) _kafkaTopicReplicationFactor_ (The Kafka topic replication factor) _schemaRegistryUrl_ (The Schema Registry URL) _s3EndpointUrl_ (The S3 URL for the environment specific LFA) |
+| controlSystem.appNamespace | string | None, must be set | Application namespacce for the control system deployment |
+| controlSystem.imageTag | string | None, must be set | Image tag for the control system deployment |
+| controlSystem.kafkaBrokerAddress | string | `"sasquatch-kafka-brokers.sasquatch:9092"` | Kafka broker address for the control system deployment |
+| controlSystem.kafkaTopicReplicationFactor | int | `3` | Kafka topic replication factor for control system topics |
+| controlSystem.s3EndpointUrl | string | None, must be set: "" | S3 endpoint (LFA) for the control system deployment |
+| controlSystem.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL for the control system deployment |
+| controlSystem.siteTag | string | None, must be set | Site tag for the control system deployment |
+| controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
