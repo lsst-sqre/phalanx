@@ -4,4 +4,4 @@ version: 1.0.0
 description: Tool to manage Google Filestore backups
 sources:
   - https://github.com/lsst-sqre/rubin-google-filestore-tool
-appVersion: 0.1.2
+appVersion: 0.1.3
