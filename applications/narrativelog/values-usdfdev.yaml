@@ -1,0 +1,5 @@
+config:
+  site_id: usdfdev
+db:
+  host: usdf-summitdb.slac.stanford.edu
+  user: usdf

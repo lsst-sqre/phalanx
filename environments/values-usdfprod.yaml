@@ -11,8 +11,10 @@ applications:
   ingress-nginx: false
 
   datalinker: true
+  exposurelog: true
   livetap: true
   mobu: true
+  narrativelog: true
   nublado: true
   plot-navigator: true
   portal: true

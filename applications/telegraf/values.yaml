@@ -43,8 +43,8 @@ prometheus_config:
     redis: "http://argocd-redis-metrics.argocd.svc:9121/metrics"
     repo_server: "http://argocd-repo-server-metrics.argocd.svc:8084/metrics"
     server: "http://argocd-server-metrics.argocd.svc:8083/metrics"
-  nublado2:
-    hub: "http://hub.nublado2:8081/metrics"
+  nublado:
+    hub: "http://hub.nublado:8081/metrics"
   ingress-nginx:
     controller: "http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"
 

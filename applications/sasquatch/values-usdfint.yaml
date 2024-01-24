@@ -12,7 +12,11 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
-    replicator:
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
       enabled: true
 
 influxdb:
@@ -60,7 +64,7 @@ kafka-connect-manager:
         topicsRegex: ".*OCPS"
       test:
         enabled: false
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: false
         topicsRegex: ".*PMD"

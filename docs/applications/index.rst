@@ -24,16 +24,14 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :caption: Rubin Science Platform
 
    butler/index
-   cachemachine/index
    datalinker/index
+   filestore-backup/index
    hips/index
    linters/index
    livetap/index
    mobu/index
-   moneypenny/index
    noteburst/index
    nublado/index
-   nublado2/index
    portal/index
    semaphore/index
    sherlock/index
@@ -52,6 +50,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    argo-workflows/index
    alert-stream-broker/index
    exposurelog/index
+   jira-data-proxy/index
    narrativelog/index
    obsloctap/index
    plot-navigator/index

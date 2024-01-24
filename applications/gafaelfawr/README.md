@@ -17,7 +17,7 @@ Authentication and identity system
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with CloudSQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.33.14"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.33.16"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a CloudSQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
@@ -97,7 +97,7 @@ Authentication and identity system
 | operator.affinity | object | `{}` | Affinity rules for the token management pod |
 | operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |
 | operator.podAnnotations | object | `{}` | Annotations for the token management pod |
-| operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator |
+| operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator. The limits are artificially higher since the operator pod is also where we manually run `gafaelfawr audit --fix`, which requires more CPU and memory. |
 | operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |

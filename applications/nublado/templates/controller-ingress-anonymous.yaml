@@ -16,21 +16,21 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/openapi.json"
+            - path: "{{ .Values.controller.config.pathPrefix }}/openapi.json"
               pathType: "Exact"
               backend:
                 service:
                   name: "nublado-controller"
                   port:
                     number: 80
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/docs"
+            - path: "{{ .Values.controller.config.pathPrefix }}/docs"
               pathType: "Exact"
               backend:
                 service:
                   name: "nublado-controller"
                   port:
                     number: 80
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/redoc"
+            - path: "{{ .Values.controller.config.pathPrefix }}/redoc"
               pathType: "Exact"
               backend:
                 service:

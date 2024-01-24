@@ -57,7 +57,7 @@ spec:
         # Policy to define the remote topic naming convention.
         # The default is to preserve topic names in the target cluster.
         # To add the source cluster alias as a prefix to the topic name, use replication.policy.separator="." and replication.policy.class="org.apache.kafka.connect.mirror.DefaultReplicationPolicy"
-        replication.policy.separator: {{ default "" .Values.mirrormaker2.replication.policy.separator }}
+        replication.policy.separator: {{ default "." .Values.mirrormaker2.replication.policy.separator }}
         replication.policy.class: {{ default "org.apache.kafka.connect.mirror.IdentityReplicationPolicy" .Values.mirrormaker2.replication.policy.class }}
         # Handling high volumes of messages
         # By increasing the batch size, produce requests are delayed and more messages are
@@ -75,8 +75,8 @@ spec:
         producer.max.request.size: 10485760
         producer.buffer.memory: 10485760
         # Increase request timeout
-        producer.request.timeout.ms: 120000
-        consumer.request.timeout.ms: 120000
+        producer.request.timeout.ms: 240000
+        consumer.request.timeout.ms: 240000
     heartbeatConnector:
       config:
         heartbeats.topic.replication.factor: 3

@@ -54,41 +54,17 @@ spec:
         - name: IMAGE_TIMEOUT
           value: {{ .Values.imageNotifications.imageTimeout | quote }}
         - name: PGUSER
-          value: rubin
+          value: {{ .Values.instrument.calibRepoPguser }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
           value: {{ .Values.s3.disableBucketValidation | quote }}
-        - name: IP_APDB  # TODO: remove on DM-40839
-          # Need explicit port for make_pgpass.py
-          value: {{ .Values.apdb.ip }}
-        - name: DB_APDB  # TODO: remove on DM-40839
-          value: {{ .Values.apdb.db }}
-        - name: USER_APDB  # TODO: remove on DM-40839
-          value: {{ .Values.apdb.user }}
         - name: URL_APDB
           value: {{ .Values.apdb.url }}
         - name: NAMESPACE_APDB
           value: {{ .Values.apdb.namespace }}
-        - name: IP_REGISTRY  # TODO: remove on DM-40839
-          # Need explicit port for make_pgpass.py
-          value: {{ .Values.registry.ip }}
-        - name: DB_REGISTRY  # TODO: remove on DM-40839
-          value: {{ .Values.registry.db }}
-        - name: USER_REGISTRY  # TODO: remove on DM-40839
-          value: {{ .Values.registry.user }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
-        - name: PSQL_REGISTRY_PASS  # TODO: remove on DM-40839
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "prompt-proto-service.fullname" . }}-secret
-              key: registry_password
-        - name: PSQL_APDB_PASS  # TODO: remove on DM-40839
-          valueFrom:
-            secretKeyRef:
-              name: {{ template "prompt-proto-service.fullname" . }}-secret
-              key: apdb_password
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}

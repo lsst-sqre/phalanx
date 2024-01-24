@@ -22,6 +22,7 @@ Rubin Observatory's telemetry service.
 | chronograf.resources.limits.memory | string | `"64Gi"` |  |
 | chronograf.resources.requests.cpu | int | `1` |  |
 | chronograf.resources.requests.memory | string | `"4Gi"` |  |
+| influxdb-enterprise | object | `{"enabled":false}` | Override influxdb-enterprise configuration. |
 | influxdb-staging.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"60s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb-staging.enabled | bool | `false` | Enable InfluxDB staging deployment. |
 | influxdb-staging.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
@@ -34,7 +35,7 @@ Rubin Observatory's telemetry service.
 | influxdb-staging.resources.requests.cpu | int | `8` |  |
 | influxdb-staging.resources.requests.memory | string | `"96Gi"` |  |
 | influxdb-staging.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
-| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"60s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":1000,"query-timeout":"30s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | influxdb.enabled | bool | `true` | Enable InfluxDB. |
 | influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
@@ -46,34 +47,9 @@ Rubin Observatory's telemetry service.
 | influxdb.resources.requests.cpu | int | `8` |  |
 | influxdb.resources.requests.memory | string | `"96Gi"` |  |
 | influxdb.setDefaultUser | object | `{"enabled":true,"user":{"existingSecret":"sasquatch"}}` | Default InfluxDB user, use influxb-user and influxdb-password keys from secret. |
-| influxdb2.adminUser.bucket | string | `"default"` | Admin default bucket. |
-| influxdb2.adminUser.existingSecret | string | `"sasquatch"` | Get admin-password/admin-token keys from secret. |
-| influxdb2.adminUser.organization | string | `"default"` | Admin default organization. |
-| influxdb2.enabled | bool | `false` |  |
-| influxdb2.env[0].name | string | `"INFLUXD_STORAGE_WAL_FSYNC_DELAY"` |  |
-| influxdb2.env[0].value | string | `"100ms"` |  |
-| influxdb2.env[1].name | string | `"INFLUXD_HTTP_IDLE_TIMEOUT"` |  |
-| influxdb2.env[1].value | string | `"0"` |  |
-| influxdb2.env[2].name | string | `"INFLUXD_FLUX_LOG_ENABLED"` |  |
-| influxdb2.env[2].value | string | `"true"` |  |
-| influxdb2.env[3].name | string | `"INFLUXD_LOG_LEVEL"` |  |
-| influxdb2.env[3].value | string | `"debug"` |  |
-| influxdb2.image.tag | string | `"2.7.1-alpine"` |  |
-| influxdb2.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/api/v2/$2"` |  |
-| influxdb2.ingress.className | string | `"nginx"` |  |
-| influxdb2.ingress.enabled | bool | `false` | InfluxDB2 ingress configuration |
-| influxdb2.ingress.hostname | string | `""` |  |
-| influxdb2.ingress.path | string | `"/influxdb2(/|$)(.*)"` |  |
-| influxdb2.initScripts.enabled | bool | `true` | InfluxDB2 initialization scripts |
-| influxdb2.initScripts.scripts."init.sh" | string | `"#!/bin/bash\ninflux bucket create --name telegraf-kafka-consumer --org default\n"` |  |
-| influxdb2.persistence.enabled | bool | `true` | Enable persistent volume claim. By default storageClass is undefined choosing the default provisioner (standard on GKE). |
-| influxdb2.persistence.size | string | `"1Ti"` | Persistent volume size. @default 1Ti for teststand deployments. |
-| influxdb2.resources.limits.cpu | int | `8` |  |
-| influxdb2.resources.limits.memory | string | `"96Gi"` |  |
-| influxdb2.resources.requests.cpu | int | `8` |  |
-| influxdb2.resources.requests.memory | string | `"16Gi"` |  |
 | kafdrop.enabled | bool | `true` | Enable Kafdrop. |
 | kafka-connect-manager | object | `{}` | Override kafka-connect-manager configuration. |
+| kafka-connect-manager-enterprise | object | `{"enabled":false}` | Override kafka-connect-manager-enterprise configuration. |
 | kapacitor.enabled | bool | `true` | Enable Kapacitor. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
@@ -85,7 +61,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.resources.requests.cpu | int | `1` |  |
 | kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | rest-proxy | object | `{"enabled":false}` | Override rest-proxy configuration. |
-| source-influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":0,"query-timeout":"60s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
+| source-influxdb.config | object | `{"continuous_queries":{"enabled":false},"coordinator":{"log-queries-after":"15s","max-concurrent-queries":1000,"query-timeout":"30s","write-timeout":"1h"},"data":{"cache-max-memory-size":0,"trace-logging-enabled":true,"wal-fsync-delay":"100ms"},"http":{"auth-enabled":true,"enabled":true,"flux-enabled":true,"max-row-limit":0},"logging":{"level":"debug"}}` | Override InfluxDB configuration. See https://docs.influxdata.com/influxdb/v1.8/administration/config |
 | source-influxdb.enabled | bool | `false` | Enable InfluxDB staging deployment. |
 | source-influxdb.image | object | `{"tag":"1.8.10"}` | InfluxDB image tag. |
 | source-influxdb.ingress | object | disabled | InfluxDB ingress configuration. |
@@ -109,9 +85,69 @@ Rubin Observatory's telemetry service.
 | source-kapacitor.resources.requests.cpu | int | `1` |  |
 | source-kapacitor.resources.requests.memory | string | `"1Gi"` |  |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations. |
-| strimzi-kafka | object | `{}` | Override strimzi-kafka configuration. |
+| strimzi-kafka | object | `{"connect":{"enabled":true},"kafka":{"listeners":{"external":{"enabled":true},"plain":{"enabled":true},"tls":{"enabled":true}}}}` | Override strimzi-kafka subchart configuration. |
 | strimzi-registry-operator | object | `{"clusterName":"sasquatch","clusterNamespace":"sasquatch","operatorNamespace":"sasquatch"}` | strimzi-registry-operator configuration. |
 | telegraf-kafka-consumer | object | `{}` | Override telegraf-kafka-consumer configuration. |
+| influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` |  |
+| influxdb-enterprise.bootstrap.ddldml | object | `{}` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].key | string | `"influxdb.influxdata.com/component"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].operator | string | `"In"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"data"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
+| influxdb-enterprise.data.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
+| influxdb-enterprise.data.config.antiEntropy.enabled | bool | `true` |  |
+| influxdb-enterprise.data.config.cluster.log-queries-after | string | `"15s"` |  |
+| influxdb-enterprise.data.config.cluster.max-concurrent-queries | int | `1000` |  |
+| influxdb-enterprise.data.config.cluster.query-timeout | string | `"300s"` |  |
+| influxdb-enterprise.data.config.continuousQueries.enabled | bool | `false` |  |
+| influxdb-enterprise.data.config.data.cache-max-memory-size | int | `0` |  |
+| influxdb-enterprise.data.config.data.trace-logging-enabled | bool | `true` |  |
+| influxdb-enterprise.data.config.data.wal-fsync-delay | string | `"100ms"` |  |
+| influxdb-enterprise.data.config.hintedHandoff.max-size | int | `107374182400` |  |
+| influxdb-enterprise.data.config.http.auth-enabled | bool | `true` |  |
+| influxdb-enterprise.data.config.http.flux-enabled | bool | `true` |  |
+| influxdb-enterprise.data.config.logging.level | string | `"debug"` |  |
+| influxdb-enterprise.data.env | object | `{}` |  |
+| influxdb-enterprise.data.image | object | `{}` |  |
+| influxdb-enterprise.data.ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"300"` |  |
+| influxdb-enterprise.data.ingress.annotations."nginx.ingress.kubernetes.io/proxy-send-timeout" | string | `"300"` |  |
+| influxdb-enterprise.data.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| influxdb-enterprise.data.ingress.className | string | `"nginx"` |  |
+| influxdb-enterprise.data.ingress.enabled | bool | `false` |  |
+| influxdb-enterprise.data.ingress.hostname | string | `""` |  |
+| influxdb-enterprise.data.ingress.path | string | `"/influxdb-enterprise-data(/|$)(.*)"` |  |
+| influxdb-enterprise.data.persistence.enabled | bool | `false` |  |
+| influxdb-enterprise.data.replicas | int | `1` |  |
+| influxdb-enterprise.data.resources | object | `{}` |  |
+| influxdb-enterprise.data.service.type | string | `"ClusterIP"` |  |
+| influxdb-enterprise.fullnameOverride | string | `""` |  |
+| influxdb-enterprise.imagePullSecrets | list | `[]` |  |
+| influxdb-enterprise.license.secret.key | string | `"json"` |  |
+| influxdb-enterprise.license.secret.name | string | `"influxdb-enterprise-license"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].key | string | `"influxdb.influxdata.com/component"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].operator | string | `"In"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.labelSelector.matchExpressions[0].values[0] | string | `"meta"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].podAffinityTerm.topologyKey | string | `"kubernetes.io/hostname"` |  |
+| influxdb-enterprise.meta.affinity.podAntiAffinity.preferredDuringSchedulingIgnoredDuringExecution[0].weight | int | `1` |  |
+| influxdb-enterprise.meta.env | object | `{}` |  |
+| influxdb-enterprise.meta.image | object | `{}` |  |
+| influxdb-enterprise.meta.ingress.annotations."nginx.ingress.kubernetes.io/proxy-read-timeout" | string | `"300"` |  |
+| influxdb-enterprise.meta.ingress.annotations."nginx.ingress.kubernetes.io/proxy-send-timeout" | string | `"300"` |  |
+| influxdb-enterprise.meta.ingress.annotations."nginx.ingress.kubernetes.io/rewrite-target" | string | `"/$2"` |  |
+| influxdb-enterprise.meta.ingress.className | string | `"nginx"` |  |
+| influxdb-enterprise.meta.ingress.enabled | bool | `false` |  |
+| influxdb-enterprise.meta.ingress.hostname | string | `""` |  |
+| influxdb-enterprise.meta.ingress.path | string | `"/influxdb-enterprise-meta(/|$)(.*)"` |  |
+| influxdb-enterprise.meta.persistence.enabled | bool | `false` |  |
+| influxdb-enterprise.meta.podDisruptionBudget.minAvailable | int | `2` |  |
+| influxdb-enterprise.meta.replicas | int | `3` |  |
+| influxdb-enterprise.meta.resources | object | `{}` |  |
+| influxdb-enterprise.meta.service.type | string | `"ClusterIP"` |  |
+| influxdb-enterprise.meta.sharedSecret.secretName | string | `"influxdb-enterprise-shared-secret"` |  |
+| influxdb-enterprise.nameOverride | string | `""` |  |
+| influxdb-enterprise.serviceAccount.annotations | object | `{}` |  |
+| influxdb-enterprise.serviceAccount.create | bool | `false` |  |
+| influxdb-enterprise.serviceAccount.name | string | `""` |  |
 | kafdrop.affinity | object | `{}` | Affinity configuration. |
 | kafdrop.cmdArgs | string | `"--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"` | Command line arguments to Kafdrop. |
 | kafdrop.existingSecret | string | `""` | Existing k8s secrect use to set kafdrop environment variables. Set SCHEMAREGISTRY_AUTH for basic auth credentials in the form username:password |
@@ -154,12 +190,12 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | kafka-connect-manager.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | kafka-connect-manager.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| kafka-connect-manager.influxdbSink.connectors | object | `{"test":{"enabled":false,"removePrefix":"source.","repairerConnector":false,"tags":"","topicsRegex":"source.lsst.sal.Test"}}` | Connector instances to deploy. |
-| kafka-connect-manager.influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
-| kafka-connect-manager.influxdbSink.connectors.test.removePrefix | string | `"source."` | Remove prefix from topic name. |
-| kafka-connect-manager.influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
-| kafka-connect-manager.influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
-| kafka-connect-manager.influxdbSink.connectors.test.topicsRegex | string | `"source.lsst.sal.Test"` | Regex to select topics from Kafka. |
+| kafka-connect-manager.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| kafka-connect-manager.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| kafka-connect-manager.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| kafka-connect-manager.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| kafka-connect-manager.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| kafka-connect-manager.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
 | kafka-connect-manager.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | kafka-connect-manager.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
 | kafka-connect-manager.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
@@ -200,13 +236,74 @@ Rubin Observatory's telemetry service.
 | kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner. |
 | kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka. |
 | kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
+| kafka-connect-manager-enterprise.enabled | bool | `true` | Enable Kafka Connect Manager. |
+| kafka-connect-manager-enterprise.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL. |
+| kafka-connect-manager-enterprise.env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL. |
+| kafka-connect-manager-enterprise.env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication. |
+| kafka-connect-manager-enterprise.image.pullPolicy | string | `"IfNotPresent"` |  |
+| kafka-connect-manager-enterprise.image.repository | string | `"ghcr.io/lsst-sqre/kafkaconnect"` |  |
+| kafka-connect-manager-enterprise.image.tag | string | `"1.3.1"` |  |
+| kafka-connect-manager-enterprise.influxdbSink.autoUpdate | bool | `true` | If autoUpdate is enabled, check for new kafka topics. |
+| kafka-connect-manager-enterprise.influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxErrorPolicy | string | `"NOOP"` | Error policy, see connector documetation for details. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
+| kafka-connect-manager-enterprise.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
+| kafka-connect-manager-enterprise.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| kafka-connect-manager-enterprise.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
+| kafka-connect-manager-enterprise.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
+| kafka-connect-manager-enterprise.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
+| kafka-connect-manager-enterprise.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
+| kafka-connect-manager-enterprise.jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table. |
+| kafka-connect-manager-enterprise.jdbcSink.autoEvolve | string | `"false"` | Whether to automatically add columns in the table schema. |
+| kafka-connect-manager-enterprise.jdbcSink.batchSize | string | `"3000"` | Specifies how many records to attempt to batch together for insertion into the destination table. |
+| kafka-connect-manager-enterprise.jdbcSink.connectionUrl | string | `"jdbc:postgresql://localhost:5432/mydb"` | Database connection URL. |
+| kafka-connect-manager-enterprise.jdbcSink.dbTimezone | string | `"UTC"` | Name of the JDBC timezone that should be used in the connector when inserting time-based values. |
+| kafka-connect-manager-enterprise.jdbcSink.enabled | bool | `false` | Whether the JDBC Sink connector is deployed. |
+| kafka-connect-manager-enterprise.jdbcSink.insertMode | string | `"insert"` | The insertion mode to use. Supported modes are: `insert`, `upsert` and `update`. |
+| kafka-connect-manager-enterprise.jdbcSink.maxRetries | string | `"10"` | The maximum number of times to retry on errors before failing the task. |
+| kafka-connect-manager-enterprise.jdbcSink.name | string | `"postgres-sink"` | Name of the connector to create. |
+| kafka-connect-manager-enterprise.jdbcSink.retryBackoffMs | string | `"3000"` | The time in milliseconds to wait following an error before a retry attempt is made. |
+| kafka-connect-manager-enterprise.jdbcSink.tableNameFormat | string | `"${topic}"` | A format string for the destination table name. |
+| kafka-connect-manager-enterprise.jdbcSink.tasksMax | string | `"10"` | Number of Kafka Connect tasks. |
+| kafka-connect-manager-enterprise.jdbcSink.topicRegex | string | `".*"` | Regex for selecting topics. |
+| kafka-connect-manager-enterprise.s3Sink.behaviorOnNullValues | string | `"fail"` | How to handle records with a null value (for example, Kafka tombstone records). Valid options are ignore and fail. |
+| kafka-connect-manager-enterprise.s3Sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector. |
+| kafka-connect-manager-enterprise.s3Sink.enabled | bool | `false` | Whether the Amazon S3 Sink connector is deployed. |
+| kafka-connect-manager-enterprise.s3Sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
+| kafka-connect-manager-enterprise.s3Sink.flushSize | string | `"1000"` | Number of records written to store before invoking file commits. |
+| kafka-connect-manager-enterprise.s3Sink.locale | string | `"en-US"` | The locale to use when partitioning with TimeBasedPartitioner. |
+| kafka-connect-manager-enterprise.s3Sink.name | string | `"s3-sink"` | Name of the connector to create. |
+| kafka-connect-manager-enterprise.s3Sink.partitionDurationMs | string | `"3600000"` | The duration of a partition in milliseconds, used by TimeBasedPartitioner. Default is 1h for an hourly based partitioner. |
+| kafka-connect-manager-enterprise.s3Sink.pathFormat | string | `"'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"` | Pattern used to format the path in the S3 object name. |
+| kafka-connect-manager-enterprise.s3Sink.rotateIntervalMs | string | `"600000"` | The time interval in milliseconds to invoke file commits. Set to 10 minutes by default. |
+| kafka-connect-manager-enterprise.s3Sink.s3BucketName | string | `""` | s3 bucket name. The bucket must already exist at the s3 provider. |
+| kafka-connect-manager-enterprise.s3Sink.s3PartRetries | int | `3` | Maximum number of retry attempts for failed requests. Zero means no retries. |
+| kafka-connect-manager-enterprise.s3Sink.s3PartSize | int | `5242880` | The Part Size in S3 Multi-part Uploads. Valid Values: [5242880,…,2147483647] |
+| kafka-connect-manager-enterprise.s3Sink.s3Region | string | `"us-east-1"` | s3 region |
+| kafka-connect-manager-enterprise.s3Sink.s3RetryBackoffMs | int | `200` | How long to wait in milliseconds before attempting the first retry of a failed S3 request. |
+| kafka-connect-manager-enterprise.s3Sink.s3SchemaCompatibility | string | `"NONE"` | s3 schema compatibility |
+| kafka-connect-manager-enterprise.s3Sink.schemaCacheConfig | int | `5000` | The size of the schema cache used in the Avro converter. |
+| kafka-connect-manager-enterprise.s3Sink.storeUrl | string | `""` | The object storage connection URL, for non-AWS s3 providers. |
+| kafka-connect-manager-enterprise.s3Sink.tasksMax | int | `1` | Number of Kafka Connect tasks. |
+| kafka-connect-manager-enterprise.s3Sink.timestampExtractor | string | `"Record"` | The extractor determines how to obtain a timestamp from each record. |
+| kafka-connect-manager-enterprise.s3Sink.timestampField | string | `""` | The record field to be used as timestamp by the timestamp extractor. Only applies if timestampExtractor is set to RecordField. |
+| kafka-connect-manager-enterprise.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner. |
+| kafka-connect-manager-enterprise.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka. |
+| kafka-connect-manager-enterprise.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | rest-proxy.affinity | object | `{}` | Affinity configuration. |
 | rest-proxy.configurationOverrides | object | `{"access.control.allow.headers":"origin,content-type,accept,authorization","access.control.allow.methods":"GET,POST,PUT,DELETE","client.sasl.mechanism":"SCRAM-SHA-512","client.security.protocol":"SASL_PLAINTEXT"}` | Kafka REST configuration options |
 | rest-proxy.customEnv | string | `nil` | Kafka REST additional env variables |
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy. |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository. |
-| rest-proxy.image.tag | string | `"7.5.2"` | Kafka REST proxy image tag. |
+| rest-proxy.image.tag | string | `"7.5.3"` | Kafka REST proxy image tag. |
 | rest-proxy.ingress.annotations | object | `{"nginx.ingress.kubernetes.io/rewrite-target":"/$2"}` | Ingress annotations. |
 | rest-proxy.ingress.enabled | bool | `false` | Enable Ingress. This should be true to create an ingress rule for the application. |
 | rest-proxy.ingress.hostname | string | `""` | Ingress hostname. |
@@ -240,12 +337,12 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
 | source-kafka-connect-manager.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL. |
 | source-kafka-connect-manager.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed. |
-| source-kafka-connect-manager.influxdbSink.connectors | object | `{"test":{"enabled":false,"removePrefix":"source.","repairerConnector":false,"tags":"","topicsRegex":"source.lsst.sal.Test"}}` | Connector instances to deploy. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.enabled | bool | `false` | Whether this connector instance is deployed. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.removePrefix | string | `"source."` | Remove prefix from topic name. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
-| source-kafka-connect-manager.influxdbSink.connectors.test.topicsRegex | string | `"source.lsst.sal.Test"` | Regex to select topics from Kafka. |
+| source-kafka-connect-manager.influxdbSink.connectors | object | `{"example":{"enabled":false,"removePrefix":"","repairerConnector":false,"tags":"","topicsRegex":"example.topic"}}` | Connector instances to deploy. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.enabled | bool | `false` | Whether this connector instance is deployed. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.removePrefix | string | `""` | Remove prefix from topic name. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.repairerConnector | bool | `false` | Whether to deploy a repairer connector in addition to the original connector instance. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.tags | string | `""` | Fields in the Avro payload that are treated as InfluxDB tags. |
+| source-kafka-connect-manager.influxdbSink.connectors.example.topicsRegex | string | `"example.topic"` | Regex to select topics from Kafka. |
 | source-kafka-connect-manager.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka. |
 | source-kafka-connect-manager.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector. |
 | source-kafka-connect-manager.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time, if not specified use `sys_time()`. |
@@ -288,7 +385,7 @@ Rubin Observatory's telemetry service.
 | source-kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka. |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
-| strimzi-kafka.connect.enabled | bool | `true` | Enable Kafka Connect. |
+| strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect. |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
@@ -304,9 +401,9 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.externalListener.brokers | list | `[]` | Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification. The format is a list of maps. |
 | strimzi-kafka.kafka.externalListener.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
 | strimzi-kafka.kafka.externalListener.tls.enabled | bool | `false` | Whether TLS encryption is enabled. |
-| strimzi-kafka.kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled. |
-| strimzi-kafka.kafka.listeners.plain.enabled | bool | `true` | Whether internal plaintext listener is enabled. |
-| strimzi-kafka.kafka.listeners.tls.enabled | bool | `true` | Whether internal TLS listener is enabled. |
+| strimzi-kafka.kafka.listeners.external.enabled | bool | `false` | Whether external listener is enabled. |
+| strimzi-kafka.kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled. |
+| strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
@@ -325,12 +422,12 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
-| strimzi-kafka.users.kafkaConnectManager.enabled | bool | `true` | Enable user kafka-connect-manager |
-| strimzi-kafka.users.promptProcessing.enabled | bool | `true` | Enable user prompt-processing |
-| strimzi-kafka.users.replicator.enabled | bool | `false` | Enabled user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
-| strimzi-kafka.users.telegraf.enabled | bool | `true` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| strimzi-kafka.users.tsSalKafka.enabled | bool | `true` | Enable user ts-salkafka. |
+| strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
+| strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
+| strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
+| strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
+| strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
 | strimzi-kafka.zookeeper.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["zookeeper"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Zookeeper pod assignment. |
 | strimzi-kafka.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
 | strimzi-kafka.zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
@@ -343,21 +440,17 @@ Rubin Observatory's telemetry service.
 | telegraf-kafka-consumer.env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
 | telegraf-kafka-consumer.env[0].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[1].name | string | `"INFLUXDB_TOKEN"` |  |
-| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB v2 admin token. |
+| telegraf-kafka-consumer.env[1].name | string | `"INFLUXDB_USER"` |  |
+| telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
 | telegraf-kafka-consumer.env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[2].name | string | `"INFLUXDB_USER"` |  |
-| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
+| telegraf-kafka-consumer.env[2].name | string | `"INFLUXDB_PASSWORD"` |  |
+| telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
 | telegraf-kafka-consumer.env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| telegraf-kafka-consumer.env[3].name | string | `"INFLUXDB_PASSWORD"` |  |
-| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
-| telegraf-kafka-consumer.env[3].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | telegraf-kafka-consumer.image.pullPolicy | string | IfNotPresent | Image pull policy. |
-| telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly:latest"` | Telegraf image repository. |
+| telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly"` | Telegraf image repository. |
 | telegraf-kafka-consumer.image.tag | string | `"latest"` | Telegraf image tag. |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
-| telegraf-kafka-consumer.influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |

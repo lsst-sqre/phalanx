@@ -11,7 +11,6 @@ controller:
       cycle: 32
       recommended_tag: "recommended_c0032"
     lab:
-      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
@@ -22,72 +21,83 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
       initContainers:
-      - name: "initdir"
-        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
-        privileged: true
-        volumes:
-        - containerPath: "/home"
-          mode: "rw"
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.2"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      pullSecret: "pull-secret"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      volumes:
+        - name: "home"
           source:
+            type: "nfs"
             serverPath: "/jhome"
             server: "nfs-jhome.tu.lsst.org"
+        - name: "project"
+          source:
             type: "nfs"
-      secrets:
-      - secretName: "nublado-lab-secret"
-        secretKey: "postgres-credentials.txt"
-      volumes:
-      - containerPath: "/home"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/jhome"
-          server: "nfs-jhome.tu.lsst.org"
-      - containerPath: "/project"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/project"
-          server: "nfs-project.tu.lsst.org"
-      - containerPath: "/scratch"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/scratch"
-          server: "nfs-scratch.tu.lsst.org"
-      - containerPath: "/datasets"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata"
-          server: "nfs-lsstdata.tu.lsst.org"
-      - containerPath: "/repo/LATISS"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/repo/LATISS"
-          server: "nfs-auxtel.tu.lsst.org"
-      - containerPath: "/net/obs-env"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/obs-env"
-          server: "nfs-obsenv.tu.lsst.org"
-      - containerPath: "/repo/LSSTComCam"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/repo/LSSTComCam"
-          server: "comcam-archiver.tu.lsst.org"
-      - containerPath: "/data/lsstdata/TTS/auxtel"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/lsstdata/TTS/auxtel"
-          server: "nfs-auxtel.tu.lsst.org"
-      - containerPath: "/data/lsstdata/TTS/comcam"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata/TTS/comcam"
-          server: "comcam-archiver.tu.lsst.org"
+            serverPath: "/project"
+            server: "nfs-project.tu.lsst.org"
+        - name: "scratch"
+          source:
+            type: "nfs"
+            serverPath: "/scratch"
+            server: "nfs-scratch.tu.lsst.org"
+        - name: "datasets"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata"
+            server: "nfs-lsstdata.tu.lsst.org"
+        - name: "latiss"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/repo/LATISS"
+            server: "nfs-auxtel.tu.lsst.org"
+        - name: "obs-env"
+          source:
+            type: "nfs"
+            serverPath: "/obs-env"
+            server: "nfs-obsenv.tu.lsst.org"
+        - name: "lsstcomcan"
+          source:
+            type: "nfs"
+            serverPath: "/repo/LSSTComCam"
+            server: "comcam-archiver.tu.lsst.org"
+        - name: "auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata/TTS/auxtel"
+            server: "nfs-auxtel.tu.lsst.org"
+        - name: "comcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata/TTS/comcam"
+            server: "comcam-archiver.tu.lsst.org"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/datasets"
+          volumeName: "datasets"
+        - containerPath: "/repo/LATISS"
+          volumeName: "latiss"
+        - containerPath: "/net/obs-env"
+          volumeName: "obs-env"
+        - containerPath: "/repo/LSSTComCam"
+          volumeName: "lsstcomcam"
+        - containerPath: "/data/lsstdata/TTS/auxtel"
+          volumeName: "auxtel"
+        - containerPath: "/data/lsstdata/TTS/comcam"
+          volumeName: "comcam"
 
 jupyterhub:
   cull:

@@ -1,0 +1,28 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "nublado-controller-hub"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "admin:jupyterlab"
+template:
+  metadata:
+    name: "controller-hub"
+    annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.controller.config.pathPrefix }}/spawner/v1/labs"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "nublado-controller"
+                  port:
+                    number: 80

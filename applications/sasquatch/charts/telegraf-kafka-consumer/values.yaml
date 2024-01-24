@@ -4,7 +4,7 @@ enabled: false
 
 image:
   # -- Telegraf image repository.
-  repo: "quay.io/influxdb/telegraf-nightly:latest"
+  repo: "quay.io/influxdb/telegraf-nightly"
   # -- Telegraf image tag.
   tag: "latest"
   # -- Image pull policy.
@@ -31,12 +31,6 @@ env:
         name: sasquatch
         # -- Telegraf KafkaUser password.
         key: telegraf-password
-  - name: INFLUXDB_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: sasquatch
-        # -- InfluxDB v2 admin token.
-        key: admin-token
   - name: INFLUXDB_USER
     valueFrom:
       secretKeyRef:
@@ -121,10 +115,6 @@ kafkaConsumers:
 influxdb:
   # -- Name of the InfluxDB v1 database to write to.
   database: "telegraf-kafka-consumer-v1"
-
-influxdb2:
-  # -- Name of the InfluxDB v2 bucket to write to.
-  bucket: "telegraf-kafka-consumer"
 
 # -- Kubernetes resources requests and limits.
 resources: {}

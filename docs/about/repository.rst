@@ -2,7 +2,7 @@
 Phalanx Git repository structure
 ################################
 
-Phalanx is an open source Git repository hosted on `GitHub <https://github.com/lsst-sqre/phalanx>`__.
+Phalanx is an open source Git repository hosted at https://github.com/lsst-sqre/phalanx.
 This page provides an overview of this repository's structure, for both application developers and environment administrators alike.
 For background on Phalanx and its technologies, see :doc:`introduction` first.
 
@@ -73,7 +73,7 @@ This directory contains Helm charts shared by multiple Phalanx applications that
 
 In some cases, several Phalanx applications should use common Helm templates to avoid duplication.
 The best way to do this within Helm is to use a subchart.
-This can be done by publishing a separate Helm chart using the `charts repository <https://github.com/lsst-sqre/charts>`__, but publication as a Helm chart implies that the chart may be useful outside of Phalanx.
+This can be done by publishing a separate Helm chart in https://github.com/lsst-sqre/charts, but publication as a Helm chart implies that the chart may be useful outside of Phalanx.
 Sometimes these shared subcharts are merely artifacts of code organization and deduplication within Phalanx, and should not have an independent existence outside of Phalanx.
 In those cases, they're maintained in the :file:`charts` directory.
 
@@ -118,7 +118,7 @@ The default branch is ``main``.
 This default branch is considered the source of truth for fullly synchronized Phalanx environments.
 
 Updates to Phalanx are introduced as pull requests on GitHub.
-Repository members create branches directly in the `GitHub lsst-sqre/phalanx repository <https://github.com/lsst-sqre/phalanx>`__ (see the `Data Management workflow guide`_)
+Repository members create branches directly in https://github.com/lsst-sqre/phalanx (see the `Data Management workflow guide`_)
 External collaborators should fork Phalanx and create pull requests.
 
 It is possible (particularly in non-production environments) to deploy applications from branches of Phalanx, which is useful for debugging new and updating applications before updating the ``main`` branch.

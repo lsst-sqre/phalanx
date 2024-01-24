@@ -67,7 +67,7 @@ template:
     tls:
       - hosts:
         - {{ .Values.ingress.hostname.readwrite | quote }}
-        secretName: tls
+        secretName: tls-rw
     rules:
       - host: {{ .Values.ingress.hostname.readwrite | quote }}
         http:

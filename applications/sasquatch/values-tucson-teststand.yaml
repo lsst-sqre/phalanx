@@ -18,6 +18,15 @@ strimzi-kafka:
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+  users:
+    tsSalKafka:
+      enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
   registry:
     ingress:
       enabled: true
@@ -30,15 +39,6 @@ influxdb:
   persistence:
     storageClass: rook-ceph-block
   ingress:
-    enabled: true
-    hostname: tucson-teststand.lsst.codes
-
-influxdb2:
-  enabled: true
-  persistence:
-    storageClass: rook-ceph-block
-  ingress:
-    # -- InfluxDB2 ingress configuration
     enabled: true
     hostname: tucson-teststand.lsst.codes
 
@@ -154,7 +154,7 @@ kafka-connect-manager:
         topicsRegex: ".*OCPS"
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: true
         topicsRegex: ".*PMD"

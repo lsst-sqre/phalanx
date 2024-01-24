@@ -77,7 +77,7 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "1.14.0"
+      tag: "1.14.1"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -93,13 +93,13 @@ config:
 
       # -- Tag of tap image to use
       # @default -- Latest release
-      tag: "2.1.0"
+      tag: "2.1.1"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.2/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.1.6/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   # @default -- The common GCS bucket
@@ -165,7 +165,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "2.1.4"
+    tag: "2.1.6"
 
   # -- Resource limits and requests for the TAP schema database pod
   resources: {}
@@ -192,7 +192,7 @@ uws:
 
     # -- Tag of UWS database image to use
     # @default -- Version of QServ TAP image
-    tag: "2.1.0"
+    tag: "2.1.1"
 
   # -- Resource limits and requests for the UWS database pod
   resources:

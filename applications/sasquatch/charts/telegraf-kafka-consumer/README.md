@@ -13,21 +13,17 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | env[0].name | string | `"TELEGRAF_PASSWORD"` |  |
 | env[0].valueFrom.secretKeyRef.key | string | `"telegraf-password"` | Telegraf KafkaUser password. |
 | env[0].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| env[1].name | string | `"INFLUXDB_TOKEN"` |  |
-| env[1].valueFrom.secretKeyRef.key | string | `"admin-token"` | InfluxDB v2 admin token. |
+| env[1].name | string | `"INFLUXDB_USER"` |  |
+| env[1].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
 | env[1].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| env[2].name | string | `"INFLUXDB_USER"` |  |
-| env[2].valueFrom.secretKeyRef.key | string | `"influxdb-user"` | InfluxDB v1 user |
+| env[2].name | string | `"INFLUXDB_PASSWORD"` |  |
+| env[2].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
 | env[2].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
-| env[3].name | string | `"INFLUXDB_PASSWORD"` |  |
-| env[3].valueFrom.secretKeyRef.key | string | `"influxdb-password"` | InfluxDB v1 password |
-| env[3].valueFrom.secretKeyRef.name | string | `"sasquatch"` |  |
 | image.pullPolicy | string | IfNotPresent | Image pull policy. |
-| image.repo | string | `"quay.io/influxdb/telegraf-nightly:latest"` | Telegraf image repository. |
+| image.repo | string | `"quay.io/influxdb/telegraf-nightly"` | Telegraf image repository. |
 | image.tag | string | `"latest"` | Telegraf image tag. |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls. |
 | influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to. |
-| influxdb2.bucket | string | `"telegraf-kafka-consumer"` | Name of the InfluxDB v2 bucket to write to. |
 | kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |

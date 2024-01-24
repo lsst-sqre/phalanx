@@ -1,0 +1,34 @@
+{{- if (index .Values "applications" "jira-data-proxy") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "jira-data-proxy"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "jira-data-proxy"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "jira-data-proxy"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/jira-data-proxy"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

@@ -1,5 +1,32 @@
 {
   "$defs": {
+    "GCPMetadata": {
+      "description": "Google Cloud Platform hosting metadata.\n\nHolds information about where in Google Cloud Platform this Phalanx\nenvironment is hosted. This supports generating documentation that\nincludes this metadata, making it easier for administrators to know what\noptions to pass to :command:`gcloud` to do things such as get Kubernetes\ncredentials.",
+      "properties": {
+        "projectId": {
+          "description": "Project ID of GCP project hosting this environment",
+          "title": "GCP project ID",
+          "type": "string"
+        },
+        "region": {
+          "description": "GCP region in which this environment is hosted",
+          "title": "GCP region",
+          "type": "string"
+        },
+        "clusterName": {
+          "description": "Name of the GKE cluster hosting this environment",
+          "title": "Kubernetes cluster name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "projectId",
+        "region",
+        "clusterName"
+      ],
+      "title": "GCPMetadata",
+      "type": "object"
+    },
     "OnepasswordConfig": {
       "description": "Configuration for 1Password static secrets source.",
       "properties": {
@@ -50,6 +77,19 @@
       "default": null,
       "description": "URL to Butler repository index",
       "title": "Butler repository index URL"
+    },
+    "gcp": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/GCPMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "If this environment is hosted on Google Cloud Platform, metadata about the hosting project, location, and other details. Used to generate additional environment documentation.",
+      "title": "GCP hosting metadata"
     },
     "onepassword": {
       "anyOf": [

@@ -64,9 +64,13 @@ global:
   vaultSecretsPath: ""
 
 config:
-  # -- URI to the file specifying the DirectButler configuration to be used
-  # by the butler server
-  configUri: ""
+  # -- URI to the DirectButler repository index file listing the configurations
+  # for each repository to be hosted by this server.
+  indexUri: ""
+
+  # -- List of Butler repository labels which will be hosted by this server,
+  # matching those from the index file.
+  repositoryLabels: []
 
   # -- The prefix of the path portion of the URL where the Butler service will
   # be exposed.  For example, if the service should be exposed at

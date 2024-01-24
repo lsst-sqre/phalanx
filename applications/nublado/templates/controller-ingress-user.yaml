@@ -21,28 +21,28 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/labs/.*/create"
+            - path: "{{ .Values.controller.config.pathPrefix }}/spawner/v1/labs/.*/create"
               pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: "nublado-controller"
                   port:
                     number: 80
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/labs/.*/events"
+            - path: "{{ .Values.controller.config.pathPrefix }}/spawner/v1/labs/.*/events"
               pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: "nublado-controller"
                   port:
                     number: 80
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/lab-form"
+            - path: "{{ .Values.controller.config.pathPrefix }}/spawner/v1/lab-form"
               pathType: "Prefix"
               backend:
                 service:
                   name: "nublado-controller"
                   port:
                     number: 80
-            - path: "{{ .Values.controller.config.safir.pathPrefix }}/spawner/v1/user-status"
+            - path: "{{ .Values.controller.config.pathPrefix }}/spawner/v1/user-status"
               pathType: "Exact"
               backend:
                 service:

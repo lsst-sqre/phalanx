@@ -29,10 +29,12 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: {{ .Values.config.pathPrefix | quote }}
+            {{- range $repositoryLabel := .Values.config.repositoryLabels }}
+            - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}"
               pathType: "Prefix"
               backend:
                 service:
                   name: "butler"
                   port:
                     number: 8080
+            {{- end }}

@@ -14,6 +14,14 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
+    promptProcessing:
+      enabled: true
 
 influxdb:
   ingress:
@@ -60,7 +68,7 @@ kafka-connect-manager:
         topicsRegex: ".*OCPS"
       test:
         enabled: false
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
       pmd:
         enabled: false
         topicsRegex: ".*PMD"
@@ -123,6 +131,12 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.lf"
         topicsRegex: "lsst.lf.*"
         tags: benchmark_env,module,benchmark_type
+      lsstprompt:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.prompt"
+        topicsRegex: "lsst.prompt.*"
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,group
 
 kafdrop:
   ingress:
@@ -146,6 +160,7 @@ rest-proxy:
       - lsst.camera
       - lsst.verify
       - lsst.lf
+      - lsst.prompt
 
 chronograf:
   ingress:

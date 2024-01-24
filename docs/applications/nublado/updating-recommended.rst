@@ -12,7 +12,7 @@ Tagging a new container version
 
 When a new version has been approved (after passing through its prior QA and sign-off gates), the ``recommended`` tag must be updated to point to the new version.
 
-To do this, run the GitHub retag workflow for the `sciplat-lab <https://github.com/lsst-sqre/sciplat-lab>`__ repository, as follows:
+To do this, run the GitHub retag workflow for https://github.com/lsst-sqre/sciplat-lab repository, as follows:
 
 #. Go to `the retag workflow page <https://github.com/lsst-sqre/sciplat-lab/actions/workflows/retag.yaml>`__.
 #. Click :guilabel:`Run workflow`.
@@ -38,7 +38,7 @@ If you do not find it, then that environment is currently using ``recommended`` 
 
 Set this key (creating it if necessary) to whatever string represents the correct recommended-by-default image for that instance.
 For instance, for a Telescope and Site environment, this will likely look something like ``recommended_c0032``.
-Create a pull request against `Phalanx <https://github.com/lsst-sqre/phalanx>`__ that updates the tag.
+Create a pull request against https://github.com/lsst-sqre/phalanx that updates the tag.
 Once this change is merged, sync the nublado application (using Argo CD) in the affected environments.
 
 You do not have to wait for a maintenance window to do this, since the change is low risk, although it will result in a very brief outage for Notebook Aspect lab spawning while the JupyterLab Controller is restarted.

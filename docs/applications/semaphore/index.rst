@@ -7,7 +7,7 @@ semaphore — User notification
 Semaphore is the user notification and messaging service for the Rubin Science Platform.
 UI applications like :px-app:`squareone` can display messages from Semaphore's API.
 
-Edit broadcast messages for SQuaRE-managed environments at `lsst-sqre/rsp_broadcast <https://github.com/lsst-sqre/rsp_broadcast>`__.
+Edit broadcast messages for SQuaRE-managed environments at https://github.com/lsst-sqre/rsp_broadcast.
 
 .. jinja:: semaphore
    :file: applications/_summary.rst.jinja

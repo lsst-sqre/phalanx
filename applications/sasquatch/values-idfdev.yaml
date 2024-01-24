@@ -16,6 +16,13 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
+
   registry:
     ingress:
       enabled: true
@@ -36,24 +43,8 @@ influxdb:
       memory: 16Gi
       cpu: 2
 
-influxdb2:
-  enabled: true
-  ingress:
-    enabled: true
-    hostname: data-dev.lsst.cloud
-  resources:
-    requests:
-      memory: 16Gi
-      cpu: 2
-    limits:
-      memory: 16Gi
-      cpu: 2
-
-
 telegraf-kafka-consumer:
   enabled: true
-  image:
-    tag: "avrounions"
   kafkaConsumers:
     test:
       enabled: true

@@ -9,10 +9,6 @@ controller:
         projectId: "rubin-shared-services-71ec"
         repository: "sciplat"
         image: "sciplat-lab"
-      recommendedTag: "recommended"
-      numReleases: 1
-      numWeeklies: 2
-      numDailies: 3
     lab:
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
@@ -24,28 +20,15 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-
-      sizes:
-        small:
-          cpu: 1.0
-          memory: 4Gi
-        medium:
-          cpu: 2.0
-          memory: 8Gi
-        large:
-          cpu: 4.0
-          memory: 16Gi
       initContainers:
-        - name: "initdir"
-          image: "ghcr.io/lsst-sqre/initdir:0.0.4"
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.2"
           privileged: true
-          volumes:
+          volumeMounts:
             - containerPath: "/home"
-              mode: "rw"
-              source:
-                serverPath: "/share1/home"
-                server: "10.13.105.122"
-                type: "nfs"
+              volumeName: "home"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -55,25 +38,39 @@ controller:
           secretKey: "butler-hmac-idf-creds.json"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+      sizes:
+        - size: small
+          cpu: 1.0
+          memory: 4Gi
+        - size: medium
+          cpu: 2.0
+          memory: 8Gi
+        - size: large
+          cpu: 4.0
+          memory: 16Gi
       volumes:
-        - containerPath: "/home"
-          mode: "rw"
+        - name: "home"
           source:
             serverPath: "/share1/home"
             server: "10.13.105.122"
             type: "nfs"
-        - containerPath: "/project"
-          mode: "rw"
+        - name: "project"
           source:
             serverPath: "/share1/project"
             server: "10.13.105.122"
             type: "nfs"
-        - containerPath: "/scratch"
-          mode: "rw"
+        - name: "scratch"
           source:
             serverPath: "/share1/scratch"
             server: "10.13.105.122"
             type: "nfs"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
 
 jupyterhub:
   hub:

@@ -13,6 +13,7 @@ prompt-proto-service:
   instrument:
     pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
     calibRepo: s3://rubin:rubin-pp-users/central_repo/
+    calibRepoPguser: hsc_prompt
 
   s3:
     imageBucket: rubin:rubin-pp
@@ -25,11 +26,5 @@ prompt-proto-service:
 
   apdb:
     url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432  # TODO: remove on DM-40839
-
-  registry:  # TODO: remove on DM-40839
-    ip: usdf-prompt-processing-dev.slac.stanford.edu:5432
-    db: ppcentralbutler
-    user: pp
 
   fullnameOverride: "prompt-proto-service-hsc"

@@ -27,18 +27,19 @@ template:
             # to the existence of the Butler server -- they are passed the URI
             # for a repository root on the filesystem or HTTP, from which a
             # configuration file is loaded.
-            - path: "{{ .Values.config.pathPrefix }}/butler.yaml"
+            {{- range $repositoryLabel := .Values.config.repositoryLabels }}
+            - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}/butler.yaml"
               pathType: "Exact"
               backend:
                 service:
                   name: "butler"
                   port:
                     number: 8080
-            - path: "{{ .Values.config.pathPrefix }}/butler.json"
+            - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}/butler.json"
               pathType: "Exact"
               backend:
                 service:
                   name: "butler"
                   port:
                     number: 8080
-
+            {{- end }}

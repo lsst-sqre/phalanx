@@ -8,10 +8,9 @@ controller:
       num_releases: 0
       num_weeklies: 3
       num_dailies: 2
-      cycle: 33
-      recommended_tag: "recommended_c0033"
+      cycle: 34
+      recommended_tag: "recommended_c0034"
     lab:
-      pullSecret: "pull-secret"
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
@@ -22,81 +21,97 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
       initContainers:
-      - name: "initdir"
-        image: "ghcr.io/lsst-sqre/initdir:0.0.4"
-        privileged: true
-        volumes:
-        - containerPath: "/home"
-          mode: "rw"
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.2"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      pullSecret: "pull-secret"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      volumes:
+        - name: "home"
           source:
+            type: "nfs"
             serverPath: "/jhome"
             server: "nfs1.cp.lsst.org"
+        - name: "project"
+          source:
             type: "nfs"
-      secrets:
-      - secretName: "nublado-lab-secret"
-        secretKey: "postgres-credentials.txt"
-      volumes:
-      - containerPath: "/home"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/jhome"
-          server: "nfs1.cp.lsst.org"
-      - containerPath: "/project"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/project"
-          server: "nfs1.cp.lsst.org"
-      - containerPath: "/scratch"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/scratch"
-          server: "nfs1.cp.lsst.org"
-      - containerPath: "/repo/LATISS"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/repo/LATISS"
-          server: "nfs-auxtel.cp.lsst.org"
-      - containerPath: "/repo/LSSTComCam"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/repo/LSSTComCam"
-          server: "comcam-archiver.cp.lsst.org"
-      - containerPath: "/net/obs-env"
-        mode: "rw"
-        source:
-          type: "nfs"
-          serverPath: "/obs-env"
-          server: "nfs-obsenv.cp.lsst.org"
-      - containerPath: "/readonly/lsstdata/other"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata"
-          server: "nfs1.cp.lsst.org"
-      - containerPath: "/readonly/lsstdata/comcam"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata"
-          server: "comcam-archiver.cp.lsst.org"
-      - containerPath: "/readonly/lsstdata/auxtel"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/lsstdata"
-          server: "nfs-auxtel.cp.lsst.org"
-      - containerPath: "/data/lsstdata/base/comcam"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata/base/comcam"
-          server: "comcam-archiver.cp.lsst.org"
-      - containerPath: "/data/lsstdata/base/auxtel"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/lsstdata/base/auxtel"
-          server: "nfs-auxtel.cp.lsst.org"
+            serverPath: "/project"
+            server: "nfs1.cp.lsst.org"
+        - name: "scratch"
+          source:
+            type: "nfs"
+            serverPath: "/scratch"
+            server: "nfs1.cp.lsst.org"
+        - name: "latiss"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/repo/LATISS"
+            server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstcomcam"
+          source:
+            type: "nfs"
+            serverPath: "/repo/LSSTComCam"
+            server: "comcam-archiver.cp.lsst.org"
+        - name: "obs-env"
+          source:
+            type: "nfs"
+            serverPath: "/obs-env"
+            server: "nfs-obsenv.cp.lsst.org"
+        - name: "lsstdata-other"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata"
+            server: "nfs1.cp.lsst.org"
+        - name: "lsstdata-comcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata"
+            server: "comcam-archiver.cp.lsst.org"
+        - name: "lsstdata-auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata"
+            server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstdata-base-comcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata/base/comcam"
+            server: "comcam-archiver.cp.lsst.org"
+        - name: "lsstdata-base-auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata/base/auxtel"
+            server: "nfs-auxtel.cp.lsst.org"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/repo/LATISS"
+          volumeName: "latiss"
+        - containerPath: "/repo/LSSTComCam"
+          volumeName: "lsstcomcam"
+        - containerPath: "/net/obs-env"
+          volumeName: "obs-env"
+        - containerPath: "/readonly/lsstdata/other"
+          volumeName: "lsstdata-other"
+        - containerPath: "/readonly/lsstdata/comcam"
+          volumeName: "lsstdata-comcam"
+        - containerPath: "/readonly/lsstdata/auxtel"
+          volumeName: "lsstdata-auxtel"
+        - containerPath: "/data/lsstdata/base/comcam"
+          volumeName: "lsstdata-base-comcam"
+        - containerPath: "/data/lsstdata/base/auxtel"
+          volumeName: "lsstdata-base-auxtel"
 
 jupyterhub:
   cull:

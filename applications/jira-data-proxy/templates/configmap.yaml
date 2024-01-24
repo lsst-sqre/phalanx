@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "jira-data-proxy"
+  labels:
+    {{- include "jira-data-proxy.labels" . | nindent 4 }}
+data:
+  SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  SAFIR_PATH_PREFIX: {{ .Values.ingress.path | quote }}
+  JIRA_BASE_URL: {{ .Values.config.jiraUrl | quote }}

@@ -1,0 +1,79 @@
+# Default values for filestore-backup.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Resource limits and requests for the filestore-backup pods
+resources: {}
+
+# -- Annotations for the filestore-backup pods
+podAnnotations: {}
+
+# -- Node selector rules for the filestore-backup pods
+nodeSelector: {}
+
+# -- Tolerations for the filestore-backup pods
+tolerations: []
+
+# -- Affinity rules for the filestore-backup pods
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+image:
+  # -- Filestore-Backup image to use
+  repository: ghcr.io/lsst-sqre/rubin-google-filestore-tools
+
+  # -- Pull policy for the filestore-backup image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of filestore-backup image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+config:
+  # -- Filestore instance (e.g. "fshare-instance-dev")
+  # @default -- None, must be set
+  instance: ""
+
+  # -- Zone for Filestore instance (e.g. "b" from "us-central1-b")
+  # @default -- None, must be set
+  zone: ""
+
+  # -- File Share name for filestore instance.  Always "share1" unless
+  # storage is on an Enterprise tier
+  fileShare: "share1"
+  backup:
+    # -- Turn on debugging mode
+    debug: false
+
+    # -- Backup schedule, in Unix cron job format
+    # @default -- fields are minute hour day-of-month month day-of-week
+    schedule: "0 10 * * *"
+  purge:
+    # -- Turn on debugging mode
+    debug: false
+
+    # -- Purge schedule, in Unix cron job format:
+    # @default -- fields are minute hour day-of-month month day-of-week
+    schedule: "45 10 * * *"
+
+    # -- Number of backups to keep when purging
+    keep: 6
+
+global:
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+  # -- GCP Project ID
+  # @default -- Set by Argo CD
+
+  gcpProjectId: ""
+
+  # -- GCP Region
+  # @default -- Set by Argo CD
+  gcpRegion: ""

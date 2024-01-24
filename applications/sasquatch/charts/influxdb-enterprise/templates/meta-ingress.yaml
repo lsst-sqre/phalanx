@@ -1,0 +1,32 @@
+{{- if .Values.meta.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "influxdb-enterprise.fullname" . }}-meta
+  labels:
+    influxdb.influxdata.com/component: meta
+{{- include "influxdb-enterprise.labels" . | nindent 4 }}
+{{- if .Values.meta.ingress.annotations }}
+  annotations:
+{{ toYaml .Values.meta.ingress.annotations | indent 4 }}
+{{- end }}
+spec:
+{{- if .Values.meta.ingress.className }}
+  ingressClassName: {{ .Values.meta.ingress.className }}
+{{- end }}
+  rules:
+{{- if .Values.meta.ingress.hostname }}
+    - host: {{ .Values.meta.ingress.hostname | quote }}
+      http:
+{{- else }}
+    - http:
+{{- end }}
+        paths:
+          - path: {{ .Values.meta.ingress.path }}
+            pathType: Prefix
+            backend:
+              service:
+                name:  {{ template "influxdb-enterprise.fullname" . }}-meta
+                port:
+                  number: 8091
+{{- end }}

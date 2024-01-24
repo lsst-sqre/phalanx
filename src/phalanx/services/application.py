@@ -241,8 +241,8 @@ class ApplicationService:
         HelmFailedError
             Raised if Helm fails.
         """
-        self.add_helm_repositories([app_name], quiet=True)
-        self._helm.repo_update(quiet=True)
+        if self.add_helm_repositories([app_name], quiet=True):
+            self._helm.repo_update(quiet=True)
         self._helm.dependency_update(app_name, quiet=True)
         environment = self._config.load_environment(env_name)
         values = self._build_injected_values(app_name, environment)
@@ -286,6 +286,9 @@ class ApplicationService:
             "global.baseUrl": f"https://{environment.fqdn}",
             "global.vaultSecretsPath": environment.vault_path_prefix,
         }
+        if environment.gcp:
+            values["global.gcpProjectId"] = environment.gcp.project_id
+            values["global.gcpRegion"] = environment.gcp.region
         if environment.butler_repository_index:
             butler_index = environment.butler_repository_index
             values["global.butlerRepositoryIndex"] = butler_index

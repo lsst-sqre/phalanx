@@ -25,6 +25,7 @@ To create a new Phalanx environment, take the following steps:
    Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
    You may omit ``vaultUrl`` for SQuaRE-managed environments.
    See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
+   If the environment will be hosted on Google Kubernetes Engine, also fill out ``gcp.projectId``, ``gcp.region``, and ``gcp.clusterName`` with metadata about where the environment will be hosted.
    Enable the applications this environment should include.
 
 #. Decide on your approach to TLS certificates.
@@ -45,8 +46,8 @@ To create a new Phalanx environment, take the following steps:
    The following applications have special bootstrapping considerations:
 
    - :px-app-bootstrap:`argocd`
-   - :px-app-bootstrap:`cachemachine`
    - :px-app-bootstrap:`gafaelfawr`
+   - :px-app-bootstrap:`nublado`
    - :px-app-bootstrap:`portal`
    - :px-app-bootstrap:`squareone`
 

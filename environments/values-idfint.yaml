@@ -1,13 +1,17 @@
+name: "idfint"
+fqdn: "data-int.lsst.cloud"
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
-fqdn: data-int.lsst.cloud
-name: idfint
+gcp:
+  projectId: "science-platform-int-dc5d"
+  region: "us-central1"
+  clusterName: "science-platform-int"
 onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP data-int.lsst.cloud"
-vaultPathPrefix: secret/phalanx/idfint
+vaultPathPrefix: "secret/phalanx/idfint"
 
 applications:
-  alert-stream-broker: true
+  butler: true
   datalinker: true
   hips: true
   linters: true

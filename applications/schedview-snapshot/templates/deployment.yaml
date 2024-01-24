@@ -40,8 +40,11 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/schedview-snapshot"
+              path: "/schedview-snapshot/dashboard"
               port: "http"
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            timeoutSeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

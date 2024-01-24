@@ -1,7 +1,7 @@
 image:
   pullPolicy: "Always"
   repository: "docker.io/lsstsqre/giftless"
-  tag: "upstream-master"
+  tag: "upstream"
 server:
   debug: true
 ingress:

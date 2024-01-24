@@ -28,7 +28,7 @@ When following these instructions, you will be modifying a `Secrets Automation w
 You will need to have permissions to modify the workflow for the 1Password Connet server that will be serving your environment.
 
 Process
-=======
+========
 
 In the following steps, you'll change the permissions of the 1Password Connect server to add the new 1Password vault for your environment and create a new token with access to that vault.
 

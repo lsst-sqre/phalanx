@@ -29,6 +29,12 @@ strimzi-kafka:
   users:
     replicator:
       enabled: true
+    kafdrop:
+      enabled: true
+    telegraf:
+      enabled: true
+    kafkaConnectManager:
+      enabled: true
 
 influxdb:
   ingress:
@@ -47,7 +53,7 @@ kafka-connect-manager:
     connectors:
       test:
         enabled: true
-        topicsRegex: ".*Test"
+        topicsRegex: "lsst.sal.Test"
 
 kafdrop:
   ingress:

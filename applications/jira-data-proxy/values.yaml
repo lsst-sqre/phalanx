@@ -1,0 +1,74 @@
+# Default values for jira-data-proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  # -- Logging level
+  logLevel: "info"
+
+  # -- Jira base URL
+  jiraUrl: "https://jira.lsstcorp.org/"
+
+# -- Number of web deployment pods to start
+replicaCount: 2
+
+image:
+  # -- Image to use in the jira-data-proxy deployment
+  repository: "ghcr.io/lsst-sqre/jira-data-proxy"
+
+  # -- Pull policy for the jira-data-proxy image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path prefix where jira-data-proxy is served
+  path: "/jira-data-proxy"
+
+autoscaling:
+  # -- Enable autoscaling of jira-data-proxy deployment
+  enabled: false
+
+  # -- Minimum number of jira-data-proxy deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of jira-data-proxy deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of jira-data-proxy deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the jira-data-proxy deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the jira-data-proxy deployment pod
+resources: {}
+
+# -- Node selection rules for the jira-data-proxy deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the jira-data-proxy deployment pod
+tolerations: []
+
+# -- Affinity rules for the jira-data-proxy deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

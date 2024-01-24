@@ -32,6 +32,10 @@ prompt-proto-service:
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
     calibRepo: ""
+    # -- Postgres username to access the shared butler repo for calibrations, templates, and pipeline outputs.
+    # If `registry.centralRepoFile` is set, a local redirect is used and its config may override this config.
+    # @default -- None, must be set
+    calibRepoPguser: ""
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -53,32 +57,16 @@ prompt-proto-service:
     # @default -- None, must be set
     topic: ""
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
-    imageTimeout: '120'
+    imageTimeout: '20'
 
   apdb:
     # -- URL to the APDB, in any form recognized by SQLAlchemy
     # @default -- None, must be set
     url: ""
-    # -- IP address or hostname and port of the APDB (deprecated for apdb.url)
-    # @default -- None, must be set
-    ip: ""  # TODO: remove on DM-40839
-    # -- PostgreSQL database name for the APDB (deprecated for apdb.url)
-    db: lsst-devl  # TODO: remove on DM-40839
-    # -- Database user for the APDB (deprecated for apdb.url)
-    user: rubin  # TODO: remove on DM-40839
     # -- Database namespace for the APDB
     namespace: pp_apdb
 
   registry:
-    # -- IP address or hostname and port of the Butler registry database (deprecated)
-    # @default -- None, must be set
-    ip: ""  # TODO: remove on DM-40839
-    # -- PostgreSQL database name for the Butler registry database (deprecated)
-    # @default -- None, must be set
-    db: ""  # TODO: remove on DM-40839
-    # -- Database user for the Butler registry database (deprecated)
-    # @default -- None, must be set
-    user: ""  # TODO: remove on DM-40839
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
     centralRepoFile: false
 
