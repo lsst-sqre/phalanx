@@ -65,7 +65,7 @@ controller:
             path: "/sps"
 jupyterhub:
   hub:
-    baseUrl: "/n3"
+    baseUrl: "/nb"
     config:
       ServerApp:
         shutdown_no_activity_timeout: 432000
