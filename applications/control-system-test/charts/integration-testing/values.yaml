@@ -1,0 +1,20 @@
+# -- The Name of the EFD instance.
+envEfd:
+# -- The S3 bucket name to use
+s3Bucket:
+# -- Container location of the RobotFramework reports
+reportLocation: /home/saluser/robotframework_EFD/Reports
+image:
+  # -- The image tag for the Integration Test runner container
+  tag:
+# -- Name for the top-level workflow
+workflowName: integration-test-workflow
+# -- This sets the service account name
+serviceAccount: integration-tests
+persistentVolume:
+  # -- PVC name for saving the reports
+  claimName: saved-reports
+  # -- Storage size request for the PVC
+  storage: 1Gi
+# -- Label for jobs to get them to appear in application
+jobLabelName: control-system-test

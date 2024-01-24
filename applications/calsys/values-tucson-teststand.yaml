@@ -1,0 +1,58 @@
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+
+gcheaderservice1:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    CAMERA: gc1
+    TSTAND_HEADERSERVICE: TUCSON
+    URL_SPEC: --lfa_mode s3 --s3instance tuc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+
+simulation-gencam:
+  enabled: true
+  classifier: genericcamera1
+  image:
+    repository: ts-dockerhub.lsst.org/genericcamera
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  service:
+    enabled: true
+    port: 5013
+    type: LoadBalancer

@@ -1,0 +1,73 @@
+# -- Set the replica count for the UWS server
+replicaCount: 1
+image:
+  # -- The Docker registry name of the UWS server container image
+  repository: lsstdm/uws-api-server
+  # -- The tag of the UWS server container image
+  tag: latest
+# -- Target Kubernetes cluster
+targetCluster: ""
+# -- Hostname for the client ingress
+hostname: ""
+# -- The base path for the client ingress
+basePath: "uws-server"
+# -- Log level of server. Set to "DEBUG" for highest verbosity
+logLevel: "WARNING"
+# -- Site-specific Vault path for secrets.
+vaultPathPrefix: ""
+server:
+  securityContext:
+    # -- Set the UID for the UWS server container entrypoint
+    runAsUser: 1000
+    # -- Set the GID for the UWS server container entrypoint
+    runAsGroup: 202
+    # -- Set the filesystem GID for the mounted volumes in the UWS server container
+    fsGroup: 202
+client:
+  # -- Turn on the UWS client system if desired
+  enabled: false
+job:
+  image:
+    # -- The Docker registry name of the UWS job container image
+    repository: "lsstsqre/centos"
+    # -- The tag of the UWS job container image
+    tag: "d_latest"
+  securityContext:
+    # -- Set the UID for the UWS job container entrypoint
+    runAsUser: 1000
+    # -- Set the GID for the UWS job container entrypoint
+    runAsGroup: 202
+    # -- Set the filesystem GID for the mounted volumes in the UWS job container
+    fsGroup: 202
+# -- Configuration for Postgres backed butlers
+# The object must have the following attributes defined:
+# _secretKey_ (A label that points to the VaultSecret for the postgres credentials)
+# _containerPath_ (The directory location in the container for the Butler secret)
+# _dbUser_ (The database user name for butler access)
+butlerPg: {}
+workingVolume:
+  # -- A label identifier for the working volume
+  name: job-files
+  # -- The hostname for the NFS server with the working volume
+  server: ""
+  # -- The export path on the NFS server for the working volume
+  exportPath: ""
+  # -- The PVC claim name for the working volume
+  claimName: ""
+  # -- The mount path in the server container for the working volume
+  mountPath: "/uws"
+  # -- A possible sub path for the working volume mount
+  subPath: ""
+# -- Central data volumes to be mounted in job containers.
+# Each object listed can have the following attributes defined:
+# _name_ (A label identifier for the data volume mount)
+# _server_ (The hostname for the NFS server with the data volume mount)
+# _claimName_ (The PVC claim name for the data volume mount)
+# _mountPath_ (The mount path in the server container for the data volume mount)
+# _exportPath_ (The export path on the NFS server for the data volume mount)
+# _subPath_ (A possible sub path for the data volume mount)
+# _readOnly_ (Flag to mark the data volume mount as read only or read/write)
+volumes: []
+# -- Temporary flag to make service deploy own namespace.
+# Doing this to not disrupt other sites.
+createNamespace: false

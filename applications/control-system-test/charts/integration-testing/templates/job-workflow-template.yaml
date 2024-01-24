@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: integration-test-job-template
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  entrypoint: inttest-template
+  ttlStrategy:
+    secondsAfterCompletion: 1800
+  imagePullSecrets:
+  - name: nexus3-docker
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  templates:
+  - name: inttest-template
+    inputs:
+      parameters:
+      - name: integrationtest
+        value: "-A Run-Robot.list"
+      - name: jobname
+        value: "myjob"
+      - name: reportname
+        value: "report.xml"
+    outputs:
+      artifacts:
+      - name: integration-test-reports
+        archive:
+          none: {}
+        path: {{ .Values.reportLocation }}/{{ printf "{{inputs.parameters.reportname}}" }}
+        s3:
+          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}/{{ printf "{{inputs.parameters.reportname}}" }}
+    metadata:
+      labels:
+        argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+    securityContext:
+      runAsUser: 73006
+      runAsGroup: 73006
+      fsGroup: 73006
+    container:
+      command: [/home/saluser/.startup.sh]
+      name: test-{{ printf "{{inputs.parameters.jobname}}" }}
+      {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystem.imageTag }}
+      image: "ts-dockerhub.lsst.org/integrationtests:{{ $imageTag }}"
+      imagePullPolicy: Always
+      envFrom:
+      - configMapRef:
+          name: csc-env-config
+      env:
+      - name: ENV_EFD
+        value: {{ .Values.envEfd }}
+      - name: RUN_ARG
+        value: {{ printf "'{{inputs.parameters.integrationtest}}'" }}
+      - name: LSST_KAFKA_SECURITY_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: ts-salkafka
+            key: ts-salkafka-password
+      volumeMounts:
+      - name: testreports
+        mountPath: {{ .Values.reportLocation }}
+        readOnly: false

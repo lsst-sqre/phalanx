@@ -1,0 +1,99 @@
+csc_collector:
+  # -- This section holds secret specifications.
+  # Each object listed can have the following attributes defined:
+  # _name_ (The name used by pods to access the secret)
+  # _key_ (The key in the vault store where the secret resides)
+  # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
+  secrets: []
+
+hexapod-sim:
+  # -- Enable the hexapod controller simulator
+  enabled: false
+
+atdome:
+  # -- Enable the ATDome CSC
+  enabled: false
+
+atdome-sim:
+  # -- Enable the ATDome simulator CSC
+  enabled: false
+
+athexapod:
+  # -- Enable the ATHexapod CSC
+  enabled: false
+
+athexapod-sim:
+  # -- Enable the ATHexapod simulator CSC
+  enabled: false
+
+atmcs:
+  # -- Enable the ATMCS CSC
+  enabled: false
+
+atmcs-sim:
+  # -- Enable the ATMCS simulator CSC
+  enabled: false
+
+atpneumatics:
+  # -- Enable the ATPneumatics CSC
+  enabled: false
+
+atpneumatics-sim:
+  # -- Enable the ATPneumatics simulator CSC
+  enabled: false
+
+atspectrograph:
+  # -- Enable the ATSpectrograph CSC
+  enabled: false
+
+atspectrograph-sim:
+  # -- Enable the ATSpectograph simulator CSC
+  enabled: false
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+  controlSystem:
+    # -- Application namespace for the control system deployment
+    # @default -- Set by ArgoCD
+    appNamespace: ""
+
+    # -- Image tag for the control system deployment
+    # @default -- Set by ArgoCD
+    imageTag: ""
+
+    # -- Site tag for the control system deployment
+    # @default -- Set by ArgoCD
+    siteTag: ""
+
+    # -- Topic name tag for the control system deployment
+    # @default -- Set by ArgoCD
+    topicName: ""
+
+    # -- Kafka broker address for the control system deployment
+    # @default -- Set by ArgoCD
+    kafkaBrokerAddress: ""
+
+    # -- Kafka topic replication factor for control system topics
+    # @default -- Set by ArgoCD
+    kafkaTopicReplicationFactor: ""
+
+    # -- Schema registry URL for the control system deployment
+    # @default -- Set by ArgoCD
+    schemaRegistryUrl: ""
+
+    # -- S3 endpoint (LFA) for the control system deployment
+    # @default -- Set by ArgoCD
+    s3EndpointUrl: ""

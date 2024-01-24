@@ -4,12 +4,25 @@ vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
 
 applications:
   argo-workflows: true
+  auxtel: true
+  calsys: true
+  control-system-test: true
+  eas: true
   exposurelog: true
+  love: true
   narrativelog: true
   nublado: true
+  obssys: true
   portal: true
   sasquatch: true
+  simonyitel: true
   squareone: true
   strimzi: true
+  uws: true
   telegraf: true
   telegraf-ds: true
+
+controlSystem:
+  imageTag: k0001
+  siteTag: tucson
+  s3EndpointUrl: https://s3.tu.lsst.org

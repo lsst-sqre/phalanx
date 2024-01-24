@@ -1,0 +1,35 @@
+{{- if .Values.client.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-client
+  labels:
+    app: {{ .Release.Name }}-client
+    chart: {{ template "uws-api-server.chart" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-client
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-client
+    spec:
+      volumes:
+      # Server configuration
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-configmap
+      containers:
+      - name: uws-api-client
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        command: ["/bin/bash", "-c", "sleep 1000d"]
+        volumeMounts:
+        # Server configuration
+        - name: config
+          subPath: config
+          mountPath: /etc/config/uws.yaml
+{{- end }}

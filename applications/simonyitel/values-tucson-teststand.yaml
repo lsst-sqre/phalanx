@@ -1,0 +1,231 @@
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+  - name: butler-secret
+    key: butler-secret
+
+ccheaderservice:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance tuc
+    TSTAND_HEADERSERVICE: TUCSON
+    CAMERA: cc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+
+ccoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ccoods
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
+  butlerSecret:
+    containerPath: &bS-cP /home/saluser/.lsst
+    dbUser: oods
+  secretPermFixer:
+  - name: butler-secret
+    containerPath: *bS-cP
+  nfsMountpoint:
+  - name: comcam-gen3-butler
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /repo/LSSTComCam
+  - name: comcam-oods-data
+    containerPath: /data
+    readOnly: false
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /data
+  configfile:
+    path: /etc
+    filename: ccoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingester:
+          imageStagingDirectory: /data/staging/comcam/oods
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.LsstComCam
+                  class:
+                      import : lsst.ctrl.oods.gen3ButlerIngester
+                      name : Gen3ButlerIngester
+                  stagingDirectory : /data/lsstdata/TTS/comcam/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/TTS/comcam/oods/gen3butler/badfiles
+                  repoDirectory : /repo/LSSTComCam
+                  collections:
+                      - LSSTComCam/raw/all
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+                  filesOlderThan:
+                      <<: *interval
+                      days: 30
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              -  /data/lsstdata/TTS/comcam/oods/gen3butler/raw
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/TTS/comcam/oods/gen3butler/badfiles
+              - /data/staging/comcam/oods
+              - /data/staging/comcam/forwarder
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 31
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
+
+lasertracker1-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/lasertracker
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate 2
+
+mtaircompressor1-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtaircompressor
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate --state disabled
+
+mtaircompressor2-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtaircompressor
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2 --simulate --state disabled
+
+mtaos:
+  image:
+    repository: ts-dockerhub.lsst.org/mtaos
+    pullPolicy: Always
+  butlerSecret:
+    containerPath: *bS-cP
+    dbUser: oods
+  secretPermFixer:
+  - name: butler-secret
+    containerPath: *bS-cP
+  nfsMountpoint:
+  - name: comcam-gen3-butler
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /repo/LSSTComCam
+  - name: comcam-gen3-oods
+    containerPath: /data/lsstdata/TTS/comcam
+    readOnly: true
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /lsstdata/TTS/comcam
+  - name: scratch
+    containerPath: /scratch
+    readOnly: false
+    server: nfs-scratch.tu.lsst.org
+    serverPath: /scratch
+
+mtcamhexapod-sim:
+  enabled: true
+  classifier: mthexapod1
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1
+
+mtdome-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtdome
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1
+
+mtdometrajectory:
+  image:
+    repository: ts-dockerhub.lsst.org/mtdometrajectory
+    pullPolicy: Always
+
+mtm1m3-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtm1m3_sim
+    pullPolicy: Always
+
+mtm2-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/m2
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+mtm2hexapod-sim:
+  enabled: true
+  classifier: mthexapod2
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 2
+
+mtmount-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtmount
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+mtptg:
+  image:
+    repository: ts-dockerhub.lsst.org/ptkernel
+    pullPolicy: Always
+  env:
+    TELESCOPE: MT
+
+mtrotator-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtrotator
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate

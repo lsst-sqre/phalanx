@@ -1,0 +1,271 @@
+# -- The overall namespace for the application
+namespace: love
+# -- The site-specific path to find Vault secrets
+secret_path: lsst.local
+# -- The top-level secret key name that houses the rest of the secrets
+envSecretKeyName: love
+manager:
+  frontend:
+    image:
+      # -- The LOVE manager frontend image to use
+      repository: lsstts/love-manager
+      # -- The pull policy on the LOVE manager frontend image
+      pullPolicy: IfNotPresent
+      # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+      nexus3: ""
+    ports:
+      # -- The port on the container for normal communications
+      container: 8000
+      # -- The port on the node for normal communcations
+      node: 30000
+    env:
+      # -- The site tag where LOVE is being run
+      LOVE_SITE: local
+      # -- The external URL from the NGINX server for LOVE
+      SERVER_URL: love.lsst.local
+      # -- The Kubernetes sub-path for LOVE
+      URL_SUBPATH: /love
+      # -- Set the manager to use LFA storage
+      REMOTE_STORAGE: true
+      # -- Set the hostname for the Jira instance
+      JIRA_API_HOSTNAME: jira.lsstcorp.org
+      # -- Set the Jira project ID
+      JIRA_PROJECT_ID: 14601
+      # -- Set the URL for the OLE instance
+      OLE_API_HOSTNAME: site.lsst.local
+      # -- Set the URI for the 1st LDAP server
+      AUTH_LDAP_1_SERVER_URI: ldap://ipa1.lsst.local
+      # -- Set the URI for the 2nd LDAP server
+      AUTH_LDAP_2_SERVER_URI: ldap://ipa2.lsst.local
+      # -- Set the URI for the 3rd LDAP server
+      AUTH_LDAP_3_SERVER_URI: ldap://ipa3.lsst.local
+      # -- The URL path for the LOVE producer websocket host
+      LOVE_PRODUCER_WEBSOCKET_HOST: love-service/manager/ws/subscription
+      # -- Label for the LOVE commander service.
+      # Must match the one spcified in the LOVE commander chart
+      COMMANDER_HOSTNAME: love-commander-service
+      # -- Port number for the LOVE commander service.
+      # Must match the one spcified in the LOVE commander chart
+      COMMANDER_PORT: 5000
+      # -- The type of database engine being used for the LOVE manager frontend
+      DB_ENGINE: postgresql
+      # -- The name of the database being used for the LOVE manager frontend
+      DB_NAME: love
+      # -- The database user needed for access from the LOVE manager frontend
+      DB_USER: love
+      # -- The name of the database service
+      DB_HOST: love-manager-database-service
+      # -- The port for the database service
+      DB_PORT: 5432
+      # -- The name of the redis service
+      REDIS_HOST: love-manager-redis-service
+      # -- The expiration time for the redis service
+      REDIS_CONFIG_EXPIRY: 5
+      # -- The connection capacity for the redis service
+      REDIS_CONFIG_CAPACITY: 5000
+    envSecrets:
+      # -- The LOVE manager frontend secret secret key name
+      SECRET_KEY: manager-secret-key
+      # -- The LOVE manager frontend process connection password secret key name
+      PROCESS_CONNECTION_PASS: process-connection-pass
+      # -- The LOVE manager frontend admin user password secret key name
+      ADMIN_USER_PASS: admin-user-pass
+      # -- The LOVE manager frontend user user password secret key name
+      USER_USER_PASS: user-user-pass
+      # -- The LOVE manager frontend cmd_user user password secret key name
+      CMD_USER_PASS: cmd-user-pass
+      # -- The LOVE manager frontend authlist_user password secret key name
+      AUTHLIST_USER_PASS: authlist-user-pass
+      # -- The LOVE manager frontend LDAP binding password secret key name
+      AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+      # -- The database password secret key name.
+      # Must match `database.envSecrets.POSTGRES_PASSWORD`
+      DB_PASS: db-pass
+      # -- The redis password secret key name.
+      # Must match `redis.envSecrets.REDIS_PASS`
+      REDIS_PASS: redis-pass
+    # -- Set the default number of LOVE manager frontend pod replicas
+    replicas: 1
+    autoscaling:
+      # -- Whether automatic horizontal scaling is active
+      enabled: true
+      # -- The allowed minimum number of replicas
+      minReplicas: 1
+      # -- The allowed maximum number of replicas
+      maxReplicas: 100
+      # -- The percentage of CPU utilization that will trigger the scaling
+      targetCPUUtilizationPercentage: 80
+      # -- (int) The percentage of memory utilization that will trigger the scaling
+      targetMemoryUtilizationPercentage: ""
+      # -- Policy for scaling up manager pods
+      scaleUpPolicy: {}
+      # -- Policy for scaling down manager pods
+      scaleDownPolicy: {}
+    # -- Resource specifications for the LOVE manager frontend pods
+    resources: {}
+    # -- Node selection rules for the LOVE manager frontend pods
+    nodeSelector: {}
+    # -- Toleration specifications for the LOVE manager frontend pods
+    tolerations: []
+    # -- Affinity rules for the LOVE manager frontend pods
+    affinity: {}
+    # -- Configuration for the LOVE manager frontend pods readiness probe
+    readinessProbe: {}
+  producers:
+    image:
+      # -- The LOVE manager producers image to use
+      repository: lsstts/love-manager
+      # -- The pull policy on the LOVE manager producers image
+      pullPolicy: IfNotPresent
+      # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+      nexus3: ""
+    ports:
+      # -- The port on the container for normal communications
+      container: 8000
+      # -- The port on the node for normal communcations
+      node: 30000
+    env:
+      # -- The site tag where LOVE is being run
+      LOVE_SITE: local
+      # -- The external URL from the NGINX server for LOVE
+      SERVER_URL: love.lsst.local
+      # -- The Kubernetes sub-path for LOVE
+      URL_SUBPATH: /love
+      # -- Set the manager to use LFA storage
+      REMOTE_STORAGE: true
+      # -- Set the hostname for the Jira instance
+      JIRA_API_HOSTNAME: jira.lsstcorp.org
+      # -- Set the Jira project ID
+      JIRA_PROJECT_ID: 14601
+      # -- Set the URL for the OLE instance
+      OLE_API_HOSTNAME: site.lsst.local
+      # -- Set the URI for the 1st LDAP server
+      AUTH_LDAP_1_SERVER_URI: ldap://ipa1.lsst.local
+      # -- Set the URI for the 2nd LDAP server
+      AUTH_LDAP_2_SERVER_URI: ldap://ipa2.lsst.local
+      # -- Set the URI for the 3rd LDAP server
+      AUTH_LDAP_3_SERVER_URI: ldap://ipa3.lsst.local
+      # -- Have the LOVE producer managers not query commander
+      HEARTBEAT_QUERY_COMMANDER: false
+      # -- Label for the LOVE commander service.
+      # Must match the one spcified in the LOVE commander chart
+      COMMANDER_HOSTNAME: love-commander-service
+      # -- Port number for the LOVE commander service.
+      # Must match the one spcified in the LOVE commander chart
+      COMMANDER_PORT: 5000
+      # -- The type of database engine being used for the LOVE manager producers
+      DB_ENGINE: postgresql
+      # -- The name of the database being used for the LOVE manager producers
+      DB_NAME: love
+      # -- The database user needed for access from the LOVE manager producers
+      DB_USER: love
+      # -- The name of the database service
+      DB_HOST: love-manager-database-service
+      # -- The port for the database service
+      DB_PORT: 5432
+      # -- The name of the redis service
+      REDIS_HOST: love-manager-redis-service
+      # -- The expiration time for the redis service
+      REDIS_CONFIG_EXPIRY: 5
+      # -- The connection capacity for the redis service
+      REDIS_CONFIG_CAPACITY: 5000
+    envSecrets:
+      # -- The LOVE manager producers secret secret key name
+      SECRET_KEY: manager-secret-key
+      # -- The LOVE manager producers process connection password secret key name
+      PROCESS_CONNECTION_PASS: process-connection-pass
+      # -- The LOVE manager producers admin user password secret key name
+      ADMIN_USER_PASS: admin-user-pass
+      # -- The LOVE manager producers user user password secret key name
+      USER_USER_PASS: user-user-pass
+      # -- The LOVE manager producers cmd_user user password secret key name
+      CMD_USER_PASS: cmd-user-pass
+      # -- The LOVE manager producers authlist_user password secret key name
+      AUTHLIST_USER_PASS: authlist-user-pass
+      # -- The LOVE manager producers LDAP binding password secret key name
+      AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+      # -- The database password secret key name.
+      # Must match `database.envSecrets.POSTGRES_PASSWORD`
+      DB_PASS: db-pass
+      # -- The redis password secret key name.
+      # Must match `redis.envSecrets.REDIS_PASS`
+      REDIS_PASS: redis-pass
+    # -- Set the default number of LOVE manager producers pod replicas
+    replicas: 1
+    autoscaling:
+      # -- Whether automatic horizontal scaling is active
+      enabled: true
+      # -- The allowed minimum number of replicas
+      minReplicas: 1
+      # -- The allowed maximum number of replicas
+      maxReplicas: 100
+      # -- The percentage of CPU utilization that will trigger the scaling
+      targetCPUUtilizationPercentage: 80
+      # -- (int) The percentage of memory utilization that will trigger the scaling
+      targetMemoryUtilizationPercentage: ""
+      # -- Policy for scaling up manager pods
+      scaleUpPolicy: {}
+      # -- Policy for scaling down manager pods
+      scaleDownPolicy: {}
+    # -- Resource specifications for the LOVE manager producers pods
+    resources: {}
+    # -- Node selection rules for the LOVE manager producers pods
+    nodeSelector: {}
+    # -- Toleration specifications for the LOVE manager producers pods
+    tolerations: []
+    # -- Affinity rules for the LOVE manager producers pods
+    affinity: {}
+    # -- Configuration for the LOVE manager producers pods readiness probe
+    readinessProbe: {}
+redis:
+  image:
+    # -- The redis image to use
+    repository: redis
+    # -- The tag to use for the redis image
+    tag: 5.0.3
+    # -- The pull policy for the redis image
+    pullPolicy: IfNotPresent
+  envSecrets:
+    # -- The redis password secret key name
+    REDIS_PASS: redis-pass
+  # -- The redis port number
+  port: 6379
+  # -- Resource specifications for the LOVE redis pods
+  resources: {}
+  # -- Node selection rules for the LOVE redis pods
+  nodeSelector: {}
+  # -- Toleration specifications for the LOVE redis pods
+  tolerations: []
+  # -- Affinity rules for the LOVE redis pods
+  affinity: {}
+  # -- Configuration specification for the redis service
+  config: |
+    timeout 60
+viewBackup:
+  # -- Whether view backup is active
+  enabled: false
+  image:
+    # -- The view backup image to use
+    repository: lsstts/love-view-backup
+    # -- The tag to use for the view backup image
+    tag: develop
+    # -- The pull policy to use for the view backup image
+    pullPolicy: IfNotPresent
+    # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
+    nexus3: ""
+  # -- Place to specify additional environment variables for the view backup job
+  env: {}
+  # -- The view backup job schedule in cron format
+  schedule: "0 0 1 1 *"
+  # -- The restart policy type for the view backup cronjob
+  restartPolicy: Never
+  # -- Time after view backup job finishes before deletion (ALPHA)
+  ttlSecondsAfterFinished: ""
+  # -- Resource specifications for the LOVE view backup pods
+  resources: {}
+  # -- Node selection rules for the LOVE view backup pods
+  nodeSelector: {}
+  # -- Toleration specifications for the LOVE view backup pods
+  tolerations: []
+  # -- Affinity rules for the LOVE view backup pods
+  affinity: {}

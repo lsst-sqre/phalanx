@@ -216,6 +216,9 @@ controller:
       # user.
       initContainers: []
 
+      # -- Flag to put T&S SAL Kafka secrets into pod.
+      installTsSalKafkaSecret: false
+
       # -- Prefix for namespaces for user labs. To this will be added a dash
       # (`-`) and the user's username.
       namespacePrefix: "nublado"

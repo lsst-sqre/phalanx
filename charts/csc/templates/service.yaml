@@ -1,0 +1,18 @@
+{{- if .Values.service.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    csc: {{ include "csc.name" . }}
+  name: {{ include "chart.name" . }}-service
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
+spec:
+  {{- if and (eq .Values.service.type "LoadBalancer") .Values.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+  ports:
+  - port: {{ .Values.service.port }}
+  selector:
+    csc: {{ include "csc.name" . }}
+  type: {{ .Values.service.type }}
+{{- end }}

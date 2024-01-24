@@ -1,0 +1,147 @@
+csc_collector:
+  # -- This section holds secret specifications.
+  # Each object listed can have the following attributes defined:
+  # _name_ (The name used by pods to access the secret)
+  # _key_ (The key in the vault store where the secret resides)
+  # _type_ (OPTIONAL: The secret type. Defaults to Opaque.)
+  secrets: []
+
+ccheaderservice:
+  # -- Enable the CCHeaderService CSC
+  enabled: false
+
+ccoods:
+  # -- Enable the CCOODS CSC
+  enabled: false
+
+lasertracker1:
+  # -- Enable the LaserTracker:1 CSC
+  enabled: false
+
+lasertracker1-sim:
+  # -- Enable the LaserTracker:1 simulator CSC
+  enabled: false
+
+mtaircompressor1:
+  # -- Enable the MTAirCompressor:1 CSC
+  enabled: false
+
+mtaircompressor1-sim:
+  # -- Enable the MTAirCompressor:1 simulator CSC
+  enabled: false
+
+mtaircompressor2:
+  # -- Enable the MTAirCompressor:2 CSC
+  enabled: false
+
+mtaircompressor2-sim:
+  # -- Enable the MTAirCompressor:2 simulator CSC
+  enabled: false
+
+mtcamhexapod:
+  # -- Enable the MTHexapod:1 CSC
+  enabled: false
+
+mtcamhexapod-sim:
+  # -- Enable the MTHexapod:1 simulator CSC
+  enabled: false
+
+mtdome:
+  # -- Enable the MTDome CSC
+  enabled: false
+
+mtdome-sim:
+  # -- Enable the MTDome simulator CSC
+  enabled: false
+
+mtheaderservice:
+  # -- Enable the MTHeaderService CSC
+  enabled: false
+
+m1m3:
+  # -- Enable the MTM1M3 hardware simulator CSC
+  enabled: false
+
+m1m3-sim:
+  # -- Enable the MTM1M3 simulator CSC
+  enabled: false
+
+mtm2:
+  # -- Enable the MTM2 CSC
+  enabled: false
+
+mtm2-sim:
+  # -- Enable the MTM2 simulator CSC
+  enabled: false
+
+mtm2hexapod:
+  # -- Enable the MTHexapod:2 CSC
+  enabled: false
+
+mtm2hexapod-sim:
+  # -- Enable the MTHexapod:2 simulator CSC
+  enabled: false
+
+mtmount:
+  # -- Enable the MTMount CSC
+  enabled: false
+
+mtmount-sim:
+  # -- Enable the MTMount simulator CSC
+  enabled: false
+
+mtrotator:
+  # -- Enable the MTRotator CSC
+  enabled: false
+
+mtrotator-sim:
+  # -- Enable the MTRotator simulator CSC
+  enabled: false
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
+  controlSystem:
+    # -- Application namespace for the control system deployment
+    # @default -- Set by ArgoCD
+    appNamespace: ""
+
+    # -- Image tag for the control system deployment
+    # @default -- Set by ArgoCD
+    imageTag: ""
+
+    # -- Site tag for the control system deployment
+    # @default -- Set by ArgoCD
+    siteTag: ""
+
+    # -- Topic name tag for the control system deployment
+    # @default -- Set by ArgoCD
+    topicName: ""
+
+    # -- Kafka broker address for the control system deployment
+    # @default -- Set by ArgoCD
+    kafkaBrokerAddress: ""
+
+    # -- Kafka topic replication factor for control system topics
+    # @default -- Set by ArgoCD
+    kafkaTopicReplicationFactor: ""
+
+    # -- Schema registry URL for the control system deployment
+    # @default -- Set by ArgoCD
+    schemaRegistryUrl: ""
+
+    # -- S3 endpoint (LFA) for the control system deployment
+    # @default -- Set by ArgoCD
+    s3EndpointUrl: ""

@@ -276,6 +276,31 @@ def application_template(
     sys.stdout.write(application_service.template(name, environment))
 
 
+@application.command("update-shared-chart-version")
+@click.argument("chart")
+@click.argument("version")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+def application_update_shared_chart_version(
+    chart: str, version: str, *, config: Path | None
+) -> None:
+    """Update the version for a shared chart.
+
+    This function updates the version of a shared chart in the Chart.yaml
+    file of all applications that use that shared chart.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    storage = factory.create_config_storage()
+    storage.update_shared_chart_version(chart, version)
+
+
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""

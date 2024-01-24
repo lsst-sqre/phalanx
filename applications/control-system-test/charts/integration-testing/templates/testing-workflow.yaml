@@ -1,0 +1,329 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: {{ .Values.workflowName }}
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20230327"
+  entrypoint: run-tests
+  onExit: save-reports
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: cameras-offline
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Offline.list"
+          - name: jobname
+            value: cameras-offline
+      - name: standby
+        depends: cameras-offline
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Standby.list"
+          - name: jobname
+            value: standby
+      - name: disabled
+        depends: standby
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Disabled.list"
+          - name: jobname
+            value: disabled
+      - name: enabled
+        depends: disabled
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Enabled.list"
+          - name: jobname
+            value: enabled
+      - name: auxtel-housekeeping
+        depends: enabled
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Housekeeping.list"
+          - name: jobname
+            value: auxtel-housekeeping
+      - name: maintel-housekeeping
+        depends: enabled
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_MainTel_Housekeeping.list"
+          - name: jobname
+            value: maintel-housekeeping
+      - name: auxtel-image-verification
+        depends: auxtel-housekeeping
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Image_Verification.list"
+          - name: jobname
+            value: auxtel-image-verification
+      - name: auxtel-latiss-daytime-checkout
+        depends: auxtel-image-verification
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_LATISS_Checkout.list"
+          - name: jobname
+            value: auxtel-latiss-daytime-checkout
+      - name: auxtel-telescope-dome-daytime-checkout
+        depends: auxtel-latiss-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Telescope_Dome_Checkout.list"
+          - name: jobname
+            value: auxtel-telescope-dome-daytime-checkout
+      - name: auxtel-telescope-slew-take-image-daytime-checkout
+        depends: auxtel-telescope-dome-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Slew_and_Take_Image_Checkout.list"
+          - name: jobname
+            value: auxtel-telescope-slew-take-image-daytime-checkout
+      - name: auxtel-prep-flat
+        depends: auxtel-telescope-slew-take-image-daytime-checkout
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Prep_Flat.list"
+          - name: jobname
+            value: auxtel-prep-flat
+      - name: auxtel-flat-calibrations
+        depends: auxtel-prep-flat
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Flat_Calibrations.list"
+          - name: jobname
+            value: auxtel-flat-calibrations
+      - name: auxtel-ptc-calibrations
+        depends: auxtel-flat-calibrations
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_PTC_Calibrations.list"
+          - name: jobname
+            value: auxtel-ptc-calibrations
+      - name: auxtel-prep-onsky
+        depends:  auxtel-ptc-calibrations
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Prep_Onsky.list"
+          - name: jobname
+            value: auxtel-prep-onsky
+      - name: auxtel-cwfs-align
+        depends: auxtel-prep-onsky
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_WEP_Align.list"
+          - name: jobname
+            value: auxtel-cwfs-align
+      - name: auxtel-acq-take-seq-pointing
+        depends: auxtel-cwfs-align
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_POINTING.list"
+          - name: jobname
+            value: auxtel-acq-take-seq-pointing
+      - name: auxtel-acq-take-seq-verify
+        depends: auxtel-acq-take-seq-pointing
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_VERIFY.list"
+          - name: jobname
+            value: auxtel-acq-take-seq-verify
+      - name: auxtel-acq-take-seq-test
+        depends: auxtel-acq-take-seq-verify
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_TEST.list"
+          - name: jobname
+            value: auxtel-acq-take-seq-test
+      - name: auxtel-acq-take-seq-nominal
+        depends: auxtel-acq-take-seq-test
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Acq_Take_Seq_NOMINAL.list"
+          - name: jobname
+            value: auxtel-acq-take-seq-nominal
+      - name: auxtel-stop
+        depends: auxtel-acq-take-seq-nominal
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Stop.list"
+          - name: jobname
+            value: auxtel-stop
+      - name: auxtel-shutdown
+        depends: auxtel-stop
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_AuxTel_Shutdown.list"
+          - name: jobname
+            value: auxtel-shutdown
+      - name: enable-atcs
+        depends: auxtel-shutdown
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Enable_ATCS.list"
+          - name: jobname
+            value: enable-atcs
+      - name: comcam-image-verification
+        depends: maintel-housekeeping
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_BigCamera_Image_Verification.list"
+          - name: jobname
+            value: comcam-image-verification
+      - name: comcam-calibrations
+        depends: comcam-image-verification
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_BigCamera_Calibrations.list"
+          - name: jobname
+            value: comcam-calibrations
+      - name: love-stress-test
+        depends: comcam-calibrations && enable-atcs
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_LOVE_Stress_Test.list"
+          - name: jobname
+            value: love-stress-test
+      - name: shutdown
+        depends: love-stress-test
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Shutdown.list"
+          - name: jobname
+            value: shutdown
+
+  - name: save-reports
+    container:
+      image: alpine:latest
+      volumeMounts:
+        - name: testreports
+          mountPath: {{ .Values.reportLocation }}
+    outputs:
+      artifacts:
+      - name: integration-test-reports
+        archive:
+          none: {}
+        path: {{ .Values.reportLocation }}/
+        s3:
+          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}
