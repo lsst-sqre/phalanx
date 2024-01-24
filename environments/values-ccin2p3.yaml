@@ -3,11 +3,8 @@ fqdn: data-dev.lsst.eu
 vaultPathPrefix: secret/k8s_operator/rsp-cc
 
 applications:
-  cachemachine: false
   datalinker: true
-  moneypenny: false
   nublado: true
-  nublado2: false
   portal: true
   postgres: true
   semaphore: true
