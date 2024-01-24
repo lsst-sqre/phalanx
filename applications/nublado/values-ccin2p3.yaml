@@ -38,21 +38,21 @@ controller:
           privileged: true
           volumesMounts:
             - containerPath: "/pbs/home"
-              volumeName: "/pbs/home"
+              volumeName: "home"
             - containerPath: "/pbs/throng"
-              volumeName: "/pbs/throng"
+              volumeName: "throng"
             - containerPath: "/sps"
-              volumeName: "/sps"
+              volumeName: "sps"
       volumes:
-        - name: "/pbs/home"
+        - name: "home"
           source:
             type: "hostPath"
             path: "/pbs/home"
-        - name: "/pbs/throng"
+        - name: "throng"
           source:
             type: "hostPath"
             path: "/pbs/throng"
-        - name: "/sps"
+        - name: "sps"
           source:
             type: "hostPath"
             path: "/sps"
