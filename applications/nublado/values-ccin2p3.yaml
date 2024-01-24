@@ -37,11 +37,11 @@ controller:
             tag: "0.0.1"
           privileged: true
           volumesMounts:
-            - containerPath: "/pbs/home"
+            - containerMount: "/pbs/home"
               volumeName: "home"
-            - containerPath: "/pbs/throng"
+            - containerMount: "/pbs/throng"
               volumeName: "throng"
-            - containerPath: "/sps"
+            - containerMount: "/sps"
               volumeName: "sps"
       volumes:
         - name: "home"
