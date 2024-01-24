@@ -44,18 +44,25 @@ controller:
             - containerPath: "/sps"
               volumeName: "/sps"
       volumes:
-        - containerPath: "/pbs/home"
+        - name: "/pbs/home"
           source:
             type: "hostPath"
             path: "/pbs/home"
-        - containerPath: "/pbs/throng"
+        - name: "/pbs/throng"
           source:
             type: "hostPath"
             path: "/pbs/throng"
-        - containerPath: "/sps"
+        - name: "/sps"
           source:
             type: "hostPath"
             path: "/sps"
+      volumeMounts:
+        - containerMount: "/pbs/home"
+          volumeName: "/pbs/home"
+        - containerMount: "/pbs/throng"
+          volumeName: "/pbs/throng"
+        - containerMount: "/sps"
+          volumeName: "/sps"
 jupyterhub:
   hub:
     baseUrl: "/nb"
