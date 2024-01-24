@@ -2,7 +2,6 @@ controller:
   config:
     fileserver:
       enabled: true
-      timeout: 43200
     images:
       source:
         type: "docker"
@@ -22,20 +21,22 @@ controller:
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
       sizes:
-        small:
-          cpu: 1.0
-          memory: 4Gi
-        medium:
+        - size: "small"
           cpu: 2.0
-          memory: 16Gi
-        large:
+          memory: "8Gi"
+        - size: "medium"
+          cpu: 4.0
+          memory: "16Gi"
+        - size: "large"
           cpu: 8.0
-          memory: 32Gi
+          memory: "32Gi"
       initContainers:
         - name: "homecreation"
-          image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1"
+          image: 
+          repository: "registry.hub.docker.com/gabrimaine/initdir"
+          tag: "0.0.1"
           privileged: true
-          volumes:
+          volumesMounts:
             - containerPath: "/pbs/home"
               source:
                 type: "hostPath"
