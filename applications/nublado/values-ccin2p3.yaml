@@ -34,7 +34,7 @@ controller:
         - name: "homecreation"
           image: 
             repository: "registry.hub.docker.com/gabrimaine/initdir"
-            tag: "0.0.1"
+            tag: "0.0.2"
           privileged: true
           volumeMounts:
             - containerPath: "/pbs/home"
