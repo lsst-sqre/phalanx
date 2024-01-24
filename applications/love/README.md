@@ -121,7 +121,7 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.redis.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name |
 | love-manager.redis.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the redis image |
 | love-manager.redis.image.repository | string | `"redis"` | The redis image to use |
-| love-manager.redis.image.tag | string | `"5.0.3"` | The tag to use for the redis image |
+| love-manager.redis.image.tag | string | `"7.2.4"` | The tag to use for the redis image |
 | love-manager.redis.nodeSelector | object | `{}` | Node selection rules for the LOVE redis pods |
 | love-manager.redis.port | int | `6379` | The redis port number |
 | love-manager.redis.resources | object | `{}` | Resource specifications for the LOVE redis pods |

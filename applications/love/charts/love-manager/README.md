@@ -109,7 +109,7 @@ Helm chart for the LOVE manager service.
 | redis.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name |
 | redis.image.pullPolicy | string | `"IfNotPresent"` | The pull policy for the redis image |
 | redis.image.repository | string | `"redis"` | The redis image to use |
-| redis.image.tag | string | `"5.0.3"` | The tag to use for the redis image |
+| redis.image.tag | string | `"7.2.4"` | The tag to use for the redis image |
 | redis.nodeSelector | object | `{}` | Node selection rules for the LOVE redis pods |
 | redis.port | int | `6379` | The redis port number |
 | redis.resources | object | `{}` | Resource specifications for the LOVE redis pods |
