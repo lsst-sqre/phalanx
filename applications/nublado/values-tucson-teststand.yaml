@@ -24,7 +24,6 @@ controller:
         LSST_SCHEMA_REGISTRY_URL: http://sasquatch-schema-registry.sasquatch:8081
         PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
         PGUSER: "oods"
-      installTsSalKafkaSecret: true
       pullSecret: "pull-secret"
       secrets:
       - secretName: "kafka-secret"
@@ -117,3 +116,6 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.tu.lsst.org/nublado3"
+
+secrets:
+  installTsSalKafkaSecret: true
