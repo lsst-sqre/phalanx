@@ -7,5 +7,7 @@ applications:
   nublado: true
   portal: true
   postgres: true
+  semaphore: true
   squareone: true
   tap: true
+

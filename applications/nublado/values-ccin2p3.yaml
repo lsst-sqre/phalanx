@@ -1,53 +1,74 @@
 controller:
   config:
+    fileserver:
+      enabled: true
+      timeout: 43200
     images:
       source:
         type: "docker"
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/sciplat-lab"
+      recommendedTag: "recommended"
+      numReleases: 1
+      numWeeklies: 2
+      numDailies: 3
     lab:
-      env:
-        AUTO_REPO_URLS: "https://github.com/lsst-sqre/system-test"
-        AUTO_REPO_BRANCH: "prod"
-        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"
-        CULL_KERNEL_CONNECTED: "True"
-        CULL_KERNEL_INTERVAL: "300"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-        CULL_TERMINAL_INTERVAL: "300"
-        NO_ACTIVITY_TIMEOUT: "432000"
-      homedirPrefix: "/homedirs"
-      homedirSchema: "initialThenUsername"
+      homedirSchema: "username"
+      homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
+      env:
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        NO_ACTIVITY_TIMEOUT: "432000"
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+      sizes:
+        small:
+          cpu: 1.0
+          memory: 4Gi
+        medium:
+          cpu: 2.0
+          memory: 16Gi
+        large:
+          cpu: 8.0
+          memory: 32Gi
       initContainers:
-        - name: "inithome"
-          image:
-            repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "4.0.2"
+        - name: "homecreation"
+          image: "registry.hub.docker.com/gabrimaine/initdir:0.0.1"
           privileged: true
-          volumeMounts:
-            - containerPath: "/home"
-              volumeName: "home"
-      pullSecret: "pull-secret"
+          volumes:
+            - containerPath: "/pbs/home"
+              source:
+                type: "hostPath"
+                path: "/pbs/home"
+            - containerPath: "/pbs/throng"
+              source:
+                type: "hostPath"
+                path: "/pbs/throng"
+            - containerPath: "/sps"
+              source:
+                type: "hostPath"
+                path: "/sps"
       volumes:
-        - name: "home"
+        - containerPath: "/pbs/home"
           source:
             type: "hostPath"
             path: "/pbs/home"
-      volumeMounts:
-        - containerMount: "/home"
-          volumeName: "home"
-
-proxy:
-  ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-connect-timeout: "50s"
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
-      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
-
+        - containerPath: "/pbs/throng"
+          source:
+            type: "hostPath"
+            path: "/pbs/throng"
+        - containerPath: "/sps"
+          source:
+            type: "hostPath"
+            path: "/sps"
 jupyterhub:
   hub:
+    baseUrl: "/nb"
+    config:
+      ServerApp:
+        shutdown_no_activity_timeout: 432000
     db:
+      url: "postgresql://nublado3@postgres.postgres/nublado3"
       upgrade: true
   cull:
     timeout: 432000
