@@ -58,11 +58,11 @@ controller:
             path: "/sps"
       volumeMounts:
         - containerMount: "/pbs/home"
-          volumeName: "/pbs/home"
+          volumeName: "home"
         - containerMount: "/pbs/throng"
-          volumeName: "/pbs/throng"
+          volumeName: "throng"
         - containerMount: "/sps"
-          volumeName: "/sps"
+          volumeName: "sps"
 jupyterhub:
   hub:
     baseUrl: "/nb"
