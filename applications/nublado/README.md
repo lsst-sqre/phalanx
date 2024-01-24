@@ -54,7 +54,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
 | controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumeMounts` (similar to the main `volumeMountss` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
-| controller.config.lab.installTsSalKafkaSecret | bool | `false` | Flag to put T&S SAL Kafka secrets into pod. |
 | controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
 | controller.config.lab.nodeSelector | object | `{}` | Node selector rules for user lab pods |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
@@ -112,4 +111,5 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| secrets.installTsSalKafkaSecret | bool | `false` | Whether to install the T&S SAL Kafka secret. |
 | secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
