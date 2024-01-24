@@ -1,7 +1,5 @@
 controller:
   config:
-    safir:
-      logLevel: "DEBUG"
     fileserver:
       enabled: true
       timeout: 43200
@@ -71,11 +69,9 @@ jupyterhub:
         shutdown_no_activity_timeout: 432000
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
+      upgrade: true
 
   cull:
-    enabled: true
-    users: false
-    removeNamedServers: false
     timeout: 432000
     every: 300
     maxAge: 2160000
