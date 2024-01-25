@@ -1,2 +1,3 @@
 config:
   separateSecrets: true
+  overrideButlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos-remote.yaml"

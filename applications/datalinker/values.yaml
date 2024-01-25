@@ -51,6 +51,10 @@ config:
   # rubin is the default
   pgUser: "rubin"
 
+  # -- URI to Butler repository index file, configuring which Butler repository labels are available.
+  # @default -- Use the default configuration for the environment
+  overrideButlerRepositoryIndex: ""
+
   # -- S3 Endpoint URL
   s3EndpointUrl: "https://storage.googleapis.com"
 

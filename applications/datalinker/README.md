@@ -15,6 +15,7 @@ IVOA DataLink-based service and data discovery
 | autoscaling.maxReplicas | int | `100` | Maximum number of datalinker deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of datalinker deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of datalinker deployment pods |
+| config.overrideButlerRepositoryIndex | string | Use the default configuration for the environment | URI to Butler repository index file, configuring which Butler repository labels are available. |
 | config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE rubin is the default |
 | config.s3EndpointUrl | string | `"https://storage.googleapis.com"` | S3 Endpoint URL |
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
