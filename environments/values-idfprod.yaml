@@ -11,6 +11,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfprod"
 
 applications:
+  butler: true
   datalinker: true
   hips: true
   mobu: true
