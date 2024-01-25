@@ -2,6 +2,9 @@ controller:
   config:
     fileserver:
       enabled: true
+      volumeMounts:
+        - containerPath: "/sps"
+          volumeName: "sps"
     images:
       source:
         type: "docker"
