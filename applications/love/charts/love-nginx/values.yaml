@@ -4,7 +4,7 @@ image:
   # -- The NGINX image to use
   repository: nginx
   # -- The tag to use for the NGINX image
-  tag: 1.14.2
+  tag: 1.25.3
   # -- The pull policy on the NGINX image
   pullPolicy: IfNotPresent
 # -- Service type specification
