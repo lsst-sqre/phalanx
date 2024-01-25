@@ -2,3 +2,6 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfint-sso"
+      tag: "2.2.0"
+  config:
+    datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.2.0/datalink-snippets.zip"

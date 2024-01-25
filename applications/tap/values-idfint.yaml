@@ -2,7 +2,9 @@ cadc-tap:
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfint-tap"
+      tag: "2.2.0"
 
   config:
     qserv:
       host: "10.136.1.211:4040"
+    datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.2.0/datalink-snippets.zip"
