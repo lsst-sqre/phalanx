@@ -1,0 +1,4 @@
+apiVersion: v2
+name: integration-testing
+description: Helm chart for Integration Testing Workflows.
+version: 1.0.0

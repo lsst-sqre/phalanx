@@ -111,4 +111,5 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
 | proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| secrets.installTsSalKafkaSecret | bool | `false` | Whether to install the T&S SAL Kafka secret. |
 | secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |

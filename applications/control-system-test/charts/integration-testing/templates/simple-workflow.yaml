@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: simple-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: nexus3-docker
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20230601"
+  entrypoint: run-tests
+  templates:
+  - name: run-tests
+    steps:
+    - - name: cleanup
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
+    - - name: standby
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_Standby.list"
+          - name: jobname
+            value: simple-standby
+          - name: reportname
+            value: standby.xml

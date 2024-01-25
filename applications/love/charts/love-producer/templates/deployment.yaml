@@ -1,0 +1,95 @@
+{{- range $producer := .Values.producers }}
+{{ $appName := printf "%s-producer-%s" $.Release.Name $producer.name | trunc 63 | trimSuffix "-" }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $appName }}
+  labels:
+    {{- include "love-producer.labels" $ | nindent 4 }}
+spec:
+  replicas: {{ $.Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "love-producer.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/instance: {{ $appName }}
+  template:
+    metadata:
+      {{- with $.Values.annotations }}
+      annotations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "love-producer.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/instance: {{ $appName }}
+    spec:
+      containers:
+        - name: {{ $producer.name }}
+          {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystem.imageTag }}
+          image: "{{ $.Values.image.repository }}:{{ $imageTag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: csc-env-config
+          env:
+            - name: LOVE_CSC_PRODUCER
+              value: {{ $producer.csc | quote }}
+            - name: LSST_KAFKA_SECURITY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ts-salkafka
+                  key: ts-salkafka-password
+          {{- range $env_var, $env_value := $.Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- range $env_var, $env_value := $.Values.envSecrets }}
+            - name: {{ $env_var }}
+              valueFrom:
+                secretKeyRef:
+                  name: love-secrets
+                  key: {{ $env_value }}
+          {{- end }}
+          {{- if or $.Values.resources $producer.resources }}
+          {{- $resources := "" }}
+          {{- if $producer.resources }}
+          {{- $resources = $producer.resources }}
+          {{- else }}
+          {{- $resources = $.Values.resources }}
+          {{- end }}
+          resources:
+            {{- toYaml $resources | nindent 12 }}
+          {{- end }}
+      imagePullSecrets:
+        - name: nexus3-docker
+      {{- if or $.Values.nodeSelector $producer.nodeSelector }}
+      {{- $nodeSelector := "" }}
+      {{- if $producer.nodeSelector }}
+      {{- $nodeSelector = $producer.nodeSelector }}
+      {{- else }}
+      {{- $nodeSelector = $.Values.nodeSelector }}
+      {{- end }}
+      nodeSelector:
+        {{- toYaml $nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if or $.Values.affinity $producer.affinity }}
+      {{- $affinity := "" }}
+      {{- if $producer.affinity }}
+      {{- $affinity = $producer.affinity }}
+      {{- else }}
+      {{- $affinity = $.Values.affinity }}
+      {{- end }}
+      affinity:
+        {{- toYaml $affinity | nindent 8 }}
+      {{- end }}
+      {{- if or $.Values.tolerations $producer.tolerations }}
+      {{- $tolerations := "" }}
+      {{- if $producer.tolerations }}
+      {{- $tolerations = $producer.tolerations }}
+      {{- else }}
+      {{- $tolerations = $.Values.tolerations }}
+      {{- end }}
+      tolerations:
+        {{- toYaml $tolerations | nindent 8 }}
+      {{- end }}
+{{- end }}

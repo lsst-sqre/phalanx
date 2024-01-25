@@ -533,6 +533,31 @@ class ConfigStorage:
             applications=sorted(applications.values(), key=lambda a: a.name),
         )
 
+    def update_shared_chart_version(self, chart: str, version: str) -> None:
+        """Update the version of a shared chart across all applications.
+
+        Parameters
+        ----------
+        chart
+            The name of the chart for the version change.
+        version
+            The chart version to update.
+        """
+        for app in self.list_applications():
+            app_config = self._load_application_config(app)
+            is_modified = False
+            try:
+                for item in app_config.chart["dependencies"]:
+                    if item["name"] == chart:
+                        item["version"] = version
+                        is_modified = True
+            except KeyError:
+                pass
+            if is_modified:
+                chart_path = self._path / "applications" / app / "Chart.yaml"
+                with chart_path.open("w") as fh:
+                    yaml.safe_dump(app_config.chart, fh, sort_keys=False)
+
     def write_application_template(self, name: str, template: str) -> None:
         """Write the Argo CD application template for a new application.
 

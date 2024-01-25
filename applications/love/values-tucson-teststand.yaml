@@ -1,0 +1,338 @@
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+
+love-commander:
+  image:
+    repository: ts-dockerhub.lsst.org/love-commander
+    pullPolicy: Always
+  env:
+    S3_INSTANCE: tuc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretName: lfa
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretName: lfa
+    secretKey: aws-secret-access-key
+  service:
+    enabled: true
+    port: 5000
+    type: ClusterIP
+
+love-manager:
+  manager:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        DB_HOST: postgresdb01.tu.lsst.org
+        LOVE_SITE: tucson
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
+    producers:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        DB_HOST: postgresdb01.tu.lsst.org
+        LOVE_SITE: tucson
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
+  redis:
+    image:
+      repository: redis
+      tag: '7'
+      pullPolicy: IfNotPresent
+    config: |
+      timeout 60
+  viewBackup:
+    enabled: true
+    image:
+      repository: ts-dockerhub.lsst.org/love-view-backup
+      pullPolicy: Always
+    schedule: 0 12 * * *
+
+love-nginx:
+  image:
+    repository: nginx
+    tag: 1.25.1
+    pullPolicy: Always
+  ingress:
+    hostname: tucson-teststand.lsst.codes
+    httpPath: /love
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: "true"
+  imagePullSecrets:
+  - name: nexus3-docker
+  initContainers:
+    frontend:
+      image:
+        repository: ts-dockerhub.lsst.org/love-frontend-k8s
+        pullPolicy: Always
+    manager:
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager-static
+        pullPolicy: Always
+      command:
+      - /bin/sh
+      - -c
+      - mkdir -p /usr/src/love-manager; cp -Rv /usr/src/love/manager/media /usr/src/love-manager; cp -Rv /usr/src/love/manager/static /usr/src/love-manager
+  staticStore:
+    name: love-nginx-static
+    storageClass: rook-ceph-block
+    accessMode: ReadWriteOnce
+    claimSize: 2Gi
+  nginxConfig: |
+    server {
+      listen 80;
+      server_name localhost;
+      location /love {
+        root   /usr/src/love-frontend;
+        try_files $uri$args $uri$args/ $uri/ /love/index.html;
+      }
+      location /love/manager {
+          client_max_body_size 5M;
+          proxy_pass http://love-manager-frontend-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/manager/producers {
+          proxy_pass http://love-manager-producers-service:8000;
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header Host $host;
+          proxy_redirect off;
+      }
+      location /love/media {
+          alias /usr/src/love-manager/media;
+      }
+      location /love/manager/static {
+          alias /usr/src/love-manager/static;
+      }
+      location /love/manager/media {
+          alias /usr/src/love-manager/media;
+      }
+      location /love/simcam {
+          proxy_pass http://simulation-gencam-service.calsys:5013/;
+          proxy_set_header Host $host/love;
+      }
+    }
+  loveConfig: |
+    {
+      "alarms": {
+        "minSeveritySound": "mute",
+        "minSeverityNotification": "mute"
+      },
+      "camFeeds": {
+        "simcam": "/love/simcam"
+      },
+      "efd": {
+        "defaultEfdInstance": "tucson_teststand_efd",
+        "urlStatus": "https://tucson-teststand.lsst.codes/influxdb/health"
+      },
+      "sal": {
+          "urlStatus": "https://tucson-teststand.lsst.codes/sasquatch-rest-proxy/brokers",
+          "expectedBrokerList": [0, 1, 2]
+      }
+    }
+
+love-producer:
+  image:
+    repository: ts-dockerhub.lsst.org/love-producer
+    pullPolicy: Always
+  env:
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  resources:
+    requests:
+      cpu: 10m
+      memory: 100Mi
+    limits:
+      cpu: 100m
+      memory: 300Mi
+  producers:
+  - name: ataos
+    csc: ATAOS:0
+  - name: atcamera
+    csc: ATCamera:0
+  - name: atdome
+    csc: ATDome:0
+  - name: atdometrajectory
+    csc: ATDomeTrajectory:0
+  - name: atheaderservice
+    csc: ATHeaderService:0
+  - name: athexapod
+    csc: ATHexapod:0
+  - name: atmcs
+    csc: ATMCS:0
+  - name: atocps
+    csc: OCPS:1
+  - name: atoods
+    csc: ATOODS:0
+  - name: atpneumatics
+    csc: ATPneumatics:0
+  - name: atptg
+    csc: ATPtg:0
+  - name: atscheduler
+    csc: Scheduler:2
+  - name: atscriptqueue
+    csc: ScriptQueue:2
+  - name: atspectrograph
+    csc: ATSpectrograph:0
+  - name: authorize
+    csc: Authorize:0
+  - name: auxteless01
+    csc: ESS:201
+  - name: auxteless02
+    csc: ESS:202
+  - name: auxteless03
+    csc: ESS:203
+  - name: auxteless04
+    csc: ESS:204
+  - name: calibhilless01
+    csc: ESS:301
+  - name: camerahexapod
+    csc: MTHexapod:1
+  - name: cccamera
+    csc: CCCamera:0
+  - name: ccheaderservice
+    csc: CCHeaderService:0
+  - name: ccoods
+    csc: CCOODS:0
+  - name: ccocps
+    csc: OCPS:2
+  - name: dimm1
+    csc: DIMM:1
+  - name: dimm2
+    csc: DIMM:2
+  - name: dsm1
+    csc: DSM:1
+  - name: dsm2
+    csc: DSM:2
+  - name: gcheaderservice1
+    csc: GCHeaderService:1
+  - name: genericcamera1
+    csc: GenericCamera:1
+  - name: lasertracker1
+    csc: LaserTracker:1
+  - name: love
+    csc: LOVE:0
+  - name: m2ess106
+    csc: ESS:106
+  - name: m2hexapod
+    csc: MTHexapod:2
+  - name: mtaircompressor1
+    csc: MTAirCompressor:1
+  - name: mtaircompressor2
+    csc: MTAirCompressor:2
+  - name: mtaos
+    csc: MTAOS:0
+  - name: mtdome
+    csc: MTDome:0
+  - name: mtdomeess01
+    csc: ESS:101
+  - name: mtdomeess02
+    csc: ESS:102
+  - name: mtdomeess03
+    csc: ESS:103
+  - name: mtdometrajectory
+    csc: MTDomeTrajectory:0
+  - name: mtm1m3
+    csc: MTM1M3:0
+  - name: mtm2
+    csc: MTM2:0
+  - name: mtmount
+    csc: MTMount:0
+  - name: mtptg
+    csc: MTPtg:0
+  - name: mtrotator
+    csc: MTRotator:0
+  - name: mtscheduler
+    csc: Scheduler:1
+  - name: mtscriptqueue
+    csc: ScriptQueue:1
+  - name: tmaess01
+    csc: ESS:1
+  - name: tmaess104
+    csc: ESS:104
+  - name: tmaess105
+    csc: ESS:105
+  - name: watcher
+    csc: Watcher:0
+  - name: weatherforecast
+    csc: WeatherForecast:0

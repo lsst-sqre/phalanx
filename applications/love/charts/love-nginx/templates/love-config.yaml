@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: love-conf
+data:
+  default.json: |
+{{ .Values.loveConfig | indent 4 }}

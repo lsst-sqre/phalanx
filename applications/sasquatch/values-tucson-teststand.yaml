@@ -1,5 +1,11 @@
 strimzi-kafka:
+  cluster:
+    releaseLabel: pillan-prom
   kafka:
+    disruption_tolerance: 1
+    config:
+      auto.create.topics.enable: false
+      log.cleaner.min.compaction.lag.ms: 259200000
     storage:
       storageClassName: rook-ceph-block
     externalListener:
@@ -15,9 +21,23 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-1.lsst.codes
         - loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
+    metricsConfig:
+      enabled: true
+  kafkaExporter:
+    enabled: true
+    enableSaramaLogging: true
+    resources:
+      requests:
+        cpu: 200m
+        memory: 64Mi
+      limits:
+        cpu: 500m
+        memory: 128Mi
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
+    metricsConfig:
+      enabled: true
   users:
     tsSalKafka:
       enabled: true
@@ -34,6 +54,10 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: tucson-teststand.lsst.codes
       path: /schema-registry(/|$)(.*)
+  connect:
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
 
 influxdb:
   persistence:
@@ -175,6 +199,9 @@ kafka-connect-manager:
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
+  image:
+    tag: 4.0.0
+  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: tucson-teststand.lsst.codes

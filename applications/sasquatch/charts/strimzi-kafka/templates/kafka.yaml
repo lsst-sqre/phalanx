@@ -92,12 +92,20 @@ spec:
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
-      transaction.state.log.min.isr: {{ .Values.kafka.replicas }}
+      transaction.state.log.min.isr: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
       default.replication.factor: {{ .Values.kafka.replicas }}
-      min.insync.replicas: {{ .Values.kafka.replicas }}
+      min.insync.replicas: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
       {{- range $key, $value := .Values.kafka.config }}
       {{ $key }}: {{ $value }}
       {{- end }}
+    {{- if .Values.kafka.metricsConfig.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: kafka-metrics
+          key: kafka-metrics-config.yml
+    {{- end }}
     storage:
       type: jbod
       volumes:
@@ -113,6 +121,14 @@ spec:
         {{- end}}
         deleteClaim: false
   zookeeper:
+    {{- if .Values.zookeeper.metricsConfig.enabled }}
+    metricsConfig:
+      type: jmxPrometheusExporter
+      valueFrom:
+        configMapKeyRef:
+          name: zookeeper-metrics
+          key: zookeeper-metrics-config.yml
+    {{- end }}
     template:
       persistentVolumeClaim:
         metadata:
@@ -139,3 +155,14 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
+  {{- if .Values.kafkaExporter.enabled }}
+  kafkaExporter:
+    topicRegex: {{ .Values.kafkaExporter.topicRegex }}
+    groupRegex: {{ .Values.kafkaExporter.groupRegex }}
+    logging: {{ .Values.kafkaExporter.logging }}
+    enableSaramaLogging: {{ .Values.kafkaExporter.enableSaramaLogging }}
+    {{- with .Values.kafkaExporter.resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  {{- end }}

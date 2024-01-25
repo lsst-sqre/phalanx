@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "love-nginx.name" . }}
+  namespace: {{ $.Values.global.controlSystem.appNamespace }}
+  labels:
+    {{- include "love-nginx.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "love-nginx.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        {{- include "love-nginx.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml $.Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      initContainers:
+      - name: love-frontend
+        {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}
+        image: "{{ .Values.initContainers.frontend.image.repository }}:{{ $feImageTag }}"
+        imagePullPolicy: {{ .Values.initContainers.frontend.image.pullPolicy }}
+        command: ["/bin/sh", "-c", "mkdir -p /usr/src/love-frontend; cp -Rv /usr/src/love/ /usr/src/love-frontend"]
+        volumeMounts:
+          - mountPath: /usr/src
+            name: {{ .Values.staticStore.name }}
+      - name: love-manager-static
+        {{- $mgImageTag := .Values.initContainers.manager.image.tag | default $.Values.global.controlSystem.imageTag }}
+        image: "{{ .Values.initContainers.manager.image.repository }}:{{ $mgImageTag }}"
+        imagePullPolicy: {{ .Values.initContainers.manager.image.pullPolicy }}
+        {{- with .Values.initContainers.manager.command }}
+        command:
+        {{- range $item := $.Values.initContainers.manager.command }}
+          - {{ $item | quote }}
+        {{- end }}
+        {{- end }}
+        volumeMounts:
+          - mountPath: /usr/src
+            name: {{ .Values.staticStore.name }}
+      containers:
+      - name: {{ include "love-nginx.name" . }}
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.ports.container }}
+        volumeMounts:
+          - mountPath: /etc/nginx/conf.d
+            readOnly: true
+            name: nginx-conf
+          - mountPath: /usr/src
+            name: {{ .Values.staticStore.name }}
+          - mountPath: /usr/src/love-manager/media/configs
+            name: love-conf
+        {{- with $.Values.resources }}
+        resources:
+          {{- toYaml $.Values.resources | nindent 10 }}
+        {{- end }}
+      volumes:
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
+            items:
+              - key: nginx.conf
+                path: nginx.conf
+        - name: {{ .Values.staticStore.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.staticStore.name }}-pvc
+        - name: love-conf
+          configMap:
+            name: love-conf
+            items:
+              - key: default.json
+                path: default.json
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}

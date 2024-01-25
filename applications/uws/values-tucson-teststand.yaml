@@ -1,0 +1,87 @@
+uws-api-server:
+  targetCluster: "tucson-teststand"
+  hostname: tucson-teststand.lsst.codes
+  image:
+    tag: latest
+  logLevel: INFO
+  vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
+  butlerPg:
+    secretKey: butler-secret
+    containerPath: /home/lsst/.lsst
+    dbUser: oods
+  workingVolume:
+    name: job-files
+    server: nfs-scratch.tu.lsst.org
+    exportPath: "/scratch"
+    claimName: uws-server-pvc
+    mountPath: "/uws"
+    subPath: "uws"
+  volumes:
+  - name: project
+    server: nfs-project.tu.lsst.org
+    claimName: project-pvc
+    mountPath: "/project"
+    exportPath: "/project"
+    subPath: ""
+    readOnly: false
+  - name: home
+    server: nfs-jhome.tu.lsst.org
+    claimName: home-pvc
+    mountPath: "/jhome"
+    exportPath: "/jhome"
+    subPath: ""
+    readOnly: false
+  - name: repo-latiss
+    server: nfs-auxtel.tu.lsst.org
+    claimName: repo-latiss-pvc
+    mountPath: "/repo/LATISS"
+    exportPath: "/auxtel/repo/LATISS"
+    subPath: ""
+    readOnly: false
+  - name: repo-comcam
+    server: comcam-archiver.tu.lsst.org
+    claimName: repo-comcam-pvc
+    mountPath: "/repo/LSSTComCam"
+    exportPath: "/repo/LSSTComCam"
+    subPath: ""
+    readOnly: false
+  - name: data-auxtel
+    server: nfs-auxtel.tu.lsst.org
+    claimName: data-auxtel-pvc
+    mountPath: "/data/lsstdata/TTS/auxtel"
+    exportPath: "/auxtel/lsstdata/TTS/auxtel"
+    subPath: ""
+    readOnly: true
+  - name: data-comcam
+    server: comcam-archiver.tu.lsst.org
+    claimName: data-comcam-pvc
+    mountPath: "/data/lsstdata/TTS/comcam"
+    exportPath: "/lsstdata/TTS/comcam"
+    subPath: ""
+    readOnly: true
+
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+
+atocps:
+  enabled: true
+  classifier: ocps1
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+
+ccocps:
+  enabled: true
+  classifier: ocps2
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2

@@ -1,0 +1,9 @@
+apiVersion: v2
+name: uws-api-server
+version: 1.5.0
+description: Helm chart for deploying the Universal Worker Service API Server
+maintainers:
+  - name: Kian-Tat Lim
+    email: ktl@slac.stanford.edu
+  - name: Michael Reuter
+    email: mareuter@lsst.org

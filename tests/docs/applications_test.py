@@ -37,7 +37,11 @@ def test_applications_index() -> None:
     for application in root_path.iterdir():
         if not application.is_dir():
             continue
-        if application.name in ("nublado-fileservers", "nublado-users"):
+        if application.name in (
+            "nublado-fileservers",
+            "nublado-users",
+            "ocps-uws-job",
+        ):
             continue
         assert (
             application.name in seen

@@ -1,0 +1,81 @@
+{{- if .Values.viewBackup.enabled }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ include "love-manager.view-backup.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "love-manager.view-backup.labels" . | nindent 4 }}
+spec:
+  concurrencyPolicy: Forbid
+  schedule: {{ .Values.viewBackup.schedule | quote }}
+  jobTemplate:
+    metadata:
+      labels:
+        {{- include "love-manager.view-backup.labels" . | nindent 8 }}
+    spec:
+      completions: 1
+      {{- if .Values.viewBackup.ttlSecondsAfterFinished }}
+      ttlSecondsAfterFinished: {{ .Values.viewBackup.ttlSecondsAfterFinished }}
+      {{- end }}
+      template:
+        metadata:
+          labels:
+            {{- include "love-manager.view-backup.labels" . | nindent 12 }}
+        spec:
+          containers:
+            - name: {{ include "love-manager.view-backup.fullname" . }}
+              image: "{{ .Values.viewBackup.image.repository }}:{{ .Values.viewBackup.image.tag }}"
+              imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
+              env:
+                - name: PGHOST
+                  value: {{ .Values.manager.frontend.env.DB_HOST | quote }}
+                - name: PGPORT
+                  value: {{ .Values.manager.frontend.env.DB_PORT | quote }}
+                - name: PGDATABASE
+                  value: {{ .Values.manager.frontend.env.DB_NAME | quote }}
+                - name: PGUSER
+                  value: {{ .Values.manager.frontend.env.DB_USER | quote }}
+                - name: LOVE_SITE
+                  value: {{ .Values.manager.frontend.env.LOVE_SITE | quote }}
+                {{- range $env_var, $env_value := .Values.viewBackup.env }}
+                - name: {{ $env_var }}
+                  value: {{ $env_value | quote }}
+                {{- end }}
+                - name: PGPASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.namespace }}-secrets
+                      key: {{ .Values.manager.frontend.envSecrets.DB_PASS }}
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.namespace }}-lfa
+                      key: aws-access-key-id
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ .Values.namespace }}-lfa
+                      key: aws-secret-access-key
+              {{- with $.Values.viewBackup.resources }}
+              resources:
+                {{- toYaml $.Values.viewBackup.resources | nindent 16 }}
+              {{- end }}
+          restartPolicy: {{ .Values.viewBackup.restartPolicy }}
+          {{- if $.Values.viewBackup.image.nexus3 }}
+          imagePullSecrets:
+            - name: {{ $.Values.namespace }}-{{ $.Values.viewBackup.image.nexus3 }}
+          {{- end }}
+          {{- with $.Values.nodeSelector }}
+          nodeSelector:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.affinity }}
+          affinity:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+          {{- with $.Values.tolerations }}
+          tolerations:
+            {{- toYaml $ | nindent 12 }}
+          {{- end }}
+{{- end }}

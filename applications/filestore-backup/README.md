@@ -4,7 +4,7 @@ Tool to manage Google Filestore backups
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/rubin-google-filestore-tool>
+* <https://github.com/lsst-sqre/rubin-google-filestore-tools>
 
 ## Values
 

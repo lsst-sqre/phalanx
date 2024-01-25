@@ -1,0 +1,4 @@
+name: love-manager
+apiVersion: v2
+version: 1.0.0
+description: Helm chart for the LOVE manager service.

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-server
+  labels:
+    app: {{ .Release.Name }}-server
+    chart: {{ template "uws-api-server.chart" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-server
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-server
+    spec:
+      securityContext:
+      {{ toYaml .Values.server.securityContext | nindent 8 }}
+      serviceAccountName: {{ .Release.Name }}-job-manager
+      volumes:
+      # Server configuration
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-configmap
+      # Volume to host job data
+      - name: "{{ .Values.workingVolume.name }}"
+        persistentVolumeClaim:
+          claimName: "{{ .Values.workingVolume.claimName }}"
+      {{- range .Values.volumes }}
+      - name: "{{ .name }}"
+        persistentVolumeClaim:
+          claimName: "{{ .claimName }}"
+      {{- end }}
+      containers:
+      - name: uws-api-server
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
+        command: ["/bin/bash", "-c", "cd server && python3 server.py"]
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        # Working directory for job data
+        - name: "{{ .Values.workingVolume.name }}"
+          mountPath: "{{ .Values.workingVolume.mountPath }}"
+          subPath: "{{ .Values.workingVolume.subPath }}"
+        # Server configuration
+        - name: config
+          subPath: config
+          mountPath: /etc/config/uws.yaml
+        # Shared data volumes (environment-specific)
+        {{- range .Values.volumes }}
+        - name: "{{ .name }}"
+          mountPath: "{{ .mountPath }}"
+          subPath: "{{ .subPath }}"
+          readOnly: {{ .readOnly }}
+        {{- end }}

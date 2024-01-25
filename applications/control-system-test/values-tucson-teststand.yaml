@@ -1,0 +1,21 @@
+csc_collector:
+  secrets:
+  - name: nexus3-docker
+    key: pull-secret
+    type: kubernetes.io/dockerconfigjson
+  - name: ts-salkafka
+    key: ts/software/ts-salkafka
+  - name: lfa
+    key: ts/software/lfa
+
+test42:
+  image:
+    repository: ts-dockerhub.lsst.org/test
+    pullPolicy: Always
+  env:
+    RUN_ARG: 42
+
+integration-testing:
+  enabled: true
+  envEfd: tucson_teststand_efd
+  s3Bucket: rubinobs-lfa-tuc

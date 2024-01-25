@@ -1,0 +1,35 @@
+# -- Set the replica count for the LOVE producers
+replicaCount: 1
+image:
+  # -- The LOVE producer image to use
+  repository: lsstts/love-producer
+  # str -- The tag to use for the LOVE producer image
+  tag:
+  # -- The pull policy on the LOVE producer image
+  pullPolicy: IfNotPresent
+# -- This section holds a set of key, value pairs for environmental variables
+env:
+  WEBSOCKET_HOST: love-nginx/manager/ws/subscription
+# -- This section holds a set of key, value pairs for secrets
+envSecrets:
+  PROCESS_CONNECTION_PASS: process-connection-pass
+# -- (obj) This sections sets the list of producers to use.
+# The producers should be specified like:
+# _name_: The identifying name for the CSC producer
+# _csc_: _CSC name:index_
+# The following attributes are optional
+# _resources_ (A resource object specification)
+# _nodeSelector_ (A node selector object specification)
+# _tolerations_ (A list of tolerations)
+# _affinity_ (An affinity object specification)
+producers: []
+# -- This allows for the specification of pod annotations.
+annotations: {}
+# -- Resource specifications applied to all LOVE producer pods
+resources: {}
+# -- Node selection rules applied to all LOVE producer pods
+nodeSelector: {}
+# -- Toleration specifications applied to all LOVE producer pods
+tolerations: []
+# -- Affinity rules applied to all LOVE producer pods
+affinity: {}
