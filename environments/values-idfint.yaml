@@ -1,6 +1,8 @@
 name: "idfint"
 fqdn: "data-int.lsst.cloud"
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
+butlerServerRepositories:
+  dp02: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"
 gcp:
   projectId: "science-platform-int-dc5d"
   region: "us-central1"

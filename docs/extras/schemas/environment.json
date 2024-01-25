@@ -189,6 +189,24 @@
       "description": "URL to Butler repository index",
       "title": "Butler repository index URL"
     },
+    "butlerServerRepositories": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "format": "uri",
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "A mapping from label to repository URI for Butler repositoriesserved by Butler server in this environment.",
+      "title": "Butler repositories accessible via Butler server"
+    },
     "gcp": {
       "anyOf": [
         {

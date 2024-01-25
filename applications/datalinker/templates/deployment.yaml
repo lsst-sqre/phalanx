@@ -58,10 +58,11 @@ spec:
             # and authenticate to its database.
             - name: "AWS_SHARED_CREDENTIALS_FILE"
               value: "/tmp/secrets/aws-credentials.ini"
-            - name: "DAF_BUTLER_REPOSITORY_INDEX"
-            {{- if .Values.config.overrideButlerRepositoryIndex }}
-              value: {{ .Values.config.overrideButlerRepositoryIndex | quote }}
+            {{- if .Values.config.useButlerServer }}
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
             {{- else }}
+            - name: "DAF_BUTLER_REPOSITORY_INDEX"
               value: {{ .Values.global.butlerRepositoryIndex | quote }}
             {{- end }}
             - name: "PGUSER"

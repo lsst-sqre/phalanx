@@ -15,15 +15,16 @@ IVOA DataLink-based service and data discovery
 | autoscaling.maxReplicas | int | `100` | Maximum number of datalinker deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of datalinker deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of datalinker deployment pods |
-| config.overrideButlerRepositoryIndex | string | Use the default configuration for the environment | URI to Butler repository index file, configuring which Butler repository labels are available. |
 | config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE rubin is the default |
 | config.s3EndpointUrl | string | `"https://storage.googleapis.com"` | S3 Endpoint URL |
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.storageBackend | string | `"GCS"` | Storage backend to use: either GCS or S3 GCS is the default |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
+| config.useButlerServer | bool | `false` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |
+| global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the datalinker image |

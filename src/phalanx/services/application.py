@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import base64
+import json
 from collections.abc import Iterable
 from pathlib import Path
+from typing import Any
 
 import jinja2
 import yaml
@@ -292,6 +295,15 @@ class ApplicationService:
         if environment.butler_repository_index:
             butler_index = environment.butler_repository_index
             values["global.butlerRepositoryIndex"] = butler_index
+        if environment.butler_server_repositories:
+            values[
+                "global.butlerServerRepositories"
+            ] = _json_and_base64_encode(
+                {
+                    k: str(v)
+                    for k, v in environment.butler_server_repositories.items()
+                }
+            )
 
         # vault-secrets-operator gets the Vault host injected into it. Use the
         # existence of its subchart configuration tree as a cue to inject the
@@ -379,3 +391,11 @@ class ApplicationService:
         template = self._templates.get_template("application-values.md.jinja")
         values = template.render({"name": name})
         (docs_path / "values.md").write_text(values)
+
+
+def _json_and_base64_encode(obj: Any) -> str:
+    """Encode an object into a JSON string, then base64 encode it. This helps
+    work around ArgoCD string escaping issues, where it wants to turn curly
+    braces into square brackets.
+    """
+    return base64.b64encode(json.dumps(obj).encode()).decode()

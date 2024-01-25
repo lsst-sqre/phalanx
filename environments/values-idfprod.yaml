@@ -1,6 +1,9 @@
 name: "idfprod"
 fqdn: "data.lsst.cloud"
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
+butlerServerRepositories:
+  dp01: "https://data.lsst.cloud/api/butler/repo/dp01/butler.yaml"
+  dp02: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"
 gcp:
   projectId: "science-platform-stable-6994"
   region: "us-central1"
