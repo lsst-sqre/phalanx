@@ -26,6 +26,8 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.butlerRepositoryIndex"
           value: {{ .Values.butlerRepositoryIndex | quote }}
+        - name: "global.butlerServerRepositories"
+          value: {{ .Values.butlerServerRepositories | toJson | b64enc }}
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.vaultSecretsPath"

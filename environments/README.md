@@ -64,7 +64,8 @@
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |
-| butlerRepositoryIndex | string | None, must be set | Butler repository index to use for this environment |
+| butlerRepositoryIndex | string | None, must be set | Butler repository index URI to use for this environment, for services that connect directly to the Butler database. |
+| butlerServerRepositories | object | None, must be set | Butler repositories that can be accessed via Butler server, as a dictionary from repository label to URI. |
 | controlSystem.appNamespace | string | None, must be set | Application namespacce for the control system deployment |
 | controlSystem.imageTag | string | None, must be set | Image tag for the control system deployment |
 | controlSystem.kafkaBrokerAddress | string | `"sasquatch-kafka-brokers.sasquatch:9092"` | Kafka broker address for the control system deployment |

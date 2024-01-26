@@ -20,9 +20,11 @@ IVOA DataLink-based service and data discovery
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.storageBackend | string | `"GCS"` | Storage backend to use: either GCS or S3 GCS is the default |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
+| config.useButlerServer | bool | `false` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |
+| global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the datalinker image |

@@ -57,6 +57,10 @@ config:
   # -- Whether to use the new secrets management scheme
   separateSecrets: false
 
+  # -- If true, use Butler in client/server mode instead of connecting
+  # directly to the Butler database
+  useButlerServer: false
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
 
@@ -82,6 +86,10 @@ global:
   # -- URI to the Butler configuration of available repositories
   # @default -- Set by Argo CD
   butlerRepositoryIndex: ""
+
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

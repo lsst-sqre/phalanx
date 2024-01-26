@@ -1,8 +1,14 @@
 # These four settings should be set in each environment values-*.yaml file.
 
-# -- Butler repository index to use for this environment
+# -- Butler repository index URI to use for this environment, for services that
+# connect directly to the Butler database.
 # @default -- None, must be set
 butlerRepositoryIndex: ""
+
+# -- Butler repositories that can be accessed via Butler server, as a
+# dictionary from repository label to URI.
+# @default -- None, must be set
+butlerServerRepositories: {}
 
 # -- Name of the environment
 # @default -- None, must be set

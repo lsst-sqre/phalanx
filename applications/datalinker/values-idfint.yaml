@@ -1,2 +1,3 @@
 config:
   separateSecrets: true
+  useButlerServer: true

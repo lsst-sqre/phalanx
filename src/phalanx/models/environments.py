@@ -6,6 +6,7 @@ from enum import Enum
 
 from pydantic import (
     AnyHttpUrl,
+    AnyUrl,
     BaseModel,
     ConfigDict,
     Field,
@@ -164,6 +165,15 @@ class EnvironmentBaseConfig(CamelCaseModel):
         None,
         title="Butler repository index URL",
         description="URL to Butler repository index",
+    )
+
+    butler_server_repositories: dict[str, AnyUrl] | None = Field(
+        None,
+        title="Butler repositories accessible via Butler server",
+        description=(
+            "A mapping from label to repository URI for Butler repositories"
+            "served by Butler server in this environment."
+        ),
     )
 
     gcp: GCPMetadata | None = Field(
