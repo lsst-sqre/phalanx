@@ -155,7 +155,7 @@ meta:
     # size: 8Gi
   podDisruptionBudget:
     minAvailable: 2
-  ## Additional data container environment variables.
+  ## Additional meta container environment variables.
   env: {}
   resources: {}
 
