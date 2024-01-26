@@ -155,6 +155,11 @@ spec:
   entityOperator:
     topicOperator: {}
     userOperator: {}
+    template:
+      topicOperatorContainer:
+        env:
+        - name: STRIMZI_MAX_QUEUE_SIZE
+          value: "8192"
   {{- if .Values.kafkaExporter.enabled }}
   kafkaExporter:
     topicRegex: {{ .Values.kafkaExporter.topicRegex }}
