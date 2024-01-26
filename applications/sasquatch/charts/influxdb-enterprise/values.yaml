@@ -153,9 +153,7 @@ meta:
     # annotations:
     # accessMode: ReadWriteOnce
     # size: 8Gi
-  # Pick one
   podDisruptionBudget:
-    # maxUnavailable: 2
     minAvailable: 2
   ## Additional data container environment variables.
   env: {}
@@ -267,6 +265,8 @@ data:
       enabled: false
     logging:
       level: "debug"
+  podDisruptionBudget:
+    minAvailable: 1
   ## Additional data container environment variables e.g.:
   ##   INFLUXDB_HTTP_FLUX_ENABLED: "true"
   env: {}

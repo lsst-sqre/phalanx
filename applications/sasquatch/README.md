@@ -117,6 +117,7 @@ Rubin Observatory's telemetry service.
 | influxdb-enterprise.data.ingress.hostname | string | `""` |  |
 | influxdb-enterprise.data.ingress.path | string | `"/influxdb-enterprise-data(/|$)(.*)"` |  |
 | influxdb-enterprise.data.persistence.enabled | bool | `false` |  |
+| influxdb-enterprise.data.podDisruptionBudget.minAvailable | int | `1` |  |
 | influxdb-enterprise.data.replicas | int | `1` |  |
 | influxdb-enterprise.data.resources | object | `{}` |  |
 | influxdb-enterprise.data.service.type | string | `"ClusterIP"` |  |

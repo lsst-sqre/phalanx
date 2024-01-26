@@ -1,0 +1,9 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: data-pdb
+spec:
+  minAvailable: {{ .Values.data.podDisruptionBudget.minAvailable }}
+  selector:
+    matchLabels:
+      influxdb.influxdata.com/component: data
