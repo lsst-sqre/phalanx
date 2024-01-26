@@ -39,6 +39,7 @@ Run InfluxDB Enterprise on Kubernetes
 | data.ingress.hostname | string | `""` |  |
 | data.ingress.path | string | `"/influxdb-enterprise-data(/|$)(.*)"` |  |
 | data.persistence.enabled | bool | `false` |  |
+| data.podDisruptionBudget.minAvailable | int | `1` |  |
 | data.replicas | int | `1` |  |
 | data.resources | object | `{}` |  |
 | data.service.type | string | `"ClusterIP"` |  |
