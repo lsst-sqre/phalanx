@@ -77,7 +77,14 @@ config:
 podAnnotations: {}
 
 # -- Resource limits and requests for the datalinker deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "200Mi"
+  requests:
+    cpu: "50m"
+    memory: "150Mi"
 
 # -- Node selection rules for the datalinker deployment pod
 nodeSelector: {}
