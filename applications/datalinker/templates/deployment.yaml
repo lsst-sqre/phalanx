@@ -20,14 +20,11 @@ spec:
       labels:
         {{- include "datalinker.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       automountServiceAccountToken: false
-      imagePullSecrets:
-        - name: "pull-secret"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -43,6 +40,23 @@ spec:
               value: "{{ .Values.global.baseUrl }}/api/cutout/sync"
             - name: "DATALINKER_HIPS_BASE_URL"
               value: "{{ .Values.global.baseUrl }}/api/hips"
+            - name: "DATALINKER_LOG_LEVEL"
+              value: {{ .Values.config.logLevel | quote }}
+            - name: "DATALINKER_PATH_PREFIX"
+              value: {{ .Values.config.pathPrefix | quote }}
+            - name: "DATALINKER_HIPS_PATH_PREFIX"
+              value: {{ .Values.config.hipsPathPrefix | quote }}
+            - name: "DATALINKER_STORAGE_BACKEND"
+              value: {{ .Values.config.storageBackend | quote }}
+            - name: "DATALINKER_S3_ENDPOINT_URL"
+              value: {{ .Values.config.s3EndpointUrl | quote }}
+            {{- if .Values.config.slackAlerts }}
+            - name: "DATALINKER_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "datalinker.fullname" . }}
+                  key: "slack-webhook"
+            {{- end }}
             {{- if .Values.config.tapMetadataUrl }}
             - name: "DATALINKER_TAP_METADATA_DIR"
               value: "/tmp/tap-metadata"
@@ -69,24 +83,20 @@ spec:
               value: {{ .Values.config.pgUser }}
             - name: "PGPASSFILE"
               value: "/tmp/secrets/postgres-credentials.txt"
-            - name: "STORAGE_BACKEND"
-              value: {{ .Values.config.storageBackend }}
-            - name: "S3_ENDPOINT_URL"
-              value: {{ .Values.config.s3EndpointUrl }}
             - name: "GOOGLE_APPLICATION_CREDENTIALS"
               value: "/tmp/secrets/butler-gcs-idf-creds.json"
           ports:
-            - name: http
+            - name: "http"
               containerPort: 8080
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
+              protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: "/"
+              port: "http"
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -98,10 +108,11 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}

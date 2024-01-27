@@ -1,4 +1,3 @@
 config:
-  # -- USDF uses an on prem S3 storage backend
   storageBackend: "S3"
   s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"

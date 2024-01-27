@@ -37,21 +37,25 @@ autoscaling:
 
   # -- Target CPU utilization of datalinker deployment pods
   targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
 
 config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- URL path prefix for DataLink and related APIs
+  pathPrefix: "/api/datalink"
+
+  # -- URL path prefix for the HiPS API (must match the configuration of the
+  # hips service)
+  hipsPathPrefix: "/api/hips"
+
   # -- URL containing TAP schema metadata used to construct queries
   tapMetadataUrl: "https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"
 
-  # -- Storage backend to use: either GCS or S3
-  # GCS is the default
+  # -- Storage backend to use (either `GCS` or `S3`)
   storageBackend: "GCS"
 
-  # -- User to use from the PGPASSFILE
-  # rubin is the default
-  pgUser: "rubin"
-
-  # -- S3 Endpoint URL
+  # -- S3 endpoint URL (must be set if using S3)
   s3EndpointUrl: "https://storage.googleapis.com"
 
   # -- Whether to use the new secrets management scheme
@@ -61,11 +65,26 @@ config:
   # directly to the Butler database
   useButlerServer: false
 
+  # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
+  # connection (`useButlerServer` is false)
+  pgUser: "rubin"
+
+  # -- Whether to send certain serious alerts to Slack. If `true`, the
+  # `slack-webhook` secret must also be set.
+  slackAlerts: false
+
 # -- Annotations for the datalinker deployment pod
 podAnnotations: {}
 
 # -- Resource limits and requests for the datalinker deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "200Mi"
+  requests:
+    cpu: "50m"
+    memory: "150Mi"
 
 # -- Node selection rules for the datalinker deployment pod
 nodeSelector: {}
