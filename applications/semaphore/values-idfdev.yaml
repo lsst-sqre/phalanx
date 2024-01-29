@@ -5,7 +5,3 @@ config:
   enable_github_app: "True"
   phalanx_env: "idfdev"
   log_level: "DEBUG"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-dev.lsst.cloud/pull-secret
