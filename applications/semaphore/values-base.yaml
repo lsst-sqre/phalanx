@@ -1,6 +1,2 @@
 config:
   phalanx_env: "base"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/base-lsp.lsst.codes/pull-secret

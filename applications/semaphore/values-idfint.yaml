@@ -2,7 +2,3 @@ config:
   phalanx_env: "idfint"
   github_app_id: "131457"
   enable_github_app: "True"
-
-pull-secret:
-  enabled: true
-  path: secret/k8s_operator/data-int.lsst.cloud/pull-secret

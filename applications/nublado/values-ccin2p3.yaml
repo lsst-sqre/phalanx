@@ -10,32 +10,18 @@ controller:
         type: "docker"
         registry: "registry.hub.docker.com"
         repository: "lsstsqre/sciplat-lab"
-      recommendedTag: "recommended"
-      numReleases: 1
-      numWeeklies: 2
-      numDailies: 3
     lab:
-      homedirSchema: "username"
-      homedirPrefix: "/sps/lsst/users"
-      homedirSuffix: "rsp_home"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-      sizes:
-        - size: "small"
-          cpu: 2.0
-          memory: "8Gi"
-        - size: "medium"
-          cpu: 4.0
-          memory: "16Gi"
-        - size: "large"
-          cpu: 8.0
-          memory: "32Gi"
+      homedirSchema: "username"
+      homedirPrefix: "/sps/lsst/users"
+      homedirSuffix: "rsp_home"
       initContainers:
         - name: "homecreation"
-          image: 
+          image:
             repository: "registry.hub.docker.com/gabrimaine/initdir"
             tag: "0.0.2"
           privileged: true
@@ -46,6 +32,16 @@ controller:
               volumeName: "throng"
             - containerPath: "/sps"
               volumeName: "sps"
+      sizes:
+        - size: "small"
+          cpu: 2.0
+          memory: "8Gi"
+        - size: "medium"
+          cpu: 4.0
+          memory: "16Gi"
+        - size: "large"
+          cpu: 8.0
+          memory: "32Gi"
       volumes:
         - name: "home"
           source:

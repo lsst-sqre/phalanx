@@ -1,9 +1,4 @@
 replicaCount: 2
-# image:
-#   # -- tap image to use
-#   repository: "gabrimaine/gafaelfawr"
-#   tag: "9.0.0-dev"
-
 
 redis:
   persistence:
@@ -31,7 +26,7 @@ config:
     uidClaim: "uid_number"
     groupsClaim: "groups"
     usernameClaim: "preferred_username"
-    
+
   ldap:
     url: ldap://ccidm01.in2p3.fr
     groupBaseDn: cn=groups,cn=compat,dc=cc,dc=in2p3,dc=fr
@@ -43,34 +38,33 @@ config:
     uidAttr: uidNumber
     gidAttr: gidNumber
     nameAttr: gecos
-      #kerberosConfig: |
-      #  [libdefaults]
-      #    default_realm       = CC.IN2P3.FR
-      #    dns_lookup_realm    = false
-      #    dns_lookup_kdc      = true
-      #    allow_weak_crypto   = false
-      #    kdc_timeout         = 10
-      #    max_retries         = 3
-      #    ticket_lifetime     = 3d
-      #    renew_lifetime      = 30d
-      #    forwardable         = true
-      #    proxiable           = false
-      #    default_ccache_name = DIR:/tmp/kerberos
-
-      #  [realms]
-      #    CC.IN2P3.FR = {
-      #      default_domain  = idm.cc.in2p3.fr
-      #      kpasswd_server  = ccidm01.in2p3.fr
-      #      admin_server    = ccidm01.in2p3.fr
-      #      kdc             = ccidm01.in2p3.fr:88
-      #      kdc             = ccidm02.in2p3.fr:88
-      #      kdc             = ccidm03.in2p3.fr:88
-      #      kdc             = ccidm04.in2p3.fr:88
-      #    }
-
-      #[appdefaults]
-      #  encrypt = true
-  
+    # kerberosConfig: |
+    #   [libdefaults]
+    #     default_realm       = CC.IN2P3.FR
+    #     dns_lookup_realm    = false
+    #     dns_lookup_kdc      = true
+    #     allow_weak_crypto   = false
+    #     kdc_timeout         = 10
+    #     max_retries         = 3
+    #     ticket_lifetime     = 3d
+    #     renew_lifetime      = 30d
+    #     forwardable         = true
+    #     proxiable           = false
+    #     default_ccache_name = DIR:/tmp/kerberos
+    #
+    #   [realms]
+    #     CC.IN2P3.FR = {
+    #       default_domain  = idm.cc.in2p3.fr
+    #       kpasswd_server  = ccidm01.in2p3.fr
+    #       admin_server    = ccidm01.in2p3.fr
+    #       kdc             = ccidm01.in2p3.fr:88
+    #       kdc             = ccidm02.in2p3.fr:88
+    #       kdc             = ccidm03.in2p3.fr:88
+    #       kdc             = ccidm04.in2p3.fr:88
+    #     }
+    #
+    #   [appdefaults]
+    #     encrypt = true
 
   oidcServer:
     enabled: false
@@ -95,4 +89,3 @@ config:
       - "lsst"
     "read:tap":
       - "lsst"
-
