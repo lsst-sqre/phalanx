@@ -5,11 +5,11 @@ controller:
         type: "docker"
         registry: "ts-dockerhub.lsst.org"
         repository: "sal-sciplat-lab"
-      num_releases: 0
-      num_weeklies: 3
-      num_dailies: 2
+      numReleases: 0
+      numWeeklies: 3
+      numDailies: 2
       cycle: 34
-      recommended_tag: "recommended_c0034"
+      recommendedTag: "recommended_c0034"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
