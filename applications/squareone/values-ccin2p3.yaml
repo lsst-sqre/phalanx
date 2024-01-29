@@ -1,5 +1,5 @@
 config:
   siteName: "Rubin Science Platform @ CC-IN2P3"
-
+  semaphoreUrl: "https://data-dev.lsst.eu/semaphore" 
 ingress:
   tls: false
