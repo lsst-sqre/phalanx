@@ -67,6 +67,13 @@ spec:
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
         - name: SASQUATCH_URL
           value: {{ .Values.sasquatch.endpointUrl }}
+        {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}
+        - name: SASQUATCH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
+              key: sasquatch_token
+        {{- end }}
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}

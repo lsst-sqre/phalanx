@@ -29,5 +29,6 @@ prompt-proto-service:
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    auth_env: false
 
   fullnameOverride: "prompt-proto-service-hsc"
