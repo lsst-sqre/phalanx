@@ -65,6 +65,8 @@ spec:
           value: {{ .Values.apdb.namespace }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+        - name: SASQUATCH_URL
+          value: {{ .Values.sasquatch.endpointUrl }}
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}
