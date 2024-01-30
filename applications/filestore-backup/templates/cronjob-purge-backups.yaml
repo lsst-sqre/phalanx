@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: purge-backup
+  name: purge-backups
   labels:
     {{- include "filestore-backup.labels" . | nindent 4 }}
 spec:
@@ -46,4 +46,4 @@ spec:
               - name: "RUBIN_GOOGLE_FILESTORE_TOOLS_DEBUG"
                 value: "true"
               {{- end }}
-            command: [ "purge_backup" ]
+            command: [ "purge_backups" ]
