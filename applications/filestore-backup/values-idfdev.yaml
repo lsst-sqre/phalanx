@@ -1,6 +1,5 @@
 config:
   instance: "fshare-instance-dev"
-  zone: "b"
   backup:
     debug: true
   purge:
