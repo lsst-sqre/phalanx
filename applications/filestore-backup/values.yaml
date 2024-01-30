@@ -40,8 +40,7 @@ config:
   instance: ""
 
   # -- Zone for Filestore instance (e.g. "b" from "us-central1-b")
-  # @default -- None, must be set
-  zone: ""
+  zone: "b"
 
   # -- File Share name for filestore instance.  Always "share1" unless
   # storage is on an Enterprise tier

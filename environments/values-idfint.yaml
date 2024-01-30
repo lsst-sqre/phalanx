@@ -15,6 +15,7 @@ vaultPathPrefix: "secret/phalanx/idfint"
 applications:
   butler: true
   datalinker: true
+  filestore-backup: true
   hips: true
   linters: true
   mobu: true
