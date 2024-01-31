@@ -15,7 +15,7 @@ config:
 
   # Allow access by GitHub team.
   groupMapping:
-    "admin:provision":
+    "admin:jupyterlab":
       - github:
           organization: "lsst-sqre"
           team: "square"

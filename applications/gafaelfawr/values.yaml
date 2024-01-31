@@ -273,8 +273,6 @@ config:
       Can create and destroy labs for any user
     "admin:token": >-
       Can create and modify tokens for any user
-    "admin:provision": >-
-      Can perform privileged user provisioning
     "exec:admin": >-
       Administrative access to all APIs
     "exec:internal-tools": >-
