@@ -32,7 +32,7 @@ config:
 
   # Allow access by GitHub team.
   groupMapping:
-    "admin:provision":
+    "admin:jupyterlab":
       - "sqre"
     "exec:admin":
       - "k8s-manke"
