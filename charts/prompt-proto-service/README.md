@@ -43,4 +43,6 @@ Event-driven processing of camera images
 | s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
+| sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
+| sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | tolerations | list | `[]` |  |

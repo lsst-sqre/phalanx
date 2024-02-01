@@ -38,3 +38,5 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-proto-service.s3.endpointUrl | string | `""` |  |
 | prompt-proto-service.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
+| prompt-proto-service.sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
+| prompt-proto-service.sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
