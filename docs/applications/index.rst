@@ -10,7 +10,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Cluster infrastructure
+   :caption: Cluster infrastructure (infrastructure)
 
    argocd/index
    cert-manager/index
@@ -21,7 +21,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Rubin Science Platform
+   :caption: Rubin Science Platform (rsp)
 
    butler/index
    datalinker/index
@@ -45,7 +45,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: RSP+
+   :caption: RSP+ (rubin)
 
    argo-workflows/index
    alert-stream-broker/index
@@ -66,7 +66,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Roundtable
+   :caption: Roundtable (roundtable)
 
    giftless/index
    kubernetes-replicator/index
@@ -77,7 +77,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Prompt Processing
+   :caption: Prompt Processing (prompt)
 
    next-visit-fan-out/index
    prompt-proto-service-hsc/index
@@ -87,7 +87,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Rubin Observatory Control System
+   :caption: Rubin Observatory Control System (telescope)
 
    auxtel/index
    calsys/index
