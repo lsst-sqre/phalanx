@@ -28,14 +28,14 @@ spec:
             key: connect-postgres-password
       - name: PG_JDBC_URL
         valueFrom:
-          secretKeyRef:
-            name: sasquatch
-            key: connect-postgres-url
+          configMapKeyRef:
+            name: sasquatch-connect-postgres
+            key: jdbcUrl
       - name: PGUSER
         valueFrom:
-          secretKeyRef:
-            name: sasquatch
-            key: connect-postgres-user
+          configMapKeyRef:
+            name: sasquatch-connect-postgres
+            key: jdbcUser
   config:
     group.id: {{ .Values.cluster.name }}-connect
     offset.storage.topic: {{ .Values.cluster.name }}-connect-offsets
@@ -57,13 +57,13 @@ spec:
     output:
       type: docker
       image: {{ .Values.connect.image | quote }}
-      pushSecret: connect-push-secret
+      pushSecret: sasquatch-connect-push-secret
     plugins:
       - name: confluent-jdbc
         artifacts:
           - type: jar
-            url: {{ .Values.connect.jdbc.url }}
-            sha512sum: {{ .Values.connect.jdbc.sha512sum }}
+            url: {{ .Values.connect.jdbcConnector.url }}
+            sha512sum: {{ .Values.connect.jdbcConnector.sha512sum }}
   resources:
     requests:
       cpu: "2"
@@ -74,6 +74,14 @@ spec:
   jvmOptions:
     "-Xmx": "8g"
     "-Xms": "8g"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-connect-postgres
+data:
+  jdbcUrl: {{ .Values.connect.postgres.jdbcUrl | quote }}
+  jdbcUser: {{ .Values.connect.postgres.jdbcUser | quote }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
