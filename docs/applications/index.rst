@@ -6,11 +6,14 @@ Applications are individual *atomic* services that are configured and deployed t
 Each environment can opt whether to deploy an application, and also customize the configuration of the application.
 This section of the documentation describes each Phalanx application.
 
+The category names correspond to the project name in phalanx/applications/_project_.
+Infrastructure is specifically reserved for applications that are necessary for "proof of life" deployments, eg by non-Rubin deployers who are only interested in phalanx as an internal developer environment. 
+
 To learn how to develop applications for Phalanx, see the :doc:`/developers/index` section.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Phalanx (cluster) infrastructure (infrastructure)
+   :caption: infrastructure ("bare" Phalanx infrastructure)
 
    argocd/index
    cert-manager/index
@@ -24,7 +27,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Rubin Science Platform (rsp)
+   :caption: rsp (Rubin Science Platform)
 
    butler/index
    datalinker/index
@@ -46,7 +49,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: RSP+ (rubin)
+   :caption: rubin: Additional Rubin services
 
    alert-stream-broker/index
    exposurelog/index
@@ -60,7 +63,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Roundtable (roundtable)
+   :caption: roundtable Roundtable
 
    giftless/index
    kubernetes-replicator/index
@@ -71,7 +74,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Monitoring and metrics (monitoring)
+   :caption: monitoring (Monitoring and metrics)
 
    linters/index
    sasquatch/index
@@ -81,7 +84,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Prompt Processing (prompt)
+   :caption: prompt (Prompt Processing)
 
    next-visit-fan-out/index
    prompt-proto-service-hsc/index
@@ -91,7 +94,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Rubin Observatory Control System (telescope)
+   :caption: telescope (Rubin Observatory Control System and related services)
 
    argo-workflows/index
    auxtel/index
