@@ -10,13 +10,16 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
 
 .. toctree::
    :maxdepth: 1
-   :caption: Cluster infrastructure (infrastructure)
+   :caption: Phalanx (cluster) infrastructure (infrastructure)
 
    argocd/index
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
+   mobu/index
    postgres/index
+   strimzi/index
+   strimzi-access-operator/index
    vault-secrets-operator/index
 
 .. toctree::
@@ -27,14 +30,12 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    datalinker/index
    filestore-backup/index
    hips/index
-   linters/index
+   jira-data-proxy/index
    livetap/index
-   mobu/index
    noteburst/index
    nublado/index
    portal/index
    semaphore/index
-   sherlock/index
    siav2/index
    sqlproxy-cross-project/index
    squareone/index
@@ -47,22 +48,15 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: RSP+ (rubin)
 
-   argo-workflows/index
    alert-stream-broker/index
    exposurelog/index
-   jira-data-proxy/index
    narrativelog/index
    obsloctap/index
    plot-navigator/index
    production-tools/index
    rubintv/index
-   sasquatch/index
    schedview-prenight/index
    schedview-snapshot/index
-   strimzi/index
-   strimzi-access-operator/index
-   telegraf/index
-   telegraf-ds/index
 
 .. toctree::
    :maxdepth: 1
@@ -74,6 +68,16 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    onepassword-connect/index
    ook/index
    squarebot/index
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Monitoring and metrics (monitoring)
+
+   linters/index
+   sasquatch/index
+   sherlock/index
+   telegraf/index
+   telegraf-ds/index
 
 .. toctree::
    :maxdepth: 1
@@ -89,6 +93,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Rubin Observatory Control System (telescope)
 
+   argo-workflows/index
    auxtel/index
    calsys/index
    control-system-test/index
