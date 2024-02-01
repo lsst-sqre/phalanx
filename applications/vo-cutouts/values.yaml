@@ -65,6 +65,10 @@ config:
   # @default -- 60 (1 minute)
   syncTimeout: 60
 
+  # -- If true, use Butler in client/server mode instead of connecting
+  # directly to the Butler database
+  useButlerServer: true
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
   # on Google Cloud
@@ -195,6 +199,10 @@ global:
   # -- URI to the Butler configuration of available repositories
   # @default -- Set by Argo CD
   butlerRepositoryIndex: ""
+
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
