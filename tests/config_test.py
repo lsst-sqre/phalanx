@@ -11,12 +11,7 @@ import yaml
 
 from phalanx.factory import Factory
 
-_ALLOW_NO_SECRETS = (
-    "giftless",
-    "linters",
-    "monitoring",
-    "next-visit-fan-out",
-)
+_ALLOW_NO_SECRETS = ("linters", "monitoring", "next-visit-fan-out")
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
