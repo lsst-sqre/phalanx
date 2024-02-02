@@ -28,6 +28,7 @@ Then, create the files for the new application, including the start of a Helm ch
    phalanx application create <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
+The application name must start with a lowercase letter and consist of lowercase letters, numbers, and hyphen (``-``).
 
 By default, this will create a Helm chart for a FastAPI web service.
 Use the ``--starter`` flag to specify a different Helm chart starter.
@@ -214,6 +215,8 @@ Phalanx uses helm-docs_ to automate generating documentation for the :file:`valu
 
 For this to work correctly, each setting must be immediately preceded by a comment that starts with :literal:`# --\ ` and is followed by documentation for that setting in Markdown.
 This documentation may be wrapped to multiple lines.
+
+Add a blank line between settings, before the helm-docs comment for the next setting.
 
 The default value is included in the documentation.
 The documentation of the default value can be overridden with a comment starting with :literal:`# @default --\ `.

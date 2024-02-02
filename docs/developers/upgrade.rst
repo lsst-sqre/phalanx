@@ -15,5 +15,10 @@ Then, update Phalanx to install the new version of the application.
 - If it is a complex application such as ``sasquatch`` that bundles first- and third-party applications, you may need to do both, including making updates to ``appVersion`` or dependency versions in the :file:`charts` subdirectory.
   Tricky cases such as these may require some study before deciding on the best course of action.
 
+- If you only want to test a new version of the application in a specific environment, edit the :file:`values-{environment}.yaml` file for that environment and override the ``image.tag`` setting to point to the new test version.
+  This can be either a new tag or (more commonly) the name of an image built from a branch, such as :samp:`tickets-DM-{NNNNN}`.
+  In this case, you will also want to set ``image.pullPolicy`` to ``Always`` so that you can restart the deployment to pick up new test versions.
+  ``image.tag`` and ``image.pullPolicy`` are the normal names for these settings but, depending on the application, the specific configuration setting may be different.
+
 Once you have updated the application, Argo CD will notice that the change is pending, but no changes will be applied automatically.
 To apply the changes in a given environment, see :doc:`/admin/sync-argo-cd`.
