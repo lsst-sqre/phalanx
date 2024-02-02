@@ -11,12 +11,7 @@ import yaml
 
 from phalanx.factory import Factory
 
-_ALLOW_NO_SECRETS = (
-    "giftless",
-    "linters",
-    "monitoring",
-    "next-visit-fan-out",
-)
+_ALLOW_NO_SECRETS = ("linters", "monitoring", "next-visit-fan-out")
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
@@ -29,6 +24,14 @@ def all_charts(
         if not candidate.is_dir():
             continue
         yield candidate
+
+
+def test_application_names() -> None:
+    """All applications must have valid names."""
+    for application in all_charts("applications"):
+        assert re.match(
+            "[a-z][a-z0-9-]+$", application.name
+        ), f"Application {application.name} has invalid name"
 
 
 def test_application_version() -> None:
