@@ -68,6 +68,11 @@ spec:
           - type: jar
             url: {{ .Values.connect.jdbcConnector.url }}
             sha512sum: {{ .Values.connect.jdbcConnector.sha512sum }}
+      - name: confluent-avro
+        artifacts:
+          - type: jar
+            url: {{ .Values.connect.avroConverter.url }}
+            sha512sum: {{ .Values.connect.avroConverter.sha512sum }}
   resources:
     requests:
       cpu: "2"
