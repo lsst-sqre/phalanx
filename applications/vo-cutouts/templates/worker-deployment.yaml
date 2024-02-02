@@ -91,6 +91,11 @@ spec:
             # Temporary directory into which to stage cutouts before uploading.
             - name: "CUTOUT_TMPDIR"
               value: "/tmp/cutouts"
+
+            # lsst-resources writes temp files into the current working
+            # directory unless you explicitly specify one.
+            - name: TMPDIR
+              value: "/tmp"
           envFrom:
             - configMapRef:
                 name: {{ template "vo-cutouts.fullname" . }}-config
