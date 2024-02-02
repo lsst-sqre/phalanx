@@ -31,6 +31,14 @@ def all_charts(
         yield candidate
 
 
+def test_application_names() -> None:
+    """All applications must have valid names."""
+    for application in all_charts("applications"):
+        assert re.match(
+            "[a-z][a-z0-9-]+$", application.name
+        ), f"Application {application.name} has invalid name"
+
+
 def test_application_version() -> None:
     """All application charts should have version 1.0.0."""
     for application in all_charts("applications"):

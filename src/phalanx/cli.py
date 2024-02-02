@@ -162,10 +162,15 @@ def application_create(
     """
     if not config:
         config = _find_config()
+    if not re.match("[a-z]", name):
+        raise click.BadParameter("Name must start with a lowercase letter")
+    if not re.match("[a-z0-9-]+$", name):
+        msg = "Name must be only lowercase letters, digits, and hyphens"
+        raise click.BadParameter(msg)
     if len(name) + 3 + len(description) > 80:
-        raise click.UsageError("Name plus description is too long")
+        raise click.BadParameter("Name plus description is too long")
     if not re.match("[A-Z0-9]", description):
-        raise click.UsageError("Description must start with capital letter")
+        raise click.BadParameter("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
     application_service.create(name, HelmStarter(starter), description)
