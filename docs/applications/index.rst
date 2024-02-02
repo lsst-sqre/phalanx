@@ -7,7 +7,7 @@ Each environment can opt whether to deploy an application, and also customize th
 This section of the documentation describes each Phalanx application.
 
 The category names correspond to the project name in phalanx/applications/_project_.
-Infrastructure is specifically reserved for applications that are necessary for "proof of life" deployments, eg by non-Rubin deployers who are only interested in phalanx as an internal developer environment. 
+Infrastructure is specifically reserved for applications that are necessary for "proof of life" deployments, eg by non-Rubin deployers who are only interested in phalanx as an internal developer environment.
 
 To learn how to develop applications for Phalanx, see the :doc:`/developers/index` section.
 
