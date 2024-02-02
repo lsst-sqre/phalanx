@@ -39,6 +39,9 @@ strimzi-kafka:
     avroConverter:
       url: https://packages.confluent.io/maven/io/confluent/kafka-connect-avro-converter/7.5.3/kafka-connect-avro-converter-7.5.3.jar
       sha512sum: ee3da574360f0e6ac76b7d0397c3dfe39c18bffeef1bed5c68f116aebca0ea9ac6db5ac6515be9b83eba24b045f76d4b9b7413c9fce2a20fc5456cbfec62fbb2
+    schemaClient:
+      url: https://packages.confluent.io/maven/io/confluent/kafka-schema-registry-client/7.5.3/kafka-schema-registry-client-7.5.3.jar
+      sha512sum: 02eb78a1596d7b61820d06dbea97e7d15e85698391af1b373ce88b3ba11ca743293f4861a5f5d24d47a2b16bf0aee165c90928e3870551a7601dc66700147857
     postgres:
       jdbcUrl: jdbc:postgresql://sqlproxy-butler-int.sqlproxy-cross-project/dp02
       jdbcUser: postgres

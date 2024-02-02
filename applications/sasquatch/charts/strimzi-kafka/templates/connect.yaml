@@ -73,6 +73,11 @@ spec:
           - type: jar
             url: {{ .Values.connect.avroConverter.url }}
             sha512sum: {{ .Values.connect.avroConverter.sha512sum }}
+      - name: confluent-schema
+        artifacts:
+          - type: jar
+            url: {{ .Values.connect.schemaClient.url }}
+            sha512sum: {{ .Values.connect.schemaClient.sha512sum }}
   resources:
     requests:
       cpu: "2"
