@@ -48,3 +48,8 @@ Finally, you need to tell Argo CD to deploy your application in some environment
    This environment will be the first place your application is deployed.
 
    You almost certainly want to start in a development or integration environment and enable your new application in production environments only after it has been smoke-tested in less critical environments.
+
+Next steps
+==========
+
+- Test your application by deploying it from a branch: :doc:`deploy-from-a-branch`
