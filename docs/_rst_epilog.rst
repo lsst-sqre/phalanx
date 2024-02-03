@@ -29,6 +29,7 @@
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
 .. _`lsst-sqre/phalanx`:
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
+.. _persistent volume: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
 .. _Pods:
 .. _Pod: https://kubernetes.io/docs/concepts/workloads/pods/
