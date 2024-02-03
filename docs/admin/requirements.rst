@@ -32,8 +32,8 @@ Phalanx can only be installed in environments that meet the following requiremen
 - An external managed PostgreSQL-compatible database server is not strictly required but is strongly recommended.
   Phalanx can deploy an in-cluster PostgreSQL server for test and development environments, but that server is not backed up and is not intended for production use.
 
-Using a Kubernetes networking layer that enforces ``NetworkPolicy`` objects is not required, but is strongly recommended.
-Without such an enforcement layer, all users and applications in the Phalanx cluster are trusted and will be able to impersonate arbitrary users to other services.
+- Using a Kubernetes networking layer that enforces ``NetworkPolicy`` objects is not required, but is strongly recommended.
+  Without such an enforcement layer, all users and applications in the Phalanx cluster are trusted and will be able to impersonate arbitrary users to other services.
 
 You will also need to manage TLS certificates for the public hostname or hostnames of your Phalanx environment, although Phalanx may be able to automate this for you.
 See :doc:`hostnames` for more information.
@@ -51,6 +51,11 @@ For installing an environment, you will also need the following tools:
 - Argo CD's command-line tool.
   It may be necessary to update this regularly to match the version of Argo CD that Phalanx, since Argo CD tends to break backward compatibility for its command-line API.
   To see the version of the client that is currently tested, search for ``argocd-linux`` in `.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__.
+
+  .. warning::
+
+     Although the Argo CD command-line client must be installed to use the Phalanx installer, do not use it to create applications.
+     All Argo CD applications should be managed through Phalanx and the ``science-platform`` app of apps.
 
 - The Vault command-line client.
   Any recent version of the client should work.

@@ -9,6 +9,12 @@ Some of the integration will be done for you by the :command:`phalanx applicatio
 
 For background on building an application, see the :ref:`dev-build-toc` documentation.
 
+.. warning::
+
+   Although Phalanx uses Argo CD to manage applications, do not use the Argo CD command-line client to add new applications to a Phalanx environment.
+   All Phalanx applications are managed inside Git and created through the Phalanx tooling.
+   Applications created by the Argo CD command-line client will not be properly managed by Phalanx.
+
 Add documentation
 =================
 
