@@ -1,6 +1,116 @@
 config:
-  siteName: "Rubin Science Platform"
+  siteName: "Rubin Science Platform @ ROE"
   semaphoreUrl: "https://rsp.lsst.ac.uk/semaphore"
+  apiAspectPageMdx: |
+    # Rubin Science Platform APIs
+
+    <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
+
+    To access most APIs you need an [*access token*](/auth/tokens).
+    See Rubin's guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn more.
+
+    ## Table Access Protocol
+
+    You can access catalog data using the Table Access Protocol (TAP)
+    service with popular tools such as
+    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
+    (pyvo)[https://pyvo.readthedocs.io/en/latest/index.html]
+    (Python package). The TAP endpoint is:
+
+    ```
+    https://rsp.lsst.ac.uk/api/tap
+    ```
+
+    See Rubin's tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
+    to learn more about accessing TAP datasets from your own computer.
+
+  docsPageMdx: |
+    # Rubin Science Platform documentation
+
+    <Lede>Find documentation for Rubin Observatory data, science platform
+    services, and software.</Lede>
+
+    <Section>
+
+      ## Data documentation
+
+      ### GaiaXCatwise
+
+      <CardGroup>
+       <a href="https://rsp.lsst.ac.uk/portal/app/">
+         <Card>Table of counterpart associations between Gaia DR3 and CatWISE2020. Uses probabilistic
+    cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022). Sources are returned either as a pairing, in which the Gaia and WISE objects are the same astrophysical source detected twice, or as non-matches, with that particular object in one of the catalogues having a corresponding flux upper limits in the opposing catalogue, and entries include various pieces of metadata such as the probability of the match/non-match, likelihood of match on purely position or brightness grounds, and information on the level to which objects suffer contamination due to hidden and unresolved background sources."
+         </Card>
+       </a>
+      </CardGroup>
+
+    </Section>
+
+    <Section>
+
+      ## Platform and software documentation
+
+      <CardGroup>
+        <a href="https://phalanx.lsst.io">
+          <Card>
+            ### Phalanx
+
+            The configuration repository for Rubin's Kubernetes deployments.
+          </Card>
+        </a>
+
+        <a href="https://rsp.lsst.io">
+          <Card>
+            ### Rubin Science Platform
+
+            The Notebook aspect is a powerful data analysis environment with
+            Jupyter Notebooks and terminals in the browser.
+            Documentation for the Rubin Science Platform, including account set up,
+            portal, notebooks, and API aspects.
+          </Card>
+        </a>
+
+        <a href="/portal/app/onlinehelp/">
+          <Card>
+            ### Portal
+
+            The Portal enables you to explore LSST image and table data in
+            your browser.
+          </Card>
+        </a>
+
+        <a href="https://pipelines.lsst.io">
+          <Card>
+            ### LSST Science Pipelines
+
+            The Science Pipelines include the Butler for accessing LSST data
+            and a pipeline framework for processing data. The LSST Science
+            Pipelines Python package is preinstalled in the Notebook aspect.
+          </Card>
+        </a>
+
+      </CardGroup>
+    </Section>
+
+    <Section>
+
+      ## Have more questions?
+
+      <Link href="/support">Learn how to get support or report issues.</Link>
+
+      Want to dive deeper into the Rubin Observatory and Legacy Survey of
+      Space and Time? [Search in our technical documentation
+      portal.](https://www.lsst.io)
+
+    </Section>
+
+  supportPageMdx: |
+    # Get help with the Rubin Science Platform on rsp.lsst.ac.uk
+
+    For user-oriented questions, contact us on the LSST:UK Slack in the
+    [#help-desk](https://lsstuk.slack.com).
+
+    Don't forget to check the <Link href="/docs">documentation</Link>.
 
 ingress:
   tls: false
