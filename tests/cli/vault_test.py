@@ -186,6 +186,7 @@ def test_create_write_token(
     token = VaultToken.model_validate(yaml.safe_load(result.output))
     assert token.display_name == display_name
     expires = current_datetime() + lifetime
+    assert token.expires
     assert expires - timedelta(seconds=5) <= token.expires <= expires
     assert token.policies == [f"{vault_path}/write"]
     token_metadata = mock_vault.lookup_accessor(token.accessor)

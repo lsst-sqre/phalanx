@@ -304,10 +304,11 @@ class MockVaultClient:
                 break
         if not token:
             raise InvalidPath(f"Unknown accessor {accessor}")
+        expires = isodatetime(token.expires) if token.expires else None
         return {
             "data": {
                 "display_name": token.display_name,
-                "expire_time": isodatetime(token.expires),
+                "expire_time": expires,
                 "policies": list(token.policies),
             }
         }
