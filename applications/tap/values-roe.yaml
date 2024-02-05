@@ -9,4 +9,4 @@ cadc-tap:
     gcsBucketType: "S3"
 
     qserv:
-      host: "192.41.122.79:30040"
+      host: "192.41.122.85:30040"
