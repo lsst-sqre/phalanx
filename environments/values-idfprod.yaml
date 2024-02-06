@@ -16,6 +16,7 @@ vaultPathPrefix: "secret/phalanx/idfprod"
 applications:
   butler: true
   datalinker: true
+  filestore-backup: true
   hips: true
   mobu: true
   nublado: true
