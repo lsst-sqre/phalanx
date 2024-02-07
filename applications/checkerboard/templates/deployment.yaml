@@ -39,9 +39,9 @@ spec:
             - name: "SAFIR_LOG_LEVEL"
               value: {{ .Values.config.logLevel | quote }}
             - name: "SAFIR_LOGGER"
-              value: {{ template "checkerboard.fullname" . | quote}}
+              value: {{ template "checkerboard.fullname" . }}
             - name: "SAFIR_NAME"
-              value: {{ template "checkerboard.fullname" . | quote}}
+              value: {{ template "checkerboard.fullname" . }}
             - name: "SAFIR_PROFILE"
               value: {{ .Values.config.profile | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
