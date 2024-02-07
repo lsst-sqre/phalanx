@@ -1,0 +1,73 @@
+# Default values for checkerboard.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Resource limits and requests for the checkerboard frontend pod
+resources: {}
+
+# -- Annotations for the checkerboard frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the checkerboard frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the checkerboard frontend pod
+tolerations: []
+
+# -- Affinity rules for the checkerboard frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+image:
+  # -- Checkerboard image to use
+  repository: ghcr.io/lsst-sqre/checkerboard
+
+  # -- Pull policy for the checkerboard image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of checkerboard image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+service:
+  # -- Type of service to create
+  type: ClusterIP
+
+  # -- Port of the service to create and map to the ingress
+  port: 80
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Path prefix where checkerboard is hosted
+  path: "/checkerboard"
+
+# -- Configuration for checkerboard server
+config:
+  # -- username for HTTP Basic auth to checkerboard
+  username: "ghslacker"
+
+  # -- Choose from the text form of Python logging levels
+  logLevel: "INFO"
+
+  # -- application Safir profile ("production" or "development")
+  profile: "production"
+
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

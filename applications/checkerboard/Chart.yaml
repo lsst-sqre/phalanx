@@ -1,0 +1,12 @@
+apiVersion: v2
+name: checkerboard
+version: 1.0.0
+description: Identity mapping service
+sources:
+  - https://github.com/lsst-sqre/checkerboard
+appVersion: 0.4.0
+
+dependencies:
+  - name: redis
+    version: 1.0.11
+    repository: https://lsst-sqre.github.io/charts/

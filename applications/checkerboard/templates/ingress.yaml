@@ -1,0 +1,39 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: {{ template "checkerboard.fullname" . }}
+  labels:
+    {{- include "checkerboard.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    anonymous: true
+template:
+  metadata:
+    name: {{ template "checkerboard.fullname" . }}
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: "{{ .Values.ingress.path }}/openapi.json"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "checkerboard"
+                  port:
+                    number: 80
+            - path: "{{ .Values.ingress.path }}/docs"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "checkerboard"
+                  port:
+                    number: 80
+            - path: "{{ .Values.ingress.path }}/redoc"
+              pathType: "Exact"
+              backend:
+                service:
+                  name: "checkerboard"
+                  port:
+                    number: 80
