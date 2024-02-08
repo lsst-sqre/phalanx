@@ -123,9 +123,12 @@ Write the Kubernetes resource templates
 =======================================
 
 Put all Kubernetes resource templates that should be created by your chart in the :file:`templates` subdirectory.
-See the `Helm chart template developer's guide <https://helm.sh/docs/chart_template_guide/>`__.
+See the `Helm chart template developer's guide <https://helm.sh/docs/chart_template_guide/>`__ for general instructions on how to write Helm templates.
 
-Two aspects of writing a Helm chart are specific to Phalanx:
+Three aspects of writing a Helm chart are specific to Phalanx:
+
+- Some values will be automatically injected by Argo CD in the ``global.*`` namespace.
+  See :doc:`injected-values` for more information.
 
 - All secrets must come from ``VaultSecret`` resources, not Kubernetes ``Secret`` resources.
   You should use the value of the ``global.vaultSecretsPath`` configuration option followed by a slash and the name of your application.
@@ -234,11 +237,14 @@ If something is the same in every Phalanx environment, it can be hard-coded into
 Injected values
 ---------------
 
-Three values will be injected by Argo CD into your application automatically as globals, and therefore do not need to be set for each environment.
+Three values will always be injected by Argo CD into your application automatically as globals, and therefore do not need to be set for each environment.
 These are ``global.baseUrl``, ``global.host``, and ``global.vaultSecretsPath`` and are taken from the global settings for each environment.
 
 These should be mentioned for documentation purposes at the bottom of your :file:`values.yaml` file with empty defaults.
 This is done automatically for you by the :ref:`chart starters <dev-chart-starters>`.
+
+It is possible to inject other values from the environment configuration.
+For more details, see :doc:`injected-values`.
 
 .. _dev-helm-docs:
 
