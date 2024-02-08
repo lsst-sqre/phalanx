@@ -35,6 +35,8 @@ spec:
                 secretKeyRef:
                   name: {{ template "checkerboard.fullname" . }}-secret
                   key: "redis-password"
+            - name: "CHECKERBOARD_REDIS_URL"
+              value: redis://{{ template "checkerboard.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0
             - name: "CHECKERBOARD_SLACK_TOKEN"
               valueFrom:
                 secretKeyRef:
