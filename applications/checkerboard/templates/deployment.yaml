@@ -20,6 +20,7 @@ spec:
       {{- end }}
       labels:
         {{- include "checkerboard.selectorLabels" . | nindent 8 }}
+        checkerboard-redis-client: "true"
     spec:
       automountServiceAccountToken: false
       containers:
