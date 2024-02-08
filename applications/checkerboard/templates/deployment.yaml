@@ -6,7 +6,6 @@ metadata:
     {{- include "checkerboard.labels" . | nindent 4 }}
 spec:
   replicas: 1
-  progressDeadlineSeconds: 1200
   selector:
     matchLabels:
       {{- include "checkerboard.selectorLabels" . | nindent 6 }}
