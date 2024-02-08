@@ -40,6 +40,4 @@ Identity mapping service
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | resources | object | `{}` | Resource limits and requests for the checkerboard frontend pod |
-| service.port | int | `80` | Port of the service to create and map to the ingress |
-| service.type | string | `"ClusterIP"` | Type of service to create |
 | tolerations | list | `[]` | Tolerations for the checkerboard frontend pod |

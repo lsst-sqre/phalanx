@@ -22,25 +22,25 @@ template:
                 service:
                   name: "checkerboard"
                   port:
-                    number: 80
+                    number: 8080
             - path: "{{ .Values.ingress.path }}/docs"
               pathType: "Exact"
               backend:
                 service:
                   name: "checkerboard"
                   port:
-                    number: 80
+                    number: 8080
             - path: "{{ .Values.ingress.path }}/redoc"
               pathType: "Exact"
               backend:
                 service:
                   name: "checkerboard"
                   port:
-                    number: 80
+                    number: 8080
             - path: {{ .Values.ingress.path | quote }}
               pathType: "Prefix"
               backend:
                 service:
                   name: "checkerboard"
                   port:
-                    number: 80
+                    number: 8080
