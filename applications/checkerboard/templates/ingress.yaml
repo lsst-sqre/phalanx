@@ -20,27 +20,27 @@ template:
               pathType: "Exact"
               backend:
                 service:
-                  name: "checkerboard"
+                  name: {{ template "checkerboard.fullname" . }}
                   port:
                     number: 8080
             - path: "{{ .Values.ingress.path }}/docs"
               pathType: "Exact"
               backend:
                 service:
-                  name: "checkerboard"
+                  name: {{ template "checkerboard.fullname" . }}
                   port:
                     number: 8080
             - path: "{{ .Values.ingress.path }}/redoc"
               pathType: "Exact"
               backend:
                 service:
-                  name: "checkerboard"
+                  name: {{ template "checkerboard.fullname" . }}
                   port:
                     number: 8080
             - path: {{ .Values.ingress.path | quote }}
               pathType: "Prefix"
               backend:
                 service:
-                  name: "checkerboard"
+                  name: {{ template "checkerboard.fullname" . }}
                   port:
                     number: 8080
