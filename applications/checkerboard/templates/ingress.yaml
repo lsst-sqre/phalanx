@@ -37,3 +37,10 @@ template:
                   name: "checkerboard"
                   port:
                     number: 80
+            - path: {{ .Values.ingress.path | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "checkerboard"
+                  port:
+                    number: 80
