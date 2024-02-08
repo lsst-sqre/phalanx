@@ -146,7 +146,7 @@ class SourceSecretGenerateRules(BaseModel):
         title="Source key",
         description=(
             "Key of secret on which this secret is based. This may only be"
-            " set by secrets of type `bcrypt-password-hash` or `mtime`."
+            " set by secrets of type ``bcrypt-password-hash`` or ``mtime``."
         ),
     )
 

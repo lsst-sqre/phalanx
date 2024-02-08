@@ -1,7 +1,7 @@
-```{px-app-values} giftless
+```{px-app-values} filestore-backup
 ```
 
-# Filestore-backup Helm values reference
+# filestore-backup Helm values reference
 
 Helm values reference table for the {px-app}`filestore-backup` application.
 
