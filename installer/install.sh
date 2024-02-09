@@ -124,6 +124,27 @@ if [ -z "$VAULT_ROLE_ID" ] || [ -z "$VAULT_SECRET_ID" ]; then
     fi
 fi
 
+# Get environment configuration
+config="../environments/values-${ENVIRONMENT}.yaml"
+
+echo "Getting Git branch and remote information..."
+GIT_URL=$(git config --get remote.origin.url)
+# Github runs in a detached head state, but sets GITHUB_REF,
+# extract the branch from it.  If we're there, use that branch.
+# git branch --show-current will return empty in deatached head.
+GIT_BRANCH=${GITHUB_HEAD_REF:-$(git branch --show-current)}
+
+echo "Logging on to Vault..."
+
+VAULT_ADDR=""
+if grep '^vaultUrl:' "$config" >/dev/null; then
+    VAULT_ADDR=$(yq -r .vaultUrl "$config")
+else
+    VAULT_ADDR=$(yq -r .vaultUrl ../environments/values.yaml)
+fi
+
+export VAULT_ADDR=$VAULT_ADDR
+
 # Check if VAULT_ROLE_ID and VAULT_SECRET_ID are provided, if so generate VAULT_TOKEN
 if [ -n "$VAULT_ROLE_ID" ] && [ -n "$VAULT_SECRET_ID" ]; then
     # If VAULT_TOKEN is not provided, generate it using VAULT_ROLE_ID and VAULT_SECRET_ID
@@ -145,27 +166,7 @@ if [ -z "$VAULT_ROLE_ID" ] || [ -z "$VAULT_SECRET_ID" ]; then
     fi
 fi
 
-# Get environment configuration
-config="../environments/values-${ENVIRONMENT}.yaml"
-
-echo "Getting Git branch and remote information..."
-GIT_URL=$(git config --get remote.origin.url)
-# Github runs in a detached head state, but sets GITHUB_REF,
-# extract the branch from it.  If we're there, use that branch.
-# git branch --show-current will return empty in deatached head.
-GIT_BRANCH=${GITHUB_HEAD_REF:-$(git branch --show-current)}
-
-echo "Logging on to Vault..."
-VAULT_ADDR=""
-if grep '^vaultUrl:' "$config" >/dev/null; then
-    VAULT_ADDR=$(yq -r .vaultUrl "$config")
-else
-    VAULT_ADDR=$(yq -r .vaultUrl ../environments/values.yaml)
-fi
-
-# Need to export these to env so that vault cli can access them
 export VAULT_TOKEN=$VAULT_TOKEN
-export VAULT_ADDR=$VAULT_ADDR
 
 VAULT_PATH_PREFIX=$(yq -r .vaultPathPrefix "$config")
 ARGOCD_PASSWORD=$(vault kv get --field=admin.plaintext_password "$VAULT_PATH_PREFIX"/argocd)
