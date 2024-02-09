@@ -56,7 +56,7 @@ applications:
   cert-manager: true
 
   # -- Enable the checkerboard application
-  cherboard: false
+  checkerboard: false
 
   # -- Enable the control-system-test application
   control-system-test: false
