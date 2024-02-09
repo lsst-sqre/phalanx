@@ -96,7 +96,7 @@ Finally, run the installer for the minikube environment.
 
 .. prompt:: bash
 
-  ./install.sh minikube $VAULT_TOKEN
+  ./install.sh minikube VAULT_TOKEN=$VAULT_TOKEN
 
 Access the Argo CD UI
 =====================
