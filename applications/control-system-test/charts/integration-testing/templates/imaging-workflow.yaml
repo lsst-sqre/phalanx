@@ -22,12 +22,16 @@ spec:
     - name: date-key
       value: "20230601"
   entrypoint: run-tests
-  onExit: save-reports
   templates:
   - name: run-tests
     dag:
       tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
       - name: auxtel-housekeeping
+        depends: call-cleanup-reports
         templateRef:
           name: integration-test-job-template
           template: inttest-template
@@ -38,6 +42,7 @@ spec:
           - name: jobname
             value: auxtel-housekeeping
       - name: maintel-housekeeping
+        depends: call-cleanup-reports
         templateRef:
           name: integration-test-job-template
           template: inttest-template
@@ -135,7 +140,7 @@ spec:
             value: "-A Test_Report_AuxTel_Prep_Onsky.list"
           - name: jobname
             value: auxtel-prep-onsky
-      - name: auxtel-cwfs-align
+      - name: auxtel-wep-align
         depends: auxtel-prep-onsky
         templateRef:
           name: integration-test-job-template
@@ -145,9 +150,9 @@ spec:
           - name: integrationtest
             value: "-A Test_Report_AuxTel_WEP_Align.list"
           - name: jobname
-            value: auxtel-cwfs-align
+            value: auxtel-wep-align
       - name: auxtel-acq-take-seq-pointing
-        depends: auxtel-cwfs-align
+        depends: auxtel-wep-align
         templateRef:
           name: integration-test-job-template
           template: inttest-template
@@ -223,7 +228,7 @@ spec:
             value: "-A Test_Report_Enable_ATCS.list"
           - name: jobname
             value: enable-atcs
-      - name: comcam-image-verification
+      - name: bigcam-image-verification
         depends: maintel-housekeeping
         templateRef:
           name: integration-test-job-template
@@ -233,9 +238,9 @@ spec:
           - name: integrationtest
             value: "-A Test_Report_BigCamera_Image_Verification.list"
           - name: jobname
-            value: comcam-image-verification
-      - name: comcam-calibrations
-        depends: comcam-image-verification
+            value: bigcam-image-verification
+      - name: bigcam-calibrations
+        depends: bigcam-image-verification
         templateRef:
           name: integration-test-job-template
           template: inttest-template
@@ -244,19 +249,9 @@ spec:
           - name: integrationtest
             value: "-A Test_Report_BigCamera_Calibrations.list"
           - name: jobname
-            value: comcam-calibrations
-
-  - name: save-reports
-    container:
-      image: alpine:latest
-      volumeMounts:
-        - name: testreports
-          mountPath: {{ .Values.reportLocation }}
-    outputs:
-      artifacts:
-      - name: integration-test-reports
-        archive:
-          none: {}
-        path: {{ .Values.reportLocation }}/
-        s3:
-          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}
+            value: bigcam-calibrations
+      - name: call-save-reports
+        depends: bigcam-calibrations && enable-atcs
+        templateRef:
+          name: save-reports-workflow
+          template: save-reports
