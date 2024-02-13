@@ -10,4 +10,4 @@ applications:
   semaphore: true
   squareone: true
   tap: true
-  mobu: true
+  mobu: false
