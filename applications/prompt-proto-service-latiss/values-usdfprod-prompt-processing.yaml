@@ -7,7 +7,7 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: d_2024_01_31
+    tag: w_2024_05
 
   instrument:
     pipelines: >-
