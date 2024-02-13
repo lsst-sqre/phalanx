@@ -9,6 +9,7 @@ applications:
   portal: true
   postgres: true
   sasquatch: true
+  schedview-snapshot: true
   squareone: true
   strimzi: true
   telegraf: true
