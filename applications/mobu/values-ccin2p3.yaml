@@ -1,4 +1,5 @@
 config:
+  slackAlerts: false
   autostart:
     - name: "firefighter"
       count: 1
