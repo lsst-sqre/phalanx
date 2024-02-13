@@ -11,10 +11,9 @@ Identity mapping service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the checkerboard frontend pod |
-| config | object | `{"logLevel":"INFO","profile":"production","username":"ghslacker"}` | Configuration for checkerboard server |
+| config | object | `{"logLevel":"INFO","profile":"production"}` | Configuration for checkerboard server |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.profile | string | `"production"` | application Safir profile ("production" or "development") |
-| config.username | string | `"ghslacker"` | username for HTTP Basic auth to checkerboard |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

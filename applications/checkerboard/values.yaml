@@ -95,9 +95,6 @@ redis:
 
 # -- Configuration for checkerboard server
 config:
-  # -- username for HTTP Basic auth to checkerboard
-  username: "ghslacker"
-
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 

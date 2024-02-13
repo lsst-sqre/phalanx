@@ -25,11 +25,6 @@ spec:
       containers:
         - name: "checkerboard"
           env:
-            - name: "CHECKERBOARD_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "checkerboard.fullname" . }}-secret
-                  key: password
             - name: "CHECKERBOARD_REDIS_PASSWORD"
               valueFrom:
                 secretKeyRef:
@@ -42,8 +37,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "checkerboard.fullname" . }}-secret
                   key: slack_token
-            - name: "CHECKERBOARD_USERNAME"
-              value: {{ .Values.config.username | quote }}
             - name: "SAFIR_LOG_LEVEL"
               value: {{ .Values.config.logLevel | quote }}
             - name: "SAFIR_LOGGER"
