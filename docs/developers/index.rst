@@ -47,3 +47,4 @@ Individual applications are documented in the :doc:`/applications/index` section
    :name: dev-reference-toc
 
    secrets-spec
+   injected-values

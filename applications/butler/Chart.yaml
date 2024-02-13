@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: w.2024.04
+appVersion: server-1.0.2
 description: Server for Butler data abstraction service
 name: butler
 sources:

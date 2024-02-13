@@ -13,7 +13,7 @@ Through this process it is possible to develop an application in a fairly tight 
 
 .. seealso::
 
-   This page focuses on using a development environment to iteratively develop and test changes to an application, ultimately yielding a applicatino upgrade in Phalanx.
+   This page focuses on using a development environment to iteratively develop and test changes to an application, ultimately yielding a application upgrade in Phalanx.
    You can achieve the same result without the iterative deployment testing by following the steps in :doc:`upgrade`.
 
 .. _deploy-branch-prep:
@@ -34,7 +34,7 @@ Throughout this process, you can continue to commit changes and push updates to 
 
 .. tip::
 
-   In a development environment it's useful to force Kubernetes to pull the application's Docker images every time a Pod_ starts up.
+   When testing development versions of a service, it's useful to force Kubernetes to pull the application's Docker images every time a Pod_ starts up.
    This way you can push edits to the Docker images with a specific development tag [1]_ and then have your test deployment use those updated images.
    This setting is controlled by the ``imagePullPolicy`` key in Deployment_ resources (and specifically their Pods_).
    In typical application Helm charts the image pull policy is accessible from Helm values.
@@ -48,7 +48,7 @@ Throughout this process, you can continue to commit changes and push updates to 
 
    Consult the Helm values documentation for your application for details.
 
-   .. [1] SQuaRE Docker images are tagged with the Git branch or tag they are built from, with a typical branch build being tagged as ``tickets-DM-00000``.
+   .. [1] SQuaRE Docker images are tagged with the Git branch or tag they are built from, with a typical branch build for a ticket branch being tagged as :samp:`tickets-DM-NNNNN`.
 
 Switching the Argo CD Application to sync the branch
 ====================================================

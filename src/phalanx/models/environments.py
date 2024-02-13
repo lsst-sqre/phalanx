@@ -149,7 +149,9 @@ class ControlSystemConfig(CamelCaseModel):
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
-    """Configuration common to `EnviromentConfig` and `Environment`."""
+    """Configuration common to `~phalanx.models.environments.EnvironmentConfig`
+    and `~phalanx.models.environments.Environment`.
+    """
 
     name: str = Field(..., title="Name", description="Name of the environment")
 
@@ -406,9 +408,9 @@ class EnvironmentDetails(EnvironmentBaseConfig):
     """Full details about an environment, including auth and Argo CD.
 
     Used primarily for documentation generation, which needs details from the
-    Argo CD and Gafaelfawr configurations for that environment.  Use
-    `EnvironmentConfig` instead when only the basic environment configuration
-    is needed.
+    Argo CD and Gafaelfawr configurations for that environment. Use
+    `~phalanx.models.environments.EnvironmentConfig` instead when only the
+    basic environment configuration is needed.
     """
 
     applications: list[Application]

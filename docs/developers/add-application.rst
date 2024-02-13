@@ -9,6 +9,12 @@ Some of the integration will be done for you by the :command:`phalanx applicatio
 
 For background on building an application, see the :ref:`dev-build-toc` documentation.
 
+.. warning::
+
+   Although Phalanx uses Argo CD to manage applications, do not use the Argo CD command-line client to add new applications to a Phalanx environment.
+   All Phalanx applications are managed inside Git and created through the Phalanx tooling.
+   Applications created by the Argo CD command-line client will not be properly managed by Phalanx.
+
 Add documentation
 =================
 
@@ -48,3 +54,8 @@ Finally, you need to tell Argo CD to deploy your application in some environment
    This environment will be the first place your application is deployed.
 
    You almost certainly want to start in a development or integration environment and enable your new application in production environments only after it has been smoke-tested in less critical environments.
+
+Next steps
+==========
+
+- Test your application by deploying it from a branch: :doc:`deploy-from-a-branch`

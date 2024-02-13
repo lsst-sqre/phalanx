@@ -14,7 +14,7 @@ IVOA TAP service
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the TAP pod |
 | config.backend | string | None, must be set to "pg" or "qserv" | What type of backend are we connecting to? |
-| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/2.2.0/datalink-snippets.zip"` | Datalink payload URL |
+| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/2.3.0/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | The common GCS bucket | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | GCS | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | The common GCS bucket | Base URL for results stored in GCS bucket |
@@ -56,7 +56,7 @@ IVOA TAP service
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
-| tapSchema.image.tag | string | `"2.2.0"` | Tag of TAP schema image |
+| tapSchema.image.tag | string | `"2.3.0"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |

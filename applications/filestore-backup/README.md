@@ -18,7 +18,7 @@ Tool to manage Google Filestore backups
 | config.purge.debug | bool | `false` | Turn on debugging mode |
 | config.purge.keep | int | `6` | Number of backups to keep when purging |
 | config.purge.schedule | string | fields are minute hour day-of-month month day-of-week | Purge schedule, in Unix cron job format: |
-| config.zone | string | None, must be set | Zone for Filestore instance (e.g. "b" from "us-central1-b") |
+| config.zone | string | `"b"` | Zone for Filestore instance (e.g. "b" from "us-central1-b") |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.gcpProjectId | string | Set by Argo CD | GCP Project ID |
 | global.gcpRegion | string | Set by Argo CD | GCP Region |

@@ -7,7 +7,7 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: d_2024_01_22
+    tag: d_2024_01_31
 
   instrument:
     pipelines: >-
@@ -43,7 +43,7 @@ prompt-proto-service:
   apdb:
     url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
 
-  logLevel: lsst.resources=DEBUG
+  logLevel: timer.lsst.activator=DEBUG lsst.resources=DEBUG
 
   knative:
     ephemeralStorageRequest: "50Gi"

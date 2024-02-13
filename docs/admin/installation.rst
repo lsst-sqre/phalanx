@@ -5,8 +5,8 @@ Installing a Phalanx environment
 Each separate installation of Phalanx is called an environment.
 An environment has a hostname, Vault server and path to its secrets, and a set of Phalanx applications that should be installed in that environment.
 
-Before starting this process, you should set up the required secrets for your new environment.
-See :doc:`secrets-setup` for details.
+Before starting this process, ensure that you have met the :doc:`requirements to run Phalanx <requirements>`.
+Then, set up the required secrets for your new environment as documented in :doc:`secrets-setup`.
 
 If you are setting up an environment that will be running a 1Password Connect server for itself, you will need to take special bootstrapping steps.
 See :px-app-bootstrap:`onepassword-connect` for more information.

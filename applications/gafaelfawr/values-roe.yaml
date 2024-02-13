@@ -14,31 +14,15 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
-    "exec:notebook":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
     "exec:internal-tools":
       - github:
           organization: "lsp-uk"
           team: "dev"
+    "exec:notebook":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "exec:portal":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "exec:user":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "read:workspace":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "read:workspace/user":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "write:workspace/user":
       - github:
           organization: "lsp-uk"
           team: "dev"
