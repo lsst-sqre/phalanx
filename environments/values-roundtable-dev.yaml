@@ -10,6 +10,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
+  checkerboard: true
   giftless: true
   kubernetes-replicator: true
   monitoring: true

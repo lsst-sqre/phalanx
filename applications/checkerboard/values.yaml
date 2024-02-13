@@ -1,0 +1,118 @@
+# Default values for checkerboard.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Resource limits and requests for the checkerboard frontend pod
+resources: {}
+
+# -- Annotations for the checkerboard frontend pod
+podAnnotations: {}
+
+# -- Node selector rules for the checkerboard frontend pod
+nodeSelector: {}
+
+# -- Tolerations for the checkerboard frontend pod
+tolerations: []
+
+# -- Affinity rules for the checkerboard frontend pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+image:
+  # -- Checkerboard image to use
+  repository: ghcr.io/lsst-sqre/checkerboard
+
+  # -- Pull policy for the checkerboard image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of checkerboard image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+  # -- Path prefix where checkerboard is hosted
+  path: "/checkerboard"
+
+redis:
+  config:
+    # -- Name of secret containing Redis password (may require changing if
+    # fullnameOverride is set)
+    secretName: "checkerboard-secret"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "1Gi"
+
+    # -- Class of storage to request
+    storageClass: ""
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: ""
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "40Mi"
+    requests:
+      cpu: "50m"
+      memory: "6Mi"
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+
+# -- Configuration for checkerboard server
+config:
+  # -- username for HTTP Basic auth to checkerboard
+  username: "ghslacker"
+
+  # -- Choose from the text form of Python logging levels
+  logLevel: "INFO"
+
+  # -- application Safir profile ("production" or "development")
+  profile: "production"
+
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

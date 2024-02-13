@@ -1,0 +1,8 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-DM-42730"
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+config:
+  logLevel: "DEBUG"

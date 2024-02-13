@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "checkerboard.fullname" . }}
+  labels:
+    {{- include "checkerboard.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "checkerboard.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: "Recreate"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "checkerboard.selectorLabels" . | nindent 8 }}
+        checkerboard-redis-client: "true"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "checkerboard"
+          env:
+            - name: "CHECKERBOARD_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "checkerboard.fullname" . }}-secret
+                  key: password
+            - name: "CHECKERBOARD_REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "checkerboard.fullname" . }}-secret
+                  key: "redis-password"
+            - name: "CHECKERBOARD_REDIS_URL"
+              value: redis://{{ template "checkerboard.fullname" . }}-redis.{{ .Release.Namespace }}:6379/0
+            - name: "CHECKERBOARD_SLACK_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "checkerboard.fullname" . }}-secret
+                  key: slack_token
+            - name: "CHECKERBOARD_USERNAME"
+              value: {{ .Values.config.username | quote }}
+            - name: "SAFIR_LOG_LEVEL"
+              value: {{ .Values.config.logLevel | quote }}
+            - name: "SAFIR_LOGGER"
+              value: {{ template "checkerboard.fullname" . }}
+            - name: "SAFIR_NAME"
+              value: {{ template "checkerboard.fullname" . }}
+            - name: "SAFIR_PROFILE"
+              value: {{ .Values.config.profile | quote }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+            timeoutSeconds: 10
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
