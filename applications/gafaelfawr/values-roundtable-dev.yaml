@@ -21,6 +21,8 @@ config:
   knownScopes:
     "write:git-lfs": >-
       Can write objects to Git LFS storage bucket
+    "read:checkerboard": >-
+      Can query Checkerboard for user mappings
 
   groupMapping:
     "exec:admin":
@@ -28,6 +30,13 @@ config:
           organization: "lsst-sqre"
           team: "square"
     "write:git-lfs":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "Friends"
+    "read:checkerboard":
       - github:
           organization: "lsst-sqre"
           team: "square"

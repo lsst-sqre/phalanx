@@ -7,7 +7,8 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
-    anonymous: true
+    all:
+      - "read:checkerboard"
 template:
   metadata:
     name: {{ template "checkerboard.fullname" . }}
@@ -16,27 +17,6 @@ template:
       - host: {{ .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.ingress.path }}/openapi.json"
-              pathType: "Exact"
-              backend:
-                service:
-                  name: {{ template "checkerboard.fullname" . }}
-                  port:
-                    number: 8080
-            - path: "{{ .Values.ingress.path }}/docs"
-              pathType: "Exact"
-              backend:
-                service:
-                  name: {{ template "checkerboard.fullname" . }}
-                  port:
-                    number: 8080
-            - path: "{{ .Values.ingress.path }}/redoc"
-              pathType: "Exact"
-              backend:
-                service:
-                  name: {{ template "checkerboard.fullname" . }}
-                  port:
-                    number: 8080
             - path: {{ .Values.ingress.path | quote }}
               pathType: "Prefix"
               backend:
