@@ -1,0 +1,3 @@
+image:
+  repository: docker.io/lsstsqre/sqrbot
+  tag: 0.10.5

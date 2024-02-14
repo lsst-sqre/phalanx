@@ -1,0 +1,73 @@
+# Default values for squarebot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+#
+# Global parameters will be set by parameters injected by Argo CD and should
+# not be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+# -- Number of API pods to run
+replicaCount: 1
+
+image:
+  # -- Squarebot image repository
+  repository: ghcr.io/lsst-sqre/sqrbot
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Tag of the image
+  # @default -- The appVersion of the chart
+  tag: ""
+
+# -- Secret names to use for all Docker pulls
+imagePullSecrets: []
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Annotations for API and worker pods
+podAnnotations: {}
+
+resources:
+  {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+config:
+  # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  logLevel: "INFO"
+
+  # -- Hubot username
+  username: "sqrbot"

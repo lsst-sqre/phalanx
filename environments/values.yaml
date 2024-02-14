@@ -163,6 +163,9 @@ applications:
   # -- Enable the simonyitel control system application
   simonyitel: false
 
+  # -- Enable the sqrbot-sr application
+  sqrbot-sr: false
+
   # -- Enable the ssotap application
   ssotap: false
 
