@@ -53,6 +53,7 @@
 | applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
+| applications.sqrbot-sr | bool | `false` | Enable the sqrbot-sr application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
 | applications.ssotap | bool | `false` | Enable the ssotap application |

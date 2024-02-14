@@ -74,6 +74,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    monitoring/index
    onepassword-connect/index
    ook/index
+   sqrbot-sr/index
    squarebot/index
 
 .. toctree::

@@ -17,6 +17,7 @@ applications:
   ook: true
   sasquatch: true
   squareone: true
+  sqrbot-sr: true
   strimzi: true
   strimzi-access-operator: true
   squarebot: true

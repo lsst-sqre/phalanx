@@ -1,0 +1,8 @@
+apiVersion: v2
+name: sqrbot-sr
+version: 1.0.0
+appVersion: "0.11.0"
+description: This is the classic hubot-based sqrbot, intended purely as a stopgap until the more modern squarebot is running.  It lurks in slack channels and provides ticket unfurls, pretty much.
+type: application
+sources:
+  - https://github.com/lsst-sqre/sqrbot
