@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.config.username }}
             - name: "HUBOT_LOG_LEVEL"
               value: {{ .Values.config.logLevel | lower }}
+            - name: "LSST_JIRA_URL"
+              value: {{ .Values.config.jiraUrl }}
             - name: "HUBOT_SLACK_TOKEN"
               valueFrom:
                 secretKeyRef:

@@ -71,3 +71,6 @@ config:
 
   # -- Hubot username
   username: "sqrbot"
+
+  # -- Jira base URL
+  jiraUrl: "https://jira.lsstcorp.org"
