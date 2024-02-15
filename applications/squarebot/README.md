@@ -1,6 +1,6 @@
 # squarebot
 
-Squarebot feeds events from services like Slack and GitHub into the SQuaRE Events Kafka message bus running on Roundtable. Backend apps like Templatebot can subscribe to these events and take domain-specific action.
+Squarebot feeds events from services like Slack and GitHub into the SQuaRE Events Kafka message bus running on Roundtable. Backend apps like Templatebot and Unfurlbot can subscribe to these events and take domain-specific action.
 
 **Homepage:** <https://squarebot.lsst.io/>
 
