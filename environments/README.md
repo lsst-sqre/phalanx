@@ -63,6 +63,7 @@
 | applications.telegraf | bool | `false` | Enable the telegraf application |
 | applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
 | applications.times-square | bool | `false` | Enable the times-square application |
+| applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |

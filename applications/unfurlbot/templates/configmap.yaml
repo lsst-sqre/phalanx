@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: unfurlbot
+  labels:
+    {{- include "unfurlbot.labels" . | nindent 4 }}
+data:
+  UNFURLBOT_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  UNFURLBOT_PATH_PREFIX: {{ .Values.ingress.path | quote }}
+  UNFURLBOT_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  UNFURLBOT_PROFILE: "production"
+  UNFURLBOT_TOPIC_APP_MENTION: {{ .Values.config.topics.slackAppMention | quote }}
+  UNFURLBOT_TOPIC_MESSAGE_CHANNELS: {{ .Values.config.topics.slackMessageChannels | quote }}
+  UNFURLBOT_TOPIC_MESSAGE_GROUPS: {{ .Values.config.topics.slackMessageGroups | quote }}
+  UNFURLBOT_TOPIC_MESSAGE_IM: {{ .Values.config.topics.slackMessageIm | quote }}
+  UNFURLBOT_TOPIC_MESSAGE_MPIM: {{ .Values.config.topics.slackMessageMpim | quote }}
