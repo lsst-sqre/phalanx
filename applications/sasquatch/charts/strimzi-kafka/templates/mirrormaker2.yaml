@@ -4,7 +4,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaMirrorMaker2
 metadata:
-  name: replicator
+  name:  {{ .Values.cluster.name }}
 spec:
   version: {{ .Values.kafka.version | quote }}
   replicas: 1
