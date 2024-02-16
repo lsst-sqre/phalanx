@@ -44,6 +44,15 @@ auxtel-ess04-sim:
   env:
     RUN_ARG: 204 --simulate
 
+auxtel-ess05-sim:
+  enabled: true
+  classifier: ess205
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 205 --simulate
+
 calibhill-ess01-sim:
   enabled: true
   classifier: ess301

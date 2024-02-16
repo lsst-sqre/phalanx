@@ -264,6 +264,8 @@ love-producer:
     csc: ESS:203
   - name: auxteless04
     csc: ESS:204
+  - name: auxteless05
+    csc: ESS:205
   - name: calibhilless01
     csc: ESS:301
   - name: camerahexapod

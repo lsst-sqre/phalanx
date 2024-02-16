@@ -47,6 +47,16 @@ dependencies:
   condition: auxtel-ess04-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: auxtel-ess05
+  version: 1.0.0
+  condition: auxtel-ess05.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: auxtel-ess05-sim
+  version: 1.0.0
+  condition: auxtel-ess05-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: calibhill-ess01
   version: 1.0.0
   condition: calibhill-ess01.enabled
