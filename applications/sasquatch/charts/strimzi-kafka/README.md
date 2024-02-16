@@ -43,6 +43,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | `{}` | Resource specification for Kafka exporter |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
+| mirrormaker2.replicas | int | `3` |  |
 | mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
 | mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster to replicate from. |

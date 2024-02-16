@@ -422,6 +422,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafkaExporter.resources | object | `{}` | Resource specification for Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
+| strimzi-kafka.mirrormaker2.replicas | int | `3` |  |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | "" | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | `""` | Source (active) cluster to replicate from. |
