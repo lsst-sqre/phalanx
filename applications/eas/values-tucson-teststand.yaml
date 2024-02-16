@@ -45,7 +45,7 @@ auxtel-ess04-sim:
     RUN_ARG: 204 --simulate
 
 auxtel-ess05-sim:
-  enabled: true
+  enabled: false
   classifier: ess205
   image:
     repository: ts-dockerhub.lsst.org/ess
