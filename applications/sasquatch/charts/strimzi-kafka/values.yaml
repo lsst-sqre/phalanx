@@ -196,6 +196,7 @@ users:
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster.
   enabled: false
+  replicas: 3
   source:
     # -- Source (active) cluster to replicate from.
     bootstrapServer: ""
