@@ -55,6 +55,8 @@ spec:
             - name: PGUSER
               value: {{ .Values.butlerSecret.dbUser | quote }}
           {{- end }}
+          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretPermFixer (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
+          {{- if $volumeTest }}
           volumeMounts:
           {{- if .Values.entrypoint }}
             - name: entrypoint
@@ -76,18 +78,19 @@ spec:
           {{- range $values := .Values.pvcMountpoint }}
             - name: {{ $values.name }}
               mountPath: {{ $values.path }}
-          {{- end}}
-          {{- end}}
+          {{- end }}
+          {{- end }}
           {{- if .Values.nfsMountpoint }}
           {{- range $values := .Values.nfsMountpoint }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               readOnly: {{ $values.readOnly }}
-          {{- end}}
-          {{- end}}
+          {{- end }}
+          {{- end }}
+          {{- end }}
           {{- with .Values.resources }}
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml . | nindent 12 }}
           {{- end }}
       {{- if .Values.secretPermFixer }}
       initContainers:
@@ -122,6 +125,7 @@ spec:
         fsGroup: {{ .Values.securityContext.fsGroup }}
         {{- end}}
       {{- end }}
+      {{- if $volumeTest }}
       volumes:
       {{- if .Values.entrypoint }}
         - name: entrypoint
@@ -166,18 +170,19 @@ spec:
             server: {{ $values.server }}
       {{- end }}
       {{- end }}
+      {{- end }}
       restartPolicy: Never
       imagePullSecrets:
         - name: nexus3-docker
-      {{- with $.Values.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $.Values.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with $.Values.tolerations }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
