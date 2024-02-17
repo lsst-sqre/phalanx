@@ -4,7 +4,7 @@ version: 1.0.0
 description: Identity mapping service
 sources:
   - https://github.com/lsst-sqre/checkerboard
-appVersion: 0.4.2
+appVersion: 0.4.3
 
 dependencies:
   - name: redis
