@@ -80,11 +80,6 @@ controller:
           type: "nfs"
           serverPath: "/auxtel/lsstdata/TTS/auxtel"
           server: "nfs-auxtel.tu.lsst.org"
-      - name: "comcam"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata/TTS/comcam"
-          server: "comcam-archiver.tu.lsst.org"
       volumeMounts:
       - containerPath: "/home"
         volumeName: "home"
@@ -102,8 +97,6 @@ controller:
         volumeName: "lsstcomcam"
       - containerPath: "/data/lsstdata/TTS/auxtel"
         volumeName: "auxtel"
-      - containerPath: "/data/lsstdata/TTS/comcam"
-        volumeName: "comcam"
 
 jupyterhub:
   cull:
