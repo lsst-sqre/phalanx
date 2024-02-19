@@ -70,7 +70,7 @@ controller:
           type: "nfs"
           serverPath: "/obs-env"
           server: "nfs-obsenv.tu.lsst.org"
-      - name: "lsstcomcan"
+      - name: "lsstcomcam"
         source:
           type: "nfs"
           serverPath: "/repo/LSSTComCam"
