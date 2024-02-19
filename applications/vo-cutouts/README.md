@@ -21,6 +21,7 @@ Image cutout service complying with IVOA SODA
 | config.gcsBucketUrl | string | None, must be set | URL for the GCS bucket into which to store cutouts (must start with `s3`) |
 | config.lifetime | string | 2592000 (30 days) | Lifetime of job results in seconds (quote so that Helm doesn't turn it into a floating point number) |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
+| config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |
 | config.syncTimeout | int | 60 (1 minute) | Timeout for results from a sync cutout in seconds |
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
 | config.useButlerServer | bool | `true` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |

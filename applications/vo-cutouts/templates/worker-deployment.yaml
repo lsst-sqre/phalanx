@@ -94,7 +94,7 @@ spec:
 
             # lsst-resources writes temp files into the current working
             # directory unless you explicitly specify one.
-            - name: TMPDIR
+            - name: "TMPDIR"
               value: "/tmp"
           envFrom:
             - configMapRef:

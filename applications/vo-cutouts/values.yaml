@@ -43,6 +43,9 @@ config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
+  # -- URL path prefix for the cutout API
+  pathPrefix: "/api/cutout"
+
   # -- URL for the PostgreSQL database
   # @default -- None, must be set
   databaseUrl: ""
