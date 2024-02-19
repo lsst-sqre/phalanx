@@ -8,9 +8,9 @@ annotated-types==0.6.0 \
     --hash=sha256:0641064de18ba7a25dee8f96403ebc39113d0cb953a01429249d5c7564666a43 \
     --hash=sha256:563339e807e53ffd9c267e99fc6d9ea23eb8443c08f112651963e24e22f84a5d
     # via pydantic
-anyio==4.2.0 \
-    --hash=sha256:745843b39e829e108e518c489b31dc757de7d2131d53fac32bd8df268227bfee \
-    --hash=sha256:e1875bb4b4e2de1669f4bc7869b6d3f54231cdced71605e6e64c9be77e3be50f
+anyio==4.3.0 \
+    --hash=sha256:048e05d0f6caeed70d731f3db756d35dcc1f35747c8c403364a8332c630441b8 \
+    --hash=sha256:f75253795a87df48568485fd18cdd2a3fa5c4f7c5be8e5e36637733fce06fed6
     # via
     #   httpcore
     #   starlette
@@ -242,9 +242,9 @@ gitdb==4.0.11 \
     --hash=sha256:81a3407ddd2ee8df444cbacea00e2d038e40150acfa3001696fe0dcf1d3adfa4 \
     --hash=sha256:bf5421126136d6d0af55bc1e7c1af1c397a34f5b7bd79e776cd3e89785c2b04b
     # via gitpython
-gitpython==3.1.41 \
-    --hash=sha256:c36b6634d069b3f719610175020a9aed919421c87552185b085e04fbbdb10b7c \
-    --hash=sha256:ed66e624884f76df22c8e16066d567aaa5a37d5b5fa19db2c6df6f7156db9048
+gitpython==3.1.42 \
+    --hash=sha256:1bf9cd7c9e7255f77778ea54359e54ac22a72a5b51288c457c881057b7bb9ecd \
+    --hash=sha256:2d99869e0fef71a73cbd242528105af1d6c1b108c60dfabd994bf292f76c3ceb
     # via -r requirements/main.in
 h11==0.14.0 \
     --hash=sha256:8f19fbbe99e72420ff35c00b27a34cb9937e902a8b810e2c88300c6f0a3b699d \
@@ -503,9 +503,7 @@ requests==2.31.0 \
 rfc3986[idna2008]==1.5.0 \
     --hash=sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835 \
     --hash=sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97
-    # via
-    #   httpx
-    #   rfc3986
+    # via httpx
 safir==5.2.0 \
     --hash=sha256:93636256dbeea847d63de6d3b434c952f81d6729f6541da09bfc7823d3f61806 \
     --hash=sha256:fe8f51d00449a60544f9eccdb8e603f085fdd4f641f5d5f13cef0f29393aad3f
@@ -546,7 +544,7 @@ uritemplate==4.1.1 \
     --hash=sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0 \
     --hash=sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e
     # via gidgethub
-urllib3==2.2.0 \
-    --hash=sha256:051d961ad0c62a94e50ecf1af379c3aba230c66c710493493560c0c223c49f20 \
-    --hash=sha256:ce3711610ddce217e6d113a2732fafad960a03fd0318c91faa79481e35c11224
+urllib3==2.2.1 \
+    --hash=sha256:450b20ec296a467077128bff42b73080516e71b56ff59a60a02bef2232c4fa9d \
+    --hash=sha256:d0570876c61ab9e520d776c38acbbb5b05a776d3f9ff98a5c8fd5162a444cf19
     # via requests
