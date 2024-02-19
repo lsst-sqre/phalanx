@@ -86,6 +86,13 @@ dsm1-sim:
   env:
     CSC_INDEX: 1
     RUN_ARG: --simulate 1 --state enabled
+  resources:
+    requests:
+      cpu: 14m
+      memory: 90Mi
+    limits:
+      cpu: 140m
+      memory: 900Mi
 
 dsm2-sim:
   enabled: true
@@ -95,6 +102,13 @@ dsm2-sim:
   env:
     CSC_INDEX: 2
     RUN_ARG: --simulate 2 --state enabled
+  resources:
+    requests:
+      cpu: 10m
+      memory: 90Mi
+    limits:
+      cpu: 100m
+      memory: 900Mi
 
 m2-ess106-sim:
   enabled: true
