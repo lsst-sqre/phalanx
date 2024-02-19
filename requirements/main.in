@@ -15,7 +15,12 @@ jinja2
 onepasswordconnectsdk
 pydantic>2
 PyYAML
-safir>=5.0.0a1
+safir>5
+
+# uv wants to downgrade FastAPI to get the latest version of Starlette by
+# default, since FastAPI 0.1.17 doesn't constrain the Starlette version.
+# Putting a floor on the FastAPI version works around this.
+fastapi>0.109
 
 # Uncomment this, change the branch, comment out safir above, and run make
 # update-deps-no-hashes to test against an unreleased version of Safir.
