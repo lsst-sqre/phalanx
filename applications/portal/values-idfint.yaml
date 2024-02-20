@@ -7,6 +7,10 @@ config:
       server: "10.22.240.130"
   ssotap: "ssotap"
 
+image:
+  tag: "portal-2024.1.3"
+
+
 resources:
   limits:
     memory: "30Gi"
