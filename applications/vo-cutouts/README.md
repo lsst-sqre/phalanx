@@ -16,6 +16,7 @@ Image cutout service complying with IVOA SODA
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.tag | string | `"1.33.16"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a CloudSQL PostgreSQL instance |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to the GCS bucket, and ability to sign URLs as itself |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
 | config.gcsBucketUrl | string | None, must be set | URL for the GCS bucket into which to store cutouts (must start with `s3`) |
@@ -32,13 +33,13 @@ Image cutout service complying with IVOA SODA
 | cutoutWorker.nodeSelector | object | `{}` | Node selection rules for the cutout worker pod |
 | cutoutWorker.podAnnotations | object | `{}` | Annotations for the cutout worker pod |
 | cutoutWorker.replicaCount | int | `2` | Number of cutout worker pods to start |
-| cutoutWorker.resources | object | `{}` | Resource limits and requests for the cutout worker pod |
+| cutoutWorker.resources | object | See `values.yaml` | Resource limits and requests for the cutout worker pod |
 | cutoutWorker.tolerations | list | `[]` | Tolerations for the cutout worker pod |
 | databaseWorker.affinity | object | `{}` | Affinity rules for the database worker pod |
 | databaseWorker.nodeSelector | object | `{}` | Node selection rules for the database worker pod |
 | databaseWorker.podAnnotations | object | `{}` | Annotations for the database worker pod |
 | databaseWorker.replicaCount | int | `1` | Number of database worker pods to start |
-| databaseWorker.resources | object | `{}` | Resource limits and requests for the database worker pod |
+| databaseWorker.resources | object | See `values.yaml` | Resource limits and requests for the database worker pod |
 | databaseWorker.tolerations | list | `[]` | Tolerations for the database worker pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
@@ -66,5 +67,5 @@ Image cutout service complying with IVOA SODA
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
-| resources | object | `{}` | Resource limits and requests for the vo-cutouts frontend pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the vo-cutouts frontend pod |
 | tolerations | list | `[]` | Tolerations for the vo-cutouts frontend pod |
