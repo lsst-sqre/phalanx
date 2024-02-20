@@ -4,4 +4,4 @@ description: Panel-based plot viewer
 version: 1.0.0
 sources:
   - https://github.com/lsst-dm/pipetask-plot-navigator
-appVersion: "0.10.2"
+appVersion: "0.11.0"
