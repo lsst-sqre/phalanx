@@ -274,3 +274,10 @@ weatherforecast:
   - name: METEOBLUE_API_KEY
     secretName: meteoblue
     secretKey: api-key
+  resources:
+    requests:
+      cpu: 9m
+      memory: 95Mi
+    limits:
+      cpu: 90m
+      memory: 950Mi
