@@ -1,31 +1,17 @@
 config:
   autostart:
-    - name: "firefighter"
+    - name: "tap"
       count: 1
       users:
-        - username: "bot-mobu-recommended"
+        - username: "bot-mobu-tap"
           uidnumber: 74768
           gidnumber: 74768
-      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
+      scopes: ["read:tap"]
       business:
-        type: "NotebookRunner"
+        type: "TAPQueryRunner"
         options:
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
-          max_executions: 1
-        restart: true
-    - name: "weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-weekly"
-          uidnumber: 74769
-          gidnumber: 74769
-      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
-      business:
-        type: "NotebookRunner"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
+          queries:
+            - "SELECT TOP 10 * FROM  video.hsc_g_f"
+            - "SELECT TOP 10 * FROM  TAP_SCHEMA.tables"
+            - "SELECT TOP 10 * FROM  viking.hsc_g_f"
         restart: true
