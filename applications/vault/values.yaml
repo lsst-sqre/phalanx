@@ -1,0 +1,48 @@
+vault:
+  global:
+    tlsDisable: true
+    namespace: vault
+
+  injector:
+    enabled: false
+
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+        cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+      tls:
+        - secretName: vault-ingress-tls
+          hosts:
+            - vault.lsst.codes
+            - vault-1.lsst.codes
+            - vault-2.lsst.codes
+      hosts:
+        - host: vault.lsst.codes
+          paths:
+            - "/"
+        - host: vault-1.lsst.codes
+          paths:
+            - "/"
+        - host: vault-2.lsst.codes
+          paths:
+            - "/"
+
+    # Used by the GCS storage backend.
+    extraEnvironmentVars:
+      GOOGLE_APPLICATION_CREDENTIALS: "/vault/userconfig/vault-kms-creds/credentials.json"
+
+    extraVolumes:
+      - type: "secret"
+        name: "vault-kms-creds"
+
+    dataStorage:
+      enabled: false
+
+    standalone:
+      enabled: false
+
+    ha:
+      enabled: true
+      replicas: 3

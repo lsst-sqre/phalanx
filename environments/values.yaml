@@ -224,6 +224,11 @@ applications:
   # application.
   uws: false
 
+  # -- Enable the vault application. This is the actual vault storage
+  # and there should only be one production and one development instance
+  # globally.
+  vault: false
+
   # -- Enable the vault-secrets-operator application. This is required for all
   # environments.
   vault-secrets-operator: true

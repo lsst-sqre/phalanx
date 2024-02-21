@@ -1,0 +1,44 @@
+vault:
+  server:
+    ha:
+      config: |
+        ui = true
+
+        listener "tcp" {
+          tls_disable     = 1
+          address         = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
+
+        seal "gcpckms" {
+          credentials = "/vault/userconfig/vault-kms-creds/credentials.json"
+          project     = "roundtable-dev-abe2"
+          region      = "global"
+          key_ring    = "vault"
+          crypto_key  = "vault-seal"
+        }
+
+        storage "gcs" {
+          bucket     = "storage.vault-dev.lsst.cloud"
+          ha_enabled = "true"
+        }
+
+        service_registration "kubernetes" {}
+
+    ingress:
+      tls:
+        - secretName: vault-ingress-tls
+          hosts:
+            - vault-dev.lsst.cloud
+            - vault-dev-1.lsst.cloud
+            - vault-dev-2.lsst.cloud
+      hosts:
+        - host: vault-dev.lsst.cloud
+          paths:
+            - "/"
+        - host: vault-dev-1.lsst.cloud
+          paths:
+            - "/"
+        - host: vault-dev-2.lsst.cloud
+          paths:
+            - "/"
