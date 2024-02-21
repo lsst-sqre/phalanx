@@ -111,6 +111,13 @@ dimm1-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
 
 dimm2-sim:
   enabled: true
@@ -119,6 +126,13 @@ dimm2-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 2 --simulate
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
 
 dsm1-sim:
   enabled: true
