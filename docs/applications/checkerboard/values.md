@@ -5,7 +5,7 @@
 
 Helm values reference table for the {px-app}`checkerboard` application.
 
-```{include} ../../../applications/gafaelfawr/README.md
+```{include} ../../../applications/checkerboard/README.md
 ---
 start-after: "## Values"
 ---
