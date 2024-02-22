@@ -29,16 +29,8 @@ vault:
         - secretName: vault-ingress-tls
           hosts:
             - vault.lsst.cloud
-            - vault-1.lsst.cloud
-            - vault-2.lsst.cloud
       hosts:
         - host: vault.lsst.cloud
-          paths:
-            - "/"
-        - host: vault-1.lsst.cloud
-          paths:
-            - "/"
-        - host: vault-2.lsst.cloud
           paths:
             - "/"
       serviceAccount:
