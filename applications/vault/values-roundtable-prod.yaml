@@ -19,7 +19,7 @@ vault:
         }
 
         storage "gcs" {
-          bucket     = "storage.vault.lsst.cloud"
+          bucket     = "rubin-us-central1-vault-server"
           ha_enabled = "true"
         }
 
@@ -41,3 +41,6 @@ vault:
         - host: vault-2.lsst.cloud
           paths:
             - "/"
+      serviceAccount:
+        annotations:
+          iam.gke.io/gcp-service-account: "vault-server@roundtable-prod-f6fd.iam.gserviceaccount.com"
