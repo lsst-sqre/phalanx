@@ -6,6 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   slackAlerts: true
+  updateSchema: true
 
   cilogon:
     clientId: "cilogon:/client_id/46f9ae932fd30e9fb1b246972a3c0720"

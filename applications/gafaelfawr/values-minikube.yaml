@@ -5,6 +5,7 @@ redis:
 
 config:
   internalDatabase: true
+  updateSchema: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
