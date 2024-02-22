@@ -10,6 +10,7 @@ cloudsql:
 
 config:
   slackAlerts: false
+  updateSchema: true
 
   github:
     clientId: "083a615e03ca3dde9392"
