@@ -10,9 +10,6 @@ Secret Storage
 | vault.global.tlsDisable | bool | `true` |  |
 | vault.injector.enabled | bool | `false` |  |
 | vault.server.dataStorage.enabled | bool | `false` |  |
-| vault.server.extraEnvironmentVars.GOOGLE_APPLICATION_CREDENTIALS | string | `"/vault/userconfig/vault-kms-creds/credentials.json"` |  |
-| vault.server.extraVolumes[0].name | string | `"vault-kms-creds"` |  |
-| vault.server.extraVolumes[0].type | string | `"secret"` |  |
 | vault.server.ha.enabled | bool | `true` |  |
 | vault.server.ha.replicas | int | `3` |  |
 | vault.server.ingress.annotations."cert-manager.io/cluster-issuer" | string | `"letsencrypt-issuer"` |  |

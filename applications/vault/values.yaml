@@ -30,13 +30,6 @@ vault:
             - "/"
 
     # Used by the GCS storage backend.
-    extraEnvironmentVars:
-      GOOGLE_APPLICATION_CREDENTIALS: "/vault/userconfig/vault-kms-creds/credentials.json"
-
-    extraVolumes:
-      - type: "secret"
-        name: "vault-kms-creds"
-
     dataStorage:
       enabled: false
 
