@@ -13,6 +13,8 @@ jobs:
 
       - name: Set up go
         uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.22'
 
       - name: Install helm-docs
         run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.0
