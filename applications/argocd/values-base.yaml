@@ -23,3 +23,4 @@ argo-cd:
       policy.csv: |
         g, lsst-sqre:friends, role:admin
         g, lsst-sqre:square, role:admin
+        g, lsst-dm:womullan, role:admin
