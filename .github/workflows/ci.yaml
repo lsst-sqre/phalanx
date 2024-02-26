@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-go@v5
 
       - name: Install helm-docs
-        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.11.3
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.0
         env:
           GOBIN: /usr/local/bin/
 
