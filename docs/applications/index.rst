@@ -86,6 +86,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    prompt-proto-service-latiss/index
    prompt-proto-service-lsstcam/index
    prompt-proto-service-lsstcomcam/index
+   prompt-proto-service-lsstcomcamsim/index
 
 .. toctree::
    :maxdepth: 1
