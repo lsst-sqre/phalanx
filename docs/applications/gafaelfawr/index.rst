@@ -22,6 +22,7 @@ Guides
    :maxdepth: 2
 
    bootstrap
+   manage-schema
    recreate-token
    github-organizations
    troubleshoot
