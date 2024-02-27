@@ -1,8 +1,8 @@
 .. px-app:: sqrbot-sr
 
-#########################
+###########################
 sqrbot-sr — Ticket unfurler
-#########################
+###########################
 
 Sqrbot-Sr is the ancient Hubot-based Slack lurker.  It is providing JIRA ticket unfurl services until Squarebot is ready.
 
