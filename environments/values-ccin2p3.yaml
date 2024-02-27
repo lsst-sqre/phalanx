@@ -3,10 +3,13 @@ fqdn: data-dev.lsst.eu
 vaultPathPrefix: secret/k8s_operator/rsp-cc
 
 applications:
-  datalinker: true
-  nublado: true
-  portal: true
-  postgres: true
-  semaphore: true
-  squareone: true
-  tap: true
+  infrastructure:
+    postgres: true
+
+  rsp:
+    datalinker: true
+    nublado: true
+    portal: true
+    semaphore: true
+    squareone: true
+    tap: true

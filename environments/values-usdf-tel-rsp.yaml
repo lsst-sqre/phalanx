@@ -4,9 +4,9 @@ vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-tel-rsp
 
 applications:
-  # This environment uses an ingress managed in a separate Kubernetes cluster,
-  # despite that configuration not being officially supported by Phalanx.
-  cert-manager: false
-  ingress-nginx: false
-
-  postgres: true
+  infrastructure:
+    # This environment uses an ingress managed in a separate Kubernetes cluster,
+    # despite that configuration not being officially supported by Phalanx.
+    cert-manager: false
+    ingress-nginx: false
+    postgres: true

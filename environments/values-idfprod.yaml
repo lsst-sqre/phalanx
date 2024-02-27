@@ -14,19 +14,24 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfprod"
 
 applications:
-  butler: true
-  datalinker: true
-  filestore-backup: true
-  hips: true
-  mobu: true
-  nublado: true
-  portal: true
-  semaphore: true
-  sherlock: true
-  siav2: true
-  squareone: true
-  ssotap: true
-  tap: true
-  telegraf: true
-  telegraf-ds: true
-  vo-cutouts: true
+  infrastructure:
+    mobu: true
+
+  monitoring:
+    sherlock: true
+    telegraf: true
+    telegraf-ds: true
+
+  rsp:
+    butler: true
+    datalinker: true
+    filestore-backup: true
+    hips: true
+    nublado: true
+    portal: true
+    semaphore: true
+    siav2: true
+    squareone: true
+    ssotap: true
+    tap: true
+    vo-cutouts: true

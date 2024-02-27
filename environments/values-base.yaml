@@ -3,14 +3,23 @@ fqdn: base-lsp.lsst.codes
 vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 applications:
-  argo-workflows: true
-  exposurelog: true
-  narrativelog: true
-  nublado: true
-  portal: true
-  rubintv: true
-  sasquatch: true
-  squareone: true
-  strimzi: true
-  telegraf: true
-  telegraf-ds: true
+  infrastructure:
+    strimzi: true
+
+  monitoring:
+    sasquatch: true
+    telegraf: true
+    telegraf-ds: true
+
+  rsp:
+    nublado: true
+    portal: true
+    squareone: true
+
+  rubin:
+    exposurelog: true
+    narrativelog: true
+    rubintv: true
+
+  telescope:
+    argo-workflows: true

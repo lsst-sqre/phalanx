@@ -13,25 +13,32 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfint"
 
 applications:
-  butler: true
-  datalinker: true
-  filestore-backup: true
-  hips: true
-  linters: true
-  mobu: true
-  nublado: true
-  plot-navigator: true
-  portal: true
-  postgres: true
-  sasquatch: true
-  siav2: true
-  ssotap: true
-  production-tools: true
-  semaphore: true
-  sherlock: true
-  squareone: true
-  strimzi: true
-  tap: true
-  telegraf: true
-  telegraf-ds: true
-  vo-cutouts: true
+  infrastructure:
+    mobu: true
+    postgres: true
+    strimzi: true
+
+  monitoring:
+    linters: true
+    sasquatch: true
+    sherlock: true
+    telegraf: true
+    telegraf-ds: true
+
+  rsp:
+    butler: true
+    datalinker: true
+    filestore-backup: true
+    hips: true
+    nublado: true
+    portal: true
+    siav2: true
+    ssotap: true
+    semaphore: true
+    squareone: true
+    tap: true
+    vo-cutouts: true
+
+  rubin:
+    plot-navigator: true
+    production-tools: true

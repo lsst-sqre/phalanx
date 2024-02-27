@@ -14,33 +14,32 @@ vaultPathPrefix: "secret/phalanx/idfdev"
 
 applications:
   infrastructure:
-    cert-manager: true
-    gafaelfawr: true
-    ingress-nginx: true
     mobu: true
     strimzi: true
-    vault-secrets-operator: true
 
-  argo-workflows: true
-  butler: true
-  datalinker: true
-  filestore-backup: true
-  hips: true
-  jira-data-proxy: true
-  mobu: true
-  noteburst: true
-  nublado: true
-  portal: true
-  sasquatch: true
-  semaphore: true
-  sherlock: true
-  siav2: true
-  ssotap: true
-  squareone: true
-  sqlproxy-cross-project: true
-  tap: true
-  telegraf: true
-  telegraf-ds: true
-  times-square: true
-  vault-secrets-operator: true
-  vo-cutouts: true
+  monitoring:
+    sasquatch: true
+    sherlock: true
+    telegraf: true
+    telegraf-ds: true
+
+  rsp:
+    butler: true
+    datalinker: true
+    filestore-backup: true
+    hips: true
+    jira-data-proxy: true
+    noteburst: true
+    nublado: true
+    portal: true
+    semaphore: true
+    siav2: true
+    ssotap: true
+    sqlproxy-cross-project: true
+    squareone: true
+    tap: true
+    times-square: true
+    vo-cutouts: true
+
+  telescope:
+    argo-workflows: true

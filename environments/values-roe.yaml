@@ -4,9 +4,12 @@ vaultUrl: "https://vault.lsst.ac.uk"
 vaultPathPrefix: secret/k8s_operator/roe
 
 applications:
-  mobu: true
-  nublado: true
-  portal: true
-  postgres: true
-  squareone: true
-  tap: true
+  infrastructure:
+    mobu: true
+    postgres: true
+
+  rsp:
+    nublado: true
+    portal: true
+    squareone: true
+    tap: true

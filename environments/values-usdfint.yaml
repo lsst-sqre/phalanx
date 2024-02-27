@@ -5,21 +5,27 @@ vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-rsp-int
 
 applications:
-  # This environment uses an ingress managed in a separate Kubernetes cluster,
-  # despite that configuration not being officially supported by Phalanx.
-  cert-manager: false
-  ingress-nginx: false
+  infrastructure:
+    # This environment uses an ingress managed in a separate Kubernetes cluster,
+    # despite that configuration not being officially supported by Phalanx.
+    cert-manager: false
+    ingress-nginx: false
+    mobu: true
+    postgres: true
+    strimzi: true
 
-  datalinker: true
-  livetap: true
-  mobu: true
-  nublado: true
-  plot-navigator: true
-  portal: true
-  postgres: true
-  sasquatch: true
-  semaphore: true
-  ssotap: true
-  squareone: true
-  strimzi: true
-  tap: true
+  monitoring:
+    sasquatch: true
+
+  rsp:
+    datalinker: true
+    livetap: true
+    nublado: true
+    portal: true
+    semaphore: true
+    ssotap: true
+    squareone: true
+    tap: true
+
+  rubin:
+    plot-navigator: true

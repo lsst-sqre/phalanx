@@ -4,10 +4,12 @@ vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: secret/rubin/usdf-alert-stream-broker-dev
 
 applications:
-  alert-stream-broker: true
-  cert-manager: true
-  gafaelfawr: false
-  ingress-nginx: false
-  strimzi: true
-  strimzi-access-operator: false
-  vault-secrets-operator: false
+  infrastructure:
+    gafaelfawr: false
+    ingress-nginx: false
+    strimzi: true
+    strimzi-access-operator: false
+    vault-secrets-operator: false
+
+  rubin:
+    alert-stream-broker: true
