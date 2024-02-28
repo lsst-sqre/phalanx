@@ -123,6 +123,10 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*LaserTracker"
+      lsstcam:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
 telegraf-kafka-consumer:
   enabled: false
@@ -202,6 +206,10 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ ".*LaserTracker" ]
+    lsstcam:
+      enabled: true
+      topicRegexps: |
+        [ ".*MTCamera", ".*MTHeaderService", ".*MTOODS" ]
 
 kafdrop:
   ingress:
