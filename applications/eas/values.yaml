@@ -38,6 +38,14 @@ auxtel-ess04-sim:
   # -- Enable the ESS:204 simulator CSC
   enabled: false
 
+auxtel-ess05:
+  # -- Enable the ESS:205 CSC
+  enabled: false
+
+auxtel-ess05-sim:
+  # -- Enable the ESS:205 simulator CSC
+  enabled: false
+
 calibhill-ess01:
   # -- Enable the ESS:301 CSC
   enabled: false

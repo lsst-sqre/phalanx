@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: save-reports-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20231208"
+  entrypoint: save-reports
+  templates:
+  - name: save-reports
+    container:
+      image: alpine:latest
+      volumeMounts:
+        - name: testreports
+          mountPath: {{ .Values.reportLocation }}
+    outputs:
+      artifacts:
+      - name: integration-test-reports
+        archive:
+          none: {}
+        path: {{ .Values.reportLocation }}/
+        s3:
+          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}

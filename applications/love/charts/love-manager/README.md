@@ -121,7 +121,6 @@ Helm chart for the LOVE manager service.
 | viewBackup.image.nexus3 | string | `""` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
 | viewBackup.image.pullPolicy | string | `"IfNotPresent"` | The pull policy to use for the view backup image |
 | viewBackup.image.repository | string | `"lsstts/love-view-backup"` | The view backup image to use |
-| viewBackup.image.tag | string | `"develop"` | The tag to use for the view backup image |
 | viewBackup.nodeSelector | object | `{}` | Node selection rules for the LOVE view backup pods |
 | viewBackup.resources | object | `{}` | Resource specifications for the LOVE view backup pods |
 | viewBackup.restartPolicy | string | `"Never"` | The restart policy type for the view backup cronjob |
