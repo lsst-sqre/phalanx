@@ -12,6 +12,7 @@ vaultPathPrefix: "secret/phalanx/roundtable-prod"
 applications:
   checkerboard: true
   giftless: true
+  jira-data-proxy: true
   kubernetes-replicator: true
   onepassword-connect: true
   ook: true
