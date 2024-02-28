@@ -54,6 +54,11 @@ spec:
             - configMapRef:
                 name: unfurlbot
           env:
+            - name: "UNFURLBOT_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: unfurlbot-gafaelfawr-token
+                  key: "token"
             # Writeable directory for concatenating certs. See "tmp" volume.
             - name: "KAFKA_CERT_TEMP_DIR"
               value: "/tmp/kafka_certs"
