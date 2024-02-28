@@ -183,6 +183,10 @@ kafka-connect-manager:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*LaserTracker"
+      lsstcam:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
 kafka-connect-manager-enterprise:
   enabled: true
@@ -264,6 +268,10 @@ kafka-connect-manager-enterprise:
         enabled: true
         repairerConnector: false
         topicsRegex: ".*LaserTracker"
+      enterprise-lsstcam:
+        enabled: true
+        repairerConnector: false
+        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
 kafdrop:
   ingress:
