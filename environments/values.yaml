@@ -181,6 +181,9 @@ applications:
   # -- Enable the prompt-proto-service-lsstcomcam application
   prompt-proto-service-lsstcomcam: false
 
+  # -- Enable the prompt-proto-service-lsstcomcamsim application
+  prompt-proto-service-lsstcomcamsim: false
+
   # -- Enable the semaphore application
   semaphore: false
 
