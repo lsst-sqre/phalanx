@@ -2,6 +2,7 @@ knative:
   hscUrl: 'http://prompt-proto-service.prompt-proto-service-hsc/next-visit'
   latissUrl: http://prompt-proto-service.prompt-proto-service-latiss/next-visit
   lsstcomcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit
+  lsstcomcamsimUrl: http://prompt-proto-service.prompt-proto-service-lsstcomcamsim/next-visit
   lsstcamUrl: http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit
 
 detectorConfigFile: detector.yaml

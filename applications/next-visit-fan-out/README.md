@@ -22,6 +22,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | knative.latissUrl | string | `"http://prompt-proto-service.prompt-proto-service-latiss/next-visit"` |  |
 | knative.lsstcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit"` |  |
 | knative.lsstcomcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit"` |  |
+| knative.lsstcomcamsimUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcomcamsim/next-visit"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
 | podAnnotations."prometheus.io/port" | string | `"8000"` |  |

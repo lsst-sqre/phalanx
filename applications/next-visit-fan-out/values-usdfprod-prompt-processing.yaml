@@ -1,6 +1,7 @@
 knative:
   latissUrl: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
   lsstcomcamUrl: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
+  lsstcomcamsimUrl: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
   lsstcamUrl: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
 
 kafka:
