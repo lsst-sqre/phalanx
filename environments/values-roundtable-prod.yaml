@@ -22,4 +22,4 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   squarebot: true
-  unfurlbot: true
+  unfurlbot: false
