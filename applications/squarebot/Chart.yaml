@@ -1,8 +1,8 @@
 apiVersion: v2
 name: squarebot
 version: 1.0.0
-appVersion: "0.7.0"
-description: Squarebot feeds events from services like Slack and GitHub into the SQuaRE Events Kafka message bus running on Roundtable. Backend apps like Templatebot can subscribe to these events and take domain-specific action.
+appVersion: "0.8.0"
+description: Squarebot feeds events from services like Slack and GitHub into the SQuaRE Events Kafka message bus running on Roundtable. Backend apps like Templatebot and Unfurlbot can subscribe to these events and take domain-specific action.
 type: application
 home: https://squarebot.lsst.io/
 sources:
