@@ -24,6 +24,7 @@ Preparing and pushing a branch
 ==============================
 
 Start by creating a branch of the `phalanx repository`_ and editing your application.
+Do not use a GitHub fork; the steps below require that your change be on a branch in that repository.
 
 You can make many types of edits to the application.
 The most straightforward changes are updates to your application's Docker images or the Helm sub-charts the application depends on.

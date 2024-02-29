@@ -8,7 +8,9 @@ This is documented in :doc:`deploy-from-a-branch`.
 If the application is not already deployed to a given environment, the Argo CD application for it will not exist and that process will not work.
 In this case, deploying your application from a branch requires the additional step of switching the Argo CD "app of apps" application to your branch first.
 
-First, add your application to an environment on a Phalanx PR branch and push that branch to GitHub.
+First, add your application to an environment on a Phalanx PR branch and push that branch to https://github.com/lsst-sqre/phalanx.
+Do not use a GitHub fork; the steps below require that your change be on a branch in that repository.
+
 Then, take the following steps:
 
 #. Go to the Argo CD dashboard for the environent where you want to test your application, and locate the "app of apps" application.

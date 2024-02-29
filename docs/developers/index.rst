@@ -8,6 +8,11 @@ In this section of the Phalanx documentation you can learn how to build and inte
 For background on Phalanx and how to contribute to the Phalanx repository itself, see the :doc:`/about/index` section.
 Individual applications are documented in the :doc:`/applications/index` section.
 
+.. note::
+
+   If you are maintaining Phalanx applications, contact SQuaRE to be added as a contributor to the https://github.com/lsst-sqre/phalanx repository.
+   Several of the steps below requiring pushing your development branches to that repository rather than using a fork.
+
 .. toctree::
    :maxdepth: 2
    :titlesonly:
