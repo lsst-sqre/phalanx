@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: tickets-DM-42877
+appVersion: "0.1.0"
 description: Squarebot backend that unfurls Jira issues.
 name: unfurlbot
 sources:
