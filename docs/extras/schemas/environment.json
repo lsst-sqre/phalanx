@@ -275,8 +275,8 @@
 	  }
 	]
       },
-      "description": "List of applications and whether they are enabled",
-      "title": "Enabled applications",
+      "description": "Dict of projects and applications and whether they are enabled",
+      "title": "Enabled applications by project",
       "type": "object"
     },
     "repoUrl": {

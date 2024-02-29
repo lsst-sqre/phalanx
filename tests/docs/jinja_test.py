@@ -66,7 +66,13 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         # Check some of the additional application data that isn't used by the
         # command-line tests, only by the documentation.
         gafaelfawr = contexts["gafaelfawr"]["app"]
-        chart_path = config_dir / "applications" / "gafaelfawr" / "Chart.yaml"
+        chart_path = (
+            config_dir
+            / "applications"
+            / "infrastructure"
+            / "gafaelfawr"
+            / "Chart.yaml"
+        )
         with chart_path.open("r") as fh:
             chart = yaml.safe_load(fh)
         assert gafaelfawr.chart == chart

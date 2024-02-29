@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "[[ name ]]") -}}
+{{- if (index .Values.applications.[[ project ]] "[[ name ]]") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -15,9 +15,9 @@ spec:
   destination:
     namespace: "[[ name ]]"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "[[ project ]]"
   source:
-    path: "applications/[[ name ]]"
+    path: "applications/[[ project ]]/[[ name ]]"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:

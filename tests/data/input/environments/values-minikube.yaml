@@ -7,5 +7,6 @@ vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/minikube
 
 applications:
-  mobu: true
-  postgres: true
+  infrastructure:
+    mobu: true
+    postgres: true

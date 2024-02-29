@@ -60,6 +60,7 @@ def test_create(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "infrastructure",
         "aaa-new-app",
         "--starter",
         "empty",
@@ -74,6 +75,7 @@ def test_create(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "rsp",
         "hips",
         "--description",
         "Some HiPS service",
@@ -86,6 +88,7 @@ def test_create(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "rsp",
         "zzz-other-app",
         "--starter",
         "empty",
@@ -114,14 +117,18 @@ def test_create(tmp_path: Path) -> None:
     # can load them with the normal tools.
     minikube_path = config_path / "environments" / "values-minikube.yaml"
     minikube = yaml.safe_load(minikube_path.read_text())
-    minikube["applications"]["aaa-new-app"] = True
-    minikube["applications"]["hips"] = True
-    minikube["applications"]["zzz-other-app"] = True
+    minikube["applications"]["infrastructure"]["aaa-new-app"] = True
+    minikube["applications"]["infrastructure"]["hips"] = True
+    minikube["applications"]["infrastructure"]["zzz-other-app"] = True
     with minikube_path.open("w") as fh:
         yaml.dump(minikube, fh)
-    (apps_path / "aaa-new-app" / "values-minikube.yaml").write_text("")
-    (apps_path / "hips" / "values-minikube.yaml").write_text("")
-    (apps_path / "zzz-other-app" / "values-minikube.yaml").write_text("")
+    (
+        apps_path / "infrastructure" / "aaa-new-app" / "values-minikube.yaml"
+    ).write_text("")
+    (apps_path / "rsp" / "hips" / "values-minikube.yaml").write_text("")
+    (apps_path / "rsp" / "zzz-other-app" / "values-minikube.yaml").write_text(
+        ""
+    )
 
     # Load the environment, make sure the new apps are enabled, and check that
     # the chart metadata is correct.
@@ -156,6 +163,7 @@ def test_create_errors(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "infrastructure",
         "some-really-long-app-name-please-do-not-do-this",
         "--description",
         "Some really long description on top of the app name",
@@ -168,6 +176,7 @@ def test_create_errors(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "infrastructure",
         "app",
         "--description",
         "lowercase description",
@@ -190,6 +199,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     result = run_cli(
         "application",
         "create",
+        "infrastructure",
         "aaa-new-app",
         "--config",
         str(config_path),
@@ -199,7 +209,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     assert result.output == "Short description: Some application\n"
     assert result.exit_code == 0
 
-    app_path = config_path / "applications" / "aaa-new-app"
+    app_path = config_path / "applications" / "infrastructure" / "aaa-new-app"
     with (app_path / "Chart.yaml").open() as fh:
         chart = yaml.safe_load(fh)
     assert chart["description"] == "Some application"
@@ -376,17 +386,31 @@ def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
     # - gafaelfawr (values change so all environments)
     # - portal (templates deletion so all environments)
     # - postgres (irrelevant change, no linting)
-    path = change_path / "applications" / "argocd" / "values-idfdev.yaml"
+    path = (
+        change_path
+        / "applications"
+        / "infrastructure"
+        / "argocd"
+        / "values-idfdev.yaml"
+    )
     with path.open("a") as fh:
         fh.write("foo: bar\n")
-    path = change_path / "applications" / "gafaelfawr" / "values.yaml"
+    path = (
+        change_path
+        / "applications"
+        / "infrastructure"
+        / "gafaelfawr"
+        / "values.yaml"
+    )
     with path.open("a") as fh:
         fh.write("foo: bar\n")
     repo.index.remove(
-        "applications/portal/templates/vault-secrets.yaml", working_tree=True
+        "applications/rsp/portal/templates/vault-secrets.yaml",
+        working_tree=True,
     )
     repo.index.remove(
-        "applications/postgres/values-idfdev.yaml", working_tree=True
+        "applications/infrastructure/postgres/values-idfdev.yaml",
+        working_tree=True,
     )
     repo.index.add(["applications"])
     repo.index.commit("Some changes", author=actor, committer=actor)
@@ -430,7 +454,7 @@ def test_template(mock_helm: MockHelm) -> None:
         [
             "template",
             "gafaelfawr",
-            str(test_path / "applications" / "gafaelfawr"),
+            str(test_path / "applications" / "infrastructure" / "gafaelfawr"),
             "--include-crds",
             "--values",
             "gafaelfawr/values.yaml",

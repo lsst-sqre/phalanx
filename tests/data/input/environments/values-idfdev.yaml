@@ -8,7 +8,9 @@ vaultUrl: https://vault.lsst.codes/
 vaultPathPrefix: secret/phalanx/idfdev
 
 applications:
-  mobu: true
-  nublado: true
-  portal: true
-  postgres: true
+  infrastructure:
+    mobu: true
+    postgres: true
+  rsp:
+    nublado: true
+    portal: true

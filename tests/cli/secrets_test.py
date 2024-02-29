@@ -93,7 +93,14 @@ def test_list() -> None:
 def test_list_path_search() -> None:
     """Test that we can find the root of the tree from a subdirectory."""
     cwd = Path.cwd()
-    os.chdir(str(phalanx_test_path() / "applications" / "gafaelfawr"))
+    os.chdir(
+        str(
+            phalanx_test_path()
+            / "applications"
+            / "infrastructure"
+            / "gafaelfawr"
+        )
+    )
     try:
         result = run_cli("secrets", "list", "idfdev", needs_config=False)
         assert result.exit_code == 0

@@ -5,7 +5,6 @@ from __future__ import annotations
 import re
 from collections.abc import Iterator
 from pathlib import Path
-from typing import Literal
 
 import yaml
 
@@ -15,12 +14,20 @@ _ALLOW_NO_SECRETS = ("linters", "monitoring", "next-visit-fan-out")
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
-def all_charts(
-    parent: Literal["applications", "charts"],
-) -> Iterator[Path]:
+def all_applications() -> Iterator[Path]:
+    """Iterate through all application paths."""
+    app_path = Path(__file__).parent.parent / "applications"
+    for project in app_path.iterdir():
+        for app in project.iterdir():
+            if not app.is_dir():
+                continue
+            yield app
+
+
+def all_charts() -> Iterator[Path]:
     """Iterate through all chart paths."""
-    root_path = Path(__file__).parent.parent / parent
-    for candidate in root_path.iterdir():
+    chart_path = Path(__file__).parent.parent / "charts"
+    for candidate in chart_path.iterdir():
         if not candidate.is_dir():
             continue
         yield candidate
@@ -28,7 +35,7 @@ def all_charts(
 
 def test_application_names() -> None:
     """All applications must have valid names."""
-    for application in all_charts("applications"):
+    for application in all_applications():
         assert re.match(
             "[a-z][a-z0-9-]+$", application.name
         ), f"Application {application.name} has invalid name"
@@ -36,14 +43,14 @@ def test_application_names() -> None:
 
 def test_application_version() -> None:
     """All application charts should have version 1.0.0."""
-    for application in all_charts("applications"):
+    for application in all_applications():
         chart = yaml.safe_load((application / "Chart.yaml").read_text())
         assert (
             chart["version"] == "1.0.0"
         ), f"Chart for application {application.name} has incorrect version"
 
     # Check the same thing for shared charts.
-    for shared_chart in all_charts("charts"):
+    for shared_chart in all_charts():
         chart = yaml.safe_load((shared_chart / "Chart.yaml").read_text())
         assert (
             chart["version"] == "1.0.0"
@@ -65,7 +72,7 @@ def test_enviroments() -> None:
 
 def test_secrets_defined() -> None:
     """Any application with a VaultSecret should have secrets.yaml."""
-    for application in all_charts("applications"):
+    for application in all_applications():
         if application.name in _ALLOW_NO_SECRETS:
             continue
         if list(application.glob("secrets*.yaml")):
@@ -91,8 +98,8 @@ def test_secrets_defined() -> None:
 
 def test_shared_subcharts() -> None:
     """Check references to shared subcharts."""
-    available = [c.name for c in all_charts("charts")]
-    for application in all_charts("applications"):
+    available = [c.name for c in all_charts()]
+    for application in all_applications():
         chart = yaml.safe_load((application / "Chart.yaml").read_text())
         chart.get("dependencies")
         for dependency in chart.get("dependencies", []):

@@ -285,10 +285,12 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     `EnvironmentBaseConfig` instead.
     """
 
-    applications: dict[str, bool] = Field(
+    applications: dict[str, dict[str, bool]] = Field(
         ...,
-        title="Enabled applications",
-        description="List of applications and whether they are enabled",
+        title="Enabled applications by project",
+        description=(
+            "Dict of projects and applications and whether they are enabled"
+        ),
     )
 
     repo_url: str | None = Field(
@@ -329,7 +331,14 @@ class EnvironmentConfig(EnvironmentBaseConfig):
     @property
     def enabled_applications(self) -> list[str]:
         """Names of all applications enabled for this environment."""
-        return sorted(k for k, v in self.applications.items() if v)
+        enabled_apps = []
+
+        for apps in self.applications.values():
+            for app, enabled in apps.items():
+                if enabled:
+                    enabled_apps.append(app)
+
+        return sorted(enabled_apps)
 
 
 class Environment(EnvironmentBaseConfig):

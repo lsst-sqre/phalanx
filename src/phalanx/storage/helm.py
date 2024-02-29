@@ -29,18 +29,24 @@ class HelmStorage:
     def __init__(self, config_storage: ConfigStorage) -> None:
         self._config = config_storage
 
-    def create(self, application: str, starter: HelmStarter) -> None:
+    def create(
+        self, project: str, application: str, starter: HelmStarter
+    ) -> None:
         """Use :command:`helm create` to create a new application chart.
 
         Parameters
         ----------
+        project
+            Name of the project.
         application
             Name of the new application.
         starter
             Name of the Helm starter template to use.
         """
         starter_path = self._config.get_starter_path(starter)
-        application_path = self._config.get_application_chart_path(application)
+        application_path = self._config.get_new_application_chart_path(
+            project, application
+        )
         self._run_helm(
             "create",
             "-p",

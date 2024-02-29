@@ -126,6 +126,7 @@ def application_add_helm_repos(
 
 
 @application.command("create")
+@click.argument("project")
 @click.argument("name")
 @click.option(
     "-c",
@@ -151,7 +152,12 @@ def application_add_helm_repos(
     help="Helm starter to use as the basis for the chart.",
 )
 def application_create(
-    name: str, *, starter: str, config: Path | None, description: str
+    project: str,
+    name: str,
+    *,
+    starter: str,
+    config: Path | None,
+    description: str,
 ) -> None:
     """Create a new application from a starter template.
 
@@ -173,7 +179,9 @@ def application_create(
         raise click.BadParameter("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create(name, HelmStarter(starter), description)
+    application_service.create(
+        project, name, HelmStarter(starter), description
+    )
 
 
 @application.command("lint")

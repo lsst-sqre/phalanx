@@ -8,6 +8,7 @@ from collections.abc import Iterable
 from .models.secrets import Secret
 
 __all__ = [
+    "ApplicationDoesNotExistError",
     "ApplicationExistsError",
     "HelmFailedError",
     "InvalidApplicationConfigError",
@@ -21,6 +22,20 @@ __all__ = [
     "UnresolvedSecretsError",
     "VaultNotFoundError",
 ]
+
+
+class ApplicationDoesNotExistError(Exception):
+    """Application does not exist.
+
+    Parameters
+    ----------
+    name
+        Name of the application.
+    """
+
+    def __init__(self, name: str) -> None:
+        msg = f"Application {name} does not exist"
+        super().__init__(msg)
 
 
 class ApplicationExistsError(Exception):

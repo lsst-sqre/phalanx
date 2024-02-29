@@ -88,12 +88,14 @@ class ApplicationService:
         return bool(repo_urls)
 
     def create(
-        self, name: str, starter: HelmStarter, description: str
+        self, project: str, name: str, starter: HelmStarter, description: str
     ) -> None:
         """Create configuration for a new application.
 
         Parameters
         ----------
+        project
+            Name of the project.
         name
             Name of the application.
         starter
@@ -107,10 +109,10 @@ class ApplicationService:
         ApplicationExistsError
             Raised if the application being created already exists.
         """
-        path = self._config.get_application_chart_path(name)
+        path = self._config.get_new_application_chart_path(project, name)
         if path.exists():
             raise ApplicationExistsError(name)
-        self._helm.create(name, starter)
+        self._helm.create(project, name, starter)
 
         # Unfortunately, Helm completely ignores the Chart.yaml in a starter
         # so far as I can tell, so we have to load the starter Chart.yaml
@@ -129,7 +131,7 @@ class ApplicationService:
             yaml.dump(chart, fh)
 
         # Add the environment configuration.
-        self._create_application_template(name)
+        self._create_application_template(project, name)
 
         # Add the documentation.
         self._create_application_docs(name, description)
@@ -341,11 +343,13 @@ class ApplicationService:
 
         return values
 
-    def _create_application_template(self, name: str) -> None:
+    def _create_application_template(self, project: str, name: str) -> None:
         """Add the ``Application`` template and environment values setting.
 
         Parameters
         ----------
+        project
+            Name of the project.
         name
             Name of the new application.
         """
@@ -355,10 +359,10 @@ class ApplicationService:
             variable_start_string="[[", variable_end_string="]]"
         )
         template = overlay.get_template("application-template.yaml.jinja")
-        application = template.render({"name": name})
-        self._config.write_application_template(name, application)
+        application = template.render({"name": name, "project": project})
+        self._config.write_application_template(project, name, application)
         setting = f"# -- Enable the {name} application\n{name}: false"
-        self._config.add_application_setting(name, setting)
+        self._config.add_application_setting(project, name, setting)
 
     def _create_application_docs(self, name: str, description: str) -> None:
         """Add the documentation for a new application.

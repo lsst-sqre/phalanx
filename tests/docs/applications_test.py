@@ -34,15 +34,16 @@ def test_applications_index() -> None:
             if m := re.match("^   ([^/]+)/index$", line):
                 seen.add(m.group(1))
     root_path = Path(__file__).parent.parent.parent / "applications"
-    for application in root_path.iterdir():
-        if not application.is_dir():
+    for project in root_path.iterdir():
+        if not project.is_dir():
             continue
-        if application.name in (
-            "nublado-fileservers",
-            "nublado-users",
-            "ocps-uws-job",
-        ):
-            continue
-        assert (
-            application.name in seen
-        ), f"{application.name} not lined in docs/applications/index.rst"
+        for application in project.iterdir():
+            if application.name in (
+                "nublado-fileservers",
+                "nublado-users",
+                "ocps-uws-job",
+            ):
+                continue
+            assert (
+                application.name in seen
+            ), f"{application.name} not lined in docs/applications/index.rst"

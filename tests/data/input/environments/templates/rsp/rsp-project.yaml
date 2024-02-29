@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: rsp
+  namespace: argocd
+spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  - name: admin
+    description: Admin privileges to rsp
+    policies:
+    - p, proj:rsp:admin, repositories, *, rsp/*, allow
+    groups:
+    - role:admin
+  sourceRepos:
+  - '*'

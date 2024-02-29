@@ -26,7 +26,7 @@
 | applications.prompt.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
 | applications.prompt.prompt-proto-service-lsstcam | bool | `false` | Enable the prompt-proto-service-lsstcam application |
 | applications.prompt.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
-| applications.roundtable | object | `{"checkerboard":false,"giftless":false,"kubernetes-replicator":false,"monitoring":false,"onepassword-connect":false,"ook":false,"sqrbot-sr":false,"squarebot":false}` | Project roundtable |
+| applications.roundtable | object | `{"checkerboard":false,"giftless":false,"kubernetes-replicator":false,"monitoring":false,"onepassword-connect":false,"ook":false,"sqrbot-sr":false,"squarebot":false,"unfurlbot":false}` | Project roundtable |
 | applications.roundtable.checkerboard | bool | `false` | Enable the checkerboard application |
 | applications.roundtable.giftless | bool | `false` | Enable the giftless application |
 | applications.roundtable.kubernetes-replicator | bool | `false` | Enable the kubernetes-replicator application |
@@ -35,6 +35,7 @@
 | applications.roundtable.ook | bool | `false` | Enable the ook application |
 | applications.roundtable.sqrbot-sr | bool | `false` | Enable the sqrbot-sr application |
 | applications.roundtable.squarebot | bool | `false` | Enable the squarebot application |
+| applications.roundtable.unfurlbot | bool | `false` | Enable the unfurlbot application |
 | applications.rsp | object | `{"butler":false,"datalinker":false,"filestore-backup":false,"hips":false,"jira-data-proxy":false,"livetap":false,"noteburst":false,"nublado":false,"portal":false,"semaphore":false,"siav2":false,"sqlproxy-cross-project":false,"squareone":false,"ssotap":false,"tap":false,"times-square":false,"vo-cutouts":false}` | Project RSP (Rubin Science Platform) |
 | applications.rsp.butler | bool | `false` | Enable the butler application |
 | applications.rsp.datalinker | bool | `false` | Eanble the datalinker application |

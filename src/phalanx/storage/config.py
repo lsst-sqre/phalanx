@@ -16,6 +16,7 @@ from pydantic import ValidationError
 
 from ..constants import HELM_DOCLINK_ANNOTATION
 from ..exceptions import (
+    ApplicationDoesNotExistError,
     ApplicationExistsError,
     InvalidApplicationConfigError,
     InvalidSecretConfigError,
@@ -136,7 +137,9 @@ class ConfigStorage:
     def __init__(self, path: Path) -> None:
         self._path = path
 
-    def add_application_setting(self, application: str, setting: str) -> None:
+    def add_application_setting(
+        self, project: str, application: str, setting: str
+    ) -> None:
         """Add the setting for a new application to the environments chart.
 
         Adds a block for a new application to :file:`values.yaml` in the
@@ -144,13 +147,15 @@ class ConfigStorage:
 
         Parameters
         ----------
+        project
+            Name of the project.
         application
             Name of the new application.
         setting
             Setting block for the new application. Indentation will be added.
         """
         key = re.compile(r" +(?P<application>[^:]+): +")
-        setting = "\n".join("  " + line for line in setting.split("\n"))
+        setting = "\n".join("    " + line for line in setting.split("\n"))
 
         # Add the new setting in correct alphabetical order. This is the sort
         # of operation that Python is very bad at, so this code is rather
@@ -179,10 +184,9 @@ class ConfigStorage:
             while old_values:
                 line = old_values.pop()
                 new.write(line + "\n")
-                if line.startswith("applications:"):
+                if line.startswith(f"  {project}:"):
                     break
             found = False
-            first = True
             block = ""
             while old_values:
                 line = old_values.pop()
@@ -193,16 +197,12 @@ class ConfigStorage:
                 if m.group("application") == application:
                     raise ApplicationExistsError(application)
                 if m.group("application") > application:
-                    if first:
-                        new.write(setting + "\n\n")
-                    else:
-                        new.write("\n" + setting + "\n")
+                    new.write("\n" + setting + "\n")
                     found = True
                     block += line + "\n"
                     break
                 new.write(block + line + "\n")
                 block = ""
-                first = False
             if block:
                 new.write(block)
             if found:
@@ -222,19 +222,41 @@ class ConfigStorage:
             application chart.
         """
         repo_urls = set()
-        for app_path in (self._path / "applications").iterdir():
-            chart_path = app_path / "Chart.yaml"
-            if not chart_path.exists():
-                continue
-            urls = self.get_dependency_repositories(app_path.name)
-            repo_urls.update(urls)
+        for project in (self._path / "applications").iterdir():
+            for app_path in project.iterdir():
+                chart_path = app_path / "Chart.yaml"
+                if not chart_path.exists():
+                    continue
+                urls = self.get_dependency_repositories(app_path.name)
+                repo_urls.update(urls)
         return repo_urls
+
+    def get_new_application_chart_path(
+        self, project: str, application: str
+    ) -> Path:
+        """Determine the path to an new application Helm chart.
+
+        The application and path should not exist since it is
+        used to generate the path to newly-created applications.
+
+        Parameters
+        ----------
+        project
+            Name of the project.
+        application
+            Name of the application.
+
+        Returns
+        -------
+        pathlib.Path
+            Path to that application's chart.
+        """
+        return self._path / "applications" / project / application
 
     def get_application_chart_path(self, application: str) -> Path:
         """Determine the path to an application Helm chart.
 
-        The application and path may not exist, since this function is also
-        used to generate the path to newly-created applications.
+        The application and path should exist.
 
         Parameters
         ----------
@@ -246,7 +268,12 @@ class ConfigStorage:
         pathlib.Path
             Path to that application's chart.
         """
-        return self._path / "applications" / application
+        for project in (self._path / "applications").iterdir():
+            app_path = project / application
+            if app_path.exists():
+                return app_path
+
+        raise ApplicationDoesNotExistError(application)
 
     def get_application_environments(self, application: str) -> list[str]:
         """List all environments for which an application is configured.
@@ -384,8 +411,11 @@ class ConfigStorage:
         list of str
             Names of all applications.
         """
-        path = self._path / "applications"
-        return sorted(v.name for v in path.iterdir() if v.is_dir())
+        apps: list[str] = []
+        for project in (self._path / "applications").iterdir():
+            apps.extend(app.name for app in project.iterdir())
+
+        return sorted(apps)
 
     def list_environments(self) -> list[str]:
         """List all of the available environments.
@@ -497,7 +527,8 @@ class ConfigStorage:
         for environment in environments:
             for name in environment.enabled_applications:
                 enabled_for[name].append(environment.name)
-            all_applications.update(environment.applications.keys())
+            for appnames in environment.applications.values():
+                all_applications.update(appnames.keys())
         applications = {}
         for name in all_applications:
             application_config = self._load_application_config(name)
@@ -513,7 +544,9 @@ class ConfigStorage:
         environment_details = []
         for environment in environments:
             name = environment.name
-            if environment.applications.get("gafaelfawr", False):
+            if environment.applications.get("infrastructure", {}).get(
+                "gafaelfawr", False
+            ):
                 gafaelfawr = self._resolve_application(
                     applications["gafaelfawr"], name
                 )
@@ -558,11 +591,15 @@ class ConfigStorage:
                 with chart_path.open("w") as fh:
                     yaml.safe_dump(app_config.chart, fh, sort_keys=False)
 
-    def write_application_template(self, name: str, template: str) -> None:
+    def write_application_template(
+        self, project: str, name: str, template: str
+    ) -> None:
         """Write the Argo CD application template for a new application.
 
         Parameters
         ----------
+        project
+            Name of the project.
         name
             Name of the application.
         template
@@ -575,7 +612,9 @@ class ConfigStorage:
             Raised if the application being created already exists.
         """
         template_name = f"{name}-application.yaml"
-        path = self._path / "environments" / "templates" / template_name
+        path = (
+            self._path / "environments" / "templates" / project / template_name
+        )
         if path.exists():
             raise ApplicationExistsError(name)
         path.write_text(template)
@@ -701,13 +740,14 @@ class ConfigStorage:
         InvalidApplicationConfigError
             Raised if the namespace for the application could not be found.
         """
-        template_path = (
-            self._path
-            / "environments"
-            / "templates"
-            / f"{application}-application.yaml"
-        )
-        template = template_path.read_text()
+        for p in (self._path / "environments" / "templates").iterdir():
+            app_path = p / f"{application}-application.yaml"
+            if app_path.exists():
+                template = app_path.read_text()
+                break
+
+        if not template:
+            raise ApplicationDoesNotExistError(application)
 
         # Helm templates are unfortunately not valid YAML, so do this the hard
         # way with a regular expression.
@@ -717,7 +757,7 @@ class ConfigStorage:
         )
         match = re.search(pattern, template, flags=re.MULTILINE | re.DOTALL)
         if not match:
-            msg = f"Namespace not found in {template_path!s}"
+            msg = f"Namespace not found in {app_path!s}"
             raise InvalidApplicationConfigError(application, msg)
         return match.group("namespace")
 
@@ -761,7 +801,7 @@ class ConfigStorage:
         ApplicationConfig
             Application configuration.
         """
-        base_path = self._path / "applications" / name
+        base_path = self.get_application_chart_path(name)
         with (base_path / "Chart.yaml").open("r") as fh:
             chart = yaml.safe_load(fh)
 
