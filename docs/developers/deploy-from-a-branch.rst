@@ -16,6 +16,8 @@ Through this process it is possible to develop an application in a fairly tight 
    This page focuses on using a development environment to iteratively develop and test changes to an application, ultimately yielding a application upgrade in Phalanx.
    You can achieve the same result without the iterative deployment testing by following the steps in :doc:`upgrade`.
 
+   If you are deploying an application in an environment where it is not currently running, either because the application is brand new or because you're adding it to an additional environment, see :doc:`switch-environment-to-branch`.
+
 .. _deploy-branch-prep:
 
 Preparing and pushing a branch
