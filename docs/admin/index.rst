@@ -5,6 +5,11 @@ Administrators
 A Phalanx administrator is someone who is responsible for defining a Phalanx environment, installing Phalanx in that environment, and maintaining the resulting cluster.
 Administrators operate infrastructure, manage secrets, and are involved in the deployment, configuration, and Argo CD synchronization of applications.
 
+.. note::
+
+   If you are maintaining a Phalanx environment, contact SQuaRE to be added as a contributor to the https://github.com/lsst-sqre/phalanx repository.
+   Some of the steps below may require pushing your development branches to that repository rather than using a fork.
+
 .. toctree::
    :caption: Initial install
    :maxdepth: 1
