@@ -21,6 +21,8 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
 
    upgrade-windows
    sync-argo-cd
+   add-new-secret
+   update-a-secret
    sync-secrets
    audit-secrets
    update-pull-secret

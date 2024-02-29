@@ -10,16 +10,14 @@
 # Testing
 coverage[toml]
 mypy
-pre-commit
 pytest
 pytest-cov
-pytest-pretty
-ruff
+pytest-sugar
 types-PyYAML
 
 # Documentation
 autodoc_pydantic
-documenteer[guide]>=1.0.0a7
+documenteer[guide]>1
 sphinx-click
 sphinx-diagrams
 sphinx-jinja

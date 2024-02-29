@@ -136,15 +136,8 @@ Update secrets
    This will create a YAML file listing all applications and their required static secrets, based on their configuration for your environment.
 
    Then, what you do depends on whether you are using 1Password as a source of static secrets or not.
-
-   - *If you are using 1Password*, add those static secrets to the 1Password vault for this environment.
-     See :ref:`dev-add-onepassword` for detailed instructions on how to add static secrets for an application.
-     You will need to do this for every application.
-     Don't forget to :ref:`add a pull secret <admin-onepassword-pull-secret>` if your environment needs one.
-
-   - *If you are not using 1Password*, edit :file:`static-secrets.yaml` and fill in the values of all of the static secrets.
-     Or, alternately, just put the static secrets directly into Vault via whatever mechanism works for you and do not supply a static secrets file.
-     In the second case, you will need to be sure to store the secrets in the format expected by Phalanx (one secret per application, with keys and values for each Phalanx secret needed by that application).
+   See :doc:`add-new-secret` for detailed instructions on how to add static secrets for an application.
+   You will need to do this for every application.
 
    To obtain the current values of static secrets, look either in the old ``RSP-Vault`` 1Password vault (for SQuaRE-managed environments) or use the :command:`vault kv get` command to read the current value of the static secret out of Vault (copied to the new path in the previous step).
 

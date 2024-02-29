@@ -182,7 +182,7 @@ Pull secrets
 If your application image resides at a Docker repository which requires authentication (either to pull the image at all or to raise the pull rate limit), then you must tell any pods deployed by your application to use a pull secret named ``pull-secret``, and you must create a ``VaultSecret`` resource for that pull secret.
 
 If your container image is built through GitHub Actions and stored at ghcr.io (the recommended approach), there is no rate limiting (as long as your container image is built from a public repository, which it should be).
-There is therefore no need for a pull secret.
+There is therefore no need for a pull secret and you can skip the rest of this section.
 
 If your container image is stored at Docker Hub, you should use a pull secret, because we have been (and will no doubt continue to be) rate-limited at Docker Hub.
 Strongly consider moving your container image to the GitHub Container Registry (ghcr.io) instead.
