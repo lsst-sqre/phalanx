@@ -13,7 +13,7 @@ It is intended to run under Roundtable, and there should only be one production 
 
 The Vault Agent Injector is not enabled since we instead use the :doc:`Vault Secrets Operator <../vault-secrets-operator/index>`.
 
-Vault is configured in HA mode with a public API endpoint accessible at vault.lsst.cloud, or vault-dev.lsst.cloud for the development instance.
+Vault is configured in HA mode with a public API endpoint accessible at https://vault.lsst.cloud, or https://vault-dev.lsst.cloud for the development instance.
 TLS termination is done at the nginx ingress layer using a Let's Encrypt server certificate.
 The UI is available at `vault.lsst.cloud <https://vault.lsst.cloud/ui>`__ for the production instance, and `vault-dev.lsst.cloud <https://vault-dev.lsst.cloud/ui>`__ for the development instance.
 
@@ -108,54 +108,14 @@ Here are the steps:
 .. rubric:: External configuration
 
 This deployment is currently only tested on GCP.
-Vault requires some external resources and a Kubernetes secret to be created and configured before deployment.
 
-#. Create a GCP service account named ``vault-server`` and download credentials for that service account.
-#. Store those credentials as ``credentials.json`` in a Kubernetes secret in the ``vault`` namespace named ``vault-kms-creds``.
-   You may have to manually create the ``vault`` namespace first.
-#. Create a GCP KMS keyring in the ``global`` region named ``vault`` and a symmetric key named ``vault-seal``.
-#. Grant the ``vault-server`` service account the ``Cloud KMS CryptoKey Encrypter/Decrypter`` role in IAM.
-   This should be constrained to only the ``vault`` keyring, but I was unable to work out how to do that correctly in GCP.
-#. Create a GCS bucket named ``storage.vault.lsst.codes``.
-   (This will require domain valiation in Google Webmaster Tools.)
-   Configure this bucket in the permissions tab to use uniform bucket-level access (there is no meaningful reason to use per-object access for this application and this configuration is simpler).
-   Grant the ``vault-server`` service account the ``Storage Object Admin`` role on this bucket in the bucket permissions tab.
-#. Create a DNS entry for the new cluster pointing to the external IP of the nginx ingress for the Kubernetes cluster in which this application is deployed.
-   We have ``vault.lsst.codes`` for the primary Vault installation and ``vault-1.lsst.codes`` and ``vault-2.lsst.codes`` for test installations.
-   Update the list of hostnames configured in the Vault ``values.yaml`` file for the ingress to match the DNS entries that you want to use.
-   The DNS entry has to match the hostname for cert-manager to be able to get TLS certificates for Vault.
+Vault resources are stored in `the IDF deployment terraform configuration <https://github.com/https://github.com/lsst/idf_deploy/tree/main/environment/deployments/roundtable>`__.
 
-When deploying Vault elsewhere, at least the storage bucket name will have to change because bucket names are globally unique in GCP.
-Note that the GCP project and region are also encoded in ``values.yaml`` if deploying elsewhere.
+All of the configuration except for the GCP S3 bucket names is found directly in `main.tf <https://github.com/lsst/idf_deploy/blob/main/environment/deployments/roundtable/main.tf>`__.
 
-.. rubric:: Backups
-
-Google Cloud Storage promises a very high level of durability, so backups are primarily to protect against human errors, upgrade disasters, or dangerous actions by Vault administrators.
-The first line of protection is to set a lifecycle rule that deletes objects if there are more than three newer versions, and then enable object versioning in the ``storage.vault.lsst.codes`` bucket:
-
-.. code-block:: console
-
-   $ gsutil versioning set on gs://storage.vault.lsst.codes/
-
-That will allow restoring a previous version of the Vault database.
-
-To also protect against problems that weren't caught immediately, and against human error such as deleting the volume, create a backup:
-
-#. Create a GCS bucket named ``backup.vault.lsst.codes``.
-   It's unclear what settings to use for this to minimize cost.
-   In particular, nearline or cold storage may be cheaper, or may not be given backup by data transfer, and it's impossible to figure this out from the documentation.
-   The current configuration uses a single-region bucket (in ``us-central1``) with standard storage.
-#. Set a lifecycle rule to delete objects if there are more than twenty newer versions.
-#. Enable object versioning on that bucket:
-
-   .. code-block:: console
-
-      $ gsutil versioning set on gs://backup.vault.lsst.codes/
-
-#. Create a daily periodic transfer from ``storage.vault.lsst.codes`` to ``backup.vault.lsst.codes``.
-   The current configuration schedules this for 2am Pacific time.
-   The time zone shown is the local time zone.
-   That time was picked to be in the middle of the night for US project staff.
+This sets up a KMS keyring and a seal key, the Vault storage bucket and its backup bucket, enables object versioning, and creates a storage transfer job to perform nightly backups of the buckets.
+The latest three versions of any given secret are kept in the storage bucket; it is backed up nightly to a backup bucket which stores up to twenty versions of each object.
+This backup takes place at 0900 UTC each day, which is 1AM or 2AM (depending on whether Daylight Savings Time is in effect) project time.
 
 .. rubric:: Migrating Vault
 
@@ -168,14 +128,8 @@ If you want to migrate a Vault deployment from one GCP project and Kubernetes cl
 #. Copy the data from the old GCS bucket to the new GCS bucket using a GCS transfer.
 #. Configure the new vault to point to the KMS keyring and key in the old project.
 #. Perform a `seal migration <change-seal_>`_ to switch from the old seal key in KMS in the old GCP project to the new seal key in the new GCP project.
-#. Change DNS to point the Vault server name (generally ``vault.lsst.codes``) to point to the new installation.
+#. Change DNS to point the Vault server name (generally ``vault.lsst.cloud``) to point to the new installation.
 
-
-
-vault-kms-creds
-===============
-
-Note that the application, when used with the Google Cloud Storage backend, has a resource, not documented in ``secrets.yaml``, which is a manually created secret called ``vault-kms-creds`` with a single key, ``credentials.json``.  This holds the specification of the service account that can access the vault storage buckets, which must have access to the roles ``Cloud KMS Viewer`` and ``Cloud KMS CryptoKey Encrypter/Decrypter``.  This secret cannot use ``secrets.yaml`` because it is the secret needed to bootstrap the whole ``vault-secrets-operator`` system on which the standard Phalanx secrets management system depends.
 
 .. jinja:: vault
    :file: applications/_summary.rst.jinja
