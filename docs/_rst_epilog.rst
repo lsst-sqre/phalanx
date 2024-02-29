@@ -27,7 +27,6 @@
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Mend Renovate: https://www.mend.io/renovate/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-.. _`lsst-sqre/phalanx`:
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
 .. _persistent volume: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
