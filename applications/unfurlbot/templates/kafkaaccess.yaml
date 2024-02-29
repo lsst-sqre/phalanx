@@ -1,0 +1,14 @@
+apiVersion: access.strimzi.io/v1alpha1
+kind: KafkaAccess
+metadata:
+  name: unfurlbot-kafka
+spec:
+  kafka:
+    name: sasquatch
+    namespace: sasquatch
+    listener: tls
+  user:
+    kind: KafkaUser
+    apiGroup: kafka.strimzi.io
+    name: unfurlbot
+    namespace: sasquatch

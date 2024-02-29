@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "0.1.0"
+description: Squarebot backend that unfurls Jira issues.
+name: unfurlbot
+sources:
+  - https://github.com/lsst-sqre/unfurlbot
+type: application
+version: 1.0.0

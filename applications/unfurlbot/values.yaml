@@ -1,0 +1,133 @@
+# Default values for unfurlbot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the unfurlbot deployment
+  repository: "ghcr.io/lsst-sqre/unfurlbot"
+
+  # -- Pull policy for the unfurlbot image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+config:
+  # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  logLevel: "INFO"
+
+  topics:
+    # -- Kafka topic name for the Slack `app_mention` events
+    slackAppMention: "lsst.square-events.squarebot.slack.app.mention"
+
+    # -- Kafka topic name for the Slack `message.channels` events (public channels)
+    slackMessageChannels: "lsst.square-events.squarebot.slack.message.channels"
+
+    # -- Kafka topic name for the Slack `message.groups` events (private channels)
+    slackMessageGroups: "lsst.square-events.squarebot.slack.message.groups"
+
+    # -- Kafka topic name for the Slack `message.im` events (direct message channels)
+    slackMessageIm: "lsst.square-events.squarebot.slack.message.im"
+
+    # -- Kafka topic name for the Slack `message.mpim` events (multi-person direct messages)
+    slackMessageMpim: "lsst.square-events.squarebot.slack.message.mpim"
+
+  # -- Names of Jira projects to unfurl (comma-separated)
+  jiraProjects: >
+    ADMIN,
+    CCB,
+    CAP,
+    COMCAM,
+    COMT,
+    DM,
+    EPO,
+    FRACAS,
+    IAM,
+    IHS,
+    IT,
+    ITRFC,
+    LOVE,
+    LASD,
+    LIT,
+    LOPS,
+    LVV,
+    M1M3V,
+    OPSIM,
+    PHOSIM,
+    PST,
+    PSV,
+    PUB,
+    RFC,
+    RM,
+    SAFE,
+    SIM,
+    SPP,
+    SBTT,
+    SE,
+    TSAIV,
+    TCT,
+    SECMVERIF,
+    TMDC,
+    TPC,
+    TSEIA,
+    TAS,
+    TELV,
+    TSSAL,
+    TSS,
+    TSSPP,
+    WMP,
+    PREOPS,
+    OBS,
+    SITCOM,
+    BLOCK
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of unfurlbot deployment
+  enabled: false
+
+  # -- Minimum number of unfurlbot deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of unfurlbot deployment pods
+  maxReplicas: 100
+
+  # -- Target CPU utilization of unfurlbot deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the unfurlbot deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the unfurlbot deployment pod
+resources: {}
+
+# -- Node selection rules for the unfurlbot deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the unfurlbot deployment pod
+tolerations: []
+
+# -- Affinity rules for the unfurlbot deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

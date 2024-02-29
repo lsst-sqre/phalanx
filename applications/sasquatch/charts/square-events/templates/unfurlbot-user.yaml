@@ -1,0 +1,71 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: unfurlbot
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  template:
+      secret:
+        metadata:
+          annotations:
+            replicator.v1.mittwald.de/replication-allowed: "true"
+            replicator.v1.mittwald.de/replication-allowed-namespaces: "unfurlbot"
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "unfurlbot"
+          patternType: literal
+        operations:
+          - "Read"
+        host: "*"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.app.mention"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.channels"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.groups"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.im"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.mpim"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"

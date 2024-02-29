@@ -76,6 +76,7 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    ook/index
    sqrbot-sr/index
    squarebot/index
+   unfurlbot/index
 
 .. toctree::
    :maxdepth: 1

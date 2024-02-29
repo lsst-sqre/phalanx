@@ -217,6 +217,9 @@ applications:
   # -- Enable the times-square application
   times-square: false
 
+  # -- Enable the unfurlbot application
+  unfurlbot: false
+
   # -- Enable the uws application. This includes the dmocps control system
   # application.
   uws: false
