@@ -1,12 +1,27 @@
-#####################################
-Updating a secret stored in 1Password
-#####################################
+######################
+Update a static secret
+######################
 
-If you are adding a new secret, start by adding the new secret definition to :file:`secrets.yaml` or :file:`secrets-{environment}.yaml` in that application's chart.
-See :ref:`dev-secret-definition` for more details.
+The process for updating a static secret depends on how static secrets are stored for that environment.
+Since it requires write access to the underlying secret store, updates must be done by an enviroment administrator.
 
-For environments with static secrets stored in 1Password, updating them requires access to the 1Password Vault used by that enviroment.
-This may have to be done for you by an environment administrator.
+Static secrets in a YAML file
+=============================
+
+If the environment stores static secrets in a secure YAML file, the environment administrator should update that file with the newly-required static secrets.
+Then, sync the secrets into Vault following the instructions in :doc:`/admin/sync-secrets`.
+
+Static secrets stored directly in Vault
+=======================================
+
+If the environment stores static secrets directly in Vault, the environment administrator should change the static secret directly in Vault.
+Be aware that when multiple applications use the same static secret, one of them is defined as the "owner" and the other applications use ``copy`` directives in their :file:`secrets.yaml` files to copy the secret from the "owning" application.
+In this case, the static secret must be updated separately for every copy.
+
+When the static secrets are stored directly in Vault, no separate sync step is required.
+
+Static secrets stored in 1Password
+==================================
 
 #. Open the 1Password Vault for the environment whose secret you want to update.
    You can find the name of this vault in the ``onepassword.vaultTitle`` key in the :file:`environments/values-{environment}.yaml` file for your environment.
@@ -18,7 +33,7 @@ This may have to be done for you by an environment administrator.
 #. Replace the value of the secret with a new value.
 
 #. Sync secrets for that environment.
-   See :doc:`/admin/sync-secrets`.
+   See :doc:`sync-secrets`.
 
 If the same secret is used in multiple environments, these steps must be done for every environment.
 

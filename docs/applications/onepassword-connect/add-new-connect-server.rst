@@ -11,6 +11,11 @@ The one in the :px-env:`roundtable-dev` environment serves the vaults for develo
 When following these instructions, you will be creating a new `Secrets Automation workflow <https://developer.1password.com/docs/connect/get-started/>`__.
 You will need to have permissions to create that workflow for the vault for your environment.
 
+.. warning::
+
+   Currently, only rra has appropriate permissions in the SQuaRE 1Password vaults to set up new secrets automation workflows.
+   If someone else needs to follow these steps, you may first need to grant them additional permissions in 1Password.
+
 Create the workflow
 ===================
 
@@ -81,7 +86,7 @@ In the following steps, you'll deploy the new 1Password Connect server.
 
 #. If you are following this process, you are presumably using 1Password to manage your static secrets.
    Go to the 1Password vault for the environment where the 1Password Connect server will be running.
-   Create a new application secret item for the application ``onepassword-connect`` (see :ref:`dev-add-onepassword` for more details), and add a key named ``op-session`` whose value is the base64-encoded 1Password credentials.
+   Create a new application secret item for the application ``onepassword-connect`` (see :doc:`/admin/add-new-secret` for more details), and add a key named ``op-session`` whose value is the base64-encoded 1Password credentials.
 
 #. Synchronize secrets for that environment following the instructions in :doc:`/admin/sync-secrets`.
 

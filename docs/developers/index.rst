@@ -36,7 +36,7 @@ Individual applications are documented in the :doc:`/applications/index` section
 
    get-application-logs
    upgrade
-   update-a-onepassword-secret
+   update-a-secret
    deploy-from-a-branch
    local-development
 
