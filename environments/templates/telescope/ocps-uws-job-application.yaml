@@ -1,4 +1,4 @@
-{{- if .Values.applications.uws -}}
+{{- if (index .Values.applications.telescope "uws") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -10,9 +10,9 @@ spec:
   destination:
     namespace: ocps-uws-job
     server: https://kubernetes.default.svc
-  project: default
+  project: "telescope"
   source:
-    path: applications/ocps-uws-job
+    path: applications/telescope/ocps-uws-job
     repoURL: {{ .Values.repoUrl }}
     targetRevision: {{ .Values.targetRevision }}
 {{- end -}}
