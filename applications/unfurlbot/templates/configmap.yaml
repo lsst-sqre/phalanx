@@ -14,3 +14,4 @@ data:
   UNFURLBOT_TOPIC_MESSAGE_GROUPS: {{ .Values.config.topics.slackMessageGroups | quote }}
   UNFURLBOT_TOPIC_MESSAGE_IM: {{ .Values.config.topics.slackMessageIm | quote }}
   UNFURLBOT_TOPIC_MESSAGE_MPIM: {{ .Values.config.topics.slackMessageMpim | quote }}
+  UNFURLBOT_JIRA_PROJECTS: {{ .Values.config.jiraProjects | quote }}
