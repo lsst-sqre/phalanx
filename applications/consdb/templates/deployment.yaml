@@ -31,16 +31,41 @@ spec:
             readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          ports:
-            - name: "http"
-              containerPort: 8080
-              protocol: "TCP"
-          readinessProbe:
-            httpGet:
-              path: "/"
-              port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "POSTGRES_URL"
+              value: "{{ .Values.db.host }}"
+            - name: "DB_HOST"
+              value: "{{ .Values.db.host }}"
+            - name: "DB_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: consdb
+                  key: "oods-password"
+            - name: "DB_USER"
+              value: "{{ .Values.db.user }}"
+            - name: "DB_NAME"
+              value: "{{ .Values.db.database }}"
+            - name: "LFA_USER"
+              value: "{{ .Values.lfa.user }}"
+            - name: "LFA_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: consdb
+                  key: "lfa-password"
+            - name: "BUCKET_PREFIX"
+              value: "{{ .Values.lfa.BUCKET_PREFIX }}"
+            - name: "KAFKA_BOOTSTRAP"
+              value: "{{ .Values.kafka.KAFKA_BOOTSTRAP }}"
+            - name: "KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "consdb-password"
+            - name: "SCHEMA_URL"
+              value: "{{ .Values.kafka.SCHEMA_URL }}"
+      securityContext:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

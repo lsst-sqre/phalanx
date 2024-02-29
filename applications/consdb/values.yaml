@@ -15,15 +15,29 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+kafka:
+  # -- Kafka bootstrap server
+  KAFKA_BOOTSTRAP: "sasquatch-base-kafka-bootstrap.lsst.codes"
+  SCHEMA_URL: "https://sasquatch-base-kafka-schema-registry.lsst.codes"
+  # -- username for SASL_PLAIN authentication
+  KAFKA_USERNAME: "consdb"
+  # -- password for SASL_PLAIN authentication in deployment from vault
+  # -- name of consumer group, default is "consdb-consumer"
+  KAFKA_GROUP_ID: "consdb-consumer"
 db:
   # -- database host
-  host: postgres.postgres
+  url: postgres.postgres
   # -- database port
   port: 5432
   # -- database user
   user: consdb
   # -- database name
   database: consdb
+
+lfa:
+  # -- user
+  user: LFA
+  BUCKET_PREFIX: "rubin"
 
 ingress:
   # -- Additional annotations for the ingress rule
