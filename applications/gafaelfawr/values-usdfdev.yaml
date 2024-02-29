@@ -13,7 +13,6 @@ redis:
       memory: "50Mi"
 
 config:
-  updateSchema: true
   internalDatabase: true
 
   oidcServer:
