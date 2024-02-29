@@ -10,6 +10,8 @@ Publish observing schedule
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.obsplanLimit | int | `1000` | limit for obsplan query |
+| config.obsplanTimeSpan | int | `24` | time span, if a time is provided in the query how man hours to look back |
 | config.persistentVolumeClaims | list | `[]` | PersistentVolumeClaims to create. |
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |
