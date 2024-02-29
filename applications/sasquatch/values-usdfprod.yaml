@@ -32,33 +32,7 @@ strimzi-kafka:
       enabled: true
 
 influxdb:
-  ingress:
-    enabled: true
-    hostname: usdf-rsp.slac.stanford.edu
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-  persistence:
-    enabled: true
-    size: 15Ti
-  config:
-    coordinator:
-      query-timeout: "300s"
-
-source-influxdb:
-  enabled: true
-  ingress:
-    enabled: true
-    hostname: usdf-rsp.slac.stanford.edu
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
-  persistence:
-    enabled: true
-    size: 15Ti
-  config:
-    coordinator:
-      query-timeout: "300s"
+  enabled: false
 
 influxdb-enterprise:
   enabled: true
@@ -103,96 +77,13 @@ influxdb-enterprise:
         memory: 192Gi
         cpu: 8
 
-kafka-connect-manager:
-  enabled: false
-  influxdbSink:
-    # Based on the kafka producers configuration for the Summit
-    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
-    connectors:
-      auxtel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
-      maintel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
-      mtmount:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTMount"
-        tasksMax: "8"
-      comcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
-      eas:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
-      latiss:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
-      m1m3:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTM1M3"
-        tasksMax: "8"
-      m2:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
-      obssys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
-      ocps:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*OCPS"
-      test:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*PMD"
-      calsys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
-      mtaircompressor:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAirCompressor"
-      genericcamera:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
-      gis:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GIS"
-      mtvms:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTVMS"
-      lasertracker:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*LaserTracker"
-      lsstcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
-
 kafka-connect-manager-enterprise:
   enabled: true
   influxdbSink:
     connectInfluxUrl: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
     connectInfluxDb: "efd"
+    # Enable here the same connectors that are enabled at the summit to
+    # persist the same data at InfluxDB Enterprise at USDF
     connectors:
       enterprise-auxtel:
         enabled: true
