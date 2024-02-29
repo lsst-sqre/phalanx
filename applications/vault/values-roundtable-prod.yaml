@@ -11,8 +11,7 @@ vault:
         }
 
         seal "gcpckms" {
-          credentials = "/vault/userconfig/vault-kms-creds/credentials.json"
-          project     = "roundtable-prod-f6fd"
+          project     = "plasma-geode-127520"
           region      = "global"
           key_ring    = "vault"
           crypto_key  = "vault-seal"
@@ -33,6 +32,6 @@ vault:
         - host: vault.lsst.cloud
           paths:
             - "/"
-      serviceAccount:
-        annotations:
-          iam.gke.io/gcp-service-account: "vault-server@roundtable-prod-f6fd.iam.gserviceaccount.com"
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: "vault-server@roundtable-prod-f6fd.iam.gserviceaccount.com"

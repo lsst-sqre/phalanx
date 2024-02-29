@@ -11,21 +11,13 @@ vault:
       enabled: true
       annotations:
         kubernetes.io/ingress.class: "nginx"
-        cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+        cert-manager.io/cluster-issuer: "letsencrypt-dns"
       tls:
         - secretName: vault-ingress-tls
           hosts:
-            - vault.lsst.codes
-            - vault-1.lsst.codes
-            - vault-2.lsst.codes
+            - vault.lsst.cloud
       hosts:
-        - host: vault.lsst.codes
-          paths:
-            - "/"
-        - host: vault-1.lsst.codes
-          paths:
-            - "/"
-        - host: vault-2.lsst.codes
+        - host: vault.lsst.cloud
           paths:
             - "/"
 

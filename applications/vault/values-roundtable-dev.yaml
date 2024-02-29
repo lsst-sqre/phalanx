@@ -11,10 +11,9 @@ vault:
         }
 
         seal "gcpckms" {
-          credentials = "/vault/userconfig/vault-kms-creds/credentials.json"
           project     = "roundtable-dev-abe2"
-          region      = "global"
-          key_ring    = "vault"
+          region      = "us-central1"
+          key_ring    = "vault-server"
           crypto_key  = "vault-seal"
         }
 
@@ -34,6 +33,6 @@ vault:
         - host: vault-dev.lsst.cloud
           paths:
             - "/"
-      serviceAccount:
-        annotations:
-          iam.gke.io/gcp-service-account: "vault-server@roundtable-dev-abe2.iam.gserviceaccount.com"
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: "vault-server@roundtable-dev-abe2.iam.gserviceaccount.com"
