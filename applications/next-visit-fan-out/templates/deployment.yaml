@@ -29,7 +29,7 @@ spec:
               value: {{ .Values.knative.hscUrl }}
             - name: LSSTCOMCAMSIM_KNATIVE_SERVING_URL
               value: {{ .Values.knative.lsstcomcamsimUrl }}
-            - name: LSST_CAM_KNATIVE_SERVING_URL
+            - name: LSSTCAM_KNATIVE_SERVING_URL
               value: {{ .Values.knative.lsstcamUrl }}
             - name: DETECTOR_CONFIG_FILE
               value: {{ .Values.detectorConfigFile }}
