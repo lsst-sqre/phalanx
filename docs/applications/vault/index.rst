@@ -1,8 +1,8 @@
 .. px-app:: vault
 
-###########################
-Vault — Secret Storage
-###########################
+######################
+vault — Secret Storage
+######################
 
 Vault provides the storage for secrets which are materialized into
 Phalanx applications as Kubernetes Secrets.
