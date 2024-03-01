@@ -14,7 +14,7 @@ Event-driven processing of camera images
 |-----|------|---------|-------------|
 | additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | affinity | object | `{}` |  |
-| apdb.namespace | string | `""` | Database namespace for the APDB |
+| apdb.namespace | string | None, must be set | Database namespace for the APDB |
 | apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | containerConcurrency | int | `1` |  |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |

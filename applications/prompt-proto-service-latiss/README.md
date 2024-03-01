@@ -13,7 +13,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | prompt-proto-service.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
-| prompt-proto-service.apdb.namespace | string | `"pp_apdb"` | Database namespace for the APDB |
+| prompt-proto-service.apdb.namespace | string | `"pp_apdb_latiss"` | Database namespace for the APDB |
 | prompt-proto-service.apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
