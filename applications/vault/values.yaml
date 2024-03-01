@@ -1,0 +1,33 @@
+vault:
+  global:
+    tlsDisable: true
+    namespace: vault
+
+  injector:
+    enabled: false
+
+  server:
+    ingress:
+      enabled: true
+      annotations:
+        kubernetes.io/ingress.class: "nginx"
+        cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      tls:
+        - secretName: vault-ingress-tls
+          hosts:
+            - vault.lsst.cloud
+      hosts:
+        - host: vault.lsst.cloud
+          paths:
+            - "/"
+
+    # Used by the GCS storage backend.
+    dataStorage:
+      enabled: false
+
+    standalone:
+      enabled: false
+
+    ha:
+      enabled: true
+      replicas: 3

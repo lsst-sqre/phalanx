@@ -1,0 +1,37 @@
+vault:
+  server:
+    ha:
+      config: |
+        ui = true
+
+        listener "tcp" {
+          tls_disable     = 1
+          address         = "[::]:8200"
+          cluster_address = "[::]:8201"
+        }
+
+        seal "gcpckms" {
+          project     = "plasma-geode-127520"
+          region      = "global"
+          key_ring    = "vault"
+          crypto_key  = "vault-seal"
+        }
+
+        storage "gcs" {
+          bucket     = "rubin-us-central1-vault-server"
+          ha_enabled = "true"
+        }
+
+        service_registration "kubernetes" {}
+    ingress:
+      tls:
+        - secretName: vault-ingress-tls
+          hosts:
+            - vault.lsst.cloud
+      hosts:
+        - host: vault.lsst.cloud
+          paths:
+            - "/"
+    serviceAccount:
+      annotations:
+        iam.gke.io/gcp-service-account: "vault-server@roundtable-prod-f6fd.iam.gserviceaccount.com"

@@ -24,3 +24,4 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   unfurlbot: true
+  vault: true
