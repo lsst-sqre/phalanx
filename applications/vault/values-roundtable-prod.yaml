@@ -12,10 +12,9 @@ vault:
         }
 
         seal "gcpckms" {
-          disabled    = "true"
-          project     = "plasma-geode-127520"
-          region      = "global"
-          key_ring    = "vault"
+          project     = "roundtable-prod-f6fd"
+          region      = "us-central1"
+          key_ring    = "vault-server"
           crypto_key  = "vault-seal"
         }
 
