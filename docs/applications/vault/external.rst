@@ -100,10 +100,10 @@ The summary of these resources is as follows:
 #. A Workload Identity IAM member binding the service account to ``<project-id>>.svc.id.goog[vault/vault]``.
    That is, the GCP service account will be bound to the ``vault`` service account in the ``vault`` Kubernetes namespace::
 
-       resource "google_project_iam_member" "vault_server_sa_wi" {
-	 project = module.project_factory.project_id
-	 role    = "roles/iam.workloadIdentityUser"
-	 member  = "serviceAccount:${module.project_factory.project_id}.svc.id.goog[vault/vault]"
+       resource "google_service_account_iam_member" "vault_server_sa_wi" {
+         service_account_id = google_service_account.vault_server_sa.name
+	 role               = "roles/iam.workloadIdentityUser"
+	 member             = "serviceAccount:${module.project_factory.project_id}.svc.id.goog[vault/vault]"
        }
 
 
