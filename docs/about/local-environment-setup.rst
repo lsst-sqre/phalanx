@@ -1,5 +1,3 @@
-.. _about-dev-setup:
-
 ############################################
 Setting up a Phalanx development environment
 ############################################
