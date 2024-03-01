@@ -1,6 +1,7 @@
 vault:
   server:
     ha:
+      replicas: 1
       config: |
         ui = true
 
@@ -11,6 +12,7 @@ vault:
         }
 
         seal "gcpckms" {
+          disabled    = "true"
           project     = "plasma-geode-127520"
           region      = "global"
           key_ring    = "vault"
