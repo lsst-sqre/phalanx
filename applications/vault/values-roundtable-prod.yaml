@@ -1,7 +1,6 @@
 vault:
   server:
     ha:
-      replicas: 1
       config: |
         ui = true
 
