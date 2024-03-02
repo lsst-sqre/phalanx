@@ -50,3 +50,4 @@
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _workload identity: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity

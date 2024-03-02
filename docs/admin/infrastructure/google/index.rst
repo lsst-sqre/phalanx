@@ -11,3 +11,4 @@ This page collects advice and supplemental documentation for Phalanx administrat
 
    credentials
    terraform
+   workload-identity
