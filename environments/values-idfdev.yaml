@@ -13,7 +13,6 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfdev"
 
 applications:
-  argo-workflows: true
   butler: true
   datalinker: true
   filestore-backup: true
