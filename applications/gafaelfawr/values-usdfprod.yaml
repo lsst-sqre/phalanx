@@ -218,7 +218,6 @@ config:
   initialAdmins:
     - "afausti"
     - "athor"
-    - "cbanek"
     - "frossie"
     - "jonathansick"
     - "rra"
