@@ -27,14 +27,12 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    datalinker/index
    filestore-backup/index
    hips/index
-   linters/index
    livetap/index
    mobu/index
    noteburst/index
    nublado/index
    portal/index
    semaphore/index
-   sherlock/index
    siav2/index
    sqlproxy-cross-project/index
    squareone/index

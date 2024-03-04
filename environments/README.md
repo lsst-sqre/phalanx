@@ -23,7 +23,6 @@
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
 | applications.kubernetes-replicator | bool | `false` | Enable the kubernetes-replicator application |
-| applications.linters | bool | `false` | Enable the linters application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
@@ -49,7 +48,6 @@
 | applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
-| applications.sherlock | bool | `false` | Enable the sherlock application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |

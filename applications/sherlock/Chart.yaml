@@ -1,8 +1,0 @@
-apiVersion: v2
-name: sherlock
-type: application
-version: 1.0.0
-description: Application ingress status and metrics
-sources:
-  - https://github.com/lsst-sqre/sherlock
-appVersion: 0.1.8

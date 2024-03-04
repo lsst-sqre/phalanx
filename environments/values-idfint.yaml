@@ -17,7 +17,6 @@ applications:
   datalinker: true
   filestore-backup: true
   hips: true
-  linters: true
   mobu: true
   nublado: true
   plot-navigator: true
@@ -28,7 +27,6 @@ applications:
   ssotap: true
   production-tools: true
   semaphore: true
-  sherlock: true
   squareone: true
   strimzi: true
   tap: true
