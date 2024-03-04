@@ -5,7 +5,7 @@ Vault Migration
 If you want to migrate a Vault deployment from one GCP project and Kubernetes cluster to another, do the following:
 
 #. Create the resources required for the new Vault server in the new GCP project.
-   If you are not using Terraform via `the IDF deployment terraform configuration <https://github.com/https://github.com/lsst/idf_deploy/tree/main/environment/deployments/roundtable>`__ consult that repository to understand what resources you will need and create them by hand.
+   If you are not using Terraform via `the IDF deployment terraform configuration <https://github.com/lsst/idf_deploy/tree/main/environment/deployments/roundtable>`__ consult that repository to understand what resources you will need and create them by hand.
 #. Grant the new service account access to the KMS keyring and key used for unsealing in the old GCP project.
    This is necessary to be able to do a seal migration later.
    See `this StackOverflow answer <https://stackoverflow.com/questions/49214127/can-you-share-google-cloud-kms-keys-across-projects-with-service-roles>`__ for how to grant access.
