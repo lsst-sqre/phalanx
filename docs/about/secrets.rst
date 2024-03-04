@@ -17,7 +17,7 @@ Helm charts that need secrets use ``VaultSecret`` resources with the name matchi
 Those ``VaultSecret`` resources are configured with the path in Vault to the secret.
 That path, in turn, is configured in the Helm per-environment values files for those applications.
 
-Most Rubin Science Platform installations use the Vault server at ``vault.lsst.codes``.
+Most Rubin Science Platform installations use the Vault server at ``vault.lsst.cloud``.
 This is currently managed using Roundtable_ but will eventually be managed using Phalanx itself.
 This Vault server uses Rubin Observatory 1Password vaults as its ultimate source of secrets that cannot be randomly generated.
 

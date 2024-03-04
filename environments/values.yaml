@@ -25,7 +25,7 @@ repoUrl: https://github.com/lsst-sqre/phalanx.git
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
-vaultUrl: "https://vault.lsst.codes/"
+vaultUrl: "https://vault.lsst.cloud/"
 
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
