@@ -44,7 +44,6 @@ Individual applications are documented in the :doc:`/applications/index` section
    update-a-secret
    deploy-from-a-branch
    switch-environment-to-branch
-   local-development
 
 .. toctree::
    :maxdepth: 2
