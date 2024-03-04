@@ -95,9 +95,6 @@ applications:
   # -- Enable the kubernetes-replicator application
   kubernetes-replicator: false
 
-  # -- Enable the linters application
-  linters: false
-
   # -- Enable the livetap application
   livetap: false
 
@@ -186,9 +183,6 @@ applications:
 
   # -- Enable the semaphore application
   semaphore: false
-
-  # -- Enable the sherlock application
-  sherlock: false
 
   # -- Enable the sqlproxy-cross-project application
   sqlproxy-cross-project: false

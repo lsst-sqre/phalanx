@@ -1,7 +1,0 @@
-apiVersion: v2
-name: linters
-version: 1.0.0
-description: Linters running for operational reasons
-sources:
-  - https://github.com/lsst-sqre/ops-linters
-appVersion: 0.1.6
