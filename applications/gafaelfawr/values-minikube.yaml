@@ -48,7 +48,6 @@ config:
   initialAdmins:
     - "afausti"
     - "athornton"
-    - "cbanek"
     - "frossie"
     - "jonathansick"
     - "rra"

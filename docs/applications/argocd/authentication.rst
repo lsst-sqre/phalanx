@@ -93,10 +93,8 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
         policy.csv: |
           g, adam@lsst.cloud, role:admin
           g, afausti@lsst.cloud, role:admin
-          g, christine@lsst.cloud, role:admin
           g, frossie@lsst.cloud, role:admin
           g, jsick@lsst.cloud, role:admin
-          g, krughoff@lsst.cloud, role:admin
           g, rra@lsst.cloud, role:admin
         scopes: "[email]"
 
