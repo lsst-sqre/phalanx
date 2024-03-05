@@ -18,7 +18,7 @@ config:
     usernameClaim: "preferred_username"
 
   ldap:
-    url: "ldap://ipa.lsst.org"
+    url: "ldap://ipa1.ls.lsst.org"
     userDn: "uid=svc_rsp,cn=users,cn=accounts,dc=lsst,dc=cloud"
     userBaseDn: "cn=users,cn=accounts,dc=lsst,dc=cloud"
     uidAttr: "uidNumber"
