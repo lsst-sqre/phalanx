@@ -37,8 +37,8 @@ controller:
         - name: "home"
           source:
             type: "nfs"
-            serverPath: "/jhome"
-            server: "nfs1.cp.lsst.org"
+            serverPath: "/rsphome"
+            server: "nfs-rsphome.cp.lsst.org"
         - name: "project"
           source:
             type: "nfs"
