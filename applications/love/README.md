@@ -133,7 +133,6 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.viewBackup.image.nexus3 | string | `""` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
 | love-manager.viewBackup.image.pullPolicy | string | `"IfNotPresent"` | The pull policy to use for the view backup image |
 | love-manager.viewBackup.image.repository | string | `"lsstts/love-view-backup"` | The view backup image to use |
-| love-manager.viewBackup.image.tag | string | `"develop"` | The tag to use for the view backup image |
 | love-manager.viewBackup.nodeSelector | object | `{}` | Node selection rules for the LOVE view backup pods |
 | love-manager.viewBackup.resources | object | `{}` | Resource specifications for the LOVE view backup pods |
 | love-manager.viewBackup.restartPolicy | string | `"Never"` | The restart policy type for the view backup cronjob |
@@ -143,7 +142,7 @@ Deployment for the LSST Operators Visualization Environment
 | love-nginx.affinity | object | `{}` | Affinity rules for the NGINX pod |
 | love-nginx.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the NGINX image |
 | love-nginx.image.repository | string | `"nginx"` | The NGINX image to use |
-| love-nginx.image.tag | string | `"1.25.3"` | The tag to use for the NGINX image |
+| love-nginx.image.tag | string | `"1.25.4"` | The tag to use for the NGINX image |
 | love-nginx.imagePullSecrets | list | `[]` | The list of pull secrets needed for the images. If this section is used, each object listed can have the following attributes defined: _name_ (The label identifying the pull-secret to use) |
 | love-nginx.ingress.annotations | object | `{}` | Annotations for the NGINX ingress |
 | love-nginx.ingress.className | string | `"nginx"` | Assign the Ingress class name |

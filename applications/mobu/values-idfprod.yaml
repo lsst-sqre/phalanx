@@ -50,25 +50,6 @@ config:
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true
-    - name: "tutorial-weekly"
-      count: 1
-      users:
-        - username: "bot-mobu-tutorial-weekly"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "NotebookRunner"
-        options:
-          image:
-            image_class: "latest-weekly"
-          repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "prod"
-          max_executions: 1
-          working_directory: "notebooks/tutorial-notebooks"
-        restart: true
     - name: "tap"
       count: 1
       users:

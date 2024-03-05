@@ -1,0 +1,7 @@
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+config:
+  logLevel: "DEBUG"
+image:
+  pullPolicy: "Always"

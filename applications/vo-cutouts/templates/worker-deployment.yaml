@@ -65,8 +65,13 @@ spec:
             # and authenticate to its database.
             - name: "AWS_SHARED_CREDENTIALS_FILE"
               value: "/etc/vo-cutouts/secrets/aws-credentials"
+            {{- if .Values.config.useButlerServer }}
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
+            {{- else }}
             - name: "DAF_BUTLER_REPOSITORY_INDEX"
               value: {{ .Values.global.butlerRepositoryIndex | quote }}
+            {{- end }}
             - name: "PGPASSFILE"
               value: "/etc/vo-cutouts/secrets/postgres-credentials"
             - name: "S3_ENDPOINT_URL"
@@ -86,6 +91,11 @@ spec:
             # Temporary directory into which to stage cutouts before uploading.
             - name: "CUTOUT_TMPDIR"
               value: "/tmp/cutouts"
+
+            # lsst-resources writes temp files into the current working
+            # directory unless you explicitly specify one.
+            - name: "TMPDIR"
+              value: "/tmp"
           envFrom:
             - configMapRef:
                 name: {{ template "vo-cutouts.fullname" . }}-config

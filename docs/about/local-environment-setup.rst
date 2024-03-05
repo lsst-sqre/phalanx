@@ -1,5 +1,3 @@
-.. _about-dev-setup:
-
 ############################################
 Setting up a Phalanx development environment
 ############################################
@@ -21,7 +19,7 @@ Clone phalanx
 Start by cloning Phalanx into your own editing environment.
 You will likely need to make changes to Phalanx and create pull requests, so you need to create a branch or fork of the repository to which you can push changes.
 
-Members of the `lsst-sqre/phalanx`_ repository on GitHub can clone the repository directly and create a ticket branch, per the `Data Management workflow guide`_.
+Members of the https://github.com/lsst-sqre/phalanx repository on GitHub can clone the repository directly and create a ticket branch, per the `Data Management workflow guide`_.
 
 Otherwise, fork lsst-sqre/phalanx `following GitHub's guide <https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo>`__.
 
@@ -34,14 +32,16 @@ Phalanx comes with a Python command-line tool which depends on a variety of Pyth
 To ensure consistent behavior, those dependencies are pinned to specific versions.
 This tool should therefore always be run from inside a Python virtual environment or venv_.
 
-Create a virtual environment with your method of choice.
+Ensure that you have Python 3.11 or later available.
+Then, create a virtual environment for that version of Python with your method of choice.
 virtualenvwrapper_ is one popular approach.
-Whenever you do Phalanx development, you will switch back to this virtualenv.
+
+Whenever you do Phalanx development, you should switch to this virtualenv.
 
 Initialize the development environment
 ======================================
 
-From the ``phalanx`` directory, initialize your environment:
+From the ``phalanx`` directory, with the virtualenv from the previous step activated, initialize your environment:
 
 .. code-block:: bash
 
@@ -59,7 +59,7 @@ You therefore must have it installed on your PATH.
 
 See the `helm-docs installation guide <https://github.com/norwoodj/helm-docs#installation>`__ for details.
 Also, not mentioned on that page, you can download a binary release from the `releases page <https://github.com/norwoodj/helm-docs/releases>`__.
-To see which binary is most appropriate for a Linux system, run ``uname -m``.
+To see which binary is most appropriate for a Linux system, run :command:`uname -m`.
 
 .. warning::
 
@@ -69,6 +69,9 @@ To see which binary is most appropriate for a Linux system, run ``uname -m``.
    The best (but possibly not the most convenient) way to make certain you have the same version is to run the same :command:`go install` command that GitHub Actions uses.
    However, this (unlike the installation methods documented in the installation guide) will require that you have Go installed locally.
    Alternately, find the binary release matching the desired version in the releases page and download that version.
+
+   The required version of helm-docs will be updated periodically.
+   If :command:`tox run -e lint` creates lots of spurious changes to generated documentation, your version of helm-docs is probably out of date and should be updated to a matching version.
 
 If you don't want to (or don't have access to) install helm-docs globally on your system, you can put the binary in the :file:`bin` directory of the virtual environment you created in :ref:`about-venv`.
 

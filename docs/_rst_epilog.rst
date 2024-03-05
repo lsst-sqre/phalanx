@@ -27,7 +27,6 @@
 .. _LSST Vault Utilites: https://github.com/lsst-sqre/lsstvaultutils/
 .. _Mend Renovate: https://www.mend.io/renovate/
 .. _Namespace: https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/
-.. _`lsst-sqre/phalanx`:
 .. _ObsTAP: https://www.ivoa.net/documents/ObsCore/
 .. _persistent volume: https://kubernetes.io/docs/concepts/storage/persistent-volumes/
 .. _Phalanx repository: https://github.com/lsst-sqre/phalanx
@@ -51,3 +50,4 @@
 .. _Vault Secrets Operator: https://github.com/ricoberger/vault-secrets-operator
 .. _venv: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#creating-a-virtual-environment
 .. _virtualenvwrapper: https://virtualenvwrapper.readthedocs.io/en/latest/
+.. _workload identity: https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity

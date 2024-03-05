@@ -24,11 +24,9 @@ argo-cd:
       policy.csv: |
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
-        g, christine@lsst.cloud, role:admin
         g, dspeck@lsst.cloud, role:admin
         g, frossie@lsst.cloud, role:admin
         g, jsick@lsst.cloud, role:admin
-        g, krughoff@lsst.cloud, role:admin
         g, rra@lsst.cloud, role:admin
         g, ctslater@lsst.cloud, role:admin
         g, gpdf@lsst.cloud, role:admin

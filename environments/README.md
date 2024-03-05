@@ -11,6 +11,7 @@
 | applications.butler | bool | `false` | Enable the butler application |
 | applications.calsys | bool | `false` | Enable the calsys control system application |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
+| applications.checkerboard | bool | `false` | Enable the checkerboard application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.eas | bool | `false` | Enable the eas control system application |
@@ -22,7 +23,6 @@
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
 | applications.kubernetes-replicator | bool | `false` | Enable the kubernetes-replicator application |
-| applications.linters | bool | `false` | Enable the linters application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
@@ -48,10 +48,10 @@
 | applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
-| applications.sherlock | bool | `false` | Enable the sherlock application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
+| applications.sqrbot-sr | bool | `false` | Enable the sqrbot-sr application |
 | applications.squarebot | bool | `false` | Enable the squarebot application |
 | applications.squareone | bool | `false` | Enable the squareone application |
 | applications.ssotap | bool | `false` | Enable the ssotap application |
@@ -61,7 +61,9 @@
 | applications.telegraf | bool | `false` | Enable the telegraf application |
 | applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
 | applications.times-square | bool | `false` | Enable the times-square application |
+| applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |
+| applications.vault | bool | `false` | Enable the vault application. This is the actual vault storage and there should only be one production and one development instance globally. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |
 | butlerRepositoryIndex | string | None, must be set | Butler repository index URI to use for this environment, for services that connect directly to the Butler database. |
@@ -79,4 +81,4 @@
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
-| vaultUrl | string | `"https://vault.lsst.codes/"` | URL of Vault server for this environment |
+| vaultUrl | string | `"https://vault.lsst.cloud/"` | URL of Vault server for this environment |

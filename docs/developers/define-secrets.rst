@@ -168,74 +168,30 @@ See the `vault-secrets-operator documentation <https://github.com/ricoberger/vau
    The ``index`` function can retrieve secrets whose names are not valid identifiers (because, for instance, they contain a dash), and ``>-`` quoting avoids the conflict between two layers of quotes.
    This also works for other characters not allowed in identifiers, such as periods.
 
+.. _dev-inject-secrets:
+
+Inject the secrets into your application
+========================================
+
+Now that you have arranged for the creation of the ``Secret`` Kubernetes resource, you need to make those secrets available to your application.
+There are two main ways to give a ``Deployment``, ``StatefulSet``, ``CronJob``, or other pod-creating resource access to secrets:
+
+- `Set environment variables based on secrets <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#define-container-environment-variables-using-secret-data>`__
+- `Mount the secrets as files in the container <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume>`__
+
 See :doc:`write-a-helm-chart` for more details on creating a Helm chart for an application.
 
-.. _dev-add-onepassword:
+Add the new secrets
+===================
 
-Create static secrets in 1Password
-==================================
+Adding secrets for a new application must be done by the environment administrator, since it requires write access to the Vault and possibly the static secret store for the environment.
 
-For SQuaRE-run Phalanx environments, static secrets for applications are stored in a 1Password vault before being automatically synced to the Vault service.
-Such secrets are things for external cloud services where we don't automatically provision accounts and password.
-When we manually create such a secret, we store it in 1Password.
+Once you have defined the secrets for your new application, contact the administrator of that environment and provide the values of any static secrets that you are using.
+They will then use one or more of the following processes:
 
-This step may have to be done for you by a Phalanx environment administrator depending on how permissions in Vault and any underlying secrets store are handled for your environment.
-
-.. note::
-
-   This document only covers creating a 1Password-backed secret for the first time for an application.
-   If you want to update a secret, either by adding new 1Password secrets or by changing their secret values, you should follow the instructions in :doc:`/developers/update-a-onepassword-secret`.
-
-1. Open the 1Password vault
----------------------------
-
-In one password, access the **LSST IT** 1Password team and open the vault for the environment to which you're adding a secret.
-If your application will be deployed in multiple environments, you will need to repeat this process for each environment.
-
-The name of the 1Password vault for a given environment is configured in the ``onepassword.vaultTitle`` key in the :file:`values-{environment}.yaml` file in :file:`environments` for that environment.
-
-2. Create the new item
-----------------------
-
-Each application should have one entry in the 1Password vault.
-Each field in that entry is one Phalanx secret for that application.
-The value of the field is the value of the secret.
-
-For a new application, create a new 1Password item of type :guilabel:`Server`.
-Delete all of the pre-defined fields.
-
-Then, create a field for each static secret for that application, and set the value to the value of that secret in that environemnt.
-The field names should match the secret keys for the application.
-Change the field type to password so that the value isn't displayed any time someone opens the 1Password entry.
-
-Do not use sections.
-Phalanx requires all of the secret entries be top-level fields outside of any section.
-
-Newlines will be converted to spaces when pasting the secret value.
-If newlines need to be preserved, be sure to mark the secret with ``onepassword.encoded`` set to ``true`` in :file:`secrets.yaml`, and then encode the secret in base64 before pasting it into 1Password.
-To encode the secret, save it to a file with the correct newlines, and then use a command such as:
-
-.. tab-set::
-
-   .. tab-item:: Linux
-
-      .. prompt:: bash
-
-         base64 -w0 < /path/to/secret; echo ''
-
-   .. tab-item:: macOS
-
-      .. prompt:: bash
-
-         base64 -i /path/to/secret; echo ''
-
-This will generate a base64-encoded version of the secret on one line, suitable for cutting and pasting into the 1Password field.
-
-3. Sync 1Password items into Vault
-----------------------------------
-
-To sync the new 1Password items into Vault, follow the instructions in :doc:`/admin/sync-secrets`.
-This must be done using a Phalanx configuration that includes your new application and the secret configuration for it that you created above.
+- :doc:`/admin/add-new-secret`
+- :doc:`/admin/update-a-secret`
+- :doc:`/admin/sync-secrets`
 
 Next steps
 ==========

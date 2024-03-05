@@ -7,7 +7,7 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: d_2024_01_31
+    tag: w_2024_08
 
   instrument:
     pipelines: >-
@@ -26,7 +26,7 @@ prompt-proto-service:
       (survey="spec_pole_with_rotation")=[]
       (survey="")=[]
     calibRepo: s3://rubin-summit-users
-    calibRepoPguser: rubin
+    calibRepoPguser: latiss_prompt
 
   s3:
     imageBucket: rubin-summit

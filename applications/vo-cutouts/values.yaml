@@ -25,7 +25,14 @@ ingress:
   annotations: {}
 
 # -- Resource limits and requests for the vo-cutouts frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "0.5"
+    memory: "500Mi"
+  requests:
+    cpu: "0.1"
+    memory: "230Mi"
 
 # -- Annotations for the vo-cutouts frontend pod
 podAnnotations: {}
@@ -42,6 +49,9 @@ affinity: {}
 config:
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
+
+  # -- URL path prefix for the cutout API
+  pathPrefix: "/api/cutout"
 
   # -- URL for the PostgreSQL database
   # @default -- None, must be set
@@ -65,6 +75,10 @@ config:
   # @default -- 60 (1 minute)
   syncTimeout: 60
 
+  # -- If true, use Butler in client/server mode instead of connecting
+  # directly to the Butler database
+  useButlerServer: true
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
   # on Google Cloud
@@ -75,7 +89,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.16"
+    tag: "1.34.0"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -88,6 +102,16 @@ cloudsql:
   # to the GCS bucket, and ability to sign URLs as itself
   # @default -- None, must be set
   serviceAccount: ""
+
+  # -- Resource limits and requests for the Cloud SQL Proxy container
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
 
 cutoutWorker:
   # -- Number of cutout worker pods to start
@@ -105,7 +129,14 @@ cutoutWorker:
     pullPolicy: "IfNotPresent"
 
   # -- Resource limits and requests for the cutout worker pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "700Mi"
+    requests:
+      cpu: "0.1"
+      memory: "350Mi"
 
   # -- Annotations for the cutout worker pod
   podAnnotations: {}
@@ -124,7 +155,14 @@ databaseWorker:
   replicaCount: 1
 
   # -- Resource limits and requests for the database worker pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.1"
+      memory: "200Mi"
+    requests:
+      cpu: "0.02"
+      memory: "85Mi"
 
   # -- Annotations for the database worker pod
   podAnnotations: {}
@@ -171,7 +209,11 @@ redis:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "1"
+      cpu: "0.5"
+      memory: "10Mi"
+    requests:
+      cpu: "0.1"
+      memory: "5Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}
@@ -195,6 +237,10 @@ global:
   # -- URI to the Butler configuration of available repositories
   # @default -- Set by Argo CD
   butlerRepositoryIndex: ""
+
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: ""
 
   # -- Host name for ingress
   # @default -- Set by Argo CD

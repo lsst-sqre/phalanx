@@ -61,7 +61,6 @@ config:
   initialAdmins:
     - "adam"
     - "afausti"
-    - "cbanek"
     - "frossie"
     - "jsick"
     - "rra"

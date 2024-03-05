@@ -35,3 +35,12 @@ You will need to assign all of them except ``admin:token`` and ``user:token``, w
 
 For ``admin:token``, ensure that the list of usernames in ``config.initialAdmins`` is correct before you start Gafaelfawr for the first time.
 Otherwise, you will need to add admins later via the Gafaelfawr API.
+
+Enable database schema initialization
+=====================================
+
+When you are bootstrapping the new environment, set ``config.updateSchema`` to true in :file:`values-{environment}.yaml` for the ``gafaelfawr`` application.
+This tells Helm to use a pre-install hook to initialize the database before installing other Gafaelfawr resources.
+Remove this setting once you have successfully bootstrapped the environment.
+
+See :ref:`gafaelfawr-db-init` for more details.

@@ -1,6 +1,4 @@
 # Default values for cadc-tap.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
 
 # -- Override the base name for resources
 nameOverride: ""
@@ -21,11 +19,12 @@ ingress:
   # such as `/sync`, `/async`, and `/tables`
   authenticatedAnnotations: {}
 
-  # -- External path to the tap service, the path eventually gets rewritten
+  # -- External path to the TAP service, the path eventually gets rewritten
   # by tomcat.
   path: ""
 
 # -- Resource limits and requests for the TAP pod
+# @default -- See `values.yaml`
 resources:
   requests:
     cpu: 2.0
@@ -46,38 +45,33 @@ tolerations: []
 # -- Affinity rules for the TAP pod
 affinity: {}
 
-# -- Path to the Vault secret (`secret/k8s_operator/<host>/tap`, for example)
-# @default -- None, must be set
-vaultSecretsPath: ""
-
 config:
   # -- What type of backend are we connecting to?
-  # @default -- None, must be set to "pg" or "qserv"
+  # @default -- None, must be set to `pg` or `qserv`
   backend: ""
 
   pg:
     # -- Host to connect to
-    # @default -- None, must be set if backend is pg
+    # @default -- None, must be set if backend is `pg`
     host: ""
 
     # -- Database to connect to
-    # @default -- None, must be set if backend is pg
+    # @default -- None, must be set if backend is `pg`
     database: ""
 
     # -- Username to connect with
-    # @default -- None, must be set if backend is pg
+    # @default -- None, must be set if backend is `pg`
     username: ""
 
     image:
-      # -- tap image to use
+      # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/tap-postgres-service"
 
-      # -- Pull policy for the tap image
+      # -- Pull policy for the TAP image
       pullPolicy: "IfNotPresent"
 
-      # -- Tag of tap image to use
-      # @default -- Latest release
-      tag: "1.14.1"
+      # -- Tag of TAP image to use
+      tag: "1.15.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -85,32 +79,28 @@ config:
     host: "mock-db:3306"
 
     image:
-      # -- tap image to use
+      # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
 
-      # -- Pull policy for the tap image
+      # -- Pull policy for the TAP image
       pullPolicy: "IfNotPresent"
 
-      # -- Tag of tap image to use
-      # @default -- Latest release
-      tag: "2.1.1"
+      # -- Tag of TAP image to use
+      tag: "2.2.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.3.0/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.4.0/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
-  # @default -- The common GCS bucket
   gcsBucket: "async-results.lsst.codes"
 
   # -- Base URL for results stored in GCS bucket
-  # @default -- The common GCS bucket
   gcsBucketUrl: "https://tap-files.lsst.codes"
 
   # -- GCS bucket type (GCS or S3)
-  # @default -- GCS
   gcsBucketType: "GCS"
 
   # -- Java heap size, which will set the maximum size of the heap. Otherwise
@@ -165,7 +155,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "2.3.0"
+    tag: "2.4.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   resources: {}
@@ -191,10 +181,10 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    # @default -- Version of QServ TAP image
-    tag: "2.1.1"
+    tag: "2.2.0"
 
   # -- Resource limits and requests for the UWS database pod
+  # @default -- See `values.yaml`
   resources:
     requests:
       cpu: 0.25

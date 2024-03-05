@@ -1,0 +1,11 @@
+
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrServiceToken
+metadata:
+  name: unfurlbot-gafaelfawr-token
+  labels:
+    {{- include "unfurlbot.labels" . | nindent 4 }}
+spec:
+  service: "bot-unfurlbot"
+  scopes:
+    - "exec:notebook"

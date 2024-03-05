@@ -1,0 +1,8 @@
+apiVersion: v2
+name: vault
+version: 1.0.0
+description: Secret Storage
+dependencies:
+  - name: vault
+    version: 0.27.0
+    repository: https://helm.releases.hashicorp.com

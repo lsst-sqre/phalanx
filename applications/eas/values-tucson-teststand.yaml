@@ -16,6 +16,13 @@ auxtel-ess01-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 201 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 auxtel-ess02-sim:
   enabled: true
@@ -25,6 +32,13 @@ auxtel-ess02-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 202 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 auxtel-ess03-sim:
   enabled: true
@@ -34,6 +48,13 @@ auxtel-ess03-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 203 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 auxtel-ess04-sim:
   enabled: true
@@ -43,6 +64,29 @@ auxtel-ess04-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 204 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+auxtel-ess05-sim:
+  enabled: false
+  classifier: ess205
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 205 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 calibhill-ess01-sim:
   enabled: true
@@ -52,6 +96,13 @@ calibhill-ess01-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 301 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 dimm1-sim:
   enabled: true
@@ -60,6 +111,13 @@ dimm1-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
 
 dimm2-sim:
   enabled: true
@@ -68,6 +126,13 @@ dimm2-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 2 --simulate
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
 
 dsm1-sim:
   enabled: true
@@ -77,6 +142,13 @@ dsm1-sim:
   env:
     CSC_INDEX: 1
     RUN_ARG: --simulate 1 --state enabled
+  resources:
+    requests:
+      cpu: 14m
+      memory: 90Mi
+    limits:
+      cpu: 140m
+      memory: 900Mi
 
 dsm2-sim:
   enabled: true
@@ -86,6 +158,13 @@ dsm2-sim:
   env:
     CSC_INDEX: 2
     RUN_ARG: --simulate 2 --state enabled
+  resources:
+    requests:
+      cpu: 10m
+      memory: 90Mi
+    limits:
+      cpu: 100m
+      memory: 900Mi
 
 m2-ess106-sim:
   enabled: true
@@ -95,6 +174,13 @@ m2-ess106-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 106 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 mtdome-ess01-sim:
   enabled: true
@@ -104,6 +190,13 @@ mtdome-ess01-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 101 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 mtdome-ess02-sim:
   enabled: true
@@ -113,6 +206,13 @@ mtdome-ess02-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 102 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 mtdome-ess03-sim:
   enabled: true
@@ -122,6 +222,13 @@ mtdome-ess03-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 103 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 tma-ess01-sim:
   enabled: true
@@ -131,6 +238,13 @@ tma-ess01-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 1 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 tma-ess104-sim:
   enabled: true
@@ -140,6 +254,13 @@ tma-ess104-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 104 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 tma-ess105-sim:
   enabled: true
@@ -149,6 +270,13 @@ tma-ess105-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 105 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
 
 weatherforecast:
   image:
@@ -160,3 +288,10 @@ weatherforecast:
   - name: METEOBLUE_API_KEY
     secretName: meteoblue
     secretKey: api-key
+  resources:
+    requests:
+      cpu: 9m
+      memory: 95Mi
+    limits:
+      cpu: 90m
+      memory: 950Mi

@@ -25,7 +25,8 @@ spec:
         spec:
           containers:
             - name: {{ include "love-manager.view-backup.fullname" . }}
-              image: "{{ .Values.viewBackup.image.repository }}:{{ .Values.viewBackup.image.tag }}"
+              {{- $imageTag := .Values.viewBackup.image.tag | default $.Values.global.controlSystem.imageTag }}
+              image: "{{ .Values.viewBackup.image.repository }}:{{ $imageTag }}"
               imagePullPolicy: {{ .Values.viewBackup.image.pullPolicy }}
               env:
                 - name: PGHOST
@@ -50,22 +51,20 @@ spec:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.namespace }}-lfa
+                      name: lfa
                       key: aws-access-key-id
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.namespace }}-lfa
+                      name: lfa
                       key: aws-secret-access-key
               {{- with $.Values.viewBackup.resources }}
               resources:
                 {{- toYaml $.Values.viewBackup.resources | nindent 16 }}
               {{- end }}
           restartPolicy: {{ .Values.viewBackup.restartPolicy }}
-          {{- if $.Values.viewBackup.image.nexus3 }}
           imagePullSecrets:
-            - name: {{ $.Values.namespace }}-{{ $.Values.viewBackup.image.nexus3 }}
-          {{- end }}
+            - name: nexus3-docker
           {{- with $.Values.nodeSelector }}
           nodeSelector:
             {{- toYaml $ | nindent 12 }}

@@ -64,7 +64,7 @@ prompt-proto-service:
     # @default -- None, must be set
     url: ""
     # -- Database namespace for the APDB
-    namespace: pp_apdb
+    namespace: pp_apdb_lsstcomcam
 
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.

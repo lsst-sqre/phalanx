@@ -3,7 +3,7 @@ fqdn: minikube.lsst.cloud
 onepassword:
   connectUrl: https://roundtable-dev.lsst.cloud/1password/minikube/
   vaultTitle: "RSP minikube.lsst.codes"
-vaultUrl: https://vault.lsst.codes/
+vaultUrl: https://vault.lsst.cloud/
 vaultPathPrefix: secret/phalanx/minikube
 
 applications:

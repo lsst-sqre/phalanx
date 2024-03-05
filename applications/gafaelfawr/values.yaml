@@ -51,6 +51,9 @@ config:
   # nor `config.internalDatabase` are true
   databaseUrl: ""
 
+  # -- Whether to automatically update the Gafaelfawr database schema
+  updateSchema: false
+
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
 
@@ -314,7 +317,10 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.33.16"
+    tag: "1.34.0"
+
+    # -- Tag suffix to use for the proxy for schema updates
+    schemaUpdateTagSuffix: "-alpine"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

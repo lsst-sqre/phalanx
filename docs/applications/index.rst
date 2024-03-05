@@ -27,14 +27,12 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    datalinker/index
    filestore-backup/index
    hips/index
-   linters/index
    livetap/index
    mobu/index
    noteburst/index
    nublado/index
    portal/index
    semaphore/index
-   sherlock/index
    siav2/index
    sqlproxy-cross-project/index
    squareone/index
@@ -68,12 +66,16 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    :maxdepth: 1
    :caption: Roundtable
 
+   checkerboard/index
    giftless/index
    kubernetes-replicator/index
    monitoring/index
    onepassword-connect/index
    ook/index
+   sqrbot-sr/index
    squarebot/index
+   unfurlbot/index
+   vault/index
 
 .. toctree::
    :maxdepth: 1

@@ -13,9 +13,11 @@ jobs:
 
       - name: Set up go
         uses: actions/setup-go@v5
+        with:
+          go-version: '>=1.22'
 
       - name: Install helm-docs
-        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.11.3
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.0
         env:
           GOBIN: /usr/local/bin/
 
@@ -82,7 +84,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Filter paths
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         id: filter
         with:
           filters: |
@@ -99,7 +101,7 @@ jobs:
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: medyagh/setup-minikube@v0.0.14
+        uses: medyagh/setup-minikube@v0.0.15
         with:
           kubernetes-version: "v1.27.3"
           cpus: max

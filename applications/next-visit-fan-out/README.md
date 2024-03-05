@@ -18,10 +18,11 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_PLAINTEXT"` |  |
-| knative.hscUrl | string | `"http://prompt-proto-service.prompt-proto-service-hsc/next-visit"` |  |
-| knative.latissUrl | string | `"http://prompt-proto-service.prompt-proto-service-latiss/next-visit"` |  |
-| knative.lsstcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcam/next-visit"` |  |
-| knative.lsstcomcamUrl | string | `"http://prompt-proto-service.prompt-proto-service-lsstcomcam/next-visit"` |  |
+| knative.hscUrl | string | `"http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit"` |  |
+| knative.latissUrl | string | `"http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit"` |  |
+| knative.lsstcamUrl | string | `"http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit"` |  |
+| knative.lsstcomcamUrl | string | `"http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit"` |  |
+| knative.lsstcomcamsimUrl | string | `"http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit"` |  |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
 | podAnnotations."prometheus.io/port" | string | `"8000"` |  |

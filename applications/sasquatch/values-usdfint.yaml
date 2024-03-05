@@ -120,7 +120,7 @@ kafka-connect-manager:
         timestamp: "timestamp"
         connectInfluxDb: "lsst.verify"
         topicsRegex: "lsst.verify.*"
-        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run
+        tags: dataset_tag,band,instrument,skymap,detector,physical_filter,tract,exposure,patch,visit,run,pipeline
       lsstlf:
         enabled: true
         timestamp: "timestamp"

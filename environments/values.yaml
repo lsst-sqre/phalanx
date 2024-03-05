@@ -25,7 +25,7 @@ repoUrl: https://github.com/lsst-sqre/phalanx.git
 targetRevision: "main"
 
 # -- URL of Vault server for this environment
-vaultUrl: "https://vault.lsst.codes/"
+vaultUrl: "https://vault.lsst.cloud/"
 
 # -- Prefix for Vault secrets for this environment
 # @default -- None, must be set
@@ -54,6 +54,9 @@ applications:
   # -- Enable the cert-manager application, required unless the environment
   # makes separate arrangements to inject a current TLS certificate
   cert-manager: true
+
+  # -- Enable the checkerboard application
+  checkerboard: false
 
   # -- Enable the control-system-test application
   control-system-test: false
@@ -91,9 +94,6 @@ applications:
 
   # -- Enable the kubernetes-replicator application
   kubernetes-replicator: false
-
-  # -- Enable the linters application
-  linters: false
 
   # -- Enable the livetap application
   livetap: false
@@ -160,6 +160,9 @@ applications:
   # -- Enable the simonyitel control system application
   simonyitel: false
 
+  # -- Enable the sqrbot-sr application
+  sqrbot-sr: false
+
   # -- Enable the ssotap application
   ssotap: false
 
@@ -180,9 +183,6 @@ applications:
 
   # -- Enable the semaphore application
   semaphore: false
-
-  # -- Enable the sherlock application
-  sherlock: false
 
   # -- Enable the sqlproxy-cross-project application
   sqlproxy-cross-project: false
@@ -211,9 +211,17 @@ applications:
   # -- Enable the times-square application
   times-square: false
 
+  # -- Enable the unfurlbot application
+  unfurlbot: false
+
   # -- Enable the uws application. This includes the dmocps control system
   # application.
   uws: false
+
+  # -- Enable the vault application. This is the actual vault storage
+  # and there should only be one production and one development instance
+  # globally.
+  vault: false
 
   # -- Enable the vault-secrets-operator application. This is required for all
   # environments.

@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sqrbot-sr.fullname" . }}
+  labels:
+    {{- include "sqrbot-sr.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "sqrbot-sr.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "sqrbot-sr.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1001
+        runAsGroup: 1001
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "HUBOT_NAME"
+              value: {{ .Values.config.username }}
+            - name: "HUBOT_LOG_LEVEL"
+              value: {{ .Values.config.logLevel | lower }}
+            - name: "LSST_JIRA_URL"
+              value: {{ .Values.config.jiraUrl }}
+            - name: "HUBOT_SLACK_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "slack-token"
+            - name: "HUBOT_GITHUB_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "github-token"
+            - name: "HUBOT_GITHUB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "github-password"
+            - name: "HUBOT_GITHUB_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "github-user"
+            - name: "LSST_JIRA_USER"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "jira-user"
+            - name: "LSST_JIRA_PWD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "sqrbot-sr.fullname" . }}-secrets
+                  key: "jira-password"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}

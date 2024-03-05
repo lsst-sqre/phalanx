@@ -5,6 +5,10 @@ environment:
   AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
   S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
   EFD: "usdf-efd"
+  database_schema: "obsloctap_dev"
+  vaultUrl: "https://vault.slac.stanford.edu"
+  vaultPathPrefix: secret/rubin/usdf-butler/postgres
+  obsloctapVaultPrefix: secret/rubin/usdf-butler/postgres
 
 config:
   volumes:
@@ -24,3 +28,12 @@ config:
       storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
+
+image:
+  pullPolicy: Always
+
+
+controller:
+  config:
+    safir:
+      logLevel: "DEBUG"

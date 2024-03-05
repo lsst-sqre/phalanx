@@ -22,7 +22,6 @@ applications:
   nublado: true
   portal: true
   semaphore: true
-  sherlock: true
   siav2: true
   squareone: true
   ssotap: true

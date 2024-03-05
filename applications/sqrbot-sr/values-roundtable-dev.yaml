@@ -1,0 +1,7 @@
+image:
+  repository: docker.io/lsstsqre/sqrbot
+  tag: ajt-dev
+  pullPolicy: Always
+
+config:
+  logLevel: "DEBUG"

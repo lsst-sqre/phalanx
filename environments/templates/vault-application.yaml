@@ -1,0 +1,27 @@
+{{- if .Values.applications.vault -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "vault"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "vault"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "vault"
+    server: "https://kubernetes.default.svc"
+  project: "default"
+  source:
+    path: "applications/vault"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

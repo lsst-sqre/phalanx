@@ -21,13 +21,18 @@ spec:
     parameters:
     - name: date-key
       value: "20230327"
-  entrypoint: run-tests
-  onExit: save-reports
+  entrypoint: call-cleanup-reports
+  onExit: call-save-reports
   templates:
   - name: run-tests
     dag:
       tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
       - name: shutdown
+        depends: call-cleanup-reports
         templateRef:
           name: integration-test-job-template
           template: inttest-template
@@ -37,18 +42,8 @@ spec:
             value: "-A Test_Report_Shutdown.list"
           - name: jobname
             value: shutdown
-
-  - name: save-reports
-    container:
-      image: alpine:latest
-      volumeMounts:
-        - name: testreports
-          mountPath: {{ .Values.reportLocation }}
-    outputs:
-      artifacts:
-      - name: integration-test-reports
-        archive:
-          none: {}
-        path: {{ .Values.reportLocation }}/
-        s3:
-          key: IntegrationTests/{{ printf "{{workflow.parameters.date-key}}" }}
+      - name: call-save-reports
+        depends: shutdown
+        templateRef:
+          name: save-reports-workflow
+          template: save-reports

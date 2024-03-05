@@ -58,4 +58,5 @@ Finally, you need to tell Argo CD to deploy your application in some environment
 Next steps
 ==========
 
+- Deploy your new application by switching a development environment to a branch: :doc:`switch-environment-to-branch`
 - Test your application by deploying it from a branch: :doc:`deploy-from-a-branch`

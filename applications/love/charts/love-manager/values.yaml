@@ -247,8 +247,6 @@ viewBackup:
   image:
     # -- The view backup image to use
     repository: lsstts/love-view-backup
-    # -- The tag to use for the view backup image
-    tag: develop
     # -- The pull policy to use for the view backup image
     pullPolicy: IfNotPresent
     # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled

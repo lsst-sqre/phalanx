@@ -10,13 +10,18 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/roundtable-dev"
 
 applications:
+  checkerboard: false
   giftless: true
+  jira-data-proxy: true
   kubernetes-replicator: true
   monitoring: true
   onepassword-connect: true
   ook: true
   sasquatch: true
   squarebot: true
+  sqrbot-sr: false
   squareone: true
   strimzi: true
   strimzi-access-operator: true
+  unfurlbot: true
+  vault: true

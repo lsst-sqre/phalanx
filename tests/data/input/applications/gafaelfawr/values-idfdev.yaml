@@ -60,11 +60,9 @@ config:
   initialAdmins:
     - "adam"
     - "afausti"
-    - "cbanek"
     - "frossie"
     - "jsick"
     - "rra"
-    - "simonkrughoff"
 
 cloudsql:
   enabled: true

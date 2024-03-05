@@ -4,10 +4,10 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaMirrorMaker2
 metadata:
-  name: replicator
+  name:  {{ .Values.cluster.name }}
 spec:
   version: {{ .Values.kafka.version | quote }}
-  replicas: 1
+  replicas:  {{ .Values.mirrormaker2.replicas }}
   # In the unidirectional (active/passive) replication scenario
   # it is recommended to deploy MirrorMaker2 on the target (passive) cluster.
   connectCluster: "target"

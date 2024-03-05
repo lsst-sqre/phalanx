@@ -4,7 +4,7 @@ gcp:
   projectId: science-platform-dev-7696
   region: us-central1
   clusterName: science-platform
-vaultUrl: https://vault.lsst.codes/
+vaultUrl: https://vault.lsst.cloud/
 vaultPathPrefix: secret/phalanx/idfdev
 
 applications:

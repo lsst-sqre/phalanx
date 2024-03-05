@@ -62,6 +62,7 @@ apdb:
   # @default -- None, must be set
   url: ""
   # -- Database namespace for the APDB
+  # @default -- None, must be set
   namespace: ""
 
 registry:

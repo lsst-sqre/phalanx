@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "unfurlbot"
+  labels:
+    {{- include "unfurlbot.labels" . | nindent 4 }}
+    app.kubernetes.io/component: "server"
+    app.kubernetes.io/part-of: "unfurlbot"
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "unfurlbot.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "unfurlbot.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "server"
+        app.kubernetes.io/part-of: "unfurlbot"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: unfurlbot
+          env:
+            - name: "UNFURLBOT_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: unfurlbot-gafaelfawr-token
+                  key: "token"
+            # Writeable directory for concatenating certs. See "tmp" volume.
+            - name: "KAFKA_CERT_TEMP_DIR"
+              value: "/tmp/kafka_certs"
+            # From KafkaAccess
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: unfurlbot-kafka
+                  key: "bootstrapServers"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              value: "SSL"
+            # From replicated KafkaUser secret
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/kafkacluster/ca.crt"
+            - name: "KAFKA_CLIENT_CA_PATH"
+              value: "/etc/kafkauser/ca.crt"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/kafkauser/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/kafkauser/user.key"
+            # From Vault secrets
+            - name: "UNFURLBOT_SLACK_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "unfurlbot"
+                  key: "UNFURLBOT_SLACK_APP_ID"
+            - name: "UNFURLBOT_SLACK_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "unfurlbot"
+                  key: "UNFURLBOT_SLACK_TOKEN"
+          volumeMounts:
+            - name: "unfurlbot"
+              mountPath: "/etc/kafkacluster/ca.crt"
+              subPath: "ca.crt"
+            - name: "kafka-user"
+              mountPath: "/etc/kafkauser/ca.crt"
+              subPath: "ca.crt"
+            - name: "kafka-user"
+              mountPath: "/etc/kafkauser/user.crt"
+              subPath: "user.crt"
+            - name: "kafka-user"
+              mountPath: "/etc/kafkauser/user.key"
+              subPath: "user.key"
+            - name: "tmp"
+              mountPath: "/tmp/kafka_certs"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "kafka-user"
+          secret:
+            secretName: unfurlbot-kafka-user
+        - name: "unfurlbot"
+          secret:
+            secretName: "unfurlbot"
+        - name: "tmp"
+          emptyDir: {}
