@@ -81,4 +81,4 @@
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |
-| vaultUrl | string | `"https://vault.lsst.codes/"` | URL of Vault server for this environment |
+| vaultUrl | string | `"https://vault.lsst.cloud/"` | URL of Vault server for this environment |
