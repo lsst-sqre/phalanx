@@ -3,9 +3,9 @@ redis:
     storageClass: "rook-ceph-block"
 
 config:
-  logLevel: "DEBUG"
   slackAlerts: true
   databaseUrl: "postgresql://gafaelfawr@postgresdb01.ls.lsst.org/gafaelfawr"
+  updateSchema: true
 
   oidc:
     clientId: "rsp-bts"

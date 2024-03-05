@@ -5,6 +5,7 @@ redis:
 config:
   slackAlerts: true
   databaseUrl: "postgresql://gafaelfawr@postgresdb01.cp.lsst.org/gafaelfawr"
+  updateSchema: true
 
   oidc:
     clientId: "rsp-summit"
