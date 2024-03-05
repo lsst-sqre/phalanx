@@ -19,6 +19,9 @@ config:
   # -- Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
   logLevel: "INFO"
 
+  # -- URL to the local redis instance
+  redisUrl: "redis://unfurlbot-redis:6379/0"
+
   topics:
     # -- Kafka topic name for the Slack `app_mention` events
     slackAppMention: "lsst.square-events.squarebot.slack.app.mention"

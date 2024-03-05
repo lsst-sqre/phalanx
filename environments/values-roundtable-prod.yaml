@@ -22,5 +22,5 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   squarebot: true
-  unfurlbot: false
+  unfurlbot: true
   vault: true
