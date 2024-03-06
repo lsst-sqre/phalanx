@@ -1,7 +1,7 @@
 apiVersion: v2
 name: noteburst
 version: 1.0.0
-appVersion: "0.8.0"
+appVersion: "0.9.0"
 description: Noteburst is a notebook execution service for the Rubin Science Platform.
 type: application
 home: https://noteburst.lsst.io/
