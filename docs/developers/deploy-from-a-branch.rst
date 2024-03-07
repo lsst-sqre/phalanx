@@ -2,7 +2,7 @@
 Deploying from a branch for development
 #######################################
 
-When developing applications and their :doc:`Helm charts <write-a-helm-chart>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
+When developing applications and their :doc:`Helm charts <helm-chart/index>`, it's useful to temporarily deploy from a branch of Phalanx on :doc:`designated development environments </environments/index>` before merging to Phalanx's default branch.
 
 Some use cases include:
 

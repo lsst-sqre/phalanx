@@ -7,7 +7,7 @@ This configuration is used to generate secrets that can be randomly generated, c
 
 If the application doesn't have any secrets, you can skip this step and continue to :doc:`add-application`.
 
-If you have not already written a Helm chart for your application, do that first, following the instructions in either :doc:`write-a-helm-chart` or :doc:`add-external-chart`.
+If you have not already written a Helm chart for your application, do that first, following the instructions in either :doc:`create-new-chart` or :doc:`/developers/add-external-chart`.
 
 .. _dev-secret-definition:
 
@@ -37,7 +37,7 @@ Mark these secrets by setting ``onepassword.encoded`` to ``true``, since they wi
 (You do not need to do this with :abbr:`GCP (Google Cloud Platform)` service account credentials.
 Although their normal form contains newlines, they are encoded in JSON, so the newlines are not significant and may be stripped.)
 
-For a full specification of the contents of this file, see :doc:`secrets-spec`.
+For a full specification of the contents of this file, see :doc:`/developers/secrets-spec`.
 
 Examples
 --------
@@ -179,8 +179,6 @@ There are two main ways to give a ``Deployment``, ``StatefulSet``, ``CronJob``, 
 - `Set environment variables based on secrets <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#define-container-environment-variables-using-secret-data>`__
 - `Mount the secrets as files in the container <https://kubernetes.io/docs/tasks/inject-data-application/distribute-credentials-secure/#create-a-pod-that-has-access-to-the-secret-data-through-a-volume>`__
 
-See :doc:`write-a-helm-chart` for more details on creating a Helm chart for an application.
-
 Add the new secrets
 ===================
 
@@ -196,4 +194,5 @@ They will then use one or more of the following processes:
 Next steps
 ==========
 
+- Check the validity of your newly-written chart: :doc:`check-chart`
 - Add the Argo CD application to appropriate environments: :doc:`add-application`
