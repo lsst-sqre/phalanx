@@ -6,7 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   internalDatabase: true
-  updateSchema: True
+  updateSchema: False
 
   # Session length and token expiration (in minutes).
   issuer:
