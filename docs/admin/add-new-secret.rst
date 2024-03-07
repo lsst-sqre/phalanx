@@ -3,7 +3,7 @@ Add a new static secret
 #######################
 
 Write access to the static secret store is generally limited to environment administrators.
-When a developer of an application wants to :doc:`add a new static secret for their application </developers/define-secrets>`, they provide those secrets to the environment administrator, who adds them to the underlying static secret store and ensures Vault is updated.
+When a developer of an application wants to :doc:`add a new static secret for their application </developers/helm-chart/define-secrets>`, they provide those secrets to the environment administrator, who adds them to the underlying static secret store and ensures Vault is updated.
 
 How to do this depends on where static secrets are stored.
 

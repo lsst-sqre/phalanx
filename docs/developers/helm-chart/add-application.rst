@@ -3,7 +3,7 @@ Add a new application to Phalanx
 ################################
 
 This page provides the steps for integrating an application with Phalanx by adding the application's Helm chart.
-This is the last step of adding a new application to Phalanx and should be done after you have :doc:`written the Helm chart <write-a-helm-chart>` and :doc:`defined the secrets it needs <define-secrets>`.
+This is the last step of adding a new application to Phalanx and should be done after you have done the other steps in :ref:`dev-helm-basics-toc`.
 
 Some of the integration will be done for you by the :command:`phalanx application create` command, but you will need to make a few adjustments.
 
@@ -26,7 +26,7 @@ This should explain the purpose of the application and which environments should
 
 The :file:`values.md` file generally does not need to be modified.
 
-Finally, add the new application to `docs/applications/index.rst <https://github.com/lsst-sqre/phalanx/blob/main/docs/applications/index.rst>`__ in the appropriate section.
+Add the new application to `docs/applications/index.rst <https://github.com/lsst-sqre/phalanx/blob/main/docs/applications/index.rst>`__ in the appropriate section.
 Please maintain the alphabetical sorting of each section.
 
 Configure other Phalanx applications
@@ -58,5 +58,5 @@ Finally, you need to tell Argo CD to deploy your application in some environment
 Next steps
 ==========
 
-- Deploy your new application by switching a development environment to a branch: :doc:`switch-environment-to-branch`
-- Test your application by deploying it from a branch: :doc:`deploy-from-a-branch`
+- Deploy your new application by switching a development environment to a branch: :doc:`/developers/switch-environment-to-branch`
+- Test your application by deploying it from a branch: :doc:`/developers/deploy-from-a-branch`

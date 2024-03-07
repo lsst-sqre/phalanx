@@ -22,10 +22,10 @@ Writing the shared subchart
 
 Shared subcharts go into the `charts directory <https://github.com/lsst-sqre/phalanx/tree/main/charts>`__.
 Each subdirectory of that directory is a Helm chart, similar to the structure of the :file:`applications` directory.
-Those Helm charts should follow our normal Phalanx chart conventions from :doc:`write-a-helm-chart`.
+Those Helm charts should follow our normal Phalanx chart conventions from :doc:`helm-chart/index`.
 For example, the ``version`` field of every chart should be set to ``1.0.0``, since these charts will not be published and don't need version tracking.
 
-Usually, the easiest way to create a shared subchart is to start by writing a regular application chart for one instance of the application following the instructions in :doc:`write-a-helm-chart`.
+Usually, the easiest way to create a shared subchart is to start by writing a regular application chart for one instance of the application following the instructions in :doc:`helm-chart/index`.
 Then, copy that application chart into a subdirectory in the :file:`charts` directory, remove all the parts that don't make sense to share between applications, and add any additional :file:`values.yaml` settings that will be required to customize the instantiation of this chart for different applications.
 
 Shared charts do not have :file:`values-{environment}.yaml` files and are not aware of Phalanx environments.
@@ -61,5 +61,5 @@ Don't forget to copy any relevant ``home``, ``sources``, or ``annotations`` sett
 Next steps
 ==========
 
-- Define the secrets needed by each application: :doc:`define-secrets`
-- Add the Argo CD applications to appropriate environments: :doc:`add-application`
+- Define the secrets needed by each application: :doc:`helm-chart/define-secrets`
+- Add the Argo CD applications to appropriate environments: :doc:`helm-chart/add-application`

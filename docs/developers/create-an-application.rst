@@ -53,6 +53,4 @@ Alternately, you can contact SQuaRE to set up Docker image publication using our
 Next steps
 ==========
 
-- Write a Helm chart for your application: :doc:`write-a-helm-chart`.
-- Define the secrets that your application will use: :doc:`define-secrets`.
-- Deploy your application with Phalanx: :doc:`add-application`.
+- Write a Helm chart for your application: :doc:`helm-chart/index`.

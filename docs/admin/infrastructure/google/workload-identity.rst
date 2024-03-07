@@ -5,7 +5,7 @@ Set up workload identity
 All Kubernetes applications that need to access Google Cloud services will running in Google Kubernetes Engine should use `workload identity`_ to do so.
 This allows applications running in Kubernetes pods to authenticate as Google service accounts without worrying about key management or separate secrets.
 
-Configuring a Kubernetes application to use workload identity is documented at :ref:`dev-helm-workload-identity`.
+Configuring a Kubernetes application to use workload identity is documented at :doc:`/developers/helm-chart/workload-identity`.
 Using this requires some configuration on the Google side, which for SQuaRE-managed environments we do via Terraform at https://github.com/lsst/idf_deploy.
 
 Terminology
@@ -56,9 +56,9 @@ That involves the following steps:
 #. Create a Google service account for use by an application.
 #. Assign appropriate permissions to that Google service account for the Google Cloud services that it will access.
 #. Configure the Kubernetes pod to run with a specific Kubernetes service account.
-   This part is done in :ref:`dev-helm-workload-identity`.
+   This part is done in :doc:`/developers/helm-chart/workload-identity`.
 #. Tell Google Kubernetes Engine what Google service account the Kubernetes service account should be mapped to.
-   This part is done in :ref:`dev-helm-workload-identity`.
+   This part is done in :doc:`/developers/helm-chart/workload-identity`.
 #. Tell Google Cloud IAM what Kubernetes service accounts are allowed to take actions as that Google service account.
 
 All five steps are necessary.

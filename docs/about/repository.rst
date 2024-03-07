@@ -101,7 +101,7 @@ starters directory
 :bdg-link-primary-line:`Browse starters/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/starters>`
 
 This directory contains templates for contributing new applications to Phalanx.
-See :doc:`/developers/write-a-helm-chart`.
+See :doc:`/developers/helm-chart/create-new-chart`.
 
 tests directory
 ---------------
