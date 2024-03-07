@@ -1,5 +1,4 @@
 replicaCount: 2
-
 redis:
   persistence:
     enabled: false
@@ -7,6 +6,7 @@ redis:
 config:
   logLevel: "DEBUG"
   internalDatabase: true
+  updateSchema: True
 
   # Session length and token expiration (in minutes).
   issuer:
