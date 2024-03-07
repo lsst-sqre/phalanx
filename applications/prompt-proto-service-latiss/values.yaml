@@ -13,7 +13,7 @@ prompt-proto-service:
 
   image:
     # -- Image to use in the PP deployment
-    repository: ghcr.io/lsst-dm/prompt-service
+    repository: ghcr.io/lsst-dm/prompt_processing
     # -- Pull policy for the PP image
     # @default -- `IfNotPresent` in prod, `Always` in dev
     pullPolicy: IfNotPresent

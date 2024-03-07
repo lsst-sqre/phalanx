@@ -16,7 +16,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.apdb.namespace | string | `"pp_apdb_latiss"` | Database namespace for the APDB |
 | prompt-proto-service.apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
-| prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
+| prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt_processing"` | Image to use in the PP deployment |
 | prompt-proto-service.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
 | prompt-proto-service.imageNotifications.imageTimeout | string | `"20"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
