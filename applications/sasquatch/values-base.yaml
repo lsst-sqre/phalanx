@@ -51,6 +51,8 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+    consdb:
+      enabled: true
 
 influxdb:
   persistence:
@@ -76,7 +78,6 @@ source-influxdb:
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
-
 
 kafka-connect-manager:
   influxdbSink:

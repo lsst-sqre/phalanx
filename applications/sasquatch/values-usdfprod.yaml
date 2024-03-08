@@ -30,6 +30,8 @@ strimzi-kafka:
       enabled: true
     promptProcessing:
       enabled: true
+    consdb:
+      enabled: true
 
 influxdb:
   enabled: false

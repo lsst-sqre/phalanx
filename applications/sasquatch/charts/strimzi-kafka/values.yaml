@@ -86,13 +86,13 @@ kafka:
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: "app.kubernetes.io/name"
-            operator: In
-            values:
-            - kafka
-        topologyKey: "kubernetes.io/hostname"
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - kafka
+          topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
@@ -128,13 +128,13 @@ zookeeper:
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: "app.kubernetes.io/name"
-            operator: In
-            values:
-            - zookeeper
-        topologyKey: "kubernetes.io/hostname"
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - zookeeper
+          topologyKey: "kubernetes.io/hostname"
 
   # -- Tolerations for Zookeeper pod assignment.
   tolerations: []
@@ -166,7 +166,7 @@ registry:
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
 superusers:
-- kafka-admin
+  - kafka-admin
 
 users:
   replicator:
@@ -191,6 +191,10 @@ users:
 
   kafkaConnectManager:
     # -- Enable user kafka-connect-manager
+    enabled: false
+
+  condsb:
+    # -- Enable user consdb
     enabled: false
 
 mirrormaker2:
