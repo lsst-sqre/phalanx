@@ -1,3 +1,4 @@
+{{- $root := . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -35,7 +36,7 @@ data:
       {{- $namespace := replace "_" "-" $app }}
 
       [[outputs.influxdb_v2]]
-        urls = ["https://monitoring.lsst.codes"]
+        urls = [{{- $root.Values.config.influxdb2Url | quote }}]
         token = "$INFLUX_TOKEN"
         organization = "square"
         bucket = {{ $bucket | quote }}
