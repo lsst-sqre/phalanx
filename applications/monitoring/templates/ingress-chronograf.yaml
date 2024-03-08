@@ -1,3 +1,5 @@
+{{- if .Values.ingress.enabled -}}
+{{- if .Values.chronograf.enabled -}}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
@@ -20,7 +22,7 @@ template:
     tls:
       - hosts:
         - {{ .Values.ingress.chronograf.hostname | quote }}
-        secretName: tls
+        secretName: "tls-chronograf"
     rules:
       - host: {{ .Values.ingress.chronograf.hostname | quote }}
         http:
@@ -29,6 +31,8 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: monitoring-chronograf
+                  name: "monitoring-chronograf"
                   port:
                     number: 80
+{{- end }}
+{{- end }}

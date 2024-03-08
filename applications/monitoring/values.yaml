@@ -1,4 +1,78 @@
+# -- Configuration of Influx endpoint to receive monitoring data
+config:
+  influxdbHostname: "monitoring.lsst.codes"
+  influxdbOrg: "square"
+
+
+# -- InfluxDB v2 server component.  Soon to be replaced with Influx DB v3
+influxdb2:
+  # -- enable influxdb2 server at all?
+  # @default -- False
+  enabled: false
+
+  # -- InfluxDB2 admin user; uses admin-password/admin-token keys from
+  # secret.
+  adminUser:
+    # -- InfluxDB internal organization
+    organization: "square"
+
+    # -- Bucket to dump raw monitoring data into
+    bucket: "monitoring"
+
+    # -- How long to keep data
+    retention_policy: "30d"
+
+    # -- Where we store secrets to run the server
+    existingSecret: monitoring
+
+  # -- InfluxDB2 ingress configuration.
+  ingress:
+    # @default -- False
+    # This is a lie.  We define our own ingress template that knows how
+    # to route to both influxdb2 and chronograf, and use it.
+    enabled: false
+
+  # -- InfluxDB2 startup probe.  We set the failure threshold high
+  # because when influx has many full shards, it takes a very long time
+  # to start up and check its shards, and that will cause a crash loop.
+  # @default -- See `values.yaml`
+  startupProbe:
+    # -- Whether to enable a startup probe
+    enabled: true
+
+    # -- How long to wait before checking the first time
+    initialDelaySeconds: 30
+
+    # -- Period between checking whether InfluxDB has started
+    periodSeconds: 10
+
+    # -- Number of checks to conclude whether InfluxDB won't start.  High
+    # to allow up to 10 minutes for startup; see above
+    failureThreshold: 60
+
+  # -- InfluxDB2 liveness probe.
+  livenessProbe:
+    # -- Period between checks for whether InfluxDB is still alive
+    periodSeconds: 10
+
+    # -- Number of checks to conclude whether InfluxDB has died
+    failureThreshold: 10
+
+  # -- Resource limits and requests for the InfluxDB server instance
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: 4.0
+      memory: 30Gi
+    requests:
+      cpu: 1.0
+      memory: 1Gi
+
 chronograf:
+  # -- enable chronograf at all?
+  # @default -- False
+  enabled: false
+
   ## Image Settings
   ##
   image:
@@ -43,7 +117,6 @@ chronograf:
   ## secret, which is a VaultSecret, and the rest can just be injected
   ## into the deployment env directly.
 
-  ## Extra environment variables that will be passed onto deployment pods
   env:
     CUSTOM_AUTO_REFRESH: "1s=1000"
     GH_CLIENT_ID: ""  # Must be specified for each endpoint for the callback
@@ -59,6 +132,10 @@ chronograf:
     type: Recreate
 
 cronjob:
+  # -- enable cronjobs at all?
+  # You only need this once per influxdb instance.
+  # @default -- False
+  enabled: false
   # -- image for monitoring-related cronjobs
   image:
     # -- repository for rubin-influx-tools
@@ -77,12 +154,13 @@ cronjob:
     # -- taskmaker schedule
     taskmaker: "6-59/15 * * * *"
 
+# -- ingresses for InfluxDBv2 server and Chronograf UI.  Only used if the
+# services are enabled.
 ingress:
-  # -- ingress for Chronograf UI
   chronograf:
-    # -- hostname for Chronograf UI
-    # @ default -- None, must be set by each individual instance
     hostname: ""
+    annotations: {}
+  influxdb2:
     # -- Additional annotations to add to the ingress
     annotations: {}
 
@@ -90,7 +168,3 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
-  # -- URL for InfluxDBv2 instance
-  influxdbUrl: "https://monitoring.lsst.codes"  # Expect this to change
-  # -- InfluxDBv2 organization
-  influxdbOrg: "square"
