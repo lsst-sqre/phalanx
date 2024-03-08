@@ -60,6 +60,11 @@ spec:
                 secretKeyRef:
                   name: {{ template "noteburst.fullname" . }}-gafaelfawr-token
                   key: "token"
+            - name: "NOTEBURST_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "noteburst.fullname" . }}
+                  key: "NOTEBURST_SLACK_WEBHOOK_URL"
             - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
               value: "/etc/noteburst/identities.yaml"
           volumeMounts:
