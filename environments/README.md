@@ -43,6 +43,7 @@
 | applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
 | applications.prompt-proto-service-lsstcam | bool | `false` | Enable the prompt-proto-service-lsstcam application |
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
+| applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
