@@ -9,7 +9,7 @@ frontend:
   - name: S3_ENDPOINT_URL
     value: "https://s3dfrgw.slac.stanford.edu"
   image:
-    tag: tickets-DM-40149
+    tag: deploy
     pullPolicy: Always
 
 workers:
