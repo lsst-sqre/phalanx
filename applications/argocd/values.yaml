@@ -43,20 +43,11 @@ argo-cd:
       # -- Create an ingress for the Argo CD server
       enabled: true
 
-      # -- Additional annotations to add to the Argo CD ingress
-      # @default -- Rewrite requests to remove `/argo-cd/` prefix
-      annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
-        nginx.ingress.kubernetes.io/use-regex: "true"
-
       # -- Ingress class to use for Argo CD ingress
       ingressClassName: "nginx"
 
       # -- Paths to route to Argo CD
-      path: "/argo-cd(/|$)(.*)"
-
-      # -- Type of path expression for Argo CD ingress
-      pathType: "ImplementationSpecific"
+      path: "/argo-cd"
 
   configs:
     cm:

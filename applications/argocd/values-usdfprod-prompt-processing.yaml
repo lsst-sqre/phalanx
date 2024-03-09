@@ -38,4 +38,4 @@ argo-cd:
   server:
     ingress:
       hostname: "k8s.slac.stanford.edu"
-      path: "/usdf-prompt-processing/argo-cd(/|$)(.*)"
+      path: "/usdf-prompt-processing/argo-cd"

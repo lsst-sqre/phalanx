@@ -36,4 +36,4 @@ argo-cd:
   server:
     ingress:
       hostname: "k8s.slac.stanford.edu"
-      path: "/usdf-alert-stream-broker-dev/argo-cd(/|$)(.*)"
+      path: "/usdf-alert-stream-broker-dev/argo-cd"
