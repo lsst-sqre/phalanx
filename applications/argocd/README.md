@@ -16,6 +16,7 @@ Kubernetes application manager
 | argo-cd.configs.cm."resource.compareoptions" | string | `"ignoreAggregatedRoles: true\n"` | Configure resource comparison |
 | argo-cd.configs.params."server.basehref" | string | `"/argo-cd"` | Base href for `index.html` when running under a reverse proxy |
 | argo-cd.configs.params."server.insecure" | bool | `true` | Do not use TLS (this is terminated at the ingress) |
+| argo-cd.configs.params."server.rootpath" | string | `"/argo-cd"` | Server root path when running under a reverse proxy |
 | argo-cd.configs.secret.createSecret | bool | `false` | Create the Argo CD secret (we manage this with Vault) |
 | argo-cd.controller.metrics.applicationLabels.enabled | bool | `true` | Enable adding additional labels to `argocd_app_labels` metric |
 | argo-cd.controller.metrics.applicationLabels.labels | list | `["name","instance"]` | Labels to add to `argocd_app_labels` metric |
@@ -27,7 +28,7 @@ Kubernetes application manager
 | argo-cd.server.ingress.annotations | object | Rewrite requests to remove `/argo-cd/` prefix | Additional annotations to add to the Argo CD ingress |
 | argo-cd.server.ingress.enabled | bool | `true` | Create an ingress for the Argo CD server |
 | argo-cd.server.ingress.ingressClassName | string | `"nginx"` | Ingress class to use for Argo CD ingress |
+| argo-cd.server.ingress.path | string | `"/argo-cd(/|$)(.*)"` | Paths to route to Argo CD |
 | argo-cd.server.ingress.pathType | string | `"ImplementationSpecific"` | Type of path expression for Argo CD ingress |
-| argo-cd.server.ingress.paths | list | `["/argo-cd(/|$)(.*)"]` | Paths to route to Argo CD |
 | argo-cd.server.metrics.enabled | bool | `true` | Enable server metrics service |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

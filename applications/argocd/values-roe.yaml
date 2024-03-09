@@ -1,12 +1,10 @@
 argo-cd:
-  server:
-    ingress:
-      hosts:
-        - "rsp.lsst.ac.uk"
-
-    config:
-      url: "https://rsp.lsst.ac.uk/argo-cd"
-
   configs:
+    cm:
+      url: "https://rsp.lsst.ac.uk/argo-cd"
     secret:
       createSecret: true
+
+  server:
+    ingress:
+      hostname: "rsp.lsst.ac.uk"

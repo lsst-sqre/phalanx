@@ -47,13 +47,13 @@ argo-cd:
       # @default -- Rewrite requests to remove `/argo-cd/` prefix
       annotations:
         nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+        nginx.ingress.kubernetes.io/use-regex: "true"
 
       # -- Ingress class to use for Argo CD ingress
       ingressClassName: "nginx"
 
       # -- Paths to route to Argo CD
-      paths:
-        - "/argo-cd(/|$)(.*)"
+      path: "/argo-cd(/|$)(.*)"
 
       # -- Type of path expression for Argo CD ingress
       pathType: "ImplementationSpecific"
@@ -70,6 +70,9 @@ argo-cd:
 
       # -- Base href for `index.html` when running under a reverse proxy
       server.basehref: "/argo-cd"
+
+      # -- Server root path when running under a reverse proxy
+      server.rootpath: "/argo-cd"
 
     secret:
       # -- Create the Argo CD secret (we manage this with Vault)
