@@ -1,10 +1,6 @@
 argo-cd:
-  server:
-    ingress:
-      hosts:
-        - "tucson-teststand.lsst.codes"
-
-    config:
+  configs:
+    cm:
       url: "https://tucson-teststand.lsst.codes/argo-cd"
       dex.config: |
         connectors:
@@ -19,7 +15,11 @@ argo-cd:
               clientSecret: $dex.clientSecret
               orgs:
                 - name: lsst-sqre
-    rbacConfig:
+    rbac:
       policy.csv: |
         g, lsst-sqre:friends, role:admin
         g, lsst-sqre:square, role:admin
+
+  server:
+    ingress:
+      hostname: "tucson-teststand.lsst.codes"

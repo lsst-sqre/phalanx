@@ -1,10 +1,6 @@
 argo-cd:
-  server:
-    ingress:
-      hosts:
-        - "data.lsst.cloud"
-
-    config:
+  configs:
+    cm:
       url: "https://data.lsst.cloud/argo-cd"
       dex.config: |
         connectors:
@@ -19,8 +15,7 @@ argo-cd:
               hostedDomains:
                 - lsst.cloud
               redirectURI: https://data.lsst.cloud/argo-cd/api/dex/callback
-
-    rbacConfig:
+    rbac:
       policy.csv: |
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
@@ -32,3 +27,7 @@ argo-cd:
         g, loi@lsst.cloud, role:admin
         g, roby@lsst.cloud, role:admin
       scopes: "[email]"
+
+  server:
+    ingress:
+      hostname: "data.lsst.cloud"
