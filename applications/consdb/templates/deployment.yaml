@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "consdb"
+  labels:
+    {{- include "consdb.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "consdb.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "consdb.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "DB_HOST"
+              value: "{{ .Values.db.host }}"
+            - name: "DB_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: consdb
+                  key: "oods-password"
+            - name: "DB_USER"
+              value: "{{ .Values.db.user }}"
+            - name: "DB_NAME"
+              value: "{{ .Values.db.database }}"
+            - name: "LFA_USER"
+              value: "{{ .Values.lfa.user }}"
+            - name: "LFA_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: consdb
+                  key: "lfa-password"
+            - name: "BUCKET_PREFIX"
+              value: "{{ .Values.lfa.BUCKET_PREFIX }}"
+            - name: "KAFKA_BOOTSTRAP"
+              value: "{{ .Values.kafka.KAFKA_BOOTSTRAP }}"
+            - name: "KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "consdb-password"
+            - name: "SCHEMA_URL"
+              value: "{{ .Values.kafka.SCHEMA_URL }}"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

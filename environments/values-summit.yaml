@@ -3,6 +3,7 @@ fqdn: summit-lsp.lsst.codes
 vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
 
 applications:
+  consdb: false
   exposurelog: true
   narrativelog: true
   nublado: true

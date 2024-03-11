@@ -4,6 +4,7 @@ vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 applications:
   argo-workflows: true
+  consdb: true
   exposurelog: true
   narrativelog: true
   nublado: true

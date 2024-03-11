@@ -1,0 +1,12 @@
+kafka:
+  KAFKA_REST: "https://base-lsp.lsst.codes/sasquatch-rest-proxy"
+  KAFKA_BOOTSTRAP: "sasquatch-base-kafka-bootstrap.lsst.codes"
+
+db:
+  user: "oods"
+  host: "postgresdb01.ls.lsst.org"
+  database: "butler"
+lfa:
+  user: "AL6Y4J5ZYTWRHV04BTC5"
+image:
+  pullPolicy: Always
