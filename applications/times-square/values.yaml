@@ -33,11 +33,11 @@ podAnnotations: {}
 
 serviceAccount:
   # -- Force creation of a service account. Normally, no service account is
-  # used or mounted. If CloudSQL is enabled, a service account is always
+  # used or mounted. If Cloud SQL is enabled, a service account is always
   # created regardless of this value.
   create: false
 
-  # -- Annotations to add to the service account. If CloudSQL is in use, the
+  # -- Annotations to add to the service account. If Cloud SQL is in use, the
   # annotation specifying the Google service account will also be added.
   annotations: {}
 
@@ -117,7 +117,7 @@ config:
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
   # on Google Cloud
   enabled: false
 
@@ -131,7 +131,7 @@ cloudsql:
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
 
   # -- The Google service account that has an IAM binding to the `times-square`

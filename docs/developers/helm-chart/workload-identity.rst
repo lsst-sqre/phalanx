@@ -58,7 +58,7 @@ Configuring the service account name
 ====================================
 
 The above examples use ``serviceAccountName`` as the :file:`values.yaml` setting.
-If the service account is only for CloudSQL, normal practice is to name the setting ``cloudsql.serviceAccountName`` and make workload identity conditional on whether ``cloudsql.enabled`` is true.
+If the service account is only for Cloud SQL, normal practice is to name the setting ``cloudsql.serviceAccountName`` and make workload identity conditional on whether ``cloudsql.enabled`` is true.
 If your application uses workload identity for other purposes, you can either use a top-level values setting as shown here, or put the setting wherever seems most appropriate (associated with one specific part of your application, for instance).
 
 For each environment where you want to use workload identity, the Phalanx environment administrator must create a Google service account for your application and associate it with the namespace and Kubernetes service account name used by your application.

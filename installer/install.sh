@@ -240,7 +240,37 @@ argocd app create science-platform \
 echo "Syncing the top-level Argo CD application..."
 argocd app sync science-platform \
   --port-forward \
-  --port-forward-namespace argocd
+  --port-forward-namespace argocd \
+  --timeout 30
+
+echo "Syncing Argo CD..."
+timeout 30 argocd app sync argocd \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --timeout 30 || \
+argocd login \
+  --plaintext \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --username admin \
+  --password "$ARGOCD_PASSWORD" && \
+timeout 30 argocd app sync argocd \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --timeout 30
+
+echo "Waiting for Argo CD to finish syncing..."
+kubectl -n argocd rollout status deployment/argocd-server
+kubectl -n argocd rollout status deployment/argocd-repo-server
+kubectl -n argocd rollout status statefulset/argocd-application-controller
+
+echo "Logging in to Argo CD..."
+argocd login \
+  --plaintext \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --username admin \
+  --password "$ARGOCD_PASSWORD"
 
 if [ "$(yq -r '.applications."ingress-nginx"' "$config")" != "false" ]; then
   echo "Syncing ingress-nginx..."
@@ -257,7 +287,7 @@ if [ "$(yq -r '.applications."cert-manager"' "$config")" != "false" ]; then
 
   # Wait for the cert-manager's webhook to finish deploying by running
   # kubectl, argocd's sync doesn't seem to wait for this to finish.
-  kubectl -n cert-manager rollout status deploy/cert-manager-webhook
+  kubectl -n cert-manager rollout status deployment/cert-manager-webhook
 fi
 
 if [ "$(yq -r .applications.postgres "$config")" == "true" ]; then

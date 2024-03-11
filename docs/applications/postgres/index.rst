@@ -15,9 +15,9 @@ It may also be used by other applications, such as :px-app:`exposurelog` and :px
 .. important::
 
    Do not use this service for important data.
-   Use a managed relational database, such as Google CloudSQL, instead.
+   Use a managed relational database, such as Google Cloud SQL, instead.
 
-   Production instances of the Science Platform use CloudSQL or a local external PostgreSQL server for the Gafaelfawr token database instead of this service.
+   Production instances of the Science Platform use Cloud SQL or a local external PostgreSQL server for the Gafaelfawr token database instead of this service.
 
 .. jinja:: postgres
    :file: applications/_summary.rst.jinja
