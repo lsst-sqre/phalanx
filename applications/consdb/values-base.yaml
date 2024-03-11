@@ -1,7 +1,6 @@
-environment:
+kafka:
   KAFKA_REST: "https://base-lsp.lsst.codes/sasquatch-rest-proxy"
   KAFKA_BOOTSTRAP: "sasquatch-base-kafka-bootstrap.lsst.codes"
-  vaultUrl: "https://vault.lsst.codes"
 
 db:
   user: "oods"
