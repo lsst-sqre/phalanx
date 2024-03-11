@@ -27,6 +27,8 @@ strimzi-kafka:
     externalListener:
       tls:
         enabled: true
+      plain:
+        enabled: true
       bootstrap:
         loadBalancerIP: "139.229.153.65"
         host: sasquatch-base-kafka-bootstrap.lsst.codes
