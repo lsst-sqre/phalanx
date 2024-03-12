@@ -30,4 +30,7 @@ prompt-proto-service:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
 
+  # A cache efficiency workaround breaks on RC2 tests; see DM-43205.
+  cacheCalibs: false
+
   fullnameOverride: "prompt-proto-service-hsc"

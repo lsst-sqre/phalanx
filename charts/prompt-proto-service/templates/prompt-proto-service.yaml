@@ -98,6 +98,8 @@ spec:
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        - name: DEBUG_CACHE_CALIBS
+          value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
