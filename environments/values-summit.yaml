@@ -9,6 +9,7 @@ applications:
   nublado: true
   portal: true
   postgres: true
+  rubintv: true
   sasquatch: true
   squareone: true
   strimzi: true
