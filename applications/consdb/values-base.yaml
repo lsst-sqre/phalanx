@@ -1,6 +1,6 @@
 kafka:
   KAFKA_REST: "https://base-lsp.lsst.codes/sasquatch-rest-proxy"
-  KAFKA_BOOTSTRAP: "sasquatch-base-kafka-bootstrap.lsst.codes"
+  KAFKA_BOOTSTRAP: "sasquatch-kafka-bootstrap.sasquatch:9092"
 
 db:
   user: "oods"
