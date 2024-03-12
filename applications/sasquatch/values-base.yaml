@@ -24,10 +24,11 @@ strimzi-kafka:
     storage:
       storageClassName: rook-ceph-block
       size: 1Ti
+    listeners:
+      plain:
+        enabled: true
     externalListener:
       tls:
-        enabled: true
-      plain:
         enabled: true
       bootstrap:
         loadBalancerIP: "139.229.153.65"
