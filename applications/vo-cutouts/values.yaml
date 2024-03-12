@@ -80,7 +80,7 @@ config:
   useButlerServer: true
 
 cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy sidecar, used with CloudSQL databases
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
   # on Google Cloud
   enabled: false
 
@@ -94,7 +94,7 @@ cloudsql:
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
 
   # -- The Google service account that has an IAM binding to the `vo-cutouts`

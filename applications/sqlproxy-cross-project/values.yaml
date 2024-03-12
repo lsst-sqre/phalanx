@@ -20,7 +20,7 @@ image:
   pullPolicy: "IfNotPresent"
 
 config:
-  # -- Instance connection name for a CloudSQL PostgreSQL instance
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set
   instanceConnectionName: ""
 
