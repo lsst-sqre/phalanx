@@ -114,7 +114,7 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: "prompt-proto-service"
 
-# The number of Knative requests that can be handled simultaneously by one container
+# -- The number of Knative requests that can be handled simultaneously by one container
 containerConcurrency: 1
 
 # -- Whether or not calibs should be cached between runs of a pod.
