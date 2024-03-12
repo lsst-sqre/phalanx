@@ -41,6 +41,7 @@ Even if you are already familiar with writing Helm charts, there are some Phalan
    container-tmp
    pull-secrets
    workload-identity
+   cloud-sql
 
 Examples
 ========
