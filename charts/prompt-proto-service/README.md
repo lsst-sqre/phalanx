@@ -29,9 +29,13 @@ Event-driven processing of camera images
 | instrument.name | string | None, must be set | The "short" name of the instrument |
 | instrument.pipelines | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
+| knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
+| knative.cpuRequest | string | `"1"` | The cpu cores requested. |
 | knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
 | knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
+| knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
+| knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
 | knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
 | knative.timeout | int | `900` | Maximum time that a container can respond to a next_visit request (seconds). |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
