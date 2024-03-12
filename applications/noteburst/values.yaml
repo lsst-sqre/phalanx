@@ -130,6 +130,11 @@ config:
     # -- Worker keep alive mode: "normal", "fast", "disabled"
     keepAlive: "normal"
 
+    # -- Enable arq liveness check. The liveness check runs `arq --check` on
+    # the worker pod. This works on Google Cloud Platform, but consistently
+    # fails on the USDF at SLAC and is not recommended there.
+    enableLivenessCheck: true
+
 redis:
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to

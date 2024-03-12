@@ -8,6 +8,7 @@ config:
     identities:
       - username: "bot-noteburst01"
       - username: "bot-noteburst02"
+    enableLivenessCheck: false # always fails at USDF
 
 # Use SSD for Redis storage.
 redis:
