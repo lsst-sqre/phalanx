@@ -36,12 +36,23 @@ spec:
             {{- end }}
             - "kopf"
             - "run"
+            - "--liveness=http://0.0.0.0:8080/health"
             - "-A"
             - "--log-format=json"
             - "-m"
             - "gafaelfawr.operator"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: "http"
+            initialDelaySeconds: 60
+            periodSeconds: 60
+          ports:
+            - containerPort: 8080
+              name: "http"
+              protocol: "TCP"
           {{- with .Values.operator.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
