@@ -13,6 +13,10 @@ global:
   # @default -- Set by Argo CD
   host: ""
 
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""
+
 # -- Number of API pods to run
 replicaCount: 1
 

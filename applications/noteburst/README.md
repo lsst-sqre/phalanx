@@ -31,6 +31,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/noteburst"` | Noteburst image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
