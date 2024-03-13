@@ -98,6 +98,10 @@ prompt-proto-service:
     ephemeralStorageRequest: "20Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     ephemeralStorageLimit: "20Gi"
+    # -- GPUs enabled.
+    gpu: false
+    # -- The number of GPUs to request.
+    gpuRequest: "0"
     # -- The minimum memory to request.
     memoryRequest: "2Gi"
     # -- The maximum memory limit.

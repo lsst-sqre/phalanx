@@ -118,6 +118,9 @@ spec:
             cpu: {{ .Values.knative.cpuLimit }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
             memory: {{ .Values.knative.memoryLimit }}
+            {{- if .Values.knative.gpu }}
+            nvidia.com/gpu: {{ .Values.knative.gpuRequest }}
+            {{- end }}
       volumes:
       - name: ephemeral
         emptyDir:
@@ -146,6 +149,11 @@ spec:
           items:
           - key: central_repo_file
             path: butler.yaml
+      {{- end }}
+      {{- if .Values.knative.gpu }}
+      tolerations:
+      - effect: NoSchedule
+        key: nvidia.com/gpu
       {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}

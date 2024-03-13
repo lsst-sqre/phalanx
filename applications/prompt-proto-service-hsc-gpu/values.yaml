@@ -3,8 +3,8 @@ prompt-proto-service:
   # -- Annotations for the prompt-proto-service pod
   # @default -- See the `values.yaml` file.
   podAnnotations:
-    autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "30"
+    autoscaling.knative.dev/min-scale: "0"
+    autoscaling.knative.dev/max-scale: "100"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
     queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
@@ -27,13 +27,13 @@ prompt-proto-service:
 
   instrument:
     # -- The "short" name of the instrument
-    name: ""
+    name: HSC
     # -- Machine-readable string describing which pipeline(s) should be run for which visits.
     # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
     # @default -- None, must be set
     pipelines: ""
     # -- Skymap to use with the instrument
-    skymap: ""
+    skymap: hsc_rings_v1
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
@@ -70,7 +70,7 @@ prompt-proto-service:
     # @default -- None, must be set
     url: ""
     # -- Database namespace for the APDB
-    namespace: pp_apdb_lsstcomcam
+    namespace: pp_apdb_hsc
 
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
@@ -78,7 +78,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: ""
+  logLevel: "timer.lsst.activator=DEBUG"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -99,9 +99,9 @@ prompt-proto-service:
     # -- The maximum storage space allowed for each container (mostly local Butler).
     ephemeralStorageLimit: "20Gi"
     # -- GPUs enabled.
-    gpu: false
+    gpu: true
     # -- The number of GPUs to request.
-    gpuRequest: "0"
+    gpuRequest: "1"
     # -- The minimum memory to request.
     memoryRequest: "2Gi"
     # -- The maximum memory limit.
@@ -112,3 +112,7 @@ prompt-proto-service:
     idleTimeout: 900
     # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).
     responseStartTimeout: 900
+
+  # -- Kubernetes YAML configs for extra container volume(s).
+  # Any volumes required by other config options are automatically handled by the Helm chart.
+  additionalVolumeMounts: []
