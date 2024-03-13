@@ -37,26 +37,10 @@ spec:
         runAsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - ALL
-            readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["arq"]
           args: ["noteburst.worker.main.WorkerSettings"]
-          {{- if .Values.config.worker.enableLivenessCheck -}}
-          livenessProbe:
-            exec:
-              command:
-                - "arq"
-                - "--check"
-                - "noteburst.worker.main.WorkerSettings"
-            initialDelaySeconds: 360
-            periodSeconds: 15
-          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
@@ -71,7 +55,7 @@ spec:
             - name: "NOTEBURST_SLACK_WEBHOOK_URL"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "noteburst.fullname" . }}
+                  name: {{ include "noteburst.fullname" . }}
                   key: "NOTEBURST_SLACK_WEBHOOK_URL"
             - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
               value: "/etc/noteburst/identities.yaml"
@@ -79,6 +63,12 @@ spec:
             - name: "identities"
               mountPath: "/etc/noteburst"
               readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
       volumes:
         - name: "identities"
           configMap:
