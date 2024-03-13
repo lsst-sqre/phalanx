@@ -30,6 +30,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| config.worker.enableLivenessCheck | bool | `true` | Enable liveness checks for the arq queue |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |
 | global.host | string | Set by times-square Argo CD Application | Host name for ingress |

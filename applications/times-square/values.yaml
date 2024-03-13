@@ -116,6 +116,10 @@ config:
   # -- GitHub organizations that can sync repos to Times Square (comma-separated).
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
+  worker:
+    # -- Enable liveness checks for the arq queue
+    enableLivenessCheck: true
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
   # on Google Cloud

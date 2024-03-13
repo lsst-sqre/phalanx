@@ -112,6 +112,11 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_GITHUB_APP_PRIVATE_KEY"
+            - name: "TS_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SLACK_WEBHOOK_URL"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
