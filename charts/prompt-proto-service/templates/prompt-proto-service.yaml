@@ -121,9 +121,13 @@ spec:
             port: 0
         resources:
           requests:
+            cpu: {{ .Values.knative.cpuRequest }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
+            memory: {{ .Values.knative.memoryRequest }}
           limits:
+            cpu: {{ .Values.knative.cpuLimit }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
+            memory: {{ .Values.knative.memoryLimit }}
       volumes:
       - name: ephemeral
         emptyDir:

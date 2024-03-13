@@ -7,6 +7,12 @@ prompt-proto-service:
     autoscaling.knative.dev/max-scale: "600"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "2"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "1Gi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "2Gi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
@@ -84,10 +90,18 @@ prompt-proto-service:
     auth_env: true
 
   knative:
+    # -- The cpu cores requested.
+    cpuRequest: "1"
+    # -- The maximum cpu cores.
+    cpuLimit: "1"
     # -- The storage space reserved for each container (mostly local Butler).
     ephemeralStorageRequest: "20Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     ephemeralStorageLimit: "20Gi"
+    # -- The minimum memory to request.
+    memoryRequest: "2Gi"
+    # -- The maximum memory limit.
+    memoryLimit: "8Gi"
     # -- Maximum time that a container can respond to a next_visit request (seconds).
     timeout: 900
     # -- Maximum time that a container can send nothing to the fanout service (seconds).

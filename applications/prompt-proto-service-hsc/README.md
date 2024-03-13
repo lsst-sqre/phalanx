@@ -26,9 +26,13 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.name | string | `"HSC"` | The "short" name of the instrument |
 | prompt-proto-service.instrument.pipelines | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-proto-service.instrument.skymap | string | `"hsc_rings_v1"` | Skymap to use with the instrument |
+| prompt-proto-service.knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
+| prompt-proto-service.knative.cpuRequest | string | `"1"` | The cpu cores requested. |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
+| prompt-proto-service.knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
+| prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
 | prompt-proto-service.knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
 | prompt-proto-service.knative.timeout | int | `900` | Maximum time that a container can respond to a next_visit request (seconds). |
 | prompt-proto-service.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
