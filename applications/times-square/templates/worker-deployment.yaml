@@ -71,14 +71,6 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["arq"]
           args: ["timessquare.worker.main.WorkerSettings"]
-          livenessProbe:
-            exec:
-              command:
-                - "arq"
-                - "--check"
-                - "timessquare.worker.main.WorkerSettings"
-            initialDelaySeconds: 360
-            periodSeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:

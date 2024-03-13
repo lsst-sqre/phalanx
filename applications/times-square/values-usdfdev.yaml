@@ -5,8 +5,6 @@ config:
   databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
   githubAppId: "327289"
   enableGitHubApp: "True"
-  worker:
-    enableLivenessCheck: false # not compatible with USDF
 cloudsql:
   enabled: false
 redis:
