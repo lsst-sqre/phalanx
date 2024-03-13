@@ -10,6 +10,8 @@ spec:
     matchLabels:
       {{- include "gafaelfawr.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: "operator"
+  strategy:
+    type: "Recreate"
   template:
     metadata:
       annotations:
