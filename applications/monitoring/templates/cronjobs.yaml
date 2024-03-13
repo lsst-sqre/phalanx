@@ -1,3 +1,4 @@
+{{- if .Values.cronjob.enabled }}
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -38,9 +39,9 @@ spec:
                     name: "monitoring"
                     key:  "influx-alert-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}/"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -99,9 +100,9 @@ spec:
                     # our naming conventions to adapt.
                     key: "admin-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}/"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -148,11 +149,12 @@ spec:
                     name: "monitoring"
                     key: "influx-alert-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}/"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
               {{- end }}
             command: [ "taskmaker" ]
+{{- end }}
