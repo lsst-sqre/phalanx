@@ -114,8 +114,12 @@ nameOverride: ""
 # -- Override the full name for resources (includes the release name)
 fullnameOverride: "prompt-proto-service"
 
-# The number of Knative requests that can be handled simultaneously by one container
+# -- The number of Knative requests that can be handled simultaneously by one container
 containerConcurrency: 1
+
+# -- Whether or not calibs should be cached between runs of a pod.
+# This is a temporary flag that should only be unset in specific circumstances, and only in the development environment.
+cacheCalibs: true
 
 # -- Kubernetes YAML configs for extra container volume(s).
 # Any volumes required by other config options are automatically handled by the Helm chart.

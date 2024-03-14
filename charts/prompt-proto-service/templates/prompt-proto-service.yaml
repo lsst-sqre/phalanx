@@ -13,27 +13,15 @@ spec:
     spec:
       containerConcurrency: {{ .Values.containerConcurrency }}
       initContainers:
-      - name: init-copy-pgpass
-        # Make a copy of the read-only secret so we can change owner
+      - name: init-pgpass
+        # Make a copy of the read-only secret that's owned by lsst
+        # lsst account is created by main image with id 1000
         image: busybox
-        command: ["sh", "-c", "cp -L /app/pg-mount/.pgpass /app/pgsql/"]
+        command: ["sh", "-c", "cp -L /app/pg-mount/.pgpass /app/pgsql/ && chown 1000:1000 /app/pgsql/.pgpass && chmod u=r,go-rwx /app/pgsql/.pgpass"]
         volumeMounts:
         - mountPath: /app/pg-mount
           name: pgpass-mount
           readOnly: true
-        - mountPath: /app/pgsql
-          name: pgpass-credentials-file
-      - name: init-chown-pgpass
-        image: busybox
-        command: ["sh", "-c", "chown 1000:1000 /app/pgsql/.pgpass"]  # lsst account created by main image
-        volumeMounts:
-        - mountPath: /app/pgsql
-          name: pgpass-credentials-file
-      - name: init-chmod-pgpass
-        image: busybox
-        # PostgreSQL refuses to read group- or world-readable files
-        command: ["sh", "-c", "chmod u=r,go-rwx /app/pgsql/.pgpass"]
-        volumeMounts:
         - mountPath: /app/pgsql
           name: pgpass-credentials-file
       containers:
@@ -98,6 +86,8 @@ spec:
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        - name: DEBUG_CACHE_CALIBS
+          value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
