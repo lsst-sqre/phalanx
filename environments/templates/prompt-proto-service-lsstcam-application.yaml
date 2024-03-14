@@ -16,6 +16,12 @@ spec:
   destination:
     namespace: prompt-proto-service-lsstcam
     server: https://kubernetes.default.svc
+  ignoreDifferences:
+  - group: serving.knative.dev
+    kind: Service
+    jqPathExpressions:
+    - .spec.template.spec.containers[].resources.requests
+    - .spec.template.spec.containers[].resources.limits
   project: default
   source:
     path: applications/prompt-proto-service-lsstcam
