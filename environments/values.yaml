@@ -172,6 +172,9 @@ applications:
   # -- Enable the prompt-proto-service-hsc application
   prompt-proto-service-hsc: false
 
+  # -- Enable the prompt-proto-service-hsc-gpu application
+  prompt-proto-service-hsc-gpu: false
+
   # -- Enable the prompt-proto-service-latiss application
   prompt-proto-service-latiss: false
 

@@ -1,6 +1,6 @@
-# prompt-proto-service-hsc
+# prompt-proto-service-hsc-gpu
 
-Prompt Proto Service is an event driven service for processing camera images. This instance of the service handles HSC images.
+Prompt Proto Service is an event driven service for processing camera images. This instance of the service handles HSC images with GPU.
 
 **Homepage:** <https://github.com/lsst-dm/prompt_processing/blob/main/doc/playbook.rst>
 
@@ -30,8 +30,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.cpuRequest | string | `"1"` | The cpu cores requested. |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
-| prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
-| prompt-proto-service.knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
+| prompt-proto-service.knative.gpu | bool | `true` | GPUs enabled. |
+| prompt-proto-service.knative.gpuRequest | string | `"1"` | The number of GPUs to request. |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
 | prompt-proto-service.knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |

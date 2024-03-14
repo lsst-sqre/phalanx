@@ -1,0 +1,33 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    repository: ghcr.io/lsst-dm/prompt-service
+    pullPolicy: Always
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: latest
+
+  instrument:
+    pipelines: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
+    calibRepo: s3://rubin-pp-dev-users/central_repo/
+    calibRepoPguser: hsc_prompt
+
+  s3:
+    imageBucket: rubin-pp-dev
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    topic: prompt-processing-dev
+
+  apdb:
+    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
+
+  sasquatch:
+    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    auth_env: false
+
+  fullnameOverride: "prompt-proto-service-hsc-gpu"
