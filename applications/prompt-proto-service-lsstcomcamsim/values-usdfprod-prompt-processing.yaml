@@ -1,0 +1,37 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: 2.1.0
+
+  instrument:
+    pipelines: >-
+      (survey="PROGRAM")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
+    calibRepo: s3://rubin-summit-users
+    calibRepoPguser: lsstcomcamsim_prompt
+
+  s3:
+    imageBucket: rubin-summit
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing-prod
+
+  apdb:
+    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
+
+  logLevel: timer.lsst.activator=DEBUG
+
+  knative:
+    ephemeralStorageRequest: "50Gi"
+    ephemeralStorageLimit: "50Gi"
+
+  fullnameOverride: "prompt-proto-service-lsstcomcamsim"
