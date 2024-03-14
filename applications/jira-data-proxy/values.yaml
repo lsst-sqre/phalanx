@@ -7,7 +7,7 @@ config:
   logLevel: "info"
 
   # -- Jira base URL
-  jiraUrl: "https://jira.lsstcorp.org/"
+  jiraUrl: "https://rubinobs.atlassian.net/"
 
 # -- Number of web deployment pods to start
 replicaCount: 2
