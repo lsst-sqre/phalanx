@@ -38,6 +38,9 @@ config:
     # -- Kafka topic name for the Slack `message.mpim` events (multi-person direct messages)
     slackMessageMpim: "lsst.square-events.squarebot.slack.message.mpim"
 
+  # -- Jira base URL
+  jiraUrl: "https://rubinobs.atlassian.net/"
+
   # -- Names of Jira projects to unfurl (comma-separated)
   jiraProjects: >
     ADMIN,
