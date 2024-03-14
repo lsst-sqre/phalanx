@@ -63,6 +63,9 @@ controller:
         - containerPath: "/sps"
           volumeName: "sps"
 jupyterhub:
+  prePuller:
+    continuous:
+      enabled: true
   hub:
     baseUrl: "/nb"
     config:
