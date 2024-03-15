@@ -19,6 +19,9 @@ influxdb2:
     # -- Bucket to dump raw monitoring data into
     bucket: "monitoring"
 
+    # -- User name
+    user: "admin"
+
     # -- How long to keep data
     retention_policy: "30d"
 
