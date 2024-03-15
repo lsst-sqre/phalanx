@@ -243,6 +243,11 @@ argocd app sync science-platform \
   --port-forward-namespace argocd \
   --timeout 30
 
+echo "Moving the top-level Argo CD application into infrastructure..."
+argocd app set science-platform --project infrastructure \
+  --port-forward \
+  --port-forward-namespace argocd
+
 echo "Syncing Argo CD..."
 timeout 30 argocd app sync argocd \
   --port-forward \

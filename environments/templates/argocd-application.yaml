@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: "argocd"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "infrastructure"
   source:
     path: "applications/argocd"
     repoURL: {{ .Values.repoUrl | quote }}

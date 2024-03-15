@@ -17,19 +17,29 @@ argo-cd:
               redirectURI: https://data-dev.lsst.cloud/argo-cd/api/dex/callback
     rbac:
       policy.csv: |
+        p, role:developer, applications, *, */*, allow
+        p, role:developer, applications, get, infrastructure/*, allow
+        p, role:developer, applications, create, infrastructure/*, deny
+        p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, sync, infrastructure/*, deny
+        p, role:developer, applications, override, infrastructure/*, deny
+        p, role:developer, applications, action/*, infrastructure/*, deny
+
         g, adam@lsst.cloud, role:admin
         g, afausti@lsst.cloud, role:admin
         g, dspeck@lsst.cloud, role:admin
         g, frossie@lsst.cloud, role:admin
         g, jsick@lsst.cloud, role:admin
         g, rra@lsst.cloud, role:admin
-        g, gpdf@lsst.cloud, role:admin
-        g, loi@lsst.cloud, role:admin
-        g, roby@lsst.cloud, role:admin
-        g, kkoehler@lsst.cloud, role:admin
-        g, fritzm@lsst.cloud, role:admin
-        g, dirving@lsst.cloud, role:admin
-        g, jeremym@lsst.cloud, role:admin
+
+        g, dirving@lsst.cloud, role:developer
+        g, fritzm@lsst.cloud, role:developer
+        g, gpdf@lsst.cloud, role:developer
+        g, jeremym@lsst.cloud, role:developer
+        g, kkoehler@lsst.cloud, role:developer
+        g, loi@lsst.cloud, role:developer
+        g, roby@lsst.cloud, role:developer
       scopes: "[email]"
 
   server:
