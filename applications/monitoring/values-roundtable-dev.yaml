@@ -1,6 +1,23 @@
 config:
-  influxdbHostname: "monitoring.lsst.cloud"
+  influxdbHostname: "monitoring-dev.lsst.cloud"
   influxdbOrg: "square"
+influxdb2:
+  enabled: true
+  # -- Schedule onto the kafka pool
+  tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "kafka"
+    effect: "NoSchedule"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: "dedicated"
+            operator: "In"
+            values:
+            - "kafka"
 chronograf:
   enabled: true
   persistence:
@@ -8,7 +25,7 @@ chronograf:
     size: 1Gi
     storageClass: standard-rwo
   env:
-    INFLUX_DB_URL: "monitoring.lsst.cloud"
+    INFLUX_DB_URL: "monitoring-dev.lsst.cloud"
     GH_CLIENT_ID: "e85fe410b0021a251180"
 cronjob:
   enabled: true
