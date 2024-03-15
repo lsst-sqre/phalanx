@@ -34,3 +34,5 @@ ingress:
   enabled: true
   chronograf:
     hostname: "panopticon-dev.lsst.cloud"
+  influxdb2:
+    hostname: "monitoring-dev.lsst.cloud"
