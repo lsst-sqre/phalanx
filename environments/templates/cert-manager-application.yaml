@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "cert-manager"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "infrastructure"
   source:
     path: "applications/cert-manager"
     repoURL: {{ .Values.repoUrl | quote }}

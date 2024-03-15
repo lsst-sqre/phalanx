@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "postgres"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "infrastructure"
   source:
     path: "applications/postgres"
     repoURL: {{ .Values.repoUrl | quote }}

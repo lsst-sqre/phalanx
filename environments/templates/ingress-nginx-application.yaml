@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "ingress-nginx"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "infrastructure"
   source:
     path: "applications/ingress-nginx"
     repoURL: {{ .Values.repoUrl | quote }}
