@@ -1,5 +1,4 @@
 config:
-  debug: true
   autostart:
     - name: "gitlfs"
       count: 1
@@ -13,6 +12,3 @@ config:
           lfs_read_url: "https://git-lfs-dev.lsst.cloud/mobu/git-lfs-test"
           lfs_write_url: "https://git-lfs-dev-rw.lsst.cloud/mobu/git-lfs-test"
         restart: true
-image:
-  tag: "tickets-DM-43203"
-  pullPolicy: "Always"
