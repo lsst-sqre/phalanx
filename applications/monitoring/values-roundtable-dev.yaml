@@ -16,4 +16,4 @@ cronjob:
 ingress:
   enabled: true
   chronograf:
-    hostname: "roundtable-chronograf-dev.lsst.cloud"
+    hostname: "panopticon-dev.lsst.cloud"

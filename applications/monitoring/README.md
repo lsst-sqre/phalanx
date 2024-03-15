@@ -40,12 +40,13 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | cronjob.schedule.bucketmapper | string | `"3-59/15 * * * *"` | bucketmapper schedule |
 | cronjob.schedule.taskmaker | string | `"6-59/15 * * * *"` | taskmaker schedule |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| influxdb2 | object | `{"adminUser":{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d"},"enabled":false,"ingress":{"enabled":false},"livenessProbe":{"failureThreshold":10,"periodSeconds":10},"resources":{"limits":{"cpu":4,"memory":"30Gi"},"requests":{"cpu":1,"memory":"1Gi"}},"startupProbe":{"enabled":true,"failureThreshold":60,"initialDelaySeconds":30,"periodSeconds":10}}` | InfluxDB v2 server component.  Soon to be replaced with Influx DB v3 |
-| influxdb2.adminUser | object | `{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d"}` | InfluxDB2 admin user; uses admin-password/admin-token keys from secret. |
+| influxdb2 | object | `{"adminUser":{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d","user":"admin"},"enabled":false,"ingress":{"enabled":false},"livenessProbe":{"failureThreshold":10,"periodSeconds":10},"resources":{"limits":{"cpu":4,"memory":"30Gi"},"requests":{"cpu":1,"memory":"1Gi"}},"startupProbe":{"enabled":true,"failureThreshold":60,"initialDelaySeconds":30,"periodSeconds":10}}` | InfluxDB v2 server component.  Soon to be replaced with Influx DB v3 |
+| influxdb2.adminUser | object | `{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d","user":"admin"}` | InfluxDB2 admin user; uses admin-password/admin-token keys from secret. |
 | influxdb2.adminUser.bucket | string | `"monitoring"` | Bucket to dump raw monitoring data into |
 | influxdb2.adminUser.existingSecret | string | `"monitoring"` | Where we store secrets to run the server |
 | influxdb2.adminUser.organization | string | `"square"` | InfluxDB internal organization |
 | influxdb2.adminUser.retention_policy | string | `"30d"` | How long to keep data |
+| influxdb2.adminUser.user | string | `"admin"` | User name |
 | influxdb2.enabled | bool | False | enable influxdb2 server at all? |
 | influxdb2.ingress | object | `{"enabled":false}` | InfluxDB2 ingress configuration. |
 | influxdb2.livenessProbe | object | `{"failureThreshold":10,"periodSeconds":10}` | InfluxDB2 liveness probe. |
