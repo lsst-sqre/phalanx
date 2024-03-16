@@ -55,14 +55,27 @@ spec:
         - name: "gafaelfawr"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          livenessProbe:
+            httpGet:
+              path: "/health"
+              port: "http"
+            periodSeconds: 60
           ports:
             - containerPort: 8080
               name: "http"
               protocol: "TCP"
+          {{- if (gt (int .Values.replicaCount) 1) }}
+          readinessProbe:
+            httpGet:
+              path: "/health"
+              port: "http"
+            periodSeconds: 60
+          {{- else }}
           readinessProbe:
             httpGet:
               path: "/"
               port: "http"
+          {{- end }}
           {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
