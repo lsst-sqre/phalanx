@@ -1,0 +1,8 @@
+image:
+  repository: ts-dockerhub.lsst.org/nightreport
+  tag: c0035
+  pullPolicy: Always
+config:
+  site_id: base
+db:
+  host: postgresdb01.ls.lsst.org
