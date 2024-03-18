@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "nightreport.fullname" . }}
+  labels:
+    {{- include "nightreport.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "nightreport.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "nightreport.selectorLabels" . | nindent 8 }}
+    spec:
+      imagePullSecrets:
+        - name: "pull-secret"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /nightreport
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /nightreport
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: NIGHTREPORT_DB_USER
+              value: {{ .Values.db.user | quote }}
+            - name: NIGHTREPORT_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: nightreport
+                  key: nightreport_password
+            - name: NIGHTREPORT_DB_HOST
+              value: {{ .Values.db.host | quote }}
+            - name: NIGHTREPORT_DB_PORT
+              value: {{ .Values.db.port | quote }}
+            - name: NIGHTREPORT_DB_DATABASE
+              value: {{ .Values.db.database | quote }}
+            - name: SITE_ID
+              value: {{ .Values.config.site_id | quote }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
