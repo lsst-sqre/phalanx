@@ -721,6 +721,45 @@ class ConfigStorage:
             raise InvalidApplicationConfigError(application, msg)
         return match.group("namespace")
 
+    def _find_application_project(self, application: str) -> str:
+        """Determine what Argo CD project an application belongs to.
+
+        This information is present in the Argo CD ``Application`` resource,
+        which by convention in Phalanx is named :file:`{app}-application.yaml`
+        in the :file:`environments/templates` directory.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        str
+            Argo CD project to which the application belongs.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the project for the application could not be found.
+        """
+        template_path = (
+            self._path
+            / "environments"
+            / "templates"
+            / f"{application}-application.yaml"
+        )
+        template = template_path.read_text()
+
+        # Helm templates are unfortunately not valid YAML, so do this the hard
+        # way with a regular expression.
+        pattern = r"project:\s*\"?(?P<project>[a-z]+)\"?\s"
+        match = re.search(pattern, template)
+        if not match:
+            msg = f"Project not found in {template_path!s}"
+            raise InvalidApplicationConfigError(application, msg)
+        return match.group("project")
+
     def _is_condition_satisfied(
         self, instance: ApplicationInstance, condition: str | None
     ) -> bool:
@@ -808,6 +847,7 @@ class ConfigStorage:
         return ApplicationConfig(
             name=name,
             namespace=self._find_application_namespace(name),
+            project=self._find_application_project(name),
             chart=chart,
             doc_links=self._parse_doclinks(chart),
             values=values,

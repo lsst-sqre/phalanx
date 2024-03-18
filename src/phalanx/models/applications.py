@@ -47,6 +47,9 @@ class ApplicationConfig(BaseModel):
     namespace: str
     """Namespace to which the application is deployed."""
 
+    project: str
+    """Argo CD project to which this application belongs."""
+
     chart: dict[str, Any]
     """Parsed Helm :file:`Chart.yaml` file."""
 

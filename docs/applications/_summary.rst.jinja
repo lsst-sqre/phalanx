@@ -33,6 +33,8 @@
      - Helm_
    * - Namespace
      - {{ app.namespace }}
+   * - Argo CD Project
+     - {{ app.project }}
    * - Environments
      - .. list-table::
           {% for env_name in app.active_environments %}
