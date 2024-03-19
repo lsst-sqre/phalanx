@@ -10,13 +10,10 @@ Then, create the files for the new application, including the start of a Helm ch
 
 .. prompt:: bash
 
-   phalanx application create <application> --project <project>
+   phalanx application create <application>
 
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 The application name must start with a lowercase letter and consist of lowercase letters, numbers, and hyphen (``-``).
-
-Replace ``<project>`` with the all-lowercase name of the Argo CD project that should contain the application.
-This must be chosen from the list of projects shown at :doc:`/applications/index`.
 
 By default, this will create a Helm chart for a FastAPI web service.
 Use the ``--starter`` flag to specify a different Helm chart starter.
@@ -33,6 +30,10 @@ empty
 You will be prompted for a short description of the application.
 Keep it succinct, ideally just a few words, and do not add a period at the end.
 The description must begin with a capital letter.
+
+You will also be prompted for the Argo CD project to use for your application.
+This must be chosen from the list of projects at :doc:`/applications/index`.
+See the page for each project for a short description of what it should contain.
 
 Next steps
 ==========
