@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "monitoring"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/monitoring"
     repoURL: {{ .Values.repoUrl | quote }}

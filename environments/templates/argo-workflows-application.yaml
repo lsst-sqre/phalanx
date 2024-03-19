@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "argo-workflows"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "telescope"
   source:
     path: "applications/argo-workflows"
     repoURL: {{ .Values.repoUrl | quote }}

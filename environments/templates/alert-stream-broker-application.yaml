@@ -13,16 +13,13 @@ metadata:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: alert-stream-broker
-    server: https://kubernetes.default.svc
+    namespace: "alert-stream-broker"
+    server: "https://kubernetes.default.svc"
   ignoreDifferences:
-  #- jsonPointers:
-    #- /spec/volumeName
-    #- /spec/storageClassName
-  - kind: PersistentVolumeClaim
-    managedFieldsManagers:
-      - strimzi-cluster-operator
-  project: default
+    - kind: "PersistentVolumeClaim"
+      managedFieldsManagers:
+        - "strimzi-cluster-operator"
+  project: "rubin"
   source:
     path: "applications/alert-stream-broker"
     repoURL: {{ .Values.repoUrl | quote }}

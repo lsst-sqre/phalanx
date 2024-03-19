@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "plot-navigator"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/plot-navigator"
     repoURL: {{ .Values.repoUrl | quote }}

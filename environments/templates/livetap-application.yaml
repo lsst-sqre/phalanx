@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "livetap"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/livetap"
     repoURL: {{ .Values.repoUrl | quote }}

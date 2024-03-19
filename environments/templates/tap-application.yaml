@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "tap"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/tap"
     repoURL: {{ .Values.repoUrl | quote }}

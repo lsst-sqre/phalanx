@@ -20,7 +20,7 @@ spec:
   destination:
     namespace: "fileservers"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/nublado-fileservers"
     repoURL: {{ .Values.repoUrl | quote }}

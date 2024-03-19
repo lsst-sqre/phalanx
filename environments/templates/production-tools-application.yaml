@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "production-tools"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/production-tools"
     repoURL: {{ .Values.repoUrl | quote }}

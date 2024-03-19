@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "hips"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/hips"
     repoURL: {{ .Values.repoUrl | quote }}

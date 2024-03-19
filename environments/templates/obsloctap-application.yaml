@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "obsloctap"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/obsloctap"
     repoURL: {{ .Values.repoUrl | quote }}

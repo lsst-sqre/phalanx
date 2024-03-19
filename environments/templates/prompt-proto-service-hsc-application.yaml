@@ -2,31 +2,31 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: prompt-proto-service-hsc
-  namespace: argocd
+  name: "prompt-proto-service-hsc"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   syncPolicy:
     managedNamespaceMetadata:
       labels:
-        argocd.argoproj.io/managed-by: argocd
+        argocd.argoproj.io/managed-by: "argocd"
     syncOptions:
-    - CreateNamespace=true
+      - "CreateNamespace=true"
   destination:
-    namespace: prompt-proto-service-hsc
-    server: https://kubernetes.default.svc
+    namespace: "prompt-proto-service-hsc"
+    server: "https://kubernetes.default.svc"
   ignoreDifferences:
-  - group: serving.knative.dev
-    kind: Service
-    jqPathExpressions:
-    - .spec.template.spec.containers[].resources.requests
-    - .spec.template.spec.containers[].resources.limits
-  project: default
+    - group: "serving.knative.dev"
+      kind: "Service"
+      jqPathExpressions:
+        - ".spec.template.spec.containers[].resources.requests"
+        - ".spec.template.spec.containers[].resources.limits"
+  project: "prompt"
   source:
-    path: applications/prompt-proto-service-hsc
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/prompt-proto-service-hsc"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

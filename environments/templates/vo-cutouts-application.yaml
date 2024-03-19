@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "vo-cutouts"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/vo-cutouts"
     repoURL: {{ .Values.repoUrl | quote }}

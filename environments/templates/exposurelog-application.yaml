@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "exposurelog"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/exposurelog"
     repoURL: {{ .Values.repoUrl | quote }}

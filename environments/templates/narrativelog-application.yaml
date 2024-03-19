@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "narrativelog"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/narrativelog"
     repoURL: {{ .Values.repoUrl | quote }}
