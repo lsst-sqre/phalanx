@@ -10,7 +10,7 @@ Sources later on this list override values from earlier sources.
 #. The :file:`values-{environment}.yaml` file for that application and the current environment.
 #. Values injected by Argo CD directly from the ``Application`` resource.
 
-The ``Application`` resources are found in :file:`environments/templates`.
+The ``Application`` resources are found in :file:`environments/templates/applications`.
 Unlike the :file:`values.yaml` file for the application, they have access to environment-wide configuration set by the :file:`environments/values-{environment}.yaml` files.
 
 This page describes that third group of values injected by Argo CD.

@@ -559,13 +559,17 @@ class ConfigStorage:
                 with chart_path.open("w") as fh:
                     yaml.safe_dump(app_config.chart, fh, sort_keys=False)
 
-    def write_application_template(self, name: str, template: str) -> None:
+    def write_application_template(
+        self, name: str, project: Project, template: str
+    ) -> None:
         """Write the Argo CD application template for a new application.
 
         Parameters
         ----------
         name
             Name of the application.
+        project
+            Project of the application.
         template
             Contents of the Argo CD application and namespace Helm template
             for the new application.
@@ -575,8 +579,14 @@ class ConfigStorage:
         ApplicationExistsError
             Raised if the application being created already exists.
         """
-        template_name = f"{name}-application.yaml"
-        path = self._path / "environments" / "templates" / template_name
+        path = (
+            self._path
+            / "environments"
+            / "templates"
+            / "applications"
+            / project.value
+            / f"{name}.yaml"
+        )
         if path.exists():
             raise ApplicationExistsError(name)
         path.write_text(template)
@@ -702,12 +712,7 @@ class ConfigStorage:
         InvalidApplicationConfigError
             Raised if the namespace for the application could not be found.
         """
-        template_path = (
-            self._path
-            / "environments"
-            / "templates"
-            / f"{application}-application.yaml"
-        )
+        template_path = self._find_application_resource_path(application)
         template = template_path.read_text()
 
         # Helm templates are unfortunately not valid YAML, so do this the hard
@@ -725,10 +730,6 @@ class ConfigStorage:
     def _find_application_project(self, application: str) -> Project:
         """Determine what Argo CD project an application belongs to.
 
-        This information is present in the Argo CD ``Application`` resource,
-        which by convention in Phalanx is named :file:`{app}-application.yaml`
-        in the :file:`environments/templates` directory.
-
         Parameters
         ----------
         application
@@ -744,28 +745,50 @@ class ConfigStorage:
         InvalidApplicationConfigError
             Raised if the project for the application could not be found or
             was set to an invalid value.
+
+        Notes
+        -----
+        All Argo CD ``Application`` resources are put into subdirectories by
+        their Argo CD project, and a Phalanx test ensures that this matches
+        the project referenced inside the Helm resource template, so we can
+        use the file system path to find this information.
+
+        """
+        template_path = self._find_application_resource_path(application)
+        return Project(template_path.parent.name)
+
+    def _find_application_resource_path(self, application: str) -> Path:
+        """Find the path to the ``Application`` resource for an application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        Path
+            Path to the ``Application`` resource template.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the project for the application could not be found or
+            was set to an invalid value.
         """
         template_path = (
-            self._path
-            / "environments"
-            / "templates"
-            / f"{application}-application.yaml"
+            self.get_environment_chart_path() / "templates" / "applications"
         )
-        template = template_path.read_text()
-
-        # Helm templates are unfortunately not valid YAML, so do this the hard
-        # way with a regular expression.
-        pattern = r"project:\s*\"?(?P<project>[a-z]+)\"?\s"
-        match = re.search(pattern, template)
-        if not match:
-            msg = f"Project not found in {template_path!s}"
+        application_path = None
+        for subdir in template_path.iterdir():
+            candidate = subdir / f"{application}.yaml"
+            if candidate.exists():
+                application_path = candidate
+                break
+        if not application_path:
+            msg = "Cannot find Application resource"
             raise InvalidApplicationConfigError(application, msg)
-        project = match.group("project")
-        try:
-            return Project(project)
-        except ValueError as e:
-            msg = f"Invalid project {project} in {template_path!s}"
-            raise InvalidApplicationConfigError(application, msg) from e
+        return application_path
 
     def _is_condition_satisfied(
         self, instance: ApplicationInstance, condition: str | None
