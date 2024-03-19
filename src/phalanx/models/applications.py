@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from enum import Enum
 from typing import Any
 
 from pydantic import BaseModel, Field
@@ -13,6 +14,7 @@ __all__ = [
     "ApplicationConfig",
     "ApplicationInstance",
     "DocLink",
+    "Project",
 ]
 
 
@@ -38,6 +40,22 @@ class DocLink(BaseModel):
         return f"`{label} <{self.url}>`__"
 
 
+class Project(Enum):
+    """Valid choices for the Argo CD project of an application."""
+
+    infrastructure = "infrastructure"
+    rsp = "rsp"
+    rubin = "rubin"
+    roundtable = "roundtable"
+    monitoring = "monitoring"
+    prompt = "prompt"
+    telescope = "telescope"
+
+    # Temporarily permissible while the migration is happening, but will be
+    # removed in the future.
+    default = "default"
+
+
 class ApplicationConfig(BaseModel):
     """Configuration for a Phalanx application."""
 
@@ -47,7 +65,7 @@ class ApplicationConfig(BaseModel):
     namespace: str
     """Namespace to which the application is deployed."""
 
-    project: str
+    project: Project
     """Argo CD project to which this application belongs."""
 
     chart: dict[str, Any]
@@ -94,6 +112,9 @@ class ApplicationInstance(BaseModel):
 
     environment: str
     """Name of the environment for which the application is configured."""
+
+    project: Project
+    """Argo CD project to which this application belongs."""
 
     chart: dict[str, Any]
     """Parsed Helm :file:`Chart.yaml` file."""

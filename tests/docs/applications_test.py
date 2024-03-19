@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from phalanx.models.applications import Project
+
 
 def test_descriptions() -> None:
     """Ensure all application pages have proper short descriptions."""
@@ -29,10 +31,13 @@ def test_applications_index() -> None:
     """Ensure all applications are mentioned in the index."""
     doc_root = Path(__file__).parent.parent.parent / "docs" / "applications"
     seen = set()
-    with (doc_root / "index.rst").open() as fh:
-        for line in fh:
-            if m := re.match("^   ([^/]+)/index$", line):
-                seen.add(m.group(1))
+    for project in Project:
+        if project == Project.default:
+            continue
+        with (doc_root / (project.value + ".rst")).open() as fh:
+            for line in fh:
+                if m := re.match("^   ([^/]+)/index$", line):
+                    seen.add(m.group(1))
     root_path = Path(__file__).parent.parent.parent / "applications"
     for application in root_path.iterdir():
         if not application.is_dir():

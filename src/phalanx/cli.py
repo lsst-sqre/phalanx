@@ -14,6 +14,7 @@ from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
 from .factory import Factory
+from .models.applications import Project
 from .models.environments import EnvironmentConfig
 from .models.helm import HelmStarter
 from .models.secrets import ConditionalSecretConfig, StaticSecrets
@@ -144,6 +145,14 @@ def application_add_helm_repos(
     ),
 )
 @click.option(
+    "-p",
+    "--project",
+    type=click.Choice([p.value for p in Project]),
+    prompt="Argo CD project",
+    show_choices=False,
+    help="Argo CD project for the application.",
+)
+@click.option(
     "-s",
     "--starter",
     type=click.Choice([s.value for s in HelmStarter]),
@@ -151,7 +160,12 @@ def application_add_helm_repos(
     help="Helm starter to use as the basis for the chart.",
 )
 def application_create(
-    name: str, *, starter: str, config: Path | None, description: str
+    name: str,
+    *,
+    config: Path | None,
+    description: str,
+    project: str,
+    starter: str,
 ) -> None:
     """Create a new application from a starter template.
 
@@ -173,7 +187,12 @@ def application_create(
         raise click.BadParameter("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create(name, HelmStarter(starter), description)
+    application_service.create(
+        name,
+        starter=HelmStarter(starter),
+        project=Project(project),
+        description=description,
+    )
 
 
 @application.command("lint")

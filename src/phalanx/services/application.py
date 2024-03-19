@@ -12,6 +12,7 @@ import jinja2
 import yaml
 
 from ..exceptions import ApplicationExistsError
+from ..models.applications import Project
 from ..models.environments import Environment
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
@@ -88,7 +89,12 @@ class ApplicationService:
         return bool(repo_urls)
 
     def create(
-        self, name: str, starter: HelmStarter, description: str
+        self,
+        name: str,
+        *,
+        starter: HelmStarter,
+        project: Project,
+        description: str,
     ) -> None:
         """Create configuration for a new application.
 
@@ -99,6 +105,8 @@ class ApplicationService:
         starter
             Name of the Helm starter to use as the template for the
             application.
+        project
+            Argo CD project for the new application.
         description
             Short description of the application.
 
@@ -129,7 +137,7 @@ class ApplicationService:
             yaml.dump(chart, fh)
 
         # Add the environment configuration.
-        self._create_application_template(name)
+        self._create_application_template(name, project)
 
         # Add the documentation.
         self._create_application_docs(name, description)
@@ -341,13 +349,17 @@ class ApplicationService:
 
         return values
 
-    def _create_application_template(self, name: str) -> None:
+    def _create_application_template(
+        self, name: str, project: Project
+    ) -> None:
         """Add the ``Application`` template and environment values setting.
 
         Parameters
         ----------
         name
             Name of the new application.
+        project
+            Argo CD project for the new application.
         """
         # Change the quote characters so that we aren't fighting with Helm
         # templating, which also uses {{ and }}.
@@ -355,7 +367,7 @@ class ApplicationService:
             variable_start_string="[[", variable_end_string="]]"
         )
         template = overlay.get_template("application-template.yaml.jinja")
-        application = template.render({"name": name})
+        application = template.render({"name": name, "project": project.value})
         self._config.write_application_template(name, application)
         setting = f"# -- Enable the {name} application\n{name}: false"
         self._config.add_application_setting(name, setting)
