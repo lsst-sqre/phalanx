@@ -62,6 +62,8 @@ spec:
               name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: sasquatch_token
         {{- end }}
+        - name: DAF_BUTLER_SASQUATCH_NAMESPACE
+          value: {{ .Values.sasquatch.namespace }}
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}
