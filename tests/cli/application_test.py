@@ -95,7 +95,7 @@ def test_create(tmp_path: Path) -> None:
         "--starter",
         "empty",
         "--project",
-        "telescope",
+        "rsp",
         "--description",
         "Last new app",
         "--config",
@@ -141,7 +141,7 @@ def test_create(tmp_path: Path) -> None:
     for app, project in (
         ("aaa-new-app", Project.infrastructure),
         ("hips", Project.rsp),
-        ("zzz-other-app", Project.telescope),
+        ("zzz-other-app", Project.rsp),
     ):
         assert environment.applications[app].project == project
     for app, expected in (

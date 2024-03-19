@@ -368,7 +368,7 @@ class ApplicationService:
         )
         template = overlay.get_template("application-template.yaml.jinja")
         application = template.render({"name": name, "project": project.value})
-        self._config.write_application_template(name, application)
+        self._config.write_application_template(name, project, application)
         setting = f"# -- Enable the {name} application\n{name}: false"
         self._config.add_application_setting(name, setting)
 

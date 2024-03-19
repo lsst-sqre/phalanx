@@ -42,8 +42,8 @@ The :file:`environments` directory is where environments are defined (an environ
 
 The :file:`environments/templates` directory contains a Helm template per application, like this one for the ``noteburst`` application:
 
-.. literalinclude:: ../../environments/templates/noteburst-application.yaml
-   :caption: environments/templates/noteburst-application.yaml
+.. literalinclude:: ../../environments/templates/applications/rsp/noteburst.yaml
+   :caption: environments/templates/applications/rsp/noteburst.yaml
 
 The template defines a Kubernetes Namespace_ and an Argo CD ``Application`` for each Phalanx application.
 ``Application`` resources direct Argo CD to deploy and synchronize the corresponding application Helm chart from the Phalanx :file:`applications` directory.
@@ -52,6 +52,8 @@ Notice that these templates are wrapped in a conditional, which controls whether
 The :file:`values.yaml` file in the :file:`environments` directory defines boolean variables for each application.
 Only some required applications are enabled by default; the rest are disabled by default.
 Each environment then has a file named :file:`values-{environment}.yaml` that defines environment-specific settings and enables the applications that should be deployed to that environment.
+
+The templates directory also contains the Argo CD ``AppProject`` resources, which are used to classify the applications into groups for access control.
 
 installer directory
 -------------------

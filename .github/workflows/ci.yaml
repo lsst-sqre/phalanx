@@ -95,7 +95,7 @@ jobs:
               - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values.yaml"
               - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values-minikube.yaml"
               - "environments/Chart.yaml"
-              - "environments/templates/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}*"
+              - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
               - "installer/**"
 
