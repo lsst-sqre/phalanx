@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "telegraf"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "monitoring"
   source:
     path: "applications/telegraf"
     repoURL: {{ .Values.repoUrl | quote }}

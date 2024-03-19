@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "ook"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/ook"
     repoURL: {{ .Values.repoUrl | quote }}

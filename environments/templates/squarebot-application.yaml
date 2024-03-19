@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "squarebot"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/squarebot"
     repoURL: {{ .Values.repoUrl | quote }}

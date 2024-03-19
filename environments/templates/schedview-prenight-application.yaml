@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "schedview-prenight"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/schedview-prenight"
     repoURL: {{ .Values.repoUrl | quote }}

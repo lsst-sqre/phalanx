@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "noteburst"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/noteburst"
     repoURL: {{ .Values.repoUrl | quote }}

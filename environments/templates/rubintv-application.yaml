@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "rubintv"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/rubintv"
     repoURL: {{ .Values.repoUrl | quote }}

@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "kubernetes-replicator"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/kubernetes-replicator"
     repoURL: {{ .Values.repoUrl | quote }}

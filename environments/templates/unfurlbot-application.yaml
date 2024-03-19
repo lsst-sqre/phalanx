@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "unfurlbot"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/unfurlbot"
     repoURL: {{ .Values.repoUrl | quote }}

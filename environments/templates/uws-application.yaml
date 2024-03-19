@@ -2,27 +2,27 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: uws
+  name: "uws"
 spec:
   finalizers:
-    - kubernetes
+    - "kubernetes"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: uws
-  namespace: argocd
+  name: "uws"
+  namespace: "argocd"
   finalizers:
-    - resources-finalizer.argocd.argoproj.io
+    - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: uws
-    server: https://kubernetes.default.svc
-  project: default
+    namespace: "uws"
+    server: "https://kubernetes.default.svc"
+  project: "telescope"
   source:
-    path: applications/uws
-    repoURL: {{ .Values.repoURL }}
-    targetRevision: {{ .Values.targetRevision }}
+    path: "applications/uws"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
         - name: "global.host"

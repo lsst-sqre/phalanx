@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "schedview-snapshot"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/schedview-snapshot"
     repoURL: {{ .Values.repoUrl | quote }}

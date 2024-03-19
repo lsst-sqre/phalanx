@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "datalinker"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/datalinker"
     repoURL: {{ .Values.repoUrl | quote }}

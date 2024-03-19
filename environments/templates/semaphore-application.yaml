@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "semaphore"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/semaphore"
     repoURL: {{ .Values.repoUrl | quote }}

@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "times-square"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/times-square"
     repoURL: {{ .Values.repoUrl |quote }}

@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "next-visit-fan-out"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "prompt"
   source:
     path: "applications/next-visit-fan-out"
     repoURL: {{ .Values.repoUrl | quote }}

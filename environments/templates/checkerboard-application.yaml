@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "checkerboard"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "roundtable"
   source:
     path: "applications/checkerboard"
     repoURL: {{ .Values.repoUrl | quote }}

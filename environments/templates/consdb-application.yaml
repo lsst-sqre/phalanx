@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "consdb"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rubin"
   source:
     path: "applications/consdb"
     repoURL: {{ .Values.repoUrl | quote }}

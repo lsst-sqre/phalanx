@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "nublado"
     server: "https://kubernetes.default.svc"
-  project: "default"
+  project: "rsp"
   source:
     path: "applications/nublado"
     repoURL: {{ .Values.repoUrl | quote }}
