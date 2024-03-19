@@ -6,99 +6,19 @@ Applications are individual *atomic* services that are configured and deployed t
 Each environment can opt whether to deploy an application, and also customize the configuration of the application.
 This section of the documentation describes each Phalanx application.
 
+Applications are divided into several Argo CD projects by type of application.
+These groupings are used for access control in some Phalanx environments.
+When creating a new Phalanx application, you will choose which of these groupings the application fits best into.
+
 To learn how to develop applications for Phalanx, see the :doc:`/developers/index` section.
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Cluster infrastructure
+   :maxdepth: 2
 
-   argocd/index
-   cert-manager/index
-   ingress-nginx/index
-   gafaelfawr/index
-   postgres/index
-   vault-secrets-operator/index
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Rubin Science Platform
-
-   butler/index
-   datalinker/index
-   filestore-backup/index
-   hips/index
-   livetap/index
-   mobu/index
-   noteburst/index
-   nublado/index
-   portal/index
-   semaphore/index
-   siav2/index
-   sqlproxy-cross-project/index
-   squareone/index
-   ssotap/index
-   tap/index
-   times-square/index
-   vo-cutouts/index
-   consdb/index
-
-.. toctree::
-   :maxdepth: 1
-   :caption: RSP+
-
-   argo-workflows/index
-   alert-stream-broker/index
-   exposurelog/index
-   jira-data-proxy/index
-   narrativelog/index
-   obsloctap/index
-   plot-navigator/index
-   production-tools/index
-   rubintv/index
-   sasquatch/index
-   schedview-prenight/index
-   schedview-snapshot/index
-   strimzi/index
-   strimzi-access-operator/index
-   telegraf/index
-   telegraf-ds/index
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Roundtable
-
-   checkerboard/index
-   giftless/index
-   kubernetes-replicator/index
-   monitoring/index
-   onepassword-connect/index
-   ook/index
-   sqrbot-sr/index
-   squarebot/index
-   unfurlbot/index
-   vault/index
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Prompt Processing
-
-   next-visit-fan-out/index
-   prompt-proto-service-hsc/index
-   prompt-proto-service-hsc-gpu/index
-   prompt-proto-service-latiss/index
-   prompt-proto-service-lsstcam/index
-   prompt-proto-service-lsstcomcam/index
-   prompt-proto-service-lsstcomcamsim/index
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Rubin Observatory Control System
-
-   auxtel/index
-   calsys/index
-   control-system-test/index
-   eas/index
-   love/index
-   obssys/index
-   simonyitel/index
-   uws/index
+   infrastructure
+   rsp
+   rubin
+   roundtable
+   monitoring
+   prompt
+   telescope

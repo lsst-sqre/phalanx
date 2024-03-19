@@ -29,6 +29,11 @@ empty
 
 You will be prompted for a short description of the application.
 Keep it succinct, ideally just a few words, and do not add a period at the end.
+The description must begin with a capital letter.
+
+You will also be prompted for the Argo CD project to use for your application.
+This must be chosen from the list of projects at :doc:`/applications/index`.
+See the page for each project for a short description of what it should contain.
 
 Next steps
 ==========

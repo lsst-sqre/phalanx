@@ -26,8 +26,8 @@ This should explain the purpose of the application and which environments should
 
 The :file:`values.md` file generally does not need to be modified.
 
-Add the new application to `docs/applications/index.rst <https://github.com/lsst-sqre/phalanx/blob/main/docs/applications/index.rst>`__ in the appropriate section.
-Please maintain the alphabetical sorting of each section.
+Add the new application to the appropriate :file:`docs/applications/{project}.rst` file, where *project* is the Argo CD project of your application (the value that you passed to ``--project`` when creating the application originally).
+Please maintain the alphabetical sorting of the applications.
 
 Configure other Phalanx applications
 ====================================

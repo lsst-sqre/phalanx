@@ -26,6 +26,7 @@ from ..models.applications import (
     ApplicationConfig,
     ApplicationInstance,
     DocLink,
+    Project,
 )
 from ..models.environments import (
     Environment,
@@ -721,7 +722,7 @@ class ConfigStorage:
             raise InvalidApplicationConfigError(application, msg)
         return match.group("namespace")
 
-    def _find_application_project(self, application: str) -> str:
+    def _find_application_project(self, application: str) -> Project:
         """Determine what Argo CD project an application belongs to.
 
         This information is present in the Argo CD ``Application`` resource,
@@ -741,7 +742,8 @@ class ConfigStorage:
         Raises
         ------
         InvalidApplicationConfigError
-            Raised if the project for the application could not be found.
+            Raised if the project for the application could not be found or
+            was set to an invalid value.
         """
         template_path = (
             self._path
@@ -758,7 +760,12 @@ class ConfigStorage:
         if not match:
             msg = f"Project not found in {template_path!s}"
             raise InvalidApplicationConfigError(application, msg)
-        return match.group("project")
+        project = match.group("project")
+        try:
+            return Project(project)
+        except ValueError as e:
+            msg = f"Invalid project {project} in {template_path!s}"
+            raise InvalidApplicationConfigError(application, msg) from e
 
     def _is_condition_satisfied(
         self, instance: ApplicationInstance, condition: str | None
@@ -910,6 +917,7 @@ class ConfigStorage:
         instance = ApplicationInstance(
             name=application.name,
             environment=environment_name,
+            project=application.project,
             chart=application.chart,
             values=values,
         )

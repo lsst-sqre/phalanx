@@ -12,6 +12,7 @@ from git.repo import Repo
 from git.util import Actor
 
 from phalanx.factory import Factory
+from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
 from ..support.data import (
@@ -63,6 +64,8 @@ def test_create(tmp_path: Path) -> None:
         "aaa-new-app",
         "--starter",
         "empty",
+        "--project",
+        "infrastructure",
         "--description",
         "First new app",
         "--config",
@@ -75,6 +78,8 @@ def test_create(tmp_path: Path) -> None:
         "application",
         "create",
         "hips",
+        "--project",
+        "rsp",
         "--description",
         "Some HiPS service",
         "--config",
@@ -89,6 +94,8 @@ def test_create(tmp_path: Path) -> None:
         "zzz-other-app",
         "--starter",
         "empty",
+        "--project",
+        "telescope",
         "--description",
         "Last new app",
         "--config",
@@ -131,6 +138,12 @@ def test_create(tmp_path: Path) -> None:
     assert "aaa-new-app" in environment.applications
     assert "hips" in environment.applications
     assert "zzz-other-app" in environment.applications
+    for app, project in (
+        ("aaa-new-app", Project.infrastructure),
+        ("hips", Project.rsp),
+        ("zzz-other-app", Project.telescope),
+    ):
+        assert environment.applications[app].project == project
     for app, expected in (
         ("aaa-new-app", "First new app"),
         ("hips", "Some HiPS service"),
@@ -157,6 +170,8 @@ def test_create_errors(tmp_path: Path) -> None:
         "application",
         "create",
         "some-really-long-app-name-please-do-not-do-this",
+        "--project",
+        "infrastructure",
         "--description",
         "Some really long description on top of the app name",
         "--config",
@@ -169,6 +184,8 @@ def test_create_errors(tmp_path: Path) -> None:
         "application",
         "create",
         "app",
+        "--project",
+        "infrastructure",
         "--description",
         "lowercase description",
         "--config",
@@ -176,6 +193,20 @@ def test_create_errors(tmp_path: Path) -> None:
         needs_config=False,
     )
     assert "Description must start with capital letter" in result.output
+    assert result.exit_code == 2
+    result = run_cli(
+        "application",
+        "create",
+        "app",
+        "--description",
+        "Description",
+        "--project",
+        "foo",
+        "--config",
+        str(config_path),
+        needs_config=False,
+    )
+    assert "'foo' is not one of" in result.output
     assert result.exit_code == 2
 
 
@@ -194,9 +225,14 @@ def test_create_prompt(tmp_path: Path) -> None:
         "--config",
         str(config_path),
         needs_config=False,
-        stdin="Some application\n",
+        stdin="Some application\ninfrastructure\n",
     )
-    assert result.output == "Short description: Some application\n"
+    assert result.output == (
+        "Short description: Some application\n"
+        "Possible Argo CD projects are\n  "
+        + "\n  ".join(p.value for p in Project)
+        + "\nArgo CD project: infrastructure\n"
+    )
     assert result.exit_code == 0
 
     app_path = config_path / "applications" / "aaa-new-app"
