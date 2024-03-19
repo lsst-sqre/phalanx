@@ -148,7 +148,11 @@ def application_add_helm_repos(
     "-p",
     "--project",
     type=click.Choice([p.value for p in Project]),
-    prompt="Argo CD project",
+    prompt=(
+        "Possible Argo CD projects are\n  "
+        + "\n  ".join(p.value for p in Project)
+        + "\nArgo CD project"
+    ),
     show_choices=False,
     help="Argo CD project for the application.",
 )

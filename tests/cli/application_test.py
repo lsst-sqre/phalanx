@@ -229,7 +229,9 @@ def test_create_prompt(tmp_path: Path) -> None:
     )
     assert result.output == (
         "Short description: Some application\n"
-        "Argo CD project: infrastructure\n"
+        "Possible Argo CD projects are\n  "
+        + "\n  ".join(p.value for p in Project)
+        + "\nArgo CD project: infrastructure\n"
     )
     assert result.exit_code == 0
 
