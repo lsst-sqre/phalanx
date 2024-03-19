@@ -52,7 +52,7 @@ def test_application_version() -> None:
 
 def test_enviroments() -> None:
     """Ensure applications don't have configs for unknown environments."""
-    factory = Factory(Path.cwd())
+    factory = Factory(Path(__file__).parent.parent)
     config_storage = factory.create_config_storage()
     environments = set(config_storage.list_environments())
     for app_name in config_storage.list_applications():

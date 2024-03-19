@@ -3,9 +3,18 @@
 from __future__ import annotations
 
 import re
+from collections import defaultdict
 from pathlib import Path
 
+from phalanx.factory import Factory
 from phalanx.models.applications import Project
+
+_SPECIAL_APPLICATIONS = (
+    "nublado-fileservers",
+    "nublado-users",
+    "ocps-uws-job",
+)
+"""Applications that are implementation details and have no documentation."""
 
 
 def test_descriptions() -> None:
@@ -28,26 +37,31 @@ def test_descriptions() -> None:
 
 
 def test_applications_index() -> None:
-    """Ensure all applications are mentioned in the index."""
+    """Ensure all applications are mentioned in the index.
+
+    Also check that the application is listed under the project that it is
+    configured to use during installation.
+    """
     doc_root = Path(__file__).parent.parent.parent / "docs" / "applications"
-    seen = set()
+    seen: defaultdict[str, set[str]] = defaultdict(set)
     for project in Project:
-        if project == Project.default:
-            continue
         with (doc_root / (project.value + ".rst")).open() as fh:
             for line in fh:
                 if m := re.match("^   ([^/]+)/index$", line):
-                    seen.add(m.group(1))
-    root_path = Path(__file__).parent.parent.parent / "applications"
-    for application in root_path.iterdir():
-        if not application.is_dir():
+                    seen[project.value].add(m.group(1))
+
+    # Load all of the configuration.
+    factory = Factory(Path(__file__).parent.parent)
+    config_storage = factory.create_config_storage()
+    config = config_storage.load_phalanx_config()
+
+    # Check that the project for each application matches where it's linked in
+    # the docs.
+    for application in config.applications:
+        if application.name in _SPECIAL_APPLICATIONS:
             continue
-        if application.name in (
-            "nublado-fileservers",
-            "nublado-users",
-            "ocps-uws-job",
-        ):
-            continue
-        assert (
-            application.name in seen
-        ), f"{application.name} not lined in docs/applications/index.rst"
+        project_name = application.project.value
+        assert application.name in seen[project_name], (
+            f"{application} in {project_name} but not linked in"
+            f" docs/applications/{project_name}.rst"
+        )

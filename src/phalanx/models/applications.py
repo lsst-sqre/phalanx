@@ -51,10 +51,6 @@ class Project(Enum):
     prompt = "prompt"
     telescope = "telescope"
 
-    # Temporarily permissible while the migration is happening, but will be
-    # removed in the future.
-    default = "default"
-
 
 class ApplicationConfig(BaseModel):
     """Configuration for a Phalanx application."""
