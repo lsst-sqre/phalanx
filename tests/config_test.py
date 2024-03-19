@@ -10,6 +10,7 @@ from typing import Literal
 import yaml
 
 from phalanx.factory import Factory
+from phalanx.models.applications import Project
 
 _ALLOW_NO_SECRETS = ("monitoring", "next-visit-fan-out")
 """Temporary whitelist of applications that haven't added secrets.yaml."""
@@ -61,6 +62,20 @@ def test_enviroments() -> None:
             unknown = ", ".join(sorted(app_envs - environments))
             msg = f"{app_name} configured for unknown environments: {unknown}"
             raise AssertionError(msg)
+
+
+def test_projects() -> None:
+    """Ensure all projects are defined."""
+    template_path = (
+        Path(__file__).parent.parent
+        / "environments"
+        / "templates"
+        / "projects"
+    )
+    for project in Project:
+        assert (
+            template_path / f"{project.value}.yaml"
+        ).exists(), f"Project {project.value} is not defined"
 
 
 def test_secrets_defined() -> None:
