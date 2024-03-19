@@ -14,5 +14,8 @@ Argo CD project: ``infrastructure``
    cert-manager/index
    ingress-nginx/index
    gafaelfawr/index
+   mobu/index
    postgres/index
+   strimzi/index
+   strimzi-access-operator/index
    vault-secrets-operator/index

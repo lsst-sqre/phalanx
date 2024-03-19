@@ -9,10 +9,9 @@ Argo CD project: ``rubin``
 .. toctree::
    :maxdepth: 1
 
-   argo-workflows/index
    alert-stream-broker/index
+   consdb/index
    exposurelog/index
-   jira-data-proxy/index
    narrativelog/index
    obsloctap/index
    plot-navigator/index
@@ -20,5 +19,3 @@ Argo CD project: ``rubin``
    rubintv/index
    schedview-prenight/index
    schedview-snapshot/index
-   strimzi/index
-   strimzi-access-operator/index

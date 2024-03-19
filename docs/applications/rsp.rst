@@ -13,8 +13,8 @@ Argo CD project: ``rsp``
    datalinker/index
    filestore-backup/index
    hips/index
+   jira-data-proxy/index
    livetap/index
-   mobu/index
    noteburst/index
    nublado/index
    portal/index
@@ -26,4 +26,3 @@ Argo CD project: ``rsp``
    tap/index
    times-square/index
    vo-cutouts/index
-   consdb/index
