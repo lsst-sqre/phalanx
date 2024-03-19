@@ -6,3 +6,5 @@ config:
   site_id: base
 db:
   host: postgresdb01.ls.lsst.org
+global:
+  tsVaultSecretsPath: /ts/software
