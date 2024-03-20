@@ -41,7 +41,7 @@ spec:
               - name: "INFLUXDB_ORG"
                 value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: "https://{{- .Values.config.influxdbHostname -}}/"
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -102,7 +102,7 @@ spec:
               - name: "INFLUXDB_ORG"
                 value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: "https://{{- .Values.config.influxdbHostname -}}/"
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -151,7 +151,7 @@ spec:
               - name: "INFLUXDB_ORG"
                 value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: "https://{{- .Values.config.influxdbHostname -}}/"
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
