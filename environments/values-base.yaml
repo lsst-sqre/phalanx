@@ -1,5 +1,8 @@
 name: base
 fqdn: base-lsp.lsst.codes
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP base-lsp.lsst.codes"
 vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
 
 applications:

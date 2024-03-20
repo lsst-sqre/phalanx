@@ -34,7 +34,7 @@ In the following steps, you'll change the permissions of the 1Password Connect s
 
 #. Log on to the 1Password UI via a web browser.
 
-#. Click on :menuselection:`Integrations` in the right sidebar under **LSST IT**.
+#. Click on :menuselection:`Developer Tools` in the right sidebar under **LSST IT**.
 
 #. Click on the Secrets Management workflow for the 1Password Connect server that will be serving this environment.
 
@@ -44,7 +44,7 @@ In the following steps, you'll change the permissions of the 1Password Connect s
 
 #. Next to :guilabel:`Access Tokens`, click on :guilabel:`New Token`.
 
-#. Under :guilabel:`Environment Name`, enter the same name as the 1Password vault name for your environment.
+#. Under :guilabel:`Token Name`, enter the name of the Phalanx environment.
    Then, click :guilabel:`Choose Vaults` and select the corresponding vault (and only that one).
    Click :guilabel:`Issue Token` to continue.
 
@@ -52,7 +52,7 @@ In the following steps, you'll change the permissions of the 1Password Connect s
    Then, click on :guilabel:`View Details` to continue.
 
 #. Go back to home by clicking on the icon on the upper left.
-   Go to the SQuaRE vault, find the ``RSP 1Password tokens``, and edit it.
+   Go to the SQuaRE vault, find the ``Phalanx 1Password tokens`` items, and edit it.
    Add the token to that item as another key/value pair, where the key is the short name of the enviroment.
    Mark the value as a password.
 
