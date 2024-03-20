@@ -32,7 +32,6 @@ Manual upgrade process
 Only use this process if the automatic upgrade failed or if there are documented serious problems with automatic upgrades.
 
 #. Determine the current version of Argo CD.
-
    The easiest way to do this is to go to the ``/argo-cd`` route and look at the version number in the top left sidebar.
    Ignore the hash after the ``+`` sign; the part before that is the version number.
 
