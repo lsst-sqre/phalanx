@@ -44,7 +44,12 @@ spec:
                   key: "token"
             - name: "MOBU_PATH_PREFIX"
               value: {{ .Values.config.pathPrefix | quote }}
-            {{- if (not .Values.config.debug) }}
+            {{- if .Values.config.debug }}
+            - name: "MOBU_LOGGING_PROFILE"
+              value: "development"
+            - name: "MOBU_LOG_LEVEL"
+              value: "DEBUG"
+            {{- else }}
             - name: "MOBU_LOGGING_PROFILE"
               value: "production"
             {{- end }}
