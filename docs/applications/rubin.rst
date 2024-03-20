@@ -13,6 +13,7 @@ Argo CD project: ``rubin``
    consdb/index
    exposurelog/index
    narrativelog/index
+   nightreport/index
    obsloctap/index
    plot-navigator/index
    production-tools/index
