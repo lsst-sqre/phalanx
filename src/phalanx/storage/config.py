@@ -29,6 +29,7 @@ from ..models.applications import (
     Project,
 )
 from ..models.environments import (
+    ArgoCDRBAC,
     Environment,
     EnvironmentConfig,
     EnvironmentDetails,
@@ -628,17 +629,13 @@ class ConfigStorage:
         # Public URL of Argo CD (or none for environments like minikube).
         argocd_url = None
         with suppress(KeyError):
-            argocd_url = argocd.values["argo-cd"]["server"]["config"]["url"]
+            argocd_url = argocd.values["argo-cd"]["configs"]["cm"]["url"]
 
         # Argo CD role-based access control configuration.
-        argocd_rbac = []
+        argocd_rbac = None
         with suppress(KeyError):
-            rbac_config = argocd.values["argo-cd"]["server"]["rbacConfig"]
-            rbac_csv = rbac_config["policy.csv"]
-            argocd_rbac = [
-                [i.strip() for i in line.split(",")]
-                for line in rbac_csv.splitlines()
-            ]
+            rbac_config = argocd.values["argo-cd"]["configs"]["rbac"]
+            argocd_rbac = ArgoCDRBAC.from_csv(rbac_config["policy.csv"])
 
         # Type of identity provider used for Gafaelfawr.
         if gafaelfawr:
