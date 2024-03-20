@@ -1,5 +1,5 @@
 config:
-  influxdbHostname: "monitoring-dev.lsst.cloud"
+  influxdbHostname: "monitoring.lsst.cloud"
   influxdbOrg: "square"
 influxdb2:
   enabled: true
@@ -8,13 +8,12 @@ influxdb2:
   - key: "dedicated"
     operator: "Equal"
     value: "kafka"
-    effect: "NoExecute"
+    effect: "NoSchedule"
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          # This should probably be roundtable-dev' but in fact it is not.
           - key: "roundtable.lsst.cloud/pool"
             operator: "In"
             values:
@@ -26,14 +25,12 @@ chronograf:
     size: 1Gi
     storageClass: standard-rwo
   env:
-    INFLUX_DB_URL: "monitoring-dev.lsst.cloud"
+    INFLUX_DB_URL: "monitoring.lsst.cloud"
     GH_CLIENT_ID: "e85fe410b0021a251180"
-cronjob:
-  enabled: true
-  debug: true
+
 ingress:
   enabled: true
   chronograf:
-    hostname: "panopticon-dev.lsst.cloud"
+    hostname: "panopticon.lsst.cloud"
   influxdb2:
-    hostname: "monitoring-dev.lsst.cloud"
+    hostname: "monitoring.lsst.cloud"
