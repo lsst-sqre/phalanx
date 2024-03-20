@@ -14,6 +14,8 @@ We expect to migrate the :px-app:`telegraf` and :px-app:`telegraf-ds` applicatio
 
 In the slightly longer term, the InfluxDBv2 server will be replaced by InfluxDBv3.
 
+
+
 .. jinja:: monitoring
    :file: applications/_summary.rst.jinja
 
@@ -21,6 +23,7 @@ Guides
 ======
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
+   postinstall
    values
