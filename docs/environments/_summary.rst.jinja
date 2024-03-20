@@ -59,9 +59,18 @@
    {%- endif %}
    {%- if env.argocd_rbac %}
    * - Argo CD RBAC
-     - .. csv-table::
-          {% for line in env.argocd_rbac_csv %}
-          {{ line }}
+     - .. list-table::
+
+          * - Role
+            - Groups or users
+          {% for role, members in env.argocd_rbac.roles.items() %}
+          * - ``{{ role }}``
+            - - {{ members[0] }}
+            {%- if members|length > 1 %}
+            {%- for member in members[1:] %}
+              - {{ member }}
+            {%- endfor %}
+            {%- endif %}
           {%- endfor %}
    {%- endif %}
 {%- if env.gcp %}

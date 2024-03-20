@@ -12,11 +12,7 @@ from phalanx.docs.jinja import build_jinja_contexts
 from phalanx.factory import Factory
 from phalanx.models.environments import IdentityProvider
 
-from ..support.data import (
-    phalanx_test_path,
-    read_output_data,
-    read_output_json,
-)
+from ..support.data import phalanx_test_path, read_output_json
 
 
 def test_build_jinja_contexts(factory: Factory) -> None:
@@ -43,6 +39,25 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         assert idfdev.name == "idfdev"
         assert idfdev.fqdn == "data-dev.lsst.cloud"
         assert idfdev.argocd_url == "https://data-dev.lsst.cloud/argo-cd"
+        assert idfdev.argocd_rbac.roles == {
+            "role:admin": [
+                "adam@lsst.cloud",
+                "afausti@lsst.cloud",
+                "dspeck@lsst.cloud",
+                "frossie@lsst.cloud",
+                "jsick@lsst.cloud",
+                "rra@lsst.cloud",
+            ],
+            "role:developer": [
+                "dirving@lsst.cloud",
+                "fritzm@lsst.cloud",
+                "gpdf@lsst.cloud",
+                "jeremym@lsst.cloud",
+                "kkoehler@lsst.cloud",
+                "loi@lsst.cloud",
+                "roby@lsst.cloud",
+            ],
+        }
         assert idfdev.identity_provider == IdentityProvider.CILOGON
         assert idfdev.gcp.project_id == "science-platform-dev-7696"
         assert idfdev.gcp.region == "us-central1"
@@ -54,8 +69,6 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         assert minikube.gcp is None
 
         # Check some of the more complex data.
-        expected = read_output_data("idfdev", "argocd-rbac-rst")
-        assert "\n".join(idfdev.argocd_rbac_csv) == expected.strip()
         scopes = {s.scope: s.groups_as_rst() for s in idfdev.gafaelfawr_scopes}
         assert scopes == read_output_json("idfdev", "gafaelfawr-scopes")
         scopes = {
