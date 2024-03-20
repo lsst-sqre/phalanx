@@ -34,6 +34,7 @@ template:
                   name: "monitoring-influxdb2"
                   port:
                     number: 80
+            {{- if .Values.chronograf.enabled }}
             - path: "/chronograf"
               pathType: "Prefix"
               backend:
@@ -41,5 +42,6 @@ template:
                   name: "monitoring-chronograf"
                   port:
                     number: 80
+            {{- end }}
 {{- end }}
 {{- end }}
