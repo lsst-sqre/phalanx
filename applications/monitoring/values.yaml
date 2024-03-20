@@ -79,7 +79,8 @@ chronograf:
   ## Image Settings
   ##
   image:
-    tag: 1.9.4
+    repository: "quay.io/influxdb/chronograf"
+    tag: 1.10.3
     pullPolicy: IfNotPresent
 
   ## Specify a service type
@@ -101,35 +102,28 @@ chronograf:
       memory: 30Gi
       cpu: 4
 
-  ## Use our own Gafaelfawr ingress.
   ingress:
-    ## We will use Gafaelfawr ingresses instead
     enabled: false
+    tls: false
+    hostname: ""
+    className: "nginx"
+    path: /chronograf(/$)
+
 
   ## Enable OAuth
   oauth:
-    ## This is a lie: see below.
     enabled: false
-  ## OAuth Settings for OAuth Providers
-  ## We do not set these here.  What we do is set:
-  ##  - TOKEN_SECRET
-  ##  - GH_CLIENT_ID
-  ##  - GH_CLIENT_SECRET
-  ##  - GH_ORGS
-  ## in the environment.  The secrets should come from the "monitoring"
-  ## secret, which is a VaultSecret, and the rest can just be injected
-  ## into the deployment env directly.
-
   env:
+    BASE_PATH: /chronograf
     CUSTOM_AUTO_REFRESH: "1s=1000"
-    GH_CLIENT_ID: ""  # Must be specified for each endpoint for the callback
-    GH_ORGS: "lsst-sqre"
     HOST_PAGE_DISABLED: true
     INFLUXDB_URL: "https://monitoring.lsst.codes"  # Expect this to change
     INFLUXDB_ORG: "square"
   ## INFLUXDB_TOKEN should be in the monitoring secret as well as
   ## TOKEN_SECRET and GH_CLIENT_SECRET.  Note that INFLUX_TOKEN is for
   ## InfluxDBv1 and INFLUXDB_TOKEN is for v2.
+  # -- Chronograf expects keys generic_client_id, generic_client_secret,
+  # and token_secret.
   envFromSecret: monitoring
   updateStrategy:
     type: Recreate
@@ -157,8 +151,7 @@ cronjob:
     # -- taskmaker schedule
     taskmaker: "6-59/15 * * * *"
 
-# -- ingresses for InfluxDBv2 server and Chronograf UI.  Only used if the
-# services are enabled.
+# -- ingress for InfluxDBv2 Only used if the service is enabled.
 ingress:
   chronograf:
     hostname: ""

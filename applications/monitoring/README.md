@@ -11,16 +11,20 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | chronograf.enabled | bool | False | enable chronograf at all? |
+| chronograf.env.BASE_PATH | string | `"/chronograf"` |  |
 | chronograf.env.CUSTOM_AUTO_REFRESH | string | `"1s=1000"` |  |
-| chronograf.env.GH_CLIENT_ID | string | `""` |  |
-| chronograf.env.GH_ORGS | string | `"lsst-sqre"` |  |
 | chronograf.env.HOST_PAGE_DISABLED | bool | `true` |  |
 | chronograf.env.INFLUXDB_ORG | string | `"square"` |  |
 | chronograf.env.INFLUXDB_URL | string | `"https://monitoring.lsst.codes"` |  |
-| chronograf.envFromSecret | string | `"monitoring"` |  |
+| chronograf.envFromSecret | string | `"monitoring"` | Chronograf expects keys generic_client_id, generic_client_secret, and token_secret. |
 | chronograf.image.pullPolicy | string | `"IfNotPresent"` |  |
-| chronograf.image.tag | string | `"1.9.4"` |  |
+| chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` |  |
+| chronograf.image.tag | string | `"1.10.3"` |  |
+| chronograf.ingress.className | string | `"nginx"` |  |
 | chronograf.ingress.enabled | bool | `false` |  |
+| chronograf.ingress.hostname | string | `""` |  |
+| chronograf.ingress.path | string | `"/chronograf(/$)"` |  |
+| chronograf.ingress.tls | bool | `false` |  |
 | chronograf.oauth.enabled | bool | `false` |  |
 | chronograf.resources.limits.cpu | int | `4` |  |
 | chronograf.resources.limits.memory | string | `"30Gi"` |  |
@@ -58,5 +62,5 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | influxdb2.startupProbe.failureThreshold | int | `60` | Number of checks to conclude whether InfluxDB won't start.  High to allow up to 10 minutes for startup; see above |
 | influxdb2.startupProbe.initialDelaySeconds | int | `30` | How long to wait before checking the first time |
 | influxdb2.startupProbe.periodSeconds | int | `10` | Period between checking whether InfluxDB has started |
-| ingress | object | `{"chronograf":{"annotations":{},"hostname":""},"influxdb2":{"annotations":{}}}` | ingresses for InfluxDBv2 server and Chronograf UI.  Only used if the services are enabled. |
+| ingress | object | `{"chronograf":{"annotations":{},"hostname":""},"influxdb2":{"annotations":{}}}` | ingress for InfluxDBv2 Only used if the service is enabled. |
 | ingress.influxdb2.annotations | object | `{}` | Additional annotations to add to the ingress |

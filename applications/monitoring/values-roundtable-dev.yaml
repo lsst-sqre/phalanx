@@ -21,19 +21,30 @@ influxdb2:
             - "kafka"
 chronograf:
   enabled: true
+  ingress:
+    enabled: true
+    hostname: "roundtable-dev.lsst.cloud"
   persistence:
     enabled: true
-    size: 1Gi
+    size: 5Gi
     storageClass: standard-rwo
   env:
+    GENERIC_NAME: "OIDC"
+    GENERIC_AUTH_URL: "https://roundtable-dev.lsst.cloud/auth/openid/login"
+    GENERIC_TOKEN_URL: "https://roundtable-dev.lsst.cloud/auth/openid/token"
+    USE_ID_TOKEN: "1"
+    JWKS_URL: "https://roundtable-dev.lsst.cloud/.well-known/jwks.json"
+    GENERIC_API_URL: "https://roundtable-dev.lsst.cloud/auth/openid/userinfo"
+    GENERIC_SCOPES: openid
+    GENERIC_API_KEY: sub
+    PUBLIC_URL: "https://roundtable-dev.lsst.cloud/"
+    STATUS_FEED_URL: "https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/roundtable-dev.json"
     INFLUX_DB_URL: "monitoring-dev.lsst.cloud"
-    GH_CLIENT_ID: "e85fe410b0021a251180"
+  envFromSecret: "monitoring"
 cronjob:
   enabled: true
   debug: true
 ingress:
   enabled: true
-  chronograf:
-    hostname: "panopticon-dev.lsst.cloud"
   influxdb2:
     hostname: "monitoring-dev.lsst.cloud"
