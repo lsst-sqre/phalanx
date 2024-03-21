@@ -5,13 +5,13 @@ description: JupyterHub and custom spawner for the Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/nublado
 home: https://nublado.lsst.io/
-appVersion: 4.0.2
+appVersion: 4.1.0
 
 dependencies:
   - name: jupyterhub
     # This is the Zero To Jupyterhub version, *not* the version of the
     # Jupyterhub package itself.
-    version: "3.2.1"
+    version: "3.3.2"
     repository: https://jupyterhub.github.io/helm-chart/
 
 annotations:
