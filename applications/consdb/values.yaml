@@ -25,9 +25,7 @@ kafka:
   group_id: "consdb-consumer"
 db:
   # -- database host
-  url: postgres.postgres
-  # -- database port
-  port: 5432
+  host: postgres.postgres
   # -- database user
   user: consdb
   # -- database name

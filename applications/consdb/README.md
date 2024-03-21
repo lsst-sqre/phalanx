@@ -18,22 +18,21 @@ Consolidated Database of Image Metadata
 | autoscaling.minReplicas | int | `1` | Minimum number of consdb deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of consdb deployment pods |
 | db.database | string | `"consdb"` | database name |
-| db.port | int | `5432` | database port |
-| db.url | string | `"postgres.postgres"` | database host |
+| db.host | string | `"postgres.postgres"` | database host |
 | db.user | string | `"consdb"` | database user |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the consdb image |
+| image.pullPolicy | string | `"Always"` | Pull policy for the consdb image |
 | image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
-| kafka.KAFKA_BOOTSTRAP | string | `"sasquatch-base-kafka-bootstrap.lsst.codes"` | Kafka bootstrap server |
-| kafka.KAFKA_GROUP_ID | string | `"consdb-consumer"` | name of consumer group, default is "consdb-consumer" |
-| kafka.KAFKA_USERNAME | string | `"consdb"` | username for SASL_PLAIN authentication |
-| kafka.SCHEMA_URL | string | `"https://sasquatch-base-kafka-schema-registry.lsst.codes"` |  |
-| lfa.BUCKET_PREFIX | string | `"rubin"` |  |
-| lfa.user | string | `"LFA"` | user |
+| kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap server |
+| kafka.group_id | string | `"consdb-consumer"` | name of consumer group, default is "consdb-consumer" |
+| kafka.schema_url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` |  |
+| kafka.username | string | `"consdb"` | username for SASL_PLAIN authentication |
+| lfa.access_key | string | `""` | access key/user for LFA bucket |
+| lfa.bucket_prefix | string | `""` | prefix for LFA bucket |
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
