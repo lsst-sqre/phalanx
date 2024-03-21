@@ -14,6 +14,7 @@ applications:
   giftless: true
   jira-data-proxy: true
   kubernetes-replicator: true
+  mobu: true
   monitoring: true
   onepassword-connect: true
   ook: true

@@ -1,0 +1,14 @@
+config:
+  autostart:
+    - name: "gitlfs"
+      count: 1
+      users:
+        - username: "bot-mobu-gitlfs"
+      scopes:
+        - "write:git-lfs"
+      business:
+        type: "GitLFS"
+        options:
+          lfs_read_url: "https://git-lfs.lsst.cloud/mobu/git-lfs-test"
+          lfs_write_url: "https://git-lfs-rw.lsst.cloud/mobu/git-lfs-test"
+        restart: true
