@@ -364,9 +364,6 @@ proxy:
 
 # Configuration for Nublado secrets management.
 secrets:
-  # -- Whether to install the T&S SAL Kafka secret.
-  installTsSalKafkaSecret: false
-
   # -- Whether to use the new secrets management mechanism. If enabled, the
   # Vault nublado secret will be split into a nublado secret for JupyterHub
   # and a nublado-lab-secret secret used as a source for secret values for the
