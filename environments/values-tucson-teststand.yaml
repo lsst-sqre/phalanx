@@ -3,7 +3,7 @@ fqdn: "tucson-teststand.lsst.codes"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP tucson-teststand.lsst.codes"
-vaultPathPrefix: "secret/k8s_operator/tucson-teststand.lsst.codes"
+vaultPathPrefix: "secret/phalanx/tucson-teststand"
 
 applications:
   argo-workflows: true
