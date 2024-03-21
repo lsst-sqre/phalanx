@@ -2,6 +2,5 @@ image:
   pullPolicy: Always
 
 config:
-  indexUri: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
-  repositoryLabels:
-    - dp02
+  repositories:
+    dp02: "s3://butler-us-central1-panda-dev/dc2/butler-external-idfdev.yaml"

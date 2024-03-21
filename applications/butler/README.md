@@ -15,9 +15,8 @@ Server for Butler data abstraction service
 | autoscaling.maxReplicas | int | `100` | Maximum number of butler deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of butler deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of butler deployment pods |
-| config.indexUri | string | `""` | URI to the DirectButler repository index file listing the configurations for each repository to be hosted by this server. |
 | config.pathPrefix | string | `"/api/butler"` | The prefix of the path portion of the URL where the Butler service will be exposed.  For example, if the service should be exposed at `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler` |
-| config.repositoryLabels | list | `[]` | List of Butler repository labels which will be hosted by this server, matching those from the index file. |
+| config.repositories | object | `{}` | Mapping from Butler repository label to Butler configuration URI for repositories which will be hosted by this server. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
