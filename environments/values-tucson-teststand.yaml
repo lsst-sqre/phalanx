@@ -1,6 +1,9 @@
-name: tucson-teststand
-fqdn: tucson-teststand.lsst.codes
-vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
+name: "tucson-teststand"
+fqdn: "tucson-teststand.lsst.codes"
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP base-lsp.lsst.codes"
+vaultPathPrefix: "secret/k8s_operator/tucson-teststand.lsst.codes"
 
 applications:
   argo-workflows: true
@@ -23,6 +26,6 @@ applications:
   telegraf-ds: true
 
 controlSystem:
-  imageTag: k0001
-  siteTag: tucson
-  s3EndpointUrl: https://s3.tu.lsst.org
+  imageTag: "k0001"
+  siteTag: "tucson"
+  s3EndpointUrl: "https://s3.tu.lsst.org"
