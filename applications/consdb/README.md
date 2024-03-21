@@ -14,7 +14,7 @@ Consolidated Database of Image Metadata
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the consdb deployment pod |
 | autoscaling.enabled | bool | `false` | Enable autoscaling of consdb deployment |
-| autoscaling.maxReplicas | int | `100` | Maximum number of consdb deployment pods |
+| autoscaling.maxReplicas | int | `10` | Maximum number of consdb deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of consdb deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of consdb deployment pods |
 | db.database | string | `"consdb"` | Database name |

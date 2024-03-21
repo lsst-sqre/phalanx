@@ -50,7 +50,7 @@ autoscaling:
   minReplicas: 1
 
   # -- Maximum number of consdb deployment pods
-  maxReplicas: 100
+  maxReplicas: 10
 
   # -- Target CPU utilization of consdb deployment pods
   targetCPUUtilizationPercentage: 80
