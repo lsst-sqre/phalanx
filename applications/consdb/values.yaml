@@ -17,13 +17,12 @@ image:
 
 kafka:
   # -- Kafka bootstrap server
-  KAFKA_BOOTSTRAP: "sasquatch-kafka-bootstrap.sasquatch:9092"
-  SCHEMA_URL: "http://sasquatch-schema-registry.sasquatch:8081"
+  bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  schema_url: "http://sasquatch-schema-registry.sasquatch:8081"
   # -- username for SASL_PLAIN authentication
-  KAFKA_USERNAME: "consdb"
-  # -- password for SASL_PLAIN authentication in deployment from vault
+  username: "consdb"
   # -- name of consumer group, default is "consdb-consumer"
-  KAFKA_GROUP_ID: "consdb-consumer"
+  group_id: "consdb-consumer"
 db:
   # -- database host
   url: postgres.postgres
@@ -35,9 +34,10 @@ db:
   database: consdb
 
 lfa:
-  # -- user
-  user: LFA
-  BUCKET_PREFIX: ""
+  # -- access key/user for LFA bucket
+  access_key: ""
+  # -- prefix for LFA bucket
+  bucket_prefix: ""
 
 ingress:
   # -- Additional annotations for the ingress rule

@@ -3,4 +3,4 @@ db:
   host: "postgresdb01.cp.lsst.org"
   database: "butler"
 lfa:
-  user: "AL6Y4J5ZYTWRHV04BTC5"
+  access_key: "AL6Y4J5ZYTWRHV04BTC5"

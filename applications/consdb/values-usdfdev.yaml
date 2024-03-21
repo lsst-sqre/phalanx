@@ -3,5 +3,5 @@ db:
   host: "usdf-butler.slac.stanford.edu"
   database: "lsstdb1"
 lfa:
-  user: "61JOIKO0VN83YFNC3UUZ"
-  BUCKET_PREFIX: "rubin"
+  access_key: "61JOIKO0VN83YFNC3UUZ"
+  bucket_prefix: "rubin:"

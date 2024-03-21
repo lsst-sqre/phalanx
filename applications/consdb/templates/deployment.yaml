@@ -45,24 +45,28 @@ spec:
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
               value: "{{ .Values.db.database }}"
-            - name: "LFA_USER"
-              value: "{{ .Values.lfa.user }}"
-            - name: "LFA_PASS"
+            - name: "AWS_ACCESS_KEY_ID"
+              value: "{{ .Values.lfa.access_key }}"
+            - name: "AWS_SECRET_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:
                   name: consdb
                   key: "lfa-password"
             - name: "BUCKET_PREFIX"
-              value: "{{ .Values.lfa.BUCKET_PREFIX }}"
+              value: "{{ .Values.lfa.bucket_prefix }}"
             - name: "KAFKA_BOOTSTRAP"
-              value: "{{ .Values.kafka.KAFKA_BOOTSTRAP }}"
+              value: "{{ .Values.kafka.bootstrap }}"
+            - name: "KAFKA_USERNAME"
+              value: "{{ .Values.kafka.username }}"
             - name: "KAFKA_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: sasquatch
                   key: "consdb-password"
+            - name: "KAFKA_GROUP_ID"
+              value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
-              value: "{{ .Values.kafka.SCHEMA_URL }}"
+              value: "{{ .Values.kafka.schema_url }}"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
