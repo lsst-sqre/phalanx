@@ -7,7 +7,6 @@ metadata:
     # Use Connect REST API to configure connectors
     strimzi.io/use-connector-resources: "false"
 spec:
-  image:  {{ .Values.connect.image | quote }}
   replicas: {{ .Values.connect.replicas }}
   bootstrapServers: {{ .Values.cluster.name }}-kafka-bootstrap:9093
   tls:
@@ -20,6 +19,23 @@ spec:
       secretName: {{ .Values.cluster.name }}-connect
       certificate: user.crt
       key: user.key
+  externalConfiguration:
+    env:
+      - name: PGPASSWORD
+        valueFrom:
+          secretKeyRef:
+            name: sasquatch
+            key: connect-postgres-password
+      - name: PG_JDBC_URL
+        valueFrom:
+          configMapKeyRef:
+            name: sasquatch-connect-postgres
+            key: jdbcUrl
+      - name: PGUSER
+        valueFrom:
+          configMapKeyRef:
+            name: sasquatch-connect-postgres
+            key: jdbcUser
   config:
     group.id: {{ .Values.cluster.name }}-connect
     offset.storage.topic: {{ .Values.cluster.name }}-connect-offsets
@@ -37,6 +53,31 @@ spec:
     value.converter.schemas.enable: true
     value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
     request.timeout.ms: 120000
+  template:
+    pod:
+      imagePullSecrets:
+        - name: sasquatch-connect-push-secret
+  build:
+    output:
+      type: docker
+      image: {{ .Values.connect.image | quote }}
+      pushSecret: sasquatch-connect-push-secret
+    plugins:
+      - name: confluent-jdbc
+        artifacts:
+          - type: jar
+            url: {{ .Values.connect.jdbcConnector.url }}
+            sha512sum: {{ .Values.connect.jdbcConnector.sha512sum }}
+      - name: confluent-avro
+        artifacts:
+          - type: jar
+            url: {{ .Values.connect.avroConverter.url }}
+            sha512sum: {{ .Values.connect.avroConverter.sha512sum }}
+      - name: confluent-schema
+        artifacts:
+          - type: jar
+            url: {{ .Values.connect.schemaClient.url }}
+            sha512sum: {{ .Values.connect.schemaClient.sha512sum }}
   resources:
     requests:
       cpu: "2"
@@ -47,6 +88,14 @@ spec:
   jvmOptions:
     "-Xmx": "8g"
     "-Xms": "8g"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sasquatch-connect-postgres
+data:
+  jdbcUrl: {{ .Values.connect.postgres.jdbcUrl | quote }}
+  jdbcUser: {{ .Values.connect.postgres.jdbcUser | quote }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -81,4 +130,25 @@ spec:
     consumerByteRate: 1073741824
     requestPercentage: 90
     controllerMutationRate: 1000
+{{- range $key, $value := .Values.connectors }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaConnector
+metadata:
+  name: {{ $value.name }}
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  class: {{ default "io.confluent.connect.jdbc.JdbcSinkConnector" $value.class }}
+  tasksMax: 2
+  config:
+    topics: {{ $value.config.topics }}
+    table.name.format: {{ $value.config.table_name_format }}
+    connection.url: "$PG_JDBC_URL"
+    connection.user: "$PGUSER"
+    connection.password: "$PGPASSWORD"
+    insert.mode: {{ default "upsert" $value.config.insert_mode }}
+    pk.mode: {{ default "record_key" $value.config.pk_mode }}
+    pk.fields: {{ $value.config.pk_fields }}
+{{- end }}
 {{- end }}
