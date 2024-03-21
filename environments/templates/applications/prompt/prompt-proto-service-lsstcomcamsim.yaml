@@ -1,4 +1,4 @@
-{{- if (index .Values "applications" "prompt-proto-service-lsstcam") -}}
+{{- if (index .Values "applications" "prompt-proto-service-lsstcomcamsim") -}}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
