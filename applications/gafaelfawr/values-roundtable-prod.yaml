@@ -16,7 +16,7 @@ config:
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
-    enabled: false
+    enabled: true
 
   knownScopes:
     "write:git-lfs": >-
