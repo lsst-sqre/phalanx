@@ -4,4 +4,4 @@ version: 1.0.0
 description: "Continuous integration testing"
 sources:
   - "https://github.com/lsst-sqre/mobu"
-appVersion: 7.0.0
+appVersion: 7.1.0
