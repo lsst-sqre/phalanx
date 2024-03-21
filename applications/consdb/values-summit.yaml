@@ -1,11 +1,6 @@
-config:
-  site_id: summit
-  nfs_path_1: /repo/LSSTComCam  # Mounted as /volume_1
-  nfs_server_1: comcam-archiver.cp.lsst.org
-  butler_uri_1: /volume_1
-
-  nfs_path_2: /auxtel/repo/LATISS  # Mounted as /volume_2
-  nfs_server_2: nfs-auxtel.cp.lsst.org
-  butler_uri_2: /volume_2
 db:
-  host: postgresdb01.cp.lsst.org
+  user: "oods"
+  host: "postgresdb01.cp.lsst.org"
+  database: "butler"
+lfa:
+  user: "AL6Y4J5ZYTWRHV04BTC5"

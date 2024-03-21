@@ -10,15 +10,15 @@ image:
   repository: "ghcr.io/lsst-dm/consdb-hinfo"
 
   # -- Pull policy for the consdb image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 kafka:
   # -- Kafka bootstrap server
-  KAFKA_BOOTSTRAP: "sasquatch-base-kafka-bootstrap.lsst.codes"
-  SCHEMA_URL: "https://sasquatch-base-kafka-schema-registry.lsst.codes"
+  KAFKA_BOOTSTRAP: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  SCHEMA_URL: "http://sasquatch-schema-registry.sasquatch:8081"
   # -- username for SASL_PLAIN authentication
   KAFKA_USERNAME: "consdb"
   # -- password for SASL_PLAIN authentication in deployment from vault
@@ -37,7 +37,7 @@ db:
 lfa:
   # -- user
   user: LFA
-  BUCKET_PREFIX: "rubin"
+  BUCKET_PREFIX: ""
 
 ingress:
   # -- Additional annotations for the ingress rule

@@ -1,12 +1,7 @@
-kafka:
-  KAFKA_REST: "https://usdf-dev-lsp.lsst.codes/sasquatch-rest-proxy"
-  KAFKA_BOOTSTRAP: "sasquatch-usdfdev-kafka-bootstrap.lsst.codes"
-
 db:
   user: "rubin"
   host: "usdf-butler.slac.stanford.edu"
   database: "lsstdb1"
 lfa:
-  user: "NOT-SET"
-image:
-  pullPolicy: Always
+  user: "61JOIKO0VN83YFNC3UUZ"
+  BUCKET_PREFIX: "rubin"
