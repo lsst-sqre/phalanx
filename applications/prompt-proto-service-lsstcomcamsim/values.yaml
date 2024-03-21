@@ -116,3 +116,6 @@ prompt-proto-service:
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.
   additionalVolumeMounts: []
+
+  # -- Affinity rules for the prompt processing pods
+  affinity: {}

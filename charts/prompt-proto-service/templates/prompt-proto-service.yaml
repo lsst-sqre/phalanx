@@ -155,6 +155,10 @@ spec:
       - effect: NoSchedule
         key: nvidia.com/gpu
       {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       enableServiceLinks: false
       timeoutSeconds: {{ .Values.knative.timeout }}
       idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}

@@ -112,3 +112,10 @@ prompt-proto-service:
     idleTimeout: 900
     # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).
     responseStartTimeout: 900
+
+  # -- Kubernetes YAML configs for extra container volume(s).
+  # Any volumes required by other config options are automatically handled by the Helm chart.
+  additionalVolumeMounts: []
+
+  # -- Affinity rules for the prompt processing pods
+  affinity: {}
