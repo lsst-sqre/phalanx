@@ -46,6 +46,16 @@ config:
        </a>
       </CardGroup>
 
+      ### VISTA-HSC
+
+      <CardGroup>
+        <a href="https://rsp.lsst.ac.uk/portal/app/">
+          <Card>
+            The VISTA-HSC fused dataset is designed to deliver pixel-matched images and multiband catalogues through the integration of data from the Visible and Infrared Survey Telescope for Astronomy (VISTA) in the near-infrared and the Hyper SuprimeCam (HSC) in the optical range. The LSST pipelines will handle the CCD processing of VISTA images, while the calibrated exposures from the final HSC PDR3 will be employed for merging with VISTA. This comprehensive dataset encompasses multiple VISTA surveys, with varying depths.
+          </Card>
+        </a>
+      </CardGroup>
+
     </Section>
 
     <Section>
