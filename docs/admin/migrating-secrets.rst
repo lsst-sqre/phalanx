@@ -193,7 +193,7 @@ Switch to the new secrets tree
    Applications to review:
 
    - :px-app:`datalinker` (``config.separateSecrets``)
-   - :px-app:`nublado` (``secrets.templateSecrets``)
+   - :px-app:`nublado` (``hub.internalDatabase``, ``secrets.templateSecrets``)
    - :px-app:`obsloctap` (``config.separateSecrets``)
    - :px-app:`plot-navigator` (``config.separateSecrets``)
    - :px-app:`production-tools` (``config.separateSecrets``)
