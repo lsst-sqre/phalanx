@@ -17,6 +17,8 @@ prompt-proto-service:
       (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+      (survey="cwfs")=[]
+      (survey="cwfs-focus-sweep")=[]
       (survey="spec")=[]
       (survey="spec-survey")=[]
       (survey="spec_with_rotation")=[]
