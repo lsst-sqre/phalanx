@@ -2,7 +2,7 @@ name: "tucson-teststand"
 fqdn: "tucson-teststand.lsst.codes"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
-  vaultTitle: "RSP base-lsp.lsst.codes"
+  vaultTitle: "RSP tucson-teststand.lsst.codes"
 vaultPathPrefix: "secret/k8s_operator/tucson-teststand.lsst.codes"
 
 applications:

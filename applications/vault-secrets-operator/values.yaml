@@ -2,7 +2,7 @@
 
 vault-secrets-operator:
   # -- Additional environment variables used to configure the operator
-  # @default -- Set `VAULT_TOKEN` and `VAULT_TOKEN_LEASE_DURATION` from secret
+  # @default -- See `values.yaml`
   environmentVars:
     - name: "VAULT_TOKEN"
       valueFrom:
@@ -10,10 +10,7 @@ vault-secrets-operator:
           name: "vault-secrets-operator"
           key: "VAULT_TOKEN"
     - name: "VAULT_TOKEN_LEASE_DURATION"
-      valueFrom:
-        secretKeyRef:
-          name: "vault-secrets-operator"
-          key: "VAULT_TOKEN_LEASE_DURATION"
+      value: "31536000"
 
   serviceAccount:
     # -- Disable creation of a secret for the service account. It shouldn't be

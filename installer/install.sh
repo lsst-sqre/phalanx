@@ -5,12 +5,12 @@
 ################################################################################
 
 # Usage:
-#   ./install.sh ENVIRONMENT=env [VAULT_ROLE_ID=<vault> VAULT_SECRET_ID=<vault> | VAULT_TOKEN=<value> [VAULT_TOKEN_LEASE_DURATION=<value>]]
+#   ./install.sh ENVIRONMENT=env [VAULT_ROLE_ID=<vault> VAULT_SECRET_ID=<vault> | VAULT_TOKEN=<value>
 
 # Arguments
 #   - The environment variable is mandatory and should be provided as the first argument.
 #   - If two positional arguments are provided, assume they are VAULT_ROLE_ID and VAULT_SECRET_ID.
-#   - If named arguments are provided, parse them for ENVIRONMENT, VAULT_ROLE_ID, VAULT_SECRET_ID, VAULT_TOKEN, and VAULT_TOKEN_LEASE_DURATION.
+#   - If named arguments are provided, parse them for ENVIRONMENT, VAULT_ROLE_ID, VAULT_SECRET_ID, and VAULT_TOKEN.
 
 # Environment Configuration:
 #   The environment configuration is retrieved from ../environments/values-${ENVIRONMENT}.yaml.
@@ -22,7 +22,7 @@
 #
 #   Using authentication with a token:
 #     ./install.sh ENVIRONMENT=myenv VAULT_TOKEN=your-vault-token
-#     ./install.sh ENVIRONMENT=myenv VAULT_TOKEN=your-vault-token VAULT_TOKEN_LEASE_DURATION=31536000
+#     ./install.sh ENVIRONMENT=myenv VAULT_TOKEN=your-vault-token
 #     ./install.sh myenv VAULT_TOKEN=your-vault-token
 
 # Script Dependencies:
@@ -41,12 +41,11 @@
 
 ################################################################################
 
-USAGE="Usage: ./install.sh ENVIRONMENT=env [VAULT_ROLE_ID=<vault> VAULT_SECRET_ID=<vault> | VAULT_TOKEN=<value> [VAULT_TOKEN_LEASE_DURATION=<value>]]"
+USAGE="Usage: ./install.sh ENVIRONMENT=env [VAULT_ROLE_ID=<vault> VAULT_SECRET_ID=<vault> | VAULT_TOKEN=<value>]"
 
 unset ENVIRONMENT
 unset VAULT_ROLE_ID
 unset VAULT_TOKEN
-unset VAULT_TOKEN_LEASE_DURATION
 unset VAULT_SECRET_ID
 
 # Function to display usage and exit
@@ -105,9 +104,6 @@ for arg in "$@"; do
         VAULT_TOKEN=*|vault_token=*)
             VAULT_TOKEN="${arg#*=}"
             ;;
-        VAULT_TOKEN_LEASE_DURATION=*|vault_token_lease_duration=*)
-            VAULT_TOKEN_LEASE_DURATION="${arg#*=}"
-            ;;
         *)
             ;;
     esac
@@ -159,10 +155,6 @@ if [ -z "$VAULT_ROLE_ID" ] || [ -z "$VAULT_SECRET_ID" ]; then
     if [ -z "$VAULT_TOKEN" ]; then
         echo "Invalid arguments provided. Please provide either VAULT_ROLE_ID and VAULT_SECRET_ID or VAULT_TOKEN."
         display_usage
-    else
-        if [ -z "$VAULT_TOKEN_LEASE_DURATION" ]; then
-          VAULT_TOKEN_LEASE_DURATION=31536000  # Default lease duration: 1 year
-        fi
     fi
 fi
 
@@ -182,8 +174,7 @@ if [ -n "$VAULT_ROLE_ID" ] && [ -n "$VAULT_SECRET_ID" ]; then
         --from-literal=VAULT_SECRET_ID="$VAULT_SECRET_ID"
 elif [ -n "$VAULT_TOKEN" ]; then
     create_kubernetes_secret "vault-secrets-operator" \
-        --from-literal=VAULT_TOKEN="$VAULT_TOKEN" \
-        --from-literal=VAULT_TOKEN_LEASE_DURATION="$VAULT_TOKEN_LEASE_DURATION"
+        --from-literal=VAULT_TOKEN="$VAULT_TOKEN"
 else
     echo "Invalid arguments provided. Please provide either VAULT_ROLE_ID and VAULT_SECRET_ID or VAULT_TOKEN."
     display_usage
