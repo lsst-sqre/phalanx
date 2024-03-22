@@ -1,4 +1,5 @@
 config:
+  s3_endpoint_url: "https://storage.googleapis.com"
   repositories:
     dp01: "s3://butler-us-central1-dp01/"
     dp02: "s3://butler-us-central1-dp02-user/"

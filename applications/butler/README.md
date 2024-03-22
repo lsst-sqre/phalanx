@@ -17,6 +17,7 @@ Server for Butler data abstraction service
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of butler deployment pods |
 | config.pathPrefix | string | `"/api/butler"` | The prefix of the path portion of the URL where the Butler service will be exposed.  For example, if the service should be exposed at `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler` |
 | config.repositories | object | `{}` | Mapping from Butler repository label to Butler configuration URI for repositories which will be hosted by this server. |
+| config.s3_endpoint_url | string | `""` | URL for the S3 service where files for datasets are stored by Butler. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
