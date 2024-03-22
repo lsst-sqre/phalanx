@@ -44,6 +44,7 @@ argo-cd:
         g, saranda@slac.stanford.edu, role:admin
         g, ktl@slac.stanford.edu, role:admin
         g, jeremym@slac.stanford.edu, role:admin
+        g, dirving@slac.stanford.edu, role:admin
       scopes: "[email]"
 
   server:
