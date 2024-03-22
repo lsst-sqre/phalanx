@@ -7,7 +7,23 @@ Bootstrapping vault-secrets-operator
 Vault Secrets Operator is the only component of the Science Platform whose secret has to be manually created, so that it can create the secrets for all other applications.
 This will be done automatically by the `install script <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
 
-Its secret will look like this:
+When using the newer, recommended :ref:`secrets management system <admin-vault-credentials>`, the secret created by the installer will look like this:
+
+.. code-block:: yaml
+
+   apiVersion: v1
+   kind: Secret
+   metadata:
+     name: vault-credentials
+     namespace: vault-secrets-operator
+   stringData:
+     VAULT_ROLE_ID: <role-id>
+     VAULT_SECRET_ID: <secret-id>
+   type: Opaque
+
+This secret will normally be created by either the installer or :command:`phalanx vault create-read-approle`.
+
+Using a regular Vault token is still supported, in which case the secret will look like this:
 
 .. code-block:: yaml
 
@@ -16,12 +32,10 @@ Its secret will look like this:
    metadata:
      name: vault-secrets-operator
      namespace: vault-secrets-operator
-   type: Opaque
    stringData:
      VAULT_TOKEN: <token>
-     VAULT_TOKEN_LEASE_DURATION: 86400
+   type: Opaque
 
-Replace ``<token>`` with the ``read`` Vault token for the path ``secret/k8s_operator/<cluster-name>`` in Vault (or whatever Vault enclave you plan to use for this Phalanx environment).
-The path must match the path configured in ``values-<environment>.yaml`` in `/environments <https://github.com/lsst-sqre/phalanx/tree/main/environments>`__.
+This secret will be created by the installer when given a ``VAULT_TOKEN`` parameter.
 
-See :dmtn:`112` for more information.
+In either case, the Vault token or AppRole must have read access to the Vault path configured in :file:`environments/values-{environment}.yaml` for your environment.

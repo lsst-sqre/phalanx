@@ -34,6 +34,8 @@ So, for example, all secrets for Gafaelfawr for a given environment may be store
 This path is configured for each environment via the ``vaultPathPrefix`` setting in the environment :file:`values-{environment}.yaml` file.
 The URL to the Vault server is set via the ``vaultUrl`` setting in the same file and defaults to the SQuaRE-run Vault server.
 
+.. _admin-vault-credentials:
+
 Vault credentials
 =================
 
