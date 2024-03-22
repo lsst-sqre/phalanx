@@ -435,7 +435,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.condsb.enabled | bool | `false` | Enable user consdb |
+| strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |

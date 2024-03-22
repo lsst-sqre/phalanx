@@ -193,7 +193,7 @@ users:
     # -- Enable user kafka-connect-manager
     enabled: false
 
-  condsb:
+  consdb:
     # -- Enable user consdb
     enabled: false
 
