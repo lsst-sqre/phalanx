@@ -4,7 +4,7 @@ prompt-proto-service:
   # @default -- See the `values.yaml` file.
   podAnnotations:
     autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "100"
+    autoscaling.knative.dev/max-scale: "30"  # Continuous observing maxes out at 12 concurrent requests
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
     queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
