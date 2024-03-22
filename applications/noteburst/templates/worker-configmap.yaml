@@ -17,3 +17,4 @@ data:
   NOTEBURST_WORKER_IMAGE_REFERENCE: {{ .Values.config.worker.imageReference | quote  }}
   NOTEBURST_WORKER_TOKEN_SCOPES: {{ .Values.config.worker.tokenScopes | quote }}
   NOTEBURST_WORKER_KEEPALIVE: {{ .Values.config.worker.keepAlive | quote }}
+  NOTEBURST_WORKER_MAX_CONCURRENT_JOBS: {{ .Values.config.worker.maxConcurrentJobs | quote }}
