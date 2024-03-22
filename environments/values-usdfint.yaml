@@ -10,6 +10,7 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
+  butler: true
   datalinker: true
   livetap: true
   mobu: true

@@ -10,6 +10,7 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
+  butler: true
   consdb: false
   datalinker: true
   exposurelog: true

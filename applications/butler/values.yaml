@@ -68,6 +68,10 @@ config:
   # repositories which will be hosted by this server.
   repositories: {}
 
+  # -- Postgres username used to connect to the Butler DB
+  # @default -- Use values specified in per-repository Butler config files.
+  pguser: ""
+
   # -- URL for the S3 service where files for datasets are stored by Butler.
   s3_endpoint_url: ""
 

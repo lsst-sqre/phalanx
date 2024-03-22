@@ -1,0 +1,5 @@
+config:
+  pguser: "rubin"
+  s3_endpoint_url: "https://s3dfrgw.slac.stanford.edu"
+  repositories:
+    embargo: "s3://rubin-summit-users/butler.yaml"

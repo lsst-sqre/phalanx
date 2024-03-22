@@ -52,6 +52,10 @@ spec:
               value: {{ .Values.config.s3_endpoint_url | quote }}
             - name: DAF_BUTLER_REPOSITORIES
               value: {{ .Values.config.repositories | toJson | quote }}
+            {{ if .Values.config.pguser }}
+            - name: PGUSER
+              value: {{ .Values.config.pguser | quote }}
+            {{ end }}
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/opt/lsst/butler/secrets"
