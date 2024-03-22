@@ -272,7 +272,7 @@ source-kapacitor:
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
-    tag: 1.7.1
+    tag: 1.7.2
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
@@ -298,7 +298,7 @@ kapacitor:
   # -- Kapacitor image tag.
   image:
     repository: kapacitor
-    tag: 1.7.1
+    tag: 1.7.2
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true

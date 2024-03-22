@@ -56,7 +56,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| users.condsb.enabled | bool | `false` | Enable user consdb |
+| users.consdb.enabled | bool | `false` | Enable user consdb |
 | users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |

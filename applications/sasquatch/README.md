@@ -53,7 +53,7 @@ Rubin Observatory's telemetry service.
 | kapacitor.enabled | bool | `true` | Enable Kapacitor. |
 | kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
-| kapacitor.image | object | `{"repository":"kapacitor","tag":"1.7.1"}` | Kapacitor image tag. |
+| kapacitor.image | object | `{"repository":"kapacitor","tag":"1.7.2"}` | Kapacitor image tag. |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL. |
 | kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | kapacitor.resources.limits.cpu | int | `4` |  |
@@ -77,7 +77,7 @@ Rubin Observatory's telemetry service.
 | source-kapacitor.enabled | bool | `false` | Enable Kapacitor. |
 | source-kapacitor.envVars | object | `{"KAPACITOR_SLACK_ENABLED":true}` | Kapacitor environment variables. |
 | source-kapacitor.existingSecret | string | `"sasquatch"` | InfluxDB credentials, use influxdb-user and influxdb-password keys from secret. |
-| source-kapacitor.image | object | `{"repository":"kapacitor","tag":"1.7.1"}` | Kapacitor image tag. |
+| source-kapacitor.image | object | `{"repository":"kapacitor","tag":"1.7.2"}` | Kapacitor image tag. |
 | source-kapacitor.influxURL | string | `"http://sasquatch-influxdb-staging.sasquatch:8086"` | InfluxDB connection URL. |
 | source-kapacitor.persistence | object | `{"enabled":true,"size":"100Gi"}` | Chronograf data persistence configuration. |
 | source-kapacitor.resources.limits.cpu | int | `4` |  |
@@ -435,7 +435,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.registry.ingress.hostname | string | `""` | Hostname for the Schema Registry. |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.condsb.enabled | bool | `false` | Enable user consdb |
+| strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
 | strimzi-kafka.users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
 | strimzi-kafka.users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
