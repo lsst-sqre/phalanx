@@ -23,7 +23,7 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | chronograf.ingress.className | string | `"nginx"` |  |
 | chronograf.ingress.enabled | bool | `false` |  |
 | chronograf.ingress.hostname | string | `""` |  |
-| chronograf.ingress.path | string | `"/chronograf(/$)"` |  |
+| chronograf.ingress.path | string | `"/chronograf(/|$)"` |  |
 | chronograf.ingress.tls | bool | `false` |  |
 | chronograf.oauth.enabled | bool | `false` |  |
 | chronograf.resources.limits.cpu | int | `4` |  |

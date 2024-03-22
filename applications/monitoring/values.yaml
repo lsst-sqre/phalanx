@@ -107,7 +107,7 @@ chronograf:
     tls: false
     hostname: ""
     className: "nginx"
-    path: /chronograf(/$)
+    path: /chronograf(/|$)
 
 
   ## Enable OAuth
