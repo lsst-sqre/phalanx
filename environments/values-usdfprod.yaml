@@ -1,4 +1,6 @@
 butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
+butlerServerRepositories:
+  embargo: "https://usdf-rsp.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"
 fqdn: usdf-rsp.slac.stanford.edu
 name: usdfprod
 vaultUrl: "https://vault.slac.stanford.edu"
@@ -10,6 +12,7 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
+  butler: true
   consdb: false
   datalinker: true
   exposurelog: true
