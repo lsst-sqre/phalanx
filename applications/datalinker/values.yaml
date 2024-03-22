@@ -63,7 +63,7 @@ config:
 
   # -- If true, use Butler in client/server mode instead of connecting
   # directly to the Butler database
-  useButlerServer: false
+  useButlerServer: true
 
   # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
   # connection (`useButlerServer` is false)
