@@ -49,7 +49,7 @@ spec:
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/opt/lsst/butler/secrets/butler-gcs-creds.json"
             - name: S3_ENDPOINT_URL
-              value: {{ .Values.config.s3_endpoint_url | quote }}
+              value: {{ .Values.config.s3EndpointUrl | quote }}
             - name: DAF_BUTLER_REPOSITORIES
               value: {{ .Values.config.repositories | toJson | quote }}
             {{ if .Values.config.pguser }}
