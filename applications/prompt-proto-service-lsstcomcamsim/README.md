@@ -19,7 +19,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-proto-service.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
-| prompt-proto-service.imageNotifications.imageTimeout | string | `"20"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
+| prompt-proto-service.imageNotifications.imageTimeout | string | `"120"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-proto-service.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |

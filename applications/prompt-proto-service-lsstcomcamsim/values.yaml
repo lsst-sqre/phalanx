@@ -63,7 +63,7 @@ prompt-proto-service:
     # @default -- None, must be set
     topic: ""
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
-    imageTimeout: '20'
+    imageTimeout: '120'  # Simulated survey has up to 2-minute slews, but most visits are faster
 
   apdb:
     # -- URL to the APDB, in any form recognized by SQLAlchemy

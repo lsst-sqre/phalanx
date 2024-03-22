@@ -1,0 +1,42 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # Expect to need roughly n_detector × request_latency / survey_cadence pods
+    # For a 30 s ComCam survey with 500 s latency, this is 150
+    # Request 2× as workaround for DM-41834
+    autoscaling.knative.dev/max-scale: "400"
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  image:
+    repository: ghcr.io/lsst-dm/prompt-service
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: w_2024_12
+
+  instrument:
+    pipelines: >-
+      (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
+      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
+    calibRepo: s3://rubin-summit-users
+    calibRepoPguser: lsstcomcamsim_prompt
+
+  s3:
+    imageBucket: rubin-summit
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing-prod
+
+  apdb:
+    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
+
+  logLevel: timer.lsst.activator=DEBUG
+
+  knative:
+    ephemeralStorageRequest: "50Gi"
+    ephemeralStorageLimit: "50Gi"
+
+  fullnameOverride: "prompt-proto-service-lsstcomcamsim"
