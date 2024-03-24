@@ -12,7 +12,7 @@ prompt-proto-service:
     repository: ghcr.io/lsst-dm/prompt-service
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: w_2024_12
+    tag: 2.2.2
 
   instrument:
     pipelines: >-
