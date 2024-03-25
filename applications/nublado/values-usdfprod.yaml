@@ -125,8 +125,6 @@ controller:
           volumeName: "sdf-scratch"
         - containerPath: "/fs/ddn/sdf/group/rubin"
           volumeName: "fs-ddn-sdf-group-rubin"
-        - containerPath: "/fs/ddn/sdf/group/lsst"
-          volumeName: "fs-ddn-sdf-group-lsst"
 
 proxy:
   ingress:
