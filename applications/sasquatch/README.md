@@ -390,7 +390,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
 | strimzi-kafka.connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect. |
-| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | strimzi-kafka.kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | strimzi-kafka.kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
@@ -414,7 +414,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
-| strimzi-kafka.kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
+| strimzi-kafka.kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
