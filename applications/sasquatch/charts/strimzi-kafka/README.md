@@ -11,7 +11,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
 | connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
 | connect.enabled | bool | `false` | Enable Kafka Connect. |
-| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
+| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
 | kafka.affinity | object | `{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app.kubernetes.io/name","operator":"In","values":["kafka"]}]},"topologyKey":"kubernetes.io/hostname"}]}}` | Affinity for Kafka pod assignment. |
 | kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
@@ -35,7 +35,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
-| kafka.version | string | `"3.5.1"` | Version of Kafka to deploy. |
+| kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |

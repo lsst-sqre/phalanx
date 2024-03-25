@@ -7,7 +7,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy.
-  version: "3.5.1"
+  version: "3.7.0"
   # -- Number of Kafka broker replicas to run.
   replicas: 3
   # -- Number of down brokers that the system can tolerate.
@@ -143,7 +143,7 @@ connect:
   # -- Enable Kafka Connect.
   enabled: false
   # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655
+  image: ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491
   # -- Number of Kafka Connect replicas to run.
   replicas: 3
   config:
