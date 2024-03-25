@@ -1,8 +1,60 @@
-# Based on the kafka-persistent.yaml example from the Strimzi documentation
+{{- if .Values.kafkaController.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: controller
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - controller
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.kafkaController.storage.size }}
+      {{- if .Values.kafkaController.storage.storageClassName }}
+      class: {{ .Values.kafkaController.storage.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+    {{- with .Values.kafkaController.resources }}
+    resources:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+{{- end }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: kafka
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: "[0-99]"
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.kafka.storage.size }}
+      {{- if .Values.kafka.storage.storageClassName }}
+      class: {{ .Values.kafka.storage.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/kraft: disabled
+    strimzi.io/node-pools: enabled
 spec:
   kafka:
     template:
