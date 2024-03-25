@@ -111,15 +111,6 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - name: "fs-ddn-sdf-group-lsst"
-          source:
-            type: "persistentVolumeClaim"
-            storageClassName: "fs-ddn-sdf-group-lsst"
-            accessModes:
-              - "ReadWriteMany"
-            resources:
-              requests:
-                storage: "1Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
