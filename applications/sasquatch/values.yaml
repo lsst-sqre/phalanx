@@ -239,7 +239,7 @@ chronograf:
   # -- Chronograf image tag.
   image:
     repository: "quay.io/influxdb/chronograf"
-    tag: 1.10.2
+    tag: 1.10.3
   # -- Chronograf data persistence configuration.
   persistence:
     enabled: true
