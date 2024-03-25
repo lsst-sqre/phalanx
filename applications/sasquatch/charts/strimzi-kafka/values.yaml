@@ -97,6 +97,23 @@ kafka:
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
 
+kafkaController:
+  # -- Enable Kafka Controller
+  enabled: false
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka controllers.
+    size: 20Gi
+    # -- Name of a StorageClass to use when requesting persistent volumes.
+    storageClassName: ""
+  # -- Resource specification for Kafka Controller
+  resources:
+    requests:
+      memory: 64Gi
+      cpu: "8"
+    limits:
+      memory: 64Gi
+      cpu: "12"
+
 kafkaExporter:
   # -- Enable Kafka exporter
   enabled: false

@@ -415,6 +415,10 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | strimzi-kafka.kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
+| strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
+| strimzi-kafka.kafkaController.resources | object | `{"limits":{"cpu":"12","memory":"64Gi"},"requests":{"cpu":"8","memory":"64Gi"}}` | Resource specification for Kafka Controller |
+| strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers. |
+| strimzi-kafka.kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
