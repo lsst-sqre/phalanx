@@ -13,7 +13,7 @@ applications:
   ingress-nginx: false
 
   butler: true
-  consdb: false
+  consdb: true
   datalinker: true
   exposurelog: true
   livetap: true
