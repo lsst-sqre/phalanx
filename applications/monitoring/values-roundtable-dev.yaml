@@ -44,6 +44,8 @@ chronograf:
 cronjob:
   enabled: true
   debug: true
+  image:
+    tag: tickets-DM-43202
 ingress:
   enabled: true
   influxdb2:

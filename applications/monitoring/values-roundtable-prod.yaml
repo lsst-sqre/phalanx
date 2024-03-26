@@ -37,7 +37,9 @@ chronograf:
     STATUS_FEED_URL: "https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/roundtable.json"
     INFLUX_DB_URL: "monitoring.lsst.cloud"
   envFromSecret: "monitoring"
-
+cronjob:
+  enabled: true
+  debug: true
 ingress:
   enabled: true
   influxdb2:

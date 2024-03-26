@@ -156,5 +156,10 @@ spec:
               - name: "DEBUG"
                 value: "true"
               {{- end }}
+              - name: "WEBHOOKS_YAML"
+                valueFrom:
+                  secretKeyRef:
+                    name: "monitoring"
+                    key: "webhooks.yaml"
             command: [ "taskmaker" ]
 {{- end }}
