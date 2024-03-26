@@ -26,7 +26,7 @@ repos:
         files: ^docs/extras/schemas/.*\.json
 
   - repo: https://github.com/norwoodj/helm-docs
-    rev: v1.13.0
+    rev: v1.13.1
     hooks:
       - id: helm-docs
         args:
@@ -46,7 +46,7 @@ repos:
           - --template-files=../helm-docs.md.gotmpl
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.2.2
+    rev: v0.3.4
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
