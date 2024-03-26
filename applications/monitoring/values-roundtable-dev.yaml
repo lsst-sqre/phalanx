@@ -46,6 +46,7 @@ cronjob:
   debug: true
   image:
     tag: tickets-DM-43202
+    pullPolicy: Always
 ingress:
   enabled: true
   influxdb2:

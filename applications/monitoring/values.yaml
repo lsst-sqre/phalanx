@@ -140,6 +140,9 @@ cronjob:
     # -- tag for rubin-influx-tools
     # @default -- the appVersion of the chart
     tag: ""
+    # -- imagePullPolicy for cronjobs
+    # @default -- "IfNotPresent"
+    pullPolicy: "IfNotPresent"
   # -- set to true to enable debug logging
   debug: false
   # -- schedules for jobs

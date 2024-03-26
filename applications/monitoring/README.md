@@ -36,7 +36,8 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | config | object | `{"influxdbHostname":"monitoring.lsst.codes","influxdbOrg":"square"}` | Configuration of Influx endpoint to receive monitoring data |
 | cronjob.debug | bool | `false` | set to true to enable debug logging |
 | cronjob.enabled | bool | False | enable cronjobs at all? You only need this once per influxdb instance. |
-| cronjob.image | object | `{"repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":""}` | image for monitoring-related cronjobs |
+| cronjob.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":""}` | image for monitoring-related cronjobs |
+| cronjob.image.pullPolicy | string | "IfNotPresent" | imagePullPolicy for cronjobs |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
 | cronjob.image.tag | string | the appVersion of the chart | tag for rubin-influx-tools |
 | cronjob.schedule | object | `{"bucketmaker":"*/15 * * * *","bucketmapper":"3-59/15 * * * *","taskmaker":"6-59/15 * * * *"}` | schedules for jobs |

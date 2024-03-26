@@ -23,6 +23,7 @@ spec:
           containers:
           - name: bucketmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -80,6 +81,7 @@ spec:
           containers:
           - name: bucketmapper
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -133,6 +135,7 @@ spec:
           containers:
           - name: taskmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
