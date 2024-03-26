@@ -115,6 +115,9 @@ config:
     # -- The default notebook execution timeout, in seconds.
     jobTimeout: 300
 
+    # -- Max number of concurrent notebook executions per worker
+    maxConcurrentJobs: 3
+
     # -- Worker token lifetime, in seconds.
     tokenLifetime: "2419200"
 
