@@ -21,8 +21,7 @@ __all__ = [
 class MockHelmCallback(Protocol):
     """Protocol for Helm callbacks."""
 
-    def __call__(*command: str) -> subprocess.CompletedProcess:
-        ...
+    def __call__(*command: str) -> subprocess.CompletedProcess: ...
 
 
 class MockHelm:

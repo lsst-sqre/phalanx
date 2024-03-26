@@ -304,14 +304,12 @@ class ApplicationService:
             butler_index = environment.butler_repository_index
             values["global.butlerRepositoryIndex"] = butler_index
         if environment.butler_server_repositories:
-            values[
-                "global.butlerServerRepositories"
-            ] = _json_and_base64_encode(
-                {
-                    k: str(v)
-                    for k, v in environment.butler_server_repositories.items()
-                }
-            )
+            butler_repos = {
+                k: str(v)
+                for k, v in environment.butler_server_repositories.items()
+            }
+            butler_repos_b64 = _json_and_base64_encode(butler_repos)
+            values["global.butlerServerRepositories"] = butler_repos_b64
 
         # vault-secrets-operator gets the Vault host injected into it. Use the
         # existence of its subchart configuration tree as a cue to inject the
