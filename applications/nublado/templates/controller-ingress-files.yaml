@@ -9,7 +9,7 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "exec:notebook"
+      - "write:files"
   delegate:
     internal:
       service: "nublado"

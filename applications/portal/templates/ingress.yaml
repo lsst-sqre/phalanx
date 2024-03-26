@@ -16,6 +16,7 @@ config:
       scopes:
         - "read:image"
         - "read:tap"
+        - "write:files"
 template:
   metadata:
     name: {{ include "portal.fullname" . }}

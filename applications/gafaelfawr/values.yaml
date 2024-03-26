@@ -290,6 +290,8 @@ config:
       Retrieve images from project datasets
     "read:tap": >-
       Execute SELECT queries in the TAP interface on project datasets
+    "write:files": >-
+      Write access to POSIX file space
     "write:sasquatch": >-
       Write access to the Sasquatch telemetry service
     "user:token": >-
