@@ -187,96 +187,51 @@ ingress:
 # -- telegraf for Prometheus monitoring.
 telegraf:
   # -- enable telegraf at all?
+  # @default -- True
+
   enabled: true
+
   # Remove processors, inputs and outputs: use generated config instead.
   config:
     processors: []
     inputs: []
     outputs: []
+
   resources:
     limits:
       memory: 512Mi
       cpu: 900m
+
   args:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"
+
   # We need the additional rules for prometheus scraping.
   rbac:
     clusterWide: true
+
   env:
   - name: INFLUX_TOKEN
     valueFrom:
       secretKeyRef:
         key: telegraf-token
         name: monitoring
+
   podLabels:
     hub.jupyter.org/network-access-hub: 'true'
+
   service:
     enabled: false
+
   tplVersion: 2
+
   volumes:
   - name: telegraf-generated-config
     configMap:
       name: telegraf-generated-config
+
   mountPoints:
   - name: telegraf-generated-config
-    mountPath: /etc/telegraf-generated
-
-telegraf-ds:
-  enabled: true
-  args:
-  - "--config"
-  - "/etc/telegraf-generated/telegraf-generated.conf"
-  env:
-    # -- Token to communicate with Influx
-  - name: INFLUX_TOKEN
-    valueFrom:
-      secretKeyRef:
-        name: telegraf
-        key: influx-token
-  # This pulls HOSTNAME from the node, not the pod.
-  - name: HOSTNAME
-    valueFrom:
-      fieldRef:
-        fieldPath: spec.nodeName
-  # In test clusters where hostnames are resolved in /etc/hosts on each node,
-  # the HOSTNAME is not resolvable from inside containers
-  # So inject the host IP as well
-  - name: HOSTIP
-    valueFrom:
-      fieldRef:
-        fieldPath: status.hostIP
-  # Mount the host filesystem and set the appropriate env variables.
-  # ref: https://github.com/influxdata/telegraf/blob/master/docs/FAQ.md
-  # HOST_PROC is required by the cpu, disk, diskio, kernel and processes input plugins
-  - name: "HOST_PROC"
-    value: "/hostfs/proc"
-  # HOST_SYS is required by the diskio plugin
-  - name: "HOST_SYS"
-    value: "/hostfs/sys"
-  - name: "HOST_MOUNT_PREFIX"
-    value: "/hostfs"
-  rbac:
-    create: true
-  resources:
-    limits:
-      memory: 512Mi
-      cpu: 900m
-
-  serviceAccount:
-    name: telegraf-ds
-
-  # Set to effectively empty and just use generated config instead.
-  override_config:
-    toml: |+
-      [agent]
-        logfile=""
-  volumes:
-  - name: telegraf-ds-generated-config
-    configMap:
-      name: "telegraf-ds-generated-config"
-  mountPoints:
-  - name: telegraf-ds-generated-config
     mountPath: /etc/telegraf-generated
 
 # The following will be set by parameters injected by Argo CD and should not

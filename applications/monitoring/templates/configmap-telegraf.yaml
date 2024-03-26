@@ -1,3 +1,4 @@
+{{if .Values.telegraf.enabled }}
 {{- $root := . -}}
 apiVersion: v1
 kind: ConfigMap
@@ -36,7 +37,7 @@ data:
     # cases, monitoring will be enabled (to give us telegraf and telegraf-ds)
     # but there's only one influxdb2 server.  So to scrape its metrics, we
     # need to do it a little differently.
-        [[inputs.prometheus]]
+    [[inputs.prometheus]]
       metric_version = 2
       name_override = "prometheus_monitoring"
       urls = [
@@ -58,7 +59,6 @@ data:
         ]
 
     {{- end }}
-
     {{- range $raw_app_name, $defn := .Values.config.prometheus }}
       {{- $app_name := replace "-" "_" $raw_app_name }}
       {{- if has $raw_app_name $enabled_apps }}
@@ -76,7 +76,7 @@ data:
       {{- end }}
     {{- end }}
 
-    {{- range $raw_app_name, $defn := $root.Values.config.prometheus }}
+    {{- range $raw_app_name, $defn := .Values.config.prometheus }}
       {{- $app_name := replace "-" "_" $raw_app_name }}
       {{- if has $raw_app_name $enabled_apps }}
         {{- range $component, $endpoint := $defn }}
@@ -95,3 +95,4 @@ data:
         {{- end }}
      {{- end }}
     {{- end }}
+{{- end }}

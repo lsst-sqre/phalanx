@@ -1,8 +1,10 @@
 apiVersion: v2
 name: monitoring
 version: 1.0.0
-description: Chronograf-based UI for monitoring (data stored in InfluxDBv2)
+description: "Monitoring suite: InfluxDB2, Chronograf, telegraf"
 sources:
+  - https://github.com/influxdata/telegraf
+  - https://github.com/influxdata/helm-charts
   - https://github.com/lsst-sqre/rubin-influx-tools
 appVersion: 0.2.0
 dependencies:
@@ -14,7 +16,4 @@ dependencies:
     repository: https://helm.influxdata.com/
   - name: telegraf
     version: 1.8.43
-    repository: https://helm.influxdata.com/
-  - name: telegraf-ds
-    version: 1.1.25
     repository: https://helm.influxdata.com/

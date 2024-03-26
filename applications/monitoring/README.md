@@ -1,9 +1,11 @@
 # monitoring
 
-Chronograf-based UI for monitoring (data stored in InfluxDBv2)
+Monitoring suite: InfluxDB2, Chronograf, telegraf
 
 ## Source Code
 
+* <https://github.com/influxdata/telegraf>
+* <https://github.com/influxdata/helm-charts>
 * <https://github.com/lsst-sqre/rubin-influx-tools>
 
 ## Values
@@ -69,27 +71,4 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | ingress | object | `{"chronograf":{"annotations":{},"hostname":""},"influxdb2":{"annotations":{}}}` | ingress for InfluxDBv2 Only used if the service is enabled. |
 | ingress.influxdb2.annotations | object | `{}` | Additional annotations to add to the ingress |
 | telegraf | object | `{"args":["--config","/etc/telegraf-generated/telegraf-generated.conf"],"config":{"inputs":[],"outputs":[],"processors":[]},"enabled":true,"env":[{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"telegraf-token","name":"monitoring"}}}],"mountPoints":[{"mountPath":"/etc/telegraf-generated","name":"telegraf-generated-config"}],"podLabels":{"hub.jupyter.org/network-access-hub":"true"},"rbac":{"clusterWide":true},"resources":{"limits":{"cpu":"900m","memory":"512Mi"}},"service":{"enabled":false},"tplVersion":2,"volumes":[{"configMap":{"name":"telegraf-generated-config"},"name":"telegraf-generated-config"}]}` | telegraf for Prometheus monitoring. |
-| telegraf-ds.args[0] | string | `"--config"` |  |
-| telegraf-ds.args[1] | string | `"/etc/telegraf-generated/telegraf-generated.conf"` |  |
-| telegraf-ds.enabled | bool | `true` |  |
-| telegraf-ds.env[0] | object | `{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"influx-token","name":"telegraf"}}}` | Token to communicate with Influx |
-| telegraf-ds.env[1].name | string | `"HOSTNAME"` |  |
-| telegraf-ds.env[1].valueFrom.fieldRef.fieldPath | string | `"spec.nodeName"` |  |
-| telegraf-ds.env[2].name | string | `"HOSTIP"` |  |
-| telegraf-ds.env[2].valueFrom.fieldRef.fieldPath | string | `"status.hostIP"` |  |
-| telegraf-ds.env[3].name | string | `"HOST_PROC"` |  |
-| telegraf-ds.env[3].value | string | `"/hostfs/proc"` |  |
-| telegraf-ds.env[4].name | string | `"HOST_SYS"` |  |
-| telegraf-ds.env[4].value | string | `"/hostfs/sys"` |  |
-| telegraf-ds.env[5].name | string | `"HOST_MOUNT_PREFIX"` |  |
-| telegraf-ds.env[5].value | string | `"/hostfs"` |  |
-| telegraf-ds.mountPoints[0].mountPath | string | `"/etc/telegraf-generated"` |  |
-| telegraf-ds.mountPoints[0].name | string | `"telegraf-ds-generated-config"` |  |
-| telegraf-ds.override_config.toml | string | `"[agent]\n  logfile=\"\"\n"` |  |
-| telegraf-ds.rbac.create | bool | `true` |  |
-| telegraf-ds.resources.limits.cpu | string | `"900m"` |  |
-| telegraf-ds.resources.limits.memory | string | `"512Mi"` |  |
-| telegraf-ds.serviceAccount.name | string | `"telegraf-ds"` |  |
-| telegraf-ds.volumes[0].configMap.name | string | `"telegraf-ds-generated-config"` |  |
-| telegraf-ds.volumes[0].name | string | `"telegraf-ds-generated-config"` |  |
-| telegraf.enabled | bool | `true` | enable telegraf at all? |
+| telegraf.enabled | bool | True | enable telegraf at all? |
