@@ -1,0 +1,97 @@
+{{- $root := . -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-generated-config
+data:
+  telegraf-generated.conf: |
+    {{- $enabled_apps := splitList "@" .Values.global.enabledServices }}
+    [global_tags]
+      cluster = {{- .Values.global.host | quote }}
+    [agent]
+      hostname = "$HOSTNAME"
+      omit_hostname = true
+      interval = "120s"
+      flush_interval = "120s"
+      collection_jitter = "10s"
+      logfile = ""
+      metric_batch_size = 10000
+      metric_buffer_limit = 100000
+
+    [[processors.enum]]
+      [[processors.enum.mapping]]
+        dest = "status_code"
+        field = "status"
+        [processors.enum.mapping.value_mappings]
+          healthy = 1
+          problem = 2
+          critical = 3
+
+    [[inputs.internal]]
+      collect_memstats = false
+
+    {{- if .Values.influxdb2.enabled }}
+    # Monitoring is special; obviously it's enabled, since you're here.
+    # But only influxdb2 has prometheus endpoints, and in the majority of
+    # cases, monitoring will be enabled (to give us telegraf and telegraf-ds)
+    # but there's only one influxdb2 server.  So to scrape its metrics, we
+    # need to do it a little differently.
+        [[inputs.prometheus]]
+      metric_version = 2
+      name_override = "prometheus_monitoring"
+      urls = [
+        "https://{{- .Values.config.influxdbHostname -}}/metrics"
+      ]
+      [inputs.prometheus.tags]
+        prometheus_app = "influxdb2"
+
+    [[outputs.influxdb_v2]]
+      bucket = "monitoring"
+      organization = "square"
+      token = "$INFLUX_TOKEN"
+      urls = [
+        "https://{{- .Values.config.influxdbHostname -}}/"
+      ]
+      [outputs.influxdb_v2.tagpass]
+        prometheus_app = [
+          "influxdb2"
+        ]
+
+    {{- end }}
+
+    {{- range $raw_app_name, $defn := .Values.config.prometheus }}
+      {{- $app_name := replace "-" "_" $raw_app_name }}
+      {{- if has $raw_app_name $enabled_apps }}
+        {{- range $component, $endpoint := $defn }}
+
+    [[inputs.prometheus]]
+      metric_version = 2
+      name_override = "prometheus_{{ $component }}"
+      urls = [
+        {{ $endpoint | quote }}
+      ]
+      [inputs.prometheus.tags]
+        prometheus_app = {{ $app_name | quote }}
+        {{- end }}
+      {{- end }}
+    {{- end }}
+
+    {{- range $raw_app_name, $defn := $root.Values.config.prometheus }}
+      {{- $app_name := replace "-" "_" $raw_app_name }}
+      {{- if has $raw_app_name $enabled_apps }}
+        {{- range $component, $endpoint := $defn }}
+
+    [[outputs.influxdb_v2]]
+      bucket = {{ $app_name | quote }}
+      organization = "square"
+      token = "$INFLUX_TOKEN"
+      urls = [
+        "https://{{- $root.Values.config.influxdbHostname -}}/"
+      ]
+      [outputs.influxdb_v2.tagpass]
+        prometheus_app = [
+          {{ $app_name | quote }}
+        ]
+        {{- end }}
+     {{- end }}
+    {{- end }}

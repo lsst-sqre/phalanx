@@ -24,7 +24,5 @@ applications:
   squareone: true
   strimzi: true
   strimzi-access-operator: true
-  telegraf: true
-  telegraf-ds: true
   unfurlbot: true
   vault: true
