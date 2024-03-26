@@ -29,6 +29,9 @@ jobs:
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
 
+  rebase:
+    uses: lsst/rubin_workflows/.github/workflows/rebase_checker.yaml@main
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 10
