@@ -3,6 +3,19 @@ config:
   influxdbHostname: "monitoring.lsst.codes"
   influxdbOrg: "square"
 
+  # -- Use prometheus config to specify all the services that expose
+  # prometheus endpoints.
+  prometheus:
+    argocd:
+      application_controller: "http://argocd-application-controller-metrics.argocd.svc:8082/metrics"
+      notifications_controller: "http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics"
+      # redis: "http://argocd-redis-metrics.argocd.svc:9121/metrics"
+      repo_server: "http://argocd-repo-server-metrics.argocd.svc:8084/metrics"
+      server: "http://argocd-server-metrics.argocd.svc:8083/metrics"
+    nublado:
+      hub: "http://hub.nublado:8081/metrics"
+    ingress-nginx:
+      controller: "http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"
 
 # -- InfluxDB v2 server component.  Soon to be replaced with Influx DB v3
 influxdb2:
@@ -113,6 +126,7 @@ chronograf:
   ## Enable OAuth
   oauth:
     enabled: false
+
   env:
     BASE_PATH: /chronograf
     CUSTOM_AUTO_REFRESH: "1s=1000"
@@ -124,15 +138,19 @@ chronograf:
   ## InfluxDBv1 and INFLUXDB_TOKEN is for v2.
   # -- Chronograf expects keys generic_client_id, generic_client_secret,
   # and token_secret.
+
   envFromSecret: monitoring
+
   updateStrategy:
     type: Recreate
 
 cronjob:
   # -- enable cronjobs at all?
-  # You only need this once per influxdb instance.
+  # You only need this once per influxdb instance.  It probably should
+  # run in the same environment as influxdb, but that's not necessary.
   # @default -- False
   enabled: false
+
   # -- image for monitoring-related cronjobs
   image:
     # -- repository for rubin-influx-tools
@@ -143,8 +161,10 @@ cronjob:
     # -- imagePullPolicy for cronjobs
     # @default -- "IfNotPresent"
     pullPolicy: "IfNotPresent"
+
   # -- set to true to enable debug logging
   debug: false
+
   # -- schedules for jobs
   schedule:
     # -- bucketmaker schedule
@@ -156,6 +176,7 @@ cronjob:
 
 # -- ingress for InfluxDBv2 Only used if the service is enabled.
 ingress:
+
   chronograf:
     hostname: ""
     annotations: {}
@@ -163,7 +184,56 @@ ingress:
     # -- Additional annotations to add to the ingress
     annotations: {}
 
+# -- telegraf for Prometheus monitoring.
+telegraf:
+  # -- enable telegraf at all?
+  enabled: true
+  # Remove processors, inputs and outputs: use generated config instead.
+  config:
+    processors: []
+    inputs: []
+    outputs: []
+  resources:
+    limits:
+      memory: 512Mi
+      cpu: 900m
+  args:
+  - "--config"
+  - "/etc/telegraf-generated/telegraf-generated.conf"
+  # We need the additional rules for prometheus scraping.
+  rbac:
+    clusterWide: true
+  env:
+  - name: INFLUX_TOKEN
+    valueFrom:
+      secretKeyRef:
+        key: telegraf-token
+        name: monitoring
+  podLabels:
+    hub.jupyter.org/network-access-hub: 'true'
+  service:
+    enabled: false
+  tplVersion: 2
+  volumes:
+  - name: telegraf-generated-config
+    configMap:
+      name: telegraf-generated-config
+  mountPoints:
+  - name: telegraf-generated-config
+    mountPath: /etc/telegraf-generated
+
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
 global:
+  # -- services enabled in this RSP instance
+  # @default -- Set by Argo CD
+  enabledServices: ""
+
+  # -- Host name for instance identification
+  # @default -- Set by Argo CD
+  host: ""
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""

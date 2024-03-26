@@ -16,7 +16,7 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | chronograf.env.HOST_PAGE_DISABLED | bool | `true` |  |
 | chronograf.env.INFLUXDB_ORG | string | `"square"` |  |
 | chronograf.env.INFLUXDB_URL | string | `"https://monitoring.lsst.codes"` |  |
-| chronograf.envFromSecret | string | `"monitoring"` | Chronograf expects keys generic_client_id, generic_client_secret, and token_secret. |
+| chronograf.envFromSecret | string | `"monitoring"` |  |
 | chronograf.image.pullPolicy | string | `"IfNotPresent"` |  |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` |  |
 | chronograf.image.tag | string | `"1.10.3"` |  |
@@ -33,9 +33,10 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | chronograf.service.replicas | int | `1` |  |
 | chronograf.service.type | string | `"ClusterIP"` |  |
 | chronograf.updateStrategy.type | string | `"Recreate"` |  |
-| config | object | `{"influxdbHostname":"monitoring.lsst.codes","influxdbOrg":"square"}` | Configuration of Influx endpoint to receive monitoring data |
+| config | object | `{"influxdbHostname":"monitoring.lsst.codes","influxdbOrg":"square","prometheus":{"argocd":{"application_controller":"http://argocd-application-controller-metrics.argocd.svc:8082/metrics","notifications_controller":"http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics","repo_server":"http://argocd-repo-server-metrics.argocd.svc:8084/metrics","server":"http://argocd-server-metrics.argocd.svc:8083/metrics"},"ingress-nginx":{"controller":"http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"},"nublado":{"hub":"http://hub.nublado:8081/metrics"}}}` | Configuration of Influx endpoint to receive monitoring data |
+| config.prometheus | object | `{"argocd":{"application_controller":"http://argocd-application-controller-metrics.argocd.svc:8082/metrics","notifications_controller":"http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics","repo_server":"http://argocd-repo-server-metrics.argocd.svc:8084/metrics","server":"http://argocd-server-metrics.argocd.svc:8083/metrics"},"ingress-nginx":{"controller":"http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"},"nublado":{"hub":"http://hub.nublado:8081/metrics"}}` | Use prometheus config to specify all the services that expose prometheus endpoints. |
 | cronjob.debug | bool | `false` | set to true to enable debug logging |
-| cronjob.enabled | bool | False | enable cronjobs at all? You only need this once per influxdb instance. |
+| cronjob.enabled | bool | False | enable cronjobs at all? You only need this once per influxdb instance.  It probably should run in the same environment as influxdb, but that's not necessary. |
 | cronjob.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":""}` | image for monitoring-related cronjobs |
 | cronjob.image.pullPolicy | string | "IfNotPresent" | imagePullPolicy for cronjobs |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools |
@@ -44,6 +45,8 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | cronjob.schedule.bucketmaker | string | `"*/15 * * * *"` | bucketmaker schedule |
 | cronjob.schedule.bucketmapper | string | `"3-59/15 * * * *"` | bucketmapper schedule |
 | cronjob.schedule.taskmaker | string | `"6-59/15 * * * *"` | taskmaker schedule |
+| global.enabledServices | string | Set by Argo CD | services enabled in this RSP instance |
+| global.host | string | Set by Argo CD | Host name for instance identification |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | influxdb2 | object | `{"adminUser":{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d","user":"admin"},"enabled":false,"ingress":{"enabled":false},"livenessProbe":{"failureThreshold":10,"periodSeconds":10},"resources":{"limits":{"cpu":4,"memory":"30Gi"},"requests":{"cpu":1,"memory":"1Gi"}},"startupProbe":{"enabled":true,"failureThreshold":60,"initialDelaySeconds":30,"periodSeconds":10}}` | InfluxDB v2 server component.  Soon to be replaced with Influx DB v3 |
 | influxdb2.adminUser | object | `{"bucket":"monitoring","existingSecret":"monitoring","organization":"square","retention_policy":"30d","user":"admin"}` | InfluxDB2 admin user; uses admin-password/admin-token keys from secret. |
@@ -65,3 +68,5 @@ Chronograf-based UI for monitoring (data stored in InfluxDBv2)
 | influxdb2.startupProbe.periodSeconds | int | `10` | Period between checking whether InfluxDB has started |
 | ingress | object | `{"chronograf":{"annotations":{},"hostname":""},"influxdb2":{"annotations":{}}}` | ingress for InfluxDBv2 Only used if the service is enabled. |
 | ingress.influxdb2.annotations | object | `{}` | Additional annotations to add to the ingress |
+| telegraf | object | `{"args":["--config","/etc/telegraf-generated/telegraf-generated.conf"],"config":{"inputs":[],"outputs":[],"processors":[]},"enabled":true,"env":[{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"telegraf-token","name":"monitoring"}}}],"mountPoints":[{"mountPath":"/etc/telegraf-generated","name":"telegraf-generated-config"}],"podLabels":{"hub.jupyter.org/network-access-hub":"true"},"rbac":{"clusterWide":true},"resources":{"limits":{"cpu":"900m","memory":"512Mi"}},"service":{"enabled":false},"tplVersion":2,"volumes":[{"configMap":{"name":"telegraf-generated-config"},"name":"telegraf-generated-config"}]}` | telegraf for Prometheus monitoring. |
+| telegraf.enabled | bool | `true` | enable telegraf at all? |
