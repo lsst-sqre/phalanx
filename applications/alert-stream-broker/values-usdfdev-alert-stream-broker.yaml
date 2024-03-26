@@ -111,7 +111,7 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
   testTopicName: "alert-stream-test"
-  testTopicPartitions: 20
+  testTopicPartitions: 400
   testTopicReplicas: 1
 
 alert-stream-schema-registry:
