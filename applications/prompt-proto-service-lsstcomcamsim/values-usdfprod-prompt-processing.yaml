@@ -26,7 +26,7 @@ prompt-proto-service:
     endpointUrl: https://s3dfrgw.slac.stanford.edu
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing-prod
 
   apdb:
