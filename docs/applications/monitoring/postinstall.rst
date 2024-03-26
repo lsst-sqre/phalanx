@@ -21,11 +21,11 @@ To do this:
    * ``OP_CONNECT_TOKEN`` should be set to the correct 1Password Connect token for the Phalanx environment you're working on.  This can be found in 1Password.
    * ``VAULT_TOKEN`` should be set to the write token for the Phalanx environment you're working on.  This can also be found in 1Password.
    * ``VAULT_ADDR`` should be set to your Vault's URL, e.g. ``https://vault.lsst.cloud``
-* In 1Password, find the set of secrets for the Phalanx environment you're working on.  Open the ``monitoring`` secret.  Edit the ``influx-alert-token`` password's value, and change it to the value of "Token for task/alert creation" that was displayed when you ran ``tokenmaker``.
-* Run ``phalanx secrets audit <environment>``; this should show only the ``influx-alert-token`` with an unexpected value.  If anything else is incorrect, fix that first before coming back here.
-* Run ``phalanx secrets sync <environment>``.  This will store the new token into Vault.
+* In 1Password, find the set of secrets for the Phalanx environment you're working on.  Open the ``monitoring`` secret.  Edit the ``influx-alert-token`` password's value, and change it to the value of "Token for task/alert creation" that was displayed when you ran ``tokenmaker``.  Edit the ``telegraf-token`` password's value, and change it to the value of "Token for remote telegraf bucket writing" that was displayed when you ran ``tokenmaker``.
+* Run ``phalanx secrets audit <environment>``; this should show only ``influx-alert-token`` and ``telegraf-tokens`` with unexpected values.  If anything else is incorrect, fix that first before coming back here.
+* Run ``phalanx secrets sync <environment>``.  This will store the new tokens into Vault.
 * Either wait 15 minutes, or delete the ``monitoring`` secret from the ``monitoring`` namespace in your Phalanx environment.  This will recreate the secret with the new (correct) value.
 
-This should get the "monitoring" application going.
+This should suffice to get the "monitoring" application going.
 
 For ``telegraf`` and ``telegraf-ds`` (for each instance you want to repoint), it will be necessary to create a Phalanx branch, change ``config.influxdb2Url`` to the new server endpoint, and update their influx-token secrets to use the "Token for remote telegraf bucket writing" that ``tokenmaker`` created.  We can't just share the secret because the telegraf scrapers are very likely to be running in a completely different Kubernetes cluster and location than the database.
