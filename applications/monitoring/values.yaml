@@ -1,10 +1,12 @@
-# -- Configuration of Influx endpoint to receive monitoring data
+# Configuration of Influx endpoint to receive monitoring data.
 config:
   influxdbHostname: "monitoring.lsst.codes"
   influxdbOrg: "square"
 
-  # -- Use prometheus config to specify all the services that expose
-  # prometheus endpoints.
+  # -- Use prometheus config to specify all Prometheus endpoints on services
+  # Except monitoring.  Monitoring is enabled if you're installing this chart,
+  # but only if the influxdb2 component is installed, which is a global
+  # singleton, would you have any Prometheus endpoint to scrape.
   prometheus:
     argocd:
       application_controller: "http://argocd-application-controller-metrics.argocd.svc:8082/metrics"
@@ -17,7 +19,7 @@ config:
     ingress-nginx:
       controller: "http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"
 
-# -- InfluxDB v2 server component.  Soon to be replaced with Influx DB v3
+# InfluxDB v2 server component.  Soon to be replaced with Influx DB v3.
 influxdb2:
   # -- enable influxdb2 server at all?
   # @default -- False
@@ -84,6 +86,8 @@ influxdb2:
       cpu: 1.0
       memory: 1Gi
 
+# Chronograf provides a UI for analyzing the data in Influx.  Unlike the
+# native InfluxDBv2 visualizer, it is capable of doing OIDC authentication.
 chronograf:
   # -- enable chronograf at all?
   # @default -- False
@@ -91,6 +95,7 @@ chronograf:
 
   ## Image Settings
   ##
+  # -- chronograf image settings
   image:
     repository: "quay.io/influxdb/chronograf"
     tag: 1.10.3
@@ -100,6 +105,7 @@ chronograf:
   ## ClusterIP is default
   ## ref: http://kubernetes.io/docs/user-guide/services/
   ##
+  # -- Chronograf service
   service:
     replicas: 1
     type: ClusterIP
@@ -107,6 +113,7 @@ chronograf:
   ## Configure resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
+  # -- Chronograf resource requests/limits
   resources:
     requests:
       memory: 1024Mi
@@ -115,6 +122,7 @@ chronograf:
       memory: 30Gi
       cpu: 4
 
+  # -- Chronograf ingress
   ingress:
     enabled: false
     tls: false
@@ -122,28 +130,36 @@ chronograf:
     className: "nginx"
     path: /chronograf(/|$)
 
-
   ## Enable OAuth
+  # -- Enable Chronograf oauth
+  # Never enable it: it breaks the deployment because it's expecting a static
+  # TOKEN_SECRET.  Instead, to get oauth working, leave this setting as-is
+  # and just configure all the correct environment variables (see below).
   oauth:
     enabled: false
 
+  # -- Environment for chronograf
   env:
     BASE_PATH: /chronograf
     CUSTOM_AUTO_REFRESH: "1s=1000"
     HOST_PAGE_DISABLED: true
     INFLUXDB_URL: "https://monitoring.lsst.codes"  # Expect this to change
     INFLUXDB_ORG: "square"
-  ## INFLUXDB_TOKEN should be in the monitoring secret as well as
-  ## TOKEN_SECRET and GH_CLIENT_SECRET.  Note that INFLUX_TOKEN is for
-  ## InfluxDBv1 and INFLUXDB_TOKEN is for v2.
-  # -- Chronograf expects keys generic_client_id, generic_client_secret,
-  # and token_secret.
 
+  # -- Chronograf will read environment variables from this secret
+  # It expects keys generic_client_id, generic_client_secret,
+  # and token_secret (assuming you want generic OIDC auth talking to your
+  # local Gafaelfawr, which is usually the case).  You should also have
+  # INFLUXDB_TOKEN for InfluxDBv2.  Check the Chronograf docs if you are
+  # using some other setup (e.g. InfluxDBv1 for a database, or GitHub for
+  # an auth provider.)
   envFromSecret: monitoring
 
+  # -- Chronograf update strategy
   updateStrategy:
     type: Recreate
 
+# Cronjobs to handle bucket and task creation for alert generation.
 cronjob:
   # -- enable cronjobs at all?
   # You only need this once per influxdb instance.  It probably should
@@ -153,13 +169,12 @@ cronjob:
 
   # -- image for monitoring-related cronjobs
   image:
-    # -- repository for rubin-influx-tools
+    # -- repository for rubin-influx-tools, which supplies tools and dashboards
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
     # @default -- the appVersion of the chart
     tag: ""
     # -- imagePullPolicy for cronjobs
-    # @default -- "IfNotPresent"
     pullPolicy: "IfNotPresent"
 
   # -- set to true to enable debug logging
@@ -174,42 +189,41 @@ cronjob:
     # -- taskmaker schedule
     taskmaker: "6-59/15 * * * *"
 
-# -- ingress for InfluxDBv2 Only used if the service is enabled.
+# -- Gafaelfawr ingress for InfluxDBv2, only used if the service is enabled.
 ingress:
-
-  chronograf:
-    hostname: ""
-    annotations: {}
+  enabled: false
   influxdb2:
     # -- Additional annotations to add to the ingress
     annotations: {}
 
-# -- telegraf for Prometheus monitoring.
+# Telegraf for Prometheus monitoring.
 telegraf:
   # -- enable telegraf at all?
-  # @default -- True
-
   enabled: true
 
-  # Remove processors, inputs and outputs: use generated config instead.
+  # -- config for telegraf
+  # Use generated config instead of specifying anything here.
   config:
     processors: []
     inputs: []
     outputs: []
 
+  # -- pod resources for telegraf
   resources:
     limits:
       memory: 512Mi
       cpu: 900m
 
+  # -- arguments for telegraf invocation
   args:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"
 
-  # We need the additional rules for prometheus scraping.
+  # -- rbac settings; we need the additional rules for Prometheus scraping.
   rbac:
     clusterWide: true
 
+  # -- environment for telegraf
   env:
   - name: INFLUX_TOKEN
     valueFrom:
@@ -217,19 +231,26 @@ telegraf:
         key: telegraf-token
         name: monitoring
 
+  # -- telegraf pod labels
+  # This annotation is required in an RSP so telegraf can get metrics from
+  # JupyterHub
   podLabels:
     hub.jupyter.org/network-access-hub: 'true'
 
+  # -- use telegraf service
   service:
     enabled: false
 
+  # -- template version
   tplVersion: 2
 
+  # -- telegraf volume: generated configuration
   volumes:
   - name: telegraf-generated-config
     configMap:
       name: telegraf-generated-config
 
+  # -- telegraf volume mount: generated configuration
   mountPoints:
   - name: telegraf-generated-config
     mountPath: /etc/telegraf-generated
