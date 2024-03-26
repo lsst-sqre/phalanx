@@ -8,7 +8,7 @@ config:
   ssotap: "ssotap"
 
 image:
-  tag: "portal-ui-conversion-build-7"
+  tag: "portal-ui-conversion-build-8"
 
 
 resources:
