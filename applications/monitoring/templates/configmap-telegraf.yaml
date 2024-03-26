@@ -44,7 +44,7 @@ data:
         "https://{{- .Values.config.influxdbHostname -}}/metrics"
       ]
       [inputs.prometheus.tags]
-        prometheus_app = "influxdb2"
+        prometheus_app = "monitoring"
 
     [[outputs.influxdb_v2]]
       bucket = "monitoring"
@@ -55,7 +55,7 @@ data:
       ]
       [outputs.influxdb_v2.tagpass]
         prometheus_app = [
-          "influxdb2"
+          "monitoring"
         ]
 
     {{- end }}

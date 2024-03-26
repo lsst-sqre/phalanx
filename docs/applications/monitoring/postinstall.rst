@@ -2,7 +2,11 @@
 Post-Installation Setup
 #######################
 
-The monitoring application needs a little bit of manual configuration after installation.
+The monitoring application requires substantial manual configuration after installation.
+
+Tokens
+======
+
 While the admin token can be supplied from an existing secret, it is necessary to run ``tokenmaker`` to generate both the token that the tasks (which run as cronjobs) will require and the token that the ``telegraf`` and ``telegraf-ds`` scrapers will need in order to send their data to the monitoring database.
 
 To do this:
@@ -28,4 +32,21 @@ To do this:
 
 This should suffice to get the "monitoring" application going.
 
-For ``telegraf`` and ``telegraf-ds`` (for each instance you want to repoint), it will be necessary to create a Phalanx branch, change ``config.influxdb2Url`` to the new server endpoint, and update their influx-token secrets to use the "Token for remote telegraf bucket writing" that ``tokenmaker`` created.  We can't just share the secret because the telegraf scrapers are very likely to be running in a completely different Kubernetes cluster and location than the database.
+Chronograf
+==========
+
+Now it is very important that you be the first person to visit the Chronograf endpoint and authenticate (it will use the local Gafaelfawr instance to do so).
+This will create your user and make you a super-admin.
+You can choose whether new users should be super-admins by default or not, but since there is no mapping from Gafaelfawr scope to Chronograf abilities, you almost certainly do not, and will have to give new users admin powers (if they should have them) when they first log in.
+After there are more admins, of course, someone else can empower new users as they come onboard.
+
+In Chronograf, you must configure the connection to InfluxDBv2.
+You may as well leave the organization at the default value.
+
+Finally, load the Chronograf dashboards from https://github.com/lsst-sqre/rubin-influx-tools/tree/main/src/rubin_influx_tools/dashboards/chronograf
+
+Telegraf-ds (separate application)
+==================================
+
+For ``telegraf-ds`` (for each instance you want to repoint), it will be necessary to create a Phalanx branch, change ``config.influxdb2Url`` to the new server endpoint, and update their influx-token secrets to use the "Token for remote telegraf bucket writing" that ``tokenmaker`` created.
+We can't just share the secret because the telegraf-ds scrapers are very likely to be running in a completely different Kubernetes cluster and location than the database.
