@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: telegraf-generated-config
+  name: telegraf-ds-generated-config
 data:
   telegraf-generated.conf: |+
       [global_tags]
