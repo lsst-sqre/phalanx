@@ -29,6 +29,11 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
   quotas:
     producerByteRate: 1073741824
     consumerByteRate: 1073741824

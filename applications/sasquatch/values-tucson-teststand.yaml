@@ -112,10 +112,6 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ ".*OCPS" ]
-    pmd:
-      enabled: true
-      topicRegexps: |
-        [ ".*PMD" ]
     calsys:
       enabled: true
       topicRegexps: |
@@ -179,9 +175,6 @@ kafka-connect-manager:
       test:
         enabled: true
         topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: true
-        topicsRegex: ".*PMD"
       calsys:
         enabled: true
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*TunableLaser"
