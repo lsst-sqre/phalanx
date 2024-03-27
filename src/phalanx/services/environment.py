@@ -63,7 +63,7 @@ class EnvironmentService:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if Helm fails.
         """
         return self._helm.template_environment(environment)

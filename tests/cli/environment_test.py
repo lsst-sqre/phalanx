@@ -7,10 +7,10 @@ from pathlib import Path
 
 from ..support.cli import run_cli
 from ..support.data import phalanx_test_path
-from ..support.helm import MockHelm
+from ..support.helm import MockHelmCommand
 
 
-def test_lint(mock_helm: MockHelm) -> None:
+def test_lint(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -116,7 +116,7 @@ def test_schema() -> None:
     assert result.output == current.read_text()
 
 
-def test_template(mock_helm: MockHelm) -> None:
+def test_template(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "template":
