@@ -21,7 +21,7 @@ data:
         bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
         insecure_skip_verify = true
         namepass = ["kubernetes_pod_container"]
-        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+        fieldinclude = ["cpu_usage_nanocores", "memory_usage_bytes"]
 
       [[inputs.kube_inventory]]
         url = "https://kubernetes.default.svc"
