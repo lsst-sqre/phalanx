@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-import subprocess
 import sys
-from pathlib import Path
 from urllib.parse import urlparse
 
-from ..exceptions import HelmFailedError
+from ..exceptions import CommandFailedError
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
+from .command import Command
 
 __all__ = ["HelmStorage"]
 
@@ -28,6 +27,7 @@ class HelmStorage:
 
     def __init__(self, config_storage: ConfigStorage) -> None:
         self._config = config_storage
+        self._helm = Command("helm")
 
     def create(self, application: str, starter: HelmStarter) -> None:
         """Use :command:`helm create` to create a new application chart.
@@ -41,7 +41,7 @@ class HelmStorage:
         """
         starter_path = self._config.get_starter_path(starter)
         application_path = self._config.get_application_chart_path(application)
-        self._run_helm(
+        self._helm.run(
             "create",
             "-p",
             str(starter_path),
@@ -69,7 +69,7 @@ class HelmStorage:
             Whether to suppress Helm's standard output.
         """
         application_path = self._config.get_application_chart_path(application)
-        self._run_helm(
+        self._helm.run(
             "dependency",
             "update",
             "--skip-refresh",
@@ -117,7 +117,7 @@ class HelmStorage:
         # the chart is being linted.
         set_arg = ",".join(f"{k}={v}" for k, v in values.items())
         try:
-            result = self._capture_helm(
+            result = self._helm.capture(
                 "lint",
                 application,
                 "--strict",
@@ -129,7 +129,7 @@ class HelmStorage:
                 set_arg,
                 cwd=application_path.parent,
             )
-        except HelmFailedError as e:
+        except CommandFailedError as e:
             self._print_lint_output(application, environment, e.stdout)
             if e.stderr:
                 sys.stderr.write(e.stderr)
@@ -163,7 +163,7 @@ class HelmStorage:
         """
         path = self._config.get_environment_chart_path()
         try:
-            result = self._capture_helm(
+            result = self._helm.capture(
                 "lint",
                 path.name,
                 "--strict",
@@ -173,7 +173,7 @@ class HelmStorage:
                 f"{path.name}/values-{environment}.yaml",
                 cwd=path.parent,
             )
-        except HelmFailedError as e:
+        except CommandFailedError as e:
             self._print_lint_output(None, environment, e.stdout)
             if e.stderr:
                 sys.stderr.write(e.stderr)
@@ -222,7 +222,7 @@ class HelmStorage:
             name = hostname.split(".")[-2]
         else:
             name = hostname
-        self._run_helm("repo", "add", name, url, quiet=quiet)
+        self._helm.run("repo", "add", name, url, quiet=quiet)
 
     def repo_update(self, *, quiet: bool = False) -> None:
         """Update Helm's cache of upstream repository indices.
@@ -232,7 +232,7 @@ class HelmStorage:
         quiet
             Whether to suppress Helm's standard output.
         """
-        self._run_helm("repo", "update", quiet=quiet)
+        self._helm.run("repo", "update", quiet=quiet)
 
     def template_application(
         self, application: str, environment: str, values: dict[str, str]
@@ -262,13 +262,13 @@ class HelmStorage:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if Helm fails.
         """
         application_path = self._config.get_application_chart_path(application)
         set_arg = ",".join(f"{k}={v}" for k, v in values.items())
         try:
-            result = self._capture_helm(
+            result = self._helm.capture(
                 "template",
                 application,
                 str(application_path),
@@ -281,7 +281,7 @@ class HelmStorage:
                 set_arg,
                 cwd=application_path.parent,
             )
-        except HelmFailedError as e:
+        except CommandFailedError as e:
             if e.stderr:
                 sys.stderr.write(e.stderr)
             raise
@@ -308,12 +308,12 @@ class HelmStorage:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if Helm fails.
         """
         path = self._config.get_environment_chart_path()
         try:
-            result = self._capture_helm(
+            result = self._helm.capture(
                 "template",
                 "science-platform",
                 str(path),
@@ -324,51 +324,13 @@ class HelmStorage:
                 f"environments/values-{environment}.yaml",
                 cwd=path.parent,
             )
-        except HelmFailedError as e:
+        except CommandFailedError as e:
             if e.stderr:
                 sys.stderr.write(e.stderr)
             raise
         if result.stderr:
             sys.stderr.write(result.stderr)
         return result.stdout
-
-    def _capture_helm(
-        self, command: str, *args: str, cwd: Path | None = None
-    ) -> subprocess.CompletedProcess:
-        """Run Helm, checking for errors and capturing the output.
-
-        Parameters
-        ----------
-        command
-            Helm subcommand to run.
-        *args
-            Arguments for that subcommand.
-        cwd
-            If provided, change working directories to this path before
-            running the Helm command.
-
-        Returns
-        -------
-        subprocess.CompletedProcess
-            Results of the process, containing the standard output and
-            standard error streams.
-
-        Raises
-        ------
-        HelmFailedError
-            Raised if Helm fails.
-        """
-        try:
-            result = subprocess.run(
-                ["helm", command, *args],
-                check=True,
-                cwd=cwd,
-                capture_output=True,
-                text=True,
-            )
-        except subprocess.CalledProcessError as e:
-            raise HelmFailedError(command, args, e) from e
-        return result
 
     def _print_lint_output(
         self, application: str | None, environment: str, output: str | None
@@ -405,36 +367,3 @@ class HelmStorage:
                 print(prelude)
             else:
                 print(line)
-
-    def _run_helm(
-        self,
-        command: str,
-        *args: str,
-        cwd: Path | None = None,
-        quiet: bool = False,
-    ) -> None:
-        """Run Helm, checking for errors.
-
-        Any output from Helm is printed to standard output and standard error.
-
-        Parameters
-        ----------
-        command
-            Helm subcommand to run.
-        *args
-            Arguments for that subcommand.
-        cwd
-            If provided, change working directories to this path before
-            running the Helm command.
-
-        Raises
-        ------
-        HelmFailedError
-            Raised if Helm fails.
-        """
-        cmdline = ["helm", command, *args]
-        stdout = subprocess.DEVNULL if quiet else None
-        try:
-            subprocess.run(cmdline, check=True, stdout=stdout, cwd=cwd)
-        except subprocess.CalledProcessError as e:
-            raise HelmFailedError(command, args, e) from e

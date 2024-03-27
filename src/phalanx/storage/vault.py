@@ -45,18 +45,6 @@ class VaultClient:
         self._vault = hvac.Client(url)
         self._vault.secrets.kv.default_kv_version = 2
 
-    def create_policy(self, name: str, policy: str) -> None:
-        """Create a policy allowing read of secrets for this environment.
-
-        Parameters
-        ----------
-        name
-            Name of policy to create.
-        policy
-            Text of the policy.
-        """
-        self._vault.sys.create_or_update_policy(name, policy)
-
     def create_approle(self, name: str, policies: list[str]) -> VaultAppRole:
         """Create a new Vault AppRole for secret access.
 
@@ -90,6 +78,18 @@ class VaultClient:
             secret_id_accessor=secret_id_accessor,
             policies=token_policies,
         )
+
+    def create_policy(self, name: str, policy: str) -> None:
+        """Create a policy allowing read of secrets for this environment.
+
+        Parameters
+        ----------
+        name
+            Name of policy to create.
+        policy
+            Text of the policy.
+        """
+        self._vault.sys.create_or_update_policy(name, policy)
 
     def create_token(
         self, display_name: str, policies: list[str], lifetime: str

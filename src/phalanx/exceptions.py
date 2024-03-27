@@ -9,7 +9,7 @@ from .models.secrets import Secret
 
 __all__ = [
     "ApplicationExistsError",
-    "HelmFailedError",
+    "CommandFailedError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
@@ -37,17 +37,24 @@ class ApplicationExistsError(Exception):
         super().__init__(msg)
 
 
-class HelmFailedError(Exception):
-    """A Helm command failed.
+class CommandFailedError(Exception):
+    """Execution of a command failed.
 
     Parameters
     ----------
     command
-        Subcommand being run.
+        Command being run.
     args
-        Arguments to that subcommand.
+        Arguments to that command.
     exc
         Exception reporting the failure.
+
+    Attributes
+    ----------
+    stdout
+        Standard output from the failed command.
+    stderr
+        Standard error from the failed command.
     """
 
     def __init__(
@@ -57,7 +64,7 @@ class HelmFailedError(Exception):
         exc: subprocess.CalledProcessError,
     ) -> None:
         args_str = " ".join(args)
-        msg = f"helm {command} {args_str} failed with status {exc.returncode}"
+        msg = f"{command} {args_str} failed with status {exc.returncode}"
         super().__init__(msg)
         self.stdout = exc.stdout
         self.stderr = exc.stderr

@@ -8,12 +8,12 @@ from pathlib import Path
 from typing import Protocol
 from unittest.mock import patch
 
-from phalanx.exceptions import HelmFailedError
-from phalanx.storage.helm import HelmStorage
+from phalanx.exceptions import CommandFailedError
+from phalanx.storage import helm
 
 __all__ = [
-    "MockHelm",
     "MockHelmCallback",
+    "MockHelmCommand",
     "patch_helm",
 ]
 
@@ -24,7 +24,7 @@ class MockHelmCallback(Protocol):
     def __call__(*command: str) -> subprocess.CompletedProcess: ...
 
 
-class MockHelm:
+class MockHelmCommand:
     """Mocked Helm commands captured during testing.
 
     This class holds a record of every Helm command that the Phalanx tooling
@@ -43,16 +43,14 @@ class MockHelm:
         self._callback: MockHelmCallback | None = None
 
     def capture(
-        self, command: str, *args: str, cwd: Path | None = None
+        self, *args: str, cwd: Path | None = None
     ) -> subprocess.CompletedProcess:
         """Mock capturing the output of a Helm command.
 
         Parameters
         ----------
-        command
-            Helm subcommand to run.
         *args
-            Arguments for that subcommand.
+            Arguments for Helm.
         cwd
             If provided, change working directories to this path before
             running the Helm command.
@@ -65,26 +63,26 @@ class MockHelm:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if the ``returncode`` returned by a callback is non-zero.
         """
-        self.call_args_list.append([command, *args])
+        self.call_args_list.append(list(args))
         if self._callback:
             # https://github.com/python/mypy/issues/708 (which despite being
             # closed is not fixed for protocols as of mypy 1.7.0)
-            result = self._callback(command, *args)  # type: ignore[misc]
+            result = self._callback(*args)  # type: ignore[misc]
             if result.returncode != 0:
                 exc = subprocess.CalledProcessError(
                     returncode=result.returncode,
-                    cmd=[command, *args],
+                    cmd=["helm", *args],
                     output=result.stdout,
                     stderr=result.stderr,
                 )
-                raise HelmFailedError(command, args, exc)
+                raise CommandFailedError("helm", args, exc)
             return result
         else:
             return subprocess.CompletedProcess(
-                args=[command, *args], returncode=0, stdout=None, stderr=None
+                args=["helm", *args], returncode=0, stdout=None, stderr=None
             )
 
     def reset_mock(self) -> None:
@@ -93,7 +91,6 @@ class MockHelm:
 
     def run(
         self,
-        command: str,
         *args: str,
         cwd: Path | None = None,
         quiet: bool = False,
@@ -113,7 +110,7 @@ class MockHelm:
         quiet
             Whether to suppress Helm's standard output. (Currently ignored.)
         """
-        self.call_args_list.append([command, *args])
+        self.call_args_list.append(list(args))
 
     def set_capture_callback(self, callback: MockHelmCallback) -> None:
         """Set the callback called when capturing Helm command output.
@@ -133,7 +130,7 @@ class MockHelm:
         self._callback = callback
 
 
-def patch_helm() -> Iterator[MockHelm]:
+def patch_helm() -> Iterator[MockHelmCommand]:
     """Intercept Helm invocations with a mock.
 
     Each attempt to run a Helm command will be captured in the mock and not
@@ -144,7 +141,6 @@ def patch_helm() -> Iterator[MockHelm]:
     MockHelm
         Class that captures the attempted Helm commands.
     """
-    mock = MockHelm()
-    with patch.object(HelmStorage, "_capture_helm", side_effect=mock.capture):
-        with patch.object(HelmStorage, "_run_helm", side_effect=mock.run):
-            yield mock
+    mock = MockHelmCommand()
+    with patch.object(helm, "Command", return_value=mock):
+        yield mock

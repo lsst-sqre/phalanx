@@ -20,10 +20,10 @@ from ..support.data import (
     read_output_data,
     read_output_json,
 )
-from ..support.helm import MockHelm
+from ..support.helm import MockHelmCommand
 
 
-def test_add_helm_repos(mock_helm: MockHelm) -> None:
+def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "add-helm-repos", "argocd")
     assert result.output == ""
     assert result.exit_code == 0
@@ -241,7 +241,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     assert chart["description"] == "Some application"
 
 
-def test_lint(mock_helm: MockHelm) -> None:
+def test_lint(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -352,7 +352,7 @@ def test_lint(mock_helm: MockHelm) -> None:
     assert result.exit_code == 1
 
 
-def test_lint_no_repos(mock_helm: MockHelm) -> None:
+def test_lint_no_repos(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -388,7 +388,7 @@ def test_lint_no_repos(mock_helm: MockHelm) -> None:
     ]
 
 
-def test_lint_all(mock_helm: MockHelm) -> None:
+def test_lint_all(mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
@@ -396,7 +396,7 @@ def test_lint_all(mock_helm: MockHelm) -> None:
     assert mock_helm.call_args_list == expected_calls
 
 
-def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
+def test_lint_all_git(tmp_path: Path, mock_helm: MockHelmCommand) -> None:
     upstream_path = tmp_path / "upstream"
     shutil.copytree(str(phalanx_test_path()), str(upstream_path))
     upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
@@ -443,7 +443,7 @@ def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
     assert mock_helm.call_args_list == expected_calls
 
 
-def test_template(mock_helm: MockHelm) -> None:
+def test_template(mock_helm: MockHelmCommand) -> None:
     test_path = phalanx_test_path()
 
     def callback(*command: str) -> subprocess.CompletedProcess:

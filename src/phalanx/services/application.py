@@ -249,7 +249,7 @@ class ApplicationService:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if Helm fails.
         """
         if self.add_helm_repositories([app_name], quiet=True):
