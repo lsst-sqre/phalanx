@@ -19,6 +19,19 @@ It also implements a Chronograf UI for analysis of this data.
 
 In the slightly longer term, the InfluxDBv2 server will be replaced by InfluxDBv3.
 
+Installation
+============
+
+If you are not running the collection server (that is, the influxdb2 component, and likely the cronjobs and the Chronograf UI), all you need to do is enable the telegraf component.
+
+Secret creation still requires definition of many fields, but everything except ``telegraf-token`` and ``influx-org`` can be set to a dummy value, since the agents only need to know how to send data to the central InfluxDBv2 server.
+
+However, if you are running the server-side pieces of ``monitoring``, it is complex and has many points of contact with both other Phalanx components, notably Gafaelfawr, and external systems, such as Slack.  There are, unfortunately, a lot of manual steps in the installation.
+
+There are both ``preinstall`` and ``postinstall`` instructions
+for ``monitoring`` installation.  Doing them in order is highly
+recommended.
+
 
 .. jinja:: monitoring
    :file: applications/_summary.rst.jinja
@@ -29,5 +42,7 @@ Guides
 .. toctree::
    :maxdepth: 2
 
+   preinstall
+   install
    postinstall
    values
