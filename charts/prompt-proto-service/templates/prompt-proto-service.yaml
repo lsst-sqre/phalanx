@@ -118,10 +118,6 @@ spec:
         {{- with .Values.additionalVolumeMounts }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        readinessProbe:
-          successThreshold: 1
-          tcpSocket:
-            port: 0
         resources:
           requests:
             cpu: {{ .Values.knative.cpuRequest }}
@@ -163,16 +159,15 @@ spec:
           - key: central_repo_file
             path: butler.yaml
       {{- end }}
-      {{- if .Values.knative.gpu }}
+      {{- with .Values.tolerations }}
       tolerations:
-      - effect: NoSchedule
-        key: nvidia.com/gpu
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      enableServiceLinks: false
+      enableServiceLinks: true
       timeoutSeconds: {{ .Values.knative.timeout }}
       idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
       responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeout }}
