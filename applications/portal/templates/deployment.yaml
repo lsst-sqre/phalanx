@@ -100,12 +100,14 @@ spec:
                       "defHipsSources": {"source": "lsst", "label": "Rubin Featured"},
                       "adhocMocSource": {
                           "sources": [
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/u",
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/g",
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/r",
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/i",
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/z",
-                              "https://ccnetlsst01.in2p3.fr:65106/hips_rsp_2/y"
+                              "temp://lsst/dp02_dc2/hips/images/color_gri",
+                              "temp://lsst/dp02_dc2/hips/images/band_u",
+                              "temp://lsst/dp02_dc2/hips/images/band_g",
+                              "temp://lsst/dp02_dc2/hips/images/band_r",
+                              "temp://lsst/dp02_dc2/hips/images/band_i",
+                              "temp://lsst/dp02_dc2/hips/images/band_z",
+                              "temp://lsst/dp02_dc2/hips/images/band_y",
+                              "ivo://CDS/P/2MASS/color"
                           ],
                           "label": "Rubin Featured MOC"
                       }
