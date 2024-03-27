@@ -1,5 +1,6 @@
 config:
   influxdb2Url: "https://monitoring.lsst.codes"
+  influxdb2Org: "square"
 telegraf-ds:
   args:
   - "--config"

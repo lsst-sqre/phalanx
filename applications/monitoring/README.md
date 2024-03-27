@@ -21,7 +21,6 @@ Monitoring suite: InfluxDB2, Chronograf, telegraf
 | chronograf.updateStrategy | object | `{"type":"Recreate"}` | Chronograf update strategy |
 | config.influxdbHostname | string | `"monitoring.lsst.cloud"` | Hostname for the singleton InfluxDBv2 collection point |
 | config.influxdbOrg | string | `"square"` | InfluxDBv2 organization |
-| config.prometheus | object | `{"argocd":{"application_controller":"http://argocd-application-controller-metrics.argocd.svc:8082/metrics","notifications_controller":"http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics","repo_server":"http://argocd-repo-server-metrics.argocd.svc:8084/metrics","server":"http://argocd-server-metrics.argocd.svc:8083/metrics"},"ingress-nginx":{"controller":"http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"},"monitoring":{"influxdb2":"https://monitoring.lsst.cloud/metrics"},"nublado":{"hub":"http://hub.nublado:8081/metrics"}}` | Use prometheus config to specify all Prometheus endpoints on services |
 | cronjob.debug | bool | `false` | set to true to enable debug logging |
 | cronjob.image | object | `{"pullPolicy":"IfNotPresent","repository":"ghcr.io/lsst-sqre/rubin-influx-tools","tag":""}` | image for monitoring-related cronjobs |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | imagePullPolicy for cronjobs |
