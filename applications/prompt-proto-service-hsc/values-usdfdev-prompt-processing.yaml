@@ -1,6 +1,7 @@
 prompt-proto-service:
 
   podAnnotations:
+    autoscaling.knative.dev/scale-down-delay: 300s
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
