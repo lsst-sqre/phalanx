@@ -1,6 +1,9 @@
 config:
   influxdbHostname: "monitoring-dev.lsst.cloud"
   influxdbOrg: "square"
+  prometheus:
+    monitoring:
+      influxdb2: "https://monitoring-dev.lsst.cloud/metrics"
 influxdb2:
   enabled: true
   # -- Schedule onto the kafka pool

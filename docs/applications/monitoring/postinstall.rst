@@ -7,9 +7,9 @@ The monitoring application requires substantial manual configuration after insta
 Secrets And Tokens
 ==================
 
-While the admin token can be supplied from an existing secret, it is necessary to run ``tokenmaker`` to generate the token that the tasks (which run as cronjobs) will require, the token that the ``telegraf`` and ``telegraf-ds`` scrapers will need in order to send their data to the monitoring database.
-
-You will also need the client secret for Chronograf to communicate with Gafaelfawr.  This will have been generated when you syncronized the secrets for ``monitoring``.
+While the admin token can be supplied from an existing secret, it is
+necessary to run ``tokenmaker`` to generate the token that the tasks
+(which run as cronjobs) will require and the token that the ``telegraf`` and ``telegraf-ds`` scrapers will need in order to send their data to the monitoring database.
 
 Set up the Environment
 ----------------------
@@ -21,11 +21,15 @@ Set up the Environment
    * ``INFLUXDB_ORG`` should be set to the influx organization, typically ``square``
    * ``INFLUXDB_TOKEN`` should be set to the admin token value, which can be found in 1Password under the ``admin-token`` entry.
    * ``INFLUXDB_URL`` should be set to the URL for the InfluxDBv2 server (e.g. ``https://monitoring.lsst.cloud``)
-* Run ``tokenmaker`` and save the tokens, which will be logged to standard output (or just leave them onscreen while you do the next step).
-* In 1Password, find the set of secrets for the Phalanx environment you're working on.  Open the ``monitoring`` secret.  Edit the ``influx-alert-token`` password's value, and change it to the value of "Token for task/alert creation" that was displayed when you ran ``tokenmaker``.  Edit the ``telegraf-token`` password's value, and change it to the value of "Token for remote telegraf bucket writing" that was displayed when you ran ``tokenmaker``.  Save the secret.
-* Run ``phalanx secrets audit <environment>``; this should show only ``influx-alert-token`` and ``telegraf-token`` in the ``monitoring`` app, and ``influx-token`` in ``telegraf-ds``, with unexpected values.  If anything else is incorrect, fix that first before coming back here.
-* Run ``phalanx secrets sync <environment>``.  This will store the new tokens into Vault.
-* Delete the ``monitoring`` secret from the ``monitoring`` namespace in your Phalanx environment (and, if ``telegraf-ds`` is installed, the ``telegraf`` secret from the ``telegraf-ds`` namespace).  This will recreate the secret(s) with the new (correct) value.
+* Run ``tokenmaker``.  You will need the two tokens created.  If you are not using 1Password, save them somewhere safe.  If you are:
+   * In 1Password, find the set of secrets for the Phalanx environment you're working on.
+   * Open the ``monitoring`` secret.
+   * Edit the ``influx-alert-token`` password's value, and change it to the value of "Token for task/alert creation" that was displayed when you ran ``tokenmaker``.
+   * Edit the ``telegraf-token`` password's value, and change it to the value of "Token for remote telegraf bucket writing" that was displayed when you ran ``tokenmaker``.
+   * Save the secret.
+* Audit the secrets: :doc:`/admin/audit-secrets`.  This should show only ``influx-alert-token`` and ``telegraf-token`` with unexpected values in the ``monitoring`` app.  If anything else is incorrect, fix that first before coming back here.
+* Sync the secrets: :doc:`/admin/sync-secrets`.
+* Delete the ``monitoring`` secret from the ``monitoring`` namespace in your Phalanx environment.  It will be recreated with the new values.  This step is not necessary, but you may have to wait up to 15 minutes for the secret to be updated.
 
 This should suffice to get the "monitoring" application going.
 
@@ -74,3 +78,11 @@ Load dashboards
 Finally, load the Chronograf dashboards from https://github.com/lsst-sqre/rubin-influx-tools/tree/main/src/rubin_influx_tools/dashboards/chronograf, using the ``Import Dashboard`` button in the upper left of the ``Dashboards`` screen, acessible through the ``Dashboard`` (bunch-of-rectangles) icon on the left side of the main screen.
 
 For each dashboard, take the default options for "Sources in Dashboard".
+
+
+Monitoring Agents
+=================
+
+You will need to update the ``influx-token`` secret in any environment that is feeding your new monitoring server, so that the telegraf and telegraf-ds agents are able to talk to it.  This is why it was convenient to save ``telegraf-token`` in the 1Password vault for the ``monitoring`` server's environment, because you can trivially cut-and-paste it.
+
+Then restart the agents; for ``telegraf`` that's the deployment, and for ``telegraf-ds`` it's the daemonset.

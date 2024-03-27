@@ -3,17 +3,13 @@ name: monitoring
 version: 1.0.0
 description: "Monitoring suite: InfluxDB2, Chronograf, telegraf"
 sources:
-  - https://github.com/influxdata/telegraf
   - https://github.com/influxdata/helm-charts
   - https://github.com/lsst-sqre/rubin-influx-tools
-appVersion: 0.2.0
+appVersion: 0.2.1
 dependencies:
   - name: chronograf
     version: 1.2.6
     repository: https://helm.influxdata.com/
   - name: influxdb2
     version: 2.1.2
-    repository: https://helm.influxdata.com/
-  - name: telegraf
-    version: 1.8.43
     repository: https://helm.influxdata.com/
