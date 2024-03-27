@@ -52,7 +52,7 @@ spec:
             - name: "config"
               mountPath: "/etc/squareone"
             - name: "next-image-cache"
-              mountPath: "/app/.next/cache/images"
+              mountPath: "/app/apps/squareone/.next/cache/images"
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
