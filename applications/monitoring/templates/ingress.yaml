@@ -7,19 +7,19 @@ metadata:
 config:
   baseUrl: "https://{{ .Values.config.influxdbHostname }}"
   scopes:
-    anonymous: true  # We will use internal token auth for now.
+    anonymous: true  # Influx requires its own token auth anyway
 template:
   metadata:
     name: "influxdb2"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-dns"
-      {{- with .Values.ingress.influxdb2.annotations }}
+      {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
   spec:
     tls:
       - hosts:
-        - {{ .Values.ingress.influxdb2.hostname | quote }}
+        - {{ .Values.config.influxdbHostname | quote }}
         secretName: "tls-influxdb2"
     rules:
       - host: {{ .Values.config.influxdbHostname | quote }}
