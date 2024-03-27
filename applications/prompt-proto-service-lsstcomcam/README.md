@@ -14,6 +14,9 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 |-----|------|---------|-------------|
 | prompt-proto-service.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | prompt-proto-service.affinity | object | `{}` | Affinity rules for the prompt processing pods |
+| prompt-proto-service.alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
+| prompt-proto-service.alerts.topic | string | `"alert-stream-test"` | Topic name where alerts will be sent |
+| prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.namespace | string | `"pp_apdb_lsstcomcam"` | Database namespace for the APDB |
 | prompt-proto-service.apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |

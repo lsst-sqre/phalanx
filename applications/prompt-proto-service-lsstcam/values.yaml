@@ -72,6 +72,14 @@ prompt-proto-service:
     # -- Database namespace for the APDB
     namespace: pp_apdb_lsstcam
 
+  alerts:
+    # -- Username for sending alerts to the alert stream
+    username: "kafka-admin"
+    # -- Server address for the alert stream
+    server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+    # -- Topic name where alerts will be sent
+    topic: "alert-stream-test"
+
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
     centralRepoFile: false

@@ -14,6 +14,9 @@ Event-driven processing of camera images
 |-----|------|---------|-------------|
 | additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | affinity | object | `{}` |  |
+| alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
+| alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
+| alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.namespace | string | None, must be set | Database namespace for the APDB |
 | apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
 | cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
