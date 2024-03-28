@@ -119,3 +119,6 @@ prompt-proto-service:
 
   # -- Affinity rules for the prompt processing pods
   affinity: {}
+
+  # -- Tolerations for the prompt processing pods
+  tolerations: []

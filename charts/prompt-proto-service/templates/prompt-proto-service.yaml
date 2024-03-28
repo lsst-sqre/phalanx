@@ -146,10 +146,9 @@ spec:
           - key: central_repo_file
             path: butler.yaml
       {{- end }}
-      {{- if .Values.knative.gpu }}
+      {{- with .Values.tolerations }}
       tolerations:
-      - effect: NoSchedule
-        key: nvidia.com/gpu
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.affinity }}
       affinity:

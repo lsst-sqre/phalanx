@@ -2,6 +2,8 @@ prompt-proto-service:
 
   podAnnotations:
     autoscaling.knative.dev/scale-down-delay: 300s
+    autoscaling.knative.dev/window: 900s
+    autoscaling.knative.dev/max-scale: "200"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
@@ -35,3 +37,8 @@ prompt-proto-service:
   cacheCalibs: false
 
   fullnameOverride: "prompt-proto-service-hsc"
+
+  tolerations:
+  - key: node-role.kubernetes.io/prompt-processing
+    operator: Exists
+    effect: NoSchedule
