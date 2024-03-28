@@ -5,7 +5,7 @@ description: "Monitoring suite: InfluxDB2, Chronograf, telegraf"
 sources:
   - https://github.com/influxdata/helm-charts
   - https://github.com/lsst-sqre/rubin-influx-tools
-appVersion: 0.2.1
+appVersion: 0.3.0
 dependencies:
   - name: chronograf
     version: 1.2.6
