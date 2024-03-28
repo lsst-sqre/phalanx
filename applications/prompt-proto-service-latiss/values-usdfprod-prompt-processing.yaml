@@ -56,13 +56,18 @@ prompt-proto-service:
     ephemeralStorageRequest: "50Gi"
     ephemeralStorageLimit: "50Gi"
 
-  # Schedule on nodes that do not have Intel NIC due to packet drops
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: feature.node.kubernetes.io/pci-8086.present
-            operator: DoesNotExist
+          - key: edu.stanford.slac.sdf.project
+            operator: In
+            values:
+            - prompt-processing
+
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/prompt-processing
 
   fullnameOverride: "prompt-proto-service-latiss"

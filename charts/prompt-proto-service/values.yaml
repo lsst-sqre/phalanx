@@ -140,10 +140,10 @@ cacheCalibs: true
 # Any volumes required by other config options are automatically handled by the Helm chart.
 additionalVolumeMounts: []
 
+affinity: {}
+
 imagePullSecrets: []
 
 nodeSelector: {}
 
 tolerations: []
-
-affinity: {}

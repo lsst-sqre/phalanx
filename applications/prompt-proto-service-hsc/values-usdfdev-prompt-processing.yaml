@@ -1,6 +1,7 @@
 prompt-proto-service:
 
   podAnnotations:
+    autoscaling.knative.dev/max-scale: "200"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
@@ -34,3 +35,17 @@ prompt-proto-service:
   cacheCalibs: false
 
   fullnameOverride: "prompt-proto-service-hsc"
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: edu.stanford.slac.sdf.project
+            operator: In
+            values:
+            - prompt-processing
+
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/prompt-processing
