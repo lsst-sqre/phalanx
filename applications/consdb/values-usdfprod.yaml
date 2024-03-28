@@ -1,6 +1,5 @@
 environment:
   vaultUrl: "https://vault.slac.stanford.edu"
-  vaultPathPrefix: secret/rubin/usdf-butler/postgres
 
 db:
   user: "rubin"
