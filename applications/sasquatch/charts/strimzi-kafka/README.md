@@ -46,6 +46,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.logging | string | `"info"` | Logging level |
 | kafkaExporter.resources | object | `{}` | Resource specification for Kafka exporter |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| kraft.enabled | bool | `false` | Enable KRaft mode for Kafka. |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | mirrormaker2.replicas | int | `3` |  |
 | mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |

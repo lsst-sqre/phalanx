@@ -22,6 +22,8 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+  kraft:
+    enabled: true
   kafkaController:
     enabled: true
     resources:

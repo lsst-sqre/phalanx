@@ -425,6 +425,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafkaExporter.logging | string | `"info"` | Logging level |
 | strimzi-kafka.kafkaExporter.resources | object | `{}` | Resource specification for Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka. |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` |  |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
