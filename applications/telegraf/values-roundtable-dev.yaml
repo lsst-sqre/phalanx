@@ -1,0 +1,5 @@
+config:
+  influxdb2Url: "https://monitoring-dev.lsst.cloud"
+prometheus_config:
+  monitoring:
+    influxdb2: "http://monitoring-influxdb2.monitoring/metrics"

@@ -9,6 +9,7 @@ Argo CD project: ``monitoring``
 .. toctree::
    :maxdepth: 1
 
+   monitoring/index
    sasquatch/index
    telegraf/index
    telegraf-ds/index

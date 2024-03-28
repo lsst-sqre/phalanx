@@ -22,6 +22,7 @@ spec:
           containers:
           - name: bucketmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -38,9 +39,9 @@ spec:
                     name: "monitoring"
                     key:  "influx-alert-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -79,6 +80,7 @@ spec:
           containers:
           - name: bucketmapper
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -99,9 +101,9 @@ spec:
                     # our naming conventions to adapt.
                     key: "admin-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
@@ -132,6 +134,7 @@ spec:
           containers:
           - name: taskmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -148,11 +151,16 @@ spec:
                     name: "monitoring"
                     key: "influx-alert-token"
               - name: "INFLUXDB_ORG"
-                value: {{ .Values.global.influxdbOrg | quote }}
+                value: {{ .Values.config.influxdbOrg | quote }}
               - name: "INFLUXDB_URL"
-                value: {{ .Values.global.influxdbUrl | quote }}
+                value: "https://{{- .Values.config.influxdbHostname -}}"
               {{- with .Values.cronjob.debug }}
               - name: "DEBUG"
                 value: "true"
               {{- end }}
+              - name: "WEBHOOKS_YAML"
+                valueFrom:
+                  secretKeyRef:
+                    name: "monitoring"
+                    key: "webhooks.yaml"
             command: [ "taskmaker" ]

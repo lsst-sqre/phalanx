@@ -1,4 +1,5 @@
 {{- $root := . -}}
+{{- $applist := splitList "@" .Values.global.enabledServices }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -20,7 +21,7 @@ data:
         bearer_token = "/var/run/secrets/kubernetes.io/serviceaccount/token"
         insecure_skip_verify = true
         namepass = ["kubernetes_pod_container"]
-        fieldpass = ["cpu_usage_nanocores", "memory_usage_bytes"]
+        fieldinclude = ["cpu_usage_nanocores", "memory_usage_bytes"]
 
       [[inputs.kube_inventory]]
         url = "https://kubernetes.default.svc"
@@ -30,7 +31,20 @@ data:
         resource_include = [ "pods" ]
         insecure_skip_verify = true
         namespace = ""
-  {{- range $app := splitList "@" .Values.global.enabledServices }}
+  {{- if has "monitoring" $applist }}
+      # We only care about host disk space and CPU
+      # for the monitoring application.
+      [[inputs.cpu]]
+        percpu = true
+        totalcpu = true
+        collect_cpu_time = false
+        report_active = false
+
+      [[inputs.disk]]
+        ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+  {{- end }}
+
+  {{- range $app := $applist }}
     {{- if $app }}
       {{- $bucket := replace "-" "_" $app }}
       {{- $namespace := replace "_" "-" $app }}
@@ -38,7 +52,7 @@ data:
       [[outputs.influxdb_v2]]
         urls = [{{- $root.Values.config.influxdb2Url | quote }}]
         token = "$INFLUX_TOKEN"
-        organization = "square"
+        organization = {{ $root.Values.config.influxdb2Org | quote }}
         bucket = {{ $bucket | quote }}
         [outputs.influxdb_v2.tagpass]
           namespace = [{{ $namespace | quote }}]
