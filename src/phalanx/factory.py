@@ -8,8 +8,10 @@ from .services.application import ApplicationService
 from .services.environment import EnvironmentService
 from .services.secrets import SecretsService
 from .services.vault import VaultService
+from .storage.argocd import ArgoCDStorage
 from .storage.config import ConfigStorage
 from .storage.helm import HelmStorage
+from .storage.kubernetes import KubernetesStorage
 from .storage.onepassword import OnepasswordStorage
 from .storage.vault import VaultStorage
 
@@ -59,8 +61,13 @@ class Factory:
             Service for manipulating environments.
         """
         config_storage = self.create_config_storage()
-        helm_storage = HelmStorage(config_storage)
-        return EnvironmentService(config_storage, helm_storage)
+        return EnvironmentService(
+            config_storage=config_storage,
+            argocd_storage=ArgoCDStorage(),
+            kubernetes_storage=KubernetesStorage(),
+            helm_storage=HelmStorage(config_storage),
+            vault_storage=VaultStorage(),
+        )
 
     def create_secrets_service(self) -> SecretsService:
         """Create service for manipulating Phalanx secrets.

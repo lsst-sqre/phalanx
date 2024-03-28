@@ -18,6 +18,11 @@ from .models.applications import Project
 from .models.environments import EnvironmentConfig
 from .models.helm import HelmStarter
 from .models.secrets import ConditionalSecretConfig, StaticSecrets
+from .models.vault import (
+    VaultAppRoleCredentials,
+    VaultCredentials,
+    VaultTokenCredentials,
+)
 
 __all__ = [
     "help",
@@ -29,6 +34,7 @@ __all__ = [
     "application_lint_all",
     "application_template",
     "environment",
+    "environment_install",
     "environment_lint",
     "environment_schema",
     "environment_template",
@@ -45,6 +51,19 @@ __all__ = [
     "vault_create_write_token",
     "vault_export_secrets",
 ]
+
+_INSTALL_WARNING = """\
+WARNING: This will install the entire {environment} Phalanx environment
+into whatever Kubernetes cluster is currently configured as your default
+cluster.
+
+THIS WILL OVERWRITE THE APPLICATIONS IN YOUR CURRENT KUBERNETES CLUSTER.
+
+If you have not verified, with kubectl config current-context, that this is
+the correct cluster immediately before running this command, answer no and
+double-check the cluster before continuing.
+"""
+"""Warning message displayed by :command:`phalanx environment install`."""
 
 
 def _find_config() -> Path:
@@ -332,6 +351,93 @@ def application_update_shared_chart_version(
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""
+
+
+@environment.command("install")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--git-branch",
+    default=None,
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+)
+@click.option(
+    "--force-noninteractive",
+    default=False,
+    is_flag=True,
+    help="Force installation without a prompt.",
+)
+@click.option(
+    "--vault-role-id",
+    default=None,
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-secret-id",
+    default=None,
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-token",
+    default=None,
+    envvar="VAULT_TOKEN",
+    help="Read-only token for vault-secrets-operator.",
+)
+def environment_install(
+    environment: str,
+    *,
+    config: Path | None,
+    force_noninteractive: bool = False,
+    git_branch: str | None = None,
+    vault_role_id: str | None = None,
+    vault_secret_id: str | None = None,
+    vault_token: str | None = None,
+) -> None:
+    """Install Phalanx into an environment.
+
+    Bootstrap Phalanx for an environment. Assumes that the currently enabled
+    Kubernetes configuration is the cluster into which to install Phalanx.
+
+    The secrets tree for the environment must already be present in Vault.
+    Read-only Vault credentials must be supplied by either setting the
+    environment variables VAULT_ROLE_ID and VAULT_SECRET_ID to the credentials
+    of a Vault AppRole, or setting VAULT_TOKEN to a read-only Vault token.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    if vault_role_id and vault_secret_id:
+        vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+            role_id=vault_role_id, secret_id=vault_secret_id
+        )
+    elif vault_token:
+        vault_credentials = VaultTokenCredentials(token=vault_token)
+    else:
+        msg = (
+            "Either VAULT_TOKEN or both VAULT_ROLE_ID and VAULT_SECRET_ID"
+            " must be set"
+        )
+        raise click.UsageError(msg)
+
+    # Prompt the user unless they specifically said not to.
+    if not force_noninteractive:
+        print(_INSTALL_WARNING.format(environment=environment))
+        click.confirm(
+            "Are you certain you want to continue?", abort=True, default=False
+        )
+
+    # Do the installation.
+    environment_service = factory.create_environment_service()
+    environment_service.install(environment, vault_credentials, git_branch)
 
 
 @environment.command("lint")

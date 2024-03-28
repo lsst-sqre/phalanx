@@ -71,10 +71,10 @@ jobs:
           cache-key-prefix: helm
 
   # The minikube job always runs, but it quickly does nothing if no files that
-  # would affect minikube were changed.  This unfortunately requires a lot of
+  # would affect minikube were changed. This unfortunately requires a lot of
   # if conditionals on all the steps of the job, but we need the job to run so
   # that we can make it mandatory before merging, which in turn allows us to
-  # use automerge.
+  # use merge queues.
   minikube:
     name: Test deploy
     runs-on: ubuntu-latest
@@ -99,7 +99,18 @@ jobs:
               - "environments/Chart.yaml"
               - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
-              - "installer/**"
+              - "src/phalanx/**"
+
+      - name: Download installer dependencies
+        if: steps.filter.outputs.minikube == 'true'
+        run: |
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.15.4/vault_1.15.4_linux_amd64.zip
+          unzip /tmp/vault.zip
+          sudo mv vault /usr/local/bin/vault
+          sudo chmod +x /usr/local/bin/vault
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.8.6/argocd-linux-amd64
+          sudo chmod +x /usr/local/bin/argocd
+          sudo apt-get install socat
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
@@ -113,23 +124,18 @@ jobs:
         if: steps.filter.outputs.minikube == 'true'
         run: kubectl get nodes
 
-      - name: Download installer dependencies
+      - uses: lsst-sqre/run-tox@v1
         if: steps.filter.outputs.minikube == 'true'
-        run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.15.4/vault_1.15.4_linux_amd64.zip
-          unzip /tmp/vault.zip
-          sudo mv vault /usr/local/bin/vault
-          sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.8.6/argocd-linux-amd64
-          sudo chmod +x /usr/local/bin/argocd
-          sudo apt-get install socat
-
-      - name: Run installer
         timeout-minutes: 15
-        if: steps.filter.outputs.minikube == 'true'
-        run: |
-          cd installer
-          ./install.sh minikube "${{ secrets.MINIKUBE_VAULT_ROLE_ID }}" "${{ secrets.MINIKUBE_VAULT_SECRET_ID }}"
+        with:
+          python-version: "3.12"
+          tox-envs: install
+          tox-posargs: >-
+            --force-noninteractive
+            --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
+            --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
+            minikube
+          cache-key-prefix: test
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'

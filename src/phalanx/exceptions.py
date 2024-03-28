@@ -10,6 +10,8 @@ from .models.secrets import Secret
 __all__ = [
     "ApplicationExistsError",
     "CommandFailedError",
+    "CommandTimedOutError",
+    "GitRemoteError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
@@ -68,6 +70,43 @@ class CommandFailedError(Exception):
         super().__init__(msg)
         self.stdout = exc.stdout
         self.stderr = exc.stderr
+
+
+class CommandTimedOutError(Exception):
+    """Execution of a command failed.
+
+    Parameters
+    ----------
+    command
+        Command being run.
+    args
+        Arguments to that command.
+    exc
+        Exception reporting the failure.
+
+    Attributes
+    ----------
+    stdout
+        Standard output from the failed command.
+    stderr
+        Standard error from the failed command.
+    """
+
+    def __init__(
+        self,
+        command: str,
+        args: Iterable[str],
+        exc: subprocess.TimeoutExpired,
+    ) -> None:
+        args_str = " ".join(args)
+        msg = f"{command} {args_str} timed out after {exc.timeout}s"
+        super().__init__(msg)
+        self.stdout = exc.stdout
+        self.stderr = exc.stderr
+
+
+class GitRemoteError(Exception):
+    """Unable to get necessary information from a Git remote."""
 
 
 class InvalidApplicationConfigError(Exception):
@@ -218,8 +257,13 @@ class VaultNotFoundError(Exception):
         Base URL of the Vault server.
     path
         Path that was not found.
+    key
+        If provided, key within that path that was not found.
     """
 
-    def __init__(self, url: str, path: str) -> None:
-        msg = f"Vault secret {path} not found in server {url}"
+    def __init__(self, url: str, path: str, key: str | None = None) -> None:
+        if key:
+            msg = f"Vault key {key} not found in secret {path} on server {url}"
+        else:
+            msg = f"Vault secret {path} not found in server {url}"
         super().__init__(msg)
