@@ -13,6 +13,13 @@ strimzi-kafka:
           host: sasquatch-dev-kafka-1.lsst.cloud
         - loadBalancerIP: ""
           host: sasquatch-dev-kafka-2.lsst.cloud
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 2
   users:
     replicator:
       enabled: true

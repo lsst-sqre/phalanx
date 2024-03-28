@@ -411,6 +411,7 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
+| strimzi-kafka.kafka.resources | object | `{"limits":{"cpu":"12","memory":"64Gi"},"requests":{"cpu":"8","memory":"64Gi"}}` | Resource specification for the Kafka brokers. |
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |

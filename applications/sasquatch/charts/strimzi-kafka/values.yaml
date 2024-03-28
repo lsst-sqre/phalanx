@@ -97,6 +97,15 @@ kafka:
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
 
+  # -- Resource specification for the Kafka brokers.
+  resources:
+    requests:
+      memory: 64Gi
+      cpu: "8"
+    limits:
+      memory: 64Gi
+      cpu: "12"
+
 kraft:
   # -- Enable KRaft mode for Kafka.
   enabled: false
