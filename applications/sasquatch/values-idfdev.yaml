@@ -23,7 +23,14 @@ strimzi-kafka:
     kafkaConnectManager:
       enabled: true
   kafkaController:
-    enabled: false
+    enabled: true
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
   registry:
     ingress:

@@ -19,10 +19,10 @@ spec:
       class: {{ .Values.kafkaController.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
-    {{- with .Values.kafkaController.resources }}
-    resources:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
+  {{- with .Values.kafkaController.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
 {{- end }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
@@ -53,7 +53,9 @@ kind: Kafka
 metadata:
   name: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/kraft: disabled
+    {{- if .Values.kraft.enabled }}
+    strimzi.io/kraft: enabled
+    {{- end }}
     strimzi.io/node-pools: enabled
 spec:
   kafka:
