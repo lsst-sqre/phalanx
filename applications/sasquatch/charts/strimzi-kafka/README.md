@@ -32,6 +32,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
+| kafka.resources | object | `{"limits":{"cpu":"12","memory":"64Gi"},"requests":{"cpu":"8","memory":"64Gi"}}` | Resource specification for the Kafka brokers. |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |

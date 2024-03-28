@@ -47,6 +47,10 @@ spec:
       class: {{ .Values.kafka.storage.storageClassName }}
       {{- end}}
       deleteClaim: false
+  {{- with .Values.kafka.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
