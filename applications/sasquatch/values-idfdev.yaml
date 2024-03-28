@@ -4,15 +4,22 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "34.72.64.180"
+        loadBalancerIP: ""
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
-        - loadBalancerIP: "34.66.20.239"
+        - loadBalancerIP: ""
           host: sasquatch-dev-kafka-0.lsst.cloud
-        - loadBalancerIP: "35.192.19.206"
+        - loadBalancerIP: ""
           host: sasquatch-dev-kafka-1.lsst.cloud
-        - loadBalancerIP: "34.71.207.19"
+        - loadBalancerIP: ""
           host: sasquatch-dev-kafka-2.lsst.cloud
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 2
   users:
     replicator:
       enabled: true
@@ -22,6 +29,17 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
   registry:
     ingress:
