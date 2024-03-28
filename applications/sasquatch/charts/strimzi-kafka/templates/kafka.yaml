@@ -53,7 +53,7 @@ kind: Kafka
 metadata:
   name: {{ .Values.cluster.name }}
   annotations:
-    strimzi.io/kraft: migration
+    strimzi.io/kraft: enabled
     strimzi.io/node-pools: enabled
 spec:
   kafka:
