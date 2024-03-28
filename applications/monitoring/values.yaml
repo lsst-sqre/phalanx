@@ -7,8 +7,6 @@ config:
 
 # InfluxDB v2 server component.  Soon to be replaced with Influx DB v3.
 influxdb2:
-  # -- InfluxDB2 admin user; uses admin-password/admin-token keys from
-  # secret.
   adminUser:
     # -- InfluxDB internal organization
     organization: "square"
@@ -26,6 +24,7 @@ influxdb2:
     existingSecret: monitoring
 
   # -- InfluxDB2 ingress configuration.
+  # @default -- disable, use our own GafaelfawrIngress
   ingress:
     # Instead of the provided ingress, we will instead define our own
     # ingress to route to influxdb2 (and chronograf, if enabled) and use it.
@@ -46,7 +45,6 @@ influxdb2:
     # shards can be slow.
     failureThreshold: 60
 
-  # -- InfluxDB2 liveness probe.
   livenessProbe:
     # -- Period between checks for whether InfluxDB is still alive
     periodSeconds: 10
@@ -70,6 +68,7 @@ chronograf:
   ## Image Settings
   ##
   # -- chronograf image settings
+  # @default -- quay.io/influxdb/chronograf 1.10.3
   image:
     repository: "quay.io/influxdb/chronograf"
     tag: 1.10.3
@@ -128,12 +127,12 @@ chronograf:
   envFromSecret: monitoring
 
   # -- Chronograf update strategy
+  # @default -- Recreate
   updateStrategy:
     type: Recreate
 
 # Cronjobs to handle bucket and task creation for alert generation.
 cronjob:
-  # -- image for monitoring-related cronjobs
   image:
     # -- repository for rubin-influx-tools, which supplies tools and dashboards
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
@@ -156,6 +155,7 @@ cronjob:
 
 ingress:
   # -- Additional annotations to add to the ingress
+  # @default -- empty
   annotations: {}
 
 global:

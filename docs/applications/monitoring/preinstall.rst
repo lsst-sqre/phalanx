@@ -38,8 +38,10 @@ Add the OIDC Secrets to Gafaelfawr
 
 * Now you'll need the values for ``GENERIC_CLIENT_ID`` and ``GENERIC_CLIENT_SECRET``.  ``GENERIC_CLIENT_ID`` is ``chronograf-client-id`` unless you've done a per-environment override.
 * These can be found with ``vault kv get secret/phalanx/<environment>/monitoring``.  They are not in 1Password because they are randomly generated when secrets are synced.
-* Take those values over to the ``gafaelfawr`` secret in 1Password and add them to the JSON document inside the ``oidc-server-secrets`` entry, replacing an old entry as needed.
+* Add these values to the JSON document inside the ``oidc-server-secrets`` entry of the ``gafaelfawr`` secret, replacing an old entry if needed.
+
    * ``id`` will be the value of ``GENERIC_CLIENT_ID``.
    * ``return_uri`` will be ``https://<environment FQDN>/chronograf/oauth/OIDC/callback``.
    * ``secret`` will be the value of ``GENERIC_CLIENT_SECRET``.
+
 * Restart Gafaelfawr to pick up the changed secrets.

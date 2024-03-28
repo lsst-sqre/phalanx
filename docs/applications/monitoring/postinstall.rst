@@ -18,10 +18,12 @@ Set up the Environment
 * Create a new virtualenv to work in.  Activate it.
 * Run ``make init`` to install ``rubin-influx-tools`` into that virtualenv.
 * Export the following environment variables:
+
    * ``INFLUXDB_ORG`` should be set to the influx organization, typically ``square``
    * ``INFLUXDB_TOKEN`` should be set to the admin token value, which can be found in 1Password under the ``admin-token`` entry.
    * ``INFLUXDB_URL`` should be set to the URL for the InfluxDBv2 server (e.g. ``https://monitoring.lsst.cloud``)
 * Run ``tokenmaker``.  You will need the two tokens created.  If you are not using 1Password, save them somewhere safe.  If you are:
+
    * In 1Password, find the set of secrets for the Phalanx environment you're working on.
    * Open the ``monitoring`` secret.
    * Edit the ``influx-alert-token`` password's value, and change it to the value of "Token for task/alert creation" that was displayed when you ran ``tokenmaker``.
