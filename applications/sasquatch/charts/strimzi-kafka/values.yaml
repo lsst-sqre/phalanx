@@ -97,6 +97,10 @@ kafka:
   # -- Tolerations for Kafka broker pod assignment.
   tolerations: []
 
+kraft:
+  # -- Enable KRaft mode for Kafka.
+  enabled: false
+
 kafkaController:
   # -- Enable Kafka Controller
   enabled: false
