@@ -1,7 +1,7 @@
 prompt-proto-service:
 
   podAnnotations:
-    autoscaling.knative.dev/max-scale: "200"
+    autoscaling.knative.dev/max-scale: "150"  # More than ~165 is starved for storage
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
