@@ -35,17 +35,3 @@ prompt-proto-service:
   cacheCalibs: false
 
   fullnameOverride: "prompt-proto-service-hsc"
-
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: edu.stanford.slac.sdf.project
-            operator: In
-            values:
-            - prompt-processing
-
-  tolerations:
-  - effect: NoSchedule
-    key: node-role.kubernetes.io/prompt-processing
