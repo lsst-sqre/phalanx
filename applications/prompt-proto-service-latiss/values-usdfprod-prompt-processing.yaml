@@ -52,10 +52,6 @@ prompt-proto-service:
 
   logLevel: timer.lsst.activator=DEBUG lsst.resources=DEBUG
 
-  knative:
-    ephemeralStorageRequest: "50Gi"
-    ephemeralStorageLimit: "50Gi"
-
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
