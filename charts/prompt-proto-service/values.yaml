@@ -134,7 +134,11 @@ containerConcurrency: 1
 
 # -- Whether or not calibs should be cached between runs of a pod.
 # This is a temporary flag that should only be unset in specific circumstances, and only in the development environment.
+# It only has an effect if `cacheAny` is true.
 cacheCalibs: true
+# -- Whether or not any pipeline inputs should be cached between runs of a pod.
+# This is a temporary flag that should only be unset in specific circumstances.
+cacheAny: true
 
 # -- Kubernetes YAML configs for extra container volume(s).
 # Any volumes required by other config options are automatically handled by the Helm chart.

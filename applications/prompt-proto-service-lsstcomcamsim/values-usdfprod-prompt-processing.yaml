@@ -43,7 +43,10 @@ prompt-proto-service:
 
   knative:
     # TODO DM-40193: Scaled down from 50Gi to avoid hitting global ephemeral storage limits.
-    ephemeralStorageRequest: "10Gi"
-    ephemeralStorageLimit: "10Gi"
+    # A value below 10 GiB is only viable if cacheAny is false.
+    ephemeralStorageRequest: "5Gi"
+    ephemeralStorageLimit: "5Gi"
+
+  cacheAny: false
 
   fullnameOverride: "prompt-proto-service-lsstcomcamsim"
