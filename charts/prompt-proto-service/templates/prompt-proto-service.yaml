@@ -101,6 +101,8 @@ spec:
           value: {{ .Values.logLevel }}
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
+        - name: DEBUG_CACHE_INPUTS
+          value: {{ if .Values.cacheAny }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral

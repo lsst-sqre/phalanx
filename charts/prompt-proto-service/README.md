@@ -19,7 +19,8 @@ Event-driven processing of camera images
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.namespace | string | None, must be set | Database namespace for the APDB |
 | apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
-| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
+| cacheAny | bool | `true` | Whether or not any pipeline inputs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances. |
+| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. It only has an effect if `cacheAny` is true. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
