@@ -1,34 +1,41 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "chronograf"
+  name: "influxdb2"
   labels:
     {{- include "monitoring.labels" . | nindent 4 }}
 config:
-  baseUrl: "https://{{ .Values.ingress.chronograf.hostname }}"
+  baseUrl: "https://{{ .Values.config.influxdbHostname }}"
   scopes:
-    anonymous: true  # We will use Chronograf auth for now.
+    anonymous: true  # Influx requires its own token auth anyway
 template:
   metadata:
-    name: "chronograf"
+    name: "influxdb2"
     annotations:
       cert-manager.io/cluster-issuer: "letsencrypt-dns"
-      {{- with .Values.ingress.chronograf.annotations }}
+      {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
   spec:
     tls:
       - hosts:
-        - {{ .Values.ingress.chronograf.hostname | quote }}
-        secretName: tls
+        - {{ .Values.config.influxdbHostname | quote }}
+        secretName: "tls-influxdb2"
     rules:
-      - host: {{ .Values.ingress.chronograf.hostname | quote }}
+      - host: {{ .Values.config.influxdbHostname | quote }}
         http:
           paths:
             - path: "/"
               pathType: "Prefix"
               backend:
                 service:
-                  name: monitoring-chronograf
+                  name: "monitoring-influxdb2"
+                  port:
+                    number: 80
+            - path: "/chronograf"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "monitoring-chronograf"
                   port:
                     number: 80

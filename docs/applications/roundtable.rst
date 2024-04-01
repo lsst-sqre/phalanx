@@ -15,7 +15,6 @@ Argo CD project: ``roundtable``
    checkerboard/index
    giftless/index
    kubernetes-replicator/index
-   monitoring/index
    onepassword-connect/index
    ook/index
    sqrbot-sr/index
