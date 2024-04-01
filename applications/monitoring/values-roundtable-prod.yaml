@@ -20,9 +20,12 @@ influxdb2:
             - "kafka"
 chronograf:
   enabled: true
+  ingress:
+    enabled: true
+    hostname: "roundtable.lsst.cloud"
   persistence:
     enabled: true
-    size: 1Gi
+    size: 5Gi
     storageClass: standard-rwo
   env:
     GENERIC_NAME: "OIDC"
