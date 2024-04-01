@@ -24,11 +24,14 @@ influxdb2:
     existingSecret: monitoring
 
   # -- InfluxDB2 ingress configuration.
-  # @default -- disable, use our own GafaelfawrIngress
+  # @default -- disabled, must be enabled and configured at each site
   ingress:
-    # Instead of the provided ingress, we will instead define our own
-    # ingress to route to influxdb2 (and chronograf, if enabled) and use it.
     enabled: false
+    tls: true
+    secretName: "tls-influxdb2"
+    hostname: ""
+    className: "nginx"
+    path: "/"
 
   startupProbe:
     # -- Whether to enable a startup probe
@@ -152,11 +155,6 @@ cronjob:
     bucketmapper: "3-59/15 * * * *"
     # -- taskmaker schedule
     taskmaker: "6-59/15 * * * *"
-
-ingress:
-  # -- Additional annotations to add to the ingress
-  # @default -- empty
-  annotations: {}
 
 global:
   # -- services enabled in this RSP instance
