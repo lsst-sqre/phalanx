@@ -16,7 +16,7 @@ prompt-proto-service:
 
   instrument:
     pipelines: >-
-      (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml,
+      (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
       ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
       (survey="")=[]
