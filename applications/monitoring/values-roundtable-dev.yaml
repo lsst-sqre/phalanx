@@ -7,6 +7,9 @@ config:
 influxdb2:
   enabled: true
   # -- Schedule onto the kafka pool
+  ingress:
+    enabled: true
+    hostname: "monitoring-dev.lsst.cloud"
   tolerations:
   - key: "dedicated"
     operator: "Equal"

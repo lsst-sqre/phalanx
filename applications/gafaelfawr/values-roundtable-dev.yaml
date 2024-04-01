@@ -58,4 +58,3 @@ ingress:
   additionalHosts:
     - "git-lfs-dev.lsst.cloud"
     - "git-lfs-dev-rw.lsst.cloud"
-    - "monitoring-dev.lsst.cloud"
