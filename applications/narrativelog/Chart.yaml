@@ -3,7 +3,7 @@ name: narrativelog
 type: application
 description: Narrative log service
 sources:
-  - https://github.com/lsst-sqre/narrativelog
+  - https://github.com/lsst-ts/narrativelog
 
 # The chart version. SQuaRE convention is to use 1.0.0
 version: 1.0.0

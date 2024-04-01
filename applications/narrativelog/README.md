@@ -4,7 +4,7 @@ Narrative log service
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/narrativelog>
+* <https://github.com/lsst-ts/narrativelog>
 
 ## Values
 

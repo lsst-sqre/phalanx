@@ -3,7 +3,7 @@ name: exposurelog
 description: Log messages related to an exposure
 type: application
 sources:
-  - https://github.com/lsst-sqre/exposurelog
+  - https://github.com/lsst-ts/exposurelog
 
 # The chart version. SQuaRE convention is to use 1.0.0
 version: 1.0.0
