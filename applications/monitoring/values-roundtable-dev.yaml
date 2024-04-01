@@ -11,7 +11,7 @@ influxdb2:
   - key: "dedicated"
     operator: "Equal"
     value: "kafka"
-    effect: "NoExecute"
+    effect: "NoSchedule"
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
