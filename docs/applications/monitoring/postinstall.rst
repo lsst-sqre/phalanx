@@ -44,7 +44,7 @@ Now it is very important that you be the first person to visit the Chronograf en
 Initial Chronograf Configuration
 --------------------------------
 
-It will be at the ``/chronograf`` path on either the ``monitoring`` endpoint or the general Phalanx instance endpoint.
+It will be at the ``/chronograf`` path on the general Phalanx instance endpoint.
 
 Log in with OIDC.
 
@@ -85,6 +85,7 @@ For each dashboard, take the default options for "Sources in Dashboard".
 Monitoring Agents
 =================
 
-You will need to update the ``influx-token`` secret in any environment that is feeding your new monitoring server, so that the telegraf and telegraf-ds agents are able to talk to it.  This is why it was convenient to save ``telegraf-token`` in the 1Password vault for the ``monitoring`` server's environment, because you can trivially cut-and-paste it.
-
-Then restart the agents; for ``telegraf`` that's the deployment, and for ``telegraf-ds`` it's the daemonset.
+You will need to update the ``influx-token`` secret in any environment that is feeding your new monitoring server, so that the telegraf and telegraf-ds agents are able to talk to it.
+This is why it was convenient to save ``telegraf-token`` in the 1Password vault for the ``monitoring`` server's environment, because you can trivially cut-and-paste it.
+Sync the secrets: :doc:`/admin/sync-secrets` and delete the ``telegraf`` and ``telegraf-ds`` secrets in their respective namespaces if you're impatient.
+After the secrets are synced, restart the agents; for ``telegraf`` that's the deployment, and for ``telegraf-ds`` it's the daemonset.
