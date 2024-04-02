@@ -54,6 +54,8 @@ spec:
                   key: "lfa-password"
             - name: "BUCKET_PREFIX"
               value: "{{ .Values.lfa.bucket_prefix }}"
+            - name: "S3_ENDPOINT_URL"
+              value: "{{ .Values.lfa.s3EndpointUrl }}"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
             - name: "KAFKA_USERNAME"

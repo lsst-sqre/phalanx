@@ -37,6 +37,8 @@ lfa:
   access_key: ""
   # -- Prefix for LFA bucket (e.g. for Ceph tenant specification)
   bucket_prefix: ""
+  # -- url
+  s3EndpointUrl: ""
 
 ingress:
   # -- Additional annotations for the ingress rule
