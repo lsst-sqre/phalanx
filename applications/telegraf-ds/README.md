@@ -14,7 +14,7 @@ Kubernetes node telemetry collection service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | config.influxdb2Org | string | `"square"` |  |
-| config.influxdb2Url | string | `"https://monitoring.lsst.codes"` |  |
+| config.influxdb2Url | string | `"https://monitoring.lsst.cloud"` |  |
 | global.enabledServices | string | Set by Argo CD | services enabled in this RSP instance |
 | global.host | string | Set by Argo CD | Host name for instance identification |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
