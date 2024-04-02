@@ -1,5 +1,5 @@
 config:
-  influxdb2Url: "https://monitoring.lsst.codes"
+  influxdb2Url: "https://monitoring.lsst.cloud"
 telegraf:
   # Remove processors, inputs and outputs: use generated config instead.
   config:
