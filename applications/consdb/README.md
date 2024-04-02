@@ -33,6 +33,7 @@ Consolidated Database of Image Metadata
 | kafka.username | string | `"consdb"` | Username for SASL_PLAIN authentication |
 | lfa.access_key | string | `""` | Access key for LFA bucket |
 | lfa.bucket_prefix | string | `""` | Prefix for LFA bucket (e.g. for Ceph tenant specification) |
+| lfa.s3EndpointUrl | string | `""` | url |
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
 | replicaCount | int | `1` | Number of consdb deployment pods to start |

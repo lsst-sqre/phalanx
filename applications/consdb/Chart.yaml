@@ -3,7 +3,7 @@ name: consdb-hinfo
 version: 1.0.0
 description: Consolidated Database of Image Metadata
 type: application
-appVersion: tickets-dm-37511
+appVersion: 1.0.0
 home: consdb.lsst.io
 sources:
   - https://github.com/lsst-dm/consdb
