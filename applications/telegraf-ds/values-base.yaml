@@ -1,0 +1,2 @@
+config:
+  influxdb2Url: "https://monitoring.lsst.codes"
