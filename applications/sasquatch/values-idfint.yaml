@@ -36,7 +36,7 @@ strimzi-kafka:
     kafkaConnectManager:
       enabled: true
   kraft:
-    enabled: false
+    enabled: true
   kafkaController:
     enabled: true
     resources:
