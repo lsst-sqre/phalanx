@@ -14,10 +14,8 @@ Gafaelfawr must have ``config.oidcServer.enabled`` set to ``true`` if you intend
 Initial Secret Setup
 --------------------
 
-Do an initial sync of the secrets:
+* Do an initial sync of the secrets: If there is no ``monitoring`` secret in the environment you're working on, create it: :doc:`/admin/add-new-secret`.  Follow the guide at :doc:`/admin/update-a-secret` to add values for ``admin-token`` and ``admin-password``. I usually use the output from ``openssl rand -hex 16`` to generate a 32-character password representing 16 random bytes, but any random password generation method would do.
 
-If there is no ``monitoring`` secret in the environment you're working on, create it: :doc:`/admin/add-new-secret`.  Follow the guide at :doc:`/admin/update-a-secret` to add values for ``admin-token`` and ``admin-password``.
-I usually use the output from ``openssl rand -hex 16`` to generate a 32-character password representing 16 random bytes, but any random password generation method would do.
 * Configure the ``webhooks.yaml`` secret.  If you can, you should probably just copy it from a working environment and edit to suit.  But if you must recreate it from scratch:
 * It is a YAML document that is a list of mappings of Slack webooks to channels.
 
