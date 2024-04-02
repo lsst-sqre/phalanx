@@ -81,10 +81,10 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "1"
-    memory: "300Mi"
+    memory: "500Mi"
   requests:
     cpu: "50m"
-    memory: "150Mi"
+    memory: "200Mi"
 
 # -- Node selection rules for the datalinker deployment pod
 nodeSelector: {}
