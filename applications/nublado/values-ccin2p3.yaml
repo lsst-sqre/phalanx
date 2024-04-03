@@ -16,6 +16,7 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        LSST_DB_AUTH: "/pbs/throng/lsst/software/rsp/.lsst/db-auth.yaml"
       homedirSchema: "username"
       homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
