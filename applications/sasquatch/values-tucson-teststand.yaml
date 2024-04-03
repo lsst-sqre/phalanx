@@ -58,6 +58,17 @@ strimzi-kafka:
     config:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
+  kraft:
+    enabled: false
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
 influxdb:
   persistence:
