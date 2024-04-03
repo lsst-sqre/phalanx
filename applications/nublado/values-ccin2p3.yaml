@@ -16,7 +16,6 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
-        LSST_DB_AUTH: "/pbs/throng/lsst/software/rsp/.lsst/db-auth.yaml"
       homedirSchema: "username"
       homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
@@ -24,7 +23,7 @@ controller:
         - name: "homecreation"
           image:
             repository: "registry.hub.docker.com/gabrimaine/initdir"
-            tag: "0.0.2"
+            tag: "0.0.3"
           privileged: true
           volumeMounts:
             - containerPath: "/pbs/home"
