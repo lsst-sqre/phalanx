@@ -411,16 +411,22 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | strimzi-kafka.kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | strimzi-kafka.kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
+| strimzi-kafka.kafka.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Resource specification for the Kafka brokers. |
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | strimzi-kafka.kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
+| strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
+| strimzi-kafka.kafkaController.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Resource specification for Kafka Controller |
+| strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers. |
+| strimzi-kafka.kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | strimzi-kafka.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
 | strimzi-kafka.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter |
 | strimzi-kafka.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | strimzi-kafka.kafkaExporter.logging | string | `"info"` | Logging level |
 | strimzi-kafka.kafkaExporter.resources | object | `{}` | Resource specification for Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka. |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster. |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` |  |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | IdentityReplicationPolicy | Replication policy. |
