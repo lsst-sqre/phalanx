@@ -100,11 +100,11 @@ kafka:
   # -- Resource specification for the Kafka brokers.
   resources:
     requests:
-      memory: 64Gi
-      cpu: "8"
+      memory: 32Gi
+      cpu: "4"
     limits:
       memory: 64Gi
-      cpu: "12"
+      cpu: "8"
 
 kraft:
   # -- Enable KRaft mode for Kafka.
@@ -121,11 +121,11 @@ kafkaController:
   # -- Resource specification for Kafka Controller
   resources:
     requests:
-      memory: 64Gi
-      cpu: "8"
+      memory: 32Gi
+      cpu: "4"
     limits:
       memory: 64Gi
-      cpu: "12"
+      cpu: "8"
 
 kafkaExporter:
   # -- Enable Kafka exporter

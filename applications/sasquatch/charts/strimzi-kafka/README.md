@@ -32,13 +32,13 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled. |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run. |
-| kafka.resources | object | `{"limits":{"cpu":"12","memory":"64Gi"},"requests":{"cpu":"8","memory":"64Gi"}}` | Resource specification for the Kafka brokers. |
+| kafka.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Resource specification for the Kafka brokers. |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment. |
 | kafka.version | string | `"3.7.0"` | Version of Kafka to deploy. |
 | kafkaController.enabled | bool | `false` | Enable Kafka Controller |
-| kafkaController.resources | object | `{"limits":{"cpu":"12","memory":"64Gi"},"requests":{"cpu":"8","memory":"64Gi"}}` | Resource specification for Kafka Controller |
+| kafkaController.resources | object | `{"limits":{"cpu":"8","memory":"64Gi"},"requests":{"cpu":"4","memory":"32Gi"}}` | Resource specification for Kafka Controller |
 | kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers. |
 | kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging for pod |
