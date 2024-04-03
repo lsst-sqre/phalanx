@@ -59,7 +59,7 @@ strimzi-kafka:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
   kraft:
-    enabled: false
+    enabled: true
   kafkaController:
     enabled: true
     resources:
