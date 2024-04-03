@@ -3,13 +3,11 @@ argo-cd:
     cm:
       url: "https://base-lsp.lsst.codes/argo-cd"
       oidc.config: |
-        connectors:
-          # Auth using Keycloak.
-          - name: Keycloak
-            issuer: https://keycloak.ls.lsst.org/realms/master
-            clientID: argocd
-            clientSecret: $dex.clientSecret
-            requestedScopes: ["openid", "profile", "email", "groups"]
+        name: Keycloak
+        issuer: https://keycloak.ls.lsst.org/realms/master
+        clientID: argocd
+        clientSecret: $dex.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
     rbac:
       policy.csv: |
         g, k8s-manke, role:admin
