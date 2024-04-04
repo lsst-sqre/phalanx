@@ -9,7 +9,11 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | cluster.releaseLabel | string | `"site-prom"` | Site wide label required for gathering Prometheus metrics if they are enabled. |
 | connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
+| connect.config."key.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Set the URL for the schema registry |
 | connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
+| connect.config."value.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message value |
+| connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Set the URL for the schema registry |
+| connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
 | connect.enabled | bool | `false` | Enable Kafka Connect. |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |
@@ -19,7 +23,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka. |
 | kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained. |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition. |
-| kafka.config."replica.lag.time.max.ms" | int | `120000` | Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect. |
 | kafka.disruption_tolerance | int | `0` | Number of down brokers that the system can tolerate. |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource. |
 | kafka.externalListener.bootstrap.host | string | `""` | Name used for TLS hostname verification. |

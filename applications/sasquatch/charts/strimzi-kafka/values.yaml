@@ -28,8 +28,6 @@ kafka:
     message.max.bytes: 10485760
     # -- The number of bytes of messages to attempt to fetch for each partition.
     replica.fetch.max.bytes: 10485760
-    # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
-    replica.lag.time.max.ms: 120000
 
   metricsConfig:
     # -- Whether metric configuration is enabled.
@@ -181,6 +179,14 @@ connect:
     key.converter: io.confluent.connect.avro.AvroConverter
     # -- Enable converted schemas for the message key
     key.converter.schemas.enable: true
+    # -- Set the URL for the schema registry
+    key.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+    # -- Set the converter for the message value
+    value.converter: io.confluent.connect.avro.AvroConverter
+    # -- Enable converted schemas for the message value
+    value.converter.schemas.enable: true
+    # -- Set the URL for the schema registry
+    value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
 
 registry:
   ingress:
