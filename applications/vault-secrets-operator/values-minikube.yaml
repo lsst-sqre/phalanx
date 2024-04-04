@@ -14,5 +14,3 @@ vault-secrets-operator:
     # not-yet-expired tokens in Vault from GitHub Actions CI tests.
     - name: "VAULT_TOKEN_MAX_TTL"
       value: "21600"
-  vault:
-    authMethod: "approle"
