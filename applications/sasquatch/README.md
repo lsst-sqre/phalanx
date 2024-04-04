@@ -388,7 +388,12 @@ Rubin Observatory's telemetry service.
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations. |
 | strimzi-kafka.cluster.releaseLabel | string | `"site-prom"` | Site wide label required for gathering Prometheus metrics if they are enabled. |
 | strimzi-kafka.connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message key |
+| strimzi-kafka.connect.config."key.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Set the URL for the schema registry |
 | strimzi-kafka.connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
+| strimzi-kafka.connect.config."request.timeout.ms" | int | `120000` | Increase the request timeout for Kafka Connect to 120 seconds |
+| strimzi-kafka.connect.config."value.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message value |
+| strimzi-kafka.connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Set the URL for the schema registry |
+| strimzi-kafka.connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
 | strimzi-kafka.connect.enabled | bool | `false` | Enable Kafka Connect. |
 | strimzi-kafka.connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch. |
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run. |

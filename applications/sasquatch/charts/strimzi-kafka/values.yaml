@@ -181,6 +181,16 @@ connect:
     key.converter: io.confluent.connect.avro.AvroConverter
     # -- Enable converted schemas for the message key
     key.converter.schemas.enable: true
+    # -- Set the URL for the schema registry
+    key.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+    # -- Set the converter for the message value
+    value.converter: io.confluent.connect.avro.AvroConverter
+    # -- Enable converted schemas for the message value
+    value.converter.schemas.enable: true
+    # -- Set the URL for the schema registry
+    value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+    # -- Increase the request timeout for Kafka Connect to 120 seconds
+    request.timeout.ms: 120000
 
 registry:
   ingress:
