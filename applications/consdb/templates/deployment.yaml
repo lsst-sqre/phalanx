@@ -46,7 +46,10 @@ spec:
             - name: "DB_NAME"
               value: "{{ .Values.db.database }}"
             - name: "AWS_ACCESS_KEY_ID"
-              value: "{{ .Values.lfa.access_key }}"
+              valueFrom:
+                secretKeyRef:
+                  name: consdb
+                  key: "lfa-key"
             - name: "AWS_SECRET_ACCESS_KEY"
               valueFrom:
                 secretKeyRef:

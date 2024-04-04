@@ -3,5 +3,4 @@ db:
   host: "postgresdb01.cp.lsst.org"
   database: "butler"
 lfa:
-  access_key: "AL6Y4J5ZYTWRHV04BTC5"
   s3EndpointUrl: "https://s3.cp.lsst.org"
