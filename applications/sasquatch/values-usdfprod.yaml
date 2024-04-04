@@ -7,6 +7,16 @@ strimzi-kafka:
         enabled: true
       external:
         enabled: true
+    config:
+      # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
+      replica.lag.time.max.ms: 120000
+
+  connect:
+    enabled: true
+    config:
+      # -- Increase the request timeout for Kafka Connect to 120 seconds
+      request.timeout.ms: 120000
+
   mirrormaker2:
     enabled: true
     source:
