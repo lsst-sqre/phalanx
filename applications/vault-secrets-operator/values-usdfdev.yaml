@@ -15,5 +15,3 @@ vault-secrets-operator:
         secretKeyRef:
           name: "vault-secrets-operator"
           key: "VAULT_TOKEN_MAX_TTL"
-  vault:
-    authMethod: "approle"
