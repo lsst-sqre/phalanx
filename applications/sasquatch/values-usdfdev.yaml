@@ -25,7 +25,7 @@ strimzi-kafka:
     consdb:
       enabled: true
   kraft:
-    enabled: false
+    enabled: true
   kafkaController:
     enabled: true
 
