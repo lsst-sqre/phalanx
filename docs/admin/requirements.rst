@@ -54,7 +54,7 @@ For installing an environment, you will also need the following tools:
 
   .. warning::
 
-     Although the Argo CD command-line client must be installed to use the Phalanx installer, do not use it to create applications.
+     Although the Argo CD command-line client must be installed to install Phalanx in a new environment, do not use it to create applications.
      All Argo CD applications should be managed through Phalanx and the ``science-platform`` app of apps.
 
 - The Vault command-line client.
@@ -62,3 +62,9 @@ For installing an environment, you will also need the following tools:
   To see the version currently used for testing, search for ``vault_`` in `.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__.
 
 - Git 2.22 or later.
+
+Next steps
+==========
+
+- Decide on how you plan to handle hostnames and TLS: :doc:`hostnames`
+- Create the configuration for your new Phalanx environment: :doc:`create-environment`

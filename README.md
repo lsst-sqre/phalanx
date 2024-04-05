@@ -1,7 +1,7 @@
 # Phalanx
 
 This is the Argo CD repository for the Rubin Science Platform.
-It stores the root Argo CD application, deployment configuration for the other applications, the installer, and other helper scripts.
+It stores the root Argo CD application, deployment configuration for the other applications, and a command-line tool to manage Phalanx environments.
 
 See [phalanx.lsst.io](https://phalanx.lsst.io/) for full documentation.
 

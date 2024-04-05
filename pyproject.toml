@@ -123,7 +123,6 @@ python_files = [
 [tool.ruff]
 exclude = [
     "docs/**",
-    "installer/**",
 ]
 line-length = 79
 target-version = "py312"

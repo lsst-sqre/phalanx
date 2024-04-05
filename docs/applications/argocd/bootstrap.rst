@@ -9,7 +9,7 @@ Authentication
 
 Initial installation of the Rubin Science Platform is done using Argo CD and a static password for the ``admin`` account.
 You can then log on to the ``admin`` account using that password to manage the resulting environment.
-The password is available as the ``admin.plaintext_password`` key in Vault secret for the ``argocd`` application, and in the ``Secret`` resource named ``argocd-secret`` in the ``argocd`` namespace after installation of the environment.
+The password is available as the ``admin.plaintext_password`` key in Vault secret for the ``argocd`` application.
 
 As part of bootstrapping a new environment, you should also configure per-user authentication.
 To do this, follow the instructions in :doc:`authentication`.

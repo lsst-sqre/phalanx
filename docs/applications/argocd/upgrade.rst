@@ -71,11 +71,13 @@ Only use this process if the automatic upgrade failed or if there are documented
 
    .. code-block:: sh
 
-      cd phalanx/installer
-      helm upgrade --install argocd argo/argo-cd --version $VERSION \
-        --values argo-cd-values.yaml --namespace argocd --wait --timeout 900s
+      cd applications
+      helm upgrade --install argocd argocd \
+        --values argocd/values.yaml --values argocd/values-$ENVIRONMENT.yaml \
+        --set "global.vaultSecretsPath=$VAULT_PATH_PREFIX" \
+        --namespace argocd --wait --timeout 900s
 
-   Replace ``$VERSION`` with the Helm chart version (**not** the Argo CD application version) that you want to install.
+   Replace ``$ENVIRONMENT`` with the name of the Phalanx environment you're attempting to repair, and ``$VAULT_PATH_PREFIX`` with the Vault path prefix (from :file:`environments/values-{environment}.yaml`) for that environment.
 
 If all goes well, you can now view the UI at ``/argo-cd`` and confirm that everything still looks correct.
 
@@ -106,17 +108,18 @@ You can then recreate the namespace, reinstall Argo CD, and restore the backup:
 
 .. code-block:: sh
 
-   kubectl create namespace argocd
-   cd phalanx/installer
-   helm upgrade --install argocd argo/argo-cd --version $HELM_VERSION \
-     --values argo-cd-values.yaml --namespace argocd --wait --timeout 900s
+   cd applications
+   helm upgrade --install argocd argocd \
+     --values argocd/values.yaml --values argocd/values-$ENVIRONMENT.yaml \
+     --set "global.vaultSecretsPath=$VAULT_PATH_PREFIX" \
+     --namespace argocd --create-namespace --wait --timeout 900s
    chmod 644 ~/.kube/config
    docker run -i -v ~/.kube:/home/argocd/.kube --rm \
      argoproj/argocd:$VERSION argocd-util import -n argocd - < backup.yaml
    chmod 600 ~/.kube/config
 
-Replace ``$HELM_VERSION`` with the version of the Helm chart you want to use and ``$VERSION`` with the corresponding Argo CD version (as shown via ``helm search repo``).
+Replace ``$ENVIRONMENT`` with the name of the Phalanx environment you're attempting to repair, and ``$VAULT_PATH_PREFIX`` with the Vault path prefix (from :file:`environments/values-{environment}.yaml`) for that environment.
 
 This should hopefully restore Argo CD to a working state.
-If it doesn't, you'll need to reinstall it using the more extended process used by the cluster installer.
-See `installer/install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__ for the commands to run.
+If it doesn't, you'll need to reinstall it using the more extended process used by :command:`phalanx environment install`.
+See :doc:`/admin/installation` for that process.

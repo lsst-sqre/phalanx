@@ -24,7 +24,13 @@ To use the first approach, you must have the following:
 
 * An :abbr:`AWS (Amazon Web Services)` account in which you can create two Route 53 hosted domains.
   You must use this domain for the hostname of the Science Platform installation.
+
 * The ability to delegate to that Route 53 hosted domain from some public DNS domain.
   This means either registering a domain via Amazon, registering a domain elsewhere and pointing it to Amazon's Route 53 DNS servers, or creating a subdomain of an existing public domain by adding ``NS`` records to that domain for a subdomain hosted on Route 53.
 
 If neither of those requirements sound familiar, you almost certainly want to use the second option and purchase a commercial certificate.
+
+Next steps
+==========
+
+- Define the configuration for your new Phalanx environment: :doc:`create-environment`
