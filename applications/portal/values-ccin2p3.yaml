@@ -8,4 +8,5 @@ config:
   hipsUrl: "https://ccnetlsst01.in2p3.fr:65106/hips_RGB/zru"
 containers:
   env:
-    PROPS_lsst__hips__masterUrl: https://ccnetlsst01.in2p3.fr:65106/hips_list
+    - name: PROPS_lsst__hips__masterUrl
+      value: "https://ccnetlsst01.in2p3.fr:65106/hips_list"
