@@ -14,7 +14,7 @@ repos:
           - -c=.yamllint.yml
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.28.0
+    rev: 0.28.1
     hooks:
       - id: check-jsonschema
         files: ^applications/.*/secrets(-[^./-]+)?\.yaml
@@ -46,7 +46,7 @@ repos:
           - --template-files=../helm-docs.md.gotmpl
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.3.4
+    rev: v0.3.5
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]

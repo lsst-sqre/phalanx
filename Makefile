@@ -15,7 +15,6 @@ clean:
 .PHONY: init
 init:
 	pip install --upgrade uv
-	uv pip install pre-commit tox
 	uv pip install --editable .
 	uv pip install -r requirements/main.txt -r requirements/dev.txt
 	rm -rf .tox
@@ -28,7 +27,7 @@ init:
 .PHONY: linkcheck
 linkcheck:
 	rm -rf docs/internals/api/
-	sphinx-build --keep-going -n -T -b linkcheck docs	\
+	sphinx-build -W --keep-going -n -T -b linkcheck docs	\
 	    docs/_build/linkcheck				\
 	    || (cat docs/_build/linkcheck/output.txt; exit 1)
 
