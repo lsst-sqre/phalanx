@@ -46,6 +46,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           tox-envs: "typing,py,coverage-report"
+          tox-plugins: tox-uv
           cache-key-prefix: test
 
   helm:
@@ -66,7 +67,8 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: phalanx-lint-change
-          cache-key-prefix: test
+          tox-plugins: tox-uv
+          cache-key-prefix: helm
 
   # The minikube job always runs, but it quickly does nothing if no files that
   # would affect minikube were changed.  This unfortunately requires a lot of
