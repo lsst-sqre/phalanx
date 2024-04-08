@@ -44,11 +44,13 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           livenessProbe:
+            failureThreshold: 3
             httpGet:
               path: "/health"
               port: "http"
             initialDelaySeconds: 60
             periodSeconds: 60
+            timeoutSeconds: 5
           ports:
             - containerPort: 8080
               name: "http"
