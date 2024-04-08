@@ -21,6 +21,13 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-1.lsst.codes
         - loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
+    resources:
+      requests:
+        memory: 80Gi
+        cpu: 4
+      limits:
+        memory: 80Gi
+        cpu: 4
     metricsConfig:
       enabled: true
   kafkaExporter:
