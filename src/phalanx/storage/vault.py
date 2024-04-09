@@ -12,8 +12,11 @@ from ..exceptions import VaultNotFoundError
 from ..models.environments import EnvironmentBaseConfig
 from ..models.vault import (
     VaultAppRole,
+    VaultAppRoleCredentials,
     VaultAppRoleMetadata,
+    VaultCredentials,
     VaultToken,
+    VaultTokenCredentials,
     VaultTokenMetadata,
 )
 
@@ -26,9 +29,16 @@ class VaultClient:
     This client is specific to a particular Phalanx environment. It is
     created using the metadata of a Phalanx environment by `VaultStorage`.
 
-    The Vault authentication token is taken from either the ``VAULT_TOKEN``
-    environment variable or a :file:`.vault-token` file in the user's home
-    directory.
+    If neither ``approle`` nor ``token`` are given, token authentication is
+    used and the the token is taken from the ``VAULT_TOKEN`` environment
+    variable or a :file:`.vault-token` file in the user's home directory.
+
+    Attributes
+    ----------
+    url
+        URL of the configured Vault server.
+    path
+        Prefix path within Vault where secrets are stored.
 
     Parameters
     ----------
@@ -37,13 +47,30 @@ class VaultClient:
     path
         Path within that Vault server where secrets for an environment are
         stored.
+    credentials
+        Credentials to use for authentication. If this is not set, fall back
+        on the default library behavior of getting the token from the
+        environment or the user's home directory.
     """
 
-    def __init__(self, url: str, path: str) -> None:
-        self._url = url
-        _, self._path = path.split("/", 1)
+    def __init__(
+        self,
+        url: str,
+        path: str,
+        credentials: VaultCredentials | None = None,
+    ) -> None:
+        self.url = url
+        _, self.path = path.split("/", 1)
         self._vault = hvac.Client(url)
         self._vault.secrets.kv.default_kv_version = 2
+        match credentials:
+            case VaultAppRoleCredentials():
+                self._vault.auth.approle.login(
+                    role_id=credentials.role_id,
+                    secret_id=credentials.secret_id,
+                )
+            case VaultTokenCredentials():
+                self._vault.token = credentials.token
 
     def create_approle(self, name: str, policies: list[str]) -> VaultAppRole:
         """Create a new Vault AppRole for secret access.
@@ -137,7 +164,7 @@ class VaultClient:
         application
             Name of the application.
         """
-        path = f"{self._path}/{application}"
+        path = f"{self.path}/{application}"
         with suppress(InvalidPath):
             self._vault.secrets.kv.delete_latest_version_of_secret(path)
 
@@ -159,13 +186,13 @@ class VaultClient:
         VaultNotFoundError
             Raised if the requested secret was not found in Vault.
         """
-        path = f"{self._path}/{application}"
+        path = f"{self.path}/{application}"
         try:
             r = self._vault.secrets.kv.read_secret(
                 path, raise_on_deleted_version=True
             )
         except InvalidPath as e:
-            raise VaultNotFoundError(self._url, path) from e
+            raise VaultNotFoundError(self.url, path) from e
         return {k: SecretStr(v) for k, v in r["data"]["data"].items()}
 
     def get_approle(self, name: str) -> VaultAppRoleMetadata | None:
@@ -264,9 +291,9 @@ class VaultClient:
             Raised if the path for application secrets does not exist.
         """
         try:
-            r = self._vault.secrets.kv.list_secrets(self._path)
+            r = self._vault.secrets.kv.list_secrets(self.path)
         except InvalidPath as e:
-            raise VaultNotFoundError(self._url, self._path) from e
+            raise VaultNotFoundError(self.url, self.path) from e
         return r["data"]["keys"]
 
     def list_token_accessors(self) -> list[str]:
@@ -314,7 +341,7 @@ class VaultClient:
         values
             Secret key and value pairs.
         """
-        path = f"{self._path}/{application}"
+        path = f"{self.path}/{application}"
         secret = {k: v.get_secret_value() for k, v in values.items()}
         self._vault.secrets.kv.create_or_update_secret(path, secret)
 
@@ -332,7 +359,7 @@ class VaultClient:
         value
             New value for that secret key.
         """
-        path = f"{self._path}/{application}"
+        path = f"{self.path}/{application}"
         self._vault.secrets.kv.patch(path, {key: value.get_secret_value()})
 
 
@@ -340,7 +367,11 @@ class VaultStorage:
     """Create Vault clients for specific environments."""
 
     def get_vault_client(
-        self, env: EnvironmentBaseConfig, path_prefix: str | None = None
+        self,
+        env: EnvironmentBaseConfig,
+        path_prefix: str | None = None,
+        *,
+        credentials: VaultCredentials | None = None,
     ) -> VaultClient:
         """Return a Vault client configured for the given environment.
 
@@ -351,14 +382,24 @@ class VaultStorage:
         path_prefix
             Path prefix within Vault for application secrets. If given, this
             overrides the path prefix in the environment configuration.
+        credentials
+            Credentials to use for authentication. If this is not set, fall
+            back on the default library behavior of getting the token from
+            the environment or the user's home directory.
 
         Returns
         -------
         VaultClient
             Vault client configured to manage secrets for that environment.
+
+        Raises
+        ------
+        ValueError
+            Raised if ``vaultUrl`` is not set for the environment or if both
+            a Vault AppRole and a Vault token were provided.
         """
         if not path_prefix:
             path_prefix = env.vault_path_prefix
         if not env.vault_url:
             raise ValueError("vaultUrl not set for this environment")
-        return VaultClient(str(env.vault_url), path_prefix)
+        return VaultClient(str(env.vault_url), path_prefix, credentials)

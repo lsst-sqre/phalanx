@@ -8,6 +8,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Self
+from urllib.parse import urlparse
 
 import yaml
 from git import Diff
@@ -17,6 +18,7 @@ from pydantic import ValidationError
 from ..constants import HELM_DOCLINK_ANNOTATION
 from ..exceptions import (
     ApplicationExistsError,
+    GitRemoteError,
     InvalidApplicationConfigError,
     InvalidSecretConfigError,
     UnknownEnvironmentError,
@@ -311,6 +313,67 @@ class ConfigStorage:
             Path to the top-level environment chart.
         """
         return self._path / "environments"
+
+    def get_git_branch(self) -> str:
+        """Get the Git branch of the current repository.
+
+        Returns
+        -------
+        str
+            Branch name.
+        """
+        return Repo(str(self._path)).active_branch.name
+
+    def get_git_url(self) -> str:
+        """Get the Git URL of the current repository.
+
+        Assumes that the current repository is a cloned Git repository with a
+        remote named ``origin`` and returns the URL of that origin,
+        transformed to an ``https`` URL if necessary. This is used to get the
+        URL of the repository for configuring Argo CD during installation of
+        an environment.
+
+        Returns
+        -------
+        str
+            URL to the Git repository of the current config tree, suitable
+            for Argo CD.
+
+        Raises
+        ------
+        GitRemoteError
+            Raised if the ``origin`` remote does not exist or if its URL is
+            not in a recognized format.
+        """
+        repo = Repo(str(self._path))
+        try:
+            origin = repo.remote("origin")
+        except ValueError as e:
+            msg = 'Current repository has no remote named "origin"'
+            raise GitRemoteError(msg) from e
+        if not origin.url:
+            raise GitRemoteError('Remote "origin" has no URL')
+
+        # If the URL is not an https URL, accept a few forms of github.com
+        # URLs that can be converted into one.
+        parsed_url = urlparse(origin.url)
+        if parsed_url.scheme == "ssh" and parsed_url.hostname == "github.com":
+            return parsed_url._replace(
+                scheme="https", netloc=parsed_url.hostname
+            ).geturl()
+        elif parsed_url.scheme == "https":
+            return origin.url
+        elif parsed_url.scheme == "":
+            match = re.match(r"git@github\.com:([^:/]+/[^:/]+)$", origin.url)
+            if match:
+                return "https://github.com/" + match.group(1)
+
+        # If we fell through, we were unable to parse the URL.
+        msg = (
+            "Cannot determine Argo CD Git URL from origin URL of"
+            f' "{origin.url}"'
+        )
+        raise GitRemoteError(msg)
 
     def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
         """Get all modified application and environment pairs.

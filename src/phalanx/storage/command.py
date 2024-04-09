@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import subprocess
+from datetime import timedelta
 from pathlib import Path
 
-from ..exceptions import CommandFailedError
+from ..exceptions import CommandFailedError, CommandTimedOutError
 
 __all__ = ["Command"]
 
@@ -32,7 +33,7 @@ class Command:
     def capture(
         self, *args: str, cwd: Path | None = None
     ) -> subprocess.CompletedProcess:
-        """Run Helm, checking for errors and capturing the output.
+        """Run the command, checking for errors and capturing the output.
 
         This method should only be called by subclasses, which should provide
         a higher-level interface used by the rest of the program.
@@ -76,11 +77,14 @@ class Command:
         cwd: Path | None = None,
         ignore_fail: bool = False,
         quiet: bool = False,
+        timeout: timedelta | None = None,
     ) -> None:
         """Run the command with the provided arguments.
 
-        This method should only be called by subclasses, which should provide
-        a higher-level interface used by the rest of the program.
+        Standard output and standard error are not redirected and will go to
+        the standard output and error of the caller. This method should only
+        be called by subclasses, which should provide a higher-level interface
+        used by the rest of the program.
 
         Parameters
         ----------
@@ -94,12 +98,19 @@ class Command:
         quiet
             If `True`, discard standard output. Standard error is still
             displayed on the process standard error stream.
+        timeout
+            If given, the command will be terminated and a
+            `~phalanx.exceptions.CommandTimedOutError` will be raised if
+            execution time exceeds this timeout.
 
         Raises
         ------
         CommandFailedError
             Raised if the command failed and ``ignore_fail`` was not set to
             `True`.
+        CommandTimedOutError
+            Raised if ``timeout`` was given and the command took longer than
+            that to complete.
         subprocess.SubprocessError
             Raised if the command could not be executed at all.
         """
@@ -110,3 +121,5 @@ class Command:
             subprocess.run(cmdline, check=check, cwd=cwd, stdout=stdout)
         except subprocess.CalledProcessError as e:
             raise CommandFailedError(self._command, args, e) from e
+        except subprocess.TimeoutExpired as e:
+            raise CommandTimedOutError(self._command, args, e) from e

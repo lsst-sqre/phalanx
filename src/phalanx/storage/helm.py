@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sys
+from datetime import timedelta
 from urllib.parse import urlparse
 
 from ..exceptions import CommandFailedError
@@ -38,6 +39,11 @@ class HelmStorage:
             Name of the new application.
         starter
             Name of the Helm starter template to use.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Helm fails.
         """
         starter_path = self._config.get_starter_path(starter)
         application_path = self._config.get_application_chart_path(application)
@@ -56,7 +62,8 @@ class HelmStorage:
 
         Tell Helm to update any third-party chart dependencies for an
         application and store them in the :file:`charts` subdirectory. This is
-        a prerequisite for :command:`helm lint` or :command:`helm template`.
+        a prerequisite for `lint_application`, `template_application`, or
+        `upgrade_application`.
 
         Assumes that remote repositories have already been refreshed with
         `repo_update` and tells Helm to skip that.
@@ -67,6 +74,11 @@ class HelmStorage:
             Application whose dependencies should be updated.
         quiet
             Whether to suppress Helm's standard output.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Helm fails.
         """
         application_path = self._config.get_application_chart_path(application)
         self._helm.run(
@@ -210,6 +222,8 @@ class HelmStorage:
 
         Raises
         ------
+        CommandFailedError
+            Raised if Helm fails.
         ValueError
             Raised if the Helm repository URL is invalid.
         """
@@ -231,6 +245,11 @@ class HelmStorage:
         ----------
         quiet
             Whether to suppress Helm's standard output.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Helm fails.
         """
         self._helm.run("repo", "update", quiet=quiet)
 
@@ -331,6 +350,71 @@ class HelmStorage:
         if result.stderr:
             sys.stderr.write(result.stderr)
         return result.stdout
+
+    def upgrade_application(
+        self,
+        application: str,
+        environment: str,
+        values: dict[str, str],
+        *,
+        timeout: timedelta = timedelta(minutes=2),
+    ) -> None:
+        """Install or upgrade an application using Helm.
+
+        Runs :command:`helm upgrade --install` to install an application chart
+        in the given environment. Assumes that :command:`helm dependency
+        update` has already been run to download any third-party charts. Any
+        output to standard error is passed along.
+
+        This method bypasses Argo CD and should only be used by the installer
+        to bootstrap the environment.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+        environment
+            Name of the environment in which to lint that application chart,
+            used to select the :file:`values-{environment}.yaml` file to add.
+        values
+            Extra key/value pairs to set.
+        timeout
+            Fail if the operation takes longer than this. The enforced timeout
+            in Python will be one second longer to allow Helm to time out its
+            own command first.
+
+        Raises
+        ------
+        CommandFailedError
+            Raised if Helm fails.
+        CommandTimedOutError
+            Raised if the command timed out. The timeout is also passed to
+            Helm as an option, so normally the command should fail and raise
+            `~phalanx.exceptions.CommandFailedError` instead. This exception
+            means the Helm timeout didn't work for some reason.
+        """
+        application_path = self._config.get_application_chart_path(application)
+        set_arg = ",".join(f"{k}={v}" for k, v in values.items())
+        self._helm.run(
+            "upgrade",
+            application,
+            str(application_path),
+            "--install",
+            "--values",
+            f"{application}/values.yaml",
+            "--values",
+            f"{application}/values-{environment}.yaml",
+            "--set",
+            set_arg,
+            "--create-namespace",
+            "--namespace",
+            application,
+            "--timeout",
+            f"{int(timeout.total_seconds())}s",
+            "--wait",
+            cwd=application_path.parent,
+            timeout=timeout + timedelta(seconds=1),
+        )
 
     def _print_lint_output(
         self, application: str | None, environment: str, output: str | None

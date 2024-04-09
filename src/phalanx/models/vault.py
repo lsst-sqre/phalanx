@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from base64 import b64encode
 from datetime import datetime
 
@@ -12,8 +13,11 @@ from ..constants import VAULT_SECRET_TEMPLATE
 
 __all__ = [
     "VaultAppRole",
+    "VaultAppRoleCredentials",
     "VaultAppRoleMetadata",
+    "VaultCredentials",
     "VaultToken",
+    "VaultTokenCredentials",
     "VaultTokenMetadata",
 ]
 
@@ -60,6 +64,44 @@ class VaultAppRole(VaultAppRoleMetadata):
     def to_yaml(self) -> str:
         """Format the data in YAML."""
         return yaml.dump(self.model_dump())
+
+
+class VaultCredentials(BaseModel, ABC):
+    """Credentials used for Vault access.
+
+    Can hold either AppRole credentials or a simple token, but always holds
+    one or the other.
+    """
+
+    @abstractmethod
+    def to_secret_data(self) -> dict[str, str]:
+        """Construct the corresponding vault-secrets-operator secret."""
+
+
+class VaultAppRoleCredentials(VaultCredentials):
+    """Credentials for Vault access using an AppRole."""
+
+    role_id: str
+    """Unique identifier of the AppRole."""
+
+    secret_id: str
+    """Authentication credentials for the AppRole."""
+
+    def to_secret_data(self) -> dict[str, str]:
+        return {
+            "VAULT_ROLE_ID": self.role_id,
+            "VAULT_SECRET_ID": self.secret_id,
+        }
+
+
+class VaultTokenCredentials(VaultCredentials):
+    """Credentials for Vault access using a token."""
+
+    token: str
+    """Vault token."""
+
+    def to_secret_data(self) -> dict[str, str]:
+        return {"VAULT_TOKEN": self.token}
 
 
 class VaultTokenMetadata(BaseModel):

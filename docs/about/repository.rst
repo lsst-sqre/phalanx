@@ -55,17 +55,6 @@ Each environment then has a file named :file:`values-{environment}.yaml` that de
 
 The templates directory also contains the Argo CD ``AppProject`` resources, which are used to classify the applications into groups for access control.
 
-installer directory
--------------------
-
-:bdg-link-primary-line:`Browse installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
-
-This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
-The arguments to this are the name of the environment, the Vault RoleID, and the Vault SecretID (see :ref:`secrets` for more details on Vault).
-This installer script is the entry point for setting up a new environment.
-It can also be run on an existing environment to update it.
-See the :ref:`environment bootstrapping documentation <bootstrapping-toc>` for details.
-
 charts directory
 ----------------
 
@@ -136,7 +125,7 @@ In one check, Pre-commit regenerates Helm chart documentation for applications w
 See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.pre-commit-config.yaml>`__ file for configuration details.
 Learn how to set up Pre-commit in your local editing environment in :doc:`local-environment-setup`.
 
-Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__).
+Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__).
 This workflow has four key jobs:
 
 - Linting with Pre-commit_, mirroring the local editing environment.
