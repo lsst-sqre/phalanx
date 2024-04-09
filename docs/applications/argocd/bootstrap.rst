@@ -16,6 +16,8 @@ To do this, follow the instructions in :doc:`authentication`.
 
 Once the environment has been installed, switch to using per-user authentication for all routine operations, and save the ``admin`` account only for emergency situations, such as some problem that breaks per-user authentication.
 
+.. _argocd-access-control:
+
 Access control
 ==============
 
