@@ -78,7 +78,7 @@ Alert transmission to community brokers
 | alert-stream-broker.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | alert-stream-broker.kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
 | alert-stream-broker.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| alert-stream-broker.maxBytesRetained | string | `"24000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
+| alert-stream-broker.maxBytesRetained | string | `"1000000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
 | alert-stream-broker.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |

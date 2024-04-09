@@ -9,7 +9,7 @@ alert-stream-broker:
 
   kafka:
 
-    version: 3.5.1
+    version: 3.7.0
     # -- Encoding version for messages, see
     # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
     logMessageFormatVersion: 3.4
@@ -111,7 +111,7 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
   testTopicName: "alert-stream-test"
-  testTopicPartitions: 20
+  testTopicPartitions: 400
   testTopicReplicas: 1
 
 alert-stream-schema-registry:
