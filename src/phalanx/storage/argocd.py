@@ -136,7 +136,7 @@ class ArgoCDStorage:
         )
 
     def sync(
-        self, application: str, *, timeout: timedelta = timedelta(seconds=30)
+        self, application: str, *, timeout: timedelta = timedelta(minutes=2)
     ) -> None:
         """Sync a specific Argo CD application.
 

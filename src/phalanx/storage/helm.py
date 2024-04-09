@@ -357,7 +357,7 @@ class HelmStorage:
         environment: str,
         values: dict[str, str],
         *,
-        timeout: timedelta = timedelta(seconds=60),
+        timeout: timedelta = timedelta(minutes=2),
     ) -> None:
         """Install or upgrade an application using Helm.
 
