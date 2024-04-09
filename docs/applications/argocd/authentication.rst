@@ -10,6 +10,7 @@ We've chosen to ignore that advice in favor of having an easy and reliable emerg
 Still, normal Argo CD access should be done via SSO, both to minimize use of the ``admin`` password and for attribution of actions taken via the web UI.
 
 In SQuaRE-run environments hosted on Google Kubernetes Engine, Argo CD is configured to use Google OAuth for SSO using the same Google Cloud Identity domain (``lsst.cloud``) as is used for other Google operations.
+On some Telescope and Site environments (eventually, all of them), Argo CD is configured to use Keycloak for SSO.
 On all other installations, Argo CD is configured to use GitHub.
 
 .. note::
@@ -78,7 +79,7 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 
    The value for ``clientSecret`` should literally be ``$dex.clientSecret``, which tells Argo CD to get it from the Argo CD configuration secret.
 
-#. In the same file, add a new ``argo-cd.configs.rbac.`` key as follows:
+#. In the same file, add a new ``argo-cd.configs.rbac`` key as follows:
 
    .. code-block:: yaml
 
@@ -100,6 +101,57 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
    You should see a login in with Google option appear.
    Click on it and you should be able to authenticate with Google.
    Anyone in the same hosted domain can authenticate, but if you aren't one of the listed users, you should not see any applications.
+
+Configuring Keycloak SSO
+========================
+
+To set up Keycloak SSO authentication to Argo CD in a new cluster, take the following steps:
+
+#. Follow the `Argo CD documentation <https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/>`__ to create a Keycloak client for Argo CD.
+   Ensure group information is released by Keycloak, following the instructions in the above page.
+
+   We found that the :guilabel:`Valid redirect URIs` setting has to use the wildcard pattern described as less secure or it wouldn't work correctly.
+
+   Argo CD uses the expiration time of the access token as the length of the session, so ensure that its lifetime is reasonable (two hours, for example).
+
+#. Store the secret for the Keycloak client as the ``dex.clientSecret`` key in the secret for the ``argocd`` application in your :ref:`static secrets store <admin-static-secrets>`, however those secrets are stored for your environment.
+   Then, sync secrets for your environment.
+
+#. In the Phalanx repository, under :file:`applications/argocd`, edit the :file:`values-{environment}.yaml` file for the relevant environment.
+   In ``argo-cd.configs.cm``, at the same level as ``url``, add the following, modifying the URL to match the Keycloak server that should be used:
+
+   .. code-block:: yaml
+
+      oidc.config: |
+        name: Keycloak
+        issuer: https://keycloak.example.org/realms/master
+        clientID: argocd
+        clientSecret: $dex.clientSecret
+        requestedScopes: ["openid", "profile", "email", "groups"]
+
+   Adjust ``clientID`` if you chose a different name for the Keycloak client.
+   The value for ``clientSecret`` should literally be ``$dex.clientSecret``, which tells Argo CD to get it from the Argo CD configuration secret.
+
+#. Determine the group memberships that should control access to Argo CD.
+   Then, in the same file, add a new ``argo-cd.configs.rbac`` key as follows:
+
+   .. code-block:: yaml
+
+      rbac:
+        policy.csv: |
+          g, admin-group, role:admin
+          g, readonly-group, role:readonly
+
+   Change the group names and roles according to the access policy that you want for this instance of Argo CD.
+   See :ref:`argocd-access-control` for more details.
+
+#. If the environment already exists, create a PR with the above changes, merge it, and then sync Argo CD.
+
+#. Go to the ``/argo-cd`` route on the environment.
+   Log out if you're logged in with the admin password.
+   You should see a login in with Keycloak option appear.
+   Click on it and you should be able to authenticate with Keycloak.
+   Any valid Keycloak user should be able to authenticate, but your subsequent access should depend on your group membership and the access control rules configured above.
 
 Configuring GitHub SSO
 ======================
@@ -159,6 +211,6 @@ To set up Google SSO authentication to Argo CD in a new cluster, take the follow
 
 #. Go to the ``/argo-cd`` route on the environment.
    Log out if you're logged in with the admin password.
-   You should see a login in with Google option appear.
-   Click on it and you should be able to authenticate with Google.
+   You should see a login in with GitHub option appear.
+   Click on it and you should be able to authenticate with GitHub.
    Anyone in the same GitHub organization can authenticate, but if you aren't in one of the listed teams, you should not see any applications.
