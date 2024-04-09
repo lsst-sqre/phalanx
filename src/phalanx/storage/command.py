@@ -33,7 +33,7 @@ class Command:
     def capture(
         self, *args: str, cwd: Path | None = None
     ) -> subprocess.CompletedProcess:
-        """Run Helm, checking for errors and capturing the output.
+        """Run the command, checking for errors and capturing the output.
 
         This method should only be called by subclasses, which should provide
         a higher-level interface used by the rest of the program.
@@ -81,8 +81,10 @@ class Command:
     ) -> None:
         """Run the command with the provided arguments.
 
-        This method should only be called by subclasses, which should provide
-        a higher-level interface used by the rest of the program.
+        Standard output and standard error are not redirected and will go to
+        the standard output and error of the caller. This method should only
+        be called by subclasses, which should provide a higher-level interface
+        used by the rest of the program.
 
         Parameters
         ----------

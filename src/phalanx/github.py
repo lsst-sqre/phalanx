@@ -2,7 +2,8 @@
 
 The utility functions in this module can all be called unconditionally. They
 will detect whether the Phalanx command-line tool is being run under GitHub
-Actions and suppress the GitHub-specific command output if not.
+Actions and, if so, add additional GitHub-specific markers to the output to
+improve display in GitHub Actions logs.
 """
 
 from __future__ import annotations
