@@ -322,7 +322,7 @@ class ConfigStorage:
         str
             Branch name.
         """
-        return Repo(str(self._path)).active_branch
+        return Repo(str(self._path)).active_branch.name
 
     def get_git_url(self) -> str:
         """Get the Git URL of the current repository.
