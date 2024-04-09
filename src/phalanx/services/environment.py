@@ -172,7 +172,9 @@ class EnvironmentService:
                 "gafaelfawr",
             ):
                 if application in environment.applications:
-                    self._argocd.sync(application)
+                    self._argocd.sync(
+                        application, timeout=timedelta(minutes=1)
+                    )
 
         # Sync everything else.
         with action_group("Sync remaining applications"):
