@@ -53,6 +53,8 @@ spec:
               mountPath: "/etc/squareone"
             - name: "next-image-cache"
               mountPath: "/app/apps/squareone/.next/cache/images"
+            - name: "node-cache"
+              mountPath: "/home/node/.cache"
       automountServiceAccountToken: false
       securityContext:
         runAsNonRoot: true
@@ -63,6 +65,8 @@ spec:
           configMap:
             name: {{ include "squareone.fullname" . }}
         - name: "next-image-cache"
+          emptyDir: {}
+        - name: "node-cache"
           emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
