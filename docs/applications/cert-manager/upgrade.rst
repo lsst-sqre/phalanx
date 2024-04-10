@@ -7,9 +7,9 @@ Upgrading cert-manager
 Upgrading :px-app:`cert-manager` is generally painless.
 The only custom configuration that we use, beyond installing a cluster issuer, is to tell the Helm chart to install the Custom Resource Definitions.
 
-Normally, it's not necessary to explicitly test :px-app:`cert-manager` after a routine upgrade.
+Normally, it's not necessary or desirable to explicitly test :px-app:`cert-manager` after a routine upgrade.
 We will notice if the certificates expire.
-However, if you want to be sure that cert-manager is still working after an upgrade, delete the TLS secret and ``Certificate`` resource in the ``squareone`` namespace.
+However, if you want to be sure that cert-manager is still working after an upgrade, delete the TLS secret and ``Certificate`` resource in the ``argocd`` namespace.
 It should be recreated by cert-manager.
 
 .. warning::

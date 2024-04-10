@@ -1,5 +1,2 @@
 config:
   siteName: "Rubin Science Platform @ minikube"
-
-ingress:
-  tls: false

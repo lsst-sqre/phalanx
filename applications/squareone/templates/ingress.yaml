@@ -14,19 +14,10 @@ template:
   metadata:
     name: {{ $fullName }}
     annotations:
-      {{- if .Values.ingress.tls }}
-      cert-manager.io/cluster-issuer: "letsencrypt-dns"
-      {{- end }}
       {{- with .Values.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
       {{- end }}
   spec:
-    {{- if .Values.ingress.tls }}
-    tls:
-      - hosts:
-          - {{ required "global.host must be set" .Values.global.host | quote }}
-        secretName: "squareone-tls"
-    {{- end }}
     rules:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:

@@ -27,7 +27,4 @@ argo-cd:
 
   server:
     ingress:
-      annotations:
-        cert-manager.io/cluster-issuer: "letsencrypt-dns"
       hostname: "roundtable.lsst.cloud"
-      tls: true
