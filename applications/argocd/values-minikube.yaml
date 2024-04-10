@@ -6,3 +6,4 @@ argo-cd:
   server:
     ingress:
       hostname: "minikube.lsst.codes"
+    tls: false

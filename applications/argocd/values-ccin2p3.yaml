@@ -22,3 +22,4 @@ argo-cd:
   server:
     ingress:
       hostnmae: "data-dev.lsst.eu"
+    tls: false

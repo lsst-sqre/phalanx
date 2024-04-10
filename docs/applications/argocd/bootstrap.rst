@@ -71,3 +71,20 @@ Or, alternately, you can grant a role write access to only one Argo CD project a
 
 More complicated rules are possible.
 See the `Argo CD RBAC documentation <https://argo-cd.readthedocs.io/en/stable/operator-manual/rbac/>`__ for the details.
+
+TLS configuration
+=================
+
+By default, Argo CD manages the TLS configuration for the entirety of the Science Platform.
+This assumes the Let's Encrypt approach to obtaining TLS certificates, and the default TLS configuration requires the cert-manager cluster issuer be set up.
+See :doc:`/applications/cert-manager/notes` for more information.
+
+If you instead are using a commercial certificate and configuring ingress-nginx to use it, you need to disable the TLS configuration for Squareone.
+Do that with the following in :file:`values-{environment}.yaml` in `/applications/argocd <https://github.com/lsst-sqre/phalanx/tree/main/applications/argocd>`__:
+
+.. code-block:: yaml
+
+   argo-cd:
+     server:
+       ingress:
+         tls: false
