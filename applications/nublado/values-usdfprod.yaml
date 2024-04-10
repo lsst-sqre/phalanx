@@ -13,6 +13,7 @@ controller:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
         HUB_ROUTE: "/nb/hub"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
