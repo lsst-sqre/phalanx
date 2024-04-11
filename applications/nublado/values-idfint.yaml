@@ -22,12 +22,15 @@ controller:
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-int-repos.yaml"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
-        PANDA_AUTH: oidc
+        IDDS_CONFIG: "/opt/lsst/software/jupyterlab/panda/idds.cfg.client.template"
+        PANDA_AUTH: "oidc"
         PANDA_VERIFY_HOST: "off"
-        PANDA_AUTH_VO: Rubin
-        PANDA_URL_SSL: https://pandaserver-doma.cern.ch:25443/server/panda
-        PANDA_URL: http://pandaserver-doma.cern.ch:25080/server/panda
-        IDDS_CONFIG: /opt/lsst/software/jupyterlab/panda/idds.cfg.client.template
+        PANDA_AUTH_VO: "Rubin"
+        PANDA_BEHIND_REAL_LB: "true"
+        PANDA_URL_SSL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+        PANDA_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+        PANDACACHE_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+        PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
