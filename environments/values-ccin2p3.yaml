@@ -1,6 +1,7 @@
-name: ccin2p3
-fqdn: data-dev.lsst.eu
-vaultPathPrefix: secret/k8s_operator/rsp-cc
+name: "ccin2p3"
+fqdn: "data-dev.lsst.eu"
+appOfAppsName: "science-platform"
+vaultPathPrefix: "secret/k8s_operator/rsp-cc"
 
 applications:
   datalinker: true

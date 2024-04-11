@@ -308,7 +308,9 @@ class HelmStorage:
             sys.stderr.write(result.stderr)
         return result.stdout
 
-    def template_environment(self, environment: str) -> str:
+    def template_environment(
+        self, environment: str, app_of_apps_name: str
+    ) -> str:
         """Expand the top-level chart into its Kubernetes resources.
 
         Runs :command:`helm template` to expand the top-level chart into its
@@ -319,6 +321,8 @@ class HelmStorage:
         ----------
         environment
             Name of the environment for which to expand the chart.
+        app_of_apps_name
+            Name of the app-of-apps for that environment.
 
         Returns
         -------
@@ -334,7 +338,7 @@ class HelmStorage:
         try:
             result = self._helm.capture(
                 "template",
-                "science-platform",
+                app_of_apps_name,
                 str(path),
                 "--include-crds",
                 "--values",

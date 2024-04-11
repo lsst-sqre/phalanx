@@ -1,5 +1,6 @@
 name: "roundtable-dev"
 fqdn: "roundtable-dev.lsst.cloud"
+appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-dev-abe2"
   region: "us-central1"

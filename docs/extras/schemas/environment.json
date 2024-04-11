@@ -176,6 +176,19 @@
       "title": "Domain name",
       "type": "string"
     },
+    "appOfAppsName": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Name of the parent Argo CD app-of-apps that manages all of the enabled applications. This is required in the merged values file that includes environment overrides, but the environment override file doesn't need to set it, so it's marked as optional for schema checking purposes to allow the override file to be schema-checked independently.",
+      "title": "Argo CD app-of-apps name"
+    },
     "butlerRepositoryIndex": {
       "anyOf": [
         {

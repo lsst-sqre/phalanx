@@ -1,5 +1,6 @@
 name: "tucson-teststand"
 fqdn: "tucson-teststand.lsst.codes"
+appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP tucson-teststand.lsst.codes"

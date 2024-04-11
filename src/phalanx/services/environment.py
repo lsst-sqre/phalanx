@@ -72,10 +72,16 @@ class EnvironmentService:
         ------
         CommandFailedError
             Raised if one of the underlying commands fails.
+        ValueError
+            Raised if ``appOfAppsName`` is not set in the environment
+            configuration.
         VaultNotFoundError
             Raised if a necessary secret was not found in Vault.
         """
         environment = self._config.load_environment(environment_name)
+        if not environment.app_of_apps_name:
+            raise ValueError(f"appOfAppsName not set for {environment_name}")
+        app_of_apps = environment.app_of_apps_name
         vault = self._vault_storage.get_vault_client(
             environment, credentials=vault_credentials
         )
@@ -132,17 +138,17 @@ class EnvironmentService:
             )
 
         # Create and sync the top-level Argo CD application.
-        with action_group("Install science-platform app-of-apps"):
+        with action_group(f"Install {app_of_apps} app-of-apps"):
             self._argocd.login("admin", argocd_password.get_secret_value())
             self._argocd.create_environment(
                 environment.name,
-                "science-platform",
+                app_of_apps,
                 git_url=git_url,
                 git_branch=git_branch,
             )
-            self._argocd.sync("science-platform")
+            self._argocd.sync(app_of_apps)
             project = Project.infrastructure
-            self._argocd.set_project("science-platform", project)
+            self._argocd.set_project(app_of_apps, project)
 
         # Sync Argo CD and wait for it to finish syncing so that the pods
         # don't restart in the middle of proxying another Argo CD operation.
@@ -176,9 +182,7 @@ class EnvironmentService:
 
         # Sync everything else.
         with action_group("Sync remaining applications"):
-            self._argocd.sync_all(
-                "science-platform", timeout=timedelta(minutes=5)
-            )
+            self._argocd.sync_all(app_of_apps, timeout=timedelta(minutes=5))
 
     def lint(self, environment: str | None = None) -> bool:
         """Lint the Helm chart for environments.
@@ -200,7 +204,7 @@ class EnvironmentService:
             success &= self._helm.lint_environment(environment)
         return success
 
-    def template(self, environment: str) -> str:
+    def template(self, environment_name: str) -> str:
         """Expand the templates of the top-level chart.
 
         Run :command:`helm template` for a top-level chart, passing in the
@@ -208,7 +212,7 @@ class EnvironmentService:
 
         Parameters
         ----------
-        environment
+        environment_name
             Environment for which to expand the top-level chart.
 
         Returns
@@ -220,5 +224,13 @@ class EnvironmentService:
         ------
         CommandFailedError
             Raised if Helm fails.
+        ValueError
+            Raised if ``appOfAppsName`` is not set in the environment
+            configuration.
         """
-        return self._helm.template_environment(environment)
+        environment = self._config.load_environment(environment_name)
+        if not environment.app_of_apps_name:
+            raise ValueError(f"appOfAppsName not set for {environment_name}")
+        return self._helm.template_environment(
+            environment.name, environment.app_of_apps_name
+        )

@@ -151,7 +151,9 @@ class ControlSystemConfig(CamelCaseModel):
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
-    """Configuration common to `~phalanx.models.environments.EnvironmentConfig`
+    """Environment configuration options.
+
+    Configuration common to `~phalanx.models.environments.EnvironmentConfig`
     and `~phalanx.models.environments.Environment`.
     """
 
@@ -162,6 +164,19 @@ class EnvironmentBaseConfig(CamelCaseModel):
         title="Domain name",
         description=(
             "Fully-qualified domain name on which the environment listens"
+        ),
+    )
+
+    app_of_apps_name: str | None = Field(
+        None,
+        title="Argo CD app-of-apps name",
+        description=(
+            "Name of the parent Argo CD app-of-apps that manages all of the"
+            " enabled applications. This is required in the merged values"
+            " file that includes environment overrides, but the environment"
+            " override file doesn't need to set it, so it's marked as"
+            " optional for schema checking purposes to allow the override"
+            " file to be schema-checked independently."
         ),
     )
 
