@@ -35,6 +35,13 @@ strimzi-kafka:
         operator: Equal
         value: "kafka"
         effect: NoExecute
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 2
 
   zookeeper:
     replicas: 3
