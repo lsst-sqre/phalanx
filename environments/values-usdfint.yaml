@@ -1,10 +1,11 @@
+fqdn: "usdf-rsp-int.slac.stanford.edu"
+name: "usdfint"
+appOfAppsName: "science-platform"
 butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
 butlerServerRepositories:
   embargo: "https://usdf-rsp-int.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"
-fqdn: usdf-rsp-int.slac.stanford.edu
-name: usdfint
 vaultUrl: "https://vault.slac.stanford.edu"
-vaultPathPrefix: secret/rubin/usdf-rsp-int
+vaultPathPrefix: "secret/rubin/usdf-rsp-int"
 
 applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,

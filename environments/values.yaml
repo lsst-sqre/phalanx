@@ -1,5 +1,17 @@
 # These four settings should be set in each environment values-*.yaml file.
 
+# -- Name of the environment
+# @default -- None, must be set
+name: ""
+
+# -- Fully-qualified domain name where the environment is running
+# @default -- None, must be set
+fqdn: ""
+
+# -- Name of the parent Argo CD app-of-apps that manages all the applications
+# enabled for this environment
+appOfAppsName: "app-of-apps"
+
 # -- Butler repository index URI to use for this environment, for services that
 # connect directly to the Butler database.
 # @default -- None, must be set
@@ -9,14 +21,6 @@ butlerRepositoryIndex: ""
 # dictionary from repository label to URI.
 # @default -- None, must be set
 butlerServerRepositories: {}
-
-# -- Name of the environment
-# @default -- None, must be set
-name: ""
-
-# -- Fully-qualified domain name where the environment is running
-# @default -- None, must be set
-fqdn: ""
 
 # -- URL of the repository for all applications
 repoUrl: https://github.com/lsst-sqre/phalanx.git

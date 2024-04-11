@@ -1,6 +1,7 @@
-name: base
-fqdn: base-lsp.lsst.codes
-vaultPathPrefix: secret/k8s_operator/base-lsp.lsst.codes
+name: "base"
+fqdn: "base-lsp.lsst.codes"
+appOfAppsName: "science-platform"
+vaultPathPrefix: "secret/k8s_operator/base-lsp.lsst.codes"
 
 applications:
   argo-workflows: true
