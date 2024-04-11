@@ -35,9 +35,5 @@ spec:
     - kind: "Secret"
       name: "ook-kafka-user"
       jsonPointers:
-        - "/data/ca.crt"
-        - "/data/user.crt"
-        - "/data/user.key"
-        - "/data/user.p12"
-        - "/data/user.password"
+        - "/data"
 {{- end -}}
