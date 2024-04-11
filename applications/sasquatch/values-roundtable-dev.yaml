@@ -1,5 +1,6 @@
 strimzi-kafka:
   kafka:
+    version: "3.6.1"
     replicas: 3
     listeners:
       plain:
