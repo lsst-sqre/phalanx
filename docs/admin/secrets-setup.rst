@@ -71,6 +71,9 @@ This normally requires a Vault admin or provisioner token or some equivalent.
     The output includes the RoleID and SecretID for the AppRole, which can then be provided to `Vault Secrets Operator`_.
     The optional ``--as-secret`` flag may be provided to write the AppRole credentials in a form suitable for piping to :command:`kubectl apply` to create a secret for `Vault Secrets Operator`_.
 
+    When creating an AppRole for GitHub Actions (usually the :px-env:`minikube` environment), pass ``--token-lifetime 3600`` to this command to limit the maximum token lifetime to an hour.
+    This avoids accumulating AppRole tokens in Vault that slow down other Vault operations.
+
 :samp:`phalanx vault create-write-token {environment}`
     Creates a new Vault token with write (create, update, and delete) access to the Vault secrets path for the given environment.
     If any write token previously created by :command:`phalanx` already exists, it is revoked.

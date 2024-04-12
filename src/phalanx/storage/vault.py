@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from contextlib import suppress
+from datetime import timedelta
 
 import hvac
 from hvac.exceptions import InvalidPath
@@ -72,7 +73,13 @@ class VaultClient:
             case VaultTokenCredentials():
                 self._vault.token = credentials.token
 
-    def create_approle(self, name: str, policies: list[str]) -> VaultAppRole:
+    def create_approle(
+        self,
+        name: str,
+        policies: list[str],
+        *,
+        token_lifetime: timedelta | None = None,
+    ) -> VaultAppRole:
         """Create a new Vault AppRole for secret access.
 
         Parameters
@@ -81,16 +88,24 @@ class VaultClient:
             Name of the AppRole to create.
         policies
             Policies to assign to that AppRole.
+        token_lifetime
+            If given, limit the token lifetime (both default and renewable) to
+            the given length of time.
 
         Returns
         -------
         VaultAppRole
             Newly-created AppRole.
         """
+        token_lifetime_seconds = None
+        if token_lifetime:
+            token_lifetime_seconds = int(token_lifetime.total_seconds())
         self._vault.auth.approle.create_or_update_approle(
             role_name=name,
             token_policies=policies,
             token_type="service",
+            token_ttl=token_lifetime_seconds,
+            token_max_ttl=token_lifetime_seconds,
         )
         r = self._vault.auth.approle.read_role_id(name)
         role_id = r["data"]["role_id"]
@@ -98,12 +113,13 @@ class VaultClient:
         secret_id = r["data"]["secret_id"]
         secret_id_accessor = r["data"]["secret_id_accessor"]
         r = self._vault.auth.approle.read_role(name)
-        token_policies = r["data"]["token_policies"]
         return VaultAppRole(
             role_id=role_id,
             secret_id=secret_id,
             secret_id_accessor=secret_id_accessor,
-            policies=token_policies,
+            policies=r["data"]["token_policies"],
+            token_ttl=r["data"]["token_ttl"],
+            token_max_ttl=r["data"]["token_max_ttl"],
         )
 
     def create_policy(self, name: str, policy: str) -> None:

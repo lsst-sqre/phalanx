@@ -127,6 +127,8 @@ def test_create_read_approle(
     result = run_cli("vault", "create-read-approle", "idfdev")
     assert result.exit_code == 0
     approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
+    assert approle.token_ttl == 0
+    assert approle.token_max_ttl == 0
 
     # Check that the AppRole was created with the right RoleID and policies.
     assert approle.policies == [f"{vault_path}/read"]
@@ -165,6 +167,16 @@ def test_create_read_approle(
         secret_id=secret["data"]["VAULT_SECRET_ID"],
     )
     assert result.output == expected
+    assert secret["data"]["VAULT_SECRET_ID"] != approle.secret_id
+
+    # Recreate one more time with a maximum token lifetime.
+    result = run_cli(
+        "vault", "create-read-approle", "--token-lifetime", "3600", "idfdev"
+    )
+    assert result.exit_code == 0
+    approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
+    assert approle.token_ttl == 3600
+    assert approle.token_max_ttl == 3600
 
 
 def test_create_write_token(

@@ -10,7 +10,7 @@ vault-secrets-operator:
         secretKeyRef:
           name: "vault-credentials"
           key: "VAULT_SECRET_ID"
-    # Set the token lifetime to six hours to minimize the spam of
+    # Set the token lifetime to one hour to minimize the spam of
     # not-yet-expired tokens in Vault from GitHub Actions CI tests.
     - name: "VAULT_TOKEN_MAX_TTL"
-      value: "21600"
+      value: "3600"
