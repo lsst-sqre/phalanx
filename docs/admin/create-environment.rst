@@ -20,12 +20,16 @@ To create a new Phalanx environment, take the following steps:
 #. Fork the `Phalanx repository`_ if this work is separate from the SQuaRE-managed environments.
 
 #. Create a new :file:`values-{environment}.yaml` file in `environments <https://github.com/lsst-sqre/phalanx/tree/main/environments/>`__.
+
    Start with a template copied from an existing environment that's similar to the new environment.
    Edit it so that ``name``, ``fqdn``, ``vaultUrl``, and ``vaultPathPrefix`` at the top match your new environment.
    You may omit ``vaultUrl`` for SQuaRE-managed environments.
    See :doc:`secrets-setup` for more information about the latter two settings and additional settings you may need.
+
+   If desired, change ``appOfAppsName`` to something more specific to your environment than the default ``app-of-apps``.
+   For environments running the Rubin Science Platform, ``science-platform`` is recommended.
+
    If the environment will be hosted on Google Kubernetes Engine, also fill out ``gcp.projectId``, ``gcp.region``, and ``gcp.clusterName`` with metadata about where the environment will be hosted.
-   Enable the applications this environment should include.
 
 #. Do what DNS setup you can.
    If you already know the IP address where your instance will reside, create the DNS records (A or possibly CNAME) for that instance.
@@ -36,7 +40,8 @@ To create a new Phalanx environment, take the following steps:
    The most frequently used method of providing that file system is NFS mounts, but you may instead want to use persistent volume claims or a different file system that's mounted on the Kubernetes cluster nodes and exposed to pods via ``hostPath``.
    Whatever storage you choose, you will need to configure appropriate mount points in :px-app:`nublado` when you configure each application in the next step.
 
-#. For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
+#. Enable the applications this environment should include in :file:`environments/values-{environment}.yaml`.
+   For each enabled application, create a corresponding :file:`values-{environment}.yaml` file in the relevant directory under `applications <https://github.com/lsst-sqre/phalanx/tree/main/applications/>`__.
    Customization will vary from application to application.
    The following applications have special bootstrapping considerations:
 
