@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -25,8 +26,8 @@ from .models.vault import (
 )
 
 __all__ = [
-    "help",
     "main",
+    "help",
     "application",
     "application_add_helm_repos",
     "application_create",
@@ -99,6 +100,23 @@ def _find_config() -> Path:
     return current
 
 
+def _require_command(command: str) -> None:
+    """Require that a given command be found on the user's PATH.
+
+    Parameters
+    ----------
+    command
+        Name of the command.
+
+    Raises
+    ------
+    click.UsageError
+        Raised if the command could not be found.
+    """
+    if not shutil.which(command):
+        raise click.UsageError(f"{command} not found on PATH, not installed?")
+
+
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(message="%(version)s")
 def main() -> None:
@@ -140,6 +158,7 @@ def application_add_helm_repos(
     command is not necessary. It is provided as a convenience for helping to
     manage your local Helm configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -199,6 +218,7 @@ def application_create(
     appropriate documentation stubs, Argo CD Application resource, and
     environment configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     if not re.match("[a-z]", name):
@@ -251,6 +271,7 @@ def application_lint(
     each chart is linted for all environments for which it has a
     configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -290,6 +311,7 @@ def application_lint_all(
     Update and download any third-party dependency charts and then lint the
     Helm charts for each application and environment combination.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -318,6 +340,7 @@ def application_template(
     for the given environment to standard output. This is intended for testing
     and debugging purposes; normally, charts should be installed with Argo CD.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -414,6 +437,9 @@ def environment_install(
     environment variables VAULT_ROLE_ID and VAULT_SECRET_ID to the credentials
     of a Vault AppRole, or setting VAULT_TOKEN to a read-only Vault token.
     """
+    _require_command("argocd")
+    _require_command("kubectl")
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -464,6 +490,7 @@ def environment_lint(
     for an environment. If the environment is not given, lints the
     instantiation of that chart for each environment.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -515,6 +542,7 @@ def environment_template(environment: str, *, config: Path | None) -> None:
     for the given environment. This is intended for testing and debugging
     purposes; normally, charts should be installed with Argo CD.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
