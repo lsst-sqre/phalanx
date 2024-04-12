@@ -1,6 +1,6 @@
 strimzi-kafka:
   kafka:
-    disruption_tolerance: 1
+    disruption_tolerance: 2
     listeners:
       tls:
         enabled: true
