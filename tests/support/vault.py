@@ -114,7 +114,13 @@ class MockVaultClient:
         }
 
     def create_or_update_approle(
-        self, role_name: str, *, token_policies: list[str], token_type: str
+        self,
+        role_name: str,
+        *,
+        token_policies: list[str],
+        token_type: str,
+        token_ttl: int | None = None,
+        token_max_ttl: int | None = None,
     ) -> None:
         """Create or update an AppRole.
 
@@ -126,10 +132,17 @@ class MockVaultClient:
             List of policies to apply to the AppRole.
         token_type
             Type of token (must be ``service``).
+        token_ttl
+            Lifetime of tokens in seconds.
+        token_max_ttl
+            Maximum lifetime of tokens in seconds.
         """
         assert token_type == "service"
         self._approles[role_name] = VaultAppRoleMetadata(
-            role_id=str(uuid4()), policies=token_policies
+            role_id=str(uuid4()),
+            policies=token_policies,
+            token_ttl=token_ttl or 0,
+            token_max_ttl=token_max_ttl or 0,
         )
 
     def create_or_update_policy(self, path: str, policy: str) -> None:
@@ -377,7 +390,9 @@ class MockVaultClient:
             raise InvalidPath(f"Unknown AppRole {role_name}")
         return {
             "data": {
-                "token_policies": list(self._approles[role_name].policies)
+                "token_policies": list(self._approles[role_name].policies),
+                "token_ttl": self._approles[role_name].token_ttl,
+                "token_max_ttl": self._approles[role_name].token_max_ttl,
             }
         }
 

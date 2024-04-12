@@ -7,7 +7,7 @@ from base64 import b64encode
 from datetime import datetime
 
 import yaml
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from ..constants import VAULT_SECRET_TEMPLATE
 
@@ -30,6 +30,25 @@ class VaultAppRoleMetadata(BaseModel):
 
     policies: list[str]
     """Policies applied to this AppRole."""
+
+    token_ttl: int | str = Field(
+        0,
+        title="Token lifetime",
+        description=(
+            "Either an integer number of seconds or a duration string."
+            " 0 means there is no limit other than Vault defaults."
+        ),
+    )
+
+    token_max_ttl: int | str = Field(
+        0,
+        title="Maximum token lifetime",
+        description=(
+            "Maximum token lifetime even after renewal. Either an integer"
+            " number of seconds or a duration string. 0 means there is no"
+            " limit other than Vault defaults."
+        ),
+    )
 
 
 class VaultAppRole(VaultAppRoleMetadata):

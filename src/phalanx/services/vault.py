@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from datetime import timedelta
 from pathlib import Path
 
 import jinja2
@@ -93,7 +94,9 @@ class VaultService:
             new_vault_client.store_application_secret(name, secret)
             print("Copied Vault secret for", name)
 
-    def create_read_approle(self, environment: str) -> VaultAppRole:
+    def create_read_approle(
+        self, environment: str, *, token_lifetime: timedelta | None = None
+    ) -> VaultAppRole:
         """Create a new Vault read AppRole for the given environment.
 
         This will create (or update) a read policy whose name is the Vault
@@ -110,6 +113,9 @@ class VaultService:
         ----------
         environment
             Name of the environment.
+        token_lifetime
+            If given, limit the token lifetime (both default and renewable) to
+            the given length of time.
 
         Returns
         -------
@@ -125,7 +131,9 @@ class VaultService:
         if approle:
             vault_client.revoke_approle_secret_ids(config.vault_read_approle)
         return vault_client.create_approle(
-            config.vault_read_approle, [config.vault_read_policy]
+            config.vault_read_approle,
+            [config.vault_read_policy],
+            token_lifetime=token_lifetime,
         )
 
     def create_write_token(

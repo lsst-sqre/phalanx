@@ -6,6 +6,7 @@ import json
 import re
 import shutil
 import sys
+from datetime import timedelta
 from pathlib import Path
 
 import click
@@ -862,8 +863,18 @@ def vault_copy_secrets(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@click.option(
+    "--token-lifetime",
+    type=int,
+    default=None,
+    help="Maximum token lifetime in seconds.",
+)
 def vault_create_read_approle(
-    environment: str, as_secret: str | None, *, config: Path | None
+    environment: str,
+    as_secret: str | None,
+    *,
+    config: Path | None,
+    token_lifetime: int | None,
 ) -> None:
     """Create a new Vault read AppRole.
 
@@ -879,7 +890,12 @@ def vault_create_read_approle(
         config = _find_config()
     factory = Factory(config)
     vault_service = factory.create_vault_service()
-    vault_approle = vault_service.create_read_approle(environment)
+    if token_lifetime:
+        vault_approle = vault_service.create_read_approle(
+            environment, token_lifetime=timedelta(seconds=token_lifetime)
+        )
+    else:
+        vault_approle = vault_service.create_read_approle(environment)
     if as_secret:
         sys.stdout.write(vault_approle.to_kubernetes_secret(as_secret))
     else:
