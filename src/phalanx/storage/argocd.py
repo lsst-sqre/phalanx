@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from datetime import timedelta
 
+from pydantic import SecretStr
+
 from ..models.applications import Project
 from .command import Command
 
@@ -78,7 +80,7 @@ class ArgoCDStorage:
             "argocd",
         )
 
-    def login(self, username: str, password: str) -> None:
+    def login(self, username: str, password: SecretStr) -> None:
         """Authenticate to Argo CD.
 
         Authenticates using username and password authentication with port
@@ -103,7 +105,7 @@ class ArgoCDStorage:
             "--username",
             username,
             "--password",
-            password,
+            password.get_secret_value(),
             "--port-forward",
             "--port-forward-namespace",
             "argocd",
