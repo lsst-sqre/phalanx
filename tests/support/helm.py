@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import shutil
 import subprocess
 from collections.abc import Iterator
 from pathlib import Path
+from shutil import which
 from typing import Protocol
 from unittest.mock import patch
 
@@ -142,5 +144,13 @@ def patch_helm() -> Iterator[MockHelmCommand]:
         Class that captures the attempted Helm commands.
     """
     mock = MockHelmCommand()
+
+    def mock_which(command: str) -> str | None:
+        if command == "helm":
+            return "/usr/local/bin/helm"
+        else:
+            return which(command)
+
     with patch.object(helm, "Command", return_value=mock):
-        yield mock
+        with patch.object(shutil, "which", side_effect=mock_which):
+            yield mock
