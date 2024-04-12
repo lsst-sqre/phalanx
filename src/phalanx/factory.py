@@ -64,10 +64,20 @@ class Factory:
         return EnvironmentService(
             config_storage=config_storage,
             argocd_storage=ArgoCDStorage(),
-            kubernetes_storage=KubernetesStorage(),
+            kubernetes_storage=self.create_kubernetes_storage(),
             helm_storage=HelmStorage(config_storage),
             vault_storage=VaultStorage(),
         )
+
+    def create_kubernetes_storage(self) -> KubernetesStorage:
+        """Create storage object for interacting with Kubernetes.
+
+        Returns
+        -------
+        KubernetesStorage
+            Storage object for interacting with Kubernetes.
+        """
+        return KubernetesStorage()
 
     def create_secrets_service(self) -> SecretsService:
         """Create service for manipulating Phalanx secrets.
