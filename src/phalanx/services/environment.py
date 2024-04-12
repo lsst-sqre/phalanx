@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import timedelta
 
 from ..exceptions import CommandFailedError, VaultNotFoundError
-from ..github import action_group
+from ..github import action_group, add_mask
 from ..models.applications import Project
 from ..models.vault import VaultCredentials
 from ..storage.argocd import ArgoCDStorage
@@ -91,13 +91,15 @@ class EnvironmentService:
         if not git_branch:
             git_branch = self._config.get_git_branch()
 
-        # Get the plain-text Argo CD admin password from Vault.
+        # Get the plain-text Argo CD admin password from Vault and tell GitHub
+        # Actions to mask it.
         argocd_secret = vault.get_application_secret("argocd")
         argocd_password = argocd_secret.get("admin.plaintext_password")
         if not argocd_password:
             raise VaultNotFoundError(
                 vault.url, f"{vault.path}/argocd", "admin.plaintext_password"
             )
+        add_mask(argocd_password)
 
         # Add the dependency repositories of the applications we're installing
         # directly with Helm, and refresh the Helm dependency cache.
@@ -139,7 +141,7 @@ class EnvironmentService:
 
         # Create and sync the top-level Argo CD application.
         with action_group(f"Install {app_of_apps} app-of-apps"):
-            self._argocd.login("admin", argocd_password.get_secret_value())
+            self._argocd.login("admin", argocd_password)
             self._argocd.create_environment(
                 environment.name,
                 app_of_apps,
