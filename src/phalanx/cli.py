@@ -58,10 +58,12 @@ into whatever Kubernetes cluster is currently configured as your default
 cluster.
 
 THIS WILL OVERWRITE THE APPLICATIONS IN YOUR CURRENT KUBERNETES CLUSTER.
+Your current cluster is:
 
-If you have not verified, with kubectl config current-context, that this is
-the correct cluster immediately before running this command, answer no and
-double-check the cluster before continuing.
+{context}
+
+If this is the correct cluster, answer no and change default clusters with
+kubectl config set-context before continuing.
 """
 """Warning message displayed by :command:`phalanx environment install`."""
 
@@ -429,8 +431,12 @@ def environment_install(
         raise click.UsageError(msg)
 
     # Prompt the user unless they specifically said not to.
+    kubernetes_storage = factory.create_kubernetes_storage()
+    context = kubernetes_storage.get_current_context()
     if not force_noninteractive:
-        print(_INSTALL_WARNING.format(environment=environment))
+        print(
+            _INSTALL_WARNING.format(environment=environment, context=context)
+        )
         click.confirm(
             "Are you certain you want to continue?", abort=True, default=False
         )

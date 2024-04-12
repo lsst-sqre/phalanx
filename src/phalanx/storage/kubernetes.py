@@ -65,6 +65,17 @@ class KubernetesStorage:
             args.append(f"--from-literal={key}={value}")
         self._kubectl.run(*args)
 
+    def get_current_context(self) -> str:
+        """Get the current context (the default Kubernetes cluster).
+
+        Returns
+        -------
+        str
+            Name of the current Kubernetes context.
+        """
+        result = self._kubectl.capture("config", "current-context")
+        return result.stdout.strip()
+
     def wait_for_rollout(self, name: str, namespace: str) -> None:
         """Wait for a Kubernetes rollout to complete.
 
