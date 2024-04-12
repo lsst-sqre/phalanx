@@ -2,78 +2,95 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# -- Override the base name for resources
 nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
 fullnameOverride: ""
+
+# -- List of pull secrets needed for images. If set, each object in the list
+# should have one attribute, _name_, identifying the pull secret to use
 imagePullSecrets: []
 
-# License-key and license-path are mutually exclusive. Use only one and leave the other blank.
 license:
-  # You can put your license key here for testing this chart out,
-  # but we STRONGLY recommend using a license file stored in a secret
+  # -- License key. You can put your license key here for testing this chart
+  # out, but we STRONGLY recommend using a license file stored in a secret
   # when you ship to production.
-  # key: ""
-  # secret:
-  #   name: influxdb-license
-  #   key: json
+  key: ""
+
   secret:
+    # -- Name of the secret containing the license
     name: influxdb-enterprise-license
+
+    # -- Key within that secret that contains the license
     key: json
-# Service account to use for deployment
-# If the name is not specified default account will be used
+
 serviceAccount:
+  # -- Whether to create a Kubernetes service account to run as
   create: false
-  name: ''
+
+  # -- Name of the Kubernetes service account to run as
+  # @default -- Name based on the chart fullname
+  name: ""
+
+  # -- Annotations to add to the service account
   annotations: {}
 
-## The name of a secret in the same kubernetes namespace which contain values
-## to be added to the environment.
-## This can be used, for example, to set the INFLUXDB_ENTERPRISE_LICENSE_KEY
-## or INFLUXDB_ENTERPRISE_LICENSE_PATH environment variable.
-# envFromSecret: influxdb-license
+# -- The name of a secret in the same kubernetes namespace which contain values
+# to be added to the environment
+# @default -- No secret
+envFromSecret: ""
 
-# A secret with keys "username" and "password" is required
-# This bootstrap configuration allows you to configure
-# some parts of the InfluxDB system at install time.
-#
-# This job ONLY runs once, after the first `helm upgrade --install`
-# or `helm install`
-#
-# This job WILL NOT run on upgrades
-#
+# This bootstrap configuration allows you to configure some parts of the
+# InfluxDB system at install time.  This job ONLY runs once, after the first
+# `helm upgrade --install` or `helm install`.  This job WILL NOT run on
+# upgrades.
 bootstrap:
-  # This section allows you to enable authentication'
-  # of the data nodes, which will create a username
-  # and password for your "admin" account.
-  # A secret should be provided, which will have the keys
-  # "username" and "password" available.
   auth:
+    # -- Enable authentication of the data nodes using this secret, by
+    # creating a username and password for an admin account. The secret
+    # must contain keys `username` and `password`.
     secretName: sasquatch
-  # This section allows you to use DDL and DML to define
-  # databases, retention policies, and inject some data.
-  # When using the configMap setting, the keys "ddl" and "dml"
-  # must exist, even if one of them is empty.
-  # DDL is executed before DML, to enforce databases and retention policies
-  # to exist.
-  ddldml: {}
-  #   configMap: influxdb-ddl-dml
-  #   resources: {}
 
+  ddldml:
+    # -- A config map containing DDL and DML that define databases, retention
+    # policies, and inject some data.  The keys `ddl` and `dml` must exist,
+    # even if one of them is empty.  DDL is executed before DML to ensure
+    # databases and retention policies exist.
+    # @default -- Do not run DDL or DML
+    configMap: ""
 
-# Sets the tagged version of the docker image that you want to run, will default to latest
-# The suffix is if you are pulling from influx repo, example images will be influxdb:1.8.0-meta and influxdb:1.8.0-data
-# If set to true, the suffix won't be added
-#image:
-#  tag: 1.11.3
-#  ignoresuffix: false
+    # -- Kubernetes resources and limits for the bootstrap job
+    resources: {}
+
+image:
+  # -- Tagged version of the Docker image that you want to run
+  # @default -- `appVersion` from `Chart.yaml`
+  tag: ""
+
+  # -- Set to true to add a suffix for the type of image to the Docker tag
+  # (for example, `-meta`, making an image name of `influxdb:1.8.0-meta`)
+  addsuffix: false
 
 meta:
+  # -- Number of meta pods to run
   replicas: 3
-  image: {}
-  #   override: true
-  #   pullPolicy: IfNotPresent
-  #   repository: influxdb
-  # nodeSelector: {}
-  # tolerations: []
+
+  image:
+    # -- Docker repository for meta images
+    repository: "influxdb"
+
+    # -- Pull policy for meta images
+    pullPolicy: "IfNotPresent"
+
+  # -- Node selection rules for meta pods
+  nodeSelector: {}
+
+  # -- Tolerations for meta pods
+  tolerations: []
+
+  # -- Affinity rules for meta pods
+  # @default -- See `values.yaml`
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -86,87 +103,138 @@ meta:
               values:
               - meta
           topologyKey: kubernetes.io/hostname
-  # podAnnotations: {}
-  #
-  # podSecurityContext: {}
+
+  # -- Annotations for meta pods
+  podAnnotations: {}
+
+  # -- Pod security context for meta pods
+  podSecurityContext: {}
   #   fsGroup: 2000
-  #
+
+  # -- Security context for meta pods
+  securityContext: {}
   # This allows you to run the pods as a non-privileged user, set to the uid
-  # securityContext: {}
   #   runAsUser: 2000
   #   runAsGroup: 2000
-  #  capabilities:
-  #    drop:
-  #    - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-  #
-  # These are the commands that will be run before influxdb is started
+  #   capabilities:
+  #     drop:
+  #       - ALL
+  #   readOnlyRootFilesystem: true
+  #   runAsNonRoot: true
+
+  # -- Commands to run in meta pods before InfluxDB is started. Each list
+  # entry should have a _cmd_ key with the command to run and an optional
+  # _description_ key describing that command
+  preruncmds: []
   # preruncmds:
   #   - cmd: ls -l
   #     description: We want to see what's in the directory
   #   - cmd: stat $HOME/somefile
   #     description: And we run a second command
-  # This secret needs a key called "secret" and it should be a long random string
-  # Please see docs for shared-internal-secret:
-  # https://docs.influxdata.com/enterprise_influxdb/v1.8/administration/config-data-nodes/#meta-internal-shared-secret
+
   sharedSecret:
+    # -- Shared secret used by the internal API for JWT authentication between
+    # InfluxDB nodes. Must have a key named `secret` that should be a long,
+    # random string See [documentation for
+    # shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret).
     secretName: influxdb-enterprise-shared-secret
-  #
+
   service:
-    ## Specify a service type
-    ## ClusterIP is default
-    ## ref: http://kubernetes.io/docs/user-guide/services/
+    # -- Service type for the meta service
     type: ClusterIP
-    # loadBalancerIP: ""
-    # externalIPs: []
-    # externalTrafficPolicy: ""
-    # nodePort: 30086
-    ## Add annotations to service
-    # annotations: {}
-  # InfluxDB ingress configuration.
+
+    # -- Load balancer IP for the meta service
+    # @default -- Do not allocate a load balancer IP
+    loadBalancerIP: ""
+
+    # -- External IPs for the meta service
+    # @default -- Do not allocate external IPs
+    externalIPs: []
+
+    # -- External traffic policy for the meta service
+    # @default -- Do not set an external traffic policy
+    externalTrafficPolicy: ""
+
+    # -- Node port for the meta service
+    # @default -- Do not allocate a node port
+    nodePort: 30086
+
+    # -- Extra annotations for the meta service
+    annotations: {}
+
   ingress:
+    # -- Whether to enable an ingress for the meta service
     enabled: false
+
+    # -- Hostname of the meta ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Extra annotations to add to the meta ingress
+    # @default -- See `values.yaml`
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+
+    # -- Ingress class name of the meta service
     className: "nginx"
-    path: /influxdb-enterprise-meta(/|$)(.*)
-  ## Persist data to a persistent volume
+
+    # -- Path of the meta service
+    # @default -- `"/influxdb-enterprise-meta(/\|$)(.*)"`
+    path: "/influxdb-enterprise-meta(/|$)(.*)"
+
   persistence:
+    # -- Whether to persist data to a persistent volume
     enabled: false
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-    ## influxdb data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    # annotations:
-    # accessMode: ReadWriteOnce
-    # size: 8Gi
+
+    # -- Manually managed PersistentVolumeClaim to use. If defined, this PVC
+    # must be created manually before the meta service will start
+    # @default -- Use a volume claim template
+    existingClaim: ""
+
+    # -- Storage class of the persistent volume (set to `-` to disable dynamic
+    # provisioning, leave unset to use the default provisioner
+    storageClass: ""
+
+    # -- Annotations to add to the persistent volume claim
+    annotations: {}
+
+    # -- Access mode for the persistent volume claim
+    accessMode: "ReadWriteOnce"
+
+    # -- Size of persistent volume to request
+    size: "8Gi"
+
   podDisruptionBudget:
+    # -- Minimum available pods to maintain
     minAvailable: 2
-  ## Additional meta container environment variables.
+
+  # -- Additional environment variables to set in the meta container
   env: {}
+
+  # -- Kubernetes resources and limits for the meta container
   resources: {}
 
 data:
+  # -- Number of data replicas to run
   replicas: 1
-  image: {}
-  #   override: true
-  #   pullPolicy: IfNotPresent
-  #   repository: influxdb
-  # nodeSelector: {}
-  # tolerations: []
+
+  image:
+    # -- Docker repository for data images
+    repository: "influxdb"
+
+    # -- Pull policy for data images
+    pullPolicy: "IfNotPresent"
+
+  # -- Node selection rules for data pods
+  nodeSelector: {}
+
+  # -- Tolerations for data pods
+  tolerations: []
+
+  # -- Affinity rules for data pods
+  # @default -- See `values.yaml`
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:
@@ -179,95 +247,157 @@ data:
               values:
               - data
           topologyKey: kubernetes.io/hostname
-  # podAnnotations: {}
-  #
-  # podSecurityContext: {}
+
+  # -- Annotations for data pods
+  podAnnotations: {}
+
+  # -- Pod security context for data pods
+  podSecurityContext: {}
   #   fsGroup: 2000
-  #
+
+  # -- Security context for meta pods
+  securityContext: {}
   # This allows you to run the pods as a non-privileged user, set to the uid
-  # securityContext: {}
   #   runAsUser: 2000
   #   runAsGroup: 2000
-  #  capabilities:
-  #    drop:
-  #    - ALL
-  #  capabilities:
-  #    drop:
-  #    - ALL
-  #
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-  #
-  # These are the commands that will be run before influxdb is started
+  #   capabilities:
+  #     drop:
+  #       - ALL
+  #   readOnlyRootFilesystem: true
+  #   runAsNonRoot: true
+
+  # -- Commands to run in data pods before InfluxDB is started. Each list
+  # entry should have a _cmd_ key with the command to run and an optional
+  # _description_ key describing that command
+  preruncmds: []
   # preruncmds:
   #   - cmd: ls -l
   #     description: We want to see what's in the directory
   #   - cmd: stat $HOME/somefile
   #     description: And we run a second command
-  #
+
   service:
-    ## Specify a service type
-    ## ClusterIP is default
-    ## ref: http://kubernetes.io/docs/user-guide/services/
+    # -- Service type for the data service
     type: ClusterIP
-    # loadBalancerIP: ""
-    # externalIPs: []
-    # externalTrafficPolicy: ""
-    # nodePort: 30091
-    ## Add annotations to service
-    # annotations: {}
-  # InfluxDB ingress configuration.
+
+    # -- Load balancer IP for the data service
+    # @default -- Do not allocate a load balancer IP
+    loadBalancerIP: ""
+
+    # -- External IPs for the data service
+    # @default -- Do not allocate external IPs
+    externalIPs: []
+
+    # -- External traffic policy for the data service
+    # @default -- Do not set an external traffic policy
+    externalTrafficPolicy: ""
+
+    # -- Node port for the data service
+    # @default -- Do not allocate a node port
+    nodePort: 30091
+
+    # -- Extra annotations for the data service
+    annotations: {}
+
   ingress:
+    # -- Whether to enable an ingress for the data service
     enabled: false
+
+    # -- Hostname of the data ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Extra annotations to add to the data ingress
+    # @default -- See `values.yaml`
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+
+    # -- Ingress class name of the data service
     className: "nginx"
-    path: /influxdb-enterprise-data(/|$)(.*)
-  ## Persist data to a persistent volume
+
+    # -- Path of the data service
+    # @default -- `"/influxdb-enterprise-data(/\|$)(.*)"`
+    path: "/influxdb-enterprise-data(/|$)(.*)"
+
   persistence:
+    # -- Whether to persist data to a persistent volume
     enabled: false
-    ## A manually managed Persistent Volume and Claim
-    ## Requires persistence.enabled: true
-    ## If defined, PVC must be created manually before volume will be bound
-    # existingClaim:
-    ## influxdb data Persistent Volume Storage Class
-    ## If defined, storageClassName: <storageClass>
-    ## If set to "-", storageClassName: "", which disables dynamic provisioning
-    ## If undefined (the default) or set to null, no storageClassName spec is
-    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
-    ##   GKE, AWS & OpenStack)
-    ##
-    # storageClass: "-"
-    # annotations:
-    # accessMode: ReadWriteOnce
-    # size: 8Gi
+
+    # -- Manually managed PersistentVolumeClaim to use. If defined, this PVC
+    # must be created manually before the meta service will start
+    # @default -- Use a volume claim template
+    existingClaim: ""
+
+    # -- Storage class of the persistent volume (set to `-` to disable dynamic
+    # provisioning, leave unset to use the default provisioner
+    storageClass: ""
+
+    # -- Annotations to add to the persistent volume claim
+    annotations: {}
+
+    # -- Access mode for the persistent volume claim
+    accessMode: "ReadWriteOnce"
+
+    # -- Size of persistent volume to request
+    size: "8Gi"
+
   config:
     data:
+      # -- Whether to enable verbose logging of additional debug information
+      # within the TSM engine and WAL
       trace-logging-enabled: true
+
+      # -- Duration a write will wait before fsyncing. This is useful for
+      # slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
+
+      # -- Maximum size a shared cache can reach before it starts rejecting
+      # writes
       cache-max-memory-size: 0
+
     antiEntropy:
+      # -- Enable the anti-entropy service, which copies and repairs shards
       enabled: true
+
     http:
+      # -- Whether to enable the Flux query endpoint
       flux-enabled: true
+
+      # -- Whether authentication is required
       auth-enabled: true
+
     cluster:
+      # -- Maximum number of running queries allowed on the instance (0 is
+      # unlimited)
       max-concurrent-queries: 1000
+
+      # -- Maximum duration a query is allowed to run before it is killed
       query-timeout: "300s"
+
+      # -- Maximum duration a query can run before InfluxDB logs it as a slow
+      # query
       log-queries-after: "15s"
+
     hintedHandoff:
+      # -- Maximum size of the hinted-handoff queue in bytes
       max-size: 107374182400
+
     continuousQueries:
+      # -- Whether continuous queries are enabled
       enabled: false
+
     logging:
+      # -- Logging level
       level: "debug"
+
   podDisruptionBudget:
+    # -- Minimum available pods to maintain
     minAvailable: 1
-  ## Additional data container environment variables e.g.:
-  ##   INFLUXDB_HTTP_FLUX_ENABLED: "true"
+
+  # -- Additional environment variables to set in the meta container
   env: {}
+
+  # -- Kubernetes resources and limits for the meta container
   resources: {}
