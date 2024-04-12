@@ -1,7 +1,7 @@
 apiVersion: v2
 name: noteburst
 version: 1.0.0
-appVersion: "0.10.0"
+appVersion: "0.12.0"
 description: Noteburst is a notebook execution service for the Rubin Science Platform.
 type: application
 home: https://noteburst.lsst.io/
@@ -22,5 +22,5 @@ annotations:
       title: "Design of Noteburst, a programatic JupyterLab notebook execution service for the Rubin Science Platform"
       url: "https://sqr-065.lsst.io/"
     - id: "SQR-062"
-      title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science platform"
+      title: "The Times Square service for publishing parameterized Jupyter Notebooks in the Rubin Science Platform"
       url: "https://sqr-062.lsst.io/"
