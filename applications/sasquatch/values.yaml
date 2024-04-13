@@ -1,80 +1,146 @@
 # Default values for Sasquatch.
 
-# -- Override strimzi-kafka subchart configuration.
+# Override strimzi-kafka subchart configuration.
 strimzi-kafka:
   kafka:
     listeners:
       tls:
+        # -- Whether internal TLS listener is enabled
         enabled: true
+
       plain:
+        # -- Whether internal plaintext listener is enabled
         enabled: true
+
       external:
+        # -- Whether external listener is enabled
         enabled: true
+
   connect:
+    # -- Whether Kafka Connect is enabled
     enabled: true
 
-# -- strimzi-registry-operator configuration.
 strimzi-registry-operator:
+  # -- Name of the Strimzi Kafka cluster
   clusterName: sasquatch
+
+  # -- Namespace where the Strimzi Kafka cluster is deployed
   clusterNamespace: sasquatch
+
+  # -- Namespace where the strimzi-registry-operator is deployed
   operatorNamespace: sasquatch
 
 influxdb:
-  # -- Enable InfluxDB.
+  # -- Whether InfluxDB is enabled
   enabled: true
-  # -- InfluxDB image tag.
+
   image:
+    # -- InfluxDB image tag
     tag: "1.8.10"
+
   persistence:
-    # -- Enable persistent volume claim.
-    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    # -- Whether to use persistent volume claims. By default, `storageClass`
+    # is undefined, choosing the default provisioner (standard on GKE).
     enabled: true
-    # -- Persistent volume size.
-    # @default 1Ti for teststand deployments
+
+    # -- Persistent volume size
+    # @default -- 1TiB for teststand deployments
     size: 1Ti
-  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+
   setDefaultUser:
+    # -- Whether the default InfluxDB user is set
     enabled: true
+
     user:
+      # -- Use `influxdb-user` and `influxdb-password` keys from this secret
       existingSecret: sasquatch
-  # -- InfluxDB ingress configuration.
-  # @default -- disabled
+
   ingress:
+    # -- Whether to enable the InfluxDB ingress
     enabled: false
+
+    # -- Whether to obtain TLS certificates for the ingress hostname
     tls: false
+
+    # -- Hostname of the ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Annotations to add to the ingress
+    # @default -- See `values.yaml`
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+    # -- Ingress class to use
     className: "nginx"
-    path: /influxdb(/|$)(.*)
-  # -- Override InfluxDB configuration.
+
+    # -- Path for the ingress
+    # @default -- `"/influxdb(/\|$)(.*)"`
+    path: "/influxdb(/|$)(.*)"
+
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
+      # -- Maximum size a shared cache can reach before it starts rejecting
+      # writes
       cache-max-memory-size: 0
-      # Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present.
+
+      # -- Duration a write will wait before fsyncing. This is useful for
+      # slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
+
+      # -- Whether to enable verbose logging of additional debug information
+      # within the TSM engine and WAL
       trace-logging-enabled: true
+
     http:
+      # -- Whether to enable the HTTP endpoints
       enabled: true
+
+      # -- Whether to enable the Flux query endpoint
       flux-enabled: true
+
+      # -- Whether authentication is required
       auth-enabled: true
+
+      # -- Maximum number of rows the system can return from a non-chunked
+      # query (0 is unlimited)
       max-row-limit: 0
+
     coordinator:
+      # -- Duration a write request waits before timeout is returned to the
+      # caller
       write-timeout: "1h"
+
+      # -- Maximum number of running queries allowed on the instance (0 is
+      # unlimited)
       max-concurrent-queries: 1000
+
+      # -- Maximum duration a query is allowed to run before it is killed
       query-timeout: "30s"
+
+      # -- Maximum duration a query can run before InfluxDB logs it as a slow
+      # query
       log-queries-after: "15s"
+
     continuous_queries:
+      # -- Whether continuous queries are enabled
       enabled: false
+
     logging:
+      # -- Logging level
       level: "debug"
+
   initScripts:
-    # -- Enable InfluxDB custom initialization script.
+    # -- Whether to enable the InfluxDB custom initialization script
     enabled: false
-    # scripts:
+
     # # -- InfluxDB custom initialization script.
+    # scripts:
     #   init.iql: |+
+
+  # -- Kubernetes resource requests and limits
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 96Gi
@@ -84,60 +150,116 @@ influxdb:
       cpu: 8
 
 influxdb-staging:
-  # -- Enable InfluxDB staging deployment.
+  # -- Whether to enable the InfluxDB staging deployment
   enabled: false
-  # -- InfluxDB image tag.
+
   image:
+    # -- InfluxDB image tag
     tag: "1.8.10"
+
   persistence:
-    # -- Enable persistent volume claim.
-    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    # -- Whether to use persistent volume claims. By default, `storageClass`
+    # is undefined, choosing the default provisioner (standard on GKE).
     enabled: true
-    # -- Persistent volume size.
-    # @default 1Ti for teststand deployments
+
+    # -- Persistent volume size
+    # @default -- 1TiB for teststand deployments
     size: 1Ti
-  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+
   setDefaultUser:
+    # -- Whether the default InfluxDB user is set
     enabled: true
+
     user:
+      # -- Use `influxdb-user` and `influxdb-password` keys from this secret
       existingSecret: sasquatch
-  # -- InfluxDB ingress configuration.
-  # @default -- disabled
+
   ingress:
+    # -- Whether to enable the InfluxDB ingress
     enabled: false
+
+    # -- Whether to obtain TLS certificates for the ingress hostname
     tls: false
+
+    # -- Hostname of the ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Annotations to add to the ingress
+    # @default -- See `values.yaml`
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+    # -- Ingress class to use
     className: "nginx"
-    path: /influxdb-staging(/|$)(.*)
-  # -- Override InfluxDB configuration.
+
+    # -- Path for the ingress
+    # @default -- `"/influxdb-staging(/\|$)(.*)"`
+    path: "/influxdb-staging(/|$)(.*)"
+
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
+      # -- Maximum size a shared cache can reach before it starts rejecting
+      # writes
       cache-max-memory-size: 0
+
+      # -- Duration a write will wait before fsyncing. This is useful for
+      # slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
+
+      # -- Whether to enable verbose logging of additional debug information
+      # within the TSM engine and WAL
       trace-logging-enabled: true
+
     http:
+      # -- Whether to enable the HTTP endpoints
       enabled: true
+
+      # -- Whether to enable the Flux query endpoint
       flux-enabled: true
+
+      # -- Whether authentication is required
       auth-enabled: true
+
+      # -- Maximum number of rows the system can return from a non-chunked
+      # query (0 is unlimited)
       max-row-limit: 0
+
     coordinator:
+      # -- Duration a write request waits before timeout is returned to the
+      # caller
       write-timeout: "1h"
+
+      # -- Maximum number of running queries allowed on the instance (0 is
+      # unlimited)
       max-concurrent-queries: 0
+
+      # -- Maximum duration a query is allowed to run before it is killed
       query-timeout: "60s"
+
+      # -- Maximum duration a query can run before InfluxDB logs it as a slow
+      # query
       log-queries-after: "15s"
+
     continuous_queries:
+      # -- Whether continuous queries are enabled
       enabled: false
+
     logging:
+      # -- Logging level
       level: "debug"
+
   initScripts:
-    # -- Enable InfluxDB custom initialization script.
+    # -- Whether to enable the InfluxDB custom initialization script
     enabled: false
-    # scripts:
+
     # # -- InfluxDB custom initialization script.
+    # scripts:
     #   init.iql: |+
+
+  # -- Kubernetes resource requests and limits
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 96Gi
@@ -147,60 +269,116 @@ influxdb-staging:
       cpu: 8
 
 source-influxdb:
-  # -- Enable InfluxDB staging deployment.
+  # -- Enable InfluxDB source deployment
   enabled: false
-  # -- InfluxDB image tag.
+
   image:
+    # -- InfluxDB image tag
     tag: "1.8.10"
+
   persistence:
-    # -- Enable persistent volume claim.
-    # By default storageClass is undefined choosing the default provisioner (standard on GKE).
+    # -- Whether to use persistent volume claims. By default, `storageClass`
+    # is undefined, choosing the default provisioner (standard on GKE).
     enabled: true
-    # -- Persistent volume size.
-    # @default 1Ti for teststand deployments
+
+    # -- Persistent volume size
+    # @default -- 1TiB for teststand deployments
     size: 1Ti
-  # -- Default InfluxDB user, use influxb-user and influxdb-password keys from secret.
+
   setDefaultUser:
+    # -- Whether the default InfluxDB user is set
     enabled: true
+
     user:
+      # -- Use `influxdb-user` and `influxdb-password` keys from this secret
       existingSecret: sasquatch
-  # -- InfluxDB ingress configuration.
-  # @default -- disabled
+
   ingress:
+    # -- Whether to enable the InfluxDB ingress
     enabled: false
+
+    # -- Whether to obtain TLS certificates for the ingress hostname
     tls: false
+
+    # -- Hostname of the ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Annotations to add to the ingress
+    # @default -- See `values.yaml`
     annotations:
       nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+    # -- Ingress class to use
     className: "nginx"
-    path: /source-influxdb(/|$)(.*)
-  # -- Override InfluxDB configuration.
+
+    # -- Path for the ingress
+    # @default -- `"/source-influxdb(/\|$)(.*)"`
+    path: "/source-influxdb(/|$)(.*)"
+
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
     data:
+      # -- Maximum size a shared cache can reach before it starts rejecting
+      # writes
       cache-max-memory-size: 0
+
+      # -- Duration a write will wait before fsyncing. This is useful for
+      # slower disks or when WAL write contention is present.
       wal-fsync-delay: "100ms"
+
+      # -- Whether to enable verbose logging of additional debug information
+      # within the TSM engine and WAL
       trace-logging-enabled: true
+
     http:
+      # -- Whether to enable the HTTP endpoints
       enabled: true
+
+      # -- Whether to enable the Flux query endpoint
       flux-enabled: true
+
+      # -- Whether authentication is required
       auth-enabled: true
+
+      # -- Maximum number of rows the system can return from a non-chunked
+      # query (0 is unlimited)
       max-row-limit: 0
+
     coordinator:
+      # -- Duration a write request waits before timeout is returned to the
+      # caller
       write-timeout: "1h"
+
+      # -- Maximum number of running queries allowed on the instance (0 is
+      # unlimited)
       max-concurrent-queries: 1000
+
+      # -- Maximum duration a query is allowed to run before it is killed
       query-timeout: "30s"
+
+      # -- Maximum duration a query can run before InfluxDB logs it as a slow
+      # query
       log-queries-after: "15s"
+
     continuous_queries:
+      # -- Whether continuous queries are enabled
       enabled: false
+
     logging:
+      # -- Logging level
       level: "debug"
+
   initScripts:
     # -- Enable InfluxDB custom initialization script.
     enabled: false
-    # scripts:
+
     # # -- InfluxDB custom initialization script.
+    # scripts:
     #   init.iql: |+
+
+  # -- Kubernetes resource requests and limits
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 96Gi
@@ -209,55 +387,81 @@ source-influxdb:
       memory: 96Gi
       cpu: 8
 
-# -- Override influxdb-enterprise configuration.
 influxdb-enterprise:
+  # -- Whether to use influxdb-enterprise
   enabled: false
 
-# -- Override kafka-connect-manager configuration.
+# -- Overrides for kafka-connect-manager configuration
 kafka-connect-manager: {}
 
-# -- Override source-kafka-connect-manager configuration.
 source-kafka-connect-manager:
+  # -- Whether source kafka-connect-manager is enabled
   enabled: false
+
+  # -- Additional environment settings for source kafka-connect-manager
+  # @default -- See `values.yaml`
   env:
     kafkaConnectUrl: "http://sasquatch-source-connect-api.sasquatch:8083"
 
-# -- Override kafka-connect-manager-enterprise configuration.
 kafka-connect-manager-enterprise:
+  # -- Whether enterprise kafka-connect-manager is enabled
   enabled: false
 
-# -- Override telegraf-kafka-consumer configuration.
+# -- Overrides for telegraf-kafka-consumer configuration
 telegraf-kafka-consumer: {}
 
-# -- Override rest-proxy configuration.
 rest-proxy:
+  # -- Whether to enable the REST proxy
   enabled: false
 
 chronograf:
-  # -- Enable Chronograf.
+  # -- Whether Chronograf is enabled
   enabled: true
-  # -- Chronograf image tag.
+
   image:
+    # -- Docker image to use for Chronograf
     repository: "quay.io/influxdb/chronograf"
+
+    # -- Docker tag to use for Chronograf
     tag: 1.10.3
-  # -- Chronograf data persistence configuration.
+
   persistence:
+    # -- Whether to enable persistence for Chronograf data
     enabled: true
+
+    # -- Size of data store to request, if enabled
     size: 100Gi
-  # -- Chronograf ingress configuration.
-  # @default -- disabled
+
   ingress:
+    # -- Whether to enable the Chronograf ingress
     enabled: false
+
+    # -- Whether to obtain TLS certificates for the ingress hostname
     tls: false
+
+    # -- Hostname of the ingress
+    # @default -- None, must be set if the ingress is enabled
     hostname: ""
+
+    # -- Ingress class to use
     className: "nginx"
-    path: /chronograf(/|$)
-  # -- Chronograf environment variables.
+
+    # -- Path for the ingress
+    # @default -- `"/chronograf(/\|$)"`
+    path: "/chronograf(/|$)"
+
+  # -- Additional environment variables for Chronograf
+  # @default -- See `values.yaml`
   env:
     HOST_PAGE_DISABLED: true
     BASE_PATH: /chronograf
-  # -- Chronograf secrets, expected keys generic_client_id, generic_client_secret and token_secret.
+
+  # -- Name of secret to use. The keys `generic_client_id`,
+  # `generic_client_secret`, and `token_secret` should be set.
   envFromSecret: "sasquatch"
+
+  # -- Kubernetes resource requests and limits for Chronograf
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 4Gi
@@ -267,23 +471,36 @@ chronograf:
       cpu: 4
 
 source-kapacitor:
-  # -- Enable Kapacitor.
+  # -- Whether Kapacitor for source is enabled
   enabled: false
-  # -- Kapacitor image tag.
+
   image:
+    # -- Docker image to use for Kapacitor
     repository: kapacitor
+
+    # -- Tag to use for Kapacitor
     tag: 1.7.2
-  # -- Chronograf data persistence configuration.
+
   persistence:
+    # -- Whether to enable Kapacitor data persistence
     enabled: true
+
+    # -- Size of storage to request if enabled
     size: 100Gi
-  # -- InfluxDB connection URL.
+
+  # -- InfluxDB connection URL
   influxURL: http://sasquatch-influxdb-staging.sasquatch:8086
-  # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
+
+  # -- Use `influxdb-user` and `influxdb-password` keys from this secret
   existingSecret: sasquatch
-  # -- Kapacitor environment variables.
+
+  # -- Additional environment variables to set
+  # @default -- See `values.yaml`
   envVars:
     KAPACITOR_SLACK_ENABLED: true
+
+  # -- Kubernetes resource requests and limits for Kapacitor
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 1Gi
@@ -293,23 +510,36 @@ source-kapacitor:
       cpu: 4
 
 kapacitor:
-  # -- Enable Kapacitor.
+  # -- Whether Kapacitor is enabled
   enabled: true
-  # -- Kapacitor image tag.
+
   image:
+    # -- Docker image to use for Kapacitor
     repository: kapacitor
+
+    # -- Tag to use for Kapacitor
     tag: 1.7.2
-  # -- Chronograf data persistence configuration.
+
   persistence:
+    # -- Whether to enable Kapacitor data persistence
     enabled: true
+
+    # -- Size of storage to request if enabled
     size: 100Gi
-  # -- InfluxDB connection URL.
+
+  # -- InfluxDB connection URL
   influxURL: http://sasquatch-influxdb.sasquatch:8086
-  # -- InfluxDB credentials, use influxdb-user and influxdb-password keys from secret.
+
+  # -- Use `influxdb-user` and `influxdb-password` keys from this secret
   existingSecret: sasquatch
-  # -- Kapacitor environment variables.
+
+  # -- Additional environment variables to set
+  # @default -- See `values.yaml`
   envVars:
     KAPACITOR_SLACK_ENABLED: true
+
+  # -- Kubernetes resource requests and limits for Kapacitor
+  # @default -- See `values.yaml`
   resources:
     requests:
       memory: 1Gi
@@ -319,19 +549,19 @@ kapacitor:
       cpu: 4
 
 kafdrop:
-  # -- Enable Kafdrop.
+  # -- Whether Kafdrop is enabled
   enabled: true
 
 bucketmapper:
-  # -- image for monitoring-related cronjobs
   image:
-    # -- repository for rubin-influx-tools
+    # -- Docker image for monitoring-related cron jobs
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
-    # -- tag for rubin-influx-tools
+
+    # -- Tag for monitoring-related cron jobs
     tag: 0.2.0
 
 squareEvents:
-  # -- Enable the Square Events subchart with topic and user configurations.
+  # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
 
 global:

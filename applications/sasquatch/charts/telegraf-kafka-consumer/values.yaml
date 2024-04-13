@@ -1,49 +1,51 @@
 ## Default values.yaml for the Telegraf Kafka Consumer subchart.
+
 # -- Wether the Telegraf Kafka Consumer is enabled
 enabled: false
 
 image:
-  # -- Telegraf image repository.
+  # -- Telegraf image repository
   repo: "quay.io/influxdb/telegraf-nightly"
-  # -- Telegraf image tag.
+
+  # -- Telegraf image tag
   tag: "latest"
-  # -- Image pull policy.
-  # @default -- IfNotPresent
+
+  # -- Image pull policy
   pullPolicy: "Always"
 
-# -- Annotations for telegraf-kafka-consumers pods.
+# -- Annotations for telegraf-kafka-consumers pods
 podAnnotations: {}
 
-# -- Labels for telegraf-kafka-consumer pods.
+# -- Labels for telegraf-kafka-consumer pods
 podLabels: {}
 
-# -- Secret names to use for Docker pulls.
+# -- Secret names to use for Docker pulls
 imagePullSecrets: []
 
-# -- Arguments passed to the Telegraf agent containers.
+# -- Arguments passed to the Telegraf agent containers
 args: []
 
-# Telegraf agent enviroment variables
+# -- Telegraf agent enviroment variables
+# @default -- See `values.yaml`
 env:
   - name: TELEGRAF_PASSWORD
     valueFrom:
       secretKeyRef:
         name: sasquatch
-        # -- Telegraf KafkaUser password.
+        # Telegraf KafkaUser password.
         key: telegraf-password
   - name: INFLUXDB_USER
     valueFrom:
       secretKeyRef:
         name: sasquatch
-        # -- InfluxDB v1 user
+        # InfluxDB v1 user
         key: influxdb-user
   - name: INFLUXDB_PASSWORD
     valueFrom:
       secretKeyRef:
         name: sasquatch
-        # -- InfluxDB v1 password
+        # InfluxDB v1 password
         key: influxdb-password
-
 
 # -- Name of the secret with values to be added to the environment.
 envFromSecret: ""
@@ -53,77 +55,92 @@ kafkaConsumers:
   test:
     # -- Enable the Telegraf Kafka consumer.
     enabled: false
-    # -- Number of Telegraf Kafka consumer replicas.
-    # Increase this value to increase the consumer throughput.
+
+    # -- Number of Telegraf Kafka consumer replicas. Increase this value to
+    # increase the consumer throughput.
     replicaCount: 1
+
     # -- Data collection interval for the Kafka consumer.
     interval: "1s"
+
     # -- Default data flushing interval to InfluxDB.
     flush_interval: "1s"
+
     # -- Union field separator: if a single Avro field is flattened into more
-    # than one InfluxDB field (e.g. an array "a", with four members,
-    # would yield "a0", "a1", "a2", "a3"; if the field separator were
-    # "_", these would be "a_0"..."a_3".
+    # than one InfluxDB field (e.g. an array `a`, with four members, would
+    # yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these
+    # would be `a_0`...`a_3`.
     union_field_separator: ""
-    # -- Union mode: this can be one of "flatten", "nullable", or
-    # "any".
-    # If empty, the default is "flatten".  When "flatten" is
-    # set, then if you have an Avro union type of '[ "int", "float" ]'
-    # for field "a", and you have union_field_separator set to "_", then
-    # measurements of "a" will go into Telegraf fields "a_int" and
-    # "a_float" depending on their type.  This keeps InfluxDB happy with
-    # your data even when the same Avro field has multiple types (see
-    # below).
-    # One common use of Avro union types is to mark fields as optional
-    # by specifying '[ "null", "<type>" ]' as the union type.  If this is
-    # set to "nullable", the plugin will not change the field name by adding
-    # the type, but will silently discard fields whose values are null.
-    # However, the measurement will still contain any other fields.
-    # The last possible value is "any".  With this value, the plugin will
-    # not change the field name and will just put in whatever value it
-    # receives.
-    # WARNING: if you use "nullable" with more than one non-null type, or
-    # if you use "any", and Telegraf is feeding InfluxDB, InfluxDB will
-    # associate that field with the first type it sees for a given
-    # its value.  If it receives another measurement with a different
-    # type in that field, it will discard that entire measurement.  Be
-    # sure you know what you're doing if you use the "any" type, or
-    # "nullable" with more than one non-null type.
-    # For Rubin, "nullable" is usually the right choice.
+
+    # Union mode.
+    #
+    # If empty, the default is `flatten`.  When `flatten` is set, then if you
+    # have an Avro union type of `[ "int", "float" ]` for field `a`, and you
+    # have union_field_separator set to `_`, then measurements of `a` will go
+    # into Telegraf fields `a_int` and `a_float` depending on their type.
+    # This keeps InfluxDB happy with your data even when the same Avro field
+    # has multiple types (see below).
+
+    # One common use of Avro union types is to mark fields as optional by
+    # specifying `[ "null", "<type>" ]` as the union type.  If this is set to
+    # `nullable`, the plugin will not change the field name by adding the
+    # type, but will silently discard fields whose values are null.  However,
+    # the measurement will still contain any other fields.
+    #
+    # The last possible value is `any`.  With this value, the plugin will not
+    # change the field name and will just put in whatever value it receives.
+    #
+    # WARNING: if you use `nullable` with more than one non-null type, or if
+    # you use `any`, and Telegraf is feeding InfluxDB, InfluxDB will associate
+    # that field with the first type it sees for a given its value.  If it
+    # receives another measurement with a different type in that field, it
+    # will discard that entire measurement.  Be sure you know what you're
+    # doing if you use the `any` type, or `nullable` with more than one
+    # non-null type.
+    #
+    # For Rubin, `nullable` is usually the right choice.
+    #
+    # -- Union mode: this can be one of `flatten`, `nullable`, or `any`. See
+    # `values.yaml` for extensive discussion.
     union_mode: "nullable"
-    # -- Timestamp format. Possible values are "unix" (the default if unset), "unix_ms",
-    # "unix_us", and "unix_ns".
-    # At Rubin, use "unix" timestamp format for SAL timestamps.
+
+    # -- Timestamp format. Possible values are `unix` (the default if unset),
+    # `unix_ms`, `unix_us`, and `unix_ns`.  At Rubin, use `unix` timestamp
+    # format for SAL timestamps.
     timestamp_format: "unix"
+
     # -- Avro field to be used as the InfluxDB timestamp (optional).  If
-    # unspecified or set to the empty string, Telegraf will use the time
-    # it received the measurement.
+    # unspecified or set to the empty string, Telegraf will use the time it
+    # received the measurement.
     timestamp_field: "private_efdStamp"
-    # -- List of Avro fields to be recorded as InfluxDB tags.  The Avro
-    # fields specified as tags will be converted to strings before
-    # ingestion into InfluxDB.
+
+    # -- List of Avro fields to be recorded as InfluxDB tags.  The Avro fields
+    # specified as tags will be converted to strings before ingestion into
+    # InfluxDB.
     tags: []
+
     # -- List of Avro fields to be recorded as InfluxDB fields.  If not
-    # specified, any Avro field that is not marked as a tag will become
-    # an InfluxDB field.
+    # specified, any Avro field that is not marked as a tag will become an
+    # InfluxDB field.
     fields: []
-    # -- List of regular expressions to specify the Kafka topics
-    # consumed by this agent.
+
+    # -- List of regular expressions to specify the Kafka topics consumed by
+    # this agent.
     topicRegexps: |
       [ ".*Test" ]
 
 influxdb:
-  # -- Name of the InfluxDB v1 database to write to.
+  # -- Name of the InfluxDB v1 database to write to
   database: "telegraf-kafka-consumer-v1"
 
-# -- Kubernetes resources requests and limits.
+# -- Kubernetes resources requests and limits
 resources: {}
 
-# -- Node labels for pod assignment.
+# -- Node labels for pod assignment
 nodeSelector: {}
 
-# -- Affinity for pod assignment.
+# -- Affinity for pod assignment
 affinity: {}
 
-# -- Tolerations for pod assignment.
+# -- Tolerations for pod assignment
 tolerations: []

@@ -4,11 +4,13 @@
 replicaCount: 1
 
 image:
-  # -- Kafdrop Docker image repository.
+  # -- Kafdrop Docker image repository
   repository: obsidiandynamics/kafdrop
-  # -- Image pull policy.
+
+  # -- Image pull policy
   pullPolicy: IfNotPresent
-  # -- Kafdrop image version.
+
+  # -- Kafdrop image version
   tag: 4.0.1
 
 kafka:
@@ -16,53 +18,60 @@ kafka:
   broker: "sasquatch-kafka-bootstrap.sasquatch:9092"
 
 jvm:
-  # -- JVM options.
+  # -- JVM options
   opts: ""
 
-# -- The hostname to report for the RMI registry (used for JMX).
-# @default -- Defaults to localhost.
+# -- The hostname to report for the RMI registry (used for JMX)
 host: localhost
 
 jmx:
   # -- Port to use for JMX. If unspecified, JMX will not be exposed.
-  # @default -- Defaults to 8686
   port: 8686
 
 server:
-  # -- The context path to serve requests on (must end with a /).
-  # @default -- Defaults to /.
   servlet:
+    # -- The context path to serve requests on
     contextPath: /kafdrop
-  # -- The web server port to listen on.
-  # @default -- Defaults to 9000.
+
+  # -- The web server port to listen on
   port: 9000
 
 # -- The endpoint of Schema Registry
 schemaregistry: "http://sasquatch-schema-registry.sasquatch:8081"
 
-# -- Existing k8s secrect use to set kafdrop environment variables.
-# Set SCHEMAREGISTRY_AUTH for basic auth credentials in the form username:password
+# -- Existing Kubernetes secrect use to set kafdrop environment variables.
+# Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form
+# `<username>:<password>`
+# @default -- Do not use a secret
 existingSecret: ""
 
-# -- Command line arguments to Kafdrop.
+# -- Command line arguments to Kafdrop
+# @default -- See `values.yaml`
 cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
 
 service:
-  # -- Service annotations
+  # -- Additional annotations to add to the service
   annotations: {}
+
   # -- Service port
   port: 9000
 
 ingress:
-  # -- Enable Ingress. This should be true to create an ingress rule for the application.
+  # -- Whether to enable the ingress
   enabled: false
-  # -- Ingress annotations.
+
+  # -- Additional ingress annotations
   annotations: {}
-  # -- Ingress hostname.
+
+  # -- Ingress hostname
+  # @default -- None, must be set if ingress is enabled
   hostname: ""
-  # -- Ingress path.
+
+  # -- Ingress path
   path: /kafdrop
 
+# -- Kubernetes requests and limits for Kafdrop
+# @default -- See `values.yaml`
 resources:
   requests:
     memory: 200Mi
@@ -71,14 +80,14 @@ resources:
     memory: 4Gi
     cpu: 2
 
-# -- Node selector configuration.
+# -- Node selector configuration
 nodeSelector: {}
 
-# -- Tolerations configuration.
+# -- Tolerations configuration
 tolerations: []
 
-# -- Affinity configuration.
+# -- Affinity configuration
 affinity: {}
 
-# -- Pod annotations.
+# -- Pod annotations
 podAnnotations: {}
