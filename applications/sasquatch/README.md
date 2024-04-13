@@ -1,6 +1,15 @@
 # sasquatch
 
-Rubin Observatory's telemetry service.
+Rubin Observatory's telemetry service
+
+**Homepage:** <https://sasquatch.lsst.io/>
+
+## Source Code
+
+* <https://github.com/influxdata/influxdb>
+* <https://github.com/obsidiandynamics/kafdrop>
+* <https://github.com/confluentinc/kafka-rest>
+* <https://github.com/lsst-sqre/sasquatch>
 
 ## Values
 
