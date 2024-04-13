@@ -558,7 +558,7 @@ bucketmapper:
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
 
     # -- Tag for monitoring-related cron jobs
-    tag: 0.2.0
+    tag: 0.3.0
 
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
