@@ -8,13 +8,9 @@ csc_collector:
     key: pull-secret
     type: kubernetes.io/dockerconfigjson
   - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: lfa
-    key: ts/software/lfa
-  - name: butler-secret
-    key: butler-secret
-  - name: love
-    key: ts/software/love
+    key: obssys
+  - name: obssys
+    key: obssys
 
 atqueue:
   namespace: *ns
@@ -30,7 +26,7 @@ atqueue:
     containerPath: &abS-cP /home/saluser/.lsst
     dbUser: oods
   secretPermFixer:
-  - name: butler-secret
+  - name: obssys
     containerPath: *abS-cP
   nfsMountpoint:
   - name: auxtel-gen3-butler
@@ -122,7 +118,7 @@ authorize:
     AUTHLIST_USER_NAME: authlist_user
   envSecrets:
   - name: AUTHLIST_USER_PASS
-    secretName: love
+    secretName: obssys
     secretKey: authlist-user-pass
 
 mtqueue:
@@ -139,7 +135,7 @@ mtqueue:
     containerPath: &mbS-cP /home/saluser/.lsst
     dbUser: oods
   secretPermFixer:
-  - name: butler-secret
+  - name: obssys
     containerPath: *mbS-cP
   nfsMountpoint:
   - name: auxtel-gen3-butler
@@ -190,16 +186,16 @@ mtscheduler:
     INDEX: 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
+    secretName: obssys
     secretKey: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
+    secretName: obssys
     secretKey: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
+    secretName: obssys
     secretKey: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
+    secretName: obssys
     secretKey: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data

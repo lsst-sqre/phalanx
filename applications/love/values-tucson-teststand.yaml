@@ -4,9 +4,9 @@ csc_collector:
     key: pull-secret
     type: kubernetes.io/dockerconfigjson
   - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: lfa
-    key: ts/software/lfa
+    key: love
+  - name: love
+    key: love
 
 love-commander:
   image:
@@ -16,16 +16,16 @@ love-commander:
     S3_INSTANCE: tuc
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
+    secretName: love
     secretKey: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
+    secretName: love
     secretKey: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
+    secretName: love
     secretKey: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
+    secretName: love
     secretKey: aws-secret-access-key
   service:
     enabled: true

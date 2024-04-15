@@ -4,11 +4,9 @@ csc_collector:
     key: pull-secret
     type: kubernetes.io/dockerconfigjson
   - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: lfa
-    key: ts/software/lfa
-  - name: butler-secret
-    key: butler-secret
+    key: simonyitel
+  - name: simonyitel
+    key: simonyitel
 
 ccheaderservice:
   enabled: true
@@ -21,16 +19,16 @@ ccheaderservice:
     CAMERA: cc
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
+    secretName: simonyitel
     secretKey: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
+    secretName: simonyitel
     secretKey: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
+    secretName: simonyitel
     secretKey: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
+    secretName: simonyitel
     secretKey: aws-secret-access-key
 
 ccoods:
@@ -45,7 +43,7 @@ ccoods:
     containerPath: &bS-cP /home/saluser/.lsst
     dbUser: oods
   secretPermFixer:
-  - name: butler-secret
+  - name: simonyitel
     containerPath: *bS-cP
   nfsMountpoint:
   - name: comcam-gen3-butler
@@ -143,7 +141,7 @@ mtaos:
     containerPath: *bS-cP
     dbUser: oods
   secretPermFixer:
-  - name: butler-secret
+  - name: simonyitel
     containerPath: *bS-cP
   nfsMountpoint:
   - name: comcam-gen3-butler
