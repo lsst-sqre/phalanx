@@ -6,7 +6,7 @@ uws-api-server:
   logLevel: INFO
   vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
   butlerPg:
-    secretKey: butler-secret
+    secretKey: uws
     containerPath: /home/lsst/.lsst
     dbUser: oods
   workingVolume:

@@ -72,6 +72,7 @@ class VaultService:
         old path and writing them to the default path for the environment.
         Any existing secrets in Vault for the environment with the same
         application names as in the old path will be overwritten.
+        Subdirectories are skipped.
 
         Parameters
         ----------
@@ -90,6 +91,9 @@ class VaultService:
         old_vault_client = self._vault.get_vault_client(config, old_path)
         secrets = old_vault_client.list_application_secrets()
         for name in sorted(secrets):
+            if name.endswith("/"):
+                print("Skipping subdirectory", name)
+                continue
             secret = old_vault_client.get_application_secret(name)
             new_vault_client.store_application_secret(name, secret)
             print("Copied Vault secret for", name)
