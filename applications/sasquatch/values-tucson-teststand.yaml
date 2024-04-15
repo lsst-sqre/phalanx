@@ -44,7 +44,7 @@ strimzi-kafka:
     storage:
       storageClassName: rook-ceph-block
     metricsConfig:
-      enabled: true
+      enabled: false
   users:
     tsSalKafka:
       enabled: true
