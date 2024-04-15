@@ -16,7 +16,7 @@ A subchart to deploy Confluent REST proxy for Sasquatch.
 | heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| image.tag | string | `"7.6.0"` | Kafka REST proxy image tag |
+| image.tag | string | `"7.6.1"` | Kafka REST proxy image tag |
 | ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `false` | Whether to enable the ingress |
 | ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
