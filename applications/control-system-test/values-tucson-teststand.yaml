@@ -5,7 +5,7 @@ csc_collector:
     type: kubernetes.io/dockerconfigjson
   - name: ts-salkafka
     key: control-system-test
-  - name: lfa
+  - name: control-system-test
     key: control-system-test
 
 test42:
