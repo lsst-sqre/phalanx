@@ -5,7 +5,7 @@ csc_collector:
     type: kubernetes.io/dockerconfigjson
   - name: ts-salkafka
     key: eas
-  - name: meteoblue
+  - name: eas
     key: eas
 
 auxtel-ess01-sim:
@@ -286,8 +286,8 @@ weatherforecast:
     RUN_ARG: --state enabled
   envSecrets:
   - name: METEOBLUE_API_KEY
-    secretName: meteoblue
-    secretKey: api-key
+    secretName: eas
+    secretKey: meteoblue-api-key
   resources:
     requests:
       cpu: 9m
