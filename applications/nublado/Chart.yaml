@@ -11,7 +11,7 @@ dependencies:
   - name: jupyterhub
     # This is the Zero To Jupyterhub version, *not* the version of the
     # Jupyterhub package itself.
-    version: "3.3.6"
+    version: "3.3.7"
     repository: https://jupyterhub.github.io/helm-chart/
 
 annotations:
