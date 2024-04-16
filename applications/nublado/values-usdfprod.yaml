@@ -103,15 +103,6 @@ controller:
             resources:
               requests:
                 storage: "1Gi"
-        - name: "fs-ddn-sdf-group-rubin"
-          source:
-            type: "persistentVolumeClaim"
-            storageClassName: "fs-ddn-sdf-group-rubin"
-            accessModes:
-              - "ReadWriteMany"
-            resources:
-              requests:
-                storage: "1Gi"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "sdf-home"
@@ -124,8 +115,6 @@ controller:
           volumeName: "sdf-data-rubin"
         - containerPath: "/scratch"
           volumeName: "sdf-scratch"
-        - containerPath: "/fs/ddn/sdf/group/rubin"
-          volumeName: "fs-ddn-sdf-group-rubin"
 
 proxy:
   ingress:
