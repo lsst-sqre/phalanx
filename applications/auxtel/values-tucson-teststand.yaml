@@ -30,17 +30,13 @@ atheaderservice:
     CAMERA: at
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: auxtel
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: auxtel
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: auxtel
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: auxtel
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
 
 athexapod-sim:
   enabled: true
@@ -62,11 +58,9 @@ atoods:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
+    containerPath: /home/saluser/.lsst
     dbUser: oods
-  secretPermFixer:
-  - name: auxtel
-    containerPath: *bS-cP
+    secretFilename: postgres-credentials.txt
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS

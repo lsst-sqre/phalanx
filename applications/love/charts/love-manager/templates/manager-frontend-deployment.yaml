@@ -25,10 +25,10 @@ spec:
         ports:
         - containerPort: {{ .Values.manager.frontend.ports.container }}
         env:
-        {{- $data := dict "env" .Values.manager.frontend.env "secretName" "" }}
+        {{- $data := dict "env" .Values.manager.frontend.env "secret" false }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         {{- if .Values.manager.frontend.envSecrets }}
-        {{- $data := dict "secretName" .Values.envSecretKeyName "env" .Values.manager.frontend.envSecrets }}
+        {{- $data := dict "secret" true "env" .Values.manager.frontend.envSecrets }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         {{- end }}
         {{- with $.Values.manager.frontend.resources }}

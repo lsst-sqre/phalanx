@@ -23,9 +23,9 @@ spec:
         ports:
           - containerPort: {{ .Values.redis.port }}
         env:
-        {{- $data := dict "env" .Values.redis.env "secretName" "" }}
+        {{- $data := dict "env" .Values.redis.env "secret" false }}
         {{- include "helpers.envFromList" $data | indent 10 }}
-        {{- $data := dict "env" .Values.redis.envSecrets "secretName" .Values.envSecretKeyName }}
+        {{- $data := dict "env" .Values.redis.envSecrets "secret" true }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         volumeMounts:
           - mountPath: /data/redis.conf

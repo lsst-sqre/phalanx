@@ -13,17 +13,13 @@ gcheaderservice1:
     URL_SPEC: --lfa_mode s3 --s3instance tuc
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: calsys
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: calsys
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: calsys
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: calsys
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
 
 simulation-gencam:
   enabled: true
@@ -35,17 +31,13 @@ simulation-gencam:
     RUN_ARG: 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: calsys
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: calsys
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: calsys
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: calsys
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   service:
     enabled: true
     port: 5013

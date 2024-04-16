@@ -46,17 +46,17 @@ spec:
                 - name: PGPASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: {{ .Values.namespace }}-secrets
+                      name: love
                       key: {{ .Values.manager.frontend.envSecrets.DB_PASS }}
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
                     secretKeyRef:
-                      name: lfa
+                      name: love
                       key: aws-access-key-id
                 - name: AWS_SECRET_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: lfa
+                      name: love
                       key: aws-secret-access-key
               {{- with $.Values.viewBackup.resources }}
               resources:

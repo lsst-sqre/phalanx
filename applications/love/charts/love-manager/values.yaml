@@ -1,9 +1,5 @@
 # -- The overall namespace for the application
 namespace: love
-# -- The site-specific path to find Vault secrets
-secret_path: lsst.local
-# -- The top-level secret key name that houses the rest of the secrets
-envSecretKeyName: love
 manager:
   frontend:
     image:

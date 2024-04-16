@@ -96,9 +96,9 @@ app.kubernetes.io/instance: {{ include "love-manager.name" . }}-producers
 Handle environment parameters
  */}}
 {{- define "helpers.envFromList" -}}
-{{- $secretName := .secretName }}
+{{- $secret := .secret }}
 {{- range $var, $value := .env }}
-{{- $item := dict "var" $var "value" $value "secretName" $secretName }}
+{{- $item := dict "var" $var "value" $value "secret" $secret }}
 {{ include "helpers.envType" $item }}
 {{- end }}
 {{- end }}
@@ -108,10 +108,10 @@ Determine type of environment
 */}}
 {{- define "helpers.envType" -}}
 - name: {{ .var }}
-{{- if ne .secretName "" }}
+{{- if .secret }}
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName }}-secrets
+      name: love
       key: {{ .value }}
 {{- else }}
   value: {{ .value | quote }}

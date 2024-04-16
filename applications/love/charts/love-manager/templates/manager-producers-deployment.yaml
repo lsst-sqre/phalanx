@@ -25,10 +25,10 @@ spec:
         ports:
         - containerPort: {{ .Values.manager.producers.ports.container }}
         env:
-        {{- $data := dict "env" .Values.manager.producers.env "secretName" "" }}
+        {{- $data := dict "env" .Values.manager.producers.env "secret" false }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         {{- if .Values.manager.producers.envSecrets }}
-        {{- $data := dict "secretName" .Values.envSecretKeyName "env" .Values.manager.producers.envSecrets }}
+        {{- $data := dict "secret" true "env" .Values.manager.producers.envSecrets }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         {{- end }}
         {{- with $.Values.manager.producers.resources }}

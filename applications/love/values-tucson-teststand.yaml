@@ -10,17 +10,13 @@ love-commander:
     S3_INSTANCE: tuc
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: love
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: love
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: love
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: love
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   service:
     enabled: true
     port: 5000

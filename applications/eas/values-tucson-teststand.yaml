@@ -280,8 +280,7 @@ weatherforecast:
     RUN_ARG: --state enabled
   envSecrets:
   - name: METEOBLUE_API_KEY
-    secretName: eas
-    secretKey: meteoblue-api-key
+    key: meteoblue-api-key
   resources:
     requests:
       cpu: 9m
