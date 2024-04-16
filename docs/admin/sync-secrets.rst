@@ -11,11 +11,11 @@ To populate Vault with all of the necessary secrets for an environment named ``<
 
    phalanx secrets sync <environment>
 
-The ``VAULT_TOKEN`` environment variable must be set to the Vault write token for this environment.
-For SQuaRE-managed environments, you can get the write token from the ``Phalanx Vault write tokens`` item in the SQuaRE 1Password vault.
-
 Add the ``--secrets`` command-line option or set ``OP_CONNECT_TOKEN`` if needed for your choice of a :ref:`static secrets source <admin-static-secrets>`.
 For SQuaRE-managed deployments, the 1Password token for ``OP_CONNECT_TOKEN`` comes from the ``Phalanx 1Password tokens`` item in the SQuaRE 1Password vault.
+
+If you did not store the Vault write token for your environment with the static secrets, the ``VAULT_TOKEN`` environment variable must be set to the Vault write token for this environment.
+For SQuaRE-managed environments, you can get the write token from the ``Phalanx Vault write tokens`` item in the SQuaRE 1Password vault.
 
 This must be done before installing a Phalanx environment for the first time.
 It can then be run again whenever the secrets for that environment change.

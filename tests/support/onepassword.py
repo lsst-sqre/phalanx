@@ -82,6 +82,11 @@ class MockOnepasswordClient:
             self._data[vault]["pull-secret"] = Item(
                 title="pull-secret", fields=fields, sections=sections
             )
+        if secrets.vault_write_token:
+            token = secrets.vault_write_token.get_secret_value()
+            fields = [Field(label="vault-token", value=token)]
+            item = Item(title="vault-write-token", fields=fields)
+            self._data[vault]["vault-write-token"] = item
 
     def get_item(self, title: str, vault_id: str) -> Item:
         """Get an item from a 1Password vault.
