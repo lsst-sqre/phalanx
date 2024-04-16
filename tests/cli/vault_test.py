@@ -31,7 +31,9 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     _, role_name = vault_path.rsplit("/", 1)
 
     # Nothing has been created, so audit will report both missing.
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-both-missing")
 
@@ -40,7 +42,9 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.create_or_update_approle(
         role_name, token_policies=["something"], token_type="service"
     )
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-approle-policy")
 
@@ -53,7 +57,9 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         token_policies=[f"{vault_path}/read", "extra"],
         token_type="service",
     )
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-approle-extra")
 
@@ -66,7 +72,9 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
     )
     mock_vault.create_or_update_policy(f"{vault_path}/write", "blah blah blah")
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "audit-token-policy")
 
@@ -81,7 +89,9 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
         ttl=VAULT_WRITE_TOKEN_LIFETIME,
         create_expired_token=True,
     )
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 1
     output = re.sub(r"[\d-]{10} [\d:]{8}", "<timestamp>", result.output)
     assert output == read_output_data("idfdev", "audit-token-expired")
@@ -92,7 +102,9 @@ def test_audit_clean(factory: Factory, mock_vault: MockVaultClient) -> None:
     vault_service.create_read_approle("idfdev")
     vault_service.create_write_token("idfdev", VAULT_WRITE_TOKEN_LIFETIME)
 
-    result = run_cli("vault", "audit", "idfdev")
+    result = run_cli(
+        "vault", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
     assert result.exit_code == 0
     assert result.output == ""
 
@@ -105,10 +117,22 @@ def test_copy_secrets(
     old_path = "secret/k8s_operator/data-dev.lsst.cloud"
     mock_vault.load_test_data(old_path, "idfdev")
 
-    result = run_cli("vault", "copy-secrets", "idfdev", old_path)
+    result = run_cli(
+        "vault",
+        "copy-secrets",
+        "idfdev",
+        old_path,
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "copy-output")
-    result = run_cli("vault", "export-secrets", "idfdev", str(tmp_path))
+    result = run_cli(
+        "vault",
+        "export-secrets",
+        "idfdev",
+        str(tmp_path),
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == ""
 
@@ -124,7 +148,12 @@ def test_create_read_approle(
     environment = config_storage.load_environment_config("idfdev")
     _, vault_path = environment.vault_path_prefix.split("/", 1)
 
-    result = run_cli("vault", "create-read-approle", "idfdev")
+    result = run_cli(
+        "vault",
+        "create-read-approle",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
     assert approle.token_ttl == 0
@@ -156,6 +185,7 @@ def test_create_read_approle(
         "idfdev",
         "--as-secret",
         "vault-credentials",
+        env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     secret = yaml.safe_load(result.output)
@@ -171,7 +201,12 @@ def test_create_read_approle(
 
     # Recreate one more time with a maximum token lifetime.
     result = run_cli(
-        "vault", "create-read-approle", "--token-lifetime", "3600", "idfdev"
+        "vault",
+        "create-read-approle",
+        "--token-lifetime",
+        "3600",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     approle = VaultAppRole.model_validate(yaml.safe_load(result.output))
@@ -193,7 +228,12 @@ def test_create_write_token(
         display_name = "token-" + vault_path
     lifetime = timedelta(days=int(VAULT_WRITE_TOKEN_LIFETIME[:-1]))
 
-    result = run_cli("vault", "create-write-token", "idfdev")
+    result = run_cli(
+        "vault",
+        "create-write-token",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     token = VaultToken.model_validate(yaml.safe_load(result.output))
     assert token.display_name == display_name
@@ -223,7 +263,13 @@ def test_export_secrets(
     environment = config_storage.load_environment("idfdev")
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
 
-    result = run_cli("vault", "export-secrets", "idfdev", str(tmp_path))
+    result = run_cli(
+        "vault",
+        "export-secrets",
+        "idfdev",
+        str(tmp_path),
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == ""
 

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 import shutil
 import sys
@@ -116,6 +117,23 @@ def _require_command(command: str) -> None:
     """
     if not shutil.which(command):
         raise click.UsageError(f"{command} not found on PATH, not installed?")
+
+
+def _require_env(variable: str) -> None:
+    """Require that a given environment variable be set.
+
+    Parameters
+    ----------
+    variable
+        Name of the environment variable.
+
+    Raises
+    ------
+    click.UsageError
+        Raised if the environment variable isn't set.
+    """
+    if not os.getenv(variable):
+        raise click.UsageError(f"{variable} must be set in the environment")
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
@@ -584,6 +602,7 @@ def secrets_audit(
     The environment variable VAULT_TOKEN must be set to a token with read
     access to the Vault data for the given environment.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
@@ -644,6 +663,7 @@ def secrets_onepassword_secrets(
     The environment variable OP_CONNECT_TOKEN must be set to the 1Password
     Connect token for the given environment.
     """
+    _require_env("OP_CONNECT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -770,6 +790,7 @@ def secrets_sync(
     access). If Vault credentials are managed through this tool, such a token
     can be created with the ``phalanx vault create-write-token`` command.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
@@ -803,6 +824,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     The environment variable VAULT_TOKEN must be set to a token with access to
     read policies, AppRoles, tokens, and token accessors.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -837,6 +859,7 @@ def vault_copy_secrets(
     access to the old path and write access to the currently configured Vault
     path for the given environment.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -886,6 +909,7 @@ def vault_create_read_approle(
     create policies and AppRoles, list AppRole SecretID accessors, and revoke
     AppRole SecretIDs.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -929,6 +953,7 @@ def vault_create_write_token(
     The environment variable VAULT_TOKEN must be set to a token with access to
     list token accessors, create policies, and create and revoke tokens.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -959,6 +984,7 @@ def vault_export_secrets(
     The environment variable VAULT_TOKEN must be set to a token with read
     access to the Vault data for the given environment.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)

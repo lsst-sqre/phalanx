@@ -15,6 +15,18 @@ from .support.onepassword import MockOnepasswordClient, patch_onepassword
 from .support.vault import MockVaultClient, patch_vault
 
 
+@pytest.fixture(autouse=True)
+def _clear_environment(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Remove dangerous environment variables.
+
+    Ensure that none of the tests can accidentally authenticate to a live
+    Vault or 1Password Connect server by clearing the relevant environment
+    variables.
+    """
+    monkeypatch.delenv("OP_CONNECT_TOKEN", raising=False)
+    monkeypatch.delenv("VAULT_TOKEN", raising=False)
+
+
 @pytest.fixture
 def factory() -> Factory:
     """Create a factory pointing at the test data."""
