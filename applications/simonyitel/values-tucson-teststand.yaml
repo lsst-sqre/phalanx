@@ -1,12 +1,6 @@
-csc_collector:
-  secrets:
+csc_shared:
+  pullSecrets:
   - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: simonyitel
-  - name: simonyitel
-    key: simonyitel
 
 ccheaderservice:
   enabled: true

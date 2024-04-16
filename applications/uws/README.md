@@ -19,7 +19,7 @@ Deployment for the UWS and DM OCPS CSCs
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | atocps.enabled | bool | `false` | Enable the OCPS:1 CSC |
 | ccocps.enabled | bool | `false` | Enable the OCPS:2 CSC |
-| csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
+| csc_shared.pullSecrets | list | `[]` | This section holds pull secret specifications. NOTE: The pull secret is expected to be part of the pull-secret key in Vault. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the pull secret) |
 | mtocps.enabled | bool | `false` | Enable the OCPS:3 CSC |
 | uws-api-server.basePath | string | `"uws-server"` | The base path for the client ingress |
 | uws-api-server.butlerPg | object | `{}` | Configuration for Postgres backed butlers The object must have the following attributes defined: _secretKey_ (A label that points to the VaultSecret for the postgres credentials) _containerPath_ (The directory location in the container for the Butler secret) _dbUser_ (The database user name for butler access) |

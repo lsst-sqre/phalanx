@@ -1,12 +1,6 @@
-csc_collector:
-  secrets:
+csc_shared:
+  pullSecrets:
   - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: eas
-  - name: eas
-    key: eas
 
 auxtel-ess01-sim:
   enabled: true

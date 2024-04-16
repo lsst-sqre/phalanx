@@ -1,16 +1,8 @@
 namespace: &ns obssys
 
-csc_collector:
-  namespace: *ns
-
-  secrets:
+csc_shared:
+  pullSecrets:
   - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: obssys
-  - name: obssys
-    key: obssys
 
 atqueue:
   namespace: *ns

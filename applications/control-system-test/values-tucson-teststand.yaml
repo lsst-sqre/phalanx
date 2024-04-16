@@ -1,12 +1,6 @@
-csc_collector:
-  secrets:
+csc_shared:
+  pullSecrets:
   - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: control-system-test
-  - name: control-system-test
-    key: control-system-test
 
 test42:
   image:

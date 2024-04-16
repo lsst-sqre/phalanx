@@ -18,7 +18,7 @@ Deployment for the Environmental Awareness Systems CSCs
 | auxtel-ess05.enabled | bool | `false` | Enable the ESS:205 CSC |
 | calibhill-ess01-sim.enabled | bool | `false` | Enable the ESS:301 simulator CSC |
 | calibhill-ess01.enabled | bool | `false` | Enable the ESS:301 CSC |
-| csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
+| csc_shared.pullSecrets | list | `[]` | This section holds pull secret specifications. NOTE: The pull secret is expected to be part of the pull-secret key in Vault. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the pull secret) |
 | dimm1-sim.enabled | bool | `false` | Enable the DIMM:1 simulator CSC |
 | dimm1.enabled | bool | `false` | Enable the DIMM:1 CSC |
 | dimm2-sim.enabled | bool | `false` | Enable the DIMM:2 simulator CSC |
