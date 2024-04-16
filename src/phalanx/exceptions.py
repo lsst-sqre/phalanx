@@ -19,6 +19,7 @@ __all__ = [
     "MissingOnepasswordSecretsError",
     "NoOnepasswordConfigError",
     "NoOnepasswordCredentialsError",
+    "NoVaultCredentialsError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
     "VaultNotFoundError",
@@ -216,6 +217,14 @@ class NoOnepasswordCredentialsError(Exception):
 
     def __init__(self) -> None:
         msg = "No 1Password Connect credentials (OP_CONNECT_TOKEN) set"
+        super().__init__(msg)
+
+
+class NoVaultCredentialsError(Exception):
+    """Vault credentials are required and were not supplied."""
+
+    def __init__(self) -> None:
+        msg = "No Vault credentials in static secrets and VAULT_TOKEN not set"
         super().__init__(msg)
 
 

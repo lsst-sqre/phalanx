@@ -16,6 +16,7 @@ from pydantic import TypeAdapter
 from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
+from .exceptions import NoOnepasswordCredentialsError, NoVaultCredentialsError
 from .factory import Factory
 from .models.applications import Project
 from .models.environments import EnvironmentConfig
@@ -119,13 +120,15 @@ def _require_command(command: str) -> None:
         raise click.UsageError(f"{command} not found on PATH, not installed?")
 
 
-def _require_env(variable: str) -> None:
+def _require_env(variable: str, alternative: str | None = None) -> None:
     """Require that a given environment variable be set.
 
     Parameters
     ----------
     variable
         Name of the environment variable.
+    alternative
+        An alternative environment variable that may be set instead.
 
     Raises
     ------
@@ -133,7 +136,9 @@ def _require_env(variable: str) -> None:
         Raised if the environment variable isn't set.
     """
     if not os.getenv(variable):
-        raise click.UsageError(f"{variable} must be set in the environment")
+        if not alternative or not os.getenv(alternative):
+            name = f"{variable} or {alternative}" if alternative else variable
+            raise click.UsageError(f"{name} must be set in the environment")
 
 
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
@@ -599,16 +604,19 @@ def secrets_audit(
     and any discrepencies will be noted. The audit report will be printed to
     standard output and will be empty if no issues were found.
 
-    The environment variable VAULT_TOKEN must be set to a token with read
-    access to the Vault data for the given environment.
+    A Vault token with read access to the Vault data for the given environment
+    must be available in the static secrets or present in the VAULT_TOKEN
+    environment variable.
     """
-    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    report = secrets_service.audit(environment, static_secrets)
+    try:
+        report = secrets_service.audit(environment, static_secrets)
+    except (NoOnepasswordCredentialsError, NoVaultCredentialsError) as e:
+        raise click.UsageError(str(e)) from None
     if report:
         sys.stdout.write(report)
         sys.exit(1)
@@ -789,16 +797,21 @@ def secrets_sync(
     write access to the secrets for this environment (and optionally delete
     access). If Vault credentials are managed through this tool, such a token
     can be created with the ``phalanx vault create-write-token`` command.
+    Alternatively, the environment variable OP_CONNECT_TOKEN may set to a
+    1Password Connect token for that environment if the Vault write token is
+    stored in the 1Password vault.
     """
-    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    secrets_service.sync(
-        environment, static_secrets, regenerate=regenerate, delete=delete
-    )
+    try:
+        secrets_service.sync(
+            environment, static_secrets, regenerate=regenerate, delete=delete
+        )
+    except (NoOnepasswordCredentialsError, NoVaultCredentialsError) as e:
+        raise click.UsageError(str(e)) from None
 
 
 @main.group()

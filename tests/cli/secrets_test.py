@@ -191,6 +191,15 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
 
+    # Syncing without a VAULT_TOKEN when the static secrets don't contain one
+    # should fail with an error.
+    result = run_cli(
+        "secrets", "sync", "--secrets", str(secrets_path), "idfdev"
+    )
+    assert result.exit_code == 2
+    assert "VAULT_TOKEN not set" in result.output
+
+    # Providing a VAULT_TOKEN should make the sync work.
     result = run_cli(
         "secrets",
         "sync",
@@ -259,11 +268,13 @@ def test_sync_onepassword(
     mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
 
+    # It should be possible to omit VAULT_TOKEN and get the value from
+    # 1Password.
     result = run_cli(
         "secrets",
         "sync",
         "minikube",
-        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+        env={"OP_CONNECT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     assert result.output == read_output_data("minikube", "sync-output")

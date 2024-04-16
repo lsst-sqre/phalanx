@@ -139,7 +139,7 @@ Update secrets
    See :doc:`add-new-secret` for detailed instructions on how to add static secrets for an application.
    You will need to do this for every application.
 
-   To obtain the current values of static secrets, look either in the old ``RSP-Vault`` 1Password vault (for SQuaRE-managed environments) or use the :command:`vault kv get` command to read the current value of the static secret out of Vault (copied to the new path in the previous step).
+   To obtain the current values of static secrets, use the :command:`vault kv get` command to read the current value of the static secret out of Vault (copied to the new path in the previous step).
 
    For example, to see all the current secrets for the application ``nublado``, run:
 
@@ -151,6 +151,8 @@ Update secrets
 
 #. If you are using 1Password as the source for static secrets, set ``OP_CONNECT_TOKEN`` to the 1Password Connect token for this environment.
    For SQuaRE-managed environments, this can be found in the ``RSP 1Password tokens`` item in the SQuaRE 1Password vault.
+
+   Also, add the :ref:`pull secret <admin-onepassword-pull-secret>` and :ref:`Vault write token <admin-onepassword-vault-token>` to the 1Password vault for this environment if appropriate.
 
 #. Check what secrets are missing or incorrect and fix them.
 

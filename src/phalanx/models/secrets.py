@@ -390,6 +390,13 @@ class StaticSecrets(BaseModel):
         alias="pull-secret",
     )
 
+    vault_write_token: SecretStr | None = Field(
+        None,
+        title="Vault write token",
+        description="Vault write token for this environment",
+        alias="vault-write-token",
+    )
+
     model_config = ConfigDict(populate_by_name=True, extra="forbid")
 
     @classmethod

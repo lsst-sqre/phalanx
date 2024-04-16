@@ -79,6 +79,16 @@ class Factory:
         """
         return KubernetesStorage()
 
+    def create_onepassword_storage(self) -> OnepasswordStorage:
+        """Create storage object for interacting with 1Password.
+
+        Returns
+        -------
+        OnepasswordStorage
+            Storage object for interacting with 1Password.
+        """
+        return OnepasswordStorage()
+
     def create_secrets_service(self) -> SecretsService:
         """Create service for manipulating Phalanx secrets.
 
@@ -87,11 +97,10 @@ class Factory:
         SecretsService
             Service for manipulating secrets.
         """
-        config_storage = self.create_config_storage()
-        onepassword_storage = OnepasswordStorage()
-        vault_storage = VaultStorage()
         return SecretsService(
-            config_storage, onepassword_storage, vault_storage
+            self.create_config_storage(),
+            self.create_onepassword_storage(),
+            VaultStorage(),
         )
 
     def create_vault_service(self) -> VaultService:

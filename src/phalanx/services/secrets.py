@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import binascii
+import os
 from base64 import b64decode
 from collections import defaultdict
 from dataclasses import dataclass, field
@@ -15,9 +16,10 @@ from ..exceptions import (
     MalformedOnepasswordSecretError,
     MissingOnepasswordSecretsError,
     NoOnepasswordConfigError,
+    NoVaultCredentialsError,
     UnresolvedSecretsError,
 )
-from ..models.environments import Environment
+from ..models.environments import Environment, EnvironmentBaseConfig
 from ..models.secrets import (
     PullSecret,
     ResolvedSecrets,
@@ -26,6 +28,7 @@ from ..models.secrets import (
     StaticSecret,
     StaticSecrets,
 )
+from ..models.vault import VaultTokenCredentials
 from ..storage.config import ConfigStorage
 from ..storage.onepassword import OnepasswordStorage
 from ..storage.vault import VaultClient, VaultStorage
@@ -115,7 +118,7 @@ class SecretsService:
             except MissingOnepasswordSecretsError as e:
                 heading = "Missing static secrets from 1Password:"
                 return f"{heading}\n• " + "\n• ".join(e.secrets) + "\n"
-        vault_client = self._vault.get_vault_client(environment)
+        vault_client = self._get_vault_client(environment, static_secrets)
         pull_secret = static_secrets.pull_secret if static_secrets else None
 
         # Retrieve all the current secrets from Vault and resolve all of the
@@ -169,7 +172,9 @@ class SecretsService:
                     static_secret.warning = YAMLFoldedString(warning)
                 template[secret.application][secret.key] = static_secret
         static_secrets = StaticSecrets(
-            applications=template, pull_secret=PullSecret()
+            applications=template,
+            pull_secret=PullSecret(),
+            vault_write_token=None,
         )
         return yaml.dump(static_secrets.to_template(), width=70)
 
@@ -239,7 +244,7 @@ class SecretsService:
         environment = self._config.load_environment(env_name)
         if not static_secrets:
             static_secrets = self._get_onepassword_secrets(environment)
-        vault_client = self._vault.get_vault_client(environment)
+        vault_client = self._get_vault_client(environment, static_secrets)
         secrets = environment.all_secrets()
         vault_secrets = vault_client.get_environment_secrets()
 
@@ -444,6 +449,42 @@ class SecretsService:
                         app_name, key, secret.value
                     )
         return result
+
+    def _get_vault_client(
+        self,
+        environment: EnvironmentBaseConfig,
+        static_secrets: StaticSecrets | None,
+    ) -> VaultClient:
+        """Get a Vault client for the given environment.
+
+        Parameters
+        ----------
+        environment
+            Environment configuration.
+        static_secrets
+            Static secrets for this environment.
+
+        Returns
+        -------
+        VaultClient
+            Vault client configured for that environment.
+
+        Raises
+        ------
+        NoVaultCredentialsError
+            Raised if VAULT_TOKEN is not set in the environment and the Vault
+            write token could not be retrieved from the static secrets.
+        """
+        credentials = None
+        if not os.getenv("VAULT_TOKEN"):
+            if static_secrets and static_secrets.vault_write_token:
+                token = static_secrets.vault_write_token.get_secret_value()
+                credentials = VaultTokenCredentials(token=token)
+            else:
+                raise NoVaultCredentialsError
+        return self._vault.get_vault_client(
+            environment, credentials=credentials
+        )
 
     def _resolve_secrets(
         self,
