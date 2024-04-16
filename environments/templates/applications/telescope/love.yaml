@@ -31,7 +31,7 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
-        - name: "global.controlSystema.appNamespace"
+        - name: "global.controlSystem.appNamespace"
           value: "love"
         - name: "global.controlSystem.imageTag"
           value: {{ .Values.controlSystem.imageTag | quote }}
