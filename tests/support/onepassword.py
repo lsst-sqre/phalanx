@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import uuid
 from collections.abc import Iterator
 from unittest.mock import patch
@@ -158,10 +157,4 @@ def patch_onepassword() -> Iterator[MockOnepasswordClient]:
     """
     mock = MockOnepasswordClient()
     with patch("phalanx.storage.onepassword.new_client", return_value=mock):
-        old = os.getenv("OP_CONNECT_TOKEN")
-        os.environ["OP_CONNECT_TOKEN"] = "some-token"
         yield mock
-        if old:
-            os.environ["OP_CONNECT_TOKEN"] = old
-        else:
-            del os.environ["OP_CONNECT_TOKEN"]
