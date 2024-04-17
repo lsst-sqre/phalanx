@@ -64,7 +64,7 @@ spec:
               {{- end }}
           restartPolicy: {{ .Values.viewBackup.restartPolicy }}
           imagePullSecrets:
-            - name: nexus3-docker
+            - name: pull-secret
           {{- with $.Values.nodeSelector }}
           nodeSelector:
             {{- toYaml $ | nindent 12 }}

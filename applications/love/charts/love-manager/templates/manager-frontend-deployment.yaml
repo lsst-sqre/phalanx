@@ -40,7 +40,7 @@ spec:
           {{- toYaml $.Values.manager.frontend.readinessProbe | nindent 10 }}
         {{- end }}
       imagePullSecrets:
-        - name: nexus3-docker
+        - name: pull-secret
       {{- with $.Values.manager.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml $ | nindent 8 }}

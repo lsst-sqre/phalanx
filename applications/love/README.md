@@ -17,7 +17,6 @@ Deployment for the LSST Operators Visualization Environment
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| csc_shared.pullSecrets | list | `[]` | This section holds pull secret specifications. NOTE: The pull secret is expected to be part of the pull-secret key in Vault. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the pull secret) |
 | love-manager.manager.frontend.affinity | object | `{}` | Affinity rules for the LOVE manager frontend pods |
 | love-manager.manager.frontend.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
 | love-manager.manager.frontend.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |

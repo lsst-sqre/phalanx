@@ -60,10 +60,6 @@ uws-api-server:
     subPath: ""
     readOnly: true
 
-csc_shared:
-  pullSecrets:
-  - name: nexus3-docker
-
 atocps:
   enabled: true
   classifier: ocps1

@@ -1,7 +1,3 @@
-csc_shared:
-  pullSecrets:
-  - name: nexus3-docker
-
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
@@ -124,8 +120,6 @@ love-nginx:
     httpPath: /love
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  imagePullSecrets:
-  - name: nexus3-docker
   initContainers:
     frontend:
       image:

@@ -1,7 +1,3 @@
-csc_shared:
-  pullSecrets:
-  - name: nexus3-docker
-
 atqueue:
   classifier: scriptqueue2
   image:

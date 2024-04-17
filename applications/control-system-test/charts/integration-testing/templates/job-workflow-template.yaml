@@ -11,7 +11,7 @@ spec:
   ttlStrategy:
     secondsAfterCompletion: 1800
   imagePullSecrets:
-  - name: nexus3-docker
+  - name: pull-secret
   volumes:
   - name: testreports
     persistentVolumeClaim:

@@ -1,7 +1,3 @@
-csc_shared:
-  pullSecrets:
-  - name: nexus3-docker
-
 auxtel-ess01-sim:
   enabled: true
   classifier: ess201

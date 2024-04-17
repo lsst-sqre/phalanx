@@ -6,7 +6,6 @@ Deployment for the Calibration System CSCs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| csc_shared.pullSecrets | list | `[]` | This section holds pull secret specifications. NOTE: The pull secret is expected to be part of the pull-secret key in Vault. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the pull secret) |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |

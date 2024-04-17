@@ -1,7 +1,3 @@
-csc_shared:
-  pullSecrets:
-  - name: nexus3-docker
-
 ccheaderservice:
   enabled: true
   image:
