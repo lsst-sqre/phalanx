@@ -121,6 +121,10 @@ users:
     # matches.
     groups: ["rubin-testing"]
 
+# Service Accounts to enable
+serviceAccounts:
+  kafdrop:
+    enabled: true
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.

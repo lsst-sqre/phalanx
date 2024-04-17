@@ -39,6 +39,7 @@ Kafka broker cluster for distributing alerts
 | maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | nameOverride | string | `""` |  |
 | schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
+| serviceAccounts.kafdrop.enabled | bool | `true` |  |
 | strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | testTopicName | string | `"alert-stream-test"` | Name of the topic which will be used to send test alerts. |

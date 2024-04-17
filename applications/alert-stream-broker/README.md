@@ -11,6 +11,7 @@ Alert transmission to community brokers
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| kafdrop.enabled | bool | `false` | Whether Kafdrop is enabled |
 | strimzi-registry-operator.clusterName | string | `"alert-broker"` |  |
 | strimzi-registry-operator.clusterNamespace | string | `"alert-stream-broker"` |  |
 | strimzi-registry-operator.operatorNamespace | string | `"alert-stream-broker"` |  |
@@ -82,6 +83,7 @@ Alert transmission to community brokers
 | alert-stream-broker.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
+| alert-stream-broker.serviceAccounts.kafdrop.enabled | bool | `true` |  |
 | alert-stream-broker.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-broker.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | alert-stream-broker.testTopicName | string | `"alert-stream-test"` | Name of the topic which will be used to send test alerts. |
@@ -125,3 +127,27 @@ Alert transmission to community brokers
 | alert-stream-simulator.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
 | alert-stream-simulator.staticTopicName | string | `"alerts-static"` | Name of the topic which will hold a static single visit of sample data. |
 | alert-stream-simulator.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |
+| kafdrop.affinity | object | `{}` | Affinity configuration |
+| kafdrop.cmdArgs | string | See `values.yaml` | Command line arguments to Kafdrop |
+| kafdrop.existingSecret | string | Do not use a secret | Existing Kubernetes secrect use to set kafdrop environment variables. Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form `<username>:<password>` |
+| kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
+| kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
+| kafdrop.image.tag | string | `"4.0.1"` | Kafdrop image version |
+| kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
+| kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
+| kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
+| kafdrop.ingress.path | string | `"/kafdrop"` | Ingress path |
+| kafdrop.jmx.port | int | `8686` | Port to use for JMX. If unspecified, JMX will not be exposed. |
+| kafdrop.jvm.opts | string | `""` | JVM options |
+| kafdrop.kafka.broker | string | `""` | Bootstrap list of Kafka host/port pairs |
+| kafdrop.nodeSelector | object | `{}` | Node selector configuration |
+| kafdrop.podAnnotations | object | `{}` | Pod annotations |
+| kafdrop.replicaCount | int | `1` | Number of kafdrop pods to run in the deployment. |
+| kafdrop.resources | object | See `values.yaml` | Kubernetes requests and limits for Kafdrop |
+| kafdrop.schemaregistry | string | `""` | The endpoint of Schema Registry |
+| kafdrop.server.port | int | `9000` | The web server port to listen on |
+| kafdrop.server.servlet.contextPath | string | `"/kafdrop"` | The context path to serve requests on |
+| kafdrop.service.annotations | object | `{}` | Additional annotations to add to the service |
+| kafdrop.service.port | int | `9000` | Service port |
+| kafdrop.tolerations | list | `[]` | Tolerations configuration |

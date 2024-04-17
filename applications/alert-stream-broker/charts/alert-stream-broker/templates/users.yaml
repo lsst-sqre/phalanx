@@ -50,3 +50,35 @@ spec:
         operation: All
       {{- end }}
 {{- end }}
+{{- if .Values.serviceAccounts.kafdrop.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: kafdrop
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: alert-stream-broker-secrets
+          key: kafdrop-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+{{- end }}

@@ -6,3 +6,7 @@ strimzi-registry-operator:
   watchNamespace: alert-stream-broker
 
   operatorNamespace: "alert-stream-broker"
+
+kafdrop:
+  # -- Whether Kafdrop is enabled
+  enabled: false
