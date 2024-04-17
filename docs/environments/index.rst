@@ -14,6 +14,7 @@ To learn more about operating a Phalanx environment, see the :doc:`/admin/index`
 
    base/index
    ccin2p3/index
+   idfdemo/index
    idfdev/index
    idfint/index
    idfprod/index

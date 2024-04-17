@@ -1,0 +1,78 @@
+controller:
+  googleServiceAccount: "nublado-controller@science-platform-demo-9e05.iam.gserviceaccount.com"
+  slackAlerts: true
+  config:
+    logLevel: "DEBUG"
+    fileserver:
+      enabled: true
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+    images:
+      source:
+        type: "google"
+        location: "us-central1"
+        projectId: "rubin-shared-services-71ec"
+        repository: "sciplat"
+        image: "sciplat-lab"
+    lab:
+      env:
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
+        DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
+        GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
+        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "6.0.2"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "butler-gcs-idf-creds.json"
+        - secretName: "nublado-lab-secret"
+          secretKey: "butler-hmac-idf-creds.json"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
+      volumes:
+        - name: "home"
+          source:
+            type: nfs
+            serverPath: "/share1/home"
+            server: "10.32.121.98"
+        - name: "project"
+          source:
+            type: nfs
+            serverPath: "/share1/project"
+            server: "10.32.121.98"
+        - name: "scratch"
+          source:
+            type: nfs
+            serverPath: "/share1/scratch"
+            server: "10.32.121.98"
+      volumeMounts:
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+jupyterhub:
+  hub:
+    db:
+      url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
+hub:
+  internalDatabase: false
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
+  serviceAccount: "nublado@science-platform-demo-9e05.iam.gserviceaccount.com"
+secrets:
+  templateSecrets: true

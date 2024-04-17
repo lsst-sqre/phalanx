@@ -1,7 +1,6 @@
 name: "idfdemo"
 fqdn: "demo.lsst.cloud"
 appOfAppsName: "science-platform"
-# FIXME?  I think I just want to use all the same sources as data-dev
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
 butlerServerRepositories:
   dp02: "https://demo.lsst.cloud/api/butler/repo/dp02/butler.yaml"
@@ -15,12 +14,10 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/idfdemo"
 
 applications:
-  butler: true  # FIXME?  Do I need one?
-  datalinker: false  # FIXME?  Do I need one?
+  butler: true
+  datalinker: true
   mobu: true
-  noteburst: true
   nublado: true
   sqlproxy-cross-project: true
   squareone: true
-  times-square: true
   vault-secrets-operator: true
