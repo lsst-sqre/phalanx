@@ -1,0 +1,6 @@
+image:
+  pullPolicy: Always
+  tag: "tickets-DM-43967"
+config:
+  logLevel: "DEBUG"
+  loggingProfile: "development"

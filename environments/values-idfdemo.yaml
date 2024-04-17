@@ -16,6 +16,7 @@ vaultPathPrefix: "secret/phalanx/idfdemo"
 applications:
   butler: true
   datalinker: true
+  fastapi-bootcamp: true
   mobu: true
   nublado: true
   sqlproxy-cross-project: true

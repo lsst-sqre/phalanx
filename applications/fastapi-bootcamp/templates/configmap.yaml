@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "fastapi-bootcamp"
+  labels:
+    {{- include "fastapi-bootcamp.labels" . | nindent 4 }}
+data:
+  FASTAPI_BOOTCAMP_PROFILE: {{ .Values.config.loggingProfile | quote }}
+  FASTAPI_BOOTCAMP_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  FASTAPI_BOOTCAMP_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}

@@ -12,6 +12,7 @@ Argo CD project: ``rubin``
    alert-stream-broker/index
    consdb/index
    exposurelog/index
+   fastapi-bootcamp/index
    narrativelog/index
    nightreport/index
    obsloctap/index
