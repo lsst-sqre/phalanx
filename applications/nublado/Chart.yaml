@@ -5,7 +5,7 @@ description: JupyterHub and custom spawner for the Rubin Science Platform
 sources:
   - https://github.com/lsst-sqre/nublado
 home: https://nublado.lsst.io/
-appVersion: 6.0.1
+appVersion: 6.0.2
 
 dependencies:
   - name: jupyterhub
