@@ -7,8 +7,11 @@ import os
 import re
 import shutil
 import sys
+from collections.abc import Callable
 from datetime import timedelta
+from functools import wraps
 from pathlib import Path
+from typing import ParamSpec
 
 import click
 import yaml
@@ -16,7 +19,7 @@ from pydantic import TypeAdapter
 from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
-from .exceptions import NoOnepasswordCredentialsError, NoVaultCredentialsError
+from .exceptions import UsageError
 from .factory import Factory
 from .models.applications import Project
 from .models.environments import EnvironmentConfig
@@ -27,6 +30,8 @@ from .models.vault import (
     VaultCredentials,
     VaultTokenCredentials,
 )
+
+P = ParamSpec("P")
 
 __all__ = [
     "main",
@@ -103,6 +108,19 @@ def _find_config() -> Path:
     return current
 
 
+def _report_usage_errors(f: Callable[P, None]) -> Callable[P, None]:
+    """Convert `~phalanx.exceptions.UsageError` to `click.UsageError`."""
+
+    @wraps(f)
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
+        try:
+            f(*args, **kwargs)
+        except UsageError as e:
+            raise click.UsageError(str(e)) from None
+
+    return wrapper
+
+
 def _require_command(command: str) -> None:
     """Require that a given command be found on the user's PATH.
 
@@ -170,6 +188,7 @@ def application() -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_add_helm_repos(
     name: str | None = None, *, config: Path | None
 ) -> None:
@@ -227,6 +246,7 @@ def application_add_helm_repos(
     default=HelmStarter.WEB_SERVICE.value,
     help="Helm starter to use as the basis for the chart.",
 )
+@_report_usage_errors
 def application_create(
     name: str,
     *,
@@ -282,6 +302,7 @@ def application_create(
     default=None,
     help="Only lint this environment.",
 )
+@_report_usage_errors
 def application_lint(
     applications: list[str],
     *,
@@ -327,6 +348,7 @@ def application_lint(
     envvar="GITHUB_BASE_REF",
     help="Base Git branch against which to compare.",
 )
+@_report_usage_errors
 def application_lint_all(
     *, config: Path | None, git: bool = False, git_branch: str
 ) -> None:
@@ -355,6 +377,7 @@ def application_lint_all(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_template(
     name: str, environment: str, *, config: Path | None
 ) -> None:
@@ -382,6 +405,7 @@ def application_template(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_update_shared_chart_version(
     chart: str, version: str, *, config: Path | None
 ) -> None:
@@ -441,6 +465,7 @@ def environment() -> None:
     envvar="VAULT_TOKEN",
     help="Read-only token for vault-secrets-operator.",
 )
+@_report_usage_errors
 def environment_install(
     environment: str,
     *,
@@ -505,6 +530,7 @@ def environment_install(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def environment_lint(
     environment: str | None = None, *, config: Path | None, git: bool = False
 ) -> None:
@@ -531,6 +557,7 @@ def environment_lint(
     default=None,
     help="Path to which to write schema.",
 )
+@_report_usage_errors
 def environment_schema(*, output: Path | None) -> None:
     """Generate schema for environment configuration.
 
@@ -559,6 +586,7 @@ def environment_schema(*, output: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def environment_template(environment: str, *, config: Path | None) -> None:
     """Expand the top-level chart for an environment.
 
@@ -594,6 +622,7 @@ def secrets() -> None:
     default=None,
     help="YAML file containing static secrets for this environment.",
 )
+@_report_usage_errors
 def secrets_audit(
     environment: str, *, config: Path | None, secrets: Path | None
 ) -> None:
@@ -613,10 +642,7 @@ def secrets_audit(
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    try:
-        report = secrets_service.audit(environment, static_secrets)
-    except (NoOnepasswordCredentialsError, NoVaultCredentialsError) as e:
-        raise click.UsageError(str(e)) from None
+    report = secrets_service.audit(environment, static_secrets)
     if report:
         sys.stdout.write(report)
         sys.exit(1)
@@ -631,6 +657,7 @@ def secrets_audit(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def secrets_list(environment: str, *, config: Path | None) -> None:
     """List all secrets required for a given environment."""
     if not config:
@@ -658,6 +685,7 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     default=None,
     help="Path to which to write 1Password secrets.",
 )
+@_report_usage_errors
 def secrets_onepassword_secrets(
     environment: str, output: Path, *, config: Path | None
 ) -> None:
@@ -693,6 +721,7 @@ def secrets_onepassword_secrets(
     default=None,
     help="Path to which to write schema.",
 )
+@_report_usage_errors
 def secrets_schema(*, output: Path | None) -> None:
     """Generate schema for application secret definition.
 
@@ -730,6 +759,7 @@ def secrets_schema(*, output: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def secrets_static_template(environment: str, *, config: Path | None) -> None:
     """Generate a template for static secrets.
 
@@ -778,6 +808,7 @@ def secrets_static_template(environment: str, *, config: Path | None) -> None:
     default=None,
     help="YAML file containing static secrets for this environment.",
 )
+@_report_usage_errors
 def secrets_sync(
     environment: str,
     *,
@@ -806,12 +837,9 @@ def secrets_sync(
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    try:
-        secrets_service.sync(
-            environment, static_secrets, regenerate=regenerate, delete=delete
-        )
-    except (NoOnepasswordCredentialsError, NoVaultCredentialsError) as e:
-        raise click.UsageError(str(e)) from None
+    secrets_service.sync(
+        environment, static_secrets, regenerate=regenerate, delete=delete
+    )
 
 
 @main.group()
@@ -828,6 +856,7 @@ def vault() -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_audit(environment: str, *, config: Path | None) -> None:
     """Audit Vault credentials for an environment.
 
@@ -858,6 +887,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_copy_secrets(
     environment: str, old_prefix: str, *, config: Path | None
 ) -> None:
@@ -905,6 +935,7 @@ def vault_copy_secrets(
     default=None,
     help="Maximum token lifetime in seconds.",
 )
+@_report_usage_errors
 def vault_create_read_approle(
     environment: str,
     as_secret: str | None,
@@ -954,6 +985,7 @@ def vault_create_read_approle(
     default=VAULT_WRITE_TOKEN_LIFETIME,
     help="Token lifetime in Vault duration format.",
 )
+@_report_usage_errors
 def vault_create_write_token(
     environment: str, *, config: Path | None, lifetime: str
 ) -> None:
@@ -985,6 +1017,7 @@ def vault_create_write_token(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_export_secrets(
     environment: str, output: Path, *, config: Path | None
 ) -> None:

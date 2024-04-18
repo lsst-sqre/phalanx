@@ -10,12 +10,10 @@ from pathlib import Path
 
 import bcrypt
 import click
-import pytest
 import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
-from phalanx.exceptions import MalformedOnepasswordSecretError
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
 
@@ -330,15 +328,15 @@ def test_sync_onepassword_errors(
             field.value = "invalid base64"
 
     # sync should throw an exception containing the application and key.
-    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
-        run_cli(
-            "secrets",
-            "sync",
-            "minikube",
-            env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
-        )
-    assert app_name in str(excinfo.value)
-    assert key in str(excinfo.value)
+    result = run_cli(
+        "secrets",
+        "sync",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 2
+    assert app_name in result.output
+    assert key in result.output
 
     # Instead set the secret to a value that is valid base64, but of binary
     # data that cannot be decoded to a string.
@@ -347,15 +345,15 @@ def test_sync_onepassword_errors(
             field.value = b64encode("ää".encode("iso-8859-1")).decode()
 
     # sync should throw an exception containing the application and key.
-    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
-        run_cli(
-            "secrets",
-            "sync",
-            "minikube",
-            env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
-        )
-    assert app_name in str(excinfo.value)
-    assert key in str(excinfo.value)
+    run_cli(
+        "secrets",
+        "sync",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 2
+    assert app_name in result.output
+    assert key in result.output
 
 
 def test_sync_regenerate(
