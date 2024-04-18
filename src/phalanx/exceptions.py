@@ -22,22 +22,9 @@ __all__ = [
     "NoVaultCredentialsError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
+    "UsageError",
     "VaultNotFoundError",
 ]
-
-
-class ApplicationExistsError(Exception):
-    """Application being created already exists.
-
-    Parameters
-    ----------
-    name
-        Name of the application.
-    """
-
-    def __init__(self, name: str) -> None:
-        msg = f"Application {name} already exists"
-        super().__init__(msg)
 
 
 class CommandFailedError(Exception):
@@ -110,7 +97,34 @@ class GitRemoteError(Exception):
     """Unable to get necessary information from a Git remote."""
 
 
-class InvalidApplicationConfigError(Exception):
+class NoOnepasswordConfigError(Exception):
+    """Environment does not use 1Password."""
+
+
+class UsageError(Exception):
+    """An error that should be printed to standard error without a backtrace.
+
+    Usage errors are caught by the CLI and turned into `click.UsageError`
+    without the backtrace. Use this as a base class for user errors and
+    configuration errors where the backtrace is not useful.
+    """
+
+
+class ApplicationExistsError(UsageError):
+    """Application being created already exists.
+
+    Parameters
+    ----------
+    name
+        Name of the application.
+    """
+
+    def __init__(self, name: str) -> None:
+        msg = f"Application {name} already exists"
+        super().__init__(msg)
+
+
+class InvalidApplicationConfigError(UsageError):
     """Configuration for an application is invalid.
 
     Parameters
@@ -133,7 +147,7 @@ class InvalidApplicationConfigError(Exception):
         super().__init__(msg)
 
 
-class InvalidEnvironmentConfigError(Exception):
+class InvalidEnvironmentConfigError(UsageError):
     """Configuration for an environment is invalid.
 
     Parameters
@@ -149,7 +163,7 @@ class InvalidEnvironmentConfigError(Exception):
         super().__init__(msg)
 
 
-class InvalidSecretConfigError(Exception):
+class InvalidSecretConfigError(UsageError):
     """Secret configuration is invalid.
 
     Parameters
@@ -168,7 +182,7 @@ class InvalidSecretConfigError(Exception):
         super().__init__(msg)
 
 
-class MalformedOnepasswordSecretError(Exception):
+class MalformedOnepasswordSecretError(UsageError):
     """A secret stored in 1Password was malformed.
 
     The most common cause of this error is that the secret was marked as
@@ -190,7 +204,7 @@ class MalformedOnepasswordSecretError(Exception):
         super().__init__(msg)
 
 
-class MissingOnepasswordSecretsError(Exception):
+class MissingOnepasswordSecretsError(UsageError):
     """Secrets are missing from 1Password.
 
     Parameters
@@ -208,11 +222,7 @@ class MissingOnepasswordSecretsError(Exception):
         super().__init__(msg)
 
 
-class NoOnepasswordConfigError(Exception):
-    """Environment does not use 1Password."""
-
-
-class NoOnepasswordCredentialsError(Exception):
+class NoOnepasswordCredentialsError(UsageError):
     """1Password is configured, but no credentials were supplied."""
 
     def __init__(self) -> None:
@@ -220,7 +230,7 @@ class NoOnepasswordCredentialsError(Exception):
         super().__init__(msg)
 
 
-class NoVaultCredentialsError(Exception):
+class NoVaultCredentialsError(UsageError):
     """Vault credentials are required and were not supplied."""
 
     def __init__(self) -> None:
@@ -228,7 +238,7 @@ class NoVaultCredentialsError(Exception):
         super().__init__(msg)
 
 
-class UnresolvedSecretsError(Exception):
+class UnresolvedSecretsError(UsageError):
     """Some secrets could not be resolved.
 
     Parameters
@@ -243,7 +253,7 @@ class UnresolvedSecretsError(Exception):
         super().__init__(msg)
 
 
-class UnknownEnvironmentError(Exception):
+class UnknownEnvironmentError(UsageError):
     """No configuration found for an environment name.
 
     Parameters
@@ -257,7 +267,7 @@ class UnknownEnvironmentError(Exception):
         super().__init__(msg)
 
 
-class VaultNotFoundError(Exception):
+class VaultNotFoundError(UsageError):
     """Secret could not be found in Vault.
 
     Parameters
