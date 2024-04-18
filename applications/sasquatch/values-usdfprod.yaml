@@ -104,81 +104,81 @@ kafka-connect-manager-enterprise:
     connectors:
       enterprise-auxtel:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
       enterprise-maintel:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
       enterprise-mtmount:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTMount"
         tasksMax: "8"
       enterprise-comcam:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       enterprise-eas:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
       enterprise-latiss:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
       enterprise-m1m3:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTM1M3"
         tasksMax: "8"
       enterprise-m2:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
       enterprise-obssys:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
       enterprise-ocps:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*OCPS"
       enterprise-test:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: "lsst.sal.Test"
       enterprise-pmd:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*PMD"
       enterprise-calsys:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
       enterprise-mtaircompressor:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTAirCompressor"
       enterprise-genericcamera:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
       enterprise-gis:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*GIS"
       enterprise-mtvms:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTVMS"
       enterprise-lasertracker:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*LaserTracker"
       enterprise-lsstcam:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
 kafdrop:
