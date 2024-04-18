@@ -42,6 +42,18 @@ strimzi-kafka:
         memory: 16Gi
         cpu: 2
 
+  kraft:
+    enabled: false
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "2"
+      limits:
+        memory: 8Gi
+        cpu: "2"
+
   zookeeper:
     replicas: 3
     storage:
