@@ -7,14 +7,17 @@ The key corresponds to the key under which this secret is stored in the secret e
 
 The specification of the secret has the following keys:
 
-``description`` (string, required)
+``description`` (string, required unless ``copy`` is set)
     Human-readable description of the secret.
     This should include a summary of what the secret is used for, any useful information about the consequences if it should be leaked, and any details on how to rotate it if needed.
     The description must be formatted with reStructuredText_.
 
+.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+
     The ``>`` and ``|`` features of YAML may be helpful in keeping this description readable inside the YAML file.
 
-.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+    If a non-conditional ``copy`` setting is also present (see below), this field may be omitted.
+    In this case, the description will be copied from the source of the secret.
 
 ``if`` (string, optional)
     If present, specifies the conditions under which this secret is required.
