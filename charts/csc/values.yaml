@@ -35,10 +35,10 @@ entrypoint:
 # _content_ (The YAML content for the configuration file)
 configfile: {}
 # -- This key allows for specification of Butler secret information.
-# **NOTE**: You must fill out a _secretPermFixer_ entry in addition.
 # If this section is used, it must contain the following attributes:
 # _containerPath_ (The directory location for the Butler secret),
-# _dbUser_ (The username for the Butler backend database)
+# _dbUser_ (The username for the Butler backend database),
+# _secretFilename_ (The expected secret file name to copy)
 butlerSecret: {}
 # -- This key allows for the specification of a pod security context for volumes.
 # If this section is used, it must contain the following attributes:
@@ -66,13 +66,6 @@ pvcMountpoint: []
 nfsMountpoint: []
 # -- This allows the specification of pod annotations
 annotations: {}
-# -- This section sets the optional use of an init container for fixing permissions on secret files.
-# If this section is used, each object listed can have the necessary attributes specified:
-# _name_ (The label used for the init container)
-# _containerPath_ (The path in the container where the secret files will be stored)
-# _secretName_ (OPTIONAL: The secret name if different from _name_)
-# _specialInstructions_ (OPTIONAL: This allows for optional instructions to be used when fixing permissions)
-secretPermFixer: []
 service:
   # -- (bool) This sets the use of a Service API for the application
   use: false

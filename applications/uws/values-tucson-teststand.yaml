@@ -60,14 +60,6 @@ uws-api-server:
     subPath: ""
     readOnly: true
 
-csc_collector:
-  secrets:
-  - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: ts/software/ts-salkafka
-
 atocps:
   enabled: true
   classifier: ocps1

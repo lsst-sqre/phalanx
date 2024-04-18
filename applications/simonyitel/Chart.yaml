@@ -3,9 +3,9 @@ name: simonyitel
 version: 1.0.0
 description: Deployment for the Simonyi Survey Telescope CSCs
 dependencies:
-- name: csc_collector
+- name: csc_shared
   version: 1.0.0
-  repository: file://../../charts/csc_collector
+  repository: file://../../charts/csc_shared
 - name: csc
   alias: ccheaderservice
   version: 1.0.0

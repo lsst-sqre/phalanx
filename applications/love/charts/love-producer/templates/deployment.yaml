@@ -37,7 +37,7 @@ spec:
             - name: LSST_KAFKA_SECURITY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ts-salkafka
+                  name: love
                   key: ts-salkafka-password
           {{- range $env_var, $env_value := $.Values.env }}
             - name: {{ $env_var }}
@@ -47,7 +47,7 @@ spec:
             - name: {{ $env_var }}
               valueFrom:
                 secretKeyRef:
-                  name: love-secrets
+                  name: love
                   key: {{ $env_value }}
           {{- end }}
           {{- if or $.Values.resources $producer.resources }}
@@ -61,7 +61,7 @@ spec:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
       imagePullSecrets:
-        - name: nexus3-docker
+        - name: pull-secret
       {{- if or $.Values.nodeSelector $producer.nodeSelector }}
       {{- $nodeSelector := "" }}
       {{- if $producer.nodeSelector }}

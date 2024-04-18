@@ -15,10 +15,8 @@ spec:
       labels:
         {{- include "love-nginx.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml $.Values.imagePullSecrets | nindent 8 }}
-      {{- end }}
+      - name: pull-secret
       initContainers:
       - name: love-frontend
         {{- $feImageTag := .Values.initContainers.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}

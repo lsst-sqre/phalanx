@@ -1,13 +1,3 @@
-csc_collector:
-  secrets:
-  - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: simonyitel
-  - name: simonyitel
-    key: simonyitel
-
 ccheaderservice:
   enabled: true
   image:
@@ -19,17 +9,13 @@ ccheaderservice:
     CAMERA: cc
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: simonyitel
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: simonyitel
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: simonyitel
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: simonyitel
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
 
 ccoods:
   enabled: true
@@ -41,10 +27,8 @@ ccoods:
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
   butlerSecret:
     containerPath: &bS-cP /home/saluser/.lsst
-    dbUser: oods
-  secretPermFixer:
-  - name: simonyitel
-    containerPath: *bS-cP
+    dbUser: &bS-dbU oods
+    secretFilename: &bS-sFn postgres-credentials.txt
   nfsMountpoint:
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam
@@ -139,10 +123,8 @@ mtaos:
     pullPolicy: Always
   butlerSecret:
     containerPath: *bS-cP
-    dbUser: oods
-  secretPermFixer:
-  - name: simonyitel
-    containerPath: *bS-cP
+    dbUser: *bS-dbU
+    secretFilename: *bS-sFn
   nfsMountpoint:
   - name: comcam-gen3-butler
     containerPath: /repo/LSSTComCam

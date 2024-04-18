@@ -3,9 +3,9 @@ name: eas
 version: 1.0.0
 description: Deployment for the Environmental Awareness Systems CSCs
 dependencies:
-- name: csc_collector
+- name: csc_shared
   version: 1.0.0
-  repository: file://../../charts/csc_collector
+  repository: file://../../charts/csc_shared
 - name: csc
   alias: auxtel-ess01
   version: 1.0.0

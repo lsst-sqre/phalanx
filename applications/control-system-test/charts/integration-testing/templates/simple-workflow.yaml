@@ -15,7 +15,7 @@ spec:
     persistentVolumeClaim:
       claimName: {{ .Values.persistentVolume.claimName }}
   imagePullSecrets:
-  - name: nexus3-docker
+  - name: pull-secret
   podMetadata:
     labels:
       argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
