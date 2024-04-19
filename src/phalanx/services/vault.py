@@ -10,6 +10,7 @@ import jinja2
 from safir.datetime import current_datetime, format_datetime_for_logging
 
 from ..constants import VAULT_WRITE_TOKEN_WARNING_LIFETIME
+from ..exceptions import VaultPathConflictError
 from ..models.environments import EnvironmentConfig
 from ..models.vault import VaultAppRole, VaultToken, VaultTokenMetadata
 from ..storage.config import ConfigStorage
@@ -89,7 +90,15 @@ class VaultService:
         config = self._config.load_environment_config(environment)
         new_vault_client = self._vault.get_vault_client(config)
         old_vault_client = self._vault.get_vault_client(config, old_path)
+        if new_vault_client.path == old_vault_client.path:
+            raise VaultPathConflictError(old_vault_client.path)
         secrets = old_vault_client.list_application_secrets()
+        print(
+            "Copying secrets from",
+            old_vault_client.path,
+            "to",
+            new_vault_client.path,
+        )
         for name in sorted(secrets):
             if name.endswith("/"):
                 print("Skipping subdirectory", name)
