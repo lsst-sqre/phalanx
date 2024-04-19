@@ -63,7 +63,7 @@ auxtel-ess04-sim:
       memory: 900Mi
 
 auxtel-ess05-sim:
-  enabled: false
+  enabled: true
   classifier: ess205
   image:
     repository: ts-dockerhub.lsst.org/ess
