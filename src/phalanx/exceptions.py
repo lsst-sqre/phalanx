@@ -24,6 +24,7 @@ __all__ = [
     "UnresolvedSecretsError",
     "UsageError",
     "VaultNotFoundError",
+    "VaultPathConflictError",
 ]
 
 
@@ -263,8 +264,7 @@ class UnknownEnvironmentError(UsageError):
     """
 
     def __init__(self, name: str) -> None:
-        msg = f"No configuration found for environment {name}"
-        super().__init__(msg)
+        super().__init__(f"No configuration found for environment {name}")
 
 
 class VaultNotFoundError(UsageError):
@@ -286,3 +286,16 @@ class VaultNotFoundError(UsageError):
         else:
             msg = f"Vault secret {path} not found in server {url}"
         super().__init__(msg)
+
+
+class VaultPathConflictError(UsageError):
+    """Attempt to copy a Vault tree onto itself.
+
+    Parameters
+    ----------
+    path
+        Path inside Vault being copied.
+    """
+
+    def __init__(self, path: str) -> None:
+        super().__init__(f"Vault path {path} cannot be copied onto itself")

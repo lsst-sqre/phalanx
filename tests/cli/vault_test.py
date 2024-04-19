@@ -138,6 +138,19 @@ def test_copy_secrets(
 
     assert_json_dirs_match(tmp_path, vault_input_path)
 
+    # Check that the Vault secrets cannot be copied over themselves.
+    config_storage = factory.create_config_storage()
+    environment = config_storage.load_environment_config("idfdev")
+    result = run_cli(
+        "vault",
+        "copy-secrets",
+        "idfdev",
+        environment.vault_path_prefix,
+        env={"VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 2
+    assert "cannot be copied onto itself" in result.output
+
 
 def test_create_read_approle(
     factory: Factory,
