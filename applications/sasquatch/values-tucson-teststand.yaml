@@ -1,6 +1,7 @@
 strimzi-kafka:
   cluster:
-    releaseLabel: pillan-prom
+    monitorLabel:
+      lsst.io/monitor: "true"
   kafka:
     disruption_tolerance: 1
     config:

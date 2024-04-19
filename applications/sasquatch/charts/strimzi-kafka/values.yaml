@@ -7,7 +7,7 @@ cluster:
 
   # -- Site wide label required for gathering Prometheus metrics if they are
   # enabled
-  releaseLabel: "site-prom"
+  monitorLabel: {}
 
 kafka:
   # -- Version of Kafka to deploy
