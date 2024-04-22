@@ -71,8 +71,8 @@ Your current cluster is:
 
 {context}
 
-If this is the correct cluster, answer no and change default clusters with
-kubectl config set-context before continuing.
+If this is not the correct cluster, answer no and change default clusters
+with kubectl config set-context before continuing.
 """
 """Warning message displayed by :command:`phalanx environment install`."""
 
