@@ -18,7 +18,7 @@ Authentication and identity system
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.schemaUpdateTagSuffix | string | `"-alpine"` | Tag suffix to use for the proxy for schema updates |
-| cloudsql.image.tag | string | `"1.34.1"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.35.1"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
 | cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
