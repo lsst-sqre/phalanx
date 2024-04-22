@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from ..models.vault import VaultCredentials
 from .command import Command
 
 __all__ = ["KubernetesStorage"]
@@ -39,10 +40,10 @@ class KubernetesStorage:
         """
         self._kubectl.run("create", "ns", namespace, ignore_fail=ignore_fail)
 
-    def create_generic_secret(
-        self, name: str, namespace: str, keys: dict[str, str]
+    def create_vault_secret(
+        self, name: str, namespace: str, credentials: VaultCredentials
     ) -> None:
-        """Create a generic Kubernetes ``Secret`` resource.
+        """Create a Kubernetes ``Secret`` resource for Vault credentials.
 
         Parameters
         ----------
@@ -50,20 +51,11 @@ class KubernetesStorage:
             Name of the secret.
         namespace
             Namespace of the secret.
-        keys
-            Key and value pairs to put into the secret.
+        credentials
+            Vault credentials to store in the secret.
         """
-        args = [
-            "create",
-            "secret",
-            "generic",
-            name,
-            "--namespace",
-            namespace,
-        ]
-        for key, value in keys.items():
-            args.append(f"--from-literal={key}={value}")
-        self._kubectl.run(*args)
+        args = ["apply", "-f", "-"]
+        self._kubectl.run(*args, stdin=credentials.to_kubernetes_secret(name))
 
     def get_current_context(self) -> str:
         """Get the current context (the default Kubernetes cluster).

@@ -77,6 +77,7 @@ class Command:
         cwd: Path | None = None,
         ignore_fail: bool = False,
         quiet: bool = False,
+        stdin: str | None = None,
         timeout: timedelta | None = None,
     ) -> None:
         """Run the command with the provided arguments.
@@ -95,6 +96,8 @@ class Command:
             running the command.
         ignore_fail
             If `True`, do not raise an exception on failure.
+        stdin
+            Input for the command.
         quiet
             If `True`, discard standard output. Standard error is still
             displayed on the process standard error stream.
@@ -115,10 +118,13 @@ class Command:
             Raised if the command could not be executed at all.
         """
         cmdline = [self._command, *args]
+        stdin_bytes = stdin.encode() if stdin is not None else None
         stdout = subprocess.DEVNULL if quiet else None
         check = not ignore_fail
         try:
-            subprocess.run(cmdline, check=check, cwd=cwd, stdout=stdout)
+            subprocess.run(
+                cmdline, check=check, cwd=cwd, input=stdin_bytes, stdout=stdout
+            )
         except subprocess.CalledProcessError as e:
             raise CommandFailedError(self._command, args, e) from e
         except subprocess.TimeoutExpired as e:

@@ -12,7 +12,8 @@ __all__ = [
     "HELM_DOCLINK_ANNOTATION",
     "ONEPASSWORD_ENCODED_WARNING",
     "PULL_SECRET_DESCRIPTION",
-    "VAULT_SECRET_TEMPLATE",
+    "VAULT_APPROLE_SECRET_TEMPLATE",
+    "VAULT_TOKEN_SECRET_TEMPLATE",
     "VAULT_WRITE_TOKEN_LIFETIME",
     "VAULT_WRITE_TOKEN_WARNING_LIFETIME",
 ]
@@ -34,7 +35,7 @@ PULL_SECRET_DESCRIPTION = (
 )
 """Description to put in the static secrets YAML file for ``pull-secret``."""
 
-VAULT_SECRET_TEMPLATE = """\
+VAULT_APPROLE_SECRET_TEMPLATE = """\
 apiVersion: v1
 kind: Secret
 metadata:
@@ -46,6 +47,18 @@ data:
 type: Opaque
 """
 """Template for a ``Secret`` containing AppRole credentials."""
+
+VAULT_TOKEN_SECRET_TEMPLATE = """\
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {name}
+  namespace: vault-secrets-operator
+data:
+  VAULT_TOKEN: {token}
+type: Opaque
+"""
+"""Template for a ``Secret`` containing token credentials."""
 
 VAULT_WRITE_TOKEN_LIFETIME = "3650d"
 """Default lifetime to set for Vault write tokens."""

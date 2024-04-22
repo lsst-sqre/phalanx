@@ -11,7 +11,10 @@ import jinja2
 import yaml
 from safir.datetime import current_datetime
 
-from phalanx.constants import VAULT_SECRET_TEMPLATE, VAULT_WRITE_TOKEN_LIFETIME
+from phalanx.constants import (
+    VAULT_APPROLE_SECRET_TEMPLATE,
+    VAULT_WRITE_TOKEN_LIFETIME,
+)
 from phalanx.factory import Factory
 from phalanx.models.vault import VaultAppRole, VaultToken
 
@@ -204,7 +207,7 @@ def test_create_read_approle(
     secret = yaml.safe_load(result.output)
     r = mock_vault.read_role_id(role_name)
     role_id = r["data"]["role_id"]
-    expected = VAULT_SECRET_TEMPLATE.format(
+    expected = VAULT_APPROLE_SECRET_TEMPLATE.format(
         name="vault-credentials",
         role_id=b64encode(role_id.encode()).decode(),
         secret_id=secret["data"]["VAULT_SECRET_ID"],
