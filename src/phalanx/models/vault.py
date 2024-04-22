@@ -9,7 +9,10 @@ from datetime import datetime
 import yaml
 from pydantic import BaseModel, Field
 
-from ..constants import VAULT_SECRET_TEMPLATE
+from ..constants import (
+    VAULT_APPROLE_SECRET_TEMPLATE,
+    VAULT_TOKEN_SECRET_TEMPLATE,
+)
 
 __all__ = [
     "VaultAppRole",
@@ -76,7 +79,7 @@ class VaultAppRole(VaultAppRoleMetadata):
         """
         role_id = b64encode(self.role_id.encode()).decode()
         secret_id = b64encode(self.secret_id.encode()).decode()
-        return VAULT_SECRET_TEMPLATE.format(
+        return VAULT_APPROLE_SECRET_TEMPLATE.format(
             name=name, role_id=role_id, secret_id=secret_id
         )
 
@@ -93,8 +96,20 @@ class VaultCredentials(BaseModel, ABC):
     """
 
     @abstractmethod
-    def to_secret_data(self) -> dict[str, str]:
-        """Construct the corresponding vault-secrets-operator secret."""
+    def to_kubernetes_secret(self, name: str) -> str:
+        """Format the data as a secret for vault-secrets-operator.
+
+        Parameters
+        ----------
+        name
+            Name of the secret to create.
+
+        Returns
+        -------
+        str
+            YAML creating a Kubernetes ``Secret`` resource for `Vault Secrets
+            Operator`_, suitable for passing to :command:`kubectl apply`.
+        """
 
 
 class VaultAppRoleCredentials(VaultCredentials):
@@ -106,11 +121,12 @@ class VaultAppRoleCredentials(VaultCredentials):
     secret_id: str
     """Authentication credentials for the AppRole."""
 
-    def to_secret_data(self) -> dict[str, str]:
-        return {
-            "VAULT_ROLE_ID": self.role_id,
-            "VAULT_SECRET_ID": self.secret_id,
-        }
+    def to_kubernetes_secret(self, name: str) -> str:
+        role_id = b64encode(self.role_id.encode()).decode()
+        secret_id = b64encode(self.secret_id.encode()).decode()
+        return VAULT_APPROLE_SECRET_TEMPLATE.format(
+            name=name, role_id=role_id, secret_id=secret_id
+        )
 
 
 class VaultTokenCredentials(VaultCredentials):
@@ -119,8 +135,9 @@ class VaultTokenCredentials(VaultCredentials):
     token: str
     """Vault token."""
 
-    def to_secret_data(self) -> dict[str, str]:
-        return {"VAULT_TOKEN": self.token}
+    def to_kubernetes_secret(self, name: str) -> str:
+        token = b64encode(self.token.encode()).decode()
+        return VAULT_TOKEN_SECRET_TEMPLATE.format(name=name, token=token)
 
 
 class VaultTokenMetadata(BaseModel):

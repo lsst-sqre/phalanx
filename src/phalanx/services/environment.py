@@ -118,10 +118,10 @@ class EnvironmentService:
             self._kubernetes.create_namespace(
                 "vault-secrets-operator", ignore_fail=True
             )
-            self._kubernetes.create_generic_secret(
+            self._kubernetes.create_vault_secret(
                 "vault-credentials",
                 "vault-secrets-operator",
-                vault_credentials.to_secret_data(),
+                vault_credentials,
             )
             self._helm.dependency_update("vault-secrets-operator")
             self._helm.upgrade_application(
