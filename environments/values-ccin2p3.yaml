@@ -4,7 +4,7 @@ vaultPathPrefix: secret/phalanx/ccin2p3
 #vaultPathPrefix: secret/k8s_operator/rsp-cc
 
 applications:
-  datalinker: true
+  datalinker: false
   nublado: true
   portal: true
   postgres: true
