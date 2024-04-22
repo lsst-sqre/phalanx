@@ -636,6 +636,10 @@ def secrets_audit(
     A Vault token with read access to the Vault data for the given environment
     must be available in the static secrets or present in the VAULT_TOKEN
     environment variable.
+
+    The Vault server does not clearly distinguish between unknown paths and
+    permission denied errors, so if the Vault token doesn't have write access
+    or if the path doesn't exist, all secrets will be reported as missing.
     """
     if not config:
         config = _find_config()
