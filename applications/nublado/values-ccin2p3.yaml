@@ -23,7 +23,7 @@ controller:
         - name: "homecreation"
           image:
             repository: "registry.hub.docker.com/gabrimaine/initdir"
-            tag: "0.0.2"
+            tag: "0.0.4"
           privileged: true
           volumeMounts:
             - containerPath: "/pbs/home"
@@ -67,6 +67,7 @@ jupyterhub:
     continuous:
       enabled: true
   hub:
+    internalDatabase: false
     baseUrl: "/nb"
     config:
       ServerApp:
@@ -78,3 +79,5 @@ jupyterhub:
     timeout: 432000
     every: 300
     maxAge: 2160000
+  secrets:
+    templateSecrets: true
