@@ -6,7 +6,7 @@ from contextlib import suppress
 from datetime import timedelta
 
 import hvac
-from hvac.exceptions import InvalidPath
+from hvac.exceptions import Forbidden, InvalidPath
 from pydantic import SecretStr
 
 from ..exceptions import VaultNotFoundError
@@ -304,11 +304,15 @@ class VaultClient:
         Raises
         ------
         VaultNotFoundError
-            Raised if the path for application secrets does not exist.
+            Raised if the path for application secrets does not exist or if
+            the Vault server returned a permission denied error.
+            Unfortunately, because the Vault server sometimes returns
+            permission denied if the path doesn't exist, there's no good way
+            to distinguish between these errors.
         """
         try:
             r = self._vault.secrets.kv.list_secrets(self.path)
-        except InvalidPath as e:
+        except (InvalidPath, Forbidden) as e:
             raise VaultNotFoundError(self.url, self.path) from e
         return r["data"]["keys"]
 

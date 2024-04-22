@@ -18,6 +18,7 @@ from ..exceptions import (
     NoOnepasswordConfigError,
     NoVaultCredentialsError,
     UnresolvedSecretsError,
+    VaultNotFoundError,
 )
 from ..models.environments import Environment, EnvironmentBaseConfig
 from ..models.secrets import (
@@ -99,6 +100,12 @@ class SecretsService:
     ) -> str:
         """Compare existing secrets to configuration and report problems.
 
+        If the Vault path doesn't exist, assume that it hasn't been created
+        yet and act as if there are no secrets in Vault. Unfortunately, we
+        will also get this behavior if the Vault token doesn't have
+        appropriate permissions, since the Vault server returns permission
+        denied for unknown paths and there's no way to distinguish.
+
         Parameters
         ----------
         env_name
@@ -124,7 +131,10 @@ class SecretsService:
         # Retrieve all the current secrets from Vault and resolve all of the
         # secrets.
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets()
+        try:
+            vault_secrets = vault_client.get_environment_secrets()
+        except VaultNotFoundError:
+            vault_secrets = {}
         try:
             resolved = self._resolve_secrets(
                 secrets=secrets,
@@ -230,6 +240,9 @@ class SecretsService:
         secrets that already have a value in Vault, that value will be kept
         and not replaced.
 
+        If the Vault path doesn't exist, assume that it hasn't been created
+        yet and act as if there are no secrets in Vault.
+
         Parameters
         ----------
         env_name
@@ -246,7 +259,10 @@ class SecretsService:
             static_secrets = self._get_onepassword_secrets(environment)
         vault_client = self._get_vault_client(environment, static_secrets)
         secrets = environment.all_secrets()
-        vault_secrets = vault_client.get_environment_secrets()
+        try:
+            vault_secrets = vault_client.get_environment_secrets()
+        except VaultNotFoundError:
+            vault_secrets = {}
 
         # Resolve all of the secrets, regenerating if desired.
         resolved = self._resolve_secrets(
