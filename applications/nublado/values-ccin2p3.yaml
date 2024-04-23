@@ -67,7 +67,7 @@ jupyterhub:
     continuous:
       enabled: true
   hub:
-    internalDatabase: false
+    internalDatabase: true
     baseUrl: "/nb"
     config:
       ServerApp:
