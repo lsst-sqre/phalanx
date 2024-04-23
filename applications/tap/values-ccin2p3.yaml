@@ -2,6 +2,7 @@ cadc-tap:
   tapSchema:
     image:
       repository: "gabrimaine/tap-schema-ccin2p3"
+      tag: 2.4.0
 
   config:
     gcsBucket: "lsstrsp:async-results.lsst.codes"
