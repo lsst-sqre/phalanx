@@ -13,8 +13,8 @@ data:
       bucket: {{ .Values.s3Bucket }}
       insecure: false
       accessKeySecret:
-        name: lfa
+        name: control-system-test
         key: aws-access-key-id
       secretKeySecret:
-        name: lfa
+        name: control-system-test
         key: aws-secret-access-key

@@ -15,7 +15,7 @@ This is the classic hubot-based sqrbot, intended purely as a stopgap until the m
 | autoscaling.maxReplicas | int | `100` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
-| config.jiraUrl | string | `"https://jira.lsstcorp.org"` | Jira base URL |
+| config.jiraUrl | string | `"https://rubinobs.atlassian.net"` | Jira base URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.username | string | `"sqrbot"` | Hubot username |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |

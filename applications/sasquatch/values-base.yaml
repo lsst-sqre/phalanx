@@ -24,6 +24,9 @@ strimzi-kafka:
     storage:
       storageClassName: rook-ceph-block
       size: 1Ti
+    listeners:
+      plain:
+        enabled: true
     externalListener:
       tls:
         enabled: true
@@ -51,6 +54,8 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+    consdb:
+      enabled: true
 
 influxdb:
   persistence:
@@ -76,7 +81,6 @@ source-influxdb:
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
-
 
 kafka-connect-manager:
   influxdbSink:

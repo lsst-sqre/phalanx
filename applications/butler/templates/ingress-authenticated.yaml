@@ -29,7 +29,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            {{- range $repositoryLabel := .Values.config.repositoryLabels }}
+            {{- range $repositoryLabel, $unused := .Values.config.repositories }}
             - path: "{{ $.Values.config.pathPrefix }}/repo/{{ $repositoryLabel }}"
               pathType: "Prefix"
               backend:

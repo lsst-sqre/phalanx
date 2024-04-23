@@ -1,5 +1,3 @@
-/installer/secrets/
-/installer/docker-creds
 /applications/*/charts/*.tgz
 /applications-expanded/
 **/Chart.lock

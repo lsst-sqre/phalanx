@@ -4,7 +4,7 @@ Log messages related to an exposure
 
 ## Source Code
 
-* <https://github.com/lsst-sqre/exposurelog>
+* <https://github.com/lsst-ts/exposurelog>
 
 ## Values
 

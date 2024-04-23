@@ -1,7 +1,13 @@
 apiVersion: v2
 name: sasquatch
 version: 1.0.0
-description: Rubin Observatory's telemetry service.
+description: "Rubin Observatory's telemetry service"
+home: "https://sasquatch.lsst.io/"
+sources:
+  - "https://github.com/influxdata/influxdb"
+  - "https://github.com/obsidiandynamics/kafdrop"
+  - "https://github.com/confluentinc/kafka-rest"
+  - "https://github.com/lsst-sqre/sasquatch"
 appVersion: 0.1.0
 
 dependencies:

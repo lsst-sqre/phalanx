@@ -111,6 +111,3 @@ config:
     [#help-desk](https://lsstuk.slack.com).
 
     Don't forget to check the <Link href="/docs">documentation</Link>.
-
-ingress:
-  tls: false

@@ -1,0 +1,10 @@
+environment:
+  vaultUrl: "https://vault.slac.stanford.edu"
+
+db:
+  user: "rubin"
+  host: "usdf-butler.slac.stanford.edu"
+  database: "lsstdb1"
+lfa:
+  bucket_prefix: "rubin:"
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"

@@ -1,6 +1,10 @@
-name: tucson-teststand
-fqdn: tucson-teststand.lsst.codes
-vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
+name: "tucson-teststand"
+fqdn: "tucson-teststand.lsst.codes"
+appOfAppsName: "science-platform"
+onepassword:
+  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
+  vaultTitle: "RSP tucson-teststand.lsst.codes"
+vaultPathPrefix: "secret/phalanx/tucson-teststand"
 
 applications:
   argo-workflows: true
@@ -10,6 +14,7 @@ applications:
   eas: true
   exposurelog: true
   love: true
+  mobu: true
   narrativelog: true
   nublado: true
   obssys: true
@@ -23,6 +28,6 @@ applications:
   telegraf-ds: true
 
 controlSystem:
-  imageTag: k0001
-  siteTag: tucson
-  s3EndpointUrl: https://s3.tu.lsst.org
+  imageTag: "k0001"
+  siteTag: "tucson"
+  s3EndpointUrl: "https://s3.tu.lsst.org"

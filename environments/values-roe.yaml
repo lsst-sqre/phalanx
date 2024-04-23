@@ -1,7 +1,8 @@
-name: roe
-fqdn: rsp.lsst.ac.uk
+name: "roe"
+fqdn: "rsp.lsst.ac.uk"
+appOfAppsName: "science-platform"
 vaultUrl: "https://vault.lsst.ac.uk"
-vaultPathPrefix: secret/k8s_operator/roe
+vaultPathPrefix: "secret/k8s_operator/roe"
 
 applications:
   mobu: true

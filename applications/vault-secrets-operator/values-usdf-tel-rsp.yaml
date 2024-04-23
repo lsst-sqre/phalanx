@@ -1,21 +1,17 @@
 vault-secrets-operator:
   environmentVars:
-    - name: VAULT_AUTH_METHOD
-      value: approle
-    - name: VAULT_ROLE_ID
+    - name: "VAULT_ROLE_ID"
       valueFrom:
         secretKeyRef:
-          name: vault-secrets-operator
-          key: VAULT_ROLE_ID
-    - name: VAULT_SECRET_ID
+          name: "vault-secrets-operator"
+          key: "VAULT_ROLE_ID"
+    - name: "VAULT_SECRET_ID"
       valueFrom:
         secretKeyRef:
-          name: vault-secrets-operator
-          key: VAULT_SECRET_ID
-    - name: VAULT_TOKEN_MAX_TTL
+          name: "vault-secrets-operator"
+          key: "VAULT_SECRET_ID"
+    - name: "VAULT_TOKEN_MAX_TTL"
       valueFrom:
         secretKeyRef:
-          name: vault-secrets-operator
-          key: VAULT_TOKEN_MAX_TTL
-  vault:
-    authMethod: approle
+          name: "vault-secrets-operator"
+          key: "VAULT_TOKEN_MAX_TTL"

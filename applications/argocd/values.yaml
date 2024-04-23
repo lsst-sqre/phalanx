@@ -43,20 +43,20 @@ argo-cd:
       # -- Create an ingress for the Argo CD server
       enabled: true
 
-      # -- Additional annotations to add to the Argo CD ingress
-      # @default -- Rewrite requests to remove `/argo-cd/` prefix
+      # -- Annotations to add to the ingress
+      # @default -- Configure the `letsencrypt-dns` TLS cert cluster issuer
       annotations:
-        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
+        cert-manager.io/cluster-issuer: "letsencrypt-dns"
 
       # -- Ingress class to use for Argo CD ingress
       ingressClassName: "nginx"
 
       # -- Paths to route to Argo CD
-      paths:
-        - "/argo-cd(/|$)(.*)"
+      path: "/argo-cd"
 
-      # -- Type of path expression for Argo CD ingress
-      pathType: "ImplementationSpecific"
+      # -- Enable TLS management for this ingress. Disable this if TLS should
+      # not use a Let's Encrypt TLS certificate.
+      tls: true
 
   configs:
     cm:
@@ -70,6 +70,9 @@ argo-cd:
 
       # -- Base href for `index.html` when running under a reverse proxy
       server.basehref: "/argo-cd"
+
+      # -- Server root path when running under a reverse proxy
+      server.rootpath: "/argo-cd"
 
     secret:
       # -- Create the Argo CD secret (we manage this with Vault)

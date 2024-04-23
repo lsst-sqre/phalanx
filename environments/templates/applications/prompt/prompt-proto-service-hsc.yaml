@@ -1,0 +1,41 @@
+{{- if (index .Values "applications"  "prompt-proto-service-hsc") -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "prompt-proto-service-hsc"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        argocd.argoproj.io/managed-by: "argocd"
+    syncOptions:
+      - "CreateNamespace=true"
+  destination:
+    namespace: "prompt-proto-service-hsc"
+    server: "https://kubernetes.default.svc"
+  ignoreDifferences:
+    - group: "serving.knative.dev"
+      kind: "Service"
+      jqPathExpressions:
+        - ".spec.template.spec.containers[].resources.requests"
+        - ".spec.template.spec.containers[].resources.limits"
+  project: "prompt"
+  source:
+    path: "applications/prompt-proto-service-hsc"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

@@ -1,13 +1,3 @@
-csc_collector:
-  secrets:
-  - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: meteoblue
-    key: ts/software/meteoblue
-
 auxtel-ess01-sim:
   enabled: true
   classifier: ess201
@@ -73,7 +63,7 @@ auxtel-ess04-sim:
       memory: 900Mi
 
 auxtel-ess05-sim:
-  enabled: false
+  enabled: true
   classifier: ess205
   image:
     repository: ts-dockerhub.lsst.org/ess
@@ -286,8 +276,7 @@ weatherforecast:
     RUN_ARG: --state enabled
   envSecrets:
   - name: METEOBLUE_API_KEY
-    secretName: meteoblue
-    secretKey: api-key
+    key: meteoblue-api-key
   resources:
     requests:
       cpu: 9m

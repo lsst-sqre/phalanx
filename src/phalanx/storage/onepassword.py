@@ -7,6 +7,7 @@ from collections import defaultdict
 
 from onepasswordconnectsdk import new_client
 from onepasswordconnectsdk.client import FailedToRetrieveItemException
+from pydantic import SecretStr
 
 from ..exceptions import (
     MissingOnepasswordSecretsError,
@@ -98,7 +99,9 @@ class OnepasswordClient:
 
         # Return the static secrets.
         return StaticSecrets(
-            applications=applications, pull_secret=self._get_pull_secret()
+            applications=applications,
+            pull_secret=self._get_pull_secret(),
+            vault_write_token=self._get_vault_write_token(),
         )
 
     def _get_pull_secret(self) -> PullSecret | None:
@@ -106,7 +109,7 @@ class OnepasswordClient:
 
         Returns
         -------
-        dict of StaticSecret
+        dict of StaticSecret or None
             The constructed pull secret in a form suitable for adding to
             Vault, or `None` if there is no pull secret for this environment.
         """
@@ -130,6 +133,26 @@ class OnepasswordClient:
 
         # Return the result converted to the appropriate model.
         return PullSecret.model_validate({"registries": secrets})
+
+    def _get_vault_write_token(self) -> SecretStr | None:
+        """Get the Vault write token for an environment from 1Password.
+
+        Returns
+        -------
+        SecretStr or None
+            Vault write token for the configured environment, or `None` if
+            it isn't present in 1Password.
+        """
+        try:
+            item = self._onepassword.get_item(
+                "vault-write-token", self._vault_id
+            )
+        except FailedToRetrieveItemException:
+            return None
+        for field in item.fields:
+            if field.label == "vault-token":
+                return SecretStr(field.value)
+        return None
 
 
 class OnepasswordStorage:

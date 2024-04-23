@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+from collections import defaultdict
 from enum import Enum
+from typing import Self
 
 from pydantic import (
     AnyHttpUrl,
@@ -149,7 +151,9 @@ class ControlSystemConfig(CamelCaseModel):
 
 
 class EnvironmentBaseConfig(CamelCaseModel):
-    """Configuration common to `~phalanx.models.environments.EnvironmentConfig`
+    """Environment configuration options.
+
+    Configuration common to `~phalanx.models.environments.EnvironmentConfig`
     and `~phalanx.models.environments.Environment`.
     """
 
@@ -160,6 +164,19 @@ class EnvironmentBaseConfig(CamelCaseModel):
         title="Domain name",
         description=(
             "Fully-qualified domain name on which the environment listens"
+        ),
+    )
+
+    app_of_apps_name: str | None = Field(
+        None,
+        title="Argo CD app-of-apps name",
+        description=(
+            "Name of the parent Argo CD app-of-apps that manages all of the"
+            " enabled applications. This is required in the merged values"
+            " file that includes environment overrides, but the environment"
+            " override file doesn't need to set it, so it's marked as"
+            " optional for schema checking purposes to allow the override"
+            " file to be schema-checked independently."
         ),
     )
 
@@ -352,6 +369,23 @@ class Environment(EnvironmentBaseConfig):
         return secrets
 
 
+class ArgoCDRBAC(BaseModel):
+    """Argo CD RBAC rules."""
+
+    roles: dict[str, list[str]]
+    """Mapping of roles to list of users or groups."""
+
+    @classmethod
+    def from_csv(cls, csv: str) -> Self:
+        """Parse the RBAC :file:`policy.csv` into the RBAC configuration."""
+        roles = defaultdict(list)
+        for line in csv.splitlines():
+            rule = [i.strip() for i in line.split(",")]
+            if rule[0] == "g":
+                roles[rule[2]].append(rule[1])
+        return cls(roles={r: sorted(m) for r, m in roles.items()})
+
+
 class IdentityProvider(Enum):
     """Type of identity provider used by Gafaelfawr."""
 
@@ -419,23 +453,14 @@ class EnvironmentDetails(EnvironmentBaseConfig):
     argocd_url: str | None
     """URL for the Argo CD UI."""
 
-    argocd_rbac: list[list[str]]
-    """Argo CD RBAC configuration as a list of parsed CSV lines."""
+    argocd_rbac: ArgoCDRBAC | None
+    """Argo CD RBAC configuration."""
 
     identity_provider: IdentityProvider
     """Type of identity provider used by Gafaelfawr in this environment."""
 
     gafaelfawr_scopes: list[GafaelfawrScope]
     """Gafaelfawr scopes and their associated groups."""
-
-    @property
-    def argocd_rbac_csv(self) -> list[str]:
-        """RBAC configuration formatted for an reStructuredText csv-table."""
-        result = []
-        for rule in self.argocd_rbac:
-            formatted = [f"``{r}``" for r in rule]
-            result.append(",".join(formatted))
-        return result
 
 
 class PhalanxConfig(BaseModel):

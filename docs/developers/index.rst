@@ -27,11 +27,9 @@ Individual applications are documented in the :doc:`/applications/index` section
    :caption: Integration
    :name: dev-int-toc
 
-   write-a-helm-chart
+   helm-chart/index
    add-external-chart
    shared-charts
-   define-secrets
-   add-application
 
 .. toctree::
    :maxdepth: 2
@@ -44,6 +42,7 @@ Individual applications are documented in the :doc:`/applications/index` section
    update-a-secret
    deploy-from-a-branch
    switch-environment-to-branch
+   resource-limits
 
 .. toctree::
    :maxdepth: 2

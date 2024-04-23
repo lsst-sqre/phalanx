@@ -71,7 +71,7 @@ The first file contains the configuration appropriate for all Phalanx environmen
 The second file contains the configuration for a specific environment.
 
 You may also need to add additional resources not created by the upstream Helm chart, particularly ``VaultSecret`` objects to create any secrets that it needs.
-See :doc:`define-secrets` for more about secrets.
+See :doc:`helm-chart/define-secrets` for more about secrets.
 
 Even though you're just setting configuration for an upstream chart that has its own documentation, please add helm-docs_ documentation comments to all settings that Phalanx may modify in :file:`values.yaml`.
 See :ref:`dev-helm-docs` for information on how to write those comments.
@@ -80,5 +80,5 @@ The Phalanx application is a new level of configuration and simplification that 
 Next steps
 ==========
 
-- Define the secrets needed by this application: :doc:`define-secrets`
-- Add the Argo CD application to appropriate environments: :doc:`add-application`
+- Define the secrets needed by this application: :doc:`helm-chart/define-secrets`
+- Add the Argo CD application to appropriate environments: :doc:`helm-chart/add-application`

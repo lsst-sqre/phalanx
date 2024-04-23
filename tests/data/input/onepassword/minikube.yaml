@@ -18,3 +18,4 @@ pull-secret:
     hub.docker.com:
       username: sqrereadonly
       password: docker-password
+vault-write-token: a-vault-write-token

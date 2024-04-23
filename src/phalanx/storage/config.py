@@ -8,6 +8,7 @@ from contextlib import suppress
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Self
+from urllib.parse import urlparse
 
 import yaml
 from git import Diff
@@ -17,6 +18,7 @@ from pydantic import ValidationError
 from ..constants import HELM_DOCLINK_ANNOTATION
 from ..exceptions import (
     ApplicationExistsError,
+    GitRemoteError,
     InvalidApplicationConfigError,
     InvalidSecretConfigError,
     UnknownEnvironmentError,
@@ -26,8 +28,10 @@ from ..models.applications import (
     ApplicationConfig,
     ApplicationInstance,
     DocLink,
+    Project,
 )
 from ..models.environments import (
+    ArgoCDRBAC,
     Environment,
     EnvironmentConfig,
     EnvironmentDetails,
@@ -310,6 +314,67 @@ class ConfigStorage:
         """
         return self._path / "environments"
 
+    def get_git_branch(self) -> str:
+        """Get the Git branch of the current repository.
+
+        Returns
+        -------
+        str
+            Branch name.
+        """
+        return Repo(str(self._path)).active_branch.name
+
+    def get_git_url(self) -> str:
+        """Get the Git URL of the current repository.
+
+        Assumes that the current repository is a cloned Git repository with a
+        remote named ``origin`` and returns the URL of that origin,
+        transformed to an ``https`` URL if necessary. This is used to get the
+        URL of the repository for configuring Argo CD during installation of
+        an environment.
+
+        Returns
+        -------
+        str
+            URL to the Git repository of the current config tree, suitable
+            for Argo CD.
+
+        Raises
+        ------
+        GitRemoteError
+            Raised if the ``origin`` remote does not exist or if its URL is
+            not in a recognized format.
+        """
+        repo = Repo(str(self._path))
+        try:
+            origin = repo.remote("origin")
+        except ValueError as e:
+            msg = 'Current repository has no remote named "origin"'
+            raise GitRemoteError(msg) from e
+        if not origin.url:
+            raise GitRemoteError('Remote "origin" has no URL')
+
+        # If the URL is not an https URL, accept a few forms of github.com
+        # URLs that can be converted into one.
+        parsed_url = urlparse(origin.url)
+        if parsed_url.scheme == "ssh" and parsed_url.hostname == "github.com":
+            return parsed_url._replace(
+                scheme="https", netloc=parsed_url.hostname
+            ).geturl()
+        elif parsed_url.scheme == "https":
+            return origin.url
+        elif parsed_url.scheme == "":
+            match = re.match(r"git@github\.com:([^:/]+/[^:/]+)$", origin.url)
+            if match:
+                return "https://github.com/" + match.group(1)
+
+        # If we fell through, we were unable to parse the URL.
+        msg = (
+            "Cannot determine Argo CD Git URL from origin URL of"
+            f' "{origin.url}"'
+        )
+        raise GitRemoteError(msg)
+
     def get_modified_applications(self, branch: str) -> dict[str, list[str]]:
         """Get all modified application and environment pairs.
 
@@ -558,13 +623,17 @@ class ConfigStorage:
                 with chart_path.open("w") as fh:
                     yaml.safe_dump(app_config.chart, fh, sort_keys=False)
 
-    def write_application_template(self, name: str, template: str) -> None:
+    def write_application_template(
+        self, name: str, project: Project, template: str
+    ) -> None:
         """Write the Argo CD application template for a new application.
 
         Parameters
         ----------
         name
             Name of the application.
+        project
+            Project of the application.
         template
             Contents of the Argo CD application and namespace Helm template
             for the new application.
@@ -574,8 +643,14 @@ class ConfigStorage:
         ApplicationExistsError
             Raised if the application being created already exists.
         """
-        template_name = f"{name}-application.yaml"
-        path = self._path / "environments" / "templates" / template_name
+        path = (
+            self._path
+            / "environments"
+            / "templates"
+            / "applications"
+            / project.value
+            / f"{name}.yaml"
+        )
         if path.exists():
             raise ApplicationExistsError(name)
         path.write_text(template)
@@ -617,17 +692,13 @@ class ConfigStorage:
         # Public URL of Argo CD (or none for environments like minikube).
         argocd_url = None
         with suppress(KeyError):
-            argocd_url = argocd.values["argo-cd"]["server"]["config"]["url"]
+            argocd_url = argocd.values["argo-cd"]["configs"]["cm"]["url"]
 
         # Argo CD role-based access control configuration.
-        argocd_rbac = []
+        argocd_rbac = None
         with suppress(KeyError):
-            rbac_config = argocd.values["argo-cd"]["server"]["rbacConfig"]
-            rbac_csv = rbac_config["policy.csv"]
-            argocd_rbac = [
-                [i.strip() for i in line.split(",")]
-                for line in rbac_csv.splitlines()
-            ]
+            rbac_config = argocd.values["argo-cd"]["configs"]["rbac"]
+            argocd_rbac = ArgoCDRBAC.from_csv(rbac_config["policy.csv"])
 
         # Type of identity provider used for Gafaelfawr.
         if gafaelfawr:
@@ -701,12 +772,7 @@ class ConfigStorage:
         InvalidApplicationConfigError
             Raised if the namespace for the application could not be found.
         """
-        template_path = (
-            self._path
-            / "environments"
-            / "templates"
-            / f"{application}-application.yaml"
-        )
+        template_path = self._find_application_resource_path(application)
         template = template_path.read_text()
 
         # Helm templates are unfortunately not valid YAML, so do this the hard
@@ -720,6 +786,69 @@ class ConfigStorage:
             msg = f"Namespace not found in {template_path!s}"
             raise InvalidApplicationConfigError(application, msg)
         return match.group("namespace")
+
+    def _find_application_project(self, application: str) -> Project:
+        """Determine what Argo CD project an application belongs to.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        str
+            Argo CD project to which the application belongs.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the project for the application could not be found or
+            was set to an invalid value.
+
+        Notes
+        -----
+        All Argo CD ``Application`` resources are put into subdirectories by
+        their Argo CD project, and a Phalanx test ensures that this matches
+        the project referenced inside the Helm resource template, so we can
+        use the file system path to find this information.
+
+        """
+        template_path = self._find_application_resource_path(application)
+        return Project(template_path.parent.name)
+
+    def _find_application_resource_path(self, application: str) -> Path:
+        """Find the path to the ``Application`` resource for an application.
+
+        Parameters
+        ----------
+        application
+            Name of the application.
+
+        Returns
+        -------
+        Path
+            Path to the ``Application`` resource template.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the project for the application could not be found or
+            was set to an invalid value.
+        """
+        template_path = (
+            self.get_environment_chart_path() / "templates" / "applications"
+        )
+        application_path = None
+        for subdir in template_path.iterdir():
+            candidate = subdir / f"{application}.yaml"
+            if candidate.exists():
+                application_path = candidate
+                break
+        if not application_path:
+            msg = "Cannot find Application resource"
+            raise InvalidApplicationConfigError(application, msg)
+        return application_path
 
     def _is_condition_satisfied(
         self, instance: ApplicationInstance, condition: str | None
@@ -808,6 +937,7 @@ class ConfigStorage:
         return ApplicationConfig(
             name=name,
             namespace=self._find_application_namespace(name),
+            project=self._find_application_project(name),
             chart=chart,
             doc_links=self._parse_doclinks(chart),
             values=values,
@@ -870,6 +1000,7 @@ class ConfigStorage:
         instance = ApplicationInstance(
             name=application.name,
             environment=environment_name,
+            project=application.project,
             chart=application.chart,
             values=values,
         )

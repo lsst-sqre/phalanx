@@ -22,6 +22,12 @@ strimzi-kafka:
       enabled: true
     promptProcessing:
       enabled: true
+    consdb:
+      enabled: true
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
 
 influxdb:
   ingress:

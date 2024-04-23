@@ -32,23 +32,15 @@ spec:
       {{- end }}
       serviceAccountName: {{ include "noteburst.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["arq"]
           args: ["noteburst.worker.main.WorkerSettings"]
-          livenessProbe:
-            exec:
-              command:
-                - "arq"
-                - "--check"
-                - "noteburst.worker.main.WorkerSettings"
-            initialDelaySeconds: 360
-            periodSeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
@@ -60,12 +52,23 @@ spec:
                 secretKeyRef:
                   name: {{ template "noteburst.fullname" . }}-gafaelfawr-token
                   key: "token"
+            - name: "NOTEBURST_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "noteburst.fullname" . }}
+                  key: "NOTEBURST_SLACK_WEBHOOK_URL"
             - name: "NOTEBURST_WORKER_IDENTITIES_PATH"
               value: "/etc/noteburst/identities.yaml"
           volumeMounts:
             - name: "identities"
               mountPath: "/etc/noteburst"
               readOnly: true
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
       volumes:
         - name: "identities"
           configMap:

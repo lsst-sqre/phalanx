@@ -1,5 +1,6 @@
 name: "roundtable-prod"
 fqdn: "roundtable.lsst.cloud"
+appOfAppsName: "roundtable"
 gcp:
   projectId: "roundtable-prod-f6fd"
   region: "us-central1"
@@ -14,6 +15,8 @@ applications:
   giftless: true
   jira-data-proxy: true
   kubernetes-replicator: true
+  monitoring: true
+  mobu: true
   onepassword-connect: true
   ook: true
   sasquatch: true
@@ -22,5 +25,7 @@ applications:
   strimzi: true
   strimzi-access-operator: true
   squarebot: true
-  unfurlbot: false
+  telegraf: true
+  telegraf-ds: true
+  unfurlbot: true
   vault: true

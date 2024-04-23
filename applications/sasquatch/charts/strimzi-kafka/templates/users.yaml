@@ -29,6 +29,11 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
   quotas:
     producerByteRate: 1073741824
     consumerByteRate: 1073741824
@@ -206,4 +211,36 @@ spec:
         type: allow
         host: "*"
         operation: Read
+{{- end }}
+{{- if .Values.users.consdb.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: consdb
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: consdb-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
 {{- end }}

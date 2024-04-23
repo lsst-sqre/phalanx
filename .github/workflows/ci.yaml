@@ -17,7 +17,7 @@ jobs:
           go-version: '>=1.22'
 
       - name: Install helm-docs
-        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.0
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.13.1
         env:
           GOBIN: /usr/local/bin/
 
@@ -46,6 +46,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           tox-envs: "typing,py,coverage-report"
+          tox-plugins: tox-uv
           cache-key-prefix: test
 
   helm:
@@ -57,7 +58,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: azure/setup-helm@v3
+      - uses: azure/setup-helm@v4
         with:
           # Used to query GitHub for the latest Helm release.
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -66,13 +67,14 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: phalanx-lint-change
-          cache-key-prefix: test
+          tox-plugins: tox-uv
+          cache-key-prefix: helm
 
   # The minikube job always runs, but it quickly does nothing if no files that
-  # would affect minikube were changed.  This unfortunately requires a lot of
+  # would affect minikube were changed. This unfortunately requires a lot of
   # if conditionals on all the steps of the job, but we need the job to run so
   # that we can make it mandatory before merging, which in turn allows us to
-  # use automerge.
+  # use merge queues.
   minikube:
     name: Test deploy
     runs-on: ubuntu-latest
@@ -90,26 +92,14 @@ jobs:
           filters: |
             minikube:
               - ".github/workflows/ci.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/Chart.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/templates/**"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values.yaml"
-              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}/values-minikube.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/Chart.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/templates/**"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values.yaml"
+              - "applications/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,vault-secrets-operator}/values-minikube.yaml"
               - "environments/Chart.yaml"
-              - "environments/templates/{argocd,gafaelfawr,ingress-nginx,mobu,postgres,squareone,vault-secrets-operator}*"
+              - "environments/templates/applications/infrastructure/*"
               - "environments/values-minikube.yaml"
-              - "installer/**"
-
-      - name: Setup Minikube
-        if: steps.filter.outputs.minikube == 'true'
-        uses: medyagh/setup-minikube@v0.0.15
-        with:
-          kubernetes-version: "v1.27.3"
-          cpus: max
-          memory: 5500m  # Linux virtual machines have 7GB of RAM
-
-      - name: Test interaction with the cluster
-        if: steps.filter.outputs.minikube == 'true'
-        run: kubectl get nodes
+              - "src/phalanx/**"
 
       - name: Download installer dependencies
         if: steps.filter.outputs.minikube == 'true'
@@ -122,12 +112,30 @@ jobs:
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
 
-      - name: Run installer
-        timeout-minutes: 15
+      - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        run: |
-          cd installer
-          ./install.sh minikube "${{ secrets.MINIKUBE_VAULT_ROLE_ID }}" "${{ secrets.MINIKUBE_VAULT_SECRET_ID }}"
+        uses: medyagh/setup-minikube@v0.0.16
+        with:
+          kubernetes-version: "v1.27.3"
+          cpus: max
+          memory: 5500m  # Linux virtual machines have 7GB of RAM
+
+      - name: Test interaction with the cluster
+        if: steps.filter.outputs.minikube == 'true'
+        run: kubectl get nodes
+
+      - uses: lsst-sqre/run-tox@v1
+        if: steps.filter.outputs.minikube == 'true'
+        timeout-minutes: 15
+        with:
+          python-version: "3.12"
+          tox-envs: install
+          tox-posargs: >-
+            --force-noninteractive
+            --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}
+            --vault-secret-id=${{ secrets.MINIKUBE_VAULT_SECRET_ID }}
+            minikube
+          cache-key-prefix: test
 
       - name: Get final list of resources
         if: steps.filter.outputs.minikube == 'true'

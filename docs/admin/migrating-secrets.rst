@@ -3,7 +3,7 @@ Migrating to the new secrets management system
 ##############################################
 
 We introduced a new command-line-driven secrets management system for Phalanx environments in September of 2023.
-This page documents how to migrate to the new system from the older scripts in :file:`installer`.
+This page documents how to migrate to the new system.
 
 These instructions assume that, if you are using 1Password for static secrets, you have already set up a 1Password vault and enabled the :px-app:`1Password Connect server <onepassword-connect>` for this environment.
 If you have not yet done this, see :doc:`/applications/onepassword-connect/add-new-environment`.
@@ -139,7 +139,7 @@ Update secrets
    See :doc:`add-new-secret` for detailed instructions on how to add static secrets for an application.
    You will need to do this for every application.
 
-   To obtain the current values of static secrets, look either in the old ``RSP-Vault`` 1Password vault (for SQuaRE-managed environments) or use the :command:`vault kv get` command to read the current value of the static secret out of Vault (copied to the new path in the previous step).
+   To obtain the current values of static secrets, use the :command:`vault kv get` command to read the current value of the static secret out of Vault (copied to the new path in the previous step).
 
    For example, to see all the current secrets for the application ``nublado``, run:
 
@@ -151,6 +151,8 @@ Update secrets
 
 #. If you are using 1Password as the source for static secrets, set ``OP_CONNECT_TOKEN`` to the 1Password Connect token for this environment.
    For SQuaRE-managed environments, this can be found in the ``RSP 1Password tokens`` item in the SQuaRE 1Password vault.
+
+   Also, add the :ref:`pull secret <admin-onepassword-pull-secret>` and :ref:`Vault write token <admin-onepassword-vault-token>` to the 1Password vault for this environment if appropriate.
 
 #. Check what secrets are missing or incorrect and fix them.
 
@@ -193,7 +195,7 @@ Switch to the new secrets tree
    Applications to review:
 
    - :px-app:`datalinker` (``config.separateSecrets``)
-   - :px-app:`nublado` (``secrets.templateSecrets``)
+   - :px-app:`nublado` (``hub.internalDatabase``, ``secrets.templateSecrets``)
    - :px-app:`obsloctap` (``config.separateSecrets``)
    - :px-app:`plot-navigator` (``config.separateSecrets``)
    - :px-app:`production-tools` (``config.separateSecrets``)

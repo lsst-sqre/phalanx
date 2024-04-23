@@ -10,12 +10,10 @@ from pathlib import Path
 
 import bcrypt
 import click
-import pytest
 import yaml
 from cryptography.fernet import Fernet
 from safir.datetime import current_datetime
 
-from phalanx.exceptions import MalformedOnepasswordSecretError
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
 
@@ -57,7 +55,12 @@ def test_audit(factory: Factory, mock_vault: MockVaultClient) -> None:
 
     secrets_path = input_path / "secrets" / "idfdev.yaml"
     result = run_cli(
-        "secrets", "audit", "--secrets", str(secrets_path), "idfdev"
+        "secrets",
+        "audit",
+        "--secrets",
+        str(secrets_path),
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 1
     assert result.output == read_output_data("idfdev", "secrets-audit")
@@ -77,7 +80,12 @@ def test_audit_onepassword_missing(
     mock_onepassword.create_empty_test_vault(vault_title)
     mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
 
-    result = run_cli("secrets", "audit", "minikube")
+    result = run_cli(
+        "secrets",
+        "audit",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 1
     assert result.output == read_output_data(
         "minikube", "audit-missing-output"
@@ -127,7 +135,12 @@ def test_onepassword_secrets(
     output_path = tmp_path / "static-secrets.yaml"
 
     result = run_cli(
-        "secrets", "onepassword-secrets", "minikube", "-o", str(output_path)
+        "secrets",
+        "onepassword-secrets",
+        "minikube",
+        "-o",
+        str(output_path),
+        env={"OP_CONNECT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     assert result.output == ""
@@ -135,9 +148,18 @@ def test_onepassword_secrets(
     output = output_path.read_text()
     assert output == read_output_data("minikube", "onepassword-secrets.yaml")
 
-    result = run_cli("secrets", "onepassword-secrets", "minikube")
+    result = run_cli(
+        "secrets",
+        "onepassword-secrets",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == output
+
+    result = run_cli("secrets", "onepassword-secrets", "minikube")
+    assert result.exit_code == 2
+    assert "OP_CONNECT_TOKEN must be set" in result.output
 
 
 def test_schema() -> None:
@@ -167,8 +189,22 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     mock_vault.load_test_data(environment.vault_path_prefix, "idfdev")
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
 
+    # Syncing without a VAULT_TOKEN when the static secrets don't contain one
+    # should fail with an error.
     result = run_cli(
         "secrets", "sync", "--secrets", str(secrets_path), "idfdev"
+    )
+    assert result.exit_code == 2
+    assert "VAULT_TOKEN not set" in result.output
+
+    # Providing a VAULT_TOKEN should make the sync work.
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--secrets",
+        str(secrets_path),
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "sync-output")
@@ -200,7 +236,13 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     # Gafaelfawr Vault secret key is deleted. This also tests that if the
     # static secrets are already in Vault, there's no need to provide a source
     # for static secrets and the Phalanx CLI will silently cope.
-    result = run_cli("secrets", "sync", "--delete", "idfdev")
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--delete",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == read_output_data("idfdev", "sync-delete-output")
     after = _get_app_secret(mock_vault, f"{base_vault_path}/gafaelfawr")
@@ -224,7 +266,14 @@ def test_sync_onepassword(
     mock_vault.load_test_data(environment.vault_path_prefix, "minikube")
     _, base_vault_path = environment.vault_path_prefix.split("/", 1)
 
-    result = run_cli("secrets", "sync", "minikube")
+    # It should be possible to omit VAULT_TOKEN and get the value from
+    # 1Password.
+    result = run_cli(
+        "secrets",
+        "sync",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken"},
+    )
     assert result.exit_code == 0
     assert result.output == read_output_data("minikube", "sync-output")
 
@@ -279,10 +328,15 @@ def test_sync_onepassword_errors(
             field.value = "invalid base64"
 
     # sync should throw an exception containing the application and key.
-    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
-        run_cli("secrets", "sync", "minikube")
-    assert app_name in str(excinfo.value)
-    assert key in str(excinfo.value)
+    result = run_cli(
+        "secrets",
+        "sync",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 2
+    assert app_name in result.output
+    assert key in result.output
 
     # Instead set the secret to a value that is valid base64, but of binary
     # data that cannot be decoded to a string.
@@ -291,10 +345,15 @@ def test_sync_onepassword_errors(
             field.value = b64encode("ää".encode("iso-8859-1")).decode()
 
     # sync should throw an exception containing the application and key.
-    with pytest.raises(MalformedOnepasswordSecretError) as excinfo:
-        run_cli("secrets", "sync", "minikube")
-    assert app_name in str(excinfo.value)
-    assert key in str(excinfo.value)
+    run_cli(
+        "secrets",
+        "sync",
+        "minikube",
+        env={"OP_CONNECT_TOKEN": "sometoken", "VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 2
+    assert app_name in result.output
+    assert key in result.output
 
 
 def test_sync_regenerate(
@@ -315,6 +374,7 @@ def test_sync_regenerate(
         str(secrets_path),
         "--regenerate",
         "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
     )
     assert result.exit_code == 0
     expected = read_output_data("idfdev", "sync-regenerate-output")

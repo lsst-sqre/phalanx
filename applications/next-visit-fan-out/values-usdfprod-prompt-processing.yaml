@@ -1,5 +1,5 @@
 kafka:
-  schemaRegistryUrl: http://10.96.98.30:8081
+  schemaRegistryUrl: http://10.97.241.112:8081
   sasquatchAddress: 10.104.21.0:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
@@ -8,4 +8,4 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v2.0
+  tag: v2.1

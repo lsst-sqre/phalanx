@@ -25,6 +25,9 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.factory
    :include-all-objects:
 
+.. automodapi:: phalanx.github
+   :include-all-objects:
+
 .. automodapi:: phalanx.models.applications
    :include-all-objects:
 
@@ -55,10 +58,19 @@ This API is only intended for use within the Phalanx code itself.
 .. automodapi:: phalanx.services.vault
    :include-all-objects:
 
+.. automodapi:: phalanx.storage.argocd
+   :include-all-objects:
+
+.. automodapi:: phalanx.storage.command
+   :include-all-objects:
+
 .. automodapi:: phalanx.storage.config
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.helm
+   :include-all-objects:
+
+.. automodapi:: phalanx.storage.kubernetes
    :include-all-objects:
 
 .. automodapi:: phalanx.storage.onepassword

@@ -17,8 +17,6 @@ Deployment for the LSST Operators Visualization Environment
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
-| love-manager.envSecretKeyName | string | `"love"` | The top-level secret key name that houses the rest of the secrets |
 | love-manager.manager.frontend.affinity | object | `{}` | Affinity rules for the LOVE manager frontend pods |
 | love-manager.manager.frontend.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
 | love-manager.manager.frontend.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
@@ -126,7 +124,6 @@ Deployment for the LSST Operators Visualization Environment
 | love-manager.redis.port | int | `6379` | The redis port number |
 | love-manager.redis.resources | object | `{}` | Resource specifications for the LOVE redis pods |
 | love-manager.redis.tolerations | list | `[]` | Toleration specifications for the LOVE redis pods |
-| love-manager.secret_path | string | `"lsst.local"` | The site-specific path to find Vault secrets |
 | love-manager.viewBackup.affinity | object | `{}` | Affinity rules for the LOVE view backup pods |
 | love-manager.viewBackup.enabled | bool | `false` | Whether view backup is active |
 | love-manager.viewBackup.env | object | `{}` | Place to specify additional environment variables for the view backup job |
@@ -142,7 +139,7 @@ Deployment for the LSST Operators Visualization Environment
 | love-nginx.affinity | object | `{}` | Affinity rules for the NGINX pod |
 | love-nginx.image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the NGINX image |
 | love-nginx.image.repository | string | `"nginx"` | The NGINX image to use |
-| love-nginx.image.tag | string | `"1.25.4"` | The tag to use for the NGINX image |
+| love-nginx.image.tag | string | `"1.25.5"` | The tag to use for the NGINX image |
 | love-nginx.imagePullSecrets | list | `[]` | The list of pull secrets needed for the images. If this section is used, each object listed can have the following attributes defined: _name_ (The label identifying the pull-secret to use) |
 | love-nginx.ingress.annotations | object | `{}` | Annotations for the NGINX ingress |
 | love-nginx.ingress.className | string | `"nginx"` | Assign the Ingress class name |

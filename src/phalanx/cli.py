@@ -3,9 +3,15 @@
 from __future__ import annotations
 
 import json
+import os
 import re
+import shutil
 import sys
+from collections.abc import Callable
+from datetime import timedelta
+from functools import wraps
 from pathlib import Path
+from typing import ParamSpec
 
 import click
 import yaml
@@ -13,14 +19,23 @@ from pydantic import TypeAdapter
 from safir.click import display_help
 
 from .constants import VAULT_WRITE_TOKEN_LIFETIME
+from .exceptions import UsageError
 from .factory import Factory
+from .models.applications import Project
 from .models.environments import EnvironmentConfig
 from .models.helm import HelmStarter
 from .models.secrets import ConditionalSecretConfig, StaticSecrets
+from .models.vault import (
+    VaultAppRoleCredentials,
+    VaultCredentials,
+    VaultTokenCredentials,
+)
+
+P = ParamSpec("P")
 
 __all__ = [
-    "help",
     "main",
+    "help",
     "application",
     "application_add_helm_repos",
     "application_create",
@@ -28,6 +43,7 @@ __all__ = [
     "application_lint_all",
     "application_template",
     "environment",
+    "environment_install",
     "environment_lint",
     "environment_schema",
     "environment_template",
@@ -44,6 +60,21 @@ __all__ = [
     "vault_create_write_token",
     "vault_export_secrets",
 ]
+
+_INSTALL_WARNING = """\
+WARNING: This will install the entire {environment} Phalanx environment
+into whatever Kubernetes cluster is currently configured as your default
+cluster.
+
+THIS WILL OVERWRITE THE APPLICATIONS IN YOUR CURRENT KUBERNETES CLUSTER.
+Your current cluster is:
+
+{context}
+
+If this is not the correct cluster, answer no and change default clusters
+with kubectl config set-context before continuing.
+"""
+"""Warning message displayed by :command:`phalanx environment install`."""
 
 
 def _find_config() -> Path:
@@ -77,6 +108,57 @@ def _find_config() -> Path:
     return current
 
 
+def _report_usage_errors(f: Callable[P, None]) -> Callable[P, None]:
+    """Convert `~phalanx.exceptions.UsageError` to `click.UsageError`."""
+
+    @wraps(f)
+    def wrapper(*args: P.args, **kwargs: P.kwargs) -> None:
+        try:
+            f(*args, **kwargs)
+        except UsageError as e:
+            raise click.UsageError(str(e)) from None
+
+    return wrapper
+
+
+def _require_command(command: str) -> None:
+    """Require that a given command be found on the user's PATH.
+
+    Parameters
+    ----------
+    command
+        Name of the command.
+
+    Raises
+    ------
+    click.UsageError
+        Raised if the command could not be found.
+    """
+    if not shutil.which(command):
+        raise click.UsageError(f"{command} not found on PATH, not installed?")
+
+
+def _require_env(variable: str, alternative: str | None = None) -> None:
+    """Require that a given environment variable be set.
+
+    Parameters
+    ----------
+    variable
+        Name of the environment variable.
+    alternative
+        An alternative environment variable that may be set instead.
+
+    Raises
+    ------
+    click.UsageError
+        Raised if the environment variable isn't set.
+    """
+    if not os.getenv(variable):
+        if not alternative or not os.getenv(alternative):
+            name = f"{variable} or {alternative}" if alternative else variable
+            raise click.UsageError(f"{name} must be set in the environment")
+
+
 @click.group(context_settings={"help_option_names": ["-h", "--help"]})
 @click.version_option(message="%(version)s")
 def main() -> None:
@@ -106,6 +188,7 @@ def application() -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_add_helm_repos(
     name: str | None = None, *, config: Path | None
 ) -> None:
@@ -118,6 +201,7 @@ def application_add_helm_repos(
     command is not necessary. It is provided as a convenience for helping to
     manage your local Helm configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -144,14 +228,32 @@ def application_add_helm_repos(
     ),
 )
 @click.option(
+    "-p",
+    "--project",
+    type=click.Choice([p.value for p in Project]),
+    prompt=(
+        "Possible Argo CD projects are\n  "
+        + "\n  ".join(p.value for p in Project)
+        + "\nArgo CD project"
+    ),
+    show_choices=False,
+    help="Argo CD project for the application.",
+)
+@click.option(
     "-s",
     "--starter",
     type=click.Choice([s.value for s in HelmStarter]),
     default=HelmStarter.WEB_SERVICE.value,
     help="Helm starter to use as the basis for the chart.",
 )
+@_report_usage_errors
 def application_create(
-    name: str, *, starter: str, config: Path | None, description: str
+    name: str,
+    *,
+    config: Path | None,
+    description: str,
+    project: str,
+    starter: str,
 ) -> None:
     """Create a new application from a starter template.
 
@@ -160,6 +262,7 @@ def application_create(
     appropriate documentation stubs, Argo CD Application resource, and
     environment configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     if not re.match("[a-z]", name):
@@ -173,7 +276,12 @@ def application_create(
         raise click.BadParameter("Description must start with capital letter")
     factory = Factory(config)
     application_service = factory.create_application_service()
-    application_service.create(name, HelmStarter(starter), description)
+    application_service.create(
+        name,
+        starter=HelmStarter(starter),
+        project=Project(project),
+        description=description,
+    )
 
 
 @application.command("lint")
@@ -194,6 +302,7 @@ def application_create(
     default=None,
     help="Only lint this environment.",
 )
+@_report_usage_errors
 def application_lint(
     applications: list[str],
     *,
@@ -207,6 +316,7 @@ def application_lint(
     each chart is linted for all environments for which it has a
     configuration.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -238,6 +348,7 @@ def application_lint(
     envvar="GITHUB_BASE_REF",
     help="Base Git branch against which to compare.",
 )
+@_report_usage_errors
 def application_lint_all(
     *, config: Path | None, git: bool = False, git_branch: str
 ) -> None:
@@ -246,6 +357,7 @@ def application_lint_all(
     Update and download any third-party dependency charts and then lint the
     Helm charts for each application and environment combination.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -265,6 +377,7 @@ def application_lint_all(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_template(
     name: str, environment: str, *, config: Path | None
 ) -> None:
@@ -274,6 +387,7 @@ def application_template(
     for the given environment to standard output. This is intended for testing
     and debugging purposes; normally, charts should be installed with Argo CD.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -291,6 +405,7 @@ def application_template(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def application_update_shared_chart_version(
     chart: str, version: str, *, config: Path | None
 ) -> None:
@@ -311,6 +426,101 @@ def environment() -> None:
     """Commands for Phalanx environment configuration."""
 
 
+@environment.command("install")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@click.option(
+    "--git-branch",
+    default=None,
+    envvar="GITHUB_HEAD_REF",
+    help="Override Git branch for Argo CD.",
+)
+@click.option(
+    "--force-noninteractive",
+    default=False,
+    is_flag=True,
+    help="Force installation without a prompt.",
+)
+@click.option(
+    "--vault-role-id",
+    default=None,
+    envvar="VAULT_ROLE_ID",
+    help="Role ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-secret-id",
+    default=None,
+    envvar="VAULT_SECRET_ID",
+    help="Secret ID for vault-secrets-operator.",
+)
+@click.option(
+    "--vault-token",
+    default=None,
+    envvar="VAULT_TOKEN",
+    help="Read-only token for vault-secrets-operator.",
+)
+@_report_usage_errors
+def environment_install(
+    environment: str,
+    *,
+    config: Path | None,
+    force_noninteractive: bool = False,
+    git_branch: str | None = None,
+    vault_role_id: str | None = None,
+    vault_secret_id: str | None = None,
+    vault_token: str | None = None,
+) -> None:
+    """Install Phalanx into an environment.
+
+    Bootstrap Phalanx for an environment. Assumes that the currently enabled
+    Kubernetes configuration is the cluster into which to install Phalanx.
+
+    The secrets tree for the environment must already be present in Vault.
+    Read-only Vault credentials must be supplied by either setting the
+    environment variables VAULT_ROLE_ID and VAULT_SECRET_ID to the credentials
+    of a Vault AppRole, or setting VAULT_TOKEN to a read-only Vault token.
+    """
+    _require_command("argocd")
+    _require_command("kubectl")
+    _require_command("helm")
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    if vault_role_id and vault_secret_id:
+        vault_credentials: VaultCredentials = VaultAppRoleCredentials(
+            role_id=vault_role_id, secret_id=vault_secret_id
+        )
+    elif vault_token:
+        vault_credentials = VaultTokenCredentials(token=vault_token)
+    else:
+        msg = (
+            "Either VAULT_TOKEN or both VAULT_ROLE_ID and VAULT_SECRET_ID"
+            " must be set"
+        )
+        raise click.UsageError(msg)
+
+    # Prompt the user unless they specifically said not to.
+    kubernetes_storage = factory.create_kubernetes_storage()
+    context = kubernetes_storage.get_current_context()
+    if not force_noninteractive:
+        print(
+            _INSTALL_WARNING.format(environment=environment, context=context)
+        )
+        click.confirm(
+            "Are you certain you want to continue?", abort=True, default=False
+        )
+
+    # Do the installation.
+    environment_service = factory.create_environment_service()
+    environment_service.install(environment, vault_credentials, git_branch)
+
+
 @environment.command("lint")
 @click.argument("environment", required=False)
 @click.option(
@@ -320,6 +530,7 @@ def environment() -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def environment_lint(
     environment: str | None = None, *, config: Path | None, git: bool = False
 ) -> None:
@@ -329,6 +540,7 @@ def environment_lint(
     for an environment. If the environment is not given, lints the
     instantiation of that chart for each environment.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -345,6 +557,7 @@ def environment_lint(
     default=None,
     help="Path to which to write schema.",
 )
+@_report_usage_errors
 def environment_schema(*, output: Path | None) -> None:
     """Generate schema for environment configuration.
 
@@ -373,6 +586,7 @@ def environment_schema(*, output: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def environment_template(environment: str, *, config: Path | None) -> None:
     """Expand the top-level chart for an environment.
 
@@ -380,6 +594,7 @@ def environment_template(environment: str, *, config: Path | None) -> None:
     for the given environment. This is intended for testing and debugging
     purposes; normally, charts should be installed with Argo CD.
     """
+    _require_command("helm")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -407,6 +622,7 @@ def secrets() -> None:
     default=None,
     help="YAML file containing static secrets for this environment.",
 )
+@_report_usage_errors
 def secrets_audit(
     environment: str, *, config: Path | None, secrets: Path | None
 ) -> None:
@@ -417,8 +633,13 @@ def secrets_audit(
     and any discrepencies will be noted. The audit report will be printed to
     standard output and will be empty if no issues were found.
 
-    The environment variable VAULT_TOKEN must be set to a token with read
-    access to the Vault data for the given environment.
+    A Vault token with read access to the Vault data for the given environment
+    must be available in the static secrets or present in the VAULT_TOKEN
+    environment variable.
+
+    The Vault server does not clearly distinguish between unknown paths and
+    permission denied errors, so if the Vault token doesn't have write access
+    or if the path doesn't exist, all secrets will be reported as missing.
     """
     if not config:
         config = _find_config()
@@ -440,6 +661,7 @@ def secrets_audit(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def secrets_list(environment: str, *, config: Path | None) -> None:
     """List all secrets required for a given environment."""
     if not config:
@@ -467,6 +689,7 @@ def secrets_list(environment: str, *, config: Path | None) -> None:
     default=None,
     help="Path to which to write 1Password secrets.",
 )
+@_report_usage_errors
 def secrets_onepassword_secrets(
     environment: str, output: Path, *, config: Path | None
 ) -> None:
@@ -480,6 +703,7 @@ def secrets_onepassword_secrets(
     The environment variable OP_CONNECT_TOKEN must be set to the 1Password
     Connect token for the given environment.
     """
+    _require_env("OP_CONNECT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -501,6 +725,7 @@ def secrets_onepassword_secrets(
     default=None,
     help="Path to which to write schema.",
 )
+@_report_usage_errors
 def secrets_schema(*, output: Path | None) -> None:
     """Generate schema for application secret definition.
 
@@ -538,6 +763,7 @@ def secrets_schema(*, output: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def secrets_static_template(environment: str, *, config: Path | None) -> None:
     """Generate a template for static secrets.
 
@@ -586,6 +812,7 @@ def secrets_static_template(environment: str, *, config: Path | None) -> None:
     default=None,
     help="YAML file containing static secrets for this environment.",
 )
+@_report_usage_errors
 def secrets_sync(
     environment: str,
     *,
@@ -605,6 +832,9 @@ def secrets_sync(
     write access to the secrets for this environment (and optionally delete
     access). If Vault credentials are managed through this tool, such a token
     can be created with the ``phalanx vault create-write-token`` command.
+    Alternatively, the environment variable OP_CONNECT_TOKEN may set to a
+    1Password Connect token for that environment if the Vault write token is
+    stored in the 1Password vault.
     """
     if not config:
         config = _find_config()
@@ -630,6 +860,7 @@ def vault() -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_audit(environment: str, *, config: Path | None) -> None:
     """Audit Vault credentials for an environment.
 
@@ -639,6 +870,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     The environment variable VAULT_TOKEN must be set to a token with access to
     read policies, AppRoles, tokens, and token accessors.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -659,6 +891,7 @@ def vault_audit(environment: str, *, config: Path | None) -> None:
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_copy_secrets(
     environment: str, old_prefix: str, *, config: Path | None
 ) -> None:
@@ -673,6 +906,7 @@ def vault_copy_secrets(
     access to the old path and write access to the currently configured Vault
     path for the given environment.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -699,8 +933,19 @@ def vault_copy_secrets(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@click.option(
+    "--token-lifetime",
+    type=int,
+    default=None,
+    help="Maximum token lifetime in seconds.",
+)
+@_report_usage_errors
 def vault_create_read_approle(
-    environment: str, as_secret: str | None, *, config: Path | None
+    environment: str,
+    as_secret: str | None,
+    *,
+    config: Path | None,
+    token_lifetime: int | None,
 ) -> None:
     """Create a new Vault read AppRole.
 
@@ -712,11 +957,17 @@ def vault_create_read_approle(
     create policies and AppRoles, list AppRole SecretID accessors, and revoke
     AppRole SecretIDs.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
     vault_service = factory.create_vault_service()
-    vault_approle = vault_service.create_read_approle(environment)
+    if token_lifetime:
+        vault_approle = vault_service.create_read_approle(
+            environment, token_lifetime=timedelta(seconds=token_lifetime)
+        )
+    else:
+        vault_approle = vault_service.create_read_approle(environment)
     if as_secret:
         sys.stdout.write(vault_approle.to_kubernetes_secret(as_secret))
     else:
@@ -738,6 +989,7 @@ def vault_create_read_approle(
     default=VAULT_WRITE_TOKEN_LIFETIME,
     help="Token lifetime in Vault duration format.",
 )
+@_report_usage_errors
 def vault_create_write_token(
     environment: str, *, config: Path | None, lifetime: str
 ) -> None:
@@ -750,6 +1002,7 @@ def vault_create_write_token(
     The environment variable VAULT_TOKEN must be set to a token with access to
     list token accessors, create policies, and create and revoke tokens.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)
@@ -768,6 +1021,7 @@ def vault_create_write_token(
     default=None,
     help="Path to root of Phalanx configuration.",
 )
+@_report_usage_errors
 def vault_export_secrets(
     environment: str, output: Path, *, config: Path | None
 ) -> None:
@@ -780,6 +1034,7 @@ def vault_export_secrets(
     The environment variable VAULT_TOKEN must be set to a token with read
     access to the Vault data for the given environment.
     """
+    _require_env("VAULT_TOKEN")
     if not config:
         config = _find_config()
     factory = Factory(config)

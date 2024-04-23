@@ -14,3 +14,5 @@ data:
   UNFURLBOT_TOPIC_MESSAGE_IM: {{ .Values.config.topics.slackMessageIm | quote }}
   UNFURLBOT_TOPIC_MESSAGE_MPIM: {{ .Values.config.topics.slackMessageMpim | quote }}
   UNFURLBOT_JIRA_PROJECTS: {{ .Values.config.jiraProjects | quote }}
+  UNFURLBOT_REDIS_URL: {{ .Values.config.redisUrl | quote }}
+  UNFURLBOT_JIRA_ROOT_URL: {{ .Values.config.jiraUrl | quote }}

@@ -12,6 +12,7 @@ import jinja2
 import yaml
 
 from ..exceptions import ApplicationExistsError
+from ..models.applications import Project
 from ..models.environments import Environment
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
@@ -88,7 +89,12 @@ class ApplicationService:
         return bool(repo_urls)
 
     def create(
-        self, name: str, starter: HelmStarter, description: str
+        self,
+        name: str,
+        *,
+        starter: HelmStarter,
+        project: Project,
+        description: str,
     ) -> None:
         """Create configuration for a new application.
 
@@ -99,6 +105,8 @@ class ApplicationService:
         starter
             Name of the Helm starter to use as the template for the
             application.
+        project
+            Argo CD project for the new application.
         description
             Short description of the application.
 
@@ -129,7 +137,7 @@ class ApplicationService:
             yaml.dump(chart, fh)
 
         # Add the environment configuration.
-        self._create_application_template(name)
+        self._create_application_template(name, project)
 
         # Add the documentation.
         self._create_application_docs(name, description)
@@ -241,7 +249,7 @@ class ApplicationService:
 
         Raises
         ------
-        HelmFailedError
+        CommandFailedError
             Raised if Helm fails.
         """
         if self.add_helm_repositories([app_name], quiet=True):
@@ -296,14 +304,12 @@ class ApplicationService:
             butler_index = environment.butler_repository_index
             values["global.butlerRepositoryIndex"] = butler_index
         if environment.butler_server_repositories:
-            values[
-                "global.butlerServerRepositories"
-            ] = _json_and_base64_encode(
-                {
-                    k: str(v)
-                    for k, v in environment.butler_server_repositories.items()
-                }
-            )
+            butler_repos = {
+                k: str(v)
+                for k, v in environment.butler_server_repositories.items()
+            }
+            butler_repos_b64 = _json_and_base64_encode(butler_repos)
+            values["global.butlerServerRepositories"] = butler_repos_b64
 
         # vault-secrets-operator gets the Vault host injected into it. Use the
         # existence of its subchart configuration tree as a cue to inject the
@@ -341,13 +347,17 @@ class ApplicationService:
 
         return values
 
-    def _create_application_template(self, name: str) -> None:
+    def _create_application_template(
+        self, name: str, project: Project
+    ) -> None:
         """Add the ``Application`` template and environment values setting.
 
         Parameters
         ----------
         name
             Name of the new application.
+        project
+            Argo CD project for the new application.
         """
         # Change the quote characters so that we aren't fighting with Helm
         # templating, which also uses {{ and }}.
@@ -355,8 +365,8 @@ class ApplicationService:
             variable_start_string="[[", variable_end_string="]]"
         )
         template = overlay.get_template("application-template.yaml.jinja")
-        application = template.render({"name": name})
-        self._config.write_application_template(name, application)
+        application = template.render({"name": name, "project": project.value})
+        self._config.write_application_template(name, project, application)
         setting = f"# -- Enable the {name} application\n{name}: false"
         self._config.add_application_setting(name, setting)
 

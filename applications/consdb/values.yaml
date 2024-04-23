@@ -1,0 +1,89 @@
+# Default values for consdb.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of consdb deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the consdb deployment
+  repository: "ghcr.io/lsst-dm/consdb-hinfo"
+
+  # -- Pull policy for the consdb image
+  pullPolicy: "Always"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+kafka:
+  # -- Kafka bootstrap server
+  bootstrap: "sasquatch-kafka-bootstrap.sasquatch:9092"
+  # -- Kafka Avro schema server URL
+  schema_url: "http://sasquatch-schema-registry.sasquatch:8081"
+  # -- Username for SASL_PLAIN authentication
+  username: "consdb"
+  # -- Name of Kafka consumer group
+  group_id: "consdb-consumer"
+db:
+  # -- Database host
+  host: postgres.postgres
+  # -- Database user
+  user: consdb
+  # -- Database name
+  database: consdb
+
+lfa:
+  # -- Access key for LFA bucket
+  access_key: ""
+  # -- Prefix for LFA bucket (e.g. for Ceph tenant specification)
+  bucket_prefix: ""
+  # -- url
+  s3EndpointUrl: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+autoscaling:
+  # -- Enable autoscaling of consdb deployment
+  enabled: false
+
+  # -- Minimum number of consdb deployment pods
+  minReplicas: 1
+
+  # -- Maximum number of consdb deployment pods
+  maxReplicas: 10
+
+  # -- Target CPU utilization of consdb deployment pods
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+# -- Annotations for the consdb deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the consdb deployment pod
+resources: {}
+
+# -- Node selection rules for the consdb deployment pod
+nodeSelector: {}
+
+# -- Tolerations for the consdb deployment pod
+tolerations: []
+
+# -- Affinity rules for the consdb deployment pod
+affinity: {}
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

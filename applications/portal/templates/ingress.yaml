@@ -16,20 +16,19 @@ config:
       scopes:
         - "read:image"
         - "read:tap"
+        - "write:files"
 template:
   metadata:
     name: {{ include "portal.fullname" . }}
     annotations:
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/affinity: "cookie"
-      nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
-      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
-      nginx.ingress.kubernetes.io/proxy-buffer-size: "24k"
       nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
-      nginx.ingress.kubernetes.io/rewrite-target: "/suit$1$2"
+      nginx.ingress.kubernetes.io/proxy-body-size: "0m"
+      nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
       nginx.ingress.kubernetes.io/proxy-redirect-from: "/suit/"
       nginx.ingress.kubernetes.io/proxy-redirect-to: "/portal/app/"
-      nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
+      nginx.ingress.kubernetes.io/rewrite-target: "/suit$1$2"
+      nginx.ingress.kubernetes.io/session-cookie-change-on-failure: "true"
       nginx.ingress.kubernetes.io/session-cookie-path: "/portal/app"
       nginx.ingress.kubernetes.io/configuration-snippet: |
         proxy_set_header X-Original-URI $request_uri;

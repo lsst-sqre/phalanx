@@ -15,95 +15,98 @@ controller:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        LSST_SITE: tucson
-        LSST_DDS_INTERFACE: net1
-        LSST_DDS_PARTITION_PREFIX: tucson
-        LSST_TOPIC_SUBNAME: sal
+        LSST_SITE: "tucson"
+        LSST_DDS_INTERFACE: "net1"
+        LSST_DDS_PARTITION_PREFIX: "tucson"
+        LSST_TOPIC_SUBNAME: "sal"
         LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
-        LSST_KAFKA_BROKER_ADDR: sasquatch-kafka-brokers.sasquatch:9092
-        LSST_SCHEMA_REGISTRY_URL: http://sasquatch-schema-registry.sasquatch:8081
-        PGPASSFILE: "/opt/lsst/software/jupyterlab/butler-secret/postgres-credentials.txt"
+        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-brokers.sasquatch:9092"
+        LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
+        PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
       pullSecret: "pull-secret"
       secrets:
-      - secretName: "kafka-secret"
-        secretKey: "kafka_credentials.txt"
-      - secretName: "nublado-lab-secret"
-        secretKey: "postgres-credentials.txt"
+        - secretName: "nublado-lab-secret"
+          secretKey: "kafka_credentials.txt"
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
       initContainers:
-      - name: "inithome"
-        image:
-          repository: "ghcr.io/lsst-sqre/nublado-inithome"
-          tag: "4.0.2"
-        privileged: true
-        volumeMounts:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "6.0.2"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      volumes:
+        - name: "home"
+          source:
+            type: "nfs"
+            serverPath: "/jhome"
+            server: "nfs-jhome.tu.lsst.org"
+        - name: "project"
+          source:
+            type: "nfs"
+            serverPath: "/project"
+            server: "nfs-project.tu.lsst.org"
+        - name: "scratch"
+          source:
+            type: "nfs"
+            serverPath: "/scratch"
+            server: "nfs-scratch.tu.lsst.org"
+        - name: "datasets"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata"
+            server: "nfs-lsstdata.tu.lsst.org"
+        - name: "latiss"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/repo/LATISS"
+            server: "nfs-auxtel.tu.lsst.org"
+        - name: "obs-env"
+          source:
+            type: "nfs"
+            serverPath: "/obs-env"
+            server: "nfs-obsenv.tu.lsst.org"
+        - name: "lsstcomcam"
+          source:
+            type: "nfs"
+            serverPath: "/repo/LSSTComCam"
+            server: "comcam-archiver.tu.lsst.org"
+        - name: "auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata/TTS/auxtel"
+            server: "nfs-auxtel.tu.lsst.org"
+        - name: "comcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstdata/TTS/comcam"
+            server: "comcam-archiver.tu.lsst.org"
+      volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
-      volumes:
-      - name: "home"
-        source:
-          type: "nfs"
-          serverPath: "/jhome"
-          server: "nfs-jhome.tu.lsst.org"
-      - name: "project"
-        source:
-          type: "nfs"
-          serverPath: "/project"
-          server: "nfs-project.tu.lsst.org"
-      - name: "scratch"
-        source:
-          type: "nfs"
-          serverPath: "/scratch"
-          server: "nfs-scratch.tu.lsst.org"
-      - name: "datasets"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata"
-          server: "nfs-lsstdata.tu.lsst.org"
-      - name: "latiss"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/repo/LATISS"
-          server: "nfs-auxtel.tu.lsst.org"
-      - name: "obs-env"
-        source:
-          type: "nfs"
-          serverPath: "/obs-env"
-          server: "nfs-obsenv.tu.lsst.org"
-      - name: "lsstcomcam"
-        source:
-          type: "nfs"
-          serverPath: "/repo/LSSTComCam"
-          server: "comcam-archiver.tu.lsst.org"
-      - name: "auxtel"
-        source:
-          type: "nfs"
-          serverPath: "/auxtel/lsstdata/TTS/auxtel"
-          server: "nfs-auxtel.tu.lsst.org"
-      - name: "comcam"
-        source:
-          type: "nfs"
-          serverPath: "/lsstdata/TTS/comcam"
-          server: "comcam-archiver.tu.lsst.org"
-      volumeMounts:
-      - containerPath: "/home"
-        volumeName: "home"
-      - containerPath: "/project"
-        volumeName: "project"
-      - containerPath: "/scratch"
-        volumeName: "scratch"
-      - containerPath: "/datasets"
-        volumeName: "datasets"
-      - containerPath: "/repo/LATISS"
-        volumeName: "latiss"
-      - containerPath: "/net/obs-env"
-        volumeName: "obs-env"
-      - containerPath: "/repo/LSSTComCam"
-        volumeName: "lsstcomcam"
-      - containerPath: "/data/lsstdata/TTS/auxtel"
-        volumeName: "auxtel"
-      - containerPath: "/data/lsstdata/TTS/comcam"
-        volumeName: "comcam"
+        - containerPath: "/project"
+          volumeName: "project"
+        - containerPath: "/scratch"
+          volumeName: "scratch"
+        - containerPath: "/datasets"
+          volumeName: "datasets"
+        - containerPath: "/repo/LATISS"
+          volumeName: "latiss"
+        - containerPath: "/net/obs-env"
+          volumeName: "obs-env"
+        - containerPath: "/repo/LSSTComCam"
+          volumeName: "lsstcomcam"
+        - containerPath: "/data/lsstdata/TTS/auxtel"
+          volumeName: "auxtel"
+        - containerPath: "/data/lsstdata/TTS/comcam"
+          volumeName: "comcam"
+
+hub:
+  internalDatabase: false
 
 jupyterhub:
   cull:
@@ -118,4 +121,4 @@ jupyterhub:
       url: "postgresql://nublado3@postgresdb01.tu.lsst.org/nublado3"
 
 secrets:
-  installTsSalKafkaSecret: true
+  templateSecrets: true

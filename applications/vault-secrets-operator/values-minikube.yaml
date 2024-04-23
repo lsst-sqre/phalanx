@@ -1,14 +1,16 @@
 vault-secrets-operator:
   environmentVars:
-    - name: VAULT_ROLE_ID
+    - name: "VAULT_ROLE_ID"
       valueFrom:
         secretKeyRef:
-          name: vault-credentials
-          key: VAULT_ROLE_ID
-    - name: VAULT_SECRET_ID
+          name: "vault-credentials"
+          key: "VAULT_ROLE_ID"
+    - name: "VAULT_SECRET_ID"
       valueFrom:
         secretKeyRef:
-          name: vault-credentials
-          key: VAULT_SECRET_ID
-  vault:
-    authMethod: approle
+          name: "vault-credentials"
+          key: "VAULT_SECRET_ID"
+    # Set the token lifetime to one hour to minimize the spam of
+    # not-yet-expired tokens in Vault from GitHub Actions CI tests.
+    - name: "VAULT_TOKEN_MAX_TTL"
+      value: "3600"

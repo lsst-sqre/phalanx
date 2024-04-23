@@ -53,7 +53,7 @@ To do this, run:
 
    tox run -e py
 
-If you make changes that affect the Phalanx documentation, such as adding new applications (see :doc:`/developers/add-application`) or adding new environments (see :doc:`/admin/installation`), you may want to build the documentation locally to see if there are any errors.
+If you make changes that affect the Phalanx documentation, such as adding new applications (see :doc:`/developers/helm-chart/add-application`) or adding new environments (see :doc:`/admin/installation`), you may want to build the documentation locally to see if there are any errors.
 Any such errors must be resolved before changes can be merged.
 To do this, run:
 

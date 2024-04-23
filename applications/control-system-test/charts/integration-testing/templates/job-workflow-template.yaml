@@ -11,7 +11,7 @@ spec:
   ttlStrategy:
     secondsAfterCompletion: 1800
   imagePullSecrets:
-  - name: nexus3-docker
+  - name: pull-secret
   volumes:
   - name: testreports
     persistentVolumeClaim:
@@ -58,7 +58,7 @@ spec:
       - name: LSST_KAFKA_SECURITY_PASSWORD
         valueFrom:
           secretKeyRef:
-            name: ts-salkafka
+            name: control-system-test
             key: ts-salkafka-password
       volumeMounts:
       - name: testreports

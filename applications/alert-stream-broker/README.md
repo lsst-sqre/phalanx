@@ -78,7 +78,7 @@ Alert transmission to community brokers
 | alert-stream-broker.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | alert-stream-broker.kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
 | alert-stream-broker.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
-| alert-stream-broker.maxBytesRetained | string | `"24000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
+| alert-stream-broker.maxBytesRetained | string | `"1000000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
 | alert-stream-broker.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
@@ -101,9 +101,9 @@ Alert transmission to community brokers
 | alert-stream-schema-registry.hostname | string | `"alert-schemas-int.lsst.cloud"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| alert-stream-schema-registry.schemaSync | object | `{"image":{"repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-40414"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| alert-stream-schema-registry.schemaSync | object | `{"image":{"repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-30267"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
 | alert-stream-schema-registry.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program |
-| alert-stream-schema-registry.schemaSync.image.tag | string | `"tickets-DM-40414"` | Version of the container to use |
+| alert-stream-schema-registry.schemaSync.image.tag | string | `"tickets-DM-30267"` | Version of the container to use |
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | alert-stream-schema-registry.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |

@@ -10,6 +10,7 @@ from typing import Literal
 import yaml
 
 from phalanx.factory import Factory
+from phalanx.models.applications import Project
 
 _ALLOW_NO_SECRETS = ("monitoring", "next-visit-fan-out")
 """Temporary whitelist of applications that haven't added secrets.yaml."""
@@ -34,6 +35,36 @@ def test_application_names() -> None:
         ), f"Application {application.name} has invalid name"
 
 
+def test_application_projects() -> None:
+    """All applications are in projects in the correct directories."""
+    factory = Factory(Path(__file__).parent.parent)
+    config_storage = factory.create_config_storage()
+    config = config_storage.load_phalanx_config()
+    for application in config.applications:
+        template_path = (
+            config_storage.get_environment_chart_path()
+            / "templates"
+            / "applications"
+            / application.project.name
+            / f"{application.name}.yaml"
+        )
+        assert template_path.exists(), (
+            f"Application resource template for {application.name} not at"
+            f" {template_path!s}"
+        )
+        template = template_path.read_text()
+
+        # Helm templates are unfortunately not valid YAML, so do this the hard
+        # way with a regular expression.
+        pattern = r"project:\s*\"?(?P<project>[a-z]+)\"?\s"
+        match = re.search(pattern, template)
+        assert match, f"Project not found in {template_path!s}"
+        assert match.group("project") == application.project.value, (
+            f"Project in {template_path!s} does not match"
+            f" {application.project.value}"
+        )
+
+
 def test_application_version() -> None:
     """All application charts should have version 1.0.0."""
     for application in all_charts("applications"):
@@ -52,7 +83,7 @@ def test_application_version() -> None:
 
 def test_enviroments() -> None:
     """Ensure applications don't have configs for unknown environments."""
-    factory = Factory(Path.cwd())
+    factory = Factory(Path(__file__).parent.parent)
     config_storage = factory.create_config_storage()
     environments = set(config_storage.list_environments())
     for app_name in config_storage.list_applications():
@@ -61,6 +92,20 @@ def test_enviroments() -> None:
             unknown = ", ".join(sorted(app_envs - environments))
             msg = f"{app_name} configured for unknown environments: {unknown}"
             raise AssertionError(msg)
+
+
+def test_projects() -> None:
+    """Ensure all projects are defined."""
+    template_path = (
+        Path(__file__).parent.parent
+        / "environments"
+        / "templates"
+        / "projects"
+    )
+    for project in Project:
+        assert (
+            template_path / f"{project.value}.yaml"
+        ).exists(), f"Project {project.value} is not defined"
 
 
 def test_secrets_defined() -> None:

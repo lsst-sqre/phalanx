@@ -1,0 +1,3 @@
+prometheus_config:
+  monitoring:
+    influxdb: "http://monitoring-influxdb2.monitoring/metrics"

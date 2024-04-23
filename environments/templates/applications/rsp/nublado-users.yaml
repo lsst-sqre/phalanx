@@ -1,0 +1,18 @@
+{{- if .Values.applications.nublado -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "nublado-users"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "nublado-users"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/nublado-users"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+{{- end -}}

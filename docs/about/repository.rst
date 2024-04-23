@@ -42,8 +42,8 @@ The :file:`environments` directory is where environments are defined (an environ
 
 The :file:`environments/templates` directory contains a Helm template per application, like this one for the ``noteburst`` application:
 
-.. literalinclude:: ../../environments/templates/noteburst-application.yaml
-   :caption: environments/templates/noteburst-application.yaml
+.. literalinclude:: ../../environments/templates/applications/rsp/noteburst.yaml
+   :caption: environments/templates/applications/rsp/noteburst.yaml
 
 The template defines a Kubernetes Namespace_ and an Argo CD ``Application`` for each Phalanx application.
 ``Application`` resources direct Argo CD to deploy and synchronize the corresponding application Helm chart from the Phalanx :file:`applications` directory.
@@ -53,16 +53,7 @@ The :file:`values.yaml` file in the :file:`environments` directory defines boole
 Only some required applications are enabled by default; the rest are disabled by default.
 Each environment then has a file named :file:`values-{environment}.yaml` that defines environment-specific settings and enables the applications that should be deployed to that environment.
 
-installer directory
--------------------
-
-:bdg-link-primary-line:`Browse installer/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/installer>`
-
-This directory contains a script named `install.sh <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__.
-The arguments to this are the name of the environment, the Vault RoleID, and the Vault SecretID (see :ref:`secrets` for more details on Vault).
-This installer script is the entry point for setting up a new environment.
-It can also be run on an existing environment to update it.
-See the :ref:`environment bootstrapping documentation <bootstrapping-toc>` for details.
+The templates directory also contains the Argo CD ``AppProject`` resources, which are used to classify the applications into groups for access control.
 
 charts directory
 ----------------
@@ -101,7 +92,7 @@ starters directory
 :bdg-link-primary-line:`Browse starters/ on GitHub <https://github.com/lsst-sqre/phalanx/tree/main/starters>`
 
 This directory contains templates for contributing new applications to Phalanx.
-See :doc:`/developers/write-a-helm-chart`.
+See :doc:`/developers/helm-chart/create-new-chart`.
 
 tests directory
 ---------------
@@ -134,7 +125,7 @@ In one check, Pre-commit regenerates Helm chart documentation for applications w
 See the `.pre-commit-config.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.pre-commit-config.yaml>`__ file for configuration details.
 Learn how to set up Pre-commit in your local editing environment in :doc:`local-environment-setup`.
 
-Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/installer/install.sh>`__).
+Second, GitHub Actions runs a CI workflow (`.github/workflows/ci.yaml <https://github.com/lsst-sqre/phalanx/blob/main/.github/workflows/ci.yaml>`__).
 This workflow has four key jobs:
 
 - Linting with Pre-commit_, mirroring the local editing environment.

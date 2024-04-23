@@ -24,7 +24,7 @@ IVOA DataLink-based service and data discovery
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.storageBackend | string | `"GCS"` | Storage backend to use (either `GCS` or `S3`) |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |
-| config.useButlerServer | bool | `false` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |
+| config.useButlerServer | bool | `true` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.butlerRepositoryIndex | string | Set by Argo CD | URI to the Butler configuration of available repositories |

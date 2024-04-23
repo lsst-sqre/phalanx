@@ -13,27 +13,15 @@ spec:
     spec:
       containerConcurrency: {{ .Values.containerConcurrency }}
       initContainers:
-      - name: init-copy-pgpass
-        # Make a copy of the read-only secret so we can change owner
+      - name: init-pgpass
+        # Make a copy of the read-only secret that's owned by lsst
+        # lsst account is created by main image with id 1000
         image: busybox
-        command: ["sh", "-c", "cp -L /app/pg-mount/.pgpass /app/pgsql/"]
+        command: ["sh", "-c", "cp -L /app/pg-mount/.pgpass /app/pgsql/ && chown 1000:1000 /app/pgsql/.pgpass && chmod u=r,go-rwx /app/pgsql/.pgpass"]
         volumeMounts:
         - mountPath: /app/pg-mount
           name: pgpass-mount
           readOnly: true
-        - mountPath: /app/pgsql
-          name: pgpass-credentials-file
-      - name: init-chown-pgpass
-        image: busybox
-        command: ["sh", "-c", "chown 1000:1000 /app/pgsql/.pgpass"]  # lsst account created by main image
-        volumeMounts:
-        - mountPath: /app/pgsql
-          name: pgpass-credentials-file
-      - name: init-chmod-pgpass
-        image: busybox
-        # PostgreSQL refuses to read group- or world-readable files
-        command: ["sh", "-c", "chmod u=r,go-rwx /app/pgsql/.pgpass"]
-        volumeMounts:
         - mountPath: /app/pgsql
           name: pgpass-credentials-file
       containers:
@@ -74,6 +62,8 @@ spec:
               name: {{ template "prompt-proto-service.fullname" . }}-secret
               key: sasquatch_token
         {{- end }}
+        - name: DAF_BUTLER_SASQUATCH_NAMESPACE
+          value: {{ .Values.sasquatch.namespace }}
         - name: S3_ENDPOINT_URL
           value: {{ .Values.s3.endpointUrl }}
         {{- if .Values.s3.auth_env }}
@@ -94,10 +84,25 @@ spec:
         {{- end }}
         - name: PGPASSFILE
           value: /app/pgsql/.pgpass
+        - name: AP_KAFKA_PRODUCER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "prompt-proto-service.fullname" . }}-secret
+              key: alert_stream_pass
+        - name: AP_KAFKA_PRODUCER_USERNAME
+          value: {{ .Values.alerts.username}}
+        - name: AP_KAFKA_SERVER
+          value: {{ .Values.alerts.server}}
+        - name: AP_KAFKA_TOPIC
+          value: {{ .Values.alerts.topic}}
         - name: LOCAL_REPOS
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        - name: DEBUG_CACHE_CALIBS
+          value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
+        - name: DEBUG_CACHE_INPUTS
+          value: {{ if .Values.cacheAny }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
@@ -115,15 +120,18 @@ spec:
         {{- with .Values.additionalVolumeMounts }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-        readinessProbe:
-          successThreshold: 1
-          tcpSocket:
-            port: 0
         resources:
           requests:
+            cpu: {{ .Values.knative.cpuRequest }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
+            memory: {{ .Values.knative.memoryRequest }}
           limits:
+            cpu: {{ .Values.knative.cpuLimit }}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
+            memory: {{ .Values.knative.memoryLimit }}
+            {{- if .Values.knative.gpu }}
+            nvidia.com/gpu: {{ .Values.knative.gpuRequest }}
+            {{- end }}
       volumes:
       - name: ephemeral
         emptyDir:
@@ -153,7 +161,15 @@ spec:
           - key: central_repo_file
             path: butler.yaml
       {{- end }}
-      enableServiceLinks: false
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      enableServiceLinks: true
       timeoutSeconds: {{ .Values.knative.timeout }}
       idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
       responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeout }}

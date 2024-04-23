@@ -49,6 +49,8 @@ config:
       - "g_users"
     "read:tap":
       - "g_users"
+    "write:files":
+      - "g_users"
 
   initialAdmins:
     - "afausti"

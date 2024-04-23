@@ -1,3 +1,4 @@
+Copying secrets from k8s_operator/data-dev.lsst.cloud to phalanx/idfdev
 Copied Vault secret for argocd
 Copied Vault secret for gafaelfawr
 Copied Vault secret for mobu

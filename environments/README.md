@@ -4,6 +4,7 @@
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| appOfAppsName | string | `"app-of-apps"` | Name of the parent Argo CD app-of-apps that manages all the applications enabled for this environment |
 | applications.alert-stream-broker | bool | `false` | Enable the alert-stream-broker application |
 | applications.argo-workflows | bool | `false` | Enable the argo-workflows application |
 | applications.argocd | bool | `true` | Enable the Argo CD application. This must be enabled for all environments and is present here only because it makes parsing easier |
@@ -40,9 +41,11 @@
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-proto-service-hsc | bool | `false` | Enable the prompt-proto-service-hsc application |
+| applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
 | applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
 | applications.prompt-proto-service-lsstcam | bool | `false` | Enable the prompt-proto-service-lsstcam application |
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
+| applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |

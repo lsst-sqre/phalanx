@@ -1,42 +1,27 @@
 argo-cd:
-  redis:
-    enabled: true
-
-  server:
-    ingress:
-      enabled: true
-      hosts:
-        - "usdf-rsp-int.slac.stanford.edu"
-      annotations:
-        kubernetes.io/ingress.class: nginx
-        nginx.ingress.kubernetes.io/rewrite-target: "/$2"
-      paths:
-        - /argo-cd(/|$)(.*)
-
-    extraArgs:
-      - "--basehref=/argo-cd"
-      - "--insecure=true"
-
+  global:
     env:
-      - name: HTTP_PROXY
-        value: http://squid.slac.stanford.edu:3128
-      - name: HTTPS_PROXY
-        value: http://squid.slac.stanford.edu:3128
-      - name: NO_PROXY
-        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
+      - name: "HTTP_PROXY"
+        value: "http://squid.slac.stanford.edu:3128"
+      - name: "HTTPS_PROXY"
+        value: "http://squid.slac.stanford.edu:3128"
+      - name: "NO_PROXY"
+        value: "127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server"
 
-    config:
-      url: https://usdf-rsp-int.slac.stanford.edu/argo-cd
+  configs:
+    cm:
+      url: "https://usdf-rsp-int.slac.stanford.edu/argo-cd"
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
         clientID: "vcluster--usdf-rsp-int"
         clientSecret: $dex.clientSecret
-        # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
+        # Optional set of OIDC scopes to request. If omitted, defaults to:
+        # ["openid", "profile", "email", "groups"]
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
-    rbacConfig:
+    rbac:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin
         g, ppascual@slac.stanford.edu, role:admin
@@ -56,31 +41,7 @@ argo-cd:
         g, jeremym@slac.stanford.edu, role:admin
       scopes: "[email]"
 
-      helm.repositories: |
-        - url: https://lsst-sqre.github.io/charts/
-          name: lsst-sqre
-        - url: https://charts.helm.sh/stable
-          name: stable
-  repoServer:
-
-    env:
-      - name: HTTP_PROXY
-        value: http://sdfproxy.sdf.slac.stanford.edu:3128
-      - name: HTTPS_PROXY
-        value: http://sdfproxy.sdf.slac.stanford.edu:3128
-      - name: NO_PROXY
-        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
-
-  controller:
-
-    env:
-      - name: HTTP_PROXY
-        value: http://sdfproxy.sdf.slac.stanford.edu:3128
-      - name: HTTPS_PROXY
-        value: http://sdfproxy.sdf.slac.stanford.edu:3128
-      - name: NO_PROXY
-        value: 127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.cluster.local,argocd-repo-server
-
-  configs:
-    secret:
-      createSecret: false
+  server:
+    ingress:
+      hostname: "usdf-rsp-int.slac.stanford.edu"
+    tls: false

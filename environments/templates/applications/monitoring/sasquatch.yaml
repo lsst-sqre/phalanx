@@ -1,0 +1,34 @@
+{{- if .Values.applications.sasquatch -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "sasquatch"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "sasquatch"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "sasquatch"
+    server: "https://kubernetes.default.svc"
+  project: "monitoring"
+  source:
+    path: "applications/sasquatch"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

@@ -1,75 +1,104 @@
-# Default values for kafka used in Sasquatch.
+# Default values for Kafka used in Sasquatch.
+
 cluster:
-  # -- Name used for the Kafka cluster, and used by Strimzi for many annotations.
+  # -- Name used for the Kafka cluster, and used by Strimzi for many
+  # annotations
   name: sasquatch
-  # -- Site wide label required for gathering Prometheus metrics if they are enabled.
+
+  # -- Site wide label required for gathering Prometheus metrics if they are
+  # enabled
   releaseLabel: "site-prom"
 
 kafka:
-  # -- Version of Kafka to deploy.
-  version: "3.5.1"
-  # -- Number of Kafka broker replicas to run.
+  # -- Version of Kafka to deploy
+  version: "3.7.0"
+
+  # -- Number of Kafka broker replicas to run
   replicas: 3
-  # -- Number of down brokers that the system can tolerate.
+
+  # -- Number of down brokers that the system can tolerate
   disruption_tolerance: 0
+
   storage:
-    # -- Size of the backing storage disk for each of the Kafka brokers.
+    # -- Size of the backing storage disk for each of the Kafka brokers
     size: 500Gi
-    # -- Name of a StorageClass to use when requesting persistent volumes.
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
     storageClassName: ""
+
   config:
-    # -- Number of minutes for a consumer group's offsets to be retained.
+    # -- Number of minutes for a consumer group's offsets to be retained
     offsets.retention.minutes: 2880
-    # -- Number of days for a topic's data to be retained.
+
+    # -- Number of days for a topic's data to be retained
     log.retention.hours: 48
-    # -- How much disk space Kafka will ensure is available, set to 70% of the data partition size
+
+    # -- How much disk space Kafka will ensure is available, set to 70% of the
+    # data partition size
     log.retention.bytes: "350000000000"
-    # -- The largest record batch size allowed by Kafka.
+
+    # -- The largest record batch size allowed by Kafka
     message.max.bytes: 10485760
-    # -- The number of bytes of messages to attempt to fetch for each partition.
+
+    # -- The number of bytes of messages to attempt to fetch for each partition
     replica.fetch.max.bytes: 10485760
-    # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
-    replica.lag.time.max.ms: 120000
 
   metricsConfig:
-    # -- Whether metric configuration is enabled.
+    # -- Whether metric configuration is enabled
     enabled: false
 
   listeners:
     plain:
-      # -- Whether internal plaintext listener is enabled.
+      # -- Whether internal plaintext listener is enabled
       enabled: false
 
     tls:
-      # -- Whether internal TLS listener is enabled.
+      # -- Whether internal TLS listener is enabled
       enabled: false
 
     external:
-      # -- Whether external listener is enabled.
+      # -- Whether external listener is enabled
       enabled: false
 
   externalListener:
     tls:
-      # -- Whether TLS encryption is enabled.
+      # -- Whether TLS encryption is enabled
       enabled: false
-      # -- Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker.
+
+      # -- Name of a ClusterIssuer capable of provisioning a TLS certificate
+      # for the broker
       certIssuerName: "letsencrypt-dns"
 
     bootstrap:
-      # -- The loadbalancer is requested with the IP address specified in this field.
-      # This feature depends on whether the underlying cloud provider supports specifying the loadBalancerIP when a load balancer is created.
-      # This field is ignored if the cloud provider does not support the feature.
-      # Once the IP address is provisioned this option make it possible to pin the IP address.
-      # We can request the same IP next time it is provisioned. This is important because
-      # it lets us configure a DNS record, associating a hostname with that pinned IP address.
+      # Load balancer IP configuration
+      #
+      # The loadbalancer is requested with the IP address specified in this
+      # field.  This feature depends on whether the underlying cloud provider
+      # supports specifying the loadBalancerIP when a load balancer is
+      # created.  This field is ignored if the cloud provider does not support
+      # the feature.
+      #
+      # Once the IP address is provisioned this option make it possible to pin
+      # the IP address.  We can request the same IP next time it is
+      # provisioned. This is important because it lets us configure a DNS
+      # record, associating a hostname with that pinned IP address.
+      #
+      # -- Request this load balancer IP. See `values.yaml` for more
+      # discussion
+      # @default -- Do not request a load balancer IP
       loadBalancerIP: ""
-      # -- Name used for TLS hostname verification.
+
+      # -- Name used for TLS hostname verification
+      # @default -- Do not configure TLS
       host: ""
-      # -- Annotations that will be added to the Ingress, Route, or Service resource.
+
+      # -- Annotations that will be added to the Ingress, Route, or Service
+      # resource
       annotations: {}
 
-    # -- Borkers configuration. host is used in the brokers' advertised.brokers configuration and for TLS hostname verification.
-    # The format is a list of maps.
+    # -- Brokers configuration. _host_ is used in the brokers'
+    # advertised.brokers configuration and for TLS hostname verification.  The
+    # format is a list of maps.
     brokers: []
     # For example:
     # brokers:
@@ -82,95 +111,161 @@ kafka:
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
 
-  # -- Affinity for Kafka pod assignment.
+  # -- Affinity for Kafka pod assignment
+  # @default -- See `values.yaml`
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: "app.kubernetes.io/name"
-            operator: In
-            values:
-            - kafka
-        topologyKey: "kubernetes.io/hostname"
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - kafka
+          topologyKey: "kubernetes.io/hostname"
 
-  # -- Tolerations for Kafka broker pod assignment.
+  # -- Tolerations for Kafka broker pod assignment
   tolerations: []
+
+  # -- Kubernetes requests and limits for the Kafka brokers
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 32Gi
+      cpu: "4"
+    limits:
+      memory: 64Gi
+      cpu: "8"
+
+kraft:
+  # -- Enable KRaft mode for Kafka
+  enabled: false
+
+kafkaController:
+  # -- Enable Kafka Controller
+  enabled: false
+
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka controllers
+    size: 20Gi
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
+    storageClassName: ""
+
+  # -- Kubernetes requests and limits for the Kafka Controller
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 32Gi
+      cpu: "4"
+    limits:
+      memory: 64Gi
+      cpu: "8"
 
 kafkaExporter:
   # -- Enable Kafka exporter
   enabled: false
+
   # -- Kafka topics to monitor
   topicRegex: ".*"
+
   # -- Consumer groups to monitor
   groupRegex: ".*"
+
   # -- Logging level
   logging: info
+
   # -- Enable Sarama logging for pod
   enableSaramaLogging: false
-  # -- Resource specification for Kafka exporter
+
+  # -- Kubernetes requests and limits for the Kafka exporter
+  # @default -- See `values.yaml`
   resources: {}
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.
   replicas: 3
+
   storage:
-    # -- Size of the backing storage disk for each of the Zookeeper instances.
+    # -- Size of the backing storage disk for each of the Zookeeper instances
     size: 100Gi
-    # -- Name of a StorageClass to use when requesting persistent volumes.
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
     storageClassName: ""
 
   metricsConfig:
-    # -- Whether metric configuration is enabled.
+    # -- Whether metric configuration is enabled
     enabled: false
 
-  # -- Affinity for Zookeeper pod assignment.
+  # -- Affinity for Zookeeper pod assignment
+  # @default -- See `values.yaml`
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
-      - labelSelector:
-          matchExpressions:
-          - key: "app.kubernetes.io/name"
-            operator: In
-            values:
-            - zookeeper
-        topologyKey: "kubernetes.io/hostname"
+        - labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                  - zookeeper
+          topologyKey: "kubernetes.io/hostname"
 
-  # -- Tolerations for Zookeeper pod assignment.
+  # -- Tolerations for Zookeeper pod assignment
   tolerations: []
 
 connect:
-  # -- Enable Kafka Connect.
+  # -- Enable Kafka Connect
   enabled: false
-  # -- Custom strimzi-kafka image with connector plugins used by sasquatch.
-  image: ghcr.io/lsst-sqre/strimzi-0.36.1-kafka-3.5.1:tickets-dm-40655
-  # -- Number of Kafka Connect replicas to run.
+
+  # -- Custom strimzi-kafka image with connector plugins used by sasquatch
+  image: ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491
+
+  # -- Number of Kafka Connect replicas to run
   replicas: 3
+
   config:
-    # -- Set the converter for the message key
+    # -- Set the converter for the message ke
     key.converter: io.confluent.connect.avro.AvroConverter
+
     # -- Enable converted schemas for the message key
     key.converter.schemas.enable: true
 
+    # -- URL for the schema registry
+    key.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+
+    # -- Converter for the message value
+    value.converter: io.confluent.connect.avro.AvroConverter
+
+    # -- Enable converted schemas for the message value
+    value.converter.schemas.enable: true
+
+    # -- URL for the schema registry
+    value.converter.schema.registry.url: http://sasquatch-schema-registry.sasquatch:8081
+
 registry:
   ingress:
-    # -- Whether to enable ingress for the Schema Registry.
+    # -- Whether to enable an ingress for the Schema Registry
     enabled: false
-    # -- Hostname for the Schema Registry.
+
+    # -- Hostname for the Schema Registry
+    # @default -- None, must be set if ingress is enabled
     hostname: ""
-    # -- Annotations that will be added to the Ingress resource.
+
+    # -- Annotations that will be added to the Ingress resource
     annotations: {}
+
   # -- Name of the topic used by the Schema Registry
   schemaTopic: registry-schemas
 
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.
 superusers:
-- kafka-admin
+  - kafka-admin
 
 users:
   replicator:
-    # -- Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters)
+    # -- Enable user replicator (used by Mirror Maker 2 and required at both
+    # source and target clusters)
     enabled: false
 
   tsSalKafka:
@@ -193,29 +288,46 @@ users:
     # -- Enable user kafka-connect-manager
     enabled: false
 
+  consdb:
+    # -- Enable user consdb
+    enabled: false
+
 mirrormaker2:
-  # -- Enable replication in the target (passive) cluster.
+  # -- Enable replication in the target (passive) cluster
   enabled: false
+
+  # -- Number of Mirror Maker replicas to run
   replicas: 3
+
   source:
-    # -- Source (active) cluster to replicate from.
+    # -- Source (active) cluster to replicate from
+    # @default -- None, must be set if enabled
     bootstrapServer: ""
-    # -- Topic replication from the source cluster defined as a comma-separated list or regular expression pattern.
+
+    # -- Topic replication from the source cluster defined as a
+    # comma-separated list or regular expression pattern
     topicsPattern: "registry-schemas, lsst.sal.*"
+
   replication:
     policy:
-      # -- Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used.
-      # @default -- ""
+      # -- Convention used to rename topics when the DefaultReplicationPolicy
+      # replication policy is used. Default is "" when the
+      # IdentityReplicationPolicy replication policy is used.
       separator: ""
+
       # -- Replication policy.
-      # @default -- IdentityReplicationPolicy
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+
   sourceRegistry:
-    # -- Whether to deploy another Schema Registry for the schemas replicated from the source cluster.
+    # -- Whether to deploy another Schema Registry for the schemas replicated
+    # from the source cluster
     enabled: false
-    # -- Name of the topic Schema Registry topic replicated from the source cluster
+
+    # -- Name of the topic Schema Registry topic replicated from the source
+    # cluster
     schemaTopic: "source.registry-schemas"
+
   sourceConnect:
-    # -- Whether to deploy another Connect cluster for topics replicated from the source cluster.
-    # Requires the sourceRegistry enabled.
+    # -- Whether to deploy another Connect cluster for topics replicated from
+    # the source cluster. Requires the `sourceRegistry` be enabled.
     enabled: false

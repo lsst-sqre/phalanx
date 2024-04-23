@@ -17,6 +17,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
 
    requirements
    hostnames
+   create-environment
    secrets-setup
    installation
 

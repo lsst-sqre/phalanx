@@ -1,10 +1,7 @@
 argo-cd:
-  server:
-    ingress:
-      hosts:
-        - "data-dev.lsst.eu"
-    config:
-      url: https://data-dev.lsst.eu/argo-cd
+  configs:
+    cm:
+      url: "https://data-dev.lsst.eu/argo-cd"
       dex.config: |
         connectors:
           # Auth using GitHub.
@@ -18,17 +15,11 @@ argo-cd:
               clientSecret: $dex.clientSecret
               orgs:
                 - name: rubin-lsst
-      # resource.customizations: |
-      #   networking.k8s.io/Ingress:
-      #     health.lua: |
-      #      hs = {}
-      #      hs.status = "Healthy"
-      #      return hs
-
-    rbacConfig:
+    rbac:
       policy.csv: |
         g, rubin-lsst:admin, role:admin
 
-  # configs:
-  #   secret:
-  #     createSecret: true
+  server:
+    ingress:
+      hostnmae: "data-dev.lsst.eu"
+    tls: false

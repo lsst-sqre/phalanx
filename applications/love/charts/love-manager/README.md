@@ -6,7 +6,6 @@ Helm chart for the LOVE manager service.
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| envSecretKeyName | string | `"love"` | The top-level secret key name that houses the rest of the secrets |
 | manager.frontend.affinity | object | `{}` | Affinity rules for the LOVE manager frontend pods |
 | manager.frontend.autoscaling.enabled | bool | `true` | Whether automatic horizontal scaling is active |
 | manager.frontend.autoscaling.maxReplicas | int | `100` | The allowed maximum number of replicas |
@@ -114,7 +113,6 @@ Helm chart for the LOVE manager service.
 | redis.port | int | `6379` | The redis port number |
 | redis.resources | object | `{}` | Resource specifications for the LOVE redis pods |
 | redis.tolerations | list | `[]` | Toleration specifications for the LOVE redis pods |
-| secret_path | string | `"lsst.local"` | The site-specific path to find Vault secrets |
 | viewBackup.affinity | object | `{}` | Affinity rules for the LOVE view backup pods |
 | viewBackup.enabled | bool | `false` | Whether view backup is active |
 | viewBackup.env | object | `{}` | Place to specify additional environment variables for the view backup job |

@@ -27,7 +27,6 @@ Deployment for the Auxiliary Telescope CSCs
 | atpneumatics.enabled | bool | `false` | Enable the ATPneumatics CSC |
 | atspectrograph-sim.enabled | bool | `false` | Enable the ATSpectograph simulator CSC |
 | atspectrograph.enabled | bool | `false` | Enable the ATSpectrograph CSC |
-| csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
 | hexapod-sim.enabled | bool | `false` | Enable the hexapod controller simulator |
 | hexapod-sim.image | object | `{"pullPolicy":"Always","repository":"ts-dockerhub.lsst.org/hexapod_simulator","tag":"latest"}` | This section holds the configuration of the container image |
 | hexapod-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |

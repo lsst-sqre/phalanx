@@ -25,12 +25,14 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | config.worker.imageSelector | string | `"recommended"` | Nublado image stream to select: "recommended", "weekly" or "reference" |
 | config.worker.jobTimeout | int | `300` | The default notebook execution timeout, in seconds. |
 | config.worker.keepAlive | string | `"normal"` | Worker keep alive mode: "normal", "fast", "disabled" |
+| config.worker.maxConcurrentJobs | int | `3` | Max number of concurrent notebook executions per worker |
 | config.worker.tokenLifetime | string | `"2419200"` | Worker token lifetime, in seconds. |
 | config.worker.tokenScopes | string | `"exec:notebook,read:image,read:tap,read:alertdb"` | Nublado2 worker account's token scopes as a comma-separated list. |
 | config.worker.workerCount | int | `1` | Number of workers to run |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/noteburst"` | Noteburst image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |

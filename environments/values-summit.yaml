@@ -1,8 +1,10 @@
-name: summit
-fqdn: summit-lsp.lsst.codes
-vaultPathPrefix: secret/k8s_operator/summit-lsp.lsst.codes
+name: "summit"
+fqdn: "summit-lsp.lsst.codes"
+appOfAppsName: "science-platform"
+vaultPathPrefix: "secret/k8s_operator/summit-lsp.lsst.codes"
 
 applications:
+  consdb: true
   exposurelog: true
   narrativelog: true
   nublado: true

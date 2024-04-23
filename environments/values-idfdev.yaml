@@ -1,5 +1,6 @@
 name: "idfdev"
 fqdn: "data-dev.lsst.cloud"
+appOfAppsName: "science-platform"
 butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
 butlerServerRepositories:
   dp02: "https://data-dev.lsst.cloud/api/butler/repo/dp02/butler.yaml"

@@ -1,23 +1,4 @@
-namespace: &ns obssys
-
-csc_collector:
-  namespace: *ns
-
-  secrets:
-  - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: lfa
-    key: ts/software/lfa
-  - name: butler-secret
-    key: butler-secret
-  - name: love
-    key: ts/software/love
-
 atqueue:
-  namespace: *ns
   classifier: scriptqueue2
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
@@ -27,11 +8,9 @@ atqueue:
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
   butlerSecret:
-    containerPath: &abS-cP /home/saluser/.lsst
-    dbUser: oods
-  secretPermFixer:
-  - name: butler-secret
-    containerPath: *abS-cP
+    containerPath: &bS-cP /home/saluser/.lsst
+    dbUser: &bS-dbU oods
+    secretFilename: &bS-sFn postgres-credentials.txt
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -72,7 +51,6 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
 
 atscheduler:
-  namespace: *ns
   classifier: scheduler2
   image:
     repository: ts-dockerhub.lsst.org/scheduler
@@ -81,17 +59,13 @@ atscheduler:
     INDEX: 2
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -113,7 +87,6 @@ atscheduler:
 
 authorize:
   enabled: true
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/authorize
     pullPolicy: Always
@@ -122,11 +95,9 @@ authorize:
     AUTHLIST_USER_NAME: authlist_user
   envSecrets:
   - name: AUTHLIST_USER_PASS
-    secretName: love
-    secretKey: authlist-user-pass
+    key: authlist-user-pass
 
 mtqueue:
-  namespace: *ns
   classifier: scriptqueue1
   image:
     repository: ts-dockerhub.lsst.org/scriptqueue
@@ -136,11 +107,9 @@ mtqueue:
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
   butlerSecret:
-    containerPath: &mbS-cP /home/saluser/.lsst
-    dbUser: oods
-  secretPermFixer:
-  - name: butler-secret
-    containerPath: *mbS-cP
+    containerPath: *bS-cP
+    dbUser: *bS-dbU
+    secretFilename: *bS-sFn
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -181,7 +150,6 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
 
 mtscheduler:
-  namespace: *ns
   classifier: scheduler1
   image:
     repository: ts-dockerhub.lsst.org/scheduler
@@ -190,17 +158,13 @@ mtscheduler:
     INDEX: 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   nfsMountpoint:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
@@ -221,7 +185,6 @@ mtscheduler:
         topologyKey: "kubernetes.io/hostname"
 
 watcher:
-  namespace: *ns
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always

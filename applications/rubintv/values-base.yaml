@@ -1,0 +1,62 @@
+siteTag: "base"
+
+imagePullSecrets:
+- name: pull-secret
+
+frontend:
+  debug: true
+  env:
+  - name: S3_ENDPOINT_URL
+    value: "https://s3.rubintv.ls.lsst.org"
+  - name: RAPID_ANALYSIS_LOCATION
+    value: "BTS"
+  image:
+    repository: ghcr.io/lsst-ts/rubintv
+    tag: tickets-DM-43214
+    pullPolicy: Always
+
+workers:
+  replicas: 1
+  image:
+    repository: lsstts/rubintv-broadcaster
+    tag: c0030_usdf
+    pullPolicy: Always
+  uid: 15517
+  gid: 4085
+  env:
+  - name: DEPLOY_BRANCH
+    value: "deploy-rubintv-worker"
+  - name: S3_ENDPOINT_URL
+    value: "https://s3.rubintv.ls.lsst.org"
+  - name: DAF_BUTLER_REPOSITORY_INDEX
+    value: "s3://rubin-summit-users/data-repos.yaml"
+  - name: DAF_BUTLER_REPOSITORY
+    value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+  volumes:
+  - name: sdf-group-rubin
+    persistentVolumeClaim:
+      name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /sdf/group/rubin
+  - name: sdf-data-rubin
+    persistentVolumeClaim:
+      name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /sdf/data/rubin
+  - name: fs-ddn-sdf-group-lsst
+    persistentVolumeClaim:
+      name: fs-ddn-sdf-group-lsst
+      storageClassName: fs-ddn-sdf-group-lsst
+      capacity: 1Gi
+    accessMode: ReadOnlyMany
+    mountPath: /fs/ddn/sdf/group/lsst
+  resources:
+    limits:
+      cpu: 2.0
+      memory: "8Gi"
+global:
+  tsVaultSecretsPath: /ts/software

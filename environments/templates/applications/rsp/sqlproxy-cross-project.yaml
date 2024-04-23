@@ -1,0 +1,27 @@
+{{- if (index .Values "applications" "sqlproxy-cross-project") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "sqlproxy-cross-project"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "sqlproxy-cross-project"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "sqlproxy-cross-project"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/sqlproxy-cross-project"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

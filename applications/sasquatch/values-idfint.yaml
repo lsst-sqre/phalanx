@@ -35,6 +35,17 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
 influxdb:
   ingress:

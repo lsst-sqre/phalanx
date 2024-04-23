@@ -1,3 +1,6 @@
+config:
+  influxdb2Url: "https://monitoring.lsst.cloud"
+  influxdb2Org: "square"
 telegraf-ds:
   args:
   - "--config"
@@ -9,6 +12,28 @@ telegraf-ds:
       secretKeyRef:
         name: telegraf
         key: influx-token
+  # This pulls HOSTNAME from the node, not the pod.
+  - name: HOSTNAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
+  # In test clusters where hostnames are resolved in /etc/hosts on each node,
+  # the HOSTNAME is not resolvable from inside containers
+  # So inject the host IP as well
+  - name: HOSTIP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+  # Mount the host filesystem and set the appropriate env variables.
+  # ref: https://github.com/influxdata/telegraf/blob/master/docs/FAQ.md
+  # HOST_PROC is required by the cpu, disk, diskio, kernel and processes input plugins
+  - name: "HOST_PROC"
+    value: "/hostfs/proc"
+  # HOST_SYS is required by the diskio plugin
+  - name: "HOST_SYS"
+    value: "/hostfs/sys"
+  - name: "HOST_MOUNT_PREFIX"
+    value: "/hostfs"
   rbac:
     create: true
   resources:

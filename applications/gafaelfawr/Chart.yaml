@@ -1,16 +1,16 @@
 apiVersion: v2
 name: gafaelfawr
 version: 1.0.0
-description: Authentication and identity system
-home: https://gafaelfawr.lsst.io/
+description: "Authentication and identity system"
+home: "https://gafaelfawr.lsst.io/"
 sources:
-  - https://github.com/lsst-sqre/gafaelfawr
-appVersion: 10.0.1
+  - "https://github.com/lsst-sqre/gafaelfawr"
+appVersion: 10.1.0
 
 dependencies:
-  - name: redis
+  - name: "redis"
     version: 1.0.11
-    repository: https://lsst-sqre.github.io/charts/
+    repository: "https://lsst-sqre.github.io/charts/"
 
 annotations:
   phalanx.lsst.io/docs: |

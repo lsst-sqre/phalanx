@@ -7,6 +7,12 @@ prompt-proto-service:
     autoscaling.knative.dev/max-scale: "600"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "2"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "1Gi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "2Gi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
@@ -66,6 +72,14 @@ prompt-proto-service:
     # -- Database namespace for the APDB
     namespace: pp_apdb_lsstcam
 
+  alerts:
+    # -- Username for sending alerts to the alert stream
+    username: "kafka-admin"
+    # -- Server address for the alert stream
+    server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+    # -- Topic name where alerts will be sent
+    topic: "alert-stream-test"
+
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
     centralRepoFile: false
@@ -79,15 +93,29 @@ prompt-proto-service:
     # This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated
     # if we instead support `SasquatchDatastore` in the future.
     endpointUrl: ""
+    # -- Namespace in the Sasquatch system with which to associate metrics.
+    namespace: lsst.prompt
     # -- If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`.
     # Leave unset to attempt anonymous access.
     auth_env: true
 
   knative:
+    # -- The cpu cores requested.
+    cpuRequest: "1"
+    # -- The maximum cpu cores.
+    cpuLimit: "1"
     # -- The storage space reserved for each container (mostly local Butler).
     ephemeralStorageRequest: "20Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     ephemeralStorageLimit: "20Gi"
+    # -- GPUs enabled.
+    gpu: false
+    # -- The number of GPUs to request.
+    gpuRequest: "0"
+    # -- The minimum memory to request.
+    memoryRequest: "2Gi"
+    # -- The maximum memory limit.
+    memoryLimit: "8Gi"
     # -- Maximum time that a container can respond to a next_visit request (seconds).
     timeout: 900
     # -- Maximum time that a container can send nothing to the fanout service (seconds).
@@ -98,3 +126,6 @@ prompt-proto-service:
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.
   additionalVolumeMounts: []
+
+  # -- Affinity rules for the prompt processing pods
+  affinity: {}

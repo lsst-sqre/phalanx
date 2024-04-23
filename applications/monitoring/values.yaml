@@ -1,14 +1,88 @@
+# Configuration of Influx endpoint to receive monitoring data.
+config:
+  # -- Hostname for the singleton InfluxDBv2 collection point
+  influxdbHostname: "monitoring.lsst.cloud"
+  # -- InfluxDBv2 organization
+  influxdbOrg: "square"
+
+# InfluxDB v2 server component.  Soon to be replaced with Influx DB v3.
+influxdb2:
+  adminUser:
+    # -- InfluxDB internal organization
+    organization: "square"
+
+    # -- Bucket to dump raw monitoring data into
+    bucket: "monitoring_raw_"
+
+    # -- User name
+    user: "admin"
+
+    # -- How long to keep data
+    retention_policy: "30d"
+
+    # -- Where we store secrets to run the server
+    existingSecret: monitoring
+
+  # -- InfluxDB2 ingress configuration.
+  # @default -- disabled, must be enabled and configured at each site
+  ingress:
+    enabled: false
+    tls: true
+    secretName: "tls-influxdb2"
+    hostname: ""
+    className: "nginx"
+    path: "/"
+
+  startupProbe:
+    # -- Whether to enable a startup probe
+    enabled: true
+
+    # -- How long to wait before checking the first time
+    initialDelaySeconds: 30
+
+    # -- Period between checking whether InfluxDB has started
+    periodSeconds: 10
+
+    # -- Number of checks to conclude whether InfluxDB won't start.  High
+    # to allow up to 10 minutes for startup, because checking many
+    # shards can be slow.
+    failureThreshold: 60
+
+  livenessProbe:
+    # -- Period between checks for whether InfluxDB is still alive
+    periodSeconds: 10
+
+    # -- Number of checks to conclude whether InfluxDB has died
+    failureThreshold: 10
+
+  # -- Resource limits and requests for the InfluxDB server instance
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: 4.0
+      memory: 30Gi
+    requests:
+      cpu: 1.0
+      memory: 1Gi
+
+# Chronograf provides a UI for analyzing the data in Influx.  Unlike the
+# native InfluxDBv2 visualizer, it is capable of doing OIDC authentication.
 chronograf:
   ## Image Settings
   ##
+  # -- chronograf image settings
+  # @default -- quay.io/influxdb/chronograf 1.10.3
   image:
-    tag: 1.9.4
+    repository: "quay.io/influxdb/chronograf"
+    tag: 1.10.3
     pullPolicy: IfNotPresent
 
   ## Specify a service type
   ## ClusterIP is default
   ## ref: http://kubernetes.io/docs/user-guide/services/
   ##
+  # -- Chronograf service
+  # @default -- 1 replica, ClusterIP
   service:
     replicas: 1
     type: ClusterIP
@@ -16,6 +90,8 @@ chronograf:
   ## Configure resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ##
+  # -- Chronograf resource requests/limits
+  # @default -- 1Gi/1CPU request, 30Gi/4CPU limit
   resources:
     requests:
       memory: 1024Mi
@@ -24,51 +100,54 @@ chronograf:
       memory: 30Gi
       cpu: 4
 
-  ## Use our own Gafaelfawr ingress.
+  # -- Chronograf ingress
+  # @default -- disabled; must be enabled and configured for each site
   ingress:
-    ## We will use Gafaelfawr ingresses instead
     enabled: false
+    tls: false
+    hostname: ""
+    className: "nginx"
+    path: /chronograf(/|$)
 
   ## Enable OAuth
   oauth:
-    ## This is a lie: see below.
+    # -- Enable Chronograf oauth
+    # Never enable it: it breaks the deployment because it's expecting a static
+    # TOKEN_SECRET.  Instead, to get oauth working, leave this setting as-is
+    # and just configure all the correct environment variables (see below).
     enabled: false
-  ## OAuth Settings for OAuth Providers
-  ## We do not set these here.  What we do is set:
-  ##  - TOKEN_SECRET
-  ##  - GH_CLIENT_ID
-  ##  - GH_CLIENT_SECRET
-  ##  - GH_ORGS
-  ## in the environment.  The secrets should come from the "monitoring"
-  ## secret, which is a VaultSecret, and the rest can just be injected
-  ## into the deployment env directly.
 
-  ## Extra environment variables that will be passed onto deployment pods
+  # -- Environment for chronograf
+  # @default -- stock settings for SQuaRE Phalanx deployment
   env:
+    BASE_PATH: "/chronograf"
     CUSTOM_AUTO_REFRESH: "1s=1000"
-    GH_CLIENT_ID: ""  # Must be specified for each endpoint for the callback
-    GH_ORGS: "lsst-sqre"
     HOST_PAGE_DISABLED: true
-    INFLUXDB_URL: "https://monitoring.lsst.codes"  # Expect this to change
+    INFLUXDB_URL: "https://monitoring.lsst.cloud"
     INFLUXDB_ORG: "square"
-  ## INFLUXDB_TOKEN should be in the monitoring secret as well as
-  ## TOKEN_SECRET and GH_CLIENT_SECRET.  Note that INFLUX_TOKEN is for
-  ## InfluxDBv1 and INFLUXDB_TOKEN is for v2.
+
+  # -- Chronograf will read environment variables from this secret
   envFromSecret: monitoring
+
+  # -- Chronograf update strategy
+  # @default -- Recreate
   updateStrategy:
     type: Recreate
 
+# Cronjobs to handle bucket and task creation for alert generation.
 cronjob:
-  # -- image for monitoring-related cronjobs
   image:
-    # -- repository for rubin-influx-tools
+    # -- repository for rubin-influx-tools, which supplies tools and dashboards
     repository: ghcr.io/lsst-sqre/rubin-influx-tools
     # -- tag for rubin-influx-tools
     # @default -- the appVersion of the chart
     tag: ""
+    # -- imagePullPolicy for cronjobs
+    pullPolicy: "IfNotPresent"
+
   # -- set to true to enable debug logging
   debug: false
-  # -- schedules for jobs
+
   schedule:
     # -- bucketmaker schedule
     bucketmaker: "*/15 * * * *"
@@ -77,20 +156,15 @@ cronjob:
     # -- taskmaker schedule
     taskmaker: "6-59/15 * * * *"
 
-ingress:
-  # -- ingress for Chronograf UI
-  chronograf:
-    # -- hostname for Chronograf UI
-    # @ default -- None, must be set by each individual instance
-    hostname: ""
-    # -- Additional annotations to add to the ingress
-    annotations: {}
-
 global:
+  # -- services enabled in this RSP instance
+  # @default -- Set by Argo CD
+  enabledServices: ""
+
+  # -- Host name for instance identification
+  # @default -- Set by Argo CD
+  host: ""
+
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
-  # -- URL for InfluxDBv2 instance
-  influxdbUrl: "https://monitoring.lsst.codes"  # Expect this to change
-  # -- InfluxDBv2 organization
-  influxdbOrg: "square"

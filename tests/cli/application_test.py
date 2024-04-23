@@ -12,6 +12,7 @@ from git.repo import Repo
 from git.util import Actor
 
 from phalanx.factory import Factory
+from phalanx.models.applications import Project
 
 from ..support.cli import run_cli
 from ..support.data import (
@@ -19,10 +20,10 @@ from ..support.data import (
     read_output_data,
     read_output_json,
 )
-from ..support.helm import MockHelm
+from ..support.helm import MockHelmCommand
 
 
-def test_add_helm_repos(mock_helm: MockHelm) -> None:
+def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "add-helm-repos", "argocd")
     assert result.output == ""
     assert result.exit_code == 0
@@ -63,6 +64,8 @@ def test_create(tmp_path: Path) -> None:
         "aaa-new-app",
         "--starter",
         "empty",
+        "--project",
+        "infrastructure",
         "--description",
         "First new app",
         "--config",
@@ -75,6 +78,8 @@ def test_create(tmp_path: Path) -> None:
         "application",
         "create",
         "hips",
+        "--project",
+        "rsp",
         "--description",
         "Some HiPS service",
         "--config",
@@ -89,6 +94,8 @@ def test_create(tmp_path: Path) -> None:
         "zzz-other-app",
         "--starter",
         "empty",
+        "--project",
+        "rsp",
         "--description",
         "Last new app",
         "--config",
@@ -131,6 +138,12 @@ def test_create(tmp_path: Path) -> None:
     assert "aaa-new-app" in environment.applications
     assert "hips" in environment.applications
     assert "zzz-other-app" in environment.applications
+    for app, project in (
+        ("aaa-new-app", Project.infrastructure),
+        ("hips", Project.rsp),
+        ("zzz-other-app", Project.rsp),
+    ):
+        assert environment.applications[app].project == project
     for app, expected in (
         ("aaa-new-app", "First new app"),
         ("hips", "Some HiPS service"),
@@ -157,6 +170,8 @@ def test_create_errors(tmp_path: Path) -> None:
         "application",
         "create",
         "some-really-long-app-name-please-do-not-do-this",
+        "--project",
+        "infrastructure",
         "--description",
         "Some really long description on top of the app name",
         "--config",
@@ -169,6 +184,8 @@ def test_create_errors(tmp_path: Path) -> None:
         "application",
         "create",
         "app",
+        "--project",
+        "infrastructure",
         "--description",
         "lowercase description",
         "--config",
@@ -176,6 +193,20 @@ def test_create_errors(tmp_path: Path) -> None:
         needs_config=False,
     )
     assert "Description must start with capital letter" in result.output
+    assert result.exit_code == 2
+    result = run_cli(
+        "application",
+        "create",
+        "app",
+        "--description",
+        "Description",
+        "--project",
+        "foo",
+        "--config",
+        str(config_path),
+        needs_config=False,
+    )
+    assert "'foo' is not one of" in result.output
     assert result.exit_code == 2
 
 
@@ -194,9 +225,14 @@ def test_create_prompt(tmp_path: Path) -> None:
         "--config",
         str(config_path),
         needs_config=False,
-        stdin="Some application\n",
+        stdin="Some application\ninfrastructure\n",
     )
-    assert result.output == "Short description: Some application\n"
+    assert result.output == (
+        "Short description: Some application\n"
+        "Possible Argo CD projects are\n  "
+        + "\n  ".join(p.value for p in Project)
+        + "\nArgo CD project: infrastructure\n"
+    )
     assert result.exit_code == 0
 
     app_path = config_path / "applications" / "aaa-new-app"
@@ -205,7 +241,7 @@ def test_create_prompt(tmp_path: Path) -> None:
     assert chart["description"] == "Some application"
 
 
-def test_lint(mock_helm: MockHelm) -> None:
+def test_lint(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -316,7 +352,7 @@ def test_lint(mock_helm: MockHelm) -> None:
     assert result.exit_code == 1
 
 
-def test_lint_no_repos(mock_helm: MockHelm) -> None:
+def test_lint_no_repos(mock_helm: MockHelmCommand) -> None:
     def callback(*command: str) -> subprocess.CompletedProcess:
         output = None
         if command[0] == "lint":
@@ -352,7 +388,7 @@ def test_lint_no_repos(mock_helm: MockHelm) -> None:
     ]
 
 
-def test_lint_all(mock_helm: MockHelm) -> None:
+def test_lint_all(mock_helm: MockHelmCommand) -> None:
     result = run_cli("application", "lint-all")
     assert result.output == ""
     assert result.exit_code == 0
@@ -360,7 +396,7 @@ def test_lint_all(mock_helm: MockHelm) -> None:
     assert mock_helm.call_args_list == expected_calls
 
 
-def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
+def test_lint_all_git(tmp_path: Path, mock_helm: MockHelmCommand) -> None:
     upstream_path = tmp_path / "upstream"
     shutil.copytree(str(phalanx_test_path()), str(upstream_path))
     upstream_repo = Repo.init(str(upstream_path), initial_branch="main")
@@ -407,7 +443,7 @@ def test_lint_all_git(tmp_path: Path, mock_helm: MockHelm) -> None:
     assert mock_helm.call_args_list == expected_calls
 
 
-def test_template(mock_helm: MockHelm) -> None:
+def test_template(mock_helm: MockHelmCommand) -> None:
     test_path = phalanx_test_path()
 
     def callback(*command: str) -> subprocess.CompletedProcess:

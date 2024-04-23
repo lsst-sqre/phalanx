@@ -12,8 +12,8 @@ See :px-app-bootstrap:`onepassword-connect` for more information.
 
 .. note::
 
-   We are in the middle of a migration from an old secrets management system that sometimes used multiple secrets per application and sometimes pointed multiple applications at the same secret, to a new system that always uses one secret per application.
-   New enviroments should use the new system, but be aware that you will see remnants of the old system lingering in application configuration.
+   The environments :px-env:`base` and :px-env:`summit` are still using an old secrets management system that sometimes used multiple secrets per application and sometimes pointed multiple applications at the same secret.
+   New enviroments should use the system described here, but be aware that you will see remnants of the old system lingering in application configuration.
 
    For documentation of how to convert an existing environment to the new secrets management system, see :doc:`migrating-secrets`.
 
@@ -34,16 +34,18 @@ So, for example, all secrets for Gafaelfawr for a given environment may be store
 This path is configured for each environment via the ``vaultPathPrefix`` setting in the environment :file:`values-{environment}.yaml` file.
 The URL to the Vault server is set via the ``vaultUrl`` setting in the same file and defaults to the SQuaRE-run Vault server.
 
+.. _admin-vault-credentials:
+
 Vault credentials
 =================
 
 A running Phalanx environment must have read access to all Vault secrets under its secrets path.
-Previously, this was done by creating a Vault read token with access to that path.
-This approach is being replaced with a `Vault AppRole`_ that has read access to that path.
+This is normally done by creating a `Vault AppRole`_ that has read access to that path and providing its credentials to :px-app:`vault-secrets-operator`.
 
 .. _Vault AppRole: https://developer.hashicorp.com/vault/docs/auth/approle
 
-Phalanx does not strictly require either of those approaches; any authentication approach that `Vault Secrets Operator`_ supports may be used as long as :px-app:`vault-secrets-operator` is configured accordingly for that environment.
+Phalanx does not strictly require this approach.
+any authentication approach that `Vault Secrets Operator`_ supports may be used as long as :px-app:`vault-secrets-operator` is configured accordingly for that environment.
 However, the standard installation process only supports AppRoles, and tooling is provided to manage those roles.
 
 Phalanx environment administrators, but not the running Phalanx environment, must also have access to a Vault write token with permissions to create, update, and delete secrets under the Vault path for that environment.
@@ -69,13 +71,19 @@ This normally requires a Vault admin or provisioner token or some equivalent.
     The output includes the RoleID and SecretID for the AppRole, which can then be provided to `Vault Secrets Operator`_.
     The optional ``--as-secret`` flag may be provided to write the AppRole credentials in a form suitable for piping to :command:`kubectl apply` to create a secret for `Vault Secrets Operator`_.
 
+    When creating an AppRole for GitHub Actions (usually the :px-env:`minikube` environment), pass ``--token-lifetime 3600`` to this command to limit the maximum token lifetime to an hour.
+    This avoids accumulating AppRole tokens in Vault that slow down other Vault operations.
+
 :samp:`phalanx vault create-write-token {environment}`
     Creates a new Vault token with write (create, update, and delete) access to the Vault secrets path for the given environment.
     If any write token previously created by :command:`phalanx` already exists, it is revoked.
     The output includes the new Vault token, which you should save somewhere secure where you store other secrets.
     (The running Phalanx environment does not need and should not have access to this token.)
     You will later set the environment variable ``VAULT_TOKEN`` to this token when running other :command:`phalanx` commands.
+
     For SQuaRE-managed environments, always update the ``Phalanx Vault write tokens`` 1Password item in the SQuaRE 1Password vault after running this command.
+    Also store this token in the ``vault-write-token`` key of the 1Password vault for this environment.
+    See :ref:`admin-onepassword-vault-token` for more details.
 
 :samp:`phalanx vault audit {environment}`
     Check the authentication credentials created by the previous two commands in the given environment for any misconfiguration.
@@ -127,6 +135,8 @@ Replace ``<environment>`` with the name of the environment.
 This will print a template for the required static secrets to standard output.
 
 Then, store this file in a secure location and fill in the ``value`` keys and, if necessary, the ``pull-secret`` block with the appropriate values.
+You can, if you choose, also store the Vault write token for your environment in this file, which will allow you to skip setting the VAULT_TOKEN environment variable each time you want to run a :command:`phalanx secrets` command.
+
 You will provide this file to :command:`phalanx` when performing secret sync or audit operations (see :doc:`sync-secrets`) with the ``--secrets`` command-line flag.
 
 .. _admin-secrets-onepassword:
@@ -149,7 +159,7 @@ Fields should be marked as passwords when appropriate for their 1Password UI sem
 
 To see what secrets must be provided in 1Password, generate the same YAML template as you would when providing secrets in a YAML file.
 
-.. code-block:: sh
+.. prompt:: bash
 
    phalanx secrets static-template <environment>
 
@@ -168,8 +178,22 @@ If the environment needs a pull secret, create a 1Password item of type :menusel
 Delete all of the pre-defined sections.
 Then, for each Docker registry used by that environment that requires a pull secret, create a section whose name is the FQDN of the registry.
 Within that section, add two fields with labels ``username`` and ``password`` and containing the Basic Auth credentials for that registry.
+The type of the ``password`` field should be changed to password.
 
 This will be transformed into a Vault entry in the correct format for generating a ``Secret`` resource in Kubernetes that can be used as a pull secret.
+
+.. _admin-onepassword-vault-token:
+
+Vault write token
+^^^^^^^^^^^^^^^^^
+
+The Vault write token for the environment can also be stored in 1Password.
+If you do this, you will not have to set the VAULT_TOKEN environment variable before :doc:`auditing <audit-secrets>` or :doc:`syncing <sync-secrets>` secrets.
+
+To do this, create a 1Password item of type :menuselection:`Server` and title ``vault-write-token``.
+Delete all of the pre-defined sections.
+Then, create an entry with key ``vault-token`` and value set to the Vault write token for this environment (normally created with :command:`phalanx vault create-write-token`).
+Don't forget to change the type of the field to password.
 
 Configuring 1Password support
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

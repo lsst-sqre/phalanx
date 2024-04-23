@@ -9,14 +9,14 @@ Static secrets in a YAML file
 =============================
 
 If the environment stores static secrets in a secure YAML file, the environment administrator should update that file with the newly-required static secrets.
-Then, sync the secrets into Vault following the instructions in :doc:`/admin/sync-secrets`.
+Then, sync the secrets into Vault following the instructions in :doc:`sync-secrets`.
 
 Static secrets stored directly in Vault
 =======================================
 
 If the environment stores static secrets directly in Vault, the environment administrator should change the static secret directly in Vault.
 Be aware that when multiple applications use the same static secret, one of them is defined as the "owner" and the other applications use ``copy`` directives in their :file:`secrets.yaml` files to copy the secret from the "owning" application.
-In this case, the static secret must be updated separately for every copy.
+In this case, the copies of the secret will be update when you :doc:`sync secrets <sync-secrets>`.
 
 When the static secrets are stored directly in Vault, no separate sync step is required.
 

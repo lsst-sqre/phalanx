@@ -1,3 +1,4 @@
+{{- $root := . -}}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -57,7 +58,7 @@ data:
       organization = "square"
       token = "$INFLUX_TOKEN"
       urls = [
-        "https://monitoring.lsst.codes"
+        {{- $root.Values.config.influxdb2Url | quote -}}
       ]
       [outputs.influxdb_v2.tagpass]
         prometheus_app = [

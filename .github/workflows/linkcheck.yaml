@@ -50,3 +50,5 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: docs-linkcheck
+          tox-plugins: tox-uv
+          cache-key-prefix: docs-linkcheck

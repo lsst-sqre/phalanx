@@ -123,9 +123,11 @@ python_files = [
 [tool.ruff]
 exclude = [
     "docs/**",
-    "installer/**",
 ]
 line-length = 79
+target-version = "py312"
+
+[tool.ruff.lint]
 ignore = [
     "ANN101",  # self should not have a type annotation
     "ANN102",  # cls should not have a type annotation
@@ -185,9 +187,8 @@ ignore = [
     "ISC002",
 ]
 select = ["ALL"]
-target-version = "py312"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/phalanx/**" = [
     "T201",    # print makes sense to use because Phalanx is interactive
 ]
@@ -199,22 +200,13 @@ target-version = "py312"
     "SLF001",  # tests are allowed to access private members
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 known-first-party = ["phalanx", "tests"]
 split-on-trailing-comma = false
 
-[tool.ruff.flake8-bugbear]
-extend-immutable-calls = [
-    "fastapi.Form",
-    "fastapi.Header",
-    "fastapi.Depends",
-    "fastapi.Path",
-    "fastapi.Query",
-]
-
 # These are too useful as attributes or methods to allow the conflict with the
 # built-in to rule out their use.
-[tool.ruff.flake8-builtins]
+[tool.ruff.lint.flake8-builtins]
 builtins-ignorelist = [
     "all",
     "any",
@@ -224,9 +216,9 @@ builtins-ignorelist = [
     "type",
 ]
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"

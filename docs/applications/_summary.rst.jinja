@@ -2,7 +2,7 @@
 
    * - View on GitHub
      - :bdg-link-primary-line:`applications/{{ app.name }} <https://github.com/lsst-sqre/phalanx/tree/main/applications/{{app.name}}>`
-       :bdg-link-primary-line:`Application template <https://github.com/lsst-sqre/phalanx/blob/main/environments/templates/{{app.name}}-application.yaml>`
+       :bdg-link-primary-line:`Application template <https://github.com/lsst-sqre/phalanx/blob/main/environments/templates/applications/{{app.project.value}}/{{app.name}}.yaml>`
    {%- if app.homepage %}
    * - Homepage
      - {{ app.homepage }}
@@ -33,6 +33,8 @@
      - Helm_
    * - Namespace
      - {{ app.namespace }}
+   * - Argo CD Project
+     - {{ app.project }}
    * - Environments
      - .. list-table::
           {% for env_name in app.active_environments %}

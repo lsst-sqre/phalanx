@@ -12,7 +12,10 @@ __all__ = ["run_cli"]
 
 
 def run_cli(
-    *command: str, needs_config: bool = True, stdin: str | None = None
+    *command: str,
+    env: dict[str, str] | None = None,
+    needs_config: bool = True,
+    stdin: str | None = None,
 ) -> Result:
     """Run the given command in the Click testing harness.
 
@@ -22,6 +25,8 @@ def run_cli(
     ----------
     *command
         Command to run.
+    env
+        Environment variable overrides.
     needs_config
         Whether to add the ``--config`` flag pointing to the test data to the
         end of the command.
@@ -32,4 +37,6 @@ def run_cli(
     if needs_config:
         args.extend(["--config", str(phalanx_test_path())])
     runner = CliRunner()
-    return runner.invoke(main, args, catch_exceptions=False, input=stdin)
+    return runner.invoke(
+        main, args, catch_exceptions=False, env=env, input=stdin
+    )

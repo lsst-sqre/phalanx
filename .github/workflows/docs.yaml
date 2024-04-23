@@ -54,6 +54,8 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: docs
+          tox-plugins: tox-uv
+          cache-key-prefix: docs
 
       # Upload docs:
       # - on pushes to main if *any* documentation content might have changed

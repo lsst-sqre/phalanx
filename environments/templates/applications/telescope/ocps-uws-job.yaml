@@ -1,0 +1,18 @@
+{{- if .Values.applications.uws -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "ocps-uws-job"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "ocps-uws-job"
+    server: "https://kubernetes.default.svc"
+  project: "telescope"
+  source:
+    path: "applications/ocps-uws-job"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+{{- end -}}

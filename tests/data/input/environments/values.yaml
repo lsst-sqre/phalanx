@@ -8,6 +8,10 @@ name: ""
 # @default -- None, must be set
 fqdn: ""
 
+# -- Name of the parent Argo CD app-of-apps that manages all the applications
+# enabled for this environment
+appOfAppsName: "app-of-apps"
+
 onepassword:
   # -- URL to the 1Password server for this environment, if 1Password is used
   # for static secrets.

@@ -54,6 +54,10 @@ spec:
               done
           image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}{{ .Values.cloudsql.image.schemaUpdateTagSuffix }}"
           imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          {{- with .Values.cloudsql.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

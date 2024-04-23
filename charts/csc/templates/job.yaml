@@ -34,28 +34,30 @@ spec:
             - name: LSST_KAFKA_SECURITY_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: ts-salkafka
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
                   key: ts-salkafka-password
-          {{- if or (or .Values.env .Values.envSecrets) .Values.butlerSecret }}
+          {{- if .Values.env }}
           {{- range $env_var, $env_value := .Values.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}
           {{- end }}
+          {{- end }}
+          {{- if .Values.envSecrets }}
           {{- range $env := .Values.envSecrets }}
             - name: {{ $env.name }}
               valueFrom:
                 secretKeyRef:
-                  name: {{ $env.secretName }}
-                  key: {{ $env.secretKey }}
+                  name: {{ $.Values.global.controlSystem.appNamespace }}
+                  key: {{ $env.key }}
           {{- end }}
           {{- end }}
           {{- if .Values.butlerSecret }}
             - name: PGPASSFILE
-              value: "{{ .Values.butlerSecret.containerPath }}/postgres-credentials.txt"
+              value: "{{ .Values.butlerSecret.containerPath }}/{{ .Values.butlerSecret.secretFilename }}"
             - name: PGUSER
               value: {{ .Values.butlerSecret.dbUser | quote }}
           {{- end }}
-          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretPermFixer (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
+          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.butlerSecret (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
           {{- if $volumeTest }}
           volumeMounts:
           {{- if .Values.entrypoint }}
@@ -68,11 +70,9 @@ spec:
               mountPath: {{ .Values.configfile.path }}/{{ .Values.configfile.filename }}
               subPath: {{ .Values.configfile.filename }}
           {{- end }}
-          {{- if .Values.secretPermFixer }}
-          {{- range $values := .Values.secretPermFixer }}
-            - name: {{ include "chart.name" $ }}-{{ $values.name }}
-              mountPath: {{ $values.containerPath }}
-          {{- end }}
+          {{- if .Values.butlerSecret }}
+            - name: {{ include "chart.name" $ }}-file-secrets
+              mountPath: {{ .Values.butlerSecret.containerPath }}
           {{- end }}
           {{- if .Values.pvcMountpoint }}
           {{- range $values := .Values.pvcMountpoint }}
@@ -92,29 +92,24 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- if .Values.secretPermFixer }}
+      {{- if .Values.butlerSecret }}
       initContainers:
-      {{- if .Values.secretPermFixer }}
-      {{- range $values := .Values.secretPermFixer }}
-        - name: {{ include "chart.name" $ }}-{{ $values.name }}-perm-fixer
+      {{- if .Values.butlerSecret }}
+        - name: {{ include "chart.name" $ }}-butler-perm-fixer
           image: "alpine:latest"
           command:
             - "/bin/ash"
             - "-c"
             - |
-              cp -RL /secrets-raw/* /secrets
+              cp /secrets-raw/{{ .Values.butlerSecret.secretFilename }} /secrets
               chown 73006:73006 /secrets/*
               chmod 0600 /secrets/*
-              {{- if $values.specialInstructions }}
-              {{- toYaml $values.specialInstructions | nindent 14 }}
-              {{- end }}
           volumeMounts:
-            - name: {{ include "chart.name" $ }}-raw-{{ $values.name }}
+            - name: {{ include "chart.name" $ }}-raw-file-secrets
               mountPath: /secrets-raw
               readOnly: true
-            - name: {{ include "chart.name" $ }}-{{ $values.name }}
+            - name: {{ include "chart.name" $ }}-file-secrets
               mountPath: /secrets
-      {{- end }}
       {{- end }}
       {{- end }}
       {{- if .Values.securityContext }}
@@ -144,15 +139,13 @@ spec:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
       {{- end }}
-      {{- if .Values.secretPermFixer }}
-      {{- range $values := .Values.secretPermFixer }}
-        - name: {{ include "chart.name" $ }}-{{ $values.name }}
+      {{- if .Values.butlerSecret }}
+        - name: {{ include "chart.name" $ }}-file-secrets
           emptyDir: {}
-        - name: {{ include "chart.name" $ }}-raw-{{ $values.name }}
+        - name: {{ include "chart.name" $ }}-raw-file-secrets
           secret:
-            secretName: {{ or $values.secretName $values.name }}
+            secretName: {{ $.Values.global.controlSystem.appNamespace }}
             defaultMode: 0600
-      {{- end }}
       {{- end }}
       {{- if .Values.pvcMountpoint }}
       {{- range $values := .Values.pvcMountpoint }}
@@ -173,7 +166,7 @@ spec:
       {{- end }}
       restartPolicy: Never
       imagePullSecrets:
-        - name: nexus3-docker
+        - name: pull-secret
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -3,7 +3,7 @@ name: exposurelog
 description: Log messages related to an exposure
 type: application
 sources:
-  - https://github.com/lsst-sqre/exposurelog
+  - https://github.com/lsst-ts/exposurelog
 
 # The chart version. SQuaRE convention is to use 1.0.0
 version: 1.0.0
@@ -12,4 +12,4 @@ version: 1.0.0
 # number should be incremented each time you make changes to the
 # application. Versions are not expected to follow Semantic Versioning. They
 # should reflect the version the application is using.
-appVersion: 1.1.0
+appVersion: 1.2.0

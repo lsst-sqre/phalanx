@@ -195,8 +195,8 @@ class SecretOnepasswordConfig(BaseModel):
 class SecretConfig(BaseModel):
     """Specification for an application secret."""
 
-    description: str = Field(
-        ..., title="Description", description="Description of the secret"
+    description: str | None = Field(
+        None, title="Description", description="Description of the secret"
     )
 
     copy_rules: SecretCopyRules | None = Field(
@@ -240,6 +240,13 @@ class ConditionalSecretConfig(SecretConfig, ConditionalMixin):
         title="Generation rules",
         description="Rules for how the secret should be generated",
     )
+
+    @model_validator(mode="after")
+    def _validate_description(self) -> Self:
+        has_copy = self.copy_rules and not self.copy_rules.condition
+        if not self.description and not has_copy:
+            raise ValueError("description must be set")
+        return self
 
     @model_validator(mode="after")
     def _validate_generate(self) -> Self:
@@ -388,6 +395,13 @@ class StaticSecrets(BaseModel):
         title="Pull secret",
         description="Pull secret for this environment, if any is needed",
         alias="pull-secret",
+    )
+
+    vault_write_token: SecretStr | None = Field(
+        None,
+        title="Vault write token",
+        description="Vault write token for this environment",
+        alias="vault-write-token",
     )
 
     model_config = ConfigDict(populate_by_name=True, extra="forbid")

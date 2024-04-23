@@ -9,7 +9,9 @@ applications:
   ingress-nginx: false
   next-visit-fan-out: true
   prompt-proto-service-hsc: true
+  prompt-proto-service-hsc-gpu: true
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: true
   prompt-proto-service-lsstcomcam: true
+  prompt-proto-service-lsstcomcamsim: true
   vault-secrets-operator: false

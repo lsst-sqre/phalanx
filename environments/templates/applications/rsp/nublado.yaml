@@ -1,0 +1,45 @@
+{{- if .Values.applications.nublado -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "nublado"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "nublado"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "nublado"
+    server: "https://kubernetes.default.svc"
+  project: "rsp"
+  source:
+    path: "applications/nublado"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+  ignoreDifferences:
+    - kind: "Secret"
+      jsonPointers:
+        - "/data/hub.config.ConfigurableHTTPProxy.auth_token"
+        - "/data/hub.config.CryptKeeper.keys"
+        - "/data/hub.config.JupyterHub.cookie_secret"
+    - group: "apps"
+      kind: "Deployment"
+      jsonPointers:
+        - "/spec/template/metadata/annotations/checksum~1secret"
+        - "/spec/template/metadata/annotations/checksum~1auth-token"
+{{- end -}}

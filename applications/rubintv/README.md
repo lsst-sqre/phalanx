@@ -24,13 +24,14 @@ Real-time display front end
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.tsVaultSecretsPath | string | `""` | Relative path for tsVault secrets |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | nameOverride | string | `""` | Override the base name for resources |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
-| redis.config.secretName | string | `"rubintv-secret"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
+| redis.config.secretName | string | `"rubintv-secrets"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |

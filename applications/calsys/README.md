@@ -6,7 +6,6 @@ Deployment for the Calibration System CSCs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| csc_collector.secrets | list | `[]` | This section holds secret specifications. Each object listed can have the following attributes defined: _name_ (The name used by pods to access the secret) _key_ (The key in the vault store where the secret resides) _type_ (OPTIONAL: The secret type. Defaults to Opaque.) |
 | gcheaderservice1.enabled | bool | `false` | Enable the GCHeaderService:1 CSC |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |

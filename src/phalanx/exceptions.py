@@ -9,7 +9,9 @@ from .models.secrets import Secret
 
 __all__ = [
     "ApplicationExistsError",
-    "HelmFailedError",
+    "CommandFailedError",
+    "CommandTimedOutError",
+    "GitRemoteError",
     "InvalidApplicationConfigError",
     "InvalidEnvironmentConfigError",
     "InvalidSecretConfigError",
@@ -17,13 +19,99 @@ __all__ = [
     "MissingOnepasswordSecretsError",
     "NoOnepasswordConfigError",
     "NoOnepasswordCredentialsError",
+    "NoVaultCredentialsError",
     "UnknownEnvironmentError",
     "UnresolvedSecretsError",
+    "UsageError",
     "VaultNotFoundError",
+    "VaultPathConflictError",
 ]
 
 
-class ApplicationExistsError(Exception):
+class CommandFailedError(Exception):
+    """Execution of a command failed.
+
+    Parameters
+    ----------
+    command
+        Command being run.
+    args
+        Arguments to that command.
+    exc
+        Exception reporting the failure.
+
+    Attributes
+    ----------
+    stdout
+        Standard output from the failed command.
+    stderr
+        Standard error from the failed command.
+    """
+
+    def __init__(
+        self,
+        command: str,
+        args: Iterable[str],
+        exc: subprocess.CalledProcessError,
+    ) -> None:
+        args_str = " ".join(args)
+        msg = f"{command} {args_str} failed with status {exc.returncode}"
+        super().__init__(msg)
+        self.stdout = exc.stdout
+        self.stderr = exc.stderr
+
+
+class CommandTimedOutError(Exception):
+    """Execution of a command failed.
+
+    Parameters
+    ----------
+    command
+        Command being run.
+    args
+        Arguments to that command.
+    exc
+        Exception reporting the failure.
+
+    Attributes
+    ----------
+    stdout
+        Standard output from the failed command.
+    stderr
+        Standard error from the failed command.
+    """
+
+    def __init__(
+        self,
+        command: str,
+        args: Iterable[str],
+        exc: subprocess.TimeoutExpired,
+    ) -> None:
+        args_str = " ".join(args)
+        msg = f"{command} {args_str} timed out after {exc.timeout}s"
+        super().__init__(msg)
+        self.stdout = exc.stdout
+        self.stderr = exc.stderr
+
+
+class GitRemoteError(Exception):
+    """Unable to get necessary information from a Git remote."""
+
+
+class NoOnepasswordConfigError(Exception):
+    """Environment does not use 1Password."""
+
+
+class UsageError(Exception):
+    """An error that should be printed to standard error without a backtrace.
+
+    Usage errors are caught by the CLI and turned into `click.UsageError`
+    without the backtrace. Use this as a base class for user errors and
+    configuration errors where the backtrace is not useful.
+    """
+
+
+class ApplicationExistsError(UsageError):
     """Application being created already exists.
 
     Parameters
@@ -37,33 +125,7 @@ class ApplicationExistsError(Exception):
         super().__init__(msg)
 
 
-class HelmFailedError(Exception):
-    """A Helm command failed.
-
-    Parameters
-    ----------
-    command
-        Subcommand being run.
-    args
-        Arguments to that subcommand.
-    exc
-        Exception reporting the failure.
-    """
-
-    def __init__(
-        self,
-        command: str,
-        args: Iterable[str],
-        exc: subprocess.CalledProcessError,
-    ) -> None:
-        args_str = " ".join(args)
-        msg = f"helm {command} {args_str} failed with status {exc.returncode}"
-        super().__init__(msg)
-        self.stdout = exc.stdout
-        self.stderr = exc.stderr
-
-
-class InvalidApplicationConfigError(Exception):
+class InvalidApplicationConfigError(UsageError):
     """Configuration for an application is invalid.
 
     Parameters
@@ -86,7 +148,7 @@ class InvalidApplicationConfigError(Exception):
         super().__init__(msg)
 
 
-class InvalidEnvironmentConfigError(Exception):
+class InvalidEnvironmentConfigError(UsageError):
     """Configuration for an environment is invalid.
 
     Parameters
@@ -102,7 +164,7 @@ class InvalidEnvironmentConfigError(Exception):
         super().__init__(msg)
 
 
-class InvalidSecretConfigError(Exception):
+class InvalidSecretConfigError(UsageError):
     """Secret configuration is invalid.
 
     Parameters
@@ -121,7 +183,7 @@ class InvalidSecretConfigError(Exception):
         super().__init__(msg)
 
 
-class MalformedOnepasswordSecretError(Exception):
+class MalformedOnepasswordSecretError(UsageError):
     """A secret stored in 1Password was malformed.
 
     The most common cause of this error is that the secret was marked as
@@ -143,7 +205,7 @@ class MalformedOnepasswordSecretError(Exception):
         super().__init__(msg)
 
 
-class MissingOnepasswordSecretsError(Exception):
+class MissingOnepasswordSecretsError(UsageError):
     """Secrets are missing from 1Password.
 
     Parameters
@@ -161,11 +223,7 @@ class MissingOnepasswordSecretsError(Exception):
         super().__init__(msg)
 
 
-class NoOnepasswordConfigError(Exception):
-    """Environment does not use 1Password."""
-
-
-class NoOnepasswordCredentialsError(Exception):
+class NoOnepasswordCredentialsError(UsageError):
     """1Password is configured, but no credentials were supplied."""
 
     def __init__(self) -> None:
@@ -173,7 +231,15 @@ class NoOnepasswordCredentialsError(Exception):
         super().__init__(msg)
 
 
-class UnresolvedSecretsError(Exception):
+class NoVaultCredentialsError(UsageError):
+    """Vault credentials are required and were not supplied."""
+
+    def __init__(self) -> None:
+        msg = "No Vault credentials in static secrets and VAULT_TOKEN not set"
+        super().__init__(msg)
+
+
+class UnresolvedSecretsError(UsageError):
     """Some secrets could not be resolved.
 
     Parameters
@@ -188,7 +254,7 @@ class UnresolvedSecretsError(Exception):
         super().__init__(msg)
 
 
-class UnknownEnvironmentError(Exception):
+class UnknownEnvironmentError(UsageError):
     """No configuration found for an environment name.
 
     Parameters
@@ -198,11 +264,10 @@ class UnknownEnvironmentError(Exception):
     """
 
     def __init__(self, name: str) -> None:
-        msg = f"No configuration found for environment {name}"
-        super().__init__(msg)
+        super().__init__(f"No configuration found for environment {name}")
 
 
-class VaultNotFoundError(Exception):
+class VaultNotFoundError(UsageError):
     """Secret could not be found in Vault.
 
     Parameters
@@ -211,8 +276,26 @@ class VaultNotFoundError(Exception):
         Base URL of the Vault server.
     path
         Path that was not found.
+    key
+        If provided, key within that path that was not found.
     """
 
-    def __init__(self, url: str, path: str) -> None:
-        msg = f"Vault secret {path} not found in server {url}"
+    def __init__(self, url: str, path: str, key: str | None = None) -> None:
+        if key:
+            msg = f"Vault key {key} not found in secret {path} on server {url}"
+        else:
+            msg = f"Vault secret {path} not found in server {url}"
         super().__init__(msg)
+
+
+class VaultPathConflictError(UsageError):
+    """Attempt to copy a Vault tree onto itself.
+
+    Parameters
+    ----------
+    path
+        Path inside Vault being copied.
+    """
+
+    def __init__(self, path: str) -> None:
+        super().__init__(f"Vault path {path} cannot be copied onto itself")

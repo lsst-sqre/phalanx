@@ -21,6 +21,13 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-1.lsst.codes
         - loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
+    resources:
+      requests:
+        memory: 80Gi
+        cpu: 4
+      limits:
+        memory: 80Gi
+        cpu: 4
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -37,7 +44,7 @@ strimzi-kafka:
     storage:
       storageClassName: rook-ceph-block
     metricsConfig:
-      enabled: true
+      enabled: false
   users:
     tsSalKafka:
       enabled: true
@@ -58,6 +65,17 @@ strimzi-kafka:
     config:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 16Gi
+        cpu: "2"
+      limits:
+        memory: 16Gi
+        cpu: "2"
 
 influxdb:
   persistence:
@@ -112,10 +130,6 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ ".*OCPS" ]
-    pmd:
-      enabled: true
-      topicRegexps: |
-        [ ".*PMD" ]
     calsys:
       enabled: true
       topicRegexps: |
@@ -179,9 +193,6 @@ kafka-connect-manager:
       test:
         enabled: true
         topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: true
-        topicsRegex: ".*PMD"
       calsys:
         enabled: true
         topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*TunableLaser"

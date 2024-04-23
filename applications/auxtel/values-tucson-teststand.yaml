@@ -1,15 +1,3 @@
-csc_collector:
-  secrets:
-  - name: nexus3-docker
-    key: pull-secret
-    type: kubernetes.io/dockerconfigjson
-  - name: ts-salkafka
-    key: ts/software/ts-salkafka
-  - name: lfa
-    key: ts/software/lfa
-  - name: butler-secret
-    key: butler-secret
-
 ataos:
   image:
     repository: ts-dockerhub.lsst.org/ataos
@@ -38,17 +26,13 @@ atheaderservice:
     CAMERA: at
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretName: lfa
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretName: lfa
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
 
 athexapod-sim:
   enabled: true
@@ -70,11 +54,9 @@ atoods:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
+    containerPath: /home/saluser/.lsst
     dbUser: oods
-  secretPermFixer:
-  - name: butler-secret
-    containerPath: *bS-cP
+    secretFilename: postgres-credentials.txt
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS

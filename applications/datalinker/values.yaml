@@ -63,7 +63,7 @@ config:
 
   # -- If true, use Butler in client/server mode instead of connecting
   # directly to the Butler database
-  useButlerServer: false
+  useButlerServer: true
 
   # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
   # connection (`useButlerServer` is false)
@@ -81,10 +81,10 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "1"
-    memory: "200Mi"
+    memory: "500Mi"
   requests:
     cpu: "50m"
-    memory: "150Mi"
+    memory: "200Mi"
 
 # -- Node selection rules for the datalinker deployment pod
 nodeSelector: {}
