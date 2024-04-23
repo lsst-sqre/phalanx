@@ -32,7 +32,10 @@ controller:
             - containerPath: "/pbs/throng"
               volumeName: "throng"
             - containerPath: "/sps"
-              volumeName: "sps"
+              volumeName: "/sps"
+      secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "postgres-credentials.txt"
       sizes:
         - size: "small"
           cpu: 2.0
