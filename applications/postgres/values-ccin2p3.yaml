@@ -8,5 +8,5 @@ nublado3_db:
   user: 'nublado3'
   db: 'nublado3'
 
-postgres_storage_class: 'rsp-local-storage'
-volume_name: 'postgres-data-rsp-ccqserv219'
+postgresStorageClass: 'rsp-local-storage'
+volumeName: 'postgres-data-rsp-ccqserv219'

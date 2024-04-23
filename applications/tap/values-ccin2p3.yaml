@@ -1,7 +1,7 @@
 cadc-tap:
   tapSchema:
     image:
-      repository: "lsstsqre/tap-schema-idfprod-tap"
+      repository: "gabrimaine/tap-schema-ccin2p3"
 
   config:
     gcsBucket: "lsstrsp:async-results.lsst.codes"

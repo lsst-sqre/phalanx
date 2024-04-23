@@ -1,0 +1,32 @@
+config:
+  slackAlerts: false
+  autostart:
+    - name: "firefighter"
+      count: 1
+      users:
+        - username: "bot-mobu-recommended"
+          uidnumber: 43452
+          gidnumber: 1021
+      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+          max_executions: 1
+        restart: true
+    - name: "weekly"
+      count: 1
+      users:
+        - username: "bot-mobu-weekly"
+          uidnumber: 43452
+          gidnumber: 1021
+      scopes: ["exec:notebook", "exec:portal", "read:image", "read:tap"]
+      business:
+        type: "NotebookRunner"
+        options:
+          image:
+            image_class: "latest-weekly"
+          repo_url: "https://github.com/lsst-sqre/system-test.git"
+          repo_branch: "prod"
+        restart: true

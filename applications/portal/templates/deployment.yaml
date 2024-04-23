@@ -106,7 +106,8 @@ spec:
                               "temp://lsst/dp02_dc2/hips/images/band_r",
                               "temp://lsst/dp02_dc2/hips/images/band_i",
                               "temp://lsst/dp02_dc2/hips/images/band_z",
-                              "temp://lsst/dp02_dc2/hips/images/band_y"
+                              "temp://lsst/dp02_dc2/hips/images/band_y",
+                              "ivo://CDS/P/2MASS/color"
                           ],
                           "label": "Rubin Featured MOC"
                       }

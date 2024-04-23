@@ -1,3 +1,26 @@
 config:
   siteName: "Rubin Science Platform @ CC-IN2P3"
   semaphoreUrl: "https://data-dev.lsst.eu/semaphore"
+  apiAspectPageMdx: |
+    # Rubin Science Platform APIs
+
+    <Lede>Integrate Rubin data into your analysis tools with APIs.</Lede>
+
+    To access most APIs you need an [*access token*](/auth/tokens).
+    See Rubin's guide [Creating user tokens](https://rsp.lsst.io/guides/auth/creating-user-tokens.html) to learn more.
+
+    ## Table Access Protocol
+
+    You can access catalog data using the Table Access Protocol (TAP)
+    service with popular tools such as
+    [TOPCAT](http://www.star.bris.ac.uk/~mbt/topcat) (GUI) and
+    [pyvo python package](https://pyvo.readthedocs.io/en/latest/index.html). The TAP endpoint is:
+
+    ```
+    https://data-dev.lsst.eu/api/tap
+    ```
+
+    See Rubin's tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
+    to learn more about accessing TAP datasets from your own computer.
+ingress:
+  tls: false
