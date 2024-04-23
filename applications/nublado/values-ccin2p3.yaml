@@ -34,7 +34,7 @@ controller:
             - containerPath: "/sps"
               volumeName: "sps"
       secrets:
-        - secretName: "nublado-lab-secret"
+        - secretName: "postgres-credentials.txt"
           secretKey: "postgres-credentials.txt"
       sizes:
         - size: "small"
