@@ -55,6 +55,7 @@ ignore = [
     '^https://summit-lsp.lsst.codes',
     '^https://minikube.lsst.codes',
     '^https://base-lsp.lsst.codes',
+    '^https://demo.lsst.cloud',
     '^https://data-dev.lsst.cloud',
     '^https://data-int.lsst.cloud',
     '^https://data.lsst.cloud',

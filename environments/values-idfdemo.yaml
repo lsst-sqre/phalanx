@@ -1,0 +1,23 @@
+name: "idfdemo"
+fqdn: "demo.lsst.cloud"
+appOfAppsName: "science-platform"
+butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-dev-repos.yaml"
+butlerServerRepositories:
+  dp02: "https://demo.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+gcp:
+  projectId: "science-platform-demo-9e05"
+  region: "us-central1"
+  clusterName: "science-platform-demo"
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "Phalanx data-demo.lsst.cloud"
+vaultPathPrefix: "secret/phalanx/idfdemo"
+
+applications:
+  butler: true
+  datalinker: true
+  mobu: true
+  nublado: true
+  sqlproxy-cross-project: true
+  squareone: true
+  vault-secrets-operator: true

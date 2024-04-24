@@ -1,0 +1,34 @@
+argo-cd:
+  configs:
+    cm:
+      url: "https://demo.lsst.cloud/argo-cd"
+      dex.config: |
+        # Auth using GitHub.
+        # See https://dexidp.io/docs/connectors/github/
+        connectors:
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: 3b16cac581d6693fcbda
+              # Reference to key in argo-secret Kubernetes resource
+              clientSecret: $dex.clientSecret
+              orgs:
+                - name: lsst-sqre
+    rbac:
+      policy.csv: |
+        g, lsst-sqre:square, role:admin
+        g, lsst:ops, role:developer
+
+        p, role:developer, applications, *, */*, allow
+        p, role:developer, applications, get, infrastructure/*, allow
+        p, role:developer, applications, create, infrastructure/*, deny
+        p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, sync, infrastructure/*, deny
+        p, role:developer, applications, override, infrastructure/*, deny
+        p, role:developer, applications, action/*, infrastructure/*, deny
+
+  server:
+    ingress:
+      hostname: "demo.lsst.cloud"

@@ -1,0 +1,83 @@
+# Use the CSI storage class so that we can use snapshots.
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+
+config:
+  logLevel: "DEBUG"
+  slackAlerts: true
+
+  github:
+    clientId: "9dd2d9bdad89973c503a"
+
+  # Support OpenID Connect clients like Chronograf.
+  oidcServer:
+    enabled: true
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 4.0
+        memory: 16
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:jupyterlab":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+    "exec:notebook":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+    "read:image":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+    "write:sasquatch":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
+  serviceAccount: "gafaelfawr@science-platform-demo-9e05.iam.gserviceaccount.com"
