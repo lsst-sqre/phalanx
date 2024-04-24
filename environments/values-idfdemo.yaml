@@ -9,8 +9,8 @@ gcp:
   region: "us-central1"
   clusterName: "science-platform-demo"
 onepassword:
-  connectUrl: "https://roundtable-dev.lsst.cloud/1password"
-  vaultTitle: "Phalanx data-demo.lsst.cloud"  # FIXME?  Wrong but consistent
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "Phalanx data-demo.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/idfdemo"
 
 applications:

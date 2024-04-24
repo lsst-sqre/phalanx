@@ -1,9 +1,0 @@
-cadc-tap:
-  tapSchema:
-    image:
-      repository: "lsstsqre/tap-schema-idfdev-tap"
-
-  config:
-    qserv:
-      host: "10.136.1.211:4040"
-      # Change to 134.79.23.209:4040 to point to USDF qserv
