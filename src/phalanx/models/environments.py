@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from enum import Enum
-from typing import Self
+from typing import Any, Self
 
 from pydantic import (
     AnyHttpUrl,
@@ -202,6 +202,15 @@ class EnvironmentBaseConfig(CamelCaseModel):
             "If this environment is hosted on Google Cloud Platform,"
             " metadata about the hosting project, location, and other details."
             " Used to generate additional environment documentation."
+        ),
+    )
+
+    namespace_labels: dict[str, Any] | None = Field(
+        None,
+        title="Labels for application namespaces",
+        description=(
+            "Collection of labels that need to be added to an application"
+            " namespace"
         ),
     )
 

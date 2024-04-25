@@ -233,6 +233,19 @@
       "description": "If this environment is hosted on Google Cloud Platform, metadata about the hosting project, location, and other details. Used to generate additional environment documentation.",
       "title": "GCP hosting metadata"
     },
+    "namespaceLabels": {
+      "anyOf": [
+        {
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "Collection of labels that need to be added to an application namespace",
+      "title": "Labels for application namespaces"
+    },
     "onepassword": {
       "anyOf": [
         {
