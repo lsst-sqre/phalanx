@@ -24,9 +24,9 @@ manager:
       # -- Set the manager to use LFA storage
       REMOTE_STORAGE: true
       # -- Set the hostname for the Jira instance
-      JIRA_API_HOSTNAME: jira.lsstcorp.org
+      JIRA_API_HOSTNAME: rubinobs.atlassian.net
       # -- Set the Jira project ID
-      JIRA_PROJECT_ID: 14601
+      JIRA_PROJECT_ID: 10063
       # -- Set the URL for the OLE instance
       OLE_API_HOSTNAME: site.lsst.local
       # -- Set the URI for the 1st LDAP server
@@ -80,6 +80,8 @@ manager:
       # -- The redis password secret key name.
       # Must match `redis.envSecrets.REDIS_PASS`
       REDIS_PASS: redis-pass
+      # -- The LOVE manager jira API token secret key name
+      JIRA_API_TOKEN: jira-api-token
     # -- Set the default number of LOVE manager frontend pod replicas
     replicas: 1
     autoscaling:
@@ -130,9 +132,9 @@ manager:
       # -- Set the manager to use LFA storage
       REMOTE_STORAGE: true
       # -- Set the hostname for the Jira instance
-      JIRA_API_HOSTNAME: jira.lsstcorp.org
+      JIRA_API_HOSTNAME: rubinobs.atlassian.net
       # -- Set the Jira project ID
-      JIRA_PROJECT_ID: 14601
+      JIRA_PROJECT_ID: 10063
       # -- Set the URL for the OLE instance
       OLE_API_HOSTNAME: site.lsst.local
       # -- Set the URI for the 1st LDAP server
@@ -186,6 +188,8 @@ manager:
       # -- The redis password secret key name.
       # Must match `redis.envSecrets.REDIS_PASS`
       REDIS_PASS: redis-pass
+      # -- The LOVE manager jira API token secret key name
+      JIRA_API_TOKEN: jira-api-token
     # -- Set the default number of LOVE manager producers pod replicas
     replicas: 1
     autoscaling:

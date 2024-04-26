@@ -24,8 +24,8 @@ Helm chart for the LOVE manager service.
 | manager.frontend.env.DB_NAME | string | `"love"` | The name of the database being used for the LOVE manager frontend |
 | manager.frontend.env.DB_PORT | int | `5432` | The port for the database service |
 | manager.frontend.env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager frontend |
-| manager.frontend.env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
-| manager.frontend.env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
+| manager.frontend.env.JIRA_API_HOSTNAME | string | `"rubinobs.atlassian.net"` | Set the hostname for the Jira instance |
+| manager.frontend.env.JIRA_PROJECT_ID | int | `10063` | Set the Jira project ID |
 | manager.frontend.env.LOVE_PRODUCER_WEBSOCKET_HOST | string | `"love-service/manager/ws/subscription"` | The URL path for the LOVE producer websocket host |
 | manager.frontend.env.LOVE_SITE | string | `"local"` | The site tag where LOVE is being run |
 | manager.frontend.env.OLE_API_HOSTNAME | string | `"site.lsst.local"` | Set the URL for the OLE instance |
@@ -40,6 +40,7 @@ Helm chart for the LOVE manager service.
 | manager.frontend.envSecrets.AUTH_LDAP_BIND_PASSWORD | string | `"auth-ldap-bind-password"` | The LOVE manager frontend LDAP binding password secret key name |
 | manager.frontend.envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager frontend cmd_user user password secret key name |
 | manager.frontend.envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. Must match `database.envSecrets.POSTGRES_PASSWORD` |
+| manager.frontend.envSecrets.JIRA_API_TOKEN | string | `"jira-api-token"` | The LOVE manager jira API token secret key name |
 | manager.frontend.envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager frontend process connection password secret key name |
 | manager.frontend.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
 | manager.frontend.envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager frontend secret secret key name |
@@ -73,8 +74,8 @@ Helm chart for the LOVE manager service.
 | manager.producers.env.DB_PORT | int | `5432` | The port for the database service |
 | manager.producers.env.DB_USER | string | `"love"` | The database user needed for access from the LOVE manager producers |
 | manager.producers.env.HEARTBEAT_QUERY_COMMANDER | bool | `false` | Have the LOVE producer managers not query commander |
-| manager.producers.env.JIRA_API_HOSTNAME | string | `"jira.lsstcorp.org"` | Set the hostname for the Jira instance |
-| manager.producers.env.JIRA_PROJECT_ID | int | `14601` | Set the Jira project ID |
+| manager.producers.env.JIRA_API_HOSTNAME | string | `"rubinobs.atlassian.net"` | Set the hostname for the Jira instance |
+| manager.producers.env.JIRA_PROJECT_ID | int | `10063` | Set the Jira project ID |
 | manager.producers.env.LOVE_SITE | string | `"local"` | The site tag where LOVE is being run |
 | manager.producers.env.OLE_API_HOSTNAME | string | `"site.lsst.local"` | Set the URL for the OLE instance |
 | manager.producers.env.REDIS_CONFIG_CAPACITY | int | `5000` | The connection capacity for the redis service |
@@ -88,6 +89,7 @@ Helm chart for the LOVE manager service.
 | manager.producers.envSecrets.AUTH_LDAP_BIND_PASSWORD | string | `"auth-ldap-bind-password"` | The LOVE manager producers LDAP binding password secret key name |
 | manager.producers.envSecrets.CMD_USER_PASS | string | `"cmd-user-pass"` | The LOVE manager producers cmd_user user password secret key name |
 | manager.producers.envSecrets.DB_PASS | string | `"db-pass"` | The database password secret key name. Must match `database.envSecrets.POSTGRES_PASSWORD` |
+| manager.producers.envSecrets.JIRA_API_TOKEN | string | `"jira-api-token"` | The LOVE manager jira API token secret key name |
 | manager.producers.envSecrets.PROCESS_CONNECTION_PASS | string | `"process-connection-pass"` | The LOVE manager producers process connection password secret key name |
 | manager.producers.envSecrets.REDIS_PASS | string | `"redis-pass"` | The redis password secret key name. Must match `redis.envSecrets.REDIS_PASS` |
 | manager.producers.envSecrets.SECRET_KEY | string | `"manager-secret-key"` | The LOVE manager producers secret secret key name |
