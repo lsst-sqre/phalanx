@@ -4,7 +4,7 @@ metadata:
   name: imaging-test-workflow
   labels:
     workflows.argoproj.io/type: "integration-test"
-    argocd.argoproj.io/instance: integration-testing
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
 spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   artifactRepositoryRef:
@@ -16,7 +16,7 @@ spec:
       claimName: {{ .Values.persistentVolume.claimName }}
   podMetadata:
     labels:
-      argocd.argoproj.io/instance: integration-testing
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
   arguments:
     parameters:
     - name: date-key
@@ -159,7 +159,7 @@ spec:
         arguments:
           parameters:
           - name: integrationtest
-            value: "-A Test_Report_AuxTel_Acq_Take_Seq_POINTING.list"
+            value: "-A Test_Report_AuxTel_Acq_and_Take_Seq_POINTING.list"
           - name: jobname
             value: auxtel-acq-take-seq-pointing
       - name: auxtel-acq-take-seq-verify
