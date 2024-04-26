@@ -19,19 +19,11 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-autoscaling:
-  # -- Enable autoscaling of <CHARTNAME> deployment
-  enabled: false
+# -- Affinity rules for the <CHARTNAME> deployment pod
+affinity: {}
 
-  # -- Minimum number of <CHARTNAME> deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of <CHARTNAME> deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of <CHARTNAME> deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+# -- Node selection rules for the <CHARTNAME> deployment pod
+nodeSelector: {}
 
 # -- Annotations for the <CHARTNAME> deployment pod
 podAnnotations: {}
@@ -39,14 +31,8 @@ podAnnotations: {}
 # -- Resource limits and requests for the <CHARTNAME> deployment pod
 resources: {}
 
-# -- Node selection rules for the <CHARTNAME> deployment pod
-nodeSelector: {}
-
 # -- Tolerations for the <CHARTNAME> deployment pod
 tolerations: []
-
-# -- Affinity rules for the <CHARTNAME> deployment pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
