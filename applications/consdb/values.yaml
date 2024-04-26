@@ -2,18 +2,25 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# -- Number of consdb deployment pods to start
-replicaCount: 1
-
 image:
-  # -- Image to use in the consdb deployment
-  repository: "ghcr.io/lsst-dm/consdb-hinfo"
-
+  # -- Number of consdb deployment pods to start
+  replicaCount: 1
   # -- Pull policy for the consdb image
   pullPolicy: "Always"
 
-  # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+hinfo:
+  image:
+    # -- Image to use in the consdb deployment
+    repository: "ghcr.io/lsst-dm/consdb-hinfo"
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+pq:
+  image:
+    # -- Image to use in the consdb deployment
+    repository: "ghcr.io/lsst-dm/consdb-pq"
+    # -- Overrides the image tag whose default is the chart appVersion.
+    tag: "tickets-DM-44099"
 
 kafka:
   # -- Kafka bootstrap server

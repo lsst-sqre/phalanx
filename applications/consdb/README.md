@@ -1,4 +1,4 @@
-# consdb-hinfo
+# consdb
 
 Consolidated Database of Image Metadata
 
@@ -23,9 +23,10 @@ Consolidated Database of Image Metadata
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| hinfo.image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb deployment |
+| hinfo.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | image.pullPolicy | string | `"Always"` | Pull policy for the consdb image |
-| image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb deployment |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.replicaCount | int | `1` | Number of consdb deployment pods to start |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap server |
 | kafka.group_id | string | `"consdb-consumer"` | Name of Kafka consumer group |
@@ -36,6 +37,7 @@ Consolidated Database of Image Metadata
 | lfa.s3EndpointUrl | string | `""` | url |
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
-| replicaCount | int | `1` | Number of consdb deployment pods to start |
+| pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb deployment |
+| pq.image.tag | string | `"tickets-DM-44099"` | Overrides the image tag whose default is the chart appVersion. |
 | resources | object | `{}` | Resource limits and requests for the consdb deployment pod |
 | tolerations | list | `[]` | Tolerations for the consdb deployment pod |

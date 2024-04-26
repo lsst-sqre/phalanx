@@ -1,5 +1,5 @@
 apiVersion: v2
-name: consdb-hinfo
+name: consdb
 version: 1.0.0
 description: Consolidated Database of Image Metadata
 type: application
