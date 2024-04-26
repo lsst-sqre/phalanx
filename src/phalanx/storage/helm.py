@@ -6,6 +6,8 @@ import sys
 from datetime import timedelta
 from urllib.parse import urlparse
 
+import yaml
+
 from ..exceptions import CommandFailedError
 from ..models.helm import HelmStarter
 from ..storage.config import ConfigStorage
@@ -30,13 +32,17 @@ class HelmStorage:
         self._config = config_storage
         self._helm = Command("helm")
 
-    def create(self, application: str, starter: HelmStarter) -> None:
+    def create(
+        self, application: str, description: str, starter: HelmStarter
+    ) -> None:
         """Use :command:`helm create` to create a new application chart.
 
         Parameters
         ----------
         application
             Name of the new application.
+        description
+            Description of the new application.
         starter
             Name of the Helm starter template to use.
 
@@ -46,14 +52,38 @@ class HelmStorage:
             Raised if Helm fails.
         """
         starter_path = self._config.get_starter_path(starter)
-        application_path = self._config.get_application_chart_path(application)
+        path = self._config.get_application_chart_path(application)
         self._helm.run(
             "create",
             "-p",
             str(starter_path),
             application,
-            cwd=application_path.parent,
+            cwd=path.parent,
         )
+
+        # Unfortunately, Helm completely ignores the Chart.yaml in a starter
+        # so far as I can tell, so we have to load the starter Chart.yaml
+        # ourselves and replace the generated Chart.yaml with it, but
+        # preserving the substitutions that Helm does make.
+        starter_path = self._config.get_starter_path(starter)
+        chart = yaml.safe_load((starter_path / "Chart.yaml").read_text())
+        chart["name"] = application
+        chart["description"] = description
+        if "sources" in chart:
+            chart["sources"] = [
+                s.replace("<CHARTNAME>", application) for s in chart["sources"]
+            ]
+        with (path / "Chart.yaml").open("w") as fh:
+            yaml.dump(chart, fh)
+
+        # Support an additional substitution variable, <CHARTENVPREFIX>,
+        # that's only used in templates/configmap.yaml.
+        configmap_path = path / "templates" / "configmap.yaml"
+        if configmap_path.exists():
+            configmap = configmap_path.read_text().replace(
+                "<CHARTENVPREFIX>", application.upper().replace("-", "_")
+            )
+            configmap_path.write_text(configmap)
 
     def dependency_update(
         self, application: str, *, quiet: bool = False

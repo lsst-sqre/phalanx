@@ -9,7 +9,6 @@ from pathlib import Path
 from typing import Any
 
 import jinja2
-import yaml
 
 from ..exceptions import ApplicationExistsError
 from ..models.applications import Project
@@ -118,23 +117,7 @@ class ApplicationService:
         path = self._config.get_application_chart_path(name)
         if path.exists():
             raise ApplicationExistsError(name)
-        self._helm.create(name, starter)
-
-        # Unfortunately, Helm completely ignores the Chart.yaml in a starter
-        # so far as I can tell, so we have to load the starter Chart.yaml
-        # ourselves and replace the generated Chart.yaml with it, but
-        # preserving the substitutions that Helm does make.
-        starter_path = self._config.get_starter_path(starter)
-        chart = yaml.safe_load((starter_path / "Chart.yaml").read_text())
-        helm_chart = yaml.safe_load((path / "Chart.yaml").read_text())
-        chart["name"] = helm_chart["name"]
-        chart["description"] = description
-        if "sources" in chart:
-            chart["sources"] = [
-                s.replace("<CHARTNAME>", name) for s in chart["sources"]
-            ]
-        with (path / "Chart.yaml").open("w") as fh:
-            yaml.dump(chart, fh)
+        self._helm.create(name, description, starter)
 
         # Add the environment configuration.
         self._create_application_template(name, project)
