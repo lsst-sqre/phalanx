@@ -243,7 +243,7 @@ def application_add_helm_repos(
     "-s",
     "--starter",
     type=click.Choice([s.value for s in HelmStarter]),
-    default=HelmStarter.WEB_SERVICE.value,
+    default=HelmStarter.FASTAPI_SAFIR.value,
     help="Helm starter to use as the basis for the chart.",
 )
 @_report_usage_errors

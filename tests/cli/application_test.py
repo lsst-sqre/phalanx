@@ -78,6 +78,8 @@ def test_create(tmp_path: Path) -> None:
         "application",
         "create",
         "hips",
+        "--starter",
+        "web-service",
         "--project",
         "rsp",
         "--description",
@@ -92,8 +94,6 @@ def test_create(tmp_path: Path) -> None:
         "application",
         "create",
         "zzz-other-app",
-        "--starter",
-        "empty",
         "--project",
         "rsp",
         "--description",
@@ -153,14 +153,22 @@ def test_create(tmp_path: Path) -> None:
         assert environment.applications[app].chart["version"] == "1.0.0"
 
     # Charts created from the empty starter should not have appVersion. Charts
-    # using the web-service starter should, set to 0.1.0.
+    # using the web-service or fastapi-safir starters should, set to 0.1.0.
     assert "appVersion" not in environment.applications["aaa-new-app"].chart
-    assert "appVersion" not in environment.applications["zzz-other-app"].chart
     assert environment.applications["hips"].chart["appVersion"] == "0.1.0"
+    zzz_other_app = environment.applications["zzz-other-app"]
+    assert zzz_other_app.chart["appVersion"] == "0.1.0"
 
     # Charts using the web-service starter should have a default sources.
     expected = "https://github.com/lsst-sqre/hips"
     assert environment.applications["hips"].chart["sources"][0] == expected
+
+    # Check that <CHARTENVPREFIX> was substituted correctly in the ConfigMap
+    # template for the fastapi-safir chart.
+    path = apps_path / "zzz-other-app" / "templates" / "configmap.yaml"
+    config_map = path.read_text()
+    assert "  ZZZ_OTHER_APP_LOG_LEVEL:" in config_map
+    assert "  ZZZ_OTHER_APP_PATH_PREFIX:" in config_map
 
 
 def test_create_errors(tmp_path: Path) -> None:

@@ -15,6 +15,17 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/<CHARTNAME>"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
