@@ -1,3 +1,5 @@
+{{- $replicas := .Values.workers.replicas | int }}
+{{- if (gt $replicas 0) }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -130,3 +132,4 @@ spec:
     tolerations:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+{{- end }}
