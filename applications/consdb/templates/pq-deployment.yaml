@@ -31,6 +31,14 @@ spec:
             readOnlyRootFilesystem: true
           image: "{{ .Values.pq.image.repository }}:{{ .Values.pq.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /consdb
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
