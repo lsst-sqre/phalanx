@@ -1,0 +1,14 @@
+imagePullSecrets:
+- name: pull-secret
+
+frontend:
+  debug: true
+  env:
+  - name: S3_ENDPOINT_URL
+    value: "https://s3dfrgw.slac.stanford.edu"
+  - name: RAPID_ANALYSIS_LOCATION
+    value: "USDF"
+  image:
+    repository: lsstts/rubintv
+    tag: c0036
+    pullPolicy: Always
