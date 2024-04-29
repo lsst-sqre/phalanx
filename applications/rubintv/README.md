@@ -55,7 +55,7 @@ Real-time display front end
 | workers.nodeSelector | object | `{}` | Node selector rules for the rubintv worker pods |
 | workers.pathPrefix | string | `"/"` | Prefix for the (internal) worker API routes |
 | workers.podAnnotations | object | `{}` | Annotations for the rubintv worker pods |
-| workers.replicas | int | `5` | how many replicas to use |
+| workers.replicas | int | `0` | how many replicas to use |
 | workers.resources | object | `{}` | Resource limits and requests for the rubintv worker pods |
 | workers.script | string | `"slac/rubintv/workerPod1.py"` | Script that runs in RUN_ARG.  This dynamic mechanism needs to be replaced with something less scary, but there is resistance to that, at least while iterating. |
 | workers.tolerations | list | `[]` | Tolerations for the rubintv worker pods |

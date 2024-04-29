@@ -15,7 +15,7 @@ frontend:
     pullPolicy: Always
 
 workers:
-  replicas: 1
+  replicas: 0
   image:
     repository: lsstts/rubintv-broadcaster
     tag: c0030_usdf

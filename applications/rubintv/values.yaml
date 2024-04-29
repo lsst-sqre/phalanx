@@ -51,7 +51,7 @@ frontend:
 
 workers:
   # -- how many replicas to use
-  replicas: 5
+  replicas: 0
 
   # -- If set to true, enable more verbose logging.
   debug: false
