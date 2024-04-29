@@ -17,6 +17,7 @@
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.eas | bool | `false` | Enable the eas control system application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
+| applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
 | applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.giftless | bool | `false` | Enable the giftless application |

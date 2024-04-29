@@ -74,6 +74,9 @@ applications:
   # -- Enable the exposurelog application
   exposurelog: false
 
+  # -- Enable the fastapi-bootcamp application
+  fastapi-bootcamp: false
+
   # -- Enable the filestore-backup application
   filestore-backup: false
 
