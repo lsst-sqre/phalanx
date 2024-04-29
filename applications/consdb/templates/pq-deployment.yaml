@@ -13,9 +13,9 @@ spec:
       {{- include "consdb.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "consdb.selectorLabels" . | nindent 8 }}
@@ -37,7 +37,7 @@ spec:
               protocol: TCP
           readinessProbe:
             httpGet:
-              path: /consdb
+              path: "/"
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}

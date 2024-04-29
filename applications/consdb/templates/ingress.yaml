@@ -9,7 +9,8 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
-    anonymous: true
+    all:
+      - "read:image"
 template:
   metadata:
     name: "consdb-pq"
@@ -22,7 +23,7 @@ template:
     - host: {{ required "global.host must be set" .Values.global.host | quote }}
       http:
         paths:
-        - path: "/consdb-pq"
+        - path: "/consdb"
           pathType: "Prefix"
           backend:
             service:
