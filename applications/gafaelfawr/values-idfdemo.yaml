@@ -50,28 +50,7 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
-    "exec:portal":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst"
-          team: "ops"
     "read:image":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst"
-          team: "ops"
-    "read:tap":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst"
-          team: "ops"
-    "write:sasquatch":
       - github:
           organization: "lsst-sqre"
           team: "square"
