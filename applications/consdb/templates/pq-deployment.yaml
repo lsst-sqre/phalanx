@@ -53,6 +53,8 @@ spec:
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
               value: "{{ .Values.db.database }}"
+            - name: "LOG_CONFIG"
+              value: "DEBUG"
           volumeMounts:
             - mountPath: /tmp
               name: temp
