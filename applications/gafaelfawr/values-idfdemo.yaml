@@ -26,10 +26,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
@@ -44,13 +50,6 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
-    "exec:portal":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst"
-          team: "ops"
     "read:image":
       - github:
           organization: "lsst-sqre"
@@ -58,17 +57,6 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
-    "read:tap":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
-      - github:
-          organization: "lsst"
-          team: "ops"
-    "write:sasquatch":
-      - github:
-          organization: "lsst-sqre"
-          team: "square"
 
   initialAdmins:
     - "afausti"
