@@ -236,6 +236,9 @@
     "namespaceLabels": {
       "anyOf": [
         {
+          "additionalProperties": {
+            "type": "string"
+          },
           "type": "object"
         },
         {

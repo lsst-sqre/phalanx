@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from enum import Enum
-from typing import Any, Self
+from typing import Self
 
 from pydantic import (
     AnyHttpUrl,
@@ -205,7 +205,7 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
-    namespace_labels: dict[str, Any] | None = Field(
+    namespace_labels: dict[str, str] | None = Field(
         None,
         title="Labels for application namespaces",
         description=(
