@@ -5,4 +5,4 @@ cadc-tap:
 
   config:
     qserv:
-      host: "10.136.1.211:4040"
+      host: "10.140.1.211:4040"
