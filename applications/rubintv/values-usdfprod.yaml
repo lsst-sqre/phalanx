@@ -9,6 +9,6 @@ frontend:
   - name: RAPID_ANALYSIS_LOCATION
     value: "USDF"
   image:
-    repository: lsstts/rubintv
+    repository: ts-dockerhub.lsst.org/rubintv
     tag: c0036
     pullPolicy: Always
