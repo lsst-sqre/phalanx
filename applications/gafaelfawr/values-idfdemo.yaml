@@ -26,10 +26,16 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
@@ -69,6 +75,9 @@ config:
       - github:
           organization: "lsst-sqre"
           team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
 
   initialAdmins:
     - "afausti"
