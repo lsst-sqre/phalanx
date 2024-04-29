@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "fastapi-bootcamp.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "fastapi-bootcamp.selectorLabels" . | nindent 6 }}
@@ -15,32 +13,30 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-      {{- with .Values.podAnnotations }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "fastapi-bootcamp.selectorLabels" . | nindent 8 }}
     spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
+          {{- if .Values.config.slackAlerts }}
           env:
-            {{- if .Values.config.slackAlerts }}
             - name: "FASTAPI_BOOTCAMP_ALERT_HOOK"
               valueFrom:
                 secretKeyRef:
                   name: "fastapi-bootcamp-secret"
                   key: "slack-webhook"
-            {{- end }}
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: "fastapi-bootcamp"
-          securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - "all"
-            readOnlyRootFilesystem: true
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -53,27 +49,29 @@ spec:
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
             - name: "astropy-cache"
               mountPath: "/home/appuser/.astropy"
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
       {{- with .Values.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       volumes:
         - name: "tmp"
           emptyDir: {}

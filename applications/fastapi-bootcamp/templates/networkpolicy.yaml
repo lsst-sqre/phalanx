@@ -7,7 +7,7 @@ spec:
     matchLabels:
       {{- include "fastapi-bootcamp.selectorLabels" . | nindent 6 }}
   policyTypes:
-    - Ingress
+    - "Ingress"
   ingress:
     # Allow inbound access from pods (in any namespace) labeled
     # gafaelfawr.lsst.io/ingress: true.

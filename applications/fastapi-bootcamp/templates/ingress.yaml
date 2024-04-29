@@ -9,7 +9,6 @@ config:
   scopes:
     all:
       - "read:image"
-  loginRedirect: true
 template:
   metadata:
     name: "fastapi-bootcamp"
@@ -22,7 +21,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: {{ .Values.config.pathPrefix | quote }}
+            - path: "/fastapi-bootcamp"
               pathType: "Prefix"
               backend:
                 service:

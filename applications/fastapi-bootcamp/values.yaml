@@ -15,52 +15,40 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-ingress:
-  # -- Additional annotations for the ingress rule
-  annotations: {}
-
-autoscaling:
-  # -- Enable autoscaling of fastapi-bootcamp deployment
-  enabled: false
-
-  # -- Minimum number of fastapi-bootcamp deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of fastapi-bootcamp deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of fastapi-bootcamp deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-# -- Annotations for the fastapi-bootcamp deployment pod
-podAnnotations: {}
-
 config:
-  # -- Log level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"
+  # -- Logging level
   logLevel: "INFO"
 
-  # -- Logging profile: "production" or "development"  (Development does not
-  # use structured logging.)
-  loggingProfile: "production"
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/fastapi-bootcamp"
 
   # -- Whether to send alerts and status to Slack.
   slackAlerts: true
 
-  # -- Prefix for fastapi-bootcamp's API routes.
-  pathPrefix: "/fastapi-bootcamp"
 
-# -- Resource limits and requests for the fastapi-bootcamp deployment pod
-resources: {}
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the fastapi-bootcamp deployment pod
+affinity: {}
 
 # -- Node selection rules for the fastapi-bootcamp deployment pod
 nodeSelector: {}
 
+# -- Annotations for the fastapi-bootcamp deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the fastapi-bootcamp deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
 # -- Tolerations for the fastapi-bootcamp deployment pod
 tolerations: []
-
-# -- Affinity rules for the fastapi-bootcamp deployment pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
