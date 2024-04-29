@@ -243,8 +243,9 @@ applications:
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
-# -- Add labels for an application namespace.
-namespaceLabels: {}
+# -- Add labels for application namespaces.
+namespaceLabels:
+  applications: {}
 
 # The following settings are used for the control system
 controlSystem:

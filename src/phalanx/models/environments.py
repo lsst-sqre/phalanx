@@ -33,6 +33,7 @@ __all__ = [
     "GafaelfawrGitHubTeam",
     "GafaelfawrScope",
     "IdentityProvider",
+    "NamespaceLabelConfig",
     "OnepasswordConfig",
     "PhalanxConfig",
 ]
@@ -150,6 +151,16 @@ class ControlSystemConfig(CamelCaseModel):
     )
 
 
+class NamespaceLabelConfig(CamelCaseModel):
+    """Configuration for applying labels to application namespaces."""
+
+    applications: dict[str, dict[str, str]] | None = Field(
+        None,
+        title="Namespace labels for applications",
+        description="List of applications that require namespace labels.",
+    )
+
+
 class EnvironmentBaseConfig(CamelCaseModel):
     """Environment configuration options.
 
@@ -205,14 +216,7 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
-    namespace_labels: dict[str, str] | None = Field(
-        None,
-        title="Labels for application namespaces",
-        description=(
-            "Collection of labels that need to be added to an application"
-            " namespace"
-        ),
-    )
+    namespace_labels: NamespaceLabelConfig | None = None
 
     onepassword: OnepasswordConfig | None = Field(
         None,

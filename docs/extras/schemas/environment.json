@@ -138,6 +138,32 @@
       "title": "GCPMetadata",
       "type": "object"
     },
+    "NamespaceLabelConfig": {
+      "description": "Configuration for applying labels to application namespaces.",
+      "properties": {
+        "applications": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "type": "object"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "List of applications that require namespace labels.",
+          "title": "Namespace labels for applications"
+        }
+      },
+      "title": "NamespaceLabelConfig",
+      "type": "object"
+    },
     "OnepasswordConfig": {
       "description": "Configuration for 1Password static secrets source.",
       "properties": {
@@ -236,18 +262,13 @@
     "namespaceLabels": {
       "anyOf": [
         {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "type": "object"
+          "$ref": "#/$defs/NamespaceLabelConfig"
         },
         {
           "type": "null"
         }
       ],
-      "default": null,
-      "description": "Collection of labels that need to be added to an application namespace",
-      "title": "Labels for application namespaces"
+      "default": null
     },
     "onepassword": {
       "anyOf": [
