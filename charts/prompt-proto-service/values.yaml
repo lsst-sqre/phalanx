@@ -64,6 +64,10 @@ imageNotifications:
   imageTimeout: '20'
 
 apdb:
+  # -- URL to a serialized APDB configuration, or the "label:" prefix followed
+  # by the indexed name of such a config.
+  # @default -- None, must be set
+  config: ""
   # -- URL to the APDB, in any form recognized by SQLAlchemy
   # @default -- None, must be set
   url: ""

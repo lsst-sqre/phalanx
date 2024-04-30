@@ -25,6 +25,7 @@ prompt-proto-service:
     topic: prompt-processing-dev
 
   apdb:
+    config: s3://rubin-pp-dev-users/apdb_config/pp_apdb_hsc-dev.py
     url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
 
   sasquatch:
