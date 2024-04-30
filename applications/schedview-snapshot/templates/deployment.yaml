@@ -55,7 +55,7 @@ spec:
           command:
             - /bin/bash
             - -c
-            - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
+            - micromamba run scheduler_dashboard --lfa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
