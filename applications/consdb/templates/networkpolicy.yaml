@@ -10,13 +10,10 @@ spec:
   policyTypes:
     - Ingress
   ingress:
-    # Allow inbound access from pods (in any namespace) labeled
-    # gafaelfawr.lsst.io/ingress: true.
+    # Allow inbound access from pods (in any namespace)
     - from:
         - namespaceSelector: {}
-          podSelector:
-            matchLabels:
-              gafaelfawr.lsst.io/ingress: "true"
+          podSelector: {}
       ports:
         - protocol: "TCP"
           port: 8080
