@@ -31,4 +31,7 @@ prompt-proto-service:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
 
+  # A cache efficiency workaround breaks when mixing observing dates; see DM-43205, DM-43913.
+  cacheCalibs: false
+
   fullnameOverride: "prompt-proto-service-latiss"
