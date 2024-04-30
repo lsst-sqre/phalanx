@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "tickets-DM-43967"
+appVersion: 1.0.0
 description: FastAPI demonstration application for bootcamp
 name: fastapi-bootcamp
 sources:
