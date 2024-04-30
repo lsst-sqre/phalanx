@@ -1,8 +1,8 @@
 .. px-app:: fastapi-bootcamp
 
-#######################################################
-fastapi-bootcamp — Phalanx FastAPI tutorial application
-#######################################################
+#################################################################
+fastapi-bootcamp — FastAPI demonstration application for bootcamp
+#################################################################
 
 .. jinja:: fastapi-bootcamp
    :file: applications/_summary.rst.jinja

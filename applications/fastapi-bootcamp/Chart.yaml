@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: "tickets-DM-43967"
-description: Phalanx FastAPI tutorial application
+description: FastAPI demonstration application for bootcamp
 name: fastapi-bootcamp
 sources:
 - https://github.com/lsst-sqre/fastapi-bootcamp

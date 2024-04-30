@@ -9,7 +9,6 @@ config:
   scopes:
     all:
       - "read:image"
-  loginRedirect: true
 template:
   metadata:
     name: "fastapi-bootcamp"

@@ -1,6 +1,6 @@
 # fastapi-bootcamp
 
-Phalanx FastAPI tutorial application
+FastAPI demonstration application for bootcamp
 
 ## Source Code
 
@@ -11,13 +11,9 @@ Phalanx FastAPI tutorial application
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the fastapi-bootcamp deployment pod |
-| autoscaling.enabled | bool | `false` | Enable autoscaling of fastapi-bootcamp deployment |
-| autoscaling.maxReplicas | int | `100` | Maximum number of fastapi-bootcamp deployment pods |
-| autoscaling.minReplicas | int | `1` | Minimum number of fastapi-bootcamp deployment pods |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of fastapi-bootcamp deployment pods |
-| config.logLevel | string | `"INFO"` | Log level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
-| config.loggingProfile | string | `"production"` | Logging profile: "production" or "development"  (Development does not use structured logging.) |
-| config.pathPrefix | string | `"/fastapi-bootcamp"` | Prefix for fastapi-bootcamp's API routes. |
+| config.logLevel | string | `"INFO"` | Logging level |
+| config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.pathPrefix | string | `"/fastapi-bootcamp"` | URL path prefix |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -29,5 +25,5 @@ Phalanx FastAPI tutorial application
 | nodeSelector | object | `{}` | Node selection rules for the fastapi-bootcamp deployment pod |
 | podAnnotations | object | `{}` | Annotations for the fastapi-bootcamp deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the fastapi-bootcamp deployment pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the fastapi-bootcamp deployment pod |
 | tolerations | list | `[]` | Tolerations for the fastapi-bootcamp deployment pod |
