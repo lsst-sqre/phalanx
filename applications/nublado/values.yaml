@@ -173,6 +173,7 @@ controller:
         FIREFLY_ROUTE: "/portal/app"
         HUB_ROUTE: "/nb/hub"
         NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
+        RSP_SITE_TYPE: "science"
         TAP_ROUTE: "/api/tap"
 
       # -- Extra annotations to add to user lab pods
