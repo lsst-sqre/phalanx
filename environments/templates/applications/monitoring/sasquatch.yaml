@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: "sasquatch"
-  {{- with .Values.namespaceLabels.applications.sasquatch }}
+  {{- with .Values.namespaceLabels.sasquatch }}
   labels:
     {{- toYaml . | nindent 4 }}
   {{- end }}

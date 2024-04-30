@@ -6,9 +6,8 @@ onepassword:
   vaultTitle: "RSP tucson-teststand.lsst.codes"
 vaultPathPrefix: "secret/phalanx/tucson-teststand"
 namespaceLabels:
-  applications:
-    sasquatch:
-      lsst.io/discover: 'true'
+  sasquatch:
+    lsst.io/discover: 'true'
 
 applications:
   argo-workflows: true
