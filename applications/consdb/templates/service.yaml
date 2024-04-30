@@ -12,4 +12,5 @@ spec:
       protocol: "TCP"
       name: "http"
   selector:
+    component: pq
     {{- include "consdb.selectorLabels" . | nindent 4 }}

@@ -5,6 +5,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
+      component: pq
       {{- include "consdb.selectorLabels" . | nindent 6 }}
   policyTypes:
     - Ingress
