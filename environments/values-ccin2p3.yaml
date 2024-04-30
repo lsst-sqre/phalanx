@@ -3,7 +3,7 @@ fqdn: data-dev.lsst.eu
 vaultPathPrefix: secret/phalanx/ccin2p3
 
 applications:
-  datalinker: true
+  datalinker: false
   nublado: true
   portal: true
   postgres: true
