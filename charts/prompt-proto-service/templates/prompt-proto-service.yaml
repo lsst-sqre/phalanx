@@ -49,10 +49,6 @@ spec:
           value: {{ .Values.s3.disableBucketValidation | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
-        - name: URL_APDB
-          value: {{ .Values.apdb.url }}
-        - name: NAMESPACE_APDB
-          value: {{ .Values.apdb.namespace }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
         - name: SASQUATCH_URL

@@ -70,11 +70,6 @@ prompt-proto-service:
     # followed by the indexed name of such a config.
     # @default -- None, must be set
     config: ""
-    # -- URL to the APDB, in any form recognized by SQLAlchemy
-    # @default -- None, must be set
-    url: ""
-    # -- Database namespace for the APDB
-    namespace: pp_apdb_lsstcomcamsim
 
   alerts:
     # -- Username for sending alerts to the alert stream

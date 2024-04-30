@@ -44,7 +44,6 @@ prompt-proto-service:
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/pp_apdb_latiss.py
-    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

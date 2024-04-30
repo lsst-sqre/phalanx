@@ -68,12 +68,6 @@ apdb:
   # by the indexed name of such a config.
   # @default -- None, must be set
   config: ""
-  # -- URL to the APDB, in any form recognized by SQLAlchemy
-  # @default -- None, must be set
-  url: ""
-  # -- Database namespace for the APDB
-  # @default -- None, must be set
-  namespace: ""
 
 alerts:
   # -- Username for sending alerts to the alert stream
