@@ -228,4 +228,11 @@ spec:
     resources:
       {{- toYaml . | nindent 6 }}
     {{- end }}
+    {{- with .Values.cluster.monitorLabel }}
+    template:
+      pod:
+        metadata:
+          labels:
+            {{- toYaml . | nindent 12 }}
+    {{- end }}
   {{- end }}

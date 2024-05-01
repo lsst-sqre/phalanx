@@ -205,6 +205,15 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
+    namespace_labels: dict[str, dict[str, str]] | None = Field(
+        None,
+        title="Labels for application namespaces",
+        description=(
+            "A mapping of application name to a set of labels that are"
+            " included in the namespace."
+        ),
+    )
+
     onepassword: OnepasswordConfig | None = Field(
         None,
         title="1Password configuration",
