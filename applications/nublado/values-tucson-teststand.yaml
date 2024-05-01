@@ -24,6 +24,7 @@ controller:
         LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+        RSP_SITE_TYPE: "telescope"
       pullSecret: "pull-secret"
       secrets:
         - secretName: "nublado-lab-secret"

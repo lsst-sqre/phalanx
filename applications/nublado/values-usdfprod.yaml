@@ -17,6 +17,7 @@ controller:
         HUB_ROUTE: "/nb/hub"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "rubin"
+        RSP_SITE_TYPE: "staff"
         S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
         http_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
         https_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"

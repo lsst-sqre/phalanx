@@ -20,6 +20,7 @@ controller:
         LSST_SITE: "summit"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+        RSP_SITE_TYPE: "telescope"
       initContainers:
         - name: "inithome"
           image:
