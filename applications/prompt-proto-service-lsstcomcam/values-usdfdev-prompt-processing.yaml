@@ -23,7 +23,4 @@ prompt-proto-service:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing
 
-  apdb:
-    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
-
   fullnameOverride: "prompt-proto-service-lsstcomcam"

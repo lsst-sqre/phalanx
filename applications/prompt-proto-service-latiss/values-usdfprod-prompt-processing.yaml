@@ -43,7 +43,7 @@ prompt-proto-service:
     imageTimeout: '110'
 
   apdb:
-    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
+    config: s3://rubin-summit-users/apdb_config/pp_apdb_latiss.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
