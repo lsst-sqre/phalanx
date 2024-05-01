@@ -50,7 +50,7 @@ spec:
               port: "http"
             initialDelaySeconds: 60
             periodSeconds: 60
-            timeoutSeconds: 5
+            timeoutSeconds: 20
           ports:
             - containerPort: 8080
               name: "http"
