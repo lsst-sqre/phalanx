@@ -423,7 +423,7 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.3
+    tag: 1.10.4
 
   persistence:
     # -- Whether to enable persistence for Chronograf data

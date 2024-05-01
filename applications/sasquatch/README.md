@@ -24,7 +24,7 @@ Rubin Observatory's telemetry service
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` | Docker image to use for Chronograf |
-| chronograf.image.tag | string | `"1.10.3"` | Docker tag to use for Chronograf |
+| chronograf.image.tag | string | `"1.10.4"` | Docker tag to use for Chronograf |
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
