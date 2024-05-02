@@ -21,7 +21,6 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   kafka:
-    version: "3.6.1"
     storage:
       storageClassName: rook-ceph-block
       size: 1Ti
