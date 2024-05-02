@@ -41,7 +41,7 @@ strimzi-kafka:
         - loadBalancerIP: "139.229.153.68"
           host: sasquatch-base-kafka-2.lsst.codes
   kraft:
-    enabled: false
+    enabled: true
   kafkaController:
     enabled: true
     resources:
