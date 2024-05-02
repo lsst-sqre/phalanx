@@ -18,8 +18,6 @@ Rubin Observatory's telemetry service
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| bucketmapper.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | Docker image for monitoring-related cron jobs |
-| bucketmapper.image.tag | string | `"0.2.0"` | Tag for monitoring-related cron jobs |
 | chronograf.enabled | bool | `true` | Whether Chronograf is enabled |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
