@@ -95,7 +95,7 @@ Rubin Observatory's telemetry service
 | kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
 | kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kapacitor.image.repository | string | `"kapacitor"` | Docker image to use for Kapacitor |
-| kapacitor.image.tag | string | `"1.7.4"` | Tag to use for Kapacitor |
+| kapacitor.image.tag | string | `"1.7.2"` | Tag to use for Kapacitor |
 | kapacitor.influxURL | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB connection URL |
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
@@ -134,7 +134,7 @@ Rubin Observatory's telemetry service
 | source-kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
 | source-kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | source-kapacitor.image.repository | string | `"kapacitor"` | Docker image to use for Kapacitor |
-| source-kapacitor.image.tag | string | `"1.7.4"` | Tag to use for Kapacitor |
+| source-kapacitor.image.tag | string | `"1.7.2"` | Tag to use for Kapacitor |
 | source-kapacitor.influxURL | string | `"http://sasquatch-influxdb-staging.sasquatch:8086"` | InfluxDB connection URL |
 | source-kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | source-kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
