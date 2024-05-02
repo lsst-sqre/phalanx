@@ -552,14 +552,6 @@ kafdrop:
   # -- Whether Kafdrop is enabled
   enabled: true
 
-bucketmapper:
-  image:
-    # -- Docker image for monitoring-related cron jobs
-    repository: ghcr.io/lsst-sqre/rubin-influx-tools
-
-    # -- Tag for monitoring-related cron jobs
-    tag: 0.2.0
-
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
