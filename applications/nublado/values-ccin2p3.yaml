@@ -37,6 +37,10 @@ controller:
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+        - secretName: "nublado-lab-secret"
+          secretKey: "butler-gcs-idf-creds.json"
+        - secretName: "nublado-lab-secret"
+          secretKet: "aws-credentials.ini"
       sizes:
         - size: "small"
           cpu: 2.0
