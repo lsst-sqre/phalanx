@@ -8,6 +8,7 @@ cadc-tap:
     gcsBucket: "lsstrsp:async-results.lsst.codes"
     gcsBucketUrl: "https://ccs3rubin.in2p3.fr:8080"
     gcsBucketType: "S3"
+    datalinkPayloadUrl: "https://github.com/gabrimaine/sdm_schemas/releases/download/2.4.1/datalink-snippets.zip"
 
     qserv:
       host: "ccqserv201.in2p3.fr:30040"
