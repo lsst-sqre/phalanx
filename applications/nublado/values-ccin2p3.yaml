@@ -12,7 +12,7 @@ controller:
         repository: "lsstsqre/sciplat-lab"
     lab:
       env:
-        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/gabrimaine/tutorial-notebooks@main"
+        AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/gabrimaine/tutorial-notebooks@ccin2p3"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "lsstprod_ro"
         NO_ACTIVITY_TIMEOUT: "432000"
