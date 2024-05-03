@@ -60,6 +60,7 @@ spec:
               path: "/health"
               port: "http"
             periodSeconds: 60
+            timeoutSeconds: 5
           ports:
             - containerPort: 8080
               name: "http"
