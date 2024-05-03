@@ -28,6 +28,7 @@ applications:
   ssotap: true
   production-tools: true
   semaphore: true
+  sqlproxy-cross-project: true
   squareone: true
   strimzi: true
   tap: true
