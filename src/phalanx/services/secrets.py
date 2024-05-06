@@ -61,10 +61,14 @@ class SecretsAuditReport:
             secrets = "\n• ".join(sorted(self.missing))
             report += "Missing secrets:\n• " + secrets + "\n"
         if self.mismatch:
+            if self.missing:
+                report += "\n"
             secrets = "\n• ".join(sorted(self.mismatch))
             heading = "Secrets that do not have their expected value:"
             report += f"{heading}\n• " + secrets + "\n"
         if self.unknown:
+            if self.missing or self.mismatch:
+                report += "\n"
             secrets = "\n• ".join(sorted(self.unknown))
             report += "Unknown secrets in Vault:\n• " + secrets + "\n"
         return report
