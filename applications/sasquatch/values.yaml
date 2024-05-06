@@ -479,7 +479,7 @@ source-kapacitor:
     repository: kapacitor
 
     # -- Tag to use for Kapacitor
-    tag: 1.7.2
+    tag: 1.7.4
 
   persistence:
     # -- Whether to enable Kapacitor data persistence
@@ -518,7 +518,7 @@ kapacitor:
     repository: kapacitor
 
     # -- Tag to use for Kapacitor
-    tag: 1.7.2
+    tag: 1.7.4
 
   persistence:
     # -- Whether to enable Kapacitor data persistence
