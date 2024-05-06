@@ -59,8 +59,8 @@ spec:
             httpGet:
               path: "/health"
               port: "http"
-            periodSeconds: 60
-            timeoutSeconds: 5
+            periodSeconds: 300
+            timeoutSeconds: 10
           ports:
             - containerPort: 8080
               name: "http"
@@ -71,6 +71,7 @@ spec:
               path: "/health"
               port: "http"
             periodSeconds: 60
+            timeoutSeconds: 10
           {{- else }}
           readinessProbe:
             httpGet:
