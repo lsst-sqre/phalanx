@@ -14,6 +14,7 @@ argo-cd:
               # Reference to key in argo-secret Kubernetes resource
               clientSecret: $dex.clientSecret
               orgs:
+                - name: lsst
                 - name: lsst-sqre
     rbac:
       policy.csv: |
