@@ -29,6 +29,9 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
@@ -36,6 +39,9 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
@@ -43,6 +49,9 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
@@ -50,6 +59,9 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
     "read:image":
       - github:
           organization: "lsst-sqre"
@@ -57,6 +69,9 @@ config:
       - github:
           organization: "lsst"
           team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
 
   initialAdmins:
     - "afausti"

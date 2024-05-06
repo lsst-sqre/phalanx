@@ -35,14 +35,14 @@ config:
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "Friends"
+          team: "friends"
     "read:checkerboard":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "Friends"
+          team: "friends"
 
   initialAdmins:
     - "afausti"
