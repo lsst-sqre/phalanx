@@ -48,9 +48,9 @@ spec:
             httpGet:
               path: "/health"
               port: "http"
-            initialDelaySeconds: 60
-            periodSeconds: 60
-            timeoutSeconds: 40
+            initialDelaySeconds: 300
+            periodSeconds: 300
+            timeoutSeconds: 120
           ports:
             - containerPort: 8080
               name: "http"
