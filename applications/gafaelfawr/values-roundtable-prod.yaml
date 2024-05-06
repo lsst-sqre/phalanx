@@ -42,7 +42,7 @@ config:
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "Friends"
+          team: "friends"
 
 
   initialAdmins:
