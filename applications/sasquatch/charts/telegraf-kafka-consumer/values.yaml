@@ -5,10 +5,10 @@ enabled: false
 
 image:
   # -- Telegraf image repository
-  repo: "quay.io/influxdb/telegraf-nightly"
+  repo: "docker.io/library/telegraf"
 
   # -- Telegraf image tag
-  tag: "latest"
+  tag: "1.30.2-alpine"
 
   # -- Image pull policy
   pullPolicy: "Always"
