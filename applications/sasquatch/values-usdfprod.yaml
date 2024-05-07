@@ -174,7 +174,7 @@ kafka-connect-manager-enterprise:
         topicsRegex: ".*MTVMS"
       enterprise-lasertracker:
         enabled: true
-        repairerConnector: false
+        repairerConnector: true
         topicsRegex: ".*LaserTracker"
       enterprise-lsstcam:
         enabled: true
