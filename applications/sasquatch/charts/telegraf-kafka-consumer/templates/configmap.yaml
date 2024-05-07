@@ -60,7 +60,7 @@ data:
       sasl_password = "$TELEGRAF_PASSWORD"
       sasl_username = "telegraf"
       topic_regexps = {{ $value.topicRegexps }}
-      offset = "newest"
+      offset = "oldest"
       consumer_fetch_default = "20MB"
       precision = "1us"
 
