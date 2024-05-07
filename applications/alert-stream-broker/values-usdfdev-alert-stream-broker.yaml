@@ -164,3 +164,12 @@ alert-database:
       project: science-platform-int-dc5d
       alertBucket: rubin-alertdb-int-us-central1-packets
       schemaBucket: rubin-alertdb-int-us-central1-schemas
+
+kafdrop:
+  cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+  kafka:
+    broker: alert-broker-kafka-external-bootstrap.alert-stream-broker:9094
+  ingress:
+    enabled: true
+    hostname: usdf-alert-stream-broker-dev.slac.stanford.edu
+  schemaregistry: "http://alert-schema-registry.alert-stream-broker:8081"

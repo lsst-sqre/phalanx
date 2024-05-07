@@ -1,0 +1,93 @@
+# Default values for Kafdrop
+
+# -- Number of kafdrop pods to run in the deployment.
+replicaCount: 1
+
+image:
+  # -- Kafdrop Docker image repository
+  repository: obsidiandynamics/kafdrop
+
+  # -- Image pull policy
+  pullPolicy: IfNotPresent
+
+  # -- Kafdrop image version
+  tag: 4.0.1
+
+kafka:
+  # -- Bootstrap list of Kafka host/port pairs
+  broker: ""
+
+jvm:
+  # -- JVM options
+  opts: ""
+
+# -- The hostname to report for the RMI registry (used for JMX)
+host: localhost
+
+jmx:
+  # -- Port to use for JMX. If unspecified, JMX will not be exposed.
+  port: 8686
+
+server:
+  servlet:
+    # -- The context path to serve requests on
+    contextPath: /kafdrop
+
+  # -- The web server port to listen on
+  port: 9000
+
+# -- The endpoint of Schema Registry
+schemaregistry: ""
+
+# -- Existing Kubernetes secrect use to set kafdrop environment variables.
+# Set `SCHEMAREGISTRY_AUTH` for basic auth credentials in the form
+# `<username>:<password>`
+# @default -- Do not use a secret
+existingSecret: ""
+
+# -- Command line arguments to Kafdrop
+# @default -- See `values.yaml`
+cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+
+service:
+  # -- Additional annotations to add to the service
+  annotations: {}
+
+  # -- Service port
+  port: 9000
+
+ingress:
+  # -- Whether to enable the ingress
+  enabled: false
+
+  # -- Additional ingress annotations
+  annotations: {}
+
+  # -- Ingress hostname
+  # @default -- None, must be set if ingress is enabled
+  hostname: ""
+
+  # -- Ingress path
+  path: /kafdrop
+
+# -- Kubernetes requests and limits for Kafdrop
+# @default -- See `values.yaml`
+resources:
+  requests:
+    memory: 200Mi
+    cpu: 1
+  limits:
+    memory: 4Gi
+    cpu: 2
+
+# -- Node selector configuration
+nodeSelector: {}
+
+# -- Tolerations configuration
+tolerations: []
+
+# -- Affinity configuration
+affinity: {}
+
+# -- Pod annotations
+podAnnotations: {}

@@ -1,0 +1,95 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}
+  labels:
+    {{- include "kafdrop.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "kafdrop.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "kafdrop.selectorLabels" . | nindent 8 }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+        {{ toYaml . | indent 8 }}
+        {{- end }}
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          {{- if .Values.existingSecret -}}
+          envFrom:
+          - secretRef:
+              name: {{ .Values.existingSecret }}
+          {{- end }}
+          env:
+          - name: KAFKA_BROKERCONNECT
+            value: {{ .Values.kafka.broker | quote }}
+          - name: JVM_OPTS
+            value: {{ .Values.jvm.opts | quote }}
+          - name: HOST
+            value: {{ .Values.host | quote }}
+          - name: JMX_PORT
+            value: {{ .Values.jmx.port | quote }}
+          - name: SERVER_SERVLET_CONTEXTPATH
+            value: {{ .Values.server.servlet.contextPath | trimSuffix "/" | quote }}
+          - name: SERVER_PORT
+            value: {{ .Values.server.port | quote }}
+          - name: CMD_ARGS
+            value: {{ .Values.cmdArgs | quote }}
+          - name: SCHEMAREGISTRY_CONNECT
+            value: {{ .Values.schemaregistry | quote }}
+          - name: KAFKA_PROPERTIES_FILE
+            value: "/tmp/kafka.properties"
+          - name: KAFKA_PROPERTIES
+            valueFrom:
+              secretKeyRef:
+                name: alert-stream-broker-secrets
+                key: kafdrop-kafka-properties
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: "{{ .Values.server.servlet.contextPath | trimSuffix "/" }}/actuator/health"
+              port: http
+            initialDelaySeconds: 180
+            periodSeconds: 30
+            timeoutSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: "{{ .Values.server.servlet.contextPath | trimSuffix "/" }}/actuator/health"
+              port: http
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            timeoutSeconds: 10
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{ toYaml . | indent 8 }}
+      {{- end }}
