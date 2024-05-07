@@ -398,8 +398,8 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
 | telegraf-kafka-consumer.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer.image.repo | string | `"quay.io/influxdb/telegraf-nightly"` | Telegraf image repository |
-| telegraf-kafka-consumer.image.tag | string | `"latest"` | Telegraf image tag |
+| telegraf-kafka-consumer.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
