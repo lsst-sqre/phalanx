@@ -28,7 +28,7 @@ spec:
         - name: {{ .Chart.Name }}
           {{- if .Values.config.slackAlerts }}
           env:
-            - name: "FASTAPI_BOOTCAMP_ALERT_HOOK"
+            - name: "FASTAPI_BOOTCAMP_SLACK_WEBHOOK_URL"
               valueFrom:
                 secretKeyRef:
                   name: "fastapi-bootcamp-secret"

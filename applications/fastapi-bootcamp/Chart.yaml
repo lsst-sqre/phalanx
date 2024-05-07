@@ -1,8 +1,8 @@
 apiVersion: v2
-appVersion: 1.0.0
+appVersion: "2.0.0"
 description: FastAPI demonstration application for bootcamp
 name: fastapi-bootcamp
 sources:
-- https://github.com/lsst-sqre/fastapi-bootcamp
+  - https://github.com/lsst-sqre/fastapi-bootcamp
 type: application
 version: 1.0.0
