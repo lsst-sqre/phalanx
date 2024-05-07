@@ -181,6 +181,54 @@ kafka-connect-manager-enterprise:
         repairerConnector: false
         topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
+telegraf-kafka-consumer:
+  enabled: true
+  influxdb:
+    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+    database: "efd"
+  kafkaConsumers:
+    auxtel:
+      enabled: true
+      replicaCount: 1
+      interval: "1s"
+      flush_interval: "1s"
+      union_mode: "nullable"
+      timestamp_format: "unix"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+    latiss:
+      enabled: true
+      replicaCount: 1
+      interval: "1s"
+      flush_interval: "1s"
+      union_mode: "nullable"
+      timestamp_format: "unix"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+    test:
+      enabled: true
+      replicaCount: 1
+      interval: "1s"
+      flush_interval: "1s"
+      union_mode: "nullable"
+      timestamp_format: "unix"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+    lasertracker:
+      enabled: true
+      replicaCount: 1
+      interval: "1s"
+      flush_interval: "1s"
+      union_mode: "nullable"
+      timestamp_format: "unix"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.LaserTracker" ]
+
+
 kafdrop:
   ingress:
     enabled: true
