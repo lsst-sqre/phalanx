@@ -251,6 +251,30 @@ def test_sync(factory: Factory, mock_vault: MockVaultClient) -> None:
     del gafaelfawr["cilogon"]
     assert after == gafaelfawr
 
+    # Add a pull-secret to Vault, run secrets sync --delete again without
+    # static secrets, and ensure that pull-secret wasn't deleted.
+    pull_secret = read_output_json("minikube", "pull-secret")
+    mock_vault.create_or_update_secret(
+        f"{base_vault_path}/pull-secret", pull_secret
+    )
+    result = run_cli(
+        "secrets",
+        "sync",
+        "--delete",
+        "idfdev",
+        env={"VAULT_TOKEN": "sometoken"},
+    )
+    assert result.exit_code == 0
+    assert result.output == ""
+
+    # Test the same path for audit. This is a bit misplaced, but all the data
+    # is set up properly here.
+    result = run_cli(
+        "secrets", "audit", "idfdev", env={"VAULT_TOKEN": "sometoken"}
+    )
+    assert result.exit_code == 0
+    assert result.output == ""
+
 
 def test_sync_onepassword(
     factory: Factory,
