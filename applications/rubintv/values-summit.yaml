@@ -14,8 +14,10 @@ frontend:
     tag: deploy
     pullPolicy: Always
 
+# TODO: update workers configurations with proper summit configurations
+# See: DM-44243
 workers:
-  replicas: 1
+  replicas: 0
   image:
     repository: lsstts/rubintv-broadcaster
     tag: c0030_usdf
