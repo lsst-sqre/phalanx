@@ -24,7 +24,7 @@ data:
 
     [[outputs.influxdb]]
       urls = [
-        "http://sasquatch-influxdb.sasquatch:8086"
+        {{ $.Values.influxdb.url | quote }}
       ]
       database = {{ $.Values.influxdb.database | quote }}
       username = "${INFLUXDB_USER}"
