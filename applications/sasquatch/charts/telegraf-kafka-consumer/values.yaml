@@ -130,6 +130,8 @@ kafkaConsumers:
       [ ".*Test" ]
 
 influxdb:
+  # -- URL of the InfluxDB v1 instance to write to
+  url: "http://sasquatch-influxdb.sasquatch:8086"
   # -- Name of the InfluxDB v1 database to write to
   database: "telegraf-kafka-consumer-v1"
 

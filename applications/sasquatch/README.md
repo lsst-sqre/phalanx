@@ -402,6 +402,7 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.image.tag | string | `"latest"` | Telegraf image tag |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
+| telegraf-kafka-consumer.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | `"1s"` | Default data flushing interval to InfluxDB. |
