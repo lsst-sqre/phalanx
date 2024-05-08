@@ -24,4 +24,5 @@ data:
     butlerPg:
       containerPath: "{{ .Values.butlerPg.containerPath }}"
       dbUser: "{{ .Values.butlerPg.dbUser }}"
+      secretName: "{{ .Values.butlerPg.secretName }}"
     {{- end }}
