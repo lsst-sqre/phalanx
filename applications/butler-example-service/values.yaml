@@ -53,6 +53,10 @@ global:
   # @default -- Set by Argo CD
   baseUrl: ""
 
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: ""
+
   # -- Host name for ingress
   # @default -- Set by Argo CD
   host: ""

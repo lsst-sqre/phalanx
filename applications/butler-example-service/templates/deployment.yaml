@@ -29,6 +29,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: "butler-example-service"
+          env:
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

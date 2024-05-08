@@ -15,6 +15,7 @@ Example of service using Butler for boot camp
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/butler-example-service"` | URL path prefix |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.butlerServerRepositories | string | Set by Argo CD | Butler repositories accessible via Butler server |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the butler-example-service image |
