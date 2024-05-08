@@ -15,6 +15,7 @@ vaultPathPrefix: "secret/phalanx/idfdemo"
 
 applications:
   butler: true
+  butler-example-service: true
   datalinker: true
   fastapi-bootcamp: true
   mobu: true

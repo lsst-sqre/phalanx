@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the butler-example-service deployment
-  repository: "ghcr.io/lsst-sqre/butler-example-service"
+  repository: "ghcr.io/lsst-dm/butler-example-service"
 
   # -- Pull policy for the butler-example-service image
   pullPolicy: "IfNotPresent"
