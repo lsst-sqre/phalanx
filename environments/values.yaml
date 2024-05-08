@@ -52,6 +52,9 @@ applications:
   # -- Enable the butler application
   butler: false
 
+  # -- Enable the butler-example-service application
+  butler-example-service: false
+
   # -- Enable the calsys control system application
   calsys: false
 

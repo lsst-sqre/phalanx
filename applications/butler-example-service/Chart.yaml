@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Example of service using Butler for boot camp
+name: butler-example-service
+sources:
+- https://github.com/lsst-sqre/butler-example-service
+type: application
+version: 1.0.0

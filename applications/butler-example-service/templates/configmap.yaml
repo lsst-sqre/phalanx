@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "butler-example-service"
+  labels:
+    {{- include "butler-example-service.labels" . | nindent 4 }}
+data:
+  BUTLER_EXAMPLE_SERVICE_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  BUTLER_EXAMPLE_SERVICE_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  BUTLER_EXAMPLE_SERVICE_PROFILE: {{ .Values.config.logProfile | quote }}
