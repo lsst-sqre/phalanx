@@ -18,7 +18,7 @@ Example of service using Butler for boot camp
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the butler-example-service image |
-| image.repository | string | `"ghcr.io/lsst-sqre/butler-example-service"` | Image to use in the butler-example-service deployment |
+| image.repository | string | `"ghcr.io/lsst-dm/butler-example-service"` | Image to use in the butler-example-service deployment |
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the butler-example-service deployment pod |
