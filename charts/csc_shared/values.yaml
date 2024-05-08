@@ -1,1 +1,3 @@
 # This chart provides a common ConfigMap and secrets for CSC applications.
+# -- Generate only the VaultSecret API
+secretsOnly: false
