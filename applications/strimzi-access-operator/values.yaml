@@ -1,6 +1,6 @@
 image:
   # -- Image repository
-  repository: ghcr.io/lsst-sqre/strimzi-access-operator
+  repository: ghcr.io/lsst-sqre/kafka-access-operator
 
   # -- Image pull policy
   pullPolicy: IfNotPresent
