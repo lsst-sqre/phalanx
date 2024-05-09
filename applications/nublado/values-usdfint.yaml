@@ -22,6 +22,7 @@ controller:
         http_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
         https_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
         no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
+        LSST_DISABLE_BUCKET_VALIDATION: "1"
       homedirSchema: "initialThenUsername"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
