@@ -4,4 +4,4 @@ type: application
 version: "1.0.0"
 description: Strimzi Access Operator
 home: https://strimzi.io
-appVersion: "tickets-DM-39107"
+appVersion: "latest"
