@@ -80,14 +80,6 @@ alert-stream-schema-registry:
   hostname: "alert-schemas-dev.slac.stanford.edu"
   schemaTopic: "registry-schemas"
 
-alert-stream-simulator:
-  clusterPort: 9092 # internal TLS listener
-  replayTopicName: "alerts-simulated"
-  replayTopicPartitions: 60
-  staticTopicName: "alerts-static"
-  image:
-    tag: v1.2.1
-
 alert-database:
   ingester:
     image:
