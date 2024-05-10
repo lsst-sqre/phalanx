@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: A FastAPI greeter app
+name: fastapi-bootcamp-jp
+sources:
+- https://github.com/lsst-sqre/u/jpollack/fastapi-bootcamp-jp
+type: application
+version: 1.0.0
