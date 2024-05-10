@@ -96,6 +96,9 @@ applications:
   # cluster.
   ingress-nginx: true
 
+  # -- Enable the jeremym-fastapi-example application
+  jeremym-fastapi-example: false
+
   # -- Enable the jira-data-proxy application
   jira-data-proxy: false
 

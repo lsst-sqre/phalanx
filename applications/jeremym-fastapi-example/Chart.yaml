@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Jeremy's bootcamp app
+name: jeremym-fastapi-example
+sources:
+- https://github.com/lsst-sqre/jeremym-fastapi-example
+type: application
+version: 1.0.0
