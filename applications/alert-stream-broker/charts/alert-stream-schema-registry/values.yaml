@@ -17,7 +17,7 @@ clusterName: alert-broker
 schemaTopic: registry-schemas
 
 # -- Hostname for an ingress which sends traffic to the Schema Registry.
-hostname: alert-schemas-int.lsst.cloud
+hostname: usdf-alert-schemas-dev.slac.stanford.edu
 
 tls: true
 
@@ -29,7 +29,7 @@ schemaSync:
     # syncLatestSchemaToRegistry.py program
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use
-    tag: tickets-DM-30267
+    tag: tickets-DM-41530
 
   # -- Subject name to use when inserting data into the Schema Registry
   subject: alert-packet
