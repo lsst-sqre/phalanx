@@ -80,6 +80,9 @@ applications:
   # -- Enable the fastapi-bootcamp application
   fastapi-bootcamp: false
 
+  # -- Enable the fastapi-bootcamp-jp application
+  fastapi-bootcamp-jp: false
+
   # -- Enable the filestore-backup application
   filestore-backup: false
 

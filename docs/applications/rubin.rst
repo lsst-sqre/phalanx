@@ -15,6 +15,7 @@ Argo CD project: ``rubin``
    exposurelog/index
    fastapi-bootcamp/index
    jeremym-fastapi-example/index
+   fastapi-bootcamp-jp/index
    narrativelog/index
    nightreport/index
    obsloctap/index

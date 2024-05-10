@@ -26,3 +26,5 @@ applications:
   jeremym-fastapi-example: true
   # -- Enable Hsin-Fang's bootcamp application
   bootcamp-hfc: true
+  # -- Enable jennifer-fastapi-example application
+  fastapi-bootcamp-jp: true
