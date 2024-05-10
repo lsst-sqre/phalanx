@@ -13,6 +13,7 @@ Argo CD project: ``rubin``
    consdb/index
    exposurelog/index
    fastapi-bootcamp/index
+   jeremym-fastapi-example/index
    narrativelog/index
    nightreport/index
    obsloctap/index
