@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 2.0.1
+description: Hsin-Fang's copied fastapi-bootcamp app
+name: bootcamp-hfc
+sources:
+- https://github.com/lsst-sqre/fastapi-bootcamp
+type: application
+version: 1.0.0
