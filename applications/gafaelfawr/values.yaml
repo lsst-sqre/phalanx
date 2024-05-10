@@ -108,29 +108,10 @@ config:
     # @default -- `"uid"`
     usernameClaim: ""
 
-    # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- `"uidNumber"`
-    uidClaim: ""
-
-    # -- Claim from which to get the primary GID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- Do not set a primary GID
-    gidClaim: ""
-
-    # -- Claim from which to get the group membership (only used if not
-    # retrieved from LDAP)
-    # @default -- `"isMemberOf"`
-    groupsClaim: ""
-
   oidc:
     # -- Client ID for generic OpenID Connect support. One and only one of
     # this, `config.cilogon.clientId`, or `config.github.clientId` must be set.
     clientId: ""
-
-    # -- Audience for the JWT token
-    # @default -- Value of `config.oidc.clientId`
-    audience: ""
 
     # -- URL to which to redirect the user for authorization
     # @default -- None, must be set
@@ -158,21 +139,6 @@ config:
     # -- Claim from which to get the username
     # @default -- `"sub"`
     usernameClaim: ""
-
-    # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- `"uidNumber"`
-    uidClaim: ""
-
-    # -- Claim from which to get the primary GID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- Do not set a primary GID
-    gidClaim: ""
-
-    # -- Claim from which to get the group membership (only used if not
-    # retrieved from LDAP)
-    # @default -- `"isMemberOf"`
-    groupsClaim: ""
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
@@ -209,7 +175,7 @@ config:
     groupSearchByDn: false
 
     # -- Base DN for the LDAP search to find a user's entry
-    # @default -- Get user metadata from the upstream authentication provider
+    # @default -- None, must be set
     userBaseDn: ""
 
     # -- Search attribute containing the user's username
@@ -242,22 +208,16 @@ config:
     # @default -- Firestore support is disabled
     project: ""
 
-  forgerock:
-    # -- If set, obtain the GIDs for groups from this ForgeRock Identity
-    # Management server.
-    # @default -- ForgeRock Identity Management support is disabled
-    url: ""
-
-    # -- Username to use for HTTP Basic authentication to ForgeRock Identity
-    # Managemnt. The corresponding password must be in the
-    # `forgerock-passsword` key of the Gafaelfawr Vault secret.
-    # @default -- None, must be set if `config.forgerock.url` is set
-    username: ""
-
   oidcServer:
     # -- Whether to support OpenID Connect clients. If set to true,
     # `oidc-server-secrets` must be set in the Gafaelfawr secret.
     enabled: false
+
+    # -- Mapping of group names to data release keywords, indicating
+    # membership in that group grants access to that data release. Used to
+    # construct the `data_rights` claim, which can be requested by asking for
+    # the `rubin` scope.
+    dataRightsMapping: {}
 
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
