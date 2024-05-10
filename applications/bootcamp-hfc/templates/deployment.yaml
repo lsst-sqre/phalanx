@@ -47,6 +47,16 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "astropy-cache"
+              mountPath: "/home/appuser/.astropy"
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+        - name: "astropy-cache"
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
