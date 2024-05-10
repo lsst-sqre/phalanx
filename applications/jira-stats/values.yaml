@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the jira-stats deployment
-  repository: "ghcr.io/lsst-sqre/jira-stats"
+  repository: "ghcr.io/lsst-dm/jira_stats:tickets-dm-44297"
 
   # -- Pull policy for the jira-stats image
   pullPolicy: "IfNotPresent"
