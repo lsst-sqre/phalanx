@@ -25,3 +25,6 @@ applications:
 
    # -- Enable the jeremym-fastapi-example application
   jeremym-fastapi-example: true
+
+  # -- Enable jennifer-fastapi-example applciation
+  fastapi-bootcamp-jp: true
