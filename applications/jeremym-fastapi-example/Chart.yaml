@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.0
+appVersion: 0.0.2
 description: Jeremy's bootcamp app
 name: jeremym-fastapi-example
 sources:
