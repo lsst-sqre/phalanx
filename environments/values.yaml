@@ -49,6 +49,9 @@ applications:
   # -- Enable the auxtel control system application
   auxtel: false
 
+  # -- Enable the bootcamp-hfc application
+  bootcamp-hfc: false
+
   # -- Enable the butler application
   butler: false
 

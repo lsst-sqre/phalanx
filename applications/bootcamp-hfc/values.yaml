@@ -1,0 +1,62 @@
+# Default values for bootcamp-hfc.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the bootcamp-hfc deployment
+  repository: "ghcr.io/lsst-sqre/fastapi-bootcamp"
+
+  # -- Pull policy for the bootcamp-hfc image
+  pullPolicy: "IfNotPresent"
+
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "development"
+
+  # -- URL path prefix
+  pathPrefix: "/bootcamp-hfc"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the bootcamp-hfc deployment pod
+affinity: {}
+
+# -- Node selection rules for the bootcamp-hfc deployment pod
+nodeSelector: {}
+
+# -- Annotations for the bootcamp-hfc deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the bootcamp-hfc deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the bootcamp-hfc deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: ""
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: ""
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: ""

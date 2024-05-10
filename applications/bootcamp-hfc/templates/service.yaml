@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "bootcamp-hfc"
+  labels:
+    {{- include "bootcamp-hfc.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+      name: "http"
+  selector:
+    {{- include "bootcamp-hfc.selectorLabels" . | nindent 4 }}

@@ -22,9 +22,10 @@ applications:
   sqlproxy-cross-project: true
   squareone: true
   vault-secrets-operator: true
-
-   # -- Enable the jeremym-fastapi-example application
+  # -- Enable the jeremym-fastapi-example application
   jeremym-fastapi-example: true
 
   # -- Enable jennifer-fastapi-example applciation
   fastapi-bootcamp-jp: true
+  # -- Enable Hsin-Fang's bootcamp application
+  bootcamp-hfc: true
