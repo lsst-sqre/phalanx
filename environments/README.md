@@ -27,6 +27,7 @@
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jeremym-fastapi-example | bool | `false` | Enable the jeremym-fastapi-example application |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
+| applications.jira-stats | bool | `false` | Enable the jira-stats application |
 | applications.kubernetes-replicator | bool | `false` | Enable the kubernetes-replicator application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
