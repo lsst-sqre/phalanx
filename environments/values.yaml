@@ -71,6 +71,9 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
+  # -- Enable the dfuchs-test application
+  dfuchs-test: false
+
   # -- Enable the eas control system application
   eas: false
 

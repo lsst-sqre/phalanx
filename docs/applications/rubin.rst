@@ -14,6 +14,7 @@ Argo CD project: ``rubin``
    consdb/index
    exposurelog/index
    fastapi-bootcamp/index
+   dfuchs-test/index
    jeremym-fastapi-example/index
    fastapi-bootcamp-jp/index
    jira-stats/index
