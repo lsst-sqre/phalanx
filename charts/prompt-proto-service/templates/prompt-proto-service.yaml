@@ -31,8 +31,8 @@ spec:
         env:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
-        - name: PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines }}
+        - name: MAIN_PIPELINES_CONFIG
+          value: {{ .Values.instrument.pipelines.main }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
         - name: IMAGE_BUCKET
