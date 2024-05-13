@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "dfuchs-test"
+  labels:
+    {{- include "dfuchs-test.labels" . | nindent 4 }}
+data:
+  DFUCHS_TEST_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  DFUCHS_TEST_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  DFUCHS_TEST_PROFILE: {{ .Values.config.logProfile | quote }}

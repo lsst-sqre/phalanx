@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Does Dan Fuchs even computer anymore?
+name: dfuchs-test
+sources:
+- https://github.com/lsst-sqre/dfuchs-test
+type: application
+version: 1.0.0

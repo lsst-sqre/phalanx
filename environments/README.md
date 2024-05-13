@@ -16,6 +16,7 @@
 | applications.checkerboard | bool | `false` | Enable the checkerboard application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
+| applications.dfuchs-test | bool | `false` | Enable the dfuchs-test application |
 | applications.eas | bool | `false` | Enable the eas control system application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
