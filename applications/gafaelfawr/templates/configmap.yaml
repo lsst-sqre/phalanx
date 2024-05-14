@@ -1,8 +1,8 @@
 {{/* Generate two versions of the ConfigMap, one using the sidecar proxy
-     and the other using the separate Cloud SQL Proxy service. The second
+     and the other two using the separate Cloud SQL Proxy service. The second
      will be used for CronJobs and other lower-load services, avoiding the
      difficulty with coordinating stopping the Cloud SQL Proxy sidecar when
-     a CronJob ends. */}}
+     a CronJob ends. The third will similarly be used for hooks. */}}
 {{- define "gafaelfawr.configMap" }}
     realm: {{ required "global.host must be set" .Values.global.host | quote }}
     {{- if .Values.config.loglevel }}
@@ -66,15 +66,6 @@
       {{- if .Values.config.cilogon.usernameClaim }}
       usernameClaim: {{ .Values.config.cilogon.usernameClaim | quote }}
       {{- end }}
-      {{- if .Values.config.cilogon.uidClaim }}
-      uidClaim: {{ .Values.config.cilogon.uidClaim | quote }}
-      {{- end }}
-      {{- if .Values.config.cilogon.gidClaim }}
-      gidClaim: {{ .Values.config.cilogon.gidClaim | quote }}
-      {{- end }}
-      {{- if .Values.config.cilogon.groupsClaim }}
-      groupsClaim: {{ .Values.config.cilogon.groupsClaim | quote }}
-      {{- end }}
 
     {{- else if .Values.config.oidc.clientId }}
 
@@ -104,15 +95,6 @@
       {{- if .Values.config.oidc.usernameClaim }}
       usernameClaim: {{ .Values.config.oidc.usernameClaim | quote }}
       {{- end }}
-      {{- if .Values.config.oidc.uidClaim }}
-      uidClaim: {{ .Values.config.oidc.uidClaim | quote }}
-      {{- end }}
-      {{- if .Values.config.oidc.gidClaim }}
-      gidClaim: {{ .Values.config.oidc.gidClaim | quote }}
-      {{- end }}
-      {{- if .Values.config.oidc.groupsClaim }}
-      groupsClaim: {{ .Values.config.oidc.groupsClaim | quote }}
-      {{- end }}
 
     {{- end }}
     {{- if .Values.config.ldap.url }}
@@ -129,7 +111,6 @@
       groupObjectClass: {{ .Values.config.ldap.groupObjectClass | quote }}
       groupMemberAttr: {{ .Values.config.ldap.groupMemberAttr | quote }}
       groupSearchByDn: {{ .Values.config.ldap.groupSearchByDn }}
-      {{- if .Values.config.ldap.userBaseDn }}
       userBaseDn: {{ .Values.config.ldap.userBaseDn | quote }}
       userSearchAttr: {{ .Values.config.ldap.userSearchAttr | quote }}
       nameAttr: {{ .Values.config.ldap.nameAttr | quote }}
@@ -139,7 +120,6 @@
       {{- end }}
       {{- if .Values.config.ldap.gidAttr }}
       gidAttr: {{ .Values.config.ldap.gidAttr | quote }}
-      {{- end }}
       {{- end }}
       {{- if .Values.config.ldap.addUserGroup }}
       addUserGroup: true
@@ -151,19 +131,16 @@
       project: {{ .Values.config.firestore.project | quote }}
     {{- end }}
 
-    {{- if .Values.config.forgerock.url }}
-    forgerock:
-      url: {{ .Values.config.forgerock.url | quote }}
-      username: {{ .Values.config.forgerock.username | quote }}
-      passwordFile: "/etc/gafaelfawr/secrets/forgerock-password"
-    {{- end }}
-
     {{- if .Values.config.oidcServer.enabled }}
     oidcServer:
       issuer: "https://{{ .Values.global.host }}"
       keyId: "gafaelfawr"
       keyFile: "/etc/gafaelfawr/secrets/signing-key"
       secretsFile: "/etc/gafaelfawr/secrets/oidc-server-secrets"
+      {{- with .Values.config.oidcServer.dataRightsMapping }}
+      dataRightsMapping:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     {{- end }}
 
     {{- with .Values.config.quota }}

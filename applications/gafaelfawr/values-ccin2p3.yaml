@@ -22,9 +22,6 @@ config:
     # scopes:
     #   - "openid"
     issuer: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr"
-    gidClaim: "gid_number"
-    uidClaim: "uid_number"
-    groupsClaim: "groups"
     usernameClaim: "preferred_username"
 
   ldap:

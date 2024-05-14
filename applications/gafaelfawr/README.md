@@ -28,17 +28,12 @@ Authentication and identity system
 | config.cadcBaseUuid | string | Disabled | Whether to support the `/auth/cadc/userinfo` route. If set, this UUID is used as the namespace to generate UUID v5 `sub` claims returned by this route to meet the needs of CADC authentication code. |
 | config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
-| config.cilogon.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
-| config.cilogon.groupsClaim | string | `"isMemberOf"` | Claim from which to get the group membership (only used if not retrieved from LDAP) |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
-| config.cilogon.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP or Firestore) |
 | config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
 | config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` | URL for the PostgreSQL database nor `config.internalDatabase` are true |
 | config.errorFooter | string | `""` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
-| config.forgerock.url | string | ForgeRock Identity Management support is disabled | If set, obtain the GIDs for groups from this ForgeRock Identity Management server. |
-| config.forgerock.username | string | None, must be set if `config.forgerock.url` is set | Username to use for HTTP Basic authentication to ForgeRock Identity Managemnt. The corresponding password must be in the `forgerock-passsword` key of the Gafaelfawr Vault secret. |
 | config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. See [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes. |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
@@ -55,22 +50,19 @@ Authentication and identity system
 | config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
 | config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
 | config.ldap.url | string | Do not use LDAP | LDAP server URL from which to retrieve user group information |
-| config.ldap.userBaseDn | string | Get user metadata from the upstream authentication provider | Base DN for the LDAP search to find a user's entry |
+| config.ldap.userBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's entry |
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
-| config.oidc.audience | string | Value of `config.oidc.clientId` | Audience for the JWT token |
 | config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
 | config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
-| config.oidc.gidClaim | string | Do not set a primary GID | Claim from which to get the primary GID (only used if not retrieved from LDAP or Firestore) |
-| config.oidc.groupsClaim | string | `"isMemberOf"` | Claim from which to get the group membership (only used if not retrieved from LDAP) |
 | config.oidc.issuer | string | None, must be set | Issuer for the JWT token |
 | config.oidc.loginParams | object | `{}` | Additional parameters to add to the login request |
 | config.oidc.loginUrl | string | None, must be set | URL to which to redirect the user for authorization |
 | config.oidc.scopes | list | `["openid"]` | Scopes to request from the OpenID Connect provider |
 | config.oidc.tokenUrl | string | None, must be set | URL from which to retrieve the token for the user |
-| config.oidc.uidClaim | string | `"uidNumber"` | Claim from which to get the numeric UID (only used if not retrieved from LDAP or Firestore) |
 | config.oidc.usernameClaim | string | `"sub"` | Claim from which to get the username |
+| config.oidcServer.dataRightsMapping | object | `{}` | Mapping of group names to data release keywords, indicating membership in that group grants access to that data release. Used to construct the `data_rights` claim, which can be requested by asking for the `rubin` scope. |
 | config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients. If set to true, `oidc-server-secrets` must be set in the Gafaelfawr secret. |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.quota | object | `{}` | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
