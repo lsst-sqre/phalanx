@@ -19,7 +19,6 @@ data:
       metric_batch_size = {{ default 1000 $value.metric_batch_size }}
       metric_buffer_limit = 10000
       omit_hostname = true
-      precision = ""
       quiet = false
       round_interval = true
 
@@ -63,6 +62,7 @@ data:
       topic_regexps = {{ $value.topicRegexps }}
       offset = "newest"
       consumer_fetch_default = "20MB"
+      precision = "1us"
 
     [[inputs.internal]]
       collect_memstats = false
