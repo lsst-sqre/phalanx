@@ -116,7 +116,7 @@ alert-stream-broker:
   topicReplicas: 1
   simulatedTopicPartitions: 400
   simulatedTopicReplicas: 1
-  devTopic: dev-topic
+  devTopicName: dev-topic
   devTopicPartitions: 10
   devTopicReplicas: 1
   devTopicCompression: lz4
