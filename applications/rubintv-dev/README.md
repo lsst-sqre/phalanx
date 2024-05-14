@@ -1,6 +1,6 @@
 # rubintv-dev
 
-Real-time display front end
+Real-time display front end development application
 
 ## Source Code
 
