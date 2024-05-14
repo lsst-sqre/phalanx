@@ -75,10 +75,11 @@ spec:
           command:
             - "/bin/sh"
             - "-c"
-          args:
             - |
               gafaelfawr update-schema
               touch /lifecycle/main-terminated
+          env:
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret-schema-update") | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
@@ -97,9 +98,6 @@ spec:
               readOnly: true
             - name: "lifecycle"
               mountPath: "/lifecycle"
-            - name: "secret"
-              mountPath: "/etc/gafaelfawr/secrets"
-              readOnly: true
       restartPolicy: "Never"
       securityContext:
         runAsNonRoot: true
@@ -111,9 +109,6 @@ spec:
             name: {{ template "gafaelfawr.fullname" . }}-config-schema-update
         - name: "lifecycle"
           emptyDir: {}
-        - name: "secret"
-          secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-secret-schema-update
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

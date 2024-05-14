@@ -41,6 +41,8 @@ spec:
             - "--log-format=json"
             - "-m"
             - "gafaelfawr.operator"
+          env:
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret") | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           livenessProbe:
@@ -69,9 +71,6 @@ spec:
             - name: "config"
               mountPath: "/etc/gafaelfawr"
               readOnly: true
-            - name: "secret"
-              mountPath: "/etc/gafaelfawr/secrets"
-              readOnly: true
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
               mountPath: "/etc/krb5.keytab"
@@ -92,9 +91,6 @@ spec:
         - name: "config"
           configMap:
             name: {{ template "gafaelfawr.fullname" . }}-config
-        - name: "secret"
-          secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-secret
         {{- if .Values.config.ldap.kerberosConfig }}
         - name: "keytab"
           secret:

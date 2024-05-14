@@ -25,16 +25,17 @@ Authentication and identity system
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
+| config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
 | config.cadcBaseUuid | string | Disabled | Whether to support the `/auth/cadc/userinfo` route. If set, this UUID is used as the namespace to generate UUID v5 `sub` claims returned by this route to meet the needs of CADC authentication code. |
-| config.cilogon.clientId | string | `""` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
+| config.cilogon.clientId | string | `nil` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
 | config.cilogon.test | bool | `false` | Whether to use the test instance of CILogon |
-| config.cilogon.usernameClaim | string | `"uid"` | Claim from which to get the username |
-| config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` | URL for the PostgreSQL database nor `config.internalDatabase` are true |
-| config.errorFooter | string | `""` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
+| config.cilogon.usernameClaim | string | `"username"` | Claim from which to get the username |
+| config.databaseUrl | string | None, must be set if neither `cloudsql.enabled` nor | URL for the PostgreSQL database `config.internalDatabase` are true |
+| config.errorFooter | string | `nil` | HTML footer to add to any login error page (will be enclosed in a <p> tag). |
 | config.firestore.project | string | Firestore support is disabled | If set, assign UIDs and GIDs using Google Firestore in the given project. Cloud SQL must be enabled and the Cloud SQL service account must have read/write access to that Firestore instance. |
-| config.github.clientId | string | `""` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
+| config.github.clientId | string | `nil` | GitHub client ID. One and only one of this, `config.cilogon.clientId`, or `config.oidc.clientId` must be set. |
 | config.groupMapping | object | `{}` | Defines a mapping of scopes to groups that provide that scope. See [DMTN-235](https://dmtn-235.lsst.io/) for more details on scopes. |
 | config.initialAdmins | list | `[]` | Usernames to add as administrators when initializing a new database. Used only if there are no administrators. |
 | config.internalDatabase | bool | `false` | Whether to use the PostgreSQL server internal to the Kubernetes cluster |
@@ -45,7 +46,7 @@ Authentication and identity system
 | config.ldap.groupBaseDn | string | None, must be set | Base DN for the LDAP search to find a user's groups |
 | config.ldap.groupMemberAttr | string | `"member"` | Member attribute of the object class. Values must match the username returned in the token from the OpenID Connect authentication server. |
 | config.ldap.groupObjectClass | string | `"posixGroup"` | Object class containing group information |
-| config.ldap.groupSearchByDn | bool | `false` | Whether to search for group membership by user DN rather than bare usernames. Most LDAP servers use full DNs for group membership, so normally this should be set to true, but it requires `userBaseDn` also be set. |
+| config.ldap.groupSearchByDn | bool | `true` | Whether to search for group membership by user DN. Most LDAP servers list group members by full DNs, but if yours uses bare usernames, set this to false. |
 | config.ldap.kerberosConfig | string | Use anonymous binds | Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file. If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set either this or `userDn`, not both. |
 | config.ldap.nameAttr | string | `"displayName"` | Attribute containing the user's full name |
 | config.ldap.uidAttr | string | Get UID from upstream authentication provider | Attribute containing the user's UID number (set to `uidNumber` for most LDAP servers) |
@@ -54,20 +55,24 @@ Authentication and identity system
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
-| config.oidc.clientId | string | `""` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
+| config.oidc.audience | string | Same as `clientId` | Audience (`aud` claim) to expect in ID tokens. |
+| config.oidc.clientId | string | `nil` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
 | config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.oidc.issuer | string | None, must be set | Issuer for the JWT token |
 | config.oidc.loginParams | object | `{}` | Additional parameters to add to the login request |
 | config.oidc.loginUrl | string | None, must be set | URL to which to redirect the user for authorization |
-| config.oidc.scopes | list | `["openid"]` | Scopes to request from the OpenID Connect provider |
+| config.oidc.scopes | list | `["openid"]` | Scopes to request from the OpenID Connect provider. The `openid` scope will always be included. |
 | config.oidc.tokenUrl | string | None, must be set | URL from which to retrieve the token for the user |
-| config.oidc.usernameClaim | string | `"sub"` | Claim from which to get the username |
+| config.oidc.usernameClaim | string | `"uid"` | Claim from which to get the username |
 | config.oidcServer.dataRightsMapping | object | `{}` | Mapping of group names to data release keywords, indicating membership in that group grants access to that data release. Used to construct the `data_rights` claim, which can be requested by asking for the `rubin` scope. |
-| config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients. If set to true, `oidc-server-secrets` must be set in the Gafaelfawr secret. |
+| config.oidcServer.enabled | bool | `false` | Whether to support OpenID Connect clients |
+| config.oidcServer.issuer | string | Base URL of this Phalanx environment | Issuer (`iss` claim) of generated ID tokens |
+| config.oidcServer.keyId | string | `"gafaelfawr"` | Key ID (`kid` claim) of generated ID tokens, and the key ID served with the OAuth key metadata |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.quota | object | `{}` | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
+| config.realm | string | Hostname of this Phalanx environment | Authentication realm for HTTP `WWW-Authenticate` headers. |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
-| config.tokenLifetimeMinutes | int | `43200` (30 days) | Session length and token expiration (in minutes) |
+| config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |

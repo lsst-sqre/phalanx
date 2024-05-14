@@ -53,6 +53,8 @@ spec:
             runAsGroup: 65532
         {{- end }}
         - name: "gafaelfawr"
+          env:
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret" "sidecar" true) | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           livenessProbe:
@@ -92,9 +94,6 @@ spec:
             - name: "config"
               mountPath: "/etc/gafaelfawr"
               readOnly: true
-            - name: "secret"
-              mountPath: "/etc/gafaelfawr/secrets"
-              readOnly: true
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
               mountPath: "/etc/krb5.keytab"
@@ -114,10 +113,7 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config-sidecar
-        - name: "secret"
-          secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-secret
+            name: {{ template "gafaelfawr.fullname" . }}-config
         {{- if .Values.config.ldap.kerberosConfig }}
         - name: "keytab"
           secret:
