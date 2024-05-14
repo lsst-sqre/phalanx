@@ -19,5 +19,6 @@ Argo CD project: ``rubin``
    plot-navigator/index
    production-tools/index
    rubintv/index
+   rubintv-dev/index
    schedview-prenight/index
    schedview-snapshot/index
