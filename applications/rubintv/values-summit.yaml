@@ -11,7 +11,7 @@ frontend:
   - name: RAPID_ANALYSIS_LOCATION
     value: "SUMMIT"
   image:
-    tag: deploy
+    tag: v2.2.0
     pullPolicy: Always
 
 # TODO: update workers configurations with proper summit configurations
