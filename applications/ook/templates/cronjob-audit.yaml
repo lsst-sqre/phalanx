@@ -56,19 +56,16 @@ spec:
                 # Writeable directory for concatenating certs. See "tmp" volume.
                 - name: "KAFKA_CERT_TEMP_DIR"
                   value: "/tmp/kafka_certs"
+                - name: "KAFKA_SECURITY_PROTOCOL"
+                  value: "SSL"
                 # From KafkaAccess
                 - name: "KAFKA_BOOTSTRAP_SERVERS"
                   valueFrom:
-                      secretKeyRef:
-                        name: {{ template "ook.fullname" . }}-kafka
-                        key: "bootstrapServers"
-                - name: "KAFKA_SECURITY_PROTOCOL"
-                  value: "SSL"
-                # From replicated KafkaUser secret
+                    secretKeyRef:
+                      name: {{ template "ook.fullname" . }}-kafka
+                      key: "bootstrapServers"
                 - name: "KAFKA_SSL_CLUSTER_CAFILE"
                   value: "/etc/kafkacluster/ca.crt"
-                - name: "KAFKA_SSL_CLIENT_CAFILE"
-                  value: "/etc/kafkauser/ca.crt"
                 - name: "KAFKA_SSL_CLIENT_CERTFILE"
                   value: "/etc/kafkauser/user.crt"
                 - name: "KAFKA_SSL_CLIENT_KEYFILE"
@@ -101,18 +98,15 @@ spec:
                     - "all"
                 readOnlyRootFilesystem: true
               volumeMounts:
-                - name: "{{ template "ook.fullname" . }}"
+                - name: "kafka"
                   mountPath: "/etc/kafkacluster/ca.crt"
-                  subPath: "ca.crt"
-                - name: "kafka-user"
-                  mountPath: "/etc/kafkauser/ca.crt"
-                  subPath: "ca.crt"
-                - name: "kafka-user"
+                  subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
+                - name: "kafka"
                   mountPath: "/etc/kafkauser/user.crt"
-                  subPath: "user.crt"
-                - name: "kafka-user"
+                  subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
+                - name: "kafka"
                   mountPath: "/etc/kafkauser/user.key"
-                  subPath: "user.key"
+                  subPath: "ssl.keystore.key" # private key for the consuming client
                 - name: "tmp"
                   mountPath: "/tmp/kafka_certs"
           {{with .Values.nodeSelector }}
@@ -128,9 +122,10 @@ spec:
             {{- toYaml . | nindent 12 }}
           {{- end }}
           volumes:
-            - name: "kafka-user"
+            # This secret comes from the KafkaAccess operator
+            - name: "kafka"
               secret:
-                secretName: {{ template "ook.fullname" . }}-kafka-user
+                secretName: ook-kafka
             - name: "{{ template "ook.fullname" . }}"
               secret:
                 secretName: {{ template "ook.fullname" . }}
