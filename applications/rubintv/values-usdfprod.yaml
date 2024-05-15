@@ -9,5 +9,5 @@ frontend:
   - name: RAPID_ANALYSIS_LOCATION
     value: "USDF"
   image:
-    tag: c0036
+    tag: v2.2.0
     pullPolicy: Always
