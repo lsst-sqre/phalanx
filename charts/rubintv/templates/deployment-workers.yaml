@@ -95,18 +95,24 @@ spec:
         - "-c"
         - |
           cp /secrets/* /etc/secrets && \
+          cp /secrets-butler/* /etc/secrets && \
           chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
            /etc/secrets/* && \
           chmod 0600 /etc/secrets/*
         volumeMounts:
         - name: "secrets"
           mountPath: "/secrets"
+        - name: "butler-secrets"
+          mountPath: "/secrets-butler"
         - name: "user-secrets"
           mountPath: "/etc/secrets"
       volumes:
       - name: "secrets"
         secret:
           secretName: {{ include "rubintv.fullname" . }}-secrets
+      - name: "butler-secrets"
+        secret:
+          secretName: butler-secret
       - name: "user-secrets"
         emptyDir: {}
       {{- range $vol := .Values.workers.volumes }}
