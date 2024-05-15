@@ -27,8 +27,6 @@ workers:
     value: "deploy-rubintv-worker"
   - name: S3_ENDPOINT_URL
     value: "https://s3dfrgw.slac.stanford.edu"
-  - name: DAF_BUTLER_REPOSITORY_INDEX
-    value: "s3://rubin-summit-users/data-repos.yaml"
   - name: DAF_BUTLER_REPOSITORY
     value: "/sdf/group/rubin/repo/ir2/butler.yaml"
   volumes:
@@ -46,13 +44,6 @@ workers:
       capacity: 1Gi
     accessMode: ReadOnlyMany
     mountPath: /sdf/data/rubin
-  - name: fs-ddn-sdf-group-lsst
-    persistentVolumeClaim:
-      name: fs-ddn-sdf-group-lsst
-      storageClassName: fs-ddn-sdf-group-lsst
-      capacity: 1Gi
-    accessMode: ReadOnlyMany
-    mountPath: /fs/ddn/sdf/group/lsst
   resources:
     limits:
       cpu: 2.0
