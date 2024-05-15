@@ -28,6 +28,19 @@ prompt-proto-service:
         (survey="spec_pole")=[]
         (survey="spec_pole_with_rotation")=[]
         (survey="")=[]
+      preprocessing: >-
+        (survey="AUXTEL_PHOTO_IMAGING")=[]
+        (survey="AUXTEL_DRP_IMAGING")=[]
+        (survey="cwfs")=[]
+        (survey="cwfs-focus-sweep")=[]
+        (survey="spec")=[]
+        (survey="spec-survey")=[]
+        (survey="spec_with_rotation")=[]
+        (survey="spec_bright")=[]
+        (survey="spec_bright_with_rotation")=[]
+        (survey="spec_pole")=[]
+        (survey="spec_pole_with_rotation")=[]
+        (survey="")=[]
     calibRepo: s3://rubin-summit-users
     calibRepoPguser: latiss_prompt
 

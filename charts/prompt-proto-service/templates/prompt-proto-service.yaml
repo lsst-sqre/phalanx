@@ -31,6 +31,8 @@ spec:
         env:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
+        - name: PREPROCESSING_PIPELINES_CONFIG
+          value: {{ .Values.instrument.pipelines.preprocessing }}
         - name: MAIN_PIPELINES_CONFIG
           value: {{ .Values.instrument.pipelines.main }}
         - name: SKYMAP

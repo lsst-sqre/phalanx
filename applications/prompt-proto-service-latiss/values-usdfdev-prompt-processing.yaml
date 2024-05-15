@@ -14,6 +14,7 @@ prompt-proto-service:
       main: >-
         (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+      preprocessing: (survey="SURVEY")=[]
     calibRepo: s3://rubin-pp-dev-users/central_repo/
     calibRepoPguser: latiss_prompt
 
