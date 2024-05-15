@@ -15,6 +15,17 @@ strimzi-kafka:
           host: sasquatch-summit-kafka-1.lsst.codes
         - loadBalancerIP: "139.229.180.5"
           host: sasquatch-summit-kafka-2.lsst.codes
+  kraft:
+    enabled: false
+  kafkaController:
+    enabled: true
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: "2"
+      limits:
+        memory: 8Gi
+        cpu: "2"
   zookeeper:
     storage:
       storageClassName: rook-ceph-block
