@@ -48,7 +48,7 @@ spec:
           readinessProbe:
             httpGet:
               path: "/"
-              port: "http"
+              port: 8080
             timeoutSeconds: 10
           {{- with .Values.frontend.resources }}
           resources:
