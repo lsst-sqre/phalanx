@@ -8,6 +8,7 @@ data:
   giftless.conf.yaml: |-
     AUTH_PROVIDERS:
       - "giftless.auth.allow_anon:read_only"
+    LEGACY_ENDPOINTS: true
     TRANSFER_ADAPTERS:
       basic:
         factory: "giftless.transfer.basic_external:factory"
