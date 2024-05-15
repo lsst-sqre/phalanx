@@ -16,7 +16,7 @@ Real-time display front end development application
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
-| redis.config.secretName | string | `"rubintv-secrets"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
+| redis.config.secretName | string | `"rubintv-dev-secrets"` | Name of secret containing Redis password (may require changing if fullnameOverride is set) |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |

@@ -140,7 +140,7 @@ redis:
   config:
     # -- Name of secret containing Redis password (may require changing if
     # fullnameOverride is set)
-    secretName: "rubintv-secrets"
+    secretName: "rubintv-dev-secrets"
 
     # -- Key inside secret from which to get the Redis password (do not
     # change)
