@@ -22,6 +22,8 @@ rubintv:
       repository: ts-dockerhub.lsst.org/rapid-analysis
       tag: c0036
       pullPolicy: Always
+    uid: 73006
+    gid: 73006
     env:
     - name: S3_ENDPOINT_URL
       value: *s-s3E
