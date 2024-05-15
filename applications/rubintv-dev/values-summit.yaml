@@ -84,5 +84,6 @@ rubintv:
       limits:
         cpu: 1.0
         memory: 2.5G
-  global:
-    tsVaultSecretsPath: /ts/software
+
+global:
+  tsVaultSecretsPath: /ts/software
