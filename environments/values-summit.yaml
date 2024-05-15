@@ -12,6 +12,7 @@ applications:
   portal: true
   postgres: true
   rubintv: true
+  rubintv-dev: true
   sasquatch: true
   squareone: true
   strimzi: true

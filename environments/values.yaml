@@ -152,6 +152,9 @@ applications:
   # -- Enable the rubintv application
   rubintv: false
 
+  # -- Enable the rubintv-dev application
+  rubintv-dev: false
+
   # -- Enable the sasquatch application
   sasquatch: false
 

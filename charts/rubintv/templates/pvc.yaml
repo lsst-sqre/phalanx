@@ -1,0 +1,22 @@
+{{- if .Values.workers.volumes }}
+{{- range $vol := .Values.workers.volumes }}
+{{- if $vol.persistentVolumeClaim }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ $vol.persistentVolumeClaim.name | quote }}
+  annotations:
+    pv.beta.kubernetes.io/uid: "{{ $.Values.workers.uid }}"
+    pv.beta.kubernetes.io/gid: "{{ $.Values.workers.gid }}"
+spec:
+  accessModes:
+  - {{ $vol.accessMode | quote }}
+  resources:
+    requests:
+      storage: {{ $vol.persistentVolumeClaim.capacity | quote }}
+  storageClassName: {{ $vol.persistentVolumeClaim.storageClassName | quote }}
+{{- end }}
+{{- end }}
+{{- end }}
+
