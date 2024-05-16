@@ -20,7 +20,7 @@ pq:
     # -- Image to use in the consdb deployment
     repository: "ghcr.io/lsst-dm/consdb-pq"
     # -- Overrides the image tag whose default is the chart appVersion.
-    tag: "tickets-DM-44099"
+    tag: ""
 
 kafka:
   # -- Kafka bootstrap server

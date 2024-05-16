@@ -38,6 +38,6 @@ Consolidated Database of Image Metadata
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
 | pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb deployment |
-| pq.image.tag | string | `"tickets-DM-44099"` | Overrides the image tag whose default is the chart appVersion. |
+| pq.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | resources | object | `{}` | Resource limits and requests for the consdb deployment pod |
 | tolerations | list | `[]` | Tolerations for the consdb deployment pod |
