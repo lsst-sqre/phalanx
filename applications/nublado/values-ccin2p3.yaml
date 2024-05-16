@@ -18,6 +18,7 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"
         CULL_KERNEL_IDLE_TIMEOUT: "432000"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        DAF_BUTLER_REPOSITORY_INDEX: "/pbs/throng/lsst/software/rsp/butler-repos.yaml"
       homedirSchema: "username"
       homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
