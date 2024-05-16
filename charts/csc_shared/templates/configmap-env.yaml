@@ -1,3 +1,4 @@
+{{- if not .Values.secretsOnly }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -10,3 +11,4 @@ data:
     LSST_KAFKA_SECURITY_USERNAME: ts-salkafka
     LSST_SCHEMA_REGISTRY_URL: {{ $.Values.global.controlSystem.schemaRegistryUrl }}
     S3_ENDPOINT_URL: {{ $.Values.global.controlSystem.s3EndpointUrl }}
+{{- end }}
