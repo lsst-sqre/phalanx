@@ -24,6 +24,7 @@ controller:
         no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
         LSST_DISABLE_BUCKET_VALIDATION: "1"
       homedirSchema: "initialThenUsername"
+      nodeSelector: "edu.stanford.slac.sdf.project/rubin=true"
       nss:
         # Add rubin_users group (there is not yet a simpler way to do this).
         baseGroup: |
