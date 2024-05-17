@@ -65,12 +65,26 @@ kafka-connect-manager:
       test:
         enabled: true
         topicsRegex: "lsst.sal.Test"
+      lsst.example:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.example"
+        topicsRegex: "lsst.example.*"
+        tags: band,instrument
 
 kafdrop:
   ingress:
     enabled: true
     hostname: data-int.lsst.cloud
 
+rest-proxy:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: data-int.lsst.cloud
+  kafka:
+    topicPrefixes:
+      - lsst.example
 chronograf:
   ingress:
     enabled: true
