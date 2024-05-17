@@ -10,7 +10,6 @@ applications:
   nightreport: true
   nublado: true
   portal: true
-  postgres: true
   rubintv: true
   rubintv-dev: true
   sasquatch: true
