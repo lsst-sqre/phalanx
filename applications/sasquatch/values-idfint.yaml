@@ -71,6 +71,24 @@ kafka-connect-manager:
         connectInfluxDb: "lsst.example"
         topicsRegex: "lsst.example.*"
         tags: band,instrument
+      lsst.atcamera:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.ATCamera"
+        topicsRegex: "lsst.ATCamera.*"
+        tags: Agent,Aspic,Location,Raft,Reb,Sensor,Source
+      lsst.cccamera:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.CCCamera"
+        topicsRegex: "lsst.CCCamera.*"
+        tags: Agent,Aspic,Cold,Cryo,Hardware,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Source
+      lsst.mtcamera:
+        enabled: true
+        timestamp: "timestamp"
+        connectInfluxDb: "lsst.MTCamera"
+        topicsRegex: "lsst.MTCamera.*"
+        tags: Agent,Aspic,Axis,Canbus,Cip,Clamp,Cold,Controller,Cryo,Gateway,Hardware,Hip,Hook,Latch,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Socket,Source,Truck
 
 kafdrop:
   ingress:
@@ -85,6 +103,10 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.example
+      - lsst.ATCamera
+      - lsst.CCCamera
+      - lsst.MTCamera
+
 chronograf:
   ingress:
     enabled: true
