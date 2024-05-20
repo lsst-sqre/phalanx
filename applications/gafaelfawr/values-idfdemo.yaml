@@ -20,6 +20,7 @@ config:
       notebook:
         cpu: 4.0
         memory: 16
+
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
