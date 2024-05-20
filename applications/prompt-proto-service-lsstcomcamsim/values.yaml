@@ -29,10 +29,14 @@ prompt-proto-service:
   instrument:
     # -- The "short" name of the instrument
     name: LSSTComCamSim
-    # -- Machine-readable string describing which pipeline(s) should be run for which visits.
-    # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
-    # @default -- None, must be set
-    pipelines: ""
+    pipelines:
+      # -- Machine-readable string describing which pipeline(s) should be run for which visits.
+      # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+      # @default -- None, must be set
+      main: ""
+      # -- Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival.
+      # @default -- None, must be set
+      preprocessing: ""
     # -- Skymap to use with the instrument
     skymap: ops_rehersal_prep_2k_v1
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.

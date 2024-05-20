@@ -15,11 +15,15 @@ prompt-proto-service:
     tag: 2.5.0
 
   instrument:
-    pipelines: >-
-      (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
-      (survey="")=[]
+    pipelines:
+      main: >-
+        (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
+        (survey="")=[]
+      preprocessing: >-
+        (survey="ops-rehearsal-3")=[]
+        (survey="")=[]
     calibRepo: s3://rubin-summit-users
     calibRepoPguser: lsstcomcamsim_prompt
 
