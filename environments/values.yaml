@@ -158,9 +158,6 @@ applications:
   # -- Enable the sasquatch application
   sasquatch: false
 
-  # -- Enable the schedview-prenight application
-  schedview-prenight: false
-
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
