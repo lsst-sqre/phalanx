@@ -12,7 +12,6 @@ prompt-proto-service:
 
   instrument:
     calibRepo: s3://rubin-summit-users/
-    calibRepoPguser: rubin
 
   s3:
     imageBucket: rubin:rubin-pp

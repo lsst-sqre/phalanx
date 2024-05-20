@@ -17,7 +17,6 @@ prompt-proto-service:
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
       preprocessing: (survey="SURVEY")=[]
     calibRepo: s3://rubin-pp-dev-users/central_repo/
-    calibRepoPguser: lsstcomcamsim_prompt
 
   s3:
     imageBucket: rubin-pp-dev
