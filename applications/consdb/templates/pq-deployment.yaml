@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "consdb"
+  name: "consdb-pq"
   labels:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
@@ -13,24 +13,33 @@ spec:
       {{- include "consdb.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
+        component: pq
         {{- include "consdb.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: {{ .Chart.Name }}
+        - name: "consdb-pq"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.pq.image.repository }}:{{ .Values.pq.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
@@ -45,33 +54,16 @@ spec:
               value: "{{ .Values.db.user }}"
             - name: "DB_NAME"
               value: "{{ .Values.db.database }}"
-            - name: "AWS_ACCESS_KEY_ID"
-              valueFrom:
-                secretKeyRef:
-                  name: consdb
-                  key: "lfa-key"
-            - name: "AWS_SECRET_ACCESS_KEY"
-              valueFrom:
-                secretKeyRef:
-                  name: consdb
-                  key: "lfa-password"
-            - name: "BUCKET_PREFIX"
-              value: "{{ .Values.lfa.bucket_prefix }}"
-            - name: "S3_ENDPOINT_URL"
-              value: "{{ .Values.lfa.s3EndpointUrl }}"
-            - name: "KAFKA_BOOTSTRAP"
-              value: "{{ .Values.kafka.bootstrap }}"
-            - name: "KAFKA_USERNAME"
-              value: "{{ .Values.kafka.username }}"
-            - name: "KAFKA_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: sasquatch
-                  key: "consdb-password"
-            - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
-            - name: "SCHEMA_URL"
-              value: "{{ .Values.kafka.schema_url }}"
+            - name: "LOG_CONFIG"
+              value: "DEBUG"
+          volumeMounts:
+            - mountPath: /tmp
+              name: temp
+      volumes:
+        - name: temp
+          emptyDir:
+            sizeLimit: 100Mi
+
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
