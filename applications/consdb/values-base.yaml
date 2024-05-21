@@ -5,8 +5,15 @@ db:
 lfa:
   s3EndpointUrl: "https://s3.ls.lsst.org"
 hinfo:
-  image:
-    tag: "2.0.4"
+  latiss:
+    enable: true
+    tag: "tickets-DM-44551"
+  lsstcomcam:
+    enable: true
+    tag: "tickets-DM-44551"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
 pq:
   image:
-    tag: "2.0.3"
+    tag: "tickets-DM-44551"

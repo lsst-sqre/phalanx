@@ -4,3 +4,16 @@ db:
   database: "butler"
 lfa:
   s3EndpointUrl: "https://s3.cp.lsst.org"
+hinfo:
+  latiss:
+    enable: true
+    tag: "tickets-DM-44551"
+  lsstcomcam:
+    enable: true
+    tag: "tickets-DM-44551"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
+pq:
+  image:
+    tag: "tickets-DM-44387"

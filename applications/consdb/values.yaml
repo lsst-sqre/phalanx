@@ -2,22 +2,37 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-image:
-  # -- Number of consdb deployment pods to start
-  replicaCount: 1
-  # -- Pull policy for the consdb image
-  pullPolicy: "Always"
-
 hinfo:
+  # -- Number of consdb-hinfo deployment pods to start per instrument
+  replicaCount: 1
   image:
-    # -- Image to use in the consdb deployment
+    # -- Pull policy for the consdb-hinfo image
+    pullPolicy: "Always"
+    # -- Image to use in the consdb-hinfo deployment
     repository: "ghcr.io/lsst-dm/consdb-hinfo"
-    # -- Overrides the image tag whose default is the chart appVersion.
+  latiss:
+    # -- Enable deployment of consdb-hinfo for LATISS.
+    enable: false
+    # -- Tag for LATISS deployment.
+    tag: ""
+  lsstcomcam:
+    # -- Enable deployment of consdb-hinfo for LSSTComCam.
+    enable: false
+    # -- Tag for LSSTComCam deployment.
+    tag: ""
+  lsstcam:
+    # -- Enable deployment of consdb-hinfo for LSSTCam.
+    enable: false
+    # -- Tag for LSSTCam deployment.
     tag: ""
 
 pq:
+  # -- Number of consdb-hinfo deployment pods to start
+  replicaCount: 1
   image:
-    # -- Image to use in the consdb deployment
+    # -- Pull policy for the consdb-hinfo image
+    pullPolicy: "Always"
+    # -- Image to use in the consdb-pq deployment
     repository: "ghcr.io/lsst-dm/consdb-pq"
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: ""

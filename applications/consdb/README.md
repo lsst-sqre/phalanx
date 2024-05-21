@@ -23,10 +23,15 @@ Consolidated Database of Image Metadata
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| hinfo.image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb deployment |
-| hinfo.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
-| image.pullPolicy | string | `"Always"` | Pull policy for the consdb image |
-| image.replicaCount | int | `1` | Number of consdb deployment pods to start |
+| hinfo.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
+| hinfo.image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb-hinfo deployment |
+| hinfo.latiss.enable | bool | `false` | Enable deployment of consdb-hinfo for LATISS. |
+| hinfo.latiss.tag | string | `""` | Tag for LATISS deployment. |
+| hinfo.lsstcam.enable | bool | `false` | Enable deployment of consdb-hinfo for LSSTCam. |
+| hinfo.lsstcam.tag | string | `""` | Tag for LSSTCam deployment. |
+| hinfo.lsstcomcam.enable | bool | `false` | Enable deployment of consdb-hinfo for LSSTComCam. |
+| hinfo.lsstcomcam.tag | string | `""` | Tag for LSSTComCam deployment. |
+| hinfo.replicaCount | int | `1` | Number of consdb-hinfo deployment pods to start per instrument |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | kafka.bootstrap | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka bootstrap server |
 | kafka.group_id | string | `"consdb-consumer"` | Name of Kafka consumer group |
@@ -37,7 +42,9 @@ Consolidated Database of Image Metadata
 | lfa.s3EndpointUrl | string | `""` | url |
 | nodeSelector | object | `{}` | Node selection rules for the consdb deployment pod |
 | podAnnotations | object | `{}` | Annotations for the consdb deployment pod |
-| pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb deployment |
+| pq.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
+| pq.image.repository | string | `"ghcr.io/lsst-dm/consdb-pq"` | Image to use in the consdb-pq deployment |
 | pq.image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| pq.replicaCount | int | `1` | Number of consdb-hinfo deployment pods to start |
 | resources | object | `{}` | Resource limits and requests for the consdb deployment pod |
 | tolerations | list | `[]` | Tolerations for the consdb deployment pod |
