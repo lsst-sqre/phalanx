@@ -74,7 +74,6 @@ Authentication and identity system
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |
-| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
@@ -91,7 +90,6 @@ Authentication and identity system
 | maintenance.podAnnotations | object | `{}` | Annotations for Gafaelfawr maintenance and audit pods |
 | maintenance.resources | object | See `values.yaml` | Resource limits and requests for Gafaelfawr maintenance and audit pods |
 | maintenance.tolerations | list | `[]` | Tolerations for Gafaelfawr maintenance and audit pods |
-| nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the Gafaelfawr frontend pod |
 | operator.affinity | object | `{}` | Affinity rules for the token management pod |
 | operator.nodeSelector | object | `{}` | Node selection rules for the token management pod |

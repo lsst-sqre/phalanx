@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-schema-update
+  name: "gafaelfawr-schema-update"
   annotations:
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
@@ -23,7 +23,7 @@ spec:
         gafaelfawr-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}-schema-update
+      serviceAccountName: "gafaelfawr-schema-update"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -106,7 +106,7 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config-schema-update
+            name: "gafaelfawr-config-schema-update"
         - name: "lifecycle"
           emptyDir: {}
       {{- with .Values.nodeSelector }}

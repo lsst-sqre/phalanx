@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-config
+  name: "gafaelfawr-config"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 data:
@@ -12,10 +12,11 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-config-schema-update
+  name: "gafaelfawr-config-schema-update"
   {{- if .Values.config.updateSchema }}
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
     helm.sh/hook-weight: "0"
   {{- end }}
   labels:

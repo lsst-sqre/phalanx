@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-maintenance
+  name: "gafaelfawr-maintenance"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -72,14 +72,14 @@ spec:
           volumes:
             - name: "config"
               configMap:
-                name: {{ template "gafaelfawr.fullname" . }}-config
+                name: "gafaelfawr-config"
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
               secret:
-                secretName: {{ template "gafaelfawr.fullname" . }}-keytab
+                secretName: "gafaelfawr-keytab"
             - name: "kerberos-config"
               configMap:
-                name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+                name: "gafaelfawr-config-kerberos"
             - name: "tmp"
               emptyDir: {}
             {{- end }}

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}
+  name: "gafaelfawr"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -23,7 +23,7 @@ spec:
         gafaelfawr-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}
+      serviceAccountName: "gafaelfawr"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -113,14 +113,14 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config
+            name: "gafaelfawr-config"
         {{- if .Values.config.ldap.kerberosConfig }}
         - name: "keytab"
           secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-keytab
+            secretName: "gafaelfawr-keytab"
         - name: "kerberos-config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+            name: "gafaelfawr-config-kerberos"
         - name: "tmp"
           emptyDir: {}
         {{- end }}
