@@ -30,7 +30,6 @@ applications:
   postgres: true
   rubintv: true
   sasquatch: true
-  schedview-prenight: true
   schedview-snapshot: true
   semaphore: true
   siav2: true
