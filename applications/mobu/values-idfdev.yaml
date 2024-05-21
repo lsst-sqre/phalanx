@@ -15,6 +15,7 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_branch: "prod"
+          exclude_dirs: ["experiments"]
         restart: true
     - name: "tutorial"
       count: 1
@@ -30,6 +31,7 @@ config:
         options:
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
           repo_branch: "prod"
+          exclude_dirs: ["DP02_09_Custom_Coadds", "DP02_11_User_Packages"]
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true
