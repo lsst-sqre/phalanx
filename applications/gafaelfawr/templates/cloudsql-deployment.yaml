@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cloud-sql-proxy
+  name: "cloud-sql-proxy"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -21,7 +21,7 @@ spec:
         {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "cloud-sql-proxy"
     spec:
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}
+      serviceAccountName: "gafaelfawr"
       containers:
         - name: "cloud-sql-proxy"
           command:

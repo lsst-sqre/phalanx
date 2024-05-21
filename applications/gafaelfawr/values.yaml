@@ -1,11 +1,5 @@
 # Default values for Gafaelfawr.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 # -- Number of web frontend pods to start
 replicaCount: 1
 
@@ -30,17 +24,17 @@ resources:
     cpu: "100m"
     memory: "150Mi"
 
-# -- Annotations for the Gafaelfawr frontend pod
-podAnnotations: {}
+# -- Affinity rules for the Gafaelfawr frontend pod
+affinity: {}
 
 # -- Node selector rules for the Gafaelfawr frontend pod
 nodeSelector: {}
 
+# -- Annotations for the Gafaelfawr frontend pod
+podAnnotations: {}
+
 # -- Tolerations for the Gafaelfawr frontend pod
 tolerations: []
-
-# -- Affinity rules for the Gafaelfawr frontend pod
-affinity: {}
 
 config:
   # -- Where to send the user after they log out

@@ -4,7 +4,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: "/auth/tokens/"
     nginx.ingress.kubernetes.io/use-regex: "true"
-  name: {{ template "gafaelfawr.fullname" . }}-rewrite
+  name: "gafaelfawr-rewrite"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -17,6 +17,6 @@ spec:
             pathType: "ImplementationSpecific"
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080

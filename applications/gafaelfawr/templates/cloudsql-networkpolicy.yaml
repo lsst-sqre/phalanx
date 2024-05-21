@@ -15,7 +15,7 @@ spec:
     - Ingress
   ingress:
     # Allow inbound access to the Cloud SQL Proxy from other components except
-    # the frontend.  The frontend, since it's performance-critical and gates
+    # the frontend. The frontend, since it's performance-critical and gates
     # all access to the cluster, continues running its own sidecar.
     - from:
         - podSelector:
