@@ -25,7 +25,6 @@ prompt-proto-service:
         (survey="ops-rehearsal-3")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
-    calibRepoPguser: lsstcomcamsim_prompt
 
   s3:
     imageBucket: rubin-summit
