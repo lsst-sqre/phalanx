@@ -15,6 +15,14 @@ vault-secrets-operator:
           name: "vault-credentials"
           key: "VAULT_SECRET_ID"
 
+  # -- Resource requests and limits for vault-secrets-operator
+  resources:
+    limits:
+      cpu: "300m"
+      memory: "300Mi"
+    requests:
+      cpu: "20m"
+      memory: "30Mi"
   serviceAccount:
     # -- Disable creation of a secret for the service account. It shouldn't be
     # needed and it conflicts with the secret we create that contains the
