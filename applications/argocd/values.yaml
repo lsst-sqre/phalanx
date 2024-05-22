@@ -23,21 +23,53 @@ argo-cd:
 
         # -- Labels to add to `argocd_app_labels` metric
         labels: ["name", "instance"]
+    # -- Resource limits and requests for the application controller pods
+    resources:
+      limits:
+        cpu: "8"
+        memory: "3Gi"
+      requests:
+        cpu: "1"
+        memory: "1Gi"
 
   repoServer:
     metrics:
       # -- Enable repo server metrics service
       enabled: true
+    # -- Resource limits and requests for the repo server pods
+    resources:
+      limits:
+        cpu: "1"
+        memory: "640Mi"
+      requests:
+        cpu: "200m"
+        memory: "80Mi"
 
   notifications:
     metrics:
       # -- Enable notifications metrics service
       enabled: true
+    # -- Resource limits and requests for the notifications controller
+    resources: {}
+      limits:
+        cpu: "100m"
+        memory: "350Mi"
+      requests:
+        cpu: "5m"
+        memory: "32Mi"
 
   server:
     metrics:
       # -- Enable server metrics service
       enabled: true
+    # -- Resource limits and requests for the Argo CD server
+    resources: {}
+      limits:
+        cpu: "1"
+        memory: "500Mi"
+      requests:
+        cpu: "10m"
+        memory: "64Mi"
 
     ingress:
       # -- Create an ingress for the Argo CD server
