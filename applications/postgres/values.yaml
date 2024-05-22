@@ -16,6 +16,15 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
+# -- Resource requests and limits for postgres pod
+resources:
+  limits:
+    cpu: "1"
+    memory: "128Mi"
+  requests:
+    cpu: "60m"
+    memory: "32Mi"
+
 # -- Volume size for postgres.  It can generally be very small
 postgresVolumeSize: "1Gi"
 
