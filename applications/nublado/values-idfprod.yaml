@@ -17,9 +17,7 @@ controller:
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "s3://butler-us-central1-repo-locations/data-repos.yaml"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
-        NO_ACTIVITY_TIMEOUT: "432000"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
       initContainers:
         - name: "inithome"
           image:
@@ -81,12 +79,9 @@ jupyterhub:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
   cull:
-    enabled: true
-    users: false
-    removeNamedServers: false
-    timeout: 432000
-    every: 300
-    maxAge: 2160000
+    timeout: 432000  # 5 days
+    every: 300  # 5 minutes
+    maxAge: 2160000  # 25 days
 hub:
   internalDatabase: false
 cloudsql:

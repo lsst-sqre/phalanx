@@ -32,9 +32,7 @@ controller:
         PANDACACHE_URL: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
-        NO_ACTIVITY_TIMEOUT: "432000"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
       initContainers:
         - name: "inithome"
           image:
