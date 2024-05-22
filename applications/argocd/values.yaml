@@ -49,8 +49,9 @@ argo-cd:
     metrics:
       # -- Enable notifications metrics service
       enabled: true
+
     # -- Resource limits and requests for the notifications controller
-    resources: {}
+    resources:
       limits:
         cpu: "100m"
         memory: "350Mi"
@@ -62,8 +63,9 @@ argo-cd:
     metrics:
       # -- Enable server metrics service
       enabled: true
+
     # -- Resource limits and requests for the Argo CD server
-    resources: {}
+    resources:
       limits:
         cpu: "1"
         memory: "500Mi"
