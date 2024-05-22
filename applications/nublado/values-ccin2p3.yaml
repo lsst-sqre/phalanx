@@ -13,9 +13,9 @@ controller:
     lab:
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
-        NO_ACTIVITY_TIMEOUT: "432000"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"
-        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"
+        NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"  # 5 days
+        CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
       homedirSchema: "username"
       homedirPrefix: "/sps/lsst/users"
       homedirSuffix: "rsp_home"
@@ -64,14 +64,10 @@ controller:
           volumeName: "sps"
 jupyterhub:
   hub:
-    baseUrl: "/nb"
-    config:
-      ServerApp:
-        shutdown_no_activity_timeout: 432000
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
       upgrade: true
   cull:
-    timeout: 432000
-    every: 300
-    maxAge: 2160000
+    timeout: 432000  # 5 days
+    every: 300  # 5 minutes
+    maxAge: 2160000  # 25 days

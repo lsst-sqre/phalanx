@@ -29,7 +29,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.fileserver.creationTimeout | int | `120` | Timeout to wait for Kubernetes to create file servers, in seconds |
 | controller.config.fileserver.deleteTimeout | int | 60 (1 minute) | Timeout for deleting a user's file server from Kubernetes, in seconds |
 | controller.config.fileserver.enabled | bool | `false` | Enable user file servers |
-| controller.config.fileserver.idleTimeout | int | `3600` | Timeout for idle user fileservers, in seconds |
+| controller.config.fileserver.idleTimeout | int | 3600 (1 hour) | Timeout for idle user fileservers, in seconds |
 | controller.config.fileserver.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for file server image |
 | controller.config.fileserver.image.repository | string | `"ghcr.io/lsst-sqre/worblehat"` | File server image to use |
 | controller.config.fileserver.image.tag | string | `"0.1.0"` | Tag of file server image to use |
