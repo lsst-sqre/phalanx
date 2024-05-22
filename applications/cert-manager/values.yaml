@@ -32,10 +32,28 @@ cert-manager:
     extraArgs:
       - "--logging-format=json"
 
+  # -- requests and limits for the cert-manager controller
+  resources:
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+
   webhook:
     # -- Additional arguments to the webhook pod
     extraArgs:
       - "--logging-format=json"
+    # -- requests and limits for the webhook pod
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "256Mi"
+      requests:
+        cpu: "10m"
+        memory: "32Mi"
+
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
