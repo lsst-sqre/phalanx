@@ -50,9 +50,7 @@ def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
 def test_create(tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
     shutil.copytree(str(phalanx_test_path()), str(config_path))
-    (config_path / "docs").mkdir()
     app_docs_path = config_path / "docs" / "applications"
-    app_docs_path.mkdir()
     apps_path = config_path / "applications"
 
     # Add three new applications that sort at the start, in the middle, and at
@@ -116,6 +114,12 @@ def test_create(tmp_path: Path) -> None:
     assert (app_docs_path / "hips" / "values.md").exists()
     assert (app_docs_path / "zzz-other-app" / "index.rst").exists()
     assert (app_docs_path / "zzz-other-app" / "values.md").exists()
+
+    # Check that the applications were added to the indices.
+    index = (app_docs_path / "infrastructure.rst").read_text()
+    assert index == read_output_data("docs", "infrastructure.rst")
+    index = (app_docs_path / "rsp.rst").read_text()
+    assert index == read_output_data("docs", "rsp.rst")
 
     # Enable all of these applications for the minikube environment so that we
     # can load them with the normal tools.
@@ -221,9 +225,6 @@ def test_create_errors(tmp_path: Path) -> None:
 def test_create_prompt(tmp_path: Path) -> None:
     config_path = tmp_path / "phalanx"
     shutil.copytree(str(phalanx_test_path()), str(config_path))
-    (config_path / "docs").mkdir()
-    app_docs_path = config_path / "docs" / "applications"
-    app_docs_path.mkdir()
 
     # Add an application, prompting for the description.
     result = run_cli(

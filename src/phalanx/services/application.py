@@ -123,7 +123,7 @@ class ApplicationService:
         self._create_application_template(name, project)
 
         # Add the documentation.
-        self._create_application_docs(name, description)
+        self._create_application_docs(name, description, project)
 
     def lint(self, app_names: list[str], env_name: str | None) -> bool:
         """Lint an application with Helm.
@@ -353,7 +353,9 @@ class ApplicationService:
         setting = f"# -- Enable the {name} application\n{name}: false"
         self._config.add_application_setting(name, setting)
 
-    def _create_application_docs(self, name: str, description: str) -> None:
+    def _create_application_docs(
+        self, name: str, description: str, project: Project
+    ) -> None:
         """Add the documentation for a new application.
 
         This does not add the new documentation to the index page for all
@@ -368,6 +370,8 @@ class ApplicationService:
             Name of the new application.
         description
             Short description of the new application.
+        project
+            Project of the application.
 
         Raises
         ------
@@ -384,6 +388,24 @@ class ApplicationService:
         template = self._templates.get_template("application-values.md.jinja")
         values = template.render({"name": name})
         (docs_path / "values.md").write_text(values)
+
+        # Add the reference to the new documentation into the index of
+        # applications in that project.
+        index_path = (
+            self._path / "docs" / "applications" / (project.value + ".rst")
+        )
+        index = index_path.read_text().split("\n")
+        line = 0
+        while index[line] is not None and ".. toctree::" not in index[line]:
+            line += 1
+        while index[line] is not None and index[line].strip():
+            line += 1
+        line += 1
+        new_line = f"   {name}/index"
+        while index[line] and index[line].strip() and new_line >= index[line]:
+            line += 1
+        index.insert(line, new_line)
+        index_path.write_text("\n".join(index))
 
 
 def _json_and_base64_encode(obj: Any) -> str:
