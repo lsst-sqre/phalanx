@@ -7,12 +7,12 @@
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null
