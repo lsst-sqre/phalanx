@@ -3,6 +3,28 @@
 # Declare variables to be passed into your templates.
 
 connect:
+  api:
+
+    # -- Resource requests and limits for connect-api pod
+    resources:
+      limits:
+        cpu: "1"
+        memory: "32Mi"
+      requests:
+        cpu: "1m"
+        memory: "15Mi"
+
+  sync:
+
+    # -- Resource requests and limits for connect-sync pod
+    resources:
+      limits:
+        cpu: "1"
+        memory: "32Mi"
+      requests:
+        cpu: "1m"
+        memory: "10Mi"
+
   connect:
     # -- Name of secret containing the 1Password credentials
     credentialsName: "onepassword-connect-secret"

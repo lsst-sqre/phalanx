@@ -33,6 +33,7 @@ Squarebot backend that unfurls Jira issues.
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the unfurlbot deployment pod |
 | podAnnotations | object | `{}` | Annotations for the unfurlbot deployment pod |
+| redis.resources | object | `{"limits":{"cpu":"1","memory":"12Mi"},"requests":{"cpu":"2m","memory":"3Mi"}}` | Resource requests and limits for the redis pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the unfurlbot deployment pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the unfurlbot deployment pod |
 | tolerations | list | `[]` | Tolerations for the unfurlbot deployment pod |

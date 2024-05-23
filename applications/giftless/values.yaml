@@ -7,7 +7,14 @@ nameOverride: ""
 fullnameOverride: ""
 
 # -- Resource limits and requests for the giftless frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "230Mi"
+  requests:
+    cpu: "20m"
+    memory: "110Mi"
 
 # -- Annotations for the giftless frontend pod
 podAnnotations: {}
