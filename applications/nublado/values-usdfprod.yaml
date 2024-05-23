@@ -135,4 +135,4 @@ jupyterhub:
   cull:
     timeout: 432000  # 5 days
     every: 300  # 5 minutes
-    maxAge: 2160000  # 25 days
+    maxAge: 691200  # 8 days
