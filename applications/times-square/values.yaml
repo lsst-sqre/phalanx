@@ -60,7 +60,14 @@ ingress:
   path: "/times-square/api"
 
 # -- Resource limits and requests for the times-square deployment pod
-resources: {}
+# @default -- see `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "350Mi"
+  requests:
+    cpu: "2m"
+    memory: "100Mi"
 
 autoscaling:
   # -- Enable autoscaling of times-square deployment
@@ -135,6 +142,15 @@ cloudsql:
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
+    # -- Resource requests and limits for Cloud SQL pod
+    resources:
+      limits:
+        cpu: "1"
+        memory: "50Mi"
+      requests:
+        cpu: "1m"
+        memory: "8Mi"
+
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
 
@@ -164,6 +180,10 @@ redis:
   resources:
     limits:
       cpu: "1"
+      memory: "130Mi"
+    requests:
+      cpu: "6m"
+      memory: "50Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

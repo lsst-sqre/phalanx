@@ -52,7 +52,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of API pods to run |
-| resources | object | `{}` |  |
+| resources | object | See `values.yaml` | Resource requests and limits for noteburst |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

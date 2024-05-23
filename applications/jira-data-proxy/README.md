@@ -28,5 +28,5 @@ Jira API read-only proxy for Times Square users.
 | nodeSelector | object | `{}` | Node selection rules for the jira-data-proxy deployment pod |
 | podAnnotations | object | `{}` | Annotations for the jira-data-proxy deployment pod |
 | replicaCount | int | `2` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the jira-data-proxy deployment pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the jira-data-proxy deployment pod |
 | tolerations | list | `[]` | Tolerations for the jira-data-proxy deployment pod |

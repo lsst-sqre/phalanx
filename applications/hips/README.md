@@ -28,5 +28,5 @@ HiPS tile server backed by Google Cloud Storage
 | nodeSelector | object | `{}` | Node selection rules for the hips deployment pod |
 | podAnnotations | object | `{}` | Annotations for the hips deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the hips deployment pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the hips deployment pod |
 | tolerations | list | `[]` | Tolerations for the hips deployment pod |

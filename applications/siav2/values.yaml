@@ -37,7 +37,14 @@ autoscaling:
 podAnnotations: {}
 
 # -- Resource limits and requests for the siav2 deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "700Mi"
+  requests:
+    cpu: "3m"
+    memory: "256Mi"
 
 # -- Node selection rules for the siav2 deployment pod
 nodeSelector: {}

@@ -3,6 +3,9 @@ cadc-tap:
   ingress:
     path: "ssotap"
 
+  # Resource limits and requests for the
+  resources:
+
   config:
     # -- What type of backend?
     backend: "pg"

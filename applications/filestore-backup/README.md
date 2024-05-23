@@ -29,5 +29,5 @@ Tool to manage Google Filestore backups
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the filestore-backup pods |
 | podAnnotations | object | `{}` | Annotations for the filestore-backup pods |
-| resources | object | `{}` | Resource limits and requests for the filestore-backup pods |
+| resources | object | see `values.yaml` | Resource limits and requests for the filestore-backup pods |
 | tolerations | list | `[]` | Tolerations for the filestore-backup pods |
