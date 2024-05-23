@@ -32,7 +32,8 @@ cert-manager:
     extraArgs:
       - "--logging-format=json"
 
-  # -- requests and limits for the cert-manager controller
+  # -- Resource requests and limits for the cert-manager controller
+  # @default -- See `values.yaml`
   resources:
     limits:
       cpu: "1"
@@ -45,7 +46,9 @@ cert-manager:
     # -- Additional arguments to the webhook pod
     extraArgs:
       - "--logging-format=json"
-    # -- requests and limits for the webhook pod
+
+    # -- Resource requests and limits for the webhook pod
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "100m"

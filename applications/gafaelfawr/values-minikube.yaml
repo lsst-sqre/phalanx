@@ -3,6 +3,8 @@ redis:
   persistence:
     enabled: false
 
+resources: {}
+
 config:
   internalDatabase: true
   updateSchema: true

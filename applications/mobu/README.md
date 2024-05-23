@@ -26,5 +26,5 @@ Continuous integration testing
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |
-| resources | object | `{"limits":{"cpu":"1","memory":"3.5Gi"},"requests":{"cpu":"50m","memory":"1Gi"}}` | Resource limits and requests for the mobu frontend pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the mobu frontend pod |
 | tolerations | list | `[]` | Tolerations for the mobu frontend pod |

@@ -17,6 +17,7 @@ image:
   tag: ""
 
 # -- Resource requests and limits for postgres pod
+# @default -- See `values.yaml`
 resources:
   limits:
     cpu: "1"

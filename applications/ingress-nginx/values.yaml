@@ -45,6 +45,7 @@ ingress-nginx:
       enabled: true
 
     # -- Resource requests and limits for ingress-nginx controller
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "4"

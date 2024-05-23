@@ -16,6 +16,7 @@ vault-secrets-operator:
           key: "VAULT_SECRET_ID"
 
   # -- Resource requests and limits for vault-secrets-operator
+  # @default -- See `values.yaml`
   resources:
     limits:
       cpu: "300m"

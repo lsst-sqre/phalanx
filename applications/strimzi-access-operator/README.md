@@ -11,7 +11,7 @@ Strimzi Access Operator
 | image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | image.repository | string | `"ghcr.io/lsst-sqre/kafka-access-operator"` | Image repository |
 | image.tag | string | The appVersion of the chart | Tag of the image |
-| resources | object | `{"limits":{"cpu":"50m","memory":"384Mi"},"requests":{"cpu":"5m","memory":"180Mi"}}` | Resource requests and limits for strimzi-access-operator |
+| resources | object | See `values.yaml` | Resource requests and limits for strimzi-access-operator |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `true` | Specifies whether a service account should be created. |
 | serviceAccount.name | string | `""` |  |

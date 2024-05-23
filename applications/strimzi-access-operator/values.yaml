@@ -10,6 +10,7 @@ image:
   tag: ""
 
 # -- Resource requests and limits for strimzi-access-operator
+# @default -- See `values.yaml`
 resources:
   limits:
     cpu: "50m"

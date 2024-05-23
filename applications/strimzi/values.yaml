@@ -1,3 +1,5 @@
+# -- Resource limits and requests for the strimzi-cluster-operator pod
+# @default -- See `values.yaml`
 strimzi-cluster-operator:
   resources:
     limits:
