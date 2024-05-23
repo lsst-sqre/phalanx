@@ -376,6 +376,7 @@ proxy:
   chp:
 
     # -- Resource limits and requests for proxy pod
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "150m"

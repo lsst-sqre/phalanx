@@ -64,7 +64,7 @@ ingress:
 resources:
   limits:
     cpu: "1"
-    memory: "350Mi"
+    memory: "1Gi"
   requests:
     cpu: "2m"
     memory: "100Mi"
@@ -180,7 +180,7 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "130Mi"
+      memory: "2Gi"
     requests:
       cpu: "6m"
       memory: "50Mi"

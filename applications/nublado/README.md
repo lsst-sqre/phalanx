@@ -116,6 +116,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
-| proxy.chp.resources | object | `{"limits":{"cpu":"150m","memory":"200Mi"},"requests":{"cpu":"5m","memory":"30Mi"}}` | Resource limits and requests for proxy pod |
-| proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) 5m, enable authentication caching |
+| proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
+| proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
 | secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
