@@ -15,6 +15,7 @@ controller:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        FIREFLY_HTML: "slate.html"
         LSST_SITE: "tucson"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "tucson"

@@ -13,6 +13,7 @@ controller:
     lab:
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
+        FIREFLY_HTML: "slate.html"
         NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
         CULL_KERNEL_IDLE_TIMEOUT: "432000"  # 5 days
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
