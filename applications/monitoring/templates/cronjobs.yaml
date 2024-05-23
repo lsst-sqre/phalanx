@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: bucketmaker
 spec:
-  schedule: {{ .Values.cronjob.schedule.bucketmaker | quote }}
+  schedule: {{ .Values.cronjob.bucketmaker.schedule | quote }}
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -23,6 +23,10 @@ spec:
           - name: bucketmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.bucketmaker.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -61,7 +65,7 @@ kind: CronJob
 metadata:
   name: bucketmapper
 spec:
-  schedule: {{ .Values.cronjob.schedule.bucketmapper | quote }}
+  schedule: {{ .Values.cronjob.bucketmapper.schedule | quote }}
   successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
@@ -81,6 +85,10 @@ spec:
           - name: bucketmapper
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.bucketmapper.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true
@@ -116,7 +124,7 @@ metadata:
   name: taskmaker
 spec:
   successfulJobsHistoryLimit: 1
-  schedule: {{ .Values.cronjob.schedule.taskmaker | quote }}
+  schedule: {{ .Values.cronjob.taskmaker.schedule | quote }}
   jobTemplate:
     spec:
       template:
@@ -135,6 +143,10 @@ spec:
           - name: taskmaker
             image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
             imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.taskmaker.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
             securityContext:
               allowPrivilegeEscalation: false
               runAsNonRoot: true

@@ -16,4 +16,3 @@ kubernetes-replicator:
     requests:
       cpu: "1m"
       memory: "14Mi"
-
