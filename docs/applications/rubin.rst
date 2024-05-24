@@ -10,6 +10,7 @@ Argo CD project: ``rubin``
    :maxdepth: 1
 
    alert-stream-broker/index
+   cm-service/index
    consdb/index
    exposurelog/index
    fastapi-bootcamp/index

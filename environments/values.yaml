@@ -62,6 +62,9 @@ applications:
   # -- Enable the checkerboard application
   checkerboard: false
 
+  # -- Enable the cm-service application
+  cm-service: false
+
   # -- Enable the control-system-test application
   control-system-test: false
 
