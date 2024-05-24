@@ -88,12 +88,6 @@ controller:
           volumeName: "auxtel"
 
 jupyterhub:
-  cull:
-    users: false
-    removeNamedServers: false
-    timeout: 432000  # 5 days
-    every: 300  # 5 minutes
-    maxAge: 2160000  # 25 days
   hub:
     db:
       upgrade: true

@@ -68,7 +68,3 @@ jupyterhub:
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
       upgrade: true
-  cull:
-    timeout: 432000  # 5 days
-    every: 300  # 5 minutes
-    maxAge: 2160000  # 25 days
