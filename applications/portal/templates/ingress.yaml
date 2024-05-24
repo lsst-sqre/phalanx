@@ -6,6 +6,7 @@ metadata:
     {{- include "portal.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  authCacheDuration: "5m"
   scopes:
     all:
       - "exec:portal"
@@ -22,7 +23,6 @@ template:
     name: {{ include "portal.fullname" . }}
     annotations:
       nginx.ingress.kubernetes.io/affinity: "cookie"
-      nginx.ingress.kubernetes.io/auth-cache-key: "$http_cookie$http_authorization"
       nginx.ingress.kubernetes.io/client-header-buffer-size: "24k"
       nginx.ingress.kubernetes.io/proxy-body-size: "0m"
       nginx.ingress.kubernetes.io/proxy-cookie-path: "/suit /portal/app"
