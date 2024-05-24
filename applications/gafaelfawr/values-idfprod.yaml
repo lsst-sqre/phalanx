@@ -57,9 +57,11 @@ config:
   initialAdmins:
     - "afausti"
     - "athornton"
+    - "danfuchs"
     - "frossie"
     - "jonathansick"
     - "rra"
+    - "svoutsin"
 
   errorFooter: |
     To report problems or ask for help, please open an issue in the

@@ -48,9 +48,11 @@ config:
   initialAdmins:
     - "afausti"
     - "athornton"
+    - "fajpunk"
     - "frossie"
     - "jonathansick"
     - "rra"
+    - "stvoutsin"
 
   errorFooter: |
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.
