@@ -22,3 +22,4 @@ applications:
   sqlproxy-cross-project: true
   squareone: true
   vault-secrets-operator: true
+  cm-service: true

@@ -13,6 +13,7 @@
 | applications.calsys | bool | `false` | Enable the calsys control system application |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.checkerboard | bool | `false` | Enable the checkerboard application |
+| applications.cm-service | bool | `false` | Enable the cm-service application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.eas | bool | `false` | Enable the eas control system application |
