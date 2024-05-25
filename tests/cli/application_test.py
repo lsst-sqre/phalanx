@@ -28,7 +28,13 @@ def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
     assert result.output == ""
     assert result.exit_code == 0
     assert mock_helm.call_args_list == [
-        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"]
+        [
+            "repo",
+            "add",
+            "--force-update",
+            "argoproj",
+            "https://argoproj.github.io/argo-helm",
+        ]
     ]
 
     mock_helm.reset_mock()
@@ -36,14 +42,27 @@ def test_add_helm_repos(mock_helm: MockHelmCommand) -> None:
     assert result.output == ""
     assert result.exit_code == 0
     assert mock_helm.call_args_list == [
-        ["repo", "add", "argoproj", "https://argoproj.github.io/argo-helm"],
         [
             "repo",
             "add",
+            "--force-update",
+            "argoproj",
+            "https://argoproj.github.io/argo-helm",
+        ],
+        [
+            "repo",
+            "add",
+            "--force-update",
             "jupyterhub",
             "https://jupyterhub.github.io/helm-chart/",
         ],
-        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        [
+            "repo",
+            "add",
+            "--force-update",
+            "lsst-sqre",
+            "https://lsst-sqre.github.io/charts/",
+        ],
     ]
 
 
@@ -276,7 +295,13 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     assert result.exit_code == 0
     set_args = read_output_json("idfdev", "lint-set-values")
     assert mock_helm.call_args_list == [
-        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        [
+            "repo",
+            "add",
+            "--force-update",
+            "lsst-sqre",
+            "https://lsst-sqre.github.io/charts/",
+        ],
         ["repo", "update"],
         ["dependency", "update", "--skip-refresh"],
         [
@@ -304,7 +329,13 @@ def test_lint(mock_helm: MockHelmCommand) -> None:
     assert result.output == expected
     assert result.exit_code == 0
     assert mock_helm.call_args_list == [
-        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        [
+            "repo",
+            "add",
+            "--force-update",
+            "lsst-sqre",
+            "https://lsst-sqre.github.io/charts/",
+        ],
         ["repo", "update"],
         ["dependency", "update", "--skip-refresh"],
         [
@@ -469,7 +500,13 @@ def test_template(mock_helm: MockHelmCommand) -> None:
     assert result.exit_code == 0
     set_args = read_output_json("idfdev", "lint-set-values")
     assert mock_helm.call_args_list == [
-        ["repo", "add", "lsst-sqre", "https://lsst-sqre.github.io/charts/"],
+        [
+            "repo",
+            "add",
+            "--force-update",
+            "lsst-sqre",
+            "https://lsst-sqre.github.io/charts/",
+        ],
         ["repo", "update"],
         ["dependency", "update", "--skip-refresh"],
         [
