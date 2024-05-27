@@ -45,6 +45,8 @@ spec:
           value: {{ .Values.global.baseUrl }}
         - name: "SAFIR_PATH_PREFIX"
           value: {{ .Values.workers.pathPrefix | quote }}
+        - name: "SCRIPTS_LOCATION"
+          value: "{{ .Values.workers.scriptsLocation }}"
         - name: "RUN_ARG"
           value: "{{ .Values.workers.script }} {{ .Values.siteTag }}"
         {{- if (not .Values.workers.debug) }}

@@ -24,6 +24,8 @@ rubintv:
       pullPolicy: Always
     uid: 73006
     gid: 73006
+    scriptsLocation: /repos/rubintv_analysis_service/scripts
+    script: rubintv_worker.py
     env:
     - name: S3_ENDPOINT_URL
       value: *s-s3E
