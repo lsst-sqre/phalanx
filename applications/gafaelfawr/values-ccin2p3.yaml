@@ -74,7 +74,7 @@ config:
 
   groupMapping:
     "admin:token":
-      - "lsst"
+      - "ccin2p3"
     "exec:admin":
       - "lsst"
     "exec:internal-tools":
