@@ -88,4 +88,3 @@ hub:
   internalDatabase: false
 secrets:
   templateSecrets: true
-
