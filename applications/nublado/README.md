@@ -81,12 +81,13 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hub.internalDatabase | bool | `true` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
+| hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
-| jupyterhub.cull.every | int | 600 (10 minutes) | How frequently to check for idle labs in seconds |
-| jupyterhub.cull.maxAge | int | 5184000 (60 days) | Maximum age of a lab regardless of activity |
+| jupyterhub.cull.every | int | 300 (5 minutes) | How frequently to check for idle labs in seconds |
+| jupyterhub.cull.maxAge | int | 2160000 (25 days) | Maximum age of a lab regardless of activity |
 | jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
-| jupyterhub.cull.timeout | int | 2592000 (30 days) | Default idle timeout before the lab is automatically deleted in seconds |
+| jupyterhub.cull.timeout | int | 432000 (5 days) | Default idle timeout before the lab is automatically deleted in seconds |
 | jupyterhub.cull.users | bool | `true` | Whether to log out the server when culling their lab |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
 | jupyterhub.hub.baseUrl | string | `"/nb"` | Base URL on which JupyterHub listens |

@@ -90,19 +90,9 @@ controller:
 
 jupyterhub:
   hub:
-    config:
-      ServerApp:
-        shutdown_no_activity_timeout: 432000
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-  cull:
-    enabled: true
-    users: false
-    removeNamedServers: false
-    timeout: 432000
-    every: 300
-    maxAge: 2160000
 
 hub:
   internalDatabase: false

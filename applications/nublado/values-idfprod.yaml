@@ -79,12 +79,10 @@ jupyterhub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
-  cull:
-    timeout: 432000  # 5 days
-    every: 300  # 5 minutes
-    maxAge: 2160000  # 25 days
+
 hub:
   internalDatabase: false
+
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"

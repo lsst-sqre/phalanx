@@ -348,6 +348,13 @@ hub:
   # controls how the database password is managed.
   internalDatabase: true
 
+  # -- Minimum remaining token lifetime when spawning a lab. The token cannot
+  # be renewed, so it should ideally live as long as the lab does. If the
+  # token has less remaining lifetime, the user will be redirected to
+  # reauthenticate before spawning a lab.
+  # @default -- `jupyterhub.cull.maxAge` if lab culling is enabled, else none
+  minimumTokenLifetime: null
+
   timeout:
     # -- Timeout for JupyterLab to start. Currently this sometimes takes over
     # 60 seconds for reasons we don't understand.
@@ -497,12 +504,12 @@ jupyterhub:
 
     # -- Default idle timeout before the lab is automatically deleted in
     # seconds
-    # @default -- 2592000 (30 days)
-    timeout: 2592000
+    # @default -- 432000 (5 days)
+    timeout: 432000
 
     # -- How frequently to check for idle labs in seconds
-    # @default -- 600 (10 minutes)
-    every: 600
+    # @default -- 300 (5 minutes)
+    every: 300
 
     # -- Whether to log out the server when culling their lab
     users: true
@@ -511,8 +518,8 @@ jupyterhub:
     removeNamedServers: true
 
     # -- Maximum age of a lab regardless of activity
-    # @default -- 5184000 (60 days)
-    maxAge: 5184000
+    # @default -- 2160000 (25 days)
+    maxAge: 2160000
 
   scheduling:
     userScheduler:
