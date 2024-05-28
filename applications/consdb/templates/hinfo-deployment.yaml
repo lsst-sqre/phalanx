@@ -39,6 +39,8 @@ spec:
           env:
             - name: "INSTRUMENT"
               value: "LATISS"
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.hinfo.latiss.logConfig }}"
             - name: "DB_HOST"
               value: "{{ .Values.db.host }}"
             - name: "DB_PASS"
@@ -135,6 +137,8 @@ spec:
           env:
             - name: "INSTRUMENT"
               value: "LSSTComCam"
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.hinfo.lsstcomcam.logConfig }}"
             - name: "DB_HOST"
               value: "{{ .Values.db.host }}"
             - name: "DB_PASS"
@@ -231,6 +235,8 @@ spec:
           env:
             - name: "INSTRUMENT"
               value: "LSSTCam"
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.hinfo.lsstcam.logConfig }}"
             - name: "DB_HOST"
               value: "{{ .Values.db.host }}"
             - name: "DB_PASS"

@@ -26,10 +26,13 @@ Consolidated Database of Image Metadata
 | hinfo.image.pullPolicy | string | `"Always"` | Pull policy for the consdb-hinfo image |
 | hinfo.image.repository | string | `"ghcr.io/lsst-dm/consdb-hinfo"` | Image to use in the consdb-hinfo deployment |
 | hinfo.latiss.enable | bool | `false` | Enable deployment of consdb-hinfo for LATISS. |
+| hinfo.latiss.logConfig | string | `"INFO"` | Log configuration for LATISS deployment. |
 | hinfo.latiss.tag | string | `""` | Tag for LATISS deployment. |
 | hinfo.lsstcam.enable | bool | `false` | Enable deployment of consdb-hinfo for LSSTCam. |
+| hinfo.lsstcam.logConfig | string | `"INFO"` | Log configuration for LSSTCam deployment. |
 | hinfo.lsstcam.tag | string | `""` | Tag for LSSTCam deployment. |
 | hinfo.lsstcomcam.enable | bool | `false` | Enable deployment of consdb-hinfo for LSSTComCam. |
+| hinfo.lsstcomcam.logConfig | string | `"INFO"` | Log configuration for LSSTComCam deployment. |
 | hinfo.lsstcomcam.tag | string | `""` | Tag for LSSTComCam deployment. |
 | hinfo.replicaCount | int | `1` | Number of consdb-hinfo deployment pods to start per instrument |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |

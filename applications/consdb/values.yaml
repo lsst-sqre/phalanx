@@ -15,16 +15,22 @@ hinfo:
     enable: false
     # -- Tag for LATISS deployment.
     tag: ""
+    # -- Log configuration for LATISS deployment.
+    logConfig: "INFO"
   lsstcomcam:
     # -- Enable deployment of consdb-hinfo for LSSTComCam.
     enable: false
     # -- Tag for LSSTComCam deployment.
     tag: ""
+    # -- Log configuration for LSSTComCam deployment.
+    logConfig: "INFO"
   lsstcam:
     # -- Enable deployment of consdb-hinfo for LSSTCam.
     enable: false
     # -- Tag for LSSTCam deployment.
     tag: ""
+    # -- Log configuration for LSSTCam deployment.
+    logConfig: "INFO"
 
 pq:
   # -- Number of consdb-hinfo deployment pods to start
