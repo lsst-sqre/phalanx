@@ -44,6 +44,16 @@ ingress-nginx:
       # -- Enable metrics reporting via Prometheus
       enabled: true
 
+    # -- Resource requests and limits for ingress-nginx controller
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "4"
+        memory: "5Gi"
+      requests:
+        cpu: "80m"
+        memory: "500Mi"
+
     service:
       # -- Force traffic routing policy to Local so that the external IP in
       # `X-Forwarded-For` will be correct

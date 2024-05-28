@@ -12,6 +12,16 @@ argo-cd:
       # -- Enable Redis metrics service
       enabled: true
 
+    # -- Resource limits and requests for the Redis controller
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+        memory: "50Mi"
+      requests:
+        cpu: "2m"
+        memory: "10Mi"
+
   controller:
     metrics:
       # -- Enable controller metrics service
@@ -24,20 +34,84 @@ argo-cd:
         # -- Labels to add to `argocd_app_labels` metric
         labels: ["name", "instance"]
 
+    # -- Resource limits and requests for the application controller pods
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "8"
+        memory: "3Gi"
+      requests:
+        cpu: "1"
+        memory: "1Gi"
+
+  dex:
+
+    # -- Resource limits and requests for the Dex server
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+        memory: "400Mi"
+      requests:
+        cpu: "5m"
+        memory: "30Mi"
+
+  applicationSet:
+
+    # -- Resource limits and requests for the applicationSet server
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+        memory: "128Mi"
+      requests:
+        cpu: "3m"
+        memory: "30Mi"
+
   repoServer:
     metrics:
       # -- Enable repo server metrics service
       enabled: true
+
+    # -- Resource limits and requests for the repo server pods
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+        memory: "640Mi"
+      requests:
+        cpu: "200m"
+        memory: "80Mi"
 
   notifications:
     metrics:
       # -- Enable notifications metrics service
       enabled: true
 
+    # -- Resource limits and requests for the notifications controller
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "100m"
+        memory: "350Mi"
+      requests:
+        cpu: "5m"
+        memory: "32Mi"
+
   server:
     metrics:
       # -- Enable server metrics service
       enabled: true
+
+    # -- Resource limits and requests for the Argo CD server
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "1"
+        memory: "500Mi"
+      requests:
+        cpu: "10m"
+        memory: "64Mi"
 
     ingress:
       # -- Create an ingress for the Argo CD server

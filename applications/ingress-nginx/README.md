@@ -21,5 +21,6 @@ Ingress controller
 | ingress-nginx.controller.config.use-forwarded-headers | string | `"true"` | Enable the `X-Forwarded-For` processing |
 | ingress-nginx.controller.metrics.enabled | bool | `true` | Enable metrics reporting via Prometheus |
 | ingress-nginx.controller.podLabels | object | See `values.yaml` | Add labels used by `NetworkPolicy` objects to restrict access to the ingress and thus ensure that auth subrequest handlers run |
+| ingress-nginx.controller.resources | object | See `values.yaml` | Resource requests and limits for ingress-nginx controller |
 | ingress-nginx.controller.service.externalTrafficPolicy | string | `"Local"` | Force traffic routing policy to Local so that the external IP in `X-Forwarded-For` will be correct |
 | vaultCertificate.enabled | bool | `false` | Whether to get the ingress TLS certificate from Vault instead of Let's Encrypt |

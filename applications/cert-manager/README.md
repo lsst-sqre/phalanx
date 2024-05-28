@@ -15,7 +15,9 @@ TLS certificate manager
 | cert-manager.cainjector.extraArgs | list | `["--logging-format=json"]` | Additional arguments to the CA injector |
 | cert-manager.extraArgs | list | `["--logging-format=json","--dns01-recursive-nameservers-only","--dns01-recursive-nameservers=8.8.8.8:53,1.1.1.1:53"]` | Additional arguments to the main cert-manager pod |
 | cert-manager.installCRDs | bool | `true` | Whether to install CRDs |
+| cert-manager.resources | object | See `values.yaml` | Resource requests and limits for the cert-manager controller |
 | cert-manager.webhook.extraArgs | list | `["--logging-format=json"]` | Additional arguments to the webhook pod |
+| cert-manager.webhook.resources | object | See `values.yaml` | Resource requests and limits for the webhook pod |
 | config.createIssuer | bool | `true` | Whether to create a Let's Encrypt DNS-based cluster issuer |
 | config.email | string | sqre-admin | Contact email address registered with Let's Encrypt |
 | config.route53.awsAccessKeyId | string | None, must be set if `createIssuer` is true | AWS access key ID for Route 53 (must match `aws-secret-access-key` in Vault secret referenced by `config.vaultSecretPath`) |
