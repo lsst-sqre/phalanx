@@ -97,6 +97,7 @@ ingress:
 redis:
 
   # -- Resource requests and limits for the redis pod
+  # @default -- see `values.yaml`
   resources:
     limits:
       cpu: "1"

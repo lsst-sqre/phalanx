@@ -47,6 +47,7 @@ ingress:
   annotations: {}
 
 # -- Resource requests and limits for Semaphore
+# @default -- See `values.yaml`
 resources:
   limits:
     cpu: "1"

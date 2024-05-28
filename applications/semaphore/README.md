@@ -36,7 +36,7 @@ Semaphore is the user notification and messaging service for the Rubin Science P
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for pods |
 | replicaCount | int | `1` | Number of Semaphore pods to run |
-| resources | object | `{"limits":{"cpu":"1","memory":"128Mi"},"requests":{"cpu":"2m","memory":"50Mi"}}` | Resource requests and limits for Semaphore |
+| resources | object | See `values.yaml` | Resource requests and limits for Semaphore |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
 | serviceAccount.name | string | `""` |  |

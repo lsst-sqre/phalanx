@@ -415,6 +415,7 @@ jupyterhub:
       tag: "6.0.2"
 
     # -- Resource limits and requests
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "900m"
@@ -569,6 +570,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Resource requests and limits for Cloud SQL pod
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "50m"

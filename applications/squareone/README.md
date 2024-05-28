@@ -42,5 +42,5 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for squareone pods |
 | replicaCount | int | `1` | Number of squareone pods to run in the deployment. |
-| resources | object | `{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"cpu":"6m","memory":"200Mi"}}` | Resource requests and limits for squareone pods |
+| resources | object | see `values.yaml` | Resource requests and limits for squareone pods |
 | tolerations | list | `[]` |  |

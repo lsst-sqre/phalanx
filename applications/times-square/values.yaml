@@ -143,6 +143,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Resource requests and limits for Cloud SQL pod
+    # @default -- see `values.yaml`
     resources:
       limits:
         cpu: "1"

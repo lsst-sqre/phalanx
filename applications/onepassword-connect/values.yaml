@@ -6,6 +6,7 @@ connect:
   api:
 
     # -- Resource requests and limits for connect-api pod
+    # @default -- see `values.yaml`
     resources:
       limits:
         cpu: "1"
@@ -17,6 +18,7 @@ connect:
   sync:
 
     # -- Resource requests and limits for connect-sync pod
+    # @default -- see `values.yaml`
     resources:
       limits:
         cpu: "1"
