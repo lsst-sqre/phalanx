@@ -19,6 +19,7 @@ applications:
   filestore-backup: true
   hips: true
   jira-data-proxy: true
+  mpc-lookup: true
   mobu: true
   noteburst: true
   nublado: true

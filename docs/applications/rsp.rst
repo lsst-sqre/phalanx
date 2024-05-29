@@ -15,6 +15,7 @@ Argo CD project: ``rsp``
    hips/index
    jira-data-proxy/index
    livetap/index
+   mpc-lookup/index
    noteburst/index
    nublado/index
    portal/index
