@@ -134,7 +134,14 @@ influxdb:
   database: "telegraf-kafka-consumer-v1"
 
 # -- Kubernetes resources requests and limits
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "160Mi"
+  requests:
+    cpu: "8m"
+    memory: "75Mi"
 
 # -- Node labels for pod assignment
 nodeSelector: {}

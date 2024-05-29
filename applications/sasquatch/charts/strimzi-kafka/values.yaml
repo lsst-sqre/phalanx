@@ -180,7 +180,13 @@ kafkaExporter:
 
   # -- Kubernetes requests and limits for the Kafka exporter
   # @default -- See `values.yaml`
-  resources: {}
+  resources:
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+    requests:
+      cpu: "375m"
+      memory: "100Mi"
 
 zookeeper:
   # -- Number of Zookeeper replicas to run.
@@ -256,6 +262,17 @@ registry:
 
   # -- Name of the topic used by the Schema Registry
   schemaTopic: registry-schemas
+
+  # -- Kubernetes requests and limits for the Schema Registry
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "5m"
+    limits:
+      memory: "2Gi"
+      cpu: "1"
+
 
 # -- A list of usernames for users who should have global admin permissions.
 # These users will be created, along with their credentials.

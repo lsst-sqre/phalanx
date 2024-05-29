@@ -30,5 +30,5 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | nodeSelector | object | `{}` | Node labels for pod assignment |
 | podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
 | podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
-| resources | object | `{}` | Kubernetes resources requests and limits |
+| resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | tolerations | list | `[]` | Tolerations for pod assignment |
