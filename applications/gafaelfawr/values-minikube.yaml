@@ -3,6 +3,8 @@ redis:
   persistence:
     enabled: false
 
+resources: {}
+
 config:
   internalDatabase: true
   updateSchema: true
@@ -48,6 +50,8 @@ config:
   initialAdmins:
     - "afausti"
     - "athornton"
+    - "fajpunk"
     - "frossie"
     - "jonathansick"
     - "rra"
+    - "stvoutsin"

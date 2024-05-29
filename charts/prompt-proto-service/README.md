@@ -17,8 +17,7 @@ Event-driven processing of camera images
 | alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
 | alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
-| apdb.namespace | string | None, must be set | Database namespace for the APDB |
-| apdb.url | string | None, must be set | URL to the APDB, in any form recognized by SQLAlchemy |
+| apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | cacheAny | bool | `true` | Whether or not any pipeline inputs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances. |
 | cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. It only has an effect if `cacheAny` is true. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
@@ -32,7 +31,8 @@ Event-driven processing of camera images
 | imagePullSecrets | list | `[]` |  |
 | instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | instrument.name | string | None, must be set | The "short" name of the instrument |
-| instrument.pipelines | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
+| instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits' raws. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
+| instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
 | knative.cpuRequest | string | `"1"` | The cpu cores requested. |

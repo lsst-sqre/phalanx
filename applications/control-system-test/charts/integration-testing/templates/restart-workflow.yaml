@@ -4,7 +4,7 @@ metadata:
   name: restart-test-workflow
   labels:
     workflows.argoproj.io/type: "integration-test"
-    argocd.argoproj.io/instance: integration-testing
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
 spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   artifactRepositoryRef:
@@ -16,7 +16,7 @@ spec:
       claimName: {{ .Values.persistentVolume.claimName }}
   podMetadata:
     labels:
-      argocd.argoproj.io/instance: integration-testing
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
   arguments:
     parameters:
     - name: date-key

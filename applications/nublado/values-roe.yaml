@@ -10,6 +10,7 @@ controller:
         AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
         AUTO_REPO_BRANCH: "main"
         AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
+        FIREFLY_HTML: "slate.html"
       initContainers:
         - name: "inithome"
           image:
@@ -55,7 +56,3 @@ jupyterhub:
   hub:
     db:
       upgrade: true
-  cull:
-    timeout: 432000
-    every: 300
-    maxAge: 2160000

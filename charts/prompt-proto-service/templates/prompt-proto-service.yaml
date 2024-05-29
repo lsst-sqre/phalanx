@@ -24,6 +24,17 @@ spec:
           readOnly: true
         - mountPath: /app/pgsql
           name: pgpass-credentials-file
+      - name: init-db-auth
+        # Make a copy of the read-only secret that's owned by lsst
+        # lsst account is created by main image with id 1000
+        image: busybox
+        command: ["sh", "-c", "cp -L /app/db-auth-mount/db-auth.yaml /app/dbauth/ && chown 1000:1000 /app/dbauth/db-auth.yaml && chmod u=r,go-rwx /app/dbauth/db-auth.yaml"]
+        volumeMounts:
+        - mountPath: /app/db-auth-mount
+          name: db-auth-mount
+          readOnly: true
+        - mountPath: /app/dbauth
+          name: db-auth-credentials-file
       containers:
       - image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
@@ -31,8 +42,10 @@ spec:
         env:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
-        - name: PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines }}
+        - name: PREPROCESSING_PIPELINES_CONFIG
+          value: {{ .Values.instrument.pipelines.preprocessing }}
+        - name: MAIN_PIPELINES_CONFIG
+          value: {{ .Values.instrument.pipelines.main }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
         - name: IMAGE_BUCKET
@@ -41,16 +54,12 @@ spec:
           value: {{ .Values.imageNotifications.topic }}
         - name: IMAGE_TIMEOUT
           value: {{ .Values.imageNotifications.imageTimeout | quote }}
-        - name: PGUSER
-          value: {{ .Values.instrument.calibRepoPguser }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
           value: {{ .Values.s3.disableBucketValidation | quote }}
-        - name: URL_APDB
-          value: {{ .Values.apdb.url }}
-        - name: NAMESPACE_APDB
-          value: {{ .Values.apdb.namespace }}
+        - name: CONFIG_APDB
+          value: {{ .Values.apdb.config }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
         - name: SASQUATCH_URL
@@ -84,6 +93,8 @@ spec:
         {{- end }}
         - name: PGPASSFILE
           value: /app/pgsql/.pgpass
+        - name: LSST_DB_AUTH
+          value: /app/lsst-credentials/db-auth.yaml
         - name: AP_KAFKA_PRODUCER_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -108,6 +119,9 @@ spec:
           name: ephemeral
         - mountPath: /app/pgsql
           name: pgpass-credentials-file
+          readOnly: true
+        - mountPath: /app/lsst-credentials
+          name: db-auth-credentials-file
           readOnly: true
         {{- if .Values.s3.cred_file_auth }}
         - mountPath: /app/s3/
@@ -145,6 +159,17 @@ spec:
             path: .pgpass
           defaultMode: 0400  # Minimal permissions, as extra protection
       - name: pgpass-credentials-file
+        emptyDir:
+          sizeLimit: 10Ki  # Just a text file!
+      - name: db-auth-mount
+        # Temporary mount for db-auth.yaml; cannot be read directly because it's owned by root
+        secret:
+          secretName: {{ template "prompt-proto-service.fullname" . }}-secret
+          defaultMode: 256
+          items:
+            - key: db-auth_file
+              path: db-auth.yaml
+      - name: db-auth-credentials-file
         emptyDir:
           sizeLimit: 10Ki  # Just a text file!
       {{- if .Values.s3.cred_file_auth }}

@@ -24,6 +24,7 @@ applications:
   plot-navigator: true
   portal: true
   postgres: true
+  rubintv: true
   sasquatch: true
   semaphore: true
   siav2: true

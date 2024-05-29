@@ -23,7 +23,6 @@ config:
     uidAttr: "uidNumber"
     gidAttr: "gidNumber"
     groupBaseDn: "cn=groups,cn=accounts,dc=lsst,dc=cloud"
-    groupSearchByDn: true
 
   # Support OpenID Connect clients like Chronograf.
   oidcServer:
@@ -52,6 +51,8 @@ config:
   initialAdmins:
     - "afausti"
     - "athornton"
+    - "fajpunk"
     - "frossie"
     - "jonathansick"
     - "rra"
+    - "stvoutsin"

@@ -29,20 +29,20 @@ prompt-proto-service:
   instrument:
     # -- The "short" name of the instrument
     name: LATISS
-    # -- Machine-readable string describing which pipeline(s) should be run for which visits.
-    # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
-    # @default -- None, must be set
-    pipelines: ""
+    pipelines:
+      # -- Machine-readable string describing which pipeline(s) should be run for which visits.
+      # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+      # @default -- None, must be set
+      main: ""
+      # -- Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival.
+      # @default -- None, must be set
+      preprocessing: ""
     # -- Skymap to use with the instrument
     skymap: latiss_v1
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
     calibRepo: ""
-    # -- Postgres username to access the shared butler repo for calibrations, templates, and pipeline outputs.
-    # If `registry.centralRepoFile` is set, a local redirect is used and its config may override this config.
-    # @default -- None, must be set
-    calibRepoPguser: ""
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -66,11 +66,10 @@ prompt-proto-service:
     imageTimeout: '20'
 
   apdb:
-    # -- URL to the APDB, in any form recognized by SQLAlchemy
+    # -- URL to a serialized APDB configuration, or the "label:" prefix
+    # followed by the indexed name of such a config.
     # @default -- None, must be set
-    url: ""
-    # -- Database namespace for the APDB
-    namespace: pp_apdb_latiss
+    config: ""
 
   alerts:
     # -- Username for sending alerts to the alert stream

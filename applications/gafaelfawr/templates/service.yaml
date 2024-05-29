@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}
+  name: "gafaelfawr"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -13,4 +13,4 @@ spec:
   selector:
     {{- include "gafaelfawr.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: "frontend"
-  sessionAffinity: None
+  sessionAffinity: "None"

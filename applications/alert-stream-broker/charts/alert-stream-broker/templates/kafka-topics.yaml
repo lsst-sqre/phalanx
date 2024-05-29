@@ -1,13 +1,59 @@
+  {{- range $topic := .Values.topics }}
+  ---
+  apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+  kind: KafkaTopic
+  metadata:
+    name: "{{ $topic }}"
+    labels:
+      strimzi.io/cluster: "{{ .Values.clusterName }}"
+  spec:
+    partitions: {{ .Values.topicPartitions }}
+    replicas: {{ .Values.topicReplicas }}
+    config:
+      cleanup.policy: "delete"
+      retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+      retention.bytes: {{ .Values.maxBytesRetained }}
+  {{- end }}
+
 apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
 kind: KafkaTopic
 metadata:
-  name: "{{ .Values.testTopicName }}"
   labels:
     strimzi.io/cluster: "{{ .Values.clusterName }}"
+  name: "{{ .Values.testTopicName}}"
 spec:
-  partitions: {{ .Values.testTopicPartitions }}
-  replicas: {{ .Values.testTopicReplicas }}
   config:
     cleanup.policy: "delete"
     retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
     retention.bytes: {{ .Values.maxBytesRetained }}
+  partitions: {{ .Values.topicPartitions }}
+  replicas: {{ .Values.topicReplicas }}
+---
+apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: "{{ .Values.clusterName }}"
+  name: "{{ .Values.simulatedTopicName}}"
+spec:
+  config:
+    cleanup.policy: "delete"
+    retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+    retention.bytes: {{ .Values.maxBytesRetained }}
+  partitions: {{ .Values.simulatedTopicPartitions }}
+  replicas: {{ .Values.simulatedTopicReplicas }}
+---
+apiVersion: "kafka.strimzi.io/{{ .Values.strimziAPIVersion }}"
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: "{{ .Values.clusterName }}"
+  name: "{{ .Values.devTopicName}}"
+spec:
+  config:
+    cleanup.policy: "delete"
+    retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+    retention.bytes: {{ .Values.maxBytesRetained }}
+    compression.type: {{ .Values.devTopicCompression}}
+  partitions: {{ .Values.devTopicPartitions }}
+  replicas: {{ .Values.devTopicReplicas }}

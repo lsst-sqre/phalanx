@@ -15,11 +15,13 @@ controller:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        FIREFLY_HTML: "slate.html"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "summit"
         LSST_SITE: "summit"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+        RSP_SITE_TYPE: "telescope"
       initContainers:
         - name: "inithome"
           image:
@@ -114,12 +116,6 @@ controller:
           volumeName: "lsstdata-base-auxtel"
 
 jupyterhub:
-  cull:
-    users: false
-    removeNamedServers: false
-    timeout: 432000
-    every: 300
-    maxAge: 2160000
   hub:
     db:
       upgrade: true

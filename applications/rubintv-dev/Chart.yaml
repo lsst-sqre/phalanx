@@ -1,0 +1,11 @@
+apiVersion: v2
+name: rubintv-dev
+version: 1.0.0
+description: Real-time display front end development application
+sources:
+  - https://github.com/lsst-ts/rubintv
+appVersion: 0.1.0
+dependencies:
+  - name: rubintv
+    version: 1.0.0
+    repository: "file://../../charts/rubintv"

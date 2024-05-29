@@ -12,53 +12,41 @@ image:
   # -- Pull policy for the <CHARTNAME> image
   pullPolicy: "IfNotPresent"
 
-  # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
 
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-autoscaling:
-  # -- Enable autoscaling of <CHARTNAME> deployment
-  enabled: false
+# -- Affinity rules for the <CHARTNAME> deployment pod
+affinity: {}
 
-  # -- Minimum number of <CHARTNAME> deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of <CHARTNAME> deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of <CHARTNAME> deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+# -- Node selection rules for the <CHARTNAME> deployment pod
+nodeSelector: {}
 
 # -- Annotations for the <CHARTNAME> deployment pod
 podAnnotations: {}
 
 # -- Resource limits and requests for the <CHARTNAME> deployment pod
+# @default -- See `values.yaml`
 resources: {}
-
-# -- Node selection rules for the <CHARTNAME> deployment pod
-nodeSelector: {}
 
 # -- Tolerations for the <CHARTNAME> deployment pod
 tolerations: []
-
-# -- Affinity rules for the <CHARTNAME> deployment pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

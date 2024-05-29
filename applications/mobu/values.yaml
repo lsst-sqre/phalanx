@@ -37,7 +37,14 @@ config:
   pathPrefix: "/mobu"
 
 # -- Resource limits and requests for the mobu frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "3.5Gi"
+  requests:
+    cpu: "50m"
+    memory: "1Gi"
 
 # -- Annotations for the mobu frontend pod
 podAnnotations: {}

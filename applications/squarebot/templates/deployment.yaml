@@ -59,19 +59,16 @@ spec:
             # Writeable directory for concatenating certs. See "tmp" volume.
             - name: "KAFKA_CERT_TEMP_DIR"
               value: "/tmp/kafka_certs"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              value: "SSL"
             # From KafkaAccess
             - name: "KAFKA_BOOTSTRAP_SERVERS"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "squarebot.fullname" . }}-kafka
+                  name: squarebot-kafka
                   key: "bootstrapServers"
-            - name: "KAFKA_SECURITY_PROTOCOL"
-              value: "SSL"
-            # From replicated KafkaUser secret
             - name: "KAFKA_CLUSTER_CA_PATH"
               value: "/etc/kafkacluster/ca.crt"
-            - name: "KAFKA_CLIENT_CA_PATH"
-              value: "/etc/kafkauser/ca.crt"
             - name: "KAFKA_CLIENT_CERT_PATH"
               value: "/etc/kafkauser/user.crt"
             - name: "KAFKA_CLIENT_KEY_PATH"
@@ -99,18 +96,15 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            - name: "{{ template "squarebot.fullname" . }}"
+            - name: "kafka"
               mountPath: "/etc/kafkacluster/ca.crt"
-              subPath: "ca.crt"
-            - name: "kafka-user"
-              mountPath: "/etc/kafkauser/ca.crt"
-              subPath: "ca.crt"
-            - name: "kafka-user"
+              subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
+            - name: "kafka"
               mountPath: "/etc/kafkauser/user.crt"
-              subPath: "user.crt"
-            - name: "kafka-user"
+              subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
+            - name: "kafka"
               mountPath: "/etc/kafkauser/user.key"
-              subPath: "user.key"
+              subPath: "ssl.keystore.key" # private key for the consuming client
             - name: "tmp"
               mountPath: "/tmp/kafka_certs"
       {{- with .Values.nodeSelector }}
@@ -126,9 +120,10 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
-        - name: "kafka-user"
+        # This secret comes from the KafkaAccess operator
+        - name: "kafka"
           secret:
-            secretName: {{ template "squarebot.fullname" . }}-kafka-user
+            secretName: squarebot-kafka
         - name: "{{ template "squarebot.fullname" . }}"
           secret:
             secretName: {{ template "squarebot.fullname" . }}

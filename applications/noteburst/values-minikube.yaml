@@ -1,6 +1,0 @@
-config:
-  worker:
-    workerCount: 0
-    identities:
-      - uid: 90000
-        username: "noteburst90000"

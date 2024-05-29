@@ -12,7 +12,6 @@ prompt-proto-service:
 
   instrument:
     calibRepo: s3://rubin-summit-users/
-    calibRepoPguser: rubin
 
   s3:
     imageBucket: rubin:rubin-pp
@@ -22,8 +21,5 @@ prompt-proto-service:
   imageNotifications:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing
-
-  apdb:
-    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu:5432/lsst-devl
 
   fullnameOverride: "prompt-proto-service-lsstcomcam"

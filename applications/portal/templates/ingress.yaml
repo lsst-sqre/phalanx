@@ -6,6 +6,7 @@ metadata:
     {{- include "portal.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  authCacheDuration: "5m"
   scopes:
     all:
       - "exec:portal"

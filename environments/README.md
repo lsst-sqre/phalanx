@@ -13,10 +13,12 @@
 | applications.calsys | bool | `false` | Enable the calsys control system application |
 | applications.cert-manager | bool | `true` | Enable the cert-manager application, required unless the environment makes separate arrangements to inject a current TLS certificate |
 | applications.checkerboard | bool | `false` | Enable the checkerboard application |
+| applications.cm-service | bool | `false` | Enable the cm-service application |
 | applications.control-system-test | bool | `false` | Enable the control-system-test application |
 | applications.datalinker | bool | `false` | Eanble the datalinker application |
 | applications.eas | bool | `false` | Enable the eas control system application |
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
+| applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
 | applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.giftless | bool | `false` | Enable the giftless application |
@@ -47,8 +49,8 @@
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
+| applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
-| applications.schedview-prenight | bool | `false` | Enable the schedview-prenight application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
@@ -81,6 +83,7 @@
 | controlSystem.topicName | string | `"sal"` | Topic name tag for the control system deployment |
 | fqdn | string | None, must be set | Fully-qualified domain name where the environment is running |
 | name | string | None, must be set | Name of the environment |
+| namespaceLabels | object | `{}` | Add labels for application namespaces. |
 | repoUrl | string | `"https://github.com/lsst-sqre/phalanx.git"` | URL of the repository for all applications |
 | targetRevision | string | `"main"` | Revision of repository to use for all applications |
 | vaultPathPrefix | string | None, must be set | Prefix for Vault secrets for this environment |

@@ -10,11 +10,12 @@ prompt-proto-service:
     tag: latest
 
   instrument:
-    pipelines: >-
-      (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+    pipelines:
+      main: >-
+        (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+      preprocessing: (survey="SURVEY")=[]
     calibRepo: s3://rubin-pp-dev-users/central_repo/
-    calibRepoPguser: latiss_prompt
 
   s3:
     imageBucket: rubin-pp-dev
@@ -25,10 +26,13 @@ prompt-proto-service:
     topic: prompt-processing-dev
 
   apdb:
-    url: postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu/lsst-devl
+    config: s3://rubin-pp-dev-users/apdb_config/pp_apdb_latiss-dev.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
+
+  # A cache efficiency workaround breaks when mixing observing dates; see DM-43205, DM-43913.
+  cacheCalibs: false
 
   fullnameOverride: "prompt-proto-service-latiss"

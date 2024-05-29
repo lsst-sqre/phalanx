@@ -1,4 +1,0 @@
-resources:
-  limits:
-    cpu: 0.3
-    memory: "2Gi"

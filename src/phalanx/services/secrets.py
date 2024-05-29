@@ -61,10 +61,14 @@ class SecretsAuditReport:
             secrets = "\n• ".join(sorted(self.missing))
             report += "Missing secrets:\n• " + secrets + "\n"
         if self.mismatch:
+            if self.missing:
+                report += "\n"
             secrets = "\n• ".join(sorted(self.mismatch))
             heading = "Secrets that do not have their expected value:"
             report += f"{heading}\n• " + secrets + "\n"
         if self.unknown:
+            if self.missing or self.mismatch:
+                report += "\n"
             secrets = "\n• ".join(sorted(self.unknown))
             report += "Unknown secrets in Vault:\n• " + secrets + "\n"
         return report
@@ -146,7 +150,12 @@ class SecretsService:
             return "Unresolved secrets:\n• " + "\n• ".join(e.secrets) + "\n"
 
         # Compare the resolved secrets to the Vault data.
-        report = self._audit_secrets(resolved, vault_secrets, pull_secret)
+        report = self._audit_secrets(
+            resolved,
+            vault_secrets,
+            pull_secret,
+            has_static_secrets=bool(static_secrets),
+        )
 
         # Generate the textual report.
         return report.to_text()
@@ -273,9 +282,12 @@ class SecretsService:
             regenerate=regenerate,
         )
 
-        # Replace any Vault secrets that are incorrect.
+        # Replace any Vault secrets that are incorrect. If there are no static
+        # secrets, tell _clean_vault_secrets that we have a pull secret to
+        # ensure that it doesn't delete any pull secret stored directly in
+        # Vault.
         self._sync_application_secrets(vault_client, vault_secrets, resolved)
-        has_pull_secret = False
+        has_pull_secret = bool(not static_secrets)
         if resolved.pull_secret and resolved.pull_secret.registries:
             has_pull_secret = True
             pull_secret = resolved.pull_secret
@@ -295,6 +307,8 @@ class SecretsService:
         resolved: ResolvedSecrets,
         vault_secrets: dict[str, dict[str, SecretStr]],
         pull_secret: PullSecret | None,
+        *,
+        has_static_secrets: bool,
     ) -> SecretsAuditReport:
         """Compare resolved secrets with the contents of Vault.
 
@@ -306,6 +320,10 @@ class SecretsService:
             Vault secrets for that environment.
         pull_secret
             Pull secret for the environment, if one is needed.
+        has_static_secrets
+            Whether static secrets were provided. If no static secrets were
+            provided, we should not complain about any pull secret that was
+            found, even if we don't have one.
 
         Returns
         -------
@@ -338,7 +356,7 @@ class SecretsService:
                     mismatch.append("pull-secret")
             else:
                 missing.append("pull-secret")
-        elif "pull-secret" in vault_secrets:
+        elif "pull-secret" in vault_secrets and has_static_secrets:
             unknown.append("pull-secret")
 
         # Return the report.

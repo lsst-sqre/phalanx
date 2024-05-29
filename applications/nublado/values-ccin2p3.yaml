@@ -74,9 +74,6 @@ jupyterhub:
       enabled: true
   hub:
     baseUrl: "/nb"
-    config:
-      ServerApp:
-        shutdown_no_activity_timeout: 432000
     db:
       url: "postgresql://nublado3@postgres.postgres/nublado3"
       upgrade: true

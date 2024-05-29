@@ -15,13 +15,16 @@ prompt-proto-service:
     tag: 2.5.0
 
   instrument:
-    pipelines: >-
-      (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
-      (survey="")=[]
+    pipelines:
+      main: >-
+        (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
+        (survey="")=[]
+      preprocessing: >-
+        (survey="ops-rehearsal-3")=[]
+        (survey="")=[]
     calibRepo: s3://rubin-summit-users
-    calibRepoPguser: lsstcomcamsim_prompt
 
   s3:
     imageBucket: rubin-summit
@@ -32,7 +35,7 @@ prompt-proto-service:
     topic: rubin-prompt-processing-prod
 
   apdb:
-    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
+    config: s3://rubin-summit-users/apdb_config/pp_apdb_lsstcomcamsim.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

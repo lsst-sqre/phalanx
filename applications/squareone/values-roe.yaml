@@ -38,10 +38,22 @@ config:
 
       <CardGroup>
        <a href="https://rsp.lsst.ac.uk/portal/app/">
-         <Card>Table of counterpart associations between Gaia DR3 and CatWISE2020. Uses probabilistic
-    cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022). Sources are returned either as a pairing, in which the Gaia and WISE objects are the same astrophysical source detected twice, or as non-matches, with that particular object in one of the catalogues having a corresponding flux upper limits in the opposing catalogue, and entries include various pieces of metadata such as the probability of the match/non-match, likelihood of match on purely position or brightness grounds, and information on the level to which objects suffer contamination due to hidden and unresolved background sources."
+         <Card>
+           Table of counterpart associations between Gaia DR3 and CatWISE2020.
+           Uses probabilistic cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022).
+           Sources are returned either as a pairing, in which the Gaia and WISE objects are the same astrophysical source detected twice, or as non-matches, with that particular object in one of the catalogues having a corresponding flux upper limits in the opposing catalogue, and entries include various pieces of metadata such as the probability of the match/non-match, likelihood of match on purely position or brightness grounds, and information on the level to which objects suffer contamination due to hidden and unresolved background sources.
          </Card>
        </a>
+      </CardGroup>
+
+      ### VISTA-HSC
+
+      <CardGroup>
+        <a href="https://rsp.lsst.ac.uk/portal/app/">
+          <Card>
+            The VISTA-HSC fused dataset is designed to deliver pixel-matched images and multiband catalogues through the integration of data from the Visible and Infrared Survey Telescope for Astronomy (VISTA) in the near-infrared and the Hyper SuprimeCam (HSC) in the optical range. The LSST pipelines will handle the CCD processing of VISTA images, while the calibrated exposures from the final HSC PDR3 will be employed for merging with VISTA. This comprehensive dataset encompasses multiple VISTA surveys, with varying depths.
+          </Card>
+        </a>
       </CardGroup>
 
     </Section>

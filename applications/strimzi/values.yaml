@@ -1,0 +1,10 @@
+# -- Resource limits and requests for the strimzi-cluster-operator pod
+# @default -- See `values.yaml`
+strimzi-cluster-operator:
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "20m"
+      memory: "450Mi"

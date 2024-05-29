@@ -77,9 +77,9 @@ alert-stream-broker:
 
     # A user used by the Rubin team but with similar access to the community
     # broker users.
-    - username: "rubin-communitybroker-idfint"
-      readonlyTopics: ["alerts-simulated"]
-      groups: ["rubin-communitybroker-idfint"]
+    # - username: "rubin-communitybroker-idfint"
+    #  readonlyTopics: ["alerts-simulated"]
+    #  groups: ["rubin-communitybroker-idfint"]
 
     # The actual community broker users
     - username: "alerce-idfint"
@@ -110,23 +110,21 @@ alert-stream-broker:
       readonlyTopics: ["alerts-simulated"]
       groups: ["pittgoogle-idfint"]
 
-  testTopicName: "alert-stream-test"
-  testTopicPartitions: 400
-  testTopicReplicas: 1
+  testTopicName: alert-stream-test
+  simulatedTopicName: alerts-simulated
+  topicPartitions: 400
+  topicReplicas: 1
+  simulatedTopicPartitions: 400
+  simulatedTopicReplicas: 1
+  devTopicName: dev-topic
+  devTopicPartitions: 10
+  devTopicReplicas: 1
+  devTopicCompression: lz4
 
 alert-stream-schema-registry:
   hostname: "usdf-alert-schemas-dev.slac.stanford.edu"
   schemaTopic: "registry-schemas"
   tls: false
-
-alert-stream-simulator:
-  clusterPort: 9092 # internal TLS listener
-  replayTopicName: "alerts-simulated"
-  replayTopicPartitions: 400
-  replayTopicReplicas: 1
-  staticTopicName: "alerts-static"
-  image:
-    tag: v1.2.1
 
 alert-database:
   ingester:

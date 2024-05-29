@@ -1,0 +1,11 @@
+fullnameOverride: sqlproxy-butler-int
+
+config:
+  ipAddressType: "PUBLIC"
+  instanceConnectionName: "panda-dev-1a74:us-central1:butler-registry-dev-6a359345"
+  serviceAccount: "sqlproxy-butler-int@science-platform-demo-9e05.iam.gserviceaccount.com"
+
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"

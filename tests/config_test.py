@@ -12,7 +12,7 @@ import yaml
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
-_ALLOW_NO_SECRETS = ("monitoring", "next-visit-fan-out")
+_ALLOW_NO_SECRETS = ("next-visit-fan-out",)
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
@@ -154,3 +154,22 @@ def test_shared_subcharts() -> None:
             assert (
                 dependency["version"] == "1.0.0"
             ), f"Incorrect shared chart version in {name}: {version} != 1.0.0"
+
+
+def test_applications_enabled() -> None:
+    """Check that every application is enabled in some environment.
+
+    Also check that the application is configured for every environment in
+    which it is enabled.
+    """
+    factory = Factory(Path(__file__).parent.parent)
+    config_storage = factory.create_config_storage()
+    config = config_storage.load_phalanx_config()
+    for application in config.applications:
+        name = application.name
+        active = set(application.active_environments)
+        assert active, f"Application {name} is not enabled in any environment"
+        configured = set(config_storage.get_application_environments(name))
+        for env in active:
+            msg = f"Application {name} enabled for {env} but not configured"
+            assert env in configured, msg

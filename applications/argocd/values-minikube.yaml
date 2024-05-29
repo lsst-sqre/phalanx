@@ -7,3 +7,22 @@ argo-cd:
     ingress:
       hostname: "minikube.lsst.codes"
     tls: false
+    resources: {}
+
+  controller:
+    resources: {}
+
+  dex:
+    resources: {}
+
+  applicationSet:
+    resources: {}
+
+  redis:
+    resources: {}
+
+  repoServer:
+    resources: {}
+
+  notifications:
+    resources: {}
