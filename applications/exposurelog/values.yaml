@@ -91,16 +91,16 @@ podAnnotations: {}
 
 # -- Security context for the exposurelog pod
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 # -- Security context for the exposurelog deployment
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+# capabilities:
+#   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
 
 # -- Resource limits and requests for the exposurelog pod
 resources: {}
