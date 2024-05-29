@@ -8,7 +8,7 @@ rubintv:
     debug: true
     env:
     - name: S3_ENDPOINT_URL
-      value: "https://s3dfrgw.slac.stanford.edu"
+      value: &s3E "https://s3dfrgw.slac.stanford.edu"
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
     image:
@@ -16,18 +16,18 @@ rubintv:
       pullPolicy: Always
 
   workers:
-    replicas: 0
+    replicas: 1
     image:
-      repository: lsstts/rubintv-broadcaster
-      tag: c0030_usdf
+      repository: ts-dockerhub.lsst.org/rapid-analysis
+      tag: c0036
       pullPolicy: Always
-    uid: 15517
-    gid: 4085
+    uid: 73006
+    gid: 73006
+    scriptsLocation: /repos/rubintv_analysis_service/scripts
+    script: rubintv_worker.py -a rubintv-dev -p 8080 -c /repos/rubintv_analysis_service/scripts/config-temporal.yaml
     env:
-    - name: DEPLOY_BRANCH
-      value: "deploy-rubintv-worker"
     - name: S3_ENDPOINT_URL
-      value: "https://s3dfrgw.slac.stanford.edu"
+      value: *s3E
     - name: DAF_BUTLER_REPOSITORY_INDEX
       value: "s3://rubin-summit-users/data-repos.yaml"
     - name: DAF_BUTLER_REPOSITORY
