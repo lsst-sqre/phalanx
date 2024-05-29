@@ -24,5 +24,5 @@ GCP SQL Proxy as a service
 | nodeSelector | object | `{}` | Node selector rules for the Cloud SQL Proxy pod |
 | podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
 | replicaCount | int | `1` | Number of pods to start |
-| resources | object | `{}` | Resource limits and requests for the Cloud SQL Proxy pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
 | tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |

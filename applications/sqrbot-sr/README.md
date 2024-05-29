@@ -29,5 +29,5 @@ This is the classic hubot-based sqrbot, intended purely as a stopgap until the m
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
 | replicaCount | int | `1` | Number of API pods to run |
-| resources | object | `{}` |  |
+| resources | object | See `values.yaml` | Resource requests and limits for sqrbot-sr |
 | tolerations | list | `[]` |  |

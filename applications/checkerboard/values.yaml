@@ -7,7 +7,14 @@ nameOverride: ""
 fullnameOverride: ""
 
 # -- Resource limits and requests for the checkerboard frontend pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "150Mi"
+  requests:
+    cpu: "2m"
+    memory: "75Mi"
 
 # -- Annotations for the checkerboard frontend pod
 podAnnotations: {}

@@ -21,13 +21,17 @@ Monitoring suite: InfluxDB2, Chronograf, telegraf
 | chronograf.updateStrategy | object | Recreate | Chronograf update strategy |
 | config.influxdbHostname | string | `"monitoring.lsst.cloud"` | Hostname for the singleton InfluxDBv2 collection point |
 | config.influxdbOrg | string | `"square"` | InfluxDBv2 organization |
+| cronjob.bucketmaker.resources | object | `{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"10m","memory":"128Mi"}}` | Resource requests and limits for bucketmaker |
+| cronjob.bucketmaker.schedule | string | `"*/15 * * * *"` | bucketmaker schedule |
+| cronjob.bucketmapper.resources | object | `{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"10m","memory":"128Mi"}}` | Resource requests and limits for bucketmapper |
+| cronjob.bucketmapper.schedule | string | `"3-59/15 * * * *"` | bucketmapper schedule |
 | cronjob.debug | bool | `false` | set to true to enable debug logging |
 | cronjob.image.pullPolicy | string | `"IfNotPresent"` | imagePullPolicy for cronjobs |
 | cronjob.image.repository | string | `"ghcr.io/lsst-sqre/rubin-influx-tools"` | repository for rubin-influx-tools, which supplies tools and dashboards |
 | cronjob.image.tag | string | the appVersion of the chart | tag for rubin-influx-tools |
-| cronjob.schedule.bucketmaker | string | `"*/15 * * * *"` | bucketmaker schedule |
-| cronjob.schedule.bucketmapper | string | `"3-59/15 * * * *"` | bucketmapper schedule |
-| cronjob.schedule.taskmaker | string | `"6-59/15 * * * *"` | taskmaker schedule |
+| cronjob.taskmaker.bucketmaker | string | see `values.yaml` | Resource requests and limits for bucketmaker pod |
+| cronjob.taskmaker.resources | object | `{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"10m","memory":"128Mi"}}` | Resource requests and limits for taskmaker |
+| cronjob.taskmaker.schedule | string | `"6-59/15 * * * *"` | taskmaker schedule |
 | global.enabledServices | string | Set by Argo CD | services enabled in this RSP instance |
 | global.host | string | Set by Argo CD | Host name for instance identification |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

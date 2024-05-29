@@ -38,8 +38,12 @@ telegraf-ds:
     create: true
   resources:
     limits:
-      memory: 512Mi
-      cpu: 900m
+      memory: "1Gi"
+      cpu: "1"
+    requests:
+      memory: "350Mi"
+      cpu: "50m"
+
 
   serviceAccount:
     name: telegraf-ds

@@ -31,3 +31,14 @@ vault:
     ha:
       enabled: true
       replicas: 3
+
+    # -- Resource requests and limits for vault server pod
+    # @default -- See `values.yaml`
+
+    resources:
+      limits:
+        cpu: "1"
+        memory: "350Mi"
+      requests:
+        cpu: "50m"
+        memory: "35Mi"

@@ -38,5 +38,5 @@ Identity mapping service
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
-| resources | object | `{}` | Resource limits and requests for the checkerboard frontend pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the checkerboard frontend pod |
 | tolerations | list | `[]` | Tolerations for the checkerboard frontend pod |

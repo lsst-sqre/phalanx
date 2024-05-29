@@ -94,6 +94,18 @@ ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
+redis:
+
+  # -- Resource requests and limits for the redis pod
+  # @default -- see `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "12Mi"
+    requests:
+      cpu: "2m"
+      memory: "3Mi"
+
 autoscaling:
   # -- Enable autoscaling of unfurlbot deployment
   enabled: false
@@ -112,7 +124,14 @@ autoscaling:
 podAnnotations: {}
 
 # -- Resource limits and requests for the unfurlbot deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "128Mi"
+  requests:
+    cpu: "9m"
+    memory: "60Mi"
 
 # -- Node selection rules for the unfurlbot deployment pod
 nodeSelector: {}

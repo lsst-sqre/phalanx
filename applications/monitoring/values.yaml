@@ -148,13 +148,49 @@ cronjob:
   # -- set to true to enable debug logging
   debug: false
 
-  schedule:
+  bucketmaker:
     # -- bucketmaker schedule
-    bucketmaker: "*/15 * * * *"
+    schedule: "*/15 * * * *"
+
+    # -- Resource requests and limits for bucketmaker
+    resources:
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+      requests:
+        cpu: "10m"
+        memory: "128Mi"
+
+  bucketmapper:
     # -- bucketmapper schedule
-    bucketmapper: "3-59/15 * * * *"
+    schedule: "3-59/15 * * * *"
+
+    # -- Resource requests and limits for bucketmapper
+    resources:
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+      requests:
+        cpu: "10m"
+        memory: "128Mi"
+
+  taskmaker:
     # -- taskmaker schedule
-    taskmaker: "6-59/15 * * * *"
+    schedule: "6-59/15 * * * *"
+
+    # -- Resource requests and limits for taskmaker
+    resources:
+      limits:
+        cpu: "1"
+        memory: "512Mi"
+      requests:
+        cpu: "10m"
+        memory: "128Mi"
+
+    # -- Resource requests and limits for bucketmaker pod
+    # @default -- see `values.yaml`
+    bucketmaker:
+
 
 global:
   # -- services enabled in this RSP instance

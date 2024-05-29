@@ -47,7 +47,14 @@ autoscaling:
 podAnnotations: {}
 
 # -- Resource limits and requests for the jira-data-proxy deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "100Mi"
+  requests:
+    cpu: "1.5m"
+    memory: "45Mi"
 
 # -- Node selection rules for the jira-data-proxy deployment pod
 nodeSelector: {}

@@ -54,7 +54,14 @@ autoscaling:
 podAnnotations: {}
 
 # -- Resource limits and requests for the hips deployment pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "256Mi"
+  requests:
+    cpu: "1m"
+    memory: "45Mi"
 
 # -- Node selection rules for the hips deployment pod
 nodeSelector: {}

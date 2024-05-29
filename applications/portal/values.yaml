@@ -24,13 +24,18 @@ ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
-# -- Resource limits and requests. The Portal will use (by default) 93% of
-# container RAM.  This is a smallish Portal; tweak it as you need to in
-# instance definitions in Phalanx.
+# -- Resource limits and requests.
+# @default -- See `values.yaml`
+# The Portal will use (by default) 93% of container RAM.  This is a
+# smallish Portal; tweak it as you need to in instance definitions in
+# Phalanx.
 resources:
   limits:
     cpu: 2.0
     memory: "6Gi"
+  requests:
+    cpu: "5m"
+    memory: "256Mi"
 
 # -- Annotations for the Portal pod
 podAnnotations: {}

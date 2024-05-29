@@ -68,18 +68,15 @@ ingress:
   # -- Path prefix where noteburst is hosted
   path: "/noteburst"
 
+# -- Resource requests and limits for noteburst
+# @default -- See `values.yaml`
 resources:
-  {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: "1"
+    memory: "256Mi"
+  requests:
+    cpu: "2m"
+    memory: "50Mi"
 
 autoscaling:
   enabled: false
@@ -155,6 +152,10 @@ redis:
   resources:
     limits:
       cpu: "1"
+      memory: "32Mi"
+    requests:
+      cpu: "2m"
+      memory: "4Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

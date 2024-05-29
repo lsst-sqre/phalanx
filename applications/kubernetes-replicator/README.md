@@ -12,6 +12,7 @@ Kafka secret replicator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| kubernetes-replicator.resources | object | See `values.yaml` | Resource requests and limits for kubernetes-replicator |
 | kubernetes-replicator.serviceAccount.annotations | object | `{}` |  |
 | kubernetes-replicator.serviceAccount.create | bool | `true` |  |
 | kubernetes-replicator.serviceAccount.name | string | `nil` |  |

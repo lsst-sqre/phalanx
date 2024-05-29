@@ -18,6 +18,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.resources | object | see `values.yaml` | Resource requests and limits for Cloud SQL pod |
 | cloudsql.image.tag | string | `"1.35.3"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
@@ -55,7 +56,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount.api | int | `1` | Number of API deployment pods to start |
 | replicaCount.worker | int | `1` | Number of worker deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the times-square deployment pod |
+| resources | object | see `values.yaml` | Resource limits and requests for the times-square deployment pod |
 | service.port | int | `8080` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account. If Cloud SQL is in use, the annotation specifying the Google service account will also be added. |

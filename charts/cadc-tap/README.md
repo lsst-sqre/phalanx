@@ -59,7 +59,7 @@ IVOA TAP service
 | tapSchema.image.tag | string | `"2.6.1"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
-| tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |
+| tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
 | tapSchema.tolerations | list | `[]` | Tolerations for the TAP schema database pod |
 | tolerations | list | `[]` | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |

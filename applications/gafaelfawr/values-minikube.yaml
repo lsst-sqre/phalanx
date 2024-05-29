@@ -2,6 +2,7 @@
 redis:
   persistence:
     enabled: false
+  resources: {}
 
 resources: {}
 
