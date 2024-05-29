@@ -9,8 +9,8 @@ config:
   updateSchema: False
 
   # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  #issuer:
+  #  exp_minutes: 43200  # 30 days
 
   # github:
   #   clientId: ae314e45a6af43ea910a
