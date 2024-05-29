@@ -15,13 +15,16 @@ Then, create the files for the new application, including the start of a Helm ch
 Replace ``<application>`` with the name of your new application, which will double as the name of the Helm chart.
 The application name must start with a lowercase letter and consist of lowercase letters, numbers, and hyphen (``-``).
 
-By default, this will create a Helm chart for a FastAPI web service.
+By default, this will create a Helm chart for a FastAPI web service created from the `SQuaRE template <https://safir.lsst.io/user-guide/set-up-from-template.html>`__.
 Use the ``--starter`` flag to specify a different Helm chart starter.
-There are two options:
+There are three options:
+
+fastapi-safir
+    Use this starter for FastAPI web services based on Safir, created from the "FastAPI application (Safir)" template.
+    This is the default.
 
 web-service
-    Use this starter if the new Helm application is a web service, such as a new Safir_ FastAPI_ service.
-    This is the default.
+    Use this starter if the new Helm application is some other web service.
 
 empty
     Use this starter for any other type of application.

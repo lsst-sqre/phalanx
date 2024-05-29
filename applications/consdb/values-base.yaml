@@ -4,3 +4,9 @@ db:
   database: "butler"
 lfa:
   s3EndpointUrl: "https://s3.ls.lsst.org"
+hinfo:
+  image:
+    tag: "2.0.4"
+pq:
+  image:
+    tag: "2.0.3"

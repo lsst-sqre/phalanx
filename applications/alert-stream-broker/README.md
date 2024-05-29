@@ -82,9 +82,10 @@ Alert transmission to community brokers
 | alert-stream-broker.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
 | alert-stream-broker.nameOverride | string | `""` |  |
 | alert-stream-broker.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
+| alert-stream-broker.simulatedTopicName | string | `"alerts-simulated"` | Topic used to send simulated alerts to brokers. |
 | alert-stream-broker.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-broker.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| alert-stream-broker.testTopicName | string | `"alert-stream-test"` | Name of the topic which will be used to send test alerts. |
+| alert-stream-broker.testTopicName | string | `"alert-stream-test"` | Topic used to send test alerts. |
 | alert-stream-broker.testTopicPartitions | int | `8` |  |
 | alert-stream-broker.testTopicReplicas | int | `2` |  |
 | alert-stream-broker.tls.certIssuerName | string | `"letsencrypt-dns"` | Name of a ClusterIssuer capable of provisioning a TLS certificate for the broker. |
@@ -98,30 +99,13 @@ Alert transmission to community brokers
 | alert-stream-broker.zookeeper.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
 | alert-stream-broker.zookeeper.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | alert-stream-schema-registry.clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
-| alert-stream-schema-registry.hostname | string | `"alert-schemas-int.lsst.cloud"` | Hostname for an ingress which sends traffic to the Schema Registry. |
+| alert-stream-schema-registry.hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| alert-stream-schema-registry.schemaSync | object | `{"image":{"repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-30267"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| alert-stream-schema-registry.schemaSync | object | `{"image":{"repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-41530"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
 | alert-stream-schema-registry.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program |
-| alert-stream-schema-registry.schemaSync.image.tag | string | `"tickets-DM-30267"` | Version of the container to use |
+| alert-stream-schema-registry.schemaSync.image.tag | string | `"tickets-DM-41530"` | Version of the container to use |
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |
 | alert-stream-schema-registry.strimziAPIVersion | string | `"v1beta2"` | Version of the Strimzi Custom Resource API. The correct value depends on the deployed version of Strimzi. See [this blog post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more. |
 | alert-stream-schema-registry.tls | bool | `true` |  |
-| alert-stream-simulator.clusterName | string | `"alert-broker"` | Name of a Strimzi Kafka cluster to connect to. |
-| alert-stream-simulator.clusterPort | int | `9092` | Port to connect to on the Strimzi Kafka cluster. It should be an internal TLS listener. |
-| alert-stream-simulator.fullnameOverride | string | `""` | Explicitly sets the full name used for the deployment and job (includes the release name). |
-| alert-stream-simulator.image.imagePullPolicy | string | `"IfNotPresent"` | Pull policy for the Deployment |
-| alert-stream-simulator.image.repository | string | `"lsstdm/alert-stream-simulator"` | Source repository for the image which holds the rubin-alert-stream program. |
-| alert-stream-simulator.image.tag | string | `"v1.2.1"` | Tag to use for the rubin-alert-stream container. |
-| alert-stream-simulator.kafkaUserName | string | `"alert-stream-simulator"` | The username of the Kafka user identity used to connect to the broker. |
-| alert-stream-simulator.maxBytesRetained | string | `"24000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
-| alert-stream-simulator.maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
-| alert-stream-simulator.nameOverride | string | `""` | Explicitly sets the name of the deployment and job. |
-| alert-stream-simulator.repeatInterval | int | `37` | How often (in seconds) to repeat the sample data into the replay topic. |
-| alert-stream-simulator.replayTopicName | string | `"alerts-simulated"` | Name of the topic which will receive the repeated alerts on an interval. |
-| alert-stream-simulator.replayTopicPartitions | int | `8` |  |
-| alert-stream-simulator.replayTopicReplicas | int | `2` |  |
-| alert-stream-simulator.schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
-| alert-stream-simulator.staticTopicName | string | `"alerts-static"` | Name of the topic which will hold a static single visit of sample data. |
-| alert-stream-simulator.strimziAPIVersion | string | `"v1beta2"` | API version of the Strimzi installation's custom resource definitions |

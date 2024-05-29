@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}
+  name: "gafaelfawr"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -14,21 +14,21 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
           - path: "/login"
             pathType: Exact
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
           - path: "/logout"
             pathType: Exact
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
           {{- if .Values.config.oidcServer.enabled }}
@@ -36,19 +36,18 @@ spec:
             pathType: Exact
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
           - path: "/.well-known/openid-configuration"
             pathType: Exact
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" . }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
           {{- end }}
-    {{- $context := . }}
-    {{- with $context.Values.ingress.additionalHosts }}
+    {{- with .Values.ingress.additionalHosts }}
     {{- range . }}
     - host: {{ . | quote }}
       http:
@@ -57,7 +56,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ template "gafaelfawr.fullname" $context }}
+                name: "gafaelfawr"
                 port:
                   number: 8080
     {{- end }}

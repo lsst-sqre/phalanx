@@ -42,15 +42,17 @@ config:
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "Friends"
+          team: "friends"
 
 
   initialAdmins:
     - "afausti"
     - "athornton"
+    - "fajpunk"
     - "frossie"
     - "jonathansick"
     - "rra"
+    - "stvoutsin"
 
   errorFooter: |
     To report problems or ask for help, contact #dm-square on the LSSTC Slack.

@@ -5,11 +5,11 @@ description: "Authentication and identity system"
 home: "https://gafaelfawr.lsst.io/"
 sources:
   - "https://github.com/lsst-sqre/gafaelfawr"
-appVersion: 10.1.0
+appVersion: 11.1.1
 
 dependencies:
   - name: "redis"
-    version: 1.0.11
+    version: 1.0.12
     repository: "https://lsst-sqre.github.io/charts/"
 
 annotations:

@@ -21,7 +21,7 @@ Deployment for the UWS and DM OCPS CSCs
 | ccocps.enabled | bool | `false` | Enable the OCPS:2 CSC |
 | mtocps.enabled | bool | `false` | Enable the OCPS:3 CSC |
 | uws-api-server.basePath | string | `"uws-server"` | The base path for the client ingress |
-| uws-api-server.butlerPg | object | `{}` | Configuration for Postgres backed butlers The object must have the following attributes defined: _secretKey_ (A label that points to the VaultSecret for the postgres credentials) _containerPath_ (The directory location in the container for the Butler secret) _dbUser_ (The database user name for butler access) |
+| uws-api-server.butlerPg | object | `{}` | Configuration for Postgres backed butlers The object must have the following attributes defined: _secretName_ (A label that points to the VaultSecret for the postgres credentials) _containerPath_ (The directory location in the container for the Butler secret) _dbUser_ (The database user name for butler access) |
 | uws-api-server.client.enabled | bool | `false` | Turn on the UWS client system if desired |
 | uws-api-server.createNamespace | bool | `false` | Temporary flag to make service deploy own namespace. Doing this to not disrupt other sites. |
 | uws-api-server.hostname | string | `""` | Hostname for the client ingress |

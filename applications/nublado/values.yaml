@@ -8,7 +8,7 @@ controller:
   # service account that has an IAM binding to the `nublado-controller`
   # Kubernetes service account and has the Artifact Registry reader role
   # @default -- None, must be set when using Google Artifact Registry
-  googleServiceAccount: ""
+  googleServiceAccount: null
 
   image:
     # -- Nublado controller image to use
@@ -19,7 +19,7 @@ controller:
 
     # -- Tag of Nublado controller image to use
     # @default -- The appVersion of the chart
-    tag: ""
+    tag: null
 
   ingress:
     # -- Additional annotations to add for the Nublado controller ingress
@@ -75,6 +75,7 @@ controller:
       deleteTimeout: 60
 
       # -- Timeout for idle user fileservers, in seconds
+      # @default -- 3600 (1 hour)
       idleTimeout: 3600
 
       image:
@@ -167,12 +168,13 @@ controller:
       env:
         API_ROUTE: "/api"
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod"
-        CULL_KERNEL_IDLE_TIMEOUT: "432000"  # These might be set from group?
+        CULL_KERNEL_IDLE_TIMEOUT: "432000"  # 5 days
         CULL_KERNEL_CONNECTED: "True"
-        CULL_KERNEL_INTERVAL: "300"
+        CULL_KERNEL_INTERVAL: "300"  # 5 minutes
         FIREFLY_ROUTE: "/portal/app"
         HUB_ROUTE: "/nb/hub"
-        NO_ACTIVITY_TIMEOUT: "432000"  # Also from group?
+        NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
+        RSP_SITE_TYPE: "science"
         TAP_ROUTE: "/api/tap"
 
       # -- Extra annotations to add to user lab pods
@@ -346,6 +348,13 @@ hub:
   # controls how the database password is managed.
   internalDatabase: true
 
+  # -- Minimum remaining token lifetime when spawning a lab. The token cannot
+  # be renewed, so it should ideally live as long as the lab does. If the
+  # token has less remaining lifetime, the user will be redirected to
+  # reauthenticate before spawning a lab.
+  # @default -- `jupyterhub.cull.maxAge` if lab culling is enabled, else none
+  minimumTokenLifetime: null
+
   timeout:
     # -- Timeout for JupyterLab to start. Currently this sometimes takes over
     # 60 seconds for reasons we don't understand.
@@ -359,8 +368,8 @@ proxy:
     # to JupyterHub and all user labs)
     # @default -- Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m
     annotations:
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"  # 5 minutes
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"  # 5 minutes
 
 # Configuration for Nublado secrets management.
 secrets:
@@ -474,9 +483,9 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
-        # This currently causes Minikube deployment in GH-actions to fail.
+        # This currently causes Minikube deployment in GitHub Actions to fail.
         # We want it sometime but it's not critical; it will help with
-        # scale-down
+        # scale-down.
         # pdb:
         #   enabled: true
         #   minAvailable: 1
@@ -495,12 +504,12 @@ jupyterhub:
 
     # -- Default idle timeout before the lab is automatically deleted in
     # seconds
-    # @default -- 2592000 (30 days)
-    timeout: 2592000
+    # @default -- 432000 (5 days)
+    timeout: 432000
 
     # -- How frequently to check for idle labs in seconds
-    # @default -- 600 (10 minutes)
-    every: 600
+    # @default -- 300 (5 minutes)
+    every: 300
 
     # -- Whether to log out the server when culling their lab
     users: true
@@ -509,8 +518,8 @@ jupyterhub:
     removeNamedServers: true
 
     # -- Maximum age of a lab regardless of activity
-    # @default -- 5184000 (60 days)
-    maxAge: 5184000
+    # @default -- 2160000 (25 days)
+    maxAge: 2160000
 
   scheduling:
     userScheduler:
@@ -538,7 +547,7 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.35.1"
+    tag: "1.35.3"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
@@ -564,7 +573,7 @@ cloudsql:
   # `cloud-sql-proxy` Kubernetes service account and has the `cloudsql.client`
   # role
   # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
-  serviceAccount: ""
+  serviceAccount: null
 
   # -- Tolerations for the Cloud SQL Auth Proxy pod
   tolerations: []
@@ -574,12 +583,12 @@ cloudsql:
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
+  baseUrl: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

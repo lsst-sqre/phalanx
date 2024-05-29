@@ -5,6 +5,9 @@ onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP tucson-teststand.lsst.codes"
 vaultPathPrefix: "secret/phalanx/tucson-teststand"
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: 'true'
 
 applications:
   argo-workflows: true

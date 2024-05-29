@@ -4,7 +4,7 @@ metadata:
   name: shutdown-workflow
   labels:
     workflows.argoproj.io/type: "integration-test"
-    argocd.argoproj.io/instance: integration-testing
+    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
 spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   artifactRepositoryRef:
@@ -16,13 +16,12 @@ spec:
       claimName: {{ .Values.persistentVolume.claimName }}
   podMetadata:
     labels:
-      argocd.argoproj.io/instance: integration-testing
+      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
   arguments:
     parameters:
     - name: date-key
       value: "20230327"
-  entrypoint: call-cleanup-reports
-  onExit: call-save-reports
+  entrypoint: run-tests
   templates:
   - name: run-tests
     dag:

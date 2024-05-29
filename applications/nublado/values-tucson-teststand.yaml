@@ -15,6 +15,7 @@ controller:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
+        FIREFLY_HTML: "slate.html"
         LSST_SITE: "tucson"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "tucson"
@@ -24,6 +25,7 @@ controller:
         LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
+        RSP_SITE_TYPE: "telescope"
       pullSecret: "pull-secret"
       secrets:
         - secretName: "nublado-lab-secret"
@@ -109,12 +111,6 @@ hub:
   internalDatabase: false
 
 jupyterhub:
-  cull:
-    users: false
-    removeNamedServers: false
-    timeout: 432000
-    every: 300
-    maxAge: 2160000
   hub:
     db:
       upgrade: true

@@ -26,3 +26,4 @@ class HelmStarter(Enum):
 
     EMPTY = "empty"
     WEB_SERVICE = "web-service"
+    FASTAPI_SAFIR = "fastapi-safir"

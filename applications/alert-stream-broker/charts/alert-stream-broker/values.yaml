@@ -149,8 +149,11 @@ fullnameOverride: ""
 
 nameOverride: ""
 
-# -- Name of the topic which will be used to send test alerts.
+# -- Topic used to send test alerts.
 testTopicName: alert-stream-test
+
+# -- Topic used to send simulated alerts to brokers.
+simulatedTopicName: alerts-simulated
 
 # -- Integer ID to use in the prefix of alert data packets. This should be a
 # valid Confluent Schema Registry ID associated with the schema used.

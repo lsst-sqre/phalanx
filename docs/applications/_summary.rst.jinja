@@ -36,6 +36,7 @@
    * - Argo CD Project
      - {{ app.project }}
    * - Environments
+     {%- if app.active_environments %}
      - .. list-table::
           {% for env_name in app.active_environments %}
           * - :px-env:`{{ env_name }}`
@@ -46,3 +47,6 @@
             -
             {%- endif %}
           {%- endfor %}
+     {%- else %}
+     -
+     {%- endif %}

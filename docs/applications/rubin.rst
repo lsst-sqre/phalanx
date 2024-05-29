@@ -10,13 +10,15 @@ Argo CD project: ``rubin``
    :maxdepth: 1
 
    alert-stream-broker/index
+   cm-service/index
    consdb/index
    exposurelog/index
+   fastapi-bootcamp/index
    narrativelog/index
    nightreport/index
    obsloctap/index
    plot-navigator/index
    production-tools/index
    rubintv/index
-   schedview-prenight/index
+   rubintv-dev/index
    schedview-snapshot/index

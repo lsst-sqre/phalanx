@@ -26,6 +26,9 @@ jinja_env_kwargs = {
     "undefined": StrictUndefined,
 }
 
+# Suppress warnings about the inability to cache the Jinja configuration.
+suppress_warnings = ["config.cache"]
+
 linkcheck_anchors = False
 linkcheck_exclude_documents = [
     r"applications/.*/values",

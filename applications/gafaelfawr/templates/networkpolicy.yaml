@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}
+  name: "gafaelfawr"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:

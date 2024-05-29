@@ -34,6 +34,8 @@ spec:
           env:
             - name: BOKEH_ALLOW_WS_ORIGIN
               value: {{ .Values.global.host }}
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /opt/schedview/aws-credentials.ini
           ports:
             - name: "http"
               containerPort: 8080
@@ -52,10 +54,13 @@ spec:
               mountPath: /tmp
             - name: slashdatcache
               mountPath: /.cache
+            - name: "schedview-snapshot-secrets"
+              mountPath: "/opt/schedview"
+              readOnly: true
           command:
             - /bin/bash
             - -c
-            - micromamba run scheduler_dashboard --data_dir /home/mambauser/schedview/test_data
+            - micromamba run scheduler_dashboard --lfa
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -77,3 +82,6 @@ spec:
           emptyDir: {}
         - name: slashdatcache
           emptyDir: {}
+        - name: schedview-snapshot-secrets
+          secret:
+            secretName: schedview-snapshot

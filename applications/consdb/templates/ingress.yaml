@@ -1,1 +1,32 @@
-# no web service no ingress for consdb-hinfo
+# ingress for consdb-pq
+
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "consdb-pq"
+  labels:
+    {{- include "consdb.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+template:
+  metadata:
+    name: "consdb-pq"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+    - host: {{ required "global.host must be set" .Values.global.host | quote }}
+      http:
+        paths:
+        - path: "/consdb"
+          pathType: "Prefix"
+          backend:
+            service:
+              name: "consdb-pq"
+              port:
+                number: 8080

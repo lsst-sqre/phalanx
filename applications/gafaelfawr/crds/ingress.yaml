@@ -59,10 +59,13 @@ spec:
               required:
                 - baseUrl
               properties:
-                baseUrl:
+                authCacheDuration:
                   type: string
-                  description: "Base URL for Gafaelfawr APIs."
-                  pattern: "^https://[a-z.-]+"
+                  description: >-
+                    The length of time for which the Gafaelfawr authorization
+                    results should be cached by NGINX. The cache is
+                    invalidated if the `Cookie` or `Authorization` HTTP
+                    headers change. Must be a valid NGINX duration string.
                 authType:
                   type: string
                   enum:
@@ -72,6 +75,10 @@ spec:
                     Controls the authentication type in the challenge
                     returned in the `WWW-Authenticate` header if the user
                     is not authenticated. By default, this is `bearer`.
+                baseUrl:
+                  type: string
+                  description: "Base URL for Gafaelfawr APIs."
+                  pattern: "^https://[a-z.-]+"
                 delegate:
                   type: object
                   description: >-

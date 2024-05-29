@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-maintenance
+  name: "gafaelfawr-maintenance"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -35,6 +35,8 @@ spec:
                 {{- end }}
                 - "gafaelfawr"
                 - "maintenance"
+              env:
+                {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret") | nindent 16 }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
               {{- with .Values.maintenance.resources }}
@@ -50,9 +52,6 @@ spec:
               volumeMounts:
                 - name: "config"
                   mountPath: "/etc/gafaelfawr"
-                  readOnly: true
-                - name: "secret"
-                  mountPath: "/etc/gafaelfawr/secrets"
                   readOnly: true
                 {{- if .Values.config.ldap.kerberosConfig }}
                 - name: "keytab"
@@ -73,17 +72,14 @@ spec:
           volumes:
             - name: "config"
               configMap:
-                name: {{ template "gafaelfawr.fullname" . }}-config
-            - name: "secret"
-              secret:
-                secretName: {{ template "gafaelfawr.fullname" . }}-secret
+                name: "gafaelfawr-config"
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
               secret:
-                secretName: {{ template "gafaelfawr.fullname" . }}-keytab
+                secretName: "gafaelfawr-keytab"
             - name: "kerberos-config"
               configMap:
-                name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+                name: "gafaelfawr-config-kerberos"
             - name: "tmp"
               emptyDir: {}
             {{- end }}

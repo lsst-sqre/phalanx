@@ -1,0 +1,8 @@
+apiVersion: v2
+name: <CHARTNAME>
+type: application
+version: 1.0.0
+description: "Helm starter chart for a new FastAPI Safir app"
+sources:
+  - "https://github.com/lsst-sqre/<CHARTNAME>"
+appVersion: "0.1.0"

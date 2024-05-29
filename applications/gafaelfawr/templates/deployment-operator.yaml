@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-operator
+  name: "gafaelfawr-operator"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 spec:
@@ -24,7 +24,7 @@ spec:
         app.kubernetes.io/component: "operator"
         gafaelfawr-redis-client: "true"
     spec:
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}-operator
+      serviceAccountName: "gafaelfawr-operator"
       containers:
         - name: "gafaelfawr"
           command:
@@ -41,6 +41,8 @@ spec:
             - "--log-format=json"
             - "-m"
             - "gafaelfawr.operator"
+          env:
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret") | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           livenessProbe:
@@ -48,9 +50,9 @@ spec:
             httpGet:
               path: "/health"
               port: "http"
-            initialDelaySeconds: 60
-            periodSeconds: 60
-            timeoutSeconds: 5
+            initialDelaySeconds: 300
+            periodSeconds: 300
+            timeoutSeconds: 120
           ports:
             - containerPort: 8080
               name: "http"
@@ -68,9 +70,6 @@ spec:
           volumeMounts:
             - name: "config"
               mountPath: "/etc/gafaelfawr"
-              readOnly: true
-            - name: "secret"
-              mountPath: "/etc/gafaelfawr/secrets"
               readOnly: true
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
@@ -91,17 +90,14 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config
-        - name: "secret"
-          secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-secret
+            name: "gafaelfawr-config"
         {{- if .Values.config.ldap.kerberosConfig }}
         - name: "keytab"
           secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-keytab
+            secretName: "gafaelfawr-keytab"
         - name: "kerberos-config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config-kerberos
+            name: "gafaelfawr-config-kerberos"
         - name: "tmp"
           emptyDir: {}
         {{- end }}

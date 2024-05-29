@@ -7,28 +7,41 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 2.6.0
+    tag: 3.0.0
 
   instrument:
-    pipelines: >-
-      (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-      (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
-      ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-      (survey="cwfs")=[]
-      (survey="cwfs-focus-sweep")=[]
-      (survey="spec")=[]
-      (survey="spec-survey")=[]
-      (survey="spec_with_rotation")=[]
-      (survey="spec_bright")=[]
-      (survey="spec_bright_with_rotation")=[]
-      (survey="spec_pole")=[]
-      (survey="spec_pole_with_rotation")=[]
-      (survey="")=[]
+    pipelines:
+      main: >-
+        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+        (survey="cwfs")=[]
+        (survey="cwfs-focus-sweep")=[]
+        (survey="spec")=[]
+        (survey="spec-survey")=[]
+        (survey="spec_with_rotation")=[]
+        (survey="spec_bright")=[]
+        (survey="spec_bright_with_rotation")=[]
+        (survey="spec_pole")=[]
+        (survey="spec_pole_with_rotation")=[]
+        (survey="")=[]
+      preprocessing: >-
+        (survey="AUXTEL_PHOTO_IMAGING")=[]
+        (survey="AUXTEL_DRP_IMAGING")=[]
+        (survey="cwfs")=[]
+        (survey="cwfs-focus-sweep")=[]
+        (survey="spec")=[]
+        (survey="spec-survey")=[]
+        (survey="spec_with_rotation")=[]
+        (survey="spec_bright")=[]
+        (survey="spec_bright_with_rotation")=[]
+        (survey="spec_pole")=[]
+        (survey="spec_pole_with_rotation")=[]
+        (survey="")=[]
     calibRepo: s3://rubin-summit-users
-    calibRepoPguser: latiss_prompt
 
   s3:
     imageBucket: rubin-summit
@@ -43,7 +56,7 @@ prompt-proto-service:
     imageTimeout: '110'
 
   apdb:
-    url: postgresql://rubin@usdf-prompt-processing.slac.stanford.edu:5432/lsst-devl
+    config: s3://rubin-summit-users/apdb_config/pp_apdb_latiss.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ template "gafaelfawr.fullname" . }}-schema-update
+  name: "gafaelfawr-schema-update"
   annotations:
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
@@ -23,7 +23,7 @@ spec:
         gafaelfawr-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: {{ include "gafaelfawr.fullname" . }}-schema-update
+      serviceAccountName: "gafaelfawr-schema-update"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -75,10 +75,11 @@ spec:
           command:
             - "/bin/sh"
             - "-c"
-          args:
             - |
               gafaelfawr update-schema
               touch /lifecycle/main-terminated
+          env:
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret-schema-update" "sidecar" true) | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
@@ -97,9 +98,6 @@ spec:
               readOnly: true
             - name: "lifecycle"
               mountPath: "/lifecycle"
-            - name: "secret"
-              mountPath: "/etc/gafaelfawr/secrets"
-              readOnly: true
       restartPolicy: "Never"
       securityContext:
         runAsNonRoot: true
@@ -108,12 +106,9 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: {{ template "gafaelfawr.fullname" . }}-config-schema-update
+            name: "gafaelfawr-config-schema-update"
         - name: "lifecycle"
           emptyDir: {}
-        - name: "secret"
-          secret:
-            secretName: {{ template "gafaelfawr.fullname" . }}-secret-schema-update
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

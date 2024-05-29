@@ -62,6 +62,9 @@ applications:
   # -- Enable the checkerboard application
   checkerboard: false
 
+  # -- Enable the cm-service application
+  cm-service: false
+
   # -- Enable the control-system-test application
   control-system-test: false
 
@@ -73,6 +76,9 @@ applications:
 
   # -- Enable the exposurelog application
   exposurelog: false
+
+  # -- Enable the fastapi-bootcamp application
+  fastapi-bootcamp: false
 
   # -- Enable the filestore-backup application
   filestore-backup: false
@@ -149,11 +155,11 @@ applications:
   # -- Enable the rubintv application
   rubintv: false
 
+  # -- Enable the rubintv-dev application
+  rubintv-dev: false
+
   # -- Enable the sasquatch application
   sasquatch: false
-
-  # -- Enable the schedview-prenight application
-  schedview-prenight: false
 
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
@@ -239,6 +245,9 @@ applications:
 
   # -- Enable the vo-cutouts application
   vo-cutouts: false
+
+# -- Add labels for application namespaces.
+namespaceLabels: {}
 
 # The following settings are used for the control system
 controlSystem:

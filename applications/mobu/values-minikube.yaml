@@ -1,2 +1,3 @@
 config:
   slackAlerts: false
+resources: {}

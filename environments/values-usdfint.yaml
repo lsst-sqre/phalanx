@@ -22,6 +22,7 @@ applications:
   portal: true
   postgres: true
   sasquatch: true
+  schedview-snapshot: true
   semaphore: true
   ssotap: true
   squareone: true

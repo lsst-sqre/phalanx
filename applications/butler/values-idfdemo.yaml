@@ -1,0 +1,7 @@
+image:
+  pullPolicy: Always
+
+config:
+  s3EndpointUrl: "https://storage.googleapis.com"
+  repositories:
+    dp02: "s3://butler-us-central1-panda-dev/dc2/butler-external-idfdev.yaml"

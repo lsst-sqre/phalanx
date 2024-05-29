@@ -12,7 +12,6 @@ config:
     clientId: "cilogon:/client_id/6b3f86ecfe74f14afa81b73a76be0868"
     enrollmentUrl: "https://id-int.lsst.cloud/registry/co_petitions/start/coef:10"
     test: true
-    usernameClaim: "username"
 
   ldap:
     url: "ldaps://ldap-test.cilogon.org"
@@ -20,8 +19,11 @@ config:
     groupBaseDn: "ou=groups,o=LSST,o=CO,dc=lsst,dc=org"
     groupObjectClass: "eduMember"
     groupMemberAttr: "hasMember"
+    groupSearchByDn: false
     userBaseDn: "ou=people,o=LSST,o=CO,dc=lsst,dc=org"
     userSearchAttr: "voPersonApplicationUID"
+    uidAttr: null
+    gidAttr: null
     addUserGroup: true
 
   firestore:
@@ -65,9 +67,11 @@ config:
   initialAdmins:
     - "adam"
     - "afausti"
+    - "danfuchs"
     - "frossie"
     - "jsick"
     - "rra"
+    - "svoutsin"
 
 cloudsql:
   enabled: true

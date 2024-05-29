@@ -1,11 +1,5 @@
 # Default values for Gafaelfawr.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 # -- Number of web frontend pods to start
 replicaCount: 1
 
@@ -30,36 +24,43 @@ resources:
     cpu: "100m"
     memory: "150Mi"
 
-# -- Annotations for the Gafaelfawr frontend pod
-podAnnotations: {}
+# -- Affinity rules for the Gafaelfawr frontend pod
+affinity: {}
 
 # -- Node selector rules for the Gafaelfawr frontend pod
 nodeSelector: {}
 
+# -- Annotations for the Gafaelfawr frontend pod
+podAnnotations: {}
+
 # -- Tolerations for the Gafaelfawr frontend pod
 tolerations: []
 
-# -- Affinity rules for the Gafaelfawr frontend pod
-affinity: {}
-
 config:
+  # -- Where to send the user after they log out
+  # @default -- Top-level page of this Phalanx environment
+  afterLogoutUrl: null
+
+  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
+  # is used as the namespace to generate UUID v5 `sub` claims returned by this
+  # route to meet the needs of CADC authentication code.
+  # @default -- Disabled
+  cadcBaseUuid: null
+
+  # -- URL for the PostgreSQL database
+  # @default -- None, must be set if neither `cloudsql.enabled` nor
+  # `config.internalDatabase` are true
+  databaseUrl: null
+
+  # -- HTML footer to add to any login error page (will be enclosed in a <p>
+  # tag).
+  errorFooter: null
+
   # -- Whether to use the PostgreSQL server internal to the Kubernetes cluster
   internalDatabase: false
 
-  # -- URL for the PostgreSQL database
-  # @default -- None, must be set if neither `cloudsql.enabled`
-  # nor `config.internalDatabase` are true
-  databaseUrl: ""
-
-  # -- Whether to automatically update the Gafaelfawr database schema
-  updateSchema: false
-
   # -- Choose from the text form of Python logging levels
   logLevel: "INFO"
-
-  # -- Session length and token expiration (in minutes)
-  # @default -- `43200` (30 days)
-  tokenLifetimeMinutes: 43200
 
   # -- List of netblocks used for internal Kubernetes IP addresses, used to
   # determine the true client IP for logging
@@ -69,33 +70,34 @@ config:
     - "172.16.0.0/12"
     - "192.168.0.0/16"
 
-  # -- HTML footer to add to any login error page (will be enclosed in a <p>
-  # tag).
-  errorFooter: ""
+  # -- Authentication realm for HTTP `WWW-Authenticate` headers.
+  # @default -- Hostname of this Phalanx environment
+  realm: null
 
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
   slackAlerts: false
 
-  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
-  # is used as the namespace to generate UUID v5 `sub` claims returned by this
-  # route to meet the needs of CADC authentication code.
-  # @default -- Disabled
-  cadcBaseUuid: ""
+  # -- Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals.
+  # For example, `1d6h23m` is one day, six hours, 23 minutes.
+  tokenLifetime: "30d"
+
+  # -- Whether to automatically update the Gafaelfawr database schema
+  updateSchema: false
 
   github:
     # -- GitHub client ID. One and only one of this, `config.cilogon.clientId`,
     # or `config.oidc.clientId` must be set.
-    clientId: ""
+    clientId: null
 
   cilogon:
     # -- CILogon client ID. One and only one of this,
     # `config.github.clientId`, or `config.oidc.clientId` must be set.
-    clientId: ""
+    clientId: null
 
     # -- Where to send the user if their username cannot be found in LDAP
     # @default -- Login fails with an error
-    enrollmentUrl: ""
+    enrollmentUrl: null
 
     # -- Whether to use the test instance of CILogon
     test: false
@@ -105,95 +107,64 @@ config:
       skin: "LSST"
 
     # -- Claim from which to get the username
-    # @default -- `"uid"`
-    usernameClaim: ""
-
-    # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- `"uidNumber"`
-    uidClaim: ""
-
-    # -- Claim from which to get the primary GID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- Do not set a primary GID
-    gidClaim: ""
-
-    # -- Claim from which to get the group membership (only used if not
-    # retrieved from LDAP)
-    # @default -- `"isMemberOf"`
-    groupsClaim: ""
+    usernameClaim: "username"
 
   oidc:
     # -- Client ID for generic OpenID Connect support. One and only one of
     # this, `config.cilogon.clientId`, or `config.github.clientId` must be set.
-    clientId: ""
+    clientId: null
 
-    # -- Audience for the JWT token
-    # @default -- Value of `config.oidc.clientId`
-    audience: ""
+    # -- Audience (`aud` claim) to expect in ID tokens.
+    # @default -- Same as `clientId`
+    audience: null
 
     # -- URL to which to redirect the user for authorization
     # @default -- None, must be set
-    loginUrl: ""
+    loginUrl: null
 
     # -- Additional parameters to add to the login request
     loginParams: {}
 
     # -- URL from which to retrieve the token for the user
     # @default -- None, must be set
-    tokenUrl: ""
+    tokenUrl: null
 
     # -- Where to send the user if their username cannot be found in LDAP
     # @default -- Login fails with an error
-    enrollmentUrl: ""
+    enrollmentUrl: null
 
     # -- Issuer for the JWT token
     # @default -- None, must be set
-    issuer: ""
+    issuer: null
 
-    # -- Scopes to request from the OpenID Connect provider
+    # -- Scopes to request from the OpenID Connect provider. The `openid`
+    # scope will always be included.
     scopes:
       - "openid"
 
     # -- Claim from which to get the username
-    # @default -- `"sub"`
-    usernameClaim: ""
-
-    # -- Claim from which to get the numeric UID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- `"uidNumber"`
-    uidClaim: ""
-
-    # -- Claim from which to get the primary GID (only used if not retrieved
-    # from LDAP or Firestore)
-    # @default -- Do not set a primary GID
-    gidClaim: ""
-
-    # -- Claim from which to get the group membership (only used if not
-    # retrieved from LDAP)
-    # @default -- `"isMemberOf"`
-    groupsClaim: ""
+    usernameClaim: "uid"
 
   ldap:
     # -- LDAP server URL from which to retrieve user group information
     # @default -- Do not use LDAP
-    url: ""
+    url: null
 
     # -- Bind DN for simple bind authentication. If set, `ldap-secret` must be
     # set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not
     # both.
     # @default -- Use anonymous binds
-    userDn: ""
+    userDn: null
 
     # -- Enable GSSAPI (Kerberos) binds to LDAP using this `krb5.conf` file.
     # If set, `ldap-keytab` must be set in the Gafaelfawr Vault secret. Set
     # either this or `userDn`, not both.
     # @default -- Use anonymous binds
-    kerberosConfig: ""
+    kerberosConfig: null
 
     # -- Base DN for the LDAP search to find a user's groups
     # @default -- None, must be set
-    groupBaseDn: ""
+    groupBaseDn: null
 
     # -- Object class containing group information
     groupObjectClass: "posixGroup"
@@ -202,15 +173,14 @@ config:
     # returned in the token from the OpenID Connect authentication server.
     groupMemberAttr: "member"
 
-    # -- Whether to search for group membership by user DN rather than bare
-    # usernames. Most LDAP servers use full DNs for group membership, so
-    # normally this should be set to true, but it requires `userBaseDn` also
-    # be set.
-    groupSearchByDn: false
+    # -- Whether to search for group membership by user DN. Most LDAP servers
+    # list group members by full DNs, but if yours uses bare usernames, set
+    # this to false.
+    groupSearchByDn: true
 
     # -- Base DN for the LDAP search to find a user's entry
-    # @default -- Get user metadata from the upstream authentication provider
-    userBaseDn: ""
+    # @default -- None, must be set
+    userBaseDn: null
 
     # -- Search attribute containing the user's username
     userSearchAttr: "uid"
@@ -224,12 +194,12 @@ config:
     # -- Attribute containing the user's UID number (set to `uidNumber` for
     # most LDAP servers)
     # @default -- Get UID from upstream authentication provider
-    uidAttr: ""
+    uidAttr: "uidNumber"
 
     # -- Attribute containing the user's primary GID (set to `gidNumber` for
     # most LDAP servers)
     # @default -- Use GID of user private group
-    gidAttr: ""
+    gidAttr: "gidNumber"
 
     # -- Whether to synthesize a user private group for each user with a GID
     # equal to their UID
@@ -240,24 +210,25 @@ config:
     # project. Cloud SQL must be enabled and the Cloud SQL service account
     # must have read/write access to that Firestore instance.
     # @default -- Firestore support is disabled
-    project: ""
-
-  forgerock:
-    # -- If set, obtain the GIDs for groups from this ForgeRock Identity
-    # Management server.
-    # @default -- ForgeRock Identity Management support is disabled
-    url: ""
-
-    # -- Username to use for HTTP Basic authentication to ForgeRock Identity
-    # Managemnt. The corresponding password must be in the
-    # `forgerock-passsword` key of the Gafaelfawr Vault secret.
-    # @default -- None, must be set if `config.forgerock.url` is set
-    username: ""
+    project: null
 
   oidcServer:
-    # -- Whether to support OpenID Connect clients. If set to true,
-    # `oidc-server-secrets` must be set in the Gafaelfawr secret.
+    # -- Whether to support OpenID Connect clients
     enabled: false
+
+    # -- Issuer (`iss` claim) of generated ID tokens
+    # @default -- Base URL of this Phalanx environment
+    issuer: null
+
+    # -- Key ID (`kid` claim) of generated ID tokens, and the key ID served
+    # with the OAuth key metadata
+    keyId: "gafaelfawr"
+
+    # -- Mapping of group names to data release keywords, indicating
+    # membership in that group grants access to that data release. Used to
+    # construct the `data_rights` claim, which can be requested by asking for
+    # the `rubin` scope.
+    dataRightsMapping: {}
 
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
@@ -319,7 +290,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.35.1"
+    tag: "1.35.3"
 
     # -- Tag suffix to use for the proxy for schema updates
     schemaUpdateTagSuffix: "-alpine"

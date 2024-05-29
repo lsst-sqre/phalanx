@@ -12,7 +12,7 @@ The specification of the secret has the following keys:
     This should include a summary of what the secret is used for, any useful information about the consequences if it should be leaked, and any details on how to rotate it if needed.
     The description must be formatted with reStructuredText_.
 
-.. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+    .. _reStructuredText: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
 
     The ``>`` and ``|`` features of YAML may be helpful in keeping this description readable inside the YAML file.
 

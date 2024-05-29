@@ -29,6 +29,7 @@ config:
     groupBaseDn: ou=Group,dc=slac,dc=stanford,dc=edu
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
+    groupSearchByDn: false
     userBaseDn: ou=Accounts,dc=slac,dc=stanford,dc=edu
     userSearchAttr: uid
     addUserGroup: false
