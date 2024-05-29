@@ -20,7 +20,9 @@ Kubernetes node telemetry collection service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | telegraf-ds.args[0] | string | `"--config"` |  |
 | telegraf-ds.args[1] | string | `"/etc/telegraf-generated/telegraf-generated.conf"` |  |
-| telegraf-ds.env[0] | object | `{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"influx-token","name":"telegraf"}}}` | Token to communicate with Influx |
+| telegraf-ds.env[0].name | string | `"INFLUX_TOKEN"` |  |
+| telegraf-ds.env[0].valueFrom.secretKeyRef.key | string | `"influx-token"` |  |
+| telegraf-ds.env[0].valueFrom.secretKeyRef.name | string | `"telegraf"` |  |
 | telegraf-ds.env[1].name | string | `"HOSTNAME"` |  |
 | telegraf-ds.env[1].valueFrom.fieldRef.fieldPath | string | `"spec.nodeName"` |  |
 | telegraf-ds.env[2].name | string | `"HOSTIP"` |  |

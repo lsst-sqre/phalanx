@@ -46,16 +46,16 @@ podAnnotations: {}
 
 # -- Security context for the nightreport pod
 podSecurityContext: {}
-  # fsGroup: 2000
+# fsGroup: 2000
 
 # -- Security context for the nightreport deployment
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+# capabilities:
+#   drop:
+#   - ALL
+# readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
 
 # -- Resource limits and requests for the nightreport pod
 resources: {}

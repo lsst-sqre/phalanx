@@ -129,7 +129,7 @@ prompt-proto-service:
   # -- Affinity rules for the prompt processing pods
   affinity: {}
 
-   # -- Tolerations for the prompt processing pods
+  # -- Tolerations for the prompt processing pods
   tolerations:
   - effect: NoSchedule
     key: nvidia.com/gpu
