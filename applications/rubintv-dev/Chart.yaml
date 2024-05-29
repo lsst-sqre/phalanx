@@ -9,3 +9,6 @@ dependencies:
   - name: rubintv
     version: 1.0.0
     repository: "file://../../charts/rubintv"
+  - name: redis
+    version: 1.0.11
+    repository: https://lsst-sqre.github.io/charts/

@@ -77,6 +77,10 @@ workers:
     # -- The policy to apply when pulling an image for deployment.
     pullPolicy: IfNotPresent
 
+  # -- The location of the scripts folder where the worker pod will run
+  # specific scripts, set by RUN_ARG.
+  scriptsLocation: /repos/rubintv_production/scripts
+
   # -- Script that runs in RUN_ARG.  This dynamic mechanism needs to be
   # replaced with something less scary, but there is resistance to that,
   # at least while iterating.
