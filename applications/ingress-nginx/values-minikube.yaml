@@ -1,5 +1,6 @@
 ingress-nginx:
   controller:
+    resources: {}
     service:
       externalTrafficPolicy: null
       type: ClusterIP

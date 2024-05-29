@@ -1,2 +1,6 @@
 config:
   createIssuer: false
+cert-manager:
+  resources: {}
+  webhook:
+    resources: {}
