@@ -74,17 +74,21 @@ config:
   groupMapping:
     "admin:token":
       - "ccin2p3"
+    "admin:jupyterlab":
+      - "ccin2p3"
     "exec:admin":
-      - "lsst"
+      - "ccin2p3"
     "exec:internal-tools":
       - "lsst"
     "exec:notebook":
       - "lsst"
     "exec:portal":
       - "lsst"
-    "read:all":
-      - "lsst"
     "read:image":
       - "lsst"
     "read:tap":
+      - "lsst"
+    "write:files":
+      - "lsst"
+    "user:token":
       - "lsst"
