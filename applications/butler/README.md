@@ -29,5 +29,5 @@ Server for Butler data abstraction service
 | nodeSelector | object | `{}` | Node selection rules for the butler deployment pod |
 | podAnnotations | object | `{}` | Annotations for the butler deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the butler deployment pod |
+| resources | object | see `values.yaml` | Resource limits and requests for the butler deployment pod |
 | tolerations | list | `[]` | Tolerations for the butler deployment pod |

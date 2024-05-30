@@ -20,7 +20,9 @@ Kubernetes node telemetry collection service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | telegraf-ds.args[0] | string | `"--config"` |  |
 | telegraf-ds.args[1] | string | `"/etc/telegraf-generated/telegraf-generated.conf"` |  |
-| telegraf-ds.env[0] | object | `{"name":"INFLUX_TOKEN","valueFrom":{"secretKeyRef":{"key":"influx-token","name":"telegraf"}}}` | Token to communicate with Influx |
+| telegraf-ds.env[0].name | string | `"INFLUX_TOKEN"` |  |
+| telegraf-ds.env[0].valueFrom.secretKeyRef.key | string | `"influx-token"` |  |
+| telegraf-ds.env[0].valueFrom.secretKeyRef.name | string | `"telegraf"` |  |
 | telegraf-ds.env[1].name | string | `"HOSTNAME"` |  |
 | telegraf-ds.env[1].valueFrom.fieldRef.fieldPath | string | `"spec.nodeName"` |  |
 | telegraf-ds.env[2].name | string | `"HOSTIP"` |  |
@@ -35,8 +37,10 @@ Kubernetes node telemetry collection service
 | telegraf-ds.mountPoints[0].name | string | `"telegraf-generated-config"` |  |
 | telegraf-ds.override_config.toml | string | `"[agent]\n  logfile=\"\"\n"` |  |
 | telegraf-ds.rbac.create | bool | `true` |  |
-| telegraf-ds.resources.limits.cpu | string | `"900m"` |  |
-| telegraf-ds.resources.limits.memory | string | `"512Mi"` |  |
+| telegraf-ds.resources.limits.cpu | string | `"1"` |  |
+| telegraf-ds.resources.limits.memory | string | `"1Gi"` |  |
+| telegraf-ds.resources.requests.cpu | string | `"50m"` |  |
+| telegraf-ds.resources.requests.memory | string | `"350Mi"` |  |
 | telegraf-ds.serviceAccount.name | string | `"telegraf-ds"` |  |
 | telegraf-ds.volumes[0].configMap.name | string | `"telegraf-generated-config"` |  |
 | telegraf-ds.volumes[0].name | string | `"telegraf-generated-config"` |  |

@@ -63,6 +63,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | users.consdb.enabled | bool | `false` | Enable user consdb |

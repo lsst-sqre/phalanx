@@ -37,7 +37,7 @@ Squarebot feeds events from services like Slack and GitHub into the SQuaRE Event
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
 | replicaCount | int | `1` | Number of API pods to run |
-| resources | object | `{}` |  |
+| resources | object | See `values.yaml` | Resource requests and limits for Squarebot |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |

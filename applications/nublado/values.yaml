@@ -35,7 +35,7 @@ controller:
   # @default -- See `values.yaml`
   resources:
     limits:
-      cpu: "0.25"
+      cpu: "1"
       memory: "200Mi"
     requests:
       cpu: "0.05"
@@ -355,6 +355,16 @@ hub:
   # @default -- `jupyterhub.cull.maxAge` if lab culling is enabled, else none
   minimumTokenLifetime: null
 
+  # -- Resource limits and requests for the Hub
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "6m"
+      memory: "130Mi"
+
   timeout:
     # -- Timeout for JupyterLab to start. Currently this sometimes takes over
     # 60 seconds for reasons we don't understand.
@@ -363,6 +373,18 @@ hub:
 # JupyterHub proxy configuration handled directly by this chart rather than by
 # Zero to JupyterHub.
 proxy:
+  chp:
+
+    # -- Resource limits and requests for proxy pod
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "150m"
+        memory: "200Mi"
+      requests:
+        cpu: "5m"
+        memory: "30Mi"
+
   ingress:
     # -- Additional annotations to add to the proxy ingress (also used to talk
     # to JupyterHub and all user labs)
@@ -393,10 +415,14 @@ jupyterhub:
       tag: "6.0.2"
 
     # -- Resource limits and requests
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "900m"
         memory: "1Gi"  # Should support about 200 users
+      requests:
+        cpu: "100m"
+        memory: "128Mi"
 
     db:
       # -- Type of database to use
@@ -542,6 +568,16 @@ cloudsql:
   image:
     # -- Cloud SQL Auth Proxy image to use
     repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Resource requests and limits for Cloud SQL pod
+    # @default -- See `values.yaml`
+    resources:
+      limits:
+        cpu: "50m"
+        memory: "64Mi"
+      requests:
+        cpu: "1m"
+        memory: "10Mi"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

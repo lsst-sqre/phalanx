@@ -16,6 +16,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.resources | object | See `values.yaml` | Resource requests and limits for Cloud SQL pod |
 | cloudsql.image.tag | string | `"1.35.3"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Auth Proxy pod |
@@ -82,6 +83,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | hub.internalDatabase | bool | `true` | Whether to use the cluster-internal PostgreSQL server instead of an external server. This is not used directly by the Nublado chart, but controls how the database password is managed. |
 | hub.minimumTokenLifetime | string | `jupyterhub.cull.maxAge` if lab culling is enabled, else none | Minimum remaining token lifetime when spawning a lab. The token cannot be renewed, so it should ideally live as long as the lab does. If the token has less remaining lifetime, the user will be redirected to reauthenticate before spawning a lab. |
+| hub.resources | object | See `values.yaml` | Resource limits and requests for the Hub |
 | hub.timeout.startup | int | `90` | Timeout for JupyterLab to start. Currently this sometimes takes over 60 seconds for reasons we don't understand. |
 | jupyterhub.cull.enabled | bool | `true` | Enable the lab culler. |
 | jupyterhub.cull.every | int | 300 (5 minutes) | How frequently to check for idle labs in seconds |
@@ -103,7 +105,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.image.tag | string | `"6.0.2"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
-| jupyterhub.hub.resources | object | `{"limits":{"cpu":"900m","memory":"1Gi"}}` | Resource limits and requests |
+| jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
 | jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
@@ -111,5 +113,6 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
+| proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
 | secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |

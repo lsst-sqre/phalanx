@@ -95,7 +95,7 @@ kafkaExporter:
   groupRegex: ".*"
   # -- Kafka topics to monitor
   topicRegex: ".*"
-    # -- Enable Sarama logging
+  # -- Enable Sarama logging
   enableSaramaLogging: false
   # -- Log level for Sarama logging
   logLevel: warning

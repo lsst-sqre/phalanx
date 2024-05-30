@@ -12,6 +12,11 @@ pre-commit
 tox
 tox-uv
 
+# Greenlet is a sqlalchemy dependency on x86_64 but not on Mac, so we
+# need to specify it explicitly; otherwise, when developing on Mac, your
+# changes will fail CI in Github Actions.
+greenlet
+
 # Testing
 coverage[toml]
 mypy

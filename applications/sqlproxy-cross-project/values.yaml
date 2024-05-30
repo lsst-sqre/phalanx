@@ -34,7 +34,14 @@ config:
   serviceAccount: ""
 
 # -- Resource limits and requests for the Cloud SQL Proxy pod
-resources: {}
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "32Mi"
+  requests:
+    cpu: "4m"
+    memory: "10Mi"
 
 # -- Annotations for the Cloud SQL Proxy pod
 podAnnotations: {}
