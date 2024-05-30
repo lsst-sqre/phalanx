@@ -117,6 +117,9 @@ applications:
   # -- Enable the monitoring application
   monitoring: false
 
+  # -- Enable the mpc-lookup application
+  mpc-lookup: false
+
   # -- Enable the narrativelog application
   narrativelog: false
 

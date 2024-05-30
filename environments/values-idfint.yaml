@@ -18,6 +18,7 @@ applications:
   datalinker: true
   filestore-backup: true
   hips: true
+  mpc-lookup: true
   mobu: true
   nublado: true
   plot-navigator: true
