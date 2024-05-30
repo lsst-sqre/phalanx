@@ -116,9 +116,6 @@ kafka-connect-manager:
       mtaircompressor:
         enabled: true
         topicsRegex: "lsst.sal.MTAirCompressor"
-      authorize:
-        enabled: true
-        topicsRegex: "lsst.sal.Authorize"
       lasertracker:
         enabled: true
         topicsRegex: "lsst.sal.LaserTracker"
@@ -272,16 +269,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
-    authorize:
-      enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.Authorize" ]
     lasertracker:
       enabled: true
       replicaCount: 1
