@@ -8,16 +8,16 @@ alert-stream-broker:
     externalListener:
       tls:
         enabled: true
-      #bootstrap:
-      #  ip: "35.224.176.103"
-      #  host: alert-stream-int.lsst.cloud
-      #brokers:
-      #  - ip: "34.28.80.188"
-      #    host: alert-stream-int-broker-0.lsst.cloud
-      #  - ip: "35.188.136.140"
-      #    host: alert-stream-int-broker-1.lsst.cloud
-      #  - ip: "35.238.84.221"
-      #    host: alert-stream-int-broker-2.lsst.cloud
+    # bootstrap:
+    #   ip: "35.224.176.103"
+    #   host: alert-stream-int.lsst.cloud
+    # brokers:
+    #   - ip: "34.28.80.188"
+    #     host: alert-stream-int-broker-0.lsst.cloud
+    #   - ip: "35.188.136.140"
+    #     host: alert-stream-int-broker-1.lsst.cloud
+    #   - ip: "35.238.84.221"
+    #     host: alert-stream-int-broker-2.lsst.cloud
 
 
     storage:

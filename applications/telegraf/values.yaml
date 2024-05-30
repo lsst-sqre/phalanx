@@ -8,8 +8,11 @@ telegraf:
     outputs: []
   resources:
     limits:
-      memory: 512Mi
-      cpu: 900m
+      memory: "1Gi"
+      cpu: "1"
+    requests:
+      memory: "350Mi"
+      cpu: "50m"
   args:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"

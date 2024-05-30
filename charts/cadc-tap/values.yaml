@@ -158,7 +158,14 @@ tapSchema:
     tag: "2.6.1"
 
   # -- Resource limits and requests for the TAP schema database pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "5m"
+      memory: "400Mi"
 
   # -- Annotations for the TAP schema database pod
   podAnnotations: {}

@@ -28,7 +28,7 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the giftless frontend pod |
 | podAnnotations | object | `{}` | Annotations for the giftless frontend pod |
-| resources | object | `{}` | Resource limits and requests for the giftless frontend pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the giftless frontend pod |
 | server.debug | bool | `false` | Turn on debugging mode |
 | server.readonly | object | `{"processes":2,"replicas":1,"threads":2}` | Values for readonly server |
 | server.readonly.processes | int | `2` | Number of processes for readonly server |

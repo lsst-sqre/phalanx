@@ -506,6 +506,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
+| strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
@@ -545,5 +546,5 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.nodeSelector | object | `{}` | Node labels for pod assignment |
 | telegraf-kafka-consumer.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
 | telegraf-kafka-consumer.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
-| telegraf-kafka-consumer.resources | object | `{}` | Kubernetes resources requests and limits |
+| telegraf-kafka-consumer.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf-kafka-consumer.tolerations | list | `[]` | Tolerations for pod assignment |

@@ -42,6 +42,6 @@ Rubin Science Platform Portal Aspect
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of pods to start |
-| resources | object | `{"limits":{"cpu":2,"memory":"6Gi"}}` | Resource limits and requests. The Portal will use (by default) 93% of container RAM.  This is a smallish Portal; tweak it as you need to in instance definitions in Phalanx. |
+| resources | object | See `values.yaml` | Resource limits and requests. The Portal will use (by default) 93% of container RAM.  This is a smallish Portal; tweak it as you need to in instance definitions in Phalanx. |
 | securityContext | object | `{}` | Security context for the Portal pod |
 | tolerations | list | `[]` | Tolerations for the Portal pod |

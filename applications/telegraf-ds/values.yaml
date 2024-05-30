@@ -6,7 +6,7 @@ telegraf-ds:
   - "--config"
   - "/etc/telegraf-generated/telegraf-generated.conf"
   env:
-    # -- Token to communicate with Influx
+  # Token to communicate with Influx
   - name: INFLUX_TOKEN
     valueFrom:
       secretKeyRef:
@@ -38,8 +38,12 @@ telegraf-ds:
     create: true
   resources:
     limits:
-      memory: 512Mi
-      cpu: 900m
+      memory: "1Gi"
+      cpu: "1"
+    requests:
+      memory: "350Mi"
+      cpu: "50m"
+
 
   serviceAccount:
     name: telegraf-ds

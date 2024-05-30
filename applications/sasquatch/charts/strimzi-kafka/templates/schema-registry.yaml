@@ -5,6 +5,10 @@ metadata:
 spec:
   listener: tls
   compatibilityLevel: none
+  cpuLimit: {{ .Values.registry.resources.limits.cpu | quote }}
+  cpuRequest: {{ .Values.registry.resources.requests.cpu | quote }}
+  memoryLimit: {{ .Values.registry.resources.limits.memory | quote }}
+  memoryRequest: {{ .Values.registry.resources.requests.memory | quote }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
