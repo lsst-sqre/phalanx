@@ -1,4 +1,6 @@
 replicaCount: 2
+image:
+  tag: "10.0.1"
 redis:
   persistence:
     enabled: false

@@ -80,7 +80,7 @@ jupyterhub:
   cull:
     timeout: 432000
     every: 300
-    maxAge: 2160000
+    maxAge: 604800
 hub:
   internalDatabase: false
 secrets:
