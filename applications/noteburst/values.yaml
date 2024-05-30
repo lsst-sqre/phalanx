@@ -152,7 +152,7 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "32Mi"
+      memory: "128Mi"
     requests:
       cpu: "2m"
       memory: "4Mi"
