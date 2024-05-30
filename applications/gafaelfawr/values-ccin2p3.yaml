@@ -31,7 +31,7 @@ config:
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
-    userBaseDn: cn=users,cn=account,dc=cc,dc=in2p3,dc=fr
+    userBaseDn: cn=users,cn=accounts,dc=cc,dc=in2p3,dc=fr
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
