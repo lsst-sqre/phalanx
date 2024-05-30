@@ -30,7 +30,7 @@ config:
     groupBaseDn: cn=groups,cn=compat,dc=cc,dc=in2p3,dc=fr
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
-    groupSearchByDn: true
+    groupSearchByDn: false
     userBaseDn: cn=users,cn=account,dc=cc,dc=in2p3,dc=fr
     userSearchAttr: uid
     addUserGroup: false
