@@ -46,9 +46,6 @@ strimzi-kafka:
       limits:
         memory: 8Gi
         cpu: "2"
-  zookeeper:
-    storage:
-      storageClassName: rook-ceph-block
   users:
     replicator:
       enabled: true

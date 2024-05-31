@@ -188,37 +188,6 @@ kafkaExporter:
       cpu: "375m"
       memory: "100Mi"
 
-zookeeper:
-  # -- Number of Zookeeper replicas to run.
-  replicas: 3
-
-  storage:
-    # -- Size of the backing storage disk for each of the Zookeeper instances
-    size: 100Gi
-
-    # -- Name of a StorageClass to use when requesting persistent volumes
-    storageClassName: ""
-
-  metricsConfig:
-    # -- Whether metric configuration is enabled
-    enabled: false
-
-  # -- Affinity for Zookeeper pod assignment
-  # @default -- See `values.yaml`
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: "app.kubernetes.io/name"
-                operator: In
-                values:
-                  - zookeeper
-          topologyKey: "kubernetes.io/hostname"
-
-  # -- Tolerations for Zookeeper pod assignment
-  tolerations: []
-
 connect:
   # -- Enable Kafka Connect
   enabled: false

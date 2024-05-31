@@ -70,9 +70,3 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
-| zookeeper.affinity | object | See `values.yaml` | Affinity for Zookeeper pod assignment |
-| zookeeper.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
-| zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
-| zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances |
-| zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
-| zookeeper.tolerations | list | `[]` | Tolerations for Zookeeper pod assignment |

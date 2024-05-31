@@ -392,12 +392,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | strimzi-kafka.users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | strimzi-kafka.users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
-| strimzi-kafka.zookeeper.affinity | object | See `values.yaml` | Affinity for Zookeeper pod assignment |
-| strimzi-kafka.zookeeper.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
-| strimzi-kafka.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
-| strimzi-kafka.zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances |
-| strimzi-kafka.zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
-| strimzi-kafka.zookeeper.tolerations | list | `[]` | Tolerations for Zookeeper pod assignment |
 | telegraf-kafka-consumer.affinity | object | `{}` | Affinity for pod assignment |
 | telegraf-kafka-consumer.args | list | `[]` | Arguments passed to the Telegraf agent containers |
 | telegraf-kafka-consumer.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
