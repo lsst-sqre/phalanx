@@ -6,3 +6,4 @@ config:
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02: "file:///opt/lsst/butler/config/dp02.yaml"
+    ir2: "s3://butler-us-central1-panda-dev/ir2/butler-ir2.yaml"
