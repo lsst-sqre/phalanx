@@ -5,12 +5,14 @@ kind: Deployment
 metadata:
   name: {{ template "rubintv.fullname" . }}-workers
   labels:
-    {{- include "rubintv.labels" . | nindent 4 }}
+    app.kubernetes.io/instance: "rubintv-worker"
+    app.kubernetes.io/name: "rubintv"
 spec:
   replicas: {{ .Values.workers.replicas }}
   selector:
     matchLabels:
-      {{- include "rubintv.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/instance: "rubintv-worker"
+      app.kubernetes.io/name: "rubintv"
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +20,8 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "rubintv.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/instance: "rubintv-worker"
+        app.kubernetes.io/name: "rubintv"
     spec:
       automountServiceAccountToken: false
       {{- with .Values.imagePullSecrets }}
