@@ -70,7 +70,7 @@ spec:
                 -Duws.driverClassName=org.postgresql.Driver
                 -Duws.maxActive=100
                 {{- if .Values.cloudsql.enabled }}
-                -Duws.password=$uwspassword
+                -Duws.password=$UWS_DB_PASSWORD
                 -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
                 -Duws.url=jdbc:postgres://localhost:5432/{{ .Values.cloudsql.database }}
                 {{- else }}
@@ -79,7 +79,7 @@ spec:
                 {{- end }}
                 {{- if eq .Values.config.backend "pg" }}
                 -Dtap.username={{ .Values.config.pg.username }}
-                -Dtap.password=$pgpassword
+                -Dtap.password=$TAP_DB_PASSWORD
                 -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
                 -Dtap.maxActive=100
                 -Dca.nrc.cadc.auth.Authenticator=ca.nrc.cadc.sample.AuthenticatorImpl
