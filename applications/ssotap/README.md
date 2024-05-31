@@ -17,6 +17,7 @@ IVOA TAP service for Solar System Objects
 | cadc-tap.config.pg.username | string | `"dp03"` | Postgres username to use to connect |
 | cadc-tap.config.vaultSecretName | string | `"ssotap"` | Vault secret name: the final key in the vault path |
 | cadc-tap.ingress.path | string | `"ssotap"` |  |
+| cadc-tap.serviceAccount.name | string | `"ssotap"` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
