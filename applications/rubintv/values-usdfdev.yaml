@@ -12,7 +12,7 @@ rubintv:
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
     image:
-      tag: deploy
+      tag: tickets-DM-44568
       pullPolicy: Always
 
   workers:
