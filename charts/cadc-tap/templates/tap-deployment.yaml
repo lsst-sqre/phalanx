@@ -72,7 +72,7 @@ spec:
                 {{- if .Values.cloudsql.enabled }}
                 -Duws.password=$UWS_DB_PASSWORD
                 -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
-                -Duws.url=jdbc:postgres://localhost:5432/{{ .Values.cloudsql.database }}
+                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.cloudsql.database }}
                 {{- else }}
                 -Duws.username=postgres
                 -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/

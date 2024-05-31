@@ -73,7 +73,7 @@ tests:
           pattern: "-Duws.username=mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
-          pattern: "-Duws.url=jdbc:postgres://localhost:5432/mydb"
+          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
           pattern: "-Duws.password="
@@ -108,7 +108,7 @@ tests:
           pattern: "-Duws.username=mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
-          pattern: "-Duws.url=jdbc:postgres://localhost:5432/mydb"
+          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
           pattern: "-Duws.password="
@@ -202,7 +202,7 @@ tests:
           pattern: "-Duws.username=mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
-          pattern: "-Duws.url=jdbc:postgres://localhost:5432/mydb"
+          pattern: "-Duws.url=jdbc:postgresql://localhost:5432/mydb"
       - matchRegex:
           path: spec.template.spec.containers[1].env[0].value
           pattern: "-Duws.password="
