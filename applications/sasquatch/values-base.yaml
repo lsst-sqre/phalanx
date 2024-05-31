@@ -87,7 +87,7 @@ kafka-connect-manager:
         topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       eas:
         enabled: true
-        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
+        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.EPM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: "lsst.sal.ATCamera|lsst.sal.ATHeaderService|lsst.sal.ATOODS|lsst.sal.ATSpectrograph"
@@ -178,7 +178,7 @@ telegraf-kafka-consumer:
       timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
     latiss:
       enabled: true
       replicaCount: 1
