@@ -12,8 +12,8 @@ tests:
         instanceConnectionName: "science-platform--xyz:test"
         serviceAccount: "sa@xyz"
         database: "mydb"
-      serviceAcccount:
-        enabled: true
+      serviceAccount:
+        create: true
         name: "sa"
     asserts:
       - hasDocuments:

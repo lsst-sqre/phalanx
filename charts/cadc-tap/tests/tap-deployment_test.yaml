@@ -66,6 +66,7 @@ tests:
             tag: "latest"
             pullPolicy: "IfNotPresent"
       serviceAccount:
+        create: true
         name: "ssotap"
     asserts:
       - matchRegex:
@@ -91,7 +92,7 @@ tests:
         serviceAccount: "sa@xyz"
         database: "mydb"
       serviceAccount:
-        enabled: true
+        create: true
         name: "sa"
       config:
         pg:
@@ -140,7 +141,7 @@ tests:
         serviceAccount: "sa@xyz"
         database: "mydb"
       serviceAccount:
-        enabled: true
+        create: true
         name: "sa"
       config:
         pg:
@@ -185,7 +186,7 @@ tests:
         serviceAccount: "sa@xyz"
         database: "mydb"
       serviceAccount:
-        enabled: true
+        create: true
         name: "sa"
       global:
         host: "example.com"
