@@ -7,6 +7,12 @@ tests:
     set:
       cloudsql:
         enabled: true
+        instanceConnectionName: "science-platform--xyz:test"
+        serviceAccount: "sa@xyz"
+        database: "mydb"
+      serviceAcccount:
+        enabled: true
+        name: "sa"
       global:
         host: "example.com"
     asserts:
