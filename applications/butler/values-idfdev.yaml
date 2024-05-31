@@ -3,6 +3,7 @@ image:
 
 config:
   s3EndpointUrl: "https://storage.googleapis.com"
+  additionalS3ProfileName: "ir2"
   repositories:
     dp02: "s3://butler-us-central1-panda-dev/dc2/butler-external-idfdev.yaml"
     ir2: "s3://butler-us-central1-panda-dev/ir2/butler-ir2.yaml"
