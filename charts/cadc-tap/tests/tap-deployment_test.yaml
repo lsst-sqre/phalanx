@@ -230,4 +230,3 @@ tests:
     asserts:
       - failedTemplate:
           errorMessage: cloudsql.instanceConnectionName must be specified
-
