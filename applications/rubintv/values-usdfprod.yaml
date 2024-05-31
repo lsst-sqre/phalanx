@@ -14,7 +14,7 @@ rubintv:
       pullPolicy: Always
 
   workers:
-    replicas: 1
+    replicas: 0
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
       tag: c0036
@@ -22,7 +22,7 @@ rubintv:
     uid: 73006
     gid: 73006
     scriptsLocation: /repos/rubintv_analysis_service/scripts
-    script: rubintv_worker.py -a rubintv-dev -p 8080 -c /repos/rubintv_analysis_service/scripts/config-temporal.yaml
+    script: rubintv_worker.py -a rubintv -p 8080 -c /repos/rubintv_analysis_service/scripts/config-temporal.yaml
     env:
     - name: S3_ENDPOINT_URL
       value: *s3E
@@ -45,13 +45,6 @@ rubintv:
         capacity: 1Gi
       accessMode: ReadOnlyMany
       mountPath: /sdf/data/rubin
-    - name: fs-ddn-sdf-group-lsst
-      persistentVolumeClaim:
-        name: fs-ddn-sdf-group-lsst
-        storageClassName: fs-ddn-sdf-group-lsst
-        capacity: 1Gi
-      accessMode: ReadOnlyMany
-      mountPath: /fs/ddn/sdf/group/lsst
     resources:
       limits:
         cpu: 2.0
