@@ -334,17 +334,3 @@ mirrormaker2:
 
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
-
-  sourceRegistry:
-    # -- Whether to deploy another Schema Registry for the schemas replicated
-    # from the source cluster
-    enabled: false
-
-    # -- Name of the topic Schema Registry topic replicated from the source
-    # cluster
-    schemaTopic: "source.registry-schemas"
-
-  sourceConnect:
-    # -- Whether to deploy another Connect cluster for topics replicated from
-    # the source cluster. Requires the `sourceRegistry` be enabled.
-    enabled: false

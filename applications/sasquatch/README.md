@@ -32,33 +32,6 @@ Rubin Observatory's telemetry service
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
 | chronograf.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Chronograf |
 | influxdb-enterprise.enabled | bool | `false` | Whether to use influxdb-enterprise |
-| influxdb-staging.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
-| influxdb-staging.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| influxdb-staging.config.coordinator.max-concurrent-queries | int | `0` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| influxdb-staging.config.coordinator.query-timeout | string | `"60s"` | Maximum duration a query is allowed to run before it is killed |
-| influxdb-staging.config.coordinator.write-timeout | string | `"1h"` | Duration a write request waits before timeout is returned to the caller |
-| influxdb-staging.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
-| influxdb-staging.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
-| influxdb-staging.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
-| influxdb-staging.config.http.auth-enabled | bool | `true` | Whether authentication is required |
-| influxdb-staging.config.http.enabled | bool | `true` | Whether to enable the HTTP endpoints |
-| influxdb-staging.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
-| influxdb-staging.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
-| influxdb-staging.config.logging.level | string | `"debug"` | Logging level |
-| influxdb-staging.enabled | bool | `false` | Whether to enable the InfluxDB staging deployment |
-| influxdb-staging.image.tag | string | `"1.8.10"` | InfluxDB image tag |
-| influxdb-staging.ingress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
-| influxdb-staging.ingress.className | string | `"nginx"` | Ingress class to use |
-| influxdb-staging.ingress.enabled | bool | `false` | Whether to enable the InfluxDB ingress |
-| influxdb-staging.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
-| influxdb-staging.ingress.path | string | `"/influxdb-staging(/\|$)(.*)"` | Path for the ingress |
-| influxdb-staging.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
-| influxdb-staging.initScripts.enabled | bool | `false` | Whether to enable the InfluxDB custom initialization script |
-| influxdb-staging.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
-| influxdb-staging.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
-| influxdb-staging.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
-| influxdb-staging.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
-| influxdb-staging.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
 | influxdb.config.coordinator.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
@@ -99,44 +72,6 @@ Rubin Observatory's telemetry service
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
-| source-influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
-| source-influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
-| source-influxdb.config.coordinator.max-concurrent-queries | int | `1000` | Maximum number of running queries allowed on the instance (0 is unlimited) |
-| source-influxdb.config.coordinator.query-timeout | string | `"30s"` | Maximum duration a query is allowed to run before it is killed |
-| source-influxdb.config.coordinator.write-timeout | string | `"1h"` | Duration a write request waits before timeout is returned to the caller |
-| source-influxdb.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
-| source-influxdb.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
-| source-influxdb.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
-| source-influxdb.config.http.auth-enabled | bool | `true` | Whether authentication is required |
-| source-influxdb.config.http.enabled | bool | `true` | Whether to enable the HTTP endpoints |
-| source-influxdb.config.http.flux-enabled | bool | `true` | Whether to enable the Flux query endpoint |
-| source-influxdb.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
-| source-influxdb.config.logging.level | string | `"debug"` | Logging level |
-| source-influxdb.enabled | bool | `false` | Enable InfluxDB source deployment |
-| source-influxdb.image.tag | string | `"1.8.10"` | InfluxDB image tag |
-| source-influxdb.ingress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
-| source-influxdb.ingress.className | string | `"nginx"` | Ingress class to use |
-| source-influxdb.ingress.enabled | bool | `false` | Whether to enable the InfluxDB ingress |
-| source-influxdb.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
-| source-influxdb.ingress.path | string | `"/source-influxdb(/\|$)(.*)"` | Path for the ingress |
-| source-influxdb.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
-| source-influxdb.initScripts.enabled | bool | `false` | Enable InfluxDB custom initialization script. |
-| source-influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
-| source-influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
-| source-influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
-| source-influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
-| source-influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
-| source-kafka-connect-manager.enabled | bool | `false` | Whether source kafka-connect-manager is enabled |
-| source-kafka-connect-manager.env | object | See `values.yaml` | Additional environment settings for source kafka-connect-manager |
-| source-kapacitor.enabled | bool | `false` | Whether Kapacitor for source is enabled |
-| source-kapacitor.envVars | object | See `values.yaml` | Additional environment variables to set |
-| source-kapacitor.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
-| source-kapacitor.image.repository | string | `"kapacitor"` | Docker image to use for Kapacitor |
-| source-kapacitor.image.tag | string | `"1.7.2"` | Tag to use for Kapacitor |
-| source-kapacitor.influxURL | string | `"http://sasquatch-influxdb-staging.sasquatch:8086"` | InfluxDB connection URL |
-| source-kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
-| source-kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
-| source-kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
 | strimzi-kafka.kafka.listeners.external.enabled | bool | `true` | Whether external listener is enabled |
@@ -392,62 +327,6 @@ Rubin Observatory's telemetry service
 | rest-proxy.schemaregistry.url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL |
 | rest-proxy.service.port | int | `8082` | Kafka REST proxy service port |
 | rest-proxy.tolerations | list | `[]` | Tolerations configuration |
-| source-kafka-connect-manager.enabled | bool | `true` | Whether to enable Kafka Connect Manager |
-| source-kafka-connect-manager.env.kafkaBrokerUrl | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker URL |
-| source-kafka-connect-manager.env.kafkaConnectUrl | string | `"http://sasquatch-connect-api.sasquatch:8083"` | Kafka connnect URL |
-| source-kafka-connect-manager.env.kafkaUsername | string | `"kafka-connect-manager"` | Username for SASL authentication |
-| source-kafka-connect-manager.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Kafka Connect Manager |
-| source-kafka-connect-manager.image.repository | string | `"ghcr.io/lsst-sqre/kafkaconnect"` | Docker image to use for Kafka Connect Manager |
-| source-kafka-connect-manager.image.tag | string | `"1.3.1"` | Docker tag to use for Kafka Connect Manager |
-| source-kafka-connect-manager.influxdbSink.autoUpdate | bool | `true` | Whether to check for new Kafka topics |
-| source-kafka-connect-manager.influxdbSink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector |
-| source-kafka-connect-manager.influxdbSink.connectInfluxDb | string | `"efd"` | InfluxDB database to write to |
-| source-kafka-connect-manager.influxdbSink.connectInfluxErrorPolicy | string | `"NOOP"` | Error policy, see connector documetation for details |
-| source-kafka-connect-manager.influxdbSink.connectInfluxMaxRetries | string | `"10"` | The maximum number of times a message is retried |
-| source-kafka-connect-manager.influxdbSink.connectInfluxRetryInterval | string | `"60000"` | The interval, in milliseconds, between retries. Only valid when the connectInfluxErrorPolicy is set to `RETRY`. |
-| source-kafka-connect-manager.influxdbSink.connectInfluxUrl | string | `"http://sasquatch-influxdb.sasquatch:8086"` | InfluxDB URL |
-| source-kafka-connect-manager.influxdbSink.connectProgressEnabled | bool | `false` | Enables the output for how many records have been processed |
-| source-kafka-connect-manager.influxdbSink.connectors | object | See `values.yaml` | Connector instances to deploy. See `example` for the fields that can be set. |
-| source-kafka-connect-manager.influxdbSink.excludedTopicsRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka |
-| source-kafka-connect-manager.influxdbSink.tasksMax | int | `1` | Maxium number of tasks to run the connector |
-| source-kafka-connect-manager.influxdbSink.timestamp | string | `"private_efdStamp"` | Timestamp field to be used as the InfluxDB time. If not specified use `sys_time()`. |
-| source-kafka-connect-manager.jdbcSink.autoCreate | string | `"true"` | Whether to automatically create the destination table |
-| source-kafka-connect-manager.jdbcSink.autoEvolve | string | `"false"` | Whether to automatically add columns in the table schema |
-| source-kafka-connect-manager.jdbcSink.batchSize | string | `"3000"` | Specifies how many records to attempt to batch together for insertion into the destination table |
-| source-kafka-connect-manager.jdbcSink.connectionUrl | string | `"jdbc:postgresql://localhost:5432/mydb"` | Database connection URL |
-| source-kafka-connect-manager.jdbcSink.dbTimezone | string | `"UTC"` | Name of the JDBC timezone that should be used in the connector when inserting time-based values |
-| source-kafka-connect-manager.jdbcSink.enabled | bool | `false` | Whether the JDBC Sink connector is deployed |
-| source-kafka-connect-manager.jdbcSink.insertMode | string | `"insert"` | The insertion mode to use. Supported modes are: `insert`, `upsert` and `update`. |
-| source-kafka-connect-manager.jdbcSink.maxRetries | string | `"10"` | The maximum number of times to retry on errors before failing the task |
-| source-kafka-connect-manager.jdbcSink.name | string | `"postgres-sink"` | Name of the connector to create |
-| source-kafka-connect-manager.jdbcSink.retryBackoffMs | string | `"3000"` | The time in milliseconds to wait following an error before a retry attempt is made |
-| source-kafka-connect-manager.jdbcSink.tableNameFormat | string | `"${topic}"` | A format string for the destination table name |
-| source-kafka-connect-manager.jdbcSink.tasksMax | string | `"10"` | Number of Kafka Connect tasks |
-| source-kafka-connect-manager.jdbcSink.topicRegex | string | `".*"` | Regex for selecting topics |
-| source-kafka-connect-manager.s3Sink.behaviorOnNullValues | string | `"fail"` | How to handle records with a null value (for example, Kafka tombstone records). Valid options are `ignore` and `fail`. |
-| source-kafka-connect-manager.s3Sink.checkInterval | string | `"15000"` | The interval, in milliseconds, to check for new topics and update the connector |
-| source-kafka-connect-manager.s3Sink.enabled | bool | `false` | Whether the Amazon S3 Sink connector is deployed |
-| source-kafka-connect-manager.s3Sink.excludedTopicRegex | string | `""` | Regex to exclude topics from the list of selected topics from Kafka |
-| source-kafka-connect-manager.s3Sink.flushSize | string | `"1000"` | Number of records written to store before invoking file commits |
-| source-kafka-connect-manager.s3Sink.locale | string | `"en-US"` | The locale to use when partitioning with TimeBasedPartitioner |
-| source-kafka-connect-manager.s3Sink.name | string | `"s3-sink"` | Name of the connector to create |
-| source-kafka-connect-manager.s3Sink.partitionDurationMs | string | `"3600000"` | The duration of a partition in milliseconds, used by TimeBasedPartitioner. Default is 1h for an hourly based partitioner |
-| source-kafka-connect-manager.s3Sink.pathFormat | string | `"'year'=YYYY/'month'=MM/'day'=dd/'hour'=HH"` | Pattern used to format the path in the S3 object name |
-| source-kafka-connect-manager.s3Sink.rotateIntervalMs | string | `"600000"` | The time interval in milliseconds to invoke file commits. Set to 10 minutes by default |
-| source-kafka-connect-manager.s3Sink.s3BucketName | string | `""` | S3 bucket name. The bucket must already exist at the s3 provider |
-| source-kafka-connect-manager.s3Sink.s3PartRetries | int | `3` | Maximum number of retry attempts for failed requests. Zero means no retries. |
-| source-kafka-connect-manager.s3Sink.s3PartSize | int | `5242880` | The part size in S3 multi-part uploads. Valid values: [5242880,…,2147483647] |
-| source-kafka-connect-manager.s3Sink.s3Region | string | `"us-east-1"` | S3 region |
-| source-kafka-connect-manager.s3Sink.s3RetryBackoffMs | int | `200` | How long to wait in milliseconds before attempting the first retry of a failed S3 request |
-| source-kafka-connect-manager.s3Sink.s3SchemaCompatibility | string | `"NONE"` | S3 schema compatibility |
-| source-kafka-connect-manager.s3Sink.schemaCacheConfig | int | `5000` | The size of the schema cache used in the Avro converter |
-| source-kafka-connect-manager.s3Sink.storeUrl | string | `""` | The object storage connection URL, for non-AWS s3 providers |
-| source-kafka-connect-manager.s3Sink.tasksMax | int | `1` | Number of Kafka Connect tasks |
-| source-kafka-connect-manager.s3Sink.timestampExtractor | string | `"Record"` | The extractor determines how to obtain a timestamp from each record |
-| source-kafka-connect-manager.s3Sink.timestampField | string | `""` | The record field to be used as timestamp by the timestamp extractor. Only applies if timestampExtractor is set to RecordField. |
-| source-kafka-connect-manager.s3Sink.timezone | string | `"UTC"` | The timezone to use when partitioning with TimeBasedPartitioner |
-| source-kafka-connect-manager.s3Sink.topicsDir | string | `"topics"` | Top level directory to store the data ingested from Kafka |
-| source-kafka-connect-manager.s3Sink.topicsRegex | string | `".*"` | Regex to select topics from Kafka |
 | square-events.cluster.name | string | `"sasquatch"` |  |
 | strimzi-kafka.cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | strimzi-kafka.cluster.name | string | `"sasquatch"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
@@ -500,9 +379,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | strimzi-kafka.mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | strimzi-kafka.mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
-| strimzi-kafka.mirrormaker2.sourceConnect.enabled | bool | `false` | Whether to deploy another Connect cluster for topics replicated from the source cluster. Requires the `sourceRegistry` be enabled. |
-| strimzi-kafka.mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster |
-| strimzi-kafka.mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
 | strimzi-kafka.registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | strimzi-kafka.registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | strimzi-kafka.registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
