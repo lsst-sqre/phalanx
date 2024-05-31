@@ -91,12 +91,6 @@ config:
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
-  # -- UWS Database URL (if using external UWS)
-  uwsDatabaseUrl: ""
-
-  # -- UWS Database Username (if using external UWS)
-  uwsDatabaseUsername: ""
-
   # -- Datalink payload URL
   datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.6.1/datalink-snippets.zip"
 
@@ -164,7 +158,14 @@ tapSchema:
     tag: "2.6.1"
 
   # -- Resource limits and requests for the TAP schema database pod
-  resources: {}
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "5m"
+      memory: "400Mi"
 
   # -- Annotations for the TAP schema database pod
   podAnnotations: {}
@@ -179,8 +180,6 @@ tapSchema:
   affinity: {}
 
 uws:
-  # --
-  enabled: true
   image:
     # -- UWS database image to use
     repository: "ghcr.io/lsst-sqre/lsst-tap-uws-db"
@@ -231,11 +230,14 @@ cloudsql:
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""
 
-  # -- The Google service account that has an IAM binding to the `vo-cutouts`
+  # -- The Google service account that has an IAM binding to the `cadc-tap`
   # Kubernetes service accounts and has the `cloudsql.client` role, access
-  # to the GCS bucket, and ability to sign URLs as itself
   # @default -- None, must be set
   serviceAccount: ""
+
+  # -- CloudSQL database name
+  # @default -- None, must be set
+  database: ""
 
   # -- Resource limits and requests for the Cloud SQL Proxy container
   # @default -- See `values.yaml`
@@ -247,6 +249,8 @@ cloudsql:
       cpu: "5m"
       memory: "7Mi"
 
+# -- The service account will allways be created when cloudsql.enabled is set to true
+# In this case the serviceAccount configuration here is required
 serviceAccount:
   # -- Specifies whether a service account should be created.
   create: false
@@ -255,8 +259,8 @@ serviceAccount:
   annotations: {}
 
   # The name of the service account to use.
-  # @default -- Generated using the fullname template
-  name: "cadc-tap"
+  # @default -- None, must be set if service account creation is enabled
+  name: ""
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

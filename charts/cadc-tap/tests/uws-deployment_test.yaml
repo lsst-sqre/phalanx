@@ -3,20 +3,21 @@ templates:
   - uws-db-deployment.yaml
 
 tests:
-  - it: should not create a UWS deployment when uws is disabled
+  - it: should not be created when cloudsql is enabled
     set:
-      uws:
-        enabled: false
       global:
         host: "example.com"
+      cloudsql:
+        enabled: true
+        instanceConnectionName: "science-platform--xyz:test"
+        serviceAccount: "sa@xyz"
+        database: "mydb"
     asserts:
       - hasDocuments:
           count: 0
 
-  - it: should create a UWS deployment when uws is enabled
+  - it: should create a UWS deployment when cloudsql is note enabled (off by default)
     set:
-      uws:
-        enabled: true
       global:
         host: "example.com"
     asserts:

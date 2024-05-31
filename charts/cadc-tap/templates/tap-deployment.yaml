@@ -71,8 +71,8 @@ spec:
                 -Duws.maxActive=100
                 {{- if .Values.cloudsql.enabled }}
                 -Duws.password=$uwspassword
-                -Duws.username={{ .Values.config.uwsDatabaseUsername }}
-                -Duws.url=jdbc:{{ .Values.config.uwsDatabaseUrl }}
+                -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
+                -Duws.url=jdbc:postgres://localhost:5432/{{ .Values.cloudsql.database }}
                 {{- else }}
                 -Duws.username=postgres
                 -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
@@ -101,18 +101,18 @@ spec:
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             {{- if eq .Values.config.backend "pg" }}
-            - name: "pgpassword"
+            - name: "TAP_DB_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "cadc-tap"
                   key: "pgpassword"
             {{- end }}
             {{- if .Values.cloudsql.enabled }}
-            - name: "uwspassword"
+            - name: "UWS_DB_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "cadc-tap"
-                  key: "uwspassword"
+                  key: "uws-db-password"
             {{- end }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"

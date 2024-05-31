@@ -13,13 +13,14 @@ IVOA TAP service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the TAP pod |
+| cloudsql.database | string | None, must be set | CloudSQL database name |
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.tag | string | `"1.35.3"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
-| cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to the GCS bucket, and ability to sign URLs as itself |
+| cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/2.6.1/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
@@ -37,8 +38,6 @@ IVOA TAP service
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
 | config.qserv.image.tag | string | `"2.2.0"` | Tag of TAP image to use |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
-| config.uwsDatabaseUrl | string | `""` | UWS Database URL (if using external UWS) |
-| config.uwsDatabaseUsername | string | `""` | UWS Database Username (if using external UWS) |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
@@ -62,20 +61,19 @@ IVOA TAP service
 | podAnnotations | object | `{}` | Annotations for the TAP pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the TAP pod |
+| serviceAccount | object | `{"annotations":{},"create":false,"name":""}` | The service account will allways be created when cloudsql.enabled is set to true In this case the serviceAccount configuration here is required |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
 | serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
-| serviceAccount.name | string | `"cadc-tap"` |  |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
 | tapSchema.image.tag | string | `"2.6.1"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
-| tapSchema.resources | object | `{}` | Resource limits and requests for the TAP schema database pod |
+| tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |
 | tapSchema.tolerations | list | `[]` | Tolerations for the TAP schema database pod |
 | tolerations | list | `[]` | Tolerations for the TAP pod |
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
-| uws.enabled | bool | `true` |  |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
 | uws.image.tag | string | `"2.2.0"` | Tag of UWS database image to use |
