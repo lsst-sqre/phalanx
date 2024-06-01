@@ -178,38 +178,6 @@ spec:
         class: {{ .Values.kafka.storage.storageClassName }}
         {{- end}}
         deleteClaim: false
-  zookeeper:
-    {{- if .Values.zookeeper.metricsConfig.enabled }}
-    metricsConfig:
-      type: jmxPrometheusExporter
-      valueFrom:
-        configMapKeyRef:
-          name: zookeeper-metrics
-          key: zookeeper-metrics-config.yml
-    {{- end }}
-    template:
-      persistentVolumeClaim:
-        metadata:
-          annotations:
-            argocd.argoproj.io/compare-options: IgnoreExtraneous
-            argocd.argoproj.io/sync-options: Prune=false
-      pod:
-        {{- with .Values.zookeeper.affinity }}
-        affinity:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
-        {{- with .Values.zookeeper.tolerations }}
-        tolerations:
-          {{- toYaml . | nindent 10 }}
-        {{- end}}
-    replicas: {{ .Values.zookeeper.replicas }}
-    storage:
-      # Note that storage is configured per replica. If there are 3 replicas,
-      # each will get its own PersistentVolumeClaim for the configured size.
-      type: persistent-claim
-      size: {{ .Values.zookeeper.storage.size }}
-      class: {{ .Values.zookeeper.storage.storageClassName }}
-      deleteClaim: false
   entityOperator:
     topicOperator: {}
     userOperator: {}

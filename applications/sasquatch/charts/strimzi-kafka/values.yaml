@@ -188,37 +188,6 @@ kafkaExporter:
       cpu: "375m"
       memory: "100Mi"
 
-zookeeper:
-  # -- Number of Zookeeper replicas to run.
-  replicas: 3
-
-  storage:
-    # -- Size of the backing storage disk for each of the Zookeeper instances
-    size: 100Gi
-
-    # -- Name of a StorageClass to use when requesting persistent volumes
-    storageClassName: ""
-
-  metricsConfig:
-    # -- Whether metric configuration is enabled
-    enabled: false
-
-  # -- Affinity for Zookeeper pod assignment
-  # @default -- See `values.yaml`
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: "app.kubernetes.io/name"
-                operator: In
-                values:
-                  - zookeeper
-          topologyKey: "kubernetes.io/hostname"
-
-  # -- Tolerations for Zookeeper pod assignment
-  tolerations: []
-
 connect:
   # -- Enable Kafka Connect
   enabled: false
@@ -334,17 +303,3 @@ mirrormaker2:
 
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
-
-  sourceRegistry:
-    # -- Whether to deploy another Schema Registry for the schemas replicated
-    # from the source cluster
-    enabled: false
-
-    # -- Name of the topic Schema Registry topic replicated from the source
-    # cluster
-    schemaTopic: "source.registry-schemas"
-
-  sourceConnect:
-    # -- Whether to deploy another Connect cluster for topics replicated from
-    # the source cluster. Requires the `sourceRegistry` be enabled.
-    enabled: false

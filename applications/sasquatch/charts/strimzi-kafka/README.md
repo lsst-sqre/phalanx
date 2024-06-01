@@ -57,9 +57,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | mirrormaker2.replication.policy.separator | string | `""` | Convention used to rename topics when the DefaultReplicationPolicy replication policy is used. Default is "" when the IdentityReplicationPolicy replication policy is used. |
 | mirrormaker2.source.bootstrapServer | string | None, must be set if enabled | Source (active) cluster to replicate from |
 | mirrormaker2.source.topicsPattern | string | `"registry-schemas, lsst.sal.*"` | Topic replication from the source cluster defined as a comma-separated list or regular expression pattern |
-| mirrormaker2.sourceConnect.enabled | bool | `false` | Whether to deploy another Connect cluster for topics replicated from the source cluster. Requires the `sourceRegistry` be enabled. |
-| mirrormaker2.sourceRegistry.enabled | bool | `false` | Whether to deploy another Schema Registry for the schemas replicated from the source cluster |
-| mirrormaker2.sourceRegistry.schemaTopic | string | `"source.registry-schemas"` | Name of the topic Schema Registry topic replicated from the source cluster |
 | registry.ingress.annotations | object | `{}` | Annotations that will be added to the Ingress resource |
 | registry.ingress.enabled | bool | `false` | Whether to enable an ingress for the Schema Registry |
 | registry.ingress.hostname | string | None, must be set if ingress is enabled | Hostname for the Schema Registry |
@@ -73,9 +70,3 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
-| zookeeper.affinity | object | See `values.yaml` | Affinity for Zookeeper pod assignment |
-| zookeeper.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
-| zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
-| zookeeper.storage.size | string | `"100Gi"` | Size of the backing storage disk for each of the Zookeeper instances |
-| zookeeper.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
-| zookeeper.tolerations | list | `[]` | Tolerations for Zookeeper pod assignment |
