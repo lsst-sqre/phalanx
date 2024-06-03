@@ -1,0 +1,22 @@
+suite: Mock-DB Network Policy
+templates:
+  - mock-db-networkpolicy.yaml
+
+tests:
+  - it: should create a Mock-DB Network Policy when mockdb is enabled
+    set:
+      mockdb:
+        enabled: true
+      global:
+        host: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 1
+
+  - it: should not create a Mock-DB Network Policy by default
+    set:
+      global:
+        host: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 0

@@ -13,6 +13,14 @@ IVOA TAP service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the TAP pod |
+| cloudsql.database | string | None, must be set | CloudSQL database name |
+| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
+| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
+| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.tag | string | `"1.35.3"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
+| cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
 | config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/2.6.1/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
@@ -23,7 +31,7 @@ IVOA TAP service
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | TAP image to use |
-| config.pg.image.tag | string | `"1.15.0"` | Tag of TAP image to use |
+| config.pg.image.tag | string | `"1.16.0"` | Tag of TAP image to use |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
@@ -53,6 +61,9 @@ IVOA TAP service
 | podAnnotations | object | `{}` | Annotations for the TAP pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the TAP pod |
+| serviceAccount | object | `{"annotations":{},"create":false,"name":""}` | The service account will allways be created when cloudsql.enabled is set to true In this case the serviceAccount configuration here is required |
+| serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
+| serviceAccount.create | bool | `false` | Specifies whether a service account should be created. |
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |

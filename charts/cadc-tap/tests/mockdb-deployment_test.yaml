@@ -1,0 +1,24 @@
+suite: MockDB Deployment
+templates:
+  - mock-db-deployment.yaml
+
+tests:
+  - it: should not create a MockDB deployment when mockdb is disabled
+    set:
+      mockdb:
+        enabled: false
+      global:
+        host: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: should create a MockDB deployment when mockdb is enabled
+    set:
+      mockdb:
+        enabled: true
+      global:
+        host: "example.com"
+    asserts:
+      - hasDocuments:
+          count: 1
