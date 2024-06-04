@@ -68,6 +68,7 @@ controller:
 jupyterhub:
   hub:
     db:
+      upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
 hub:
   internalDatabase: false

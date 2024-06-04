@@ -96,6 +96,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":768,"runAsUser":768}` | Security context for JupyterHub container |
 | jupyterhub.hub.db.password | string | Comes from nublado-secret | Database password (not used) |
 | jupyterhub.hub.db.type | string | `"postgres"` | Type of database to use |
+| jupyterhub.hub.db.upgrade | bool | `false` | Whether to automatically update DB schema at Hub start |
 | jupyterhub.hub.db.url | string | Use the in-cluster PostgreSQL installed by Phalanx | URL of PostgreSQL server |
 | jupyterhub.hub.existingSecret | string | `"nublado-secret"` | Existing secret to use for private keys |
 | jupyterhub.hub.extraEnv | object | Gets `JUPYTERHUB_CRYPT_KEY` from `nublado-secret` | Additional environment variables to set |

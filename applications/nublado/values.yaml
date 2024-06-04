@@ -432,6 +432,9 @@ jupyterhub:
       # @default -- Comes from nublado-secret
       password: "true"
 
+      # -- Whether to automatically update DB schema at Hub start
+      upgrade: false
+
       # -- URL of PostgreSQL server
       # @default -- Use the in-cluster PostgreSQL installed by Phalanx
       url: "postgresql://nublado3@postgres.postgres/jupyterhub"
