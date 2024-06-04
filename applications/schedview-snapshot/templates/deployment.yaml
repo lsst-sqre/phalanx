@@ -80,9 +80,11 @@ spec:
       {{- end }}
       volumes:
         - name: tmp
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: "16Gi"
         - name: slashdatcache
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: "16Gi"
         - name: schedview-snapshot-secrets
           secret:
             secretName: schedview-snapshot
