@@ -15,8 +15,6 @@ rubintv:
       tag: v2.2.0
       pullPolicy: Always
 
-  # TODO: update workers configurations with proper summit configurations
-  # See: DM-44243
   workers:
     replicas: 0
     image:
