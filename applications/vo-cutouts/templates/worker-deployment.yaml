@@ -22,7 +22,11 @@ spec:
         app.kubernetes.io/component: "worker"
         vo-cutouts-redis-client: "true"
     spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ include "vo-cutouts.fullname" . }}
+      {{- else }}
       automountServiceAccountToken: false
+      {{- end }}
       containers:
         - name: "worker"
           securityContext:
@@ -47,6 +51,8 @@ spec:
             # URL of the bucket into which to store the cutouts.
             - name: "CUTOUT_STORAGE_URL"
               value: {{ required "config.gcsBucketUrl must be set" .Values.config.gcsBucketUrl | quote }}
+            - name: "S3_ENDPOINT_URL"
+              value: "https://storage.googleapis.com"
 
             # Temporary directory into which to stage cutouts before uploading.
             - name: "CUTOUT_TMPDIR"
