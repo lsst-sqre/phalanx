@@ -1,6 +1,6 @@
 config:
   databaseUrl: "postgresql://vo-cutouts@localhost/vo-cutouts"
-  gcsBucketUrl: "s3://rubin-cutouts-dev-us-central1-output/"
+  gcsBucketUrl: "gs://rubin-cutouts-dev-us-central1-output/"
 
 cloudsql:
   enabled: true
