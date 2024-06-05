@@ -25,7 +25,6 @@ Image cutout service complying with IVOA SODA
 | config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |
 | config.syncTimeout | int | 60 (1 minute) | Timeout for results from a sync cutout in seconds |
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
-| config.useButlerServer | bool | `true` | If true, use Butler in client/server mode instead of connecting directly to the Butler database |
 | cutoutWorker.affinity | object | `{}` | Affinity rules for the cutout worker pod |
 | cutoutWorker.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for cutout workers |
 | cutoutWorker.image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts-worker"` | Stack image to use for cutouts |

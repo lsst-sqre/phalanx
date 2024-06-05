@@ -58,23 +58,19 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command:
-            - "dramatiq"
-            - "vocutouts.actors"
-            - "-Q"
-            - "uws"
-            - "-p"
-            - "1"
+            - "arq"
+            - "vocutouts.workers.uws.WorkerSettings"
           env:
+            - name: "CUTOUT_ARQ_QUEUE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  key: "redis-password"
             - name: "CUTOUT_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "vo-cutouts.fullname" . }}-secret
                   key: "database-password"
-            - name: "CUTOUT_REDIS_PASSWORD"
-              valueFrom:
-                secretKeyRef:
-                  name: {{ template "vo-cutouts.fullname" . }}-secret
-                  key: "redis-password"
           envFrom:
             - configMapRef:
                 name: {{ template "vo-cutouts.fullname" . }}-config
@@ -82,18 +78,10 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          volumeMounts:
-            - name: "tmp"
-              mountPath: "/tmp"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
-      volumes:
-        # Dramatiq enables its Prometheus middleware by default, which
-        # requires writable /tmp.
-        - name: "tmp"
-          emptyDir: {}
       {{- with .Values.databaseWorker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
