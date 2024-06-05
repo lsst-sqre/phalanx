@@ -44,12 +44,27 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end -}}
 
+{{- define "rubintv.workers.labels" -}}
+app.kubernetes.io/name: {{ include "rubintv.name" . }}
+helm.sh/chart: {{ include "rubintv.chart" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}-worker
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end -}}
+
 {{/*
 Selector labels
 */}}
 {{- define "rubintv.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "rubintv.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{- define "rubintv.workers.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "rubintv.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}-worker
 {{- end }}
 
 {{/*
