@@ -29,7 +29,6 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          privileged: false
           securityContext:
             privileged: false
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
