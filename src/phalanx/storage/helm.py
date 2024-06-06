@@ -266,7 +266,7 @@ class HelmStorage:
             name = hostname.split(".")[-2]
         else:
             name = hostname
-        self._helm.run("repo", "add", name, url, quiet=quiet)
+        self._helm.run("repo", "add", "--force-update", name, url, quiet=quiet)
 
     def repo_update(self, *, quiet: bool = False) -> None:
         """Update Helm's cache of upstream repository indices.

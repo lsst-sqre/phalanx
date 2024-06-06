@@ -1,0 +1,12 @@
+fqdn: "usdf-cm-dev.slac.stanford.edu"
+name: "usdf-cm-dev"
+appOfAppsName: "science-platform"
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: "secret/rubin/usdf-cm-dev"
+
+applications:
+  # This environment uses an ingress managed in a separate Kubernetes cluster,
+  # despite that configuration not being officially supported by Phalanx.
+  cert-manager: false
+  gafaelfawr: false
+  ingress-nginx: false

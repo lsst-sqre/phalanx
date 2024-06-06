@@ -64,6 +64,8 @@ ignore = [
     '^https://rsp.lsst.ac.uk',
     '^https://roundtable-dev.lsst.cloud',
     '^https://roundtable.lsst.cloud',
+    '^https://usdf-cm.slac.stanford.edu',
+    '^https://usdf-cm-dev.slac.stanford.edu',
     '^https://usdf-prompt-processing-dev.slac.stanford.edu',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',
