@@ -66,9 +66,8 @@ jobs:
       - name: Install Helm Unittest Plugin
         run: helm plugin install https://github.com/helm-unittest/helm-unittest
 
-      - name: Run Helm Unittest
-        run: helm unittest charts/cadc-tap
-
+      - name: Run Helm Unittest for all applications and charts with a `tests` directory
+        run: helm unittest {applications,charts}/*/tests/..
       - uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.12"
