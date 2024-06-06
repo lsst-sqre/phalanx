@@ -1,0 +1,24 @@
+suite: Github Integration Enabled
+set:
+  # GitHub integration is enabled by default, so no need to set any values
+  global:
+    host: "example.com"
+tests:
+  - it: "Should create an anonymous ingress"
+    template: "ingress-webhooks.yaml"
+    asserts:
+      - containsDocument:
+          kind: "GafaelfawrIngress"
+          apiVersion: gafaelfawr.lsst.io/v1alpha1
+      - equal:
+          path: "config.scopes.anonymous"
+          value: true
+
+  - it: "Should inject GitHub secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_WEBHOOK_SECRET"

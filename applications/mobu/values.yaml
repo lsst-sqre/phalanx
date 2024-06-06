@@ -36,6 +36,11 @@ config:
   # -- Prefix for mobu's API routes.
   pathPrefix: "/mobu"
 
+  # -- Whether to enable the GitHub app integration. This should be `false`
+  # in envs that are behind a VPN because the integration depends on being
+  # able to receive webhook requests from github.com.
+  githubIntegration: true
+
 # -- Resource limits and requests for the mobu frontend pod
 # @default -- See `values.yaml`
 resources:

@@ -1,0 +1,21 @@
+suite: Github Integration Disabled
+set:
+  config:
+    githubIntegration: false
+  global:
+    host: "example.com"
+tests:
+  - it: "Should not create an anonymous ingress"
+    template: "ingress-webhooks.yaml"
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: "Should not inject GitHub secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_WEBHOOK_SECRET"

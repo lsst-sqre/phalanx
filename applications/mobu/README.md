@@ -13,6 +13,7 @@ Continuous integration testing
 | affinity | object | `{}` | Affinity rules for the mobu frontend pod |
 | config.autostart | list | `[]` | Autostart specification. Must be a list of mobu flock specifications. Each flock listed will be automatically started when mobu is started. |
 | config.debug | bool | `false` | If set to true, include the output from all flocks in the main mobu log and disable structured JSON logging. |
+| config.githubIntegration | bool | `true` | Whether to enable the GitHub app integration. This should be `false` in envs that are behind a VPN because the integration depends on being able to receive webhook requests from github.com. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
