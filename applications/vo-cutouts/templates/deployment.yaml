@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "vo-cutouts.fullname" . }}
+  name: "vo-cutouts"
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.frontend.replicaCount }}
   selector:
     matchLabels:
       {{- include "vo-cutouts.selectorLabels" . | nindent 6 }}
@@ -14,7 +14,7 @@ spec:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
-        {{- with .Values.podAnnotations }}
+        {{- with .Values.frontend.podAnnotations }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
@@ -22,8 +22,12 @@ spec:
         app.kubernetes.io/component: "frontend"
         vo-cutouts-redis-client: "true"
     spec:
+      {{- with .Values.frontend.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: {{ include "vo-cutouts.fullname" . }}
+      serviceAccountName: "vo-cutouts"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -73,33 +77,29 @@ spec:
             - name: "CUTOUT_ARQ_QUEUE_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  name: "vo-cutouts"
                   key: "redis-password"
             - name: "CUTOUT_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  name: "vo-cutouts"
                   key: "database-password"
           envFrom:
             - configMapRef:
-                name: {{ template "vo-cutouts.fullname" . }}-config
+                name: "vo-cutouts"
           readinessProbe:
             httpGet:
               path: "/api/cutout/availability"
               port: "http"
-          {{- with .Values.resources }}
+          {{- with .Values.frontend.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
-      affinity:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.frontend.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

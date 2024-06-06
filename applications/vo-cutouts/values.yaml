@@ -1,50 +1,6 @@
 # Default values for vo-cutouts.
-
-# -- Number of web frontend pods to start
-replicaCount: 1
-
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
-image:
-  # -- vo-cutouts image to use
-  repository: "ghcr.io/lsst-sqre/vo-cutouts"
-
-  # -- Pull policy for the vo-cutouts image
-  pullPolicy: "IfNotPresent"
-
-  # -- Tag of vo-cutouts image to use
-  # @default -- The appVersion of the chart
-  tag: ""
-
-ingress:
-  # -- Additional annotations to add to the ingress
-  annotations: {}
-
-# -- Resource limits and requests for the vo-cutouts frontend pod
-# @default -- See `values.yaml`
-resources:
-  limits:
-    cpu: "0.5"
-    memory: "500Mi"
-  requests:
-    cpu: "0.1"
-    memory: "230Mi"
-
-# -- Annotations for the vo-cutouts frontend pod
-podAnnotations: {}
-
-# -- Node selector rules for the vo-cutouts frontend pod
-nodeSelector: {}
-
-# -- Tolerations for the vo-cutouts frontend pod
-tolerations: []
-
-# -- Affinity rules for the vo-cutouts frontend pod
-affinity: {}
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
 
 config:
   # -- Choose from the text form of Python logging levels
@@ -53,27 +9,73 @@ config:
   # -- URL path prefix for the cutout API
   pathPrefix: "/api/cutout"
 
-  # -- URL for the PostgreSQL database
-  # @default -- None, must be set
-  databaseUrl: ""
-
-  # -- URL for the GCS bucket into which to store cutouts (must start with
-  # `s3`)
-  # @default -- None, must be set
-  gcsBucketUrl: ""
-
-  # -- Timeout for a single cutout job in seconds
-  # @default -- 600 (10 minutes)
-  timeout: 600
+  # -- URL for the PostgreSQL database if Cloud SQL is not in use
+  # @default -- None, must be set if `cloudsql.enabled` is false
+  databaseUrl: null
 
   # -- Lifetime of job results in seconds (quote so that Helm doesn't turn it
   # into a floating point number)
   # @default -- 2592000 (30 days)
   lifetime: "2592000"
 
+  # -- Google service account with an IAM binding to the `vo-cutouts`
+  # Kubernetes service accounts and has the `cloudsql.client` role, access
+  # to write to the GCS bucket, and ability to sign URLs as itself
+  # @default -- None, must be set
+  serviceAccount: null
+
+  # -- URL for the GCS bucket for results (must start with `gs`)
+  # @default -- None, must be set
+  storageBucketUrl: null
+
   # -- Timeout for results from a sync cutout in seconds
   # @default -- 60 (1 minute)
   syncTimeout: 60
+
+  # -- Timeout for a single cutout job in seconds
+  # @default -- 600 (10 minutes)
+  timeout: 600
+
+image:
+  # -- vo-cutouts image to use for the frontend and database workers
+  repository: "ghcr.io/lsst-sqre/vo-cutouts"
+
+  # -- Pull policy for the vo-cutouts image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of vo-cutouts image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+frontend:
+  # -- Number of web frontend pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the vo-cutouts frontend pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.5"
+      memory: "500Mi"
+    requests:
+      cpu: "0.1"
+      memory: "230Mi"
+
+  # -- Affinity rules for the vo-cutouts frontend pod
+  affinity: {}
+
+  # -- Node selector rules for the vo-cutouts frontend pod
+  nodeSelector: {}
+
+  # -- Annotations for the vo-cutouts frontend pod
+  podAnnotations: {}
+
+  # -- Tolerations for the vo-cutouts frontend pod
+  tolerations: []
 
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
@@ -91,13 +93,8 @@ cloudsql:
     pullPolicy: "IfNotPresent"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
-  instanceConnectionName: ""
-
-  # -- The Google service account that has an IAM binding to the `vo-cutouts`
-  # Kubernetes service accounts and has the `cloudsql.client` role, access
-  # to the GCS bucket, and ability to sign URLs as itself
-  # @default -- None, must be set
-  serviceAccount: ""
+  # @default -- None, must be set if Cloud SQL is used
+  instanceConnectionName: null
 
   # -- Resource limits and requests for the Cloud SQL Proxy container
   # @default -- See `values.yaml`
@@ -119,7 +116,7 @@ cutoutWorker:
 
     # -- Tag of vo-cutouts worker image to use
     # @default -- The appVersion of the chart
-    tag: ""
+    tag: null
 
     # -- Pull policy for cutout workers
     pullPolicy: "IfNotPresent"
@@ -134,17 +131,17 @@ cutoutWorker:
       cpu: "0.1"
       memory: "550Mi"
 
-  # -- Annotations for the cutout worker pod
-  podAnnotations: {}
+  # -- Affinity rules for the cutout worker pod
+  affinity: {}
 
   # -- Node selection rules for the cutout worker pod
   nodeSelector: {}
 
+  # -- Annotations for the cutout worker pod
+  podAnnotations: {}
+
   # -- Tolerations for the cutout worker pod
   tolerations: []
-
-  # -- Affinity rules for the cutout worker pod
-  affinity: {}
 
 databaseWorker:
   # -- Number of database worker pods to start
@@ -160,17 +157,17 @@ databaseWorker:
       cpu: "0.02"
       memory: "85Mi"
 
-  # -- Annotations for the database worker pod
-  podAnnotations: {}
+  # -- Affinity rules for the database worker pod
+  affinity: {}
 
   # -- Node selection rules for the database worker pod
   nodeSelector: {}
 
+  # -- Annotations for the database worker pod
+  podAnnotations: {}
+
   # -- Tolerations for the database worker pod
   tolerations: []
-
-  # -- Affinity rules for the database worker pod
-  affinity: {}
 
 redis:
   config:
@@ -192,14 +189,14 @@ redis:
     size: "100Mi"
 
     # -- Class of storage to request
-    storageClass: ""
+    storageClass: null
 
     # -- Access mode of storage to request
     accessMode: "ReadWriteOnce"
 
     # -- Use an existing PVC, not dynamic provisioning. If this is set, the
     # size, storageClass, and accessMode settings are ignored.
-    volumeClaimName: ""
+    volumeClaimName: null
 
   # -- Resource limits and requests for the Redis pod
   # @default -- See `values.yaml`
@@ -211,37 +208,33 @@ redis:
       cpu: "0.1"
       memory: "5Mi"
 
-  # -- Pod annotations for the Redis pod
-  podAnnotations: {}
+  # -- Affinity rules for the Redis pod
+  affinity: {}
 
   # -- Node selection rules for the Redis pod
   nodeSelector: {}
 
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
   # -- Tolerations for the Redis pod
   tolerations: []
-
-  # -- Affinity rules for the Redis pod
-  affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
-  baseUrl: ""
-
-  # -- URI to the Butler configuration of available repositories
-  # @default -- Set by Argo CD
-  butlerRepositoryIndex: ""
+  baseUrl: null
 
   # -- Butler repositories accessible via Butler server
   # @default -- Set by Argo CD
-  butlerServerRepositories: ""
+  butlerServerRepositories: null
 
   # -- Host name for ingress
   # @default -- Set by Argo CD
-  host: ""
+  host: null
 
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
-  vaultSecretsPath: ""
+  vaultSecretsPath: null

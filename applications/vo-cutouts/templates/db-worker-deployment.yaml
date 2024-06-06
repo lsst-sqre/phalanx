@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "vo-cutouts.fullname" . }}-db-worker
+  name: vo-cutouts-db-worker
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 spec:
@@ -22,8 +22,12 @@ spec:
         app.kubernetes.io/component: "db-worker"
         vo-cutouts-redis-client: "true"
     spec:
+      {{- with .Values.databaseWorker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: {{ include "vo-cutouts.fullname" . }}
+      serviceAccountName: "vo-cutouts"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -64,16 +68,16 @@ spec:
             - name: "CUTOUT_ARQ_QUEUE_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  name: "vo-cutouts"
                   key: "redis-password"
             - name: "CUTOUT_DATABASE_PASSWORD"
               valueFrom:
                 secretKeyRef:
-                  name: {{ template "vo-cutouts.fullname" . }}-secret
+                  name: "vo-cutouts"
                   key: "database-password"
           envFrom:
             - configMapRef:
-                name: {{ template "vo-cutouts.fullname" . }}-config
+                name: "vo-cutouts"
           {{- with .Values.databaseWorker.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -84,10 +88,6 @@ spec:
         runAsGroup: 1000
       {{- with .Values.databaseWorker.nodeSelector }}
       nodeSelector:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- with .Values.databaseWorker.affinity }}
-      affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       {{- with .Values.databaseWorker.tolerations }}
