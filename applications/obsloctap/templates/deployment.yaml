@@ -74,6 +74,20 @@ spec:
                 secretKeyRef:
                   name: obsloctap-postgres
                   key: "password"
+            - name: "KAFKA_BOOTSTRAP"
+              value: "{{ .Values.kafka.bootstrap }}"
+            - name: "KAFKA_USERNAME"
+              value: "{{ .Values.kafka.username }}"
+            - name: "KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "obsloctap-password"
+            - name: "KAFKA_GROUP_ID"
+              value: "{{ .Values.kafka.group_id }}"
+            - name: "SCHEMA_URL"
+              value: "{{ .Values.kafka.schema_url }}"
+
 {{- range $key, $value := .Values.environment }}
             - name: {{ $key | quote }}
               value: {{ $value | quote }}
