@@ -24,6 +24,9 @@ config:
   # @default -- None, must be set
   serviceAccount: null
 
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: true
+
   # -- URL for the GCS bucket for results (must start with `gs`)
   # @default -- None, must be set
   storageBucketUrl: null

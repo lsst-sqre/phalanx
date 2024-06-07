@@ -84,6 +84,13 @@ spec:
                 secretKeyRef:
                   name: "vo-cutouts"
                   key: "database-password"
+            {{- if .Values.config.slackAlerts }}
+            - name: "CUTOUT_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "vo-cutouts"
+                  key: "slack-webhook"
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: "vo-cutouts"

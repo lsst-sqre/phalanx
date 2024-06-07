@@ -21,6 +21,7 @@ Image cutout service complying with IVOA SODA
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |
 | config.serviceAccount | string | None, must be set | Google service account with an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to write to the GCS bucket, and ability to sign URLs as itself |
+| config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.storageBucketUrl | string | None, must be set | URL for the GCS bucket for results (must start with `gs`) |
 | config.syncTimeout | int | 60 (1 minute) | Timeout for results from a sync cutout in seconds |
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
