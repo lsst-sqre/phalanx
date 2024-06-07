@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Rubin Observatory Environment Managment System
+name: obsenv-management
+sources:
+- https://github.com/lsst-sqre/obsenv-management
+type: application
+version: 1.0.0
