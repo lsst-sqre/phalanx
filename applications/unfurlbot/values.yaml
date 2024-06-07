@@ -73,6 +73,7 @@ config:
     SPP,
     SBTT,
     SE,
+    SUMMIT,
     TSAIV,
     TCT,
     SECMVERIF,
