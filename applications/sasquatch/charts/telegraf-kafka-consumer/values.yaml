@@ -104,9 +104,9 @@ kafkaConsumers:
     # `values.yaml` for extensive discussion.
     union_mode: "nullable"
 
-    # -- Timestamp format. Possible values are `unix` (the default if unset),
-    # `unix_ms`, `unix_us`, and `unix_ns`.  At Rubin, use `unix` timestamp
-    # format for SAL timestamps.
+    # -- Timestamp format. Possible values are `unix` (the default if unset) a
+    # timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds),
+    # `unix_us` (microsseconds), or `unix_ns` (nanoseconds).
     timestamp_format: "unix"
 
     # -- Avro field to be used as the InfluxDB timestamp (optional).  If
@@ -140,10 +140,10 @@ influxdb:
 resources:
   limits:
     cpu: "1"
-    memory: "160Mi"
+    memory: "1Gi"
   requests:
-    cpu: "8m"
-    memory: "75Mi"
+    cpu: "1"
+    memory: "1Gi"
 
 # -- Node labels for pod assignment
 nodeSelector: {}

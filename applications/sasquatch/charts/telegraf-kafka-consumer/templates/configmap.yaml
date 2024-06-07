@@ -26,30 +26,22 @@ data:
       urls = [
         {{ $.Values.influxdb.url | quote }}
       ]
-      database = {{ $.Values.influxdb.database | quote }}
+      database = {{ $value.database | quote }}
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
 
     [[inputs.kafka_consumer]]
       avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
-      {{- with $value.union_mode }}
-      avro_union_mode = {{- $value.union_mode | quote }}
-      {{- end }}
-      {{- with $value.timestamp_field }}
-      avro_timestamp = {{- $value.timestamp_field | quote }}
-      {{- end }}
-      {{- with $value.timestamp_format }}
-      avro_timestamp_format = {{- $value.timestamp_format | quote }}
-      {{- end }}
-      {{- with $value.union_field_separator }}
-      avro_field_separator = {{- $value.union_field_separator | quote }}
-      {{- end }}
-      {{- with $value.fields }}
-      avro_fields = {{- toYaml . }}
-      {{- end }}
-      {{- with $value.tags }}
-      avro_tags = {{- toYaml . }}
-      {{- end }}
+      avro_union_mode = {{ default "nullable" $value.union_mode | quote }}
+      avro_timestamp = {{ default "private_efdStamp" $value.timestamp_field | quote }}
+      avro_timestamp_format = {{ default "unix" $value.timestamp_format | quote }}
+      avro_field_separator = {{ default "" $value.union_field_separator | quote }}
+      {{ with $value.fields }}
+      avro_fields = {{ $value.fields }}
+      {{ end }}
+      {{ with $value.tags }}
+      avro_tags = {{ $value.tags }}
+      {{ end }}
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
       ]

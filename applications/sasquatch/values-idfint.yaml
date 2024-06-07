@@ -59,6 +59,58 @@ influxdb:
       memory: 16Gi
       cpu: 2
 
+telegraf-kafka-consumer:
+  enabled: true
+  kafkaConsumers:
+    example:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.example"
+      tags: |
+        [ "band", "instrument" ]
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.example" ]
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+    atcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    cccamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.CCCamera" ]
+    mtcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
+
 kafka-connect-manager:
   influxdbSink:
     connectors:
