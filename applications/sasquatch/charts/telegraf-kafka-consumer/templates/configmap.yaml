@@ -24,7 +24,7 @@ data:
       urls = [
         {{ $.Values.influxdb.url | quote }}
       ]
-      database = {{ $.Values.influxdb.database | quote }}
+      database = {{ $value.database | quote }}
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
 
