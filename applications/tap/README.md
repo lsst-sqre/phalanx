@@ -16,4 +16,5 @@ IVOA TAP service
 | cadc-tap.ingress.path | string | `"tap"` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.pathPrefix | string | `"/api/tap"` | Prefix for the TAP API routes. |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

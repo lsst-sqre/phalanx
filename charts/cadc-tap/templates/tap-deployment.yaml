@@ -98,6 +98,7 @@ spec:
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Dbase_url={{ .Values.global.baseUrl }}
+                -Dpath_prefix={{ .Values.global.pathPrefix }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             {{- if eq .Values.config.backend "pg" }}

@@ -2,9 +2,9 @@ cadc-tap:
   config:
     pg:
       image:
-        repository: "ghcr.io/lsst-sqre/tap-postgres-service"
+        repository: "stvoutsin/tap-postgres-service"
         pullPolicy: "Always"
-        tag: "1.16.0"
+        tag: "1.18.8"
 
   tapSchema:
     image:

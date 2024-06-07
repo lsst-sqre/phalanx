@@ -20,4 +20,5 @@ IVOA TAP service for Solar System Objects
 | cadc-tap.serviceAccount.name | string | `"ssotap"` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
+| global.pathPrefix | string | `"/api/ssotap"` | Prefix for the TAP API routes. |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
