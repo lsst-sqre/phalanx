@@ -76,7 +76,7 @@ telegraf-kafka-consumer:
       enabled: true
       replicaCount: 1
       database: "lsst.backpack"
-      timestamp_format: "unix_ms"
+      timestamp_format: "unix"
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
@@ -124,6 +124,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.example
+      - lsst.backpack
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera
