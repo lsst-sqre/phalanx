@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "obsenv-management"
+  name: "obsenv-ui"
   labels:
-    {{- include "obsenv-management.labels" . | nindent 4 }}
+    {{- include "obsenv-ui.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "obsenv-management.selectorLabels" . | nindent 6 }}
+      {{- include "obsenv-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       annotations:
@@ -17,7 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "obsenv-management.selectorLabels" . | nindent 8 }}
+        {{- include "obsenv-ui.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.affinity }}
       affinity:
@@ -28,7 +28,7 @@ spec:
         - name: {{ .Chart.Name }}
           envFrom:
             - configMapRef:
-                name: "obsenv-management"
+                name: "obsenv-ui"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -57,5 +57,5 @@ spec:
       {{- end }}
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsUser: 1001
+        runAsGroup: 1001

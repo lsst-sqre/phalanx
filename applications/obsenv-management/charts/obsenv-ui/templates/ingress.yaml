@@ -1,17 +1,17 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "obsenv-management"
+  name: "obsenv-ui"
   labels:
-    {{- include "obsenv-management.labels" . | nindent 4 }}
+    {{- include "obsenv-ui.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "read:image"
+      - "exec:internal-tools"
 template:
   metadata:
-    name: "obsenv-management"
+    name: "obsenv-ui"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -25,6 +25,6 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: "obsenv-management"
+                  name: "obsenv-ui"
                   port:
-                    number: 8080
+                    number: 3000

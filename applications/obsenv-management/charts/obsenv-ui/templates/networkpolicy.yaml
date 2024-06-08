@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "obsenv-ui"
+spec:
+  podSelector:
+    matchLabels:
+      {{- include "obsenv-ui.selectorLabels" . | nindent 6 }}
+  policyTypes:
+    - "Ingress"
+    - "Egress"
+  ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: obsenv-api
+  egress:
+    - to:
+      - podSelector:
+          matchLabels:
+            app.kubernetes.io/name: obsenv-api

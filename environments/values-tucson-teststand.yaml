@@ -20,6 +20,7 @@ applications:
   mobu: true
   narrativelog: true
   nublado: true
+  obsenv-management: true
   obssys: true
   portal: true
   sasquatch: true

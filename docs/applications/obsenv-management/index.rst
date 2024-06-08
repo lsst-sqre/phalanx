@@ -1,8 +1,8 @@
 .. px-app:: obsenv-management
 
-############################################################
-obsenv-management — Observatory Environment Managment System
-############################################################
+###################################################################
+obsenv-management — Rubin Observatory Environment Management System
+###################################################################
 
 .. jinja:: obsenv-management
    :file: applications/_summary.rst.jinja
