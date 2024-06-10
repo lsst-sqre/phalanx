@@ -1,6 +1,6 @@
 config:
   serviceAccount: "vo-cutouts@science-platform-stable-6994.iam.gserviceaccount.com"
-  storageBucketUrl: "s3://rubin-cutouts-stable-us-central1-output/"
+  storageBucketUrl: "gs://rubin-cutouts-stable-us-central1-output/"
 
 cloudsql:
   enabled: true
