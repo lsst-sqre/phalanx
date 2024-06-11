@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 36
-      recommendedTag: "recommended_c0036"
+      cycle: 37
+      recommendedTag: "recommended_c0037"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
