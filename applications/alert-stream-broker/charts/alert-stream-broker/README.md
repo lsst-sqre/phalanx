@@ -36,7 +36,7 @@ Kafka broker cluster for distributing alerts
 | kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | maxBytesRetained | string | `"1000000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
-| maxMillisecondsRetained | string | `"604800000"` | Maximum amount of time to save simulated alerts in the replay topic, in milliseconds. Default is 7 days. |
+| maxMillisecondsRetained | string | `"1814400000"` | Maximum amount of time to save alerts in the replay topic, in milliseconds. Default is 7 days (604800000). |
 | nameOverride | string | `""` |  |
 | schemaID | int | `1` | Integer ID to use in the prefix of alert data packets. This should be a valid Confluent Schema Registry ID associated with the schema used. |
 | simulatedTopicName | string | `"alerts-simulated"` | Topic used to send simulated alerts to brokers. |

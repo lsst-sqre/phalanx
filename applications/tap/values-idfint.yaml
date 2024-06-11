@@ -5,4 +5,18 @@ cadc-tap:
 
   config:
     qserv:
+<<<<<<< HEAD
       host: "10.140.1.211:4040"
+
+  cloudsql:
+    enabled: true
+    instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
+    serviceAccount: "tap-service@science-platform-int-dc5d.iam.gserviceaccount.com"
+    database: "tap"
+=======
+      host: "134.79.23.227:4040"
+<<<<<<< HEAD
+>>>>>>> 9d31aa29 (Repoint data-int tap to usdf-prod.)
+=======
+      jdbcParams: "?enabledTLSProtocols=TLSv1.2"
+>>>>>>> 9561c90f (Add TLS parameters for TAP connections to qserv.)

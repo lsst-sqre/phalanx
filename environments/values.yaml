@@ -129,6 +129,9 @@ applications:
   # -- Enable the nublado application (v3 of the Notebook Aspect)
   nublado: false
 
+  # -- Enable the obsenv-management application
+  obsenv-management: false
+
   # -- Enable the obssys control system application
   obssys: false
 

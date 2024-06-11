@@ -18,8 +18,10 @@ Event-driven processing of camera images
 | alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
-| cacheAny | bool | `true` | Whether or not any pipeline inputs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances. |
-| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. It only has an effect if `cacheAny` is true. |
+| cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
+| cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
+| cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
+| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
@@ -36,8 +38,8 @@ Event-driven processing of camera images
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
 | knative.cpuRequest | string | `"1"` | The cpu cores requested. |
-| knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
-| knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
+| knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
+| knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
 | knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |

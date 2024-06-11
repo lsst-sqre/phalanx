@@ -1,10 +1,17 @@
-environment:
-  vaultUrl: "https://vault.slac.stanford.edu"
-
 db:
-  user: "rubin"
-  host: "usdf-butler.slac.stanford.edu"
-  database: "lsstdb1"
-lfa:
-  bucket_prefix: "rubin:"
-  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"
+  user: "usdf"
+  host: "usdf-summitdb.slac.stanford.edu"
+  database: "exposurelog"
+hinfo:
+  latiss:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcomcam:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
+pq:
+  image:
+    tag: "main"

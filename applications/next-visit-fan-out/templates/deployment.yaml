@@ -45,6 +45,8 @@ spec:
               value: {{ .Values.kafka.nextVisitTopic }}
             - name: OFFSET
               value: {{ .Values.kafka.offset }}
+            - name: MESSAGE_EXPIRATION
+              value: '{{ .Values.kafka.expiration }}'
             - name: SASL_MECHANISM
               value: {{ .Values.kafka.saslMechamism }}
             - name: SECURITY_PROTOCOL

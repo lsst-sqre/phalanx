@@ -59,7 +59,7 @@ spec:
             capabilities:
               drop:
                 - ALL
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           volumeMounts:
             - name: {{ $.Release.Name }}-secrets
               mountPath: "/etc/secrets"

@@ -1,0 +1,44 @@
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the obsenv-ui deployment
+  repository: "rubincr.lsst.org/obsenv-ui"
+
+  # -- Pull policy for the obsenv-ui image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/obsenv-ui"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the obsenv-ui deployment pod
+affinity: {}
+
+# -- Node selection rules for the obsenv-ui deployment pod
+nodeSelector: {}
+
+# -- Annotations for the obsenv-ui deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the obsenv-ui deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the obsenv-ui deployment pod
+tolerations: []
