@@ -114,7 +114,7 @@ alert-stream-broker:
   simulatedTopicName: alerts-simulated
   topicPartitions: 400
   topicReplicas: 1
-  simulatedTopicPartitions: 400
+  simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
   devTopicName: dev-topic
   devTopicPartitions: 10
