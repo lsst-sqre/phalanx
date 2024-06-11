@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: cm-service-output
+  labels:
+    {{- include "cm-service.labels" . | nindent 4 }}
+spec:
+  {{- if .Values.config.outputVolume.storageClassName }}
+  storageClassName: {{ .Values.config.outputVolume.storageClassName }}
+  {{- end }}
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.config.outputVolume.storage }}
