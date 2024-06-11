@@ -1,0 +1,11 @@
+fqdn: ""
+name: "tacc"
+appOfAppsName: "science-platform"
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP tacc.lsst.cloud"
+vaultPathPrefix: "secret/phalanx/tacc"
+applications:
+  nublado: true
+  portal: true
+  squareone: true

@@ -1,0 +1,79 @@
+redis:
+  persistence:
+    storageClass: "standard-rwo"
+
+config:
+  logLevel: "DEBUG"
+  slackAlerts: false
+
+  github:
+    clientId: ""
+
+  # User quota settings for services.
+  quota:
+    default:
+      notebook:
+        cpu: 2.0
+        memory: 8
+
+  # Allow access by GitHub team.
+  groupMapping:
+    "admin:jupyterlab":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "exec:admin":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "exec:internal-tools":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "exec:notebook":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+    "read:image":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst"
+          team: "ops"
+      - github:
+          organization: "lsst-sqre"
+          team: "friends"
+
+  initialAdmins:
+    - "afausti"
+    - "athornton"
+    - "fajpunk"
+    - "frossie"
+    - "jonathansick"
+    - "rra"
+    - "stvoutsin"
