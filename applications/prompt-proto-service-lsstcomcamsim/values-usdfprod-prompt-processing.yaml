@@ -15,12 +15,12 @@ prompt-proto-service:
   instrument:
     pipelines:
       main: >-
-        (survey="ops-rehearsal-3")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
+        (survey="BLOCK-297")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe-noForced.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
         (survey="")=[]
       preprocessing: >-
-        (survey="ops-rehearsal-3")=[]
+        (survey="BLOCK-297")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
 
