@@ -27,7 +27,7 @@ prompt-proto-service:
     topic: prompt-processing-dev
 
   apdb:
-    config: s3://rubin-pp-dev-users/apdb_config/pp_apdb_lsstcomcamsim-dev.py
+    config: s3://rubin-pp-dev-users/apdb_config/sql/pp_apdb_lsstcomcamsim-dev.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
