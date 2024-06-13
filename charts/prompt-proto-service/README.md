@@ -21,8 +21,7 @@ Event-driven processing of camera images
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
-| cacheAny | bool | `true` | Whether or not any pipeline inputs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances. |
-| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. It only has an effect if `cacheAny` is true. |
+| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
