@@ -1,0 +1,35 @@
+argo-cd:
+  configs:
+    cm:
+      url: "https://tacc.lsst.cloud/argo-cd"
+      dex.config: |
+        # Auth using GitHub.
+        # See https://dexidp.io/docs/connectors/github/
+        connectors:
+          - type: github
+            id: github
+            name: GitHub
+            config:
+              clientID: Ov23liKfYDkoJPekZaON
+              # Reference to key in argo-secret Kubernetes resource
+              clientSecret: $dex.clientSecret
+              orgs:
+                - name: lsst
+                - name: lsst-sqre
+    rbac:
+      policy.csv: |
+        g, lsst-sqre:square, role:admin
+        g, lsst-sqre:TACC, role:admin
+
+        p, role:developer, applications, *, */*, allow
+        p, role:developer, applications, get, infrastructure/*, allow
+        p, role:developer, applications, create, infrastructure/*, deny
+        p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, sync, infrastructure/*, deny
+        p, role:developer, applications, override, infrastructure/*, deny
+        p, role:developer, applications, action/*, infrastructure/*, deny
+
+  server:
+    ingress:
+      hostname: "tacc.lsst.cloud"
