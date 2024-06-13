@@ -15,6 +15,7 @@ Argo CD project: ``telescope``
    control-system-test/index
    eas/index
    love/index
+   obsenv-management/index
    obssys/index
    simonyitel/index
    uws/index
