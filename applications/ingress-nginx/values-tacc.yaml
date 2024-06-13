@@ -6,10 +6,14 @@ ingress-nginx:
       proxy-buffer-size: "64k"
     service:
       type: NodePort
+      enableHttp: true
+      enableHttps: true
       ports:
-        - port: 80
-          targetPort: 80
-          nodePort: 30080
-        - port: 443
-          targetPort: 443
-          nodePort: 30443
+        http: 80
+        https: 443
+      targetPorts:
+        http: http
+        https: https
+      nodePorts:
+        http: 30080
+        https: 30443
