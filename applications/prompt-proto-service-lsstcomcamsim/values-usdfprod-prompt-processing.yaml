@@ -3,9 +3,7 @@ prompt-proto-service:
   podAnnotations:
     # Expect to need roughly n_detector × request_latency / survey_cadence pods
     # For a 30 s ComCam survey with 500 s latency, this is 150
-    # Request 2× as workaround for DM-41834
-    # TODO DM-40193: Scaled down from 400 to avoid hitting global ephemeral storage limits.
-    autoscaling.knative.dev/max-scale: "150"
+    autoscaling.knative.dev/max-scale: "200"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
@@ -45,9 +43,6 @@ prompt-proto-service:
   logLevel: timer.lsst.activator=DEBUG
 
   knative:
-    # TODO DM-40193: Scaled down from 50Gi to avoid hitting global ephemeral storage limits.
-    ephemeralStorageRequest: "5Gi"
-    ephemeralStorageLimit: "5Gi"
     memoryLimit: "16Gi"
 
   fullnameOverride: "prompt-proto-service-lsstcomcamsim"

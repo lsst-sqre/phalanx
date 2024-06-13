@@ -38,8 +38,8 @@ Event-driven processing of camera images
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
 | knative.cpuRequest | string | `"1"` | The cpu cores requested. |
-| knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
-| knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
+| knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
+| knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
 | knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |

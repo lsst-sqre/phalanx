@@ -34,8 +34,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.skymap | string | `"hsc_rings_v1"` | Skymap to use with the instrument |
 | prompt-proto-service.knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
 | prompt-proto-service.knative.cpuRequest | string | `"1"` | The cpu cores requested. |
-| prompt-proto-service.knative.ephemeralStorageLimit | string | `"20Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
-| prompt-proto-service.knative.ephemeralStorageRequest | string | `"20Gi"` | The storage space reserved for each container (mostly local Butler). |
+| prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
+| prompt-proto-service.knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | prompt-proto-service.knative.gpu | bool | `true` | GPUs enabled. |
 | prompt-proto-service.knative.gpuRequest | string | `"1"` | The number of GPUs to request. |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
