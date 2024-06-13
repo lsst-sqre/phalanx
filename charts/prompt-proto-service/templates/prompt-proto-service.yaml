@@ -110,6 +110,12 @@ spec:
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        - name: LOCAL_REPO_CACHE_SIZE
+          value: '{{ .Values.cache.baseSize }}'
+        - name: REFCATS_PER_IMAGE
+          value: '{{ .Values.cache.refcatsPerImage }}'
+        - name: PATCHES_PER_IMAGE
+          value: '{{ .Values.cache.patchesPerImage }}'
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         - name: DEBUG_CACHE_INPUTS

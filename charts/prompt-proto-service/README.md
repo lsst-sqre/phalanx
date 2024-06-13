@@ -18,6 +18,9 @@ Event-driven processing of camera images
 | alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
+| cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
+| cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
+| cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | cacheAny | bool | `true` | Whether or not any pipeline inputs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances. |
 | cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. It only has an effect if `cacheAny` is true. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
