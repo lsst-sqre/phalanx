@@ -7,7 +7,7 @@ config:
   slackAlerts: false
 
   github:
-    clientId: ""
+    clientId: "Ov23liKfYDkoJPekZaON"
 
   # User quota settings for services.
   quota:
