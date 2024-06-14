@@ -12,7 +12,4 @@ obsenv-ui:
     tag: develop
     pullPolicy: Always
   config:
-    pathPrefix: /obsenv-management
-  ingress:
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/obsenv-management/"
+    pathPrefix: /obsenv-ui
