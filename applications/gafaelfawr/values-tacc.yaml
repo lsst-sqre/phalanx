@@ -9,6 +9,8 @@ config:
   github:
     clientId: "Ov23liKfYDkoJPekZaON"
 
+  internalDatabase: true
+
   # User quota settings for services.
   quota:
     default:
