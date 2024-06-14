@@ -9,7 +9,7 @@ config:
   github:
     clientId: "Ov23liKfYDkoJPekZaON"
 
-  internalDatabase: true
+  databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
 
   # User quota settings for services.
   quota:
