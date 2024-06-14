@@ -18,4 +18,4 @@ spec:
               gafaelfawr.lsst.io/ingress: "true"
       ports:
         - protocol: "TCP"
-          port: 8080
+          port: 3000
