@@ -1,6 +1,6 @@
 redis:
   persistence:
-    storageClass: "standard-rwo"
+    storageClass: "cinder-csi"
 
 config:
   logLevel: "DEBUG"
