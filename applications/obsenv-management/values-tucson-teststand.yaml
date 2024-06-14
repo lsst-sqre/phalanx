@@ -2,6 +2,7 @@ obsenv-api:
   image:
     repository: mareuter/obsenv-api
     tag: develop
+    pullPolicy: Always
   config:
     useFakeObsenvManager: true
 
@@ -9,5 +10,6 @@ obsenv-ui:
   image:
     repository: mareuter/obsenv-ui
     tag: develop
+    pullPolicy: Always
   config:
     pathPrefix: /obsenv-management
