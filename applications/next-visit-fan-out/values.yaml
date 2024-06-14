@@ -11,6 +11,8 @@ kafka:
   offset: latest
   saslMechamism: SCRAM-SHA-512
   securityProtocol: SASL_PLAINTEXT
+  # -- Maximum message age to consider, in seconds.
+  expiration: 3600.0
 
 replicaCount: 1
 

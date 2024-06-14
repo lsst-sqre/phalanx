@@ -15,6 +15,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout"` |  |
 | image.tag | string | `""` |  |
+| kafka.expiration | float | `3600` | Maximum message age to consider, in seconds. |
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_PLAINTEXT"` |  |
