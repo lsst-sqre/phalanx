@@ -8,14 +8,14 @@ spec:
       {{- include "obsenv-ui.selectorLabels" . | nindent 6 }}
   policyTypes:
     - "Ingress"
-    - "Egress"
   ingress:
+    # Allow inbound access from pods (in any namespace) labeled
+    # gafaelfawr.lsst.io/ingress: true.
     - from:
-      - podSelector:
-          matchLabels:
-            app.kubernetes.io/name: obsenv-api
-  egress:
-    - to:
-      - podSelector:
-          matchLabels:
-            app.kubernetes.io/name: obsenv-api
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              gafaelfawr.lsst.io/ingress: "true"
+      ports:
+        - protocol: "TCP"
+          port: 8080
