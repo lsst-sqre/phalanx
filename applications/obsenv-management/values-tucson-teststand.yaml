@@ -1,3 +1,13 @@
 obsenv-api:
+  image:
+    repository: mareuter/obsenv-api
+    tag: develop
   config:
     useFakeObsenvManager: true
+
+obsenv-ui:
+  image:
+    repository: mareuter/obsenv-ui
+    tag: develop
+  config:
+    pathPrefix: /obsenv-management
