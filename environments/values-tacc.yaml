@@ -7,3 +7,5 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/tacc"
 applications:
   squareone: true
+  nublado: true
+  portal: true
