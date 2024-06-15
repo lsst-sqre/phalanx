@@ -6,5 +6,5 @@ metadata:
     {{- include "obsenv-ui.labels" . | nindent 4 }}
 data:
   BASE_URL: {{ .Values.global.baseUrl | quote }}
-  OBSENV_API: "obsenv-api/obsenv-api"
+  OBSENV_API: "http://obsenv-api/obsenv-api"
   AUTH_GROUP: "lsst-ts-integration-testing-team"
