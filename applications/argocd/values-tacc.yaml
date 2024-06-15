@@ -10,7 +10,7 @@ argo-cd:
             id: github
             name: GitHub
             config:
-              clientID: Ov23liKfYDkoJPekZaON
+              clientID: Ov23liQR856m7i216tSU
               # Reference to key in argo-secret Kubernetes resource
               clientSecret: $dex.clientSecret
               orgs:
