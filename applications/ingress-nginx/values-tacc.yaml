@@ -15,6 +15,6 @@ ingress-nginx:
         http: http
         https: https
       nodePorts:
-        http: 30080
-        https: 30443
+        http: 80
+        https: 443
     #kind: DaemonSet
