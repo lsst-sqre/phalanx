@@ -10,6 +10,7 @@ config:
     clientId: "Ov23liKfYDkoJPekZaON"
 
   databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
+  updateSchema: true
 
   # User quota settings for services.
   quota:
