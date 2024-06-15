@@ -5,16 +5,19 @@ ingress-nginx:
       large-client-header-buffers: "4 64k"
       proxy-buffer-size: "64k"
     service:
-      type: NodePort
+      #type: NodePort
+      type: LoadBalancer
       enableHttp: true
       enableHttps: true
       ports:
         http: 80
         https: 443
       targetPorts:
-        http: http
-        https: https
-      nodePorts:
         http: 80
         https: 443
+        #http: http
+        #https: https
+      #nodePorts:
+      #  http: 80
+      #  https: 443
     #kind: DaemonSet
