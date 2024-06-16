@@ -19,23 +19,6 @@ config:
         cpu: 2.0
         memory: 8
 
-  groupMapping:
-    "admin:jupyterlab":
-      - "g_admins"
-    "exec:admin":
-      - "g_admins"
-    "exec:notebook":
-      - "g_users"
-    "exec:portal":
-      - "g_users"
-    "read:image":
-      - "g_users"
-    "read:tap":
-      - "g_users"
-    "write:files":
-      - "g_users"
-
-
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
