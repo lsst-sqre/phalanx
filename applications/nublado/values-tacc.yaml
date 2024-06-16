@@ -33,17 +33,17 @@ controller:
         - name: "home"
           source:
             serverPath: "/data/home"
-            server: ""
+            server: "129.114.35.159"
             type: "nfs"
         - name: "project"
           source:
             serverPath: "/data/project"
-            server: ""
+            server: "129.114.35.159"
             type: "nfs"
         - name: "scratch"
           source:
             serverPath: "/data/scratch"
-            server: ""
+            server: "129.114.35.159"
             type: "nfs"
       volumeMounts:
         - containerPath: "/home"
