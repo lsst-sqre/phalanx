@@ -57,7 +57,7 @@ jupyterhub:
   hub:
     baseUrl: "/nb"
     db:
-      url: "postgresql://nublado3@postgres.postgres/nublado3"
+      url: "postgresql://jhubsessions@129.114.35.51/jhubsessions01"
       upgrade: true
   cull:
     timeout: 432000  # 5 days
