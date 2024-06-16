@@ -19,6 +19,23 @@ config:
         cpu: 2.0
         memory: 8
 
+  groupMapping:
+    "admin:jupyterlab":
+      - "g_admins"
+    "exec:admin":
+      - "g_admins"
+    "exec:notebook":
+      - "g_users"
+    "exec:portal":
+      - "g_users"
+    "read:image":
+      - "g_users"
+    "read:tap":
+      - "g_users"
+    "write:files":
+      - "g_users"
+
+
   # Allow access by GitHub team.
   groupMapping:
     "admin:jupyterlab":
@@ -26,35 +43,56 @@ config:
           organization: "lsst-sqre"
           team: "square"
       - github:
-          organization: "lsst"
+          organization: "lsst-sqre"
           team: "TACC"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
-          organization: "lsst"
+          organization: "lsst-sqre"
           team: "TACC"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
-          organization: "lsst"
+          organization: "lsst-sqre"
           team: "TACC"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
-          organization: "lsst"
+          organization: "lsst-sqre"
           team: "TACC"
     "read:image":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
-          organization: "lsst"
+          organization: "lsst-sqre"
+          team: "TACC"
+    "exec:portal":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "TACC"
+    "read:tap":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
+          team: "TACC"
+    "write:files":
+      - github:
+          organization: "lsst-sqre"
+          team: "square"
+      - github:
+          organization: "lsst-sqre"
           team: "TACC"
 
   initialAdmins:
