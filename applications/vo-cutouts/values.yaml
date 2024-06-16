@@ -174,9 +174,8 @@ databaseWorker:
 
 redis:
   config:
-    # -- Name of secret containing Redis password (may require changing if
-    # fullnameOverride is set)
-    secretName: "vo-cutouts-secret"
+    # -- Name of secret containing Redis password
+    secretName: "vo-cutouts"
 
     # -- Key inside secret from which to get the Redis password (do not
     # change)
