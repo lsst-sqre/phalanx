@@ -11,7 +11,7 @@ config:
       - "exec:internal-tools"
   delegate:
     internal:
-      service: "obsenv-management"
+      service: "gafaelfawr/gafaelfawr"
       scopes:
         - "exec:internal-tools"
 template:
