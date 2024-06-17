@@ -1,3 +1,54 @@
+{{- if .Values.hub.enableSubdomains }}
+{{- $baseHost := .Values.global.host }}
+{{- $hubHost := print "nb." $baseHost }}
+{{- $baseObj := .Values.global.baseUrl | urlParse }}
+{{- $hubObj := set $baseObj "host" $hubHost }}
+{{- $hubUrl := $hubObj | urlJoin | quote }}
+{{- if (or .Values.hub.minimumTokenLifetime .Values.jupyterhub.cull) }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "proxy-spawn"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ $hubUrl }}
+  scopes:
+    all:
+      - "exec:notebook"
+  loginRedirect: true
+  delegate:
+    {{- if .Values.hub.minimumTokenLifetime }}
+    minimumLifetime: {{ .Values.hub.minimumTokenLifetime }}
+    {{- else }}
+    minimumLifetime: {{ .Values.jupyterhub.cull.maxAge }}
+    {{- end }}
+    notebook: {}
+template:
+  metadata:
+    name: "proxy-spawn"
+    {{- with .Values.proxy.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    tls:
+      - hosts:
+        - {{ $hubHost | quote }}
+        secretName: nb-tls-secret
+    rules:
+      - host: {{ $hubHost | quote }}
+        http:
+          paths:
+            - path: "/hub/spawn"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "proxy-public"
+                  port:
+                    name: "http"
+{{- end }}
+{{- else }}
 {{- if (or .Values.hub.minimumTokenLifetime .Values.jupyterhub.cull) }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
@@ -37,4 +88,5 @@ template:
                   name: "proxy-public"
                   port:
                     name: "http"
+{{- end }}
 {{- end }}

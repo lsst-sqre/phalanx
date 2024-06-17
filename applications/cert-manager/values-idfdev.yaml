@@ -2,3 +2,8 @@ config:
   route53:
     awsAccessKeyId: "AKIAQSJOS2SFL5I4TYND"
     hostedZone: "Z0567328105IEHEMIXLCO"
+  userDomains:
+    enabled: true
+    route53:
+      awsAccessKeyId: "AKIAQSJOS2SFDTKUJ7FF"
+      hostedZone: "Z070804919H97IFHL58K9"

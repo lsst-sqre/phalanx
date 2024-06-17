@@ -39,3 +39,11 @@ data:
 
     # Configure the URL to the lab controller.
     c.NubladoSpawner.controller_url = "{{ .Values.global.baseUrl }}{{ .Values.controller.config.pathPrefix }}"
+    {{- if .Values.hub.enableSubdomains }}
+    {{- $baseHost := .Values.global.host }}
+    {{- $hubHost := print "nb." $baseHost }}
+
+    # Configure the root subdomain of the Hub; user labs will then be at
+    # a hostname of <username>. prepended to that.
+    c.JupyterHub.subdomain_host = {{ $hubHost | quote }}
+    {{- end}}

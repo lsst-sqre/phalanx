@@ -1,0 +1,31 @@
+{{- if .Values.hub.enableSubdomains }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nb-root-cert
+  namespace: nublado
+spec:
+  secretName: nb-tls-secret
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-dns
+    group: cert-manager.io
+  commonName: "nb.{{- .Values.global.host -}}"
+  dnsNames:
+  - "nb.{{- .Values.global.host -}}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nb-wildcard-cert
+  namespace: nublado
+spec:
+  secretName: nb-wildcard-tls-secret
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-dns
+    group: cert-manager.io
+  commonName: "*.nb.{{- .Values.global.host -}}"
+  dnsNames:
+  - "*.nb.{{- .Values.global.host -}}"
+{{- end}}
