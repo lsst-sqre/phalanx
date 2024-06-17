@@ -27,56 +27,56 @@ config:
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
-          team: "square"
+          team: "tacc"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "read:image":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "exec:portal":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "read:tap":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
     "write:files":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "TACC"
+          team: "tacc"
 
   initialAdmins:
     - "afausti"
