@@ -18,7 +18,7 @@ argo-cd:
     rbac:
       policy.csv: |
         g, lsst-sqre:square, role:admin
-        g, lsst-sqre:TACC, role:admin
+        g, lsst-sqre:tacc, role:admin
 
         p, role:developer, applications, *, */*, allow
         p, role:developer, applications, get, infrastructure/*, allow
