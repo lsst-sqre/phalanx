@@ -9,6 +9,11 @@ config:
   scopes:
     all:
       - "exec:internal-tools"
+  delegate:
+    internal:
+      service: "gafaelfawr"
+      scopes:
+        - "exec:internal-tools"
 template:
   metadata:
     name: "obsenv-ui"
