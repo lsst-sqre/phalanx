@@ -1,0 +1,17 @@
+db:
+  user: "rubin"
+  host: "usdf-butler.slac.stanford.edu"
+  database: "lsstdb1"
+hinfo:
+  latiss:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcomcam:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
+pq:
+  image:
+    tag: "main"

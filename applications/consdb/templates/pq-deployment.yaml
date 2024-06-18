@@ -6,7 +6,7 @@ metadata:
     {{- include "consdb.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.pq.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
@@ -31,7 +31,7 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
           image: "{{ .Values.pq.image.repository }}:{{ .Values.pq.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.pq.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 8080
