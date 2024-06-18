@@ -26,11 +26,11 @@ prompt-proto-service:
 
   s3:
     imageBucket: rubin-summit
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing-prod
+    topic: rubin-summit-notification
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/sql/pp_apdb_lsstcomcamsim_pre_or4.py
