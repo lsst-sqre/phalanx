@@ -14,4 +14,4 @@ hinfo:
     tag: "tickets-DM-44551"
 pq:
   image:
-    tag: "tickets-DM-44387"
+    tag: "main"
