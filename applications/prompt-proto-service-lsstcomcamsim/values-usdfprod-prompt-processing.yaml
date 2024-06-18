@@ -10,7 +10,7 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 4.0.0
+    tag: 4.1.0
 
   instrument:
     pipelines:
@@ -33,7 +33,7 @@ prompt-proto-service:
     topic: rubin-summit-notification
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/sql/pp_apdb_lsstcomcamsim_pre_or4.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim_pre_or4.py
 
   alerts:
     topic: alerts-simulated
