@@ -12,6 +12,23 @@ config:
   databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
   updateSchema: true
 
+  oidcServer:
+    enabled: true
+
+  oidc:
+    clientId: "tacc"
+    audience: "tacc"
+    loginUrl: "https://tacc.tapis.io/v3/oauth2/login"
+    tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens"
+    issuer: "https://tacc.tapis.io/v3/oauth2/tokens"
+    scopes:
+      - "openid"
+      - "email"
+      - "groups"
+      - "profile"
+    usernameClaim: "name"
+
+
   # User quota settings for services.
   quota:
     default:
