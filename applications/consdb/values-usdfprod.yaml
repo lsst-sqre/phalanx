@@ -1,7 +1,7 @@
 db:
-  user: "rubin"
-  host: "usdf-butler.slac.stanford.edu"
-  database: "lsstdb1"
+  user: "usdf"
+  host: "usdf-summitdb.slac.stanford.edu"
+  database: "exposurelog"
 hinfo:
   latiss:
     enable: false

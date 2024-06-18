@@ -1,7 +1,7 @@
 db:
   user: "oods"
   host: "postgresdb01.cp.lsst.org"
-  database: "butler"
+  database: "exposurelog"
 lfa:
   s3EndpointUrl: "https://s3.cp.lsst.org"
 hinfo:
