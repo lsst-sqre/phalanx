@@ -78,6 +78,9 @@ config:
     # @default -- `"mock-db:3306"` (the mock QServ)
     host: "mock-db:3306"
 
+    # -- Extra JDBC connection parameters
+    jdbcParams: ""
+
     image:
       # -- TAP image to use
       repository: "ghcr.io/lsst-sqre/lsst-tap-service"
