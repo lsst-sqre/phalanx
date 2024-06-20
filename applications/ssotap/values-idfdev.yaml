@@ -4,7 +4,7 @@ cadc-tap:
       image:
         repository: "stvoutsin/tap-postgres-service"
         pullPolicy: "Always"
-        tag: "1.18.8"
+        tag: "1.18.0"
 
   tapSchema:
     image:
