@@ -24,6 +24,7 @@ controller:
         https_proxy: "http://sdfproxy.sdf.slac.stanford.edu:3128"
         no_proxy: "hub.nublado,.sdf.slac.stanford.edu,.slac.stanford.edu,localhost,127.0.0.1"
         LSST_DISABLE_BUCKET_VALIDATION: "1"
+        LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
       homedirSchema: "initialThenUsername"
       nodeSelector:
         "edu.stanford.slac.sdf.project/rubin": "true"
