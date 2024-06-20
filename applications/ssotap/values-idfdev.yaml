@@ -2,7 +2,7 @@ cadc-tap:
   config:
     pg:
       image:
-        repository: "stvoutsin/tap-postgres-service"
+        repository: "stvoutsin/tap-postgres"
         pullPolicy: "Always"
         tag: "1.18.0"
 
