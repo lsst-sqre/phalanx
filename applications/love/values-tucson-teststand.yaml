@@ -240,17 +240,17 @@ love-producer:
     csc: ATSpectrograph:0
   - name: authorize
     csc: Authorize:0
-  - name: auxteless01
+  - name: auxteless201
     csc: ESS:201
-  - name: auxteless02
+  - name: auxteless202
     csc: ESS:202
-  - name: auxteless03
+  - name: auxteless203
     csc: ESS:203
-  - name: auxteless04
+  - name: auxteless204
     csc: ESS:204
-  - name: auxteless05
+  - name: auxteless205
     csc: ESS:205
-  - name: calibhilless01
+  - name: calibhilless301
     csc: ESS:301
   - name: camerahexapod
     csc: MTHexapod:1
@@ -290,11 +290,11 @@ love-producer:
     csc: MTAOS:0
   - name: mtdome
     csc: MTDome:0
-  - name: mtdomeess01
+  - name: mtdomeess101
     csc: ESS:101
-  - name: mtdomeess02
+  - name: mtdomeess102
     csc: ESS:102
-  - name: mtdomeess03
+  - name: mtdomeess103
     csc: ESS:103
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0
@@ -312,7 +312,7 @@ love-producer:
     csc: Scheduler:1
   - name: mtscriptqueue
     csc: ScriptQueue:1
-  - name: tmaess01
+  - name: tmaess001
     csc: ESS:1
   - name: tmaess104
     csc: ESS:104

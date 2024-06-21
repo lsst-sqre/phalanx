@@ -1,4 +1,4 @@
-auxtel-ess01-sim:
+auxtel-ess201-sim:
   enabled: true
   classifier: ess201
   image:
@@ -14,7 +14,7 @@ auxtel-ess01-sim:
       cpu: 190m
       memory: 900Mi
 
-auxtel-ess02-sim:
+auxtel-ess202-sim:
   enabled: true
   classifier: ess202
   image:
@@ -30,7 +30,7 @@ auxtel-ess02-sim:
       cpu: 190m
       memory: 900Mi
 
-auxtel-ess03-sim:
+auxtel-ess203-sim:
   enabled: true
   classifier: ess203
   image:
@@ -46,7 +46,7 @@ auxtel-ess03-sim:
       cpu: 190m
       memory: 900Mi
 
-auxtel-ess04-sim:
+auxtel-ess204-sim:
   enabled: true
   classifier: ess204
   image:
@@ -62,7 +62,7 @@ auxtel-ess04-sim:
       cpu: 190m
       memory: 900Mi
 
-auxtel-ess05-sim:
+auxtel-ess205-sim:
   enabled: true
   classifier: ess205
   image:
@@ -78,7 +78,7 @@ auxtel-ess05-sim:
       cpu: 190m
       memory: 900Mi
 
-calibhill-ess01-sim:
+calibhill-ess301-sim:
   enabled: true
   classifier: ess301
   image:
@@ -172,7 +172,7 @@ m2-ess106-sim:
       cpu: 190m
       memory: 900Mi
 
-mtdome-ess01-sim:
+mtdome-ess101-sim:
   enabled: true
   classifier: ess101
   image:
@@ -188,7 +188,7 @@ mtdome-ess01-sim:
       cpu: 190m
       memory: 900Mi
 
-mtdome-ess02-sim:
+mtdome-ess102-sim:
   enabled: true
   classifier: ess102
   image:
@@ -204,7 +204,7 @@ mtdome-ess02-sim:
       cpu: 190m
       memory: 900Mi
 
-mtdome-ess03-sim:
+mtdome-ess103-sim:
   enabled: true
   classifier: ess103
   image:
@@ -220,7 +220,7 @@ mtdome-ess03-sim:
       cpu: 190m
       memory: 900Mi
 
-tma-ess01-sim:
+tma-ess001-sim:
   enabled: true
   classifier: ess1
   image:
