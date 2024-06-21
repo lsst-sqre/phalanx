@@ -236,6 +236,38 @@ mtdome-ess103-sim:
       cpu: 190m
       memory: 900Mi
 
+mtdome-ess107-sim:
+  enabled: true
+  classifier: ess107
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 107 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+mtdome-ess108-sim:
+  enabled: true
+  classifier: ess108
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 108 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 tma-ess001-sim:
   enabled: true
   classifier: ess1

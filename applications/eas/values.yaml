@@ -118,6 +118,22 @@ mtdome-ess103-sim:
   # -- Enable the ESS:103 simulator CSC
   enabled: false
 
+mtdome-ess107:
+  # -- Enable the ESS:107 CSC
+  enabled: false
+
+mtdome-ess107-sim:
+  # -- Enable the ESS:107 simulator CSC
+  enabled: false
+
+mtdome-ess108:
+  # -- Enable the ESS:108 CSC
+  enabled: false
+
+mtdome-ess108-sim:
+  # -- Enable the ESS:108 simulator CSC
+  enabled: false
+
 tma-ess001:
   # -- Enable the ESS:1 CSC
   enabled: false

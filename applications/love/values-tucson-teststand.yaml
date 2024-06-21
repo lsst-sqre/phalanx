@@ -298,6 +298,10 @@ love-producer:
     csc: ESS:102
   - name: mtdomeess103
     csc: ESS:103
+  - name: mtdomeess107
+    csc: ESS:107
+  - name: mtdomeess108
+    csc: ESS:108
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0
   - name: mtm1m3
