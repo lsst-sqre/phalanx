@@ -22,7 +22,7 @@ prompt-proto-service:
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
         (survey="spec-survey")=[]
-        (survey="BLOCK-295")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml]
+        (survey="BLOCK-295")=[]
         (survey="")=[]
       preprocessing: >-
         (survey="AUXTEL_PHOTO_IMAGING")=[]
