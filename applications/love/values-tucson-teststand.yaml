@@ -238,8 +238,6 @@ love-producer:
     csc: ScriptQueue:2
   - name: atspectrograph
     csc: ATSpectrograph:0
-  - name: authorize
-    csc: Authorize:0
   - name: auxteless201
     csc: ESS:201
   - name: auxteless202

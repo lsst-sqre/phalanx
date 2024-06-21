@@ -85,18 +85,6 @@ atscheduler:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
 
-authorize:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/authorize
-    pullPolicy: Always
-  env:
-    RUN_ARG: --state enabled
-    AUTHLIST_USER_NAME: authlist_user
-  envSecrets:
-  - name: AUTHLIST_USER_PASS
-    key: authlist-user-pass
-
 mtqueue:
   classifier: scriptqueue1
   image:

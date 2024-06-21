@@ -6,7 +6,6 @@ Deployment for the Observatory System CSCs
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| authorize.enabled | bool | `false` | Enable the Authorize CSC |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
