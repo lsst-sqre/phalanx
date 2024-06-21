@@ -318,6 +318,10 @@ love-producer:
     csc: Scheduler:1
   - name: mtscriptqueue
     csc: ScriptQueue:1
+  - name: ocsscheduler
+    csc: Scheduler:3
+  - name: ocsscriptqueue
+    csc: ScriptQueue:3
   - name: tmaess001
     csc: ESS:1
   - name: tmaess104
