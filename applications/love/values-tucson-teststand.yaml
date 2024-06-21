@@ -270,6 +270,8 @@ love-producer:
     csc: DSM:1
   - name: dsm2
     csc: DSM:2
+  - name: epm1
+    csc: EPM:1
   - name: gcheaderservice1
     csc: GCHeaderService:1
   - name: genericcamera1

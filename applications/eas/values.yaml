@@ -78,6 +78,14 @@ dsm2-sim:
   # -- Enable the DSM:2 simulator CSC
   enabled: false
 
+epm1:
+  # -- Enable the EPM:1 CSC
+  enabled: false
+
+epm1-sim:
+  # -- Enable the EPM:1 simulator CSC
+  enabled: false
+
 m2-ess106:
   # -- Enable the ESS:106 CSC
   enabled: false

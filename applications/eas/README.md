@@ -26,6 +26,8 @@ Deployment for the Environmental Awareness Systems CSCs
 | dsm1.enabled | bool | `false` | Enable the DSM:1 CSC |
 | dsm2-sim.enabled | bool | `false` | Enable the DSM:2 simulator CSC |
 | dsm2.enabled | bool | `false` | Enable the DSM:2 CSC |
+| epm1-sim.enabled | bool | `false` | Enable the EPM:1 simulator CSC |
+| epm1.enabled | bool | `false` | Enable the EPM:1 CSC |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |

@@ -156,6 +156,22 @@ dsm2-sim:
       cpu: 100m
       memory: 900Mi
 
+epm1-sim:
+  enabled: true
+  classifier: epm1
+  image:
+    repository: ts-dockerhub.lsst.org/epm
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 m2-ess106-sim:
   enabled: true
   classifier: ess106

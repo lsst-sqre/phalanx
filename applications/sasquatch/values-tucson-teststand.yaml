@@ -102,7 +102,7 @@ telegraf-kafka-consumer:
     eas:
       enabled: true
       topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*ESS", ".*WeatherForecast" ]
+        [ ".*DIMM", ".*DSM", ".*EPM", ".*ESS", ".*WeatherForecast" ]
     latiss:
       enabled: true
       topicRegexps: |
@@ -170,7 +170,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast"
+        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
