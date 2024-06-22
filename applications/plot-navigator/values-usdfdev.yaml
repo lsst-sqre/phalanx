@@ -4,6 +4,9 @@ environment:
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
   BUTLER_URL: "https://usdf-rsp-dev.slac.stanford.edu/"
 
+global:
+  vaultSecretsPath: "rubin"
+
 image:
   tag: v0.1.1
 config:

@@ -31,7 +31,9 @@ spec:
         envFrom:
           - secretRef: {{ include "plot-navigator.fullname" . }}
         {{- end }}
+        {{- if .Values.config.volume_mounts }}
         volumeMounts:
           {{- with .Values.config.volume_mounts }}
           {{- . | toYaml | nindent 10 }}
           {{- end }}
+        {{- end }}
