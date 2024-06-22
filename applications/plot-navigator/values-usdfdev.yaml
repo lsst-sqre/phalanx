@@ -8,4 +8,4 @@ global:
   vaultSecretsPath: "rubin"
 
 image:
-  tag: v0.1.1
+  tag: DM-44957
