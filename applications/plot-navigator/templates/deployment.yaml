@@ -27,6 +27,16 @@ spec:
           - name: {{ $key | quote }}
             value: {{ $value | quote }}
 {{- end }}
+          - name: S3_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "plot-navigator.fullname" . }}
+                key: S3_KEY
+          - name: S3_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "plot-navigator.fullname" . }}
+                key: S3_SECRET
         {{- if .Values.config.envFromSecretPath }}
         envFrom:
           - secretRef: {{ include "plot-navigator.fullname" . }}
