@@ -1,6 +1,6 @@
 image:
   # -- plot-navigator image to use
-  repository: ghcr.io/lsst-dm/pipetask-plot-navigator
+  repository: ghcr.io/lsst-dm/plot-navigator
 
   # -- Tag of plot-navigator image to use
   # @default -- The appVersion of the chart
