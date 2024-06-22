@@ -2,10 +2,7 @@ environment:
   REPOS: "embargo"
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
-  BUTLER_URL: "https://usdf-rsp-dev.slac.stanford.edu/"
-
-global:
-  vaultSecretsPath: "rubin"
+  BUTLER_URL: "http://butler.butler:8080"
 
 image:
   tag: DM-44957
