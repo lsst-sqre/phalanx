@@ -1,11 +1,4 @@
 cadc-tap:
-  config:
-    pg:
-      image:
-        repository: "stvoutsin/tap-postgres"
-        pullPolicy: "Always"
-        tag: "1.18.0"
-
   tapSchema:
     image:
       repository: "lsstsqre/tap-schema-idfdev-sso"
