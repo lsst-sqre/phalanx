@@ -16,7 +16,7 @@ config:
     enabled: false
 
   oidc:
-    clientId: tacc-rsp
+    clientId: rsp-tacc
     audience: "tacc"
     loginUrl: "https://tacc.tapis.io/v3/oauth2/login"
     tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens"
