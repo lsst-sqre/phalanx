@@ -6,11 +6,23 @@ config:
   logLevel: "DEBUG"
   slackAlerts: false
 
-  github:
-    clientId: "Ov23liKfYDkoJPekZaON"
+  #github:
+  #  clientId: "Ov23liKfYDkoJPekZaON"
 
   databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
   updateSchema: true
+
+  oidcServer:
+    enabled: false
+
+  oidc:
+    clientId: tacc-rsp
+    audience: "tacc"
+    loginUrl: "https://tacc.tapis.io/v3/oauth2/login"
+    tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens"
+    issuer: "https://tacc.tapis.io/v3/tokens"
+    usernameClaim: "name"
+
 
   # User quota settings for services.
   quota:
