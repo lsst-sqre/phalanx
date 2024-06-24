@@ -3,7 +3,8 @@ prompt-proto-service:
   podAnnotations:
     # Expect to need roughly n_detector × request_latency / survey_cadence pods
     # For a 30 s ComCam survey with 500 s latency, this is 150
-    autoscaling.knative.dev/max-scale: "200"
+    autoscaling.knative.dev/min-scale: "100"
+    autoscaling.knative.dev/max-scale: "100"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
