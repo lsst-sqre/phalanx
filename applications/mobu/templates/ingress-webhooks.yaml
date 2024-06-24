@@ -1,4 +1,4 @@
-{{- if .Values.config.githubIntegration }}
+{{- if or .Values.config.githubRefreshAppEnabled .Values.config.githubCiAppEnabled }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
