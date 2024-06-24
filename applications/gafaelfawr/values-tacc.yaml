@@ -18,8 +18,8 @@ config:
   oidc:
     clientId: rsp-tacc
     audience: "tacc"
-    loginUrl: "https://tacc.tapis.io/v3/oauth2/login"
-    tokenUrl: "https://tacc.tapis.io/v3/tokens"
+    loginUrl: "https://tacc.tapis.io/v3/oauth2/authorize"
+    tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens"
     issuer: "https://tacc.tapis.io/v3/tokens"
     usernameClaim: "name"
 
