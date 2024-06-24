@@ -17,6 +17,10 @@ image:
   tag: null
 
 config:
+
+  # -- Whether to echo SQLAlchemy generated SQL to the log
+  databaseEcho: false
+
   # -- Logging level
   logLevel: "INFO"
 
@@ -24,8 +28,19 @@ config:
   # human-friendly)
   logProfile: "production"
 
+  outputVolume:
+    # -- If specified, name of storage class requested in service output area PVC
+    storageClassName: null
+    # -- Minimum storage requested in service output area PVC
+    storage: 1Gi
+    # -- If specified, sub-path within bound PV to be mounted at service output area
+    subPath: null
+
   # -- URL path prefix
-  pathPrefix: "/cm-service"
+  pathPrefix: "/cm-service/v1"
+
+  # -- Image tag for utility stack container
+  workerImage: "ghcr.io/lsst-dm/cm-service-worker"
 
 ingress:
   # -- Additional annotations for the ingress rule
@@ -46,6 +61,11 @@ resources: {}
 
 # -- Tolerations for the cm-service deployment pod
 tolerations: []
+
+redis:
+  config:
+    secretName: "redis-secret"
+    secretKey: "password"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
