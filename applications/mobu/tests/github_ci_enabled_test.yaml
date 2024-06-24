@@ -1,6 +1,7 @@
-suite: Github Integration Enabled
+suite: Github Refresh App Integration Enabled
 set:
-  # GitHub integration is enabled by default, so no need to set any values
+  config:
+    githubCiAppEnabled: true
   global:
     host: "example.com"
 tests:
@@ -21,4 +22,14 @@ tests:
           path: "spec.template.spec.containers[0].env"
           any: true
           content:
-            name: "MOBU_GITHUB_WEBHOOK_SECRET"
+            name: "MOBU_GITHUB_CI_APP_ID"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"

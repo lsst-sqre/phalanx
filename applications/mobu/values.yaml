@@ -26,6 +26,10 @@ config:
   # Each flock listed will be automatically started when mobu is started.
   autostart: []
 
+  # -- GitHub app integration options.
+  # @default -- See `values.yaml`
+  github: {}
+
   # -- If set to true, include the output from all flocks in the main mobu log
   # and disable structured JSON logging.
   debug: false
@@ -36,10 +40,17 @@ config:
   # -- Prefix for mobu's API routes.
   pathPrefix: "/mobu"
 
-  # -- Whether to enable the GitHub app integration. This should be `false`
-  # in envs that are behind a VPN because the integration depends on being
-  # able to receive webhook requests from github.com.
-  githubIntegration: true
+  # -- Whether to enable the GitHub refresh app integration. This should be
+  # `false` in envs that are behind a VPN because the integration depends on
+  # being able to receive webhook requests from github.com.
+  githubRefreshAppEnabled: false
+
+  # -- Whether to enable the GitHub CI app integration. This should be `false`
+  # in production environments, because we don't want to run unapproved/
+  # unreviewed code there. This should also be `false` in envs that are behind
+  # a VPN because the integration depends on being able to receive webhook
+  # requests from github.com.
+  githubCiAppEnabled: false
 
 # -- Resource limits and requests for the mobu frontend pod
 # @default -- See `values.yaml`

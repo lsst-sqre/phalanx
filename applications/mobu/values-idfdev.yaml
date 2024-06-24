@@ -1,5 +1,15 @@
 config:
   debug: true
+  githubRefreshAppEnabled: true
+  githubCiAppEnabled: true
+  github:
+    accepted_github_orgs:
+      - lsst-sqre
+    users:
+      - username: bot-mobu-ci-user-1
+      - username: bot-mobu-ci-user-2
+      - username: bot-mobu-ci-user-3
+      - username: bot-mobu-ci-user-4
   autostart:
     - name: "recommended"
       count: 1
