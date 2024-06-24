@@ -1,6 +1,7 @@
 replicaCount: 4
 
 config:
+  cleanupInterval: "1h"
   volumes:
     workareaNfs:
       path: "/share1/home/firefly/shared-workarea"
