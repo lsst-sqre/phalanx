@@ -1,21 +1,21 @@
 db:
   user: "oods"
   host: "postgresdb01.ls.lsst.org"
-  database: "butler"
+  database: "exposurelog"
 lfa:
   s3EndpointUrl: "https://s3.ls.lsst.org"
 hinfo:
   latiss:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "3.0.0"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "3.0.0"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "3.0.0"
 pq:
   image:
-    tag: "main"
+    tag: "3.0.0"

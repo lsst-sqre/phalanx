@@ -5,13 +5,10 @@ db:
 hinfo:
   latiss:
     enable: false
-    tag: "tickets-DM-44551"
   lsstcomcam:
     enable: false
-    tag: "tickets-DM-44551"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
 pq:
   image:
-    tag: "main"
+    tag: "3.0.0"
