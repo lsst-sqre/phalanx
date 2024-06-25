@@ -3,6 +3,7 @@ prompt-proto-service:
   podAnnotations:
     # Expect to need roughly n_detector × request_latency / survey_cadence pods
     # For a 30 s ComCam survey with 500 s latency, this is 150
+    # HACK: disable autoscaling as an OR4 workaround for DM-41829
     autoscaling.knative.dev/min-scale: "100"
     autoscaling.knative.dev/max-scale: "100"
     # Update this field if using latest or static image tag in dev
@@ -34,7 +35,7 @@ prompt-proto-service:
     topic: rubin-summit-notification
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim_pre_or4.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim_or4.py
 
   alerts:
     topic: alerts-simulated
