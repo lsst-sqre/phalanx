@@ -35,7 +35,7 @@ prompt-proto-service:
     topic: rubin-summit-notification
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim_pre_or4.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcamsim_or4.py
 
   alerts:
     topic: alerts-simulated
