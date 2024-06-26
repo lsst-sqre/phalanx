@@ -27,6 +27,8 @@ template:
       nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/{{ .Values.ingress.path }}/"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
       nginx.ingress.kubernetes.io/use-regex: "true"
+      nginx.ingress.kubernetes.io/server-snippet: |
+        more_set_headers "server: OpenCADC/cadc-rest";
       {{- with .Values.ingress.authenticatedAnnotations }}
       {{- toYaml . | indent 6 }}
       {{- end }}
