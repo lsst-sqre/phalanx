@@ -102,7 +102,7 @@ telegraf-kafka-consumer:
     eas:
       enabled: true
       topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*ESS", ".*WeatherForecast" ]
+        [ ".*DIMM", ".*DSM", ".*EPM", ".*ESS", ".*WeatherForecast" ]
     latiss:
       enabled: true
       topicRegexps: |
@@ -134,10 +134,6 @@ telegraf-kafka-consumer:
       enabled: true
       topicRegexps: |
         [ ".*MTAirCompressor" ]
-    authorize:
-      enabled: true
-      topicRegexps: |
-        [ ".*Authorize" ]
     lasertracker:
       enabled: true
       topicRegexps: |
@@ -170,7 +166,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast"
+        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
@@ -195,9 +191,6 @@ kafka-connect-manager:
       mtaircompressor:
         enabled: true
         topicsRegex: ".*MTAirCompressor"
-      authorize:
-        enabled: true
-        topicsRegex: ".*Authorize"
       lasertracker:
         enabled: true
         topicsRegex: ".*LaserTracker"
