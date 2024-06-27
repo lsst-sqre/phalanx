@@ -15,7 +15,7 @@ template:
       nginx.ingress.kubernetes.io/proxy-connect-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "900"
       nginx.ingress.kubernetes.io/proxy-read-timeout: "900"
-      nginx.ingress.kubernetes.io/rewrite-target: "/tap/$1"
+      nginx.ingress.kubernetes.io/rewrite-target: "/api/tap/$1"
       nginx.ingress.kubernetes.io/proxy-redirect-from: "http://$host/tap/"
       nginx.ingress.kubernetes.io/proxy-redirect-to: "https://$host/api/{{ .Values.ingress.path }}/"
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
