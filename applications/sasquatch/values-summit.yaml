@@ -80,7 +80,7 @@ kafka-connect-manager:
       eas:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
+        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*HVAC|.*WeatherForecast"
       latiss:
         enabled: true
         repairerConnector: false
@@ -160,7 +160,7 @@ telegraf-kafka-consumer:
     eas:
       enabled: true
       topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*ESS", ".*HVAC", ".*WeatherForecast" ]
+        [ ".*DIMM", ".*DSM", ".*EPM", ".*ESS", ".*HVAC", ".*WeatherForecast" ]
     latiss:
       enabled: true
       topicRegexps: |
