@@ -1,6 +1,8 @@
 prompt-proto-service:
 
   podAnnotations:
+    autoscaling.knative.dev/min-scale: "20"
+    autoscaling.knative.dev/max-scale: "20"
     # Update this field if using latest or static image tag in dev
     revision: "12"
 
