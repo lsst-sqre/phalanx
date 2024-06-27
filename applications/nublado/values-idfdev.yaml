@@ -72,7 +72,10 @@ jupyterhub:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
 hub:
   internalDatabase: false
-  enableSubdomains: true
+  # GafaelfawrIngress needs to be able to handle a baseUrl that starts
+  # with '*', and Gafaelfawr needs to be able to handle multiple domains
+  # before this will work.
+  # enableSubdomains: true
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
