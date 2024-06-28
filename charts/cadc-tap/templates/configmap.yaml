@@ -15,7 +15,6 @@ data:
     tomcat.connector.scheme=http
     tomcat.connector.proxyName={{ .Values.global.host }}
     tomcat.connector.proxyPort=80
-    tomcat.connector.basePath ={{ .Values.global.host }}/api/{{ .Values.ingress.path }}
 
     # authentication provider
     ca.nrc.cadc.auth.IdentityManager=org.opencadc.auth.StandardIdentityManager
