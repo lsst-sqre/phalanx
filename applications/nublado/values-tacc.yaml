@@ -8,7 +8,6 @@ controller:
     lab:
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
-        FIREFLY_HTML: "slate.html"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
       initContainers:
         - name: "inithome"
@@ -45,6 +44,11 @@ controller:
             serverPath: "/data/scratch"
             server: "129.114.35.159"
             type: "nfs"
+        - name: "spherexdata"
+          source:
+            serverPath: "/corral/main/projects/JPL-SPHEREx/yjyang/SPHEREx_RefCat"
+            server: "129.114.52.51"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -52,7 +56,8 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
-
+        - containerPath: "/project/SPHEREx/SPHEREx_RefCat"
+          volumeName: "spherexdata"
 jupyterhub:
   hub:
     baseUrl: "/nb"
