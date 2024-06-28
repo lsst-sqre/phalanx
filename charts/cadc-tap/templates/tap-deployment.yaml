@@ -95,6 +95,7 @@ spec:
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Dbase_url={{ .Values.global.baseUrl }}
+                -Dpath_prefix=/api/{{ .Values.ingress.path }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
             {{- if eq .Values.config.backend "pg" }}
