@@ -2,6 +2,8 @@
 
 Continuous integration testing
 
+**Homepage:** <https://mobu.lsst.io/>
+
 ## Source Code
 
 * <https://github.com/lsst-sqre/mobu>
