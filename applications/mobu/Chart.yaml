@@ -2,6 +2,7 @@ apiVersion: v2
 name: mobu
 version: 1.0.0
 description: "Continuous integration testing"
+home: https://mobu.lsst.io/
 sources:
   - "https://github.com/lsst-sqre/mobu"
 appVersion: 8.1.0
