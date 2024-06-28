@@ -122,7 +122,7 @@ kafka-connect-manager-enterprise:
       enterprise-eas:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
+        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*HVAC|.*WeatherForecast"
       enterprise-latiss:
         enabled: true
         repairerConnector: false
