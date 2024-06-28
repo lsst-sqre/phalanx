@@ -13,7 +13,7 @@ data:
     tomcat.connector.keepAliveTimeout=120000
     tomcat.connector.secure=false
     tomcat.connector.scheme=http
-    tomcat.connector.proxyName={{ .Values.global.host }}
+    tomcat.connector.proxyName={{ .Values.global.host }}/api-test/
     tomcat.connector.proxyPort=80
 
     # authentication provider
