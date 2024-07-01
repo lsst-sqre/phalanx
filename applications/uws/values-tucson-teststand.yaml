@@ -1,10 +1,11 @@
+csc_shared:
+  secretsOnly: true
 uws-api-server:
   targetCluster: "tucson-teststand"
   hostname: tucson-teststand.lsst.codes
   image:
     tag: latest
   logLevel: INFO
-  vaultPathPrefix: secret/k8s_operator/tucson-teststand.lsst.codes
   butlerPg:
     secretName: uws
     containerPath: /home/lsst/.lsst
@@ -61,7 +62,7 @@ uws-api-server:
     readOnly: true
 
 atocps:
-  enabled: true
+  enabled: false
   classifier: ocps1
   image:
     repository: ts-dockerhub.lsst.org/dmocps
@@ -70,7 +71,7 @@ atocps:
     RUN_ARG: 1
 
 ccocps:
-  enabled: true
+  enabled: false
   classifier: ocps2
   image:
     repository: ts-dockerhub.lsst.org/dmocps
