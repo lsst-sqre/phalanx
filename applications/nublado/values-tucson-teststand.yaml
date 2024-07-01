@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: null
-      recommendedTag: "recommended_k0001"
+      cycle: 37
+      recommendedTag: "recommended_c0037"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
@@ -18,17 +18,11 @@ controller:
         LSST_SITE: "tucson"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "tucson"
-        LSST_TOPIC_SUBNAME: "sal"
-        LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
-        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-brokers.sasquatch:9092"
-        LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
       pullSecret: "pull-secret"
       secrets:
-        - secretName: "nublado-lab-secret"
-          secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       initContainers:
