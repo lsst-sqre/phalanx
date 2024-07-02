@@ -17,3 +17,8 @@ applications:
   strimzi: true
   telegraf: true
   telegraf-ds: true
+
+controlSystem:
+  imageTag: "k0001"
+  siteTag: "base"
+  s3EndpointUrl: "https://s3.ls.lsst.org"
