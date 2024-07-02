@@ -8,19 +8,25 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 37
-      recommendedTag: "recommended_c0037"
+      cycle: null
+      recommendedTag: "recommended_k0001"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
+        AWS_SHARED_CRDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "base"
         LSST_SITE: "base"
+        LSST_TOPIC_SUBNAME: "sal"
+        LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
+        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-brokers.sasquatch:9092"
+        LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
+        S3_ENDPOINT_URL: "https://s3-butler.ls.lsst.org"
       initContainers:
         - name: "inithome"
           image:
@@ -32,6 +38,10 @@ controller:
               volumeName: "home"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
+        - secretName: "nublado-lab-secret"
+          secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       volumes:
@@ -91,3 +101,6 @@ jupyterhub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.ls.lsst.org/nublado3"
+
+secrets:
+  templateSecrets: true
