@@ -1,0 +1,11 @@
+{{- if .Values.config.github -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mobu.fullname" . }}-github-config
+  labels:
+    {{- include "mobu.labels" . | nindent 4 }}
+data:
+  github-config.yaml: |
+    {{- toYaml .Values.config.github | nindent 4 }}
+{{- end }}

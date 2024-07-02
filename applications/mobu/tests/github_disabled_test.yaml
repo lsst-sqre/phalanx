@@ -1,7 +1,6 @@
 suite: Github Integration Disabled
 set:
-  config:
-    githubIntegration: false
+  # GitHub integrations are disabled by default
   global:
     host: "example.com"
 tests:
@@ -10,7 +9,11 @@ tests:
     asserts:
       - hasDocuments:
           count: 0
-
+  - it: "Should not create an github-config ConfigMap"
+    template: "configmap-github-config.yaml"
+    asserts:
+      - hasDocuments:
+          count: 0
   - it: "Should not inject GitHub secrets into the Deployment env"
     template: "deployment.yaml"
     asserts:
