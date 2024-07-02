@@ -5,18 +5,26 @@ vaultPathPrefix: "secret/k8s_operator/base-lsp.lsst.codes"
 
 applications:
   argo-workflows: true
+  auxtel: true
+  calsys: true
   consdb: true
+  control-system-test: true
+  eas: true
   exposurelog: true
+  love: true
   narrativelog: true
   nightreport: true
   nublado: true
+  obssys: true
   portal: true
   rubintv: true
   sasquatch: true
+  simonyitel: true
   squareone: true
   strimzi: true
   telegraf: true
   telegraf-ds: true
+  uws: true
 
 controlSystem:
   imageTag: "k0001"
