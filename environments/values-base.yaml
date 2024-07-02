@@ -2,6 +2,9 @@ name: "base"
 fqdn: "base-lsp.lsst.codes"
 appOfAppsName: "science-platform"
 vaultPathPrefix: "secret/k8s_operator/base-lsp.lsst.codes"
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: 'true'
 
 applications:
   argo-workflows: true
