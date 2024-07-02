@@ -15,7 +15,14 @@ strimzi-kafka:
       limits:
         cpu: 4
         memory: 8Gi
+  cluster:
+    monitorLabel:
+      lsst.io/monitor: "true"
   kafka:
+    disruption_tolerance: 1
+    config:
+      auto.create.topics.enable: false
+      log.cleaner.min.compaction.lag.ms: 259200000
     storage:
       storageClassName: rook-ceph-block
       size: 1Ti
@@ -35,6 +42,25 @@ strimzi-kafka:
           host: sasquatch-base-kafka-1.lsst.codes
         - loadBalancerIP: "139.229.153.68"
           host: sasquatch-base-kafka-2.lsst.codes
+    resources:
+      requests:
+        memory: 80Gi
+        cpu: 4
+      limits:
+        memory: 80Gi
+        cpu: 4
+    metricsConfig:
+      enabled: true
+  kafkaExporter:
+    enabled: true
+    enableSaramaLogging: true
+    resources:
+      requests:
+        cpu: 200m
+        memory: 64Mi
+      limits:
+        cpu: 500m
+        memory: 128Mi
   kraft:
     enabled: true
   kafkaController:
@@ -59,6 +85,17 @@ strimzi-kafka:
       enabled: true
     consdb:
       enabled: true
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: base-lsp.lsst.codes
+      path: /schema-registry(/|$)(.*)
+  connect:
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
 
 influxdb:
   persistence:
@@ -82,9 +119,6 @@ kafka-connect-manager:
         enabled: true
         topicsRegex: "lsst.sal.MTMount"
         tasksMax: "8"
-      comcam:
-        enabled: true
-        topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       eas:
         enabled: true
         topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.EPM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
@@ -107,12 +141,6 @@ kafka-connect-manager:
       test:
         enabled: true
         topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: true
-        topicsRegex: "lsst.sal.PMD"
-      calsys:
-        enabled: true
-        topicsRegex: "lsst.sal.ATMonochromator|lsst.sal.ATWhiteLight|lsst.sal.CBP|lsst.sal.Electrometer|lsst.sal.FiberSpectrograph|lsst.sal.LinearStage|lsst.sal.TunableLaser"
       mtaircompressor:
         enabled: true
         topicsRegex: "lsst.sal.MTAirCompressor"
@@ -159,16 +187,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
-    comcam:
-      enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
     eas:
       enabled: true
       replicaCount: 1
@@ -239,26 +257,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Test" ]
-    pmd:
-      enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.PMD" ]
-    calsys:
-      enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
     mtaircompressor:
       enabled: true
       replicaCount: 1
@@ -301,6 +299,7 @@ telegraf-kafka-consumer:
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
 
 kafdrop:
+  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
