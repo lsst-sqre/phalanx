@@ -75,18 +75,18 @@ resources:
   noteburst:
     limits:
       cpu: "1"
-      memory: "256Mi"
+      memory: "512Mi"
     requests:
       cpu: "2m"
-      memory: "50Mi"
+      memory: "128Mi"
   # -- Resource limits and requests for the noteburst arq worker FastAPI pods
   noteburstWorker:
     limits:
       cpu: "1"
-      memory: "256Mi"
+      memory: "4000Mi"
     requests:
       cpu: "2m"
-      memory: "50Mi"
+      memory: "256Mi"
 
 autoscaling:
   enabled: false
@@ -143,12 +143,12 @@ config:
 redis:
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
-    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # false will use `emptyDir` and reset data on every restart. Only
     # use this for a test deployment.
     enabled: true
 
     # -- Amount of persistent storage to request
-    size: "8Gi"
+    size: "64Gi"
 
     # -- Class of storage to request
     storageClass: ""
@@ -162,10 +162,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "128Mi"
+      memory: "4Gi"
     requests:
       cpu: "2m"
-      memory: "4Mi"
+      memory: "512Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

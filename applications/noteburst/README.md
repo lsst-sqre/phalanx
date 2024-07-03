@@ -44,8 +44,8 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | podAnnotations | object | `{}` | Annotations for API and worker pods |
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
-| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
-| redis.persistence.size | string | `"8Gi"` | Amount of persistent storage to request |
+| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset data on every restart. Only use this for a test deployment. |
+| redis.persistence.size | string | `"64Gi"` | Amount of persistent storage to request |
 | redis.persistence.storageClass | string | `""` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
@@ -53,8 +53,8 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of API pods to run |
 | resources | object | See `values.yaml` | Resource requests and limits for noteburst |
-| resources.noteburst | object | `{"limits":{"cpu":"1","memory":"256Mi"},"requests":{"cpu":"2m","memory":"50Mi"}}` | Resource limits and requests for the noteburst FastAPI pods |
-| resources.noteburstWorker | object | `{"limits":{"cpu":"1","memory":"256Mi"},"requests":{"cpu":"2m","memory":"50Mi"}}` | Resource limits and requests for the noteburst arq worker FastAPI pods |
+| resources.noteburst | object | `{"limits":{"cpu":"1","memory":"512Mi"},"requests":{"cpu":"2m","memory":"128Mi"}}` | Resource limits and requests for the noteburst FastAPI pods |
+| resources.noteburstWorker | object | `{"limits":{"cpu":"1","memory":"4000Mi"},"requests":{"cpu":"2m","memory":"256Mi"}}` | Resource limits and requests for the noteburst arq worker FastAPI pods |
 | service.port | int | `80` | Port of the service to create and map to the ingress |
 | service.type | string | `"ClusterIP"` | Type of service to create |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
