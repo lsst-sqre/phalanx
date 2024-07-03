@@ -1,6 +1,8 @@
 image:
   pullPolicy: Always
 
+replicaCount: 3
+
 config:
   logLevel: "DEBUG"
   worker:
