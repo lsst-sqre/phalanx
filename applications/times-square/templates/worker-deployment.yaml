@@ -72,7 +72,7 @@ spec:
           command: ["arq"]
           args: ["timessquare.worker.main.WorkerSettings"]
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.timesSquareWorker | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ include "times-square.fullname" . }}

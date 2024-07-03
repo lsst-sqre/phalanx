@@ -82,7 +82,7 @@ spec:
               path: /
               port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.timesSquare | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ include "times-square.fullname" . }}
