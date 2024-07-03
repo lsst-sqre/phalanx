@@ -168,11 +168,11 @@ clusterPort: 9092
 
 # -- Maximum amount of time to save alerts in the replay topic, in
 # milliseconds. Default is 7 days (604800000).
-maxMillisecondsRetained: "1814400000"
+maxMillisecondsRetained: "5259492000"
 
 # -- Maximum number of bytes for the replay topic, per partition, per replica.
 # Default is 100GB, but should be lower to not fill storage.
-maxBytesRetained: "1000000000000"
+maxBytesRetained: "100000000000"
 
 testTopicPartitions: 8
 
