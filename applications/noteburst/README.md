@@ -45,7 +45,7 @@ Noteburst is a notebook execution service for the Rubin Science Platform.
 | redis.affinity | object | `{}` | Affinity rules for the Redis pod |
 | redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
 | redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset data on every restart. Only use this for a test deployment. |
-| redis.persistence.size | string | `"64Gi"` | Amount of persistent storage to request |
+| redis.persistence.size | string | `"8Gi"` | Amount of persistent storage to request |
 | redis.persistence.storageClass | string | `""` | Class of storage to request |
 | redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |

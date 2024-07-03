@@ -148,7 +148,7 @@ redis:
     enabled: true
 
     # -- Amount of persistent storage to request
-    size: "64Gi"
+    size: "8Gi"
 
     # -- Class of storage to request
     storageClass: ""
