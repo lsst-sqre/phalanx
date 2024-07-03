@@ -71,12 +71,22 @@ ingress:
 # -- Resource requests and limits for noteburst
 # @default -- See `values.yaml`
 resources:
-  limits:
-    cpu: "1"
-    memory: "256Mi"
-  requests:
-    cpu: "2m"
-    memory: "50Mi"
+  # -- Resource limits and requests for the noteburst FastAPI pods
+  noteburst:
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+    requests:
+      cpu: "2m"
+      memory: "50Mi"
+  # -- Resource limits and requests for the noteburst arq worker FastAPI pods
+  noteburstWorker:
+    limits:
+      cpu: "1"
+      memory: "256Mi"
+    requests:
+      cpu: "2m"
+      memory: "50Mi"
 
 autoscaling:
   enabled: false
