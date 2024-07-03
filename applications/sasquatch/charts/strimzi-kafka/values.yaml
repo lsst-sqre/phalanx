@@ -17,7 +17,7 @@ kafka:
   replicas: 3
 
   # -- Number of down brokers that the system can tolerate
-  disruption_tolerance: 0
+  disruption_tolerance: 1
 
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers
