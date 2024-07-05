@@ -46,7 +46,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
           tox-envs: "typing,py,coverage-report"
-          tox-plugins: tox-uv
+          tox-requirements: requirements/tox.txt
           cache-key-prefix: test
 
   helm:
@@ -63,16 +63,17 @@ jobs:
           # Used to query GitHub for the latest Helm release.
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install Helm Unittest Plugin
+      - name: Install helm-unittest plugin
         run: helm plugin install https://github.com/helm-unittest/helm-unittest
 
-      - name: Run Helm Unittest for all applications and charts with a `tests` directory
+      - name: Run helm unittest
         run: helm unittest {applications,charts}/*/tests/..
+
       - uses: lsst-sqre/run-tox@v1
         with:
           python-version: "3.12"
           tox-envs: phalanx-lint-change
-          tox-plugins: tox-uv
+          tox-requirements: requirements/tox.txt
           cache-key-prefix: helm
 
   # The minikube job always runs, but it quickly does nothing if no files that
@@ -135,6 +136,7 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: install
+          tox-requirements: requirements/tox.txt
           tox-posargs: >-
             --force-noninteractive
             --vault-role-id=${{ secrets.MINIKUBE_VAULT_ROLE_ID }}

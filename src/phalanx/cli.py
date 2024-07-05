@@ -96,9 +96,7 @@ def _find_config() -> Path:
     def _is_config(path: Path) -> bool:
         if not (path / "environments").is_dir():
             return False
-        if not (path / "applications").is_dir():
-            return False
-        return True
+        return (path / "applications").is_dir()
 
     while not _is_config(current):
         if current.parent == current:
