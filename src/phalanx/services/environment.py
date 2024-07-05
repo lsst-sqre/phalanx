@@ -202,8 +202,8 @@ class EnvironmentService:
         if environment:
             return self._helm.lint_environment(environment)
         success = True
-        for environment in self._config.list_environments():
-            success &= self._helm.lint_environment(environment)
+        for env in self._config.list_environments():
+            success &= self._helm.lint_environment(env)
         return success
 
     def template(self, environment_name: str) -> str:

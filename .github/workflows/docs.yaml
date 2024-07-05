@@ -54,7 +54,7 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: docs
-          tox-plugins: tox-uv
+          tox-requirements: requirements/tox.txt
           cache-key-prefix: docs
 
       # Upload docs:

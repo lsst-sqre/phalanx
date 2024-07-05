@@ -123,9 +123,7 @@ class _ApplicationChange:
         """Whether this change may affect any environment."""
         if self.path in ("Chart.yaml", "values.yaml"):
             return True
-        if self.path.startswith(("crds/", "templates/")):
-            return True
-        return False
+        return self.path.startswith(("crds/", "templates/"))
 
 
 class ConfigStorage:
