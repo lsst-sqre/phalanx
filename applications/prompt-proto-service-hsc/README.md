@@ -54,3 +54,4 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | prompt-proto-service.sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
 | prompt-proto-service.tolerations | list | `[]` | Tolerations for the prompt processing pods |
+| prompt-proto-service.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |

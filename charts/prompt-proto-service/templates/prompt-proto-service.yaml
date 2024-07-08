@@ -40,6 +40,8 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         name: user-container
         env:
+        - name: WORKER_RESTART_FREQ
+          value: {{ .Values.worker.restart | toString | quote }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG

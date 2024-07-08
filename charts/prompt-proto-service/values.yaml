@@ -26,6 +26,11 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: latest
 
+worker:
+  # -- The number of requests to process before rebooting a worker.
+  # If 0, workers process requests indefinitely.
+  restart: 0
+
 instrument:
   # -- The "short" name of the instrument
   # @default -- None, must be set
