@@ -53,11 +53,11 @@ spec:
         - name: BUCKET_TOPIC
           value: {{ .Values.imageNotifications.topic }}
         - name: IMAGE_TIMEOUT
-          value: {{ .Values.imageNotifications.imageTimeout | quote }}
+          value: {{ .Values.imageNotifications.imageTimeout | toString | quote }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
-          value: {{ .Values.s3.disableBucketValidation | quote }}
+          value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
         - name: KAFKA_CLUSTER
@@ -111,11 +111,11 @@ spec:
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
         - name: LOCAL_REPO_CACHE_SIZE
-          value: '{{ .Values.cache.baseSize }}'
+          value: {{ .Values.cache.baseSize | toString | quote }}
         - name: REFCATS_PER_IMAGE
-          value: '{{ .Values.cache.refcatsPerImage }}'
+          value: {{ .Values.cache.refcatsPerImage | toString | quote }}
         - name: PATCHES_PER_IMAGE
-          value: '{{ .Values.cache.patchesPerImage }}'
+          value: {{ .Values.cache.patchesPerImage | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
@@ -140,15 +140,15 @@ spec:
         {{- end }}
         resources:
           requests:
-            cpu: {{ .Values.knative.cpuRequest }}
+            cpu: {{ .Values.knative.cpuRequest | toString | quote}}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
             memory: {{ .Values.knative.memoryRequest }}
           limits:
-            cpu: {{ .Values.knative.cpuLimit }}
+            cpu: {{ .Values.knative.cpuLimit | toString | quote}}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
             memory: {{ .Values.knative.memoryLimit }}
             {{- if .Values.knative.gpu }}
-            nvidia.com/gpu: {{ .Values.knative.gpuRequest }}
+            nvidia.com/gpu: {{ .Values.knative.gpuRequest | toString | quote }}
             {{- end }}
       volumes:
       - name: ephemeral

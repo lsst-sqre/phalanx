@@ -32,12 +32,12 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-proto-service.instrument.skymap | string | `"hsc_rings_v1"` | Skymap to use with the instrument |
-| prompt-proto-service.knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
-| prompt-proto-service.knative.cpuRequest | string | `"1"` | The cpu cores requested. |
+| prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores. |
+| prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested. |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
-| prompt-proto-service.knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
+| prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request. |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
 | prompt-proto-service.knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
@@ -47,7 +47,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
 | prompt-proto-service.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-proto-service.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
-| prompt-proto-service.s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
+| prompt-proto-service.s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-proto-service.s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | prompt-proto-service.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
 | prompt-proto-service.sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |

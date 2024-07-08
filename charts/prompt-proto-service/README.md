@@ -27,7 +27,7 @@ Event-driven processing of camera images
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
-| imageNotifications.imageTimeout | string | `"20"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
+| imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | imagePullSecrets | list | `[]` |  |
@@ -36,12 +36,12 @@ Event-driven processing of camera images
 | instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits' raws. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
-| knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
-| knative.cpuRequest | string | `"1"` | The cpu cores requested. |
+| knative.cpuLimit | int | `1` | The maximum cpu cores. |
+| knative.cpuRequest | int | `1` | The cpu cores requested. |
 | knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | knative.gpu | bool | `false` | GPUs enabled. |
-| knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
+| knative.gpuRequest | int | `0` | The number of GPUs to request. |
 | knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
 | knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
@@ -53,7 +53,7 @@ Event-driven processing of camera images
 | podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
 | registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
-| s3.disableBucketValidation | string | `"0"` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
+| s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
 | sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |

@@ -24,7 +24,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-proto-service.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
-| prompt-proto-service.imageNotifications.imageTimeout | string | `"20"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
+| prompt-proto-service.imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-proto-service.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
@@ -32,12 +32,12 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-proto-service.instrument.skymap | string | `"latiss_v1"` | Skymap to use with the instrument |
-| prompt-proto-service.knative.cpuLimit | string | `"1"` | The maximum cpu cores. |
-| prompt-proto-service.knative.cpuRequest | string | `"1"` | The cpu cores requested. |
+| prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores. |
+| prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested. |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | prompt-proto-service.knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
-| prompt-proto-service.knative.gpuRequest | string | `"0"` | The number of GPUs to request. |
+| prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request. |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
 | prompt-proto-service.knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
