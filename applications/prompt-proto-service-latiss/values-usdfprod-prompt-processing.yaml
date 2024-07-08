@@ -1,10 +1,15 @@
 prompt-proto-service:
 
   podAnnotations:
+    # HACK: disable autoscaling as workaround for DM-41829
     autoscaling.knative.dev/min-scale: "20"
     autoscaling.knative.dev/max-scale: "20"
     # Update this field if using latest or static image tag in dev
-    revision: "12"
+    revision: "1"
+
+  # HACK: disable autoscaling as workaround for DM-41829
+  worker:
+    restart: 15
 
   image:
     pullPolicy: IfNotPresent
