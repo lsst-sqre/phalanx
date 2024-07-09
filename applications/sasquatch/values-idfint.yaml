@@ -59,36 +59,57 @@ influxdb:
       memory: 16Gi
       cpu: 2
 
-kafka-connect-manager:
-  influxdbSink:
-    connectors:
-      test:
-        enabled: true
-        topicsRegex: "lsst.sal.Test"
-      lsst.example:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.example"
-        topicsRegex: "lsst.example.*"
-        tags: band,instrument
-      lsst.atcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.ATCamera"
-        topicsRegex: "lsst.ATCamera.*"
-        tags: Agent,Aspic,Location,Raft,Reb,Sensor,Source
-      lsst.cccamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.CCCamera"
-        topicsRegex: "lsst.CCCamera.*"
-        tags: Agent,Aspic,Cold,Cryo,Hardware,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Source
-      lsst.mtcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.MTCamera"
-        topicsRegex: "lsst.MTCamera.*"
-        tags: Agent,Aspic,Axis,Canbus,Cip,Clamp,Cold,Controller,Cryo,Gateway,Hardware,Hip,Hook,Latch,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Socket,Source,Truck
+telegraf-kafka-consumer:
+  enabled: true
+  kafkaConsumers:
+    example:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.example"
+      tags: |
+        [ "band", "instrument" ]
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.example" ]
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+    atcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    cccamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.CCCamera" ]
+    mtcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
 
 kafdrop:
   ingress:
@@ -103,6 +124,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.example
+      - lsst.backpack
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera
