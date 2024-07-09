@@ -13,7 +13,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
+          repo_ref: "prod"
           exclude_dirs: ["experiments"]
           max_executions: 1
         restart: true
@@ -30,7 +30,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
+          repo_ref: "prod"
           exclude_dirs: ["experiments"]
           idle_time: 900
           delete_lab: false
@@ -48,7 +48,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "prod"
+          repo_ref: "prod"
           exclude_dirs: ["DP02_09_Custom_Coadds", "DP02_11_User_Packages"]
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"

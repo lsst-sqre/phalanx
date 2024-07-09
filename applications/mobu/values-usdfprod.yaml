@@ -16,7 +16,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
+          repo_ref: "prod"
           exclude_dirs: ["experiments"]
         restart: true
     - name: "tap"
