@@ -30,6 +30,8 @@ rubintv:
       value: "s3://rubin-summit-users/data-repos.yaml"
     - name: DAF_BUTLER_REPOSITORY
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+    - name: DEPLOY_BRANCH
+      value: "deploy-slac"
     volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:

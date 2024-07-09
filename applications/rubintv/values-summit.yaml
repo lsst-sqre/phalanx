@@ -33,7 +33,7 @@ rubintv:
     - name: DAF_BUTLER_REPOSITORY
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
-      value: "deploy-slac"
+      value: "deploy-summit"
     resources:
       limits:
         cpu: 2.0
