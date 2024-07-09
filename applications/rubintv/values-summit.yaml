@@ -11,6 +11,10 @@ rubintv:
       value: &s3E "https://s3.rubintv.cp.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "SUMMIT"
+    - name: DDV_BASE_HREF
+      value: "/rubintv/ddv/"
+    - name: DDV_CLIENT_WS_ADDRESS
+      value: "rubintv/ws/ddv"
     image:
       tag: v2.2.0
       pullPolicy: Always

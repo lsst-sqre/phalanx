@@ -11,6 +11,10 @@ rubintv:
       value: &s3E "https://s3dfrgw.slac.stanford.edu"
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
+    - name: DDV_BASE_HREF
+      value: "/rubintv/ddv/"
+    - name: DDV_CLIENT_WS_ADDRESS
+      value: "rubintv/ws/ddv"
     image:
       tag: deploy
       pullPolicy: Always
