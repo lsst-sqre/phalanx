@@ -1,8 +1,8 @@
 .. px-app:: sasquatch-backpack
 
-#######################################
-sasquatch-backpack — Collection of APIs
-#######################################
+################################################################
+sasquatch-backpack — Collection of APIs that feed into Sasquatch
+################################################################
 
 Collection of APIs that feed data into sasquatch.
 See the `Doccumentation <https://sasquatch-backpack.lsst.io>`__ for more information.

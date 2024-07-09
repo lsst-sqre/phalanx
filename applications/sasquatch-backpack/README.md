@@ -1,6 +1,6 @@
 # sasquatch-backpack
 
-Collection of APIs
+Collection of APIs that feed into Sasquatch
 
 **Homepage:** <https://sasquatch-backpack.lsst.io/>
 
