@@ -5,4 +5,4 @@ description: "Continuous integration testing"
 home: https://mobu.lsst.io/
 sources:
   - "https://github.com/lsst-sqre/mobu"
-appVersion: 8.1.0
+appVersion: 9.0.0
