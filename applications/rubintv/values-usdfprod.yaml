@@ -22,7 +22,7 @@ rubintv:
     uid: 73006
     gid: 73006
     scriptsLocation: /repos/rubintv_analysis_service/scripts
-    script: rubintv_worker.py -a rubintv -p 8080 -c /repos/rubintv_analysis_service/scripts/config-temporal.yaml
+    script: rubintv_worker.py -a rubintv -p 8080 -l usdf
     env:
     - name: S3_ENDPOINT_URL
       value: *s3E
@@ -30,6 +30,8 @@ rubintv:
       value: "s3://rubin-summit-users/data-repos.yaml"
     - name: DAF_BUTLER_REPOSITORY
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+    - name: DEPLOY_BRANCH
+      value: "deploy-slac"
     volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
