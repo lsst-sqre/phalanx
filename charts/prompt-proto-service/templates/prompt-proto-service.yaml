@@ -42,6 +42,8 @@ spec:
         env:
         - name: WORKER_RESTART_FREQ
           value: {{ .Values.worker.restart | toString | quote }}
+        - name: WORKER_TIMEOUT
+          value: {{ .Values.worker.timeout | toString | quote }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG

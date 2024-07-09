@@ -61,3 +61,4 @@ Event-driven processing of camera images
 | sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
 | tolerations | list | `[]` |  |
 | worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
+| worker.timeout | int | `900` | Maximum time that a worker can process a next_visit request (seconds). |

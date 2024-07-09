@@ -55,3 +55,4 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
 | prompt-proto-service.tolerations | list | `[]` | Tolerations for the prompt processing pods |
 | prompt-proto-service.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
+| prompt-proto-service.worker.timeout | int | `900` | Maximum time that a worker can process a next_visit request (seconds). |
