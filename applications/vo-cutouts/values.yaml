@@ -43,7 +43,7 @@ image:
   repository: "ghcr.io/lsst-sqre/vo-cutouts"
 
   # -- Pull policy for the vo-cutouts image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of vo-cutouts image to use
   # @default -- The appVersion of the chart
@@ -121,7 +121,7 @@ cutoutWorker:
     tag: null
 
     # -- Pull policy for cutout workers
-    pullPolicy: "IfNotPresent"
+    pullPolicy: "Always"
 
   # -- Resource limits and requests for the cutout worker pod
   # @default -- See `values.yaml`
