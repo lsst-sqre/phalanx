@@ -13,10 +13,9 @@ config:
   # @default -- None, must be set if `cloudsql.enabled` is false
   databaseUrl: null
 
-  # -- Lifetime of job results in seconds (quote so that Helm doesn't turn it
-  # into a floating point number)
-  # @default -- 2592000 (30 days)
-  lifetime: "2592000"
+  # -- Lifetime of job results in safir parse_timedelta format
+  # @default -- 2592000s (30 days)
+  lifetime: "2592000s"
 
   # -- Google service account with an IAM binding to the `vo-cutouts`
   # Kubernetes service accounts and has the `cloudsql.client` role, access
@@ -31,9 +30,9 @@ config:
   # @default -- None, must be set
   storageBucketUrl: null
 
-  # -- Timeout for results from a sync cutout in seconds
-  # @default -- 60 (1 minute)
-  syncTimeout: 60
+  # -- Timeout for results from a sync cutout in safir parse_timedelta format
+  # @default -- 60s (1 minute)
+  syncTimeout: "60s"
 
   # -- Timeout for a single cutout job in seconds
   # @default -- 600 (10 minutes)
