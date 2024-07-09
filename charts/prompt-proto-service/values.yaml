@@ -134,8 +134,9 @@ knative:
   memoryRequest: "2Gi"
   # -- The maximum memory limit.
   memoryLimit: "8Gi"
-  # -- Maximum time that a container can respond to a next_visit request (seconds).
-  timeout: 900
+  # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
+  # This parameter adds extra time to that minimum (seconds).
+  extraTimeout: 10
   # -- Maximum time that a container can send nothing to the fanout service (seconds).
   idleTimeout: 900
   # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).

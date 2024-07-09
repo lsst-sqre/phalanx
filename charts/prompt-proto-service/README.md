@@ -40,13 +40,13 @@ Event-driven processing of camera images
 | knative.cpuRequest | int | `1` | The cpu cores requested. |
 | knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
+| knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | int | `0` | The number of GPUs to request. |
 | knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
 | knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
 | knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
-| knative.timeout | int | `900` | Maximum time that a container can respond to a next_visit request (seconds). |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
