@@ -11,6 +11,18 @@ config:
       - username: bot-mobu-ci-user-3
       - username: bot-mobu-ci-user-4
   autostart:
+    - name: "dfuchs-test"
+      count: 1
+      users:
+        - username: "bot-mobu-dfuchs-test"
+      scopes:
+        - "exec:notebook"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
+          repo_ref: "main"
+        restart: true
     - name: "recommended"
       count: 1
       users:
