@@ -11,6 +11,8 @@ rubintv:
       value: &s3E "https://s3.rubintv.cp.lsst.org"
     - name: RAPID_ANALYSIS_LOCATION
       value: "SUMMIT"
+    - name: DDV_DEPLOY_BRANCH
+      value: &dbE "deploy-summit"
     - name: DDV_BASE_HREF
       value: "/rubintv/ddv/"
     - name: DDV_CLIENT_WS_ADDRESS
@@ -37,7 +39,7 @@ rubintv:
     - name: DAF_BUTLER_REPOSITORY
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
-      value: "deploy-summit"
+      value: *dbE
     resources:
       limits:
         cpu: 2.0
