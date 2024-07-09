@@ -22,6 +22,7 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
           repo_ref: "main"
+          exclude_dirs: ["exceptions"]
         restart: true
     - name: "recommended"
       count: 1
