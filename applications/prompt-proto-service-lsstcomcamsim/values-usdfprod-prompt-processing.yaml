@@ -10,6 +10,10 @@ prompt-proto-service:
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
+  # HACK: disable autoscaling as an OR4 workaround for DM-41829
+  worker:
+    restart: 15
+
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.

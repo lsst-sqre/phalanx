@@ -1,10 +1,15 @@
 prompt-proto-service:
 
   podAnnotations:
+    # HACK: disable autoscaling as workaround for DM-41829
     autoscaling.knative.dev/min-scale: "20"
     autoscaling.knative.dev/max-scale: "20"
     # Update this field if using latest or static image tag in dev
-    revision: "12"
+    revision: "1"
+
+  # HACK: disable autoscaling as workaround for DM-41829
+  worker:
+    restart: 15
 
   image:
     pullPolicy: IfNotPresent
@@ -46,7 +51,7 @@ prompt-proto-service:
     # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
     # and files can take up to 20 seconds to arrive. Scheduler delay associated
     # with CWFS engineering data, should not apply to other cameras.
-    imageTimeout: '110'
+    imageTimeout: 110
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/sql/pp_apdb_latiss.py

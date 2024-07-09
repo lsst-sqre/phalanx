@@ -25,6 +25,11 @@ prompt-proto-service:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
+  worker:
+    # -- The number of requests to process before rebooting a worker.
+    # If 0, workers process requests indefinitely.
+    restart: 0
+
   instrument:
     # -- The "short" name of the instrument
     name: HSC
@@ -62,7 +67,7 @@ prompt-proto-service:
     # -- If set, get S3 credentials from this application's Vault secret.
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
-    disableBucketValidation: '0'
+    disableBucketValidation: 0
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider
@@ -72,7 +77,7 @@ prompt-proto-service:
     # @default -- None, must be set
     topic: ""
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
-    imageTimeout: '20'
+    imageTimeout: 20
 
   apdb:
     # -- URL to a serialized APDB configuration, or the "label:" prefix
@@ -109,9 +114,9 @@ prompt-proto-service:
 
   knative:
     # -- The cpu cores requested.
-    cpuRequest: "1"
+    cpuRequest: 1
     # -- The maximum cpu cores.
-    cpuLimit: "1"
+    cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
     ephemeralStorageRequest: "5Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
@@ -119,7 +124,7 @@ prompt-proto-service:
     # -- GPUs enabled.
     gpu: true
     # -- The number of GPUs to request.
-    gpuRequest: "1"
+    gpuRequest: 1
     # -- The minimum memory to request.
     memoryRequest: "2Gi"
     # -- The maximum memory limit.
