@@ -1,4 +1,5 @@
 controller:
+  slackAlerts: true
   config:
     images:
       source:
@@ -86,8 +87,14 @@ controller:
         - containerPath: "/data/lsstdata/BTS/auxtel"
           volumeName: "auxtel"
 
+hub:
+  internalDatabase: false
+
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.ls.lsst.org/nublado3"
+
+secrets:
+  templateSecrets: true

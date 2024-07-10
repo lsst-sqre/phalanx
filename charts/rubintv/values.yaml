@@ -15,6 +15,9 @@ siteTag: ""
 imagePullSecrets: []
 # Each entry is of the form: { name: pull-secret-name }
 
+# -- Whether to use the new secrets management scheme
+separateSecrets: false
+
 frontend:
   # -- If set to true, enable more verbose logging.
   debug: false

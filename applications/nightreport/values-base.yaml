@@ -7,4 +7,4 @@ config:
 db:
   host: postgresdb01.ls.lsst.org
 global:
-  tsVaultSecretsPath: /ts/software
+  tsVaultSecretsPath: ""
