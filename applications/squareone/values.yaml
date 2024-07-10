@@ -99,6 +99,10 @@ config:
     See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
     to learn more about accessing TAP datasets from your own computer.
 
+    ## Documentation
+
+    Learn more about the APIs in the [Rubin Science Platform API Aspect guide](https://rsp.lsst.io/guides/api/).
+
   # -- MDX content for the `/docs` page
   # @default -- See `values.yaml`
   docsPageMdx: |
