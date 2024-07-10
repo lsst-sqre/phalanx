@@ -11,20 +11,13 @@ namespaceLabels:
 
 applications:
   argo-workflows: true
-  auxtel: true
-  calsys: true
-  control-system-test: true
-  eas: true
   exposurelog: true
-  love: true
   mobu: true
   narrativelog: true
   nublado: true
   obsenv-management: true
-  obssys: true
   portal: true
   sasquatch: true
-  simonyitel: true
   squareone: true
   strimzi: true
   uws: true

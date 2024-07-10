@@ -5,19 +5,35 @@ onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP base-lsp.lsst.codes"
 vaultPathPrefix: "secret/phalanx/base"
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: 'true'
 
 applications:
   argo-workflows: true
+  auxtel: true
+  calsys: true
   consdb: true
+  control-system-test: true
+  eas: true
   exposurelog: true
+  love: true
   mobu: true
   narrativelog: true
   nightreport: true
   nublado: true
+  obssys: true
   portal: true
   rubintv: true
   sasquatch: true
+  simonyitel: true
   squareone: true
   strimzi: true
   telegraf: true
   telegraf-ds: true
+  uws: true
+
+controlSystem:
+  imageTag: "k0001"
+  siteTag: "base"
+  s3EndpointUrl: "https://s3.ls.lsst.org"

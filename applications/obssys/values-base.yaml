@@ -1,0 +1,235 @@
+atqueue:
+  classifier: scriptqueue2
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 2 --state enabled
+    USER_USERNAME: user
+  butlerSecret:
+    containerPath: &bS-cP /home/saluser/.lsst
+    dbUser: &bS-dbU oods
+    secretFilename: &bS-sFn postgres-credentials.txt
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-oods
+    containerPath: /data/lsstdata/BTS/auxtel
+    readOnly: true
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/lsstdata/BTS/auxtel
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+
+atscheduler:
+  classifier: scheduler2
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 2
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+
+mtqueue:
+  classifier: scriptqueue1
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 1 --state enabled
+    USER_USERNAME: user
+  butlerSecret:
+    containerPath: *bS-cP
+    dbUser: *bS-dbU
+    secretFilename: *bS-sFn
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-oods
+    containerPath: /data/lsstdata/BTS/auxtel
+    readOnly: true
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/lsstdata/BTS/auxtel
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+
+mtscheduler:
+  classifier: scheduler1
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+
+ocsqueue:
+  classifier: scriptqueue3
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 3 --state enabled
+    USER_USERNAME: user
+  butlerSecret:
+    containerPath: *bS-cP
+    dbUser: *bS-dbU
+    secretFilename: *bS-sFn
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-oods
+    containerPath: /data/lsstdata/BTS/auxtel
+    readOnly: true
+    server: nfs-auxtel.ls.lsst.org
+    serverPath: /auxtel/lsstdata/BTS/auxtel
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+
+ocsscheduler:
+  classifier: scheduler3
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 3
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs-project.ls.lsst.org
+    serverPath: /project/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.ls.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+
+watcher:
+  image:
+    repository: ts-dockerhub.lsst.org/watcher
+    pullPolicy: Always

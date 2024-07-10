@@ -10,7 +10,7 @@ hinfo:
     tag: "tickets-DM-44551"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
-    enable: true
+    enable: false
     tag: "tickets-DM-44551"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
