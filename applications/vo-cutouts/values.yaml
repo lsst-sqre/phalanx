@@ -13,9 +13,8 @@ config:
   # @default -- None, must be set if `cloudsql.enabled` is false
   databaseUrl: null
 
-  # -- Lifetime of job results in safir parse_timedelta format
-  # @default -- 2592000s (30 days)
-  lifetime: "2592000s"
+  # -- Lifetime of job results in Safir `parse_timedelta` format
+  lifetime: "30d"
 
   # -- Google service account with an IAM binding to the `vo-cutouts`
   # Kubernetes service accounts and has the `cloudsql.client` role, access
@@ -30,9 +29,9 @@ config:
   # @default -- None, must be set
   storageBucketUrl: null
 
-  # -- Timeout for results from a sync cutout in safir parse_timedelta format
-  # @default -- 60s (1 minute)
-  syncTimeout: "60s"
+  # -- Timeout for results from a sync cutout in Safir `parse_timedelta`
+  # format
+  syncTimeout: "1m"
 
   # -- Timeout for a single cutout job in seconds
   # @default -- 600 (10 minutes)
