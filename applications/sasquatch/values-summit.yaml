@@ -143,87 +143,38 @@ kafka-connect-manager:
         topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
 
 telegraf-kafka-consumer:
-  enabled: false
+  enabled: true
   kafkaConsumers:
-    auxtel:
+    atcamera:
       enabled: true
+      replicaCount: 1
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
       topicRegexps: |
-        [ ".*ATAOS", ".*ATDome", ".*ATDomeTrajectory", ".*ATHexapod", ".*ATPneumatics", ".*ATPtg", ".*ATMCS" ]
-    maintel:
+        [ "lsst.ATCamera" ]
+    cccamera:
       enabled: true
+      replicaCount: 1
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
       topicRegexps: |
-        [ ".*MTAOS", ".*MTDome", ".*MTDomeTrajectory", ".*MTPtg" ]
-    mtmount:
+        [ "lsst.CCCamera" ]
+    mtcamera:
       enabled: true
+      replicaCount: 1
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
-        [ ".*MTMount" ]
-    comcam:
-      enabled: true
-      topicRegexps: |
-        [ ".*CCCamera", ".*CCHeaderService", ".*CCOODS" ]
-    eas:
-      enabled: true
-      topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*EPM", ".*ESS", ".*HVAC", ".*WeatherForecast" ]
-    latiss:
-      enabled: true
-      topicRegexps: |
-        [ ".*ATCamera", ".*ATHeaderService", ".*ATOODS", ".*ATSpectrograph" ]
-    m1m3:
-      enabled: true
-      flush_interval: "1s"
-      metric_batch_size: 5000
-      interval: "0.1s"
-      topicRegexps: |
-        [ ".*MTM1M3" ]
-    m2:
-      enabled: true
-      topicRegexps: |
-        [ ".*MTHexapod", ".*MTM2", ".*MTRotator" ]
-    obssys:
-      enabled: true
-      topicRegexps: |
-        [ ".*Scheduler", ".*Script", ".*ScriptQueue", ".*Watcher" ]
-    ocps:
-      enabled: true
-      topicRegexps: |
-        [ ".*OCPS" ]
-    test:
-      enabled: true
-      topicRegexps: |
-        [ "lsst.sal.Test" ]
-    pmd:
-      enabled: true
-      topicRegexps: |
-        [ ".*PMD" ]
-    calsys:
-      enabled: true
-      topicRegexps: |
-        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LinearStage", ".*TunableLaser" ]
-    mtaircompressor:
-      enabled: true
-      topicRegexps: |
-        [ ".*MTAirCompressor" ]
-    genericcamera:
-      enabled: true
-      topicRegexps: |
-        [ ".*GCHeaderService", ".*GenericCamera" ]
-    gis:
-      enabled: true
-      topicRegexps: |
-        [ ".*GIS" ]
-    mtvms:
-      enabled: true
-      topicRegexps: |
-        [ ".*MTVMS" ]
-    lasertracker:
-      enabled: true
-      topicRegexps: |
-        [ ".*LaserTracker" ]
-    lsstcam:
-      enabled: true
-      topicRegexps: |
-        [ ".*MTCamera", ".*MTHeaderService", ".*MTOODS" ]
+        [ "lsst.MTCamera" ]
 
 kafdrop:
   ingress:
@@ -243,6 +194,9 @@ rest-proxy:
     topicPrefixes:
       - test
       - lsst.dm
+      - lsst.ATCamera
+      - lsst.CCCamera
+      - lsst.MTCamera
 
 chronograf:
   persistence:
