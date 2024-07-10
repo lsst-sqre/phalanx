@@ -19,7 +19,7 @@ rubintv:
     replicas: 0
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0036
+      tag: c0037
       pullPolicy: Always
     uid: 73006
     gid: 73006
