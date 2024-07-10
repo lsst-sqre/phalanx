@@ -8,6 +8,7 @@ vaultPathPrefix: "secret/phalanx/base"
 namespaceLabels:
   sasquatch:
     lsst.io/discover: 'true'
+targetRevision: "tickets/DM-45060"
 
 applications:
   argo-workflows: true
