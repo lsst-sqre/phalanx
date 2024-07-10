@@ -15,6 +15,10 @@ strimzi-kafka:
           host: sasquatch-summit-kafka-1.lsst.codes
         - loadBalancerIP: "139.229.180.5"
           host: sasquatch-summit-kafka-2.lsst.codes
+    config:
+      offsets.retention.minutes: 10080
+      log.retention.hours: 168
+
   kraft:
     enabled: true
   kafkaController:
