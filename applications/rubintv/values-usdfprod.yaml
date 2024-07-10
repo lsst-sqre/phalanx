@@ -9,6 +9,12 @@ rubintv:
       value: &s3E "https://s3dfrgw.slac.stanford.edu"
     - name: RAPID_ANALYSIS_LOCATION
       value: "USDF"
+    - name: DDV_DEPLOY_BRANCH
+      value: &dbE "deploy-slac"
+    - name: DDV_BASE_HREF
+      value: "/rubintv/ddv/"
+    - name: DDV_CLIENT_WS_ADDRESS
+      value: "rubintv/ws/ddv"
     image:
       tag: v2.2.0
       pullPolicy: Always
@@ -31,7 +37,7 @@ rubintv:
     - name: DAF_BUTLER_REPOSITORY
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
-      value: "deploy-slac"
+      value: *dbE
     volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
