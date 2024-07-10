@@ -189,10 +189,7 @@ rest-proxy:
   configurationOverrides:
     "access.control.allow.origin": http://love01.cp.lsst.org,http://love02.cp.lsst.org
   kafka:
-    topics:
-      - test.next-visit
     topicPrefixes:
-      - test
       - lsst.dm
       - lsst.ATCamera
       - lsst.CCCamera
