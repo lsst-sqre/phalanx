@@ -62,12 +62,20 @@ ingress:
 # -- Resource limits and requests for the times-square deployment pod
 # @default -- see `values.yaml`
 resources:
-  limits:
-    cpu: "1"
-    memory: "1Gi"
-  requests:
-    cpu: "2m"
-    memory: "100Mi"
+  timesSquare:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "2m"
+      memory: "100Mi"
+  timesSquareWorker:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "2m"
+      memory: "256Mi"
 
 autoscaling:
   # -- Enable autoscaling of times-square deployment
@@ -147,10 +155,10 @@ cloudsql:
     resources:
       limits:
         cpu: "1"
-        memory: "50Mi"
+        memory: "4Gi"
       requests:
         cpu: "1m"
-        memory: "8Mi"
+        memory: "512Mi"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""

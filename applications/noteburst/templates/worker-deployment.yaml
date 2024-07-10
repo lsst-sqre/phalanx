@@ -42,7 +42,7 @@ spec:
           command: ["arq"]
           args: ["noteburst.worker.main.WorkerSettings"]
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources.noteburstWorker | nindent 12 }}
           envFrom:
             - configMapRef:
                 name: {{ include "noteburst.fullname" . }}-worker
