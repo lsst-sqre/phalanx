@@ -34,7 +34,7 @@ mtaos:
   - name: scratch
     containerPath: /scratch
     readOnly: false
-    server: nfs-scratch.tu.lsst.org
+    server: nfs-scratch.ls.lsst.org
     serverPath: /scratch
 
 mtcamhexapod-sim:
