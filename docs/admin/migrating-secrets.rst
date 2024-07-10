@@ -13,28 +13,10 @@ In all :command:`phalanx` commands listed below, replace ``<environment>`` with 
 Change Vault configuration
 ==========================
 
-By default, :px-app:`vault-secrets-operator` is configured to use a read token stored in a ``vault-secrets-operator`` ``Secret`` resource.
+Previously, :px-app:`vault-secrets-operator` was configured to use a read token stored in a ``vault-secrets-operator`` ``Secret`` resource.
 The new secret management system uses Vault AppRoles instead, which are the recommeded authentication approach for services.
 
-#. Override the ``vault-secrets-operator`` configuration to use an AppRole by adding the following block to :file:`applications/vault-secrets-operator/values-{environment}.yaml` for your environment:
-
-   .. code-block:: yaml
-
-      vault-secrets-operator:
-        environmentVars:
-          - name: VAULT_ROLE_ID
-            valueFrom:
-              secretKeyRef:
-                name: vault-credentials
-                key: VAULT_ROLE_ID
-          - name: VAULT_SECRET_ID
-            valueFrom:
-              secretKeyRef:
-                name: vault-credentials
-                key: VAULT_SECRET_ID
-        vault:
-          authMethod: approle
-
+#. Delete the override in the ``vault-secrets-operator`` configuration to use an AppRole by deleting the configuration block in :file:`applications/vault-secrets-operator/values-{environment}.yaml` for your environment.
    If your environment was already using AppRoles, you can skip this step.
 
    Don't sync the ``vault-secrets-operator`` application yet.
@@ -45,7 +27,7 @@ The new secret management system uses Vault AppRoles instead, which are the reco
 
    .. code-block:: yaml
 
-      vaultPathPrefix: secret/phalanx/idfdev
+      vaultPathPrefix: "secret/phalanx/idfdev"
 
    Note that the last component of the path now uses the short environment name, not the FQDN of the environment.
 
@@ -195,10 +177,13 @@ Switch to the new secrets tree
    Applications to review:
 
    - :px-app:`datalinker` (``config.separateSecrets``)
+   - :px-app:`nightreport` (``global.tsVaultSecretsPath``)
    - :px-app:`nublado` (``hub.internalDatabase``, ``secrets.templateSecrets``)
    - :px-app:`obsloctap` (``config.separateSecrets``)
    - :px-app:`plot-navigator` (``config.separateSecrets``)
    - :px-app:`production-tools` (``config.separateSecrets``)
+   - :px-app:`rubintv` (``rubintv.separateSecrets``, ``global.tsVaultSecretsPath``)
+   - :px-app:`rubintv-dev` (``rubintv.separateSecrets``, ``global.tsVaultSecretsPath``)
 
 #. You're now ready to test the new secrets tree.
    You can do this on a branch that contains the changes you made above.

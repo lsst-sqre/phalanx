@@ -1,12 +1,16 @@
 name: "base"
 fqdn: "base-lsp.lsst.codes"
 appOfAppsName: "science-platform"
-vaultPathPrefix: "secret/k8s_operator/base-lsp.lsst.codes"
+onepassword:
+  connectUrl: "https://roundtable.lsst.cloud/1password"
+  vaultTitle: "RSP base-lsp.lsst.codes"
+vaultPathPrefix: "secret/phalanx/base"
 
 applications:
   argo-workflows: true
   consdb: true
   exposurelog: true
+  mobu: true
   narrativelog: true
   nightreport: true
   nublado: true

@@ -41,6 +41,7 @@ Real-time display front end
 | rubintv.imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
 | rubintv.ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | rubintv.nameOverride | string | `""` | Override the base name for resources |
+| rubintv.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | rubintv.siteTag | string | `""` | A special tag for letting the scripts know where they are running.  Must be overridden at each site |
 | rubintv.workers.affinity | object | `{}` | Affinity rules for the rubintv worker pods |
 | rubintv.workers.debug | bool | `false` | If set to true, enable more verbose logging. |
