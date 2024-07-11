@@ -4,21 +4,59 @@ set:
   global:
     host: "example.com"
 tests:
-  - it: "Should not create an anonymous ingress"
-    template: "ingress-webhooks.yaml"
+  - it: "Should not create a GitHub CI app ingress"
+    template: "ingress-github-ci-app.yaml"
     asserts:
       - hasDocuments:
           count: 0
-  - it: "Should not create an github-config ConfigMap"
-    template: "configmap-github-config.yaml"
+  - it: "Should not create a GitHub refresh app ingress"
+    template: "ingress-github-refresh-app.yaml"
     asserts:
       - hasDocuments:
           count: 0
-  - it: "Should not inject GitHub secrets into the Deployment env"
+  - it: "Should not create a GitHub CI app ConfigMap"
+    template: "configmap-github-ci-app.yaml"
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: "Should not create a GitHub refresh app ConfigMap"
+    template: "configmap-github-refresh-app.yaml"
+    asserts:
+      - hasDocuments:
+          count: 0
+  - it: "Should not inject GitHub CI app secrets into the Deployment env"
     template: "deployment.yaml"
     asserts:
       - notContains:
           path: "spec.template.spec.containers[0].env"
           any: true
           content:
-            name: "MOBU_GITHUB_WEBHOOK_SECRET"
+            name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_ID"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+  - it: "Should not inject GitHub refresh app secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
+      - notContains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"

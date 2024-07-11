@@ -1,3 +1,0 @@
-config:
-  # Mobu here is behind a VPN and is not reachable by github.com
-  githubIntegration: false

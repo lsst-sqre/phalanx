@@ -1,8 +1,8 @@
-{{- if or .Values.config.githubRefreshAppEnabled .Values.config.githubCiAppEnabled }}
+{{- if .Values.config.githubCiApp }}
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "mobu.fullname" . }}-github-webhook
+  name: {{ template "mobu.fullname" . }}-github-ci
   labels:
     {{- include "mobu.labels" . | nindent 4 }}
 config:
@@ -11,7 +11,7 @@ config:
     anonymous: true
 template:
   metadata:
-    name: {{ template "mobu.fullname" . }}-github-webhook
+    name: {{ template "mobu.fullname" . }}-github-ci
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -21,7 +21,7 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{ .Values.config.pathPrefix }}/github"
+            - path: "{{ .Values.config.pathPrefix }}/github/ci"
               pathType: "Prefix"
               backend:
                 service:
