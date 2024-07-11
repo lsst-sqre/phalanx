@@ -30,6 +30,8 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
+    tsSalKafka:
+      enabled: true
     replicator:
       enabled: true
     kafdrop:
