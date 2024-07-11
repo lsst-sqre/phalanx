@@ -50,7 +50,7 @@ Here is an example of a message that will appear on data.lsst.cloud (idfprod) an
     We are aware of and are investigating an issue with DP0.2 searches in the portal
 
 The summary appears on the banner, the body appears if the user clicks the "details" button on the banner.
-See :doc:`environments </environments/index.html>` for the short labels for your environment.
+See :doc:`environments </environments/index>` for the short labels for your environment.
 
 .. seealso::
 
