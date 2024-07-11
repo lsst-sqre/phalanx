@@ -39,6 +39,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    :maxdepth: 2
 
    troubleshooting
+   outage-comms
 
 .. toctree::
    :caption: Infrastructure
