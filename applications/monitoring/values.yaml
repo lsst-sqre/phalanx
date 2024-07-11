@@ -32,6 +32,8 @@ influxdb2:
     hostname: ""
     className: "nginx"
     path: "/"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
 
   startupProbe:
     # -- Whether to enable a startup probe
