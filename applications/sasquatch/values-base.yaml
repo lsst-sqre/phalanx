@@ -98,6 +98,13 @@ strimzi-kafka:
       key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
+  localStorage:
+    enabled: false
+    migration:
+      enabled: false
+      rebalance: false
+    size: 1.5Ti
+    storageClassName: localdrive
 
 influxdb:
   persistence:
