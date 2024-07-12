@@ -31,7 +31,7 @@ IVOA TAP service
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | TAP image to use |
-| config.pg.image.tag | string | `"1.18.0"` | Tag of TAP image to use |
+| config.pg.image.tag | string | `"1.18.1"` | Tag of TAP image to use |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
