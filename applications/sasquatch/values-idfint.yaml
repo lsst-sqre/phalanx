@@ -32,6 +32,8 @@ strimzi-kafka:
   users:
     tsSalKafka:
       enabled: true
+    camera:
+      enabled: true
     replicator:
       enabled: true
     kafdrop:
