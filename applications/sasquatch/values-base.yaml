@@ -101,7 +101,7 @@ strimzi-kafka:
   localStorage:
     enabled: false
     migration:
-      enabled: false
+      enabled: true
       rebalance: false
     size: 1.5Ti
     storageClassName: localdrive
