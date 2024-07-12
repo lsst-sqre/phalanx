@@ -204,3 +204,6 @@ spec:
             {{- toYaml . | nindent 12 }}
     {{- end }}
   {{- end }}
+  {{ if .Values.cruiseControl.enabled }}
+  cruiseControl: {}
+  {{- end }}

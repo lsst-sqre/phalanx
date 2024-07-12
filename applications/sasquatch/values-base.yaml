@@ -96,6 +96,8 @@ strimzi-kafka:
     config:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
+  cruiseControl:
+    enabled: true
 
 influxdb:
   persistence:
