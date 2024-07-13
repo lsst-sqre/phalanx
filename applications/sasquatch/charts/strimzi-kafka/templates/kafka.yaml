@@ -24,6 +24,7 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
+{{- if not .Values.localStorage.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
@@ -51,6 +52,61 @@ spec:
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
+{{- end }}
+{{- if or .Values.localStorage.enabled .Values.localStorage.migration.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: kafka-local-storage
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: "[6-99]"
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.localStorage.size }}
+      {{- if .Values.localStorage.storageClassName }}
+      class: {{ .Values.localStorage.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+  template:
+    pod:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: local-storage
+                  operator: In
+                  values:
+                  - "true"
+  {{- with .Values.kafka.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- if and .Values.localStorage.migration.enabled .Values.localStorage.migration.rebalance }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaRebalance
+metadata:
+  name: broker-migration
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/rebalance-auto-approval: "true"
+spec:
+  mode: remove-brokers
+  brokers: [0, 1, 2] # Use the node IDs of the existing brokers
+{{- end }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
@@ -203,4 +259,7 @@ spec:
           labels:
             {{- toYaml . | nindent 12 }}
     {{- end }}
+  {{- end }}
+  {{ if .Values.cruiseControl.enabled }}
+  cruiseControl: {}
   {{- end }}

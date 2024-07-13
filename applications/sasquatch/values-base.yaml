@@ -44,10 +44,10 @@ strimzi-kafka:
           host: sasquatch-base-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 80Gi
+        memory: 48Gi
         cpu: 4
       limits:
-        memory: 80Gi
+        memory: 48Gi
         cpu: 4
     metricsConfig:
       enabled: true
@@ -96,6 +96,15 @@ strimzi-kafka:
     config:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
+  cruiseControl:
+    enabled: true
+  localStorage:
+    enabled: true
+    migration:
+      enabled: false
+      rebalance: false
+    size: 1.5Ti
+    storageClassName: localdrive
 
 influxdb:
   persistence:
