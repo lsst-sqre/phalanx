@@ -99,10 +99,10 @@ strimzi-kafka:
   cruiseControl:
     enabled: true
   localStorage:
-    enabled: false
+    enabled: true
     migration:
-      enabled: true
-      rebalance: true
+      enabled: false
+      rebalance: false
     size: 1.5Ti
     storageClassName: localdrive
 
