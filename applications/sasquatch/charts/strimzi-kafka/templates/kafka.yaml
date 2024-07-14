@@ -79,15 +79,10 @@ spec:
       deleteClaim: false
   template:
     pod:
+      {{- with .Values.localStorage.affinity }}
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                - key: local-storage
-                  operator: In
-                  values:
-                  - "true"
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
   {{- with .Values.kafka.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
@@ -105,7 +100,10 @@ metadata:
     strimzi.io/rebalance-auto-approval: "true"
 spec:
   mode: remove-brokers
-  brokers: [0, 1, 2] # Use the node IDs of the existing brokers
+  {{- with .Values.localStorage.migration.brokers }}
+  brokers:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
 {{- end }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2

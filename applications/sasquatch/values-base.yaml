@@ -103,8 +103,21 @@ strimzi-kafka:
     migration:
       enabled: false
       rebalance: false
+      brokers:
+        - 0
+        - 1
+        - 2
     size: 1.5Ti
     storageClassName: localdrive
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: local-storage
+                  operator: In
+                  values:
+                    - "true"
 
 influxdb:
   persistence:
