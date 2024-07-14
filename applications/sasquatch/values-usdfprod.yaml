@@ -54,6 +54,10 @@ strimzi-kafka:
     migration:
       enabled: true
       rebalance: true
+      brokers:
+        - 3
+        - 4
+        - 5
     size: 1.5Ti
     storageClassName: zfs--rubin-efd
     affinity:

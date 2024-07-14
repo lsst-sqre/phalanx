@@ -374,7 +374,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | strimzi-kafka.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | strimzi-kafka.kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
-| strimzi-kafka.localStorage | object | `{"enabled":false,"migration":{"enabled":false,"rebalance":false},"size":"1.5Ti","storageClassName":"localdrive"}` | Configuration for deploying Kafka brokers with local storage |
+| strimzi-kafka.localStorage | object | `{"enabled":false,"migration":{"brokers":[0,1,2],"enabled":false,"rebalance":false},"size":"1.5Ti","storageClassName":"localdrive"}` | Configuration for deploying Kafka brokers with local storage |
 | strimzi-kafka.mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
 | strimzi-kafka.mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | strimzi-kafka.mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |

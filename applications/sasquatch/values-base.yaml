@@ -103,6 +103,10 @@ strimzi-kafka:
     migration:
       enabled: false
       rebalance: false
+      brokers:
+        - 0
+        - 1
+        - 2
     size: 1.5Ti
     storageClassName: localdrive
     affinity:
