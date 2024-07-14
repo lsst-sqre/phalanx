@@ -79,15 +79,10 @@ spec:
       deleteClaim: false
   template:
     pod:
+      {{- with .Values.localStorage.affinity }}
       affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-              - matchExpressions:
-                - key: local-storage
-                  operator: In
-                  values:
-                  - "true"
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
   {{- with .Values.kafka.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
