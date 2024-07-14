@@ -64,8 +64,8 @@ strimzi-kafka:
                 - key: kubernetes.io/hostname
                   operator: In
                   values:
+                    - sdfk8sn004
                     - sdfk8sn005
-                    - sdfk8sn006
                     - sdfk8sn007
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
