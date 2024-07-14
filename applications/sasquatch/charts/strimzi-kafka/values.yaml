@@ -303,3 +303,16 @@ mirrormaker2:
 
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
+
+# -- Configuration for the Kafka Cruise Control
+cruiseControl:
+  enabled: false
+
+# -- Configuration for deploying Kafka brokers with local storage
+localStorage:
+  enabled: false
+  migration:
+    enabled: false
+    rebalance: false
+  size: 1.5Ti
+  storageClassName: localdrive
