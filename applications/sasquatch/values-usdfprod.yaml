@@ -49,6 +49,33 @@ strimzi-kafka:
     enabled: true
   cruiseControl:
     enabled: true
+  localStorage:
+    enabled: false
+    migration:
+      enabled: true
+      rebalance: false
+    size: 1.5Ti
+    storageClassName: zfs--rubin-efd
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8sn005
+                    - sdfk8sn006
+                    - sdfk8sn007
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
 
 influxdb:
   enabled: false
