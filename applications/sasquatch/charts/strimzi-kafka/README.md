@@ -17,6 +17,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.enabled | bool | `false` | Enable Kafka Connect |
 | connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
+| cruiseControl | object | `{"enabled":false}` | Configuration for the Kafka Cruise Control |
 | kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
 | kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
 | kafka.config."log.retention.hours" | int | `48` | Number of days for a topic's data to be retained |
@@ -51,6 +52,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafkaExporter.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka exporter |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
 | kraft.enabled | bool | `false` | Enable KRaft mode for Kafka |
+| localStorage | object | `{"enabled":false,"migration":{"brokers":[0,1,2],"enabled":false,"rebalance":false},"size":"1.5Ti","storageClassName":"localdrive"}` | Configuration for deploying Kafka brokers with local storage |
 | mirrormaker2.enabled | bool | `false` | Enable replication in the target (passive) cluster |
 | mirrormaker2.replicas | int | `3` | Number of Mirror Maker replicas to run |
 | mirrormaker2.replication.policy.class | string | `"org.apache.kafka.connect.mirror.IdentityReplicationPolicy"` | Replication policy. |
