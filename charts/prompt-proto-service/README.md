@@ -43,10 +43,10 @@ Event-driven processing of camera images
 | knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | int | `0` | The number of GPUs to request. |
-| knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
+| knative.idleTimeout | int | `0` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
 | knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
-| knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
+| knative.responseStartTimeout | int | `0` | Maximum time that a container can send nothing to Knative after initial submission (seconds). This is only useful if the container runs async workers. If 0, startup timeout is ignored. |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |

@@ -206,5 +206,5 @@ spec:
       {{- end }}
       enableServiceLinks: true
       timeoutSeconds: {{ $knative_timeout }}
-      idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
-      responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeout }}
+      idleTimeoutSeconds: {{ with .Values.knative.idleTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
+      responseStartTimeoutSeconds: {{ with .Values.knative.responseStartTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
