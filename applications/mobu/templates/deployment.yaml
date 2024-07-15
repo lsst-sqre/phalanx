@@ -35,10 +35,6 @@ spec:
             - name: "MOBU_AUTOSTART_PATH"
               value: "/etc/mobu/autostart.yaml"
             {{- end }}
-            {{- if .Values.config.github }}
-            - name: "MOBU_GITHUB_CONFIG_PATH"
-              value: "/etc/mobu/github-config.yaml"
-            {{- end }}
             - name: "MOBU_ENVIRONMENT_URL"
               value: {{ .Values.global.baseUrl }}
             - name: "MOBU_GAFAELFAWR_TOKEN"
@@ -46,18 +42,18 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
-            {{- if .Values.config.githubRefreshAppEnabled }}
-            - name: "MOBU_GITHUB_REFRESH_APP_ENABLED"
-              value: "true"
+            {{- if .Values.config.githubRefreshApp }}
+            - name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
+              value: "/etc/mobu/github-refresh-app.yaml"
             - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
               valueFrom:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "github-refresh-app-webhook-secret"
             {{- end}}
-            {{- if .Values.config.githubCiAppEnabled }}
-            - name: "MOBU_GITHUB_CI_APP_ENABLED"
-              value: "true"
+            {{- if .Values.config.githubCiApp }}
+            - name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
+              value: "/etc/mobu/github-ci-app.yaml"
             - name: "MOBU_GITHUB_CI_APP_ID"
               valueFrom:
                 secretKeyRef:
@@ -73,10 +69,6 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "github-ci-app-webhook-secret"
-            {{- end}}
-            {{- if .Values.config.github_config }}
-            - name: "MOBU_GITHUB_CONFIG_PATH"
-              value: "/etc/mobu/github-config.yaml"
             {{- end}}
             - name: "MOBU_PATH_PREFIX"
               value: {{ .Values.config.pathPrefix | quote }}
@@ -131,12 +123,19 @@ spec:
                   - key: autostart.yaml
                     path: autostart.yaml
             {{- end }}
-            {{- if .Values.config.github }}
+            {{- if .Values.config.githubCiApp }}
             - configMap:
-                name: {{ include "mobu.fullname" . }}-github-config
+                name: {{ include "mobu.fullname" . }}-github-ci-app
                 items:
-                  - key: github-config.yaml
-                    path: github-config.yaml
+                  - key: github-ci-app.yaml
+                    path: github-ci-app.yaml
+            {{- end }}
+            {{- if .Values.config.githubRefreshApp }}
+            - configMap:
+                name: {{ include "mobu.fullname" . }}-github-refresh-app
+                items:
+                  - key: github-refresh-app.yaml
+                    path: github-refresh-app.yaml
             {{- end }}
         - name: "tmp"
           emptyDir: {}

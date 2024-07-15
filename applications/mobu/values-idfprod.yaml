@@ -1,4 +1,7 @@
 config:
+  githubRefreshApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
   autostart:
     - name: "firefighter"
       count: 5

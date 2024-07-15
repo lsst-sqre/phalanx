@@ -1,4 +1,20 @@
 config:
+  githubRefreshApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
+  githubCiApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
+    users:
+      - username: bot-mobu-ci-user-1
+      - username: bot-mobu-ci-user-2
+      - username: bot-mobu-ci-user-3
+      - username: bot-mobu-ci-user-4
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
   autostart:
     - name: "recommended"
       count: 1
