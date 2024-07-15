@@ -4,7 +4,7 @@ controller:
     images:
       source:
         type: "docker"
-        registry: "docker-registry.slac.stanford.edu"
+        registry: "ghcr.io"
         repository: "lsstsqre/sciplat-lab"
       pin:
         - "w_2024_32"
