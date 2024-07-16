@@ -54,7 +54,7 @@ prompt-proto-service:
     imageTimeout: 110
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/sql/pp_apdb_latiss.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
