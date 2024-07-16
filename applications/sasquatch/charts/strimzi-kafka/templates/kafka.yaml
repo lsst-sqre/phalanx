@@ -174,8 +174,8 @@ spec:
             {{- end }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
-            {{- range $idx, $broker := .Values.kafka.externalListener.brokers }}
-            - broker: {{ $idx }}
+            {{- range $broker := .Values.kafka.externalListener.brokers }}
+            - broker: {{ $broker.broker }}
               loadBalancerIP: {{ $broker.loadBalancerIP }}
               advertisedHost: {{ $broker.host }}
               advertisedPort: 9094
