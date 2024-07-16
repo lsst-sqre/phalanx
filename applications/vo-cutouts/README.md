@@ -17,6 +17,7 @@ Image cutout service complying with IVOA SODA
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL is used | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | config.databaseUrl | string | None, must be set if `cloudsql.enabled` is false | URL for the PostgreSQL database if Cloud SQL is not in use |
+| config.gracePeriod | int | `60` | Grace period in seconds to wait for cutout worker jobs to finish |
 | config.lifetime | string | `"30d"` | Lifetime of job results in Safir `parse_timedelta` format |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |

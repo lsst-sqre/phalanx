@@ -9,6 +9,7 @@ data:
   {{- if .Values.cloudsql.enabled }}
   CUTOUT_DATABASE_URL: "postgresql://vo-cutouts@localhost/vo-cutouts"
   {{- end }}
+  CUTOUT_GRACE_PERIOD: {{ .Values.config.gracePeriod | quote }}
   CUTOUT_LIFETIME: {{ .Values.config.lifetime | quote }}
   CUTOUT_SERVICE_ACCOUNT: {{ required "config.serviceAccount must be set" .Values.config.serviceAccount | quote }}
   CUTOUT_STORAGE_URL: {{ required "config.storageBucketUrl must be set" .Values.config.storageBucketUrl | quote }}

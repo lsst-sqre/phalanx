@@ -13,6 +13,9 @@ config:
   # @default -- None, must be set if `cloudsql.enabled` is false
   databaseUrl: null
 
+  # -- Grace period in seconds to wait for cutout worker jobs to finish
+  gracePeriod: 60
+
   # -- Lifetime of job results in Safir `parse_timedelta` format
   lifetime: "30d"
 
