@@ -8,11 +8,14 @@ strimzi-kafka:
         host: sasquatch-int-kafka-bootstrap.lsst.cloud
 
       brokers:
-        - loadBalancerIP: "34.171.69.125"
+        - broker: 0
+          loadBalancerIP: "34.171.69.125"
           host: sasquatch-int-kafka-0.lsst.cloud
-        - loadBalancerIP: "34.72.50.204"
+        - broker: 1
+          loadBalancerIP: "34.72.50.204"
           host: sasquatch-int-kafka-1.lsst.cloud
-        - loadBalancerIP: "34.173.225.150"
+        - broker: 2
+          loadBalancerIP: "34.173.225.150"
           host: sasquatch-int-kafka-2.lsst.cloud
   mirrormaker2:
     enabled: true

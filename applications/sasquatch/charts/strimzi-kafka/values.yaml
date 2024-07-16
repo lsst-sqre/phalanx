@@ -102,11 +102,13 @@ kafka:
     brokers: []
     # For example:
     # brokers:
-    #   - loadBalancerIP: "192.168.1.1"
+    #   - broker: 0
+    #     loadBalancerIP: "192.168.1.1"
     #     host: broker-0.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
-    #   - loadBalancerIP: "192.168.1.2"
+    #   - broker: 1
+    #     loadBalancerIP: "192.168.1.2"
     #     host: broker-1.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
