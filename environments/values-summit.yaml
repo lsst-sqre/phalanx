@@ -21,3 +21,4 @@ applications:
   strimzi: true
   telegraf: true
   telegraf-ds: true
+  uws: true
