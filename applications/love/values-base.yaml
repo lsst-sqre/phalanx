@@ -192,7 +192,7 @@ love-nginx:
       },
       "sal": {
           "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
-          "expectedBrokerList": [0, 1, 2]
+          "expectedBrokerList": [6, 7, 8]
       }
     }
 
