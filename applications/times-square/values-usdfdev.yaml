@@ -3,8 +3,6 @@ replicaCount:
   worker: 2
 image:
   pullPolicy: Always
-ingress:
-  privilegedScope: "exec:notebook"
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"

@@ -1,20 +1,21 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "times-square.fullname" . }}
+  name: "{{ template "times-square.fullname" . }}-templates"
   labels:
     {{- include "times-square.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - {{ .Values.ingress.defaultScope }}
+      - {{ .Values.ingress.templateApiScope | quote }}
   loginRedirect: true
 template:
   metadata:
-    name: {{ template "times-square.fullname" . }}
+    name: "{{ template "times-square.fullname" . }}-templates"
     {{- with .Values.ingress.annotations }}
     annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
@@ -22,7 +23,14 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: {{ .Values.ingress.path | quote }}
+            - path: "{{- .Values.ingress.path -}}/v1/pages/.*/rendered"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "times-square.fullname" . }}
+                  port:
+                    number: {{ .Values.service.port }}
+            - path: "{{- .Values.ingress.path -}}/v1/github"
               pathType: "Prefix"
               backend:
                 service:

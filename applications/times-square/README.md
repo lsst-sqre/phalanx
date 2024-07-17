@@ -41,8 +41,9 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| ingress.defaultScope | string | `"exec:notebook"` | scope for general operations |
 | ingress.path | string | `"/times-square/api"` | Root URL path prefix for times-square API |
-| ingress.privilegedScope | string | `"exec:admin"` | scope for privileged operations (anything except `github` and `pages/*/rendered`) |
+| ingress.templateApiScope | string | `"exec:notebook"` | scope for using just the template engine |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |
