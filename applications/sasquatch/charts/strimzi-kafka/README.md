@@ -24,7 +24,6 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
-| kafka.disruption_tolerance | int | `1` | Number of down brokers that the system can tolerate |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
 | kafka.externalListener.bootstrap.loadBalancerIP | string | Do not request a load balancer IP | Request this load balancer IP. See `values.yaml` for more discussion |
@@ -35,6 +34,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.listeners.plain.enabled | bool | `false` | Whether internal plaintext listener is enabled |
 | kafka.listeners.tls.enabled | bool | `false` | Whether internal TLS listener is enabled |
 | kafka.metricsConfig.enabled | bool | `false` | Whether metric configuration is enabled |
+| kafka.minInsyncReplicas | int | `2` | The minimum number of in-sync replicas that must be available for the producer to successfully send records Cannot be greater than the number of replicas. |
 | kafka.replicas | int | `3` | Number of Kafka broker replicas to run |
 | kafka.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka brokers |
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |

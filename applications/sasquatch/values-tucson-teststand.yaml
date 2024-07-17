@@ -3,7 +3,6 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    disruption_tolerance: 1
     storage:
       storageClassName: rook-ceph-block
     externalListener:
