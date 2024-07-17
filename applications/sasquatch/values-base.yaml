@@ -19,7 +19,7 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    disruption_tolerance: 1
+    disruptionTolerance: 1
     config:
       auto.create.topics.enable: false
       log.cleaner.min.compaction.lag.ms: 259200000
