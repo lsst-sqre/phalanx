@@ -31,6 +31,8 @@ prompt-proto-service:
     restart: 0
     # -- Maximum time that a worker can process a next_visit request (seconds).
     timeout: 900
+    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    grace_period: 45
 
   instrument:
     # -- The "short" name of the instrument
