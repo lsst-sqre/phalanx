@@ -38,6 +38,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | image.tag | string | Chart's appVersion | Overrides the image tag. |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.enabled | bool | `true` | Enable ingress |
+| ingress.timesSquareScope | string | `"exec:admin"` | Scope required for /times-square UI |
 | nameOverride | string | `""` | Overrides the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` | Annotations for squareone pods |

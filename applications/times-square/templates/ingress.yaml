@@ -8,7 +8,7 @@ config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
-      - "exec:notebook"
+      - {{ .Values.ingress.privilegedScope }}
   loginRedirect: true
 template:
   metadata:
