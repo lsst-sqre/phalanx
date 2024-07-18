@@ -114,8 +114,14 @@ controller:
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
 
+hub:
+  internalDatabase: false
+
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.cp.lsst.org/nublado3"
+
+secrets:
+  templateSecrets: true
