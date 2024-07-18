@@ -16,5 +16,6 @@ spec:
             - sasquatchbackpack
             - usgs-earthquake-data
             - -d
-            - 10 0
+            - "10"
+            - "0"
           restartPolicy: OnFailure
