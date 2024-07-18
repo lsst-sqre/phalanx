@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.17.3"
+      tag: "1.16.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.3.1"
+      tag: "2.2.0"
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
@@ -158,7 +158,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "3.0.2"
+    tag: "2.6.1"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -191,7 +191,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.3.1"
+    tag: "2.2.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`

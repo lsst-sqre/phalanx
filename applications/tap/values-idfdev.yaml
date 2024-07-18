@@ -7,9 +7,3 @@ cadc-tap:
     qserv:
       host: "10.140.1.211:4040"
       # Change to 134.79.23.209:4040 to point to USDF qserv
-
-  cloudsql:
-    enabled: true
-    instanceConnectionName: "science-platform-dev-7696:us-central1:science-platform-dev-e9e11de2"
-    serviceAccount: "tap-service@science-platform-dev-7696.iam.gserviceaccount.com"
-    database: "tap"
