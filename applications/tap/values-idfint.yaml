@@ -6,4 +6,4 @@ cadc-tap:
   config:
     qserv:
       host: "134.79.23.227:4040"
-      jdbcParams: "?enabledTLSProtocols=TLSv1.3"
+      jdbcParams: "?enabledTLSProtocols=TLSv1.2"
