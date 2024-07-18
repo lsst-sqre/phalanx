@@ -40,6 +40,62 @@ spec:
     requestPercentage: 90
     controllerMutationRate: 1000
 {{- end }}
+{{- if .Values.users.camera.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: camera
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: camera-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.ATCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.CCCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.MTCamera"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
+  quotas:
+    producerByteRate: 20971520
+    consumerByteRate: 20971520
+    requestPercentage: 90
+    controllerMutationRate: 1000
+{{- end }}
 {{- if .Values.users.replicator.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2

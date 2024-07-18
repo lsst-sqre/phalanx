@@ -30,6 +30,10 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
+    tsSalKafka:
+      enabled: true
+    camera:
+      enabled: true
     replicator:
       enabled: true
     kafdrop:
@@ -49,6 +53,13 @@ strimzi-kafka:
       limits:
         memory: 16Gi
         cpu: "2"
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: data-int.lsst.cloud
+      path: /schema-registry(/|$)(.*)
 
 influxdb:
   ingress:
