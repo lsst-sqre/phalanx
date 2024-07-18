@@ -99,6 +99,10 @@ config:
     See our tutorial [Authenticating from TOPCat outside the Science Platform](https://rsp.lsst.io/guides/auth/using-topcat-outside-rsp.html)
     to learn more about accessing TAP datasets from your own computer.
 
+    ## Documentation
+
+    Learn more about the APIs in the [Rubin Science Platform API Aspect guide](https://rsp.lsst.io/guides/api/).
+
   # -- MDX content for the `/docs` page
   # @default -- See `values.yaml`
   docsPageMdx: |
@@ -106,6 +110,23 @@ config:
 
     <Lede>Find documentation for Rubin Observatory data, science platform
     services, and software.</Lede>
+
+    <Section>
+      ## Data previews
+
+      <CardGroup>
+        <a href="https://dp0.lsst.io/">
+          <Card>
+            ### Data Preview 0 (DP0)
+
+            DP0 is the first of three data previews during the period leading up to the start of Rubin Observatory Operations.
+            This site provides resources to delegates for exploring the DP0 datasets with the Rubin Science Platform.
+          </Card>
+        </a>
+
+      </CardGroup>
+
+    </Section>
 
     <Section>
 
