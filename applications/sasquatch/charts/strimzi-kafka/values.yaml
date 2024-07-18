@@ -256,6 +256,10 @@ users:
     # source and target clusters)
     enabled: false
 
+  camera:
+    # -- Enable user camera, used at the camera environments
+    enabled: false
+
   tsSalKafka:
     # -- Enable user ts-salkafka, used at the telescope environments
     enabled: false
