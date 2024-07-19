@@ -1,2 +1,5 @@
 config:
   siteName: "Phalanx @ data-demo"
+
+ingress:
+  timesSquareScope: "exec:admin"

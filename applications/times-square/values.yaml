@@ -59,6 +59,11 @@ ingress:
   # -- Root URL path prefix for times-square API
   path: "/times-square/api"
 
+  # -- scope for general operations
+  defaultScope: "exec:notebook"
+  # -- scope for using just the template engine
+  templateApiScope: "exec:notebook"
+
 # -- Resource limits and requests for the times-square deployment pod
 # @default -- see `values.yaml`
 resources:

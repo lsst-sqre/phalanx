@@ -30,6 +30,9 @@ ingress:
   # -- Additional annotations to add to the ingress
   annotations: {}
 
+  # -- Scope required for /times-square UI
+  timesSquareScope: "exec:notebook"
+
 # -- Resource requests and limits for squareone pods
 # @default -- see `values.yaml`
 resources:

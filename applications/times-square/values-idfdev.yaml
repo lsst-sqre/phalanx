@@ -1,5 +1,7 @@
 image:
   pullPolicy: Always
+ingress:
+  defaultScope: "exec:admin"
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://times-square@localhost/times-square"

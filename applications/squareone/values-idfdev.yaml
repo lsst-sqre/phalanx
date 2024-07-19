@@ -2,6 +2,9 @@ image:
   pullPolicy: Always
   # tag: tickets-DM-34723
 
+ingress:
+  timesSquareScope: "exec:admin"
+
 config:
   siteName: "Rubin Science Platform @ data-dev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
