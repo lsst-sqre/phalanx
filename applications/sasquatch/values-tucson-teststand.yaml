@@ -124,7 +124,7 @@ telegraf-kafka-consumer:
     calsys:
       enabled: true
       topicRegexps: |
-        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LEDProjector", ".*LinearStage", ".*TunableLaser" ]
+        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LEDProjector", ".*LinearStage", ".*MTReflector", ".*TunableLaser" ]
     mtaircompressor:
       enabled: true
       topicRegexps: |
@@ -182,7 +182,7 @@ kafka-connect-manager:
         topicsRegex: "lsst.sal.Test"
       calsys:
         enabled: true
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*TunableLaser"
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*MTReflector|.*TunableLaser"
       mtaircompressor:
         enabled: true
         topicsRegex: ".*MTAirCompressor"
