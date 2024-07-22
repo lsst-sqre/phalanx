@@ -30,6 +30,10 @@ prompt-proto-service:
     # -- The number of requests to process before rebooting a worker.
     # If 0, workers process requests indefinitely.
     restart: 0
+    # -- Maximum time that a worker can process a next_visit request (seconds).
+    timeout: 900
+    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    grace_period: 45
 
   instrument:
     # -- The "short" name of the instrument
@@ -129,12 +133,17 @@ prompt-proto-service:
     memoryRequest: "2Gi"
     # -- The maximum memory limit.
     memoryLimit: "8Gi"
-    # -- Maximum time that a container can respond to a next_visit request (seconds).
-    timeout: 900
-    # -- Maximum time that a container can send nothing to the fanout service (seconds).
-    idleTimeout: 900
-    # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).
-    responseStartTimeout: 900
+    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
+    # This parameter adds extra time to that minimum (seconds).
+    extraTimeout: 10
+    # -- Maximum time that a container can send nothing to Knative (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    idleTimeout: 0
+    # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    responseStartTimeout: 0
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.

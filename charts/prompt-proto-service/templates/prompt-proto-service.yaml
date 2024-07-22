@@ -42,6 +42,12 @@ spec:
         env:
         - name: WORKER_RESTART_FREQ
           value: {{ .Values.worker.restart | toString | quote }}
+        - name: WORKER_TIMEOUT
+          value: {{ .Values.worker.timeout | toString | quote }}
+        - name: WORKER_GRACE_PERIOD
+          value: {{ .Values.worker.grace_period | toString | quote }}
+        {{- /* Knative not configured for timeouts longer than 1200 seconds, and shouldn't need to be. */ -}}
+        {{- $knative_timeout := minf 1200 (addf (mulf 2 (coalesce .Values.worker.timeout 600)) .Values.knative.extraTimeout) }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
@@ -201,6 +207,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       enableServiceLinks: true
-      timeoutSeconds: {{ .Values.knative.timeout }}
-      idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
-      responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeout }}
+      timeoutSeconds: {{ $knative_timeout }}
+      idleTimeoutSeconds: {{ with .Values.knative.idleTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
+      responseStartTimeoutSeconds: {{ with .Values.knative.responseStartTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}

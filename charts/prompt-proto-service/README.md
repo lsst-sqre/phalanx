@@ -40,13 +40,13 @@ Event-driven processing of camera images
 | knative.cpuRequest | int | `1` | The cpu cores requested. |
 | knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
 | knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
+| knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | knative.gpu | bool | `false` | GPUs enabled. |
 | knative.gpuRequest | int | `0` | The number of GPUs to request. |
-| knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service (seconds). |
+| knative.idleTimeout | int | `0` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
 | knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
 | knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
-| knative.responseStartTimeout | int | `900` | Maximum time that a container can send nothing to the fanout service after initial submission (seconds). |
-| knative.timeout | int | `900` | Maximum time that a container can respond to a next_visit request (seconds). |
+| knative.responseStartTimeout | int | `0` | Maximum time that a container can send nothing to Knative after initial submission (seconds). This is only useful if the container runs async workers. If 0, startup timeout is ignored. |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
@@ -60,4 +60,6 @@ Event-driven processing of camera images
 | sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
 | tolerations | list | `[]` |  |
+| worker.grace_period | int | `45` | When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
 | worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
+| worker.timeout | int | `900` | Maximum time that a worker can process a next_visit request (seconds). |

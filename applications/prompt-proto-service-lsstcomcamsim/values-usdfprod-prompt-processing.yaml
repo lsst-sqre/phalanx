@@ -8,6 +8,10 @@ prompt-proto-service:
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
+  worker:
+    # Embargo rack allows fast cleanup.
+    grace_period: 20
+
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
