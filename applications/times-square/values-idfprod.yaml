@@ -5,7 +5,7 @@ ingress:
 config:
   logLevel: "DEBUG"
   databaseUrl: "postgresql://times-square@localhost/times-square"
-  githubAppId: "196798"
+  githubAppId: "952886"
   enableGitHubApp: "True"
 cloudsql:
   enabled: true
