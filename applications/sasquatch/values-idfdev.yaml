@@ -69,14 +69,10 @@ telegraf-kafka-consumer:
   kafkaConsumers:
     test:
       enabled: true
+      database: "telegraf-kafka-consumer-v1"
       replicaCount: 1
       topicRegexps: |
         [ "lsst.Test.*" ]
-    atmcs:
-      enabled: false
-      replicaCount: 1
-      topicRegexps: |
-        [ ".*ATMCS" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
