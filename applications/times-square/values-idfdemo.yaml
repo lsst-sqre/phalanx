@@ -13,4 +13,4 @@ cloudsql:
   serviceAccount: "times-square@science-platform-demo-9e05.iam.gserviceaccount.com"
 redis:
   persistence:
-    storageClass: "premium-rwo"
+    storageClass: "standard-rwo"
