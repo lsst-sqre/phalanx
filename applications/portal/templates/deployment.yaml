@@ -138,6 +138,8 @@ spec:
             - mountPath: "/firefly/config"
               name: "firefly-config"
               readOnly: true
+            - mountPath: "/firefly/workarea"
+              name: "firefly-private-workarea"
       imagePullSecrets:
         - name: "pull-secret"
       {{- with .Values.securityContext }}
@@ -146,29 +148,60 @@ spec:
       {{- end }}
       volumes:
         - name: "firefly-shared-workarea"
-          {{- if .Values.config.volumes.workareaHostPath }}
+          {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
           hostPath:
-            path: {{ .Values.config.volumes.workareaHostPath | quote }}
+            path: {{ .Values.config.volumes.sharedWorkarea.hostPath | quote }}
             type: "Directory"
-          {{- else if .Values.config.volumes.workareaNfs }}
+          {{- else if .Values.config.volumes.sharedWorkarea.nfs }}
           nfs:
-            path: {{ .Values.config.volumes.workareaNfs.path | quote }}
-            server: {{ .Values.config.volumes.workareaNfs.server | quote }}
+            path: {{ .Values.config.volumes.sharedWorkarea.nfs.path | quote }}
+            server: {{ .Values.config.volumes.sharedWorkarea.nfs.server | quote }}
+          {{- else if .Values.config.volumes.sharedWorkarea.pvc }}
+          persistentVolumeClaim:
+            accessModes:
+            - "ReadWriteMany"
+            size: {{ .Values.config.volumes.sharedWorkarea.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.sharedWorkarea.pvc.storageClass | quote }}
           {{- else }}
           emptyDir: {}
           {{- end }}
         - name: "firefly-config"
-          {{- if .Values.config.volumes.configHostPath }}
+          {{- if .Values.config.volumes.config.hostPath }}
           hostPath:
-            path: {{ .Values.config.volumes.configHostPath | quote }}
+            path: {{ .Values.config.volumes.config.hostPath | quote }}
             type: "Directory"
-          {{- else if .Values.config.volumes.configNfs }}
+          {{- else if .Values.config.volumes.config.nfs }}
           nfs:
-            path: {{ .Values.config.volumes.configNfs.path | quote }}
-            server: {{ .Values.config.volumes.configNfs.server | quote }}
+            path: {{ .Values.config.volumes.config.nfs.path | quote }}
+            server: {{ .Values.config.volumes.config.nfs.server | quote }}
+          {{- else if .Values.config.volumes.config.pvc }}
+          persistentVolumeClaim:
+            accessModes:
+            - "ReadOnlyMany"
+            size: {{ .Values.config.volumes.config.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.config.pvc.storageClass | quote }}
           {{- else }}
           emptyDir: {}
           {{- end }}
+        - name: "firefly-private-workarea"
+          {{- if .Values.config.volumes.privateWorkArea.hostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.privateWorkArea.hostPath | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.privateWorkArea.nfs }}
+          nfs:
+            path: {{ .Values.config.volumes.privateWorkArea.nfs.path | quote }}
+            server: {{ .Values.config.volumes.privateWorkArea.nfs.server | quote }}
+          {{- else if .Values.config.volumes.privateWorkArea.pvc }}
+          persistentVolumeClaim:
+            accessModes:
+            - "ReadWriteOnce"
+            size: {{ .Values.config.volumes.privateWorkArea.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.privateWorkArea.pvc.storageClass | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

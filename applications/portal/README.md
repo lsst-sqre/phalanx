@@ -18,10 +18,10 @@ Rubin Science Platform Portal Aspect
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
 | config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
-| config.volumes.configHostPath | string | Use an `emptyDir` | hostPath to mount as configuration.  Set either this of `configNfs`, not both. |
-| config.volumes.configNfs | object | Use an `emptyDir` | NFS information for a configuration.  If set, must have keys for path and server, Set either this of `configHostPath`, not both. |
-| config.volumes.workareaHostPath | string | Use an `emptyDir` | hostPath to mount as a shared work area.  Set either this or `workareaNfs`, not both. |
-| config.volumes.workareaNfs | object | Use an `emptyDir` | NFS information for a shared work area.  If set, must have keys for path and server.  Set either this or `workareaHostPath`, not both. |
+| config.volumes | object | `{"config":{},"privateWorkArea":{},"sharedWorkArea":{}}` | Each volume has a type, which is an object.  If the type is empty, the volume will be taken to be an emptyDir.  If its key is "hostPath", the value must be a string, indicating the hostPath to mount there.  If its key is "nfs", the value must be an object with "path" and "server" keys.  If its key is "pvc", the value must be an object with "size" and "storageClass" keys.  If "pvc" is chosen, the storage class must support mode "ReadWriteOnce" for the `privateWorkArea`, "ReadWriteMany" for `sharedWorkArea`, and "ReadOnlyMany" for `config`. |
+| config.volumes.config | object | use an `emptyDir` | configuration directory accessible read-only to all Portal pods |
+| config.volumes.privateWorkArea | object | use an `emptyDir` | private work area accessible read-write to a single Portal pod |
+| config.volumes.sharedWorkArea | object | use an `emptyDir` | work area accessible read-write to all Portal pods |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
