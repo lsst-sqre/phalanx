@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: {{ include "portal.fullname" . }}
   labels:
@@ -217,9 +217,9 @@ spec:
         name: "firefly-private-workarea"
       spec:
         accessModes:
-        - "ReadWriteOnce"
+          - "ReadWriteOnce"
         resources:
           requests:
             storage: {{ .Values.config.volumes.privateWorkarea.pvc.size | quote }}
-            storageClassName: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
+        storageClassName: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
   {{- end }}

@@ -81,20 +81,21 @@ config:
   # keys, both strings.
   # For the key "pvc", the value is an object with "size" and
   # "storageClass" keys.  If "pvc" is chosen, the storage class must
-  # support mode "ReadWriteOnce" for the `privateWorkArea`,
+  # support mode "ReadWriteOnce" for the `privateWorkarea`,
   # "ReadWriteMany"
-  # for `sharedWorkArea`, and "ReadOnlyMany" for `config`.
+  # for `sharedWorkarea`, and "ReadOnlyMany" for `config`.
   # If all objects have null values, an `emptyDir` is used for this volume.
+  # @default -- See `values.yaml`
   volumes:
     # -- work area accessible read-write to all Portal pods
     # @default -- use an `emptyDir`
-    sharedWorkArea:
+    sharedWorkarea:
       hostPath: {}
       nfs: {}
       pvc: {}
     # -- private work area accessible read-write to a single Portal pod
     # @default -- use an `emptyDir`
-    privateWorkArea:
+    privateWorkarea:
       hostPath: {}
       nfs: {}
       pvc: {}
