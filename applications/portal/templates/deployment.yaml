@@ -184,20 +184,20 @@ spec:
           emptyDir: {}
           {{- end }}
         - name: "firefly-private-workarea"
-          {{- if .Values.config.volumes.privateWorkArea.hostPath }}
+          {{- if .Values.config.volumes.privateWorkarea.hostPath }}
           hostPath:
-            path: {{ .Values.config.volumes.privateWorkArea.hostPath | quote }}
+            path: {{ .Values.config.volumes.privateWorkarea.hostPath | quote }}
             type: "Directory"
-          {{- else if .Values.config.volumes.privateWorkArea.nfs }}
+          {{- else if .Values.config.volumes.privateWorkarea.nfs }}
           nfs:
-            path: {{ .Values.config.volumes.privateWorkArea.nfs.path | quote }}
-            server: {{ .Values.config.volumes.privateWorkArea.nfs.server | quote }}
-          {{- else if .Values.config.volumes.privateWorkArea.pvc }}
+            path: {{ .Values.config.volumes.privateWorkarea.nfs.path | quote }}
+            server: {{ .Values.config.volumes.privateWorkarea.nfs.server | quote }}
+          {{- else if .Values.config.volumes.privateWorkarea.pvc }}
           persistentVolumeClaim:
             accessModes:
             - "ReadWriteOnce"
-            size: {{ .Values.config.volumes.privateWorkArea.pvc.size | quote }}
-            storageClass: {{ .Values.config.volumes.privateWorkArea.pvc.storageClass | quote }}
+            size: {{ .Values.config.volumes.privateWorkarea.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
           {{- else }}
           emptyDir: {}
           {{- end }}
