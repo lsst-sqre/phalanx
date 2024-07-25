@@ -20,7 +20,6 @@ applications:
   filestore-backup: true
   hips: true
   mobu: true
-  noteburst: true
   nublado: true
   portal: true
   semaphore: true

@@ -18,7 +18,6 @@ applications:
   datalinker: true
   fastapi-bootcamp: true
   mobu: true
-  noteburst: true
   nublado: true
   sqlproxy-cross-project: true
   squareone: true
