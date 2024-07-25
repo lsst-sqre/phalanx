@@ -1,0 +1,17 @@
+image:
+  pullPolicy: Always
+ingress:
+  defaultScope: "exec:admin"
+config:
+  logLevel: "DEBUG"
+  databaseUrl: "postgresql://times-square@localhost/times-square"
+  githubAppId: "952886"
+  enableGitHubApp: "True"
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+  serviceAccount: "times-square@science-platform-stable-6994.iam.gserviceaccount.com"
+redis:
+  persistence:
+    size: "20Gi"
+    storageClass: "premium-rwo"
