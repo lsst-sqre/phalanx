@@ -232,7 +232,7 @@ kapacitor:
     repository: kapacitor
 
     # -- Tag to use for Kapacitor
-    tag: 1.7.2
+    tag: 1.7.5
 
   persistence:
     # -- Whether to enable Kapacitor data persistence
@@ -251,6 +251,7 @@ kapacitor:
   # @default -- See `values.yaml`
   envVars:
     KAPACITOR_SLACK_ENABLED: true
+    KAPACITOR_AS_ROOT: true
 
   # -- Kubernetes resource requests and limits for Kapacitor
   # @default -- See `values.yaml`
