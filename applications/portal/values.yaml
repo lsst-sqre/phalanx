@@ -31,7 +31,7 @@ ingress:
 # Phalanx.
 resources:
   limits:
-    cpu: 2.0
+    cpu: "2"
     memory: "6Gi"
   requests:
     cpu: "5m"
@@ -72,27 +72,38 @@ config:
   # -- Endpoint under `/api/` for the live TAP service on the instance, if present
   livetap: ""
 
-  # -- Each volume has a type, which is an object.  If the type is
-  # empty, the volume will be taken to be an emptyDir.  If its key is
-  # "hostPath", the value must be a string, indicating the hostPath to
-  # mount there.  If its key is "nfs", the value must be an object with
-  # "path" and "server" keys.  If its key is "pvc", the value must
-  # be an object with "size" and "storageClass" keys.  If "pvc" is
-  # chosen, the storage class must support mode "ReadWriteOnce" for the
-  # `privateWorkArea`, "ReadWriteMany" for `sharedWorkArea`, and
-  # "ReadOnlyMany" for `config`.
+  # -- Each volume has a type, which is an object with keys "hostPath",
+  # "nfs", and "pvc".  At most one of these must have a non-null value.
+  # Each is an object.
+  # For the key "hostPath", the value is an object with a single string,
+  # "path", which indicates the hostPath to mount there.
+  # For the key "nfs", the value is an object with "path" and "server"
+  # keys, both strings.
+  # For the key "pvc", the value is an object with "size" and
+  # "storageClass" keys.  If "pvc" is chosen, the storage class must
+  # support mode "ReadWriteOnce" for the `privateWorkArea`,
+  # "ReadWriteMany"
+  # for `sharedWorkArea`, and "ReadOnlyMany" for `config`.
+  # If all objects have null values, an `emptyDir` is used for this volume.
   volumes:
     # -- work area accessible read-write to all Portal pods
     # @default -- use an `emptyDir`
-    sharedWorkArea: {}
-
+    sharedWorkArea:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
     # -- private work area accessible read-write to a single Portal pod
     # @default -- use an `emptyDir`
-    privateWorkArea: {}
-
+    privateWorkArea:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
     # -- configuration directory accessible read-only to all Portal pods
     # @default -- use an `emptyDir`
-    config: {}
+    config:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
 
 redis:
   config:

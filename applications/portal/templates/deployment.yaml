@@ -150,7 +150,7 @@ spec:
         - name: "firefly-shared-workarea"
           {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
           hostPath:
-            path: {{ .Values.config.volumes.sharedWorkarea.hostPath | quote }}
+            path: {{ .Values.config.volumes.sharedWorkarea.hostPath.path | quote }}
             type: "Directory"
           {{- else if .Values.config.volumes.sharedWorkarea.nfs }}
           nfs:
@@ -160,6 +160,7 @@ spec:
           persistentVolumeClaim:
             accessModes:
             - "ReadWriteMany"
+            claimName: "portal-sharedworkarea"
             size: {{ .Values.config.volumes.sharedWorkarea.pvc.size | quote }}
             storageClass: {{ .Values.config.volumes.sharedWorkarea.pvc.storageClass | quote }}
           {{- else }}
@@ -178,11 +179,13 @@ spec:
           persistentVolumeClaim:
             accessModes:
             - "ReadOnlyMany"
+            claimName: "portal-config"
             size: {{ .Values.config.volumes.config.pvc.size | quote }}
             storageClass: {{ .Values.config.volumes.config.pvc.storageClass | quote }}
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if (not .Values.config.volumes.privateWorkarea.pvc) }}
         - name: "firefly-private-workarea"
           {{- if .Values.config.volumes.privateWorkarea.hostPath }}
           hostPath:
@@ -192,16 +195,10 @@ spec:
           nfs:
             path: {{ .Values.config.volumes.privateWorkarea.nfs.path | quote }}
             server: {{ .Values.config.volumes.privateWorkarea.nfs.server | quote }}
-          {{- else if .Values.config.volumes.privateWorkarea.pvc }}
-          persistentVolumeClaim:
-            accessModes:
-            - "ReadWriteOnce"
-            size: {{ .Values.config.volumes.privateWorkarea.pvc.size | quote }}
-            storageClass: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
           {{- else }}
           emptyDir: {}
           {{- end }}
-
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -214,3 +211,15 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+  {{- if .Values.config.volumes.privateWorkarea.pvc }}
+  volumeClaimTemplates:
+    - metadata:
+        name: "firefly-private-workarea"
+      spec:
+        accessModes:
+        - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: {{ .Values.config.volumes.privateWorkarea.pvc.size | quote }}
+            storageClassName: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
+  {{- end }}
