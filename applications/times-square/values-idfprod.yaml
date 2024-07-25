@@ -13,4 +13,5 @@ cloudsql:
   serviceAccount: "times-square@science-platform-stable-6994.iam.gserviceaccount.com"
 redis:
   persistence:
+    size: "20Gi"
     storageClass: "premium-rwo"
