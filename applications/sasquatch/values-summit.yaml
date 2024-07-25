@@ -48,6 +48,13 @@ strimzi-kafka:
       enabled: true
     consdb:
       enabled: true
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: summit-lsp.lsst.codes
+      path: /schema-registry(/|$)(.*)
 
 influxdb:
   persistence:
