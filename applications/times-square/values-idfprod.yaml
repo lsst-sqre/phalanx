@@ -14,4 +14,4 @@ cloudsql:
 redis:
   persistence:
     size: "20Gi"
-    storageClass: "premium-rwo"
+    storageClass: "standard-rwo"
