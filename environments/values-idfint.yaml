@@ -19,6 +19,7 @@ applications:
   filestore-backup: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
   plot-navigator: true
   portal: true
