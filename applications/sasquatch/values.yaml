@@ -251,6 +251,7 @@ kapacitor:
   # @default -- See `values.yaml`
   envVars:
     KAPACITOR_SLACK_ENABLED: true
+    KAPACITOR_AS_ROOT: true
 
   # -- Kubernetes resource requests and limits for Kapacitor
   # @default -- See `values.yaml`
