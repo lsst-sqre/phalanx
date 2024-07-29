@@ -139,7 +139,7 @@ spec:
               name: "firefly-config"
               readOnly: true
             - mountPath: "/firefly/workarea"
-              name: "firefly-private-workarea"
+              name: "workarea"
       imagePullSecrets:
         - name: "pull-secret"
       {{- with .Values.securityContext }}
@@ -186,7 +186,7 @@ spec:
           emptyDir: {}
           {{- end }}
         {{- if (not .Values.config.volumes.privateWorkarea.pvc) }}
-        - name: "firefly-private-workarea"
+        - name: "workarea"
           {{- if .Values.config.volumes.privateWorkarea.hostPath }}
           hostPath:
             path: {{ .Values.config.volumes.privateWorkarea.hostPath | quote }}
@@ -214,7 +214,7 @@ spec:
   {{- if .Values.config.volumes.privateWorkarea.pvc }}
   volumeClaimTemplates:
     - metadata:
-        name: "firefly-private-workarea"
+        name: "workarea"
       spec:
         accessModes:
           - "ReadWriteOnce"

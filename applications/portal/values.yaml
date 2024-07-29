@@ -72,23 +72,10 @@ config:
   # -- Endpoint under `/api/` for the live TAP service on the instance, if present
   livetap: ""
 
-  # -- Each volume has a type, which is an object with keys "hostPath",
-  # "nfs", and "pvc".  At most one of these must have a non-null value.
-  # Each is an object.
-  # For the key "hostPath", the value is an object with a single string,
-  # "path", which indicates the hostPath to mount there.
-  # For the key "nfs", the value is an object with "path" and "server"
-  # keys, both strings.
-  # For the key "pvc", the value is an object with "size" and
-  # "storageClass" keys.  If "pvc" is chosen, the storage class must
-  # support mode "ReadWriteOnce" for the `privateWorkarea`,
-  # "ReadWriteMany"
-  # for `sharedWorkarea`, and "ReadOnlyMany" for `config`.
-  # If all objects have null values, an `emptyDir` is used for this volume.
-  # @default -- See `values.yaml`
+  # @default -- See documentation at `https://phalanx.lsst.io/applications/portal/volumes.html`
   volumes:
     # -- work area accessible read-write to all Portal pods
-    # @default -- use an `emptyDir`
+    # @default -- use an `emptyDir` (will not be shared; see documentation)
     sharedWorkarea:
       hostPath: {}
       nfs: {}
