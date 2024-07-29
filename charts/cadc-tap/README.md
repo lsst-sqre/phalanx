@@ -38,6 +38,7 @@ IVOA TAP service
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
 | config.qserv.image.tag | string | `"2.2.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
+| config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
 | fullnameOverride | string | `"cadc-tap"` | Override the full name for resources (includes the release name) |

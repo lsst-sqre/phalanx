@@ -86,7 +86,7 @@ spec:
                 {{- end }}
                 {{- if eq .Values.config.backend "qserv" }}
                 -Dqservuser.username=qsmaster
-                -Dqservuser.password=
+                -Dqservuser.password=$QSERV_DB_PASSWORD
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
                 -Dqservuser.maxActive=100
@@ -100,6 +100,13 @@ spec:
                 -Dbase_url={{ .Values.global.baseUrl }}
                 -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            {{- if (and (eq .Values.config.backend "qserv") .Values.config.qserv.passwordEnabled) }}
+            - name: "QSERV_DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "qserv-password"
+            {{- end }}
             {{- if eq .Values.config.backend "pg" }}
             - name: "TAP_DB_PASSWORD"
               valueFrom:
