@@ -335,6 +335,8 @@ rest-proxy:
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
+  configurationOverrides:
+    "access.control.allow.origin": https://base-lsp.lsst.codes/love
   kafka:
     topics:
       - test.next-visit
