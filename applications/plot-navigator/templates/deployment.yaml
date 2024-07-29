@@ -9,10 +9,12 @@ spec:
   selector:
     matchLabels:
       {{- include "plot-navigator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: nodejs
   template:
     metadata:
       labels:
         {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: nodejs
     spec:
       volumes:
         {{- with .Values.config.volumes }}
@@ -37,6 +39,8 @@ spec:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_SECRET
+        resources:
+          {{- toYaml .Values.resources | nindent 10 }}
         {{- if .Values.config.envFromSecretPath }}
         envFrom:
           - secretRef: {{ include "plot-navigator.fullname" . }}
@@ -47,3 +51,7 @@ spec:
           {{- . | toYaml | nindent 10 }}
           {{- end }}
         {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 4085

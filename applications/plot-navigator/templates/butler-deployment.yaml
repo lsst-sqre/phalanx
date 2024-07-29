@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "internal-butler"
+  labels:
+    {{- include "plot-navigator.labels" . | nindent 4 }}
+    app.kubernetes.io/component: butler
+spec:
+  selector:
+    matchLabels:
+      {{- include "plot-navigator.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: butler
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: butler
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: internal-butler
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: ghcr.io/ctslater/daf_butler:test_cts
+          imagePullPolicy: Always
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.butlerResources | nindent 12 }}
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: "/opt/lsst/butler/secrets/aws-credentials.ini"
+            - name: PGPASSFILE
+              value: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/opt/lsst/butler/secrets/butler-gcs-creds.json"
+            - name: S3_ENDPOINT_URL
+              value: {{ .Values.butlerConfig.s3EndpointUrl | quote }}
+            - name: DAF_BUTLER_REPOSITORIES
+              value: {{ .Values.butlerConfig.repositories | toJson | quote }}
+            {{ if .Values.butlerConfig.pguser }}
+            - name: PGUSER
+              value: {{ .Values.butlerConfig.pguser | quote }}
+            {{ end }}
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+              readOnly: true
+            {{- with .Values.butlerConfig.volume_mounts }}
+            {{- . | toYaml | nindent 12 }}
+            {{- end }}
+      volumes:
+        # butler-secrets-raw pulls in the secrets from the vault as files.
+        # These files are owned by root and group/world readable.
+        # This volume is not used directly by the container running the actual
+        # Butler application.
+        - name: "butler-secrets-raw"
+          secret:
+            secretName: {{ include "plot-navigator.fullname" . }}
+        # Postgres will not use a pgpass file (postgres-credentials.txt in the
+        # vault) if it is group/world writeable or owned by a different user.
+        # So the initContainers below copies the files from butler-secrets-raw
+        # to butlet-secrets, changing the owner and permissions.
+        # This volume is the one used by the container running the actual
+        # Butler application.
+        - name: "butler-secrets"
+          emptyDir: {}
+        {{- with .Values.butlerConfig.volumes }}
+        {{- . | toYaml | nindent 8 }}
+        {{- end }}
+      initContainers:
+        # To deal with the Postgres file permission issued mentioned above,
+        # copy the secrets from butler-secrets-raw to butler-secrets.
+        # This initContainer definition is borrowed from obsloctap's
+        # deployment.yaml.
+        - name: fix-secret-permissions
+          image: ghcr.io/ctslater/daf_butler:test_cts
+          imagePullPolicy: Always
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              cp -RL /tmp/butler-secrets-raw/* /opt/lsst/butler/secrets/
+              chmod 0400 /opt/lsst/butler/secrets/*
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+          volumeMounts:
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+            - name: "butler-secrets-raw"
+              mountPath: "/tmp/butler-secrets-raw"
+              readOnly: true
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 4085
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

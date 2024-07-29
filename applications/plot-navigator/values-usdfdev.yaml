@@ -1,8 +1,54 @@
 environment:
-  REPOS: "embargo"
+  BASE_URL: "/plot-navigator"
+  REPO_URLS: '{"embargo": "http://internal-butler/api/butler/repo/embargo", "/repo/main": "http://internal-butler/api/butler/repo/main", "/repo/dc2": "http://internal-butler/api/butler/repo/dc2"}'
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
-  BUTLER_URL: "http://butler.butler:8080"
+
+
+config:
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
+
+butlerConfig:
+  pguser: "rubin"
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"
+  repositories:
+    embargo: "s3://rubin-summit-users/butler.yaml"
+    main: "/sdf/group/rubin/repo/main"
+    dc2: "/sdf/group/rubin/repo/dc2"
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
+
 
 image:
   tag: DM-44957
+
