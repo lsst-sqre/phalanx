@@ -31,7 +31,7 @@ ingress:
 # Phalanx.
 resources:
   limits:
-    cpu: 2.0
+    cpu: "2"
     memory: "6Gi"
   requests:
     cpu: "5m"
@@ -72,26 +72,26 @@ config:
   # -- Endpoint under `/api/` for the live TAP service on the instance, if present
   livetap: ""
 
+  # @default -- See documentation at `https://phalanx.lsst.io/applications/portal/volumes.html`
   volumes:
-    # -- hostPath to mount as a shared work area.  Set either this or
-    # `workareaNfs`, not both.
-    # @default -- Use an `emptyDir`
-    workareaHostPath: ""
-
-    # -- NFS information for a shared work area.  If set, must have keys for
-    # path and server.  Set either this or `workareaHostPath`, not both.
-    # @default -- Use an `emptyDir`
-    workareaNfs: {}
-
-    # -- hostPath to mount as configuration.  Set either this of
-    # `configNfs`, not both.
-    # @default -- Use an `emptyDir`
-    configHostPath: ""
-
-    # -- NFS information for a configuration.  If set, must have keys for path
-    # and server, Set either this of `configHostPath`, not both.
-    # @default -- Use an `emptyDir`
-    configNfs: {}
+    # -- work area accessible read-write to all Portal pods
+    # @default -- use an `emptyDir` (will not be shared; see documentation)
+    sharedWorkarea:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
+    # -- private work area accessible read-write to a single Portal pod
+    # @default -- use an `emptyDir`
+    privateWorkarea:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
+    # -- configuration directory accessible read-only to all Portal pods
+    # @default -- use an `emptyDir`
+    config:
+      hostPath: {}
+      nfs: {}
+      pvc: {}
 
 redis:
   config:
