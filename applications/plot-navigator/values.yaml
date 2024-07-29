@@ -6,7 +6,7 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
-# -- Environment variables (e.g. butler configuration/auth parms) for panel
+# -- Environment variables (e.g. butler configuration/auth parms) for the nextjs server
 environment: {}
 
 ingress:
@@ -40,3 +40,23 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+# -- Resource limits and requests for the nodejs pod
+# @default -- see `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "512Mi"
+  requests:
+    cpu: "50m"
+    memory: "256Mi"
+
+# -- Resource limits and requests for the butler pod
+# @default -- see `values.yaml`
+butlerResources:
+  limits:
+    cpu: "1"
+    memory: "324Mi"
+  requests:
+    cpu: "15m"
+    memory: "150Mi"
