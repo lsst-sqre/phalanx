@@ -88,8 +88,8 @@ spec:
         # This initContainer definition is borrowed from obsloctap's
         # deployment.yaml.
         - name: fix-secret-permissions
-          image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          image: ghcr.io/ctslater/daf_butler:test_cts
+          imagePullPolicy: Always
           command:
             - "/bin/sh"
             - "-c"
@@ -110,7 +110,7 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
-        runAsGroup: 1000
+        runAsGroup: 4085
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

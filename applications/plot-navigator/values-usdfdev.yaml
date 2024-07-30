@@ -11,6 +11,20 @@ config:
       storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
 
 butlerConfig:
   pguser: "rubin"
