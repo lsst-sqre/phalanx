@@ -468,6 +468,9 @@ class EnvironmentDetails(EnvironmentBaseConfig):
     identity_provider: IdentityProvider
     """Type of identity provider used by Gafaelfawr in this environment."""
 
+    identity_provider_hostname: str | None
+    """Hostname of upstream identity provider, if meaningful."""
+
     gafaelfawr_scopes: list[GafaelfawrScope]
     """Gafaelfawr scopes and their associated groups."""
 

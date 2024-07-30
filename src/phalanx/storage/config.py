@@ -699,6 +699,7 @@ class ConfigStorage:
             argocd_rbac = ArgoCDRBAC.from_csv(rbac_config["policy.csv"])
 
         # Type of identity provider used for Gafaelfawr.
+        identity_provider_hostname = None
         if gafaelfawr:
             if gafaelfawr.values["config"]["cilogon"]["clientId"]:
                 identity_provider = IdentityProvider.CILOGON
@@ -706,6 +707,8 @@ class ConfigStorage:
                 identity_provider = IdentityProvider.GITHUB
             elif gafaelfawr.values["config"]["oidc"]["clientId"]:
                 identity_provider = IdentityProvider.OIDC
+                url = gafaelfawr.values["config"]["oidc"]["loginUrl"]
+                identity_provider_hostname = urlparse(url).hostname
             else:
                 raise InvalidApplicationConfigError(
                     "gafaelfawr",
@@ -745,6 +748,7 @@ class ConfigStorage:
             argocd_url=argocd_url,
             argocd_rbac=argocd_rbac,
             identity_provider=identity_provider,
+            identity_provider_hostname=identity_provider_hostname,
             gafaelfawr_scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
         )
 

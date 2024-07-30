@@ -5,7 +5,7 @@
    * - Root domain
      - `{{ env.fqdn }} <https://{{ env.fqdn }}>`__
    * - Identity provider
-     - {{ env.identity_provider.value }}
+     - {{ env.identity_provider.value }}{% if env.identity_provider_hostname %} ({{ env.identity_provider_hostname }}){% endif %}
    * - Argo CD
      - {% if env.argocd_url %}{{ env.argocd_url }}{% else %}N/A{% endif %}
    {%- if env.gcp %}
