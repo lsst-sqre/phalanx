@@ -20,8 +20,14 @@ Use the ``--starter`` flag to specify a different Helm chart starter.
 There are three options:
 
 fastapi-safir
-    Use this starter for FastAPI web services based on Safir, created from the "FastAPI application (Safir)" template.
+    Use this starter for FastAPI web services based on Safir, created from the "FastAPI application (Safir)" template with the "Default" flavor selected.
     This is the default.
+
+fastapi-safir-uws
+    Use this starter for FastAPI web services based on Safir that use UWS.
+    These services separate the work of the service into a frontend and several backend workers, connected by a queuing system.
+    It is used for services that have a backend that needs to run on a stack container.
+    This starter corresponds to applications created from the "FastAPI application (Safir)" template with the "UWS" flavor selected.
 
 web-service
     Use this starter if the new Helm application is some other web service.

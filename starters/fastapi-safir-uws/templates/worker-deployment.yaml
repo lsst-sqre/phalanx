@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "<CHARTNAME>-worker"
+  labels:
+    {{- include "<CHARTNAME>.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.databaseWorker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "<CHARTNAME>.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.databaseWorker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "<CHARTNAME>.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "worker"
+        <CHARTNAME>-redis-client: "true"
+    spec:
+      {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.config.serviceAccount }}
+      serviceAccountName: "<CHARTNAME>"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        - name: "worker"
+          env:
+            # Password for Redis for the job queue.
+            - name: "<CHARTENVPREFIX>_ARQ_QUEUE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "<CHARTNAME>"
+                  key: "redis-password"
+
+            # Temporary directory into which to stage work.
+            - name: "<CHARTENVPREFIX>_TMPDIR"
+              value: "/tmp/<CHARTNAME>"
+
+            # Used by Butler to retrieve its configuration.
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
+
+            # lsst-resources writes temp files into the current working
+            # directory unless you explicitly specify one.
+            - name: "TMPDIR"
+              value: "/tmp"
+          envFrom:
+            - configMapRef:
+                name: "<CHARTNAME>"
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy | quote }}
+          {{- with .Values.worker.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "tmp"
+              mountPath: "/tmp"
+      {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      terminationGracePeriodSeconds: {{ .Values.config.gracePeriod }}
+      {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "tmp"
+          emptyDir: {}

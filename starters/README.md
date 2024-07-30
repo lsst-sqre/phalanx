@@ -1,11 +1,10 @@
 # Helm starters for Phalanx
 
 Each subdirectory of this directory is a Helm starter for a class of Phalanx service.
-Use the starters with the `-p` option to `helm create`.
-For example, from the `applications` directory:
+These are used by the `phalanx application create` command.
+
+For example, from the top of a Phalanx checkout:
 
 ```sh
-helm create new-service -p $(pwd)/../starters/rsp-web-service
+phalanx application create --starter fastapi-safir <application>
 ```
-
-The path to the starter directory must be absolute, not relative, or Helm will try to use it has a path relative to `$HOME/.local/share/helm`.
