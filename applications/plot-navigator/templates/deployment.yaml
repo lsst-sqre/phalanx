@@ -51,3 +51,7 @@ spec:
           {{- . | toYaml | nindent 10 }}
           {{- end }}
         {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 4085
