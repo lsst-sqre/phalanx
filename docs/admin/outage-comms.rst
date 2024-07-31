@@ -54,7 +54,8 @@ See :doc:`environments </environments/index>` for the short labels for your envi
 
 .. seealso::
 
-    More information on semaphore and the syntax of its payload repositories can be found at https://sqr-060.lsst.io.
+    More information about the syntax of Semaphore broadcasts messages can be found in the `rsp_broadcast README <https://github.com/lsst-sqre/rsp_broadcast/blob/main/README.md>`__.
+    Information about Semaphore's installation and operation can be found in `the Semaphore documentation <https://github.com/lsst-sqre/rsp_broadcast/blob/main/README.md>`__.
     Routine banners such as the Patch Thursday messages automatically go up and down using semaphore's cron-like syntax and you should not be editing them.
     By default, banners are "scary red". For informational banners use ``category: info`` in the yaml header.
 
