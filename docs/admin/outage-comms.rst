@@ -32,7 +32,7 @@ Steps:
     b. Check the correct environment is listed in the message
     c. Set ``enabled`` to true (if you're ready for the message to go live)
 
-3. Commit/push to main. The message will immediately appear on your RSP's landing page.
+3. Commit and push to ``main``. The message will immediately appear on your RSP's landing page.
 
 4. When the emergency is over, repeat the steps above but this time edit the file to read ``enabled: false`` to take the banner down.
 
