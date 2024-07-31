@@ -41,8 +41,8 @@
           {% for env_name in app.active_environments %}
           * - :px-env:`{{ env_name }}`
             - `values <https://github.com/lsst-sqre/phalanx/blob/main/applications/{{ app.name }}/values-{{ env_name }}.yaml>`__
-            {%- if envs[env_name].argocd_url %}
-            - `Argo CD <{{ envs[env_name].argocd_url }}/applications/{{ app.name }}>`__
+            {%- if envs[env_name].argocd.url %}
+            - `Argo CD <{{ envs[env_name].argocd.url }}/applications/{{ app.name }}>`__
             {%- else %}
             -
             {%- endif %}
