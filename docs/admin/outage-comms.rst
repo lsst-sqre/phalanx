@@ -58,7 +58,7 @@ See :doc:`environments </environments/index>` for the short labels for your envi
     More information about the syntax of Semaphore broadcasts messages can be found in the `rsp_broadcast README <https://github.com/lsst-sqre/rsp_broadcast/blob/main/README.md>`__.
     Information about Semaphore's installation and operation can be found in `the Semaphore documentation <https://github.com/lsst-sqre/rsp_broadcast/blob/main/README.md>`__.
     Routine banners such as the Patch Thursday messages automatically go up and down using semaphore's cron-like syntax and you should not be editing them.
-    By default, banners are "scary red". For informational banners use ``category: info`` in the yaml header.
+    By default, banners are "scary red". For informational banners use ``category: info`` in the YAML header.
 
 Push browser notications, per-user notifications and notifications on other RSP UIs are all on the future roadmap.
 
