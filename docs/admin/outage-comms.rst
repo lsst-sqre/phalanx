@@ -23,7 +23,7 @@ The payload for the content of those banners is in the repo `rsp_broadcast <http
 Steps:
 ------
 
-1. Edit or create a message in https://github.com/lsst-sqre/rsp_broadcast/tree/main/broadcasts (if you are in a hurry and you have an issue affecting data.lsst.cloud consider editing 104_idfprod_outage.md on Github and committing directly to main)
+1. Edit or create a message in https://github.com/lsst-sqre/rsp_broadcast/tree/main/broadcasts (if you are in a hurry and you have an issue affecting data.lsst.cloud consider editing 104_idfprod_outage.md on GitHub and committing directly to main)
 
 2. Edit your message. If you are starting from an existing message
     a. Update the summary and body of the message (the body is what appears if the user expands
