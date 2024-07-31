@@ -9,7 +9,8 @@ Putting up a banner
 
 The banners that appear on the RSP home page (:doc:`squareone </applications/squareone/index>`) are provided by the :doc:`semaphore </applications/semaphore/index>` service.
 
-The payload for the content of those banners is in the repo `rsp_broadcast <https://github.com/lsst-sqre/rsp_broadcast/>`_. You will need push access to that repository.
+The content of those banners is sourced from the https://github.com/lsst-sqre/rsp_broadcast repository.
+You will need push access to that repository.
 
 
 .. tip::
