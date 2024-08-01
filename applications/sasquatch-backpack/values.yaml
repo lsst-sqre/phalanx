@@ -41,7 +41,13 @@ podAnnotations: {}
 
 # -- Resource limits and requests for the sasquatch-backpack deployment pod
 # @default -- See `values.yaml`
-resources: {}
+resources:
+  limits:
+    cpu: "1"
+    memory: "128Mi"
+  requests:
+    cpu: "1"
+    memory: "128Mi"
 
 # -- Tolerations for the sasquatch-backpack deployment pod
 tolerations: []
