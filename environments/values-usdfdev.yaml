@@ -13,7 +13,6 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
-  alert-stream-broker: true
   butler: true
   consdb: true
   datalinker: true
