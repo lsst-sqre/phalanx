@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.2.0"
+      tag: "2.4.7"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
