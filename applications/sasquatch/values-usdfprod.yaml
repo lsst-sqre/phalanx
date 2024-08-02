@@ -203,6 +203,14 @@ telegraf-kafka-consumer:
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
     auxtel:
       enabled: true
       database: "efd"
