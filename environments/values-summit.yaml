@@ -17,6 +17,7 @@ applications:
   rubintv: true
   rubintv-dev: true
   sasquatch: true
+  sasquatch-backpack: true
   squareone: true
   strimzi: true
   telegraf: true
