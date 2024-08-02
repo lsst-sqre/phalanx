@@ -26,6 +26,9 @@ config:
   # -- URL path prefix
   pathPrefix: "/sasquatch-backpack"
 
+  # -- Sasquatch REST Proxy URL
+  sasquatchRestProxyUrl: ""
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

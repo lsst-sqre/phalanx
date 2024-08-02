@@ -16,6 +16,7 @@ Collection of APIs that feed into Sasquatch
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/sasquatch-backpack"` | URL path prefix |
+| config.sasquatchRestProxyUrl | string | `""` | Sasquatch REST Proxy URL |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
