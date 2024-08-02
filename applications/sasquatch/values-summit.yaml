@@ -157,6 +157,14 @@ kafka-connect-manager:
 telegraf-kafka-consumer:
   enabled: true
   kafkaConsumers:
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
     atcamera:
       enabled: true
       replicaCount: 1
@@ -203,6 +211,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.dm
+      - lsst.backpack
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera
