@@ -13,10 +13,12 @@ spec:
       {{- include "butler.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        # Force the pod to restart when the config maps are updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- end }}
       labels:
         {{- include "butler.selectorLabels" . | nindent 8 }}
     spec:
@@ -60,6 +62,10 @@ spec:
             - name: "butler-secrets"
               mountPath: "/opt/lsst/butler/secrets"
               readOnly: true
+            # Mount configuration files generated in configmap.yaml.
+            - name: config
+              mountPath: "/opt/lsst/butler/config"
+              readOnly: true
       volumes:
         # butler-secrets-raw pulls in the secrets from the vault as files.
         # These files are owned by root and group/world readable.
@@ -76,6 +82,9 @@ spec:
         # Butler application.
         - name: "butler-secrets"
           emptyDir: {}
+        - name: config
+          configMap:
+            name: butler
       initContainers:
         # To deal with the Postgres file permission issued mentioned above,
         # copy the secrets from butler-secrets-raw to butler-secrets.

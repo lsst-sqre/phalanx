@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: butler
+data:
+{{- if .Values.config.dp02PostgresUri }}
+  dp02.yaml: |
+    datastore:
+      cls: lsst.daf.butler.datastores.chainedDatastore.ChainedDatastore
+      datastore_constraints:
+        # One entry per datastore in datastores section
+        # Use empty `-` if no constraint override required
+        - constraints:
+            reject:
+              - all
+        - constraints:
+            accept:
+              - all
+      datastores:
+        - datastore:
+            name: FileDatastore@s3://butler-us-central1-panda-dev/dc2
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://butler-us-central1-panda-dev/dc2
+        - datastore:
+            name: FileDatastore@s3://butler-us-central1-dp02-user
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://butler-us-central1-dp02-user/
+            records:
+              table: user_datastore_records
+    registry:
+      db: {{ .Values.config.dp02PostgresUri }}
+      managers:
+        collections: lsst.daf.butler.registry.collections.synthIntKey.SynthIntKeyCollectionManager
+        datasets: lsst.daf.butler.registry.datasets.byDimensions.ByDimensionsDatasetRecordStorageManagerUUID
+        attributes: lsst.daf.butler.registry.attributes.DefaultButlerAttributeManager
+        datastores: lsst.daf.butler.registry.bridge.monolithic.MonolithicDatastoreRegistryBridgeManager
+        dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
+        opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
+      namespace: dc2_20210215
+{{- end }}
