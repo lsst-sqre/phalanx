@@ -126,6 +126,10 @@ alert-stream-schema-registry:
   schemaTopic: "registry-schemas"
   tls: false
 
+  configuration:
+    # Set the registry mutability to true so that new schema may be added
+    "mode.mutability": "true"
+
 alert-database:
   ingester:
     image:
