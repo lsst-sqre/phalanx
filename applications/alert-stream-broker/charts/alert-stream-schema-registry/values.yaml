@@ -30,6 +30,7 @@ schemaSync:
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use
     tag: tickets-DM-42606
+    pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry
   subject: alert-packet
