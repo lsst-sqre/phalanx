@@ -23,6 +23,7 @@ spec:
       containers:
       - name: sync-schema-job
         image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
           - "syncLatestSchemaToRegistry.py"
           - "--schema-registry-url=http://{{ .Values.name }}:{{ .Values.port }}"
