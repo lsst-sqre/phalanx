@@ -1,6 +1,6 @@
 environment:
   BASE_URL: "/plot-navigator"
-  REPO_URLS: '{"embargo": "http://internal-butler/api/butler/repo/embargo", "/repo/main": "http://internal-butler/api/butler/repo/main"}'
+  REPO_URLS: '{"embargo": "http://internal-butler/api/butler/repo/embargo", "/repo/main": "http://internal-butler/api/butler/repo/main", "/repo/dc2": "http://internal-butler/api/butler/repo/dc2"}'
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
 
@@ -32,6 +32,7 @@ butlerConfig:
   repositories:
     embargo: "s3://rubin-summit-users/butler.yaml"
     main: "/sdf/group/rubin/repo/main"
+    dc2: "/sdf/group/rubin/repo/dc2"
   volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
