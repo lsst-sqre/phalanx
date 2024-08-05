@@ -12,11 +12,6 @@ fqdn: ""
 # enabled for this environment
 appOfAppsName: "app-of-apps"
 
-# -- Butler repository index URI to use for this environment, for services that
-# connect directly to the Butler database.
-# @default -- None, must be set
-butlerRepositoryIndex: ""
-
 # -- Butler repositories that can be accessed via Butler server, as a
 # dictionary from repository label to URI.
 # @default -- None, must be set

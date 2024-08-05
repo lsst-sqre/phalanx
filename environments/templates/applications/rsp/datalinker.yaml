@@ -24,8 +24,6 @@ spec:
       parameters:
         - name: "global.baseUrl"
           value: "https://{{ .Values.fqdn }}"
-        - name: "global.butlerRepositoryIndex"
-          value: {{ .Values.butlerRepositoryIndex | quote }}
         - name: "global.butlerServerRepositories"
           value: {{ .Values.butlerServerRepositories | toJson | b64enc }}
         - name: "global.host"
