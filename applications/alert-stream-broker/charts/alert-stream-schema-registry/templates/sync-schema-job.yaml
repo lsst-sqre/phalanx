@@ -9,7 +9,7 @@ metadata:
     helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
   annotations:
     argocd.argoproj.io/hook: Sync
-    revision: 1
+    description: "Load schemas into registry."
 spec:
   ttlSecondsAfterFinished: 600
   template:
