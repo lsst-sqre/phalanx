@@ -5,6 +5,10 @@ name: alert-schema-registry
 # strimzi-registry-operator, so this basically cannot be changed.
 port: 8081
 
+podAnnotations:
+  # Update this field if `make apply` by itself doesn't make a new revision.
+  revision: "1"
+
 # -- Version of the Strimzi Custom Resource API. The correct value depends on
 # the deployed version of Strimzi. See [this blog
 # post](https://strimzi.io/blog/2021/04/29/api-conversion/) for more.
