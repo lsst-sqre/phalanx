@@ -42,6 +42,8 @@ data:
       namespace: dc2_20210215
   # Repository index for END USERS defining aliases for Butler configurations.
   # This is NOT the configuration used internally for Butler server itself.
+  # It is also NOT the configuration that should be used by Phalanx services
+  # connecting to the Butler server.
   #
   # We provide both DirectButler and RemoteButler versions of dp02 because some
   # users rely on functionality not yet available via RemoteButler.  The default is currently
