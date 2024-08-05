@@ -9,7 +9,6 @@ Confluent Schema Registry for managing schema versions for the Alert Stream
 | clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
 | hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
-| podAnnotations.revision | string | `"1"` |  |
 | port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
 | schemaSync | object | `{"image":{"pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet","tag":"tickets-DM-42606"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
 | schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program |

@@ -2,6 +2,8 @@ apiVersion: roundtable.lsst.codes/v1beta1
 kind: StrimziSchemaRegistry
 metadata:
   name: {{ .Values.name }}
+  # Update this field if `make apply` by itself doesn't make a new revision.
+  revision: "1"
 spec:
   strimzi-version: {{ .Values.strimziAPIVersion }}
   listener: internal
