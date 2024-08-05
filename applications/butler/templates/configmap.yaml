@@ -4,6 +4,8 @@ kind: ConfigMap
 metadata:
   name: butler
 data:
+# WARNING! The files in this configmap are served publicly on the internet via unauthenticated HTTP.
+# DO NOT PUT ANY SENSITIVE INFORMATION IN THESE FILES.
 {{- if .Values.config.dp02PostgresUri }}
   dp02.yaml: |
     datastore:
@@ -38,4 +40,15 @@ data:
         dimensions: lsst.daf.butler.registry.dimensions.static.StaticDimensionRecordStorageManager
         opaque: lsst.daf.butler.registry.opaque.ByNameOpaqueTableStorageManager
       namespace: dc2_20210215
+  # Repository index for END USERS defining aliases for Butler configurations.
+  # This is NOT the configuration used internally for Butler server itself.
+  #
+  # We provide both DirectButler and RemoteButler versions of dp02 because some
+  # users rely on functionality not yet available via RemoteButler.  The default is currently
+  # DirectButler because the Community Science team has not had the opportunity to test RemoteButler,
+  # and RemoteButler is not available in the current "recommended" RSP image.
+  idf-repositories.yaml: |
+    dp02: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/configs/dp02.yaml
+    dp02-direct: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/configs/dp02.yaml
+    dp02-remote: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/repo/dp02/butler.yaml
 {{- end }}

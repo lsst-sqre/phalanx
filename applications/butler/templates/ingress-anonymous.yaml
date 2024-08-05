@@ -43,3 +43,13 @@ template:
                   port:
                     number: 8080
             {{- end }}
+            # We also host the configuration files needed for DirectButler here, for lack of a better place
+            # to put them.  The files served here are defined by the DAF_BUTLER_SERVER_STATIC_FILES_PATH
+            # environment variable in deployment.yaml.
+            - path: "{{ $.Values.config.pathPrefix }}/configs"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "butler"
+                  port:
+                    number: 8080
