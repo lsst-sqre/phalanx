@@ -55,6 +55,8 @@ spec:
               value: {{ .Values.config.butler_uri_1 | quote }}
             - name: BUTLER_URI_2
               value: {{ .Values.config.butler_uri_2 | quote }}
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: "/opt/lsst/butler/secrets/aws-credentials.ini"
             - name: EXPOSURELOG_DB_USER
               value: {{ .Values.db.user | quote }}
             - name: PGUSER
@@ -88,6 +90,9 @@ spec:
             {{- end }}
             - name: tmp
               mountPath: /tmp
+            - name: "butler-secrets"
+              mountPath: "/opt/lsst/butler/secrets"
+              readOnly: true
       volumes:
         {{- if .Values.config.nfs_path_1 }}
         - name: volume1
@@ -112,6 +117,9 @@ spec:
         {{- end }}
         - name: tmp
           emptyDir: {}
+        - name: "butler-secrets"
+          secret:
+            secretName: exposurelog
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
