@@ -180,12 +180,6 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
-    butler_repository_index: str | None = Field(
-        None,
-        title="Butler repository index URL",
-        description="URL to Butler repository index",
-    )
-
     butler_server_repositories: dict[str, AnyUrl] | None = Field(
         None,
         title="Butler repositories accessible via Butler server",

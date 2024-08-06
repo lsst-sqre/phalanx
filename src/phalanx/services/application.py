@@ -283,9 +283,6 @@ class ApplicationService:
         if environment.gcp:
             values["global.gcpProjectId"] = environment.gcp.project_id
             values["global.gcpRegion"] = environment.gcp.region
-        if environment.butler_repository_index:
-            butler_index = environment.butler_repository_index
-            values["global.butlerRepositoryIndex"] = butler_index
         if environment.butler_server_repositories:
             butler_repos = {
                 k: str(v)
