@@ -7,7 +7,7 @@ telegraf:
           service_address: ":4317"
     outputs:
       - influxdb_v2:
-          bucket: opentelemetry
+          bucket: "gafaelfawr"
           organization: "square"
           token: "$INFLUX_TOKEN"
           urls:

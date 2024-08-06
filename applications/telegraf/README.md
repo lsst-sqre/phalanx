@@ -19,7 +19,7 @@ Application telemetry collection service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | prometheus_config | object | `{"argocd":{"application_controller":"http://argocd-application-controller-metrics.argocd.svc:8082/metrics","notifications_controller":"http://argocd-notifications-controller-metrics.argocd.svc:9001/metrics","repo_server":"http://argocd-repo-server-metrics.argocd.svc:8084/metrics","server":"http://argocd-server-metrics.argocd.svc:8083/metrics"},"ingress-nginx":{"controller":"http://ingress-nginx-controller-metrics.ingress-nginx:10254/metrics"},"nublado":{"hub":"http://hub.nublado:8081/metrics"}}` | Use prometheus_config to specify all the services in the RSP that expose prometheus endpoints.  A better option, eventually, will be to use telegraf-operator and capture these as pod annotations. |
 | telegraf.config.inputs[0].opentelemetry.service_address | string | `":4317"` |  |
-| telegraf.config.outputs[0].influxdb_v2.bucket | string | `"opentelemetry"` |  |
+| telegraf.config.outputs[0].influxdb_v2.bucket | string | `"gafaelfawr"` |  |
 | telegraf.config.outputs[0].influxdb_v2.organization | string | `"square"` |  |
 | telegraf.config.outputs[0].influxdb_v2.token | string | `"$INFLUX_TOKEN"` |  |
 | telegraf.config.outputs[0].influxdb_v2.urls[0] | string | `"https://monitoring.lsst.cloud"` |  |
