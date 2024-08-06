@@ -1,11 +1,17 @@
 config:
   influxdb2Url: "https://monitoring.lsst.cloud"
 telegraf:
-  # Remove processors, inputs and outputs: use generated config instead.
   config:
-    processors: []
-    inputs: []
-    outputs: []
+    inputs:
+      - opentelemetry:
+          service_address: ":4317"
+    outputs:
+      - influxdb_v2:
+          bucket: opentelemetry
+          organization: "square"
+          token: "$INFLUX_TOKEN"
+          urls:
+            - "https://monitoring.lsst.cloud"
   resources:
     limits:
       memory: "1Gi"
@@ -13,28 +19,17 @@ telegraf:
     requests:
       memory: "350Mi"
       cpu: "50m"
-  args:
-  - "--config"
-  - "/etc/telegraf-generated/telegraf-generated.conf"
-  # We need the additional rules for prometheus scraping.
   rbac:
     clusterWide: true
   env:
-  - name: INFLUX_TOKEN
-    valueFrom:
-      secretKeyRef:
-        key: influx-token
-        name: telegraf
+    - name: INFLUX_TOKEN
+      valueFrom:
+        secretKeyRef:
+          key: influx-token
+          name: telegraf
   podLabels:
     hub.jupyter.org/network-access-hub: 'true'
   tplVersion: 2
-  volumes:
-  - name: telegraf-generated-config
-    configMap:
-      name: telegraf-generated-config
-  mountPoints:
-  - name: telegraf-generated-config
-    mountPath: /etc/telegraf-generated
 
 # -- Use prometheus_config to specify all the services in the RSP that
 # expose prometheus endpoints.  A better option, eventually, will be to
