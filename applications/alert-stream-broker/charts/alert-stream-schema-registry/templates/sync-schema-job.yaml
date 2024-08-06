@@ -24,7 +24,8 @@ spec:
       restartPolicy: Never
       containers:
       - name: sync-schema-job
-        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
+        #image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
+        image: {{ .Values.schemaSync.image.repository }}@{{ .Values.schemaSync.image.digest }}
         imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
           - "syncLatestSchemaToRegistry.py"

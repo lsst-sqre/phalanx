@@ -29,7 +29,8 @@ schemaSync:
     # syncLatestSchemaToRegistry.py program
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use
-    tag: tickets-DM-42606:sha256:0ff9644298ce3371b36b8cc3a6f44026cda9a7e909a4882a862b5a688d722528
+    #tag: tickets-DM-42606
+    digest: sha256:0ff9644298ce3371b36b8cc3a6f44026cda9a7e909a4882a862b5a688d722528
     pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry
