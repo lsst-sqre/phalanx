@@ -34,7 +34,6 @@ Application telemetry collection service
 | telegraf.resources.limits.memory | string | `"1Gi"` |  |
 | telegraf.resources.requests.cpu | string | `"50m"` |  |
 | telegraf.resources.requests.memory | string | `"350Mi"` |  |
-| telegraf.service.enabled | bool | `false` |  |
 | telegraf.tplVersion | int | `2` |  |
 | telegraf.volumes[0].configMap.name | string | `"telegraf-generated-config"` |  |
 | telegraf.volumes[0].name | string | `"telegraf-generated-config"` |  |

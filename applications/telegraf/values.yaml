@@ -27,8 +27,6 @@ telegraf:
         name: telegraf
   podLabels:
     hub.jupyter.org/network-access-hub: 'true'
-  service:
-    enabled: false
   tplVersion: 2
   volumes:
   - name: telegraf-generated-config
