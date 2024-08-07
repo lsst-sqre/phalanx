@@ -191,6 +191,7 @@ select = ["ALL"]
 [tool.ruff.lint.per-file-ignores]
 "src/phalanx/**" = [
     "T201",    # print makes sense to use because Phalanx is interactive
+    "C901",
 ]
 "tests/**" = [
     "D103",    # tests don't need docstrings
