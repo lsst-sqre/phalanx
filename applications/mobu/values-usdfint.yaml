@@ -22,5 +22,4 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
-          exclude_dirs: ["experiments"]
         restart: true

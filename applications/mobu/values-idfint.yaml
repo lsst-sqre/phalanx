@@ -30,7 +30,6 @@ config:
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
-          exclude_dirs: ["experiments"]
         restart: true
     - name: "weekly"
       count: 1
@@ -48,7 +47,6 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
-          exclude_dirs: ["experiments"]
         restart: true
     - name: "tutorial"
       count: 1
@@ -64,7 +62,6 @@ config:
         options:
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
           repo_ref: "prod"
-          exclude_dirs: ["DP02_09_Custom_Coadds", "DP02_11_User_Packages"]
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true
@@ -84,7 +81,6 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
           repo_ref: "prod"
-          exclude_dirs: ["DP02_09_Custom_Coadds", "DP02_11_User_Packages", "DP02_03c_Big_deepCoadd_Cutout"]
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true
