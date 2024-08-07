@@ -173,10 +173,8 @@ class EnvironmentService:
         # Sync applications that others have dependencies on, if they're
         # enabled.
         with action_group("Sync infrastructure applications"):
-            if "ingress-nginx" in environment.applications:
-                self._argocd.sync("ingress-nginx")
-            self._argocd.sync(app_of_apps)
             for application in (
+                "ingress-nginx"
                 "cert-manager",
                 "postgres",
                 "gafaelfawr",
