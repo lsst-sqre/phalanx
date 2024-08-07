@@ -102,8 +102,8 @@ Alert transmission to community brokers
 | alert-stream-schema-registry.hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |
-| alert-stream-schema-registry.schemaSync | object | `{"image":{"digest":"sha256:1db4d58c22d39bbf34e4a542bb321bea0178955e67ea84c641f388e4bedc0744","pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
-| alert-stream-schema-registry.schemaSync.image.digest | string | `"sha256:1db4d58c22d39bbf34e4a542bb321bea0178955e67ea84c641f388e4bedc0744"` | Version of the container to use tag: tickets-DM-42606 |
+| alert-stream-schema-registry.schemaSync | object | `{"image":{"digest":"sha256:8f59fa56ade68297e494babb06a862e39c7d6aed478a90bb1bbd4dd4ce8fca74","pullPolicy":"Always","repository":"lsstdm/lsst_alert_packet"},"subject":"alert-packet"}` | Configuration for the Job which injects the most recent alert_packet schema into the Schema Registry |
+| alert-stream-schema-registry.schemaSync.image.digest | string | `"sha256:8f59fa56ade68297e494babb06a862e39c7d6aed478a90bb1bbd4dd4ce8fca74"` | Version of the container to use tag: tickets-DM-42606 |
 | alert-stream-schema-registry.schemaSync.image.repository | string | `"lsstdm/lsst_alert_packet"` | Repository of a container which has the alert_packet syncLatestSchemaToRegistry.py program |
 | alert-stream-schema-registry.schemaSync.subject | string | `"alert-packet"` | Subject name to use when inserting data into the Schema Registry |
 | alert-stream-schema-registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry to store data. |

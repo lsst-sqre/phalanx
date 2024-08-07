@@ -30,7 +30,7 @@ schemaSync:
     repository: lsstdm/lsst_alert_packet
     # -- Version of the container to use
     #tag: tickets-DM-42606
-    digest: sha256:1db4d58c22d39bbf34e4a542bb321bea0178955e67ea84c641f388e4bedc0744
+    digest: sha256:8f59fa56ade68297e494babb06a862e39c7d6aed478a90bb1bbd4dd4ce8fca74
     pullPolicy: Always
 
   # -- Subject name to use when inserting data into the Schema Registry
