@@ -174,7 +174,7 @@ class EnvironmentService:
         # enabled.
         with action_group("Sync infrastructure applications"):
             for application in (
-                "ingress-nginx"
+                "ingress-nginx",
                 "cert-manager",
                 "postgres",
                 "gafaelfawr",
