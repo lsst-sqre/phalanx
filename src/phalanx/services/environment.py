@@ -180,7 +180,10 @@ class EnvironmentService:
                 "gafaelfawr",
             ):
                 if application in environment.applications:
-                    self._argocd.sync(application)
+                    try:
+                        self._argocd.sync(application)
+                    except CommandFailedError:
+                        self._argocd.sync(application)
 
         # Sync everything else.
         with action_group("Sync remaining applications"):
