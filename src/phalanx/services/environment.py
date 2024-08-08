@@ -175,9 +175,9 @@ class EnvironmentService:
         with action_group("Sync infrastructure applications"):
             for application in (
                 "ingress-nginx",
+                "cert-manager",
                 "postgres",
                 "gafaelfawr",
-                "cert-manager",
             ):
                 if application in environment.applications:
                     self._argocd.sync(application)
