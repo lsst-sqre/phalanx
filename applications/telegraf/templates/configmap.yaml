@@ -30,6 +30,7 @@ data:
     [[inputs.internal]]
       collect_memstats = false
 
+    [[inputs.opentelemetry]]
 
     {{- range $raw_app_name, $defn := .Values.prometheus_config }}
       {{- $app_name := replace "-" "_" $raw_app_name }}

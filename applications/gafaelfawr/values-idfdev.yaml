@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-45518"
+  pullPolicy: "Always"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
