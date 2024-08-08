@@ -50,7 +50,11 @@ tolerations: []
 affinity: {}
 
 # -- Security context for the Portal pod
-securityContext: {}
+# @default -- See `values.yaml`
+securityContext:
+  runAsUser: 91
+  runAsGroup: 91
+  fsGroup: 91
 
 config:
   # -- Set to `TRUE` to enable service debugging

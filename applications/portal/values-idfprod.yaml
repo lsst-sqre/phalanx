@@ -1,10 +1,5 @@
 replicaCount: 4
 
-securityContext:
-  runAsUser: 91
-  runAsGroup: 91
-  fsGroup: 91
-
 config:
   cleanupInterval: "1h"
   volumes:
