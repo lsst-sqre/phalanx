@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "obsloctap-consume-kafka"
+  labels:
+    {{- include "obsloctap.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "obsloctap.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        component: consume-kafka
+        {{- include "obsloctap.selectorLabels" . | nindent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "obsloctap-consume-kafka"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          image: "{{ .Values.consume-kafka.image.repository }}:{{ .Values.consume-kafka.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.consume-kafka.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: "INSTRUMENT"
+              value: "LSSTCam"
+            - name: "LOG_CONFIG"
+              value: "{{ .Values.consume-kafka.logConfig }}"
+            - name: "DB_HOST"
+              value: "{{ .Values.db.host }}"
+            - name: "DB_PASS"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "oods-password"
+            - name: "DB_USER"
+              value: "{{ .Values.db.user }}"
+            - name: "DB_NAME"
+              value: "{{ .Values.db.database }}"
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "lfa-key"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap
+                  key: "lfa-password"
+            - name: "BUCKET_PREFIX"
+              value: "{{ .Values.lfa.bucket_prefix }}"
+            - name: "S3_ENDPOINT_URL"
+              value: "{{ .Values.lfa.s3EndpointUrl }}"
+            - name: "KAFKA_BOOTSTRAP"
+              value: "{{ .Values.kafka.bootstrap }}"
+            - name: "KAFKA_USERNAME"
+              value: "{{ .Values.kafka.username }}"
+            - name: "KAFKA_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: sasquatch
+                  key: "obsloctap-password"
+            - name: "KAFKA_GROUP_ID"
+              value: "{{ .Values.kafka.group_id }}"
+            - name: "SCHEMA_URL"
+              value: "{{ .Values.kafka.schema_url }}"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
