@@ -47,7 +47,7 @@ spec:
         - name: WORKER_GRACE_PERIOD
           value: {{ .Values.worker.grace_period | toString | quote }}
         {{- /* Knative not configured for timeouts longer than 1200 seconds, and shouldn't need to be. */ -}}
-        {{- $knative_timeout := minf 1200 (addf (mulf 2 (coalesce .Values.worker.timeout 600)) .Values.knative.extraTimeout) }}
+        {{- $knative_timeout := min 1200 (add (mul 2 (coalesce .Values.worker.timeout 600)) .Values.knative.extraTimeout) }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
