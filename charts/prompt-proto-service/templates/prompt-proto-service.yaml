@@ -40,6 +40,8 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         name: user-container
         env:
+        - name: WORKER_COUNT
+          value: {{ .Values.containerConcurrency | toString | quote }}
         - name: WORKER_RESTART_FREQ
           value: {{ .Values.worker.restart | toString | quote }}
         - name: WORKER_TIMEOUT

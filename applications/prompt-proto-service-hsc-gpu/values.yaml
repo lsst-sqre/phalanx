@@ -121,21 +121,23 @@ prompt-proto-service:
     auth_env: true
 
   knative:
-    # -- The cpu cores requested.
+    # -- The cpu cores requested for the full pod (see `containerConcurrency`).
     cpuRequest: 1
-    # -- The maximum cpu cores.
+    # -- The maximum cpu cores for the full pod (see `containerConcurrency`).
     cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
     ephemeralStorageRequest: "5Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
     ephemeralStorageLimit: "5Gi"
     # -- GPUs enabled.
     gpu: true
-    # -- The number of GPUs to request.
+    # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
     gpuRequest: 1
-    # -- The minimum memory to request.
+    # -- The minimum memory to request for the full pod (see `containerConcurrency`).
     memoryRequest: "2Gi"
-    # -- The maximum memory limit.
+    # -- The maximum memory limit for the full pod (see `containerConcurrency`).
     memoryLimit: "8Gi"
     # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
     # This parameter adds extra time to that minimum (seconds).
@@ -148,6 +150,9 @@ prompt-proto-service:
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
     responseStartTimeout: 0
+
+  # -- The number of Knative requests that can be handled simultaneously by one container
+  containerConcurrency: 1
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.
