@@ -28,3 +28,6 @@ Publish observing schedule
 | kafka.group_id | string | `"obsloctap-consumer"` | Name of Kafka consumer group |
 | kafka.schema_url | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Kafka Avro schema server URL |
 | kafka.username | string | `"obsloctap"` | Username for SASL_PLAIN authentication |
+| lfa.access_key | string | `""` | Access key for LFA bucket |
+| lfa.bucket_prefix | string | `""` | Prefix for LFA bucket (e.g. for Ceph tenant specification) |
+| lfa.s3EndpointUrl | string | `""` | url |
