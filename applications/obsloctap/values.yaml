@@ -44,6 +44,15 @@ kafka:
   username: "obsloctap"
   # -- Name of Kafka consumer group
   group_id: "obsloctap-consumer"
+
+lfa:
+  # -- Access key for LFA bucket
+  access_key: ""
+  # -- Prefix for LFA bucket (e.g. for Ceph tenant specification)
+  bucket_prefix: ""
+  # -- url
+  s3EndpointUrl: ""
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
