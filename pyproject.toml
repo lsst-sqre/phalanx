@@ -121,104 +121,13 @@ python_files = [
 # Reference for settings: https://beta.ruff.rs/docs/settings/
 # Reference for rules: https://beta.ruff.rs/docs/rules/
 [tool.ruff]
-exclude = [
-    "docs/**",
-]
-line-length = 79
-target-version = "py312"
+extend = "ruff-shared.toml"
 
-[tool.ruff.lint]
-ignore = [
-    "ANN101",  # self should not have a type annotation
-    "ANN102",  # cls should not have a type annotation
-    "ANN401",  # sometimes Any is the right type
-    "ARG001",  # unused function arguments are often legitimate
-    "ARG002",  # unused method arguments are often legitimate
-    "ARG005",  # unused lambda arguments are often legitimate
-    "BLE001",  # we want to catch and report Exception in background tasks
-    "C414",    # nested sorted is how you sort by multiple keys with reverse
-    "COM812",  # omitting trailing commas allows black autoreformatting
-    "D102",    # sometimes we use docstring inheritence
-    "D104",    # don't see the point of documenting every package
-    "D105",    # our style doesn't require docstrings for magic methods
-    "D106",    # Pydantic uses a nested Config class that doesn't warrant docs
-    "D205",    # our documentation style allows a folded first line
-    "EM101",   # justification (duplicate string in traceback) is silly
-    "EM102",   # justification (duplicate string in traceback) is silly
-    "FBT003",  # positional booleans are normal for Pydantic field defaults
-    "FIX002",  # point of a TODO comment is that we're not ready to fix it
-    "G004",    # forbidding logging f-strings is appealing, but not our style
-    "PD011",   # false positive with non-NumPY code that uses .values
-    "RET505",  # disagree that omitting else always makes code more readable
-    "PLR0911", # often many returns is clearer and simpler style
-    "PLR0913", # factory pattern uses constructors with many arguments
-    "PLR2004", # too aggressive about magic values
-    "PLW0603", # yes global is discouraged but if needed, it's needed
-    "S105",    # good idea but too many false positives on non-passwords
-    "S106",    # good idea but too many false positives on non-passwords
-    "S107",    # good idea but too many false positives on non-passwords
-    "S603",    # impossible to write subprocess code without triggering this
-    "S607",    # searching for executables on PATH is often correct
-    "SIM102",  # sometimes the formatting of nested if statements is clearer
-    "SIM114",  # sometimes or conditions result in long lines and awkward code
-    "SIM117",  # sometimes nested with contexts are clearer
-    "TCH001",  # we decided to not maintain separate TYPE_CHECKING blocks
-    "TCH002",  # we decided to not maintain separate TYPE_CHECKING blocks
-    "TCH003",  # we decided to not maintain separate TYPE_CHECKING blocks
-    "TID252",  # if we're going to use relative imports, use them always
-    "TRY003",  # good general advice but lint is way too aggressive
-    "TRY301",  # sometimes raising exceptions inside try is the best flow
-
-    # The following settings should be disabled when using ruff format
-    # per https://docs.astral.sh/ruff/formatter/#conflicting-lint-rules
-    "W191",
-    "E111",
-    "E114",
-    "E117",
-    "D206",
-    "D300",
-    "Q000",
-    "Q001",
-    "Q002",
-    "Q003",
-    "COM812",
-    "COM819",
-    "ISC001",
-    "ISC002",
-]
-select = ["ALL"]
-
-[tool.ruff.lint.per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "src/phalanx/**" = [
     "T201",    # print makes sense to use because Phalanx is interactive
-]
-"tests/**" = [
-    "D103",    # tests don't need docstrings
-    "PLR0915", # tests are allowed to be long, sometimes that's convenient
-    "PT012",   # way too aggressive about limiting pytest.raises blocks
-    "S101",    # tests should use assert
-    "SLF001",  # tests are allowed to access private members
 ]
 
 [tool.ruff.lint.isort]
 known-first-party = ["phalanx", "tests"]
 split-on-trailing-comma = false
-
-# These are too useful as attributes or methods to allow the conflict with the
-# built-in to rule out their use.
-[tool.ruff.lint.flake8-builtins]
-builtins-ignorelist = [
-    "all",
-    "any",
-    "help",
-    "id",
-    "list",
-    "type",
-]
-
-[tool.ruff.lint.flake8-pytest-style]
-fixture-parentheses = false
-mark-parentheses = false
-
-[tool.ruff.lint.pydocstyle]
-convention = "numpy"
