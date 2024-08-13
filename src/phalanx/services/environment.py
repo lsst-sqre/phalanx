@@ -6,7 +6,7 @@ from datetime import timedelta
 
 from pydantic import SecretStr
 
-from ..exceptions import CommandFailedError, VaultNotFoundError
+from ..exceptions import VaultNotFoundError
 from ..github import action_group, add_mask
 from ..models.applications import Project
 from ..models.environments import Environment
@@ -82,15 +82,11 @@ class EnvironmentService:
             Raised if a necessary secret was not found in Vault.
         """
         environment = self._config.load_environment(environment_name)
-        if not environment.app_of_apps_name:
-            raise ValueError(f"appOfAppsName not set for {environment_name}")
-        app_of_apps = environment.app_of_apps_name
         vault = self._vault_storage.get_vault_client(
             environment, credentials=vault_credentials
         )
 
         # Get information about the local repository.
-        git_url = self._config.get_git_url()
         if not git_branch:
             git_branch = self._config.get_git_branch()
 
@@ -101,223 +97,15 @@ class EnvironmentService:
         # Update Helm dependencies.
         self._update_helm_dependencies(["vault-secrets-operator", "argocd"])
 
-        # Install vault-secrets-operator.
+        # Perform the installation.
         self._install_vault_secrets_operator(
             environment, vault_credentials, vault.url
         )
-
-        # Install Argo CD.
-        self._install_argocd(environment, environment.vault_path_prefix)
-
-        # Create and sync the top-level Argo CD application.
-        self._install_app_of_apps(
-            environment, app_of_apps, git_url, git_branch, argocd_password
-        )
-
-        # Sync Argo CD and wait for it to finish syncing.
+        self._install_argocd(environment)
+        self._install_app_of_apps(environment, git_branch, argocd_password)
         self._sync_argocd()
-
-        # Sync infrastructure applications.
         self._sync_infrastructure_applications(environment)
-
-        # Sync remaining applications.
-        self._sync_remaining_applications(app_of_apps)
-
-    @staticmethod
-    def _get_argocd_password(vault: VaultClient) -> SecretStr:
-        """Retrieve the Argo CD admin password from Vault.
-
-        Parameters
-        ----------
-        vault
-            Vault client to use for retrieving secrets.
-
-        Returns
-        -------
-        str
-            The plain-text Argo CD admin password.
-
-        Raises
-        ------
-        VaultNotFoundError
-            Raised if the admin plain-text password is not found in Vault.
-        """
-        argocd_secret = vault.get_application_secret("argocd")
-        argocd_password = argocd_secret.get("admin.plaintext_password")
-        if not argocd_password:
-            raise VaultNotFoundError(
-                vault.url, f"{vault.path}/argocd", "admin.plaintext_password"
-            )
-        add_mask(argocd_password)
-        return argocd_password
-
-    def _update_helm_dependencies(self, app_names: list[str]) -> None:
-        """Update Helm dependencies for the specified applications.
-
-        Parameters
-        ----------
-        app_names
-            List of application names whose dependencies should be updated.
-        """
-        # Add the dependency repositories of the applications we're installing
-        # directly with Helm, and refresh the Helm dependency cache.
-        with action_group("Update Helm dependencies"):
-            repo_urls = set()
-            for app_name in app_names:
-                app_urls = self._config.get_dependency_repositories(app_name)
-                repo_urls.update(app_urls)
-            for url in sorted(repo_urls):
-                self._helm.repo_add(url)
-            self._helm.repo_update()
-
-    def _install_vault_secrets_operator(
-        self,
-        environment: Environment,
-        vault_credentials: VaultCredentials,
-        vault_url: str,
-    ) -> None:
-        """Install the vault-secrets-operator application.
-
-        Parameters
-        ----------
-        environment
-            The environment configuration object.
-        vault_credentials
-            Credentials to use for Vault access.
-        vault_url
-            URL of the Vault server.
-        """
-        # Argo CD depends on this, so it has to be installed and configured
-        # with its Vault secret first.
-        with action_group("Install vault-secrets-operator"):
-            self._kubernetes.create_namespace(
-                "vault-secrets-operator", ignore_fail=True
-            )
-            self._kubernetes.create_vault_secret(
-                "vault-credentials",
-                "vault-secrets-operator",
-                vault_credentials,
-            )
-            self._helm.dependency_update("vault-secrets-operator")
-            self._helm.upgrade_application(
-                "vault-secrets-operator",
-                environment.name,
-                {"vault-secrets-operator.vault.address": vault_url},
-            )
-
-    def _install_argocd(
-        self, environment: Environment, vault_path_prefix: str
-    ) -> None:
-        """Install the Argo CD application.
-
-        Parameters
-        ----------
-        environment
-            The environment configuration object.
-        vault_path_prefix
-            Path prefix for the Vault secrets in Argo CD.
-        """
-        with action_group("Install Argo CD"):
-            self._helm.dependency_update("argocd")
-            self._helm.upgrade_application(
-                "argocd",
-                environment.name,
-                {"global.vaultSecretsPath": vault_path_prefix},
-            )
-
-    def _install_app_of_apps(
-        self,
-        environment: Environment,
-        app_of_apps: str,
-        git_url: str,
-        git_branch: str,
-        argocd_password: SecretStr,
-    ) -> None:
-        """Create and sync the top-level Argo CD application.
-
-        Parameters
-        ----------
-        environment
-            The environment configuration object.
-        app_of_apps
-            The name of the app-of-apps to install.
-        git_url
-            The URL of the Git repository.
-        git_branch
-            The branch of the Git repository to use.
-        argocd_password
-            The plain-text Argo CD admin password.
-        """
-        with action_group(f"Install {app_of_apps} app-of-apps"):
-            self._argocd.login("admin", argocd_password)
-            self._argocd.create_environment(
-                environment.name,
-                app_of_apps,
-                git_url=git_url,
-                git_branch=git_branch,
-            )
-            self._argocd.sync(app_of_apps)
-            project = Project.infrastructure
-            self._argocd.set_project(app_of_apps, project)
-
-    def _sync_argocd(self) -> None:
-        """Sync the Argo CD application."""
-        # Sync and wait for it to finish syncing so that the pods don't
-        # restart in the middle of proxying another Argo CD operation.
-        with action_group("Sync Argo CD"):
-            try:
-                self._argocd.sync("argocd")
-            except CommandFailedError:
-                # As of Argo CD 2.10.5, the first execution always fails with
-                # a spurious error claiming the infrastructure project had not
-                # been created.  This is transient; the second execution
-                # succeeds.
-                self._argocd.sync("argocd")
-            for deployment in (
-                "deployment/argocd-server",
-                "deployment/argocd-repo-server",
-                "statefulset/argocd-application-controller",
-            ):
-                self._kubernetes.wait_for_rollout(deployment, "argocd")
-
-    def _sync_infrastructure_applications(
-        self, environment: Environment
-    ) -> None:
-        """Sync infrastructure applications that other applications depend on.
-
-        Parameters
-        ----------
-        environment
-            The environment configuration object.
-        """
-        with action_group("Sync infrastructure applications"):
-            for application in (
-                "ingress-nginx",
-                "cert-manager",
-                "postgres",
-                "gafaelfawr",
-            ):
-                if application in environment.applications:
-                    try:
-                        self._argocd.sync(application)
-                    except CommandFailedError:
-                        # As of argo-helm version 7.4.1, the first execution
-                        # always fails with an error for cert-manager &
-                        # gafaelfawr claiming the infrastructure project had
-                        # not been created. Re-running the sync operation
-                        # fixes the issue.
-                        self._argocd.sync(application)
-
-    def _sync_remaining_applications(self, app_of_apps: str) -> None:
-        """Sync remaining applications that were not already synced.
-
-        Parameters
-        ----------
-        app_of_apps
-            The name of the top-level app-of-apps.
-        """
-        with action_group("Sync remaining applications"):
-            self._argocd.sync_all(app_of_apps, timeout=timedelta(minutes=5))
+        self._sync_remaining_applications(environment)
 
     def lint(self, environment: str | None = None) -> bool:
         """Lint the Helm chart for environments.
@@ -369,3 +157,183 @@ class EnvironmentService:
         return self._helm.template_environment(
             environment.name, environment.app_of_apps_name
         )
+
+    @staticmethod
+    def _get_argocd_password(vault: VaultClient) -> SecretStr:
+        """Retrieve the Argo CD admin password from Vault.
+
+        Parameters
+        ----------
+        vault
+            Vault client to use for retrieving secrets.
+
+        Returns
+        -------
+        str
+            The plain-text Argo CD admin password.
+
+        Raises
+        ------
+        VaultNotFoundError
+            Raised if the admin plain-text password is not found in Vault.
+        """
+        argocd_secret = vault.get_application_secret("argocd")
+        argocd_password = argocd_secret.get("admin.plaintext_password")
+        if not argocd_password:
+            raise VaultNotFoundError(
+                vault.url, f"{vault.path}/argocd", "admin.plaintext_password"
+            )
+        add_mask(argocd_password)
+        return argocd_password
+
+    def _install_vault_secrets_operator(
+        self,
+        environment: Environment,
+        vault_credentials: VaultCredentials,
+        vault_url: str,
+    ) -> None:
+        """Install the vault-secrets-operator application.
+
+        Argo CD depends on this, so it has to be installed and configured with
+        its Vault secret first.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        vault_credentials
+            Credentials to use for Vault access.
+        vault_url
+            URL of the Vault server.
+        """
+        with action_group("Install vault-secrets-operator"):
+            self._kubernetes.create_namespace(
+                "vault-secrets-operator", ignore_fail=True
+            )
+            self._kubernetes.create_vault_secret(
+                "vault-credentials",
+                "vault-secrets-operator",
+                vault_credentials,
+            )
+            self._helm.dependency_update("vault-secrets-operator")
+            self._helm.upgrade_application(
+                "vault-secrets-operator",
+                environment.name,
+                {"vault-secrets-operator.vault.address": vault_url},
+            )
+
+    def _install_argocd(self, environment: Environment) -> None:
+        """Install the Argo CD application.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Install Argo CD"):
+            self._helm.dependency_update("argocd")
+            self._helm.upgrade_application(
+                "argocd",
+                environment.name,
+                {"global.vaultSecretsPath": environment.vault_path_prefix},
+            )
+
+    def _install_app_of_apps(
+        self,
+        environment: Environment,
+        git_branch: str,
+        argocd_password: SecretStr,
+    ) -> None:
+        """Create and sync the top-level Argo CD application.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        git_branch
+            The branch of the Git repository to use.
+        argocd_password
+            The plain-text Argo CD admin password.
+        """
+        app_of_apps = environment.app_of_apps_name
+        if not app_of_apps:
+            raise ValueError(f"appOfAppsName not set for {environment.name}")
+        with action_group(f"Install {app_of_apps} app-of-apps"):
+            self._argocd.login("admin", argocd_password)
+            self._argocd.create_environment(
+                environment.name,
+                app_of_apps,
+                git_url=self._config.get_git_url(),
+                git_branch=git_branch,
+            )
+            self._argocd.sync(app_of_apps)
+            project = Project.infrastructure
+            self._argocd.set_project(app_of_apps, project)
+
+    def _sync_argocd(self) -> None:
+        """Sync the Argo CD application.
+
+        Sync and wait for it to finish syncing so that the pods don't restart
+        in the middle of proxying another Argo CD operation.
+        """
+        with action_group("Sync Argo CD"):
+            self._argocd.sync("argocd")
+            for deployment in (
+                "deployment/argocd-server",
+                "deployment/argocd-repo-server",
+                "statefulset/argocd-application-controller",
+            ):
+                self._kubernetes.wait_for_rollout(deployment, "argocd")
+
+    def _sync_infrastructure_applications(
+        self, environment: Environment
+    ) -> None:
+        """Sync infrastructure applications that other applications depend on.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        with action_group("Sync infrastructure applications"):
+            for application in (
+                "ingress-nginx",
+                "cert-manager",
+                "postgres",
+                "gafaelfawr",
+            ):
+                if application in environment.applications:
+                    self._argocd.sync(application)
+
+    def _sync_remaining_applications(self, environment: Environment) -> None:
+        """Sync remaining applications that were not already synced.
+
+        Parameters
+        ----------
+        environment
+            The environment configuration object.
+        """
+        app_of_apps = environment.app_of_apps_name
+        if not app_of_apps:
+            raise ValueError(f"appOfAppsName not set for {environment.name}")
+        with action_group("Sync remaining applications"):
+            self._argocd.sync_all(app_of_apps, timeout=timedelta(minutes=5))
+
+    def _update_helm_dependencies(self, app_names: list[str]) -> None:
+        """Update Helm dependencies for the specified applications.
+
+        Parameters
+        ----------
+        app_names
+            List of application names whose dependencies should be updated.
+        """
+        # Add the dependency repositories of the applications we're installing
+        # directly with Helm, and refresh the Helm dependency cache.
+        with action_group("Update Helm dependencies"):
+            repo_urls = set()
+            for app_name in app_names:
+                app_urls = self._config.get_dependency_repositories(app_name)
+                repo_urls.update(app_urls)
+            for url in sorted(repo_urls):
+                self._helm.repo_add(url)
+            self._helm.repo_update()
