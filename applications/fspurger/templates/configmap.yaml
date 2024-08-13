@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "fspurger-configmap"
+  labels:
+    {{- include "fspurger.labels" . | nindent 4 }}
+data:
+  config.yaml: |-
+    {{- toYaml .Values.config | nindent 4 }}
+  policy.yaml: |-
+    {{- toYaml .Values.policy | nindent 4 }}

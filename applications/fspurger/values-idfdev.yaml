@@ -1,0 +1,41 @@
+slackAlerts: true
+
+image:
+  tag: "tickets-DM-45624"
+  pullPolicy: Always
+
+nfs:
+  server: "10.87.86.26"
+
+schedule: "* * * * *"
+
+config:
+  logging:
+    logLevel: DEBUG
+    profile: development
+
+policy:
+  directories:
+  - path: "/scratch/adam/tmp/fspurger-test"
+    threshold: 10B
+    intervals:
+      large:
+        accessInterval: 60s
+        creationInterval: 11m
+        modificationInterval: 6m
+      small:
+        accessInterval: 120s
+        creationInterval: 21m
+        modificationInterval: 16m
+
+  - path: /scratch
+    threshold: 1GiB
+    intervals:
+      large:
+        accessInterval: 15d
+        modificationInterval: 90d
+        creationInterval: 180d
+      small:
+        accessInterval: 30d
+        modificationInterval: 180d
+        creationInterval: 360d

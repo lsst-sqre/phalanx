@@ -1,0 +1,97 @@
+# Default values for fspurger.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Affinity rules for fspurger
+affinity: {}
+
+# -- Node selector rules for fspurger
+nodeSelector: {}
+
+# -- Annotations for the fspurger pod
+podAnnotations: {}
+
+# -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
+# set in the corresponding fspurger Vault secret.
+slackAlerts: false
+
+# -- Tolerations for fspurger
+tolerations: []
+
+image:
+  # -- fspurger image to use
+  repository: "ghcr.io/lsst-sqre/scratchpurger"
+
+  # -- Pull policy for the fspurger image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of fspurger image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+schedule:
+  # -- Crontab entry for when to run.
+  schedule: "05 03 * * *"
+
+config:
+  # -- File holding purge policy
+  policyFile: /etc/purger/policy.yaml
+  # -- Report only; do not purge
+  dryRun: false
+  logging:
+    # -- Level at which to log
+    logLevel: info
+    # -- "production" (JSON logs) or "development" (human-friendly)
+    profile: production
+    # -- Add timestamps to log lines
+    addTimestamps: false
+
+policy:
+  directories:
+  - path: /scratch
+    # -- Files this large or larger will be subject to the "large" interval set
+    threshold: 1GiB
+    # -- If any of these times are older than specified, remove the file
+    # @default -- see `values.yaml`
+    intervals:
+      large:
+        accessInterval: 15d
+        modificationInterval: 90d
+        creationInterval: 180d
+      small:
+        accessInterval: 30d
+        modificationInterval: 180d
+        creationInterval: 360d
+
+nfs:
+  # -- Hostname or IP address for NFS server
+  # @default -- None, must be set for each environment
+  server: null
+
+  # -- Path (on server) for served /scratch
+  path: /share1/scratch
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+# -- Resource limits and requests for the filesystem purger
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "10Gi"
+  requests:
+    cpu: "0.05"
+    memory: "120Mi"
