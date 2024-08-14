@@ -316,7 +316,7 @@ cruiseControl:
   enabled: false
 
 # -- Configuration for deploying Kafka brokers with local storage
-localStorage:
+brokerStorage:
   enabled: false
   migration:
     enabled: false

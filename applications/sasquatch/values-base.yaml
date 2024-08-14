@@ -102,7 +102,7 @@ strimzi-kafka:
       key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
-  localStorage:
+  brokerStorage:
     enabled: true
     migration:
       enabled: false
