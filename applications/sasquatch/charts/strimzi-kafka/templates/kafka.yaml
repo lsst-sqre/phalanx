@@ -24,7 +24,7 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if not .Values.localStorage.enabled }}
+{{- if not .Values.brokerStorage.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
@@ -53,7 +53,7 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if or .Values.localStorage.enabled .Values.localStorage.migration.enabled }}
+{{- if or .Values.brokerStorage.enabled .Values.brokerStorage.migration.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
@@ -72,14 +72,14 @@ spec:
     volumes:
     - id: 0
       type: persistent-claim
-      size: {{ .Values.localStorage.size }}
-      {{- if .Values.localStorage.storageClassName }}
-      class: {{ .Values.localStorage.storageClassName }}
+      size: {{ .Values.brokerStorage.size }}
+      {{- if .Values.brokerStorage.storageClassName }}
+      class: {{ .Values.brokerStorage.storageClassName }}
       {{- end}}
       deleteClaim: false
   template:
     pod:
-      {{- with .Values.localStorage.affinity }}
+      {{- with .Values.brokerStorage.affinity }}
       affinity:
         {{- toYaml . | nindent 10 }}
       {{- end }}
@@ -88,7 +88,7 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
-{{- if and .Values.localStorage.migration.enabled .Values.localStorage.migration.rebalance }}
+{{- if and .Values.brokerStorage.migration.enabled .Values.brokerStorage.migration.rebalance }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaRebalance
@@ -100,7 +100,7 @@ metadata:
     strimzi.io/rebalance-auto-approval: "true"
 spec:
   mode: remove-brokers
-  {{- with .Values.localStorage.migration.brokers }}
+  {{- with .Values.brokerStorage.migration.brokers }}
   brokers:
     {{- toYaml . | nindent 6 }}
   {{- end }}

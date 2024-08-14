@@ -49,7 +49,7 @@ strimzi-kafka:
     enabled: true
   cruiseControl:
     enabled: true
-  localStorage:
+  brokerStorage:
     enabled: true
     migration:
       enabled: false
