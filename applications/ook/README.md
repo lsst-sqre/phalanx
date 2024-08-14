@@ -24,9 +24,6 @@ Ook is the librarian service for Rubin Observatory. Ook indexes documentation co
 | audit.ttlSecondsAfterFinished | int | `86400` | Time (second) to keep a finished job before cleaning up |
 | config.algolia.documents_index | string | `"documents_dev"` | Name of the Algolia index for documents |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
-| config.registryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Cluster URL for the Confluent Schema Registry |
-| config.subjectCompatibility | string | `"FORWARD"` | Schema subject compatibility. |
-| config.subjectSuffix | string | `""` | Schema subject suffix. Should be empty for production but can be set to a value to create unique subjects in the Confluent Schema Registry for testing. |
 | config.topics.ingest | string | `"lsst.square-events.ook.ingest"` | Kafka topic name for ingest events |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |

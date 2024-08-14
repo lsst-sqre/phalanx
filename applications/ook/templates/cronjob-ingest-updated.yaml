@@ -63,11 +63,11 @@ spec:
                     secretKeyRef:
                       name: {{ template "ook.fullname" . }}-kafka
                       key: "bootstrapServers"
-                - name: "KAFKA_SSL_CLUSTER_CAFILE"
+                - name: "KAFKA_CLUSTER_CA_PATH"
                   value: "/etc/kafkacluster/ca.crt"
-                - name: "KAFKA_SSL_CLIENT_CERTFILE"
+                - name: "KAFKA_CLIENT_CERT_PATH"
                   value: "/etc/kafkauser/user.crt"
-                - name: "KAFKA_SSL_CLIENT_KEYFILE"
+                - name: "KAFKA_CLIENT_KEY_PATH"
                   value: "/etc/kafkauser/user.key"
                 # From Vault secrets
                 - name: "ALGOLIA_APP_ID"
