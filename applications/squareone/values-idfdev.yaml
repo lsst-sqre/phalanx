@@ -10,6 +10,7 @@ config:
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"
+  plausibleDomain: "data-dev.lsst.cloud"
 
   supportPageMdx: |
     # Get help with the Rubin Science Platform on idf-dev.lsst.cloud

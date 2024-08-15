@@ -77,6 +77,10 @@ config:
   # @default null disables the COmanage integration
   coManageRegistryUrl: null
 
+  # -- Plausible tracking domain. For example, `data.lsst.cloud`.
+  # @default null disables Plausible tracking
+  plausibleDomain: null
+
   # -- MDX content for the `/api-aspect` page
   # @default -- See `values.yaml`
   apiAspectPageMdx: |
