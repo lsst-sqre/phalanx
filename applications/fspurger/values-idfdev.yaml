@@ -11,7 +11,7 @@ schedule: "* * * * *"
 
 config:
   logging:
-    logLevel: DEBUG
+    log_level: debug
     profile: development
 
 policy:
