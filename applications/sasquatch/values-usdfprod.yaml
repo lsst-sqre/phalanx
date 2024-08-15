@@ -138,65 +138,65 @@ kafka-connect-manager-enterprise:
       enterprise-maintel:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
+        topicsRegex: "lsst.sal.MTAOS|lsst.sal.MTDome|lsst.sal.MTDomeTrajectory|lsst.sal.MTPtg"
       enterprise-mtmount:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTMount"
+        topicsRegex: "lsst.sal.MTMount"
         tasksMax: "8"
       enterprise-comcam:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
+        topicsRegex: "lsst.sal.CCCamera|lsst.sal.CCHeaderService|lsst.sal.CCOODS"
       enterprise-eas:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*HVAC|.*WeatherForecast"
+        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.EPM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
       enterprise-m1m3:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTM1M3"
+        topicsRegex: "lsst.sal.MTM1M3"
         tasksMax: "8"
       enterprise-m2:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
+        topicsRegex: "lsst.sal.MTHexapod|lsst.sal.MTM2|lsst.sal.MTRotator"
       enterprise-obssys:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
+        topicsRegex: "lsst.sal.Scheduler|lsst.sal.Script|lsst.sal.ScriptQueue|lsst.sal.Watcher"
       enterprise-ocps:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*OCPS"
+        topicsRegex: "lsst.sal.OCPS"
       enterprise-pmd:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*PMD"
+        topicsRegex: "lsst.sal.PMD"
       enterprise-calsys:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
+        topicsRegex: "lsst.sal.ATMonochromator|lsst.sal.ATWhiteLight|lsst.sal.CBP|lsst.sal.Electrometer|lsst.sal.FiberSpectrograph|lsst.sal.LinearStage|lsst.sal.TunableLaser"
       enterprise-mtaircompressor:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTAirCompressor"
+        topicsRegex: "lsst.sal.MTAirCompressor"
       enterprise-genericcamera:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
+        topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
       enterprise-gis:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*GIS"
+        topicsRegex: "lsst.sal.GIS"
       enterprise-mtvms:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTVMS"
+        topicsRegex: "lsst.sal.MTVMS"
       enterprise-lsstcam:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
+        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
 telegraf-kafka-consumer:
   enabled: true
