@@ -7,12 +7,7 @@ image:
 nfs:
   server: "10.87.86.26"
 
-schedule: "* * * * *"
-
-config:
-  logging:
-    log_level: debug
-    profile: development
+schedule: "*/10 * * * *"
 
 policy:
   directories:

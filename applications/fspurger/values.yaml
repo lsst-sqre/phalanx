@@ -40,7 +40,7 @@ config:
   dryRun: false
   logging:
     # -- Level at which to log
-    logLevel: info
+    log_level: info
     # -- "production" (JSON logs) or "development" (human-friendly)
     profile: production
     # -- Add timestamps to log lines
@@ -51,17 +51,19 @@ policy:
   - path: /scratch
     # -- Files this large or larger will be subject to the "large" interval set
     threshold: 1GiB
-    # -- If any of these times are older than specified, remove the file
-    # @default -- see `values.yaml`
+    # -- If any of these times are older than specified, remove the
+    # file.  Zero means "never remove".
+    # @default -- see `values.yaml`, but in short, never remove: each
+    # environment must set its own values.
     intervals:
       large:
-        accessInterval: 15d
-        modificationInterval: 90d
-        creationInterval: 180d
+        accessInterval: 0
+        modificationInterval: 0
+        creationInterval: 0
       small:
-        accessInterval: 30d
-        modificationInterval: 180d
-        creationInterval: 360d
+        accessInterval: 0
+        modificationInterval: 0
+        creationInterval: 0
 
 nfs:
   # -- Hostname or IP address for NFS server
