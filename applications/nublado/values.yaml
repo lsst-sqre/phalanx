@@ -66,17 +66,17 @@ controller:
       # -- Argo CD application in which to collect user file servers
       application: "nublado-fileservers"
 
-      # -- Timeout to wait for Kubernetes to create file servers, in seconds
-      creationTimeout: 120
+      # -- Timeout to wait for Kubernetes to create file servers, in Safir
+      # `parse_timedelta` format
+      creationTimeout: 2m
 
-      # -- Timeout for deleting a user's file server from Kubernetes, in
-      # seconds
-      # @default -- 60 (1 minute)
-      deleteTimeout: 60
+      # -- Timeout for deleting a user's file server from Kubernetes, in Safir
+      # `parse_timedelta` format
+      deleteTimeout: 1m
 
-      # -- Timeout for idle user fileservers, in seconds
-      # @default -- 3600 (1 hour)
-      idleTimeout: 3600
+      # -- Timeout for idle user fileservers, in Safir `parse_timedelta`
+      # format
+      idleTimeout: 1h
 
       image:
         # -- File server image to use
@@ -159,9 +159,8 @@ controller:
       application: "nublado-users"
 
       # -- Timeout for deleting a user's lab resources from Kubernetes in
-      # seconds
-      # @default -- 60 (1 minute)
-      deleteTimeout: 60
+      # Safir `parse_timedelta` format
+      deleteTimeout: 1m
 
       # -- Environment variables to set for every user lab
       # @default -- See `values.yaml`
@@ -366,8 +365,8 @@ hub:
       memory: "130Mi"
 
   timeout:
-    # -- Timeout for JupyterLab to start. Currently this sometimes takes over
-    # 60 seconds for reasons we don't understand.
+    # -- Timeout for JupyterLab to start in seconds. Currently this sometimes
+    # takes over 60 seconds for reasons we don't understand.
     startup: 90
 
 # JupyterHub proxy configuration handled directly by this chart rather than by
@@ -412,7 +411,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "6.1.0"
+      tag: "6.3.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
