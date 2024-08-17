@@ -147,8 +147,8 @@ kafka-connect-manager:
         topicsRegex: ".*LaserTracker"
       lsstcam:
         enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
+        repairerConnector: true
+        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
 telegraf-kafka-consumer:
   enabled: true
