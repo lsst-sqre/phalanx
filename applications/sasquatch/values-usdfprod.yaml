@@ -132,61 +132,141 @@ telegraf-kafka-consumer:
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
+    # Sasquatch backpack connector
     backpack:
       enabled: true
-      replicaCount: 1
       database: "lsst.backpack"
-      timestamp_format: "unix"
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
+    # CSC connectors
+    maintel:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+      offset: "newest"
+    mtmount:
+      enabled: true
+      database: "efd"
+      replicaCount: 8
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTMount" ]
+      offset: "newest"
+    comcam:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      offset: "newest"
+    eas:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+         [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      offset: "newest"
+    m1m3:
+      enabled: true
+      database: "efd"
+      replicaCount: 8
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3" ]
+      offset: "newest"
+    m2:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      offset: "newest"
+    obssys:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      offset: "newest"
+    ocps:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.OCPS" ]
+      offset: "newest"
+    pmd:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.PMD" ]
+      offset: "newest"
+    calsys:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      offset: "newest"
+    mtaircompressor:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAirCompressor" ]
+      offset: "newest"
+    genericcamera:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      offset: "newest"
+    gis:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GIS" ]
+      offset: "newest"
+    lsstcam:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      offset: "newest"
     auxtel:
       enabled: true
       database: "efd"
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
     latiss:
       enabled: true
       database: "efd"
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
     test:
       enabled: true
       database: "efd"
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Test" ]
     lasertracker:
       enabled: true
       database: "efd"
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
+    # CCS connectors (experimental) data is being written on separate databases for now
     atcamera:
       enabled: true
-      replicaCount: 1
       database: "lsst.ATCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
@@ -196,7 +276,6 @@ telegraf-kafka-consumer:
         [ "lsst.ATCamera" ]
     cccamera:
       enabled: true
-      replicaCount: 1
       database: "lsst.CCCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
@@ -206,7 +285,6 @@ telegraf-kafka-consumer:
         [ "lsst.CCCamera" ]
     mtcamera:
       enabled: true
-      replicaCount: 1
       database: "lsst.MTCamera"
       timestamp_format: "unix_ms"
       timestamp_field: "timestamp"
