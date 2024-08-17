@@ -148,7 +148,7 @@ kafka-connect-manager:
       lsstcam:
         enabled: true
         repairerConnector: false
-        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
+        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
 telegraf-kafka-consumer:
   enabled: true
