@@ -23,6 +23,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | config.emailVerifiedPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/thanks-for-verifying` page |
 | config.pendingApprovalPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-approval` page |
 | config.pendingVerificationPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-confirmation` |
+| config.plausibleDomain | string | `nil` | Plausible tracking domain. For example, `data.lsst.cloud`. @default null disables Plausible tracking |
 | config.semaphoreUrl | string | `nil` | URL to the Semaphore (user notifications) API service. @default null disables the Semaphore integration |
 | config.siteDescription | string | `"Access Rubin Observatory Legacy Survey of Space and Time data.\n"` | Site description, used in meta tags |
 | config.siteName | string | `"Rubin Science Platform"` | Name of the site, used in the title and meta tags. |
