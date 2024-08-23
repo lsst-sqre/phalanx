@@ -1,13 +1,26 @@
-image:
-  # -- obsloctap image to use
-  repository: "ghcr.io/lsst-dm/obsloctap"
+obsloctap:
+  image:
+    # -- obsloctap image to use
+    repository: "ghcr.io/lsst-dm/obsloctap"
 
-  # -- Pull policy for the obsloctap image
-  pullPolicy: "IfNotPresent"
+    # -- Pull policy for the obsloctap image
+    pullPolicy: "IfNotPresent"
 
-  # -- Tag of obsloctap image to use
-  # @default -- The appVersion of the chart
-  tag: "tickets-dm-38824"
+    # -- Tag of image to use
+    # @default -- The appVersion of the chart
+    tag: "tickets-dm-44729"
+
+consume-kafka:
+  image:
+    # -- obsloctap image to use
+    repository: "ghcr.io/lsst-dm/consume-kafka"
+
+    # -- Pull policy for the obsloctap image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of image to use
+    # @default -- The appVersion of the chart
+    tag: "tickets-dm-44729`"
 
 # -- Environment variables (e.g. butler configuration/auth parms) for panel
 environment: {}
