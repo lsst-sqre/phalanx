@@ -2,6 +2,11 @@ apiVersion: roundtable.lsst.codes/v1beta1
 kind: StrimziSchemaRegistry
 metadata:
   name: {{ .Values.name }}
+  annotations:
+    # Update this field if `make apply` by itself doesn't make a new revision.
+    description: "Schema registry for handling Avro schemas"
+    maintained-by: "drbsmart@uw.edu"
+    revision: "1"
 spec:
   strimzi-version: {{ .Values.strimziAPIVersion }}
   listener: internal
