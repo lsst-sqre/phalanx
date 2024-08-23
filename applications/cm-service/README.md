@@ -30,8 +30,6 @@ Campaign Management for Rubin Data Release Production
 | image.repository | string | `"ghcr.io/lsst-dm/cm-service"` | Image to use for frontend containers |
 | image.tag | string | The appVersion of the chart | Tag of frontend image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the frontend ingress rule |
-| redis.config.secretKey | string | `"password"` | Key inside secret from which to get the Redis password (do not change) |
-| redis.config.secretName | string | `"redis-secret"` | Name of secret containing Redis password |
 | worker.affinity | object | `{}` | Affinity rules for the worker pods |
 | worker.htcondor.config.contents | string | `nil` | If specified, contents of htcondor config file to be injected into worker containers |
 | worker.htcondor.config.mountPath | string | `nil` | If specified, location for htcondor config file to be injected into worker containers |
