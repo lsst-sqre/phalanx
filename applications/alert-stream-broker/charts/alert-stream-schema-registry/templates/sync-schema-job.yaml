@@ -18,12 +18,15 @@ spec:
         app.kubernetes.io/managed-by: {{ .Release.Service | quote }}
         app.kubernetes.io/instance: {{ .Release.Name | quote }}
         helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+      annotations:
+        description: "Load schemas into registry."
     spec:
       restartPolicy: Never
       containers:
       - name: sync-schema-job
-        image: "{{ .Values.schemaSync.image.repository }}:{{ .Values.schemaSync.image.tag | default .Chart.AppVersion }}"
+        image: {{ .Values.schemaSync.image.repository }}@{{ .Values.schemaSync.image.digest }}
+        imagePullPolicy: "{{ .Values.schemaSync.image.pullPolicy}}"
         command:
-          - "syncLatestSchemaToRegistry.py"
+          - "syncAllSchemasToRegistry.py"
           - "--schema-registry-url=http://{{ .Values.name }}:{{ .Values.port }}"
           - "--subject={{ .Values.schemaSync.subject }}"
