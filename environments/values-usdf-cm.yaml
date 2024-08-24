@@ -10,3 +10,5 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+
+  cm-service: true

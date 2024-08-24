@@ -22,4 +22,3 @@ applications:
   squareone: true
   times-square: true
   vault-secrets-operator: true
-  cm-service: true

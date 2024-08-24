@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "cm-service-worker"
+  labels:
+    {{- include "cm-service.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "cm-service.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
+  template:
+    metadata:
+      annotations:
+        {{- with .Values.worker.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "cm-service.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "worker"
+    spec:
+      {{- with .Values.worker.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: "cm-service-worker"
+          env:
+            - name: CM_ARQ_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secret
+                  key: password
+            - name: CM_ARQ_REDIS_URL
+              value: "redis://cm-service-redis/1"
+          image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: "/output"
+              name: "output-volume"
+              {{- with .Values.config.outputVolume.subPath }}
+              subPath: {{ . }}
+              {{- end }}
+            - mountPath: "/tmp"
+              name: "tmp-volume"
+            {{- with .Values.worker.htcondor.config }}
+            - mountPath: {{ .mountPath }}
+              name: "condor-config-volume"
+              readOnly: true
+            {{- end }}
+            {{- with .Values.worker.htcondor.fsRemoteDir }}
+            - mountPath: {{ .mountPath }}
+              name: "condor-remote-volume"
+              {{- with .subPath }}
+              subPath: {{ . }}
+              {{- end }}
+            {{- end }}
+            {{- with .Values.worker.htcondor.scheddAddress }}
+            - mountPath: {{ .mountPath }}
+              name: "condor-schedd-volume"
+              readOnly: true
+            {{- end }}
+      volumes:
+        - name: output-volume
+          persistentVolumeClaim:
+            claimName: cm-service-output
+        - name: tmp-volume
+          emptyDir:
+            sizeLimit: 500Mi
+        {{- with .Values.worker.htcondor.config }}
+        - name: condor-config-volume
+          configMap:
+            name: cm-service-config-worker
+            items:
+              - key: config
+                path: condor-config
+        {{- end }}
+        {{- with .Values.worker.htcondor.fsRemoteDir }}
+        - name: condor-remote-volume
+          persistentVolumeClaim:
+            claimName: cm-service-htcondor
+        {{- end }}
+        {{- with .Values.worker.htcondor.scheddAddress }}
+        - name: condor-schedd-volume
+          configMap:
+            name: cm-service-config-worker
+            items:
+              - key: scheddAddress
+                path: schedd-address
+        {{- end }}
+      {{- with .Values.worker.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.worker.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
