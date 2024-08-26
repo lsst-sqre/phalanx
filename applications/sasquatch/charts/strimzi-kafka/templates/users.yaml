@@ -300,3 +300,41 @@ spec:
         host: "*"
         operation: All
 {{- end }}
+{{- if .Values.users.appmetrics.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: appmetrics
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: sasquatch
+          key: appmetrics-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "lsst.square.metrics"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
+          type: cluster
+        operations:
+          - Describe
+          - DescribeConfigs
+  # TODO: Any quotas needed?
+{{- end }}
