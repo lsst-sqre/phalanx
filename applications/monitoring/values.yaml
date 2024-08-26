@@ -32,6 +32,8 @@ influxdb2:
     hostname: ""
     className: "nginx"
     path: "/"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
 
   startupProbe:
     # -- Whether to enable a startup probe
@@ -74,7 +76,7 @@ chronograf:
   # @default -- quay.io/influxdb/chronograf 1.10.3
   image:
     repository: "quay.io/influxdb/chronograf"
-    tag: 1.10.4
+    tag: 1.10.5
     pullPolicy: IfNotPresent
 
   ## Specify a service type

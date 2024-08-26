@@ -76,14 +76,13 @@ class HelmStorage:
         with (path / "Chart.yaml").open("w") as fh:
             yaml.dump(chart, fh)
 
-        # Support an additional substitution variable, <CHARTENVPREFIX>,
-        # that's only used in templates/configmap.yaml.
-        configmap_path = path / "templates" / "configmap.yaml"
-        if configmap_path.exists():
-            configmap = configmap_path.read_text().replace(
-                "<CHARTENVPREFIX>", application.upper().replace("-", "_")
-            )
-            configmap_path.write_text(configmap)
+        # Support an additional substitution variable, <CHARTENVPREFIX>.
+        for env_path in (path / "templates").iterdir():
+            if env_path.is_file() and env_path.suffix == ".yaml":
+                text = env_path.read_text().replace(
+                    "<CHARTENVPREFIX>", application.upper().replace("-", "_")
+                )
+                env_path.write_text(text)
 
     def dependency_update(
         self, application: str, *, quiet: bool = False
@@ -266,7 +265,7 @@ class HelmStorage:
             name = hostname.split(".")[-2]
         else:
             name = hostname
-        self._helm.run("repo", "add", name, url, quiet=quiet)
+        self._helm.run("repo", "add", "--force-update", name, url, quiet=quiet)
 
     def repo_update(self, *, quiet: bool = False) -> None:
         """Update Helm's cache of upstream repository indices.

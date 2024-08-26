@@ -52,35 +52,6 @@ strimzi-kafka:
       limits:
         memory: 8Gi
         cpu: "2"
-  zookeeper:
-    replicas: 3
-    storage:
-      size: 100Gi
-      storageClassName: "premium-rwo"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: "roundtable.lsst.cloud/pool"
-                  operator: In
-                  values:
-                    - "zookeeper"
-      podAntiAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-                - key: "strimzi.io/cluster"
-                  operator: "In"
-                  values:
-                    - "sasquatch"
-            topologyKey: "kubernetes.io/hostname"
-    tolerations:
-      - key: dedicated
-        operator: Equal
-        value: "zookeeper"
-        effect: NoExecute
-
   users:
     tsSalKafka:
       enabled: false

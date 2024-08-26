@@ -26,6 +26,17 @@ config:
   # Each flock listed will be automatically started when mobu is started.
   autostart: []
 
+  # -- Configuration for the GitHub refresh app integration.
+  # See https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration
+  # @default -- disabled.
+  githubRefreshApp: {}
+
+  # -- Configuration for the GitHub CI app integration.
+  # -- Configuration for the GitHub refresh app integration.
+  # See https://mobu.lsst.io/operations/github_ci_app.html#add-phalanx-configuration
+  # @default -- disabled.
+  githubCiApp: {}
+
   # -- If set to true, include the output from all flocks in the main mobu log
   # and disable structured JSON logging.
   debug: false

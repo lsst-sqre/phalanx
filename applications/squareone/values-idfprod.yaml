@@ -1,6 +1,10 @@
 replicaCount: 3
 
+ingress:
+  timesSquareScope: "exec:admin"
+
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://data.lsst.cloud/semaphore"
   coManageRegistryUrl: "https://id.lsst.cloud"
+  plausibleDomain: "data.lsst.cloud"

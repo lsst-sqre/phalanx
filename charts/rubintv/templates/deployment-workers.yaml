@@ -5,12 +5,12 @@ kind: Deployment
 metadata:
   name: {{ template "rubintv.fullname" . }}-workers
   labels:
-    {{- include "rubintv.labels" . | nindent 4 }}
+    {{- include "rubintv.workers.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.workers.replicas }}
   selector:
     matchLabels:
-      {{- include "rubintv.selectorLabels" . | nindent 6 }}
+      {{- include "rubintv.workers.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "rubintv.selectorLabels" . | nindent 8 }}
+        {{- include "rubintv.workers.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       {{- with .Values.imagePullSecrets }}
@@ -97,24 +97,30 @@ spec:
         - "-c"
         - |
           cp /secrets/* /etc/secrets && \
+{{- if (not .Values.separateSecrets) }}
           cp /secrets-butler/* /etc/secrets && \
+{{- end }}
           chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
            /etc/secrets/* && \
           chmod 0600 /etc/secrets/*
         volumeMounts:
         - name: "secrets"
           mountPath: "/secrets"
+{{- if (not .Values.separateSecrets) }}
         - name: "butler-secrets"
           mountPath: "/secrets-butler"
+{{- end }}
         - name: "user-secrets"
           mountPath: "/etc/secrets"
       volumes:
       - name: "secrets"
         secret:
           secretName: {{ include "rubintv.fullname" . }}-secrets
+{{- if (not .Values.separateSecrets) }}
       - name: "butler-secrets"
         secret:
           secretName: butler-secret
+{{- end }}
       - name: "user-secrets"
         emptyDir: {}
       {{- range $vol := .Values.workers.volumes }}

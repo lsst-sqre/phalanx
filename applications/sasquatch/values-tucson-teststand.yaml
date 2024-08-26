@@ -3,10 +3,6 @@ strimzi-kafka:
     monitorLabel:
       lsst.io/monitor: "true"
   kafka:
-    disruption_tolerance: 1
-    config:
-      auto.create.topics.enable: false
-      log.cleaner.min.compaction.lag.ms: 259200000
     storage:
       storageClassName: rook-ceph-block
     externalListener:
@@ -16,11 +12,14 @@ strimzi-kafka:
         loadBalancerIP: "140.252.146.59"
         host: sasquatch-tts-kafka-bootstrap.lsst.codes
       brokers:
-        - loadBalancerIP: "140.252.146.46"
+        - broker: 0
+          loadBalancerIP: "140.252.146.46"
           host: sasquatch-tts-kafka-0.lsst.codes
-        - loadBalancerIP: "140.252.146.58"
+        - broker: 1
+          loadBalancerIP: "140.252.146.58"
           host: sasquatch-tts-kafka-1.lsst.codes
-        - loadBalancerIP: "140.252.146.47"
+        - broker: 2
+          loadBalancerIP: "140.252.146.47"
           host: sasquatch-tts-kafka-2.lsst.codes
     resources:
       requests:
@@ -41,11 +40,6 @@ strimzi-kafka:
       limits:
         cpu: 500m
         memory: 128Mi
-  zookeeper:
-    storage:
-      storageClassName: rook-ceph-block
-    metricsConfig:
-      enabled: false
   users:
     tsSalKafka:
       enabled: true
@@ -62,10 +56,6 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: tucson-teststand.lsst.codes
       path: /schema-registry(/|$)(.*)
-  connect:
-    config:
-      key.converter: org.apache.kafka.connect.json.JsonConverter
-      key.converter.schemas.enable: false
   kraft:
     enabled: true
   kafkaController:
@@ -107,7 +97,7 @@ telegraf-kafka-consumer:
     eas:
       enabled: true
       topicRegexps: |
-        [ ".*DIMM", ".*DSM", ".*ESS", ".*WeatherForecast" ]
+        [ ".*DIMM", ".*DSM", ".*EPM", ".*ESS", ".*WeatherForecast" ]
     latiss:
       enabled: true
       topicRegexps: |
@@ -134,15 +124,11 @@ telegraf-kafka-consumer:
     calsys:
       enabled: true
       topicRegexps: |
-        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LEDProjector", ".*LinearStage", ".*TunableLaser" ]
+        [ ".*ATMonochromator", ".*ATWhiteLight", ".*CBP", ".*Electrometer", ".*FiberSpectrograph", ".*LEDProjector", ".*LinearStage", ".*MTReflector", ".*TunableLaser" ]
     mtaircompressor:
       enabled: true
       topicRegexps: |
         [ ".*MTAirCompressor" ]
-    authorize:
-      enabled: true
-      topicRegexps: |
-        [ ".*Authorize" ]
     lasertracker:
       enabled: true
       topicRegexps: |
@@ -175,7 +161,7 @@ kafka-connect-manager:
         topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
       eas:
         enabled: true
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*WeatherForecast"
+        topicsRegex: ".*DIMM|.*DSM|.*EPM|.*ESS|.*WeatherForecast"
       latiss:
         enabled: true
         topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
@@ -196,13 +182,10 @@ kafka-connect-manager:
         topicsRegex: "lsst.sal.Test"
       calsys:
         enabled: true
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*TunableLaser"
+        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*MTReflector|.*TunableLaser"
       mtaircompressor:
         enabled: true
         topicsRegex: ".*MTAirCompressor"
-      authorize:
-        enabled: true
-        topicsRegex: ".*Authorize"
       lasertracker:
         enabled: true
         topicsRegex: ".*LaserTracker"
@@ -211,8 +194,6 @@ kafka-connect-manager:
         topicsRegex: ".*GCHeaderService|.*GenericCamera"
 
 kafdrop:
-  image:
-    tag: 4.0.0
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
@@ -224,7 +205,7 @@ rest-proxy:
     enabled: true
     hostname: tucson-teststand.lsst.codes
   configurationOverrides:
-    "access.control.allow.origin": http://love1.tu.lsst.org
+    "access.control.allow.origin": https://tucson-teststand.lsst.codes/love
   kafka:
     topics:
       - test.next-visit

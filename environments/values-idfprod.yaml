@@ -1,7 +1,6 @@
 name: "idfprod"
 fqdn: "data.lsst.cloud"
 appOfAppsName: "science-platform"
-butlerRepositoryIndex: "s3://butler-us-central1-repo-locations/data-repos.yaml"
 butlerServerRepositories:
   dp01: "https://data.lsst.cloud/api/butler/repo/dp01/butler.yaml"
   dp02: "https://data.lsst.cloud/api/butler/repo/dp02/butler.yaml"
@@ -29,4 +28,5 @@ applications:
   tap: true
   telegraf: true
   telegraf-ds: true
+  times-square: true
   vo-cutouts: true

@@ -55,7 +55,7 @@ The value of the field is the value of the secret.
 For a new application, create a new 1Password item of type :guilabel:`Server`.
 Delete all of the pre-defined fields.
 
-Then, create a field for each static secret for that application, and set the value to the value of that secret in that environemnt.
+Then, create a field for each static secret for that application, and set the value to the value of that secret in that environment.
 The field names should match the secret keys for the application.
 Change the field type to password so that the value isn't displayed any time someone opens the 1Password entry.
 

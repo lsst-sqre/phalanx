@@ -1,0 +1,2 @@
+config:
+  sasquatchRestProxyUrl: https://data-int.lsst.cloud/sasquatch-rest-proxy

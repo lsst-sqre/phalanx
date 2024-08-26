@@ -1,0 +1,11 @@
+test42:
+  image:
+    repository: ts-dockerhub.lsst.org/test
+    pullPolicy: Always
+  env:
+    RUN_ARG: 42
+
+integration-testing:
+  enabled: true
+  envEfd: base_efd
+  s3Bucket: rubinobs-lfa-ls

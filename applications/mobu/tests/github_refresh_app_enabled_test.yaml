@@ -1,0 +1,45 @@
+suite: Github Refresh App Integration Enabled
+set:
+  config:
+    githubRefreshApp:
+      accepted_github_orgs:
+        - "org1"
+        - "org2"
+  global:
+    host: "example.com"
+tests:
+  - it: "Should create an anonymous ingress"
+    template: "ingress-github-refresh-app.yaml"
+    asserts:
+      - containsDocument:
+          kind: "GafaelfawrIngress"
+          apiVersion: gafaelfawr.lsst.io/v1alpha1
+      - equal:
+          path: "config.scopes.anonymous"
+          value: true
+
+  - it: "Should inject secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
+  - it: "Should create a ConfigMap"
+    template: "configmap-github-refresh-app.yaml"
+    asserts:
+      - containsDocument:
+          kind: "ConfigMap"
+          apiVersion: v1
+      - equal:
+          path: "data['github-refresh-app.yaml']"
+          value: |
+            accepted_github_orgs:
+            - org1
+            - org2

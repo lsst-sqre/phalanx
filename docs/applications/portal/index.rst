@@ -17,4 +17,5 @@ Guides
    :maxdepth: 1
 
    bootstrap
+   volumes
    values

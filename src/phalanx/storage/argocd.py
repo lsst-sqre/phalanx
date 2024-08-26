@@ -6,6 +6,7 @@ from datetime import timedelta
 
 from pydantic import SecretStr
 
+from ..exceptions import CommandFailedError
 from ..models.applications import Project
 from .command import Command
 
@@ -159,7 +160,12 @@ class ArgoCDStorage:
             raise `~phalanx.exceptions.CommandFailedError` instead. This
             exception means the Argo CD timeout didn't work for some reason.
         """
-        self._argocd.run(
+        # As of Argo CD 2.10.5, the first sync of Argo CD, cert-manager, and
+        # Gafaelfawr always fails with a spurious error claiming the
+        # infrastructure project had not been created. This is transient; the
+        # second execution succeeds. Therefore, on CommandFailedError, try
+        # running the same command again.
+        args = [
             "app",
             "sync",
             application,
@@ -168,7 +174,11 @@ class ArgoCDStorage:
             "--port-forward",
             "--port-forward-namespace",
             "argocd",
-        )
+        ]
+        try:
+            self._argocd.run(*args)
+        except CommandFailedError:
+            self._argocd.run(*args)
 
     def sync_all(
         self,

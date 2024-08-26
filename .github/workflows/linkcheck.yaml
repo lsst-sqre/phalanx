@@ -1,6 +1,6 @@
 # This is a separate documentation build just to check links.  We don't check
 # links as part of the normal documentation build since, unlike Sphinx errors
-# and warnings, we don't want broken links to block a merge.  (Sometimes they
+# and warnings, we don't want broken links to block a merge. (Sometimes they
 # will be fixed by the same merge, sometimes they're temporary rate limit
 # issues.)
 #
@@ -50,5 +50,5 @@ jobs:
         with:
           python-version: "3.12"
           tox-envs: docs-linkcheck
-          tox-plugins: tox-uv
+          tox-requirements: requirements/tox.txt
           cache-key-prefix: docs-linkcheck

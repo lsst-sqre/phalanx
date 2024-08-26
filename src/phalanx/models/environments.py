@@ -180,12 +180,6 @@ class EnvironmentBaseConfig(CamelCaseModel):
         ),
     )
 
-    butler_repository_index: str | None = Field(
-        None,
-        title="Butler repository index URL",
-        description="URL to Butler repository index",
-    )
-
     butler_server_repositories: dict[str, AnyUrl] | None = Field(
         None,
         title="Butler repositories accessible via Butler server",
@@ -400,6 +394,7 @@ class IdentityProvider(Enum):
 
     CILOGON = "CILogon"
     GITHUB = "GitHub"
+    GOOGLE = "Google"
     OIDC = "OpenID Connect"
     NONE = "None"
 
@@ -447,6 +442,35 @@ class GafaelfawrScope(BaseModel):
         return result
 
 
+class ArgoCDDetails(BaseModel):
+    """Details about the Argo CD configuration for an environment."""
+
+    provider: IdentityProvider
+    """Type of identity provider used for Argo CD."""
+
+    provider_hostname: str | None = None
+    """Hostname of Argo CD identity provider, if meaningful."""
+
+    rbac: ArgoCDRBAC | None = None
+    """Argo CD RBAC configuration."""
+
+    url: str | None = None
+    """URL for the Argo CD UI."""
+
+
+class GafaelfawrDetails(BaseModel):
+    """Details about the Gafaelfawr configuration for an environment."""
+
+    provider: IdentityProvider
+    """Type of identity provider used by Gafaelfawr in this environment."""
+
+    provider_hostname: str | None = None
+    """Hostname of upstream identity provider, if meaningful."""
+
+    scopes: list[GafaelfawrScope] = []
+    """Gafaelfawr scopes and their associated groups."""
+
+
 class EnvironmentDetails(EnvironmentBaseConfig):
     """Full details about an environment, including auth and Argo CD.
 
@@ -459,17 +483,11 @@ class EnvironmentDetails(EnvironmentBaseConfig):
     applications: list[Application]
     """List of enabled applications."""
 
-    argocd_url: str | None
-    """URL for the Argo CD UI."""
+    argocd: ArgoCDDetails
+    """Details about the Argo CD configuration."""
 
-    argocd_rbac: ArgoCDRBAC | None
-    """Argo CD RBAC configuration."""
-
-    identity_provider: IdentityProvider
-    """Type of identity provider used by Gafaelfawr in this environment."""
-
-    gafaelfawr_scopes: list[GafaelfawrScope]
-    """Gafaelfawr scopes and their associated groups."""
+    gafaelfawr: GafaelfawrDetails
+    """Details about the Gafaelfawr configuration."""
 
 
 class PhalanxConfig(BaseModel):

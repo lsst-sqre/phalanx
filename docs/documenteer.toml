@@ -43,6 +43,7 @@ rst_epilog_file = "_rst_epilog.rst"
 
 [sphinx.intersphinx.projects]
 click = "https://click.palletsprojects.com/en/8.1.x/"
+hvac = "https://hvac.readthedocs.io/en/stable/"
 python = "https://docs.python.org/3/"
 safir = "https://safir.lsst.io/"
 sphinx = "https://www.sphinx-doc.org/en/master/"
@@ -64,6 +65,8 @@ ignore = [
     '^https://rsp.lsst.ac.uk',
     '^https://roundtable-dev.lsst.cloud',
     '^https://roundtable.lsst.cloud',
+    '^https://usdf-cm.slac.stanford.edu',
+    '^https://usdf-cm-dev.slac.stanford.edu',
     '^https://usdf-prompt-processing-dev.slac.stanford.edu',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',

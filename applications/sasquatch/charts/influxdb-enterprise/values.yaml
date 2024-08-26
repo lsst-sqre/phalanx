@@ -157,7 +157,7 @@ meta:
 
     # -- Node port for the meta service
     # @default -- Do not allocate a node port
-    nodePort: 30086
+    nodePort: 0
 
     # -- Extra annotations for the meta service
     annotations: {}
@@ -294,7 +294,7 @@ data:
 
     # -- Node port for the data service
     # @default -- Do not allocate a node port
-    nodePort: 30091
+    nodePort: 0
 
     # -- Extra annotations for the data service
     annotations: {}

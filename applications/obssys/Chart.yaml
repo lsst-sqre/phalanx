@@ -15,16 +15,19 @@ dependencies:
   version: 1.0.0
   repository: file://../../charts/csc
 - name: csc
-  alias: authorize
-  version: 1.0.0
-  condition: authorize.enabled
-  repository: file://../../charts/csc
-- name: csc
   alias: mtqueue
   version: 1.0.0
   repository: file://../../charts/csc
 - name: csc
   alias: mtscheduler
+  version: 1.0.0
+  repository: file://../../charts/csc
+- name: csc
+  alias: ocsqueue
+  version: 1.0.0
+  repository: file://../../charts/csc
+- name: csc
+  alias: ocsscheduler
   version: 1.0.0
   repository: file://../../charts/csc
 - name: csc

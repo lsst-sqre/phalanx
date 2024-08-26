@@ -71,12 +71,22 @@ ingress:
 # -- Resource requests and limits for noteburst
 # @default -- See `values.yaml`
 resources:
-  limits:
-    cpu: "1"
-    memory: "256Mi"
-  requests:
-    cpu: "2m"
-    memory: "50Mi"
+  # -- Resource limits and requests for the noteburst FastAPI pods
+  noteburst:
+    limits:
+      cpu: "1"
+      memory: "512Mi"
+    requests:
+      cpu: "2m"
+      memory: "128Mi"
+  # -- Resource limits and requests for the noteburst arq worker FastAPI pods
+  noteburstWorker:
+    limits:
+      cpu: "1"
+      memory: "4000Mi"
+    requests:
+      cpu: "2m"
+      memory: "256Mi"
 
 autoscaling:
   enabled: false
@@ -133,7 +143,7 @@ config:
 redis:
   persistence:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
-    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # false will use `emptyDir` and reset data on every restart. Only
     # use this for a test deployment.
     enabled: true
 
@@ -152,10 +162,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "32Mi"
+      memory: "4Gi"
     requests:
       cpu: "2m"
-      memory: "4Mi"
+      memory: "512Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

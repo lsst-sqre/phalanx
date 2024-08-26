@@ -85,18 +85,6 @@ atscheduler:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
 
-authorize:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/authorize
-    pullPolicy: Always
-  env:
-    RUN_ARG: --state enabled
-    AUTHLIST_USER_NAME: authlist_user
-  envSecrets:
-  - name: AUTHLIST_USER_PASS
-    key: authlist-user-pass
-
 mtqueue:
   classifier: scriptqueue1
   image:
@@ -156,6 +144,93 @@ mtscheduler:
     pullPolicy: Always
   env:
     INDEX: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs-scratch.tu.lsst.org
+    serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.tu.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+
+ocsqueue:
+  classifier: scriptqueue3
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 3 --state enabled
+    USER_USERNAME: user
+  butlerSecret:
+    containerPath: *bS-cP
+    dbUser: *bS-dbU
+    secretFilename: *bS-sFn
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-oods
+    containerPath: /data/lsstdata/TTS/auxtel
+    readOnly: true
+    server: nfs-auxtel.tu.lsst.org
+    serverPath: /auxtel/lsstdata/TTS/auxtel
+  - name: comcam-gen3-butler
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /repo/LSSTComCam
+  - name: comcam-gen3-oods
+    containerPath: /data/lsstdata/TTS/comcam
+    readOnly: true
+    server: comcam-archiver.tu.lsst.org
+    serverPath: /lsstdata/TTS/comcam
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs-project.tu.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.tu.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+
+ocsscheduler:
+  classifier: scheduler3
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 3
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id

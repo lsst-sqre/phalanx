@@ -8,14 +8,13 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 36
-      recommendedTag: "recommended_c0036"
+      cycle: 38
+      recommendedTag: "recommended_c0038"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        FIREFLY_HTML: "slate.html"
         LSST_DDS_INTERFACE: "net1"
         LSST_DDS_PARTITION_PREFIX: "summit"
         LSST_SITE: "summit"
@@ -26,7 +25,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "6.0.2"
+            tag: "6.3.0"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -115,8 +114,14 @@ controller:
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
 
+hub:
+  internalDatabase: false
+
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.cp.lsst.org/nublado3"
+
+secrets:
+  templateSecrets: true

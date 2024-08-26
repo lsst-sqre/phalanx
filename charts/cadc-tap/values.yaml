@@ -71,12 +71,15 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.15.0"
+      tag: "1.18.5"
 
   qserv:
     # -- QServ hostname:port to connect to
     # @default -- `"mock-db:3306"` (the mock QServ)
     host: "mock-db:3306"
+
+    # -- Extra JDBC connection parameters
+    jdbcParams: ""
 
     image:
       # -- TAP image to use
@@ -86,13 +89,17 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.2.0"
+      tag: "2.4.7"
+
+    # -- Whether the Qserv database is password protected
+    # @default -- false
+    passwordEnabled: false
 
   # -- Address to a MySQL database containing TAP schema data
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/2.6.1/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/3.0.2/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -155,7 +162,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "2.6.1"
+    tag: "3.0.2"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -188,7 +195,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.2.0"
+    tag: "2.4.7"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -211,6 +218,56 @@ uws:
 
   # -- Affinity rules for the UWS database pod
   affinity: {}
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.37.0"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
+  instanceConnectionName: ""
+
+  # -- The Google service account that has an IAM binding to the `cadc-tap`
+  # Kubernetes service accounts and has the `cloudsql.client` role, access
+  # @default -- None, must be set
+  serviceAccount: ""
+
+  # -- CloudSQL database name
+  # @default -- None, must be set
+  database: ""
+
+  # -- Resource limits and requests for the Cloud SQL Proxy container
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
+
+# -- The service account will allways be created when cloudsql.enabled is set to true
+# In this case the serviceAccount configuration here is required
+serviceAccount:
+  # -- Specifies whether a service account should be created.
+  create: false
+
+  # -- Annotations to add to the service account
+  annotations: {}
+
+  # The name of the service account to use.
+  # @default -- None, must be set if service account creation is enabled
+  name: ""
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

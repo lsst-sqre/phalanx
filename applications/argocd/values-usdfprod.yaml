@@ -23,22 +23,36 @@ argo-cd:
         requestedIDTokenClaims: {"groups": {"essential": true}}
     rbac:
       policy.csv: |
-        g, ytl@slac.stanford.edu, role:admin
-        g, ppascual@slac.stanford.edu, role:admin
-        g, pav@slac.stanford.edu, role:admin
-        g, dspeck@slac.stanford.edu, role:admin
+        p, role:developer, applications, *, */*, allow
+        p, role:developer, applications, get, infrastructure/*, allow
+        p, role:developer, applications, create, infrastructure/*, deny
+        p, role:developer, applications, update, infrastructure/*, deny
+        p, role:developer, applications, delete, infrastructure/*, deny
+        p, role:developer, applications, sync, infrastructure/*, deny
+        p, role:developer, applications, override, infrastructure/*, deny
+        p, role:developer, applications, action/*, infrastructure/*, deny
+
         g, afausti@slac.stanford.edu, role:admin
-        g, mfl@slac.stanford.edu, role:admin
-        g, frossie@slac.stanford.edu, role:admin
-        g, hchiang2@slac.stanford.edu, role:admin
         g, athor@slac.stanford.edu, role:admin
+        g, dspeck@slac.stanford.edu, role:admin
+        g, frossie@slac.stanford.edu, role:admin
+        g, jsick@slac.stanford.edu, role:admin
+        g, pav@slac.stanford.edu, role:admin
+        g, ppascual@slac.stanford.edu, role:admin
         g, reinking@slac.stanford.edu, role:admin
-        g, smart@slac.stanford.edu, role:admin
-        g, omullan@slac.stanford.edu, role:admin
-        g, mreuter@slac.stanford.edu, role:admin
         g, rra@slac.stanford.edu, role:admin
-        g, fritzm@slac.stanford.edu, role:admin
+        g, ytl@slac.stanford.edu, role:admin
+        g, ktl@slac.stanford.edu, role:admin
         g, cslater@slac.stanford.edu, role:admin
+
+        g, fritzm@slac.stanford.edu, role:developer
+        g, hchiang2@slac.stanford.edu, role:developer
+        g, mfl@slac.stanford.edu, role:developer
+        g, mreuter@slac.stanford.edu, role:developer
+        g, omullan@slac.stanford.edu, role:developer
+        g, smart@slac.stanford.edu, role:developer
+        g, spothi@slac.stanford.edu, role:developer
+        g, bbrond@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:

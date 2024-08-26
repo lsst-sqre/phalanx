@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import json
+from contextlib import suppress
 from datetime import timedelta
 from pathlib import Path
 
 import jinja2
+from hvac.exceptions import Forbidden
 from safir.datetime import current_datetime, format_datetime_for_logging
 
 from ..constants import VAULT_WRITE_TOKEN_WARNING_LIFETIME
@@ -337,6 +339,11 @@ class VaultService:
         and finding all tokens whose display name match the expected display
         name of the write token for that environment.
 
+        Any accessors that cannot be retrieved are ignored, since our Vault
+        has at least one accessor that is apparently not usable by any of our
+        privileged tokens. Hopefully this won't cause duplicate write tokens
+        to be created.
+
         Parameters
         ----------
         vault_client
@@ -352,7 +359,8 @@ class VaultService:
         accessors = vault_client.list_token_accessors()
         tokens = []
         for accessor in accessors:
-            token = vault_client.get_token(accessor)
-            if token and token.display_name == config.vault_write_token:
-                tokens.append(token)
+            with suppress(Forbidden):
+                token = vault_client.get_token(accessor)
+                if token and token.display_name == config.vault_write_token:
+                    tokens.append(token)
         return tokens

@@ -42,6 +42,34 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
+            {{- if .Values.config.githubRefreshApp }}
+            - name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
+              value: "/etc/mobu/github-refresh-app.yaml"
+            - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "github-refresh-app-webhook-secret"
+            {{- end}}
+            {{- if .Values.config.githubCiApp }}
+            - name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
+              value: "/etc/mobu/github-ci-app.yaml"
+            - name: "MOBU_GITHUB_CI_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "github-ci-app-id"
+            - name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "github-ci-app-private-key"
+            - name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "github-ci-app-webhook-secret"
+            {{- end}}
             - name: "MOBU_PATH_PREFIX"
               value: {{ .Values.config.pathPrefix | quote }}
             {{- if .Values.config.debug }}
@@ -75,11 +103,9 @@ spec:
                 - ALL
             readOnlyRootFilesystem: true
           volumeMounts:
-            {{- if .Values.config.autostart }}
-            - name: "autostart"
+            - name: "config"
               mountPath: "/etc/mobu"
               readOnly: true
-            {{- end }}
             - name: "tmp"
               mountPath: "/tmp"
       securityContext:
@@ -87,11 +113,30 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        {{- if .Values.config.autostart }}
-        - name: "autostart"
-          configMap:
-            name: {{ include "mobu.fullname" . }}-autostart
-        {{- end }}
+        - name: "config"
+          projected:
+            sources:
+            {{- if .Values.config.autostart }}
+            - configMap:
+                name: {{ include "mobu.fullname" . }}-autostart
+                items:
+                  - key: autostart.yaml
+                    path: autostart.yaml
+            {{- end }}
+            {{- if .Values.config.githubCiApp }}
+            - configMap:
+                name: {{ include "mobu.fullname" . }}-github-ci-app
+                items:
+                  - key: github-ci-app.yaml
+                    path: github-ci-app.yaml
+            {{- end }}
+            {{- if .Values.config.githubRefreshApp }}
+            - configMap:
+                name: {{ include "mobu.fullname" . }}-github-refresh-app
+                items:
+                  - key: github-refresh-app.yaml
+                    path: github-refresh-app.yaml
+            {{- end }}
         - name: "tmp"
           emptyDir: {}
       {{- with .Values.nodeSelector }}

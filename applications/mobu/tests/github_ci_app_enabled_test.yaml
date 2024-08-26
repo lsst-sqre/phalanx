@@ -1,0 +1,67 @@
+suite: Github CI App Integration Enabled
+set:
+  config:
+    githubCiApp:
+      accepted_github_orgs:
+        - "org1"
+        - "org2"
+      users:
+        - "bot-mobu-ci-user-1"
+        - "bot-mobu-ci-user-2"
+      scopes:
+        - "exec:notebook"
+        - "read:tap"
+  global:
+    host: "example.com"
+tests:
+  - it: "Should create an anonymous ingress"
+    template: "ingress-github-ci-app.yaml"
+    asserts:
+      - containsDocument:
+          kind: "GafaelfawrIngress"
+          apiVersion: gafaelfawr.lsst.io/v1alpha1
+      - equal:
+          path: "config.scopes.anonymous"
+          value: true
+
+  - it: "Should inject secrets into the Deployment env"
+    template: "deployment.yaml"
+    asserts:
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_ID"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_PRIVATE_KEY"
+      - contains:
+          path: "spec.template.spec.containers[0].env"
+          any: true
+          content:
+            name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
+  - it: "Should create a ConfigMap"
+    template: "configmap-github-ci-app.yaml"
+    asserts:
+      - containsDocument:
+          kind: "ConfigMap"
+          apiVersion: v1
+      - equal:
+          path: "data['github-ci-app.yaml']"
+          value: |
+            accepted_github_orgs:
+            - org1
+            - org2
+            scopes:
+            - exec:notebook
+            - read:tap
+            users:
+            - bot-mobu-ci-user-1
+            - bot-mobu-ci-user-2

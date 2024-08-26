@@ -1,0 +1,9 @@
+apiVersion: v2
+appVersion: 0.1.0
+home: https://sasquatch-backpack.lsst.io/
+description: Collection of APIs that feed into Sasquatch
+name: sasquatch-backpack
+sources:
+- https://github.com/lsst-sqre/sasquatch-backpack
+type: application
+version: 1.0.0

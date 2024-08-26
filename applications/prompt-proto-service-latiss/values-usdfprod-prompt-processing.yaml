@@ -1,35 +1,46 @@
 prompt-proto-service:
 
   podAnnotations:
+    # HACK: disable autoscaling as workaround for DM-41829
+    autoscaling.knative.dev/min-scale: "20"
+    autoscaling.knative.dev/max-scale: "20"
     # Update this field if using latest or static image tag in dev
-    revision: "12"
+    revision: "1"
+
+  # HACK: disable autoscaling as workaround for DM-41829
+  worker:
+    restart: 15
 
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 3.0.0
+    tag: 4.3.0
 
   instrument:
     pipelines:
       # BLOCK-295 is the daily calibration sequence as of May 27, 2024
       main: >-
-        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
+        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe-noForced.yaml,
+        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
+        (survey="BLOCK-T17")=[]
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
         (survey="spec-survey")=[]
+        (survey="BLOCK-271")=[]
         (survey="BLOCK-295")=[]
         (survey="")=[]
       preprocessing: >-
         (survey="AUXTEL_PHOTO_IMAGING")=[]
         (survey="AUXTEL_DRP_IMAGING")=[]
+        (survey="BLOCK-T17")=[]
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
         (survey="spec-survey")=[]
+        (survey="BLOCK-271")=[]
         (survey="BLOCK-295")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
@@ -44,16 +55,16 @@ prompt-proto-service:
     # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
     # and files can take up to 20 seconds to arrive. Scheduler delay associated
     # with CWFS engineering data, should not apply to other cameras.
-    imageTimeout: '110'
+    imageTimeout: 110
 
   apdb:
-    config: s3://rubin-summit-users/apdb_config/pp_apdb_latiss.py
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.py
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     namespace: lsst.prompt.prod
     auth_env: false
 
-  logLevel: timer.lsst.activator=DEBUG lsst.resources=DEBUG
+  logLevel: timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.resources=DEBUG
 
   fullnameOverride: "prompt-proto-service-latiss"

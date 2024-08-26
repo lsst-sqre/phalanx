@@ -20,6 +20,10 @@ cadc-tap:
     # -- Vault secret name: the final key in the vault path
     vaultSecretName: "ssotap"
 
+  serviceAccount:
+    # Name of Service Account
+    name: "ssotap"
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

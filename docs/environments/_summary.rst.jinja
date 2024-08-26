@@ -5,9 +5,13 @@
    * - Root domain
      - `{{ env.fqdn }} <https://{{ env.fqdn }}>`__
    * - Identity provider
-     - {{ env.identity_provider.value }}
+     - {{ env.gafaelfawr.provider.value }}{% if env.gafaelfawr.provider_hostname %} ({{ env.gafaelfawr.provider_hostname }}){% endif %}
+   {%- if env.argocd.url %}
    * - Argo CD
-     - {% if env.argocd_url %}{{ env.argocd_url }}{% else %}N/A{% endif %}
+     - {{ env.argocd.url }}
+   {%- endif %}
+   * - Argo CD identity provider
+     - {{ env.argocd.provider.value }}{% if env.argocd.provider_hostname %} ({{ env.argocd.provider_hostname }}){% endif %}
    {%- if env.gcp %}
    * - Google console
      - - `Log Explorer <https://console.cloud.google.com/logs/query?project={{ env.gcp.project_id }}>`__
@@ -41,13 +45,13 @@
             -
             {%- endif %}
           {% endfor %}
-   {%- if env.gafaelfawr_scopes %}
+   {%- if env.gafaelfawr.scopes %}
    * - Gafaelfawr groups
      - .. list-table::
 
           * - Scope
             - Groups
-          {% for scope_groups in env.gafaelfawr_scopes %}
+          {% for scope_groups in env.gafaelfawr.scopes %}
           * - ``{{ scope_groups.scope }}``
             - - {{ scope_groups.groups_as_rst()[0] }}
             {%- if scope_groups.groups|length > 1 %}
@@ -57,13 +61,13 @@
             {%- endif %}
           {%- endfor %}
    {%- endif %}
-   {%- if env.argocd_rbac %}
+   {%- if env.argocd.rbac %}
    * - Argo CD RBAC
      - .. list-table::
 
           * - Role
             - Groups or users
-          {% for role, members in env.argocd_rbac.roles.items() %}
+          {% for role, members in env.argocd.rbac.roles.items() %}
           * - ``{{ role }}``
             - - {{ members[0] }}
             {%- if members|length > 1 %}

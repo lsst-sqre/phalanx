@@ -16,7 +16,7 @@ prompt-proto-service:
   s3:
     imageBucket: rubin:rubin-pp
     endpointUrl: https://s3dfrgw.slac.stanford.edu
-    disableBucketValidation: '1'
+    disableBucketValidation: 1
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092

@@ -19,7 +19,7 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.resources | object | see `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.35.3"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.0"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
@@ -41,7 +41,9 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
 | imagePullSecrets | list | `[]` | Secret names to use for all Docker pulls |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| ingress.defaultScope | string | `"exec:notebook"` | scope for general operations |
 | ingress.path | string | `"/times-square/api"` | Root URL path prefix for times-square API |
+| ingress.templateApiScope | string | `"exec:notebook"` | scope for using just the template engine |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the times-square deployment pod |
 | podAnnotations | object | `{}` | Annotations for the times-square deployment pod |

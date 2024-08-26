@@ -1,7 +1,6 @@
 fqdn: "usdf-rsp-dev.slac.stanford.edu"
 name: "usdfdev"
 appOfAppsName: "science-platform"
-butlerRepositoryIndex: "s3://rubin-summit-users/data-repos.yaml"
 butlerServerRepositories:
   embargo: "https://usdf-rsp-dev.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"
 vaultUrl: "https://vault.slac.stanford.edu"
@@ -13,7 +12,6 @@ applications:
   cert-manager: false
   ingress-nginx: false
 
-  alert-stream-broker: true
   butler: true
   consdb: true
   datalinker: true

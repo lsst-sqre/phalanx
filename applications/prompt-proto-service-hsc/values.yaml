@@ -25,6 +25,15 @@ prompt-proto-service:
     # -- Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
+  worker:
+    # -- The number of requests to process before rebooting a worker.
+    # If 0, workers process requests indefinitely.
+    restart: 0
+    # -- Maximum time that a worker can process a next_visit request (seconds).
+    timeout: 900
+    # -- When Knative shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds).
+    grace_period: 45
+
   instrument:
     # -- The "short" name of the instrument
     name: HSC
@@ -43,6 +52,15 @@ prompt-proto-service:
     # @default -- None, must be set
     calibRepo: ""
 
+  cache:
+    # -- The default number of datasets of each type to keep.
+    # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
+    baseSize: 3
+    # -- A factor by which to multiply `baseSize` for refcat datasets.
+    refcatsPerImage: 4
+    # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
+    patchesPerImage: 4
+
   s3:
     # -- Bucket containing the incoming raw images
     # @default -- None, must be set
@@ -53,7 +71,7 @@ prompt-proto-service:
     # -- If set, get S3 credentials from this application's Vault secret.
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
-    disableBucketValidation: '0'
+    disableBucketValidation: 0
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider
@@ -85,7 +103,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: "timer.lsst.activator=DEBUG"
+  logLevel: "timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -100,27 +118,32 @@ prompt-proto-service:
 
   knative:
     # -- The cpu cores requested.
-    cpuRequest: "1"
+    cpuRequest: 1
     # -- The maximum cpu cores.
-    cpuLimit: "1"
+    cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
-    ephemeralStorageRequest: "20Gi"
+    ephemeralStorageRequest: "5Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
-    ephemeralStorageLimit: "20Gi"
+    ephemeralStorageLimit: "5Gi"
     # -- GPUs enabled.
     gpu: false
     # -- The number of GPUs to request.
-    gpuRequest: "0"
+    gpuRequest: 0
     # -- The minimum memory to request.
     memoryRequest: "2Gi"
     # -- The maximum memory limit.
     memoryLimit: "8Gi"
-    # -- Maximum time that a container can respond to a next_visit request (seconds).
-    timeout: 900
-    # -- Maximum time that a container can send nothing to the fanout service (seconds).
-    idleTimeout: 900
-    # -- Maximum time that a container can send nothing to the fanout service after initial submission (seconds).
-    responseStartTimeout: 900
+    # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
+    # This parameter adds extra time to that minimum (seconds).
+    extraTimeout: 10
+    # -- Maximum time that a container can send nothing to Knative (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    idleTimeout: 0
+    # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
+    # This is only useful if the container runs async workers.
+    # If 0, idle timeout is ignored.
+    responseStartTimeout: 0
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.

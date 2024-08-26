@@ -1,6 +1,6 @@
 strimzi-kafka:
   kafka:
-    disruption_tolerance: 2
+    minInsyncReplicas: 1
     listeners:
       tls:
         enabled: true
@@ -22,7 +22,7 @@ strimzi-kafka:
     enabled: true
     source:
       bootstrapServer: sasquatch-summit-kafka-bootstrap.lsst.codes:9094
-      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*"
+      topicsPattern: "registry-schemas, lsst.sal.*, lsst.dm.*, lsst.backpack.*, lsst.ATCamera.*, lsst.CCCamera.*, lsst.MTCamera.*"
     resources:
       requests:
         cpu: 2
@@ -47,6 +47,39 @@ strimzi-kafka:
     enabled: true
   kafkaController:
     enabled: true
+  cruiseControl:
+    enabled: true
+  brokerStorage:
+    enabled: true
+    migration:
+      enabled: false
+      rebalance: false
+      brokers:
+        - 3
+        - 4
+        - 5
+    size: 1.5Ti
+    storageClassName: zfs--rubin-efd
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - sdfk8sn004
+                    - sdfk8sn005
+                    - sdfk8sn007
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: strimzi.io/cluster
+                  operator: In
+                  values:
+                    - sasquatch
+            topologyKey: kubernetes.io/hostname
 
 influxdb:
   enabled: false
@@ -94,92 +127,171 @@ influxdb-enterprise:
         memory: 192Gi
         cpu: 8
 
-kafka-connect-manager-enterprise:
+telegraf-kafka-consumer:
   enabled: true
-  influxdbSink:
-    connectInfluxUrl: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
-    connectInfluxDb: "efd"
-    # Enable here the same connectors that are enabled at the summit to
-    # persist the same data at InfluxDB Enterprise at USDF
-    connectors:
-      enterprise-auxtel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATAOS|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
-      enterprise-maintel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
-      enterprise-mtmount:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTMount"
-        tasksMax: "8"
-      enterprise-comcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
-      enterprise-eas:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*DIMM|.*DSM|.*ESS|.*HVAC|.*WeatherForecast"
-      enterprise-latiss:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
-      enterprise-m1m3:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTM1M3"
-        tasksMax: "8"
-      enterprise-m2:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
-      enterprise-obssys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
-      enterprise-ocps:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*OCPS"
-      enterprise-test:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: "lsst.sal.Test"
-      enterprise-pmd:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*PMD"
-      enterprise-calsys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LinearStage|.*TunableLaser"
-      enterprise-mtaircompressor:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAirCompressor"
-      enterprise-genericcamera:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
-      enterprise-gis:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GIS"
-      enterprise-mtvms:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTVMS"
-      enterprise-lasertracker:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*LaserTracker"
-      enterprise-lsstcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTCamera|.*MTHeaderService|.*MTOODS"
+  influxdb:
+    url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
+  kafkaConsumers:
+    # Sasquatch backpack connector
+    backpack:
+      enabled: true
+      database: "lsst.backpack"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+    # CSC connectors
+    maintel:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+      offset: "newest"
+    mtmount:
+      enabled: true
+      database: "efd"
+      replicaCount: 8
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTMount" ]
+      offset: "newest"
+    comcam:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      offset: "newest"
+    eas:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+         [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      offset: "newest"
+    m1m3:
+      enabled: true
+      database: "efd"
+      replicaCount: 8
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3" ]
+      offset: "newest"
+    m2:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      offset: "newest"
+    obssys:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      offset: "newest"
+    ocps:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.OCPS" ]
+      offset: "newest"
+    pmd:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.PMD" ]
+      offset: "newest"
+    calsys:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      offset: "newest"
+    mtaircompressor:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTAirCompressor" ]
+      offset: "newest"
+    genericcamera:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      offset: "newest"
+    gis:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.GIS" ]
+      offset: "newest"
+    lsstcam:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      offset: "newest"
+    auxtel:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+    latiss:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+    test:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+    lasertracker:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.LaserTracker" ]
+    # CCS connectors (experimental) data is being written on separate databases for now
+    atcamera:
+      enabled: true
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    cccamera:
+      enabled: true
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.CCCamera" ]
+    mtcamera:
+      enabled: true
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
 
 kafdrop:
   ingress:
