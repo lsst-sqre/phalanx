@@ -11,13 +11,14 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "3.7.0"
+  version: "3.7.1"
 
   # -- Number of Kafka broker replicas to run
   replicas: 3
 
-  # -- Number of down brokers that the system can tolerate
-  disruption_tolerance: 0
+  # -- The minimum number of in-sync replicas that must be available for the producer to successfully send records
+  # Cannot be greater than the number of replicas.
+  minInsyncReplicas: 2
 
   storage:
     # -- Size of the backing storage disk for each of the Kafka brokers
@@ -102,11 +103,13 @@ kafka:
     brokers: []
     # For example:
     # brokers:
-    #   - loadBalancerIP: "192.168.1.1"
+    #   - broker: 0
+    #     loadBalancerIP: "192.168.1.1"
     #     host: broker-0.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
-    #   - loadBalancerIP: "192.168.1.2"
+    #   - broker: 1
+    #     loadBalancerIP: "192.168.1.2"
     #     host: broker-1.example
     #     annotations:
     #       metallb.universe.tf/address-pool: sdf-dmz
@@ -188,37 +191,6 @@ kafkaExporter:
       cpu: "375m"
       memory: "100Mi"
 
-zookeeper:
-  # -- Number of Zookeeper replicas to run.
-  replicas: 3
-
-  storage:
-    # -- Size of the backing storage disk for each of the Zookeeper instances
-    size: 100Gi
-
-    # -- Name of a StorageClass to use when requesting persistent volumes
-    storageClassName: ""
-
-  metricsConfig:
-    # -- Whether metric configuration is enabled
-    enabled: false
-
-  # -- Affinity for Zookeeper pod assignment
-  # @default -- See `values.yaml`
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchExpressions:
-              - key: "app.kubernetes.io/name"
-                operator: In
-                values:
-                  - zookeeper
-          topologyKey: "kubernetes.io/hostname"
-
-  # -- Tolerations for Zookeeper pod assignment
-  tolerations: []
-
 connect:
   # -- Enable Kafka Connect
   enabled: false
@@ -285,6 +257,10 @@ users:
     # source and target clusters)
     enabled: false
 
+  camera:
+    # -- Enable user camera, used at the camera environments
+    enabled: false
+
   tsSalKafka:
     # -- Enable user ts-salkafka, used at the telescope environments
     enabled: false
@@ -335,16 +311,19 @@ mirrormaker2:
       # -- Replication policy.
       class: "org.apache.kafka.connect.mirror.IdentityReplicationPolicy"
 
-  sourceRegistry:
-    # -- Whether to deploy another Schema Registry for the schemas replicated
-    # from the source cluster
-    enabled: false
+# -- Configuration for the Kafka Cruise Control
+cruiseControl:
+  enabled: false
 
-    # -- Name of the topic Schema Registry topic replicated from the source
-    # cluster
-    schemaTopic: "source.registry-schemas"
-
-  sourceConnect:
-    # -- Whether to deploy another Connect cluster for topics replicated from
-    # the source cluster. Requires the `sourceRegistry` be enabled.
+# -- Configuration for deploying Kafka brokers with local storage
+brokerStorage:
+  enabled: false
+  migration:
     enabled: false
+    rebalance: false
+    brokers:
+      - 0
+      - 1
+      - 2
+  size: 1.5Ti
+  storageClassName: localdrive

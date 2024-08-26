@@ -1,3 +1,6 @@
+ingress:
+  timesSquareScope: "exec:admin"
+
 config:
   siteName: "Rubin Science Platform @ data-int"
   semaphoreUrl: "https://data-int.lsst.cloud/semaphore"

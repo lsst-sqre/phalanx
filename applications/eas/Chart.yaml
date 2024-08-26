@@ -7,64 +7,64 @@ dependencies:
   version: 1.0.0
   repository: file://../../charts/csc_shared
 - name: csc
-  alias: auxtel-ess01
+  alias: auxtel-ess201
   version: 1.0.0
-  condition: auxtel-ess01.enabled
+  condition: auxtel-ess201.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess01-sim
+  alias: auxtel-ess201-sim
   version: 1.0.0
-  condition: auxtel-ess01-sim.enabled
+  condition: auxtel-ess201-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess02
+  alias: auxtel-ess202
   version: 1.0.0
-  condition: auxtel-ess02.enabled
+  condition: auxtel-ess202.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess02-sim
+  alias: auxtel-ess202-sim
   version: 1.0.0
-  condition: auxtel-ess02-sim.enabled
+  condition: auxtel-ess202-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess03
+  alias: auxtel-ess203
   version: 1.0.0
-  condition: auxtel-ess03.enabled
+  condition: auxtel-ess203.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess03-sim
+  alias: auxtel-ess203-sim
   version: 1.0.0
-  condition: auxtel-ess03-sim.enabled
+  condition: auxtel-ess203-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess04
+  alias: auxtel-ess204
   version: 1.0.0
-  condition: auxtel-ess04.enabled
+  condition: auxtel-ess204.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess04-sim
+  alias: auxtel-ess204-sim
   version: 1.0.0
-  condition: auxtel-ess04-sim.enabled
+  condition: auxtel-ess204-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess05
+  alias: auxtel-ess205
   version: 1.0.0
-  condition: auxtel-ess05.enabled
+  condition: auxtel-ess205.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: auxtel-ess05-sim
+  alias: auxtel-ess205-sim
   version: 1.0.0
-  condition: auxtel-ess05-sim.enabled
+  condition: auxtel-ess205-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: calibhill-ess01
+  alias: calibhill-ess301
   version: 1.0.0
-  condition: calibhill-ess01.enabled
+  condition: calibhill-ess301.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: calibhill-ess01-sim
+  alias: calibhill-ess301-sim
   version: 1.0.0
-  condition: calibhill-ess01-sim.enabled
+  condition: calibhill-ess301-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: dimm1
@@ -107,6 +107,16 @@ dependencies:
   condition: dsm2-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: epm1
+  version: 1.0.0
+  condition: epm1.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm1-sim
+  version: 1.0.0
+  condition: epm1-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: m2-ess106
   version: 1.0.0
   condition: m2-ess106.enabled
@@ -117,44 +127,64 @@ dependencies:
   condition: m2-ess106-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess01
+  alias: mtdome-ess101
   version: 1.0.0
-  condition: mtdome-ess01.enabled
+  condition: mtdome-ess101.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess01-sim
+  alias: mtdome-ess101-sim
   version: 1.0.0
-  condition: mtdome-ess01-sim.enabled
+  condition: mtdome-ess101-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess02
+  alias: mtdome-ess102
   version: 1.0.0
-  condition: mtdome-ess02.enabled
+  condition: mtdome-ess102.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess02-sim
+  alias: mtdome-ess102-sim
   version: 1.0.0
-  condition: mtdome-ess02-sim.enabled
+  condition: mtdome-ess102-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess03
+  alias: mtdome-ess103
   version: 1.0.0
-  condition: mtdome-ess03.enabled
+  condition: mtdome-ess103.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtdome-ess03-sim
+  alias: mtdome-ess103-sim
   version: 1.0.0
-  condition: mtdome-ess03-sim.enabled
+  condition: mtdome-ess103-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess01
+  alias: mtdome-ess107
   version: 1.0.0
-  condition: tma-ess01.enabled
+  condition: mtdome-ess107.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: tma-ess01-sim
+  alias: mtdome-ess107-sim
   version: 1.0.0
-  condition: tma-ess01-sim.enabled
+  condition: mtdome-ess107-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess108
+  version: 1.0.0
+  condition: mtdome-ess108.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtdome-ess108-sim
+  version: 1.0.0
+  condition: mtdome-ess108-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tma-ess001
+  version: 1.0.0
+  condition: tma-ess001.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tma-ess001-sim
+  version: 1.0.0
+  condition: tma-ess001-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: tma-ess104

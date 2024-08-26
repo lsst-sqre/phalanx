@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: "<CHARTNAME>-worker"
+  labels:
+    {{- include "<CHARTNAME>.labels" . | nindent 4 }}
+spec:
+  podSelector:
+    # This policy controls inbound access to the workers.
+    matchLabels:
+      {{- include "<CHARTNAME>.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "worker"
+  policyTypes:
+    # Block all inbound access.
+    - Ingress

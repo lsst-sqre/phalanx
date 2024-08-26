@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "obsenv-api"
+  labels:
+    {{- include "obsenv-api.labels" . | nindent 4 }}
+data:
+  OBSENV_API_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  OBSENV_API_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  OBSENV_API_PROFILE: {{ .Values.config.logProfile | quote }}
+  OBSENV_API_USE_FAKE_OBSENV_MANAGER: {{ .Values.config.useFakeObsenvManager | quote }}

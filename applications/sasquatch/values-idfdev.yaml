@@ -7,11 +7,14 @@ strimzi-kafka:
         loadBalancerIP: ""
         host: sasquatch-dev-kafka-bootstrap.lsst.cloud
       brokers:
-        - loadBalancerIP: ""
+        - broker: 0
+          loadBalancerIP: ""
           host: sasquatch-dev-kafka-0.lsst.cloud
-        - loadBalancerIP: ""
+        - broker: 1
+          loadBalancerIP: ""
           host: sasquatch-dev-kafka-1.lsst.cloud
-        - loadBalancerIP: ""
+        - broker: 2
+          loadBalancerIP: ""
           host: sasquatch-dev-kafka-2.lsst.cloud
     resources:
       requests:
@@ -66,14 +69,10 @@ telegraf-kafka-consumer:
   kafkaConsumers:
     test:
       enabled: true
+      database: "telegraf-kafka-consumer-v1"
       replicaCount: 1
       topicRegexps: |
         [ "lsst.Test.*" ]
-    atmcs:
-      enabled: false
-      replicaCount: 1
-      topicRegexps: |
-        [ ".*ATMCS" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"

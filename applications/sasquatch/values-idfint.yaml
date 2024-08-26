@@ -8,11 +8,14 @@ strimzi-kafka:
         host: sasquatch-int-kafka-bootstrap.lsst.cloud
 
       brokers:
-        - loadBalancerIP: "34.171.69.125"
+        - broker: 0
+          loadBalancerIP: "34.171.69.125"
           host: sasquatch-int-kafka-0.lsst.cloud
-        - loadBalancerIP: "34.72.50.204"
+        - broker: 1
+          loadBalancerIP: "34.72.50.204"
           host: sasquatch-int-kafka-1.lsst.cloud
-        - loadBalancerIP: "34.173.225.150"
+        - broker: 2
+          loadBalancerIP: "34.173.225.150"
           host: sasquatch-int-kafka-2.lsst.cloud
   mirrormaker2:
     enabled: true
@@ -27,6 +30,10 @@ strimzi-kafka:
         cpu: 4
         memory: 8Gi
   users:
+    tsSalKafka:
+      enabled: true
+    camera:
+      enabled: true
     replicator:
       enabled: true
     kafdrop:
@@ -46,6 +53,13 @@ strimzi-kafka:
       limits:
         memory: 16Gi
         cpu: "2"
+  registry:
+    ingress:
+      enabled: true
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$2
+      hostname: data-int.lsst.cloud
+      path: /schema-registry(/|$)(.*)
 
 influxdb:
   ingress:
@@ -59,36 +73,57 @@ influxdb:
       memory: 16Gi
       cpu: 2
 
-kafka-connect-manager:
-  influxdbSink:
-    connectors:
-      test:
-        enabled: true
-        topicsRegex: "lsst.sal.Test"
-      lsst.example:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.example"
-        topicsRegex: "lsst.example.*"
-        tags: band,instrument
-      lsst.atcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.ATCamera"
-        topicsRegex: "lsst.ATCamera.*"
-        tags: Agent,Aspic,Location,Raft,Reb,Sensor,Source
-      lsst.cccamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.CCCamera"
-        topicsRegex: "lsst.CCCamera.*"
-        tags: Agent,Aspic,Cold,Cryo,Hardware,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Source
-      lsst.mtcamera:
-        enabled: true
-        timestamp: "timestamp"
-        connectInfluxDb: "lsst.MTCamera"
-        topicsRegex: "lsst.MTCamera.*"
-        tags: Agent,Aspic,Axis,Canbus,Cip,Clamp,Cold,Controller,Cryo,Gateway,Hardware,Hip,Hook,Latch,Location,Ps,RTD,Raft,Reb,Segment,Sensor,Socket,Source,Truck
+telegraf-kafka-consumer:
+  enabled: true
+  kafkaConsumers:
+    example:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.example"
+      tags: |
+        [ "band", "instrument" ]
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.example" ]
+    backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+    atcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.ATCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Location", "Raft", "Reb", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.ATCamera" ]
+    cccamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.CCCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Cold", "Cryo", "Hardware", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Source" ]
+      topicRegexps: |
+        [ "lsst.CCCamera" ]
+    mtcamera:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.MTCamera"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      tags: |
+        [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
+      topicRegexps: |
+        [ "lsst.MTCamera" ]
 
 kafdrop:
   ingress:
@@ -103,6 +138,7 @@ rest-proxy:
   kafka:
     topicPrefixes:
       - lsst.example
+      - lsst.backpack
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera

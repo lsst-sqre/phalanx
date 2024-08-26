@@ -24,6 +24,7 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
 {{- end }}
+{{- if not .Values.brokerStorage.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaNodePool
@@ -51,6 +52,59 @@ spec:
   resources:
     {{- toYaml . | nindent 6 }}
   {{- end }}
+{{- end }}
+{{- if or .Values.brokerStorage.enabled .Values.brokerStorage.migration.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaNodePool
+metadata:
+  name: kafka-local-storage
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/next-node-ids: "[6-99]"
+spec:
+  replicas: {{ .Values.kafka.replicas }}
+  roles:
+    - broker
+  storage:
+    type: jbod
+    volumes:
+    - id: 0
+      type: persistent-claim
+      size: {{ .Values.brokerStorage.size }}
+      {{- if .Values.brokerStorage.storageClassName }}
+      class: {{ .Values.brokerStorage.storageClassName }}
+      {{- end}}
+      deleteClaim: false
+  template:
+    pod:
+      {{- with .Values.brokerStorage.affinity }}
+      affinity:
+        {{- toYaml . | nindent 10 }}
+      {{- end }}
+  {{- with .Values.kafka.resources }}
+  resources:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
+{{- if and .Values.brokerStorage.migration.enabled .Values.brokerStorage.migration.rebalance }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaRebalance
+metadata:
+  name: broker-migration
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+  annotations:
+    strimzi.io/rebalance-auto-approval: "true"
+spec:
+  mode: remove-brokers
+  {{- with .Values.brokerStorage.migration.brokers }}
+  brokers:
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+{{- end }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
@@ -120,8 +174,8 @@ spec:
             {{- end }}
           {{- if .Values.kafka.externalListener.brokers }}
           brokers:
-            {{- range $idx, $broker := .Values.kafka.externalListener.brokers }}
-            - broker: {{ $idx }}
+            {{- range $broker := .Values.kafka.externalListener.brokers }}
+            - broker: {{ $broker.broker }}
               loadBalancerIP: {{ $broker.loadBalancerIP }}
               advertisedHost: {{ $broker.host }}
               advertisedPort: 9094
@@ -150,9 +204,9 @@ spec:
     config:
       offsets.topic.replication.factor:  {{ .Values.kafka.replicas }}
       transaction.state.log.replication.factor:  {{ .Values.kafka.replicas }}
-      transaction.state.log.min.isr: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
+      transaction.state.log.min.isr: {{ .Values.kafka.minInsyncReplicas }}
       default.replication.factor: {{ .Values.kafka.replicas }}
-      min.insync.replicas: {{ sub .Values.kafka.replicas .Values.kafka.disruption_tolerance }}
+      min.insync.replicas: {{ .Values.kafka.minInsyncReplicas }}
       {{- range $key, $value := .Values.kafka.config }}
       {{ $key }}: {{ $value }}
       {{- end }}
@@ -178,38 +232,6 @@ spec:
         class: {{ .Values.kafka.storage.storageClassName }}
         {{- end}}
         deleteClaim: false
-  zookeeper:
-    {{- if .Values.zookeeper.metricsConfig.enabled }}
-    metricsConfig:
-      type: jmxPrometheusExporter
-      valueFrom:
-        configMapKeyRef:
-          name: zookeeper-metrics
-          key: zookeeper-metrics-config.yml
-    {{- end }}
-    template:
-      persistentVolumeClaim:
-        metadata:
-          annotations:
-            argocd.argoproj.io/compare-options: IgnoreExtraneous
-            argocd.argoproj.io/sync-options: Prune=false
-      pod:
-        {{- with .Values.zookeeper.affinity }}
-        affinity:
-          {{- toYaml . | nindent 10 }}
-        {{- end }}
-        {{- with .Values.zookeeper.tolerations }}
-        tolerations:
-          {{- toYaml . | nindent 10 }}
-        {{- end}}
-    replicas: {{ .Values.zookeeper.replicas }}
-    storage:
-      # Note that storage is configured per replica. If there are 3 replicas,
-      # each will get its own PersistentVolumeClaim for the configured size.
-      type: persistent-claim
-      size: {{ .Values.zookeeper.storage.size }}
-      class: {{ .Values.zookeeper.storage.storageClassName }}
-      deleteClaim: false
   entityOperator:
     topicOperator: {}
     userOperator: {}
@@ -235,4 +257,7 @@ spec:
           labels:
             {{- toYaml . | nindent 12 }}
     {{- end }}
+  {{- end }}
+  {{ if .Values.cruiseControl.enabled }}
+  cruiseControl: {}
   {{- end }}

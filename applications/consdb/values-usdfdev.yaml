@@ -1,0 +1,17 @@
+db:
+  user: "usdf"
+  host: "usdf-summitdb.slac.stanford.edu"
+  database: "exposurelog"
+hinfo:
+  latiss:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcomcam:
+    enable: false
+    tag: "tickets-DM-44551"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
+pq:
+  image:
+    tag: "main"

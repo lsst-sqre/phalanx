@@ -1,59 +1,61 @@
-siteTag: "usdf-dev"
+rubintv:
+  siteTag: "usdf-dev"
 
-imagePullSecrets:
-- name: pull-secret
+  imagePullSecrets:
+  - name: pull-secret
 
-frontend:
-  debug: true
-  env:
-  - name: S3_ENDPOINT_URL
-    value: "https://s3dfrgw.slac.stanford.edu"
-  - name: RAPID_ANALYSIS_LOCATION
-    value: "USDF"
-  image:
-    tag: deploy
-    pullPolicy: Always
+  frontend:
+    debug: true
+    env:
+    - name: S3_ENDPOINT_URL
+      value: &s3E "https://s3dfrgw.slac.stanford.edu"
+    - name: RAPID_ANALYSIS_LOCATION
+      value: "USDF"
+    - name: DDV_DEPLOY_BRANCH
+      value: &dbE "deploy-slac"
+    - name: DDV_BASE_HREF
+      value: "/rubintv/ddv/"
+    - name: DDV_CLIENT_WS_ADDRESS
+      value: "rubintv/ws/ddv"
+    image:
+      tag: deploy
+      pullPolicy: Always
 
-workers:
-  replicas: 0
-  image:
-    repository: lsstts/rubintv-broadcaster
-    tag: c0030_usdf
-    pullPolicy: Always
-  uid: 15517
-  gid: 4085
-  env:
-  - name: DEPLOY_BRANCH
-    value: "deploy-rubintv-worker"
-  - name: S3_ENDPOINT_URL
-    value: "https://s3dfrgw.slac.stanford.edu"
-  - name: DAF_BUTLER_REPOSITORY_INDEX
-    value: "s3://rubin-summit-users/data-repos.yaml"
-  - name: DAF_BUTLER_REPOSITORY
-    value: "/sdf/group/rubin/repo/ir2/butler.yaml"
-  volumes:
-  - name: sdf-group-rubin
-    persistentVolumeClaim:
-      name: sdf-group-rubin
-      storageClassName: sdf-group-rubin
-      capacity: 1Gi
-    accessMode: ReadOnlyMany
-    mountPath: /sdf/group/rubin
-  - name: sdf-data-rubin
-    persistentVolumeClaim:
-      name: sdf-data-rubin
-      storageClassName: sdf-data-rubin
-      capacity: 1Gi
-    accessMode: ReadOnlyMany
-    mountPath: /sdf/data/rubin
-  - name: fs-ddn-sdf-group-lsst
-    persistentVolumeClaim:
-      name: fs-ddn-sdf-group-lsst
-      storageClassName: fs-ddn-sdf-group-lsst
-      capacity: 1Gi
-    accessMode: ReadOnlyMany
-    mountPath: /fs/ddn/sdf/group/lsst
-  resources:
-    limits:
-      cpu: 2.0
-      memory: "8Gi"
+  workers:
+    replicas: 1
+    image:
+      repository: ts-dockerhub.lsst.org/rapid-analysis
+      tag: c0037
+      pullPolicy: Always
+    uid: 73006
+    gid: 73006
+    scriptsLocation: /repos/rubintv_analysis_service/scripts
+    script: rubintv_worker.py -a rubintv -p 8080 -l usdf
+    env:
+    - name: S3_ENDPOINT_URL
+      value: *s3E
+    - name: DAF_BUTLER_REPOSITORY_INDEX
+      value: "s3://rubin-summit-users/data-repos.yaml"
+    - name: DAF_BUTLER_REPOSITORY
+      value: "/sdf/group/rubin/repo/ir2/butler.yaml"
+    - name: DEPLOY_BRANCH
+      value: *dbE
+    volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        name: sdf-group-rubin
+        storageClassName: sdf-group-rubin
+        capacity: 1Gi
+      accessMode: ReadOnlyMany
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        name: sdf-data-rubin
+        storageClassName: sdf-data-rubin
+        capacity: 1Gi
+      accessMode: ReadOnlyMany
+      mountPath: /sdf/data/rubin
+    resources:
+      limits:
+        cpu: 2.0
+        memory: "8Gi"

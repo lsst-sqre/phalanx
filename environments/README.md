@@ -34,6 +34,7 @@
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
+| applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
 | applications.obsloctap | bool | `false` | Enable the obsloctap application |
 | applications.obssys | bool | `false` | Enable the obssys control system application |
 | applications.onepassword-connect | bool | `false` | Enable the onepassword-connect application |
@@ -51,6 +52,7 @@
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
+| applications.sasquatch-backpack | bool | `false` | Enable the sasquatch-backpack application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
@@ -71,7 +73,6 @@
 | applications.vault | bool | `false` | Enable the vault application. This is the actual vault storage and there should only be one production and one development instance globally. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |
-| butlerRepositoryIndex | string | None, must be set | Butler repository index URI to use for this environment, for services that connect directly to the Butler database. |
 | butlerServerRepositories | object | None, must be set | Butler repositories that can be accessed via Butler server, as a dictionary from repository label to URI. |
 | controlSystem.appNamespace | string | None, must be set | Application namespacce for the control system deployment |
 | controlSystem.imageTag | string | None, must be set | Image tag for the control system deployment |

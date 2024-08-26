@@ -9,7 +9,7 @@ appVersion: 11.1.1
 
 dependencies:
   - name: "redis"
-    version: 1.0.12
+    version: 1.0.13
     repository: "https://lsst-sqre.github.io/charts/"
 
 annotations:

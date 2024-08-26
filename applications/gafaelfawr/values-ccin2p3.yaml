@@ -68,8 +68,8 @@ config:
   oidcServer:
     enabled: false
 
-  initialAdmins:
-    - "mainetti"
+  # initialAdmins:
+  #   - "mainetti"
 
   groupMapping:
     "admin:token":

@@ -3,9 +3,11 @@ kafka:
   sasquatchAddress: 10.100.226.209:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit
+  # Dev processes very old images, set to ~20 years
+  expiration: 600_000_000.0
 
 image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v2.1.1
+  tag: 2.3.0

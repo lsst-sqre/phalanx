@@ -67,3 +67,12 @@ spec:
           - /bin/bash
           - -c
           - panel serve dashboard_gen3.py --port 8080 --prefix /plot-navigator --allow-websocket-origin {{ .Values.global.host }} --static-dirs assets=./assets
+        resources:
+          limits:
+            cpu: "2"
+            memory: "3Gi"
+            ephemeral-storage: "100Mi"
+          requests:
+            cpu: "1"
+            memory: "2Gi"
+            ephemeral-storage: "50Mi"

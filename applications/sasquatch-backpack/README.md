@@ -1,0 +1,31 @@
+# sasquatch-backpack
+
+Collection of APIs that feed into Sasquatch
+
+**Homepage:** <https://sasquatch-backpack.lsst.io/>
+
+## Source Code
+
+* <https://github.com/lsst-sqre/sasquatch-backpack>
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| affinity | object | `{}` | Affinity rules for the sasquatch-backpack deployment pod |
+| config.logLevel | string | `"INFO"` | Logging level |
+| config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.pathPrefix | string | `"/sasquatch-backpack"` | URL path prefix |
+| config.sasquatchRestProxyUrl | string | `""` | Sasquatch REST Proxy URL |
+| global.baseUrl | string | Set by Argo CD | Base URL for the environment |
+| global.host | string | Set by Argo CD | Host name for ingress |
+| global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| image.pullPolicy | string | `"Always"` | Pull policy for the sasquatch-backpack image |
+| image.repository | string | `"ghcr.io/lsst-sqre/sasquatch-backpack"` | Image to use in the sasquatch-backpack deployment |
+| image.tag | string | The appVersion of the chart | Tag of image to use |
+| ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
+| nodeSelector | object | `{}` | Node selection rules for the sasquatch-backpack deployment pod |
+| podAnnotations | object | `{}` | Annotations for the sasquatch-backpack deployment pod |
+| resources | object | See `values.yaml` | Resource limits and requests for the sasquatch-backpack deployment pod |
+| schedule | string | `"0 0 * * *"` |  |
+| tolerations | list | `[]` | Tolerations for the sasquatch-backpack deployment pod |

@@ -1,6 +1,8 @@
 image:
   pullPolicy: Always
 
+replicaCount: 3
+
 config:
   logLevel: "DEBUG"
   worker:
@@ -8,6 +10,9 @@ config:
     identities:
       - username: "bot-noteburst01"
       - username: "bot-noteburst02"
+      - username: "bot-noteburst03"
+      - username: "bot-noteburst04"
+      - username: "bot-noteburst05"
 
 # Use SSD for Redis storage.
 redis:

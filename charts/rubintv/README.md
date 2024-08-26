@@ -41,6 +41,7 @@ Real-time display front end
 | redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
 | redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
+| separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | siteTag | string | `""` | A special tag for letting the scripts know where they are running.  Must be overridden at each site |
 | workers.affinity | object | `{}` | Affinity rules for the rubintv worker pods |
 | workers.debug | bool | `false` | If set to true, enable more verbose logging. |

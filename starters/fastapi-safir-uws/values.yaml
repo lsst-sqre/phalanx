@@ -1,0 +1,232 @@
+# Default values for <CHARTNAME>.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+config:
+  # -- Choose from the text form of Python logging levels
+  loglevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix for the API
+  pathPrefix: "/api/<CHARTNAME>"
+
+  # -- URL for the PostgreSQL database if Cloud SQL is not in use
+  # @default -- None, must be set if `cloudsql.enabled` is false
+  databaseUrl: null
+
+  # -- Grace period in seconds to wait for worker jobs to finish
+  gracePeriod: 60
+
+  # -- Lifetime of job results in Safir `parse_timedelta` format
+  lifetime: "30d"
+
+  # -- Google service account with an IAM binding to the Kubernetes service
+  # account for the application. Must have the `cloudsql.client` role, access
+  # to write to the GCS bucket, and ability to sign URLs as itself
+  # @default -- None, must be set
+  serviceAccount: null
+
+  # -- URL for the GCS bucket for results (must start with `s3` or `gs`)
+  # @default -- None, must be set
+  storageBucketUrl: null
+
+  # -- Timeout for results from a sync request in Safir `parse_timedelta`
+  # format
+  syncTimeout: "1m"
+
+  # -- Timeout for a single job in seconds
+  # @default -- 600 (10 minutes)
+  timeout: 600
+
+image:
+  # -- Image to use for the frontend and database workers
+  repository: "ghcr.io/lsst-sqre/<CHARTNAME>"
+
+  # -- Pull policy for the image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+ingress:
+  # -- Additional annotations to add to the ingress
+  annotations: {}
+
+frontend:
+  # -- Number of web frontend pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the <CHARTNAME> frontend pod
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Affinity rules for the <CHARTNAME> frontend pod
+  affinity: {}
+
+  # -- Node selector rules for the <CHARTNAME> frontend pod
+  nodeSelector: {}
+
+  # -- Annotations for the <CHARTNAME> frontend pod
+  podAnnotations: {}
+
+  # -- Tolerations for the <CHARTNAME> frontend pod
+  tolerations: []
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.37.0"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
+  # @default -- None, must be set if Cloud SQL is used
+  instanceConnectionName: null
+
+  # -- Resource limits and requests for the Cloud SQL Proxy container
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
+
+worker:
+  # -- Number of <CHARTNAME> worker pods to start
+  replicaCount: 2
+
+  image:
+    # -- Stack image to use for the backend worker
+    repository: "ghcr.io/lsst-sqre/<CHARTNAME>-worker"
+
+    # -- Tag of worker image to use
+    # @default -- The appVersion of the chart
+    tag: null
+
+    # -- Pull policy for workers
+    pullPolicy: "IfNotPresent"
+
+  # -- Resource limits and requests for the <CHARTNAME> worker pod
+  # @default -- See `values.yaml`
+  resources: {}
+
+  # -- Affinity rules for the <CHARTNAME> worker pod
+  affinity: {}
+
+  # -- Node selection rules for the <CHARTNAME> worker pod
+  nodeSelector: {}
+
+  # -- Annotations for the <CHARTNAME> worker pod
+  podAnnotations: {}
+
+  # -- Tolerations for the <CHARTNAME> worker pod
+  tolerations: []
+
+databaseWorker:
+  # -- Number of database worker pods to start
+  replicaCount: 1
+
+  # -- Resource limits and requests for the database worker pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.1"
+      memory: "200Mi"
+    requests:
+      cpu: "0.02"
+      memory: "85Mi"
+
+  # -- Affinity rules for the database worker pod
+  affinity: {}
+
+  # -- Node selection rules for the database worker pod
+  nodeSelector: {}
+
+  # -- Annotations for the database worker pod
+  podAnnotations: {}
+
+  # -- Tolerations for the database worker pod
+  tolerations: []
+
+redis:
+  config:
+    # -- Name of secret containing Redis password
+    secretName: "<CHARTNAME>"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage and thus tokens. Setting this to
+    # false will use `emptyDir` and reset all tokens on every restart. Only
+    # use this for a test deployment.
+    enabled: true
+
+    # -- Amount of persistent storage to request
+    size: "100Mi"
+
+    # -- Class of storage to request
+    storageClass: null
+
+    # -- Access mode of storage to request
+    accessMode: "ReadWriteOnce"
+
+    # -- Use an existing PVC, not dynamic provisioning. If this is set, the
+    # size, storageClass, and accessMode settings are ignored.
+    volumeClaimName: null
+
+  # -- Resource limits and requests for the Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "0.5"
+      memory: "10Mi"
+    requests:
+      cpu: "0.1"
+      memory: "5Mi"
+
+  # -- Affinity rules for the Redis pod
+  affinity: {}
+
+  # -- Node selection rules for the Redis pod
+  nodeSelector: {}
+
+  # -- Pod annotations for the Redis pod
+  podAnnotations: {}
+
+  # -- Tolerations for the Redis pod
+  tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Butler repositories accessible via Butler server
+  # @default -- Set by Argo CD
+  butlerServerRepositories: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

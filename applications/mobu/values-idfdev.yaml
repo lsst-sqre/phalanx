@@ -1,6 +1,34 @@
 config:
   debug: true
+  githubRefreshApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
+  githubCiApp:
+    acceptedGithubOrgs:
+      - lsst-sqre
+    users:
+      - username: bot-mobu-ci-user-1
+      - username: bot-mobu-ci-user-2
+      - username: bot-mobu-ci-user-3
+      - username: bot-mobu-ci-user-4
+    scopes:
+      - "exec:notebook"
+      - "exec:portal"
+      - "read:image"
+      - "read:tap"
   autostart:
+    - name: "dfuchs-test"
+      count: 1
+      users:
+        - username: "bot-mobu-dfuchs-test"
+      scopes:
+        - "exec:notebook"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
+          repo_ref: "main"
+        restart: true
     - name: "recommended"
       count: 1
       users:
@@ -14,8 +42,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
-          repo_branch: "prod"
-          exclude_dirs: ["experiments"]
+          repo_ref: "prod"
         restart: true
     - name: "tutorial"
       count: 1
@@ -30,8 +57,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
-          repo_branch: "prod"
-          exclude_dirs: ["DP02_09_Custom_Coadds", "DP02_11_User_Packages"]
+          repo_ref: "prod"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true

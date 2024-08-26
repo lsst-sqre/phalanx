@@ -1,3 +1,6 @@
+replicaCount:
+  api: 2
+  worker: 2
 image:
   pullPolicy: Always
 config:

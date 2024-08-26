@@ -27,5 +27,5 @@ Dashboard for examination of scheduler snapshots
 | nodeSelector | object | `{}` | Node selection rules for the schedview-snapshot deployment pod |
 | podAnnotations | object | `{}` | Annotations for the schedview-snapshot deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
-| resources | object | `{}` | Resource limits and requests for the schedview-snapshot deployment pod |
+| resources | object | `{"limits":{"cpu":2,"memory":"8Gi"},"requests":{"cpu":1,"memory":"4Gi"}}` | Resource limits and requests for the schedview-snapshot deployment pod |
 | tolerations | list | `[]` | Tolerations for the schedview-snapshot deployment pod |

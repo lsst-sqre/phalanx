@@ -10,6 +10,7 @@ Argo CD project: ``monitoring``
    :maxdepth: 1
 
    monitoring/index
+   sasquatch-backpack/index
    sasquatch/index
    telegraf/index
    telegraf-ds/index

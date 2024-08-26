@@ -18,10 +18,9 @@ Rubin Science Platform Portal Aspect
 | config.livetap | string | `""` | Endpoint under `/api/` for the live TAP service on the instance, if present |
 | config.ssotap | string | `""` | Endpoint under `/api/` for the DP0.3 SSO TAP service on the instance, if present |
 | config.visualizeFitsSearchPath | string | `"/datasets"` | Search path for FITS files |
-| config.volumes.configHostPath | string | Use an `emptyDir` | hostPath to mount as configuration.  Set either this of `configNfs`, not both. |
-| config.volumes.configNfs | object | Use an `emptyDir` | NFS information for a configuration.  If set, must have keys for path and server, Set either this of `configHostPath`, not both. |
-| config.volumes.workareaHostPath | string | Use an `emptyDir` | hostPath to mount as a shared work area.  Set either this or `workareaNfs`, not both. |
-| config.volumes.workareaNfs | object | Use an `emptyDir` | NFS information for a shared work area.  If set, must have keys for path and server.  Set either this or `workareaHostPath`, not both. |
+| config.volumes.config | object | use an `emptyDir` | configuration directory accessible read-only to all Portal pods |
+| config.volumes.privateWorkarea | object | use an `emptyDir` | private work area accessible read-write to a single Portal pod |
+| config.volumes.sharedWorkarea | object | use an `emptyDir` (will not be shared; see documentation) | work area accessible read-write to all Portal pods |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -43,5 +42,5 @@ Rubin Science Platform Portal Aspect
 | redis.tolerations | list | `[]` | Tolerations for the Redis pod |
 | replicaCount | int | `1` | Number of pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests. The Portal will use (by default) 93% of container RAM.  This is a smallish Portal; tweak it as you need to in instance definitions in Phalanx. |
-| securityContext | object | `{}` | Security context for the Portal pod |
+| securityContext | object | See `values.yaml` | Security context for the Portal pod |
 | tolerations | list | `[]` | Tolerations for the Portal pod |

@@ -37,7 +37,13 @@ autoscaling:
 podAnnotations: {}
 
 # -- Resource limits and requests for the schedview-snapshot deployment pod
-resources: {}
+resources:
+  limits:
+    cpu: 2.0
+    memory: "8Gi"
+  requests:
+    cpu: 1.0
+    memory: "4Gi"
 
 # -- Node selection rules for the schedview-snapshot deployment pod
 nodeSelector: {}

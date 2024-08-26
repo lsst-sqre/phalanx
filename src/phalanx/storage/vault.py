@@ -281,6 +281,12 @@ class VaultClient:
         VaultTokenMetadata or None
             Metadata for the token, or `None` if no token exists with that
             accessor.
+
+        Raises
+        ------
+        hvac.exceptions.Forbidden
+            Raised if the caller doesn't have access to retrieve this
+            accessor.
         """
         try:
             r = self._vault.auth.token.lookup_accessor(accessor)

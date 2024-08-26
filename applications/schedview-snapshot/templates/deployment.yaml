@@ -29,6 +29,7 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+            privileged: false
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
@@ -79,9 +80,11 @@ spec:
       {{- end }}
       volumes:
         - name: tmp
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: "16Gi"
         - name: slashdatcache
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: "16Gi"
         - name: schedview-snapshot-secrets
           secret:
             secretName: schedview-snapshot

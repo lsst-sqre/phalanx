@@ -20,8 +20,36 @@ spec:
         {{- include "cadc-tap.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "server"
     spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      {{- else }}
       automountServiceAccountToken: false
+      {{- end }}
       containers:
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          command:
+            - "/cloud_sql_proxy"
+            - "-ip_address_types=PRIVATE"
+            - "-log_debug_stdout=true"
+            - "-structured_logs=true"
+            - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          {{- with .Values.cloudsql.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+        {{- end }}
         - name: "tap-server"
           {{- if eq .Values.config.backend "pg" }}
           image: "{{ .Values.config.pg.image.repository }}:{{ .Values.config.pg.image.tag }}"
@@ -39,40 +67,57 @@ spec:
                 -Dtapschemauser.driverClassName=com.mysql.cj.jdbc.Driver
                 -Dtapschemauser.url=jdbc:mysql://{{ .Values.config.tapSchemaAddress }}/
                 -Dtapschemauser.maxActive=100
-                -Duws.username=postgres
                 -Duws.driverClassName=org.postgresql.Driver
-                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
                 -Duws.maxActive=100
+                {{- if .Values.cloudsql.enabled }}
+                -Duws.password=$UWS_DB_PASSWORD
+                -Duws.username={{ required "cloudsql.database must be specified" .Values.cloudsql.database }}
+                -Duws.url=jdbc:postgresql://localhost:5432/{{ .Values.cloudsql.database }}
+                {{- else }}
+                -Duws.username=postgres
+                -Duws.url=jdbc:postgresql://{{ template "cadc-tap.fullname" . }}-uws-db/
+                {{- end }}
                 {{- if eq .Values.config.backend "pg" }}
                 -Dtap.username={{ .Values.config.pg.username }}
-                -Dtap.password=$pgpassword
+                -Dtap.password=$TAP_DB_PASSWORD
                 -Dtap.url=jdbc:postgresql://{{ .Values.config.pg.host }}/{{ .Values.config.pg.database }}
                 -Dtap.maxActive=100
-                -Dca.nrc.cadc.auth.Authenticator=ca.nrc.cadc.sample.AuthenticatorImpl
                 {{- end }}
-
                 {{- if eq .Values.config.backend "qserv" }}
                 -Dqservuser.username=qsmaster
-                -Dqservuser.password=
+                -Dqservuser.password=$QSERV_DB_PASSWORD
                 -Dqservuser.driverClassName=com.mysql.cj.jdbc.Driver
-                -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/
+                -Dqservuser.url=jdbc:mysql://{{ .Values.config.qserv.host }}/{{ .Values.config.qserv.jdbcParams }}
                 -Dqservuser.maxActive=100
-                -Dca.nrc.cadc.auth.Authenticator=org.opencadc.tap.impl.AuthenticatorImpl
                 {{- end }}
-                -Dca.nrc.cadc.reg.client.RegistryClient.local=true
                 -Dgafaelfawr_url={{ .Values.global.baseUrl }}/auth/api/v1/user-info
                 -Dgcs_bucket={{ .Values.config.gcsBucket }}
                 -Dgcs_bucket_url={{ .Values.config.gcsBucketUrl }}
                 -Dgcs_bucket_type={{ .Values.config.gcsBucketType }}
                 -Dbase_url={{ .Values.global.baseUrl }}
-                -Dca.nrc.cadc.util.PropertiesReader.dir=/etc/creds/
+                -Dpath_prefix=/api/{{ .Values.ingress.path }}
+                -Dca.nrc.cadc.util.PropertiesReader.dir=/config/
                 -Xmx{{ .Values.config.jvmMaxHeapSize }}
+            {{- if (and (eq .Values.config.backend "qserv") .Values.config.qserv.passwordEnabled) }}
+            - name: "QSERV_DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "qserv-password"
+            {{- end }}
             {{- if eq .Values.config.backend "pg" }}
-            - name: "pgpassword"
+            - name: "TAP_DB_PASSWORD"
               valueFrom:
                 secretKeyRef:
                   name: "cadc-tap"
                   key: "pgpassword"
+            {{- end }}
+            {{- if .Values.cloudsql.enabled }}
+            - name: "UWS_DB_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "cadc-tap"
+                  key: "uws-db-password"
             {{- end }}
             - name: GOOGLE_APPLICATION_CREDENTIALS
               value: "/etc/creds/google_creds.json"
@@ -102,6 +147,8 @@ spec:
               readOnly: true
             - name: "tmp"
               mountPath: "/tmp"
+            - name: "config-volume"
+              mountPath: "/config"
           livenessProbe:
             failureThreshold: 3
             httpGet:
@@ -115,9 +162,12 @@ spec:
       volumes:
         - name: "google-creds"
           secret:
-            secretName: cadc-tap
+            secretName: "cadc-tap"
         - name: "tmp"
           emptyDir: {}
+        - name: "config-volume"
+          configMap:
+            name: "cadc-tap-config"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

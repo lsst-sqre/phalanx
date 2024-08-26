@@ -40,6 +40,14 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         name: user-container
         env:
+        - name: WORKER_RESTART_FREQ
+          value: {{ .Values.worker.restart | toString | quote }}
+        - name: WORKER_TIMEOUT
+          value: {{ .Values.worker.timeout | toString | quote }}
+        - name: WORKER_GRACE_PERIOD
+          value: {{ .Values.worker.grace_period | toString | quote }}
+        {{- /* Knative not configured for timeouts longer than 1200 seconds, and shouldn't need to be. */ -}}
+        {{- $knative_timeout := minf 1200 (addf (mulf 2 (coalesce .Values.worker.timeout 600)) .Values.knative.extraTimeout) }}
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
@@ -53,11 +61,11 @@ spec:
         - name: BUCKET_TOPIC
           value: {{ .Values.imageNotifications.topic }}
         - name: IMAGE_TIMEOUT
-          value: {{ .Values.imageNotifications.imageTimeout | quote }}
+          value: {{ .Values.imageNotifications.imageTimeout | toString | quote }}
         - name: CALIB_REPO
           value: {{ .Values.instrument.calibRepo }}
         - name: LSST_DISABLE_BUCKET_VALIDATION
-          value: {{ .Values.s3.disableBucketValidation | quote }}
+          value: {{ .Values.s3.disableBucketValidation | toString | quote }}
         - name: CONFIG_APDB
           value: {{ .Values.apdb.config }}
         - name: KAFKA_CLUSTER
@@ -110,10 +118,14 @@ spec:
           value: "/tmp-butler"
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
+        - name: LOCAL_REPO_CACHE_SIZE
+          value: {{ .Values.cache.baseSize | toString | quote }}
+        - name: REFCATS_PER_IMAGE
+          value: {{ .Values.cache.refcatsPerImage | toString | quote }}
+        - name: PATCHES_PER_IMAGE
+          value: {{ .Values.cache.patchesPerImage | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
-        - name: DEBUG_CACHE_INPUTS
-          value: {{ if .Values.cacheAny }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
@@ -136,15 +148,15 @@ spec:
         {{- end }}
         resources:
           requests:
-            cpu: {{ .Values.knative.cpuRequest }}
+            cpu: {{ .Values.knative.cpuRequest | toString | quote}}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageRequest }}
             memory: {{ .Values.knative.memoryRequest }}
           limits:
-            cpu: {{ .Values.knative.cpuLimit }}
+            cpu: {{ .Values.knative.cpuLimit | toString | quote}}
             ephemeral-storage: {{ .Values.knative.ephemeralStorageLimit }}
             memory: {{ .Values.knative.memoryLimit }}
             {{- if .Values.knative.gpu }}
-            nvidia.com/gpu: {{ .Values.knative.gpuRequest }}
+            nvidia.com/gpu: {{ .Values.knative.gpuRequest | toString | quote }}
             {{- end }}
       volumes:
       - name: ephemeral
@@ -195,6 +207,6 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       enableServiceLinks: true
-      timeoutSeconds: {{ .Values.knative.timeout }}
-      idleTimeoutSeconds: {{ .Values.knative.idleTimeout }}
-      responseStartTimeoutSeconds: {{ .Values.knative.responseStartTimeout }}
+      timeoutSeconds: {{ $knative_timeout }}
+      idleTimeoutSeconds: {{ with .Values.knative.idleTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}
+      responseStartTimeoutSeconds: {{ with .Values.knative.responseStartTimeout }}{{ . }}{{ else }}{{ $knative_timeout }}{{ end }}

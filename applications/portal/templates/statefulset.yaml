@@ -1,0 +1,226 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "portal.fullname" . }}
+  labels:
+    {{- include "portal.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "portal.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: "firefly"
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "portal.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "firefly"
+        portal-redis-client: "true"
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: "firefly"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: "MANAGER"
+              value: "TRUE"
+            - name: "ADMIN_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "portal.fullname" . }}-secret
+                  key: "ADMIN_PASSWORD"
+            - name: "USE_ADMIN_AUTH"
+              value: "false"
+            - name: "REDIS_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "portal.fullname" . }}-secret
+                  key: "ADMIN_PASSWORD"
+            - name: "PROPS_redis__host"
+              value: {{ include "portal.fullname" . }}-redis
+            - name: "PROPS_sso__req__auth__hosts"
+              value: {{ .Values.global.host | quote }}
+            - name: "PROPS_lsst__hips__masterUrl"
+              value: "{{ .Values.global.baseUrl }}/api/hips/list"
+            - name: "PROPS_FIREFLY_OPTIONS"
+              value: >-
+                $'{
+                   "coverage":  {
+                      {{- if .Values.config.hipsUrl }}
+                      "hipsSourceURL" : "{{ .Values.config.hipsUrl }}",
+                      "hipsSource360URL" : "{{ .Values.config.hipsUrl }}"
+                      {{- else }}
+                      "hipsSourceURL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                      "hipsSource360URL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                      {{- end }}
+                   },
+                   "tap" : {
+                      "additional": {
+                          "services": [
+                            {
+                               "label": "LSST DP0.2 DC2",
+                               "value": "{{ .Values.global.baseUrl }}/api/tap",
+                               {{- if .Values.config.hipsUrl }}
+                               "hipsUrl": "{{ .Values.config.hipsUrl }}",
+                               {{- else }}
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               {{- end }}
+                               "centerWP": "62;-37;EQ_J2000",
+                               "fovDeg": 10
+                            }
+                            {{- if .Values.config.ssotap }}
+                            ,
+                            {
+                               "label": "LSST DP0.3 SSO",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.ssotap}}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
+                               "fovDeg": 10
+                            }
+                            {{- end }}
+                            {{- if .Values.config.livetap }}
+                            ,
+                            {
+                               "label": "LSST Live ObsCore",
+                               "value": "{{ .Values.global.baseUrl }}/api/{{ .Values.config.livetap }}",
+                               "hipsUrl": "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                               "centerWP": "0;0;ECL",
+                               "fovDeg": 10
+                            }
+                            {{- end }}
+                          ]
+                      }
+                   },
+                   "hips": {
+                      "defHipsSources": {"source": "lsst", "label": "Rubin Featured"},
+                      "adhocMocSource": {
+                          "sources": [
+                              "temp://lsst/dp02_dc2/hips/images/color_gri",
+                              "temp://lsst/dp02_dc2/hips/images/band_u",
+                              "temp://lsst/dp02_dc2/hips/images/band_g",
+                              "temp://lsst/dp02_dc2/hips/images/band_r",
+                              "temp://lsst/dp02_dc2/hips/images/band_i",
+                              "temp://lsst/dp02_dc2/hips/images/band_z",
+                              "temp://lsst/dp02_dc2/hips/images/band_y",
+                              "ivo://CDS/P/2MASS/color"
+                          ],
+                          "label": "Rubin Featured MOC"
+                      }
+                   },
+                   "searchActionsCmdMask": [
+                     "tableTapUpload",
+                     "tableHiPS", "tapRadius", "tapArea", "tableTapRadius",
+                     "HiPS", "lsstObsCoreTap", "lsstTruthSummaryRadius", "lsstTruthSummaryArea",
+                     "lsstObsCoreTapTable", "lsstTruthSummaryRadiusTable"
+                   ]
+                }'
+            - name: "SERVER_CONFIG_DIR"
+              value: "/firefly/config"
+            - name: "CLEANUP_INTERVAL"
+              value: "{{ .Values.config.cleanupInterval }}"
+            - name: VISUALIZE_FITS_SEARCH_PATH
+              value: "{{ .Values.config.visualizeFitsSearchPath }}"
+            - name: DEBUG
+              value: "{{ .Values.config.debug }}"
+          ports:
+            - containerPort: 8080
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - mountPath: "/firefly/shared-workarea"
+              name: "firefly-shared-workarea"
+            - mountPath: "/firefly/config"
+              name: "firefly-config"
+              readOnly: true
+            - mountPath: "/firefly/workarea"
+              name: "workarea"
+      imagePullSecrets:
+        - name: "pull-secret"
+      {{- with .Values.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: "firefly-shared-workarea"
+          {{- if .Values.config.volumes.sharedWorkarea.hostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.sharedWorkarea.hostPath.path | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.sharedWorkarea.nfs }}
+          nfs:
+            path: {{ .Values.config.volumes.sharedWorkarea.nfs.path | quote }}
+            server: {{ .Values.config.volumes.sharedWorkarea.nfs.server | quote }}
+          {{- else if .Values.config.volumes.sharedWorkarea.pvc }}
+          persistentVolumeClaim:
+            accessModes:
+            - "ReadWriteMany"
+            claimName: "portal-sharedworkarea"
+            size: {{ .Values.config.volumes.sharedWorkarea.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.sharedWorkarea.pvc.storageClass | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        - name: "firefly-config"
+          {{- if .Values.config.volumes.config.hostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.config.hostPath | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.config.nfs }}
+          nfs:
+            path: {{ .Values.config.volumes.config.nfs.path | quote }}
+            server: {{ .Values.config.volumes.config.nfs.server | quote }}
+          {{- else if .Values.config.volumes.config.pvc }}
+          persistentVolumeClaim:
+            accessModes:
+            - "ReadOnlyMany"
+            claimName: "portal-config"
+            size: {{ .Values.config.volumes.config.pvc.size | quote }}
+            storageClass: {{ .Values.config.volumes.config.pvc.storageClass | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- if (not .Values.config.volumes.privateWorkarea.pvc) }}
+        - name: "workarea"
+          {{- if .Values.config.volumes.privateWorkarea.hostPath }}
+          hostPath:
+            path: {{ .Values.config.volumes.privateWorkarea.hostPath | quote }}
+            type: "Directory"
+          {{- else if .Values.config.volumes.privateWorkarea.nfs }}
+          nfs:
+            path: {{ .Values.config.volumes.privateWorkarea.nfs.path | quote }}
+            server: {{ .Values.config.volumes.privateWorkarea.nfs.server | quote }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+  {{- if .Values.config.volumes.privateWorkarea.pvc }}
+  volumeClaimTemplates:
+    - metadata:
+        name: "workarea"
+      spec:
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: {{ .Values.config.volumes.privateWorkarea.pvc.size | quote }}
+        storageClassName: {{ .Values.config.volumes.privateWorkarea.pvc.storageClass | quote }}
+  {{- end }}

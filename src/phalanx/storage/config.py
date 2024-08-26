@@ -31,10 +31,12 @@ from ..models.applications import (
     Project,
 )
 from ..models.environments import (
+    ArgoCDDetails,
     ArgoCDRBAC,
     Environment,
     EnvironmentConfig,
     EnvironmentDetails,
+    GafaelfawrDetails,
     GafaelfawrScope,
     IdentityProvider,
     PhalanxConfig,
@@ -123,9 +125,7 @@ class _ApplicationChange:
         """Whether this change may affect any environment."""
         if self.path in ("Chart.yaml", "values.yaml"):
             return True
-        if self.path.startswith(("crds/", "templates/")):
-            return True
-        return False
+        return self.path.startswith(("crds/", "templates/"))
 
 
 class ConfigStorage:
@@ -689,10 +689,58 @@ class ConfigStorage:
         InvalidApplicationConfigError
             Raised if the Gafaelfawr or Argo CD configuration is invalid.
         """
-        # Public URL of Argo CD (or none for environments like minikube).
-        argocd_url = None
-        with suppress(KeyError):
-            argocd_url = argocd.values["argo-cd"]["configs"]["cm"]["url"]
+        return EnvironmentDetails(
+            **config.model_dump(exclude={"applications"}),
+            applications=applications,
+            gafaelfawr=self._build_gafaelfawr_details(config, gafaelfawr),
+            argocd=self._build_argocd_details(argocd),
+        )
+
+    def _build_argocd_details(
+        self, argocd: ApplicationInstance
+    ) -> ArgoCDDetails:
+        """Construct the details of an Argo CD configuration.
+
+        Parameters
+        ----------
+        argocd
+            Argo CD application configuration.
+
+        Returns
+        -------
+        ArgoCDDetails
+            Fleshed-out details for that environment.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the Gafaelfawr or Argo CD configuration is invalid.
+        """
+        try:
+            config = argocd.values["argo-cd"]["configs"]["cm"]
+        except KeyError:
+            return ArgoCDDetails(provider=IdentityProvider.NONE)
+
+        # Public URL of Argo CD.
+        url = config.get("url")
+
+        # Argo CD identity provider.
+        provider = IdentityProvider.NONE
+        provider_hostname = None
+        if "oidc.config" in config:
+            provider = IdentityProvider.OIDC
+            oidc_config = yaml.safe_load(config["oidc.config"])
+            with suppress(KeyError):
+                provider_hostname = urlparse(oidc_config["issuer"]).hostname
+        elif "dex.config" in config:
+            dex_config = yaml.safe_load(config["dex.config"])
+            with suppress(KeyError):
+                connector = dex_config["connectors"][0]
+                if connector["name"] == "GitHub":
+                    provider = IdentityProvider.GITHUB
+                elif connector["name"] == "Google":
+                    provider = IdentityProvider.GOOGLE
+                    provider_hostname = connector["config"]["hostedDomains"][0]
 
         # Argo CD role-based access control configuration.
         argocd_rbac = None
@@ -700,14 +748,53 @@ class ConfigStorage:
             rbac_config = argocd.values["argo-cd"]["configs"]["rbac"]
             argocd_rbac = ArgoCDRBAC.from_csv(rbac_config["policy.csv"])
 
-        # Type of identity provider used for Gafaelfawr.
+        # Return the results.
+        return ArgoCDDetails(
+            provider=provider,
+            provider_hostname=provider_hostname,
+            rbac=argocd_rbac,
+            url=url,
+        )
+
+    def _build_gafaelfawr_details(
+        self,
+        config: EnvironmentConfig,
+        gafaelfawr: ApplicationInstance | None,
+    ) -> GafaelfawrDetails:
+        """Construct the details of a Gafaelfawr configuration.
+
+        Parameters
+        ----------
+        config
+            Configuration for the environment.
+        gafaelfawr
+            Gafaelfawr application configuration, if Gafaelfawr is enabled for
+            this environment.
+
+        Returns
+        -------
+        GafaelfawrDetails
+            Fleshed-out details for that environment.
+
+        Raises
+        ------
+        InvalidApplicationConfigError
+            Raised if the Gafaelfawr or Argo CD configuration is invalid.
+        """
+        if not gafaelfawr:
+            return GafaelfawrDetails(provider=IdentityProvider.NONE)
+
+        # Determine the upstream identity provider.
+        provider_hostname = None
         if gafaelfawr:
             if gafaelfawr.values["config"]["cilogon"]["clientId"]:
-                identity_provider = IdentityProvider.CILOGON
+                provider = IdentityProvider.CILOGON
             elif gafaelfawr.values["config"]["github"]["clientId"]:
-                identity_provider = IdentityProvider.GITHUB
+                provider = IdentityProvider.GITHUB
             elif gafaelfawr.values["config"]["oidc"]["clientId"]:
-                identity_provider = IdentityProvider.OIDC
+                provider = IdentityProvider.OIDC
+                url = gafaelfawr.values["config"]["oidc"]["loginUrl"]
+                provider_hostname = urlparse(url).hostname
             else:
                 raise InvalidApplicationConfigError(
                     "gafaelfawr",
@@ -715,39 +802,33 @@ class ConfigStorage:
                     environment=config.name,
                 )
         else:
-            identity_provider = IdentityProvider.NONE
+            provider = IdentityProvider.NONE
 
         # Gafaelfawr scopes. Restructure the data to let Pydantic do most of
         # the parsing.
         gafaelfawr_scopes = []
-        if gafaelfawr:
-            try:
-                group_mapping = gafaelfawr.values["config"]["groupMapping"]
-                for scope, groups in group_mapping.items():
-                    raw = {"scope": scope, "groups": groups}
-                    gafaelfawr_scope = GafaelfawrScope.model_validate(raw)
-                    gafaelfawr_scopes.append(gafaelfawr_scope)
-            except KeyError as e:
-                raise InvalidApplicationConfigError(
-                    "gafaelfawr",
-                    "No config.groupMapping",
-                    environment=config.name,
-                ) from e
-            except ValidationError as e:
-                raise InvalidApplicationConfigError(
-                    "gafaelfawr",
-                    "Invalid config.groupMapping",
-                    environment=config.name,
-                ) from e
+        try:
+            group_mapping = gafaelfawr.values["config"]["groupMapping"]
+            for scope, groups in group_mapping.items():
+                raw = {"scope": scope, "groups": groups}
+                gafaelfawr_scope = GafaelfawrScope.model_validate(raw)
+                gafaelfawr_scopes.append(gafaelfawr_scope)
+        except KeyError as e:
+            raise InvalidApplicationConfigError(
+                "gafaelfawr", "No config.groupMapping", environment=config.name
+            ) from e
+        except ValidationError as e:
+            raise InvalidApplicationConfigError(
+                "gafaelfawr",
+                "Invalid config.groupMapping",
+                environment=config.name,
+            ) from e
 
-        # Return the resulting model.
-        return EnvironmentDetails(
-            **config.model_dump(exclude={"applications"}),
-            applications=applications,
-            argocd_url=argocd_url,
-            argocd_rbac=argocd_rbac,
-            identity_provider=identity_provider,
-            gafaelfawr_scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
+        # Return the results.
+        return GafaelfawrDetails(
+            provider=provider,
+            provider_hostname=provider_hostname,
+            scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
         )
 
     def _find_application_namespace(self, application: str) -> str:

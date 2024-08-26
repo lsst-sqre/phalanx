@@ -38,8 +38,10 @@ def test_build_jinja_contexts(factory: Factory) -> None:
         # Check the additional environment information we gather.
         assert idfdev.name == "idfdev"
         assert idfdev.fqdn == "data-dev.lsst.cloud"
-        assert idfdev.argocd_url == "https://data-dev.lsst.cloud/argo-cd"
-        assert idfdev.argocd_rbac.roles == {
+        assert idfdev.argocd.provider == IdentityProvider.GOOGLE
+        assert idfdev.argocd.provider_hostname == "lsst.cloud"
+        assert idfdev.argocd.url == "https://data-dev.lsst.cloud/argo-cd"
+        assert idfdev.argocd.rbac.roles == {
             "role:admin": [
                 "adam@lsst.cloud",
                 "afausti@lsst.cloud",
@@ -58,21 +60,22 @@ def test_build_jinja_contexts(factory: Factory) -> None:
                 "roby@lsst.cloud",
             ],
         }
-        assert idfdev.identity_provider == IdentityProvider.CILOGON
+        assert idfdev.gafaelfawr.provider == IdentityProvider.CILOGON
         assert idfdev.gcp.project_id == "science-platform-dev-7696"
         assert idfdev.gcp.region == "us-central1"
         assert idfdev.gcp.cluster_name == "science-platform"
         assert minikube.name == "minikube"
         assert minikube.fqdn == "minikube.lsst.cloud"
-        assert minikube.argocd_url is None
-        assert minikube.identity_provider == IdentityProvider.GITHUB
+        assert minikube.argocd.provider == IdentityProvider.NONE
+        assert minikube.argocd.url is None
+        assert minikube.gafaelfawr.provider == IdentityProvider.GITHUB
         assert minikube.gcp is None
 
         # Check some of the more complex data.
-        scopes = {s.scope: s.groups_as_rst() for s in idfdev.gafaelfawr_scopes}
+        scopes = {s.scope: s.groups_as_rst() for s in idfdev.gafaelfawr.scopes}
         assert scopes == read_output_json("idfdev", "gafaelfawr-scopes")
         scopes = {
-            s.scope: s.groups_as_rst() for s in minikube.gafaelfawr_scopes
+            s.scope: s.groups_as_rst() for s in minikube.gafaelfawr.scopes
         }
         assert scopes == read_output_json("minikube", "gafaelfawr-scopes")
 

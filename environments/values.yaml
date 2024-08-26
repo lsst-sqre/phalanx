@@ -12,11 +12,6 @@ fqdn: ""
 # enabled for this environment
 appOfAppsName: "app-of-apps"
 
-# -- Butler repository index URI to use for this environment, for services that
-# connect directly to the Butler database.
-# @default -- None, must be set
-butlerRepositoryIndex: ""
-
 # -- Butler repositories that can be accessed via Butler server, as a
 # dictionary from repository label to URI.
 # @default -- None, must be set
@@ -129,6 +124,9 @@ applications:
   # -- Enable the nublado application (v3 of the Notebook Aspect)
   nublado: false
 
+  # -- Enable the obsenv-management application
+  obsenv-management: false
+
   # -- Enable the obssys control system application
   obssys: false
 
@@ -160,6 +158,9 @@ applications:
 
   # -- Enable the sasquatch application
   sasquatch: false
+
+  # -- Enable the sasquatch-backpack application
+  sasquatch-backpack: false
 
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false

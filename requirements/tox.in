@@ -1,0 +1,14 @@
+# -*- conf -*-
+#
+# Editable tox dependencies
+# Add tox and its plugins here. These will be installed in the user's venv for
+# local development and by CI when running tox actions.
+#
+# After editing, update requirements/dev.txt by running:
+#     make update-deps
+
+-c main.txt
+-c dev.txt
+
+tox
+tox-uv

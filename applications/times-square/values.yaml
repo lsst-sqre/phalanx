@@ -59,15 +59,28 @@ ingress:
   # -- Root URL path prefix for times-square API
   path: "/times-square/api"
 
+  # -- scope for general operations
+  defaultScope: "exec:notebook"
+  # -- scope for using just the template engine
+  templateApiScope: "exec:notebook"
+
 # -- Resource limits and requests for the times-square deployment pod
 # @default -- see `values.yaml`
 resources:
-  limits:
-    cpu: "1"
-    memory: "1Gi"
-  requests:
-    cpu: "2m"
-    memory: "100Mi"
+  timesSquare:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "2m"
+      memory: "100Mi"
+  timesSquareWorker:
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+    requests:
+      cpu: "2m"
+      memory: "256Mi"
 
 autoscaling:
   # -- Enable autoscaling of times-square deployment
@@ -137,7 +150,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.35.3"
+    tag: "1.37.0"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
@@ -147,10 +160,10 @@ cloudsql:
     resources:
       limits:
         cpu: "1"
-        memory: "50Mi"
+        memory: "4Gi"
       requests:
         cpu: "1m"
-        memory: "8Mi"
+        memory: "512Mi"
 
   # -- Instance connection name for a Cloud SQL PostgreSQL instance
   instanceConnectionName: ""

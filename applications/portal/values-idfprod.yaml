@@ -1,12 +1,19 @@
 replicaCount: 4
 
 config:
+  cleanupInterval: "1h"
   volumes:
-    workareaNfs:
-      path: "/share1/home/firefly/shared-workarea"
-      server: "10.13.105.122"
+    sharedWorkarea:
+      nfs:
+        path: "/share1/home/firefly/shared-workarea"
+        server: "10.13.105.122"
+    privateWorkarea:
+      pvc:
+        size: "40Gi"
+        storageClass: "standard-rwo"
   ssotap: "ssotap"
 
 resources:
   limits:
-    memory: "30Gi"
+    cpu: "6"
+    memory: "90Gi"

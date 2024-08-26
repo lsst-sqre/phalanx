@@ -14,10 +14,12 @@ clean:
 
 .PHONY: init
 init:
-	pip install --upgrade uv
-	uv pip install -r requirements/main.txt -r requirements/dev.txt
+	pip install --upgrade pip uv
+	uv pip install -r requirements/main.txt -r requirements/dev.txt \
+	    -r requirements/tox.txt
 	uv pip install --editable .
 	rm -rf .tox
+	uv pip install --upgrade pre-commit
 	pre-commit install
 
 # This is defined as a Makefile target instead of only a tox command because
@@ -36,13 +38,15 @@ update: update-deps init
 
 .PHONY: update-deps
 update-deps:
-	pip install --upgrade uv
-	uv pip install pre-commit
+	pip install --upgrade pip uv
+	uv pip install --upgrade pre-commit
 	pre-commit autoupdate
 	uv pip compile --upgrade --generate-hashes			\
 	    --output-file requirements/main.txt requirements/main.in
 	uv pip compile --upgrade --generate-hashes			\
 	    --output-file requirements/dev.txt requirements/dev.in
+	uv pip compile --upgrade --generate-hashes			\
+	    --output-file requirements/tox.txt requirements/tox.in
 
 # Useful for testing against a Git version of Safir.
 .PHONY: update-deps-no-hashes
@@ -52,3 +56,5 @@ update-deps-no-hashes:
 	    --output-file requirements/main.txt requirements/main.in
 	uv pip compile --upgrade					\
 	    --output-file requirements/dev.txt requirements/dev.in
+	uv pip compile --upgrade					\
+	    --output-file requirements/tox.txt requirements/tox.in

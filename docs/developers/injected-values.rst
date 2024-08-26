@@ -41,9 +41,6 @@ Optional injected values
 
 The following additional values are not normally injected by the default ``Application`` template but can be added if needed by adding a new entry to the ``spec.source.helm.parameters`` key of the ``Application`` resource template.
 
-``global.butlerRepositoryIndex``
-    The URI for the Butler index for this environment, used by services that connect directly to the Butler database without using the Butler server.
-
 ``global.butlerServerRepositories``
     A mapping from Butler repository labels to URIs that is used by applications that talk to the Butler server.
     Since this is a complex data structure, it has to be injected as a base64-encoded value to prevent Helm from misinterpreting it:
