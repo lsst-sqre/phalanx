@@ -33,7 +33,7 @@ config:
     "admin:jupyterlab":
       - "sqre"
     "exec:admin":
-      - "k8s-manke"
+      - "integration-testers"
       - "sqre"
     "exec:internal-tools":
       - "rsp-bts"
