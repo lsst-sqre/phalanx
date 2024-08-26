@@ -68,6 +68,9 @@ config:
   oidcServer:
     enabled: false
 
+  # Support generating user metadata for CADC authentication code.
+  cadcBaseUuid: "df534647-a1df-4608-b08e-3af8dc291e41"
+
   # initialAdmins:
   #   - "mainetti"
 
