@@ -1,5 +1,4 @@
 replicaCount: 2
-
 redis:
   persistence:
     enabled: false
@@ -7,16 +6,18 @@ redis:
 config:
   logLevel: "DEBUG"
   internalDatabase: true
+  updateSchema: False
 
   # Session length and token expiration (in minutes).
-  issuer:
-    exp_minutes: 43200  # 30 days
+  #issuer:
+  #  exp_minutes: 43200  # 30 days
 
   # github:
   #   clientId: ae314e45a6af43ea910a
 
   oidc:
     clientId: "lsst_rsp"
+    audience: "lsst_rsp"
     loginUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/auth"
     tokenUrl: "https://login.cc.in2p3.fr/auth/realms/cc.in2p3.fr/protocol/openid-connect/token"
     # scopes:
@@ -30,7 +31,7 @@ config:
     groupObjectClass: posixGroup
     groupMemberAttr: memberUid
     groupSearchByDn: false
-    userBaseDn: cn=users,cn=account,dc=cc,dc=in2p3,dc=fr
+    userBaseDn: cn=users,cn=accounts,dc=cc,dc=in2p3,dc=fr
     userSearchAttr: uid
     addUserGroup: false
     uidAttr: uidNumber
@@ -67,23 +68,27 @@ config:
   oidcServer:
     enabled: false
 
-  initialAdmins:
-    - "mainetti"
+  # initialAdmins:
+  #   - "mainetti"
 
   groupMapping:
     "admin:token":
-      - "lsst"
+      - "ccin2p3"
+    "admin:jupyterlab":
+      - "ccin2p3"
     "exec:admin":
-      - "lsst"
+      - "ccin2p3"
     "exec:internal-tools":
       - "lsst"
     "exec:notebook":
       - "lsst"
     "exec:portal":
       - "lsst"
-    "read:all":
-      - "lsst"
     "read:image":
       - "lsst"
     "read:tap":
+      - "lsst"
+    "write:files":
+      - "lsst"
+    "user:token":
       - "lsst"
