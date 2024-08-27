@@ -41,10 +41,15 @@ podAnnotations: {}
 resources:
   limits:
     cpu: "1"
-    memory: "324Mi"
+    # Worst case peak usage for a single container would be something like all
+    # 40 threads in the thread pool running large queries costing ~35MB each.
+    memory: "1.5Gi"
   requests:
     cpu: "15m"
-    memory: "150Mi"
+    # Butler server uses around 200MB idle at startup, but under dynamic usage
+    # Python seems to want to hold onto another couple hundred megabytes of
+    # heap.
+    memory: "0.5Gi"
 
 # -- Node selection rules for the butler deployment pod
 nodeSelector: {}
