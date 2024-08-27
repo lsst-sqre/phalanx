@@ -1,0 +1,8 @@
+replicaCount: 2
+
+resources:
+  limits:
+    memory: "8Gi"
+
+config:
+  hipsUrl: "http://thisdoesntexist.org"
