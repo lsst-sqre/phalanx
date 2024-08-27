@@ -8,7 +8,7 @@ config:
 worker:
   htcondor:
     config:
-      mountPath: "/opt/lsst/software/stack/conda/envs/lsst-scipipe-9.0.0/etc/condor/config.d"
+      mountPath: "/home/lsstsvc1/stack/conda/envs/lsst-scipipe-9.0.0/etc/condor/config.d"
       contents: |
         CONDOR_HOST = sdfiana012.sdf.slac.stanford.edu
         COLLECTOR_HOST = sdfiana012.sdf.slac.stanford.edu

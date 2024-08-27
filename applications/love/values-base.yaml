@@ -211,114 +211,114 @@ love-producer:
       memory: 300Mi
   producers:
   - name: ataos
-    csc: ATAOS:0
+    csc: ATAOS:0 --log-level 10
   - name: atcamera
-    csc: ATCamera:0
+    csc: ATCamera:0 --log-level 10
   - name: atdome
-    csc: ATDome:0
+    csc: ATDome:0 --log-level 10
   - name: atdometrajectory
-    csc: ATDomeTrajectory:0
+    csc: ATDomeTrajectory:0 --log-level 10
   - name: atheaderservice
-    csc: ATHeaderService:0
+    csc: ATHeaderService:0 --log-level 10
   - name: athexapod
-    csc: ATHexapod:0
+    csc: ATHexapod:0 --log-level 10
   - name: atmcs
-    csc: ATMCS:0
+    csc: ATMCS:0 --log-level 10
   - name: atocps
-    csc: OCPS:1
+    csc: OCPS:1 --log-level 10
   - name: atoods
-    csc: ATOODS:0
+    csc: ATOODS:0 --log-level 10
   - name: atpneumatics
-    csc: ATPneumatics:0
+    csc: ATPneumatics:0 --log-level 10
   - name: atptg
-    csc: ATPtg:0
+    csc: ATPtg:0 --log-level 10
   - name: atscheduler
-    csc: Scheduler:2
+    csc: Scheduler:2 --log-level 10
   - name: atscriptqueue
-    csc: ScriptQueue:2
+    csc: ScriptQueue:2 --log-level 10
   - name: atspectrograph
-    csc: ATSpectrograph:0
+    csc: ATSpectrograph:0 --log-level 10
   - name: auxteless201
-    csc: ESS:201
+    csc: ESS:201 --log-level 10
   - name: auxteless202
-    csc: ESS:202
+    csc: ESS:202 --log-level 10
   - name: auxteless203
-    csc: ESS:203
+    csc: ESS:203 --log-level 10
   - name: auxteless204
-    csc: ESS:204
+    csc: ESS:204 --log-level 10
   - name: auxteless205
-    csc: ESS:205
+    csc: ESS:205 --log-level 10
   - name: calibhilless301
-    csc: ESS:301
+    csc: ESS:301 --log-level 10
   - name: camerahexapod
-    csc: MTHexapod:1
+    csc: MTHexapod:1 --log-level 10
   - name: dimm1
-    csc: DIMM:1
+    csc: DIMM:1 --log-level 10
   - name: dimm2
-    csc: DIMM:2
+    csc: DIMM:2 --log-level 10
   - name: dsm1
-    csc: DSM:1
+    csc: DSM:1 --log-level 10
   - name: dsm2
-    csc: DSM:2
+    csc: DSM:2 --log-level 10
   - name: epm1
-    csc: EPM:1
+    csc: EPM:1 --log-level 10
   - name: gcheaderservice1
-    csc: GCHeaderService:1
+    csc: GCHeaderService:1 --log-level 10
   - name: genericcamera1
-    csc: GenericCamera:1
+    csc: GenericCamera:1 --log-level 10
   - name: lasertracker1
-    csc: LaserTracker:1
+    csc: LaserTracker:1 --log-level 10
   - name: love
-    csc: LOVE:0
+    csc: LOVE:0 --log-level 10
   - name: m2ess106
-    csc: ESS:106
+    csc: ESS:106 --log-level 10
   - name: m2hexapod
-    csc: MTHexapod:2
+    csc: MTHexapod:2 --log-level 10
   - name: mtaircompressor1
-    csc: MTAirCompressor:1
+    csc: MTAirCompressor:1 --log-level 10
   - name: mtaircompressor2
-    csc: MTAirCompressor:2
+    csc: MTAirCompressor:2 --log-level 10
   - name: mtaos
-    csc: MTAOS:0
+    csc: MTAOS:0 --log-level 10
   - name: mtdome
-    csc: MTDome:0
+    csc: MTDome:0 --log-level 10
   - name: mtdomeess101
-    csc: ESS:101
+    csc: ESS:101 --log-level 10
   - name: mtdomeess102
-    csc: ESS:102
+    csc: ESS:102 --log-level 10
   - name: mtdomeess103
-    csc: ESS:103
+    csc: ESS:103 --log-level 10
   - name: mtdomeess107
-    csc: ESS:107
+    csc: ESS:107 --log-level 10
   - name: mtdomeess108
-    csc: ESS:108
+    csc: ESS:108 --log-level 10
   - name: mtdometrajectory
-    csc: MTDomeTrajectory:0
+    csc: MTDomeTrajectory:0 --log-level 10
   - name: mtm1m3
-    csc: MTM1M3:0
+    csc: MTM1M3:0 --log-level 10
   - name: mtm2
-    csc: MTM2:0
+    csc: MTM2:0 --log-level 10
   - name: mtmount
-    csc: MTMount:0
+    csc: MTMount:0 --log-level 10
   - name: mtptg
-    csc: MTPtg:0
+    csc: MTPtg:0 --log-level 10
   - name: mtrotator
-    csc: MTRotator:0
+    csc: MTRotator:0 --log-level 10
   - name: mtscheduler
-    csc: Scheduler:1
+    csc: Scheduler:1 --log-level 10
   - name: mtscriptqueue
-    csc: ScriptQueue:1
+    csc: ScriptQueue:1 --log-level 10
   - name: ocsscheduler
-    csc: Scheduler:3
+    csc: Scheduler:3 --log-level 10
   - name: ocsscriptqueue
-    csc: ScriptQueue:3
+    csc: ScriptQueue:3 --log-level 10
   - name: tmaess001
-    csc: ESS:1
+    csc: ESS:1 --log-level 10
   - name: tmaess104
-    csc: ESS:104
+    csc: ESS:104 --log-level 10
   - name: tmaess105
-    csc: ESS:105
+    csc: ESS:105 --log-level 10
   - name: watcher
-    csc: Watcher:0
+    csc: Watcher:0 --log-level 10
   - name: weatherforecast
-    csc: WeatherForecast:0
+    csc: WeatherForecast:0 --log-level 10
