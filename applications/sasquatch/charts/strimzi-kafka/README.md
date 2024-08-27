@@ -65,6 +65,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| users.appmetrics.enabled | bool | `false` | Enable user appmetrics |
 | users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | users.consdb.enabled | bool | `false` | Enable user consdb |
 | users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |

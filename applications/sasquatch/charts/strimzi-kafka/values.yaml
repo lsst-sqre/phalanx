@@ -285,6 +285,11 @@ users:
     # -- Enable user consdb
     enabled: false
 
+  appmetrics:
+    # -- Enable user appmetrics
+    enabled: false
+
+
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster
   enabled: false
