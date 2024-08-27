@@ -41,7 +41,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
-| kafka.version | string | `"3.7.1"` | Version of Kafka to deploy |
+| kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
 | kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
