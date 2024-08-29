@@ -1,15 +1,15 @@
 obsenv-api:
   image:
-    repository: mareuter/obsenv-api
-    tag: develop
+    repository: rubin-cr.lsst.org/obsenv-api
+    tag: tickets-DM-44286-1
     pullPolicy: Always
   config:
     useFakeObsenvManager: true
 
 obsenv-ui:
   image:
-    repository: mareuter/obsenv-ui
-    tag: develop
+    repository: rubin-cr.lsst.org/obsenv-ui
+    tag: tickets-DM-44443
     pullPolicy: Always
   config:
     pathPrefix: /obsenv-management
