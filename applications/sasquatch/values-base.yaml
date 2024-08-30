@@ -131,56 +131,6 @@ influxdb:
     enabled: true
     hostname: base-lsp.lsst.codes
 
-kafka-connect-manager:
-  influxdbSink:
-    # Based on the kafka producers configuration for the BTS
-    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-base-teststand.yaml
-    connectors:
-      auxtel:
-        enabled: true
-        topicsRegex: "lsst.sal.ATAOS|lsst.sal.ATDome|lsst.sal.ATDomeTrajectory|lsst.sal.ATHexapod|lsst.sal.ATPneumatics|lsst.sal.ATPtg|lsst.sal.ATMCS"
-      maintel:
-        enabled: true
-        topicsRegex: "lsst.sal.MTAOS|lsst.sal.MTDome|lsst.sal.MTDomeTrajectory|lsst.sal.MTPtg"
-      mtmount:
-        enabled: true
-        topicsRegex: "lsst.sal.MTMount"
-        tasksMax: "8"
-      eas:
-        enabled: true
-        topicsRegex: "lsst.sal.DIMM|lsst.sal.DSM|lsst.sal.EPM|lsst.sal.ESS|lsst.sal.HVAC|lsst.sal.WeatherForecast"
-      latiss:
-        enabled: true
-        topicsRegex: "lsst.sal.ATCamera|lsst.sal.ATHeaderService|lsst.sal.ATOODS|lsst.sal.ATSpectrograph"
-      m1m3:
-        enabled: true
-        topicsRegex: "lsst.sal.MTM1M3"
-        tasksMax: "8"
-      m2:
-        enabled: true
-        topicsRegex: "lsst.sal.MTHexapod|lsst.sal.MTM2|lsst.sal.MTRotator"
-      obssys:
-        enabled: true
-        topicsRegex: "lsst.sal.Scheduler|lsst.sal.Script|lsst.sal.ScriptQueue|lsst.sal.Watcher"
-      ocps:
-        enabled: true
-        topicsRegex: "lsst.sal.OCPS"
-      test:
-        enabled: true
-        topicsRegex: "lsst.sal.Test"
-      mtaircompressor:
-        enabled: true
-        topicsRegex: "lsst.sal.MTAirCompressor"
-      lasertracker:
-        enabled: true
-        topicsRegex: "lsst.sal.LaserTracker"
-      genericcamera:
-        enabled: true
-        topicsRegex: "lsst.sal.GCHeaderService|lsst.sal.GenericCamera"
-      lsstcam:
-        enabled: true
-        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
-
 telegraf-kafka-consumer:
   enabled: false
   kafkaConsumers:
