@@ -6,7 +6,9 @@ kind: ConfigMap
 metadata:
   name: sasquatch-telegraf-{{ $key }}
   labels:
-    app: sasquatch-telegraf-kakfa-consumer
+    app.kubernetes.io/name: sasquatch-telegraf
+    app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
+    app.kubernetes.io/part-of: sasquatch
 data:
   telegraf.conf: |+
     [agent]
