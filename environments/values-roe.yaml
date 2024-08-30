@@ -11,3 +11,4 @@ applications:
   postgres: true
   squareone: true
   tap: true
+  ssotap: true
