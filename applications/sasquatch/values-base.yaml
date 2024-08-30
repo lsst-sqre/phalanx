@@ -22,6 +22,7 @@ strimzi-kafka:
     config:
       auto.create.topics.enable: false
       log.cleaner.min.compaction.lag.ms: 259200000
+      log.message.timestamp.type: LogAppendTime
       log.retention.hours: 72
       log.retention.ms: 259200000
     storage:
