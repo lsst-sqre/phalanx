@@ -33,6 +33,8 @@ prompt-proto-service:
     imageBucket: rubin-summit
     endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
 
+  raw_microservice: http://172.24.5.158:8080/presence
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-summit-notification

@@ -70,6 +70,8 @@ spec:
           value: {{ .Values.apdb.config }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+        - name: RAW_MICROSERVICE
+          value: {{ .Values.raw_microservice }}
         - name: SASQUATCH_URL
           value: {{ .Values.sasquatch.endpointUrl }}
         {{- if and .Values.sasquatch.endpointUrl .Values.sasquatch.auth_env }}

@@ -51,6 +51,7 @@ Event-driven processing of camera images
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | See the `values.yaml` file. | Annotations for the prompt-proto-service pod |
+| raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
 | s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |

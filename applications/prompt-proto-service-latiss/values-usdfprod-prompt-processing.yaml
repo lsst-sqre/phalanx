@@ -49,6 +49,8 @@ prompt-proto-service:
     imageBucket: rubin-summit
     endpointUrl: https://s3dfrgw.slac.stanford.edu
 
+  raw_microservice: http://172.24.5.144:8080/presence
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing-prod
