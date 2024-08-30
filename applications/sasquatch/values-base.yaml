@@ -132,146 +132,78 @@ influxdb:
     hostname: base-lsp.lsst.codes
 
 telegraf-kafka-consumer:
-  enabled: false
+  enabled: true
   kafkaConsumers:
     auxtel:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
     maintel:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
     mtmount:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
+      replicaCount: 8
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
     eas:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
     latiss:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
     m1m3:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
+      replicaCount: 8
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
     m2:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
     obssys:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
     ocps:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
     test:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.Test" ]
     mtaircompressor:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
     lasertracker:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
     genericcamera:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
     lsstcam:
       enabled: true
-      replicaCount: 1
-      interval: "1s"
-      flush_interval: "1s"
-      union_mode: "nullable"
-      timestamp_format: "unix"
-      timestamp_field: "private_efdStamp"
+      database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
 
