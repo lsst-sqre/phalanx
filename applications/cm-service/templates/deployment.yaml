@@ -28,11 +28,6 @@ spec:
       containers:
         - name: "cm-service"
           env:
-            - name: CM_ARQ_REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: redis-secret
-                  key: password
             - name: CM_DATABASE_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -48,8 +43,6 @@ spec:
               value: {{ .Values.config.logProfile | quote }}
             - name: CM_LOG_LEVEL
               value: {{ .Values.config.logLevel | quote }}
-            - name: CM_ARQ_REDIS_URL
-              value: "redis://cm-service-redis/1"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
