@@ -6,16 +6,18 @@ kind: Deployment
 metadata:
   name: sasquatch-telegraf-{{ $key }}
   labels:
-    app: sasquatch-telegraf-kafka-consumer
+    app.kubernetes.io/name: sasquatch-telegraf
+    app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
+    app.kubernetes.io/part-of: sasquatch
 spec:
   replicas: {{ default 1 $value.replicaCount }}
   selector:
     matchLabels:
-      app: sasquatch-telegraf-kafka-consumer
+      app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
   template:
     metadata:
       labels:
-        app: sasquatch-telegraf-kafka-consumer
+        app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
       {{- if $.Values.podAnnotations }}
       annotations:
         {{- toYaml $.Values.podAnnotations | nindent 8 }}
