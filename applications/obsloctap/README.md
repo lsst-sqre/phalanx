@@ -16,9 +16,9 @@ Publish observing schedule
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |
 | config.volumes | list | `[]` | Additional volumes to attach |
-| consume-kafka.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the obsloctap image |
-| consume-kafka.image.repository | string | `"ghcr.io/lsst-dm/consume-kafka"` | obsloctap image to use |
-| consume-kafka.image.tag | string | The appVersion of the chart | Tag of image to use |
+| consumekafka.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the obsloctap image |
+| consumekafka.image.repository | string | `"ghcr.io/lsst-dm/consume-kafka"` | obsloctap image to use |
+| consumekafka.image.tag | string | The appVersion of the chart | Tag of image to use |
 | environment | object | `{}` | Environment variables (e.g. butler configuration/auth parms) for panel |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
