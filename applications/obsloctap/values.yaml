@@ -13,7 +13,7 @@ obsloctap:
 consumekafka:
   image:
     # -- obsloctap image to use
-    repository: "ghcr.io/lsst-dm/consume-kafka"
+    repository: "ghcr.io/lsst-dm/consumekafka"
 
     # -- Pull policy for the obsloctap image
     pullPolicy: "IfNotPresent"

@@ -16,19 +16,19 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        component: consume-kafka
+        component:
         {{- include "obsloctap.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: "obsloctap-consume-kafka"
+        - name: "obsloctap-consumekafka"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          image: "{{ .Values.consumekafka.image.repository }}:{{ .Values.consumekafka.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.consumekafka.image.repository }}:{{ .Values.consumekafka.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.consumekafka.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
