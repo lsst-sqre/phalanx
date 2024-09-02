@@ -33,21 +33,30 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
+            - name: "database"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "database"
+            - name: "database_user"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "username"
+            - name: "database_url"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "url"
+            - name: "database_password"
+              valueFrom:
+                secretKeyRef:
+                  name: obsloctap-postgres
+                  key: "password"
             - name: "INSTRUMENT"
               value: "LSSTCam"
             - name: "LOG_CONFIG"
               value: "{{ .Values.consumekafka.logConfig }}"
-            - name: "DB_HOST"
-              value: "{{ .Values.db.host }}"
-            - name: "DB_PASS"
-              valueFrom:
-                secretKeyRef:
-                  name: obsloctap
-                  key: "oods-password"
-            - name: "DB_USER"
-              value: "{{ .Values.db.user }}"
-            - name: "DB_NAME"
-              value: "{{ .Values.db.database }}"
             - name: "AWS_ACCESS_KEY_ID"
               valueFrom:
                 secretKeyRef:
