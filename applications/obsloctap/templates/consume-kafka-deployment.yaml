@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "obsloctap-consume-kafka"
+  name: "obsloctap-consumekafka"
   labels:
     {{- include "obsloctap.labels" . | nindent 4 }}
 spec:
@@ -28,15 +28,15 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          image: "{{ .Values.consume-kafka.image.repository }}:{{ .Values.consume-kafka.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.consume-kafka.image.pullPolicy }}
+          image: "{{ .Values.consumekafka.image.repository }}:{{ .Values.consumekafka.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.consumekafka.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: "INSTRUMENT"
               value: "LSSTCam"
             - name: "LOG_CONFIG"
-              value: "{{ .Values.consume-kafka.logConfig }}"
+              value: "{{ .Values.consumekafka.logConfig }}"
             - name: "DB_HOST"
               value: "{{ .Values.db.host }}"
             - name: "DB_PASS"
@@ -91,4 +91,3 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-{{- end }}
