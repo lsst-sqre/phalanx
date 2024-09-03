@@ -1,47 +1,51 @@
-{{- if .Values.manager.producers.autoscaling.enabled }}
+{{ range $manager_producer:= .Values.manager.producers }}
+{{ $_ := set $.Values "manager_producer" $manager_producer }}
+---
+{{- if $manager_producer.autoscaling.enabled }}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "love-manager-producers.fullname" . }}
+  name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
   labels:
-    {{- include "love-manager-producers.labels" . | nindent 4 }}
+    {{- include "love-manager-producer.labels" $ | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "love-manager-producers.fullname" . }}
-  minReplicas: {{ .Values.manager.producers.autoscaling.minReplicas }}
-  maxReplicas: {{ .Values.manager.producers.autoscaling.maxReplicas }}
+    name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
+  minReplicas: {{ $manager_producer.autoscaling.minReplicas }}
+  maxReplicas: {{ $manager_producer.autoscaling.maxReplicas }}
   metrics:
-    {{- if .Values.manager.producers.autoscaling.targetCPUUtilizationPercentage }}
+    {{- if $manager_producer.autoscaling.targetCPUUtilizationPercentage }}
     - type: Resource
       resource:
         name: cpu
         target:
           type: Utilization
-          averageUtilization: {{ .Values.manager.producers.autoscaling.targetCPUUtilizationPercentage }}
+          averageUtilization: {{ $manager_producer.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
-    {{- if .Values.manager.producers.autoscaling.targetMemoryUtilizationPercentage }}
+    {{- if $manager_producer.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
         target:
           type: Utilization
-          averageUtilization: {{ .Values.manager.producers.autoscaling.targetMemoryUtilizationPercentage }}
+          averageUtilization: {{ $manager_producer.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
-  {{- if or .Values.manager.producers.autoscaling.scaleUpPolicy .Values.manager.producers.autoscaling.scaleDownPolicy }}
+  {{- if or $manager_producer.autoscaling.scaleUpPolicy $manager_producer.autoscaling.scaleDownPolicy }}
   behavior:
-  {{- if .Values.manager.producers.autoscaling.scaleUpPolicy }}
+  {{- if $manager_producer.autoscaling.scaleUpPolicy }}
     scaleUp:
-    {{- with .Values.manager.producers.autoscaling.scaleUpPolicy }}
+    {{- with $manager_producer.autoscaling.scaleUpPolicy }}
       {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}
-  {{- if .Values.manager.producers.autoscaling.scaleDownPolicy }}
+  {{- if $manager_producer.autoscaling.scaleDownPolicy }}
     scaleDown:
-    {{- with .Values.manager.producers.autoscaling.scaleDownPolicy }}
+    {{- with $manager_producer.autoscaling.scaleDownPolicy }}
       {{- toYaml . | nindent 6 }}
     {{- end }}
   {{- end }}
   {{- end }}
+{{- end }}
 {{- end }}

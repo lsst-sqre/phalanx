@@ -8,7 +8,7 @@ Helm chart for the LOVE producers.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules applied to all LOVE producer pods |
 | annotations | object | `{}` | This allows for the specification of pod annotations. |
-| env | object | `{"WEBSOCKET_HOST":"love-nginx/manager/ws/subscription"}` | This section holds a set of key, value pairs for environmental variables |
+| env | object | `{}` | This section holds a set of key, value pairs for environmental variables |
 | envSecrets | object | `{"PROCESS_CONNECTION_PASS":"process-connection-pass"}` | This section holds a set of key, value pairs for secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the LOVE producer image |
 | image.repository | string | `"lsstts/love-producer"` | The LOVE producer image to use |
