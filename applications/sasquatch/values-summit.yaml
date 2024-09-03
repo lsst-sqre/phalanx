@@ -53,7 +53,24 @@ strimzi-kafka:
       path: /schema-registry(/|$)(.*)
   cruiseControl:
     enabled: true
-
+  brokerStorage:
+    enabled: false
+    storageClassName: localdrive
+    size: 15Ti
+    migration:
+      enabled: true
+      rebalance: false
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - yagan17
+                    - yagan18
+                    - yagan19
 influxdb:
   persistence:
     storageClass: rook-ceph-block
