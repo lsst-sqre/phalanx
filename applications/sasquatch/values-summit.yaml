@@ -18,6 +18,13 @@ strimzi-kafka:
         - broker: 2
           loadBalancerIP: "139.229.180.5"
           host: sasquatch-summit-kafka-2.lsst.codes
+    resources:
+      requests:
+        memory: 32Gi
+        cpu: 4
+      limits:
+        memory: 32Gi
+        cpu: 4
   kraft:
     enabled: true
   kafkaController:
