@@ -1,8 +1,8 @@
 image:
-  # pullPolicy: "Always"
+  pullPolicy: "Always"
   tag: "tickets-dm-46010"
 config:
-  slackAlerts: true
+  # slackAlerts: true
   debug: true
 mapping:
   routes:
