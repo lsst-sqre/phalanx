@@ -1,0 +1,10 @@
+image:
+  # pullPolicy: "Always"
+  tag: "tickets-dm-46010"
+config:
+  slackAlerts: true
+  debug: true
+mapping:
+  routes:
+  - source_prefix: "/tutorials/"
+    target: "${base_url}/nb/user/${user}/lab/tree/${path}.ipynb"
