@@ -7,4 +7,4 @@ config:
 mapping:
   routes:
   - source_prefix: "/tutorials/"
-    target: "${base_url}/nb/user/${user}/lab/tree/${path}.ipynb"
+    target: "${base_url}/nb/user/${user}/lab/tree/notebooks/tutorial-notebooks/${path}.ipynb"
