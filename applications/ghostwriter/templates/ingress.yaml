@@ -9,16 +9,8 @@ config:
   scopes:
     all:
       - "read:image"
-    delegate:
-      internal:
-        service: "ghostwriter"
-        scopes:
-          - "read:image"
-          - "exec:notebook"
-          - "exec:portal"
-          - "read:image"
-          - "read:tap"
-          - "write:files"
+  delegate:
+    notebook: {}
 template:
   metadata:
     name: "ghostwriter"
