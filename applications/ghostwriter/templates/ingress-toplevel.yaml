@@ -1,0 +1,36 @@
+{{- $root := . -}}
+{{- range $route := $root.Values.mapping.routes }}
+{{- $source := $route.source_prefix | trimAll "/" }}
+{{- $res_src := trimPrefix "/" $source | replace "/" "-" }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "ghostwriter-{{ $res_src }}"
+config:
+  baseUrl: {{ $root.Values.global.baseUrl | quote }}
+  scopes:
+    all:
+      - "read:image"
+  delegate:
+    notebook: {}
+template:
+  metadata:
+    name: "ghostwriter-{{ $res_src }}"
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: "/ghostwriter/rewrite/$1"
+    {{- with $root.Values.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" $root.Values.global.host | quote }}
+        http:
+          paths:
+            - path: "/({{ $source }}/.*)"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: "ghostwriter"
+                  port:
+                    number: 8080
+{{- end }}
