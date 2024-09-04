@@ -67,6 +67,55 @@ influxdb:
       memory: 128Gi
       cpu: 16
 
+influxdb-enterprise:
+  enabled: true
+  license:
+    secret:
+      name: sasquatch
+      key: influxdb-enterprise-license
+  meta:
+    ingress:
+      enabled: true
+      hostname: summit-lsp.lsst.codes
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 2
+      limits:
+        memory: 4Gi
+        cpu: 4
+  data:
+    replicas: 1
+    ingress:
+      enabled: true
+      hostname: summit-lsp.lsst.codes
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      storageClass: localdrive
+      size: 15Ti
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - yagan20
+    # -- InfluxDB Enterprise data pod resources, 16 cores single node license
+    resources:
+      requests:
+        memory: 256Gi
+        cpu: 16
+      limits:
+        memory: 256Gi
+        cpu: 16
+
 kafka-connect-manager:
   influxdbSink:
     # Based on the kafka producers configuration for the Summit
