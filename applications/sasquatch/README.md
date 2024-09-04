@@ -365,7 +365,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
-| strimzi-kafka.kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
+| strimzi-kafka.kafka.version | string | `"3.7.1"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | strimzi-kafka.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
