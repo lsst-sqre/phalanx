@@ -8,3 +8,5 @@ mapping:
   routes:
   - source_prefix: "/tutorials/"
     target: "${base_url}/nb/user/${user}/lab/tree/notebooks/tutorial-notebooks/${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
