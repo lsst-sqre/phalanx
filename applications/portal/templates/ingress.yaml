@@ -18,6 +18,7 @@ config:
         - "read:image"
         - "read:tap"
         - "write:files"
+        - "exec:notebook"
 template:
   metadata:
     name: {{ include "portal.fullname" . }}
