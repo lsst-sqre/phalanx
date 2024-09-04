@@ -1,8 +1,7 @@
 cadc-tap:
   tapSchema:
     image:
-      repository: "gabrimaine/tap-schema-ccin2p3"
-      tag: 2.4.1
+      repository: "stvoutsin/tap-schema-roe"
 
   config:
     gcsBucket: "lsstrsp:async-results.lsst.codes"
@@ -11,4 +10,4 @@ cadc-tap:
     datalinkPayloadUrl: "https://github.com/gabrimaine/sdm_schemas/releases/download/2.4.1/datalink-snippets.zip"
 
     qserv:
-      host: "ccqserv201.in2p3.fr:30040"
+      host: "192.41.122.85:30040"
