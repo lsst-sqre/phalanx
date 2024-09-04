@@ -23,6 +23,7 @@ controller:
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-dev.lsst.cloud/api/butler/configs/idf-repositories.yaml"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:
