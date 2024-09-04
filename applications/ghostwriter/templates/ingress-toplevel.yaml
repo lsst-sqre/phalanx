@@ -33,4 +33,5 @@ template:
                   name: "ghostwriter"
                   port:
                     number: 8080
+---
 {{- end }}
