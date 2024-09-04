@@ -3,9 +3,9 @@ redis:
     enabled: false
 
 config:
-  updateSchema: false
+  updateSchema: true
   internalDatabase: true
-   #databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+  #databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
   github:
     clientId: "c4a5727c5788cc2d346e"
