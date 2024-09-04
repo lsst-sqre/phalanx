@@ -81,6 +81,10 @@ influxdb-enterprise:
       enabled: true
       accessMode: ReadWriteOnce
       size: 16Gi
+    sharedSecret:
+      secret:
+        name: sasquatch
+        key: influxdb-enterprise-shared-secret
     resources:
       requests:
         memory: 2Gi
