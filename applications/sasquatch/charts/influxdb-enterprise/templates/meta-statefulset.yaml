@@ -59,8 +59,8 @@ spec:
             - name: INFLUXDB_META_INTERNAL_SHARED_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.meta.sharedSecret.secretName }}
-                  key: secret
+                  name: {{ .Values.meta.sharedSecret.secret.name }}
+                  key: {{ .Values.meta.sharedSecret.secret.key }}
           {{- if .Values.meta.env }}
 {{ toYaml .Values.meta.env | indent 12 }}
           {{- end}}

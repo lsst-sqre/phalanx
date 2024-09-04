@@ -46,6 +46,10 @@ dependencies:
   - name: telegraf-kafka-consumer
     condition: telegraf-kafka-consumer.enabled
     version: 1.0.0
+  - name: telegraf-kafka-consumer
+    alias: telegraf-kafka-consumer-oss
+    condition: telegraf-kafka-consumer-oss.enabled
+    version: 1.0.0
   - name: rest-proxy
     condition: rest-proxy.enabled
     version: 1.0.0

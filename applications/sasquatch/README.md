@@ -163,7 +163,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.meta.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the meta service |
 | influxdb-enterprise.meta.service.nodePort | int | Do not allocate a node port | Node port for the meta service |
 | influxdb-enterprise.meta.service.type | string | `"ClusterIP"` | Service type for the meta service |
-| influxdb-enterprise.meta.sharedSecret.secretName | string | `"influxdb-enterprise-shared-secret"` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret | object | `{"key":"secret","name":"influxdb-enterprise-shared-secret"}` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret.key | string | `"secret"` | Key within that secret that contains the shared secret |
+| influxdb-enterprise.meta.sharedSecret.secret.name | string | `"influxdb-enterprise-shared-secret"` | Name of the secret containing the shared secret |
 | influxdb-enterprise.meta.tolerations | list | `[]` | Tolerations for meta pods |
 | influxdb-enterprise.nameOverride | string | `""` | Override the base name for resources |
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
@@ -432,3 +434,39 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
 | telegraf-kafka-consumer.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf-kafka-consumer.tolerations | list | `[]` | Tolerations for pod assignment |
+| telegraf-kafka-consumer-oss.affinity | object | `{}` | Affinity for pod assignment |
+| telegraf-kafka-consumer-oss.args | list | `[]` | Arguments passed to the Telegraf agent containers |
+| telegraf-kafka-consumer-oss.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
+| telegraf-kafka-consumer-oss.env | list | See `values.yaml` | Telegraf agent enviroment variables |
+| telegraf-kafka-consumer-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"Always"` | Image pull policy |
+| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer-oss.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| telegraf-kafka-consumer-oss.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
+| telegraf-kafka-consumer-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_interval | string | "1s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.interval | string | "1s" | Data collection interval for the Kafka consumer. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_buffer_limit | int | 10000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.precision | string | "1us" | Data precision. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-kafka-consumer-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
+| telegraf-kafka-consumer-oss.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
+| telegraf-kafka-consumer-oss.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| telegraf-kafka-consumer-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf-kafka-consumer-oss.tolerations | list | `[]` | Tolerations for pod assignment |
