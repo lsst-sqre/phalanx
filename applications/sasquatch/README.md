@@ -163,7 +163,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.meta.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the meta service |
 | influxdb-enterprise.meta.service.nodePort | int | Do not allocate a node port | Node port for the meta service |
 | influxdb-enterprise.meta.service.type | string | `"ClusterIP"` | Service type for the meta service |
-| influxdb-enterprise.meta.sharedSecret.secretName | string | `"influxdb-enterprise-shared-secret"` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret | object | `{"key":"secret","name":"influxdb-enterprise-shared-secret"}` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret.key | string | `"secret"` | Key within that secret that contains the shared secret |
+| influxdb-enterprise.meta.sharedSecret.secret.name | string | `"influxdb-enterprise-shared-secret"` | Name of the secret containing the shared secret |
 | influxdb-enterprise.meta.tolerations | list | `[]` | Tolerations for meta pods |
 | influxdb-enterprise.nameOverride | string | `""` | Override the base name for resources |
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
