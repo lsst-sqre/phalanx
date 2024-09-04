@@ -10,3 +10,8 @@ mapping:
     target: "${base_url}/nb/user/${user}/lab/tree/notebooks/tutorial-notebooks/${path}.ipynb"
     hooks:
     - "ensure_running_lab"
+  - source_prefix: "/queries/"
+    target: "${base_url}/nb/user/${user}/lab/tree/queries/portal_${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
+    - "portal_query"
