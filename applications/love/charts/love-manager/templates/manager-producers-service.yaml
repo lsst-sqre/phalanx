@@ -1,10 +1,14 @@
+{{ range $manager_producer:= .Values.manager.producers }}
+{{ $_ := set $.Values "manager_producer" $manager_producer }}
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "love-manager-producers.fullname" . }}-service
-  namespace: {{ .Values.namespace }}
+  name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}-service
+  namespace: {{ $.Values.namespace }}
 spec:
   selector:
-    app.kubernetes.io/instance: {{ include "love-manager-producers.fullname" . }}
+    app.kubernetes.io/instance: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
   ports:
-  - port: {{ .Values.manager.producers.ports.container }}
+  - port: {{ $.Values.manager.producers_ports.container }}
+{{- end }}

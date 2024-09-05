@@ -33,8 +33,8 @@ Manager frontend fullname
 {{/*
 Manager producers fullname
 */}}
-{{- define "love-manager-producers.fullname" -}}
-{{ include "love-manager.fullname" . }}-producers
+{{- define "love-manager-producer.fullname" -}}
+{{ include "love-manager.fullname" . }}-producer
 {{- end }}
 
 {{/*
@@ -63,9 +63,9 @@ helm.sh/chart: {{ include "love-manager.chart" . }}
 {{/*
 Manager Producers Common labels
 */}}
-{{- define "love-manager-producers.labels" -}}
+{{- define "love-manager-producer.labels" -}}
 helm.sh/chart: {{ include "love-manager.chart" . }}
-{{ include "love-manager-producers.selectorLabels" . }}
+{{ include "love-manager-producer.selectorLabels" . }}
 {{- end }}
 
 {{/*
@@ -87,9 +87,9 @@ app.kubernetes.io/instance: {{ include "love-manager.name" . }}-frontend
 {{/*
 Manager Producers Selector labels
 */}}
-{{- define "love-manager-producers.selectorLabels" -}}
+{{- define "love-manager-producer.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "love-manager.name" . }}
-app.kubernetes.io/instance: {{ include "love-manager.name" . }}-producers
+app.kubernetes.io/instance: {{ include "love-manager.name" . }}-producer
 {{- end }}
 
 {{/*
