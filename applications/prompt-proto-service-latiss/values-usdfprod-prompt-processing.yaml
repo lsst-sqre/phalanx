@@ -20,10 +20,7 @@ prompt-proto-service:
     pipelines:
       # BLOCK-295 is the daily calibration sequence as of May 27, 2024
       main: >-
-        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
         (survey="BLOCK-T17")=[]
@@ -34,8 +31,7 @@ prompt-proto-service:
         (survey="BLOCK-295")=[]
         (survey="")=[]
       preprocessing: >-
-        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
-        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
         (survey="BLOCK-T17")=[]
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
