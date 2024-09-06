@@ -18,7 +18,7 @@ spec:
       labels:
         {{- include "csc.selectorLabels" . | nindent 8 }}
       annotations:
-        argocd.argoproj.io/sync-options: Replace=true
+        argocd.argoproj.io/sync-options: Force=true,Replace=true
       {{- with .Values.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
