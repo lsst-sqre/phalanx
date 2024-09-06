@@ -5,6 +5,8 @@ metadata:
   namespace: {{ $.Values.global.controlSystem.appNamespace }}
   labels:
     {{- include "csc.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-options: Replace=true
   {{- with .Values.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -15,6 +17,8 @@ spec:
     metadata:
       labels:
         {{- include "csc.selectorLabels" . | nindent 8 }}
+      annotations:
+        argocd.argoproj.io/sync-options: Replace=true
       {{- with .Values.annotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
