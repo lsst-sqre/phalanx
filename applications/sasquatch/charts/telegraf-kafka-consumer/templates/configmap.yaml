@@ -57,7 +57,8 @@ data:
       consumer_fetch_default = {{ default "20MB" $value.consumer_fetch_default | quote }}
 
     [[inputs.internal]]
-      collect_memstats = false
       collect_memstats = true
+      tags = { instance = "{{ $key }}" }
+
 {{- end }}
 {{- end }}
