@@ -58,5 +58,6 @@ data:
 
     [[inputs.internal]]
       collect_memstats = false
+      collect_memstats = true
 {{- end }}
 {{- end }}
