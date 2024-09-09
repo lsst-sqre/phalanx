@@ -15,3 +15,8 @@ mapping:
     hooks:
     - "ensure_running_lab"
     - "portal_query"
+  - source_prefix: "/tutorials-on-demand/"
+    target: "${base_url}/nb/user/${user}/lab/tree/notebooks/tutorials-on-demand/${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
+    - "tutorial_on_demand"
