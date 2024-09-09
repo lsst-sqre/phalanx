@@ -146,7 +146,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
-      offset: "newest"
     mtmount:
       enabled: true
       database: "efd"
@@ -154,21 +153,18 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
-      offset: "newest"
     comcam:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
-      offset: "newest"
     eas:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
          [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
-      offset: "newest"
     m1m3:
       enabled: true
       database: "efd"
@@ -176,70 +172,60 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
-      offset: "newest"
     m2:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
-      offset: "newest"
     obssys:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
-      offset: "newest"
     ocps:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
-      offset: "newest"
     pmd:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.PMD" ]
-      offset: "newest"
     calsys:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
-      offset: "newest"
     mtaircompressor:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
-      offset: "newest"
     genericcamera:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
-      offset: "newest"
     gis:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
-      offset: "newest"
     lsstcam:
       enabled: true
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
-      offset: "newest"
     auxtel:
       enabled: true
       database: "efd"
