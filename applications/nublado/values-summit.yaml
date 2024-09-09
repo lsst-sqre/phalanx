@@ -103,7 +103,7 @@ controller:
         - name: "lsstdata-base-lsstcam"
           source:
             type: "nfs"
-            serverPath: "/lsstcam/lsstdata/base/lsstcam"
+            serverPath: "/lsstcam/lsstdata/base/maintel"
             server: "nfs3.cp.lsst.org"
       volumeMounts:
         - containerPath: "/home"
@@ -132,7 +132,7 @@ controller:
           volumeName: "lsstdata-base-comcam"
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
-        - containerPath: "/data/lsstdata/base/lsstcam"
+        - containerPath: "/data/lsstdata/base/maintel"
           volumeName: "lsstdata-base-lsstcam"
 
 hub:
