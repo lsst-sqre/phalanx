@@ -60,6 +60,11 @@ controller:
             type: "nfs"
             serverPath: "/repo/LSSTComCam"
             server: "comcam-archiver.cp.lsst.org"
+        - name: "lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/repo/LSSTCam"
+            server: "nfs3.cp.lsst.org"
         - name: "obs-env"
           source:
             type: "nfs"
@@ -80,6 +85,11 @@ controller:
             type: "nfs"
             serverPath: "/auxtel/lsstdata"
             server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstdata-lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/lsstdata"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-base-comcam"
           source:
             type: "nfs"
@@ -90,6 +100,11 @@ controller:
             type: "nfs"
             serverPath: "/auxtel/lsstdata/base/auxtel"
             server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstdata-base-lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/lsstdata/base/lsstcam"
+            server: "nfs3.cp.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -101,6 +116,8 @@ controller:
           volumeName: "latiss"
         - containerPath: "/repo/LSSTComCam"
           volumeName: "lsstcomcam"
+        - containerPath: "/repo/LSSTCam"
+          volumeName: "lsstcam"
         - containerPath: "/net/obs-env"
           volumeName: "obs-env"
         - containerPath: "/readonly/lsstdata/other"
@@ -109,10 +126,14 @@ controller:
           volumeName: "lsstdata-comcam"
         - containerPath: "/readonly/lsstdata/auxtel"
           volumeName: "lsstdata-auxtel"
+        - containerPath: "/readonly/lsstdata/lsstcam"
+          volumeName: "lsstdata-lsstcam"
         - containerPath: "/data/lsstdata/base/comcam"
           volumeName: "lsstdata-base-comcam"
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
+        - containerPath: "/data/lsstdata/base/lsstcam"
+          volumeName: "lsstdata-base-lsstcam"
 
 hub:
   internalDatabase: false
