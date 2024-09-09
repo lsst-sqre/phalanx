@@ -7,6 +7,7 @@ atqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
+    IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
   butlerSecret:
     containerPath: &bS-cP /home/saluser/.lsst
     dbUser: &bS-dbU oods
@@ -84,6 +85,7 @@ mtqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
+    IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
   butlerSecret:
     containerPath: *bS-cP
     dbUser: *bS-dbU
@@ -161,6 +163,7 @@ ocsqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
+    IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
   butlerSecret:
     containerPath: *bS-cP
     dbUser: *bS-dbU
