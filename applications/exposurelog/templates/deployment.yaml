@@ -86,6 +86,8 @@ spec:
             - name: volume2
               mountPath: /volume_2
             {{- end }}
+            - name: aws-secrets
+              mountPath: /var/secrets/aws
             - name: tmp
               mountPath: /tmp
       volumes:
@@ -110,6 +112,10 @@ spec:
             readOnly: true
             server: {{ .Values.config.nfs_server_3 }}
         {{- end }}
+        - name: aws-secrets
+          secret:
+            defaultMode: 420
+            secretName: exposurelog
         - name: tmp
           emptyDir: {}
       {{- with .Values.nodeSelector }}
