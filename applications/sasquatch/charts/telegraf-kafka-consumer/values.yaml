@@ -177,6 +177,10 @@ kafkaConsumers:
     # @default -- 10000
     max_undelivered_messages: 10000
 
+    # -- Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD
+    # @default -- 3
+    compression_codec: 3
+
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
   url: "http://sasquatch-influxdb.sasquatch:8086"

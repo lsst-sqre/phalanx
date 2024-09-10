@@ -63,6 +63,7 @@ data:
       max_processing_time = {{ default "5s" $value.max_processing_time | quote }}
       consumer_fetch_default = {{ default "20MB" $value.consumer_fetch_default | quote }}
       max_undelivered_messages = {{ default 10000 $value.max_undelivered_messages }}
+      compression_codec = {{ default 3 $value.compression_codec }}
 
     [[inputs.internal]]
       name_prefix = "telegraf_"
