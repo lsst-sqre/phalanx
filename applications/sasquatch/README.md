@@ -415,7 +415,7 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
-| telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | "1s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-kafka-consumer.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | telegraf-kafka-consumer.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
@@ -452,7 +452,7 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
-| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_interval | string | "1s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |

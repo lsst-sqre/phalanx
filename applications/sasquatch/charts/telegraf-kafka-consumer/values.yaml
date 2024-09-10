@@ -80,8 +80,8 @@ kafkaConsumers:
     # -- Data flushing interval for all outputs.
     # Don’t set this below interval.
     # Maximum flush_interval is flush_interval + flush_jitter
-    # @default -- "1s"
-    flush_interval: "1s"
+    # @default -- "10s"
+    flush_interval: "10s"
 
     # -- Jitter the flush interval by a random amount. This is primarily to
     # avoid large write spikes for users running a large number of telegraf
