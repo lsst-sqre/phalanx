@@ -12,8 +12,6 @@ metadata:
 data:
   telegraf.conf: |+
     [agent]
-      interval = {{ default "1s" $value.interval | quote }}
-      round_interval = true
       metric_batch_size = {{ default 1000 $value.metric_batch_size }}
       metric_buffer_limit = {{ default 10000 $value.metric_buffer_limit }}
       collection_jitter = {{ default "0s" $value.collection_jitter | quote }}

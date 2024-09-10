@@ -24,7 +24,6 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
 | kafkaConsumers.test.flush_interval | string | "1s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
-| kafkaConsumers.test.interval | string | "1s" | Data collection interval for the Kafka consumer. |
 | kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | kafkaConsumers.test.metric_buffer_limit | int | 10000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |

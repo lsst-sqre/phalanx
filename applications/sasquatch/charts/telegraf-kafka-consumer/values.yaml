@@ -60,10 +60,6 @@ kafkaConsumers:
     # increase the consumer throughput.
     replicaCount: 1
 
-    # -- Data collection interval for the Kafka consumer.
-    # @default -- "1s"
-    interval: "1s"
-
     # -- Sends metrics to the output in batches of at most metric_batch_size
     # metrics.
     # @default -- 1000
