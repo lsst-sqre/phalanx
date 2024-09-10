@@ -30,6 +30,15 @@ data:
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
 
+    [[outputs.influxdb]]
+      namepass = ["telegraf_*"]
+      urls = [
+        {{ $.Values.influxdb.url | quote }}
+      ]
+      database = "telegraf"
+      username = "${INFLUXDB_USER}"
+      password = "${INFLUXDB_PASSWORD}"
+
     [[inputs.kafka_consumer]]
       brokers = [
         "sasquatch-kafka-brokers.sasquatch:9092"
@@ -57,6 +66,9 @@ data:
       consumer_fetch_default = {{ default "20MB" $value.consumer_fetch_default | quote }}
 
     [[inputs.internal]]
-      collect_memstats = false
+      name_prefix = "telegraf_"
+      collect_memstats = true
+      tags = { instance = "{{ $key }}" }
+
 {{- end }}
 {{- end }}
