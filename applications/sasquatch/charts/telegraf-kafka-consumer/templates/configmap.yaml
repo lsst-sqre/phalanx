@@ -12,8 +12,8 @@ metadata:
 data:
   telegraf.conf: |+
     [agent]
-      metric_batch_size = {{ default 1000 $value.metric_batch_size }}
-      metric_buffer_limit = {{ default 10000 $value.metric_buffer_limit }}
+      metric_batch_size = {{ default 5000 $value.metric_batch_size }}
+      metric_buffer_limit = {{ default 100000 $value.metric_buffer_limit }}
       collection_jitter = {{ default "0s" $value.collection_jitter | quote }}
       flush_interval = {{ default "10s" $value.flush_interval | quote }}
       flush_jitter = {{ default "0s" $value.flush_jitter | quote }}
@@ -62,6 +62,7 @@ data:
       precision = {{ default "1us" $value.precision | quote }}
       max_processing_time = {{ default "5s" $value.max_processing_time | quote }}
       consumer_fetch_default = {{ default "20MB" $value.consumer_fetch_default | quote }}
+      max_undelivered_messages = {{ default 10000 $value.max_undelivered_messages }}
 
     [[inputs.internal]]
       name_prefix = "telegraf_"

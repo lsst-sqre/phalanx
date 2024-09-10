@@ -62,14 +62,14 @@ kafkaConsumers:
 
     # -- Sends metrics to the output in batches of at most metric_batch_size
     # metrics.
-    # @default -- 1000
-    metric_batch_size: 1000
+    # @default -- 5000
+    metric_batch_size: 5000
 
     # -- Caches metric_buffer_limit metrics for each output, and flushes this
     # buffer on a successful write. This should be a multiple of metric_batch_size
     # and could not be less than 2 times metric_batch_size.
-    # @default -- 10000
-    metric_buffer_limit: 10000
+    # @default -- 100000
+    metric_buffer_limit: 100000
 
     # -- Data collection jitter. This is used to jitter the collection by a
     # random amount. Each plugin will sleep for a random time within jitter
@@ -170,6 +170,12 @@ kafkaConsumers:
     # -- Maximum amount of data the server should return for a fetch request.
     # @default -- "20MB"
     consumer_fetch_default: "20MB"
+
+    # -- Maximum number of undelivered messages.
+    # Should be a multiple of metric_batch_size, setting it too low may never
+    # flush the broker's messages.
+    # @default -- 10000
+    max_undelivered_messages: 10000
 
 influxdb:
   # -- URL of the InfluxDB v1 instance to write to
