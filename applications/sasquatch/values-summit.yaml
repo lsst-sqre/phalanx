@@ -81,7 +81,11 @@ strimzi-kafka:
     size: 15Ti
     migration:
       enabled: true
-      rebalance: false
+      rebalance: true
+      brokers:
+        - 0
+        - 1
+        - 2
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
