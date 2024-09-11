@@ -20,3 +20,8 @@ mapping:
     hooks:
     - "ensure_running_lab"
     - "tutorial_on_demand"
+  - source_prefix: "/system-test/"
+    target: "${base_url}/nb/user/${user}/lab/tree/notebooks/on-demand/${path}.ipynb"
+    hooks:
+    - "ensure_running_lab"
+    - "system_test"
