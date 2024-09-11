@@ -46,11 +46,17 @@ data:
   # connecting to the Butler server.
   #
   # We provide both DirectButler and RemoteButler versions of dp02 because some
-  # users rely on functionality not yet available via RemoteButler.  The default is currently
-  # DirectButler because the Community Science team has not had the opportunity to test RemoteButler,
-  # and RemoteButler is not available in the current "recommended" RSP image.
+  # users rely on functionality not yet available via RemoteButler.  The default in production is
+  # DirectButler because RemoteButler is not available in the current recommended RSP image.
+  # On dev and int it is RemoteButler -- the Community Science team is testing the new system.
   idf-repositories.yaml: |
-    dp02: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/configs/dp02.yaml
-    dp02-direct: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/configs/dp02.yaml
-    dp02-remote: {{ .Values.global.baseUrl }}{{ .Values.config.pathPrefix }}/repo/dp02/butler.yaml
+    {{- $dp02Direct := print .Values.global.baseUrl .Values.config.pathPrefix "/configs/dp02.yaml" -}}
+    {{- $dp02Remote := print .Values.global.baseUrl .Values.config.pathPrefix "/repo/dp02/butler.yaml" -}}
+    {{- if .Values.config.dp02ClientServerIsDefault }}
+    dp02: {{ $dp02Remote }}
+    {{- else }}
+    dp02: {{ $dp02Direct }}
+    {{- end }}
+    dp02-direct: {{ $dp02Direct }}
+    dp02-remote: {{ $dp02Remote }}
 {{- end }}
