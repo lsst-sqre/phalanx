@@ -21,8 +21,3 @@ documenteer[guide]>1
 sphinx-click
 sphinx-diagrams
 sphinx-jinja
-
-# Greenlet is a SQLAlchemy dependency on x86_64 but not on macOS, so we need
-# to explicitly include it. Otherwise, if dependencies are rebuilt on macOS,
-# dependency installation will fail on all other platforms.
-greenlet
