@@ -21,6 +21,18 @@ classifiers = [
     "Operating System :: POSIX",
 ]
 requires-python = ">=3.11"
+dependencies = [
+    "bcrypt",
+    "click",
+    "cryptography",
+    "GitPython",
+    "hvac",
+    "jinja2",
+    "onepasswordconnectsdk",
+    "pydantic>2",
+    "PyYAML",
+    "safir>5",
+]
 
 [project.scripts]
 phalanx = "phalanx.cli:main"
