@@ -137,10 +137,10 @@ config:
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
   # -- Timeout for GitHub check runs in seconds
-  githubCheckRunTimeout: "600" # 10 minutes
+  githubCheckRunTimeout: "900" # 15 minutes
 
   # -- Default execution timeout for notebooks in seconds
-  defaultExecutionTimeout: "60" # 1 minute
+  defaultExecutionTimeout: "300" # 5 minutes
 
   worker:
     # -- Enable liveness checks for the arq queue
