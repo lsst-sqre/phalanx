@@ -9,15 +9,6 @@ strimzi-kafka:
         loadBalancerIP: "139.229.180.2"
         host: sasquatch-summit-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 0
-          loadBalancerIP: "139.229.180.3"
-          host: sasquatch-summit-kafka-0.lsst.codes
-        - broker: 1
-          loadBalancerIP: "139.229.180.4"
-          host: sasquatch-summit-kafka-1.lsst.codes
-        - broker: 2
-          loadBalancerIP: "139.229.180.5"
-          host: sasquatch-summit-kafka-2.lsst.codes
         - broker: 6
           loadBalancerIP: "139.229.180.8"
           host: sasquatch-summit-kafka-6.lsst.codes
@@ -82,10 +73,6 @@ strimzi-kafka:
     migration:
       enabled: false
       rebalance: false
-      brokers:
-        - 0
-        - 1
-        - 2
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
