@@ -9,15 +9,28 @@ strimzi-kafka:
         loadBalancerIP: "139.229.180.2"
         host: sasquatch-summit-kafka-bootstrap.lsst.codes
       brokers:
-        - broker: 0
-          loadBalancerIP: "139.229.180.3"
-          host: sasquatch-summit-kafka-0.lsst.codes
-        - broker: 1
-          loadBalancerIP: "139.229.180.4"
-          host: sasquatch-summit-kafka-1.lsst.codes
-        - broker: 2
-          loadBalancerIP: "139.229.180.5"
-          host: sasquatch-summit-kafka-2.lsst.codes
+        - broker: 6
+          loadBalancerIP: "139.229.180.8"
+          host: sasquatch-summit-kafka-6.lsst.codes
+          annotations:
+            metallb.universe.tf/address-pool: lhn
+        - broker: 7
+          loadBalancerIP: "139.229.180.9"
+          host: sasquatch-summit-kafka-7.lsst.codes
+          annotations:
+            metallb.universe.tf/address-pool: lhn
+        - broker: 8
+          loadBalancerIP: "139.229.180.10"
+          host: sasquatch-summit-kafka-8.lsst.codes
+          annotations:
+            metallb.universe.tf/address-pool: lhn
+    resources:
+      requests:
+        memory: 32Gi
+        cpu: 4
+      limits:
+        memory: 32Gi
+        cpu: 4
   kraft:
     enabled: true
   kafkaController:
@@ -51,7 +64,26 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: summit-lsp.lsst.codes
       path: /schema-registry(/|$)(.*)
-
+  cruiseControl:
+    enabled: true
+  brokerStorage:
+    enabled: true
+    storageClassName: localdrive
+    size: 15Ti
+    migration:
+      enabled: false
+      rebalance: false
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: kubernetes.io/hostname
+                  operator: In
+                  values:
+                    - yagan17
+                    - yagan18
+                    - yagan19
 influxdb:
   persistence:
     storageClass: rook-ceph-block
