@@ -76,12 +76,12 @@ strimzi-kafka:
   cruiseControl:
     enabled: true
   brokerStorage:
-    enabled: false
+    enabled: true
     storageClassName: localdrive
     size: 15Ti
     migration:
-      enabled: true
-      rebalance: true
+      enabled: false
+      rebalance: false
       brokers:
         - 0
         - 1
