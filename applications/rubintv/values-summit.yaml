@@ -24,7 +24,7 @@ rubintv:
       pullPolicy: Always
 
   workers:
-    replicas: 0
+    replicas: 1
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
       tag: c0037
@@ -32,7 +32,7 @@ rubintv:
     uid: 73006
     gid: 73006
     scriptsLocation: /repos/rubintv_analysis_service/scripts
-    script: rubintv_worker.py -a rubintv-dev -p 8080 -l summit
+    script: rubintv_worker.py -a rubintv -p 8080 -l summit
     env:
     - name: S3_ENDPOINT_URL
       value: *s3E
@@ -43,9 +43,12 @@ rubintv:
     - name: DEPLOY_BRANCH
       value: *dbE
     resources:
+      requests:
+        cpu: 0.5
+        memory: 1G
       limits:
-        cpu: 2.0
-        memory: "8Gi"
+        cpu: 1.0
+        memory: 2.5G
 
 global:
   tsVaultSecretsPath: ""
