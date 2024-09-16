@@ -249,9 +249,9 @@ cryptography==43.0.1 \
     #   phalanx (pyproject.toml)
     #   pyjwt
     #   safir
-fastapi==0.114.1 \
-    --hash=sha256:1d7bbbeabbaae0acb0c22f0ab0b040f642d3093ca3645f8c876b6f91391861d8 \
-    --hash=sha256:5d4746f6e4b7dff0b4f6b6c6d5445645285f662fe75886e99af7ee2d6b58bb3e
+fastapi==0.114.2 \
+    --hash=sha256:0adb148b62edb09e8c6eeefa3ea934e8f276dabc038c5a82989ea6346050c3da \
+    --hash=sha256:44474a22913057b1acb973ab90f4b671ba5200482e7622816d79105dcece1ac5
     # via safir
 gidgethub==5.3.0 \
     --hash=sha256:4dd92f2252d12756b13f9dd15cde322bfb0d625b6fb5d680da1567ec74b462c0 \
@@ -283,9 +283,9 @@ hvac==2.3.0 \
     --hash=sha256:1b85e3320e8642dd82f234db63253cda169a817589e823713dc5fca83119b1e2 \
     --hash=sha256:a3afc5710760b6ee9b3571769df87a0333da45da05a5f9f963e1d3925a84be7d
     # via phalanx (pyproject.toml)
-idna==3.8 \
-    --hash=sha256:050b4e5baadcd44d760cedbd2b8e639f2ff89bbc7a5730fcc662954303377aac \
-    --hash=sha256:d838c2c0ed6fced7693d5e8ab8e734d5f8fda53a039c0164afb0b82e771e3603
+idna==3.10 \
+    --hash=sha256:12f65c9b470abda6dc35cf8e63cc574b1c52b11df2c86030af0ac09b01b13ea9 \
+    --hash=sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3
     # via
     #   anyio
     #   requests
@@ -535,13 +535,13 @@ rfc3986==1.5.0 \
     --hash=sha256:270aaf10d87d0d4e095063c65bf3ddbc6ee3d0b226328ce21e036f946e421835 \
     --hash=sha256:a86d6e1f5b1dc238b218b012df0aa79409667bb209e58da56d0b94704e712a97
     # via httpx
-safir==6.3.0 \
-    --hash=sha256:2fcd64bf37dd42eacedd6378341b2487cd06dbaf1f28403301b8d80f60a4fb56 \
-    --hash=sha256:6ad7dad520d87d853628849ef95a348c55dbd0180ad3f15c1cf2f7f8fe32f915
+safir==6.4.0 \
+    --hash=sha256:ba7af071eab0d198e6e15a2117028566f3f4237e02e2278e8bfc2633a7c68228 \
+    --hash=sha256:f38c3f1d7d76d304984b572288826510e5c7a0e1f965b2eabdd7f3bace07c48a
     # via phalanx (pyproject.toml)
-safir-logging==6.3.0 \
-    --hash=sha256:491dfe85de89a3f2daa29c491a22a0551f0961444490418d91ec50c040ae16eb \
-    --hash=sha256:e14754ab0bba6cfa248c3fc4cb5ca28410d97ff3965e831eab6581ed37485e79
+safir-logging==6.4.0 \
+    --hash=sha256:4031a430d738b8fe5bfd29125dce6cbf4e4949879307ba4146648afa3d24cd0a \
+    --hash=sha256:e2dbf0b5d9dabecd70c27bff9bf01629bf0724b05b0f0087a1fe4f45c702215f
     # via safir
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
@@ -581,7 +581,7 @@ uritemplate==4.1.1 \
     --hash=sha256:4346edfc5c3b79f694bccd6d6099a322bbeb628dbf2cd86eea55a456ce5124f0 \
     --hash=sha256:830c08b8d99bdd312ea4ead05994a38e8936266f84b9a7878232db50b044e02e
     # via gidgethub
-urllib3==2.2.2 \
-    --hash=sha256:a448b2f64d686155468037e1ace9f2d2199776e17f0a46610480d311f73e3472 \
-    --hash=sha256:dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168
+urllib3==2.2.3 \
+    --hash=sha256:ca899ca043dcb1bafa3e262d73aa25c465bfb49e0bd9dd5d59f1d0acba2f8fac \
+    --hash=sha256:e7d814a81dad81e6caf2ec9fdedb284ecc9c73076b62654547cc64ccdcae26e9
     # via requests
