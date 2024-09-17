@@ -19,6 +19,7 @@ Argo CD project: ``roundtable``
    ook/index
    sqrbot-sr/index
    squarebot/index
+   templatebot/index
    unfurlbot/index
    vault/index
 

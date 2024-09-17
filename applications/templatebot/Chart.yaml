@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "tickets-DM-43699"
+description: Create new projects
+name: templatebot
+sources:
+  - https://github.com/lsst-sqre/templatebot
+type: application
+version: 1.0.0
