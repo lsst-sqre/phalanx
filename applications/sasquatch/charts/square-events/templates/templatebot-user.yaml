@@ -1,0 +1,44 @@
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: templatebot
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  template:
+      secret:
+        metadata:
+          annotations:
+            replicator.v1.mittwald.de/replication-allowed: "true"
+            replicator.v1.mittwald.de/replication-allowed-namespaces: "templatebot"
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "templatebot"
+          patternType: prefix
+        operations:
+          - "Read"
+        host: "*"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.app.mention"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.message.im"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
