@@ -225,6 +225,9 @@ applications:
   # -- Enable the telegraf-ds application
   telegraf-ds: false
 
+  # -- Enable the templatebot application
+  templatebot: false
+
   # -- Enable the times-square application
   times-square: false
 
