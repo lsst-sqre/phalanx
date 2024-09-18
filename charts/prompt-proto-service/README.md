@@ -36,16 +36,16 @@ Event-driven processing of camera images
 | instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits' raws. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
-| knative.cpuLimit | int | `1` | The maximum cpu cores. |
-| knative.cpuRequest | int | `1` | The cpu cores requested. |
-| knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). |
-| knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). |
+| knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
+| knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
+| knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
 | knative.extraTimeout | int | `10` | To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`. This parameter adds extra time to that minimum (seconds). |
 | knative.gpu | bool | `false` | GPUs enabled. |
-| knative.gpuRequest | int | `0` | The number of GPUs to request. |
+| knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |
 | knative.idleTimeout | int | `0` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
-| knative.memoryLimit | string | `"8Gi"` | The maximum memory limit. |
-| knative.memoryRequest | string | `"2Gi"` | The minimum memory to request. |
+| knative.memoryLimit | string | `"8Gi"` | The maximum memory limit for the full pod (see `containerConcurrency`). |
+| knative.memoryRequest | string | `"2Gi"` | The minimum memory to request for the full pod (see `containerConcurrency`). |
 | knative.responseStartTimeout | int | `0` | Maximum time that a container can send nothing to Knative after initial submission (seconds). This is only useful if the container runs async workers. If 0, startup timeout is ignored. |
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | nameOverride | string | `""` | Override the base name for resources |
