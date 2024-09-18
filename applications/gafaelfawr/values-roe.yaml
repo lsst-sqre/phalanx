@@ -7,7 +7,7 @@ config:
 
   github:
     clientId: "10172b4db1b67ee31620"
-
+  cadcBaseUuid: "4cb5f948-aad9-466c-837b-5eae565b0a77"
   # Allow access by GitHub team.
   groupMapping:
     "exec:admin":
