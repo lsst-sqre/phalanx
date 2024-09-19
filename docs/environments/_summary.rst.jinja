@@ -5,7 +5,7 @@
    * - Root domain
      - `{{ env.fqdn }} <https://{{ env.fqdn }}>`__
    * - Identity provider
-     - {{ env.gafaelfawr.provider.value }}{% if env.gafaelfawr.provider_hostname %} ({{ env.gafaelfawr.provider_hostname }}){% endif %}
+     - {{ env.gafaelfawr.provider.value }}{% if env.gafaelfawr.provider_hostname %} ({{ env.gafaelfawr.provider_hostname }}){% endif %}{% if env.gafaelfawr.comanage_hostname %} (COmanage: `{{ env.gafaelfawr.comanage_hostname }} <https://{{ env.gafaelfawr.comanage_hostname }}/>`__){% endif %}
    {%- if env.argocd.url %}
    * - Argo CD
      - {{ env.argocd.url }}

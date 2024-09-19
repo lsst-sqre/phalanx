@@ -786,9 +786,14 @@ class ConfigStorage:
 
         # Determine the upstream identity provider.
         provider_hostname = None
+        comanage_hostname = None
         if gafaelfawr:
             if gafaelfawr.values["config"]["cilogon"]["clientId"]:
                 provider = IdentityProvider.CILOGON
+                cilogon_config = gafaelfawr.values["config"]["cilogon"]
+                if cilogon_config["enrollmentUrl"]:
+                    url = cilogon_config["enrollmentUrl"]
+                    comanage_hostname = urlparse(url).hostname
             elif gafaelfawr.values["config"]["github"]["clientId"]:
                 provider = IdentityProvider.GITHUB
             elif gafaelfawr.values["config"]["oidc"]["clientId"]:
@@ -828,6 +833,7 @@ class ConfigStorage:
         return GafaelfawrDetails(
             provider=provider,
             provider_hostname=provider_hostname,
+            comanage_hostname=comanage_hostname,
             scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
         )
 
