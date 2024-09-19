@@ -151,7 +151,6 @@ telegraf-kafka-consumer:
     mtmount:
       enabled: true
       database: "efd"
-      replicaCount: 8
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
@@ -180,7 +179,6 @@ telegraf-kafka-consumer:
     m1m3:
       enabled: true
       database: "efd"
-      replicaCount: 8
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
