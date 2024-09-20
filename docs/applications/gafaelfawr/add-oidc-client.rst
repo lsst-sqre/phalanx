@@ -43,7 +43,7 @@ The goal is to eventually add automation to Phalanx to generate the latter from 
    Change the contents to :samp:`{random-id}.clients.{fqdn}` where the random ID is the results of ``os.urandom(16).hex()`` in Python and the FQDN is the FQDN of the environment.
    For example, ``de5dd2c1fbf648e11d50b6cf3aa72277.clients.data.lsst.cloud``.
 
-#. Add a password field to the new section, leaving the label as ``password``.
+#. Add a password field to the new section, changing the label as ``secret``.
    You can let 1Password generate a random 20-character password if you want, or generate one of equivalent entropy however you choose.
 
 #. Add a final text field to the new section.
@@ -53,13 +53,13 @@ The goal is to eventually add automation to Phalanx to generate the latter from 
 
 #. Now, you will need to copy this data into the ``gafaelfawr`` secret under the ``oidc-server-secrets`` key, creating that key if it doesn't already exist.
    Unfortunately, you currently have to construct the JSON by hand.
-   The value of this key should be a JSON-encoded list of objects, and each object should have keys ``id``, ``password``, and ``return_uri`` with the information above.
+   The value of this key should be a JSON-encoded list of objects, and each object should have keys ``id``, ``secret``, and ``return_uri`` with the information above.
    Be sure to include all the clients, not just the new one that you're adding.
 
 Share the secret with the client
 ================================
 
-You now need to convey the ``client_id`` (the ``id`` value above) and the ``client_secret`` (the ``password`` value above) to the OpenID Connect client.
+You now need to convey the ``client_id`` (the ``id`` value above) and the ``client_secret`` (the ``secret`` value above) to the OpenID Connect client.
 They will need to configure their client software to use that ``client_id`` and ``client_secret`` whenever performing an OpenID Connect authentication.
 
 The easiest way to do this is often to create a separate 1Password secret and share it with the client.
