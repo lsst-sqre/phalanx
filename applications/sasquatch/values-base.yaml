@@ -147,7 +147,6 @@ telegraf-kafka-consumer:
     mtmount:
       enabled: true
       database: "efd"
-      replicaCount: 8
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
     eas:
@@ -163,7 +162,6 @@ telegraf-kafka-consumer:
     m1m3:
       enabled: true
       database: "efd"
-      replicaCount: 8
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
     m2:
