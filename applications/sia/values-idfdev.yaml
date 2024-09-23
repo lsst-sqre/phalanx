@@ -1,0 +1,10 @@
+config:
+
+  # Data (Butler) Collections
+  butlerDataCollections:
+    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/dp02.yaml"
+      label: "LSST.DP02"
+      repository: "https://data-dev.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+      datalinkurl: "https://data-dev.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"
+      defaultinstrument: "LSSTCam-imSim"
+      default: true

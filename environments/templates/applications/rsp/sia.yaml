@@ -1,23 +1,23 @@
-{{- if (index .Values "applications" "siav2") -}}
+{{- if (index .Values "applications" "sia") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "siav2"
+  name: "sia"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "siav2"
+  name: "sia"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "siav2"
+    namespace: "sia"
     server: "https://kubernetes.default.svc"
   project: "rsp"
   source:
-    path: "applications/siav2"
+    path: "applications/sia"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:

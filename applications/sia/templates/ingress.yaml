@@ -1,19 +1,24 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "siav2-anonymous"
+  name: {{ template "sia.fullname" . }}
   labels:
-    {{- include "siav2.labels" . | nindent 4 }}
+    {{- include "sia.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
-    anonymous: true
+    all:
+      - "read:image"
+  delegate:
+    internal:
+      service: "sia"
+      scopes:
+        - "read:image"
 template:
   metadata:
-    name: "siav2-anonymous"
+    name: {{ template "sia.fullname" . }}
     {{- with .Values.ingress.annotations }}
     annotations:
-      nginx.ingress.kubernetes.io/ssl-redirect: "true"
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
@@ -21,10 +26,10 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "/api/siav2/(availability|capabilities|swagger-ui.*)"
-              pathType: "ImplementationSpecific"
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
               backend:
                 service:
-                  name: "siav2"
+                  name: "sia"
                   port:
                     number: 8080
