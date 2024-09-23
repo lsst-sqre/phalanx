@@ -85,6 +85,10 @@ config:
   # @default -- No configuration file for DP02 will be generated.
   dp02PostgresUri: ""
 
+  # -- True if the 'dp02' Butler repository alias should use client/server
+  # Butler.  False if it should use DirectButler.
+  dp02ClientServerIsDefault: false
+
   # -- Postgres username used to connect to the Butler DB
   # @default -- Use values specified in per-repository Butler config files.
   pguser: ""
