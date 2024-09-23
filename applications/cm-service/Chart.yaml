@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.1
+appVersion: 0.1.2
 description: Campaign Management for Rubin Data Release Production
 name: cm-service
 sources:
