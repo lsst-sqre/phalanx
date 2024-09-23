@@ -19,7 +19,7 @@ Squarebot feeds events from services like Slack and GitHub into the SQuaRE Event
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app.mention"` | Kafka topic name for the Slack `app_mention` events |
-| config.topics.slackInteraction | string | `"lsst.square-events.squarebot.slack.interaction"` | Kafka topic for Slack interaction events |
+| config.topics.slackBlockActions | string | `"lsst.square-events.squarebot.slack.interaction.block-actions"` | Kafka topic for Slack `block_actions` interaction events |
 | config.topics.slackMessageChannels | string | `"lsst.square-events.squarebot.slack.message.channels"` | Kafka topic name for the Slack `message.channels` events (public channels) |
 | config.topics.slackMessageGroups | string | `"lsst.square-events.squarebot.slack.message.groups"` | Kafka topic name for the Slack `message.groups` events (private channels) |
 | config.topics.slackMessageIm | string | `"lsst.square-events.squarebot.slack.message.im"` | Kafka topic name for the Slack `message.im` events (direct message channels) |

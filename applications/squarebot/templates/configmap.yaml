@@ -14,4 +14,4 @@ data:
   SQUAREBOT_TOPIC_MESSAGE_GROUPS: {{ .Values.config.topics.slackMessageGroups | quote }}
   SQUAREBOT_TOPIC_MESSAGE_IM: {{ .Values.config.topics.slackMessageIm | quote }}
   SQUAREBOT_TOPIC_MESSAGE_MPIM: {{ .Values.config.topics.slackMessageMpim | quote }}
-  SQUAREBOT_TOPIC_INTERACTION: {{ .Values.config.topics.slackInteraction | quote }}
+  SQUAREBOT_TOPIC_BLOCK_ACTIONS: {{ .Values.config.topics.slackBlockActions | quote }}
