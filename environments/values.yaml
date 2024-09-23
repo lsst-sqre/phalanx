@@ -171,6 +171,9 @@ applications:
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
+  # -- Enable the sia over butler application
+  sia: false
+
   # -- Enable the siav2 application
   siav2: false
 
