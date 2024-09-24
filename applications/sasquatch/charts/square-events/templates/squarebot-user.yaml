@@ -64,7 +64,7 @@ spec:
           - "Describe"
       - resource:
           type: topic
-          name: "lsst.square-events.squarebot.slack.interaction"
+          name: "lsst.square-events.squarebot.slack.interaction.block-actions"
           patternType: literal
         type: allow
         host: "*"

@@ -2,7 +2,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "lsst.square-events.squarebot.slack.interaction"
+  name: "lsst.square-events.squarebot.slack.interaction.block-actions"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:
