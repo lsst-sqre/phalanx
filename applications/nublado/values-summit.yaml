@@ -58,8 +58,8 @@ controller:
         - name: "lsstcomcam"
           source:
             type: "nfs"
-            serverPath: "/repo/LSSTComCam"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/repo/LSSTComCam"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstcam"
           source:
             type: "nfs"
@@ -78,8 +78,8 @@ controller:
         - name: "lsstdata-comcam"
           source:
             type: "nfs"
-            serverPath: "/lsstdata"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/lsstdata"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-auxtel"
           source:
             type: "nfs"
@@ -93,8 +93,8 @@ controller:
         - name: "lsstdata-base-comcam"
           source:
             type: "nfs"
-            serverPath: "/lsstdata/base/comcam"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/lsstdata/base/comcam"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-base-auxtel"
           source:
             type: "nfs"
