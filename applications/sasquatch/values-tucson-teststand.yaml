@@ -172,6 +172,14 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
       debug: true
+    obsenv:
+      enabled: true
+      database: "lsst.obsenv"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.obsenv" ]
+      debug: true
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
@@ -191,6 +199,7 @@ rest-proxy:
       - test.next-visit
     topicPrefixes:
       - test
+      - lsst.obsenv
       - lsst.dm
 
 chronograf:

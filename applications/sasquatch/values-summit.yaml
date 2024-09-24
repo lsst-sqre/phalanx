@@ -276,6 +276,14 @@ telegraf-kafka-consumer-oss:
         [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
+    oss-obsenv:
+      enabled: true
+      database: "lsst.obsenv"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.obsenv" ]
+      debug: true
 
 telegraf-kafka-consumer:
   enabled: true
@@ -450,6 +458,7 @@ telegraf-kafka-consumer:
         [ "lsst.MTCamera" ]
       debug: true
 
+
 kafdrop:
   ingress:
     enabled: true
@@ -466,6 +475,7 @@ rest-proxy:
     topicPrefixes:
       - lsst.dm
       - lsst.backpack
+      - lsst.obsenv
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera
