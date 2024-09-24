@@ -47,5 +47,6 @@ Log messages related to an exposure
 | podSecurityContext | object | `{}` | Security context for the exposurelog pod |
 | replicaCount | int | `1` | How many exposurelog pods to run |
 | resources | object | `{}` | Resource limits and requests for the exposurelog pod |
+| secretEnv | list | `[]` | Additional secret environment variables to set in the exposurelog pod |
 | securityContext | object | `{}` | Security context for the exposurelog deployment |
 | tolerations | list | `[]` | Tolerations for the exposurelog pod |

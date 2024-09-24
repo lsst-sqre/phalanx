@@ -89,6 +89,9 @@ config:
 # -- Environment variables to set in the exposurelog pod
 env: []
 
+# -- Additional secret environment variables to set in the exposurelog pod
+secretEnv: []
+
 # -- Annotations for the exposurelog pod
 podAnnotations: {}
 
