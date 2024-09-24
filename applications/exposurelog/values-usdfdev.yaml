@@ -13,3 +13,5 @@ env:
     value: "https://s3dfrgw.slac.stanford.edu"
   - name: PGPASSFILE
     value: "/var/secrets/butler/postgres-credentials.txt"
+  - name: PGUSER
+    value: "rubin"
