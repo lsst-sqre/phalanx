@@ -57,14 +57,7 @@ spec:
               value: {{ .Values.config.butler_uri_2 | quote }}
             - name: EXPOSURELOG_DB_USER
               value: {{ .Values.db.user | quote }}
-            - name: PGUSER
-              value: {{ .Values.db.user | quote }}
             - name: EXPOSURELOG_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: exposurelog
-                  key: exposurelog_password
-            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: exposurelog
@@ -77,8 +70,17 @@ spec:
               value: {{ .Values.db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
-            - name: AWS_SHARED_CREDENTIALS_FILE
-              value: /var/secrets/butler/aws-credentials.ini
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- range .Values.secretEnv }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretKey }}
+            {{- end }}
           volumeMounts:
             {{- if .Values.config.nfs_path_1 }}
             - name: volume1

@@ -9,3 +9,15 @@ config:
   butler_uri_2: /volume_2
 db:
   host: postgresdb01.cp.lsst.org
+
+# We use the same database user and password defined on the db object
+# in the values.yaml file. This is due to telescope deployments
+# are not using butler access which requires a different user and password.
+env:
+  - name: PGUSER
+    value: exposurelog
+
+secretEnv:
+  - name: PGPASSWORD
+    secretName: exposurelog
+    secretKey: exposurelog_password

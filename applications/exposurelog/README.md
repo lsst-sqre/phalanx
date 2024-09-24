@@ -32,6 +32,7 @@ Log messages related to an exposure
 | db.host | string | `"postgres.postgres"` | database host |
 | db.port | int | `5432` | database port |
 | db.user | string | `"exposurelog"` | database user |
+| env | list | `[]` | Environment variables to set in the exposurelog pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -46,5 +47,6 @@ Log messages related to an exposure
 | podSecurityContext | object | `{}` | Security context for the exposurelog pod |
 | replicaCount | int | `1` | How many exposurelog pods to run |
 | resources | object | `{}` | Resource limits and requests for the exposurelog pod |
+| secretEnv | list | `[]` | Additional secret environment variables to set in the exposurelog pod |
 | securityContext | object | `{}` | Security context for the exposurelog deployment |
 | tolerations | list | `[]` | Tolerations for the exposurelog pod |
