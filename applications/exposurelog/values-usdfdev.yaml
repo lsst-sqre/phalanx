@@ -4,3 +4,12 @@ config:
 db:
   host: usdf-summitdb.slac.stanford.edu
   user: usdf
+env:
+  - name: AWS_SHARED_CREDENTIALS_FILE
+    value: "/var/secrets/butler/aws-credentials.ini"
+  - name: DAF_BUTLER_REPOSITORY_INDEX
+    value: "/project/data-repos.yaml"
+  - name: S3_ENDPOINT_URL
+    value: "https://s3dfrgw.slac.stanford.edu"
+  - name: PGPASSFILE
+    value: "/var/secrets/butler/postgres-credentials.txt"

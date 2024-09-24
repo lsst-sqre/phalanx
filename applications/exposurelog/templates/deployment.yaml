@@ -77,8 +77,10 @@ spec:
               value: {{ .Values.db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
-            - name: AWS_SHARED_CREDENTIALS_FILE
-              value: /var/secrets/butler/aws-credentials.ini
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
           volumeMounts:
             {{- if .Values.config.nfs_path_1 }}
             - name: volume1

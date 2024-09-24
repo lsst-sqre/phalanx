@@ -86,6 +86,9 @@ config:
   # Sandboxes should use `test`.
   site_id: ""
 
+# -- Environment variables to set in the exposurelog pod
+env: []
+
 # -- Annotations for the exposurelog pod
 podAnnotations: {}
 

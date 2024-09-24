@@ -32,6 +32,7 @@ Log messages related to an exposure
 | db.host | string | `"postgres.postgres"` | database host |
 | db.port | int | `5432` | database port |
 | db.user | string | `"exposurelog"` | database user |
+| env | list | `[]` | Environment variables to set in the exposurelog pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
