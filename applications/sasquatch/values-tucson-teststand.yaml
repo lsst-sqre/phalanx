@@ -136,6 +136,12 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
       debug: true
+    comcam:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      debug: true
     test:
       enabled: true
       database: "efd"
