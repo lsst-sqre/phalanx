@@ -23,7 +23,7 @@ applications:
   plot-navigator: true
   portal: true
   sasquatch: true
-  siav2: true
+  siav2: false
   ssotap: true
   production-tools: true
   sasquatch-backpack: true

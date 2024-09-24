@@ -25,7 +25,7 @@ applications:
   portal: true
   sasquatch: true
   semaphore: true
-  siav2: true
+  siav2: false
   ssotap: true
   squareone: true
   sqlproxy-cross-project: true
