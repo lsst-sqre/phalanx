@@ -136,6 +136,12 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
       debug: true
+    calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.MTReflector", "lsst.sal.TunableLaser" ]
+      debug: true
     comcam:
       enabled: true
       database: "efd"
