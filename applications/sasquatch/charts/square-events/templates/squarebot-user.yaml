@@ -71,3 +71,12 @@ spec:
         operations:
           - "Write"
           - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.interaction.view-submission"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Write"
+          - "Describe"

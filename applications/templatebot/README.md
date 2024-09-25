@@ -17,6 +17,7 @@ Create new projects
 | config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app.mention"` | Kafka topic name for the Slack `app_mention` events |
 | config.topics.slackBlockActions | string | `"lsst.square-events.squarebot.slack.interaction.block-actions"` | Kafka topic for Slack `block_actions` interaction events |
 | config.topics.slackMessageIm | string | `"lsst.square-events.squarebot.slack.message.im"` | Kafka topic name for the Slack `message.im` events (direct message channels) |
+| config.topics.slackViewSubmission | string | `"lsst.square-events.squarebot.slack.interaction.view-submission"` | Kafka topic for Slack `view_submission` interaction events |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |

@@ -24,6 +24,7 @@ Squarebot feeds events from services like Slack and GitHub into the SQuaRE Event
 | config.topics.slackMessageGroups | string | `"lsst.square-events.squarebot.slack.message.groups"` | Kafka topic name for the Slack `message.groups` events (private channels) |
 | config.topics.slackMessageIm | string | `"lsst.square-events.squarebot.slack.message.im"` | Kafka topic name for the Slack `message.im` events (direct message channels) |
 | config.topics.slackMessageMpim | string | `"lsst.square-events.squarebot.slack.message.mpim"` | Kafka topic name for the Slack `message.mpim` events (multi-person direct messages) |
+| config.topics.slackViewSubmission | string | `"lsst.square-events.squarebot.slack.interaction.view-submission"` | Kafka topic for Slack `view_submission` interaction events |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |

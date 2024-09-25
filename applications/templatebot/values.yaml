@@ -37,6 +37,9 @@ config:
     # -- Kafka topic for Slack `block_actions` interaction events
     slackBlockActions: "lsst.square-events.squarebot.slack.interaction.block-actions"
 
+    # -- Kafka topic for Slack `view_submission` interaction events
+    slackViewSubmission: "lsst.square-events.squarebot.slack.interaction.view-submission"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
