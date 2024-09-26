@@ -43,6 +43,8 @@ spec:
             value: "-A Test_Report_Shutdown.list"
           - name: jobname
             value: shutdown
+          - name: reportname
+            value: shutdown.xml
       - name: call-save-reports
         depends: shutdown
         templateRef:

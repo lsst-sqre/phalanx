@@ -43,6 +43,8 @@ spec:
             value: "-A Test_Report_LOVE_Stress_Test.list"
           - name: jobname
             value: love-stress-test
+          - name: reportname
+            value: love_stress_test.xml
       - name: call-save-reports
         depends: love-stress-test
         templateRef:
