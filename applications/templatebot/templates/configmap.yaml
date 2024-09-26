@@ -11,3 +11,5 @@ data:
   TEMPLATEBOT_PROFILE: {{ .Values.config.logProfile | quote }}
   TEMPLATEBOT_APP_MENTION_TOPIC: {{ .Values.config.topics.slackAppMention | quote }}
   TEMPLATEBOT_MESSAGE_IM_TOPIC: {{ .Values.config.topics.slackMessageIm | quote }}
+  TEMPLATEBOT_BLOCK_ACTIONS_TOPIC: {{ .Values.config.topics.slackBlockActions | quote }}
+  TEMPLATEBOT_VIEW_SUBMISSION_TOPIC: {{ .Values.config.topics.slackViewSubmission | quote }}

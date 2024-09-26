@@ -42,3 +42,21 @@ spec:
         operations:
           - "Read"
           - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.interaction.block-actions"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
+      - resource:
+          type: topic
+          name: "lsst.square-events.squarebot.slack.interaction.view-submission"
+          patternType: literal
+        type: allow
+        host: "*"
+        operations:
+          - "Read"
+          - "Describe"
