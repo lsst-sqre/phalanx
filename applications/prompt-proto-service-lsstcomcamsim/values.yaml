@@ -99,6 +99,7 @@ prompt-proto-service:
     # -- Server address for the alert stream
     server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
+    # @default -- None, must be set
     topic: ""
 
   registry:
