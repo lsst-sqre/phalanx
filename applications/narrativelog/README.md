@@ -30,7 +30,6 @@ Narrative log service
 | image.pullPolicy | string | `"Always"` | Pull policy for the narrativelog image |
 | image.repository | string | `"lsstsqre/narrativelog"` | narrativelog image to use |
 | image.tag | string | The appVersion of the chart | Tag of exposure image to use |
-| ingress.gafaelfawrAuthQuery | string | `""` | Gafaelfawr auth query string |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the narrativelog pod |
 | podAnnotations | object | `{}` | Annotations for the narrativelog pod |
