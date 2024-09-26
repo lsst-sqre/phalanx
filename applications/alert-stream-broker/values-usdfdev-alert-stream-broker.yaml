@@ -10,7 +10,7 @@ alert-stream-broker:
 
     prometheusScrapingEnabled: true
 
-    # Addresses based on the state as of 2021-12-02; these were assigned by
+    # Addresses based on the state as of 2023; these were assigned by
     # Square and now we're pinning them.
     externalListener:
       tls:
@@ -106,15 +106,23 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
-  simulatedTopicName: alerts-simulated
   topicPartitions: 400
   topicReplicas: 1
+
+  simulatedTopicName: alerts-simulated
   simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
+
   devTopicName: dev-topic
   devTopicPartitions: 10
   devTopicReplicas: 1
-  devTopicCompression: lz4
+
+  latissTopicName: latiss-alerts
+  latissTopicPartitions: 45
+  latissTopicReplicas: 1
+
+  # Compression set to snappy to balance alert packet compression speed and size.
+  topicCompression: snappy
 
 alert-stream-schema-registry:
   hostname: "usdf-alert-schemas-dev.slac.stanford.edu"
