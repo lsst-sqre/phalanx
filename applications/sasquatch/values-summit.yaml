@@ -284,6 +284,16 @@ telegraf-kafka-consumer-oss:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+    oss-cp:
+      enabled: true
+      database: "lsst.cp"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.cp" ]
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
+      debug: true
 
 telegraf-kafka-consumer:
   enabled: true
@@ -476,6 +486,7 @@ rest-proxy:
       - lsst.dm
       - lsst.backpack
       - lsst.obsenv
+      - lsst.cp
       - lsst.ATCamera
       - lsst.CCCamera
       - lsst.MTCamera
