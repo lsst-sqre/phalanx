@@ -84,6 +84,19 @@ spec:
             value: enabled
           - name: reportname
             value: enabled.xml
+      - name: sensor-cscs
+        depends: enabled
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_SensorCSCs.list"
+          - name: jobname
+            value: sensor-cscs
+          - name: reportname
+            value: sensor_cscs.xml
       - name: auxtel-housekeeping
         depends: enabled
         templateRef:
@@ -345,7 +358,7 @@ spec:
           - name: reportname
             value: bigcam_calib.xml
       - name: love-stress-test
-        depends: bigcam-calibrations && enable-atcs
+        depends: bigcam-calibrations && enable-atcs && sensor-cscs
         templateRef:
           name: integration-test-job-template
           template: inttest-template
