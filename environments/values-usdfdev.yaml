@@ -27,6 +27,7 @@ applications:
   plot-navigator: true
   portal: true
   postgres: true
+  ppdb-replication: true
   rubintv: true
   sasquatch: true
   schedview-snapshot: true

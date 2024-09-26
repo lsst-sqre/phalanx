@@ -153,6 +153,9 @@ applications:
   # supported for use cases such as minikube test deployments.
   postgres: false
 
+  # -- Enable the ppdb-replication application
+  ppdb-replication: false
+
   # -- Enable the rubintv application
   rubintv: false
 
