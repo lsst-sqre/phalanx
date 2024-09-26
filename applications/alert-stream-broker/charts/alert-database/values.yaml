@@ -101,6 +101,3 @@ ingress:
 
   # -- Subpath to host the alert database application under the ingress
   path: "/alertdb"
-
-  # -- Query string for Gafaelfawr to authorize access
-  gafaelfawrAuthQuery: "scope=read:alertdb"
