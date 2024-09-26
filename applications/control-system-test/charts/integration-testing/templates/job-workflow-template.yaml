@@ -60,6 +60,13 @@ spec:
           secretKeyRef:
             name: control-system-test
             key: ts-salkafka-password
+      resources:
+        limits:
+          cpu: 4
+          memory: 4Gi
+        requests:
+          cpu: 1
+          memory: 1Gi
       volumeMounts:
       - name: testreports
         mountPath: {{ .Values.reportLocation }}
