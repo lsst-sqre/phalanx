@@ -58,6 +58,9 @@ prompt-proto-service:
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.py
 
+  alerts:
+    topic: "latiss-alerts"
+
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     namespace: lsst.prompt.prod

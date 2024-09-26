@@ -28,6 +28,9 @@ prompt-proto-service:
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/sql/pp_apdb_hsc-dev.py
 
+  alerts:
+    topic: "alert-stream-test"
+
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false

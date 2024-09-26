@@ -15,7 +15,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | prompt-proto-service.affinity | object | `{}` | Affinity rules for the prompt processing pods |
 | prompt-proto-service.alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
-| prompt-proto-service.alerts.topic | string | `""` | Topic name where alerts will be sent |
+| prompt-proto-service.alerts.topic | string | None, must be set | Topic name where alerts will be sent |
 | prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-proto-service.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
