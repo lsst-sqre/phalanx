@@ -45,8 +45,3 @@ spec:
             value: love-stress-test
           - name: reportname
             value: love_stress_test.xml
-      - name: call-save-reports
-        depends: love-stress-test
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports

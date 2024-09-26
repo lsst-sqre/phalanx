@@ -292,8 +292,3 @@ spec:
             value: bigcam-calibrations
           - name: reportname
             value: bigcam_calib.xml
-      - name: call-save-reports
-        depends: bigcam-calibrations && enable-atcs
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports

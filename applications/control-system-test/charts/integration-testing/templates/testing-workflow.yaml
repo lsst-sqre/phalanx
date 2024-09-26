@@ -383,8 +383,3 @@ spec:
             value: shutdown
           - name: reportname
             value: shutdown.xml
-      - name: call-save-reports
-        depends: shutdown
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports
