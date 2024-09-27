@@ -27,6 +27,9 @@ config:
   # -- URL path prefix
   pathPrefix: "/templatebot"
 
+  # -- URL for the template repository
+  templateRepoUrl: "https://github.com/lsst/templates"
+
   topics:
     # -- Kafka topic name for the Slack `app_mention` events
     slackAppMention: "lsst.square-events.squarebot.slack.app.mention"

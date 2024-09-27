@@ -14,6 +14,7 @@ Create new projects
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/templatebot"` | URL path prefix |
+| config.templateRepoUrl | string | `"https://github.com/lsst/templates"` | URL for the template repository |
 | config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app.mention"` | Kafka topic name for the Slack `app_mention` events |
 | config.topics.slackBlockActions | string | `"lsst.square-events.squarebot.slack.interaction.block-actions"` | Kafka topic for Slack `block_actions` interaction events |
 | config.topics.slackMessageIm | string | `"lsst.square-events.squarebot.slack.message.im"` | Kafka topic name for the Slack `message.im` events (direct message channels) |

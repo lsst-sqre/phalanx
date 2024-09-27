@@ -30,6 +30,9 @@ spec:
             - configMapRef:
                 name: "templatebot"
           env:
+            # Writeable directory for caching template repo checkouts
+            - name: "TEMPLATEBOT_TEMPLATE_CACHE_DIR"
+              value: "/tmp/template_repo_cache"
             # Writeable directory for concatenating certs. See "tmp" volume.
             - name: "KAFKA_CERT_TEMP_DIR"
               value: "/tmp/kafka_certs"
@@ -70,6 +73,8 @@ spec:
               subPath: "ssl.keystore.key" # private key for the consuming client
             - name: "tmp"
               mountPath: "/tmp/kafka_certs"
+            - name: "repo-cache"
+              mountPath: "/tmp/template_repo_cache"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -108,4 +113,6 @@ spec:
           secret:
             secretName: "templatebot"
         - name: "tmp"
+          emptyDir: {}
+        - name: "repo-cache"
           emptyDir: {}
