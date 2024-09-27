@@ -3,8 +3,8 @@ obsenv-api:
     repository: rubin-cr.lsst.org/obsenv-api
     tag: tickets-DM-44286-1
     pullPolicy: Always
-  config:
-    useFakeObsenvManager: true
+  nfsMount:
+    server: nfs-obsenv.tu.lsst.org
 
 obsenv-ui:
   image:
