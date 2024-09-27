@@ -14,10 +14,13 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 4.5.0
+    tag: 4.5.1
 
   instrument:
     pipelines:
+      # BLOCK-306 is photographic imaging
+      # BLOCK-T17 is daytime checkout
+      # BLOCK-271 is photon transfer curve calibrations
       # BLOCK-295 is the daily calibration sequence as of May 27, 2024
       main: >-
         (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
