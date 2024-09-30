@@ -2,58 +2,53 @@ alert-stream-broker:
   cluster:
     name: "alert-broker"
 
-  zookeeper:
-    storage:
-      size: 1000Gi
-      storageClassName: wekafs--sdf-k8s01
-
   kafka:
 
     version: 3.7.0
-    # -- Encoding version for messages, see
-    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-    logMessageFormatVersion: 3.4
-    # -- Version of the protocol for inter-broker communication, see
-    # https://strimzi.io/docs/operators/latest/deploying.html#ref-kafka-versions-str.
-    interBrokerProtocolVersion: 3.4
 
     replicas: 6
 
     prometheusScrapingEnabled: true
 
-    # Addresses based on the state as of 2021-12-02; these were assigned by
-    # Google and now we're pinning them.
+    # Addresses based on the state as of 2023; these were assigned by
+    # Square and now we're pinning them.
     externalListener:
       tls:
         enabled: false
       bootstrap:
         host: usdf-alert-stream-dev.lsst.cloud
-        ip: "134.79.23.215"
+        ip: ""
         annotations:
           metallb.universe.tf/address-pool: 'sdf-dmz'
       brokers:
         - host: usdf-alert-stream-dev-broker-0.lsst.cloud
           ip: "134.79.23.214"
+          broker: 6
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-1.lsst.cloud
           ip: "134.79.23.216"
+          broker: 7
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-2.lsst.cloud
           ip: "134.79.23.218"
+          broker: 8
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-3.lsst.cloud
           ip: "134.79.23.220"
+          broker: 9
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-4.lsst.cloud
           ip: "134.79.23.217"
+          broker: 10
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
         - host: usdf-alert-stream-dev-broker-5.lsst.cloud
           ip: "134.79.23.219"
+          broker: 11
           annotations:
             metallb.universe.tf/address-pool: 'sdf-dmz'
 
@@ -111,15 +106,23 @@ alert-stream-broker:
       groups: ["pittgoogle-idfint"]
 
   testTopicName: alert-stream-test
-  simulatedTopicName: alerts-simulated
   topicPartitions: 400
   topicReplicas: 1
+
+  simulatedTopicName: alerts-simulated
   simulatedTopicPartitions: 45
   simulatedTopicReplicas: 1
+
   devTopicName: dev-topic
   devTopicPartitions: 10
   devTopicReplicas: 1
-  devTopicCompression: lz4
+
+  latissTopicName: latiss-alerts
+  latissTopicPartitions: 45
+  latissTopicReplicas: 1
+
+  # Compression set to snappy to balance alert packet compression speed and size.
+  topicCompression: snappy
 
 alert-stream-schema-registry:
   hostname: "usdf-alert-schemas-dev.slac.stanford.edu"
