@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "exec:internal-tools"
+    loginRedirect: true
   delegate:
     internal:
       service: "obsenv-api"
