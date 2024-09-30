@@ -1,0 +1,21 @@
+db:
+  user: "oods"
+  host: "postgresdb01.tu.lsst.org"
+  database: "exposurelog"
+lfa:
+  s3EndpointUrl: "https://s3.tu.lsst.org"
+hinfo:
+  latiss:
+    enable: true
+    tag: "tickets-DM-44551"
+    logConfig: "consdb.hinfo=DEBUG"
+  lsstcomcam:
+    enable: true
+    tag: "tickets-DM-44551"
+    logConfig: "consdb.hinfo=DEBUG"
+  lsstcam:
+    enable: false
+    tag: "tickets-DM-44551"
+pq:
+  image:
+    tag: "main"
