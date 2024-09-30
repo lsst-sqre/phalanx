@@ -32,8 +32,6 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
-    appmetrics:
-      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -75,12 +73,6 @@ telegraf-kafka-consumer:
       replicaCount: 1
       topicRegexps: |
         [ "lsst.Test.*" ]
-    appmetrics:
-      enabled: true
-      database: "metrics"
-      replicaCount: 1
-      topicRegexps: |
-        [ "lsst.square.metrics.*" ]
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
