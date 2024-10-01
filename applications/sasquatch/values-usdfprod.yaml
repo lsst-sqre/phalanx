@@ -182,7 +182,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
-      metric_batch_size: 2500
       debug: true
     m2:
       enabled: true

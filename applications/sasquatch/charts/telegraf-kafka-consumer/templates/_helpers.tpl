@@ -12,7 +12,7 @@ metadata:
 data:
   telegraf.conf: |+
     [agent]
-      metric_batch_size = {{ default 5000 .value.metric_batch_size }}
+      metric_batch_size = {{ default 1000 .value.metric_batch_size }}
       metric_buffer_limit = {{ default 100000 .value.metric_buffer_limit }}
       collection_jitter = {{ default "0s" .value.collection_jitter | quote }}
       flush_interval = {{ default "10s" .value.flush_interval | quote }}
