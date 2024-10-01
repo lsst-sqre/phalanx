@@ -167,14 +167,7 @@ telegraf-kafka-consumer:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-         [ "lsst.sal.ESS" ]
-      debug: true
-    eas2:
-      enabled: true
-      database: "efd"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-         [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+         [ "lsst.sal.DIMM", "lsst.sal.ESS", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     m1m3:
       enabled: true
@@ -251,14 +244,7 @@ telegraf-kafka-consumer:
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory" ]
-      debug: true
-    auxtel2:
-      enabled: true
-      database: "efd"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     latiss:
       enabled: true
