@@ -61,6 +61,16 @@ spec:
                 secretKeyRef:
                   name: "templatebot"
                   key: "TEMPLATEBOT_SLACK_TOKEN"
+            - name: "TEMPLATEBOT_GITHUB_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_ID"
+            - name: "TEMPLATEBOT_GITHUB_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_PRIVATE_KEY"
           volumeMounts:
             - name: "kafka"
               mountPath: "/etc/kafkacluster/ca.crt"
