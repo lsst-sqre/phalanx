@@ -23,7 +23,6 @@ applications:
   nublado: true
   portal: true
   semaphore: true
-  siav2: false
   squareone: true
   ssotap: true
   tap: true

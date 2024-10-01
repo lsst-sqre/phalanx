@@ -168,9 +168,6 @@ applications:
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
 
-  # -- Enable the siav2 application
-  siav2: false
-
   # -- Enable the simonyitel control system application
   simonyitel: false
 

@@ -31,7 +31,6 @@ applications:
   sasquatch: true
   schedview-snapshot: true
   semaphore: true
-  siav2: true
   ssotap: true
   squareone: true
   strimzi: true

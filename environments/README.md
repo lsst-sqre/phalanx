@@ -56,7 +56,6 @@
 | applications.sasquatch-backpack | bool | `false` | Enable the sasquatch-backpack application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
-| applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |
 | applications.sqrbot-sr | bool | `false` | Enable the sqrbot-sr application |
