@@ -14,6 +14,7 @@ applications:
   nightreport: true
   nublado: true
   portal: true
+  rapid-analysis: true
   rubintv: true
   rubintv-dev: true
   sasquatch: true

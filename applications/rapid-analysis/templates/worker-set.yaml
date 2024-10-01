@@ -1,0 +1,231 @@
+{{ $_ := set $.Values "script" $.Values.workerSet }}
+{{ $script := $.Values.workerSet }}
+{{- if $script.name }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ include "rapid-analysis.deploymentName" $ }}-workerset
+  namespace: {{ $.Values.namespace }}
+  labels:
+    {{- include "rapid-analysis.labels" $ | nindent 4 }}
+spec:
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
+  replicas: {{ ($script.replicas | int) }}
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
+    spec:
+      {{- with $.Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml $.Values.imagePullSecrets | nindent 8 }}
+      {{- end }}
+      {{- if $.Values.securityContext }}
+      securityContext:
+        {{- if $.Values.securityContext.uid }}
+        runAsUser: {{ $.Values.securityContext.uid }}
+        {{- end }}
+        {{- if $.Values.securityContext.gid }}
+        runAsGroup: {{ $.Values.securityContext.gid }}
+        {{- end }}
+        {{- if $.Values.securityContext.fid }}
+        fsGroup: {{ $.Values.securityContext.fid }}
+        {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ include "rapid-analysis.scriptName" $ }}
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          env:
+            - name: RUN_ARG
+              value: {{ $script.name }}
+            - name: WORKER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
+            - name: RAPID_ANALYSIS_LOCATION
+              value: {{ $.Values.location | upper | quote }}
+          {{- if or $.Values.env $.Values.envSecrets }}
+          {{- range $env_var, $env_value := $.Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- range $env := $.Values.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+          {{- end }}
+          {{- end }}
+          {{- if $.Values.butlerSecret }}
+            - name: PGPASSFILE
+              value: "{{ $.Values.butlerSecret.containerPath }}/postgres-credentials.txt"
+            - name: PGUSER
+              value: {{ $.Values.butlerSecret.dbUser | quote }}
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: "{{ $.Values.butlerSecret.containerPath }}/aws-credentials.ini"
+          {{- end }}
+          {{- if $.Values.redis.enabled }}
+            - name: REDIS_HOST
+              value: "redis-service"
+          {{- if $.Values.redis.envSecrets }}
+          {{- range $env := $.Values.redis.envSecrets }}
+            - name: {{ $env.name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $env.secretName }}
+                  key: {{ $env.secretKey }}
+          {{- end }}
+          {{- end }}
+          {{- end }}
+          envFrom:
+            - configMapRef:
+                name: env-configmap
+          volumeMounts:
+            - name: rubintv-creds
+              mountPath: "/etc/rubintv/creds"
+              readOnly: true
+          {{- if $.Values.nfsMountpoint }}
+          {{- range $values := $.Values.nfsMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              readOnly: {{ $values.readOnly }}
+          {{- end }}
+          {{- end }}
+          {{- if $.Values.pvcMountpoint }}
+          {{- range $values := $.Values.pvcMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              {{- if ($values.subPath) }}
+              subPath: {{ $values.subPath }}
+              {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if $.Values.pvcMountpointClaim }}
+          {{- range $values := $.Values.pvcMountpointClaim }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              {{- if ($values.subPath) }}
+              subPath: {{ $values.subPath }}
+              {{- end }}
+          {{- end }}
+          {{- end }}
+          {{- if $.Values.butlerSecret }}
+            - name: {{ $.Release.Name }}-butler-secret
+              mountPath: {{ $.Values.butlerSecret.containerPath }}
+          {{- end }}
+          {{- if or $.Values.resources $script.resources }}
+          {{- $resources := "" }}
+          {{- if $script.resources }}
+          {{- $resources = $script.resources }}
+          {{- else }}
+          {{- $resources = $.Values.resources }}
+          {{- end }}
+          resources:
+            {{- toYaml $resources | nindent 12 }}
+          {{- end }}
+      {{- if $.Values.butlerSecret }}
+      initContainers:
+        - name: {{ $.Release.Name }}-butler-secret-perm-fixer
+          image: "alpine:latest"
+          command:
+            - "/bin/ash"
+            - "-c"
+            - |
+              cp -RL /secrets-raw/* /secrets
+              cat /secrets/aws-credentials.ini > new-aws-credentials.ini
+              printf "\n" >> new-aws-credentials.ini
+              cat /secrets-rubintv/aws-credentials.ini >> new-aws-credentials.ini
+              printf "\n" >> new-aws-credentials.ini
+              mv new-aws-credentials.ini /secrets/aws-credentials.ini
+              chown 73006:73006 /secrets/*
+              chmod 0600 /secrets/*
+          volumeMounts:
+            - name: {{ $.Release.Name }}-raw-butler-secret
+              mountPath: /secrets-raw
+              readOnly: true
+            - name: {{ $.Release.Name }}-butler-secret
+              mountPath: /secrets
+            - name: rubintv-aws-creds
+              mountPath: /secrets-rubintv
+              readOnly: true
+      {{- end }}
+      volumes:
+        - name: rubintv-creds
+          secret:
+            secretName: google-creds
+        - name: rubintv-aws-creds
+          secret:
+            secretName: rubintv-secrets
+      {{- if $.Values.nfsMountpoint }}
+      {{- range $values := $.Values.nfsMountpoint }}
+        - name: {{ $values.name }}
+          nfs:
+            path: {{ $values.serverPath }}
+            readOnly: {{ $values.readOnly }}
+            server: {{ $values.server }}
+      {{- end }}
+      {{- end }}
+      {{- if $.Values.pvcMountpoint }}
+      {{- range $values := $.Values.pvcMountpoint }}
+        - name: {{ $values.name }}
+          persistentVolumeClaim:
+            claimName: {{ $values.name }}
+      {{- end }}
+      {{- end }}
+      {{- if $.Values.pvcMountpointClaim }}
+      {{- range $values := $.Values.pvcMountpointClaim }}
+        - name: {{ $values.name }}
+          persistentVolumeClaim:
+            claimName: {{ $values.name }}
+      {{- end }}
+      {{- end }}
+      {{- if $.Values.butlerSecret }}
+        - name: {{ $.Release.Name }}-butler-secret
+          emptyDir: {}
+        - name: {{ $.Release.Name }}-raw-butler-secret
+          secret:
+            secretName: butler-secret
+            defaultMode: 0600
+      {{- end }}
+      {{- if or $.Values.nodeSelector $script.nodeSelector }}
+      {{- $nodeSelector := "" }}
+      {{- if $script.nodeSelector }}
+      {{- $nodeSelector = $script.nodeSelector }}
+      {{- else }}
+      {{- $nodeSelector = $.Values.nodeSelector }}
+      {{- end }}
+      nodeSelector:
+        {{- toYaml $nodeSelector | nindent 8 }}
+      {{- end }}
+      {{- if or $.Values.affinity $script.affinity }}
+      {{- $affinity := "" }}
+      {{- if $script.affinity }}
+      {{- $affinity = $script.affinity }}
+      {{- else }}
+      {{- $affinity = $.Values.affinity }}
+      {{- end }}
+      affinity:
+        {{- toYaml $affinity | nindent 8 }}
+      {{- end }}
+      {{- if or $.Values.tolerations $script.tolerations }}
+      {{- $tolerations := "" }}
+      {{- if $script.tolerations }}
+      {{- $tolerations = $script.tolerations }}
+      {{- else }}
+      {{- $tolerations = $.Values.tolerations }}
+      {{- end }}
+      tolerations:
+        {{- toYaml $tolerations | nindent 8 }}
+      {{- end }}
+{{- end }}
