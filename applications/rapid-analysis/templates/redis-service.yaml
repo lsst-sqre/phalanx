@@ -1,0 +1,21 @@
+{{- if .Values.redis.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: {{ .Values.namespace }}
+  {{- with $.Values.redis.serviceAnnotations }}
+  annotations:
+    {{- toYaml $.Values.redis.serviceAnnotations | nindent 4 }}
+  {{- end }}
+spec:
+  type: LoadBalancer
+  internalTrafficPolicy: Cluster
+  selector:
+    app.kubernetes.io/instance: {{ include "rapid-analysis.redis.fullname" . }}
+  ports:
+  - name: redis
+    protocol: TCP
+    port: {{ .Values.redis.port }}
+    targetPort: {{ .Values.redis.port }}
+{{- end }}
