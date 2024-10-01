@@ -11,9 +11,9 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| image.pullPolicy | string | `"Always"` | Image pull policy |
-| image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |

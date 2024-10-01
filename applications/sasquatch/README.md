@@ -403,9 +403,9 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-kafka-consumer.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-kafka-consumer.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer.image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
@@ -440,9 +440,9 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer-oss.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer-oss.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-kafka-consumer-oss.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer-oss.image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | telegraf-kafka-consumer-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer-oss.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |

@@ -5,13 +5,13 @@ enabled: false
 
 image:
   # -- Telegraf image repository
-  repo: "docker.io/library/telegraf"
+  repo: "docker.io/lsstsqre/telegraf"
 
   # -- Telegraf image tag
-  tag: "1.30.2-alpine"
+  tag: "avro-mutex"
 
   # -- Image pull policy
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
 # -- Annotations for telegraf-kafka-consumers pods
 podAnnotations: {}
