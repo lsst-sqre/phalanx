@@ -26,9 +26,9 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          # envFrom:
-          #   - configMapRef:
-          #       name: "obsenv-ui"
+          envFrom:
+            - configMapRef:
+                name: "obsenv-ui"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -47,9 +47,9 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          volumeMounts:
-          - name: config-mount
-            mountPath: /app/.env.production
+          # volumeMounts:
+          # - name: config-mount
+          #   mountPath: /app/.env.production
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -62,7 +62,7 @@ spec:
         runAsNonRoot: true
         runAsUser: 1001
         runAsGroup: 1001
-      volumes:
-      - name: config-mount
-        configMap:
-          name: obsenv-ui
+      # volumes:
+      # - name: config-mount
+      #   configMap:
+      #     name: obsenv-ui
