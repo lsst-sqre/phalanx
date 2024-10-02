@@ -15,9 +15,15 @@ spec:
       {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
+      {{- if or $.Values.podAnnotations $script.podAnnotations }}
+      {{- $podAnnotations := "" }}
+      {{- if $script.podAnnotations }}
+      {{- $podAnnotations = $script.podAnnotations }}
+      {{- else }}
+      {{- $podAnnotations = $.Values.podAnnotations }}
+      {{- end }}
       annotations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $podAnnotations | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
