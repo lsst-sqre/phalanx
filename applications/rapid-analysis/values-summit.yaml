@@ -6,7 +6,12 @@ location: SUMMIT
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
 scripts:
+###
+### AuxTel pods
+###
 - name: summit/auxTel/runBackgroundService.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -16,11 +21,19 @@ scripts:
       memory: 10G
 - name: summit/auxTel/runButlerWatcher.py
 - name: summit/auxTel/runCalibrateCcdRunner.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runImExaminer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runIsrRunner.py
 - name: summit/auxTel/runMetadataCreator.py
 - name: summit/auxTel/runMetadataServer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runMonitor.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -29,8 +42,14 @@ scripts:
       cpu: 1.0
       memory: 10G
 - name: summit/auxTel/runMountTorquePlotter.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runNightReporter.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runSpecExaminer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -39,6 +58,8 @@ scripts:
       cpu: 1.0
       memory: 4G
 - name: summit/misc/runAllSky.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 1.0
@@ -47,15 +68,34 @@ scripts:
       cpu: 2
       memory: 6G
 - name: summit/misc/runStarTracker.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerCatchup.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerFast.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerMetadata.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerNightReport.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerWide.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runTmaTelemetry.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+###
+### ComCam pods
+###
 - name: summit/LSSTComCam/runButlerWatcher.py
 - name: summit/LSSTComCam/runHeadNode.py
 - name: summit/LSSTComCam/runMetadataServer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/LSSTComCam/runPlotter.py
 workerSet:
   name: summit/LSSTComCam/runSfmRunner.py
