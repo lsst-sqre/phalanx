@@ -176,7 +176,7 @@ scripts:
 ###
 comcamsimWorkerSet:
   name: summit/LSSTComCamSim/runSfmRunner.py
-  replicas: 1
+  replicas: 9
   resources:
     requests:
       cpu: 1.0
@@ -209,7 +209,7 @@ comcamsimGatherRollupSet:
 ###
 comcamWorkerSet:
   name: summit/LSSTComCam/runSfmRunner.py
-  replicas: 1
+  replicas: 9
   resources:
     requests:
       cpu: 1.0
