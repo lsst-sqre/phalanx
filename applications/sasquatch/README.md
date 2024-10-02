@@ -18,6 +18,8 @@ Rubin Observatory's telemetry service
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| app-metrics.apps | list | `[]` | The apps to create configuration for. |
+| app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
 | chronograf.enabled | bool | `true` | Whether Chronograf is enabled |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
@@ -81,6 +83,26 @@ Rubin Observatory's telemetry service
 | strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
 | telegraf-kafka-consumer | object | `{}` | Overrides for telegraf-kafka-consumer configuration |
+| app-metrics.affinity | object | `{}` | Affinity for pod assignment |
+| app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags. The names should be the same as the app names in Phalanx. |
+| app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |
+| app-metrics.cluster.name | string | `"sasquatch"` |  |
+| app-metrics.debug | bool | false | Run Telegraf in debug mode. |
+| app-metrics.env | list | See `values.yaml` | Telegraf agent enviroment variables |
+| app-metrics.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| app-metrics.globalAppConfig | object | `{}` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden. See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
+| app-metrics.globalInfluxTags | list | `["service"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
+| app-metrics.image.pullPolicy | string | `"Always"` | Image pull policy |
+| app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| app-metrics.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
+| app-metrics.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
+| app-metrics.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| app-metrics.replicaCount | int | `3` | Number of Telegraf  replicas. Multiple replicas increase availability. |
+| app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
@@ -389,7 +411,6 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| strimzi-kafka.users.appmetrics.enabled | bool | `false` | Enable user appmetrics |
 | strimzi-kafka.users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
 | strimzi-kafka.users.consdb.enabled | bool | `false` | Enable user consdb |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
