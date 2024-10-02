@@ -19,6 +19,7 @@ applications:
   nublado: true
   obsenv-management: true
   portal: true
+  rapid-analysis: true
   rubintv: true
   sasquatch: true
   squareone: true
