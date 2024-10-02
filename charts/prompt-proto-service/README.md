@@ -35,6 +35,7 @@ Event-driven processing of camera images
 | instrument.name | string | None, must be set | The "short" name of the instrument |
 | instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits' raws. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
+| instrument.preloadPadding | int | `30` | Number of arcseconds to pad the refcat and template region in preloading. |
 | instrument.skymap | string | `""` | Skymap to use with the instrument |
 | knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
 | knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |

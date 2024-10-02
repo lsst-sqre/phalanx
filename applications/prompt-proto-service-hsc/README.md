@@ -32,6 +32,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.name | string | `"HSC"` | The "short" name of the instrument |
 | prompt-proto-service.instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
+| prompt-proto-service.instrument.preloadPadding | int | `30` | Number of arcseconds to pad the refcat and template region in preloading. |
 | prompt-proto-service.instrument.skymap | string | `"hsc_rings_v1"` | Skymap to use with the instrument |
 | prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |

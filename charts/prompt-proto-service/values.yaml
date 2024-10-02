@@ -49,6 +49,8 @@ instrument:
     preprocessing: ""
   # -- Skymap to use with the instrument
   skymap: ""
+  # -- Number of arcseconds to pad the refcat and template region in preloading.
+  preloadPadding: 30
   # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
   # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
   # @default -- None, must be set

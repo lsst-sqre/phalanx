@@ -9,12 +9,13 @@ prompt-proto-service:
     repository: ghcr.io/lsst-dm/prompt-service
     pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: DM-43712-w_latest
 
   instrument:
     pipelines:
       main: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
       preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/Preprocessing.yaml]
+    preloadPadding: 0
     calibRepo: s3://rubin-pp-dev-users/central_repo/
 
   s3:
