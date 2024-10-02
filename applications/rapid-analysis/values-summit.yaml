@@ -57,6 +57,67 @@ scripts:
     limits:
       cpu: 1.0
       memory: 4G
+###
+### ComCamSim pods
+###
+- name: summit/LSSTComCamSim/runButlerWatcher.py
+- name: summit/LSSTComCamSim/runHeadNode.py
+- name: summit/LSSTComCamSim/runMetadataServer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: summit/LSSTComCamSim/runPlotter.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 6G
+- name: summit/LSSTComCamSim/runAosDonutPipeline.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 32
+      memory: 96G
+    limits:
+      cpu: 32
+      memory: 96G
+- name: summit/LSSTComCamSim/runFocusSweepAnalysis.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 2G
+- name: summit/LSSTComCamSim/runMetadataServerAos.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 0.25
+      memory: 500M
+    limits:
+      cpu: .5
+      memory: 1G
+- name: summit/LSSTComCamSim/runPsfPlotting.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: .5
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
+###
+### Misc pods
+###
 - name: summit/misc/runAllSky.py
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
@@ -97,7 +158,56 @@ scripts:
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/LSSTComCam/runPlotter.py
-workerSet:
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+###
+### LSSTCam pods
+###
+- name: summit/LSSTCam/runButlerWatcher.py
+- name: summit/LSSTCam/runHeadNode.py
+- name: summit/LSSTCam/runMetadataServer.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: summit/LSSTCam/runPlotter.py
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+###
+### ComCamSim StatefulSets
+###
+comcamsimWorkerSet:
+  name: summit/LSSTComCamSim/runSfmRunner.py
+  replicas: 9
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamsimGather2aSet:
+  name: summit/LSSTComCamSim/runStep2aWorker.py
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamsimGatherRollupSet:
+  name: summit/LSSTComCamSim/runNightlyWorker.py
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 12G
+    limits:
+      cpu: 1.0
+      memory: 24G
+###
+### ComCam StatefulSets
+###
+comcamWorkerSet:
   name: summit/LSSTComCam/runSfmRunner.py
   replicas: 36
   resources:
@@ -107,6 +217,39 @@ workerSet:
     limits:
       cpu: 1.0
       memory: 8G
+comcamGather2aSet:
+  name: summit/LSSTComCam/runStep2aWorker.py
+  replicas: 4  # 4 deep to match comcamWorkerSet
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+comcamGatherRollupSet:
+  name: summit/LSSTComCam/runNightlyWorker.py
+  replicas: 2  # 2 is probably plenty, 1 might even be fine
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
+###
+### LSSTCam StatefulSets
+###
+lsstcamWorkerSet:
+  name: summit/LSSTCam/runSfmRunner.py
+  replicas: 1  # 1 deep for now - in-focus chips only
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G  # we should check this value
 credentialFile: google_write_creds
 pullSecretsPath: pull-secret
 rubinTvSecretsPath: rubintv
