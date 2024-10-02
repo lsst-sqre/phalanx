@@ -108,3 +108,8 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
+
+app-metrics:
+  enabled: true
+  apps:
+    - mobu
