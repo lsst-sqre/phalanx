@@ -1,0 +1,90 @@
+{{- if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rapid-analysis.redis.labels" . | nindent 4 }}
+spec:
+  serviceName: redis-service
+  selector:
+    matchLabels:
+      {{- include "rapid-analysis.redis.selectorLabels" . | nindent 6 }}
+  replicas: {{ .Values.redis.replicas | default 1 }}
+  template:
+    metadata:
+      labels:
+        {{- include "rapid-analysis.redis.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        fsGroup: 999
+        runAsGroup: 999
+        runAsNonRoot: true
+        runAsUser: 999
+      containers:
+      - name: redis
+        image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+        imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+        command: [ "redis-server", "--appendonly", "yes", "--requirepass", "$(REDIS_PASSWORD)" ]
+        ports:
+          - containerPort: {{ .Values.redis.port }}
+        env:
+        {{- range $env_var, $env_value := .Values.redis.env }}
+          - name: {{ $env_var }}
+            value: {{ $env_value | quote }}
+        {{- end }}
+        {{- range $env := .Values.redis.envSecrets }}
+          - name: {{ $env.name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $env.secretName }}
+                key: {{ $env.secretKey }}
+        {{- end }}
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - '-c'
+              - 'redis-cli -h $(hostname) -a $(REDIS_PASSWORD) incr health:counter'
+          failureThreshold: 3
+          initialDelaySeconds: 15
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 1
+        {{- with $.Values.redis.resources }}
+        resources:
+          {{- toYaml $.Values.redis.resources | nindent 10 }}
+        {{- end }}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+        volumeMounts:
+        - mountPath: /data
+          name: data
+      {{- with $.Values.redis.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.redis.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.redis.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      {{- if $.Values.redis.storage.classname }}
+      storageClassName: {{ $.Values.redis.storage.classname }}
+      {{- end }}
+      resources:
+        requests:
+          storage: {{ $.Values.redis.storage.request }}
+{{- end }}

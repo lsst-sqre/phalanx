@@ -1,0 +1,4 @@
+apiVersion: v2
+name: rapid-analysis
+version: 1.0.0
+description: A Helm chart for deploying the Rapid Analysis services.
