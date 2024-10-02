@@ -306,6 +306,11 @@ nfsMountpoint:
   readOnly: false
   server: nfs1.cp.lsst.org
   serverPath: /scratch/rubintv
+- name: lsstcam-data
+  containerPath: /repo/LSSTCam
+  readOnly: false
+  server: nfs3.cp.lsst.org
+  serverPath: /lsstcam/repo/LSSTCam
 resources:
   requests:
     cpu: 0.5
