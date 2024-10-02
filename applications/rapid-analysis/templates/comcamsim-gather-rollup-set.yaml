@@ -1,5 +1,5 @@
-{{ $_ := set $.Values "script" $.Values.gatherRollupSet }}
-{{ $script := $.Values.gatherRollupSet }}
+{{ $_ := set $.Values "script" $.Values.comcamsimGatherRollupSet }}
+{{ $script := $.Values.comcamsimGatherRollupSet }}
 {{- if $script.name }}
 ---
 apiVersion: apps/v1
@@ -20,7 +20,7 @@ spec:
     metadata:
       {{- with $.Values.podAnnotations }}
       annotations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}

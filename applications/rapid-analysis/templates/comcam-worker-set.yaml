@@ -1,11 +1,11 @@
-{{ $_ := set $.Values "script" $.Values.gather2aSet }}
-{{ $script := $.Values.gather2aSet }}
+{{ $_ := set $.Values "script" $.Values.comcamWorkerSet }}
+{{ $script := $.Values.comcamWorkerSet }}
 {{- if $script.name }}
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ include "rapid-analysis.deploymentName" $ }}-gather2aset
+  name: {{ include "rapid-analysis.deploymentName" $ }}-workerset
   namespace: {{ $.Values.namespace }}
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}
@@ -20,7 +20,7 @@ spec:
     metadata:
       {{- with $.Values.podAnnotations }}
       annotations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
