@@ -5,13 +5,13 @@ enabled: false
 
 image:
   # -- Telegraf image repository
-  repo: "docker.io/library/telegraf"
+  repo: "docker.io/lsstsqre/telegraf"
 
   # -- Telegraf image tag
-  tag: "1.30.2-alpine"
+  tag: "avro-mutex"
 
   # -- Image pull policy
-  pullPolicy: "Always"
+  pullPolicy: "IfNotPresent"
 
 # -- Annotations for telegraf-kafka-consumers pods
 podAnnotations: {}
@@ -62,8 +62,8 @@ kafkaConsumers:
 
     # -- Sends metrics to the output in batches of at most metric_batch_size
     # metrics.
-    # @default -- 5000
-    metric_batch_size: 5000
+    # @default -- 1000
+    metric_batch_size: 1000
 
     # -- Caches metric_buffer_limit metrics for each output, and flushes this
     # buffer on a successful write. This should be a multiple of metric_batch_size

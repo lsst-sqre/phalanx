@@ -133,9 +133,6 @@ influxdb:
 
 telegraf-kafka-consumer:
   enabled: true
-  image:
-    repo: "docker.io/lsstsqre/telegraf"
-    tag: "avro-mutex"
   kafkaConsumers:
     auxtel:
       enabled: true
@@ -172,7 +169,6 @@ telegraf-kafka-consumer:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
-      metric_batch_size: 2500
       debug: true
     m2:
       enabled: true

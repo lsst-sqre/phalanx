@@ -403,9 +403,9 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-kafka-consumer.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-kafka-consumer.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer.image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
@@ -419,7 +419,7 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-kafka-consumer.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | telegraf-kafka-consumer.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
-| telegraf-kafka-consumer.kafkaConsumers.test.metric_batch_size | int | 5000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-kafka-consumer.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf-kafka-consumer.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf-kafka-consumer.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | telegraf-kafka-consumer.kafkaConsumers.test.precision | string | "1us" | Data precision. |
@@ -440,9 +440,9 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer-oss.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer-oss.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-kafka-consumer-oss.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer-oss.image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | telegraf-kafka-consumer-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer-oss.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
@@ -456,7 +456,7 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
-| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_batch_size | int | 5000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | telegraf-kafka-consumer-oss.kafkaConsumers.test.precision | string | "1us" | Data precision. |

@@ -11,9 +11,9 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| image.pullPolicy | string | `"Always"` | Image pull policy |
-| image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
@@ -27,7 +27,7 @@ Telegraf is an agent written in Go for collecting, processing, aggregating, and 
 | kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
 | kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
 | kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
-| kafkaConsumers.test.metric_batch_size | int | 5000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
 | kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | kafkaConsumers.test.precision | string | "1us" | Data precision. |
