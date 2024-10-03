@@ -104,31 +104,11 @@ nfsMountpoint:
   readOnly: false
   server: comcam-archiver.tu.lsst.org
   serverPath: /repo/LSSTComCam
-- name: auxtel-data
-  containerPath: /readonly/lsstdata/auxtel
-  readOnly: true
-  server: nfs-auxtel.tu.lsst.org
-  serverPath: /auxtel/lsstdata
-- name: comcam-data
-  containerPath: /readonly/lsstdata/comcam
-  readOnly: true
-  server: comcam-archiver.tu.lsst.org
-  serverPath: /lsstdata
 - name: project-shared
   containerPath: /project
   readOnly: false
   server: nfs-project.tu.lsst.org
   serverPath: /project
-- name: auxtel-gen3-data-temp
-  containerPath: /data/lsstdata/TTS/auxtel
-  readOnly: true
-  server: nfs-auxtel.tu.lsst.org
-  serverPath: /auxtel/lsstdata/TTS/auxtel
-- name: comcam-gen3-data-temp
-  containerPath: /data/lsstdata/TTS/comcam
-  readOnly: true
-  server: comcam-archiver.tu.lsst.org
-  serverPath: /lsstdata/TTS/comcam
 - name: scratch-shared
   containerPath: /scratch
   readOnly: false
