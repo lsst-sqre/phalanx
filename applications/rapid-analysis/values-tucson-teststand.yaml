@@ -109,11 +109,6 @@ nfsMountpoint:
   readOnly: false
   server: nfs-project.tu.lsst.org
   serverPath: /project
-- name: scratch-shared
-  containerPath: /scratch
-  readOnly: false
-  server: nfs-scratch.tu.lsst.org
-  serverPath: /scratch/rubintv
 resources:
   requests:
     cpu: 0.5
