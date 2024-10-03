@@ -85,6 +85,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the gai-helpers application
+  gai-helpers: false
+
   # -- Enable the ghostwriter application
   ghostwriter: false
 

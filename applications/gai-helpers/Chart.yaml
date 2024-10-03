@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: RAG helpers for documentation searches
+name: gai-helpers
+sources:
+- https://github.com/lsst-sqre/gai-helpers
+type: application
+version: 1.0.0
