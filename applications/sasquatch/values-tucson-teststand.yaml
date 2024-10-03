@@ -99,6 +99,8 @@ telegraf-kafka-consumer:
     eas:
       enabled: true
       database: "efd"
+      metric_batch_size: 100
+      flush_interval: 20s
       topicRegexps: |
         [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
@@ -176,6 +178,13 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+  resources:
+    limits:
+      cpu: "2"
+      memory: "2Gi"
+    requests:
+      cpu: "1"
+      memory: "1Gi"
 
 kafdrop:
   cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
