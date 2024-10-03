@@ -97,27 +97,33 @@ spec:
               readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               readOnly: {{ $values.readOnly }}
           {{- end }}
           {{- end }}
+          {{- end }}
           {{- if $.Values.pvcMountpoint }}
           {{- range $values := $.Values.pvcMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if $.Values.pvcMountpointClaim }}
           {{- range $values := $.Values.pvcMountpointClaim }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if $.Values.butlerSecret }}
@@ -169,6 +175,7 @@ spec:
             secretName: rubintv-secrets
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           nfs:
             path: {{ $values.serverPath }}
@@ -176,18 +183,23 @@ spec:
             server: {{ $values.server }}
       {{- end }}
       {{- end }}
+      {{- end }}
       {{- if $.Values.pvcMountpoint }}
       {{- range $values := $.Values.pvcMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
       {{- end }}
       {{- end }}
       {{- if $.Values.pvcMountpointClaim }}
       {{- range $values := $.Values.pvcMountpointClaim }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
       {{- end }}
       {{- end }}
       {{- if $.Values.butlerSecret }}

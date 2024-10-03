@@ -8,7 +8,13 @@ env:
 siteTag: tts
 location: TTS
 scripts:
+###
+### AuxTel pods
+###
 - name: summit/auxTel/runBackgroundService.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
   resources:
     requests:
       cpu: 0.5
@@ -17,12 +23,33 @@ scripts:
       cpu: 1.0
       memory: 10G
 - name: summit/auxTel/runButlerWatcher.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runCalibrateCcdRunner.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runImExaminer.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runIsrRunner.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runMetadataCreator.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runMetadataServer.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runMonitor.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
   resources:
     requests:
       cpu: 0.5
@@ -31,8 +58,17 @@ scripts:
       cpu: 1.0
       memory: 10G
 - name: summit/auxTel/runMountTorquePlotter.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runNightReporter.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
 - name: summit/auxTel/runSpecExaminer.py
+  mounts:
+  - auxtel-gen3-data
+  - project-shared
   resources:
     requests:
       cpu: 0.5
@@ -44,14 +80,29 @@ scripts:
 ### ComCam pods
 ###
 - name: summit/LSSTComCam/runButlerWatcher.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
 - name: summit/LSSTComCam/runHeadNode.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
 - name: summit/LSSTComCam/runMetadataServer.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
 - name: summit/LSSTComCam/runPlotter.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
 ###
 ### ComCam StatefulSets
 ###
 comcamWorkerSet:
   name: summit/LSSTComCam/runSfmRunner.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
   replicas: 1
   resources:
     requests:
@@ -62,6 +113,9 @@ comcamWorkerSet:
       memory: 8G
 comcamGather2aSet:
   name: summit/LSSTComCam/runStep2aWorker.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
   replicas: 1
   resources:
     requests:
@@ -72,6 +126,9 @@ comcamGather2aSet:
       memory: "8G"
 comcamGatherRollupSet:
   name: summit/LSSTComCam/runNightlyWorker.py
+  mounts:
+  - comcam-gen3-data
+  - project-shared
   replicas: 1
   resources:
     requests:
