@@ -7,6 +7,7 @@ Confluent Schema Registry for managing schema versions for the Alert Stream
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
+| compatibilityLevel | string | `"None"` |  |
 | hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |

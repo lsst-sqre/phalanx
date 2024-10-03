@@ -73,6 +73,10 @@ prompt-proto-service:
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: 0
 
+  # -- The URI to a microservice that maps image metadata to a file location.
+  # If empty, Prompt Processing does not use a microservice.
+  raw_microservice: ""
+
   imageNotifications:
     # -- Hostname and port of the Kafka provider
     # @default -- None, must be set
@@ -95,7 +99,8 @@ prompt-proto-service:
     # -- Server address for the alert stream
     server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
-    topic: "alert-stream-test"
+    # @default -- None, must be set
+    topic: ""
 
   registry:
     # -- If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted.
@@ -117,21 +122,23 @@ prompt-proto-service:
     auth_env: true
 
   knative:
-    # -- The cpu cores requested.
+    # -- The cpu cores requested for the full pod (see `containerConcurrency`).
     cpuRequest: 1
-    # -- The maximum cpu cores.
+    # -- The maximum cpu cores for the full pod (see `containerConcurrency`).
     cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
     ephemeralStorageRequest: "5Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
+    # This allocation is for the full pod (see `containerConcurrency`)
     ephemeralStorageLimit: "5Gi"
     # -- GPUs enabled.
     gpu: true
-    # -- The number of GPUs to request.
+    # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
     gpuRequest: 1
-    # -- The minimum memory to request.
+    # -- The minimum memory to request for the full pod (see `containerConcurrency`).
     memoryRequest: "2Gi"
-    # -- The maximum memory limit.
+    # -- The maximum memory limit for the full pod (see `containerConcurrency`).
     memoryLimit: "8Gi"
     # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
     # This parameter adds extra time to that minimum (seconds).
@@ -144,6 +151,9 @@ prompt-proto-service:
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
     responseStartTimeout: 0
+
+  # -- The number of Knative requests that can be handled simultaneously by one container
+  containerConcurrency: 1
 
   # -- Kubernetes YAML configs for extra container volume(s).
   # Any volumes required by other config options are automatically handled by the Helm chart.

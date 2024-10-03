@@ -1,0 +1,118 @@
+# Default values for ppdb-replication.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the ppdb-replication deployment
+  repository: "ghcr.io/lsst/ppdb-replication"
+
+  # -- Pull policy for the ppdb-replication image
+  pullPolicy: "Always"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: "main"
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the ppdb-replication deployment pod
+affinity: {}
+
+# -- Node selection rules for the ppdb-replication deployment pod
+nodeSelector: {}
+
+# -- Annotations for the ppdb-replication deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the ppdb-replication deployment pod
+# @default -- see `values.yaml`
+resources:
+  limits:
+    cpu: "1"
+    memory: "16.0Gi"
+  requests:
+    cpu: "200m"  # 20% of a single core
+    memory: "4.0Gi"
+
+# -- Tolerations for the ppdb-replication deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null
+
+# Application-specific configuration
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Name of logger for monitoring
+  monLogger: "lsst.dax.ppdb.monitor"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/ppdb-replication"
+
+  # -- APDB config file resource
+  apdbConfig: null
+
+  # -- PPDB config file resource
+  ppdbConfig: null
+
+  # -- APDB index URI
+  apdbIndexUri: null
+
+  # -- Comma-separated list of monitoring filter rules
+  monRules: null
+
+  # -- Allow updates to already replicated data
+  updateExisting: false
+
+  # -- Minimum time to wait before replicating a chunk after next chunk appears
+  minWaitTime: null
+
+  # -- Maximum time to wait before replicating a chunk after next chunk appears
+  maxWaitTime: null
+
+  # -- Time to wait before checking for new chunks, if no chunk appears
+  checkInterval: null
+
+  # -- S3 endpoint URL
+  s3EndpointUrl: null
+
+  # -- Additional S3 profile name
+  additionalS3ProfileName: null
+
+  # -- Additional S3 profile URL
+  additionalS3ProfileUrl: null
+
+  # -- Disable bucket validation in LSST S3 tools
+  disableBucketValidation: 1
+
+  # -- Volumes specific to the environment
+  volumes: []
+
+  # -- Volume mounts
+  volumeMounts: []
+
+  # -- Persistent volume claims
+  persistentVolumeClaims: []

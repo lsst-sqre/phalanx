@@ -23,12 +23,14 @@ from .applications import Application, ApplicationInstance
 from .secrets import Secret
 
 __all__ = [
+    "ArgoCDDetails",
     "ControlSystemConfig",
     "Environment",
     "EnvironmentBaseConfig",
     "EnvironmentConfig",
     "EnvironmentDetails",
     "GCPMetadata",
+    "GafaelfawrDetails",
     "GafaelfawrGitHubGroup",
     "GafaelfawrGitHubTeam",
     "GafaelfawrScope",
@@ -466,6 +468,9 @@ class GafaelfawrDetails(BaseModel):
 
     provider_hostname: str | None = None
     """Hostname of upstream identity provider, if meaningful."""
+
+    comanage_hostname: str | None = None
+    """Hostname of COmanage instance, if COmanage is in use."""
 
     scopes: list[GafaelfawrScope] = []
     """Gafaelfawr scopes and their associated groups."""

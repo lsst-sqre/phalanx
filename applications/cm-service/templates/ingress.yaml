@@ -1,0 +1,38 @@
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "cm-service"
+  labels:
+    {{- include "cm-service.labels" . | nindent 4 }}
+config:
+  baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
+  scopes:
+    all:
+      - "exec:internal-tools"
+template:
+  metadata:
+    name: "cm-service"
+    {{- with .Values.ingress.annotations }}
+    annotations:
+      {{- toYaml . | nindent 6 }}
+    {{- end }}
+  spec:
+    rules:
+      - host: {{ required "global.host must be set" .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix | quote }}
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "cm-service"
+                  port:
+                    number: 8080
+            - path: "/web_app"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "cm-service"
+                  port:
+                    number: 8080

@@ -29,12 +29,17 @@ Kafka broker cluster for distributing alerts
 | kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| kafkaController.enabled | bool | `false` | Enable Kafka Controller |
+| kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
+| kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
+| kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
 | kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging |
 | kafkaExporter.enabled | bool | `false` | Enable Kafka exporter. |
 | kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
 | kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| kraft | bool | `true` |  |
 | maxBytesRetained | string | `"100000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
 | maxMillisecondsRetained | string | `"5259492000"` | Maximum amount of time to save alerts in the replay topic, in milliseconds. Default is 7 days (604800000). |
 | nameOverride | string | `""` |  |
@@ -52,6 +57,3 @@ Kafka broker cluster for distributing alerts
 | users[0].readonlyTopics | list | `["alert-stream","alerts-simulated","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
 | users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
-| zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
-| zookeeper.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
-| zookeeper.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |

@@ -20,12 +20,14 @@ applications:
   livetap: true
   mobu: true
   narrativelog: true
+  nightreport: true
   noteburst: true
   nublado: true
   obsloctap: true
   plot-navigator: true
   portal: true
   postgres: true
+  ppdb-replication: true
   rubintv: true
   sasquatch: true
   schedview-snapshot: true

@@ -82,6 +82,9 @@ applications:
   # most other applications use `GafaelfawrIngress`
   gafaelfawr: true
 
+  # -- Enable the ghostwriter application
+  ghostwriter: false
+
   # -- Enable the giftless application
   giftless: false
 
@@ -149,6 +152,9 @@ applications:
   # discouraged in favor of using infrastructure SQL, but will remain
   # supported for use cases such as minikube test deployments.
   postgres: false
+
+  # -- Enable the ppdb-replication application
+  ppdb-replication: false
 
   # -- Enable the rubintv application
   rubintv: false
@@ -224,6 +230,9 @@ applications:
 
   # -- Enable the telegraf-ds application
   telegraf-ds: false
+
+  # -- Enable the templatebot application
+  templatebot: false
 
   # -- Enable the times-square application
   times-square: false

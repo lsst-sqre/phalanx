@@ -14,19 +14,19 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 4.3.0
+    tag: 4.5.1
 
   instrument:
     pipelines:
+      # BLOCK-306 is photographic imaging
+      # BLOCK-T17 is daytime checkout
+      # BLOCK-271 is photon transfer curve calibrations
       # BLOCK-295 is the daily calibration sequence as of May 27, 2024
       main: >-
-        (survey="AUXTEL_PHOTO_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-        (survey="AUXTEL_DRP_IMAGING")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-        (survey="BLOCK-T17")=[]
+        (survey="BLOCK-T17")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml]
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
         (survey="spec-survey")=[]
@@ -34,8 +34,7 @@ prompt-proto-service:
         (survey="BLOCK-295")=[]
         (survey="")=[]
       preprocessing: >-
-        (survey="AUXTEL_PHOTO_IMAGING")=[]
-        (survey="AUXTEL_DRP_IMAGING")=[]
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
         (survey="BLOCK-T17")=[]
         (survey="cwfs")=[]
         (survey="cwfs-focus-sweep")=[]
@@ -49,6 +48,8 @@ prompt-proto-service:
     imageBucket: rubin-summit
     endpointUrl: https://s3dfrgw.slac.stanford.edu
 
+  raw_microservice: http://172.24.5.144:8080/presence
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing-prod
@@ -59,6 +60,9 @@ prompt-proto-service:
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_latiss.py
+
+  alerts:
+    topic: "latiss-alerts"
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

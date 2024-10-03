@@ -27,14 +27,6 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: "cm-service-worker"
-          env:
-            - name: CM_ARQ_REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: redis-secret
-                  key: password
-            - name: CM_ARQ_REDIS_URL
-              value: "redis://cm-service-redis/1"
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:

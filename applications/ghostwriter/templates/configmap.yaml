@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "ghostwriter-config"
+  labels:
+    {{- include "ghostwriter.labels" . | nindent 4 }}
+data:
+  routing.yaml: |-
+    {{- toYaml .Values.mapping | nindent 4 }}
+  config.yaml: |-
+    # Empty: values will be taken from environment
