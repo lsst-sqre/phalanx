@@ -14,7 +14,7 @@ prompt-proto-service:
   instrument:
     pipelines:
       main: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/ApPipe.yaml]
-      preprocessing: (survey="SURVEY")=[]
+      preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/HSC/Preprocessing.yaml]
     calibRepo: s3://rubin-pp-dev-users/central_repo/
 
   s3:
@@ -27,6 +27,9 @@ prompt-proto-service:
 
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/sql/pp_apdb_hsc-dev.py
+
+  alerts:
+    topic: "alert-stream-test"
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

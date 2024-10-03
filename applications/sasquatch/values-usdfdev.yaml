@@ -157,6 +157,7 @@ rest-proxy:
   kafka:
     topics:
       - test.next-visit
+      - test.next-visit-job
     topicPrefixes:
       - test
       - lsst.dm

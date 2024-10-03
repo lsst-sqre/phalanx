@@ -18,6 +18,8 @@ Rubin Observatory's telemetry service
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| app-metrics.apps | list | `[]` | The apps to create configuration for. |
+| app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
 | chronograf.enabled | bool | `true` | Whether Chronograf is enabled |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
@@ -81,6 +83,26 @@ Rubin Observatory's telemetry service
 | strimzi-registry-operator.clusterNamespace | string | `"sasquatch"` | Namespace where the Strimzi Kafka cluster is deployed |
 | strimzi-registry-operator.operatorNamespace | string | `"sasquatch"` | Namespace where the strimzi-registry-operator is deployed |
 | telegraf-kafka-consumer | object | `{}` | Overrides for telegraf-kafka-consumer configuration |
+| app-metrics.affinity | object | `{}` | Affinity for pod assignment |
+| app-metrics.apps | list | `[]` | A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags. The names should be the same as the app names in Phalanx. |
+| app-metrics.args | list | `[]` | Arguments passed to the Telegraf agent containers |
+| app-metrics.cluster.name | string | `"sasquatch"` |  |
+| app-metrics.debug | bool | false | Run Telegraf in debug mode. |
+| app-metrics.env | list | See `values.yaml` | Telegraf agent enviroment variables |
+| app-metrics.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| app-metrics.globalAppConfig | object | `{}` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden. See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
+| app-metrics.globalInfluxTags | list | `["service"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
+| app-metrics.image.pullPolicy | string | `"Always"` | Image pull policy |
+| app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
+| app-metrics.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
+| app-metrics.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
+| app-metrics.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| app-metrics.replicaCount | int | `3` | Number of Telegraf  replicas. Multiple replicas increase availability. |
+| app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
@@ -163,7 +185,9 @@ Rubin Observatory's telemetry service
 | influxdb-enterprise.meta.service.loadBalancerIP | string | Do not allocate a load balancer IP | Load balancer IP for the meta service |
 | influxdb-enterprise.meta.service.nodePort | int | Do not allocate a node port | Node port for the meta service |
 | influxdb-enterprise.meta.service.type | string | `"ClusterIP"` | Service type for the meta service |
-| influxdb-enterprise.meta.sharedSecret.secretName | string | `"influxdb-enterprise-shared-secret"` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret | object | `{"key":"secret","name":"influxdb-enterprise-shared-secret"}` | Shared secret used by the internal API for JWT authentication between InfluxDB nodes. Must have a key named `secret` that should be a long, random string See [documentation for shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret). |
+| influxdb-enterprise.meta.sharedSecret.secret.key | string | `"secret"` | Key within that secret that contains the shared secret |
+| influxdb-enterprise.meta.sharedSecret.secret.name | string | `"influxdb-enterprise-shared-secret"` | Name of the secret containing the shared secret |
 | influxdb-enterprise.meta.tolerations | list | `[]` | Tolerations for meta pods |
 | influxdb-enterprise.nameOverride | string | `""` | Override the base name for resources |
 | influxdb-enterprise.serviceAccount.annotations | object | `{}` | Annotations to add to the service account |
@@ -311,7 +335,7 @@ Rubin Observatory's telemetry service
 | rest-proxy.heapOptions | string | `"-Xms512M -Xmx512M"` | Kafka REST proxy JVM Heap Option |
 | rest-proxy.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | rest-proxy.image.repository | string | `"confluentinc/cp-kafka-rest"` | Kafka REST proxy image repository |
-| rest-proxy.image.tag | string | `"7.7.0"` | Kafka REST proxy image tag |
+| rest-proxy.image.tag | string | `"7.7.1"` | Kafka REST proxy image tag |
 | rest-proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the ingress |
 | rest-proxy.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | rest-proxy.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |
@@ -363,7 +387,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
 | strimzi-kafka.kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | strimzi-kafka.kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
-| strimzi-kafka.kafka.version | string | `"3.7.1"` | Version of Kafka to deploy |
+| strimzi-kafka.kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
 | strimzi-kafka.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | strimzi-kafka.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | strimzi-kafka.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
@@ -400,23 +424,24 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
 | telegraf-kafka-consumer.env | list | See `values.yaml` | Telegraf agent enviroment variables |
 | telegraf-kafka-consumer.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
-| telegraf-kafka-consumer.image.pullPolicy | string | `"Always"` | Image pull policy |
-| telegraf-kafka-consumer.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| telegraf-kafka-consumer.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| telegraf-kafka-consumer.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer.image.tag | string | `"avro-mutex"` | Telegraf image tag |
 | telegraf-kafka-consumer.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | telegraf-kafka-consumer.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
 | telegraf-kafka-consumer.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | telegraf-kafka-consumer.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
+| telegraf-kafka-consumer.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
 | telegraf-kafka-consumer.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
 | telegraf-kafka-consumer.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
 | telegraf-kafka-consumer.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
-| telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | "1s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-kafka-consumer.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
 | telegraf-kafka-consumer.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
-| telegraf-kafka-consumer.kafkaConsumers.test.interval | string | "1s" | Data collection interval for the Kafka consumer. |
 | telegraf-kafka-consumer.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf-kafka-consumer.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
 | telegraf-kafka-consumer.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
-| telegraf-kafka-consumer.kafkaConsumers.test.metric_buffer_limit | int | 10000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
+| telegraf-kafka-consumer.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
 | telegraf-kafka-consumer.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
 | telegraf-kafka-consumer.kafkaConsumers.test.precision | string | "1us" | Data precision. |
 | telegraf-kafka-consumer.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
@@ -431,3 +456,40 @@ Rubin Observatory's telemetry service
 | telegraf-kafka-consumer.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
 | telegraf-kafka-consumer.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | telegraf-kafka-consumer.tolerations | list | `[]` | Tolerations for pod assignment |
+| telegraf-kafka-consumer-oss.affinity | object | `{}` | Affinity for pod assignment |
+| telegraf-kafka-consumer-oss.args | list | `[]` | Arguments passed to the Telegraf agent containers |
+| telegraf-kafka-consumer-oss.enabled | bool | `false` | Wether the Telegraf Kafka Consumer is enabled |
+| telegraf-kafka-consumer-oss.env | list | See `values.yaml` | Telegraf agent enviroment variables |
+| telegraf-kafka-consumer-oss.envFromSecret | string | `""` | Name of the secret with values to be added to the environment. |
+| telegraf-kafka-consumer-oss.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
+| telegraf-kafka-consumer-oss.image.repo | string | `"docker.io/lsstsqre/telegraf"` | Telegraf image repository |
+| telegraf-kafka-consumer-oss.image.tag | string | `"avro-mutex"` | Telegraf image tag |
+| telegraf-kafka-consumer-oss.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
+| telegraf-kafka-consumer-oss.influxdb.database | string | `"telegraf-kafka-consumer-v1"` | Name of the InfluxDB v1 database to write to |
+| telegraf-kafka-consumer-oss.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.collection_jitter | string | "0s" | Data collection jitter. This is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.compression_codec | int | 3 | Compression codec. 0 : None, 1 : Gzip, 2 : Snappy, 3 : LZ4, 4 : ZSTD |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.consumer_fetch_default | string | "20MB" | Maximum amount of data the server should return for a fetch request. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.debug | bool | false | Run Telegraf in debug mode. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.enabled | bool | `false` | Enable the Telegraf Kafka consumer. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.fields | list | `[]` | List of Avro fields to be recorded as InfluxDB fields.  If not specified, any Avro field that is not marked as a tag will become an InfluxDB field. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_interval | string | "10s" | Data flushing interval for all outputs. Don’t set this below interval. Maximum flush_interval is flush_interval + flush_jitter |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.flush_jitter | string | "0s" | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.max_processing_time | string | "5s" | Maximum processing time for a single message. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.max_undelivered_messages | int | 10000 | Maximum number of undelivered messages. Should be a multiple of metric_batch_size, setting it too low may never flush the broker's messages. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_batch_size | int | 1000 | Sends metrics to the output in batches of at most metric_batch_size metrics. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.metric_buffer_limit | int | 100000 | Caches metric_buffer_limit metrics for each output, and flushes this buffer on a successful write. This should be a multiple of metric_batch_size and could not be less than 2 times metric_batch_size. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.offset | string | `"oldest"` | Kafka consumer offset. Possible values are `oldest` and `newest`. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.precision | string | "1us" | Data precision. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.replicaCount | int | `1` | Number of Telegraf Kafka consumer replicas. Increase this value to increase the consumer throughput. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.tags | list | `[]` | List of Avro fields to be recorded as InfluxDB tags.  The Avro fields specified as tags will be converted to strings before ingestion into InfluxDB. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.timestamp_field | string | `"private_efdStamp"` | Avro field to be used as the InfluxDB timestamp (optional).  If unspecified or set to the empty string, Telegraf will use the time it received the measurement. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.timestamp_format | string | `"unix"` | Timestamp format. Possible values are `unix` (the default if unset) a timestamp in seconds since the Unix epoch, `unix_ms` (milliseconds), `unix_us` (microsseconds), or `unix_ns` (nanoseconds). |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.topicRegexps | string | `"[ \".*Test\" ]\n"` | List of regular expressions to specify the Kafka topics consumed by this agent. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.union_field_separator | string | `""` | Union field separator: if a single Avro field is flattened into more than one InfluxDB field (e.g. an array `a`, with four members, would yield `a0`, `a1`, `a2`, `a3`; if the field separator were `_`, these would be `a_0`...`a_3`. |
+| telegraf-kafka-consumer-oss.kafkaConsumers.test.union_mode | string | `"nullable"` | Union mode: this can be one of `flatten`, `nullable`, or `any`. See `values.yaml` for extensive discussion. |
+| telegraf-kafka-consumer-oss.nodeSelector | object | `{}` | Node labels for pod assignment |
+| telegraf-kafka-consumer-oss.podAnnotations | object | `{}` | Annotations for telegraf-kafka-consumers pods |
+| telegraf-kafka-consumer-oss.podLabels | object | `{}` | Labels for telegraf-kafka-consumer pods |
+| telegraf-kafka-consumer-oss.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
+| telegraf-kafka-consumer-oss.tolerations | list | `[]` | Tolerations for pod assignment |

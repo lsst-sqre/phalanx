@@ -17,12 +17,13 @@ applications:
   butler: true
   datalinker: true
   filestore-backup: true
+  ghostwriter: true
   hips: true
   mobu: true
   nublado: true
   portal: true
   semaphore: true
-  siav2: true
+  siav2: false
   squareone: true
   ssotap: true
   tap: true

@@ -283,3 +283,10 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
+
+app-metrics:
+  # -- Enable the app-metrics subchart with topic, user, and telegraf configurations
+  enabled: false
+
+  # -- The apps to create configuration for.
+  apps: []

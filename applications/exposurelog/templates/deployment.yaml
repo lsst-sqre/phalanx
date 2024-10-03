@@ -57,14 +57,7 @@ spec:
               value: {{ .Values.config.butler_uri_2 | quote }}
             - name: EXPOSURELOG_DB_USER
               value: {{ .Values.db.user | quote }}
-            - name: PGUSER
-              value: {{ .Values.db.user | quote }}
             - name: EXPOSURELOG_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: exposurelog
-                  key: exposurelog_password
-            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: exposurelog
@@ -77,6 +70,17 @@ spec:
               value: {{ .Values.db.database | quote }}
             - name: SITE_ID
               value: {{ .Values.config.site_id | quote }}
+            {{- range .Values.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+            {{- range .Values.secretEnv }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .secretName }}
+                  key: {{ .secretKey }}
+            {{- end }}
           volumeMounts:
             {{- if .Values.config.nfs_path_1 }}
             - name: volume1
@@ -86,8 +90,25 @@ spec:
             - name: volume2
               mountPath: /volume_2
             {{- end }}
+            - name: user-secrets
+              mountPath: /var/secrets/butler
             - name: tmp
               mountPath: /tmp
+      initContainers:
+        - name: secret-perm-fixer
+          image: busybox
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              cp /secrets/* /etc/secrets && \
+              chown 1000:1000 /etc/secrets/* && \
+              chmod 0400 /etc/secrets/*
+          volumeMounts:
+            - name: butler-secrets
+              mountPath: /secrets
+            - name: user-secrets
+              mountPath: /etc/secrets
       volumes:
         {{- if .Values.config.nfs_path_1 }}
         - name: volume1
@@ -110,6 +131,12 @@ spec:
             readOnly: true
             server: {{ .Values.config.nfs_server_3 }}
         {{- end }}
+        - name: butler-secrets
+          secret:
+            defaultMode: 420
+            secretName: exposurelog
+        - name: user-secrets
+          emptyDir: {}
         - name: tmp
           emptyDir: {}
       {{- with .Values.nodeSelector }}

@@ -1,55 +1,62 @@
+{{ range $manager_producer:= .Values.manager.producers }}
+{{ $_ := set $.Values "manager_producer" $manager_producer }}
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "love-manager-producers.fullname" . }}
+  name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
   namespace: {{ $.Values.global.controlSystem.appNamespace }}
   labels:
-    {{- include "love-manager-producers.labels" . | nindent 4 }}
+    app.kubernetes.io/instance: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
+    app.kubernetes.io/name: {{ include "love-manager-producer.fullname" $ }}
 spec:
   selector:
     matchLabels:
-      {{- include "love-manager-producers.selectorLabels" . | nindent 6 }}
-  {{- if not .Values.manager.producers.autoscaling.enabled }}
-  replicas: {{ .Values.manager.producers.replicas }}
+      app.kubernetes.io/instance: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
+      app.kubernetes.io/name: {{ include "love-manager-producer.fullname" $ }}
+  {{- if not $manager_producer.autoscaling.enabled }}
+  replicas: {{ $manager_producer.replicas }}
   {{- end }}
   template:
     metadata:
       labels:
-        {{- include "love-manager-producers.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/instance: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
+        app.kubernetes.io/name: {{ include "love-manager-producer.fullname" $ }}
     spec:
       containers:
-      - name: {{ include "love-manager-producers.fullname" . }}
-        {{- $imageTag := .Values.manager.producers.image.tag | default $.Values.global.controlSystem.imageTag }}
-        image: "{{ .Values.manager.producers.image.repository }}:{{ $imageTag }}"
-        imagePullPolicy: {{ .Values.manager.producers.image.pullPolicy }}
+      - name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
+        {{- $imageTag := $manager_producer.image.tag | default $.Values.global.controlSystem.imageTag }}
+        image: "{{ $manager_producer.image.repository }}:{{ $imageTag }}"
+        imagePullPolicy: {{ $manager_producer.image.pullPolicy }}
         ports:
-        - containerPort: {{ .Values.manager.producers.ports.container }}
+        - containerPort: {{ $.Values.manager.producers_ports.container }}
         env:
-        {{- $data := dict "env" .Values.manager.producers.env "secret" false }}
+        {{- $data := dict "env" $manager_producer.env "secret" false }}
         {{- include "helpers.envFromList" $data | indent 10 }}
-        {{- if .Values.manager.producers.envSecrets }}
-        {{- $data := dict "secret" true "env" .Values.manager.producers.envSecrets }}
+        {{- if $manager_producer.envSecrets }}
+        {{- $data := dict "secret" true "env" $manager_producer.envSecrets }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         {{- end }}
-        {{- with $.Values.manager.producers.resources }}
+        {{- with $manager_producer.resources }}
         resources:
-          {{- toYaml $.Values.manager.producers.resources | nindent 10 }}
+          {{- toYaml $manager_producer.resources | nindent 10 }}
         {{- end }}
-        {{- with $.Values.manager.producers.readinessProbe }}
+        {{- with $manager_producer.readinessProbe }}
         readinessProbe:
-          {{- toYaml $.Values.manager.producers.readinessProbe | nindent 10 }}
+          {{- toYaml $manager_producer.readinessProbe | nindent 10 }}
         {{- end }}
       imagePullSecrets:
         - name: pull-secret
-      {{- with $.Values.manager.producers.nodeSelector }}
+      {{- with $manager_producer.nodeSelector }}
       nodeSelector:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
-      {{- with $.Values.manager.producers.affinity }}
+      {{- with $manager_producer.affinity }}
       affinity:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
-      {{- with $.Values.manager.producers.tolerations }}
+      {{- with $manager_producer.tolerations }}
       tolerations:
         {{- toYaml $ | nindent 8 }}
       {{- end }}
+{{- end }}

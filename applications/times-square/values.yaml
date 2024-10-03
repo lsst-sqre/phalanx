@@ -136,6 +136,12 @@ config:
   # -- GitHub organizations that can sync repos to Times Square (comma-separated).
   githubOrgs: "lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"
 
+  # -- Timeout for GitHub check runs in seconds
+  githubCheckRunTimeout: "900" # 15 minutes
+
+  # -- Default execution timeout for notebooks in seconds
+  defaultExecutionTimeout: "300" # 5 minutes
+
   worker:
     # -- Enable liveness checks for the arq queue
     enableLivenessCheck: true
@@ -194,10 +200,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "2Gi"
+      memory: "4Gi"
     requests:
       cpu: "6m"
-      memory: "50Mi"
+      memory: "1Gi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}

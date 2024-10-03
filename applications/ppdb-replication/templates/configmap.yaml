@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "ppdb-replication"
+  labels:
+    {{- include "ppdb-replication.labels" . | nindent 4 }}
+data:
+  DAX_APDB_INDEX_URI: {{ .Values.config.apdbIndexUri | quote }}
+  PPDB_REPLICATION_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  PPDB_REPLICATION_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  PPDB_REPLICATION_PROFILE: {{ .Values.config.logProfile | quote }}
+  PPDB_REPLICATION_APDB_CONFIG: {{ .Values.config.apdbConfig | quote }}
+  PPDB_REPLICATION_PPDB_CONFIG: {{ .Values.config.ppdbConfig | quote }}
+  PPDB_REPLICATION_MON_LOGGER: {{ .Values.config.monLogger | quote }}
+  PPDB_REPLICATION_MON_RULES: {{ .Values.config.monRules | quote }}
+  PPDB_REPLICATION_UPDATE_EXISTING: {{ .Values.config.updateExisting | quote}}
+  PPDB_REPLICATION_MIN_WAIT_TIME: {{ .Values.config.minWaitTime | quote }}
+  PPDB_REPLICATION_MAX_WAIT_TIME: {{ .Values.config.maxWaitTime | quote }}
+  PPDB_REPLICATION_CHECK_INTERVAL: {{ .Values.config.checkInterval | quote}}

@@ -16,6 +16,7 @@ applications:
   butler: true
   datalinker: true
   filestore-backup: true
+  ghostwriter: true
   hips: true
   jira-data-proxy: true
   mobu: true
@@ -24,11 +25,12 @@ applications:
   portal: true
   sasquatch: true
   semaphore: true
-  siav2: true
+  siav2: false
   ssotap: true
   squareone: true
   sqlproxy-cross-project: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
   telegraf: true
   telegraf-ds: true

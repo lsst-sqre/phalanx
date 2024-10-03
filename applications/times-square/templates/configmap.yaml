@@ -16,3 +16,5 @@ data:
   TS_ENABLE_GITHUB_APP: {{ .Values.config.enableGitHubApp | quote }}
   TS_GITHUB_APP_ID: {{ .Values.config.githubAppId | quote }}
   TS_GITHUB_ORGS: {{ .Values.config.githubOrgs | quote }}
+  TS_CHECK_RUN_TIMEOUT: {{ .Values.config.githubCheckRunTimeout | quote }}
+  TS_DEFAULT_EXECUTION_TIMEOUT: {{ .Values.config.defaultExecutionTimeout | quote }}

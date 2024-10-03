@@ -33,10 +33,10 @@ uws-api-server:
     subPath: ""
     readOnly: false
   - name: repo-comcam
-    server: comcam-archiver.cp.lsst.org
+    server: nfs3.cp.lsst.org
     claimName: repo-comcam-pvc
     mountPath: "/repo/LSSTComCam"
-    exportPath: "/repo/LSSTComCam"
+    exportPath: "/comcam/repo/LSSTComCam"
     subPath: ""
     readOnly: false
   - name: data-auxtel
@@ -47,9 +47,9 @@ uws-api-server:
     subPath: ""
     readOnly: true
   - name: data-comcam
-    server: comcam-archiver.cp.lsst.org
+    server: nfs3.cp.lsst.org
     claimName: data-comcam-pvc
     mountPath: "/data/lsstdata/base/comcam"
-    exportPath: "/lsstdata/base/comcam"
+    exportPath: "/comcam/lsstdata/base/comcam"
     subPath: ""
     readOnly: true

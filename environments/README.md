@@ -21,6 +21,7 @@
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
 | applications.filestore-backup | bool | `false` | Enable the filestore-backup application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
+| applications.ghostwriter | bool | `false` | Enable the ghostwriter application |
 | applications.giftless | bool | `false` | Enable the giftless application |
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
@@ -42,6 +43,7 @@
 | applications.plot-navigator | bool | `false` | Enable the plot-navigator application |
 | applications.portal | bool | `false` | Enable the portal application |
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
+| applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-proto-service-hsc | bool | `false` | Enable the prompt-proto-service-hsc application |
 | applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
@@ -67,6 +69,7 @@
 | applications.tap | bool | `false` | Enable the tap application |
 | applications.telegraf | bool | `false` | Enable the telegraf application |
 | applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
+| applications.templatebot | bool | `false` | Enable the templatebot application |
 | applications.times-square | bool | `false` | Enable the times-square application |
 | applications.unfurlbot | bool | `false` | Enable the unfurlbot application |
 | applications.uws | bool | `false` | Enable the uws application. This includes the dmocps control system application. |

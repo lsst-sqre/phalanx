@@ -11,7 +11,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "3.7.1"
+  version: "3.8.0"
 
   # -- Number of Kafka broker replicas to run
   replicas: 3
@@ -284,6 +284,7 @@ users:
   consdb:
     # -- Enable user consdb
     enabled: false
+
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster

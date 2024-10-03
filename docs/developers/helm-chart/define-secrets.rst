@@ -136,7 +136,7 @@ A typical ``VaultSecret`` Helm template for an application looks like this (repl
    apiVersion: ricoberger.de/v1alpha1
    kind: VaultSecret
    metadata:
-     name: {{ include "myapp.fullname" . }}
+     name: "myapp"
      labels:
        {{- include "myapp.labels" . | nindent 4 }}
    spec:

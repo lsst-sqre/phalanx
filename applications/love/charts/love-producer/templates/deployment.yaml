@@ -34,6 +34,8 @@ spec:
           env:
             - name: LOVE_CSC_PRODUCER
               value: {{ $producer.csc | quote }}
+            - name: WEBSOCKET_HOST
+              value: {{ $producer.WEBSOCKET_HOST | quote }}
             - name: LSST_KAFKA_SECURITY_PASSWORD
               valueFrom:
                 secretKeyRef:

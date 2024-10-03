@@ -40,6 +40,9 @@ config:
   # @default -- 600 (10 minutes)
   timeout: 600
 
+  # -- Whether to automatically update the vo-cutouts database schema
+  updateSchema: false
+
 image:
   # -- vo-cutouts image to use for the frontend and database workers
   repository: "ghcr.io/lsst-sqre/vo-cutouts"
@@ -92,6 +95,9 @@ cloudsql:
 
     # -- Cloud SQL Auth Proxy tag to use
     tag: "1.37.0"
+
+    # -- Tag suffix to use for the proxy for schema updates
+    schemaUpdateTagSuffix: "-alpine"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

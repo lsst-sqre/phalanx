@@ -2,7 +2,20 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "lsst.square-events.squarebot.slack.interaction"
+  name: "lsst.square-events.squarebot.slack.interaction.block-actions"
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: 4
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 1800000  # 30 minutes
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square-events.squarebot.slack.interaction.view-submission"
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
 spec:

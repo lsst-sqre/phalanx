@@ -8,8 +8,7 @@ image:
   # -- The pull policy on the LOVE producer image
   pullPolicy: IfNotPresent
 # -- This section holds a set of key, value pairs for environmental variables
-env:
-  WEBSOCKET_HOST: love-nginx/manager/ws/subscription
+env: {}
 # -- This section holds a set of key, value pairs for secrets
 envSecrets:
   PROCESS_CONNECTION_PASS: process-connection-pass

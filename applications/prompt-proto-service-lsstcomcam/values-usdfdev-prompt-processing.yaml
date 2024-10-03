@@ -22,4 +22,7 @@ prompt-proto-service:
     kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
     topic: rubin-prompt-processing
 
+  alerts:
+    topic: "alert-stream-test"
+
   fullnameOverride: "prompt-proto-service-lsstcomcam"

@@ -10,7 +10,7 @@ controller:
       numWeeklies: 3
       numDailies: 2
       cycle: null
-      recommendedTag: "recommended_k0001"
+      recommendedTag: "recommended_k0002"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
