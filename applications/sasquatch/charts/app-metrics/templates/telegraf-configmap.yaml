@@ -19,6 +19,7 @@ data:
       omit_hostname = true
 
     [[outputs.influxdb]]
+      namedrop = ["telegraf_*"]
       urls = [
         {{ .Values.influxdb.url | quote }}
       ]
