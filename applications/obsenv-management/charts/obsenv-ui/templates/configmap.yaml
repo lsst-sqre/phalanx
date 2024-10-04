@@ -7,4 +7,4 @@ metadata:
 data:
   BASE_URL: {{ .Values.global.baseUrl | quote }}
   OBSENV_API: "http://obsenv-api:8080/obsenv-api"
-  NEXT_PUBLIC_AUTH_GROUP: "lsst-ts-integration-testing-team"
+  AUTH_GROUP: "lsst-ts-integration-testing-team"
