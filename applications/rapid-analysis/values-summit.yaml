@@ -11,6 +11,7 @@ scripts:
 ###
 - name: summit/auxTel/runBackgroundService.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - allsky-data
   - project-shared
@@ -25,36 +26,43 @@ scripts:
       memory: 10G
 - name: summit/auxTel/runButlerWatcher.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runCalibrateCcdRunner.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runImExaminer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runIsrRunner.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runMetadataCreator.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runMetadataServer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runMonitor.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
@@ -68,18 +76,21 @@ scripts:
       memory: 10G
 - name: summit/auxTel/runMountTorquePlotter.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runNightReporter.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runSpecExaminer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   podAnnotations:
@@ -96,20 +107,24 @@ scripts:
 ###
 - name: summit/LSSTComCamSim/runButlerWatcher.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCamSim/runHeadNode.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCamSim/runMetadataServer.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/LSSTComCamSim/runPlotter.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -123,6 +138,7 @@ scripts:
       memory: 6G
 - name: summit/LSSTComCamSim/runAosDonutPipeline.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -136,6 +152,7 @@ scripts:
       memory: 96G
 - name: summit/LSSTComCamSim/runFocusSweepAnalysis.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -149,6 +166,7 @@ scripts:
       memory: 2G
 - name: summit/LSSTComCamSim/runMetadataServerAos.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -162,6 +180,7 @@ scripts:
       memory: 1G
 - name: summit/LSSTComCamSim/runPsfPlotting.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -229,20 +248,24 @@ scripts:
 ###
 - name: summit/LSSTComCam/runButlerWatcher.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCam/runHeadNode.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCam/runMetadataServer.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/LSSTComCam/runPlotter.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
@@ -276,6 +299,7 @@ scripts:
 comcamsimWorkerSet:
   name: summit/LSSTComCamSim/runSfmRunner.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 9
@@ -289,6 +313,7 @@ comcamsimWorkerSet:
 comcamsimGather2aSet:
   name: summit/LSSTComCamSim/runStep2aWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -302,6 +327,7 @@ comcamsimGather2aSet:
 comcamsimGatherRollupSet:
   name: summit/LSSTComCamSim/runNightlyWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -318,6 +344,7 @@ comcamsimGatherRollupSet:
 comcamWorkerSet:
   name: summit/LSSTComCam/runSfmRunner.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 9
@@ -331,6 +358,7 @@ comcamWorkerSet:
 comcamGather2aSet:
   name: summit/LSSTComCam/runStep2aWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -344,6 +372,7 @@ comcamGather2aSet:
 comcamGatherRollupSet:
   name: summit/LSSTComCam/runNightlyWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -381,31 +410,41 @@ butlerSecret:
 imagePullSecrets:
 - name: pull-secret
 nfsMountpoint:
-- name: auxtel-gen3-data
+- name: auxtel-data
   containerPath: /repo/LATISS
   readOnly: false
   server: nfs-auxtel.cp.lsst.org
   serverPath: /auxtel/repo/LATISS
-- name: comcam-gen3-data
+- name: auxtel-gen3-data
+  containerPath: /data/lsstdata/base/auxtel
+  readOnly: true
+  server: nfs-auxtel.cp.lsst.org
+  serverPath: /auxtel/lsstdata/base/auxtel
+- name: comcam-data
   containerPath: /repo/LSSTComCam
   readOnly: false
   server: nfs3.cp.lsst.org
   serverPath: /comcam/repo/LSSTComCam
-- name: project-shared
-  containerPath: /project
-  readOnly: false
-  server: nfs1.cp.lsst.org
-  serverPath: /project
-- name: allsky-data
-  containerPath: /data/allsky
+- name: comcam-gen3-data
+  containerPath: /data/lsstdata/base/comcam
   readOnly: true
-  server: nfs-auxtel.cp.lsst.org
-  serverPath: /auxtel/allsky
+  server: nfs3.cp.lsst.org
+  serverPath: /comcam/lsstdata/base/comcam
 - name: lsstcam-data
   containerPath: /repo/LSSTCam
   readOnly: false
   server: nfs3.cp.lsst.org
   serverPath: /lsstcam/repo/LSSTCam
+- name: allsky-data
+  containerPath: /data/allsky
+  readOnly: true
+  server: nfs-auxtel.cp.lsst.org
+  serverPath: /auxtel/allsky
+- name: project-shared
+  containerPath: /project
+  readOnly: false
+  server: nfs1.cp.lsst.org
+  serverPath: /project
 resources:
   requests:
     cpu: 0.5
