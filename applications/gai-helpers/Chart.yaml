@@ -6,3 +6,7 @@ sources:
 - https://github.com/lsst-sqre/gai-helpers
 type: application
 version: 1.0.0
+dependencies:
+  - name: weaviate
+    version: 17.2.1
+    repository: https://weaviate.github.io/weaviate-helm
