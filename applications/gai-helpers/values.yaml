@@ -61,3 +61,16 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: null
+
+weaviate:
+  requests:
+    cpu: '300m'
+    memory: '150Mi'
+  limits:
+    cpu: '500m'
+    memory: '300Mi'
+  env:
+    AUTHENTICATION_APIKEY_ENABLED: 'true'
+    AUTHENTICATION_APIKEY_USERS: 'admin'
+  envSecrets:
+    AUTHENTICATION_APIKEY_ALLOWED_KEYS: weaviate-api-key
