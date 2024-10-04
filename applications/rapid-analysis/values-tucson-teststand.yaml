@@ -13,6 +13,7 @@ scripts:
 ###
 - name: summit/auxTel/runBackgroundService.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   resources:
@@ -24,30 +25,37 @@ scripts:
       memory: 10G
 - name: summit/auxTel/runButlerWatcher.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runCalibrateCcdRunner.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runImExaminer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runIsrRunner.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runMetadataCreator.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runMetadataServer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runMonitor.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   resources:
@@ -59,14 +67,17 @@ scripts:
       memory: 10G
 - name: summit/auxTel/runMountTorquePlotter.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runNightReporter.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
 - name: summit/auxTel/runSpecExaminer.py
   mounts:
+  - auxtel-data
   - auxtel-gen3-data
   - project-shared
   resources:
@@ -81,18 +92,22 @@ scripts:
 ###
 - name: summit/LSSTComCam/runButlerWatcher.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCam/runHeadNode.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCam/runMetadataServer.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: summit/LSSTComCam/runPlotter.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
 ###
@@ -101,6 +116,7 @@ scripts:
 comcamWorkerSet:
   name: summit/LSSTComCam/runSfmRunner.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -114,6 +130,7 @@ comcamWorkerSet:
 comcamGather2aSet:
   name: summit/LSSTComCam/runStep2aWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -127,6 +144,7 @@ comcamGather2aSet:
 comcamGatherRollupSet:
   name: summit/LSSTComCam/runNightlyWorker.py
   mounts:
+  - comcam-data
   - comcam-gen3-data
   - project-shared
   replicas: 1
@@ -151,16 +169,26 @@ butlerSecret:
 imagePullSecrets:
 - name: pull-secret
 nfsMountpoint:
-- name: auxtel-gen3-data
+- name: auxtel-data
   containerPath: /repo/LATISS
   readOnly: false
   server: nfs-auxtel.tu.lsst.org
   serverPath: /auxtel/repo/LATISS
-- name: comcam-gen3-data
+- name: auxtel-gen3-data
+  containerPath: /data/lsstdata/TTS/auxtel
+  readOnly: true
+  server: nfs-auxtel.tu.lsst.org
+  serverPath: /auxtel/lsstdata/TTS/auxtel
+- name: comcam-data
   containerPath: /repo/LSSTComCam
   readOnly: false
   server: comcam-archiver.tu.lsst.org
   serverPath: /repo/LSSTComCam
+- name: comcam-gen3-data
+  containerPath: /data/lsstdata/TTS/comcam
+  readOnly: true
+  server: comcam-archiver.tu.lsst.org
+  serverPath: /lsstdata/TTS/comcam
 - name: project-shared
   containerPath: /project
   readOnly: false
