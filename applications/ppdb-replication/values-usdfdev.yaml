@@ -8,10 +8,10 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "label:pp-prod:lsstcomcamsim-or4"
+  apdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/apdb-dm46614-config.py"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-1.yaml"
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-2.yaml"
 
   # -- APDB index URI
   apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
