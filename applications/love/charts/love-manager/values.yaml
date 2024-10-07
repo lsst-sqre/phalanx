@@ -248,7 +248,7 @@ redis:
     # -- The redis image to use
     repository: redis
     # -- The tag to use for the redis image
-    tag: 7.4.0
+    tag: 7.4.1
     # -- The pull policy for the redis image
     pullPolicy: IfNotPresent
   envSecrets:
