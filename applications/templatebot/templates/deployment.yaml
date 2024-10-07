@@ -91,8 +91,10 @@ spec:
             - name: "kafka"
               mountPath: "/etc/kafkauser/user.key"
               subPath: "ssl.keystore.key" # private key for the consuming client
-            - name: "tmp"
+            - name: "kafka-certs-tmp"
               mountPath: "/tmp/kafka_certs"
+            - name: "tmp"
+              mountPath: "/tmp"
             - name: "repo-cache"
               mountPath: "/tmp/template_repo_cache"
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -133,6 +135,8 @@ spec:
           secret:
             secretName: "templatebot"
         - name: "tmp"
+          emptyDir: {}
+        - name: "kafka-certs-tmp"
           emptyDir: {}
         - name: "repo-cache"
           emptyDir: {}
