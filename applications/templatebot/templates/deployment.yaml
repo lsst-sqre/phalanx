@@ -66,6 +66,11 @@ spec:
                 secretKeyRef:
                   name: "templatebot"
                   key: "TEMPLATEBOT_GITHUB_APP_ID"
+            - name: "TEMPLATEBOT_GITHUB_APP_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_USERNAME"
             - name: "TEMPLATEBOT_GITHUB_APP_PRIVATE_KEY"
               valueFrom:
                 secretKeyRef:
