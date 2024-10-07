@@ -32,7 +32,6 @@ Alert transmission to community brokers
 | alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
 | alert-database.ingress.annotations | object | `{}` |  |
 | alert-database.ingress.enabled | bool | `true` | Whether to create an ingress |
-| alert-database.ingress.gafaelfawrAuthQuery | string | `"scope=read:alertdb"` | Query string for Gafaelfawr to authorize access |
 | alert-database.ingress.host | string | None, must be set if the ingress is enabled | Hostname for the ingress |
 | alert-database.ingress.path | string | `"/alertdb"` | Subpath to host the alert database application under the ingress |
 | alert-database.ingress.tls | list | `[]` | Configures TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
