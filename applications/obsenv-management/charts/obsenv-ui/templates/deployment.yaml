@@ -47,9 +47,6 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          # volumeMounts:
-          # - name: config-mount
-          #   mountPath: /app/.env.production
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -62,7 +59,3 @@ spec:
         runAsNonRoot: true
         runAsUser: 1001
         runAsGroup: 1001
-      # volumes:
-      # - name: config-mount
-      #   configMap:
-      #     name: obsenv-ui
