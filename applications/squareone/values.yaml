@@ -222,10 +222,10 @@ config:
 
         <a href="/portal/app/onlinehelp/">
           <Card>
-            ### Portal
+            ### Firefly
 
-            The Portal enables you to explore LSST image and table data in
-            your browser.
+            Help pages for Firefly, which enables exploration and visualization
+            of image and table data in the Portal Aspect.
           </Card>
         </a>
 
