@@ -6,9 +6,14 @@ metadata:
     {{- include "obsenv-ui.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  loginRedirect: true
   scopes:
     all:
       - "exec:internal-tools"
+  delegate:
+    internal:
+      service: "obsenv-api"
+      scopes: []
 template:
   metadata:
     name: "obsenv-ui"
