@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the gai-helpers deployment
-  repository: "ghcr.io/lsst-sqre/gai-helpers"
+  repository: "ghcr.io/gmegh/docuchat"
 
   # -- Pull policy for the gai-helpers image
   pullPolicy: "IfNotPresent"
@@ -69,6 +69,9 @@ weaviate:
   limits:
     cpu: '500m'
     memory: '300Mi'
+  authentication:
+    anonymous_access:
+      enabled: true
   env:
     AUTHENTICATION_APIKEY_ENABLED: 'true'
     AUTHENTICATION_APIKEY_USERS: 'admin'
