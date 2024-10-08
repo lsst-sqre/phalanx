@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the gai-helpers deployment
-  repository: "ghcr.io/gmegh/docuchat"
+  repository: "ghcr.io/gmegh/gai-helpers"
 
   # -- Pull policy for the gai-helpers image
   pullPolicy: "IfNotPresent"
