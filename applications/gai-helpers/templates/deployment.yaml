@@ -25,7 +25,7 @@ spec:
       {{- end }}
       containers:
         - name: gai-helpers
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:main"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
