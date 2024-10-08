@@ -27,4 +27,4 @@ template:
                 service:
                   name: "gai-helpers"
                   port:
-                    number: 8080
+                    number: 8501
