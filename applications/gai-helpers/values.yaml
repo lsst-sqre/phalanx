@@ -71,7 +71,7 @@ weaviate:
     memory: '300Mi'
   authentication:
     anonymous_access:
-      enabled: true
+      enabled: false
   env:
     AUTHENTICATION_APIKEY_ENABLED: 'true'
     AUTHENTICATION_APIKEY_USERS: 'admin'
