@@ -401,6 +401,13 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.GIS" ]
       debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
     lsstcam:
       enabled: true
       database: "efd"
