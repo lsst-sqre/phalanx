@@ -77,3 +77,5 @@ weaviate:
     AUTHENTICATION_APIKEY_USERS: 'admin'
   envSecrets:
     AUTHENTICATION_APIKEY_ALLOWED_KEYS: gai-helpers
+    CLUSTER_BASIC_AUTH_PASSWORD: gai-helpers
+    CLUSTER_BASIC_AUTH_USERNAME: gai-helpers
