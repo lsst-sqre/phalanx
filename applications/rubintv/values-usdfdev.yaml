@@ -24,11 +24,11 @@ rubintv:
   workers:
     replicas: 1
     image:
-      repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0037
+      repository: lsstts/rapid-analysis
+      tag: c0039_usdf
       pullPolicy: Always
-    uid: 73006
-    gid: 73006
+    uid: 15517
+    gid: 4085
     scriptsLocation: /repos/rubintv_analysis_service/scripts
     script: rubintv_worker.py -a rubintv -p 8080 -l usdf
     env:
