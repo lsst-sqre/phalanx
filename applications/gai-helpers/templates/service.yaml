@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "gai-helpers"
+  labels:
+    {{- include "gai-helpers.labels" . | nindent 4 }}
+spec:
+  type: "ClusterIP"
+  ports:
+    - port: 8080
+      targetPort: "http"
+      protocol: "TCP"
+  selector:
+    {{- include "gai-helpers.selectorLabels" . | nindent 4 }}
