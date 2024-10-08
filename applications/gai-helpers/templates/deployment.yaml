@@ -11,7 +11,7 @@ spec:
       {{- include "gai-helpers.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.frontend.podAnnotations }}
+      {{- with .Values.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
@@ -24,9 +24,9 @@ spec:
       {{ toYaml . | nindent 8 }}
       {{- end }}
       containers:
-        - name: frontend
-          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.frontend.image.pullPolicy | quote }}
+        - name: gai-helpers
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
             - name: "http"
               containerPort: 8080
@@ -36,7 +36,7 @@ spec:
               path: "/"
               port: "http"
             timeoutSeconds: 10
-          {{- with .Values.frontend.resources }}
+          {{- with .Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
@@ -57,15 +57,15 @@ spec:
         - name: {{ $.Release.Name }}-secrets
           secret:
             secretName: gai-helpers-secrets
-      {{- with .Values.frontend.nodeSelector }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.frontend.tolerations }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
