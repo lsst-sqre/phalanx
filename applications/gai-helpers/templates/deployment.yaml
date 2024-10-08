@@ -47,16 +47,16 @@ spec:
                 - ALL
             readOnlyRootFilesystem: false
           volumeMounts:
-            - name: {{ $.Release.Name }}-secrets
+            - name: {{ $.Release.Name }}
               mountPath: "/etc/secrets"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
       volumes:
-        - name: {{ $.Release.Name }}-secrets
+        - name: {{ $.Release.Name }}
           secret:
-            secretName: gai-helpers-secrets
+            secretName: gai-helpers
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
