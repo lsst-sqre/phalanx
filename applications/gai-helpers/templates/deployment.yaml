@@ -25,6 +25,27 @@ spec:
       {{- end }}
       containers:
         - name: gai-helpers
+          env:
+          - name: WEAVIATE_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: gai-helpers
+                key: "AUTHENTICATION_APIKEY_ALLOWED_KEYS"
+          - name: OPENAI_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: gai-helpers
+                key: "OPENAI_API_KEY"
+          - name: GRPC_HOST
+            valueFrom:
+              secretKeyRef:
+                name: gai-helpers
+                key: "GRPC_HOST"
+          - name: HTTP_HOST
+            valueFrom:
+              secretKeyRef:
+                name: gai-helpers
+                key: "HTTP_HOST"          
           image: "{{ .Values.image.repository }}:main"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
