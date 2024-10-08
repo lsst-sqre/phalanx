@@ -10,7 +10,7 @@ image:
   repository: "ghcr.io/gmegh/gai-helpers"
 
   # -- Pull policy for the gai-helpers image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
