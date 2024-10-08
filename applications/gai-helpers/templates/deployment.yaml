@@ -34,7 +34,7 @@ spec:
           readinessProbe:
             httpGet:
               path: "/gai-helpers"
-              port: "8501"
+              port: 8501
             timeoutSeconds: 10
           {{- with .Values.resources }}
           resources:
