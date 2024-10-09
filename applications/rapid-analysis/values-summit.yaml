@@ -435,6 +435,11 @@ nfsMountpoint:
   readOnly: false
   server: nfs3.cp.lsst.org
   serverPath: /lsstcam/repo/LSSTCam
+- name: lsstcam-gen3-data
+  containerPath: /data/lsstdata/base/maintel
+  readOnly: true
+  server: nfs3.cp.lsst.org
+  serverPath: /lsstcam/lsstdata/base/maintel
 - name: allsky-data
   containerPath: /data/allsky
   readOnly: true
