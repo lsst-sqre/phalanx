@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: siav2-uws-configmap
-  labels:
-    {{- include "siav2.labels" . | nindent 4 }}
-data:
-  uws-schema-create.sql: |
-    CREATE SCHEMA uws;

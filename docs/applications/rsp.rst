@@ -20,7 +20,6 @@ Argo CD project: ``rsp``
    portal/index
    ppdb-replication/index
    semaphore/index
-   siav2/index
    sqlproxy-cross-project/index
    squareone/index
    ssotap/index
