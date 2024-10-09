@@ -49,6 +49,8 @@ strimzi-kafka:
       enabled: true
     kafkaConnectManager:
       enabled: true
+    consdb:
+      enabled: true
   registry:
     ingress:
       enabled: true
