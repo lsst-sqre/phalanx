@@ -143,6 +143,7 @@ telegraf-kafka-consumer:
     # CSC connectors
     maintel:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -150,6 +151,7 @@ telegraf-kafka-consumer:
       debug: true
     mtmount:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -157,6 +159,7 @@ telegraf-kafka-consumer:
       debug: true
     comcam:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -164,6 +167,7 @@ telegraf-kafka-consumer:
       debug: true
     eas:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -171,6 +175,7 @@ telegraf-kafka-consumer:
       debug: true
     m1m3:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -178,6 +183,7 @@ telegraf-kafka-consumer:
       debug: true
     m2:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -185,6 +191,7 @@ telegraf-kafka-consumer:
       debug: true
     obssys:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -192,6 +199,7 @@ telegraf-kafka-consumer:
       debug: true
     ocps:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -199,6 +207,7 @@ telegraf-kafka-consumer:
       debug: true
     pmd:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -206,6 +215,7 @@ telegraf-kafka-consumer:
       debug: true
     calsys:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -213,6 +223,7 @@ telegraf-kafka-consumer:
       debug: true
     mtaircompressor:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -220,6 +231,7 @@ telegraf-kafka-consumer:
       debug: true
     genericcamera:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -227,6 +239,7 @@ telegraf-kafka-consumer:
       debug: true
     gis:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -234,6 +247,7 @@ telegraf-kafka-consumer:
       debug: true
     mtvms:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -241,6 +255,7 @@ telegraf-kafka-consumer:
       debug: true
     lsstcam:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -248,6 +263,7 @@ telegraf-kafka-consumer:
       debug: true
     auxtel:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -255,6 +271,7 @@ telegraf-kafka-consumer:
       debug: true
     latiss:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -262,6 +279,7 @@ telegraf-kafka-consumer:
       debug: true
     test:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
@@ -269,6 +287,7 @@ telegraf-kafka-consumer:
       debug: true
     lasertracker:
       enabled: true
+      repair: false
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |

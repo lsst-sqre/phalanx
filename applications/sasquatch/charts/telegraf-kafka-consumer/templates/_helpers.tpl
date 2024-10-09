@@ -66,6 +66,36 @@ data:
       max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
       compression_codec = {{ default 3 .value.compression_codec }}
 
+    {{- if .value.repair }}
+    [[inputs.kafka_consumer]]
+      brokers = [
+        "sasquatch-kafka-brokers.sasquatch:9092"
+      ]
+      consumer_group = "telegraf-kafka-consumer-{{ .key }}-repairer"
+      sasl_mechanism = "SCRAM-SHA-512"
+      sasl_password = "$TELEGRAF_PASSWORD"
+      sasl_username = "telegraf"
+      data_format = "avro"
+      avro_schema_registry = "http://sasquatch-schema-registry.sasquatch:8081"
+      avro_timestamp = {{ default "private_efdStamp" .value.timestamp_field | quote }}
+      avro_timestamp_format = {{ default "unix" .value.timestamp_format | quote }}
+      avro_union_mode = {{ default "nullable" .value.union_mode | quote }}
+      avro_field_separator = {{ default "" .value.union_field_separator | quote }}
+      {{- if .value.fields }}
+      avro_fields = {{ .value.fields }}
+      {{- end }}
+      {{- if .value.tags }}
+      avro_tags = {{ .value.tags }}
+      {{- end }}
+      topic_regexps = {{ .value.topicRegexps }}
+      offset = "oldest"
+      precision = {{ default "1us" .value.precision | quote }}
+      max_processing_time = {{ default "5s" .value.max_processing_time | quote }}
+      consumer_fetch_default = {{ default "20MB" .value.consumer_fetch_default | quote }}
+      max_undelivered_messages = {{ default 10000 .value.max_undelivered_messages }}
+      compression_codec = {{ default 3 .value.compression_codec }}
+    {{- end }}
+
     [[inputs.internal]]
       name_prefix = "telegraf_"
       collect_memstats = true
