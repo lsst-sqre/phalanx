@@ -33,6 +33,14 @@ data:
             records:
               table: raw_datastore_records
         - datastore:
+            # Also for historical reasons, some files that originated in DP01
+            # are kept in a separate bucket.
+            name: FileDatastore@s3://butler-us-central1-dp01-desc-dr6
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://butler-us-central1-dp01-desc-dr6/
+            records:
+              table: dp01_datastore_records
+        - datastore:
             name: FileDatastore@s3://butler-us-central1-dp02-user
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
             root: s3://butler-us-central1-dp02-user/
