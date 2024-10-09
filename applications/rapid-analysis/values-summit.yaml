@@ -276,20 +276,24 @@ scripts:
 - name: summit/LSSTCam/runButlerWatcher.py
   mounts:
   - lsstcam-data
+  - lsstcam-gen3-data
   - project-shared
 - name: summit/LSSTCam/runHeadNode.py
   mounts:
   - lsstcam-data
+  - lsstcam-gen3-data
   - project-shared
 - name: summit/LSSTCam/runMetadataServer.py
   mounts:
   - lsstcam-data
+  - lsstcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
+  - lsstcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
@@ -390,6 +394,7 @@ lsstcamWorkerSet:
   name: summit/LSSTCam/runSfmRunner.py
   mounts:
   - lsstcam-data
+  - lsstcam-gen3-data
   - project-shared
   replicas: 1
   resources:
@@ -435,6 +440,11 @@ nfsMountpoint:
   readOnly: false
   server: nfs3.cp.lsst.org
   serverPath: /lsstcam/repo/LSSTCam
+- name: lsstcam-gen3-data
+  containerPath: /data/lsstdata/base/maintel
+  readOnly: true
+  server: nfs3.cp.lsst.org
+  serverPath: /lsstcam/lsstdata/base/maintel
 - name: allsky-data
   containerPath: /data/allsky
   readOnly: true
