@@ -5,10 +5,10 @@ enabled: false
 
 image:
   # -- Telegraf image repository
-  repo: "docker.io/lsstsqre/telegraf"
+  repo: "docker.io/library/telegraf"
 
   # -- Telegraf image tag
-  tag: "avro-mutex"
+  tag: "1.32.1-alpine"
 
   # -- Image pull policy
   pullPolicy: "IfNotPresent"
