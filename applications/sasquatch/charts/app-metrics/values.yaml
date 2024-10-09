@@ -5,7 +5,12 @@
 # overridden.
 # See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration)
 # for the structure of this value.
-globalAppConfig: {}
+#
+# @default -- See `values.yaml`
+globalAppConfig:
+  mobu:
+    influxTags:
+      - "type"
 
 # -- A list of applications that will publish metrics events, and the keys that should be ingested into InfluxDB as tags.
 # The names should be the same as the app names in Phalanx.
