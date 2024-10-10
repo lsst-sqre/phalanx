@@ -17,6 +17,12 @@ data:
             reject:
               - all
         - constraints:
+            reject:
+              - all
+        - constraints:
+            reject:
+              - all
+        - constraints:
             accept:
               - all
       datastores:
@@ -24,6 +30,22 @@ data:
             name: FileDatastore@s3://butler-us-central1-panda-dev/dc2
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
             root: s3://butler-us-central1-panda-dev/dc2
+        - datastore:
+            # Datasets of type 'raw' are stored in a separate bucket for
+            # historical reasons.
+            name: FileDatastore@s3://curation-us-central1-desc-dc2-run22i
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://curation-us-central1-desc-dc2-run22i/
+            records:
+              table: raw_datastore_records
+        - datastore:
+            # Also for historical reasons, some files that originated in DP01
+            # are kept in a separate bucket.
+            name: FileDatastore@s3://butler-us-central1-dp01-desc-dr6
+            cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
+            root: s3://butler-us-central1-dp01-desc-dr6/
+            records:
+              table: dp01_datastore_records
         - datastore:
             name: FileDatastore@s3://butler-us-central1-dp02-user
             cls: lsst.daf.butler.datastores.fileDatastore.FileDatastore
