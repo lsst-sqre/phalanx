@@ -8,15 +8,15 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "main"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "main"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "main"
 pq:
   image:
     tag: "main"
