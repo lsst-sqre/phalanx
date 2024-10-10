@@ -30,10 +30,6 @@ db:
   # -- database name
   database: exposurelog
 
-ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: ""
-
 # -- Application-specific configuration
 config:
   # -- NFS path to butler registry 1

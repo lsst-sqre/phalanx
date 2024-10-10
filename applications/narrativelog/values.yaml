@@ -30,10 +30,6 @@ db:
   # -- database name
   database: narrativelog
 
-ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: ""
-
 # -- Application-specific configuration
 config:
   # -- Site ID; a non-empty string of up to 16 characters.
