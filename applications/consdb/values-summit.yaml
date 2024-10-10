@@ -1,5 +1,6 @@
 db:
   user: "oods"
+  passwordkey: "oods-password"
   host: "postgresdb01.cp.lsst.org"
   database: "exposurelog"
 lfa:

@@ -2,7 +2,7 @@
 
 Consolidated Database of Image Metadata
 
-**Homepage:** <consdb.lsst.io>
+**Homepage:** <https://consdb.lsst.io/>
 
 ## Source Code
 

@@ -1,5 +1,6 @@
 db:
   user: "usdf"
+  passwordkey: "oods-password"
   host: "usdf-summitdb.slac.stanford.edu"
   database: "exposurelog"
 hinfo:
