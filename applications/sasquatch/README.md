@@ -366,7 +366,7 @@ Rubin Observatory's telemetry service
 | strimzi-kafka.connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | strimzi-kafka.cruiseControl | object | `{"enabled":false}` | Configuration for the Kafka Cruise Control |
 | strimzi-kafka.kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
-| strimzi-kafka.kafka.config."log.retention.hours" | int | `48` | Number of days for a topic's data to be retained |
+| strimzi-kafka.kafka.config."log.retention.minutes" | int | `2880` | Number of days for a topic's data to be retained |
 | strimzi-kafka.kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
 | strimzi-kafka.kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained |
 | strimzi-kafka.kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |

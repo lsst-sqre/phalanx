@@ -32,7 +32,7 @@ kafka:
     offsets.retention.minutes: 2880
 
     # -- Number of days for a topic's data to be retained
-    log.retention.hours: 48
+    log.retention.minutes: 2880
 
     # -- The largest record batch size allowed by Kafka
     message.max.bytes: 10485760
