@@ -17,6 +17,13 @@ hinfo:
   lsstcam:
     enable: false
     tag: "main"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 80Gi
+    limits:
+      cpu: 500m
+      memory: 80Gi
 pq:
   image:
     tag: "main"
