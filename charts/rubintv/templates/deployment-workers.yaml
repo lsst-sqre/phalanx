@@ -88,6 +88,9 @@ spec:
         {{- range $vol := .Values.workers.volumes }}
         - name: {{ $vol.name }}
           mountPath: {{ $vol.mountPath }}
+          {{- if ($vol.subPath) }}
+          subPath: {{ $vol.subPath }}
+          {{- end }}
         {{- end }}
       initContainers:
       - name: "secret-perm-fixer"
