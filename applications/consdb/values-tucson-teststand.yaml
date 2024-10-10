@@ -10,34 +10,22 @@ hinfo:
     enable: true
     tag: "main"
     logConfig: "consdb.hinfo=DEBUG"
-    resources:
-      requests:
-        cpu: 200m
-        memory: 80Gi
-      limits:
-        cpu: 500m
-        memory: 80Gi
   lsstcomcam:
     enable: true
     tag: "main"
     logConfig: "consdb.hinfo=DEBUG"
-    resources:
-      requests:
-        cpu: 200m
-        memory: 80Gi
-      limits:
-        cpu: 500m
-        memory: 80Gi
   lsstcam:
     enable: false
     tag: "main"
-    resources:
-      requests:
-        cpu: 200m
-        memory: 80Gi
-      limits:
-        cpu: 500m
-        memory: 80Gi
+
 pq:
   image:
     tag: "main"
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 80Gi
+  limits:
+    cpu: 500m
+    memory: 80Gi
