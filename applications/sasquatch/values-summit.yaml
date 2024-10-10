@@ -1,5 +1,8 @@
 strimzi-kafka:
   kafka:
+    config:
+      log.retention.minutes: 10080
+      offsets.retention.minutes: 10080
     storage:
       storageClassName: rook-ceph-block
     externalListener:
