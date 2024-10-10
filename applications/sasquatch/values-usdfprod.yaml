@@ -1,13 +1,5 @@
 strimzi-kafka:
   kafka:
-    minInsyncReplicas: 1
-    listeners:
-      tls:
-        enabled: true
-      plain:
-        enabled: true
-      external:
-        enabled: true
     config:
       # -- Replica lag time can't be smaller than request.timeout.ms configuration in kafka connect.
       replica.lag.time.max.ms: 120000
