@@ -34,10 +34,6 @@ kafka:
     # -- Number of days for a topic's data to be retained
     log.retention.hours: 48
 
-    # -- How much disk space Kafka will ensure is available, set to 70% of the
-    # data partition size
-    log.retention.bytes: "350000000000"
-
     # -- The largest record batch size allowed by Kafka
     message.max.bytes: 10485760
 
