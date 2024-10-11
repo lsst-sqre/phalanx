@@ -36,6 +36,9 @@ spec:
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: "tmp"
+            - mountPath: "/tmp"
           env:
             - name: "INSTRUMENT"
               value: "LATISS"
@@ -79,9 +82,6 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
-        - volumeMounts:
-          mountPath: "/tmp"
-          name: "tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
@@ -137,6 +137,9 @@ spec:
                 - "all"
             readOnlyRootFilesystem: true
           image: "{{ .Values.hinfo.image.repository }}:{{ .Values.hinfo.lsstcomcam.tag | default .Chart.AppVersion }}"
+          volumeMounts:
+            - name: "tmp"
+            - mountPath: "/tmp"
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -183,9 +186,6 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
-        - volumeMounts:
-          mountPath: "/tmp"
-          name: "tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
@@ -244,6 +244,9 @@ spec:
           imagePullPolicy: {{ .Values.hinfo.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: "tmp"
+            - mountPath: "/tmp"
           env:
             - name: "INSTRUMENT"
               value: "LSSTCam"
@@ -287,9 +290,6 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
-        - volumeMounts:
-          mountPath: "/tmp"
-          name: "tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
