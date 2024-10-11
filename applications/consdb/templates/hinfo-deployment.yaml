@@ -79,12 +79,12 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+        - volumeMounts:
+          - name: "tmp"
+            mountPath: "/tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
-      volumeMounts:
-        - name: "tmp"
-          mountPath: "/tmp"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -183,12 +183,12 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+        - volumeMounts:
+          - name: "tmp"
+            mountPath: "/tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
-      volumeMounts:
-        - name: "tmp"
-          mountPath: "/tmp"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -287,12 +287,12 @@ spec:
               value: "{{ .Values.kafka.group_id }}"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
+        - volumeMounts:
+          - name: "tmp"
+            mountPath: "/tmp"
       volumes:
         - name: "tmp"
           emptyDir: {}
-      volumeMounts:
-        - name: "tmp"
-          mountPath: "/tmp"
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
