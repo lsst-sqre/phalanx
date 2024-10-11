@@ -81,8 +81,7 @@ spec:
               value: "{{ .Values.kafka.schema_url }}"
       volumes:
         - name: "tmp"
-          emptyDir:
-            sizeLimit: 100Mi
+          emptyDir: {}
       volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
@@ -186,8 +185,7 @@ spec:
               value: "{{ .Values.kafka.schema_url }}"
       volumes:
         - name: "tmp"
-          emptyDir:
-            sizeLimit: 100Mi
+          emptyDir: {}
       volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
@@ -291,8 +289,7 @@ spec:
               value: "{{ .Values.kafka.schema_url }}"
       volumes:
         - name: "tmp"
-          emptyDir:
-            sizeLimit: 100Mi
+          emptyDir: {}
       volumeMounts:
         - name: "tmp"
           mountPath: "/tmp"
