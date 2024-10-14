@@ -82,8 +82,12 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            - name: ".astropy"
+              mountPath: "/home/lsst/.astropy"
       volumes:
         - name: "tmp"
+          emptyDir: {}
+        - name: ".astropy"
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
@@ -186,8 +190,12 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            - name: ".astropy"
+              mountPath: "/home/lsst/.astropy"
       volumes:
         - name: "tmp"
+          emptyDir: {}
+        - name: ".astropy"
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
@@ -290,8 +298,12 @@ spec:
           volumeMounts:
             - name: "tmp"
               mountPath: "/tmp"
+            - name: ".astropy"
+              mountPath: "/home/lsst/.astropy"
       volumes:
         - name: "tmp"
+          emptyDir: {}
+        - name: ".astropy"
           emptyDir: {}
       securityContext:
         runAsNonRoot: true
