@@ -61,6 +61,8 @@ spec:
                 secretKeyRef:
                   key: kafka_pp_sasl_password
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
+            - name: SUPPORTED_INSTRUMENTS
+              value: {{ .Values.instruments }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
 
