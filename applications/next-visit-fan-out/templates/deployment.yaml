@@ -23,16 +23,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: LATISS_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.latissUrl }}
-            - name: HSC_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.hscUrl }}
-            - name: LSSTCOMCAM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcomcamUrl }}
-            - name: LSSTCOMCAMSIM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcomcamsimUrl }}
-            - name: LSSTCAM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcamUrl }}
             - name: KAFKA_SCHEMA_REGISTRY_URL
               value: {{ .Values.kafka.schemaRegistryUrl }}
             - name: KAFKA_CLUSTER
