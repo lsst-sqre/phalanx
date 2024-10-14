@@ -104,11 +104,11 @@ rubintv:
     imagePullSecrets: []
     # Each entry is of the form: { name: pull-secret-name }
 
-    # -- Volumes for the rubintv worker pods
+    # -- PVC claims for the rubintv worker pods
     # @default -- See `values.yaml`
-    volumes: []
+    pvcMountpoint: []
     # Each list item must have the following form:
-    # { name: volume-name,
+    # { name: pvc-name,
     #   accessMode: one of "ReadOnly", "ReadWriteOnce", "ReadWriteMany",
     #   mountPath: path-mounted-in-container,
     #   persistentVolumeClaim: {
@@ -117,8 +117,17 @@ rubintv:
     #     capacity: size-as-string-of-pvc (e.g. "1Gi")
     #   }
     # }
-    # It is planned to implement "nfs" as an alternative to
-    # "PersistentVolumeClaim" but that has not yet been done.
+
+    # -- NFS mountpoints for the rubintv worker pods
+    # @default -- See `values.yaml`
+    nfsMountpoint: []
+    # Each list item must have the following form:
+    # { name: nfs-name,
+    #   containerPath: path-mounted-in-container,
+    #   readOnly: boolean,
+    #   server: nfs-server,
+    #   serverPath: nfs-server-path
+    # }
 
     # -- Resource limits and requests for the rubintv worker pods
     resources: {}

@@ -85,12 +85,17 @@ spec:
         volumeMounts:
         - name: "user-secrets"
           mountPath: "/etc/secrets"
-        {{- range $vol := .Values.workers.volumes }}
+        {{- range $vol := .Values.workers.pvcMountpoint }}
         - name: {{ $vol.name }}
           mountPath: {{ $vol.mountPath }}
           {{- if ($vol.subPath) }}
           subPath: {{ $vol.subPath }}
           {{- end }}
+        {{- end }}
+        {{- range $vol := .Values.workers.nfsMountpoint }}
+        - name: {{ $vol.name }}
+          mountPath: {{ $vol.containerPath }}
+          readOnly: {{ $vol.readOnly }}
         {{- end }}
       initContainers:
       - name: "secret-perm-fixer"
@@ -126,12 +131,19 @@ spec:
 {{- end }}
       - name: "user-secrets"
         emptyDir: {}
-      {{- range $vol := .Values.workers.volumes }}
+      {{- range $vol := .Values.workers.pvcMountpoint }}
       - name: {{ $vol.name | quote }}
         {{ with $vol.persistentVolumeClaim }}
         persistentVolumeClaim:
           claimName: {{ .name | quote }}
         {{- end }}
+      {{- end }}
+      {{- range $vol := .Values.workers.nfsMountpoint }}
+      - name: {{ $vol.name | quote }}
+        nfs:
+          path: {{ $vol.serverPath }}
+          readOnly: {{ $vol.readOnly }}
+          server: {{ $vol.server }}
       {{- end }}
       securityContext:
         runAsNonRoot: true
