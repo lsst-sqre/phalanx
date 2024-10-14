@@ -53,13 +53,14 @@ Real-time display front end
 | workers.image.repository | string | `"ts-dockerhub.lsst.org/rubintv-broadcaster"` | The Docker registry name for the container image. |
 | workers.image.tag | string | `"develop"` | The tag of the container image to use. |
 | workers.imagePullSecrets | list | See `values.yaml` | Image pull secrets. |
+| workers.nfsMountpoint | list | See `values.yaml` | NFS mountpoints for the rubintv worker pods |
 | workers.nodeSelector | object | `{}` | Node selector rules for the rubintv worker pods |
 | workers.pathPrefix | string | `"/"` | Prefix for the (internal) worker API routes |
 | workers.podAnnotations | object | `{}` | Annotations for the rubintv worker pods |
+| workers.pvcMountpoint | list | See `values.yaml` | PVC claims for the rubintv worker pods |
 | workers.replicas | int | `0` | how many replicas to use |
 | workers.resources | object | `{}` | Resource limits and requests for the rubintv worker pods |
 | workers.script | string | `"slac/rubintv/workerPod1.py"` | Script that runs in RUN_ARG.  This dynamic mechanism needs to be replaced with something less scary, but there is resistance to that, at least while iterating. |
 | workers.scriptsLocation | string | `"/repos/rubintv_production/scripts"` | The location of the scripts folder where the worker pod will run specific scripts, set by RUN_ARG. |
 | workers.tolerations | list | `[]` | Tolerations for the rubintv worker pods |
 | workers.uid | string | `nil` | UID to run as (site-dependent because of filesystem access; must be specified) |
-| workers.volumes | list | See `values.yaml` | Volumes for the rubintv worker pods |

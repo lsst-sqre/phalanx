@@ -27,7 +27,7 @@ rubintv:
       repository: lsstts/rapid-analysis
       tag: c0039_usdf
       pullPolicy: Always
-    uid: 15517
+    uid: 17951
     gid: 4085
     scriptsLocation: /repos/rubintv_analysis_service/scripts
     script: rubintv_worker.py -a rubintv -p 8080 -l usdf
@@ -40,7 +40,7 @@ rubintv:
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
-    volumes:
+    pvcMountpoint:
     - name: sdf-group-rubin
       persistentVolumeClaim:
         name: sdf-group-rubin
@@ -61,7 +61,7 @@ rubintv:
         storageClassName: sdf-data-rubin
         capacity: 1Gi
       accessMode: ReadWriteMany
-      mountPath: /etc/test
+      mountPath: /var/ddv-config
       subPath: shared/rubintv-ddv-config
     resources:
       limits:
