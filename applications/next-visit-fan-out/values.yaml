@@ -1,9 +1,11 @@
-knative:
-  hscUrl: http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit
-  latissUrl: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
-  lsstcomcamUrl: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
-  lsstcomcamsimUrl: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
-  lsstcamUrl: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
+# -- A mapping of instrument to that instrument's Knative service.
+# @default -- See `values.yaml`.
+knativeUrls:
+  HSC: http://prompt-proto-service-hsc.prompt-proto-service-hsc/next-visit
+  LATISS: http://prompt-proto-service-latiss.prompt-proto-service-latiss/next-visit
+  LSSTComCam: http://prompt-proto-service-lsstcomcam.prompt-proto-service-lsstcomcam/next-visit
+  LSSTComCamSim: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
+  LSSTCam: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
 
 kafka:
   offset: latest

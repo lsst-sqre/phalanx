@@ -5,5 +5,7 @@ metadata:
   name: instrument-map
 data:
   instruments: |
+    knative-urls:
+      {{- .Values.knativeUrls | toYaml | nindent 6 }}
     detectors:
       {{- .Values.detectorConfig | toYaml | nindent 6 }}
