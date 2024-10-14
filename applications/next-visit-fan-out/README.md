@@ -8,7 +8,6 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the next-visit-fan-out deployment pod |
 | detectorConfig | object | See `values.yaml`. | A mapping, for each instrument, of detector number to whether that detector is "active" (i.e., producing images). |
-| detectorConfigFile | string | `"/etc/config/detector.yaml"` |  |
 | fullnameOverride | string | `""` |  |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
