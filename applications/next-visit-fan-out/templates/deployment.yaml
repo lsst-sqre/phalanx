@@ -33,8 +33,6 @@ spec:
               value: {{ .Values.knative.lsstcomcamsimUrl }}
             - name: LSSTCAM_KNATIVE_SERVING_URL
               value: {{ .Values.knative.lsstcamUrl }}
-            - name: DETECTOR_CONFIG_FILE
-              value: {{ .Values.detectorConfigFile }}
             - name: KAFKA_SCHEMA_REGISTRY_URL
               value: {{ .Values.kafka.schemaRegistryUrl }}
             - name: KAFKA_CLUSTER
@@ -63,11 +61,13 @@ spec:
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: SUPPORTED_INSTRUMENTS
               value: {{ .Values.instruments }}
+            - name: DETECTOR_CONFIG_FILE
+              value: /etc/config/detector.yaml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
           - name: detector-config
-            mountPath: {{ .Values.detectorConfigFile | dir }}
+            mountPath: /etc/config
             readOnly: true
 
       volumes:
@@ -79,4 +79,4 @@ spec:
             name: detector-map
             items:
             - key: "detectors.status"
-              path: {{ .Values.detectorConfigFile | base }}
+              path: detector.yaml

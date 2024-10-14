@@ -5,8 +5,6 @@ knative:
   lsstcomcamsimUrl: http://prompt-proto-service-lsstcomcamsim.prompt-proto-service-lsstcomcamsim/next-visit
   lsstcamUrl: http://prompt-proto-service-lsstcam.prompt-proto-service-lsstcam/next-visit
 
-detectorConfigFile: /etc/config/detector.yaml
-
 kafka:
   offset: latest
   saslMechamism: SCRAM-SHA-512
