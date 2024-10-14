@@ -8,37 +8,153 @@ env:
 siteTag: tts
 location: TTS
 scripts:
+###
+### AuxTel pods
+###
 - name: summit/auxTel/runBackgroundService.py
-- name: summit/auxTel/runButlerWatcher.py
-- name: summit/auxTel/runCalibrateCcdRunner.py
-- name: summit/auxTel/runImExaminer.py
-- name: summit/auxTel/runIsrRunner.py
-- name: summit/auxTel/runMetadataCreator.py
-- name: summit/auxTel/runMetadataServer.py
-- name: summit/auxTel/runMonitor.py
-- name: summit/auxTel/runMountTorquePlotter.py
-- name: summit/auxTel/runNightReporter.py
-- name: summit/auxTel/runSpecExaminer.py
-- name: summit/comCam/runButlerWatcher.py
-- name: summit/comCam/runIsrRunner_000.py
-- name: summit/comCam/runIsrRunner_001.py
-- name: summit/comCam/runIsrRunner_002.py
-- name: summit/comCam/runIsrRunner_003.py
-- name: summit/comCam/runIsrRunner_004.py
-- name: summit/comCam/runIsrRunner_005.py
-- name: summit/comCam/runIsrRunner_006.py
-- name: summit/comCam/runIsrRunner_007.py
-- name: summit/comCam/runIsrRunner_008.py
-- name: summit/comCam/runMetadataServer.py
-- name: summit/comCam/runPlotter.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
   resources:
     requests:
       cpu: 0.5
       memory: 4G
     limits:
       cpu: 1.0
-      memory: 6G
-- name: summit/misc/runTmaTelemetry.py
+      memory: 10G
+- name: summit/auxTel/runButlerWatcher.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runCalibrateCcdRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runImExaminer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runIsrRunner.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMetadataCreator.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMetadataServer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runMonitor.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 1G
+    limits:
+      cpu: 1.0
+      memory: 10G
+- name: summit/auxTel/runMountTorquePlotter.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runNightReporter.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+- name: summit/auxTel/runSpecExaminer.py
+  mounts:
+  - auxtel-data
+  - auxtel-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 2G
+    limits:
+      cpu: 1.0
+      memory: 4G
+###
+### ComCam pods
+###
+- name: summit/LSSTComCam/runButlerWatcher.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+- name: summit/LSSTComCam/runHeadNode.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+- name: summit/LSSTComCam/runMetadataServer.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+- name: summit/LSSTComCam/runPlotter.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+###
+### ComCam StatefulSets
+###
+comcamWorkerSet:
+  name: summit/LSSTComCam/runSfmRunner.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamGather2aSet:
+  name: summit/LSSTComCam/runStep2aWorker.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+comcamGatherRollupSet:
+  name: summit/LSSTComCam/runNightlyWorker.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
 # TODO: remove google credentials
 credentialFile: google_write_creds
 vaultPrefixPath: secret/k8s_operator/tucson-teststand.lsst.codes
@@ -53,46 +169,31 @@ butlerSecret:
 imagePullSecrets:
 - name: pull-secret
 nfsMountpoint:
-- name: auxtel-gen3-data
+- name: auxtel-data
   containerPath: /repo/LATISS
   readOnly: false
   server: nfs-auxtel.tu.lsst.org
   serverPath: /auxtel/repo/LATISS
-- name: comcam-gen3-data
+- name: auxtel-gen3-data
+  containerPath: /data/lsstdata/TTS/auxtel
+  readOnly: true
+  server: nfs-auxtel.tu.lsst.org
+  serverPath: /auxtel/lsstdata/TTS/auxtel
+- name: comcam-data
   containerPath: /repo/LSSTComCam
   readOnly: false
   server: comcam-archiver.tu.lsst.org
   serverPath: /repo/LSSTComCam
-- name: auxtel-data
-  containerPath: /readonly/lsstdata/auxtel
-  readOnly: true
-  server: nfs-auxtel.tu.lsst.org
-  serverPath: /auxtel/lsstdata
-- name: comcam-data
-  containerPath: /readonly/lsstdata/comcam
+- name: comcam-gen3-data
+  containerPath: /data/lsstdata/TTS/comcam
   readOnly: true
   server: comcam-archiver.tu.lsst.org
-  serverPath: /lsstdata
+  serverPath: /lsstdata/TTS/comcam
 - name: project-shared
   containerPath: /project
   readOnly: false
   server: nfs-project.tu.lsst.org
   serverPath: /project
-- name: auxtel-gen3-data-temp
-  containerPath: /data/lsstdata/TTS/auxtel
-  readOnly: true
-  server: nfs-auxtel.tu.lsst.org
-  serverPath: /auxtel/lsstdata/TTS/auxtel
-- name: comcam-gen3-data-temp
-  containerPath: /data/lsstdata/TTS/comcam
-  readOnly: true
-  server: comcam-archiver.tu.lsst.org
-  serverPath: /lsstdata/TTS/comcam
-- name: scratch-shared
-  containerPath: /scratch
-  readOnly: false
-  server: nfs-scratch.tu.lsst.org
-  serverPath: /scratch/rubintv
 resources:
   requests:
     cpu: 0.5

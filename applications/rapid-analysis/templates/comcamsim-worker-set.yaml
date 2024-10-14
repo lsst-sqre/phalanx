@@ -1,10 +1,11 @@
-{{ range $script := .Values.scripts }}
-{{ $_ := set $.Values "script" $script }}
+{{ $_ := set $.Values "script" $.Values.comcamsimWorkerSet }}
+{{ $script := $.Values.comcamsimWorkerSet }}
+{{- if $script.name }}
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
-  name: {{ include "rapid-analysis.deploymentName" $ }}
+  name: {{ include "rapid-analysis.deploymentName" $ }}-workerset
   namespace: {{ $.Values.namespace }}
   labels:
     {{- include "rapid-analysis.labels" $ | nindent 4 }}
@@ -13,17 +14,13 @@ spec:
   selector:
     matchLabels:
       {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
+  replicas: {{ ($script.replicas | int) }}
+  podManagementPolicy: Parallel
   template:
     metadata:
-      {{- if or $.Values.podAnnotations $script.podAnnotations }}
-      {{- $podAnnotations := "" }}
-      {{- if $script.podAnnotations }}
-      {{- $podAnnotations = $script.podAnnotations }}
-      {{- else }}
-      {{- $podAnnotations = $.Values.podAnnotations }}
-      {{- end }}
+      {{- with $.Values.podAnnotations }}
       annotations:
-        {{- toYaml $podAnnotations | nindent 8 }}
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
@@ -50,7 +47,11 @@ spec:
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           env:
             - name: RUN_ARG
-              value: {{ $script.name }} {{ $.Values.siteTag }}
+              value: {{ $script.name }}
+            - name: WORKER_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['statefulset.kubernetes.io/pod-name']
             - name: RAPID_ANALYSIS_LOCATION
               value: {{ $.Values.location | upper | quote }}
           {{- if or $.Values.env $.Values.envSecrets }}
@@ -150,7 +151,7 @@ spec:
               cp -RL /secrets-raw/* /secrets
               cat /secrets/aws-credentials.ini > new-aws-credentials.ini
               printf "\n" >> new-aws-credentials.ini
-              cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
+              cat /secrets-rubintv/aws-credentials.ini >> new-aws-credentials.ini
               printf "\n" >> new-aws-credentials.ini
               mv new-aws-credentials.ini /secrets/aws-credentials.ini
               chown 73006:73006 /secrets/*
