@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: detector-map
+data:
+  detectors.status: |
+    {{- .Values.detectorConfig | toYaml | nindent 4 }}

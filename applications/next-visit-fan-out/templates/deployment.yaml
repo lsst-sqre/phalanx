@@ -65,8 +65,18 @@ spec:
               value: {{ .Values.instruments }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: detector-config
+            mountPath: {{ .Values.detectorConfigFile | dir }}
+            readOnly: true
 
       volumes:
         - name: kafka-sasl-prompt-prompt-processing
           secret:
             secretName: {{ template "next-visit-fan-out.fullname" . }}-secret
+        - name: detector-config
+          configMap:
+            name: detector-map
+            items:
+            - key: "detectors.status"
+              path: {{ .Values.detectorConfigFile | base }}
