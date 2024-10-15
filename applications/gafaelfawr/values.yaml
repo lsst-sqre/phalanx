@@ -230,6 +230,29 @@ config:
     # the `rubin` scope.
     dataRightsMapping: {}
 
+  metrics:
+    metricsEvents:
+      # -- Whether to disable sending metric events. If disabled, other
+      # settings must be present but are ignored.
+      disable: true
+
+      # -- Name under which to log metric events. Generally there is no reason
+      # to change this.
+      appName: "gafaelfawr"
+
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.app-metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
   quota: {}

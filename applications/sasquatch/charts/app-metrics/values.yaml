@@ -8,6 +8,10 @@
 #
 # @default -- See `values.yaml`
 globalAppConfig:
+  gafaelfawr:
+    influxTags:
+      - "service"
+      - "username"
   mobu:
     influxTags:
       - "type"
