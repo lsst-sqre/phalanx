@@ -574,9 +574,9 @@ sniffio==1.3.1 \
     #   anyio
     #   httpcore
     #   httpx
-starlette==0.39.2 \
-    --hash=sha256:134dd6deb655a9775991d352312d53f1879775e5cc8a481f966e83416a2c3f71 \
-    --hash=sha256:caaa3b87ef8518ef913dac4f073dea44e85f73343ad2bdc17941931835b2a26a
+starlette==0.40.0 \
+    --hash=sha256:1a3139688fb298ce5e2d661d37046a66ad996ce94be4d4983be019a23a04ea35 \
+    --hash=sha256:c494a22fae73805376ea6bf88439783ecfba9aac88a43911b48c653437e784c4
     # via
     #   fastapi
     #   safir
