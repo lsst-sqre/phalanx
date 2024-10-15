@@ -6,6 +6,17 @@ config:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-prod"
 worker:
+  imagePullPolicy: "always"
+  image:
+    tag: "tickets/DM-46851"
+  env:
+    PGPASSFILE: "/home/lsstsvc1/.lsst/postgres-credentials.txt"
+    PGUSER: "rubin"
+  pvcVolumes:
+  - name: sdf-group-rubin
+    containerPath: /sdf/group/rubin
+  - name: sdf-data-rubin
+    containerPath: /sdf/data/rubin
   htcondor:
     config:
       mountPath: "/home/lsstsvc1/stack/conda/envs/lsst-scipipe-9.0.0/etc/condor/config.d"
