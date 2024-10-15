@@ -127,4 +127,16 @@ Common environment variables
       name: {{ .secretName | quote }}
       key: "slack-webhook"
 {{- end }}
+{{- if .Values.config.metrics.metricsEvents }}
+- name: "KAFKA_BOOTSTRAP_SERVERS"
+  valueFrom:
+    secretKeyRef:
+      name: "gafaelfawr-kafka"
+      key: "bootstrapServers"
+- name: "KAFKA_SECURITY_PROTOCOL"
+  valueFrom:
+    secretKeyRef:
+      name: "gafaelfawr-kafka"
+      key: "securityProtocol"
+{{- end }}
 {{- end }}

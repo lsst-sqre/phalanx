@@ -37,6 +37,14 @@ spec:
                 - "maintenance"
               env:
                 {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret") | nindent 16 }}
+                {{- if .Values.config.metrics.metricsEvents }}
+                - name: "KAFKA_CLIENT_CERT_PATH"
+                  value: "/etc/gafaelfawr-kafka/user.crt"
+                - name: "KAFKA_CLIENT_KEY_PATH"
+                  value: "/etc/gafaelfawr-kafka/user.key"
+                - name: "KAFKA_CLUSTER_CA_PATH"
+                  value: "/etc/gafaelfawr-kafka/ca.crt"
+                {{- end }}
               image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
               imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
               {{- with .Values.maintenance.resources }}
@@ -53,6 +61,20 @@ spec:
                 - name: "config"
                   mountPath: "/etc/gafaelfawr"
                   readOnly: true
+                {{- if .Values.config.metrics.metricsEvents }}
+                - name: "kafka"
+                  mountPath: "/etc/gafaelfawr-kafka/ca.crt"
+                  readOnly: true
+                  subPath: "ssl.truststore.crt"
+                - name: "kafka"
+                  mountPath: "/etc/gafaelfawr-kafka/user.crt"
+                  readOnly: true
+                  subPath: "ssl.keystore.crt"
+                - name: "kafka"
+                  mountPath: "/etc/gafaelfawr-kafka/user.key"
+                  readOnly: true
+                  subPath: "ssl.keystore.key"
+                {{- end }}
                 {{- if .Values.config.ldap.kerberosConfig }}
                 - name: "keytab"
                   mountPath: "/etc/krb5.keytab"
@@ -73,6 +95,11 @@ spec:
             - name: "config"
               configMap:
                 name: "gafaelfawr-config"
+            {{- if .Values.config.metrics.metricsEvents }}
+            - name: "kafka"
+              secret:
+                secretName: "gafaelfawr-kafka"
+            {{- end }}
             {{- if .Values.config.ldap.kerberosConfig }}
             - name: "keytab"
               secret:
