@@ -28,7 +28,7 @@ spec:
       containers:
         - name: "cm-service-worker"
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           securityContext:
@@ -37,8 +37,13 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          {{- if .Values.worker.env }}
           env:
+            - name: CM_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: password
+          {{- if .Values.worker.env }}
           {{- range $env_var, $env_value := .Values.worker.env }}
             - name: {{ $env_var }}
               value: {{ $env_value | quote }}
@@ -88,20 +93,16 @@ spec:
             - "/bin/ash"
             - "-c"
             - |
-              cp -RL /secrets-raw/* /secrets
-              cat /secrets/aws-credentials.ini > new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              cat /secrets-rubintv/aws-credentials.ini >> new-aws-credentials.ini
-              printf "\n" >> new-aws-credentials.ini
-              mv new-aws-credentials.ini /secrets/aws-credentials.ini
-              chown 73006:73006 /secrets/*
-              chmod 0600 /secrets/*
+              cp -RL /secrets-raw/* /home/lsstsvc1/.lsst/
+              chown 17951:1126 /home/lsstsvc1/.lsst/*
+              chmod 0400 /home/lsstsvc1/.lsst/*
+          securityContext:
           volumeMounts:
             - name: cm-service-raw-butler-secret
               mountPath: /secrets-raw
               readOnly: true
             - name: cm-service-butler-secret
-              mountPath: /secrets
+              mountPath: /home/lsstsvc1/.lsst
       volumes:
         - name: output-volume
           persistentVolumeClaim:
@@ -110,7 +111,8 @@ spec:
           emptyDir:
             sizeLimit: 500Mi
         - name: cm-service-butler-secret
-          emptyDir: {}
+          emptyDir:
+            sizeLimit: 50Mi
         - name: cm-service-raw-butler-secret
           secret:
             secretName: butler-secret

@@ -5,13 +5,18 @@ config:
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-prod"
+image:
+  tag: "tickets-DM-46851"
+  pullPolicy: "Always"
 worker:
-  imagePullPolicy: "always"
   image:
     tag: "tickets-DM-46851"
+    pullPolicy: "Always"
   env:
     PGPASSFILE: "/home/lsstsvc1/.lsst/postgres-credentials.txt"
     PGUSER: "rubin"
+    CM_DATABASE_URL: "postgresql://cm-service@cm-service-pg-rw/cm-service"
+    DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
   pvcVolumes:
   - name: sdf-group-rubin
     containerPath: /sdf/group/rubin
