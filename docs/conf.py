@@ -33,3 +33,6 @@ linkcheck_anchors = False
 linkcheck_exclude_documents = [
     r"applications/.*/values",
 ]
+
+# Remove this later after we fix documenteer
+mermaid_version = "11.2.0"
