@@ -25,6 +25,8 @@ spec:
       containers:
         - name: "checkerboard"
           env:
+            - name: "CHECKERBOARD_PROFILE_FIELD"
+              value: {{ .Values.config.slackProfileField | quote }}
             - name: "CHECKERBOARD_REDIS_PASSWORD"
               valueFrom:
                 secretKeyRef:
