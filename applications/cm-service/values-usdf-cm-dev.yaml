@@ -8,7 +8,7 @@ config:
 worker:
   imagePullPolicy: "always"
   image:
-    tag: "tickets/DM-46851"
+    tag: "tickets-DM-46851"
   env:
     PGPASSFILE: "/home/lsstsvc1/.lsst/postgres-credentials.txt"
     PGUSER: "rubin"
