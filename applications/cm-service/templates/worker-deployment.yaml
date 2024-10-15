@@ -37,6 +37,13 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          {{- if .Values.worker.env }}
+          env:
+          {{- range $env_var, $env_value := .Values.worker.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- end }}
           volumeMounts:
             - mountPath: "/output"
               name: "output-volume"
@@ -45,6 +52,18 @@ spec:
               {{- end }}
             - mountPath: "/tmp"
               name: "tmp-volume"
+            - mountPath: "/home/lsstsvc1/.lsst"
+              name: "cm-service-butler-secret"
+              readOnly: true
+            {{- if .Values.worker.pvcVolumes }}
+            {{- range $values := .Values.worker.pvcVolumes }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              {{- if ($values.subPath) }}
+              subPath: {{ $values.subPath }}
+              {{- end }}
+            {{- end }}
+            {{- end }}
             {{- with .Values.worker.htcondor.config }}
             - mountPath: {{ .mountPath }}
               name: "condor-config-volume"
@@ -62,6 +81,27 @@ spec:
               name: "condor-schedd-volume"
               readOnly: true
             {{- end }}
+      initContainers:
+        - name: "cm-service-butler-secret-perm-fixer"
+          image: "alpine:latest"
+          command:
+            - "/bin/ash"
+            - "-c"
+            - |
+              cp -RL /secrets-raw/* /secrets
+              cat /secrets/aws-credentials.ini > new-aws-credentials.ini
+              printf "\n" >> new-aws-credentials.ini
+              cat /secrets-rubintv/aws-credentials.ini >> new-aws-credentials.ini
+              printf "\n" >> new-aws-credentials.ini
+              mv new-aws-credentials.ini /secrets/aws-credentials.ini
+              chown 73006:73006 /secrets/*
+              chmod 0600 /secrets/*
+          volumeMounts:
+            - name: cm-service-raw-butler-secret
+              mountPath: /secrets-raw
+              readOnly: true
+            - name: cm-service-butler-secret
+              mountPath: /secrets
       volumes:
         - name: output-volume
           persistentVolumeClaim:
@@ -69,6 +109,19 @@ spec:
         - name: tmp-volume
           emptyDir:
             sizeLimit: 500Mi
+        - name: cm-service-butler-secret
+          emptyDir: {}
+        - name: cm-service-raw-butler-secret
+          secret:
+            secretName: butler-secret
+            defaultMode: 0600
+        {{- if .Values.worker.pvcVolumes }}
+        {{- range $values := .Values.worker.pvcVolumes }}
+        - name: {{ $values.name }}
+          persistentVolumeClaim:
+            claimName: {{ $values.name }}
+        {{- end }}
+        {{- end }}
         {{- with .Values.worker.htcondor.config }}
         - name: condor-config-volume
           configMap:
