@@ -81,7 +81,7 @@ spec:
       # internal listener without tls encryption and without authentication
       # used by ceph bucket notifications as authentication does not work with
       - name: plain
-        port: 9091
+        port: 9095
         type: internal
         tls: false
       {{- end }}
