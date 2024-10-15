@@ -59,7 +59,8 @@ global:
 
 # -- The instruments that are initialized when the fan-out service starts up as a space-delimited string.
 # This list is a subset of the keys of `detectorConfig` because the latter handles some special cases.
-instruments: "LATISS LSSTCam LSSTComCam LSSTComCamSim HSC"
+# @default -- None, must be set.
+instruments: ""
 
 # -- A mapping, for each instrument, of detector number to whether that detector is "active" (i.e., producing images).
 # @default -- See `values.yaml`.
