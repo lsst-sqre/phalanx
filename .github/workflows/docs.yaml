@@ -40,6 +40,7 @@ jobs:
               - "applications/argocd/values-*.yaml"
               - "applications/gafaelfawr/values-*.yaml"
               - "environments/values-*.yaml"
+              - "requirements/*.txt"
               - "src/phalanx/**"
             docsSpecific:
               - "docs/**"
