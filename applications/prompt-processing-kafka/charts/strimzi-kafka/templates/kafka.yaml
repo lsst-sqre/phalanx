@@ -80,7 +80,7 @@ spec:
       {{- if .Values.kafka.listeners.noauth.enabled }}
       # internal listener without tls encryption and without authentication
       # used by ceph bucket notifications as authentication does not work with
-      - name: plain
+      - name: noauth
         port: 9095
         type: internal
         tls: false
