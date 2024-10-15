@@ -8,15 +8,6 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 |-----|------|---------|-------------|
 | cluster.monitorLabel | object | `{}` | Site wide label required for gathering Prometheus metrics if they are enabled |
 | cluster.name | string | `"prompt-processing-kafka"` | Name used for the Kafka cluster, and used by Strimzi for many annotations |
-| connect.config."key.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Set the converter for the message ke |
-| connect.config."key.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL for the schema registry |
-| connect.config."key.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message key |
-| connect.config."value.converter" | string | `"io.confluent.connect.avro.AvroConverter"` | Converter for the message value |
-| connect.config."value.converter.schema.registry.url" | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | URL for the schema registry |
-| connect.config."value.converter.schemas.enable" | bool | `true` | Enable converted schemas for the message value |
-| connect.enabled | bool | `false` | Enable Kafka Connect |
-| connect.image | string | `"ghcr.io/lsst-sqre/strimzi-0.40.0-kafka-3.7.0:tickets-DM-43491"` | Custom strimzi-kafka image with connector plugins used by sasquatch |
-| connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | cruiseControl.enabled | bool | `false` |  |
 | kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
 | kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
@@ -59,12 +50,5 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 | registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| users.appmetrics.enabled | bool | `false` | Enable user appmetrics |
-| users.camera.enabled | bool | `false` | Enable user camera, used at the camera environments |
-| users.consdb.enabled | bool | `false` | Enable user consdb |
-| users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Sasquatch chart). |
-| users.kafkaConnectManager.enabled | bool | `false` | Enable user kafka-connect-manager |
+| users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart). |
 | users.promptProcessing.enabled | bool | `false` | Enable user prompt-processing |
-| users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
-| users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
-| users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
