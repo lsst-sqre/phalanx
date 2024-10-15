@@ -32,3 +32,31 @@ spec:
     requests:
       storage: {{ .storage }}
 {{- end }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sdf-group-rubin
+  labels:
+    {{- include "cm-service.labels" $ | nindent 4 }}
+spec:
+  storageClassName: sdf-group-rubin
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sdf-data-rubin
+  labels:
+    {{- include "cm-service.labels" $ | nindent 4 }}
+spec:
+  storageClassName: sdf-data-rubin
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
