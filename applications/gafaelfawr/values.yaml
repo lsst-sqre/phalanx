@@ -41,12 +41,6 @@ config:
   # @default -- Top-level page of this Phalanx environment
   afterLogoutUrl: null
 
-  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
-  # is used as the namespace to generate UUID v5 `sub` claims returned by this
-  # route to meet the needs of CADC authentication code.
-  # @default -- Disabled
-  cadcBaseUuid: null
-
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
