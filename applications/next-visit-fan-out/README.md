@@ -15,7 +15,7 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"us-central1-docker.pkg.dev/prompt-proto/prompt/nextvisit-fanout"` |  |
 | image.tag | string | `""` |  |
-| instruments | string | `"LATISS LSSTCam LSSTComCam LSSTComCamSim HSC"` | The instruments that are initialized when the fan-out service starts up as a space-delimited string. This list is a subset of the keys of `detectorConfig` because the latter handles some special cases. |
+| instruments | string | None, must be set. | The instruments that are initialized when the fan-out service starts up as a space-delimited string. This list is a subset of the keys of `detectorConfig` because the latter handles some special cases. |
 | kafka.expiration | float | `3600` | Maximum message age to consider, in seconds. |
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
