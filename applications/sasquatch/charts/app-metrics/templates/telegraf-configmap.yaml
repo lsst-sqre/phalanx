@@ -55,7 +55,7 @@ data:
       avro_union_mode = "nullable"
       avro_tags = {{ include "helpers.toTomlArray" $influxTags }}
       topics = [
-        "lsst.square.app-metrics.events.{{ $app }}",
+        "lsst.square.metrics.events.{{ $app }}",
       ]
       max_processing_time = "5s"
       consumer_fetch_default = "5MB"

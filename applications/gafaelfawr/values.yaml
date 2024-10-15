@@ -236,7 +236,7 @@ config:
 
       # -- Topic prefix for events. It may sometimes be useful to change this
       # in development environments.
-      topicPrefix: "lsst.square.app-metrics.events"
+      topicPrefix: "lsst.square.metrics.events"
 
     schemaManager:
       # -- URL of the Confluent-compatible schema registry server
