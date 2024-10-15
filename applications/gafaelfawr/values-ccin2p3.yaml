@@ -68,8 +68,6 @@ config:
   oidcServer:
     enabled: false
 
-  cadcBaseUuid: "df534647-a1df-4608-b08e-3af8dc291e41"
-
   # initialAdmins:
   #   - "mainetti"
 

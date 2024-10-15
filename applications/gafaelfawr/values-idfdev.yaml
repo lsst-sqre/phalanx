@@ -32,9 +32,6 @@ config:
   oidcServer:
     enabled: true
 
-  # Support generating user metadata for CADC authentication code.
-  cadcBaseUuid: "db8626e0-3b93-45c0-89ab-3058b0ed39fe"
-
   # Enable metrics reporting.
   metrics:
     metricsEvents:
