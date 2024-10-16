@@ -1,0 +1,331 @@
+image:
+  repository: lsstts/rapid-analysis
+  tag: c0039_usdf
+  pullPolicy: Always
+location: USDF
+env:
+  DAF_BUTLER_REPOSITORY_INDEX: /sdf/group/rubin/shared/data-repos.yaml
+  http_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  https_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  squid_proxy: http://sdfproxy.sdf.slac.stanford.edu:3128
+  no_proxy: .slac.stanford.edu
+  HTTP_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  HTTPS_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  SQUID_PROXY: http://sdfproxy.sdf.slac.stanford.edu:3128
+  NO_PROXY: .slac.stanford.edu
+  DEPLOY_BRANCH: deploy-slac-comcam
+  S3_ENDPOINT_URL: https://s3dfrgw.slac.stanford.edu
+  SASQUATCH_EXTRAS: dataset_tag=LSSTComCamSim/rapid_analysis
+  LSST_RESOURCES_S3_PROFILE_embargo: https://sdfembs3.sdf.slac.stanford.edu
+scripts:
+###
+### ComCamSim pods
+###
+- name: summit/LSSTComCamSim/runButlerWatcher.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: summit/LSSTComCamSim/runHeadNode.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: summit/LSSTComCamSim/runMetadataServer.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: summit/LSSTComCamSim/runPlotter.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 6G
+- name: summit/LSSTComCamSim/runAosDonutPipeline.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 32
+      memory: 96G
+    limits:
+      cpu: 32
+      memory: 96G
+- name: summit/LSSTComCamSim/runFocusSweepAnalysis.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 0.5
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 2G
+- name: summit/LSSTComCamSim/runMetadataServerAos.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: 0.25
+      memory: 500M
+    limits:
+      cpu: .5
+      memory: 1G
+- name: summit/LSSTComCamSim/runPsfPlotting.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  resources:
+    requests:
+      cpu: .5
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
+###
+### ComCam pods
+###
+- name: summit/LSSTComCam/runButlerWatcher.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: summit/LSSTComCam/runHeadNode.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+- name: summit/LSSTComCam/runMetadataServer.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: summit/LSSTComCam/runPlotter.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+###
+### LSSTCam pods
+###
+- name: summit/LSSTCam/runButlerWatcher.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - lsstcam-data
+  - project-shared
+- name: summit/LSSTCam/runHeadNode.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - lsstcam-data
+  - project-shared
+- name: summit/LSSTCam/runMetadataServer.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - lsstcam-data
+  - project-shared
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+- name: summit/LSSTCam/runPlotter.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - lsstcam-data
+  - project-shared
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+###
+### ComCamSim StatefulSets
+###
+comcamsimWorkerSet:
+  name: summit/LSSTComCamSim/runSfmRunner.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 9
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamsimGather2aSet:
+  name: summit/LSSTComCamSim/runStep2aWorker.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamsimGatherRollupSet:
+  name: summit/LSSTComCamSim/runNightlyWorker.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 12G
+    limits:
+      cpu: 1.0
+      memory: 24G
+###
+### ComCam StatefulSets
+###
+comcamWorkerSet:
+  name: summit/LSSTComCam/runSfmRunner.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 9
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamGather2aSet:
+  name: summit/LSSTComCam/runStep2aWorker.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+comcamGatherRollupSet:
+  name: summit/LSSTComCam/runNightlyWorker.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
+###
+### LSSTCam StatefulSets
+###
+lsstcamWorkerSet:
+  name: summit/LSSTCam/runSfmRunner.py
+  mounts:
+  - sdf-group-rubin
+  - sdf-data-rubin
+  - sdf-scratch
+  - lsstcam-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G  # we should check this value
+credentialFile: google_write_creds
+vaultPrefixPath: secret/rubin/usdf-rapid-analysis-dev
+pullSecretsPath: pull-secret
+rubinTvSecretsPath: rubintv-secrets
+credentialSecretsPath: rubintv-broadcaster
+butlerSecret:
+  key: butler-secret
+  containerPath: /secrets
+  dbUser: rubin
+envSecrets:
+- name: ASTROMETRY_NET_API_KEY
+  secretName: rubintv-secrets
+  secretKey: astrometry-net-api-key
+imagePullSecrets:
+- name: pull-secret
+pvcMountpointClaim:
+- name: sdf-group-rubin
+  containerPath: /sdf/group/rubin
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+- name: sdf-data-rubin
+  containerPath: /sdf/data/rubin
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+- name: sdf-scratch
+  containerPath: /sdf/scratch
+  claimSize: 1Gi
+  accessMode: ReadWriteMany
+securityContext:
+  uid: 15517
+  gid: 4085
+  fid: 4085
+resources:
+  requests:
+    cpu: 0.5
+    memory: 1G
+  limits:
+    cpu: 1.0
+    memory: 2.5G
+redis:
+  enabled: true
+  port: 6379
+  env:
+    MASTER: true
+  serviceAnnotations:
+    metallb.universe.tf/address-pool: sdf-services
+  envSecrets:
+  - name: REDIS_PASSWORD
+    secretName: rubintv-secrets
+    secretKey: redis-password
+  storage:
+    request: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 1Gi
+    limits:
+      cpu: 1
+      memory: 50Gi
