@@ -5,4 +5,5 @@ metadata:
   name: instrument-map
 data:
   instruments: |
-    {{- .Values.detectorConfig | toYaml | nindent 4 }}
+    detectors:
+      {{- .Values.detectorConfig | toYaml | nindent 6 }}
