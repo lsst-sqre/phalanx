@@ -119,7 +119,7 @@ comcamWorkerSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 1
+  replicas: 18
   resources:
     requests:
       cpu: 1.0
