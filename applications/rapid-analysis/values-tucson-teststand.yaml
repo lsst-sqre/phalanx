@@ -91,21 +91,49 @@ scripts:
 ### ComCam pods
 ###
 - name: LSSTComCam/runButlerWatcher.py
+  resources:
+    requests:
+      cpu: 1m
+      memory: 2G
+    limits:
+      cpu: 1
+      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: LSSTComCam/runHeadNode.py
+  resources:
+    requests:
+      cpu: 1m
+      memory: 2G
+    limits:
+      cpu: 1
+      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: LSSTComCam/runMetadataServer.py
+  resources:
+    requests:
+      cpu: 1m
+      memory: 2G
+    limits:
+      cpu: 1
+      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
 - name: LSSTComCam/runPlotter.py
+  resources:
+    requests:
+      cpu: 1m
+      memory: 2G
+    limits:
+      cpu: 1
+      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -122,13 +150,20 @@ comcamWorkerSet:
   replicas: 18
   resources:
     requests:
-      cpu: 1.0
+      cpu: 1m
       memory: 4G
     limits:
       cpu: 1.0
       memory: 8G
 comcamGather2aSet:
   name: LSSTComCam/runStep2aWorker.py
+  resources:
+    requests:
+      cpu: 1m
+      memory: 2G
+    limits:
+      cpu: 1
+      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -136,7 +171,7 @@ comcamGather2aSet:
   replicas: 1
   resources:
     requests:
-      cpu: 1.0
+      cpu: 1m
       memory: "4G"
     limits:
       cpu: 1.0
@@ -150,7 +185,7 @@ comcamGatherRollupSet:
   replicas: 1
   resources:
     requests:
-      cpu: 1.0
+      cpu: 1m
       memory: "12G"
     limits:
       cpu: 1.0
