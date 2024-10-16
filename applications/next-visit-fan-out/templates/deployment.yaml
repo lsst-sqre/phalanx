@@ -61,12 +61,12 @@ spec:
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: SUPPORTED_INSTRUMENTS
               value: {{ .Values.instruments }}
-            - name: DETECTOR_CONFIG_FILE
-              value: /etc/config/detector.yaml
+            - name: INSTRUMENT_CONFIG_FILE
+              value: /etc/config/instrument.yaml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
-          - name: detector-config
+          - name: instrument-config
             mountPath: /etc/config
             readOnly: true
 
@@ -74,9 +74,9 @@ spec:
         - name: kafka-sasl-prompt-prompt-processing
           secret:
             secretName: {{ template "next-visit-fan-out.fullname" . }}-secret
-        - name: detector-config
+        - name: instrument-config
           configMap:
-            name: detector-map
+            name: instrument-map
             items:
-            - key: "detectors.status"
-              path: detector.yaml
+            - key: "instruments"
+              path: instrument.yaml
