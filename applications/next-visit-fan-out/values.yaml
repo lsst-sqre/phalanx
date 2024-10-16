@@ -66,7 +66,7 @@ instruments: "LATISS LSSTCam LSSTComCam LSSTComCamSim HSC"
 detectorConfig:
   LATISS:
     0: True
-  LSSTComCam:
+  LSSTComCam: &ComCam
     0: True
     1: True
     2: True
@@ -76,6 +76,8 @@ detectorConfig:
     6: True
     7: True
     8: True
+  LSSTComCamSim:
+    <<: *ComCam
   LSSTCam:
     0: False
     1: False
