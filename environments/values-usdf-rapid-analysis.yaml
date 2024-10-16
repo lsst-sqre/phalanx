@@ -1,0 +1,12 @@
+fqdn: "k8s.slac.stanford.edu"
+name: "usdf-rapid-analysis"
+appOfAppsName: "phalanx"
+vaultUrl: "https://vault.slac.stanford.edu"
+vaultPathPrefix: "secret/rubin/usdf-rapid-analysis"
+
+applications:
+  cert-manager: false
+  gafaelfawr: false
+  ingress-nginx: false
+  rapid-analysis: true
+  vault-secrets-operator: false
