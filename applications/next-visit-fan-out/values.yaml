@@ -57,6 +57,9 @@ global:
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
 
+# -- If set, enable debug logging.
+debug: false
+
 # -- The instruments that are initialized when the fan-out service starts up as a space-delimited string.
 # This list is a subset of the keys of `detectorConfig` because the latter handles some special cases.
 # @default -- None, must be set.
