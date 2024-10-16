@@ -10,3 +10,4 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+  rapid-analysis: true
