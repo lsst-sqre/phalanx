@@ -23,7 +23,7 @@ data:
       urls = [
         {{ .Values.influxdb.url | quote }}
       ]
-      database = "telegraf-kafka-app-metrics-consumer"
+      database = "lsst.square.metrics"
       username = "${INFLUXDB_USER}"
       password = "${INFLUXDB_PASSWORD}"
 
