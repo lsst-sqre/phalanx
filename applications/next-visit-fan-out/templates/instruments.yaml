@@ -6,6 +6,6 @@ metadata:
 data:
   instruments: |
     knative-urls:
-      {{- .Values.knativeUrls | toYaml | nindent 6 }}
+      {{- .Values.knative.urls | toYaml | nindent 6 }}
     detectors:
       {{- .Values.detectorConfig | toYaml | nindent 6 }}
