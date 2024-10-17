@@ -8,15 +8,24 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
+
 pq:
   image:
-    tag: "main"
+    tag: "24.10.1"
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 20Gi
+  limits:
+    cpu: 500m
+    memory: 20Gi
