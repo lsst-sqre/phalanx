@@ -4,6 +4,7 @@ uws-api-server:
   image:
     tag: latest
   logLevel: INFO
+  ttlSecondsAfterFinished: 3600
   butlerPg:
     secretName: uws
     containerPath: /home/lsst/.lsst

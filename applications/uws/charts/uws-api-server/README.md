@@ -24,6 +24,7 @@ Helm chart for deploying the Universal Worker Service API Server
 | server.securityContext.runAsGroup | int | `202` | Set the GID for the UWS server container entrypoint |
 | server.securityContext.runAsUser | int | `1000` | Set the UID for the UWS server container entrypoint |
 | targetCluster | string | `""` | Target Kubernetes cluster |
+| ttlSecondsAfterFinished | int | `0` | Time to live (in seconds) for pod after it completes Allows logs to be inspected. |
 | vaultPathPrefix | string | `""` | Site-specific Vault path for secrets. |
 | volumes | list | `[]` | Central data volumes to be mounted in job containers. Each object listed can have the following attributes defined: _name_ (A label identifier for the data volume mount) _server_ (The hostname for the NFS server with the data volume mount) _claimName_ (The PVC claim name for the data volume mount) _mountPath_ (The mount path in the server container for the data volume mount) _exportPath_ (The export path on the NFS server for the data volume mount) _subPath_ (A possible sub path for the data volume mount) _readOnly_ (Flag to mark the data volume mount as read only or read/write) |
 | workingVolume.claimName | string | `""` | The PVC claim name for the working volume |

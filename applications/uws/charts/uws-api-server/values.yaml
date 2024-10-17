@@ -71,3 +71,6 @@ volumes: []
 # -- Temporary flag to make service deploy own namespace.
 # Doing this to not disrupt other sites.
 createNamespace: false
+# -- Time to live (in seconds) for pod after it completes
+# Allows logs to be inspected.
+ttlSecondsAfterFinished: 0
