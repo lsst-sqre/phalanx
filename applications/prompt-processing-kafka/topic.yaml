@@ -1,0 +1,12 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  labels:
+    strimzi.io/cluster: prompt-processing
+  name: registry-schemas
+  namespace: kafka
+spec:
+  config:
+    cleanup.policy: compact
+  partitions: 1
+  replicas: 1
