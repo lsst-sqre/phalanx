@@ -76,7 +76,7 @@ spec:
                   name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-latiss"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
           volumeMounts:
@@ -184,7 +184,7 @@ spec:
                   name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-lsstcomcam"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
           volumeMounts:
@@ -292,7 +292,7 @@ spec:
                   name: consdb
                   key: "consdb-password"
             - name: "KAFKA_GROUP_ID"
-              value: "{{ .Values.kafka.group_id }}"
+              value: "{{ .Values.kafka.group_id }}-lsstcam"
             - name: "SCHEMA_URL"
               value: "{{ .Values.kafka.schema_url }}"
           volumeMounts:
