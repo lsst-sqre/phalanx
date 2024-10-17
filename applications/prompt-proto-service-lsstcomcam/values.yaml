@@ -49,7 +49,7 @@ prompt-proto-service:
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: ""
+    skymap: "ops_rehersal_prep_2k_v1"
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
@@ -60,9 +60,9 @@ prompt-proto-service:
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
     # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 4
+    refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 4
+    patchesPerImage: 16
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -111,7 +111,7 @@ prompt-proto-service:
 
   # -- Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level).
   # @default -- log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING.
-  logLevel: ""
+  logLevel: "timer.lsst.activator=DEBUG"
 
   sasquatch:
     # -- Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload.
@@ -149,11 +149,11 @@ prompt-proto-service:
     # -- Maximum time that a container can send nothing to Knative (seconds).
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
-    idleTimeout: 0
+    idleTimeout: 900
     # -- Maximum time that a container can send nothing to Knative after initial submission (seconds).
     # This is only useful if the container runs async workers.
     # If 0, idle timeout is ignored.
-    responseStartTimeout: 0
+    responseStartTimeout: 900
 
   # -- The number of Knative requests that can be handled simultaneously by one container
   containerConcurrency: 1
