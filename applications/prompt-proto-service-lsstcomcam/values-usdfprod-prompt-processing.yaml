@@ -1,0 +1,74 @@
+prompt-proto-service:
+
+  podAnnotations:
+    # HACK: disable autoscaling as workaround for DM-41829
+    autoscaling.knative.dev/min-scale: "20"
+    autoscaling.knative.dev/max-scale: "20"
+    # Update this field if using latest or static image tag in dev
+    revision: "1"
+
+  # HACK: disable autoscaling as workaround for DM-41829
+  worker:
+    restart: 15
+
+  image:
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: 4.5.1
+
+  instrument:
+    pipelines:
+      # BLOCK-306 is photographic imaging
+      # BLOCK-T17 is daytime checkout
+      # BLOCK-271 is photon transfer curve calibrations
+      # BLOCK-295 is the daily calibration sequence as of May 27, 2024
+      main: >-
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/SingleFrame.yaml,
+        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr.yaml]
+        (survey="BLOCK-T17")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="cwfs")=[]
+        (survey="cwfs-focus-sweep")=[]
+        (survey="spec-survey")=[]
+        (survey="BLOCK-271")=[]
+        (survey="BLOCK-295")=[]
+        (survey="")=[]
+      preprocessing: >-
+        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
+        (survey="BLOCK-T17")=[]
+        (survey="cwfs")=[]
+        (survey="cwfs-focus-sweep")=[]
+        (survey="spec-survey")=[]
+        (survey="BLOCK-271")=[]
+        (survey="BLOCK-295")=[]
+        (survey="")=[]
+    calibRepo: s3://rubin-summit-users
+
+  s3:
+    imageBucket: rubin-summit
+    endpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  raw_microservice: http://172.24.5.144:8080/presence
+
+  imageNotifications:
+    kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
+    topic: rubin-prompt-processing-prod
+    # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
+    # and files can take up to 20 seconds to arrive. Scheduler delay associated
+    # with CWFS engineering data, should not apply to other cameras.
+    imageTimeout: 110
+
+  apdb:
+    config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcomcam.py
+
+  alerts:
+    topic: "lsstcomcam-alerts"
+
+  sasquatch:
+    endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
+    namespace: lsst.prompt.prod
+    auth_env: false
+
+  logLevel: timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.resources=DEBUG
+
+  fullnameOverride: "prompt-proto-service-lsstcomcam"
