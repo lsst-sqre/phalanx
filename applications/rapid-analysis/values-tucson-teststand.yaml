@@ -138,6 +138,54 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
+- name: LSSTComCam/runAosDonutPipeline.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1
+      memory: 24G
+    limits:
+      cpu: 18
+      memory: 48G
+- name: LSSTComCam/runFocusSweepAnalysis.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1m
+      memory: 1G
+    limits:
+      cpu: 1
+      memory: 2G
+- name: LSSTComCam/runMetadataServerAos.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1m
+      memory: 500M
+    limits:
+      cpu: .5
+      memory: 1G
+- name: LSSTComCam/runPsfPlotting.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  resources:
+    requests:
+      cpu: 1m
+      memory: 4G
+    limits:
+      cpu: 1
+      memory: 6G
 ###
 ### ComCam StatefulSets
 ###
