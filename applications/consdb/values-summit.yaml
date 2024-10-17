@@ -8,15 +8,15 @@ lfa:
 hinfo:
   latiss:
     enable: true
-    tag: "main"
+    tag: "24.10.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "main"
+    tag: "24.10.1"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "main"
+    tag: "24.10.1"
 pq:
   image:
-    tag: "main"
+    tag: "24.10.1"
