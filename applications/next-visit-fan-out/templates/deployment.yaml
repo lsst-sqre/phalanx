@@ -39,6 +39,8 @@ spec:
               value: {{ .Values.kafka.saslMechamism }}
             - name: SECURITY_PROTOCOL
               value: {{ .Values.kafka.securityProtocol }}
+            - name: MAX_FAN_OUT_MESSAGES
+              value: {{ .Values.knative.maxMessages | toString | quote }}
             - name: SASL_USERNAME
               valueFrom:
                 secretKeyRef:

@@ -21,7 +21,8 @@ Poll next visit events from Kafka, duplicate them, and send them to all applicat
 | kafka.offset | string | `"latest"` |  |
 | kafka.saslMechamism | string | `"SCRAM-SHA-512"` |  |
 | kafka.securityProtocol | string | `"SASL_PLAINTEXT"` |  |
-| knativeUrls | object | See `values.yaml`. | A mapping of instrument to that instrument's Knative service. |
+| knative.maxMessages | string | None, must be set. | The maximum number of messages that can be forwarded to all Knative instances combined. |
+| knative.urls | object | See `values.yaml`. | A mapping of instrument to that instrument's Knative service. |
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` | Node selection rules for the next-visit-fan-out deployment pod |
 | podAnnotations."prometheus.io/port" | string | `"8000"` |  |

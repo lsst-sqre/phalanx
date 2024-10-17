@@ -1,3 +1,6 @@
+knative:
+  maxMessages: 1000  # Kubernetes can't support more pods yet
+
 kafka:
   schemaRegistryUrl: http://10.110.90.252:8081
   sasquatchAddress: 10.96.121.181:9094
