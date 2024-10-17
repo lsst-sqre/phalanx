@@ -4,8 +4,38 @@ environment:
   BUCKET_NAME: "rubin-plot-navigator"
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
 
-
 config:
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
+
+productionTools:
+  image:
+    repository: ghcr.io/lsst-dm/production_tools
+    tag: SP-883
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
+    PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+    PGUSER: "rubin"
+    AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
+    S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+    LSST_DISABLE_BUCKET_VALIDATION: "1"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
@@ -48,7 +78,5 @@ butlerConfig:
       mountPath: /sdf/data/rubin
       readOnly: true
 
-
 image:
   tag: DM-44957
-
