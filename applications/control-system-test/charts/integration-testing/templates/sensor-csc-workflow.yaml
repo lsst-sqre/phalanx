@@ -1,10 +1,10 @@
 apiVersion: argoproj.io/v1alpha1
 kind: WorkflowTemplate
 metadata:
-  name: simple-workflow
+  name: sensor-cscs-workflow
   labels:
     workflows.argoproj.io/type: "integration-test"
-    argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+    argocd.argoproj.io/instance: integration-testing
 spec:
   serviceAccountName: {{ .Values.serviceAccount }}
   artifactRepositoryRef:
@@ -18,28 +18,30 @@ spec:
   - name: pull-secret
   podMetadata:
     labels:
-      argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
+      argocd.argoproj.io/instance: integration-testing
   arguments:
     parameters:
     - name: date-key
-      value: "20230601"
+      value: "20240725"
   entrypoint: run-tests
   templates:
   - name: run-tests
-    steps:
-    - - name: cleanup
+    dag:
+      tasks:
+      - name: call-cleanup-reports
         templateRef:
           name: cleanup-reports-workflow
           template: cleanup-reports
-    - - name: offline
+      - name: sensor-cscs
+        depends: call-cleanup-reports
         templateRef:
           name: integration-test-job-template
           template: inttest-template
         arguments:
           parameters:
           - name: integrationtest
-            value: "-A Test_Report_Offline.list"
+            value: "-A Test_Report_SensorCSCs.list"
           - name: jobname
-            value: simple-offline
+            value: sensor-cscs
           - name: reportname
-            value: offline.xml
+            value: sensor_cscs.xml

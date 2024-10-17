@@ -14,6 +14,8 @@ spec:
   - name: testreports
     persistentVolumeClaim:
       claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: pull-secret
   podMetadata:
     labels:
       argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
@@ -41,8 +43,5 @@ spec:
             value: "-A Test_Report_LOVE_Stress_Test.list"
           - name: jobname
             value: love-stress-test
-      - name: call-save-reports
-        depends: love-stress-test
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports
+          - name: reportname
+            value: love_stress_test.xml
