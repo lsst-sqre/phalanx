@@ -4,7 +4,10 @@ prompt-proto-service:
   # @default -- See the `values.yaml` file.
   podAnnotations:
     autoscaling.knative.dev/min-scale: "3"
-    autoscaling.knative.dev/max-scale: "30"
+    # Expect to need roughly n_detector × request_latency / survey_cadence pods
+    # For a 30 s ComCam survey with 500 s latency, this is 150
+    # Add some buffer for fast twilight survey
+    autoscaling.knative.dev/max-scale: "200"
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
     queue.sidecar.serving.knative.dev/cpu-resource-request: "1"

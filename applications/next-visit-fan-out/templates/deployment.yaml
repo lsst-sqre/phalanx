@@ -23,18 +23,6 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: LATISS_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.latissUrl }}
-            - name: HSC_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.hscUrl }}
-            - name: LSSTCOMCAM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcomcamUrl }}
-            - name: LSSTCOMCAMSIM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcomcamsimUrl }}
-            - name: LSSTCAM_KNATIVE_SERVING_URL
-              value: {{ .Values.knative.lsstcamUrl }}
-            - name: DETECTOR_CONFIG_FILE
-              value: {{ .Values.detectorConfigFile }}
             - name: KAFKA_SCHEMA_REGISTRY_URL
               value: {{ .Values.kafka.schemaRegistryUrl }}
             - name: KAFKA_CLUSTER
@@ -51,6 +39,8 @@ spec:
               value: {{ .Values.kafka.saslMechamism }}
             - name: SECURITY_PROTOCOL
               value: {{ .Values.kafka.securityProtocol }}
+            - name: MAX_FAN_OUT_MESSAGES
+              value: {{ .Values.knative.maxMessages | toString | quote }}
             - name: SASL_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -61,10 +51,26 @@ spec:
                 secretKeyRef:
                   key: kafka_pp_sasl_password
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
+            - name: DEBUG_LOGS
+              value: {{ ternary "true" "false" .Values.debug | quote}}
+            - name: SUPPORTED_INSTRUMENTS
+              value: {{ .Values.instruments }}
+            - name: INSTRUMENT_CONFIG_FILE
+              value: /etc/config/instrument.yaml
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: instrument-config
+            mountPath: /etc/config
+            readOnly: true
 
       volumes:
         - name: kafka-sasl-prompt-prompt-processing
           secret:
             secretName: {{ template "next-visit-fan-out.fullname" . }}-secret
+        - name: instrument-config
+          configMap:
+            name: instrument-map
+            items:
+            - key: "instruments"
+              path: instrument.yaml

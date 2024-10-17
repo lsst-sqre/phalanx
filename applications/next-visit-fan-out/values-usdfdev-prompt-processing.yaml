@@ -1,3 +1,6 @@
+knative:
+  maxMessages: 150
+
 kafka:
   schemaRegistryUrl: http://10.96.181.159:8081
   sasquatchAddress: 10.100.226.209:9094
@@ -11,3 +14,5 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: 2.3.0
+
+instruments: "LATISS LSSTComCamSim HSC"
