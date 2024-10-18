@@ -104,13 +104,13 @@ metadata:
 spec:
   config:
     cleanup.policy: "delete"
-    retention.ms: { { .Values.maxMillisecondsRetained } } # 7 days
-    retention.bytes: { { .Values.maxBytesRetained } }
-    compression.type: { { .Values.topicCompression } }
+    retention.ms: {{ .Values.maxMillisecondsRetained }} # 7 days
+    retention.bytes: {{ .Values.maxBytesRetained }}
+    compression.type: {{ .Values.topicCompression }}
     # The default timestamp is the creation time of the alert.
     # To get the ingestion rate, we need this to be the log
     # append time, and the header will contain the producer
     # timestamp instead
     message.timestamp.type: 'LogAppendTime'
-  partitions: { { .Values.comcamTopicPartitions } }
-  replicas: { { .Values.comcamTopicReplicas } }
+  partitions: {{ .Values.comcamTopicPartitions }}
+  replicas: {{ .Values.comcamTopicReplicas }}
