@@ -54,9 +54,9 @@ Authentication and identity system
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
-| config.metrics.metricsEvents.appName | string | `"gafaelfawr"` | Name under which to log metric events. Generally there is no reason to change this. |
-| config.metrics.metricsEvents.disable | bool | `true` | Whether to disable sending metric events. If disabled, other settings must be present but are ignored. |
-| config.metrics.metricsEvents.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.appName | string | `"gafaelfawr"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.oidc.audience | string | Same as `clientId` | Audience (`aud` claim) to expect in ID tokens. |

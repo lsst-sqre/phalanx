@@ -34,8 +34,7 @@ config:
 
   # Enable metrics reporting.
   metrics:
-    metricsEvents:
-      disable: false
+    enabled: true
 
   # User quota settings for services.
   quota:
