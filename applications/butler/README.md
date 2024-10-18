@@ -15,7 +15,6 @@ Server for Butler data abstraction service
 | autoscaling.maxReplicas | int | `100` | Maximum number of butler deployment pods |
 | autoscaling.minReplicas | int | `1` | Minimum number of butler deployment pods |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of butler deployment pods |
-| config.additionalS3ProfileName | string | No second S3 profile is available. | Profile name identifying a second S3 endpoint and set of credentials to use for accessing files in the datastore. |
 | config.dp02ClientServerIsDefault | bool | `false` | True if the 'dp02' Butler repository alias should use client/server Butler.  False if it should use DirectButler. |
 | config.dp02PostgresUri | string | No configuration file for DP02 will be generated. | Postgres connection string pointing to the registry database hosting Data Preview 0.2 data. |
 | config.pathPrefix | string | `"/api/butler"` | The prefix of the path portion of the URL where the Butler service will be exposed.  For example, if the service should be exposed at `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler` |

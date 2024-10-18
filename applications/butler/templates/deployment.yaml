@@ -65,13 +65,6 @@ spec:
             - name: PGUSER
               value: {{ .Values.config.pguser | quote }}
             {{ end }}
-            {{ if .Values.config.additionalS3ProfileName }}
-            - name: LSST_RESOURCES_S3_PROFILE_{{ .Values.config.additionalS3ProfileName }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "butler.fullname" . }}
-                  key: additional-s3-profile
-            {{ end }}
           volumeMounts:
             - name: "butler-secrets"
               mountPath: "/opt/lsst/butler/secrets"

@@ -96,11 +96,6 @@ config:
   # -- URL for the S3 service where files for datasets are stored by Butler.
   s3EndpointUrl: ""
 
-  # -- Profile name identifying a second S3 endpoint and set of credentials
-  # to use for accessing files in the datastore.
-  # @default -- No second S3 profile is available.
-  additionalS3ProfileName: ""
-
   # -- The prefix of the path portion of the URL where the Butler service will
   # be exposed.  For example, if the service should be exposed at
   # `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler`
