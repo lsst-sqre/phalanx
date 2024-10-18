@@ -121,6 +121,10 @@ alert-stream-broker:
   latissTopicPartitions: 45
   latissTopicReplicas: 1
 
+  comcamTopicName: lsstcomcam-alerts
+  comcamTopicPartitions: 45
+  comcamTopicReplicas: 1
+
   # Compression set to snappy to balance alert packet compression speed and size.
   topicCompression: snappy
 
