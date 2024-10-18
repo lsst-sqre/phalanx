@@ -1,4 +1,4 @@
-{{- if .Values.config.metrics.metricsEvents -}}
+{{- if .Values.config.metrics.enabled -}}
 apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:

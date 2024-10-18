@@ -225,15 +225,14 @@ config:
     dataRightsMapping: {}
 
   metrics:
-    metricsEvents:
-      # -- Whether to disable sending metric events. If disabled, other
-      # settings must be present but are ignored.
-      disable: true
+    # -- Whether to enable sending metrics
+    enabled: false
 
-      # -- Name under which to log metric events. Generally there is no reason
-      # to change this.
-      appName: "gafaelfawr"
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    appName: "gafaelfawr"
 
+    events:
       # -- Topic prefix for events. It may sometimes be useful to change this
       # in development environments.
       topicPrefix: "lsst.square.metrics.events"

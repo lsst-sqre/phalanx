@@ -55,7 +55,7 @@ spec:
         - name: "gafaelfawr"
           env:
             {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret" "sidecar" true) | nindent 12 }}
-            {{- if .Values.config.metrics.metricsEvents }}
+            {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_CLIENT_CERT_PATH"
               value: "/etc/gafaelfawr-kafka/user.crt"
             - name: "KAFKA_CLIENT_KEY_PATH"
@@ -102,7 +102,7 @@ spec:
             - name: "config"
               mountPath: "/etc/gafaelfawr"
               readOnly: true
-            {{- if .Values.config.metrics.metricsEvents }}
+            {{- if .Values.config.metrics.enabled }}
             - name: "kafka"
               mountPath: "/etc/gafaelfawr-kafka/ca.crt"
               readOnly: true
@@ -136,7 +136,7 @@ spec:
         - name: "config"
           configMap:
             name: "gafaelfawr-config"
-        {{- if .Values.config.metrics.metricsEvents }}
+        {{- if .Values.config.metrics.enabled }}
         - name: "kafka"
           secret:
             secretName: "gafaelfawr-kafka"
