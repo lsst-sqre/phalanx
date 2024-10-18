@@ -66,7 +66,21 @@ spec:
         operation: All
       - resource:
           type: topic
-          name: "fanned-out-events"
+          name: "fanned-out-comcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      - resource:
+          type: topic
+          name: "fanned-out-hsc-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      - resource:
+          type: topic
+          name: "fanned-out-latiss-events"
           patternType: literal
         type: allow
         host: "*"
