@@ -24,11 +24,11 @@ rubintv:
   workers:
     replicas: 1
     image:
-      repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0037
+      repository: lsstts/rapid-analysis
+      tag: c0039_usdf
       pullPolicy: Always
-    uid: 73006
-    gid: 73006
+    uid: 17951
+    gid: 4085
     scriptsLocation: /repos/rubintv_analysis_service/scripts
     script: rubintv_worker.py -a rubintv -p 8080 -l usdf
     env:
@@ -40,7 +40,7 @@ rubintv:
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
-    volumes:
+    pvcMountpoint:
     - name: sdf-group-rubin
       persistentVolumeClaim:
         name: sdf-group-rubin
@@ -55,6 +55,14 @@ rubintv:
         capacity: 1Gi
       accessMode: ReadOnlyMany
       mountPath: /sdf/data/rubin
+    - name: sdf-data-rubin-rubintv-ddv-config
+      persistentVolumeClaim:
+        name: sdf-data-rubin-rubintv-ddv-config
+        storageClassName: sdf-data-rubin
+        capacity: 1Gi
+      accessMode: ReadWriteMany
+      mountPath: /var/ddv-config
+      subPath: shared/rubintv-ddv-config
     resources:
       limits:
         cpu: 2.0
