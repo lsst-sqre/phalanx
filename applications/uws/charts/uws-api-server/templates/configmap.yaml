@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   config: |
+    ttlSecondsAfterFinished: "{{ .Values.ttlSecondsAfterFinished }}"
     workingVolume:
       {{- toYaml .Values.workingVolume | nindent 6 }}
     volumes:
