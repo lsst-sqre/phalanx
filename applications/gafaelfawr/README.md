@@ -54,7 +54,7 @@ Authentication and identity system
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
-| config.metrics.appName | string | `"gafaelfawr"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.application | string | `"gafaelfawr"` | Name under which to log metrics. Generally there is no reason to change this. |
 | config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
 | config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
 | config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |

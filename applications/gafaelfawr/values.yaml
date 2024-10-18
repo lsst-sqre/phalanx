@@ -230,7 +230,7 @@ config:
 
     # -- Name under which to log metrics. Generally there is no reason to
     # change this.
-    appName: "gafaelfawr"
+    application: "gafaelfawr"
 
     events:
       # -- Topic prefix for events. It may sometimes be useful to change this
