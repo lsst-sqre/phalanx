@@ -26,7 +26,6 @@ Authentication and identity system
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
-| config.cadcBaseUuid | string | Disabled | Whether to support the `/auth/cadc/userinfo` route. If set, this UUID is used as the namespace to generate UUID v5 `sub` claims returned by this route to meet the needs of CADC authentication code. |
 | config.cilogon.clientId | string | `nil` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
 | config.cilogon.loginParams | object | `{"skin":"LSST"}` | Additional parameters to add |
@@ -55,6 +54,11 @@ Authentication and identity system
 | config.ldap.userDn | string | Use anonymous binds | Bind DN for simple bind authentication. If set, `ldap-secret` must be set in the Gafaelfawr Vault secret. Set this or `kerberosConfig`, not both. |
 | config.ldap.userSearchAttr | string | `"uid"` | Search attribute containing the user's username |
 | config.logLevel | string | `"INFO"` | Choose from the text form of Python logging levels |
+| config.metrics.application | string | `"gafaelfawr"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
+| config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.oidc.audience | string | Same as `clientId` | Audience (`aud` claim) to expect in ID tokens. |
 | config.oidc.clientId | string | `nil` | Client ID for generic OpenID Connect support. One and only one of this, `config.cilogon.clientId`, or `config.github.clientId` must be set. |
 | config.oidc.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |

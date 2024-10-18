@@ -3,7 +3,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaTopic
 metadata:
-  name: "lsst.square.app-metrics.events.{{ . }}"
+  name: "lsst.square.metrics.events.{{ . }}"
   labels:
     strimzi.io/cluster: {{ $.Values.cluster.name }}
 spec:

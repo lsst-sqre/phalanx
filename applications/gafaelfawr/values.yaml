@@ -41,12 +41,6 @@ config:
   # @default -- Top-level page of this Phalanx environment
   afterLogoutUrl: null
 
-  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
-  # is used as the namespace to generate UUID v5 `sub` claims returned by this
-  # route to meet the needs of CADC authentication code.
-  # @default -- Disabled
-  cadcBaseUuid: null
-
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
@@ -229,6 +223,28 @@ config:
     # construct the `data_rights` claim, which can be requested by asking for
     # the `rubin` scope.
     dataRightsMapping: {}
+
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "gafaelfawr"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
 
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
