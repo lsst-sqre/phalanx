@@ -34,6 +34,10 @@ Common environment variables
 - name: "GAFAELFAWR_AFTER_LOGOUT_URL"
   value: {{ required "global.baseUrl must be set" .Values.global.baseUrl | quote }}
 {{- end }}
+- name: "GAFAELFAWR_BASE_URL"
+  value: {{ .Values.global.baseUrl | quote }}
+- name: "GAFAELFAWR_BASE_INTERNAL_URL"
+  value: "http://gafaelfawr.{{ .Release.Namespace }}.svc.cluster.local:8080"
 - name: "GAFAELFAWR_BOOTSTRAP_TOKEN"
   valueFrom:
     secretKeyRef:
@@ -122,5 +126,17 @@ Common environment variables
     secretKeyRef:
       name: {{ .secretName | quote }}
       key: "slack-webhook"
+{{- end }}
+{{- if .Values.config.metrics.enabled }}
+- name: "KAFKA_BOOTSTRAP_SERVERS"
+  valueFrom:
+    secretKeyRef:
+      name: "gafaelfawr-kafka"
+      key: "bootstrapServers"
+- name: "KAFKA_SECURITY_PROTOCOL"
+  valueFrom:
+    secretKeyRef:
+      name: "gafaelfawr-kafka"
+      key: "securityProtocol"
 {{- end }}
 {{- end }}
