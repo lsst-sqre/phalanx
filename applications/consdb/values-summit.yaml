@@ -12,11 +12,11 @@ hinfo:
     logConfig: "consdb.hinfo=DEBUG"
   lsstcomcam:
     enable: true
-    tag: "24.10.1"
+    tag: "24.10.2"
     logConfig: "consdb.hinfo=DEBUG"
   lsstcam:
     enable: false
-    tag: "24.10.1"
+    tag: "24.10.2"
 pq:
   image:
-    tag: "24.10.1"
+    tag: "24.10.2"
