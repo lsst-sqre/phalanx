@@ -28,7 +28,7 @@ config:
 productionTools:
   image:
     repository: ghcr.io/lsst-dm/production_tools
-    tag: SP-883
+    tag: 0.1
   env:
     DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
     PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
@@ -36,6 +36,8 @@ productionTools:
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
     S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
     LSST_DISABLE_BUCKET_VALIDATION: "1"
+    REDIS_HOST: "plot-navigator-redis"
+    REDIS_PORT: "6379"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
@@ -79,4 +81,4 @@ butlerConfig:
       readOnly: true
 
 image:
-  tag: DM-44957
+  tag: v0.2.1

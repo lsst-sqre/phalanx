@@ -60,3 +60,11 @@ butlerResources:
   requests:
     cpu: "15m"
     memory: "150Mi"
+
+redis:
+  config:
+    # -- Name of secret containing Redis password
+    secretName: "redis-secret"
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "password"

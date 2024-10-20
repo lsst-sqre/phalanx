@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: production-tools
+  name: production-tools-worker
   labels:
     {{- include "plot-navigator.labels" . | nindent 4 }}
 spec:
@@ -9,12 +9,12 @@ spec:
   selector:
     matchLabels:
       {{- include "plot-navigator.selectorLabels" . | nindent 6 }}
-      app.kubernetes.io/component: production-tools
+      app.kubernetes.io/component: production-tools-worker
   template:
     metadata:
       labels:
         {{- include "plot-navigator.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/component: production-tools
+        app.kubernetes.io/component: production-tools-worker
     spec:
       volumes:
         - name: "butler-secrets-raw"
@@ -64,6 +64,9 @@ spec:
           {{- . | toYaml | nindent 10 }}
           {{- end }}
         {{- end }}
+        command:
+          - arq
+          - lsst.production.tools.cache.Worker
       initContainers:
         # To deal with the Postgres file permission issues,
         # copy the secrets from butler-secrets-raw to butler-secrets.
