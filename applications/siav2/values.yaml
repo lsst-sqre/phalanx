@@ -79,7 +79,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "16.4"
+    tag: "17.0"
 
   # -- Resource limits and requests for the UWS database pod
   resources:
