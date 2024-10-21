@@ -105,24 +105,24 @@ scripts:
 ###
 ### ComCamSim pods
 ###
-- name: summit/LSSTComCamSim/runButlerWatcher.py
+- name: LSSTComCamSim/runButlerWatcher.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-- name: summit/LSSTComCamSim/runHeadNode.py
+- name: LSSTComCamSim/runHeadNode.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-- name: summit/LSSTComCamSim/runMetadataServer.py
+- name: LSSTComCamSim/runMetadataServer.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTComCamSim/runPlotter.py
+- name: LSSTComCamSim/runPlotter.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -136,7 +136,7 @@ scripts:
     limits:
       cpu: 1.0
       memory: 6G
-- name: summit/LSSTComCamSim/runAosDonutPipeline.py
+- name: LSSTComCamSim/runAosDonutPipeline.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -150,7 +150,7 @@ scripts:
     limits:
       cpu: 32
       memory: 96G
-- name: summit/LSSTComCamSim/runFocusSweepAnalysis.py
+- name: LSSTComCamSim/runFocusSweepAnalysis.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -164,7 +164,7 @@ scripts:
     limits:
       cpu: 1
       memory: 2G
-- name: summit/LSSTComCamSim/runMetadataServerAos.py
+- name: LSSTComCamSim/runMetadataServerAos.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -178,7 +178,7 @@ scripts:
     limits:
       cpu: .5
       memory: 1G
-- name: summit/LSSTComCamSim/runPsfPlotting.py
+- name: LSSTComCamSim/runPsfPlotting.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -246,24 +246,24 @@ scripts:
 ###
 ### ComCam pods
 ###
-- name: summit/LSSTComCam/runButlerWatcher.py
+- name: LSSTComCam/runButlerWatcher.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-- name: summit/LSSTComCam/runHeadNode.py
+- name: LSSTComCam/runHeadNode.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-- name: summit/LSSTComCam/runMetadataServer.py
+- name: LSSTComCam/runMetadataServer.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTComCam/runPlotter.py
+- name: LSSTComCam/runPlotter.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -273,21 +273,21 @@ scripts:
 ###
 ### LSSTCam pods
 ###
-- name: summit/LSSTCam/runButlerWatcher.py
+- name: LSSTCam/runButlerWatcher.py
   mounts:
   - lsstcam-data
   - project-shared
-- name: summit/LSSTCam/runHeadNode.py
+- name: LSSTCam/runHeadNode.py
   mounts:
   - lsstcam-data
   - project-shared
-- name: summit/LSSTCam/runMetadataServer.py
+- name: LSSTCam/runMetadataServer.py
   mounts:
   - lsstcam-data
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: summit/LSSTCam/runPlotter.py
+- name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
   - project-shared
@@ -297,7 +297,7 @@ scripts:
 ### ComCamSim StatefulSets
 ###
 comcamsimWorkerSet:
-  name: summit/LSSTComCamSim/runSfmRunner.py
+  name: LSSTComCamSim/runSfmRunner.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -311,7 +311,7 @@ comcamsimWorkerSet:
       cpu: 1.0
       memory: 8G
 comcamsimGather2aSet:
-  name: summit/LSSTComCamSim/runStep2aWorker.py
+  name: LSSTComCamSim/runStep2aWorker.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -325,7 +325,7 @@ comcamsimGather2aSet:
       cpu: 1.0
       memory: 8G
 comcamsimGatherRollupSet:
-  name: summit/LSSTComCamSim/runNightlyWorker.py
+  name: LSSTComCamSim/runNightlyWorker.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -342,7 +342,7 @@ comcamsimGatherRollupSet:
 ### ComCam StatefulSets
 ###
 comcamWorkerSet:
-  name: summit/LSSTComCam/runSfmRunner.py
+  name: LSSTComCam/runSfmRunner.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -356,7 +356,7 @@ comcamWorkerSet:
       cpu: 1.0
       memory: 8G
 comcamGather2aSet:
-  name: summit/LSSTComCam/runStep2aWorker.py
+  name: LSSTComCam/runStep2aWorker.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -370,7 +370,7 @@ comcamGather2aSet:
       cpu: 1.0
       memory: "8G"
 comcamGatherRollupSet:
-  name: summit/LSSTComCam/runNightlyWorker.py
+  name: LSSTComCam/runNightlyWorker.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -387,7 +387,7 @@ comcamGatherRollupSet:
 ### LSSTCam StatefulSets
 ###
 lsstcamWorkerSet:
-  name: summit/LSSTCam/runSfmRunner.py
+  name: LSSTCam/runSfmRunner.py
   mounts:
   - lsstcam-data
   - project-shared
