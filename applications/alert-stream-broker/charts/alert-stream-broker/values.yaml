@@ -121,17 +121,6 @@ users:
     # matches.
     groups: ["rubin-testing"]
 
-
-zookeeper:
-  # -- Number of Zookeeper replicas to run.
-  replicas: 3
-
-  storage:
-    # -- Size of the backing storage disk for each of the Zookeeper instances.
-    size: 1000Gi
-    # -- Name of a StorageClass to use when requesting persistent volumes.
-    storageClassName: standard
-
 tls:
   subject:
     # -- Organization to use in the 'Subject' field of the broker's TLS certificate.
@@ -148,6 +137,29 @@ vaultSecretsPath: ""
 fullnameOverride: ""
 
 nameOverride: ""
+
+kraft: true
+
+kafkaController:
+  # -- Enable Kafka Controller
+  enabled: false
+
+  storage:
+    # -- Size of the backing storage disk for each of the Kafka controllers
+    size: 20Gi
+
+    # -- Name of a StorageClass to use when requesting persistent volumes
+    storageClassName: ""
+
+  # -- Kubernetes requests and limits for the Kafka Controller
+  # @default -- See `values.yaml`
+  resources:
+    requests:
+      memory: 32Gi
+      cpu: "4"
+    limits:
+      memory: 64Gi
+      cpu: "8"
 
 # -- Topic used to send test alerts.
 testTopicName: alert-stream-test

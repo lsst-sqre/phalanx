@@ -18,7 +18,9 @@ Argo CD project: ``rubin``
    nightreport/index
    obsloctap/index
    plot-navigator/index
+   ppdb-replication/index
    production-tools/index
+   rapid-analysis/index
    rubintv/index
    rubintv-dev/index
    schedview-snapshot/index

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: app-metrics
+version: 1.0.0
+appVersion: "1.0.0"
+description: Kafka topics, users, and a telegraf connector for metrics events.
+type: application

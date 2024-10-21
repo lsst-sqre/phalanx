@@ -12,6 +12,7 @@ Argo CD project: ``infrastructure``
 
    argocd/index
    cert-manager/index
+   ghostwriter/index
    ingress-nginx/index
    gafaelfawr/index
    mobu/index

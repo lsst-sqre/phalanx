@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.1
+description: URL rewriter/personalizer
+name: ghostwriter
+sources:
+- https://github.com/lsst-sqre/ghostwriter
+type: application
+version: 1.0.0

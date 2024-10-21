@@ -33,6 +33,7 @@ controller:
         PANDAMON_URL: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
         PANDA_CONFIG_ROOT: "~"
         CULL_TERMINAL_INACTIVE_TIMEOUT: "432000"  # 5 days
+        TMPDIR: "/tmp"
       initContainers:
         - name: "inithome"
           image:

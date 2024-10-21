@@ -13,6 +13,7 @@ Image cutout service complying with IVOA SODA
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
+| cloudsql.image.schemaUpdateTagSuffix | string | `"-alpine"` | Tag suffix to use for the proxy for schema updates |
 | cloudsql.image.tag | string | `"1.37.0"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL is used | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
@@ -26,6 +27,7 @@ Image cutout service complying with IVOA SODA
 | config.storageBucketUrl | string | None, must be set | URL for the GCS bucket for results (must start with `gs`) |
 | config.syncTimeout | string | `"1m"` | Timeout for results from a sync cutout in Safir `parse_timedelta` format |
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
+| config.updateSchema | bool | `false` | Whether to automatically update the vo-cutouts database schema |
 | cutoutWorker.affinity | object | `{}` | Affinity rules for the cutout worker pod |
 | cutoutWorker.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for cutout workers |
 | cutoutWorker.image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts-worker"` | Stack image to use for cutouts |

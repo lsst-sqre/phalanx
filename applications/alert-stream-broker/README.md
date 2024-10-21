@@ -32,7 +32,6 @@ Alert transmission to community brokers
 | alert-database.ingester.serviceAccountName | string | `"alert-database-ingester"` | The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM service account!) which is used by the alert database ingester. |
 | alert-database.ingress.annotations | object | `{}` |  |
 | alert-database.ingress.enabled | bool | `true` | Whether to create an ingress |
-| alert-database.ingress.gafaelfawrAuthQuery | string | `"scope=read:alertdb"` | Query string for Gafaelfawr to authorize access |
 | alert-database.ingress.host | string | None, must be set if the ingress is enabled | Hostname for the ingress |
 | alert-database.ingress.path | string | `"/alertdb"` | Subpath to host the alert database application under the ingress |
 | alert-database.ingress.tls | list | `[]` | Configures TLS for the ingress if needed. If multiple ingresses share the same hostname, only one of them needs a TLS configuration. |
@@ -72,12 +71,17 @@ Alert transmission to community brokers
 | alert-stream-broker.kafka.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Kafka brokers. |
 | alert-stream-broker.kafka.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | alert-stream-broker.kafka.version | string | `"3.4.0"` | Version of Kafka to deploy. |
+| alert-stream-broker.kafkaController.enabled | bool | `false` | Enable Kafka Controller |
+| alert-stream-broker.kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
+| alert-stream-broker.kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |
+| alert-stream-broker.kafkaController.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | alert-stream-broker.kafkaExporter | object | `{"enableSaramaLogging":false,"enabled":false,"groupRegex":".*","logLevel":"warning","topicRegex":".*"}` | Kafka JMX Exporter for more detailed diagnostic metrics. |
 | alert-stream-broker.kafkaExporter.enableSaramaLogging | bool | `false` | Enable Sarama logging |
 | alert-stream-broker.kafkaExporter.enabled | bool | `false` | Enable Kafka exporter. |
 | alert-stream-broker.kafkaExporter.groupRegex | string | `".*"` | Consumer groups to monitor |
 | alert-stream-broker.kafkaExporter.logLevel | string | `"warning"` | Log level for Sarama logging |
 | alert-stream-broker.kafkaExporter.topicRegex | string | `".*"` | Kafka topics to monitor |
+| alert-stream-broker.kraft | bool | `true` |  |
 | alert-stream-broker.maxBytesRetained | string | `"100000000000"` | Maximum number of bytes for the replay topic, per partition, per replica. Default is 100GB, but should be lower to not fill storage. |
 | alert-stream-broker.maxMillisecondsRetained | string | `"5259492000"` | Maximum amount of time to save alerts in the replay topic, in milliseconds. Default is 7 days (604800000). |
 | alert-stream-broker.nameOverride | string | `""` |  |
@@ -95,10 +99,8 @@ Alert transmission to community brokers
 | alert-stream-broker.users[0].readonlyTopics | list | `["alert-stream","alerts-simulated","alert-stream-test"]` | A list of topics that the user should get read-only access to. |
 | alert-stream-broker.users[0].username | string | `"rubin-testing"` | The username for the user that should be created. |
 | alert-stream-broker.vaultSecretsPath | string | `""` | Path to the secret resource in Vault |
-| alert-stream-broker.zookeeper.replicas | int | `3` | Number of Zookeeper replicas to run. |
-| alert-stream-broker.zookeeper.storage.size | string | `"1000Gi"` | Size of the backing storage disk for each of the Zookeeper instances. |
-| alert-stream-broker.zookeeper.storage.storageClassName | string | `"standard"` | Name of a StorageClass to use when requesting persistent volumes. |
 | alert-stream-schema-registry.clusterName | string | `"alert-broker"` | Strimzi "cluster name" of the broker to use as a backend. |
+| alert-stream-schema-registry.compatibilityLevel | string | `"None"` |  |
 | alert-stream-schema-registry.hostname | string | `"usdf-alert-schemas-dev.slac.stanford.edu"` | Hostname for an ingress which sends traffic to the Schema Registry. |
 | alert-stream-schema-registry.name | string | `"alert-schema-registry"` | Name used by the registry, and by its users. |
 | alert-stream-schema-registry.port | int | `8081` | Port where the registry is listening. NOTE: Not actually configurable in strimzi-registry-operator, so this basically cannot be changed. |

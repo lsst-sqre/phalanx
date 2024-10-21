@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 38
-      recommendedTag: "recommended_c0038"
+      cycle: 39
+      recommendedTag: "recommended_c0039"
     lab:
       extraAnnotations:
         k8s.v1.cni.cncf.io/networks: "kube-system/dds"
@@ -58,8 +58,13 @@ controller:
         - name: "lsstcomcam"
           source:
             type: "nfs"
-            serverPath: "/repo/LSSTComCam"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/repo/LSSTComCam"
+            server: "nfs3.cp.lsst.org"
+        - name: "lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/repo/LSSTCam"
+            server: "nfs3.cp.lsst.org"
         - name: "obs-env"
           source:
             type: "nfs"
@@ -73,23 +78,33 @@ controller:
         - name: "lsstdata-comcam"
           source:
             type: "nfs"
-            serverPath: "/lsstdata"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/lsstdata"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-auxtel"
           source:
             type: "nfs"
             serverPath: "/auxtel/lsstdata"
             server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstdata-lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/lsstdata"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-base-comcam"
           source:
             type: "nfs"
-            serverPath: "/lsstdata/base/comcam"
-            server: "comcam-archiver.cp.lsst.org"
+            serverPath: "/comcam/lsstdata/base/comcam"
+            server: "nfs3.cp.lsst.org"
         - name: "lsstdata-base-auxtel"
           source:
             type: "nfs"
             serverPath: "/auxtel/lsstdata/base/auxtel"
             server: "nfs-auxtel.cp.lsst.org"
+        - name: "lsstdata-base-lsstcam"
+          source:
+            type: "nfs"
+            serverPath: "/lsstcam/lsstdata/base/maintel"
+            server: "nfs3.cp.lsst.org"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -101,6 +116,8 @@ controller:
           volumeName: "latiss"
         - containerPath: "/repo/LSSTComCam"
           volumeName: "lsstcomcam"
+        - containerPath: "/repo/LSSTCam"
+          volumeName: "lsstcam"
         - containerPath: "/net/obs-env"
           volumeName: "obs-env"
         - containerPath: "/readonly/lsstdata/other"
@@ -109,10 +126,14 @@ controller:
           volumeName: "lsstdata-comcam"
         - containerPath: "/readonly/lsstdata/auxtel"
           volumeName: "lsstdata-auxtel"
+        - containerPath: "/readonly/lsstdata/lsstcam"
+          volumeName: "lsstdata-lsstcam"
         - containerPath: "/data/lsstdata/base/comcam"
           volumeName: "lsstdata-base-comcam"
         - containerPath: "/data/lsstdata/base/auxtel"
           volumeName: "lsstdata-base-auxtel"
+        - containerPath: "/data/lsstdata/base/maintel"
+          volumeName: "lsstdata-base-lsstcam"
 
 hub:
   internalDatabase: false

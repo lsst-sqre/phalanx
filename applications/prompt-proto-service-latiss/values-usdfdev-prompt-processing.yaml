@@ -14,8 +14,8 @@ prompt-proto-service:
       main: >-
         (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-      preprocessing: (survey="SURVEY")=[]
-    calibRepo: s3://rubin-pp-dev-users/central_repo/
+      preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
+    calibRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
     imageBucket: rubin-pp-dev
@@ -27,6 +27,9 @@ prompt-proto-service:
 
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_latiss-dev.py
+
+  alerts:
+    topic: "alert-stream-test"
 
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy

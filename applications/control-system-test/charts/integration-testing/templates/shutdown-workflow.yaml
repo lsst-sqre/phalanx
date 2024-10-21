@@ -14,6 +14,8 @@ spec:
   - name: testreports
     persistentVolumeClaim:
       claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: pull-secret
   podMetadata:
     labels:
       argocd.argoproj.io/instance: {{ .Values.jobLabelName }}
@@ -41,8 +43,5 @@ spec:
             value: "-A Test_Report_Shutdown.list"
           - name: jobname
             value: shutdown
-      - name: call-save-reports
-        depends: shutdown
-        templateRef:
-          name: save-reports-workflow
-          template: save-reports
+          - name: reportname
+            value: shutdown.xml

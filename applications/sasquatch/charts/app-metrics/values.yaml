@@ -1,0 +1,109 @@
+## Default values.yaml for the Metrics Events subchart.
+
+# -- app-metrics configuration in any environment in which the subchart is
+# enabled. This should stay globally specified here, and it shouldn't be
+# overridden.  See
+# [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration)
+# for the structure of this value.
+# @default -- See `values.yaml`
+globalAppConfig:
+  gafaelfawr:
+    influxTags:
+      - "service"
+      - "username"
+  mobu:
+    influxTags:
+      - "type"
+
+# -- A list of applications that will publish metrics events, and the keys
+# that should be ingested into InfluxDB as tags.  The names should be the same
+# as the app names in Phalanx.
+apps: []
+
+# -- Keys in an every event sent by any app that should be recorded in
+# InfluxDB as "tags" (vs. "fields"). These will be concatenated with the
+# `influxTags` from `globalAppConfig`
+globalInfluxTags: ["application"]
+
+cluster:
+  # -- Name of the Strimzi cluster. Synchronize this with the cluster name in
+  # the parent Sasquatch chart.
+  name: sasquatch
+
+# These values refer to the Telegraf deployment and config
+image:
+  # -- Telegraf image repository
+  repo: "docker.io/library/telegraf"
+
+  # -- Telegraf image tag
+  tag: "1.30.2-alpine"
+
+  # -- Image pull policy
+  pullPolicy: "Always"
+
+# -- Annotations for telegraf-kafka-consumers pods
+podAnnotations: {}
+
+# -- Labels for telegraf-kafka-consumer pods
+podLabels: {}
+
+# -- Secret names to use for Docker pulls
+imagePullSecrets: []
+
+# -- Arguments passed to the Telegraf agent containers
+args: []
+
+# -- Telegraf agent enviroment variables
+# @default -- See `values.yaml`
+env:
+  - name: TELEGRAF_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # Telegraf KafkaUser password.
+        key: telegraf-password
+  - name: INFLUXDB_USER
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # InfluxDB v1 user
+        key: influxdb-user
+  - name: INFLUXDB_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: sasquatch
+        # InfluxDB v1 password
+        key: influxdb-password
+
+# -- Name of the secret with values to be added to the environment
+envFromSecret: ""
+
+# -- Run Telegraf in debug mode.
+# @default -- false
+debug: false
+
+influxdb:
+  # -- URL of the InfluxDB v1 instance to write to
+  url: "http://sasquatch-influxdb.sasquatch:8086"
+
+# -- Number of Telegraf replicas. Multiple replicas increase availability.
+replicaCount: 3
+
+# -- Kubernetes resources requests and limits
+# @default -- See `values.yaml`
+resources:
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+  requests:
+    cpu: "0.5"
+    memory: "1Gi"
+
+# -- Node labels for pod assignment
+nodeSelector: {}
+
+# -- Affinity for pod assignment
+affinity: {}
+
+# -- Tolerations for pod assignment
+tolerations: []

@@ -81,3 +81,17 @@ Even when you want to be prompted.
 **Solution:** Have the user go to `https://cilogin.org/me <https://cilogon.org/me>`__ and choose "Delete ALL".
 This will clear their remembered selection.
 They can they retry whatever operation they were attempting.
+
+User deleted from COmanage and needs to be restored
+===================================================
+
+**Symptoms**: In a Phalanx environment that uses CILogon and COmanage, a user was deleted from COmanage, possibly because their identity record or authentication configuration was irrevocably broken.
+The user needs to be reinstated with their previously existing files.
+
+**Solution**: The user should create their account again and choose the same username that they used previously.
+This will assign them the same UID and GID that they had previously.
+Currently, we don't delete files for deleted users, so all of their files should still be intact.
+
+UID and GID for users is tracked in Google Filestore and is assigned solely based on the user's username.
+Any user in the environment with the same username will get the same UID and GID, and UIDs and GIDs are never reused.
+Therefore, the same UID and GID can be retained by keeping the same username.

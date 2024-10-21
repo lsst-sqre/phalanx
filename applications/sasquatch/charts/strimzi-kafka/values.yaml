@@ -11,7 +11,7 @@ cluster:
 
 kafka:
   # -- Version of Kafka to deploy
-  version: "3.7.1"
+  version: "3.8.0"
 
   # -- Number of Kafka broker replicas to run
   replicas: 3
@@ -29,14 +29,12 @@ kafka:
 
   config:
     # -- Number of minutes for a consumer group's offsets to be retained
-    offsets.retention.minutes: 2880
+    # @default -- 4320 minutes (3 days)
+    offsets.retention.minutes: 4320
 
     # -- Number of days for a topic's data to be retained
-    log.retention.hours: 48
-
-    # -- How much disk space Kafka will ensure is available, set to 70% of the
-    # data partition size
-    log.retention.bytes: "350000000000"
+    # @default -- 4320 minutes (3 days)
+    log.retention.minutes: 4320
 
     # -- The largest record batch size allowed by Kafka
     message.max.bytes: 10485760
@@ -284,6 +282,7 @@ users:
   consdb:
     # -- Enable user consdb
     enabled: false
+
 
 mirrormaker2:
   # -- Enable replication in the target (passive) cluster

@@ -32,6 +32,7 @@ Log messages related to an exposure
 | db.host | string | `"postgres.postgres"` | database host |
 | db.port | int | `5432` | database port |
 | db.user | string | `"exposurelog"` | database user |
+| env | list | `[]` | Environment variables to set in the exposurelog pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -39,12 +40,13 @@ Log messages related to an exposure
 | image.pullPolicy | string | `"Always"` | Pull policy for the exposurelog image |
 | image.repository | string | `"lsstsqre/exposurelog"` | exposurelog image to use |
 | image.tag | string | The appVersion of the chart | Tag of exposure image to use |
-| ingress.gafaelfawrAuthQuery | string | `""` | Gafaelfawr auth query string |
+| ingress.auth.enabled | bool | `false` | Whether to require Gafaelfawr authentication for access |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the exposurelog pod |
 | podAnnotations | object | `{}` | Annotations for the exposurelog pod |
 | podSecurityContext | object | `{}` | Security context for the exposurelog pod |
 | replicaCount | int | `1` | How many exposurelog pods to run |
 | resources | object | `{}` | Resource limits and requests for the exposurelog pod |
+| secretEnv | list | `[]` | Additional secret environment variables to set in the exposurelog pod |
 | securityContext | object | `{}` | Security context for the exposurelog deployment |
 | tolerations | list | `[]` | Tolerations for the exposurelog pod |

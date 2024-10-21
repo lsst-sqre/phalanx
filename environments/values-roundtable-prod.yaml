@@ -27,5 +27,6 @@ applications:
   squarebot: true
   telegraf: true
   telegraf-ds: true
+  templatebot: true
   unfurlbot: true
   vault: true

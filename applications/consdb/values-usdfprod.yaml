@@ -1,17 +1,18 @@
 db:
   user: "usdf"
+  passwordkey: "oods-password"
   host: "usdf-summitdb.slac.stanford.edu"
   database: "exposurelog"
 hinfo:
   latiss:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
   lsstcomcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
   lsstcam:
     enable: false
-    tag: "tickets-DM-44551"
+    tag: "24.10.1"
 pq:
   image:
-    tag: "main"
+    tag: "24.10.1"

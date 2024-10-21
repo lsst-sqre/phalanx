@@ -1,0 +1,15 @@
+{{- range .Values.apps }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: "lsst.square.metrics.events.{{ . }}"
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  partitions: 10
+  replicas: 3
+  config:
+    # http://kafka.apache.org/documentation/#topicconfigs
+    retention.ms: 86400000  # 1 day
+{{- end }}

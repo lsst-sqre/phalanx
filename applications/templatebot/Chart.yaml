@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: "0.3.0"
+description: Create new projects
+name: templatebot
+sources:
+  - https://github.com/lsst-sqre/templatebot
+type: application
+version: 1.0.0

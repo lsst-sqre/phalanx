@@ -4,11 +4,11 @@ version: 1.0.0
 description: "Image cutout service complying with IVOA SODA"
 sources:
   - "https://github.com/lsst-sqre/vo-cutouts"
-appVersion: 3.1.0
+appVersion: 3.2.0
 
 dependencies:
   - name: redis
-    version: 1.0.13
+    version: 1.0.14
     repository: https://lsst-sqre.github.io/charts/
 
 annotations:

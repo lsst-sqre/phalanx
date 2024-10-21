@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "ghostwriter"
+  labels:
+    {{- include "ghostwriter.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "ghostwriter.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "ghostwriter.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: "GHOSTWRITER_ENVIRONMENT_URL"
+              value: {{ .Values.global.baseUrl | quote }}
+            {{- if .Values.config.slackAlerts }}
+            - name: "GHOSTWRITER_ALERT_HOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "ghostwriter-secret"
+                  key: "slack-webhook"
+            {{- end }}
+            {{- if .Values.config.debug }}
+            - name: GHOSTWRITER_LOG_LEVEL
+              value: "DEBUG"
+            - name: GHOSTWRITER_LOGGING_PROFILE
+              value: "development"
+            {{- end }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: "config"
+              mountPath: "/etc/ghostwriter"
+              readOnly: true
+      volumes:
+        - name: "config"
+          configMap:
+            name: "ghostwriter-config"
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000

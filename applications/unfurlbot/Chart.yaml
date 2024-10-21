@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "0.3.0"
+appVersion: "0.3.1"
 description: Squarebot backend that unfurls Jira issues.
 name: unfurlbot
 sources:
@@ -9,5 +9,5 @@ version: 1.0.0
 
 dependencies:
   - name: redis
-    version: 1.0.13
+    version: 1.0.14
     repository: https://lsst-sqre.github.io/charts/

@@ -1,0 +1,31 @@
+db:
+  user: "exposurelog"
+  passwordkey: "exposurelog-password"
+  host: "postgresdb01.tu.lsst.org"
+  database: "exposurelog"
+lfa:
+  s3EndpointUrl: "https://s3.tu.lsst.org"
+hinfo:
+  latiss:
+    enable: true
+    tag: "24.10.1"
+    logConfig: "consdb.hinfo=DEBUG"
+  lsstcomcam:
+    enable: true
+    tag: "24.10.1"
+    logConfig: "consdb.hinfo=DEBUG"
+  lsstcam:
+    enable: false
+    tag: "24.10.1"
+
+pq:
+  image:
+    tag: "24.10.1"
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 20Gi
+  limits:
+    cpu: 500m
+    memory: 20Gi

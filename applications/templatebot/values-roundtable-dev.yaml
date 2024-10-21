@@ -1,0 +1,5 @@
+image:
+  pullPolicy: Always
+
+config:
+  logLevel: "DEBUG"

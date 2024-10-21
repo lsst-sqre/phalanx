@@ -129,15 +129,6 @@ worker:
       # -- If specified, location for htcondor schedd address file to be injected into worker pods
       contents: null
 
-redis:
-  config:
-    # -- Name of secret containing Redis password
-    secretName: "redis-secret"
-
-    # -- Key inside secret from which to get the Redis password (do not
-    # change)
-    secretKey: "password"
-
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

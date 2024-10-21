@@ -6,20 +6,23 @@ kind: Deployment
 metadata:
   name: sasquatch-telegraf-{{ $key }}
   labels:
-    app: sasquatch-telegraf-kafka-consumer
+    app.kubernetes.io/name: sasquatch-telegraf
+    app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
+    app.kubernetes.io/part-of: sasquatch
 spec:
   replicas: {{ default 1 $value.replicaCount }}
   selector:
     matchLabels:
-      app: sasquatch-telegraf-kafka-consumer
+      app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
   template:
     metadata:
       labels:
-        app: sasquatch-telegraf-kafka-consumer
-      {{- if $.Values.podAnnotations }}
+        app.kubernetes.io/instance: sasquatch-telegraf-{{ $key }}
       annotations:
+        checksum/config: {{ include "configmap" (dict "key" $key "value" $value "influxdbUrl" $.Values.influxdb.url ) | sha256sum }}
+        {{- if $.Values.podAnnotations }}
         {{- toYaml $.Values.podAnnotations | nindent 8 }}
-      {{- end }}
+        {{- end }}
     spec:
       securityContext:
         runAsNonRoot: true

@@ -16,6 +16,8 @@ clusterName: alert-broker
 # -- Name of the topic used by the Schema Registry to store data.
 schemaTopic: registry-schemas
 
+compatibilityLevel: None
+
 # -- Hostname for an ingress which sends traffic to the Schema Registry.
 hostname: usdf-alert-schemas-dev.slac.stanford.edu
 

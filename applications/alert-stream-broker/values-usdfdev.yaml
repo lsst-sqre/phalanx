@@ -110,7 +110,6 @@ alert-database:
   ingress:
     enabled: true
     host: "usdf-rsp-dev.slac.stanford.edu"
-    gafaelfawrAuthQuery: "scope=read:alertdb"
 
   storage:
     gcp:

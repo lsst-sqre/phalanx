@@ -1,0 +1,31 @@
+{{- range .Values.apps }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: app-metrics-{{ . }}
+  labels:
+    strimzi.io/cluster: {{ $.Values.cluster.name }}
+spec:
+  authentication:
+    type: tls
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: app-metrics-events
+          patternType: prefix
+        operations:
+          - "Read"
+        host: "*"
+      - resource:
+          type: topic
+          name: "lsst.square.metrics.events.{{ . }}"
+          patternType: literal
+        operations:
+          - "Describe"
+          - "Read"
+          - "Write"
+        host: "*"
+{{- end }}

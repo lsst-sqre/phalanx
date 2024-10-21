@@ -20,10 +20,9 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | connect.replicas | int | `3` | Number of Kafka Connect replicas to run |
 | cruiseControl | object | `{"enabled":false}` | Configuration for the Kafka Cruise Control |
 | kafka.affinity | object | See `values.yaml` | Affinity for Kafka pod assignment |
-| kafka.config."log.retention.bytes" | string | `"350000000000"` | How much disk space Kafka will ensure is available, set to 70% of the data partition size |
-| kafka.config."log.retention.hours" | int | `48` | Number of days for a topic's data to be retained |
+| kafka.config."log.retention.minutes" | int | 4320 minutes (3 days) | Number of days for a topic's data to be retained |
 | kafka.config."message.max.bytes" | int | `10485760` | The largest record batch size allowed by Kafka |
-| kafka.config."offsets.retention.minutes" | int | `2880` | Number of minutes for a consumer group's offsets to be retained |
+| kafka.config."offsets.retention.minutes" | int | 4320 minutes (3 days) | Number of minutes for a consumer group's offsets to be retained |
 | kafka.config."replica.fetch.max.bytes" | int | `10485760` | The number of bytes of messages to attempt to fetch for each partition |
 | kafka.externalListener.bootstrap.annotations | object | `{}` | Annotations that will be added to the Ingress, Route, or Service resource |
 | kafka.externalListener.bootstrap.host | string | Do not configure TLS | Name used for TLS hostname verification |
@@ -41,7 +40,7 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | kafka.storage.size | string | `"500Gi"` | Size of the backing storage disk for each of the Kafka brokers |
 | kafka.storage.storageClassName | string | `""` | Name of a StorageClass to use when requesting persistent volumes |
 | kafka.tolerations | list | `[]` | Tolerations for Kafka broker pod assignment |
-| kafka.version | string | `"3.7.1"` | Version of Kafka to deploy |
+| kafka.version | string | `"3.8.0"` | Version of Kafka to deploy |
 | kafkaController.enabled | bool | `false` | Enable Kafka Controller |
 | kafkaController.resources | object | See `values.yaml` | Kubernetes requests and limits for the Kafka Controller |
 | kafkaController.storage.size | string | `"20Gi"` | Size of the backing storage disk for each of the Kafka controllers |

@@ -137,7 +137,12 @@ meta:
     # InfluxDB nodes. Must have a key named `secret` that should be a long,
     # random string See [documentation for
     # shared-internal-secret](https://docs.influxdata.com/enterprise_influxdb/v1/administration/configure/config-data-nodes/#meta-internal-shared-secret).
-    secretName: influxdb-enterprise-shared-secret
+    secret:
+      # -- Name of the secret containing the shared secret
+      name: influxdb-enterprise-shared-secret
+
+      # -- Key within that secret that contains the shared secret
+      key: secret
 
   service:
     # -- Service type for the meta service

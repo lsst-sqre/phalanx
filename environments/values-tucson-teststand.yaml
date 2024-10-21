@@ -11,6 +11,7 @@ namespaceLabels:
 
 applications:
   argo-workflows: true
+  consdb: true
   exposurelog: true
   mobu: true
   narrativelog: true
@@ -18,6 +19,8 @@ applications:
   nublado: true
   obsenv-management: true
   portal: true
+  rapid-analysis: true
+  rubintv: true
   sasquatch: true
   squareone: true
   strimzi: true

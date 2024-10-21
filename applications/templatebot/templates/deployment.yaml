@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "templatebot"
+  labels:
+    {{- include "templatebot.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "templatebot.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "templatebot.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          envFrom:
+            - configMapRef:
+                name: "templatebot"
+          env:
+            # Writeable directory for caching template repo checkouts
+            - name: "TEMPLATEBOT_TEMPLATE_CACHE_DIR"
+              value: "/tmp/template_repo_cache"
+            # Writeable directory for concatenating certs. See "tmp" volume.
+            - name: "KAFKA_CERT_TEMP_DIR"
+              value: "/tmp/kafka_certs"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              value: "SSL"
+            # From KafkaAccess
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: templatebot-kafka
+                  key: "bootstrapServers"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/kafkacluster/ca.crt"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/kafkauser/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/kafkauser/user.key"
+            # From Vault secrets
+            - name: "TEMPLATEBOT_SLACK_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_SLACK_APP_ID"
+            - name: "TEMPLATEBOT_SLACK_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_SLACK_TOKEN"
+            - name: "TEMPLATEBOT_GITHUB_APP_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_ID"
+            - name: "TEMPLATEBOT_GITHUB_APP_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_USERNAME"
+            - name: "TEMPLATEBOT_GITHUB_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_GITHUB_APP_PRIVATE_KEY"
+            - name: "TEMPLATEBOT_LTD_USERNAME"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_LTD_USERNAME"
+            - name: "TEMPLATEBOT_LTD_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "templatebot"
+                  key: "TEMPLATEBOT_LTD_PASSWORD"
+          volumeMounts:
+            - name: "kafka"
+              mountPath: "/etc/kafkacluster/ca.crt"
+              subPath: "ssl.truststore.crt" # CA cert from the Kafka cluster
+            - name: "kafka"
+              mountPath: "/etc/kafkauser/user.crt"
+              subPath: "ssl.keystore.crt" # User cert from the Kafka cluster signed by the clients' CA
+            - name: "kafka"
+              mountPath: "/etc/kafkauser/user.key"
+              subPath: "ssl.keystore.key" # private key for the consuming client
+            - name: "kafka-certs-tmp"
+              mountPath: "/tmp/kafka_certs"
+            - name: "tmp"
+              mountPath: "/tmp"
+            - name: "repo-cache"
+              mountPath: "/tmp/template_repo_cache"
+            - name: "cookiecutter-replay-dir"
+              mountPath: "/home/appuser/.cookiecutter_replay/"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "kafka"
+          secret:
+            secretName: templatebot-kafka
+        - name: "templatebot"
+          secret:
+            secretName: "templatebot"
+        - name: "tmp"
+          emptyDir: {}
+        - name: "cookiecutter-replay-dir"
+          emptyDir: {}
+        - name: "kafka-certs-tmp"
+          emptyDir: {}
+        - name: "repo-cache"
+          emptyDir: {}

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "templatebot"
+  labels:
+    {{- include "templatebot.labels" . | nindent 4 }}
+data:
+  TEMPLATEBOT_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  TEMPLATEBOT_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  TEMPLATEBOT_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  TEMPLATEBOT_PROFILE: {{ .Values.config.logProfile | quote }}
+  TEMPLATEBOT_TEMPLATE_REPO_URL: {{ .Values.config.templateRepoUrl | quote }}
+  TEMPLATEBOT_APP_MENTION_TOPIC: {{ .Values.config.topics.slackAppMention | quote }}
+  TEMPLATEBOT_MESSAGE_IM_TOPIC: {{ .Values.config.topics.slackMessageIm | quote }}
+  TEMPLATEBOT_BLOCK_ACTIONS_TOPIC: {{ .Values.config.topics.slackBlockActions | quote }}
+  TEMPLATEBOT_VIEW_SUBMISSION_TOPIC: {{ .Values.config.topics.slackViewSubmission | quote }}

@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: sensor-cscs-workflow
+  labels:
+    workflows.argoproj.io/type: "integration-test"
+    argocd.argoproj.io/instance: integration-testing
+spec:
+  serviceAccountName: {{ .Values.serviceAccount }}
+  artifactRepositoryRef:
+    configMap: integration-test-controller-configmap
+    key: artifactRepository
+  volumes:
+  - name: testreports
+    persistentVolumeClaim:
+      claimName: {{ .Values.persistentVolume.claimName }}
+  imagePullSecrets:
+  - name: pull-secret
+  podMetadata:
+    labels:
+      argocd.argoproj.io/instance: integration-testing
+  arguments:
+    parameters:
+    - name: date-key
+      value: "20240725"
+  entrypoint: run-tests
+  templates:
+  - name: run-tests
+    dag:
+      tasks:
+      - name: call-cleanup-reports
+        templateRef:
+          name: cleanup-reports-workflow
+          template: cleanup-reports
+      - name: sensor-cscs
+        depends: call-cleanup-reports
+        templateRef:
+          name: integration-test-job-template
+          template: inttest-template
+        arguments:
+          parameters:
+          - name: integrationtest
+            value: "-A Test_Report_SensorCSCs.list"
+          - name: jobname
+            value: sensor-cscs
+          - name: reportname
+            value: sensor_cscs.xml

@@ -1,0 +1,44 @@
+config:
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "development"
+
+  # -- APDB config file resource
+  apdbConfig: "label:pp-prod:lsstcomcamsim-or4"
+
+  # -- PPDB config file resource
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-1.yaml"
+
+  # -- APDB index URI
+  apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
+
+  # -- S3 endpoint URL
+  s3EndpointUrl: https://s3dfrgw.slac.stanford.edu
+
+  # -- S3 profile name for additional S3 profile
+  additionalS3ProfileName: "embargo"
+
+  # -- S3 profile URL for additional S3 profile
+  additionalS3ProfileUrl: "https://sdfembs3.sdf.slac.stanford.edu"
+
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volumeMounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
