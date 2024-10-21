@@ -41,6 +41,11 @@ config:
   # @default -- Top-level page of this Phalanx environment
   afterLogoutUrl: null
 
+  # -- URL for direct connections to the Gafaelfawr service, bypassing the
+  # Ingress. Must use a service name of `gafaelfawr` and port 8080.
+  # @default -- FQDN under `svc.cluster.local`
+  baseInternalUrl: null
+
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true

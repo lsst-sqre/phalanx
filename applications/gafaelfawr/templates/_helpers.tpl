@@ -36,8 +36,10 @@ Common environment variables
 {{- end }}
 - name: "GAFAELFAWR_BASE_URL"
   value: {{ .Values.global.baseUrl | quote }}
+{{- if not .Values.config.baseInternalUrl }}
 - name: "GAFAELFAWR_BASE_INTERNAL_URL"
   value: "http://gafaelfawr.{{ .Release.Namespace }}.svc.cluster.local:8080"
+{{- end }}
 - name: "GAFAELFAWR_BOOTSTRAP_TOKEN"
   valueFrom:
     secretKeyRef:
