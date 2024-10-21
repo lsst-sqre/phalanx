@@ -29,6 +29,7 @@ argo-cd:
         g, fritzm@slac.stanford.edu, role:admin
         g, cslater@slac.stanford.edu, role:admin
         g, yusra@slac.stanford.edu, role:admin
+        g, rra@slac.stanford.edu, role:admin
       scopes: "[email]"
 
   server:
