@@ -93,8 +93,13 @@ config:
   # @default -- Use values specified in per-repository Butler config files.
   pguser: ""
 
-  # -- URL for the S3 service where files for datasets are stored by Butler.
+  # -- URL for the primary S3 service where files for datasets are stored by Butler.
   s3EndpointUrl: ""
+
+  # -- Endpoint URLs for additional S3 services used by the Butler, as a
+  # mapping from profile name to URL.
+  # @default -- No additional URLs
+  additionalS3EndpointUrls: {}
 
   # -- The prefix of the path portion of the URL where the Butler service will
   # be exposed.  For example, if the service should be exposed at
