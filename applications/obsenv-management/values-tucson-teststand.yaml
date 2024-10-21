@@ -15,4 +15,4 @@ obsenv-ui:
     pullPolicy: Always
   config:
     pathPrefix: /obsenv-management
-    authGroup: obsenv-admin-group
+    authGroup: lsst-ts-obsenv-admin-group
