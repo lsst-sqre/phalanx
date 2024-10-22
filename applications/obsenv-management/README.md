@@ -34,6 +34,7 @@ Rubin Observatory Environment Management System
 | obsenv-api.securityContext.user | int | `72091` | User ID |
 | obsenv-api.tolerations | list | `[]` | Tolerations for the obsenv-api deployment pod |
 | obsenv-ui.affinity | object | `{}` | Affinity rules for the obsenv-ui deployment pod |
+| obsenv-ui.config.authGroup | string | `"test-group"` | The group used to authorize users to change the package versions |
 | obsenv-ui.config.logLevel | string | `"INFO"` | Logging level |
 | obsenv-ui.config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | obsenv-ui.config.pathPrefix | string | `"/obsenv-ui"` | URL path prefix |
