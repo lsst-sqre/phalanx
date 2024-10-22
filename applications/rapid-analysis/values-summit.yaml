@@ -136,7 +136,7 @@ scripts:
     limits:
       cpu: 1.0
       memory: 6G
-- name: LSSTComCamSim/runAosDonutPipeline.py
+- name: LSSTComCam/runAosDonutPipeline.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -150,7 +150,7 @@ scripts:
     limits:
       cpu: 32
       memory: 96G
-- name: LSSTComCamSim/runFocusSweepAnalysis.py
+- name: LSSTComCam/runFocusSweepAnalysis.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -164,7 +164,7 @@ scripts:
     limits:
       cpu: 1
       memory: 2G
-- name: LSSTComCamSim/runMetadataServerAos.py
+- name: LSSTComCam/runMetadataServerAos.py
   mounts:
   - comcam-data
   - comcam-gen3-data
@@ -178,7 +178,7 @@ scripts:
     limits:
       cpu: .5
       memory: 1G
-- name: LSSTComCamSim/runPsfPlotting.py
+- name: LSSTComCam/runPsfPlotting.py
   mounts:
   - comcam-data
   - comcam-gen3-data
