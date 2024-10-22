@@ -23,6 +23,7 @@ applications:
   plot-navigator: true
   portal: true
   sasquatch: true
+  sia: true
   siav2: false
   ssotap: true
   production-tools: true
