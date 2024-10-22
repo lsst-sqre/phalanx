@@ -1,14 +1,15 @@
 environment:
-  DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
-  PGPASSFILE: "/home/worker/.lsst/postgres-credentials.txt"
-  PGUSER: "rubin"
-  AWS_SHARED_CREDENTIALS_FILE: "/home/worker/.lsst/aws-credentials.ini"
-  S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
-  BUTLER_DEFAULT_REPO: "/repo/main"
-  BUTLER_DEFAULT_COLLECTION: "HSC/runs/RC2/w_2024_02/DM-42454"
-  LSST_DISABLE_BUCKET_VALIDATION: "1"
+  BASE_URL: "/plot-navigator"
+  REPO_URLS: '{"embargo": "http://internal-butler/api/butler/repo/embargo", "/repo/main": "http://internal-butler/api/butler/repo/main", "/repo/dc2": "http://internal-butler/api/butler/repo/dc2"}'
+  BUCKET_NAME: "rubin-plot-navigator"
+  BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
 
 config:
+  persistentVolumeClaims:
+    - name: sdf-group-rubin
+      storageClassName: sdf-group-rubin
+    - name: sdf-data-rubin
+      storageClassName: sdf-data-rubin
   volumes:
     - name: sdf-group-rubin
       persistentVolumeClaim:
@@ -19,10 +20,65 @@ config:
   volume_mounts:
     - name: sdf-group-rubin
       mountPath: /sdf/group/rubin
+      readOnly: true
     - name: sdf-data-rubin
       mountPath: /sdf/data/rubin
+      readOnly: true
+
+productionTools:
+  image:
+    repository: ghcr.io/lsst-dm/production_tools
+    tag: 0.1
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
+    PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
+    PGUSER: "rubin"
+    AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
+    S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+    LSST_DISABLE_BUCKET_VALIDATION: "1"
+    REDIS_HOST: "plot-navigator-redis"
+    REDIS_PORT: "6379"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
+
+butlerConfig:
+  pguser: "rubin"
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"
+  repositories:
+    embargo: "s3://rubin-summit-users/butler.yaml"
+    main: "/sdf/group/rubin/repo/main"
+    dc2: "/sdf/group/rubin/repo/dc2"
+  volumes:
+    - name: sdf-group-rubin
+      persistentVolumeClaim:
+        claimName: sdf-group-rubin
+    - name: sdf-data-rubin
+      persistentVolumeClaim:
+        claimName: sdf-data-rubin
+  volume_mounts:
+    - name: sdf-group-rubin
+      mountPath: /sdf/group/rubin
+      readOnly: true
+    - name: sdf-data-rubin
+      mountPath: /sdf/data/rubin
+      readOnly: true
+
+image:
+  tag: v0.2.1

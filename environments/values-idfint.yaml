@@ -20,7 +20,6 @@ applications:
   hips: true
   mobu: true
   nublado: true
-  plot-navigator: true
   portal: true
   sasquatch: true
   siav2: false
