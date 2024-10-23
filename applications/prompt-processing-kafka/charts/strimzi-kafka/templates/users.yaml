@@ -41,6 +41,13 @@ spec:
         type: allow
         host: "*"
         operation: All
+      - resource:
+          type: topic
+          name: "fanned-out-latiss-events-2"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -81,6 +88,13 @@ spec:
       - resource:
           type: topic
           name: "fanned-out-latiss-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      - resource:
+          type: topic
+          name: "fanned-out-latiss-events-2"
           patternType: literal
         type: allow
         host: "*"
