@@ -6,3 +6,13 @@ strimzi-kafka:
     enabled: true
   kafkaController:
     enabled: true
+  kafka:
+    storage:
+      size: 100Gi
+      storageClassName: wekafs--sdf-k8s01
+kafdrop:
+  ingress:
+    enabled: false
+  kafka:
+    broker: 10.103.195.233:9092
+  schemaregistry: http://10.104.75.248:8081

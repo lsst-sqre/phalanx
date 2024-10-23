@@ -232,8 +232,4 @@ superusers:
 users:
   kafdrop:
     # -- Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart).
-    enabled: false
-
-  promptProcessing:
-    # -- Enable user prompt-processing
-    enabled: false
+    enabled: true
