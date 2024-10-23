@@ -59,7 +59,7 @@ spec:
           - name: KAFKA_PROPERTIES
             valueFrom:
               secretKeyRef:
-                name: sasquatch
+                name: prompt-processing-kafka-secret
                 key: kafdrop-kafka-properties
           ports:
             - name: http
