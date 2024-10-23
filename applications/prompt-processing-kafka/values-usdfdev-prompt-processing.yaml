@@ -14,12 +14,12 @@ strimzi-kafka:
     hsc:
       enabled: true
       partitions: 200
-      replicas: 1
+      replicas: 3
       retention: 3600000
     latiss:
       enabled: true
       partitions: 200
-      replicas: 1
+      replicas: 3
       retention: 3600000
 kafdrop:
   ingress:
