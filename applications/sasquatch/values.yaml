@@ -93,6 +93,11 @@ influxdb:
       # within the TSM engine and WAL
       trace-logging-enabled: true
 
+      # -- Maximum number of series allowed per database before writes are
+      # dropped. Change the setting to 0 to allow an unlimited number of series per
+      # database.
+      max-series-per-database: 0
+
     http:
       # -- Whether to enable the HTTP endpoints
       enabled: true
