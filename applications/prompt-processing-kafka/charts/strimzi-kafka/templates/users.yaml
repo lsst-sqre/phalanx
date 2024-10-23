@@ -10,7 +10,7 @@ spec:
     password:
       valueFrom:
         secretKeyRef:
-          name: prompt-processing-kafka
+          name: prompt-processing-kafka-secret
           key: fan-out-producer-password
   authorization:
     type: simple
@@ -61,7 +61,7 @@ spec:
     password:
       valueFrom:
         secretKeyRef:
-          name: prompt-processing-kafka
+          name: prompt-processing-kafka-secret
           key: fan-out-consumer-password
   authorization:
     type: simple
@@ -113,7 +113,7 @@ spec:
     password:
       valueFrom:
         secretKeyRef:
-          name: prompt-processing-kafka
+          name: prompt-processing-kafka-secret
           key: kafdrop-password
   authorization:
     type: simple
