@@ -1,7 +1,7 @@
 strimzi-kafka:
   users:
     kafdrop:
-      enabled: false
+      enabled: true
   kraft:
     enabled: true
   kafkaController:

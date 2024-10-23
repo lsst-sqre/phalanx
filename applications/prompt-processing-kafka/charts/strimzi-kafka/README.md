@@ -50,4 +50,4 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 | registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
-| users.kafdrop.enabled | bool | `true` | Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart). |
+| users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart). |
