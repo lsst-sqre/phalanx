@@ -98,6 +98,7 @@ kafka-connect-manager:
         topicsRegex: ".*GIS"
       lsstdm:
         enabled: true
+        repairerConnector: true
         timestamp: "timestamp"
         connectInfluxDb: "lsst.dm"
         topicsRegex: "lsst.dm.*"
