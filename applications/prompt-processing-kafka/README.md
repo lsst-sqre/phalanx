@@ -63,4 +63,24 @@ Kafka environment for prompt processing fan out events and bucket notifications
 | strimzi-kafka.registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | strimzi-kafka.registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | strimzi-kafka.superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| strimzi-kafka.topics | object | `{"hsc":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"latiss":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcamsim":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000}}` | Topic configuration.  Enable for supporting certain instruments. |
+| strimzi-kafka.topics.hsc.enabled | bool | `false` | Enable hsc topic |
+| strimzi-kafka.topics.hsc.partitions | int | `1` | Number of partitions on topic |
+| strimzi-kafka.topics.hsc.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.latiss.enabled | bool | `false` | Enable latiss topic |
+| strimzi-kafka.topics.latiss.partitions | int | `1` | Number of partitions on topic |
+| strimzi-kafka.topics.latiss.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.latiss.retention | int | `3600000` | Retention time of events in milliseconds |
+| strimzi-kafka.topics.lsstcam.enabled | bool | `false` | Enable lsstcam topic |
+| strimzi-kafka.topics.lsstcam.partitions | int | `1` | Number of partitions on topic |
+| strimzi-kafka.topics.lsstcam.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.lsstcam.retention | int | `3600000` | Retention time of events in milliseconds |
+| strimzi-kafka.topics.lsstcomcam.enabled | bool | `false` | Enable lsstcomcam topic |
+| strimzi-kafka.topics.lsstcomcam.partitions | int | `1` | Number of partitions on topic |
+| strimzi-kafka.topics.lsstcomcam.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.lsstcomcam.retention | int | `3600000` | Retention time of events in milliseconds |
+| strimzi-kafka.topics.lsstcomcamsim.enabled | bool | `false` | Enable lsstcomcamsim topic |
+| strimzi-kafka.topics.lsstcomcamsim.partitions | int | `1` | Number of partitions on topic |
+| strimzi-kafka.topics.lsstcomcamsim.replicas | int | `1` | Number of replicas |
+| strimzi-kafka.topics.lsstcomcamsim.retention | int | `3600000` | Retention time of events in milliseconds |
 | strimzi-kafka.users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart). |

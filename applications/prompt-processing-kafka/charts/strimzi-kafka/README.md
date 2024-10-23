@@ -50,4 +50,24 @@ A subchart to deploy Strimzi Kafka components for Prompt Processing.
 | registry.resources | object | See `values.yaml` | Kubernetes requests and limits for the Schema Registry |
 | registry.schemaTopic | string | `"registry-schemas"` | Name of the topic used by the Schema Registry |
 | superusers | list | `["kafka-admin"]` | A list of usernames for users who should have global admin permissions. These users will be created, along with their credentials. |
+| topics | object | `{"hsc":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"latiss":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcam":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000},"lsstcomcamsim":{"enabled":false,"partitions":1,"replicas":1,"retention":3600000}}` | Topic configuration.  Enable for supporting certain instruments. |
+| topics.hsc.enabled | bool | `false` | Enable hsc topic |
+| topics.hsc.partitions | int | `1` | Number of partitions on topic |
+| topics.hsc.replicas | int | `1` | Number of replicas |
+| topics.latiss.enabled | bool | `false` | Enable latiss topic |
+| topics.latiss.partitions | int | `1` | Number of partitions on topic |
+| topics.latiss.replicas | int | `1` | Number of replicas |
+| topics.latiss.retention | int | `3600000` | Retention time of events in milliseconds |
+| topics.lsstcam.enabled | bool | `false` | Enable lsstcam topic |
+| topics.lsstcam.partitions | int | `1` | Number of partitions on topic |
+| topics.lsstcam.replicas | int | `1` | Number of replicas |
+| topics.lsstcam.retention | int | `3600000` | Retention time of events in milliseconds |
+| topics.lsstcomcam.enabled | bool | `false` | Enable lsstcomcam topic |
+| topics.lsstcomcam.partitions | int | `1` | Number of partitions on topic |
+| topics.lsstcomcam.replicas | int | `1` | Number of replicas |
+| topics.lsstcomcam.retention | int | `3600000` | Retention time of events in milliseconds |
+| topics.lsstcomcamsim.enabled | bool | `false` | Enable lsstcomcamsim topic |
+| topics.lsstcomcamsim.partitions | int | `1` | Number of partitions on topic |
+| topics.lsstcomcamsim.replicas | int | `1` | Number of replicas |
+| topics.lsstcomcamsim.retention | int | `3600000` | Retention time of events in milliseconds |
 | users.kafdrop.enabled | bool | `false` | Enable user Kafdrop (deployed by parent Prompt Processing Kafka chart). |

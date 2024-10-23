@@ -10,6 +10,17 @@ strimzi-kafka:
     storage:
       size: 100Gi
       storageClassName: wekafs--sdf-k8s01
+  topics:
+    hsc:
+      enabled: true
+      partitions: 200
+      replicas: 1
+      retention: 3600000
+    latiss:
+      enabled: true
+      partitions: 200
+      replicas: 1
+      retention: 3600000
 kafdrop:
   ingress:
     enabled: false

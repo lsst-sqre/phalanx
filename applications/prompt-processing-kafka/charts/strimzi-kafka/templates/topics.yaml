@@ -1,0 +1,70 @@
+{{- if .Values.topics.hsc.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fanned-out-hsc-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.hsc.partitions }}
+  replicas: {{ .Values.topics.hsc.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.hsc.retention }}
+{{- end }}
+---
+{{- if .Values.topics.latiss.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fanned-out-latiss-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.latiss.partitions }}
+  replicas: {{ .Values.topics.latiss.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.latiss.retention }}
+ {{- end }}
+---
+{{- if .Values.topics.lsstcam.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fanned-out-lsstcam-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.lsstcam.partitions }}
+  replicas: {{ .Values.topics.lsstcam.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.lsstcam.retention }}
+ {{- end }}
+---
+{{- if .Values.topics.lsstcomcam.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fanned-out-lsstcomcam-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.lsstcomcam.partitions }}
+  replicas: {{ .Values.topics.lsstcomcam.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.lsstcomcam.retention }}
+ {{- end }}
+---
+{{- if .Values.topics.lsstcomcamsim.enabled }}
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaTopic
+metadata:
+  name: fanned-out-lsstcomcamsim-events
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  partitions: {{ .Values.topics.lsstcomcamsim.partitions }}
+  replicas: {{ .Values.topics.lsstcomcamsim.replicas }}
+  config:
+    retention.ms: {{ .Values.topics.lsstcomcamsimretention }}
+ {{- end }}
+---
