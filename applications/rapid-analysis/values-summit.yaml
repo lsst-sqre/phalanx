@@ -218,6 +218,13 @@ scripts:
   - project-shared
   podAnnotations:
     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 6G
+    limits:
+      cpu: 1
+      memory: 8G
 - name: summit/misc/runStarTrackerFast.py
   mounts:
   - project-shared
