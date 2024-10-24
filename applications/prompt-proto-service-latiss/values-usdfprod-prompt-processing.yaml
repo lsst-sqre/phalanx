@@ -10,6 +10,8 @@ prompt-proto-service:
   # HACK: disable autoscaling as workaround for DM-41829
   worker:
     restart: 15
+    # Embargo rack allows fast cleanup.
+    grace_period: 20
 
   image:
     pullPolicy: IfNotPresent
@@ -46,13 +48,13 @@ prompt-proto-service:
 
   s3:
     imageBucket: rubin-summit
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
 
-  raw_microservice: http://172.24.5.144:8080/presence
+  raw_microservice: http://172.24.5.158:8080/presence
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing-prod
+    topic: rubin-summit-notification
     # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
     # and files can take up to 20 seconds to arrive. Scheduler delay associated
     # with CWFS engineering data, should not apply to other cameras.
