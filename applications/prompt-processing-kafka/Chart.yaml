@@ -1,0 +1,15 @@
+apiVersion: v2
+name: prompt-processing-kafka
+version: 1.0.0
+description: "Kafka environment for prompt processing fan out events and bucket notifications"
+sources:
+  - "https://github.com/lsst-dm/prompt_processing"
+  - "https://github.com/lsst-dm/next_visit_fan_out"
+appVersion: 0.1.0
+
+dependencies:
+  - name: strimzi-kafka
+    version: 1.0.0
+  - name: strimzi-registry-operator
+    version: 2.1.0
+    repository: https://lsst-sqre.github.io/charts/
