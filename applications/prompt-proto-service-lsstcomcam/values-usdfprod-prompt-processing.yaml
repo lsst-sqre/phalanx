@@ -68,4 +68,3 @@ prompt-proto-service:
   logLevel: timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.resources=DEBUG
 
   fullnameOverride: "prompt-proto-service-lsstcomcam"
-  
