@@ -24,6 +24,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
+      {{- if .Values.config.directButlerEnabled }}
       initContainers:
         - name: fix-secret-permissions
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
@@ -44,6 +45,7 @@ spec:
               mountPath: "/etc/butler/secrets"
             - name: "secrets-raw"
               mountPath: "/tmp/secrets-raw"
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           envFrom:
@@ -71,6 +73,7 @@ spec:
                   name: "sia"
                   key: "slack-webhook"
             {{- end }}
+            {{- if .Values.config.directButlerEnabled }}
             - name: "AWS_SHARED_CREDENTIALS_FILE"
               value: "/tmp/secrets/aws-credentials.ini"
             - name: "PGUSER"
@@ -79,10 +82,13 @@ spec:
               value: "/etc/butler/secrets/postgres-credentials.txt"
             - name: "GOOGLE_APPLICATION_CREDENTIALS"
               value: "/tmp/secrets/butler-gcs-idf-creds.json"
+            {{- end }}
+          {{- if .Values.config.directButlerEnabled }}
           volumeMounts:
             - name: "secrets"
               mountPath: "/etc/butler/secrets"
               readOnly: true
+          {{- end }}
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
@@ -97,12 +103,14 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.config.directButlerEnabled }}
       volumes:
         - name: "secrets-raw"
           secret:
             secretName: "sia"
         - name: "secrets"
           emptyDir: {}
+      {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000

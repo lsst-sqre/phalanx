@@ -36,6 +36,9 @@ config:
   # -- URL path prefix
   pathPrefix: "/api/sia"
 
+  # -- Whether direct butler access is enabled
+  directButlerEnabled: false
+
   # -- List of data (Butler) Collections
   # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository`, `datalink_url` & `default_instrument`
   butlerDataCollections: []

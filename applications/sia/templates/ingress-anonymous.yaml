@@ -13,6 +13,7 @@ template:
     name: {{ template "sia.fullname" . }}-anonymous
     {{- with .Values.ingress.annotations }}
     annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
@@ -28,14 +29,14 @@ template:
                   port:
                     number: 8080
             - path: "{{ .Values.ingress.path }}/.+/capabilities"
-              pathType: "Exact"
+              pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: {{ template "sia.fullname" . }}
                   port:
                     number: 8080
             - path: "{{ .Values.ingress.path }}/.+/availability"
-              pathType: "Exact"
+              pathType: "ImplementationSpecific"
               backend:
                 service:
                   name: {{ template "sia.fullname" . }}
