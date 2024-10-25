@@ -43,19 +43,19 @@ Common environment variables
 - name: "GAFAELFAWR_BOOTSTRAP_TOKEN"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "bootstrap-token"
 {{- if .Values.config.cilogon.clientId }}
 - name: "GAFAELFAWR_CILOGON_CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "cilogon-client-secret"
 {{- end }}
 - name: "GAFAELFAWR_DATABASE_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "database-password"
 {{- if (or .Values.cloudsql.enabled .Values.config.internalDatabase) }}
 - name: "GAFAELFAWR_DATABASE_URL"
@@ -71,28 +71,28 @@ Common environment variables
 - name: "GAFAELFAWR_GITHUB_CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "github-client-secret"
 {{- end }}
 {{- if .Values.config.ldap.userDn }}
 - name: "GAFAELFAWR_LDAP_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "ldap-password"
 {{- end }}
 {{- if .Values.config.oidc.clientId }}
 - name: "GAFAELFAWR_OIDC_CLIENT_SECRET"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "oidc-client-secret"
 {{- end }}
 {{- if .Values.config.oidcServer.enabled }}
 - name: "GAFAELFAWR_OIDC_SERVER_CLIENTS"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "oidc-server-secrets"
 {{- if (not .Values.config.oidcServer.issuer) }}
 - name: "GAFAELFAWR_OIDC_SERVER_ISSUER"
@@ -101,7 +101,7 @@ Common environment variables
 - name: "GAFAELFAWR_OIDC_SERVER_KEY"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "signing-key"
 {{- end }}
 {{- if (not .Values.config.realm) }}
@@ -113,20 +113,20 @@ Common environment variables
 - name: "GAFAELFAWR_REDIS_PASSWORD"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "redis-password"
 - name: "GAFAELFAWR_REDIS_URL"
   value: "redis://gafaelfawr-redis.{{ .Release.Namespace }}:6379/0"
 - name: "GAFAELFAWR_SESSION_SECRET"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "session-secret"
 {{- if .Values.config.slackAlerts }}
 - name: "GAFAELFAWR_SLACK_WEBHOOK"
   valueFrom:
     secretKeyRef:
-      name: {{ .secretName | quote }}
+      name: "gafaelfawr"
       key: "slack-webhook"
 {{- end }}
 {{- if .Values.config.metrics.enabled }}
