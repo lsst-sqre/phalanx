@@ -175,6 +175,14 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
       debug: true
+    m1m3ts:
+      enabled: true
+      repair: false
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3TS" ]
+      debug: true
     m2:
       enabled: true
       repair: false
