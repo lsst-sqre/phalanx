@@ -190,10 +190,6 @@ kafka-connect-manager:
         repairerConnector: false
         topicsRegex: ".*MTM1M3"
         tasksMax: "8"
-      m1m3ts:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTM1M3TS"
       m2:
         enabled: true
         repairerConnector: false
@@ -351,14 +347,6 @@ telegraf-kafka-consumer:
       timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
-      debug: true
-    m1m3ts:
-      enabled: true
-      repair: false
-      database: "efd"
-      timestamp_field: "private_efdStamp"
-      topicRegexps: |
-        [ "lsst.sal.MTM1M3TS" ]
       debug: true
     m2:
       enabled: true
