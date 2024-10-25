@@ -54,7 +54,7 @@ spec:
         {{- end }}
         - name: "gafaelfawr"
           env:
-            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret" "sidecar" true) | nindent 12 }}
+            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "sidecar" true) | nindent 12 }}
             {{- if .Values.config.metrics.enabled }}
             - name: "KAFKA_CLIENT_CERT_PATH"
               value: "/etc/gafaelfawr-kafka/user.crt"
@@ -135,7 +135,7 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: "gafaelfawr-config"
+            name: "gafaelfawr"
         {{- if .Values.config.metrics.enabled }}
         - name: "kafka"
           secret:
@@ -147,7 +147,7 @@ spec:
             secretName: "gafaelfawr-keytab"
         - name: "kerberos-config"
           configMap:
-            name: "gafaelfawr-config-kerberos"
+            name: "gafaelfawr-kerberos"
         - name: "tmp"
           emptyDir: {}
         {{- end }}
