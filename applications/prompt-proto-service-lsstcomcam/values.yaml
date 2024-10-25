@@ -39,7 +39,7 @@ prompt-proto-service:
 
   instrument:
     # -- The "short" name of the instrument
-    name: ""
+    name: LSSTComCam
     pipelines:
       # -- Machine-readable string describing which pipeline(s) should be run for which visits.
       # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
