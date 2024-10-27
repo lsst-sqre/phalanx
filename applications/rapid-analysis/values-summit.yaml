@@ -178,6 +178,11 @@ scripts:
     limits:
       cpu: .5
       memory: 1G
+- name: LSSTComCam/runOneOffProcessor.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
 - name: LSSTComCam/runPsfPlotting.py
   mounts:
   - comcam-data
