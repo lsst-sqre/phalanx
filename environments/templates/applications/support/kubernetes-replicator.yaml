@@ -1,23 +1,23 @@
-{{- if (index .Values "applications" "ghostwriter") -}}
+{{- if (index .Values "applications" "kubernetes-replicator") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "ghostwriter"
+  name: "kubernetes-replicator"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "ghostwriter"
+  name: "kubernetes-replicator"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "ghostwriter"
+    namespace: "kubernetes-replicator"
     server: "https://kubernetes.default.svc"
-  project: "infrastructure"
+  project: "support"
   source:
-    path: "applications/ghostwriter"
+    path: "applications/kubernetes-replicator"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:

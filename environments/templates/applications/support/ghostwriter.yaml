@@ -1,27 +1,31 @@
-{{- if .Values.applications.postgres -}}
+{{- if (index .Values "applications" "ghostwriter") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "postgres"
+  name: "ghostwriter"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "postgres"
+  name: "ghostwriter"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "postgres"
+    namespace: "ghostwriter"
     server: "https://kubernetes.default.svc"
-  project: "infrastructure"
+  project: "support"
   source:
-    path: "applications/postgres"
+    path: "applications/ghostwriter"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:

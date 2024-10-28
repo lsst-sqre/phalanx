@@ -1,26 +1,27 @@
-{{- if .Values.applications.strimzi -}}
+{{- if (index .Values "applications" "sqlproxy-cross-project") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "strimzi"
+  name: "sqlproxy-cross-project"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "strimzi"
+  name: "sqlproxy-cross-project"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "strimzi"
+    namespace: "sqlproxy-cross-project"
     server: "https://kubernetes.default.svc"
-  project: "infrastructure"
+  project: "support"
   source:
-    path: "applications/strimzi"
+    path: "applications/sqlproxy-cross-project"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       valueFiles:
+        - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
 {{- end -}}

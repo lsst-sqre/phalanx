@@ -18,10 +18,8 @@ Argo CD project: ``rsp``
    noteburst/index
    nublado/index
    portal/index
-   ppdb-replication/index
    semaphore/index
    siav2/index
-   sqlproxy-cross-project/index
    squareone/index
    ssotap/index
    tap/index
