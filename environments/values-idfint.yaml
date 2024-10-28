@@ -30,6 +30,7 @@ applications:
   sqlproxy-cross-project: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
   telegraf: true
   telegraf-ds: true
