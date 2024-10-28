@@ -311,7 +311,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.0"
+    tag: "1.37.1"
 
     # -- Tag suffix to use for the proxy for schema updates
     schemaUpdateTagSuffix: "-alpine"
