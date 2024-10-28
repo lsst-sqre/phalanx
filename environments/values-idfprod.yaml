@@ -22,10 +22,13 @@ applications:
   mobu: true
   nublado: true
   portal: true
+  sasquatch: true
   semaphore: true
   sia: false
   siav2: false
   squareone: true
+  strimzi: true
+  strimzi-access-operator: true
   ssotap: true
   tap: true
   telegraf: true
