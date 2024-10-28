@@ -159,3 +159,8 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-int.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfint.json
+
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr

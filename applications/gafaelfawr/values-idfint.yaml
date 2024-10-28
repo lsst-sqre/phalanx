@@ -33,6 +33,10 @@ config:
   oidcServer:
     enabled: true
 
+  # Enable metrics reporting.
+  metrics:
+    enabled: true
+
   # User quota settings for services.
   quota:
     default:
