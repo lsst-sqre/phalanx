@@ -25,6 +25,7 @@ applications:
   portal: true
   sasquatch: true
   semaphore: true
+  sia: true
   siav2: false
   ssotap: true
   squareone: true
