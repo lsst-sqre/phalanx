@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: 0.1.2
+appVersion: 0.1.3
 description: Simple Image Access (SIA) IVOA Service using Butler
 name: sia
 sources:
