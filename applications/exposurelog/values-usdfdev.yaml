@@ -10,7 +10,7 @@ env:
   - name: DAF_BUTLER_REPOSITORY_INDEX
     value: "/project/data-repos.yaml"
   - name: S3_ENDPOINT_URL
-    value: "https://s3dfrgw.slac.stanford.edu"
+    value: "https://sdfembs3.sdf.slac.stanford.edu"
   - name: PGPASSFILE
     value: "/var/secrets/butler/postgres-credentials.txt"
   - name: PGUSER
