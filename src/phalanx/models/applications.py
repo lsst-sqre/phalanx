@@ -48,6 +48,7 @@ class Project(Enum):
     rubin = "rubin"
     roundtable = "roundtable"
     monitoring = "monitoring"
+    support = "support"
     prompt = "prompt"
     telescope = "telescope"
 

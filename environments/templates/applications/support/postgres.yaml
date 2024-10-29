@@ -1,26 +1,29 @@
-{{- if (index .Values "applications" "strimzi-access-operator") -}}
+{{- if .Values.applications.postgres -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "strimzi-access-operator"
+  name: "postgres"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "strimzi-access-operator"
+  name: "postgres"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "strimzi-access-operator"
+    namespace: "postgres"
     server: "https://kubernetes.default.svc"
-  project: "infrastructure"
+  project: "support"
   source:
-    path: "applications/strimzi-access-operator"
+    path: "applications/postgres"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
+      parameters:
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
