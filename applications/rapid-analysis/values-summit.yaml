@@ -178,7 +178,12 @@ scripts:
     limits:
       cpu: .5
       memory: 1G
-- name: LSSTComCam/runOneOffProcessor.py
+- name: LSSTComCam/runOneOffPostIsr.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+- name: LSSTComCam/runOneOffCalexp.py
   mounts:
   - comcam-data
   - comcam-gen3-data
