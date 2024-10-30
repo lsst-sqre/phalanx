@@ -40,7 +40,7 @@ config:
   directButlerEnabled: false
 
   # -- List of data (Butler) Collections
-  # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository`, `datalink_url` & `default_instrument`
+  # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url`
   butlerDataCollections: []
 
   # -- User to use from the PGPASSFILE if sia is using a direct Butler
