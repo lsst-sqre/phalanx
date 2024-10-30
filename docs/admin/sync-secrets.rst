@@ -23,7 +23,7 @@ It can then be run again whenever the secrets for that environment change.
 Deleting secrets
 ================
 
-By default old secrets that are no longer required are deleted out of Vault.
+By default old secrets that are no longer required are not deleted out of Vault.
 To delete obsolete secrets, pass the ``--delete`` flag to :command:`phalanx secrets sync`.
 
 This will keep your Vault tidy, but you should use this flag with caution if you have applications temporarily disabled or if you store static secrets directly in Vault and nowhere else.
