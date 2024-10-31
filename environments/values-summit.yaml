@@ -13,6 +13,7 @@ applications:
   narrativelog: true
   nightreport: true
   nublado: true
+  obsenv-management: true
   portal: true
   rapid-analysis: true
   rubintv: true
