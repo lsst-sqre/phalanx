@@ -153,7 +153,7 @@ spec:
               cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
               printf "\n" >> new-aws-credentials.ini
               mv new-aws-credentials.ini /secrets/aws-credentials.ini
-              chown 73006:73006 /secrets/*
+              chown 17951:4085 /secrets/*
               chmod 0600 /secrets/*
           volumeMounts:
             - name: {{ $.Release.Name }}-raw-butler-secret
