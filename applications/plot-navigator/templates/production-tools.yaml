@@ -45,7 +45,7 @@ spec:
               secretKeyRef:
                 name: {{ include "plot-navigator.fullname" . }}
                 key: S3_SECRET
-          - name: CM_ARQ_REDIS_PASSWORD
+          - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: redis-secret
