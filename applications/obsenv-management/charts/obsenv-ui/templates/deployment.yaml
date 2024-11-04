@@ -37,7 +37,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/obsenv-management"
+              path: "/obsenv-management/status"
               port: "http"
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
