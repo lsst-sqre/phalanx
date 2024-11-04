@@ -13,6 +13,9 @@ config:
 
   # github:
   #   clientId: ae314e45a6af43ea910a
+  metrics:
+    application: gafaelfawr
+    enabled: false
 
   oidc:
     clientId: "lsst_rsp"
