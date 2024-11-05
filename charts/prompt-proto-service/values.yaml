@@ -62,6 +62,9 @@ cache:
   refcatsPerImage: 4
   # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
   patchesPerImage: 4
+  # -- The maximum number of datasets of a given type the service might load if the filter is unknown.
+  # Should be greater than or equal to the number of filters that have e.g. flats or transmission curves.
+  maxFilters: 20
 
 s3:
   # -- Bucket containing the incoming raw images
