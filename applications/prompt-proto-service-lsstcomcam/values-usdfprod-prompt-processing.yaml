@@ -18,17 +18,28 @@ prompt-proto-service:
 
   instrument:
     pipelines:
+      # BLOCK-T60 is optics alignment
+      # BLOCK-T75 is giant donuts
+      # BLOCK-T88 is optics alignment
+      # BLOCK-T246 is instrument checkout
+      # BLOCK-T249 is AOS alignment
       main: >-
-        (survey="comcam-ap")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
+        (survey="PP-SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr.yaml]
         (survey="BLOCK-T60")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
-        (survey="BLOCK-T208")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="BLOCK-T75")=[]
+        (survey="BLOCK-T88")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="BLOCK-T246")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="BLOCK-T249")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
         (survey="")=[]
       preprocessing: >-
-        (survey="comcam-ap")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
+        (survey="PP-SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
         (survey="BLOCK-T60")=[]
-        (survey="BLOCK-T208")=[]
+        (survey="BLOCK-T75")=[]
+        (survey="BLOCK-T88")=[]
+        (survey="BLOCK-T246")=[]
+        (survey="BLOCK-T249")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
 
