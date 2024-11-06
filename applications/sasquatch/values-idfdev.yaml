@@ -91,6 +91,9 @@ influxdb-enterprise:
         cpu: 2
   data:
     replicas: 2
+    config:
+      antiEntropy:
+        enabled: false
     ingress:
       enabled: true
       hostname: data-dev.lsst.cloud
