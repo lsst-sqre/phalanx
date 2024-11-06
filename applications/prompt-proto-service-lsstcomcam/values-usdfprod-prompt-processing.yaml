@@ -22,13 +22,13 @@ prompt-proto-service:
         (survey="comcam-ap")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr.yaml]
-        (survey="BLOCK-T208")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
         (survey="BLOCK-T60")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="BLOCK-T208")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
         (survey="")=[]
       preprocessing: >-
         (survey="comcam-ap")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
-        (survey="BLOCK-T208")=[]
         (survey="BLOCK-T60")=[]
+        (survey="BLOCK-T208")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
 
