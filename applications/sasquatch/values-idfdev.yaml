@@ -90,7 +90,7 @@ influxdb-enterprise:
         memory: 4Gi
         cpu: 2
   data:
-    replicas: 2
+    replicas: 1
     config:
       antiEntropy:
         enabled: false
