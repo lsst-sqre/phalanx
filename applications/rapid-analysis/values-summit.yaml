@@ -364,7 +364,21 @@ comcamWorkerSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 90
+  replicas: 63
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+comcamAosWorkerSet:
+  name: LSSTComCam/runAosWorker.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  replicas: 36
   resources:
     requests:
       cpu: 1.0
@@ -379,6 +393,22 @@ comcamGather2aSet:
   - comcam-gen3-data
   - project-shared
   replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+comcamGather2aAosSet:
+  name: LSSTComCam/runStep2aAosWorker.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  replicas: 4
   resources:
     requests:
       cpu: 1.0
