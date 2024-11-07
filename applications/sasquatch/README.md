@@ -40,6 +40,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.coordinator.query-timeout | string | `"30s"` | Maximum duration a query is allowed to run before it is killed |
 | influxdb.config.coordinator.write-timeout | string | `"1h"` | Duration a write request waits before timeout is returned to the caller |
 | influxdb.config.data.cache-max-memory-size | int | `0` | Maximum size a shared cache can reach before it starts rejecting writes |
+| influxdb.config.data.max-series-per-database | int | `0` | Maximum number of series allowed per database before writes are dropped. Change the setting to 0 to allow an unlimited number of series per database. |
 | influxdb.config.data.trace-logging-enabled | bool | `true` | Whether to enable verbose logging of additional debug information within the TSM engine and WAL |
 | influxdb.config.data.wal-fsync-delay | string | `"100ms"` | Duration a write will wait before fsyncing. This is useful for slower disks or when WAL write contention is present. |
 | influxdb.config.http.auth-enabled | bool | `true` | Whether authentication is required |
