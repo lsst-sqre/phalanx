@@ -170,6 +170,7 @@ telegraf-kafka-consumer:
     m1m3:
       enabled: true
       repair: false
+      metric_batch_size: 2500
       database: "efd"
       timestamp_field: "private_efdStamp"
       topicRegexps: |
