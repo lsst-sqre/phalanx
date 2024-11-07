@@ -1,5 +1,5 @@
 image:
-  pullPolicy: Always
+  tag: "0.13.0"
 
 replicaCount: 3
 
