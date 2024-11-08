@@ -13,8 +13,10 @@ spec:
     type: "Recreate"
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
       annotations:
+        # Force the pod to restart when the config map is updated.
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- with .Values.podAnnotations }}
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
@@ -31,10 +33,6 @@ spec:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "ALERT_HOOK"
             {{- end }}
-            {{- if .Values.config.autostart }}
-            - name: "MOBU_AUTOSTART_PATH"
-              value: "/etc/mobu/autostart.yaml"
-            {{- end }}
             - name: "MOBU_ENVIRONMENT_URL"
               value: {{ .Values.global.baseUrl }}
             - name: "MOBU_GAFAELFAWR_TOKEN"
@@ -43,8 +41,6 @@ spec:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
             {{- if .Values.config.githubRefreshApp }}
-            - name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
-              value: "/etc/mobu/github-refresh-app.yaml"
             - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
               valueFrom:
                 secretKeyRef:
@@ -52,8 +48,6 @@ spec:
                   key: "github-refresh-app-webhook-secret"
             {{- end}}
             {{- if .Values.config.githubCiApp }}
-            - name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
-              value: "/etc/mobu/github-ci-app.yaml"
             - name: "MOBU_GITHUB_CI_APP_ID"
               valueFrom:
                 secretKeyRef:
@@ -70,17 +64,6 @@ spec:
                   name: {{ template "mobu.fullname" . }}-secret
                   key: "github-ci-app-webhook-secret"
             {{- end}}
-            - name: "MOBU_PATH_PREFIX"
-              value: {{ .Values.config.pathPrefix | quote }}
-            {{- if .Values.config.debug }}
-            - name: "MOBU_LOGGING_PROFILE"
-              value: "development"
-            - name: "MOBU_LOG_LEVEL"
-              value: "DEBUG"
-            {{- else }}
-            - name: "MOBU_LOGGING_PROFILE"
-              value: "production"
-            {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
@@ -114,29 +97,8 @@ spec:
         runAsGroup: 1000
       volumes:
         - name: "config"
-          projected:
-            sources:
-            {{- if .Values.config.autostart }}
-            - configMap:
-                name: {{ include "mobu.fullname" . }}-autostart
-                items:
-                  - key: autostart.yaml
-                    path: autostart.yaml
-            {{- end }}
-            {{- if .Values.config.githubCiApp }}
-            - configMap:
-                name: {{ include "mobu.fullname" . }}-github-ci-app
-                items:
-                  - key: github-ci-app.yaml
-                    path: github-ci-app.yaml
-            {{- end }}
-            {{- if .Values.config.githubRefreshApp }}
-            - configMap:
-                name: {{ include "mobu.fullname" . }}-github-refresh-app
-                items:
-                  - key: github-refresh-app.yaml
-                    path: github-refresh-app.yaml
-            {{- end }}
+          configMap:
+            name: "mobu"
         - name: "tmp"
           emptyDir: {}
       {{- with .Values.nodeSelector }}

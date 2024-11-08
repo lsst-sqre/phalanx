@@ -1,5 +1,6 @@
 config:
-  debug: true
+  logLevel: DEBUG
+  profile: development
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
