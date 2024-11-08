@@ -123,6 +123,11 @@ strimzi-kafka:
                   operator: In
                   values:
                     - "true"
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
 
 influxdb:
   persistence:

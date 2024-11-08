@@ -83,6 +83,10 @@ spec:
       affinity:
         {{- toYaml . | nindent 10 }}
       {{- end }}
+      {{- with .Values.brokerStorage.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 10 }}
+      {{- end}}
   {{- with .Values.kafka.resources }}
   resources:
     {{- toYaml . | nindent 6 }}
