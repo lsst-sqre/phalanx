@@ -119,7 +119,7 @@ strimzi-kafka:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: local-storage
+                - key: kafka-broker
                   operator: In
                   values:
                     - "true"
