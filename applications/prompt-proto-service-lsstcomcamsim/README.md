@@ -31,8 +31,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-proto-service.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-proto-service.instrument.name | string | `"LSSTComCamSim"` | The "short" name of the instrument |
-| prompt-proto-service.instrument.pipelines.main | string | None, must be set | Machine-readable string describing which pipeline(s) should be run for which visits. Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
-| prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival. |
+| prompt-proto-service.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
+| prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-proto-service.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
 | prompt-proto-service.instrument.skymap | string | `"ops_rehersal_prep_2k_v1"` | Skymap to use with the instrument |
 | prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |

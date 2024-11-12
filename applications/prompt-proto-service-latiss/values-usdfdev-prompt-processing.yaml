@@ -11,10 +11,15 @@ prompt-proto-service:
 
   instrument:
     pipelines:
-      main: >-
-        (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-      preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
+      main: |-
+        - survey: SURVEY
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml
+          # Fallback for an upload.py image without templates
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml
+      preprocessing: |-
+        - survey: SURVEY
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
     calibRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:

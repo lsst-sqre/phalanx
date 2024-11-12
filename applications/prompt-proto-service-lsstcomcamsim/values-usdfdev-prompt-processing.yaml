@@ -11,11 +11,15 @@ prompt-proto-service:
 
   instrument:
     pipelines:
-      main: >-
-        (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
-      preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Preprocessing.yaml]
+      main: |-
+        - survey: SURVEY
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml
+      preprocessing: |-
+        - survey: SURVEY
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Preprocessing.yaml']
     calibRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
