@@ -23,11 +23,11 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 80Gi
-        cpu: 4
+        memory: 8Gi
+        cpu: 1
       limits:
-        memory: 80Gi
-        cpu: 4
+        memory: 8Gi
+        cpu: 1
     metricsConfig:
       enabled: true
   kafkaExporter:
