@@ -55,6 +55,7 @@ argo-cd:
         g, spothi@slac.stanford.edu, role:developer
         g, bbrond@slac.stanford.edu, role:developer
         g, vbecker@slac.stanford.edu, role:developer
+        g, saranda@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:
