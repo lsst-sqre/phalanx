@@ -4,34 +4,25 @@ set:
   global:
     host: "example.com"
 tests:
-  - it: "Should not create a GitHub CI app ingress"
-    template: "ingress-github-ci-app.yaml"
+  - it: "Should not include github things in the config file ConfigMap"
+    template: "configmap.yaml"
     asserts:
-      - hasDocuments:
-          count: 0
-  - it: "Should not create a GitHub refresh app ingress"
-    template: "ingress-github-refresh-app.yaml"
-    asserts:
-      - hasDocuments:
-          count: 0
-  - it: "Should not create a GitHub CI app ConfigMap"
-    template: "configmap-github-ci-app.yaml"
-    asserts:
-      - hasDocuments:
-          count: 0
-  - it: "Should not create a GitHub refresh app ConfigMap"
-    template: "configmap-github-refresh-app.yaml"
-    asserts:
-      - hasDocuments:
-          count: 0
+      - containsDocument:
+          kind: "ConfigMap"
+          apiVersion: v1
+      - equal:
+          path: "data['config.yaml']"
+          value: |
+            autostart: []
+            githubCiApp: null
+            githubRefreshApp: null
+            logLevel: INFO
+            pathPrefix: /mobu
+            profile: production
+            slackAlerts: true
   - it: "Should not inject GitHub CI app secrets into the Deployment env"
     template: "deployment.yaml"
     asserts:
-      - notContains:
-          path: "spec.template.spec.containers[0].env"
-          any: true
-          content:
-            name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
       - notContains:
           path: "spec.template.spec.containers[0].env"
           any: true
@@ -50,11 +41,6 @@ tests:
   - it: "Should not inject GitHub refresh app secrets into the Deployment env"
     template: "deployment.yaml"
     asserts:
-      - notContains:
-          path: "spec.template.spec.containers[0].env"
-          any: true
-          content:
-            name: "MOBU_GITHUB_REFRESH_APP_CONFIG_PATH"
       - notContains:
           path: "spec.template.spec.containers[0].env"
           any: true

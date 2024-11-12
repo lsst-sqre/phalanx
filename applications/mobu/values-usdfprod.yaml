@@ -1,5 +1,4 @@
 config:
-  debug: true
   autostart:
     - name: "firefighter"
       count: 1
