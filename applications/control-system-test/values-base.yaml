@@ -7,7 +7,7 @@ test42:
 
 test43:
   image:
-    repository: ts-dockerhub.lsst.org/test
+    repository: confluentinc/cp-kafka
     pullPolicy: Always
   env:
     RUN_ARG: 43
