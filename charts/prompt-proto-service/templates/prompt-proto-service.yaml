@@ -47,6 +47,8 @@ spec:
           value: {{ .Values.instrument.pipelines.main }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        - name: PRELOAD_PADDING
+          value: {{ .Values.instrument.preloadPadding | toString | quote }}
         - name: IMAGE_BUCKET
           value: {{ .Values.s3.imageBucket }}
         - name: BUCKET_TOPIC
