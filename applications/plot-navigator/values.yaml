@@ -51,16 +51,6 @@ resources:
     cpu: "50m"
     memory: "256Mi"
 
-# -- Resource limits and requests for the butler pod
-# @default -- see `values.yaml`
-butlerResources:
-  limits:
-    cpu: "1"
-    memory: "324Mi"
-  requests:
-    cpu: "15m"
-    memory: "150Mi"
-
 redis:
   config:
     # -- Name of secret containing Redis password

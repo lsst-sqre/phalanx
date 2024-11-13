@@ -10,7 +10,6 @@ Plot-navigator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| butlerResources | object | see `values.yaml` | Resource limits and requests for the butler pod |
 | config.persistentVolumeClaims | list | `[]` | PersistentVolumeClaims to create. |
 | config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |

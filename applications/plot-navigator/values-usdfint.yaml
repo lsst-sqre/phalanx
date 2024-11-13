@@ -28,16 +28,18 @@ config:
 productionTools:
   image:
     repository: ghcr.io/lsst-dm/production_tools
-    tag: 0.1
+    tag: 0.1.2
   env:
     DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
     PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
     PGUSER: "rubin"
     AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/butler/secrets/aws-credentials.ini"
     S3_ENDPOINT_URL: "https://s3dfrgw.slac.stanford.edu"
+    LSST_RESOURCES_S3_PROFILE_embargo: "https://sdfembs3.sdf.slac.stanford.edu"
     LSST_DISABLE_BUCKET_VALIDATION: "1"
     REDIS_HOST: "plot-navigator-redis"
     REDIS_PORT: "6379"
+    BUTLER_REPO_NAMES: "embargo,/repo/embargo,/repo/main,/repo/dc2"
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin
@@ -58,27 +60,5 @@ productionTools:
       mountPath: /sdf/data/rubin
       readOnly: true
 
-butlerConfig:
-  pguser: "rubin"
-  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu"
-  repositories:
-    embargo: "s3://rubin-summit-users/butler.yaml"
-    main: "/sdf/group/rubin/repo/main"
-    dc2: "/sdf/group/rubin/repo/dc2"
-  volumes:
-    - name: sdf-group-rubin
-      persistentVolumeClaim:
-        claimName: sdf-group-rubin
-    - name: sdf-data-rubin
-      persistentVolumeClaim:
-        claimName: sdf-data-rubin
-  volume_mounts:
-    - name: sdf-group-rubin
-      mountPath: /sdf/group/rubin
-      readOnly: true
-    - name: sdf-data-rubin
-      mountPath: /sdf/data/rubin
-      readOnly: true
-
 image:
-  tag: v0.2.1
+  tag: v0.2.2
