@@ -2,4 +2,4 @@ name: obsenv-ui
 apiVersion: v2
 version: 1.0.0
 description: Helm chart for the Observatory Environment Management UI.
-appVersion: "0.2.1"
+appVersion: "0.3.0"

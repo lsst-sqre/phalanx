@@ -11,7 +11,7 @@ obsenv-api:
 obsenv-ui:
   image:
     repository: rubin-cr.lsst.org/obsenv-ui
-    tag: 0.2.1
+    tag: 0.3.0
     pullPolicy: Always
   config:
     pathPrefix: /obsenv-management
