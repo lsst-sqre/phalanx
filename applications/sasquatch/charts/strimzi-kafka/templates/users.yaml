@@ -30,6 +30,13 @@ spec:
         host: "*"
         operation: All
       - resource:
+          type: topic
+          name: "lsst.s3"
+          patternType: prefix
+        type: allow
+        host: "*"
+        operation: All
+      - resource:
           type: cluster
         operations:
           - Describe
