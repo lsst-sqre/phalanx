@@ -1,0 +1,16 @@
+image:
+  tag: tickets/DM-47606
+
+config:
+  profiles:
+    - name: embargo
+      url: "https://sdfembs3.sdf.slac.stanford.edu/"
+  s3EndpointUrl: "https://s3dfrgw.slac.stanford.edu/"
+
+resources:
+  limits:
+    compute: 500m
+    memory: 1Gi
+  requests:
+    compute: 200m
+    memory: 100Mi
