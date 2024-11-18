@@ -90,6 +90,8 @@ controller:
           volumeName: "scratch"
 
 jupyterhub:
+  cull:
+    users: false  # Don't log out user on idle cull, just kill their server.
   hub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
