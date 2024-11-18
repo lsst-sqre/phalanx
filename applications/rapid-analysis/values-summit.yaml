@@ -105,37 +105,40 @@ scripts:
 ###
 ### ComCamSim pods
 ###
-- name: LSSTComCamSim/runButlerWatcher.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: LSSTComCamSim/runHeadNode.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-- name: LSSTComCamSim/runMetadataServer.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-- name: LSSTComCamSim/runPlotter.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 0.5
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 6G
+# - name: LSSTComCamSim/runButlerWatcher.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCamSim/runHeadNode.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+# - name: LSSTComCamSim/runMetadataServer.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   podAnnotations:
+#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+# - name: LSSTComCamSim/runPlotter.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   podAnnotations:
+#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+#   resources:
+#     requests:
+#       cpu: 0.5
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 6G
+###
+### ComCam pods
+###
 - name: LSSTComCam/runAosDonutPipeline.py
   mounts:
   - comcam-data
@@ -313,48 +316,48 @@ scripts:
 ###
 ### ComCamSim StatefulSets
 ###
-comcamsimWorkerSet:
-  name: LSSTComCamSim/runSfmRunner.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 9
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 8G
-comcamsimGather2aSet:
-  name: LSSTComCamSim/runStep2aWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 4G
-    limits:
-      cpu: 1.0
-      memory: 8G
-comcamsimGatherRollupSet:
-  name: LSSTComCamSim/runNightlyWorker.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  replicas: 1
-  resources:
-    requests:
-      cpu: 1.0
-      memory: 12G
-    limits:
-      cpu: 1.0
-      memory: 24G
+# comcamsimWorkerSet:
+#   name: LSSTComCamSim/runSfmRunner.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 9
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamsimGather2aSet:
+#   name: LSSTComCamSim/runStep2aWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 4G
+#     limits:
+#       cpu: 1.0
+#       memory: 8G
+# comcamsimGatherRollupSet:
+#   name: LSSTComCamSim/runNightlyWorker.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   replicas: 1
+#   resources:
+#     requests:
+#       cpu: 1.0
+#       memory: 12G
+#     limits:
+#       cpu: 1.0
+#       memory: 24G
 ###
 ### ComCam StatefulSets
 ###
