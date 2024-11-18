@@ -293,10 +293,10 @@ scripts:
 ###
 ### LSSTCam pods
 ###
-- name: LSSTCam/runButlerWatcher.py
-  mounts:
-  - lsstcam-data
-  - project-shared
+# - name: LSSTCam/runButlerWatcher.py
+#   mounts:
+#   - lsstcam-data
+#   - project-shared
 - name: LSSTCam/runHeadNode.py
   mounts:
   - lsstcam-data
