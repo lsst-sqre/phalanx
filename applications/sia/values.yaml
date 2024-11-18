@@ -47,6 +47,9 @@ config:
   # connection
   pgUser: "rubin"
 
+  # -- True to enable capture of trace and other diagnostics to Sentry.io.
+  enableSentry: false
+
 
 ingress:
   # -- Additional annotations for the ingress rule

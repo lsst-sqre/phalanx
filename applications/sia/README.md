@@ -13,6 +13,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 | affinity | object | `{}` | Affinity rules for the sia deployment pod |
 | config.butlerDataCollections | list | `[]` | List of data (Butler) Collections Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url` |
 | config.directButlerEnabled | bool | `false` | Whether direct butler access is enabled |
+| config.enableSentry | bool | `false` | True to enable capture of trace and other diagnostics to Sentry.io. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/api/sia"` | URL path prefix |
