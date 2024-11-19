@@ -10,6 +10,8 @@ knative:
   # -- The maximum number of messages that can be forwarded to all Knative instances combined.
   # @default -- None, must be set.
   maxMessages: ""
+  # -- Whether or not to retry requests that returned a suitable response.
+  retryRequests: true
 
 kafka:
   offset: latest

@@ -1,5 +1,6 @@
 knative:
   maxMessages: 150
+  retryRequests: false
 
 kafka:
   schemaRegistryUrl: http://10.96.181.159:8081
