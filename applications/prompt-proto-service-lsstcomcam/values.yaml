@@ -49,7 +49,7 @@ prompt-proto-service:
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
-    skymap: "ops_rehersal_prep_2k_v1"
+    skymap: "lsst_cells_v1"
     # -- Number of arcseconds to pad the spatial region in preloading.
     preloadPadding: 30
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
