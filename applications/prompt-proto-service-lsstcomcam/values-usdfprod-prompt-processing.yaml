@@ -22,25 +22,37 @@ prompt-proto-service:
       # BLOCK-T60 is optics alignment
       # BLOCK-T75 is giant donuts
       # BLOCK-T88 is optics alignment
+      # BLOCK-T215 is evening twilight flats
+      # BLOCK-T216 is morning twilight flats
+      # BLOCK-T219 is pretty picture
       # BLOCK-T246 is instrument checkout
       # BLOCK-T249 is AOS alignment
+      # BLOCK-T250 is TMA daytime checkout
       main: >-
-        (survey="PP-SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
+        (survey="BLOCK-320")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/SingleFrame.yaml,
         ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr.yaml]
-        (survey="BLOCK-T60")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
-        (survey="BLOCK-T75")=[]
-        (survey="BLOCK-T88")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
-        (survey="BLOCK-T246")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
-        (survey="BLOCK-T249")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
-        (survey="")=[]
-      preprocessing: >-
-        (survey="PP-SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
         (survey="BLOCK-T60")=[]
         (survey="BLOCK-T75")=[]
         (survey="BLOCK-T88")=[]
+        (survey="BLOCK-T215")=[]
+        (survey="BLOCK-T216")=[]
+        (survey="BLOCK-T219")=[]
+        (survey="BLOCK-T246")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml]
+        (survey="BLOCK-T249")=[]
+        (survey="BLOCK-T250")=[]
+        (survey="")=[]
+      preprocessing: >-
+        (survey="BLOCK-320")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml]
+        (survey="BLOCK-T60")=[]
+        (survey="BLOCK-T75")=[]
+        (survey="BLOCK-T88")=[]
+        (survey="BLOCK-T215")=[]
+        (survey="BLOCK-T216")=[]
+        (survey="BLOCK-T219")=[]
         (survey="BLOCK-T246")=[]
         (survey="BLOCK-T249")=[]
+        (survey="BLOCK-T250")=[]
         (survey="")=[]
     calibRepo: s3://rubin-summit-users
 
