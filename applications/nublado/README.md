@@ -90,7 +90,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.cull.maxAge | int | 2160000 (25 days) | Maximum age of a lab regardless of activity |
 | jupyterhub.cull.removeNamedServers | bool | `true` | Whether to remove named servers when culling their lab |
 | jupyterhub.cull.timeout | int | 432000 (5 days) | Default idle timeout before the lab is automatically deleted in seconds |
-| jupyterhub.cull.users | bool | `true` | Whether to log out the server when culling their lab |
+| jupyterhub.cull.users | bool | `false` | Whether to log out the user (from JupyterHub) when culling their lab |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
 | jupyterhub.hub.baseUrl | string | `"/nb"` | Base URL on which JupyterHub listens |
 | jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":768,"runAsUser":768}` | Security context for JupyterHub container |

@@ -539,8 +539,8 @@ jupyterhub:
     # @default -- 300 (5 minutes)
     every: 300
 
-    # -- Whether to log out the server when culling their lab
-    users: true
+    # -- Whether to log out the user (from JupyterHub) when culling their lab
+    users: false
 
     # -- Whether to remove named servers when culling their lab
     removeNamedServers: true
