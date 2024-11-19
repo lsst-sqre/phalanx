@@ -52,7 +52,7 @@ spec:
                   key: kafka_pp_sasl_password
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: DEBUG_LOGS
-              value: {{ ternary "true" "false" .Values.debug | quote}}
+              value: {{ ternary "true" "false" .Values.debug | quote }}
             - name: SUPPORTED_INSTRUMENTS
               value: {{ .Values.instruments }}
             - name: INSTRUMENT_CONFIG_FILE
