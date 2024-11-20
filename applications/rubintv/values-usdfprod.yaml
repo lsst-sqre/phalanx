@@ -53,6 +53,14 @@ rubintv:
         capacity: 1Gi
       accessMode: ReadOnlyMany
       mountPath: /sdf/data/rubin
+    - name: sdf-data-rubin-rubintv-ddv-config
+      persistentVolumeClaim:
+        name: sdf-data-rubin-rubintv-ddv-config
+        storageClassName: sdf-data-rubin
+        capacity: 1Gi
+      accessMode: ReadWriteMany
+      mountPath: /var/ddv-config
+      subPath: shared/rubintv-ddv-config
     resources:
       limits:
         cpu: 2.0
