@@ -38,7 +38,7 @@ rubintv:
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
-    volumes:
+    pvcMountpoint:
     - name: sdf-group-rubin
       persistentVolumeClaim:
         name: sdf-group-rubin
