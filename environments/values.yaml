@@ -162,6 +162,9 @@ applications:
   # -- Enable the rubintv-dev application
   rubintv-dev: false
 
+  # -- Enable the s3proxy application
+  s3proxy: false
+
   # -- Enable the sasquatch application
   sasquatch: false
 
