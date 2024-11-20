@@ -10,5 +10,5 @@ data:
   S3PROXY_PROFILE: {{ .Values.config.logProfile | quote }}
   S3_ENDPOINT_URL: {{ .Values.config.s3EndpointUrl | quote }}
   {{- range .Values.config.profiles }}
-  LSST_RESOURCES_S3_PROFILE_{{ .name | quote }}: {{ .url | quote }}
+  LSST_RESOURCES_S3_PROFILE_{{ .name }}: {{ .url | quote }}
   {{- end }}
