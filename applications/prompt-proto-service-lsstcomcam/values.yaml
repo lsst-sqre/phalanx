@@ -51,7 +51,7 @@ prompt-proto-service:
     # -- Skymap to use with the instrument
     skymap: "lsst_cells_v1"
     # -- Number of arcseconds to pad the spatial region in preloading.
-    preloadPadding: 30
+    preloadPadding: 50
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
