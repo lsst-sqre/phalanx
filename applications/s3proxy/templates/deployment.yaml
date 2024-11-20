@@ -28,7 +28,7 @@ spec:
         - name: {{ .Chart.Name }}
           env:
             - name: AWS_SHARED_CREDENTIALS_FILE
-              value: /pod-secrets/aws-credentials.ini
+              value: /pod-secrets/secrets/aws-credentials.ini
           envFrom:
             - configMapRef:
                 name: "s3proxy"
@@ -86,4 +86,5 @@ spec:
             sizeLimit: 1Mi
         - name: secret-volume
           secret:
-            secretName: "aws-credentials.ini"
+            secretName: "s3proxy"
+            secretKey: "aws-credentials.ini"
