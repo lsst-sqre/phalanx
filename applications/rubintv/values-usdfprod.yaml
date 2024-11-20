@@ -20,7 +20,7 @@ rubintv:
       pullPolicy: Always
 
   workers:
-    replicas: 0
+    replicas: 1
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
       tag: c0037
