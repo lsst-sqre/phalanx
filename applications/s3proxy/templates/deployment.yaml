@@ -59,8 +59,8 @@ spec:
             - /bin/ash
             - "-c"
             - |
-              cp -R /secrets /pod-secrets
-              chmod -R go-rwx /pod-secrets
+              cp -L -r /secrets /pod-secrets
+              chmod -R go-rwx /pod-secrets/*
           image: alpine
           volumeMounts:
             - name: secret-volume
