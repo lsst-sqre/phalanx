@@ -41,6 +41,8 @@ spec:
               value: {{ .Values.kafka.securityProtocol }}
             - name: MAX_FAN_OUT_MESSAGES
               value: {{ .Values.knative.maxMessages | toString | quote }}
+            - name: RETRY_KNATIVE_REQUESTS
+              value: {{ ternary "true" "false" .Values.knative.retryRequests | quote }}
             - name: SASL_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -52,7 +54,7 @@ spec:
                   key: kafka_pp_sasl_password
                   name: {{ template "next-visit-fan-out.fullname" . }}-secret
             - name: DEBUG_LOGS
-              value: {{ ternary "true" "false" .Values.debug | quote}}
+              value: {{ ternary "true" "false" .Values.debug | quote }}
             - name: SUPPORTED_INSTRUMENTS
               value: {{ .Values.instruments }}
             - name: INSTRUMENT_CONFIG_FILE
