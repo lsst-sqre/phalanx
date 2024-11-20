@@ -50,7 +50,7 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          volumes:
+          volumeMounts:
             - name: pod-secrets
               mountPath: /pod-secrets
       initContainers:
