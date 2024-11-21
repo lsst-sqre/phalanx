@@ -13,6 +13,7 @@ config:
       - username: "bot-noteburst03"
       - username: "bot-noteburst04"
       - username: "bot-noteburst05"
+    imageSelector: "weekly"
 
 # Use SSD for Redis storage.
 redis:
