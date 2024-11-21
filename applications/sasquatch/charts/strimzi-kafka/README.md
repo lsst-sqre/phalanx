@@ -72,3 +72,4 @@ A subchart to deploy Strimzi Kafka components for Sasquatch.
 | users.replicator.enabled | bool | `false` | Enable user replicator (used by Mirror Maker 2 and required at both source and target clusters) |
 | users.telegraf.enabled | bool | `false` | Enable user telegraf (deployed by parent Sasquatch chart) |
 | users.tsSalKafka.enabled | bool | `false` | Enable user ts-salkafka, used at the telescope environments |
+| users.tsSalKafka.topics | list | `[]` | Create lsst.s3.* related topics for the ts-salkafka user. |

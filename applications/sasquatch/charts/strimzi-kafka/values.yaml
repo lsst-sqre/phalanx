@@ -263,6 +263,9 @@ users:
     # -- Enable user ts-salkafka, used at the telescope environments
     enabled: false
 
+    # -- Create lsst.s3.* related topics for the ts-salkafka user.
+    topics: []
+
   kafdrop:
     # -- Enable user Kafdrop (deployed by parent Sasquatch chart).
     enabled: false
