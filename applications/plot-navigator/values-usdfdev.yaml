@@ -28,7 +28,7 @@ config:
 productionTools:
   image:
     repository: ghcr.io/lsst-dm/production_tools
-    tag: 0.1.2
+    tag: SP-1740
   env:
     DAF_BUTLER_REPOSITORY_INDEX: "/sdf/group/rubin/shared/data-repos.yaml"
     PGPASSFILE: "/opt/lsst/butler/secrets/postgres-credentials.txt"
