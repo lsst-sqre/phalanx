@@ -1,4 +1,6 @@
 rubintv:
+  siteTag: "usdf-prod"
+
   imagePullSecrets:
   - name: pull-secret
 
