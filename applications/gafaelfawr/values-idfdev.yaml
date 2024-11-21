@@ -1,3 +1,7 @@
+image:
+  tag: "tickets-DM-47581-queue"
+  pullPolicy: "Always"
+
 # Use the CSI storage class so that we can use snapshots.
 redis:
   persistence:
@@ -5,6 +9,7 @@ redis:
 
 config:
   logLevel: "DEBUG"
+  enableSentry: true
   slackAlerts: true
 
   cilogon:
