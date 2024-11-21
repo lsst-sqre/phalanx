@@ -23,6 +23,11 @@ influxdb2:
     # -- Where we store secrets to run the server
     existingSecret: monitoring
 
+  # -- InfluxDB2 pod disruption budget.
+  # @default -- disabled; nonsensical for single replica
+  pdb:
+    create: false
+
   # -- InfluxDB2 ingress configuration.
   # @default -- disabled, must be enabled and configured at each site
   ingress:
