@@ -28,7 +28,7 @@ spec:
         - name: {{ .Chart.Name }}
           env:
             - name: AWS_SHARED_CREDENTIALS_FILE
-              value: /pod-secrets/aws-credentials.ini
+              value: /pod-secrets/secrets/aws-credentials.ini
           envFrom:
             - configMapRef:
                 name: "s3proxy"
@@ -50,7 +50,7 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          volumes:
+          volumeMounts:
             - name: pod-secrets
               mountPath: /pod-secrets
       initContainers:
@@ -59,8 +59,8 @@ spec:
             - /bin/ash
             - "-c"
             - |
-              cp -R /secrets /pod-secrets
-              chmod -R go-rwx /pod-secrets
+              cp -L -r /secrets /pod-secrets
+              chmod -R go-rwx /pod-secrets/*
           image: alpine
           volumeMounts:
             - name: secret-volume
@@ -86,4 +86,5 @@ spec:
             sizeLimit: 1Mi
         - name: secret-volume
           secret:
-            secretName: "aws-credentials.ini"
+            secretName: "s3proxy"
+            secretKey: "aws-credentials.ini"

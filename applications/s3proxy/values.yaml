@@ -7,14 +7,14 @@ replicaCount: 1
 
 image:
   # -- Image to use in the s3proxy deployment
-  repository: "ghcr.io/lsst-sqre/s3proxy"
+  repository: "ghcr.io/lsst-dm/s3proxy"
 
   # -- Pull policy for the s3proxy image
   pullPolicy: "IfNotPresent"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: 0.1.0
+  tag: ""
 
 config:
   # -- Logging level
