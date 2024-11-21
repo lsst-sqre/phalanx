@@ -51,6 +51,11 @@ config:
   # `config.internalDatabase` are true
   databaseUrl: null
 
+  # -- Whether to send trace and telemetry information to Sentry. This traces
+  # every call and therefore should only be enabled in non-production
+  # environments.
+  enableSentry: false
+
   # -- HTML footer to add to any login error page (will be enclosed in a <p>
   # tag).
   errorFooter: null
