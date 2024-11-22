@@ -95,6 +95,7 @@ config:
     PREOPS,
     OBS,
     SITCOM,
+    SP,
     BLOCK
 
 ingress:
