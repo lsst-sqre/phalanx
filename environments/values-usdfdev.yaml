@@ -16,6 +16,7 @@ applications:
   consdb: true
   datalinker: true
   exposurelog: true
+  fov-quicklook: true
   jira-data-proxy: true
   livetap: true
   mobu: true
@@ -39,4 +40,3 @@ applications:
   strimzi: true
   tap: true
   times-square: true
-  fov-quicklook: true
