@@ -13,6 +13,7 @@ Argo CD project: ``rsp``
    consdbtap/index
    datalinker/index
    filestore-backup/index
+   fov-quicklook/index
    hips/index
    jira-data-proxy/index
    livetap/index
