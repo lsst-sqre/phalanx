@@ -41,3 +41,4 @@ applications:
   tap: true
   tasso: true
   times-square: true
+  fov-quicklook: true
