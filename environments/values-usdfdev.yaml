@@ -39,3 +39,4 @@ applications:
   strimzi: true
   tap: true
   times-square: true
+  fov-quicklook: true
