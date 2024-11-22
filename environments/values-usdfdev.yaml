@@ -18,6 +18,7 @@ applications:
   datalinker: true
   exposurelog: true
   exposure-checker: true
+  fov-quicklook: true
   rubin-rag: true
   jira-data-proxy: true
   livetap: true
@@ -44,4 +45,3 @@ applications:
   tap: true
   tasso: true
   times-square: true
-  fov-quicklook: true
