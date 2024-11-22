@@ -35,6 +35,6 @@ applications:
   uws: true
 
 controlSystem:
-  imageTag: "k0002"
+  imageTag: "k0003"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
