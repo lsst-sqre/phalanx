@@ -26,6 +26,7 @@
 | applications.exposurelog | bool | `false` | Enable the exposurelog application |
 | applications.fastapi-bootcamp | bool | `false` | Enable the fastapi-bootcamp application |
 | applications.flink | bool | `false` | Enable the flink application |
+| applications.fov-quicklook | bool | `false` | Enable the fov-quicklook application |
 | applications.gafaelfawr | bool | `true` | Enable the Gafaelfawr application. This is required by Phalanx since most other applications use `GafaelfawrIngress` |
 | applications.ghostwriter | bool | `false` | Enable the ghostwriter application |
 | applications.giftless | bool | `false` | Enable the giftless application |

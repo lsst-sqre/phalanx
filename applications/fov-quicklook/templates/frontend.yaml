@@ -1,0 +1,89 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quicklook-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quicklook-frontend
+  template:
+    metadata:
+      labels:
+        app: quicklook-frontend
+    spec:
+      containers:
+        - name: quicklook-frontend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command:
+            - sh
+            - -c
+            - |
+              exec python -m quicklook.frontend.api
+          env:
+            - name: QUICKLOOK_coordinator_base_url
+              value: http://quicklook-coordinator:9501
+            - name: QUICKLOOK_frontend_app_prefix
+              value: {{ .Values.config.pathPrefix | quote }}
+            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
+            {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
+          ports:
+            - containerPort: 9500
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quicklook-frontend
+spec:
+  selector:
+    app: quicklook-frontend
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9500
+      targetPort: 9500
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: quicklook-frontend
+spec:
+  selector:
+    app: quicklook-frontend
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 9500
+      targetPort: 9500
+---
+{{- if .Values.use_gafaelfawr }}
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: quicklook-frontend
+config:
+  scopes:
+    all:
+      - "read:all"
+  service: service
+  loginRedirect: true
+template:
+  metadata:
+    name: quicklook-frontend
+  spec:
+    {{- include "quicklook.ingress.spec" . | nindent 4 }}
+{{- else }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: quicklook-frontend
+spec:
+  {{- include "quicklook.ingress.spec" . | nindent 2 }}
+{{- end }}
+
