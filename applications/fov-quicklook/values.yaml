@@ -1,0 +1,32 @@
+# -- Use vault to store secrets
+use_vault: true
+
+# -- Use gafaelfawr to authenticate
+use_gafaelfawr: true
+
+image:
+  # -- Image to use in the fov-quicklook deployment
+  repository: ghcr.io/michitaro/rubin-fov-viewer
+
+  # -- Pull policy for the fov-quicklook image
+  pullPolicy: Always
+
+  # -- Tag of image to use
+  tag: latest
+
+config:
+  # -- URL path prefix
+  pathPrefix: /fov-quicklook
+
+# -- S3 configuration for the repository
+s3_repository:
+  endpoint: sdfembs3.sdf.slac.stanford.edu:443
+  secure: true
+
+# -- S3 configuration for the tile storage
+s3_tile:
+  endpoint: sdfembs3.sdf.slac.stanford.edu:443
+  secure: true
+
+# -- Storage class to use for the database
+db_storage_class: null
