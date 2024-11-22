@@ -1,0 +1,82 @@
+{
+  "properties": {
+    "image": {
+      "$ref": "#/definitions/image_config"
+    },
+    "config": {
+      "$ref": "#/definitions/config"
+    },
+    "s3_repository": {
+      "$ref": "#/definitions/s3_config"
+    },
+    "s3_tile": {
+      "$ref": "#/definitions/s3_config"
+    },
+    "use_vault": {
+      "type": "boolean"
+    },
+    "use_gafaelfawr": {
+      "type": "boolean"
+    },
+    "db_storage_class": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "global": {}
+  },
+  "required": [
+    "image",
+    "use_vault",
+    "use_gafaelfawr",
+    "db_storage_class"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "image_config": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "tag",
+        "pullPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "config": {
+      "properties": {
+        "pathPrefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pathPrefix"
+      ],
+      "additionalProperties": false
+    },
+    "s3_config": {
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "secure": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "endpoint",
+        "secure"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
