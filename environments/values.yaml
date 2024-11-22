@@ -93,6 +93,8 @@ applications:
 
   # -- Enable the flink application
   flink: false
+  # -- Enable the fov-quicklook application
+  fov-quicklook: false
 
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
   # most other applications use `GafaelfawrIngress`
