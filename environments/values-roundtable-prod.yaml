@@ -14,7 +14,6 @@ applications:
   checkerboard: true
   giftless: true
   jira-data-proxy: true
-  kubernetes-replicator: true
   monitoring: true
   mobu: true
   onepassword-connect: true

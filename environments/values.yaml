@@ -100,9 +100,6 @@ applications:
   # -- Enable the jira-data-proxy application
   jira-data-proxy: false
 
-  # -- Enable the kubernetes-replicator application
-  kubernetes-replicator: false
-
   # -- Enable the livetap application
   livetap: false
 
