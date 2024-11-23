@@ -139,20 +139,20 @@ scripts:
 ###
 ### ComCam pods
 ###
-- name: LSSTComCam/runAosDonutPipeline.py
-  mounts:
-  - comcam-data
-  - comcam-gen3-data
-  - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
-  resources:
-    requests:
-      cpu: 32
-      memory: 96G
-    limits:
-      cpu: 32
-      memory: 96G
+# - name: LSSTComCam/runAosDonutPipeline.py
+#   mounts:
+#   - comcam-data
+#   - comcam-gen3-data
+#   - project-shared
+#   podAnnotations:
+#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+#   resources:
+#     requests:
+#       cpu: 32
+#       memory: 96G
+#     limits:
+#       cpu: 32
+#       memory: 96G
 - name: LSSTComCam/runFocusSweepAnalysis.py
   mounts:
   - comcam-data
