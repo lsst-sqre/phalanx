@@ -11,7 +11,6 @@ Argo CD project: ``support``
    :maxdepth: 1
 
    ghostwriter/index
-   kubernetes-replicator/index
    postgres/index
    sqlproxy-cross-project/index
    strimzi/index
