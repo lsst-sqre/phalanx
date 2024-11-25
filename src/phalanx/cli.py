@@ -34,8 +34,6 @@ from .models.vault import (
 P = ParamSpec("P")
 
 __all__ = [
-    "main",
-    "help",
     "application",
     "application_add_helm_repos",
     "application_create",
@@ -47,6 +45,8 @@ __all__ = [
     "environment_lint",
     "environment_schema",
     "environment_template",
+    "help",
+    "main",
     "secrets",
     "secrets_audit",
     "secrets_list",
