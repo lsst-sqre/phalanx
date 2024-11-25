@@ -100,6 +100,9 @@ spec:
       initContainers:
       - name: "secret-perm-fixer"
         image: "busybox"
+        # TODO: Note that rubintv-secrets and butler-secrets share the same
+        # aws-credentials.ini and postgres-credentials.txt files so this will
+        # need to be fixed. See DM-47762.
         command:
         - "/bin/sh"
         - "-c"

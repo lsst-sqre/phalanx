@@ -42,6 +42,12 @@ rubintv:
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
+    nfsMountpoint:
+    - name: project-rubintv-ddv-config
+      containerPath: /var/ddv-config
+      readOnly: false
+      server: nfs1.cp.lsst.org
+      serverPath: /project/rubintv/ddv-config
     resources:
       requests:
         cpu: 0.5
