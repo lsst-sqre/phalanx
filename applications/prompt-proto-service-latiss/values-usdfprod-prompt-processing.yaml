@@ -18,30 +18,30 @@ prompt-proto-service:
 
   instrument:
     pipelines:
-      # BLOCK-306 is photographic imaging
-      # BLOCK-T17 is daytime checkout
-      # BLOCK-271 is photon transfer curve calibrations
-      # BLOCK-295 is the daily calibration sequence as of May 27, 2024
-      main: >-
-        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml]
-        (survey="BLOCK-T17")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml]
-        (survey="cwfs")=[]
-        (survey="cwfs-focus-sweep")=[]
-        (survey="spec-survey")=[]
-        (survey="BLOCK-271")=[]
-        (survey="BLOCK-295")=[]
-        (survey="")=[]
-      preprocessing: >-
-        (survey="BLOCK-306")=[${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml]
-        (survey="BLOCK-T17")=[]
-        (survey="cwfs")=[]
-        (survey="cwfs-focus-sweep")=[]
-        (survey="spec-survey")=[]
-        (survey="BLOCK-271")=[]
-        (survey="BLOCK-295")=[]
-        (survey="")=[]
+      main: |-
+        - survey: BLOCK-306  # photographic imaging
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml
+        - survey: BLOCK-T17  # daytime checkout
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml']
+        - {survey: cwfs, pipelines: []}
+        - {survey: cwfs-focus-sweep, pipelines: []}
+        - {survey: spec-survey, pipelines: []}
+        - {survey: BLOCK-271, pipelines: []}  # photon transfer curve calibrations
+        - {survey: BLOCK-295, pipelines: []}  # the daily calibration sequence as of May 27, 2024
+        - {survey: "", pipelines: []}
+      preprocessing: |-
+        - survey: BLOCK-306
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
+        - {survey: BLOCK-T17, pipelines: []}
+        - {survey: cwfs, pipelines: []}
+        - {survey: cwfs-focus-sweep, pipelines: []}
+        - {survey: spec-survey, pipelines: []}
+        - {survey: BLOCK-271, pipelines: []}
+        - {survey: BLOCK-295, pipelines: []}
+        - {survey: "", pipelines: []}
     calibRepo: s3://rubin-summit-users
 
   s3:

@@ -42,9 +42,11 @@ spec:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines.preprocessing }}
+          value: |-
+            {{- .Values.instrument.pipelines.preprocessing | nindent 12 }}
         - name: MAIN_PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines.main }}
+          value: |-
+            {{- .Values.instrument.pipelines.main | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
         - name: PRELOAD_PADDING
