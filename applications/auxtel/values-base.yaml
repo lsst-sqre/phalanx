@@ -144,3 +144,10 @@ atspectrograph-sim:
 
 hexapod-sim:
   enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 20m
+      memory: 200Mi
