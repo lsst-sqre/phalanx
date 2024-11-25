@@ -6,7 +6,7 @@ metadata:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 data:
   cadc-registry.properties: |
-    ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}/auth/cadc
+    ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}
   catalina.properties: |
     # tomcat properties
     tomcat.connector.connectionTimeout=20000
