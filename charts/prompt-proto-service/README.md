@@ -22,8 +22,8 @@ Event-driven processing of camera images
 | cache.maxFilters | int | `20` | The maximum number of datasets of a given type the service might load if the filter is unknown. Should be greater than or equal to the number of filters that have e.g. flats or transmission curves. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
-| cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
+| debug.cacheCalibs | bool | `true` | Whether or not calibs should be cached between runs of a pod. This is a temporary flag that should only be unset in specific circumstances, and only in the development environment. |
 | fullnameOverride | string | `"prompt-proto-service"` | Override the full name for resources (includes the release name) |
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |

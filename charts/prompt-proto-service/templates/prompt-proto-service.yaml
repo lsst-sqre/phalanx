@@ -122,7 +122,7 @@ spec:
         - name: FILTERS_WITH_CALIBS
           value: {{ .Values.cache.maxFilters | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
-          value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
+          value: {{ if .Values.debug.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral
