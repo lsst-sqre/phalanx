@@ -62,22 +62,6 @@ auxtel-ess204-sim:
       cpu: 190m
       memory: 900Mi
 
-auxtel-ess205-sim:
-  enabled: true
-  classifier: ess205
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 205 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 90Mi
-    limits:
-      cpu: 190m
-      memory: 900Mi
-
 calibhill-ess301-sim:
   enabled: true
   classifier: ess301
@@ -86,6 +70,22 @@ calibhill-ess301-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 301 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+camera-ess111-sim:
+  enabled: true
+  classifier: ess111
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 111 --simulate
   resources:
     requests:
       cpu: 19m
@@ -172,6 +172,22 @@ epm1-sim:
       cpu: 190m
       memory: 900Mi
 
+m1m3-ess113-sim:
+  enabled: true
+  classifier: ess113
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 113 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 m2-ess106-sim:
   enabled: true
   classifier: ess106
@@ -188,46 +204,14 @@ m2-ess106-sim:
       cpu: 190m
       memory: 900Mi
 
-mtdome-ess101-sim:
+m2-ess112-sim:
   enabled: true
-  classifier: ess101
+  classifier: ess112
   image:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 101 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 90Mi
-    limits:
-      cpu: 190m
-      memory: 900Mi
-
-mtdome-ess102-sim:
-  enabled: true
-  classifier: ess102
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 102 --simulate
-  resources:
-    requests:
-      cpu: 19m
-      memory: 90Mi
-    limits:
-      cpu: 190m
-      memory: 900Mi
-
-mtdome-ess103-sim:
-  enabled: true
-  classifier: ess103
-  image:
-    repository: ts-dockerhub.lsst.org/ess
-    pullPolicy: Always
-  env:
-    RUN_ARG: 103 --simulate
+    RUN_ARG: 112 --simulate
   resources:
     requests:
       cpu: 19m
@@ -308,6 +292,22 @@ tma-ess105-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 105 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess110-sim:
+  enabled: true
+  classifier: ess110
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 110 --simulate
   resources:
     requests:
       cpu: 19m

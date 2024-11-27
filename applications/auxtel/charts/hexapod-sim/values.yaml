@@ -8,3 +8,11 @@ image:
   tag: latest
   # -- The policy to apply when pulling an image for deployment
   pullPolicy: Always
+# -- This allows the specification of resources (CPU, memory) requires to run the container
+resources: {}
+# -- This allows the specification of using specific nodes to run the pod
+nodeSelector: {}
+# -- This specifies the tolerations of the pod for any system taints
+tolerations: []
+# -- This specifies the scheduling constraints of the pod
+affinity: {}
