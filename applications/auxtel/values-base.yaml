@@ -45,6 +45,8 @@ atmcs-sim:
   image:
     repository: ts-dockerhub.lsst.org/atmcs_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atoods:
   image:
@@ -126,6 +128,8 @@ atpneumatics-sim:
   image:
     repository: ts-dockerhub.lsst.org/at_pneumatics_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atptg:
   image:
