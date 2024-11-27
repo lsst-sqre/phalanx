@@ -31,12 +31,12 @@ IVOA TAP service
 | config.pg.host | string | None, must be set if backend is `pg` | Host to connect to |
 | config.pg.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.pg.image.repository | string | `"ghcr.io/lsst-sqre/tap-postgres-service"` | TAP image to use |
-| config.pg.image.tag | string | `"1.18.6"` | Tag of TAP image to use |
+| config.pg.image.tag | string | `"1.19.0"` | Tag of TAP image to use |
 | config.pg.username | string | None, must be set if backend is `pg` | Username to connect with |
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"2.4.7"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"2.5.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
@@ -78,7 +78,7 @@ IVOA TAP service
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"2.4.7"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"2.5.0"` | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |
