@@ -36,6 +36,10 @@ config:
         - "dp0.2"
         - "dp0.3"
 
+  # Enable metrics reporting.
+  metrics:
+    enabled: true
+
   # User quota settings for services.
   quota:
     default:
