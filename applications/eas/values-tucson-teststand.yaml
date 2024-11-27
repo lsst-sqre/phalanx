@@ -94,6 +94,22 @@ camera-ess111-sim:
       cpu: 190m
       memory: 900Mi
 
+cleanroom-ess109-sim:
+  enabled: true
+  classifier: ess109
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 109 --simulate
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
 dimm1-sim:
   enabled: true
   image:
