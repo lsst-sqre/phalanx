@@ -30,20 +30,28 @@ auxtel-ess204-sim:
   # -- Enable the ESS:204 simulator CSC
   enabled: false
 
-auxtel-ess205:
-  # -- Enable the ESS:205 CSC
-  enabled: false
-
-auxtel-ess205-sim:
-  # -- Enable the ESS:205 simulator CSC
-  enabled: false
-
 calibhill-ess301:
   # -- Enable the ESS:301 CSC
   enabled: false
 
 calibhill-ess301-sim:
   # -- Enable the ESS:301 simulator CSC
+  enabled: false
+
+camera-ess111:
+  # -- Enable the ESS:111 CSC
+  enabled: false
+
+camera-ess111-sim:
+  # -- Enable the ESS:111 simulator CSC
+  enabled: false
+
+cleanroom-ess109:
+  # -- Enable the ESS:109 CSC
+  enabled: false
+
+cleanroom-ess109-sim:
+  # -- Enable the ESS:109 simulator CSC
   enabled: false
 
 dimm1:
@@ -86,6 +94,14 @@ epm1-sim:
   # -- Enable the EPM:1 simulator CSC
   enabled: false
 
+m1m3-ess113:
+  # -- Enable the ESS:113 CSC
+  enabled: false
+
+m1m3-ess113-sim:
+  # -- Enable the ESS:113 simulator CSC
+  enabled: false
+
 m2-ess106:
   # -- Enable the ESS:106 CSC
   enabled: false
@@ -94,28 +110,12 @@ m2-ess106-sim:
   # -- Enable the ESS:106 simulator CSC
   enabled: false
 
-mtdome-ess101:
-  # -- Enable the ESS:101 CSC
+m2-ess112:
+  # -- Enable the ESS:112 CSC
   enabled: false
 
-mtdome-ess101-sim:
-  # -- Enable the ESS:101 simulator CSC
-  enabled: false
-
-mtdome-ess102:
-  # -- Enable the ESS:102 CSC
-  enabled: false
-
-mtdome-ess102-sim:
-  # -- Enable the ESS:102 simulator CSC
-  enabled: false
-
-mtdome-ess103:
-  # -- Enable the ESS:103 CSC
-  enabled: false
-
-mtdome-ess103-sim:
-  # -- Enable the ESS:103 simulator CSC
+m2-ess112-sim:
+  # -- Enable the ESS:112 simulator CSC
   enabled: false
 
 mtdome-ess107:
@@ -156,6 +156,14 @@ tma-ess105:
 
 tma-ess105-sim:
   # -- Enable the ESS:105 simulator CSC
+  enabled: false
+
+tma-ess110:
+  # -- Enable the ESS:110 CSC
+  enabled: false
+
+tma-ess110-sim:
+  # -- Enable the ESS:110 simulator CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

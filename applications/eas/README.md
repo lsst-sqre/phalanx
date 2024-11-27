@@ -14,10 +14,12 @@ Deployment for the Environmental Awareness Systems CSCs
 | auxtel-ess203.enabled | bool | `false` | Enable the ESS:203 CSC |
 | auxtel-ess204-sim.enabled | bool | `false` | Enable the ESS:204 simulator CSC |
 | auxtel-ess204.enabled | bool | `false` | Enable the ESS:204 CSC |
-| auxtel-ess205-sim.enabled | bool | `false` | Enable the ESS:205 simulator CSC |
-| auxtel-ess205.enabled | bool | `false` | Enable the ESS:205 CSC |
 | calibhill-ess301-sim.enabled | bool | `false` | Enable the ESS:301 simulator CSC |
 | calibhill-ess301.enabled | bool | `false` | Enable the ESS:301 CSC |
+| camera-ess111-sim.enabled | bool | `false` | Enable the ESS:111 simulator CSC |
+| camera-ess111.enabled | bool | `false` | Enable the ESS:111 CSC |
+| cleanroom-ess109-sim.enabled | bool | `false` | Enable the ESS:109 simulator CSC |
+| cleanroom-ess109.enabled | bool | `false` | Enable the ESS:109 CSC |
 | dimm1-sim.enabled | bool | `false` | Enable the DIMM:1 simulator CSC |
 | dimm1.enabled | bool | `false` | Enable the DIMM:1 CSC |
 | dimm2-sim.enabled | bool | `false` | Enable the DIMM:2 simulator CSC |
@@ -39,14 +41,12 @@ Deployment for the Environmental Awareness Systems CSCs
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| m1m3-ess113-sim.enabled | bool | `false` | Enable the ESS:113 simulator CSC |
+| m1m3-ess113.enabled | bool | `false` | Enable the ESS:113 CSC |
 | m2-ess106-sim.enabled | bool | `false` | Enable the ESS:106 simulator CSC |
 | m2-ess106.enabled | bool | `false` | Enable the ESS:106 CSC |
-| mtdome-ess101-sim.enabled | bool | `false` | Enable the ESS:101 simulator CSC |
-| mtdome-ess101.enabled | bool | `false` | Enable the ESS:101 CSC |
-| mtdome-ess102-sim.enabled | bool | `false` | Enable the ESS:102 simulator CSC |
-| mtdome-ess102.enabled | bool | `false` | Enable the ESS:102 CSC |
-| mtdome-ess103-sim.enabled | bool | `false` | Enable the ESS:103 simulator CSC |
-| mtdome-ess103.enabled | bool | `false` | Enable the ESS:103 CSC |
+| m2-ess112-sim.enabled | bool | `false` | Enable the ESS:112 simulator CSC |
+| m2-ess112.enabled | bool | `false` | Enable the ESS:112 CSC |
 | mtdome-ess107-sim.enabled | bool | `false` | Enable the ESS:107 simulator CSC |
 | mtdome-ess107.enabled | bool | `false` | Enable the ESS:107 CSC |
 | mtdome-ess108-sim.enabled | bool | `false` | Enable the ESS:108 simulator CSC |
@@ -57,3 +57,5 @@ Deployment for the Environmental Awareness Systems CSCs
 | tma-ess104.enabled | bool | `false` | Enable the ESS:104 CSC |
 | tma-ess105-sim.enabled | bool | `false` | Enable the ESS:105 simulator CSC |
 | tma-ess105.enabled | bool | `false` | Enable the ESS:105 CSC |
+| tma-ess110-sim.enabled | bool | `false` | Enable the ESS:110 simulator CSC |
+| tma-ess110.enabled | bool | `false` | Enable the ESS:110 CSC |
