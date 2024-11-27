@@ -36,7 +36,7 @@ spec:
                 - "gafaelfawr"
                 - "maintenance"
               env:
-                {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values) | nindent 16 }}
+                {{- include "gafaelfawr.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values) | nindent 16 }}
                 {{- if .Values.config.metrics.enabled }}
                 - name: "KAFKA_CLIENT_CERT_PATH"
                   value: "/etc/gafaelfawr-kafka/user.crt"
