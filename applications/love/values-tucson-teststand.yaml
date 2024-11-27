@@ -59,19 +59,171 @@ love-manager:
         initialDelaySeconds: 20
         periodSeconds: 10
     producers:
+    - name: general
       image:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
+        LOVE_SITE: tucson
         SERVER_URL: tucson-teststand.lsst.codes
         OLE_API_HOSTNAME: tucson-teststand.lsst.codes
         AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
         AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
         AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        COMMANDER_HOSTNAME: love-commander-service
+        COMMANDER_PORT: 5000
         DB_HOST: postgresdb01.tu.lsst.org
-        LOVE_SITE: tucson
+        DB_ENGINE: postgresql
+        DB_NAME: love
+        DB_PORT: 5432
+        DB_USER: love
+        HEARTBEAT_QUERY_COMMANDER: false
+        JIRA_API_HOSTNAME: rubinobs.atlassian.net
+        JIRA_PROJECT_ID: 10063
+        REDIS_CONFIG_CAPACITY: 5000
+        REDIS_CONFIG_EXPIRY: 5
+        REDIS_HOST: love-manager-redis-service
+        REMOTE_STORAGE: true
+        URL_SUBPATH: /love
+      envSecrets:
+        SECRET_KEY: manager-secret-key
+        PROCESS_CONNECTION_PASS: process-connection-pass
+        ADMIN_USER_PASS: admin-user-pass
+        USER_USER_PASS: user-user-pass
+        CMD_USER_PASS: cmd-user-pass
+        AUTHLIST_USER_PASS: authlist-user-pass
+        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+        DB_PASS: db-pass
+        REDIS_PASS: redis-pass
+      replicas: 10
       autoscaling:
-        enabled: true
+        enabled: false
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
+    - name: queue
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        LOVE_SITE: tucson
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        COMMANDER_HOSTNAME: love-commander-service
+        COMMANDER_PORT: 5000
+        DB_HOST: postgresdb01.tu.lsst.org
+        DB_ENGINE: postgresql
+        DB_NAME: love
+        DB_PORT: 5432
+        DB_USER: love
+        HEARTBEAT_QUERY_COMMANDER: false
+        JIRA_API_HOSTNAME: rubinobs.atlassian.net
+        JIRA_PROJECT_ID: 10063
+        REDIS_CONFIG_CAPACITY: 5000
+        REDIS_CONFIG_EXPIRY: 5
+        REDIS_HOST: love-manager-redis-service
+        REMOTE_STORAGE: true
+        URL_SUBPATH: /love
+      envSecrets:
+        SECRET_KEY: manager-secret-key
+        PROCESS_CONNECTION_PASS: process-connection-pass
+        ADMIN_USER_PASS: admin-user-pass
+        USER_USER_PASS: user-user-pass
+        CMD_USER_PASS: cmd-user-pass
+        AUTHLIST_USER_PASS: authlist-user-pass
+        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+        DB_PASS: db-pass
+        REDIS_PASS: redis-pass
+      replicas: 3
+      autoscaling:
+        enabled: false
+        minReplicas: 2
+        maxReplicas: 25
+        targetCPUUtilizationPercentage: 50
+        scaleDownPolicy:
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+          - type: Percent
+            value: 10
+            periodSeconds: 120
+          selectPolicy: Min
+      resources:
+        requests:
+          cpu: 150m
+          memory: 200Mi
+        limits:
+          cpu: 1000m
+          memory: 1500Mi
+      readinessProbe:
+        tcpSocket:
+          port: 8000
+        initialDelaySeconds: 20
+        periodSeconds: 10
+    - name: m1m3
+      image:
+        repository: ts-dockerhub.lsst.org/love-manager
+        pullPolicy: Always
+      env:
+        LOVE_SITE: tucson
+        SERVER_URL: tucson-teststand.lsst.codes
+        OLE_API_HOSTNAME: tucson-teststand.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.tu.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.tu.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.tu.lsst.org
+        COMMANDER_HOSTNAME: love-commander-service
+        COMMANDER_PORT: 5000
+        DB_HOST: postgresdb01.tu.lsst.org
+        DB_ENGINE: postgresql
+        DB_NAME: love
+        DB_PORT: 5432
+        DB_USER: love
+        HEARTBEAT_QUERY_COMMANDER: false
+        JIRA_API_HOSTNAME: rubinobs.atlassian.net
+        JIRA_PROJECT_ID: 10063
+        REDIS_CONFIG_CAPACITY: 5000
+        REDIS_CONFIG_EXPIRY: 5
+        REDIS_HOST: love-manager-redis-service
+        REMOTE_STORAGE: true
+        URL_SUBPATH: /love
+      envSecrets:
+        SECRET_KEY: manager-secret-key
+        PROCESS_CONNECTION_PASS: process-connection-pass
+        ADMIN_USER_PASS: admin-user-pass
+        USER_USER_PASS: user-user-pass
+        CMD_USER_PASS: cmd-user-pass
+        AUTHLIST_USER_PASS: authlist-user-pass
+        AUTH_LDAP_BIND_PASSWORD: auth-ldap-bind-password
+        DB_PASS: db-pass
+        REDIS_PASS: redis-pass
+      replicas: 1
+      autoscaling:
+        enabled: false
         minReplicas: 2
         maxReplicas: 25
         targetCPUUtilizationPercentage: 50
