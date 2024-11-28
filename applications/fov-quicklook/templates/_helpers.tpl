@@ -20,7 +20,7 @@
   valueFrom:
     secretKeyRef:
       name: fov-quicklook-secret
-      key: s3_repository_acceess_key
+      key: s3_repository_access_key
 - name: QUICKLOOK_s3_repository__secret_key
   valueFrom:
     secretKeyRef:
