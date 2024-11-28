@@ -4,12 +4,12 @@
 - name: QUICKLOOK_s3_tile__access_key
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-secret
+      name: fov-quicklook
       key: s3_tile_access_key
 - name: QUICKLOOK_s3_tile__secret_key
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-secret
+      name: fov-quicklook
       key: s3_tile_secret_key
 {{- end }}
 
@@ -19,12 +19,12 @@
 - name: QUICKLOOK_s3_repository__access_key
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-secret
+      name: fov-quicklook
       key: s3_repository_access_key
 - name: QUICKLOOK_s3_repository__secret_key
   valueFrom:
     secretKeyRef:
-      name: fov-quicklook-secret
+      name: fov-quicklook
       key: s3_repository_secret_key
 {{- end }}
 
