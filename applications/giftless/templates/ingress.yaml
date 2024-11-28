@@ -91,6 +91,7 @@ config:
   scopes:
     all:
       - "write:git-lfs"
+  service: "giftless"
 template:
   metadata:
     name: {{ template "giftless.fullname" . }}-rw

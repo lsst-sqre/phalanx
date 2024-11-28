@@ -16,6 +16,7 @@ config:
     internal:
       service: "butler"
       scopes: []
+  service: "butler"
 
 template:
   metadata:

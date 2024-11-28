@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:tap"
+  service: "datalinker"
 template:
   metadata:
     name: {{ include "datalinker.fullname" . }}-tap

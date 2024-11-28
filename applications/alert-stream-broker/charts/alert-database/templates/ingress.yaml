@@ -10,6 +10,7 @@ config:
   scopes:
     all:
       - "read:alertdb"
+  service: "alert-stream-broker"
 template:
   metadata:
     name: {{ template "alertDatabase.fullname" . }}

@@ -115,6 +115,11 @@ config:
   # maths.
   jvmMaxHeapSize: 31G
 
+  # -- Name of the service from Gafaelfawr's perspective, used for metrics
+  # reporting
+  # @default -- None, must be set
+  serviceName: ""
+
   # -- Vault secret name, this is appended to the global path to find the
   # vault secrets associated with this deployment.
   vaultSecretName: ""

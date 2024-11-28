@@ -11,6 +11,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "ghostwriter"
   delegate:
     notebook: {}
 template:

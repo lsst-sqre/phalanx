@@ -1,6 +1,6 @@
 cadc-tap:
-  # Settings for the ingress rules.
   ingress:
+    # -- Ingress path that should be routed to this service
     path: "live"
 
   config:
@@ -20,6 +20,9 @@ cadc-tap:
 
     # -- Vault secret name: the final key in the vault path
     vaultSecretName: "livetap"
+
+  # -- Name of the service from Gafaelfawr's perspective
+  service: "livetap"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

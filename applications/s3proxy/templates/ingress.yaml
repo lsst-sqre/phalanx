@@ -13,6 +13,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "s3proxy"
 template:
   metadata:
     name: "s3proxy"
