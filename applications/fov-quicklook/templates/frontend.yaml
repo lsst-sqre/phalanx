@@ -56,7 +56,7 @@ metadata:
 config:
   scopes:
     all:
-      - "read:all"
+      - "read:image"
   service: service
   loginRedirect: true
 template:
