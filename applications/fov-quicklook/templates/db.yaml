@@ -30,8 +30,8 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: fov-quicklook-db
-                  key: password
+                  name: fov-quicklook
+                  key: db_password
           ports:
             - containerPort: 5432
           volumeMounts:
