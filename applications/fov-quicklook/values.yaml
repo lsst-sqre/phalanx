@@ -32,3 +32,47 @@ s3_tile:
 
 # -- Storage class to use for the database
 db_storage_class: null
+
+coordinator:
+  resources:
+    # -- Resource requests for the coordinator
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    # -- Resource limits for the coordinator
+    limits:
+      cpu: 4000m
+      memory: 256Mi
+
+frontend:
+  resources:
+    # -- Resource requests for the frontend
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    # -- Resource limits for the frontend
+    limits:
+      cpu: 8000m
+      memory: 256Mi
+
+db:
+  resources:
+    # -- Resource requests for the database
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    # -- Resource limits for the database
+    limits:
+      cpu: 2000m
+      memory: 256Mi
+
+generator:
+  resources:
+    # -- Resource requests for the generator
+    requests:
+      cpu: 100m
+      memory: 2Gi
+    # -- Resource limits for the generator
+    limits:
+      cpu: 16000m
+      memory: 2Gi
