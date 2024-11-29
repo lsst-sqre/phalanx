@@ -15,7 +15,7 @@ spec:
       initContainers:
         - name: init-permissions
           image: 'busybox'
-          command: ['sh', '-c', 'chown -R 999:999 /var/lib/postgresql/data']
+          command: ['sh', '-c', 'chown 999:999 /var/lib/postgresql/data']
           volumeMounts:
             - name: fov-quicklook-db
               mountPath: /var/lib/postgresql/data
