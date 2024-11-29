@@ -41,6 +41,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 999
             runAsGroup: 999
+          resources: {{ toYaml .Values.db.resources | nindent 12 }}
       volumes:
         - name: fov-quicklook-db
           persistentVolumeClaim:
