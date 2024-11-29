@@ -68,12 +68,16 @@
         "endpoint": {
           "type": "string"
         },
+        "bucket": {
+          "type": "string"
+        },
         "secure": {
           "type": "boolean"
         }
       },
       "required": [
         "endpoint",
+        "bucket",
         "secure"
       ],
       "additionalProperties": false
