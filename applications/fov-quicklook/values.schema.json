@@ -22,12 +22,52 @@
       "type": ["string", "null"],
       "default": null
     },
-    "global": {}
+    "global": {},
+    "coordinator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "frontend": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "db": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    }
   },
   "required": [
     "image",
     "use_vault",
-    "use_gafaelfawr"
+    "use_gafaelfawr",
+    "coordinator",
+    "frontend",
+    "db",
+    "generator"
   ],
   "additionalProperties": false,
   "definitions": {
@@ -80,6 +120,34 @@
         "secure"
       ],
       "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          },
+          "required": ["cpu", "memory"]
+        }
+      }
     }
   }
 }
