@@ -22,11 +22,13 @@ config:
 s3_repository:
   endpoint: sdfembs3.sdf.slac.stanford.edu:443
   secure: true
+  bucket: fov-quicklook-repository
 
 # -- S3 configuration for the tile storage
 s3_tile:
   endpoint: sdfembs3.sdf.slac.stanford.edu:443
   secure: true
+  bucket: fov-quicklook-tile
 
 # -- Storage class to use for the database
 db_storage_class: null
