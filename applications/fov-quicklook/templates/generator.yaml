@@ -37,6 +37,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
+          resources: {{ toYaml .Values.generator.resources | nindent 12 }}
       volumes:
         - name: shm
           emptyDir:
