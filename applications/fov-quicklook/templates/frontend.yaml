@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: quicklook-frontend
+  name: fov-quicklook-frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: quicklook-frontend
+      app: fov-quicklook-frontend
   template:
     metadata:
       labels:
-        app: quicklook-frontend
+        app: fov-quicklook-frontend
     spec:
       containers:
-        - name: quicklook-frontend
+        - name: fov-quicklook-frontend
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command:
             - sh
@@ -22,7 +22,7 @@ spec:
               exec python -m quicklook.frontend.api
           env:
             - name: QUICKLOOK_coordinator_base_url
-              value: http://quicklook-coordinator:9501
+              value: http://fov-quicklook-coordinator:9501
             - name: QUICKLOOK_frontend_app_prefix
               value: {{ .Values.config.pathPrefix | quote }}
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
@@ -37,10 +37,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: quicklook-frontend
+  name: fov-quicklook-frontend
 spec:
   selector:
-    app: quicklook-frontend
+    app: fov-quicklook-frontend
   type: ClusterIP
   ports:
     - name: http
@@ -52,7 +52,7 @@ spec:
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: quicklook-frontend
+  name: fov-quicklook-frontend
 config:
   scopes:
     all:
@@ -61,14 +61,14 @@ config:
   loginRedirect: true
 template:
   metadata:
-    name: quicklook-frontend
+    name: fov-quicklook-frontend
   spec:
     {{- include "quicklook.ingress.spec" . | nindent 4 }}
 {{- else }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: quicklook-frontend
+  name: fov-quicklook-frontend
 spec:
   {{- include "quicklook.ingress.spec" . | nindent 2 }}
 {{- end }}
