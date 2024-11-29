@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: quicklook-generator
+  name: fov-quicklook-generator
   labels:
-    app: quicklook-generator
+    app: fov-quicklook-generator
 spec:
   updateStrategy:
     type: RollingUpdate
@@ -11,23 +11,23 @@ spec:
       maxUnavailable: 100%
   selector:
     matchLabels:
-      app: quicklook-generator
+      app: fov-quicklook-generator
   template:
     metadata:
       labels:
-        app: quicklook-generator
+        app: fov-quicklook-generator
     spec:
       nodeSelector:
         quicklook: "true"
       containers:
-        - name: quicklook-generator
+        - name: fov-quicklook-generator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           command: ["python", "-u", "-m", "quicklook.generator.api"]
           ports:
             - containerPort: 9502
           env:
             - name: QUICKLOOK_coordinator_base_url
-              value: http://quicklook-coordinator:9501
+              value: http://fov-quicklook-coordinator:9501
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
           volumeMounts:
@@ -45,22 +45,22 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: quicklook-generator-policy
+  name: fov-quicklook-generator-policy
 spec:
   podSelector:
     matchLabels:
-      app: quicklook-generator
+      app: fov-quicklook-generator
   ingress:
     - from:
         - podSelector:
             matchLabels:
-              app: quicklook-coordinator
+              app: fov-quicklook-coordinator
         - podSelector:
             matchLabels:
-              app: quicklook-frontend
+              app: fov-quicklook-frontend
         - podSelector:
             matchLabels:
-              app: quicklook-generator
+              app: fov-quicklook-generator
       ports:
         - protocol: TCP
           port: 9502
