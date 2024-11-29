@@ -29,8 +29,8 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: fov-quicklook-db
-                  key: password
+                  name: fov-quicklook
+                  key: db_password
             - name: QUICKLOOK_db_url
               value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
