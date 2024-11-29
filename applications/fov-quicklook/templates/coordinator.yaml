@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: quicklook-coordinator
+  name: fov-quicklook-coordinator
 spec:
   strategy:
     type: Recreate
   replicas: 1
   selector:
     matchLabels:
-      app: quicklook-coordinator
+      app: fov-quicklook-coordinator
   template:
     metadata:
       labels:
-        app: quicklook-coordinator
+        app: fov-quicklook-coordinator
     spec:
       containers:
-        - name: quicklook-coordinator
+        - name: fov-quicklook-coordinator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           command:
@@ -29,10 +29,10 @@ spec:
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: quicklook-db
+                  name: fov-quicklook-db
                   key: password
             - name: QUICKLOOK_db_url
-              value: postgresql://quicklook:$(DB_PASSWORD)@quicklook-db:5432/quicklook
+              value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
             {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
           ports:
@@ -45,10 +45,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: quicklook-coordinator
+  name: fov-quicklook-coordinator
 spec:
   selector:
-    app: quicklook-coordinator
+    app: fov-quicklook-coordinator
   type: ClusterIP
   ports:
     - name: http
@@ -59,19 +59,19 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: quicklook-coordinator-policy
+  name: fov-quicklook-coordinator-policy
 spec:
   podSelector:
     matchLabels:
-      app: quicklook-coordinator
+      app: fov-quicklook-coordinator
   ingress:
     - from:
         - podSelector:
             matchLabels:
-              app: quicklook-generator
+              app: fov-quicklook-generator
         - podSelector:
             matchLabels:
-              app: quicklook-frontend
+              app: fov-quicklook-frontend
       ports:
         - protocol: TCP
           port: 9501
