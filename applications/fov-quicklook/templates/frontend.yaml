@@ -29,6 +29,7 @@ spec:
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
           ports:
             - containerPort: 9500
+          resources: {{ toYaml .Values.frontend.resources | nindent 12 }}
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
