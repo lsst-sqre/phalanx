@@ -181,6 +181,13 @@ scripts:
     limits:
       cpu: .5
       memory: 1G
+- name: LSSTComCam/runOneOffExpRecord.py
+  mounts:
+  - comcam-data
+  - comcam-gen3-data
+  - project-shared
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: LSSTComCam/runOneOffPostIsr.py
   mounts:
   - comcam-data
