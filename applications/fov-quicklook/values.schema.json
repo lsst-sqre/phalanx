@@ -27,8 +27,7 @@
   "required": [
     "image",
     "use_vault",
-    "use_gafaelfawr",
-    "db_storage_class"
+    "use_gafaelfawr"
   ],
   "additionalProperties": false,
   "definitions": {
