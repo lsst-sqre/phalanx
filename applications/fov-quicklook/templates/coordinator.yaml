@@ -41,6 +41,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
+          resources: {{ toYaml .Values.coordinator.resources | nindent 12 }}
 ---
 apiVersion: v1
 kind: Service
