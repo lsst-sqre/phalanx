@@ -36,7 +36,7 @@ rules:
           pathType: Prefix
           backend:
             service:
-              name: quicklook-frontend
+              name: fov-quicklook-frontend
               port:
                 number: 9500
 {{- end -}}
