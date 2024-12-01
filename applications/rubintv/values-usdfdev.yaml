@@ -18,7 +18,7 @@ rubintv:
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
     image:
-      tag: deploy
+      tag: tickets-DM-47287
       pullPolicy: Always
 
   workers:
