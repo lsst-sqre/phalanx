@@ -21,7 +21,7 @@ rubintv:
       value: "rubintv-dev/ws/ddv"
     image:
       repository: ghcr.io/lsst-ts/rubintv
-      tag: deploy
+      tag: tickets-DM-47867
       pullPolicy: Always
 
   workers:
