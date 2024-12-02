@@ -8,7 +8,7 @@ cadc-tap:
     backend: "pg"
 
     # -- Name of the service from Gafaelfawr's perspective
-    service: "livetap"
+    serviceName: "livetap"
 
     pg:
       # -- Postgres hostname:port to connect to

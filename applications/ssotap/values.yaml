@@ -8,7 +8,7 @@ cadc-tap:
     backend: "pg"
 
     # -- Name of the service from Gafaelfawr's perspective
-    service: "ssotap"
+    serviceName: "ssotap"
 
     pg:
       # -- Postgres hostname:port to connect to
