@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "sia"
   delegate:
     internal:
       service: "sia"

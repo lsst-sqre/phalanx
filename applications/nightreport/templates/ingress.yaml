@@ -11,6 +11,7 @@ config:
   scopes:
     all:
       - "exec:internal-tools"
+  service: "nightreport"
   {{- else }}
   scopes:
     anonymous: true

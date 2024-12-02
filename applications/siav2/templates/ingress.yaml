@@ -7,16 +7,17 @@ metadata:
 config:
   authType: "basic"
   baseUrl: {{ .Values.global.baseUrl | quote }}
-  delegate:
-    internal:
-      scopes:
-      - read:tap
-      service: "siav2"
-    useAuthorization: true
   loginRedirect: false
   scopes:
     all:
-    - read:image
+      - "read:image"
+  service: "siav2"
+  delegate:
+    internal:
+      scopes:
+        - "read:tap"
+      service: "siav2"
+    useAuthorization: true
 template:
   metadata:
     name: "siav2-authenticated"

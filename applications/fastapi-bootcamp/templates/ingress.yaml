@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:image"
+  service: "fastapi-bootcamp"
 template:
   metadata:
     name: "fastapi-bootcamp"

@@ -11,6 +11,7 @@ config:
   scopes:
     all:
       - "exec:internal-tools"
+  service: "narrativelog"
   {{- else }}
   scopes:
     anonymous: true

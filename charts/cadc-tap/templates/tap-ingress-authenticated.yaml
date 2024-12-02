@@ -6,14 +6,15 @@ metadata:
     {{- include "cadc-tap.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
+  authType: "basic"
   scopes:
     all:
       - "read:tap"
-  authType: "basic"
+  service: {{ required "config.serviceName must be set" .Values.config.serviceName | quote }}
   delegate:
     internal:
       scopes: []
-      service: "tap"
+      service: {{ .Values.config.serviceName | quote }}
     useAuthorization: true
 template:
   metadata:
