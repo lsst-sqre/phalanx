@@ -11,10 +11,6 @@ Squarebot backend that unfurls Jira issues.
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the unfurlbot deployment pod |
-| autoscaling.enabled | bool | `false` | Enable autoscaling of unfurlbot deployment |
-| autoscaling.maxReplicas | int | `100` | Maximum number of unfurlbot deployment pods |
-| autoscaling.minReplicas | int | `1` | Minimum number of unfurlbot deployment pods |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of unfurlbot deployment pods |
 | config.jiraProjects | string | See `values.yaml` | Names of Jira projects to unfurl (comma-separated) |
 | config.jiraUrl | string | `"https://rubinobs.atlassian.net/"` | Jira base URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
@@ -29,7 +25,7 @@ Squarebot backend that unfurls Jira issues.
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the unfurlbot image |
 | image.repository | string | `"ghcr.io/lsst-sqre/unfurlbot"` | Image to use in the unfurlbot deployment |
-| image.tag | string | `""` | Overrides the image tag whose default is the chart appVersion. |
+| image.tag | string | The appVersion of the chart | Image tag to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |
 | nodeSelector | object | `{}` | Node selection rules for the unfurlbot deployment pod |
 | podAnnotations | object | `{}` | Annotations for the unfurlbot deployment pod |
