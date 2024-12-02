@@ -1,7 +1,7 @@
 strimzi-kafka:
   users:
     kafdrop:
-      enabled: false
+      enabled: true
   kraft:
     enabled: true
   kafkaController:
@@ -16,3 +16,9 @@ strimzi-kafka:
       partitions: 50
       replicas: 3
       retention: 300000
+kafdrop:
+  ingress:
+    enabled: false
+  kafka:
+    broker: prompt-processing-kafka-kafka-bootstrap.prompt-processing-kafka:9092
+  schemaregistry: http://10.106.68.124:8081
