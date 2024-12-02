@@ -107,10 +107,10 @@ spec:
         - "/bin/sh"
         - "-c"
         - |
-          cp /secrets/* /etc/secrets && \
 {{- if (not .Values.separateSecrets) }}
           cp /secrets-butler/* /etc/secrets && \
 {{- end }}
+          cp /secrets/* /etc/secrets && \
           chown {{ required "workers.uid must be set" .Values.workers.uid }}:{{ required "workers.gid must be set" .Values.workers.gid }} \
            /etc/secrets/* && \
           chmod 0600 /etc/secrets/*
