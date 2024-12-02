@@ -20,13 +20,7 @@ spec:
           name: "*"
           patternType: literal
         operation: All
-      - resource:
-          type: topic
-          name: "fanned-out-comcamsim-events"
-          patternType: literal
-        type: allow
-        host: "*"
-        operation: All
+      {{- if .Values.topics.hsc.enabled }}
       - resource:
           type: topic
           name: "fanned-out-hsc-events"
@@ -34,6 +28,8 @@ spec:
         type: allow
         host: "*"
         operation: All
+      {{- end }}
+      {{- if .Values.topics.latiss.enabled }}
       - resource:
           type: topic
           name: "fanned-out-latiss-events"
@@ -41,13 +37,34 @@ spec:
         type: allow
         host: "*"
         operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcam.enabled }}
       - resource:
           type: topic
-          name: "fanned-out-latiss-events-2"
+          name: "fanned-out-lsstcam-events"
           patternType: literal
         type: allow
         host: "*"
         operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcomcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcomcamsim.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}  
 ---
 apiVersion: kafka.strimzi.io/v1beta2
 kind: KafkaUser
@@ -78,6 +95,7 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      {{- if .Values.topics.hsc.enabled }}
       - resource:
           type: topic
           name: "fanned-out-hsc-events"
@@ -85,6 +103,8 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      {{- end }}
+      {{- if .Values.topics.latiss.enabled }}
       - resource:
           type: topic
           name: "fanned-out-latiss-events"
@@ -92,13 +112,34 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcam.enabled }}
       - resource:
           type: topic
-          name: "fanned-out-latiss-events-2"
+          name: "fanned-out-lsstcam-events"
           patternType: literal
         type: allow
         host: "*"
         operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcomcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcomcamsim.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
 {{- if .Values.users.kafdrop.enabled }}
 ---
 apiVersion: kafka.strimzi.io/v1beta2

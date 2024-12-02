@@ -1,0 +1,18 @@
+strimzi-kafka:
+  users:
+    kafdrop:
+      enabled: false
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+  kafka:
+    storage:
+      size: 100Gi
+      storageClassName: wekafs--sdf-k8s01
+  topics:
+    lsstcomcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000

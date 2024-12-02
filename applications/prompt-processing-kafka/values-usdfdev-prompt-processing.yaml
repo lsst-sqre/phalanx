@@ -13,14 +13,29 @@ strimzi-kafka:
   topics:
     hsc:
       enabled: true
-      partitions: 200
+      partitions: 50
       replicas: 3
-      retention: 3600000
+      retention: 300000
     latiss:
       enabled: true
-      partitions: 200
+      partitions: 10
       replicas: 3
-      retention: 3600000
+      retention: 300000
+    lsstcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+    lsstcomcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+    lsstcomcamsim:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
 kafdrop:
   ingress:
     enabled: false
