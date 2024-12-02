@@ -7,6 +7,9 @@ cadc-tap:
     # -- What type of backend?
     backend: "pg"
 
+    # -- Name of the service from Gafaelfawr's perspective
+    service: "ssotap"
+
     pg:
       # -- Postgres hostname:port to connect to
       host: "usdf-pg-catalogs.slac.stanford.edu:5432"
@@ -23,9 +26,6 @@ cadc-tap:
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "ssotap"
-
-  # -- Name of the service from Gafaelfawr's perspective
-  service: "ssotap"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

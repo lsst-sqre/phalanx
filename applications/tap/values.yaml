@@ -10,12 +10,12 @@ cadc-tap:
     # -- Vault secret name: the final key in the vault path
     vaultSecretName: "tap"
 
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "tap"
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
-
-  # -- Name of the service from Gafaelfawr's perspective
-  serviceName: "tap"
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
