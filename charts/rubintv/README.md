@@ -16,9 +16,11 @@ Real-time display front end
 | frontend.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the rubintv image |
 | frontend.image.repository | string | `"ghcr.io/lsst-ts/rubintv"` | rubintv frontend image to use |
 | frontend.image.tag | string | The appVersion of the chart | Tag of rubintv image to use |
+| frontend.nfsMountpoint | list | See `values.yaml` | NFS mountpoints for the rubintv frontend pods |
 | frontend.nodeSelector | object | `{}` | Node selector rules for the rubintv frontend pod |
 | frontend.pathPrefix | string | `"/rubintv"` | Prefix for rubintv's frontend API routes. |
 | frontend.podAnnotations | object | `{}` | Annotations for the rubintv frontend pod |
+| frontend.pvcMountpoint | list | See `values.yaml` | PVC claims for the rubintv frontend pods |
 | frontend.resources | object | `{}` | Resource limits and requests for the rubintv frontend pod |
 | frontend.tolerations | list | `[]` | Tolerations for the rubintv frontend pod |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |

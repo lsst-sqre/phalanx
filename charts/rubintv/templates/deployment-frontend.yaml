@@ -67,6 +67,18 @@ spec:
           volumeMounts:
             - name: {{ $.Release.Name }}-secrets
               mountPath: "/etc/secrets"
+            {{- range $vol := .Values.frontend.pvcMountpoint }}
+            - name: {{ $vol.name }}
+              mountPath: {{ $vol.mountPath }}
+              {{- if ($vol.subPath) }}
+              subPath: {{ $vol.subPath }}
+              {{- end }}
+            {{- end }}
+            {{- range $vol := .Values.frontend.nfsMountpoint }}
+            - name: {{ $vol.name }}
+              mountPath: {{ $vol.containerPath }}
+              readOnly: {{ $vol.readOnly }}
+            {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -75,6 +87,20 @@ spec:
         - name: {{ $.Release.Name }}-secrets
           secret:
             secretName: {{ include "rubintv.fullname" . }}-secrets
+        {{- range $vol := .Values.frontend.pvcMountpoint }}
+        - name: {{ $vol.name | quote }}
+          {{ with $vol.persistentVolumeClaim }}
+          persistentVolumeClaim:
+            claimName: {{ .name | quote }}
+          {{- end }}
+        {{- end }}
+        {{- range $vol := .Values.frontend.nfsMountpoint }}
+        - name: {{ $vol.name | quote }}
+          nfs:
+            path: {{ $vol.serverPath }}
+            readOnly: {{ $vol.readOnly }}
+            server: {{ $vol.server }}
+        {{- end }}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

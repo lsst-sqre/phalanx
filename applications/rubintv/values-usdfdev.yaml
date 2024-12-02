@@ -20,6 +20,15 @@ rubintv:
     image:
       tag: deploy
       pullPolicy: Always
+    pvcMountpoint:
+    - name: sdf-data-rubin-rubintv-ddv-config
+      persistentVolumeClaim:
+        name: sdf-data-rubin-rubintv-ddv-config
+        storageClassName: sdf-data-rubin
+        capacity: 1Gi
+      accessMode: ReadWriteMany
+      mountPath: /var/ddv-config
+      subPath: shared/rubintv-ddv-config
 
   workers:
     replicas: 1
