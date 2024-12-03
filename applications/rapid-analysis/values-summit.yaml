@@ -277,6 +277,28 @@ scripts:
     limits:
       cpu: 1
       memory: 8G
+- name: summit/misc/runSoarSeeingUploader.py
+  mounts:
+  - project-shared
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
+  resources:
+    requests:
+      cpu: .5
+      memory: 2G
+    limits:
+      cpu: .5
+      memory: 2G
+- name: summit/misc/runSoarSeeingScraper.py
+  mounts:
+  - project-shared
+  resources:
+    requests:
+      cpu: .5
+      memory: 4G
+    limits:
+      cpu: .5
+      memory: 4G
 ###
 ### ComCam pods
 ###
