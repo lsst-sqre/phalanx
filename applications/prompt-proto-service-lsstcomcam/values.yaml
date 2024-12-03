@@ -131,10 +131,10 @@ prompt-proto-service:
     cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageRequest: "5Gi"
+    ephemeralStorageRequest: "8Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageLimit: "5Gi"
+    ephemeralStorageLimit: "8Gi"
     # -- GPUs enabled.
     gpu: false
     # -- The number of GPUs to request for the full pod (see `containerConcurrency`).
