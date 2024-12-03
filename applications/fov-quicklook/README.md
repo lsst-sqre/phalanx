@@ -18,6 +18,7 @@ Full focal plane viewer
 | db_storage_class | string | `nil` | Storage class to use for the database |
 | frontend.resources.limits | object | `{"cpu":"8000m","memory":"256Mi"}` | Resource limits for the frontend |
 | frontend.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the frontend |
+| generator.replicas | int | `8` | Number of replicas for the generator |
 | generator.resources.limits | object | `{"cpu":"16000m","memory":"32Gi"}` | Resource limits for the generator |
 | generator.resources.requests | object | `{"cpu":"100m","memory":"32Gi"}` | Resource requests for the generator |
 | generator.workdir.medium | string | `"Memory"` | Work directory type for the generator |
