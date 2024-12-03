@@ -25,8 +25,6 @@ prompt-proto-service:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/ApPipe.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/SingleFrame.yaml
           - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr.yaml
-        - survey: BLOCK-T60  # optics alignment
-          pipelines: []
         - survey: BLOCK-T75  # giant donuts
           pipelines: []
         - survey: BLOCK-T88  # optics alignment
@@ -35,27 +33,37 @@ prompt-proto-service:
           pipelines: []
         - survey: BLOCK-T216  # twilight flats
           pipelines: []
-        - survey: BLOCK-T219  # pretty pictures
-          pipeliens: []
         - survey: BLOCK-T246  # instrument checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Isr-cal.yaml']
         - survey: BLOCK-T249  # AOS alignment
           pipelines: []
         - survey: BLOCK-T250  # TMA daytime checkout
           pipelines: []
+        - {survey: BLOCK-T306, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T307, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T308, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T309, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T310, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T311, pipelines: []}  # Manual observations during SV block
+        - {survey: BLOCK-T312, pipelines: []}  # Manual observations during SV block
         - {survey: "", pipelines: []}
       preprocessing: |-
         - survey: BLOCK-320
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCam/Preprocessing.yaml']
-        - {survey: BLOCK-T60, pipelines: []}
         - {survey: BLOCK-T75, pipelines: []}
         - {survey: BLOCK-T88, pipelines: []}
         - {survey: BLOCK-T215, pipelines: []}
         - {survey: BLOCK-T216, pipelines: []}
-        - {survey: BLOCK-T219, pipelines: []}
         - {survey: BLOCK-T246, pipelines: []}
         - {survey: BLOCK-T249, pipelines: []}
         - {survey: BLOCK-T250, pipelines: []}
+        - {survey: BLOCK-T306, pipelines: []}
+        - {survey: BLOCK-T307, pipelines: []}
+        - {survey: BLOCK-T308, pipelines: []}
+        - {survey: BLOCK-T309, pipelines: []}
+        - {survey: BLOCK-T310, pipelines: []}
+        - {survey: BLOCK-T311, pipelines: []}
+        - {survey: BLOCK-T312, pipelines: []}
         - {survey: "", pipelines: []}
     calibRepo: s3://rubin-summit-users
 
