@@ -20,6 +20,7 @@ Full focal plane viewer
 | frontend.resources.requests | object | `{"cpu":"100m","memory":"256Mi"}` | Resource requests for the frontend |
 | generator.resources.limits | object | `{"cpu":"16000m","memory":"2Gi"}` | Resource limits for the generator |
 | generator.resources.requests | object | `{"cpu":"100m","memory":"2Gi"}` | Resource requests for the generator |
+| generator.workdir.medium | string | `"Memory"` | Work directory type for the generator |
 | image.pullPolicy | string | `"Always"` | Pull policy for the fov-quicklook image |
 | image.repository | string | `"ghcr.io/michitaro/rubin-fov-viewer"` | Image to use in the fov-quicklook deployment |
 | image.tag | string | `"latest"` | Tag of image to use |
