@@ -34,27 +34,77 @@ config:
 
       ## Data documentation
 
+      ### DP0.3
+      <CardGroup>
+        <a href="https://dp0-3.lsst.io/">
+          <Card>
+            ### Data Preview 0.3 (DP0.3)
+            DP0.3 provides a catalog of solar system objects from a simulated 
+            LSST ten-year wide-fast-deep survey by the Solar System Science 
+            Collaboration.
+          </Card>
+        </a>
+        <a href="https://dp0-3.lsst.io/tutorials-dp0-3/index.html">
+          <Card>
+            ### DP0.3 Tutorials
+            Tutorials for exploring the DP0.3 solar system object dataset on
+            the Rubin Science Platform.
+          </Card>
+        </a>
+        <a href="https://dm.lsst.org/sdm_schemas/browser/dp03.html">
+          <Card>
+            ### DP0.3 Catalog Schema
+            Schema reference for the DP0.3 catalog dataset available through
+            the Table Access Protocol (TAP) service.
+          </Card>
+        </a>
+      </CardGroup>
+      ### DP0.2
+      <CardGroup>
+        <a href="https://dp0-2.lsst.io/">
+          <Card>
+            ### Data Preview 0.2 (DP0.2)
+            DP0.2 is the second phase of the Data Preview 0 program using
+            simulated images from the DESC DC2 data challenge processed
+            with version 23.0 of the LSST Science Pipelines.
+          </Card>
+        </a>
+        <a href="https://dp0-2.lsst.io/tutorials-examples/index.html">
+          <Card>
+            ### DP0.2 Tutorials
+            Tutorials for exploring the DP0.2 dataset on the Rubin Science
+            Platform.
+          </Card>
+        </a>
+        <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
+          <Card>
+            ### DP0.2 Catalog Schema
+            Schema reference for the DP0.2 catalog dataset available through 
+            the Table Access Protocol (TAP) service.
+          </Card>
+        </a>
+      </CardGroup>
       ### GaiaXCatwise
 
       <CardGroup>
        <a href="https://rsp.lsst.ac.uk/portal/app/">
          <Card>
-           Table of counterpart associations between Gaia DR3 and CatWISE2020.
-           Uses probabilistic cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022).
+           Table of counterpart associations between Gaia DR3 and CatWISE2020. 
+           Uses probabilistic cross-match algorithms as described by Wilson & Naylor (MNRAS, 2017, 2018a,b) and Wilson (RNAAS, 2022). 
            Sources are returned either as a pairing, in which the Gaia and WISE objects are the same astrophysical source detected twice, or as non-matches, with that particular object in one of the catalogues having a corresponding flux upper limits in the opposing catalogue, and entries include various pieces of metadata such as the probability of the match/non-match, likelihood of match on purely position or brightness grounds, and information on the level to which objects suffer contamination due to hidden and unresolved background sources.
          </Card>
        </a>
       </CardGroup>
 
       ### VISTA-HSC
-
+      
       <CardGroup>
         <a href="https://rsp.lsst.ac.uk/portal/app/">
           <Card>
             The VISTA-HSC fused dataset is designed to deliver pixel-matched images and multiband catalogues through the integration of data from the Visible and Infrared Survey Telescope for Astronomy (VISTA) in the near-infrared and the Hyper SuprimeCam (HSC) in the optical range. The LSST pipelines will handle the CCD processing of VISTA images, while the calibrated exposures from the final HSC PDR3 will be employed for merging with VISTA. This comprehensive dataset encompasses multiple VISTA surveys, with varying depths.
           </Card>
         </a>
-      </CardGroup>
+      </CardGroup>       
 
     </Section>
 

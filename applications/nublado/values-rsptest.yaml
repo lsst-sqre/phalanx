@@ -1,0 +1,61 @@
+controller:
+  config:
+    images:
+      source:
+        type: "docker"
+        registry: "registry.hub.docker.com"
+        repository: "lsstsqre/sciplat-lab"
+    lab:
+      env:
+        AUTO_REPO_URLS: "https://github.com/lsst-uk/rsp-uk-notebooks"
+        AUTO_REPO_BRANCH: "main"
+        AUTO_REPO_SPECS: "https://github.com/lsst-uk/rsp-uk-notebooks@main"
+      initContainers:
+        - name: "inithome"
+          image:
+            repository: "ghcr.io/lsst-sqre/nublado-inithome"
+            tag: "4.0.2"
+          privileged: true
+          volumeMounts:
+            - containerPath: "/home"
+              volumeName: "home"
+      pullSecret: "pull-secret"
+      volumes:
+        - name: "data"
+          source:
+            serverPath: "/data"
+            server: "192.41.122.94"
+            type: "nfs"
+        - name: "home"
+          source:
+            serverPath: "/jhome"
+            server: "192.41.122.94"
+            type: "nfs"
+        - name: "datasets"
+          source:
+            serverPath: "/datasets"
+            server: "192.41.122.94"
+            type: "nfs"
+      volumeMounts:
+        - containerPath: "/data"
+          volumeName: "data"
+        - containerPath: "/home"
+          volumeName: "home"
+        - containerPath: "/datasets"
+          volumeName: "datasets"
+
+proxy:
+  ingress:
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-connect-timeout: "50s"
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "50s"
+      nginx.ingress.kubernetes.io/client-max-body-size: "50m"
+
+jupyterhub:
+  hub:
+    db:
+      upgrade: true
+  cull:
+    timeout: 432000
+    every: 300
+    maxAge: 2160000

@@ -7,7 +7,7 @@ ingress-nginx:
       use-proxy-protocol: "false"
       enable-health-monitor: "false"
     service:
-      loadBalancerIP: "192.41.122.216"
+      loadBalancerIP: "192.41.122.55"
       annotations:
         kubernetes.io/ingress.class: "openstack"
         loadbalancer.openstack.org/enable-health-monitor: "false"

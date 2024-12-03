@@ -3,23 +3,16 @@ redis:
     enabled: false
 
 config:
+  updateSchema: false
   internalDatabase: true
-  updateSchema: true
+  #databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
 
   github:
-    clientId: "10172b4db1b67ee31620"
+    clientId: "c4a5727c5788cc2d346e"
 
-
-# Support generating user metadata for CADC authentication code.
-  cadcBaseUuid: "4cb5f948-aad9-466c-837b-5eae565b0a77"
-
-# Allow access by GitHub team.
+  # Allow access by GitHub team.
   groupMapping:
     "exec:admin":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "exec:internal-tools":
       - github:
           organization: "lsp-uk"
           team: "dev"
@@ -27,10 +20,30 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
+    "exec:internal-tools":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "exec:portal":
       - github:
           organization: "lsp-uk"
           team: "dev"
+    # "exec:user":
+    #   - github:
+    #       organization: "lsp-uk"
+    #       team: "dev"
+    # "read:workspace":
+    #   - github:
+    #       organization: "lsp-uk"
+    #       team: "dev"
+    # "read:workspace/user":
+    #   - github:
+    #       organization: "lsp-uk"
+    #       team: "dev"
+    # "write:workspace/user":
+    #   - github:
+    #       organization: "lsp-uk"
+    #       team: "dev"
     "read:image":
       - github:
           organization: "lsp-uk"
@@ -43,4 +56,3 @@ config:
   initialAdmins:
     - "gpfrancis"
     - "aibsen"
-    - "davedavemckay"

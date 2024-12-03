@@ -1,14 +1,16 @@
-name: "roe"
-fqdn: "rsp.lsst.ac.uk"
+name: "rsptest"
+fqdn: "rsp-test.lsst.ac.uk"
 appOfAppsName: "science-platform"
 vaultUrl: "https://vault.lsst.ac.uk"
-vaultPathPrefix: "kv-v2/k8s_operator/roe"
+vaultPathPrefix: kv-v2/k8s_operator/rsptest
 
 applications:
+  # cert-manager: false
+  # ingress-nginx: true
   mobu: true
   nublado: true
   portal: true
   postgres: true
   squareone: true
   tap: true
-  ssotap: true
+
