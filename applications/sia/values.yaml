@@ -16,7 +16,7 @@ image:
   repository: "ghcr.io/lsst-sqre/sia"
 
   # -- Pull policy for the sia image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
