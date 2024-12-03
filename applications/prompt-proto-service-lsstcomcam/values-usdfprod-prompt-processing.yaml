@@ -39,13 +39,14 @@ prompt-proto-service:
           pipelines: []
         - survey: BLOCK-T250  # TMA daytime checkout
           pipelines: []
-        - {survey: BLOCK-T306, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T307, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T308, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T309, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T310, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T311, pipelines: []}  # Manual observations during SV block
-        - {survey: BLOCK-T312, pipelines: []}  # Manual observations during SV block
+        # Manual observations during SV blocks
+        - {survey: BLOCK-T306, pipelines: []}
+        - {survey: BLOCK-T307, pipelines: []}
+        - {survey: BLOCK-T308, pipelines: []}
+        - {survey: BLOCK-T309, pipelines: []}
+        - {survey: BLOCK-T310, pipelines: []}
+        - {survey: BLOCK-T311, pipelines: []}
+        - {survey: BLOCK-T312, pipelines: []}
         - {survey: "", pipelines: []}
       preprocessing: |-
         - survey: BLOCK-320
