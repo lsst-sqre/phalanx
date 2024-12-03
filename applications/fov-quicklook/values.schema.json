@@ -55,9 +55,19 @@
       "properties": {
         "resources": {
           "$ref": "#/definitions/resources"
+        },
+        "workdir": {
+          "type": "object",
+          "properties": {
+            "medium": {
+              "type": "string",
+              "enum": ["", "Memory"]
+            }
+          },
+          "required": ["medium"]
         }
       },
-      "required": ["resources"]
+      "required": ["resources", "workdir"]
     }
   },
   "required": [
