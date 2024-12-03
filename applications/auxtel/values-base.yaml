@@ -137,6 +137,8 @@ atptg:
     pullPolicy: Always
   env:
     TELESCOPE: AT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
 
 atspectrograph-sim:
   enabled: true
