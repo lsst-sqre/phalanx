@@ -5,8 +5,8 @@ redis:
 config:
   internalDatabase: true
 
-  oidcServer:
-    enabled: true
+  #oidcServer:
+  #  enabled: true
     
   updateSchema: false
 
