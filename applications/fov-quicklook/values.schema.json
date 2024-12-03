@@ -65,9 +65,13 @@
             }
           },
           "required": ["medium"]
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
         }
       },
-      "required": ["resources", "workdir"]
+      "required": ["resources", "workdir", "replicas"]
     }
   },
   "required": [
