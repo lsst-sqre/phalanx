@@ -76,3 +76,6 @@ generator:
     limits:
       cpu: 16000m
       memory: 2Gi
+  workdir:
+    # -- Work directory type for the generator
+    medium: Memory
