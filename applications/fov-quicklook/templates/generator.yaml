@@ -41,7 +41,7 @@ spec:
       volumes:
         - name: shm
           emptyDir:
-            medium: Memory
+            medium: {{ .Values.generator.workdir.medium | quote }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
