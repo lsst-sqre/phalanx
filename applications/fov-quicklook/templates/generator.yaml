@@ -1,14 +1,13 @@
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: fov-quicklook-generator
   labels:
     app: fov-quicklook-generator
 spec:
-  updateStrategy:
+  replicas: {{ .Values.generator.replicas }}
+  strategy:
     type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 100%
   selector:
     matchLabels:
       app: fov-quicklook-generator
@@ -17,8 +16,16 @@ spec:
       labels:
         app: fov-quicklook-generator
     spec:
-      nodeSelector:
-        quicklook: "true"
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - fov-quicklook-generator
+              topologyKey: "kubernetes.io/hostname"
       containers:
         - name: fov-quicklook-generator
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
