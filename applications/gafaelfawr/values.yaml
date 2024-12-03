@@ -41,16 +41,20 @@ config:
   # @default -- Top-level page of this Phalanx environment
   afterLogoutUrl: null
 
-  # -- Whether to support the `/auth/cadc/userinfo` route. If set, this UUID
-  # is used as the namespace to generate UUID v5 `sub` claims returned by this
-  # route to meet the needs of CADC authentication code.
-  # @default -- Disabled
-  cadcBaseUuid: null
+  # -- URL for direct connections to the Gafaelfawr service, bypassing the
+  # Ingress. Must use a service name of `gafaelfawr` and port 8080.
+  # @default -- FQDN under `svc.cluster.local`
+  baseInternalUrl: null
 
   # -- URL for the PostgreSQL database
   # @default -- None, must be set if neither `cloudsql.enabled` nor
   # `config.internalDatabase` are true
   databaseUrl: null
+
+  # -- Whether to send trace and telemetry information to Sentry. This traces
+  # every call and therefore should only be enabled in non-production
+  # environments.
+  enableSentry: false
 
   # -- HTML footer to add to any login error page (will be enclosed in a <p>
   # tag).
@@ -230,6 +234,28 @@ config:
     # the `rubin` scope.
     dataRightsMapping: {}
 
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "gafaelfawr"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
   # -- Quota settings (see
   # [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)).
   quota: {}
@@ -290,7 +316,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.0"
+    tag: "1.37.2"
 
     # -- Tag suffix to use for the proxy for schema updates
     schemaUpdateTagSuffix: "-alpine"
@@ -394,9 +420,8 @@ operator:
 
 redis:
   config:
-    # -- Name of secret containing Redis password (may require changing if
-    # fullnameOverride is set)
-    secretName: "gafaelfawr-secret"
+    # -- Name of secret containing Redis password (do not change)
+    secretName: "gafaelfawr"
 
     # -- Key inside secret from which to get the Redis password (do not
     # change)

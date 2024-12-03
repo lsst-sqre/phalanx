@@ -10,6 +10,7 @@ config:
   scopes:
     all:
       - "exec:internal-tools"
+  service: "cm-service"
 template:
   metadata:
     name: "cm-service"

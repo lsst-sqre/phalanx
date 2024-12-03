@@ -1,11 +1,14 @@
 cadc-tap:
-  # Settings for the ingress rules.
   ingress:
+    # -- Ingress path that should be routed to this service
     path: "ssotap"
 
   config:
     # -- What type of backend?
     backend: "pg"
+
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "ssotap"
 
     pg:
       # -- Postgres hostname:port to connect to
@@ -21,7 +24,7 @@ cadc-tap:
     vaultSecretName: "ssotap"
 
   serviceAccount:
-    # Name of Service Account
+    # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "ssotap"
 
 # The following will be set by parameters injected by Argo CD and should not

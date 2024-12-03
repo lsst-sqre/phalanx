@@ -1,5 +1,8 @@
+knative:
+  maxMessages: 1000 # Kubernetes can't support more pods yet
+
 kafka:
-  schemaRegistryUrl: http://10.110.90.252:8081
+  schemaRegistryUrl: http://10.96.24.88:8081
   sasquatchAddress: 10.96.121.181:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
@@ -8,4 +11,6 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.3.0
+  tag: 2.5.0
+
+instruments: "LATISS LSSTComCam"

@@ -20,9 +20,9 @@ applications:
   hips: true
   mobu: true
   nublado: true
-  plot-navigator: true
   portal: true
   sasquatch: true
+  sia: true
   siav2: false
   ssotap: true
   production-tools: true
@@ -31,6 +31,7 @@ applications:
   sqlproxy-cross-project: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
   telegraf: true
   telegraf-ds: true

@@ -2,7 +2,7 @@ suite: Github CI App Integration Enabled
 set:
   config:
     githubCiApp:
-      accepted_github_orgs:
+      acceptedGithubOrgs:
         - "org1"
         - "org2"
       users:
@@ -31,11 +31,6 @@ tests:
           path: "spec.template.spec.containers[0].env"
           any: true
           content:
-            name: "MOBU_GITHUB_CI_APP_CONFIG_PATH"
-      - contains:
-          path: "spec.template.spec.containers[0].env"
-          any: true
-          content:
             name: "MOBU_GITHUB_CI_APP_ID"
       - contains:
           path: "spec.template.spec.containers[0].env"
@@ -48,20 +43,27 @@ tests:
           content:
             name: "MOBU_GITHUB_CI_APP_WEBHOOK_SECRET"
   - it: "Should create a ConfigMap"
-    template: "configmap-github-ci-app.yaml"
+    template: "configmap.yaml"
     asserts:
       - containsDocument:
           kind: "ConfigMap"
           apiVersion: v1
       - equal:
-          path: "data['github-ci-app.yaml']"
+          path: "data['config.yaml']"
           value: |
-            accepted_github_orgs:
-            - org1
-            - org2
-            scopes:
-            - exec:notebook
-            - read:tap
-            users:
-            - bot-mobu-ci-user-1
-            - bot-mobu-ci-user-2
+            autostart: []
+            githubCiApp:
+              acceptedGithubOrgs:
+              - org1
+              - org2
+              scopes:
+              - exec:notebook
+              - read:tap
+              users:
+              - bot-mobu-ci-user-1
+              - bot-mobu-ci-user-2
+            githubRefreshApp: null
+            logLevel: INFO
+            pathPrefix: /mobu
+            profile: production
+            slackAlerts: true

@@ -1,0 +1,69 @@
+# Default values for s3proxy.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the s3proxy deployment
+  repository: "ghcr.io/lsst-dm/s3proxy"
+
+  # -- Pull policy for the s3proxy image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+config:
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/s3proxy"
+
+  # -- Profiles using different endpoint URLs and credentials
+  profiles: []
+
+  # -- Default S3 endpoint URL
+  s3EndpointUrl: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the s3proxy deployment pod
+affinity: {}
+
+# -- Node selection rules for the s3proxy deployment pod
+nodeSelector: {}
+
+# -- Annotations for the s3proxy deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the s3proxy deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the s3proxy deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

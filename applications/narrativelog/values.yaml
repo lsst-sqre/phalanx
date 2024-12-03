@@ -20,6 +20,11 @@ image:
   # @default -- The appVersion of the chart
   tag: ""
 
+ingress:
+  auth:
+    # -- Whether to require Gafaelfawr authentication for access
+    enabled: false
+
 db:
   # -- database host
   host: postgres.postgres
@@ -29,10 +34,6 @@ db:
   user: narrativelog
   # -- database name
   database: narrativelog
-
-ingress:
-  # -- Gafaelfawr auth query string
-  gafaelfawrAuthQuery: ""
 
 # -- Application-specific configuration
 config:

@@ -1,5 +1,4 @@
 config:
-  debug: true
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre

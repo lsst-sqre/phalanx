@@ -23,7 +23,7 @@ spec:
         gafaelfawr-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: "gafaelfawr-schema-update"
+      serviceAccountName: "gafaelfawr"
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}
@@ -79,7 +79,7 @@ spec:
               gafaelfawr update-schema
               touch /lifecycle/main-terminated
           env:
-            {{- include "gafaelfawr.envVars" (dict "Release" .Release "Values" .Values "secretName" "gafaelfawr-secret-schema-update" "sidecar" true) | nindent 12 }}
+            {{- include "gafaelfawr.envVars" (dict "Chart" .Chart "Release" .Release "Values" .Values "sidecar" true) | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           {{- with .Values.resources }}
@@ -106,7 +106,7 @@ spec:
       volumes:
         - name: "config"
           configMap:
-            name: "gafaelfawr-config-schema-update"
+            name: "gafaelfawr"
         - name: "lifecycle"
           emptyDir: {}
       {{- with .Values.nodeSelector }}

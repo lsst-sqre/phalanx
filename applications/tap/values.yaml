@@ -1,6 +1,6 @@
 cadc-tap:
-  # Settings for the ingress rules.
   ingress:
+    # -- Ingress path that should be routed to this service
     path: "tap"
 
   config:
@@ -10,8 +10,11 @@ cadc-tap:
     # -- Vault secret name: the final key in the vault path
     vaultSecretName: "tap"
 
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "tap"
+
   serviceAccount:
-    # Name of Service Account
+    # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
 
 # The following will be set by parameters injected by Argo CD and should not

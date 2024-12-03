@@ -38,15 +38,17 @@ prompt-proto-service:
     # -- The "short" name of the instrument
     name: ""
     pipelines:
-      # -- Machine-readable string describing which pipeline(s) should be run for which visits.
-      # Notation is complex and still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
+      # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
+      # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
       # @default -- None, must be set
       main: ""
-      # -- Machine-readable string describing which pipeline(s) should be run before which visits' raw arrival.
+      # -- YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival.
       # @default -- None, must be set
       preprocessing: ""
     # -- Skymap to use with the instrument
     skymap: ""
+    # -- Number of arcseconds to pad the spatial region in preloading.
+    preloadPadding: 50
     # -- URI to the shared repo used for calibrations, templates, and pipeline outputs.
     # If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself.
     # @default -- None, must be set
@@ -60,6 +62,9 @@ prompt-proto-service:
     refcatsPerImage: 4
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
     patchesPerImage: 4
+    # -- The maximum number of datasets of a given type the service might load if the filter is unknown.
+    # Should be greater than or equal to the number of filters that have e.g. flats or transmission curves.
+    maxFilters: 20
 
   s3:
     # -- Bucket containing the incoming raw images

@@ -64,6 +64,51 @@ influxdb:
       memory: 16Gi
       cpu: 2
 
+influxdb-enterprise:
+  enabled: true
+  license:
+    secret:
+      name: sasquatch
+      key: influxdb-enterprise-license
+  meta:
+    ingress:
+      enabled: true
+      hostname: data-dev.lsst.cloud
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 16Gi
+    sharedSecret:
+      secret:
+        name: sasquatch
+        key: influxdb-enterprise-shared-secret
+    resources:
+      requests:
+        memory: 2Gi
+        cpu: 1
+      limits:
+        memory: 4Gi
+        cpu: 2
+  data:
+    replicas: 2
+    config:
+      antiEntropy:
+        enabled: true
+    ingress:
+      enabled: true
+      hostname: data-dev.lsst.cloud
+    persistence:
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Ti
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: 2
+      limits:
+        memory: 16Gi
+        cpu: 4
+
 telegraf-kafka-consumer:
   enabled: true
   kafkaConsumers:
@@ -108,3 +153,9 @@ chronograf:
     GENERIC_API_KEY: sub
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
+
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr
+    - mobu

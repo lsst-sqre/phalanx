@@ -4,7 +4,7 @@ version: 1.0.0
 description: Consolidated Database of Image Metadata
 type: application
 appVersion: 1.1.0
-home: consdb.lsst.io
+home: https://consdb.lsst.io/
 sources:
   - https://github.com/lsst-dm/consdb
 annotations:

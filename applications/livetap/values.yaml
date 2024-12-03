@@ -1,11 +1,14 @@
 cadc-tap:
-  # Settings for the ingress rules.
   ingress:
+    # -- Ingress path that should be routed to this service
     path: "live"
 
   config:
     # -- What type of backend?
     backend: "pg"
+
+    # -- Name of the service from Gafaelfawr's perspective
+    serviceName: "livetap"
 
     pg:
       # -- Postgres hostname:port to connect to

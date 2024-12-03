@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "s3proxy"
+  labels:
+    {{- include "s3proxy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "s3proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "s3proxy.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      automountServiceAccountToken: false
+      containers:
+        - name: {{ .Chart.Name }}
+          env:
+            - name: AWS_SHARED_CREDENTIALS_FILE
+              value: /pod-secrets/secrets/aws-credentials.ini
+          envFrom:
+            - configMapRef:
+                name: "s3proxy"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/"
+              port: "http"
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - name: pod-secrets
+              mountPath: /pod-secrets
+      initContainers:
+        - name: secret-setup
+          command:
+            - /bin/ash
+            - "-c"
+            - |
+              cp -L -r /secrets /pod-secrets
+              chmod -R go-rwx /pod-secrets/*
+          image: alpine
+          volumeMounts:
+            - name: secret-volume
+              mountPath: /secrets
+              readOnly: true
+            - name: pod-secrets
+              mountPath: /pod-secrets
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: pod-secrets
+          emptyDir:
+            sizeLimit: 1Mi
+        - name: secret-volume
+          secret:
+            secretName: "s3proxy"
+            secretKey: "aws-credentials.ini"

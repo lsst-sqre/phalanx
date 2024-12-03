@@ -26,7 +26,6 @@
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
-| applications.kubernetes-replicator | bool | `false` | Enable the kubernetes-replicator application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
@@ -53,10 +52,12 @@
 | applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
+| applications.s3proxy | bool | `false` | Enable the s3proxy application |
 | applications.sasquatch | bool | `false` | Enable the sasquatch application |
 | applications.sasquatch-backpack | bool | `false` | Enable the sasquatch-backpack application |
 | applications.schedview-snapshot | bool | `false` | Enable the schedview-snapshot application |
 | applications.semaphore | bool | `false` | Enable the semaphore application |
+| applications.sia | bool | `false` | Enable the sia over butler application |
 | applications.siav2 | bool | `false` | Enable the siav2 application |
 | applications.simonyitel | bool | `false` | Enable the simonyitel control system application |
 | applications.sqlproxy-cross-project | bool | `false` | Enable the sqlproxy-cross-project application |

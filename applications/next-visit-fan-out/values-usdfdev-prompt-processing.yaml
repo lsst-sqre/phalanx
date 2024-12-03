@@ -1,5 +1,9 @@
+knative:
+  maxMessages: 150
+  retryRequests: false
+
 kafka:
-  schemaRegistryUrl: http://10.96.181.159:8081
+  schemaRegistryUrl: http://10.103.8.219:8081
   sasquatchAddress: 10.100.226.209:9094
   consumerGroup: test-group-3
   nextVisitTopic: test.next-visit
@@ -10,4 +14,6 @@ image:
   repository: ghcr.io/lsst-dm/next_visit_fan_out
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: 2.3.0
+  tag: 2.5.0
+
+instruments: "LATISS LSSTComCam LSSTComCamSim HSC"

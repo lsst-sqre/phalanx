@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "read:checkerboard"
+  service: "checkerboard"
 template:
   metadata:
     name: {{ template "checkerboard.fullname" . }}

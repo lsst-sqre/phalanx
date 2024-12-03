@@ -15,9 +15,15 @@ spec:
       {{- include "rapid-analysis.selectorLabels" $ | nindent 6 }}
   template:
     metadata:
-      {{- with $.Values.podAnnotations }}
+      {{- if or $.Values.podAnnotations $script.podAnnotations }}
+      {{- $podAnnotations := "" }}
+      {{- if $script.podAnnotations }}
+      {{- $podAnnotations = $script.podAnnotations }}
+      {{- else }}
+      {{- $podAnnotations = $.Values.podAnnotations }}
+      {{- end }}
       annotations:
-        {{- toYaml $ | nindent 8 }}
+        {{- toYaml $podAnnotations | nindent 8 }}
       {{- end }}
       labels:
         {{- include "rapid-analysis.selectorLabels" $ | nindent 8 }}
@@ -90,27 +96,33 @@ spec:
               readOnly: true
           {{- if $.Values.nfsMountpoint }}
           {{- range $values := $.Values.nfsMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               readOnly: {{ $values.readOnly }}
           {{- end }}
           {{- end }}
+          {{- end }}
           {{- if $.Values.pvcMountpoint }}
           {{- range $values := $.Values.pvcMountpoint }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if $.Values.pvcMountpointClaim }}
           {{- range $values := $.Values.pvcMountpointClaim }}
+          {{- if (has $values.name $script.mounts) }}
             - name: {{ $values.name }}
               mountPath: {{ $values.containerPath }}
               {{- if ($values.subPath) }}
               subPath: {{ $values.subPath }}
               {{- end }}
+          {{- end }}
           {{- end }}
           {{- end }}
           {{- if $.Values.butlerSecret }}
@@ -162,6 +174,7 @@ spec:
             secretName: rubintv-secrets
       {{- if $.Values.nfsMountpoint }}
       {{- range $values := $.Values.nfsMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           nfs:
             path: {{ $values.serverPath }}
@@ -169,18 +182,23 @@ spec:
             server: {{ $values.server }}
       {{- end }}
       {{- end }}
+      {{- end }}
       {{- if $.Values.pvcMountpoint }}
       {{- range $values := $.Values.pvcMountpoint }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
       {{- end }}
       {{- end }}
       {{- if $.Values.pvcMountpointClaim }}
       {{- range $values := $.Values.pvcMountpointClaim }}
+      {{- if (has $values.name $script.mounts) }}
         - name: {{ $values.name }}
           persistentVolumeClaim:
             claimName: {{ $values.name }}
+      {{- end }}
       {{- end }}
       {{- end }}
       {{- if $.Values.butlerSecret }}

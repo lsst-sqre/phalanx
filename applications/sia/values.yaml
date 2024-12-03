@@ -1,0 +1,87 @@
+# Default values for sia.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Override the base name for resources
+nameOverride: ""
+
+# -- Override the full name for resources (includes the release name)
+fullnameOverride: ""
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the sia deployment
+  repository: "ghcr.io/lsst-sqre/sia"
+
+  # -- Pull policy for the sia image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: ""
+
+config:
+  # -- Whether to send alerts and status to Slack.
+  slackAlerts: false
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/api/sia"
+
+  # -- Whether direct butler access is enabled
+  directButlerEnabled: false
+
+  # -- List of data (Butler) Collections
+  # Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url`
+  butlerDataCollections: []
+
+  # -- User to use from the PGPASSFILE if sia is using a direct Butler
+  # connection
+  pgUser: "rubin"
+
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+  # -- Path prefix where app is hosted
+  path: "/api/sia"
+
+# -- Affinity rules for the sia deployment pod
+affinity: {}
+
+# -- Node selection rules for the sia deployment pod
+nodeSelector: {}
+
+# -- Annotations for the sia deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the sia deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the sia deployment pod
+tolerations: []
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

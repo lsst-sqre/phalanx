@@ -23,4 +23,5 @@ Argo CD project: ``rubin``
    rapid-analysis/index
    rubintv/index
    rubintv-dev/index
+   s3proxy/index
    schedview-snapshot/index

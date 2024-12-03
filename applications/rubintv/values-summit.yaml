@@ -20,14 +20,14 @@ rubintv:
     - name: DDV_CLIENT_WS_ADDRESS
       value: "rubintv/ws/ddv"
     image:
-      tag: v2.3.1
+      tag: v2.5.5
       pullPolicy: Always
 
   workers:
     replicas: 1
     image:
       repository: ts-dockerhub.lsst.org/rapid-analysis
-      tag: c0037
+      tag: c0039
       pullPolicy: Always
     uid: 73006
     gid: 73006
@@ -42,6 +42,12 @@ rubintv:
       value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
+    nfsMountpoint:
+    - name: project-rubintv-ddv-config
+      containerPath: /var/ddv-config
+      readOnly: false
+      server: nfs1.cp.lsst.org
+      serverPath: /project/rubintv/ddv-config
     resources:
       requests:
         cpu: 0.5

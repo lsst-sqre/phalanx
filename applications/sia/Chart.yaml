@@ -1,0 +1,13 @@
+apiVersion: v2
+appVersion: 0.1.3
+description: Simple Image Access (SIA) IVOA Service using Butler
+name: sia
+sources:
+- https://github.com/lsst-sqre/sia
+type: application
+version: 1.0.0
+annotations:
+  phalanx.lsst.io/docs: |
+    - id: "SQR-095"
+      title: "SIAv2 over Butler FastAPI service"
+      url: "https://sqr-095.lsst.io"

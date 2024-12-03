@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "gafaelfawr-config-kerberos"
+  name: "gafaelfawr-kerberos"
   labels:
     {{- include "gafaelfawr.labels" . | nindent 4 }}
 data:

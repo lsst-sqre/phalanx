@@ -45,6 +45,8 @@ atmcs-sim:
   image:
     repository: ts-dockerhub.lsst.org/atmcs_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atoods:
   image:
@@ -126,6 +128,8 @@ atpneumatics-sim:
   image:
     repository: ts-dockerhub.lsst.org/at_pneumatics_sim
     pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 atptg:
   image:
@@ -144,3 +148,10 @@ atspectrograph-sim:
 
 hexapod-sim:
   enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 20m
+      memory: 200Mi

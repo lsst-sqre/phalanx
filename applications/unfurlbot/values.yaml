@@ -12,7 +12,8 @@ image:
   # -- Pull policy for the unfurlbot image
   pullPolicy: "IfNotPresent"
 
-  # -- Overrides the image tag whose default is the chart appVersion.
+  # -- Image tag to use
+  # @default -- The appVersion of the chart
   tag: ""
 
 config:
@@ -26,22 +27,27 @@ config:
     # -- Kafka topic name for the Slack `app_mention` events
     slackAppMention: "lsst.square-events.squarebot.slack.app.mention"
 
-    # -- Kafka topic name for the Slack `message.channels` events (public channels)
+    # -- Kafka topic name for the Slack `message.channels` events (public
+    # channels)
     slackMessageChannels: "lsst.square-events.squarebot.slack.message.channels"
 
-    # -- Kafka topic name for the Slack `message.groups` events (private channels)
+    # -- Kafka topic name for the Slack `message.groups` events (private
+    # channels)
     slackMessageGroups: "lsst.square-events.squarebot.slack.message.groups"
 
-    # -- Kafka topic name for the Slack `message.im` events (direct message channels)
+    # -- Kafka topic name for the Slack `message.im` events (direct message
+    # channels)
     slackMessageIm: "lsst.square-events.squarebot.slack.message.im"
 
-    # -- Kafka topic name for the Slack `message.mpim` events (multi-person direct messages)
+    # -- Kafka topic name for the Slack `message.mpim` events (multi-person
+    # direct messages)
     slackMessageMpim: "lsst.square-events.squarebot.slack.message.mpim"
 
   # -- Jira base URL
   jiraUrl: "https://rubinobs.atlassian.net/"
 
   # -- Names of Jira projects to unfurl (comma-separated)
+  # @default -- See `values.yaml`
   jiraProjects: >
     ADMIN,
     CCB,
@@ -81,6 +87,7 @@ config:
     TPC,
     TSEIA,
     TAS,
+    TAXICAB,
     TELV,
     TSSAL,
     TSS,
@@ -89,6 +96,7 @@ config:
     PREOPS,
     OBS,
     SITCOM,
+    SP,
     BLOCK
 
 ingress:
@@ -96,7 +104,6 @@ ingress:
   annotations: {}
 
 redis:
-
   # -- Resource requests and limits for the redis pod
   # @default -- see `values.yaml`
   resources:
@@ -107,19 +114,11 @@ redis:
       cpu: "2m"
       memory: "3Mi"
 
-autoscaling:
-  # -- Enable autoscaling of unfurlbot deployment
-  enabled: false
+# -- Affinity rules for the unfurlbot deployment pod
+affinity: {}
 
-  # -- Minimum number of unfurlbot deployment pods
-  minReplicas: 1
-
-  # -- Maximum number of unfurlbot deployment pods
-  maxReplicas: 100
-
-  # -- Target CPU utilization of unfurlbot deployment pods
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+# -- Node selection rules for the unfurlbot deployment pod
+nodeSelector: {}
 
 # -- Annotations for the unfurlbot deployment pod
 podAnnotations: {}
@@ -134,14 +133,8 @@ resources:
     cpu: "9m"
     memory: "60Mi"
 
-# -- Node selection rules for the unfurlbot deployment pod
-nodeSelector: {}
-
 # -- Tolerations for the unfurlbot deployment pod
 tolerations: []
-
-# -- Affinity rules for the unfurlbot deployment pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

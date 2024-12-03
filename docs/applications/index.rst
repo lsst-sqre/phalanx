@@ -20,5 +20,6 @@ To learn how to develop applications for Phalanx, see the :doc:`/developers/inde
    rubin
    roundtable
    monitoring
+   support
    prompt
    telescope

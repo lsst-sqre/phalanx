@@ -42,11 +42,15 @@ spec:
         - name: RUBIN_INSTRUMENT
           value: {{ .Values.instrument.name }}
         - name: PREPROCESSING_PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines.preprocessing }}
+          value: |-
+            {{- .Values.instrument.pipelines.preprocessing | nindent 12 }}
         - name: MAIN_PIPELINES_CONFIG
-          value: {{ .Values.instrument.pipelines.main }}
+          value: |-
+            {{- .Values.instrument.pipelines.main | nindent 12 }}
         - name: SKYMAP
           value: {{ .Values.instrument.skymap }}
+        - name: PRELOAD_PADDING
+          value: {{ .Values.instrument.preloadPadding | toString | quote }}
         - name: IMAGE_BUCKET
           value: {{ .Values.s3.imageBucket }}
         - name: BUCKET_TOPIC
@@ -115,8 +119,12 @@ spec:
           value: {{ .Values.cache.refcatsPerImage | toString | quote }}
         - name: PATCHES_PER_IMAGE
           value: {{ .Values.cache.patchesPerImage | toString | quote }}
+        - name: FILTERS_WITH_CALIBS
+          value: {{ .Values.cache.maxFilters | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
-          value: {{ if .Values.cacheCalibs }}'1'{{ else }}'0'{{ end }}
+          value: {{ if .Values.debug.cacheCalibs }}'1'{{ else }}'0'{{ end }}
+        - name: DEBUG_EXPORT_OUTPUTS
+          value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
         volumeMounts:
         - mountPath: /tmp-butler
           name: ephemeral

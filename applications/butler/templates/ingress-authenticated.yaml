@@ -5,6 +5,9 @@ metadata:
   labels:
     {{- include "butler.labels" . | nindent 4 }}
 config:
+  # The Butler server often services large numbers of small requests,
+  # so this cache reduces the load on Gafaelfawr.
+  authCacheDuration: 5m
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
     all:
@@ -16,6 +19,7 @@ config:
     internal:
       service: "butler"
       scopes: []
+  service: "butler"
 
 template:
   metadata:

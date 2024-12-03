@@ -9,6 +9,7 @@ config:
   scopes:
     all:
       - "exec:admin"
+  service: "nublado-controller"
 template:
   metadata:
     name: "controller-admin"

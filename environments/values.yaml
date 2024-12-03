@@ -100,9 +100,6 @@ applications:
   # -- Enable the jira-data-proxy application
   jira-data-proxy: false
 
-  # -- Enable the kubernetes-replicator application
-  kubernetes-replicator: false
-
   # -- Enable the livetap application
   livetap: false
 
@@ -162,6 +159,9 @@ applications:
   # -- Enable the rubintv-dev application
   rubintv-dev: false
 
+  # -- Enable the s3proxy application
+  s3proxy: false
+
   # -- Enable the sasquatch application
   sasquatch: false
 
@@ -170,6 +170,9 @@ applications:
 
   # -- Enable the schedview-snapshot application
   schedview-snapshot: false
+
+  # -- Enable the sia over butler application
+  sia: false
 
   # -- Enable the siav2 application
   siav2: false

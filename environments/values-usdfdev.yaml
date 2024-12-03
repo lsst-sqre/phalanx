@@ -29,6 +29,7 @@ applications:
   postgres: true
   ppdb-replication: true
   rubintv: true
+  s3proxy: true
   sasquatch: true
   schedview-snapshot: true
   semaphore: true

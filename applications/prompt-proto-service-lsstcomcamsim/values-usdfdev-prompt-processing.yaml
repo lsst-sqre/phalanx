@@ -11,19 +11,23 @@ prompt-proto-service:
 
   instrument:
     pipelines:
-      main: >-
-        (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml,
-        ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml]
-      preprocessing: (survey="SURVEY")=[${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Preprocessing.yaml]
-    calibRepo: s3://rubin-pp-dev-users/central_repo/
+      main: |-
+        - survey: SURVEY
+          pipelines:
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/ApPipe.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/SingleFrame.yaml
+          - ${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Isr.yaml
+      preprocessing: |-
+        - survey: SURVEY
+          pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTComCamSim/Preprocessing.yaml']
+    calibRepo: s3://rubin-pp-dev-users/central_repo_2
 
   s3:
     imageBucket: rubin-pp-dev
     endpointUrl: https://s3dfrgw.slac.stanford.edu
 
   imageNotifications:
-    kafkaClusterAddress: prompt-processing-kafka-bootstrap.kafka:9092
+    kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
     topic: prompt-processing-dev
 
   apdb:

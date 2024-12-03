@@ -23,11 +23,11 @@ strimzi-kafka:
           host: sasquatch-tts-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 80Gi
-        cpu: 4
+        memory: 8Gi
+        cpu: 1
       limits:
-        memory: 80Gi
-        cpu: 4
+        memory: 8Gi
+        cpu: 1
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -48,6 +48,8 @@ strimzi-kafka:
     telegraf:
       enabled: true
     kafkaConnectManager:
+      enabled: true
+    consdb:
       enabled: true
   registry:
     ingress:
@@ -82,7 +84,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     maintel:
       enabled: true
@@ -102,7 +104,7 @@ telegraf-kafka-consumer:
       metric_batch_size: 100
       flush_interval: 20s
       topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     latiss:
       enabled: true

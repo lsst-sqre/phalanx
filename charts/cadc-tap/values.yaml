@@ -71,7 +71,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "1.18.6"
+      tag: "1.19.0"
 
   qserv:
     # -- QServ hostname:port to connect to
@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.4.7"
+      tag: "2.5.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -99,7 +99,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/v3.2.1/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/v3.3.0/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -114,6 +114,11 @@ config:
   # Java would determine it based on how much memory is available and black
   # maths.
   jvmMaxHeapSize: 31G
+
+  # -- Name of the service from Gafaelfawr's perspective, used for metrics
+  # reporting
+  # @default -- None, must be set
+  serviceName: ""
 
   # -- Vault secret name, this is appended to the global path to find the
   # vault secrets associated with this deployment.
@@ -162,7 +167,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "v3.2.1"
+    tag: "v3.3.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -195,7 +200,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.4.7"
+    tag: "2.5.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
@@ -229,7 +234,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.0"
+    tag: "1.37.2"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
