@@ -71,11 +71,11 @@ generator:
     # -- Resource requests for the generator
     requests:
       cpu: 100m
-      memory: 2Gi
+      memory: 32Gi
     # -- Resource limits for the generator
     limits:
       cpu: 16000m
-      memory: 2Gi
+      memory: 32Gi
   workdir:
     # -- Work directory type for the generator
     medium: Memory
