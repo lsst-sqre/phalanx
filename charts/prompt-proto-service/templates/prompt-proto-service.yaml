@@ -119,8 +119,6 @@ spec:
           value: {{ .Values.cache.refcatsPerImage | toString | quote }}
         - name: PATCHES_PER_IMAGE
           value: {{ .Values.cache.patchesPerImage | toString | quote }}
-        - name: FILTERS_WITH_CALIBS
-          value: {{ .Values.cache.maxFilters | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.debug.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         - name: DEBUG_EXPORT_OUTPUTS

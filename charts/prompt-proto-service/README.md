@@ -19,7 +19,6 @@ Event-driven processing of camera images
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| cache.maxFilters | int | `20` | The maximum number of datasets of a given type the service might load if the filter is unknown. Should be greater than or equal to the number of filters that have e.g. flats or transmission curves. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
