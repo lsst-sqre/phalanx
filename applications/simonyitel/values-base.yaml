@@ -64,6 +64,9 @@ mtm1m3-sim:
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
     pullPolicy: Always
+  env:
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
 
 mtm2-sim:
   enabled: true
@@ -96,6 +99,8 @@ mtptg:
     pullPolicy: Always
   env:
     TELESCOPE: MT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
 
 mtrotator-sim:
   enabled: true
