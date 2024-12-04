@@ -18,6 +18,10 @@ prompt-proto-service:
 
   instrument:
     pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
       main: |-
         - survey: BLOCK-306  # photographic imaging
           pipelines:
