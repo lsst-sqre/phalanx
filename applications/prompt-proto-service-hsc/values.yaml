@@ -38,6 +38,11 @@ prompt-proto-service:
     # -- The "short" name of the instrument
     name: HSC
     pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+
       # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
       # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
       # @default -- None, must be set
