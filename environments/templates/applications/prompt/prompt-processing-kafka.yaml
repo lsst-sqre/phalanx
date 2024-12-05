@@ -22,8 +22,8 @@ spec:
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
       parameters:
-        - name: "global.argo_revision"
-          value: $ARGOCD_APP_NAME
+        - name: "global.argocd_revision"
+          value: $ARGOCD_APP_REVISION
         - name: "global.host"
           value: {{ .Values.fqdn | quote }}
         - name: "global.baseUrl"
