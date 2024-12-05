@@ -46,6 +46,9 @@ config:
   # -- Jira base URL
   jiraUrl: "https://rubinobs.atlassian.net/"
 
+  # -- Jira request timeout. Use `m` and `s` for time intervals.
+  jiraTimeout: "60s"
+
   # -- Names of Jira projects to unfurl (comma-separated)
   # @default -- See `values.yaml`
   jiraProjects: >

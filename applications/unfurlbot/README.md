@@ -12,6 +12,7 @@ Squarebot backend that unfurls Jira issues.
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the unfurlbot deployment pod |
 | config.jiraProjects | string | See `values.yaml` | Names of Jira projects to unfurl (comma-separated) |
+| config.jiraTimeout | string | `"60s"` | Jira request timeout. Use `m` and `s` for time intervals. |
 | config.jiraUrl | string | `"https://rubinobs.atlassian.net/"` | Jira base URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.redisUrl | string | `"redis://unfurlbot-redis:6379/0"` | URL to the local redis instance |
