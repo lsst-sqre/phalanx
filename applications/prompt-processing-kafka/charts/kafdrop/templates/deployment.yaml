@@ -38,6 +38,9 @@ spec:
               name: {{ .Values.existingSecret }}
           {{- end }}
           env:
+          - name: ARGOCD_APP_REVISION
+          - name: ARGOCD_APP_REVISION_SHORT
+          - name: KUBE_VERSION
           - name: KAFKA_BROKERCONNECT
             value: {{ .Values.kafka.broker | quote }}
           - name: JVM_OPTS
