@@ -39,10 +39,7 @@ spec:
           {{- end }}
           env:
           - name: ARGOCD_APP_REVISION
-            value: $ARGOCD_APP_REVISION
-          - name: ARGOCD_APP_REVISION_SHORT
-          - name: KUBE_VERSION
-            value: $KUBE_VERSION
+            value: {{.Values.global.argo_revision}}
           - name: KAFKA_BROKERCONNECT
             value: {{ .Values.kafka.broker | quote }}
           - name: JVM_OPTS
