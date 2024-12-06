@@ -28,6 +28,7 @@ Event-driven processing of camera images
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
+| imageNotifications.consumerOffsetReset | string | `"latest"` | Kafka consumer offset reset setting for image arrival notifications |
 | imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
