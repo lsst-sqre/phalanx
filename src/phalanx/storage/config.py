@@ -466,6 +466,28 @@ class ConfigStorage:
             for v in sorted(path.glob("values-*.yaml"))
         ]
 
+    def list_project_applications(self, project_name: str) -> list[str]:
+        """List all project applications.
+
+        Parameters
+        ----------
+        project_name
+            The project to collect applications for.
+
+        Returns
+        -------
+        list of str
+            Names of all project applications.
+        """
+        path = (
+            self._path
+            / "environments"
+            / "templates"
+            / "applications"
+            / project_name
+        )
+        return [v.stem for v in sorted(path.glob("*.yaml"))]
+
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
 
@@ -597,6 +619,36 @@ class ConfigStorage:
             environments=environment_details,
             applications=sorted(applications.values(), key=lambda a: a.name),
         )
+
+    def check_control_system_tags(self, environment: str) -> None:
+        """Check on control system applications for app specific tags.
+
+        Parameters
+        ----------
+        environment
+            The name of the environment to check for the tags.
+        """
+        for app in self.list_project_applications("telescope"):
+            if app in ["argo-workflows", "obsenv-management", "ocps-uws-job"]:
+                continue
+            app_config = self._load_application_config(app)
+            env_config = app_config.environment_values[environment]
+            app_list = []
+            if app == "love":
+                pass
+            else:
+                for key, item_config in env_config.items():
+                    if key in ["uws-api-server"]:
+                        continue
+                    if "image" not in item_config:
+                        continue
+                    if "tag" in item_config["image"]:
+                        app_list.append(key)
+
+            if app_list:
+                print(f"{app} has application specific tags:")
+                for item in app_list:
+                    print(f"- {item}")
 
     def update_shared_chart_version(self, chart: str, version: str) -> None:
         """Update the version of a shared chart across all applications.
