@@ -1,0 +1,16 @@
+{{- if .Values.config.metrics.enabled -}}
+apiVersion: access.strimzi.io/v1alpha1
+kind: KafkaAccess
+metadata:
+  name: "mobu-kafka"
+spec:
+  kafka:
+    name: "sasquatch"
+    namespace: "sasquatch"
+    listener: "tls"
+  user:
+    kind: "KafkaUser"
+    apiGroup: "kafka.strimzi.io"
+    name: "app-metrics-mobu"
+    namespace: "sasquatch"
+{{- end }}

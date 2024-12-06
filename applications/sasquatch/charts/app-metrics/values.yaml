@@ -13,7 +13,14 @@ globalAppConfig:
       - "username"
   mobu:
     influxTags:
-      - "type"
+      - "sync"
+      - "success"
+      - "flock"
+      - "business"
+      - "username"
+      - "notebook"
+      - "repo"
+      - "repo_ref"
 
 # -- A list of applications that will publish metrics events, and the keys
 # that should be ingested into InfluxDB as tags.  The names should be the same

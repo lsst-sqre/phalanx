@@ -4,6 +4,8 @@ image:
 config:
   logLevel: DEBUG
   profile: development
+  metrics:
+    enabled: true
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
