@@ -16,7 +16,7 @@ image:
   repository: "ghcr.io/lsst-sqre/sia"
 
   # -- Pull policy for the sia image
-  pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
@@ -46,6 +46,9 @@ config:
   # -- User to use from the PGPASSFILE if sia is using a direct Butler
   # connection
   pgUser: "rubin"
+
+  # -- True to enable capture of trace and other diagnostics to Sentry.io.
+  enableSentry: false
 
 
 ingress:
