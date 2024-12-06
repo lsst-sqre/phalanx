@@ -66,6 +66,8 @@ spec:
             # to live, so we just have Butler server host them.)
             - name: DAF_BUTLER_SERVER_STATIC_FILES_PATH
               value: "/opt/lsst/butler/config"
+            - name: DAF_BUTLER_SERVER_THREAD_POOL_SIZE
+              value: "3"
             {{ if .Values.config.pguser }}
             - name: PGUSER
               value: {{ .Values.config.pguser | quote }}
