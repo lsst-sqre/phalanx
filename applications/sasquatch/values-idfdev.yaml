@@ -155,6 +155,10 @@ chronograf:
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
 
 app-metrics:
+  image:
+    repo: "docker.io/fajpunk/telegraf-test"
+    tag: "tag-fix"
+    pullPolicy: "Always"
   enabled: true
   apps:
     - gafaelfawr
