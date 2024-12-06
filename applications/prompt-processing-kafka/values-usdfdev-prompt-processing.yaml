@@ -1,0 +1,44 @@
+strimzi-kafka:
+  users:
+    kafdrop:
+      enabled: true
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+  kafka:
+    storage:
+      size: 100Gi
+      storageClassName: wekafs--sdf-k8s01
+  topics:
+    hsc:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+    latiss:
+      enabled: true
+      partitions: 10
+      replicas: 3
+      retention: 300000
+    lsstcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+    lsstcomcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+    lsstcomcamsim:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+kafdrop:
+  ingress:
+    enabled: false
+  kafka:
+    broker: 10.103.195.233:9092
+  schemaregistry: http://10.104.75.248:8081
