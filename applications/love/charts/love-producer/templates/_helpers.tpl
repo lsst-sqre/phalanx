@@ -24,6 +24,18 @@ If release name contains chart name it will be used as a full name.
 {{- end }}
 
 {{/*
+Create image name from information
+*/}}
+{{- define "helpers.makeImage" -}}
+{{- if kindIs "float64" .rev }}
+{{- $rev := int .rev -}}
+{{- printf "%s:%s.%03d" .repo .tag $rev }}
+{{- else }}
+{{- printf "%s:%s" .repo .tag }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create app name from release and producer name.
 */}}
 {{- define "love-producer.appName" -}}

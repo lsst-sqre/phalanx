@@ -70,16 +70,16 @@ initContainers:
     image:
       # -- The frontend image to use
       repository: lsstts/love-frontend
-      # str -- The tag to use for the frontend image
-      tag:
+      # -- (int) The cycle revision to add to the image tag
+      revision:
       # -- The pull policy to use for the frontend image
       pullPolicy: IfNotPresent
   manager:
     image:
       # -- The static love-manager content image to use
       repository: lsstts/love-manager
-      # str -- The tag to use for the love-manager static content image
-      tag:
+      # -- (int) The cycle revision to add to the image tag
+      revision:
       # -- The pull policy to use for the love-manager static content image
       pullPolicy: IfNotPresent
     # -- The command to execute for the love-manager static content

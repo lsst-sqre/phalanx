@@ -19,8 +19,8 @@ spec:
     spec:
       containers:
       - name: {{ include "love-manager-frontend.fullname" . }}
-        {{- $imageTag := .Values.manager.frontend.image.tag | default $.Values.global.controlSystem.imageTag }}
-        image: "{{ .Values.manager.frontend.image.repository }}:{{ $imageTag }}"
+        {{- $image := dict "repo" .Values.manager.frontend.image.repository "tag" .Values.global.controlSystem.imageTag "rev" .Values.manager.frontend.image.revision }}
+        image: {{ include "helpers.makeImage" $image }}
         imagePullPolicy: {{ .Values.manager.frontend.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.manager.frontend.ports.container }}

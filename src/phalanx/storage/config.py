@@ -466,6 +466,28 @@ class ConfigStorage:
             for v in sorted(path.glob("values-*.yaml"))
         ]
 
+    def list_project_applications(self, project_name: str) -> list[str]:
+        """List all project applications.
+
+        Parameters
+        ----------
+        project_name
+            The project to collect applications for.
+
+        Returns
+        -------
+        list of str
+            Names of all project applications.
+        """
+        path = (
+            self._path
+            / "environments"
+            / "templates"
+            / "applications"
+            / project_name
+        )
+        return [v.stem for v in sorted(path.glob("*.yaml"))]
+
     def load_environment(self, environment_name: str) -> Environment:
         """Load the configuration of a Phalanx environment from disk.
 
@@ -597,6 +619,40 @@ class ConfigStorage:
             environments=environment_details,
             applications=sorted(applications.values(), key=lambda a: a.name),
         )
+
+    def check_telescope_revisions(self, environment: str) -> None:
+        """Check on control system applications for app specific revisions.
+
+        Note: The summit configuration for the love application will have app
+              specific revisions, but those must be 0 for a new cycle build.
+
+        Parameters
+        ----------
+        environment
+            The name of the environment to check for the revisions.
+        """
+        for app in self.list_project_applications("telescope"):
+            if app in ["argo-workflows", "obsenv-management", "ocps-uws-job"]:
+                continue
+            app_config = self._load_application_config(app)
+            env_config = app_config.environment_values[environment]
+            app_list: list[str] = []
+            for key, item_config in env_config.items():
+                if key.startswith("love"):
+                    self._check_love_revisions(
+                        item_config, app_list, key, environment
+                    )
+                if key in ["uws-api-server"]:
+                    continue
+                if "image" not in item_config:
+                    continue
+                if "revision" in item_config["image"]:
+                    app_list.append(key)
+
+            if app_list:
+                print(f"{app} has application specific revisions:")
+                for item in set(app_list):
+                    print(f"- {item}")
 
     def update_shared_chart_version(self, chart: str, version: str) -> None:
         """Update the version of a shared chart across all applications.
@@ -836,6 +892,30 @@ class ConfigStorage:
             comanage_hostname=comanage_hostname,
             scopes=sorted(gafaelfawr_scopes, key=lambda s: s.scope),
         )
+
+    def _check_love_revisions(self, c: dict, al: list, k: str, e: str) -> None:
+        """Check revisions on LOVE apps.
+
+        Summit apps are set to revision 0 on cycle upgrades, so always have a
+        value. The test stands do not have a revision set normally.
+        """
+        if k == "love-manager":
+            blocks = c["manager"]["producers"]
+            blocks.append(c["manager"]["frontend"])
+        elif k == "love-nginx":
+            blocks = list(c["initContainers"].values())
+        else:
+            if "image" not in c:
+                return
+            blocks = [c]
+
+        for block in blocks:
+            if "revision" in block["image"]:
+                if e == "summit":
+                    if block["image"]["revision"]:
+                        al.append(k)
+                else:
+                    al.append(k)
 
     def _find_application_namespace(self, application: str) -> str:
         """Determine what namespace an application will be deployed into.

@@ -21,6 +21,8 @@ manager:
     image:
       # -- The LOVE manager frontend image to use
       repository: lsstts/love-manager
+      # -- (int) The cycle revision to add to the image tag
+      revision:
       # -- The pull policy on the LOVE manager frontend image
       pullPolicy: IfNotPresent
       # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled
@@ -132,6 +134,8 @@ manager:
       image:
         # -- The LOVE manager producers image to use
         repository: lsstts/love-manager
+        # -- (int) The cycle revision to add to the image tag
+        revision:
         # -- The pull policy on the LOVE manager producers image
         pullPolicy: IfNotPresent
         # -- The tag name for the Nexus3 Docker repository secrets if private images need to be pulled

@@ -25,8 +25,8 @@ spec:
     spec:
       containers:
         - name: {{ $producer.name }}
-          {{- $imageTag := $.Values.image.tag | default $.Values.global.controlSystem.imageTag }}
-          image: "{{ $.Values.image.repository }}:{{ $imageTag }}"
+          {{- $image := dict "repo" $.Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" $.Values.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
