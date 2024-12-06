@@ -60,6 +60,10 @@ strimzi-kafka:
   users:
     tsSalKafka:
       enabled: true
+      topics:
+        - lsst.s3.raw.latiss
+        - lsst.s3.raw.comcam
+        - lsst.s3.raw.lsstcam
     camera:
       enabled: true
     replicator:
