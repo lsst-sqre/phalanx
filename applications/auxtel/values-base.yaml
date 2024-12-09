@@ -3,6 +3,14 @@ ataos:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
 
+atbuilding-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atbuilding
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
 atdome-sim:
   enabled: true
   image:
