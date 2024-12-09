@@ -18,7 +18,6 @@ prompt-proto-service:
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
-
   image:
     # -- Image to use in the PP deployment
     repository: ghcr.io/lsst-dm/prompt-service
@@ -93,6 +92,8 @@ prompt-proto-service:
     # -- Topic where raw image arrival notifications appear
     # @default -- None, must be set
     topic: ""
+    # -- Kafka consumer offset reset setting for image arrival notifications
+    consumerOffsetReset: "latest"
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
     imageTimeout: 120  # Simulated survey has up to 2-minute slews, but most visits are faster
 
