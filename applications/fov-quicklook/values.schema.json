@@ -1,0 +1,167 @@
+{
+  "properties": {
+    "image": {
+      "$ref": "#/definitions/image_config"
+    },
+    "config": {
+      "$ref": "#/definitions/config"
+    },
+    "s3_repository": {
+      "$ref": "#/definitions/s3_config"
+    },
+    "s3_tile": {
+      "$ref": "#/definitions/s3_config"
+    },
+    "use_vault": {
+      "type": "boolean"
+    },
+    "use_gafaelfawr": {
+      "type": "boolean"
+    },
+    "db_storage_class": {
+      "type": ["string", "null"],
+      "default": null
+    },
+    "global": {},
+    "coordinator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "frontend": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "db": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        }
+      },
+      "required": ["resources"]
+    },
+    "generator": {
+      "type": "object",
+      "properties": {
+        "resources": {
+          "$ref": "#/definitions/resources"
+        },
+        "workdir": {
+          "type": "object",
+          "properties": {
+            "medium": {
+              "type": "string",
+              "enum": ["", "Memory"]
+            }
+          },
+          "required": ["medium"]
+        },
+        "replicas": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "required": ["resources", "workdir", "replicas"]
+    }
+  },
+  "required": [
+    "image",
+    "use_vault",
+    "use_gafaelfawr",
+    "coordinator",
+    "frontend",
+    "db",
+    "generator"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "image_config": {
+      "type": "object",
+      "properties": {
+        "repository": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        },
+        "pullPolicy": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repository",
+        "tag",
+        "pullPolicy"
+      ],
+      "additionalProperties": false
+    },
+    "config": {
+      "properties": {
+        "pathPrefix": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "pathPrefix"
+      ],
+      "additionalProperties": false
+    },
+    "s3_config": {
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "bucket": {
+          "type": "string"
+        },
+        "secure": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "endpoint",
+        "bucket",
+        "secure"
+      ],
+      "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "requests": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        },
+        "limits": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          },
+          "required": ["cpu", "memory"]
+        }
+      }
+    }
+  }
+}

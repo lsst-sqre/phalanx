@@ -12,6 +12,7 @@ Argo CD project: ``rsp``
    butler/index
    datalinker/index
    filestore-backup/index
+   fov-quicklook/index
    hips/index
    jira-data-proxy/index
    livetap/index
