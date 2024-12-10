@@ -146,7 +146,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     maintel:
       enabled: true
@@ -164,7 +164,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     latiss:
       enabled: true
@@ -225,6 +225,12 @@ telegraf-kafka-consumer:
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      debug: true
+    calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
       debug: true
     obsenv:
       enabled: true
