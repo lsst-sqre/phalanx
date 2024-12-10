@@ -101,7 +101,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.existingSecret | string | `"nublado-secret"` | Existing secret to use for private keys |
 | jupyterhub.hub.extraEnv | object | Gets `JUPYTERHUB_CRYPT_KEY` from `nublado-secret` | Additional environment variables to set |
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
-| jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
+| jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap`, the Gafaelfawr token, | Additional volumes to make available to JupyterHub and the revised page template. |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
 | jupyterhub.hub.image.tag | string | `"6.3.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
