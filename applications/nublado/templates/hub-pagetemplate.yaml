@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "page-template"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+data:
+  page.html: |
+    {% extends "templates/page.html" %}
+                {% block nav_bar_left_items %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ base_url }}home">Home</a>
+                  </li>
+                  {% if 'admin-ui' in parsed_scopes %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{{ base_url }}admin">Admin</a>
+                    </li>
+                  {% endif %}
+                  {% if services %}
+                    <li class="nav-item dropdown">
+                      <a href="#"
+                         class="nav-link dropdown-toggle"
+                         data-bs-toggle="dropdown"
+                         role="button"
+                         aria-expanded="false">Services</a>
+                      <ul class="dropdown-menu">
+                        {% for service in services %}
+                          {% block service scoped %}
+                            <li>
+                              <a class="dropdown-item" href="{{ service.href }}">{{ service.name }}</a>
+                            </li>
+                          {% endblock service %}
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% endif %}
+                {% endblock nav_bar_left_items %}
