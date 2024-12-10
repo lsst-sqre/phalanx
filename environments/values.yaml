@@ -259,6 +259,10 @@ applications:
   # -- Enable the vo-cutouts application
   vo-cutouts: false
 
+  # -- Enable the wobbly application, required if the environment will be
+  # running any Safir-based UWS services
+  wobbly: false
+
 # -- Add labels for application namespaces.
 namespaceLabels: {}
 
