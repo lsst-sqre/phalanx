@@ -88,25 +88,31 @@ atoods:
           minutes: 0
           seconds: 0
 
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
       ingester:
           imageStagingDirectory: /data/staging/auxtel/oods
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.Latiss
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
-                  stagingDirectory : /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
+                  stagingDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
                   badFileDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/badfiles
-                  repoDirectory : /repo/LATISS
+                  repoDirectory: /repo/LATISS
                   collections:
                       - LATISS/raw/all
+                  cleanCollections:
+                      - collection: LATISS/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 30
+
           batchSize: 20
           scanInterval:
               <<: *interval
@@ -126,7 +132,7 @@ atoods:
               hours: 1
           filesOlderThan:
               <<: *interval
-              days: 31
+              days: 30
           directoriesEmptyForMoreThan:
               <<: *interval
               days: 2
