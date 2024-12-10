@@ -154,6 +154,13 @@ chronograf:
     PUBLIC_URL: https://data-dev.lsst.cloud/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/idfdev.json
 
+backup:
+  enabled: true
+  image:
+    pullPolicy: Always
+  persistence:
+    storageClass: standard
+
 app-metrics:
   enabled: true
   apps:

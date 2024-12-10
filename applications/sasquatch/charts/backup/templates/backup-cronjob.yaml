@@ -1,0 +1,62 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sasquatch-backup
+  labels:
+    {{- include "backup.labels" . | nindent 4 }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          {{- if .Values.podAnnotations }}
+          annotations:
+            {{ toYaml .Values.podAnnotations | nindent 12 }}
+          {{- end }}
+          labels:
+            {{- include "backup.selectorLabels" . | nindent 12 }}
+        spec:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
+          volumes:
+          - name: backup
+            persistentVolumeClaim:
+              claimName: sasquatch-backup
+          - name: chronograf
+            persistentVolumeClaim:
+              claimName: sasquatch-chronograf
+              readOnly: true
+          - name: kapacitor
+            persistentVolumeClaim:
+              claimName: sasquatch-kapacitor
+              readOnly: true
+          containers:
+          - name: sasquatch-backup
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+            volumeMounts:
+            - name: backup
+              mountPath: /backup
+            - name: chronograf
+              mountPath: /chronograf
+            - name: kapacitor
+              mountPath: /kapacitor
+            command:
+            - /bin/sh
+            - -c
+            - 'trap : TERM INT; sleep infinity & wait'
+            resources:
+              {{- toYaml .Values.resources | nindent 14 }}
+          {{- with .Values.nodeSelector }}
+          nodeSelector:
+             {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.tolerations }}
+          tolerations:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
