@@ -64,7 +64,7 @@ spec:
                           "services": [
                             {
                                "label": "LSST SIAV2 DP0.2 DC2",
-                               "value": "{{ .Values.global.baseUrl }}api/sia/dp02/query",
+                               "value": "{{ .Values.global.baseUrl }}/api/sia/dp02/query",
                                {{- if .Values.config.hipsUrl }}
                                "hipsUrl": "{{ .Values.config.hipsUrl }}",
                                {{- else }}
