@@ -469,9 +469,6 @@ jupyterhub:
       - name: "hub-gafaelfawr-token"
         secret:
           secretName: "hub-gafaelfawr-token"
-      - name: "page-template"
-        configMap:
-          name: "page-template"
 
     # -- Additional volume mounts for JupyterHub
     # @default -- `hub-config` and the Gafaelfawr token
@@ -480,8 +477,6 @@ jupyterhub:
         mountPath: "/usr/local/etc/jupyterhub/jupyterhub_config.d"
       - name: "hub-gafaelfawr-token"
         mountPath: "/etc/gafaelfawr"
-      - name: "page-template"
-        mountPath: "/usr/local/etc/jupyterhub/templates"
 
     networkPolicy:
       # -- Whether to enable the default `NetworkPolicy` (currently, the
