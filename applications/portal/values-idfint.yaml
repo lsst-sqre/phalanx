@@ -14,7 +14,7 @@ config:
   ssotap: "ssotap"
 
 image:
-  tag: "portal-sia-test-1"
+  tag: "portal-against-pre-1-2024.4_b1"
 
 resources:
   limits:
