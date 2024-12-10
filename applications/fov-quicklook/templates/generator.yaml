@@ -40,6 +40,7 @@ spec:
           volumeMounts:
             - mountPath: /dev/shm/quicklook
               name: shm
+            {{- include "quicklook.butler-settings.volumeMounts" . | nindent 12 }}
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -49,6 +50,7 @@ spec:
         - name: shm
           emptyDir:
             medium: {{ .Values.generator.workdir.medium | quote }}
+        {{- include "quicklook.butler-settings.volumes" . | nindent 8 }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
