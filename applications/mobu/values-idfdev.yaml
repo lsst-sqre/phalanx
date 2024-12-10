@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-47389-app-metrics-for-real
+  pullPolicy: Always
 config:
   logLevel: DEBUG
   profile: development
