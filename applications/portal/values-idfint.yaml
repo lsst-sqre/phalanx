@@ -13,6 +13,9 @@ config:
         storageClass: "standard-rwo"
   ssotap: "ssotap"
 
+image:
+  tag: "portal-sia-test-1"
+
 resources:
   limits:
     memory: "30Gi"
