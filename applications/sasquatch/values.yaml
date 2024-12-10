@@ -276,6 +276,10 @@ squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
 
+backup:
+  # -- Whether to enable Sasquatch backups
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD

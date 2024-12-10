@@ -20,6 +20,7 @@ Rubin Observatory's telemetry service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | app-metrics.apps | list | `[]` | The apps to create configuration for. |
 | app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
+| backup.enabled | bool | `false` | Whether to enable Sasquatch backups |
 | chronograf.enabled | bool | `true` | Whether Chronograf is enabled |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
@@ -104,6 +105,20 @@ Rubin Observatory's telemetry service
 | app-metrics.replicaCount | int | `3` | Number of Telegraf replicas. Multiple replicas increase availability. |
 | app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
+| backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
+| backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
+| backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
+| backup.image.tag | string | The appVersion of the chart | Tag of image to use |
+| backup.items.chronograf | bool | `false` | Whether to backup Chronograf |
+| backup.items.influxdbEnterprise | bool | `false` | Whether to backup InfluxDB Enterprise |
+| backup.items.kapacitor | bool | `false` | Whether to backup Kapacitor |
+| backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
+| backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
+| backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
+| backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
+| backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
+| backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
+| backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |

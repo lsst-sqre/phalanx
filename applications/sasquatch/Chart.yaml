@@ -56,6 +56,9 @@ dependencies:
   - name: square-events
     condition: squareEvents.enabled
     version: 1.0.0
+  - name: backup
+    condition: backup.enabled
+    version: 1.0.0
   - name: app-metrics
     condition: app-metrics.enabled
     version: 1.0.0
