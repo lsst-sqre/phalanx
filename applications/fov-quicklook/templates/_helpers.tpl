@@ -40,3 +40,31 @@ rules:
               port:
                 number: 9500
 {{- end -}}
+
+{{- define "quicklook.butler-settings.env" -}}
+- name: AWS_SHARED_CREDENTIALS_FILE
+  value: /var/run/secrets/aws-credentials.ini
+- name: PGPASSFILE
+  value: /var/run/secrets/postgres-credentials.txt
+- name: PGUSER
+  value: rubin
+- name: LSST_RESOURCES_S3_PROFILE_embargo
+  value: https://sdfembs3.sdf.slac.stanford.edu
+- name: DAF_BUTLER_REPOSITORY_INDEX
+  value: s3://embargo@rubin-summit-users/data-repos.yaml
+{{- end -}}
+
+{{- define "quicklook.butler-settings.volumes" -}}
+- name: butler-settings
+  secret:
+    secretName: fov-quicklook
+{{- end -}}
+
+{{- define "quicklook.butler-settings.volumeMounts" -}}
+- name: butler-settings
+  mountPath: /var/run/secrets/aws-credentials.ini
+  subPath: aws-credentials.ini
+- name: butler-settings
+  mountPath: /var/run/secrets/postgres-credentials.txt
+  subPath: postgres-credentials.txt
+{{- end -}}
