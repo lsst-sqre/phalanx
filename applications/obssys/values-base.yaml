@@ -8,6 +8,9 @@ atqueue:
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+  envSecrets:
+  - name: USER_USER_PASS
+    key: user-user-pass
   butlerSecret:
     containerPath: &bS-cP /home/saluser/.lsst
     dbUser: &bS-dbU oods
@@ -86,6 +89,9 @@ mtqueue:
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+  envSecrets:
+  - name: USER_USER_PASS
+    key: user-user-pass
   butlerSecret:
     containerPath: *bS-cP
     dbUser: *bS-dbU
@@ -164,6 +170,9 @@ ocsqueue:
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+  envSecrets:
+  - name: USER_USER_PASS
+    key: user-user-pass
   butlerSecret:
     containerPath: *bS-cP
     dbUser: *bS-dbU
