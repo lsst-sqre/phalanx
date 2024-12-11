@@ -11,7 +11,8 @@ config:
     - {{ . | quote }}
     {{- end }}
   scopes:
-    all: []
+    all:
+      - "read:image"
   service: "wobbly"
 template:
   metadata:
