@@ -59,6 +59,32 @@ mtdometrajectory:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
 
+mtheaderservice:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance ls
+    TSTAND_HEADERSERVICE: BASE
+    CAMERA: mt
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    secretKey: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    secretKey: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    secretKey: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    secretKey: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 150m
+      memory: 600Mi
+    requests:
+      cpu: 15m
+      memory: 240Mi
+
 mtm1m3-sim:
   enabled: true
   image:
@@ -92,6 +118,69 @@ mtmount-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+
+mtoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtoods
+    pullPolicy: Always
+  env:
+    CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
+    AWS_ACCESS_KEY_ID: oods-lsstcam
+    AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
+  envSecrets:
+  - name: AWS_SECRET_ACCESS_KEY
+    secretKey: oods-lsstcam-secret-key
+  butlerSecret:
+    containerPath: /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: postgres-credentials.txt
+  resources:
+    limits:
+      cpu: 50m
+      memory: 700Mi
+    requests:
+      cpu: 5m
+      memory: 345Mi
+  configfile:
+    path: /etc
+    filename: mtoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingester:
+          kafka:
+              brokers:
+                  - sasquatch-kafka-brokers.sasquatch:9092
+              topics:
+                - lsst.s3.raw.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 250
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.LsstCam
+                  class:
+                      import : lsst.ctrl.oods.messageAttendant
+                      name : MessageAttendant
+                  repoDirectory : s3://rubinobs-butler-lsstcam
+                  collections:
+                      - LSSTCam/raw/all
+                  cleanCollections:
+                      - collection: LSSTCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 5
+                      - collection: LSSTCam/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 2
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
 
 mtptg:
   image:
