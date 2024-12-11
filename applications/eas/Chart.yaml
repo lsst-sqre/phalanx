@@ -97,6 +97,16 @@ dependencies:
   condition: dimm2-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: dream
+  version: 1.0.0
+  condition: dream.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: dream-sim
+  version: 1.0.0
+  condition: dream-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: dsm1
   version: 1.0.0
   condition: dsm1.enabled
