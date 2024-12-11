@@ -68,6 +68,7 @@ ignore = [
     '^https://usdf-cm.slac.stanford.edu',
     '^https://usdf-cm-dev.slac.stanford.edu',
     '^https://usdf-prompt-processing-dev.slac.stanford.edu',
+    '^https://usdf-rapid-analysis.slac.stanford.edu',
     '^https://usdf-rsp.slac.stanford.edu',
     '^https://usdf-rsp-dev.slac.stanford.edu',
     '^https://usdf-rsp-int.slac.stanford.edu',
