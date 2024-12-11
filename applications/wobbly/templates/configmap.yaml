@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "wobbly"
+  {{- if .Values.config.updateSchema }}
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "before-hook-creation"
+    helm.sh/hook-weight: "0"
+  {{- end }}
+  labels:
+    {{- include "wobbly.labels" . | nindent 4 }}
+data:
+  METRICS_APPLICATION: {{ .Values.config.metrics.application | quote }}
+  {{- if .Values.config.metrics.enabled }}
+  METRICS_ENABLED: "true"
+  METRICS_EVENTS_TOPIC_PREFIX: {{ .Values.config.metrics.events.topicPrefix | quote }}
+  SCHEMA_MANAGER_REGISTRY_URL: {{ .Values.config.metrics.schemaManager.registryUrl | quote }}
+  {{- else }}
+  METRICS_ENABLED: "false"
+  {{- end }}
+  {{- if .Values.cloudsql.enabled }}
+  WOBBLY_DATABASE_URL: "postgresql://wobbly@localhost/wobbly"
+  {{- else }}
+  WOBBLY_DATABASE_URL: {{ .Values.config.databaseUrl | quote }}
+  {{- end }}
+  WOBBLY_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
+  WOBBLY_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  WOBBLY_PROFILE: {{ .Values.config.logProfile | quote }}
