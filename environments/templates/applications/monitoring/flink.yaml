@@ -1,0 +1,34 @@
+{{- if (index .Values "applications" "flink") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "flink"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "flink"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "flink"
+    server: "https://kubernetes.default.svc"
+  project: "monitoring"
+  source:
+    path: "applications/flink"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}

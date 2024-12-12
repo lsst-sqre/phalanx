@@ -9,6 +9,7 @@ Argo CD project: ``monitoring``
 .. toctree::
    :maxdepth: 1
 
+   flink/index
    monitoring/index
    sasquatch-backpack/index
    sasquatch/index
