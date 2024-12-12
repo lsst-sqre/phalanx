@@ -8,7 +8,7 @@ argo-cd:
   server:
     ingress:
       hostname: "rsp-test.lsst.ac.uk"
-    tls: false
+      tls: false
 # argo-cd:
 #   server:
 #     ingress:
