@@ -440,8 +440,8 @@ jupyterhub:
 
     # -- Security context for JupyterHub container
     containerSecurityContext:
-      runAsUser: 768
-      runAsGroup: 768
+      runAsUser: 1000
+      runAsGroup: 1000
       allowPrivilegeEscalation: false
 
     # -- Base URL on which JupyterHub listens

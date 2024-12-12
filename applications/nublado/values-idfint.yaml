@@ -91,6 +91,9 @@ controller:
 
 jupyterhub:
   hub:
+    image:
+      tag: tickets-DM-48125
+      pullPolicy: Always
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true

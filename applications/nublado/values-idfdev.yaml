@@ -67,6 +67,9 @@ controller:
           volumeName: "scratch"
 jupyterhub:
   hub:
+    image:
+      tag: tickets-DM-48125
+      pullPolicy: Always
     db:
       upgrade: true
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
