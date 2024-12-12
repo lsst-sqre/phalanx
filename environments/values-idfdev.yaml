@@ -38,3 +38,4 @@ applications:
   times-square: true
   vault-secrets-operator: true
   vo-cutouts: true
+  wobbly: true

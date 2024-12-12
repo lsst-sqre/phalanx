@@ -290,7 +290,8 @@ global:
   vaultSecretsPath: ""
 
 app-metrics:
-  # -- Enable the app-metrics subchart with topic, user, and telegraf configurations
+  # -- Enable the app-metrics subchart with topic, user, and telegraf
+  # configurations
   enabled: false
 
   # -- The apps to create configuration for.

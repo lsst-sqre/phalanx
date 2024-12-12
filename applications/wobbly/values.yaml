@@ -1,0 +1,134 @@
+# Default values for Wobbly.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# -- Number of web deployment pods to start
+replicaCount: 1
+
+image:
+  # -- Image to use in the wobbly deployment
+  repository: "ghcr.io/lsst-sqre/wobbly"
+
+  # -- Pull policy for the wobbly image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: null
+
+config:
+  # -- URL for the PostgreSQL database if Cloud SQL is not in use
+  # @default -- None, must be set if `cloudsql.enabled` is false
+  databaseUrl: null
+
+  # -- Logging level
+  logLevel: "INFO"
+
+  # -- Logging profile (`production` for JSON, `development` for
+  # human-friendly)
+  logProfile: "production"
+
+  # -- URL path prefix
+  pathPrefix: "/wobbly"
+
+  # -- Services allowed to use Wobbly for their backend
+  # @default -- See `values.yaml`
+  services:
+    - "vo-cutouts"
+
+  # -- Whether to automatically update the Wobbly database schema
+  updateSchema: false
+
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "wobbly"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
+ingress:
+  # -- Additional annotations for the ingress rule
+  annotations: {}
+
+# -- Affinity rules for the wobbly deployment pod
+affinity: {}
+
+# -- Node selection rules for the wobbly deployment pod
+nodeSelector: {}
+
+# -- Annotations for the wobbly deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the wobbly deployment pod
+# @default -- See `values.yaml`
+resources: {}
+
+# -- Tolerations for the wobbly deployment pod
+tolerations: []
+
+cloudsql:
+  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
+  # on Google Cloud
+  enabled: false
+
+  image:
+    # -- Cloud SQL Auth Proxy image to use
+    repository: "gcr.io/cloudsql-docker/gce-proxy"
+
+    # -- Cloud SQL Auth Proxy tag to use
+    tag: "1.37.2"
+
+    # -- Tag suffix to use for the proxy for schema updates
+    schemaUpdateTagSuffix: "-alpine"
+
+    # -- Pull policy for Cloud SQL Auth Proxy images
+    pullPolicy: "IfNotPresent"
+
+  # -- Instance connection name for a Cloud SQL PostgreSQL instance
+  # @default -- None, must be set if Cloud SQL is used
+  instanceConnectionName: null
+
+  # -- The Google service account that has an IAM binding to the `wobbly`
+  # Kubernetes service account and has the `cloudsql.client` role
+  # @default -- None, must be set if Cloud SQL Auth Proxy is enabled
+  serviceAccount: ""
+
+  # -- Resource limits and requests for the Cloud SQL Proxy container
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "100m"
+      memory: "20Mi"
+    requests:
+      cpu: "5m"
+      memory: "7Mi"
+
+# The following will be set by parameters injected by Argo CD and should not
+# be set in the individual environment values files.
+global:
+  # -- Base URL for the environment
+  # @default -- Set by Argo CD
+  baseUrl: null
+
+  # -- Host name for ingress
+  # @default -- Set by Argo CD
+  host: null
+
+  # -- Base path for Vault secrets
+  # @default -- Set by Argo CD
+  vaultSecretsPath: null

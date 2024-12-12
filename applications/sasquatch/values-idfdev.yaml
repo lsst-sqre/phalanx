@@ -159,3 +159,4 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - wobbly

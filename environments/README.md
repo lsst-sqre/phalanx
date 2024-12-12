@@ -77,6 +77,7 @@
 | applications.vault | bool | `false` | Enable the vault application. This is the actual vault storage and there should only be one production and one development instance globally. |
 | applications.vault-secrets-operator | bool | `true` | Enable the vault-secrets-operator application. This is required for all environments. |
 | applications.vo-cutouts | bool | `false` | Enable the vo-cutouts application |
+| applications.wobbly | bool | `false` | Enable the wobbly application, required if the environment will be running any Safir-based UWS services |
 | butlerServerRepositories | object | None, must be set | Butler repositories that can be accessed via Butler server, as a dictionary from repository label to URI. |
 | controlSystem.appNamespace | string | None, must be set | Application namespacce for the control system deployment |
 | controlSystem.imageTag | string | None, must be set | Image tag for the control system deployment |
