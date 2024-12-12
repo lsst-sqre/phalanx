@@ -10,24 +10,15 @@ Image cutout service complying with IVOA SODA
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
-| cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
-| cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.schemaUpdateTagSuffix | string | `"-alpine"` | Tag suffix to use for the proxy for schema updates |
-| cloudsql.image.tag | string | `"1.37.2"` | Cloud SQL Auth Proxy tag to use |
-| cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL is used | Instance connection name for a Cloud SQL PostgreSQL instance |
-| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
-| config.databaseUrl | string | None, must be set if `cloudsql.enabled` is false | URL for the PostgreSQL database if Cloud SQL is not in use |
 | config.gracePeriod | int | `60` | Grace period in seconds to wait for cutout worker jobs to finish |
 | config.lifetime | string | `"30d"` | Lifetime of job results in Safir `parse_timedelta` format |
 | config.loglevel | string | `"INFO"` | Choose from the text form of Python logging levels |
 | config.pathPrefix | string | `"/api/cutout"` | URL path prefix for the cutout API |
-| config.serviceAccount | string | None, must be set | Google service account with an IAM binding to the `vo-cutouts` Kubernetes service accounts and has the `cloudsql.client` role, access to write to the GCS bucket, and ability to sign URLs as itself |
+| config.serviceAccount | string | None, must be set | Google service account with an IAM binding to the `vo-cutouts` Kubernetes service accounts and has access to write to the GCS bucket and ability to sign URLs as itself |
 | config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.storageBucketUrl | string | None, must be set | URL for the GCS bucket for results (must start with `gs`) |
 | config.syncTimeout | string | `"1m"` | Timeout for results from a sync cutout in Safir `parse_timedelta` format |
 | config.timeout | int | 600 (10 minutes) | Timeout for a single cutout job in seconds |
-| config.updateSchema | bool | `false` | Whether to automatically update the vo-cutouts database schema |
 | cutoutWorker.affinity | object | `{}` | Affinity rules for the cutout worker pod |
 | cutoutWorker.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for cutout workers |
 | cutoutWorker.image.repository | string | `"ghcr.io/lsst-sqre/vo-cutouts-worker"` | Stack image to use for cutouts |

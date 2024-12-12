@@ -2,25 +2,17 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: vo-cutouts
-  {{- if .Values.config.updateSchema }}
-  annotations:
-    helm.sh/hook: "pre-install,pre-upgrade"
-    helm.sh/hook-delete-policy: "before-hook-creation"
-    helm.sh/hook-weight: "0"
-  {{- end }}
   labels:
     {{- include "vo-cutouts.labels" . | nindent 4 }}
 data:
   CUTOUT_ARQ_QUEUE_URL: "redis://vo-cutouts-redis.{{ .Release.Namespace }}"
-  {{- if .Values.cloudsql.enabled }}
-  CUTOUT_DATABASE_URL: "postgresql://vo-cutouts@localhost/vo-cutouts"
-  {{- end }}
   CUTOUT_GRACE_PERIOD: {{ .Values.config.gracePeriod | quote }}
   CUTOUT_LIFETIME: {{ .Values.config.lifetime | quote }}
+  CUTOUT_LOG_LEVEL: {{ .Values.config.loglevel | quote }}
+  CUTOUT_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  CUTOUT_PROFILE: "production"
   CUTOUT_SERVICE_ACCOUNT: {{ required "config.serviceAccount must be set" .Values.config.serviceAccount | quote }}
   CUTOUT_STORAGE_URL: {{ required "config.storageBucketUrl must be set" .Values.config.storageBucketUrl | quote }}
   CUTOUT_SYNC_TIMEOUT: {{ .Values.config.syncTimeout | quote }}
   CUTOUT_TIMEOUT: {{ .Values.config.timeout | quote }}
-  CUTOUT_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
-  CUTOUT_PROFILE: "production"
-  CUTOUT_LOG_LEVEL: {{ .Values.config.loglevel | quote }}
+  CUTOUT_WOBBLY_URL: "{{ .Values.global.baseUrl }}/wobbly"

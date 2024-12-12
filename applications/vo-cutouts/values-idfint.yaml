@@ -1,7 +1,3 @@
 config:
   serviceAccount: "vo-cutouts@science-platform-int-dc5d.iam.gserviceaccount.com"
   storageBucketUrl: "gs://rubin-cutouts-int-us-central1-output/"
-
-cloudsql:
-  enabled: true
-  instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
