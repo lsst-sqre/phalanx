@@ -2,6 +2,13 @@ ataos:
   image:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 60m
+      memory: 500Mi
+    requests:
+      cpu: 6m
+      memory: 160Mi
 
 atbuilding-sim:
   enabled: true
@@ -18,11 +25,25 @@ atdome-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 170m
+      memory: 300Mi
+    requests:
+      cpu: 17m
+      memory: 100Mi
 
 atdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 350m
+      memory: 300Mi
+    requests:
+      cpu: 35m
+      memory: 100Mi
 
 atheaderservice:
   image:
@@ -41,12 +62,26 @@ atheaderservice:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 90m
+      memory: 700Mi
+    requests:
+      cpu: 9m
+      memory: 250Mi
 
 athexapod-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 90m
+      memory: 300Mi
+    requests:
+      cpu: 9m
+      memory: 95Mi
 
 atmcs-sim:
   enabled: true
@@ -55,6 +90,13 @@ atmcs-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 80m
+      memory: 1200Mi
+    requests:
+      cpu: 8m
+      memory: 400Mi
 
 atoods:
   image:
@@ -78,6 +120,13 @@ atoods:
     readOnly: false
     server: nfs-auxtel.ls.lsst.org
     serverPath: /auxtel
+  resources:
+    limits:
+      cpu: 75m
+      memory: 1000Mi
+    requests:
+      cpu: 25m
+      memory: 325Mi
   configfile:
     path: /etc
     filename: atoods.yaml
@@ -144,6 +193,13 @@ atpneumatics-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 90Mi
 
 atptg:
   image:
@@ -153,6 +209,13 @@ atptg:
     TELESCOPE: AT
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 120m
+      memory: 2400Mi
+    requests:
+      cpu: 12m
+      memory: 790Mi
 
 atspectrograph-sim:
   enabled: true
@@ -161,6 +224,13 @@ atspectrograph-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 95Mi
 
 hexapod-sim:
   enabled: true

@@ -16,6 +16,13 @@ gcheaderservice1:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 140m
+      memory: 400Mi
+    requests:
+      cpu: 14m
+      memory: 130Mi
 
 simulation-gencam:
   enabled: true
@@ -38,3 +45,10 @@ simulation-gencam:
     enabled: true
     port: 5013
     type: LoadBalancer
+  resources:
+    limits:
+      cpu: 120m
+      memory: 360Mi
+    requests:
+      cpu: 12m
+      memory: 120Mi
