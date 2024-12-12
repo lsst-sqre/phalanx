@@ -493,6 +493,9 @@ love-producer:
   - name: mtaos
     csc: MTAOS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtcamera
+    csc: MTCamera:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdome
     csc: MTDome:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
