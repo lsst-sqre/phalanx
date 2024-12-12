@@ -183,6 +183,10 @@ chronograf:
     # -- Docker tag to use for Chronograf
     tag: 1.10.5
 
+  updateStrategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
+
   persistence:
     # -- Whether to enable persistence for Chronograf data
     enabled: true
@@ -239,6 +243,10 @@ kapacitor:
     # -- Tag to use for Kapacitor
     tag: 1.7.6
 
+  strategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
+
   persistence:
     # -- Whether to enable Kapacitor data persistence
     enabled: true
@@ -274,6 +282,10 @@ kafdrop:
 
 squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
+  enabled: false
+
+backup:
+  # -- Whether to enable Sasquatch backups
   enabled: false
 
 global:
