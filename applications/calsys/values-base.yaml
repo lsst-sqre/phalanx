@@ -89,7 +89,7 @@ linearstage101-sim:
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
-  RUN_ARG: 101 --simulate
+    RUN_ARG: 101 --simulate
 
 linearstage102-sim:
   enabled: true
@@ -97,7 +97,7 @@ linearstage102-sim:
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
-  RUN_ARG: 102 --simulate
+    RUN_ARG: 102 --simulate
 
 linearstage103-sim:
   enabled: true
@@ -105,7 +105,7 @@ linearstage103-sim:
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
-  RUN_ARG: 103 --simulate
+    RUN_ARG: 103 --simulate
   
 linearstage104-sim:
   enabled: true
@@ -113,7 +113,7 @@ linearstage104-sim:
     repository: ts-dockerhub.lsst.org/linearstage
     pullPolicy: Always
   env:
-  RUN_ARG: 104 --simulate
+    RUN_ARG: 104 --simulate
 
 simulation-gencam:
   enabled: true
