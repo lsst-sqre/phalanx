@@ -127,6 +127,16 @@ dependencies:
   condition: dsm2-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: eas
+  version: 1.0.0
+  condition: eas.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: eas-sim
+  version: 1.0.0
+  condition: eas-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: epm1
   version: 1.0.0
   condition: epm1.enabled

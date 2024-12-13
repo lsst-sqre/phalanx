@@ -94,6 +94,14 @@ dsm2-sim:
   # -- Enable the DSM:2 simulator CSC
   enabled: false
 
+eas:
+  # -- Enable the EAS CSC
+  enabled: false
+
+eas-sim:
+  # -- Enable the EAS simulator CSC
+  enabled: false
+
 epm1:
   # -- Enable the EPM:1 CSC
   enabled: false

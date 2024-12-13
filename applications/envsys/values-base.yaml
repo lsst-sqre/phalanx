@@ -180,6 +180,14 @@ dsm2-sim:
       cpu: 100m
       memory: 900Mi
 
+eas-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/eas
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
 epm1-sim:
   enabled: true
   classifier: epm1
