@@ -17,6 +17,36 @@ dependencies:
   condition: cbp-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: electrometer101
+  version: 1.0.0
+  condition: electrometer101.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer101-sim
+  version: 1.0.0
+  condition: electrometer101-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer102
+  version: 1.0.0
+  condition: electrometer102.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer102-sim
+  version: 1.0.0
+  condition: electrometer102-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer201
+  version: 1.0.0
+  condition: electrometer201.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: electrometer201-sim
+  version: 1.0.0
+  condition: electrometer201-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: gcheaderservice1
   version: 1.0.0
   condition: gcheaderservice1.enabled
