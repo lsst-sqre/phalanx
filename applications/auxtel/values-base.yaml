@@ -4,11 +4,11 @@ ataos:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 60m
-      memory: 500Mi
+      cpu: 450m
+      memory: 600Mi
     requests:
-      cpu: 6m
-      memory: 160Mi
+      cpu: 45m
+      memory: 200Mi
 
 atbuilding-sim:
   enabled: true
