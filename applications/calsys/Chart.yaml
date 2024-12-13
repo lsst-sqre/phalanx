@@ -52,6 +52,16 @@ dependencies:
   condition: gcheaderservice1.enabled
   repository: file://../../charts/csc  
 - name: csc
+  alias: ledprojector
+  version: 1.0.0
+  condition: ledprojector.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: ledprojector-sim
+  version: 1.0.0
+  condition: ledprojector-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: linearstage101
   version: 1.0.0
   condition: linearstage101.enabled
@@ -95,4 +105,14 @@ dependencies:
   alias: simulation-gencam
   version: 1.0.0
   condition: simulation-gencam.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tunablelaser
+  version: 1.0.0
+  condition: tunablelaser.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: tunablelaser-sim
+  version: 1.0.0
+  condition: tunablelaser-sim.enabled
   repository: file://../../charts/csc
