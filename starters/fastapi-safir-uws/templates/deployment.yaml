@@ -35,6 +35,13 @@ spec:
                 secretKeyRef:
                   name: "<CHARTNAME>"
                   key: "redis-password"
+            {{- if .Values.config.slackAlerts }}
+            - name: "<CHARTENVPREFIX>_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "<CHARTNAME>"
+                  key: "slack-webhook"
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: "<CHARTNAME>"
