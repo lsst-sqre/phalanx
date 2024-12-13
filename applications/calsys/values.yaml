@@ -18,6 +18,10 @@ gcheaderservice1:
   # -- Enable the GCHeaderService:1 CSC
   enabled: false
 
+ledprojector:
+  # -- Enabled the LedProjector:0 CSC
+  enabled: false
+
 linearstage101:
   # -- Enable the LinearStage:101 CSC
   enabled: false
@@ -37,7 +41,11 @@ linearstage104:
 simulation-gencam:
   # -- Enabled the GenericCamera:1 CSC
   enabled: false
-
+  
+tunablelaser:
+  # -- Enabled the TunableLaser:0 CSC
+  enabled: false
+  
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
