@@ -1,3 +1,11 @@
+cbp-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/cbp
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+    
 gcheaderservice1:
   enabled: true
   image:
