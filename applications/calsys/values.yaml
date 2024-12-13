@@ -1,5 +1,37 @@
+cbp:
+  # -- Enable the CBP:0 CSC
+  enabled: false
+
+electrometer101:
+  # -- Enable the Electrometer:101 CSC
+  enabled: false
+  
+electrometer102:
+  # -- Enable the Electrometer:102 CSC
+  enabled: false
+
+electrometer201:
+  # -- Enable the Electrometer:201 CSC
+  enabled: false
+  
 gcheaderservice1:
   # -- Enable the GCHeaderService:1 CSC
+  enabled: false
+
+linearstage101:
+  # -- Enable the LinearStage:101 CSC
+  enabled: false
+
+linearstage102:
+  # -- Enable the LinearStage:102 CSC
+  enabled: false
+
+linearstage103:
+  # -- Enable the LinearStage:103 CSC
+  enabled: false
+
+linearstage104:
+  # -- Enable the LinearStage:104 CSC
   enabled: false
 
 simulation-gencam:
