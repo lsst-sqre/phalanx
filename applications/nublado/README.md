@@ -93,7 +93,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.cull.users | bool | `false` | Whether to log out the user (from JupyterHub) when culling their lab |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
 | jupyterhub.hub.baseUrl | string | `"/nb"` | Base URL on which JupyterHub listens |
-| jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":768,"runAsUser":768}` | Security context for JupyterHub container |
+| jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":1000,"runAsUser":1000}` | Security context for JupyterHub container |
 | jupyterhub.hub.db.password | string | Comes from nublado-secret | Database password (not used) |
 | jupyterhub.hub.db.type | string | `"postgres"` | Type of database to use |
 | jupyterhub.hub.db.upgrade | bool | `false` | Whether to automatically update DB schema at Hub start |
@@ -103,7 +103,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.extraVolumeMounts | list | `hub-config` and the Gafaelfawr token | Additional volume mounts for JupyterHub |
 | jupyterhub.hub.extraVolumes | list | The `hub-config` `ConfigMap` and the Gafaelfawr token | Additional volumes to make available to JupyterHub |
 | jupyterhub.hub.image.name | string | `"ghcr.io/lsst-sqre/nublado-jupyterhub"` | Image to use for JupyterHub |
-| jupyterhub.hub.image.tag | string | `"6.3.0"` | Tag of image to use for JupyterHub |
+| jupyterhub.hub.image.tag | string | `"8.2.0"` | Tag of image to use for JupyterHub |
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
