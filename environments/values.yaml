@@ -66,9 +66,6 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
-  # -- Enable the eas control system application
-  eas: false
-
   # -- Enable the envsys control system application
   envsys: false
 
