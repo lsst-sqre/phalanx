@@ -79,11 +79,11 @@ mtheaderservice:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 150m
-      memory: 600Mi
+      cpu: 300m
+      memory: 2000Mi
     requests:
-      cpu: 15m
-      memory: 240Mi
+      cpu: 30m
+      memory: 500Mi
 
 mtm1m3-sim:
   enabled: true

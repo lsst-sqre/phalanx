@@ -4,11 +4,11 @@ ataos:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 60m
-      memory: 500Mi
+      cpu: 450m
+      memory: 600Mi
     requests:
-      cpu: 6m
-      memory: 160Mi
+      cpu: 45m
+      memory: 200Mi
 
 atbuilding-sim:
   enabled: true
@@ -17,6 +17,13 @@ atbuilding-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 100Mi
 
 atdome-sim:
   enabled: true
@@ -64,10 +71,10 @@ atheaderservice:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 90m
+      cpu: 800m
       memory: 700Mi
     requests:
-      cpu: 9m
+      cpu: 80m
       memory: 250Mi
 
 athexapod-sim:
@@ -211,11 +218,11 @@ atptg:
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
   resources:
     limits:
-      cpu: 120m
-      memory: 2400Mi
+      cpu: 900m
+      memory: 900Mi
     requests:
-      cpu: 12m
-      memory: 790Mi
+      cpu: 90m
+      memory: 265Mi
 
 atspectrograph-sim:
   enabled: true
