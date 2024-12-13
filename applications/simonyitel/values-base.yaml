@@ -70,13 +70,13 @@ mtheaderservice:
     CAMERA: mt
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   - name: MYS3_ACCESS_KEY
-    secretKey: aws-access-key-id
+    key: aws-access-key-id
   - name: MYS3_SECRET_KEY
-    secretKey: aws-secret-access-key
+    key: aws-secret-access-key
   resources:
     limits:
       cpu: 150m
@@ -130,7 +130,7 @@ mtoods:
     AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
   envSecrets:
   - name: AWS_SECRET_ACCESS_KEY
-    secretKey: oods-lsstcam-secret-key
+    key: oods-lsstcam-secret-key
   butlerSecret:
     containerPath: /home/saluser/.lsst
     dbUser: oods
