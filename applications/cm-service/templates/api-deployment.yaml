@@ -1,14 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "cm-service"
+  name: {{ .Chart.Name }}-server
   labels:
-    {{- include "cm-service.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      {{- include "cm-service.selectorLabels" . | nindent 6 }}
+      {{- include "application.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: "frontend"
   template:
     metadata:
@@ -17,7 +18,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "cm-service.selectorLabels" . | nindent 8 }}
+        {{- include "application.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "frontend"
     spec:
       {{- with .Values.frontend.affinity }}
@@ -26,23 +27,18 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "cm-service"
+        - name: {{ .Chart.Name }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-env
           env:
-            - name: CM_DATABASE_PASSWORD
+            - name: BUTLER__MOCK
+              value: "1"
+            - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-secret
-                  key: password
-            - name: CM_URL_PREFIX
-              value: {{ .Values.config.pathPrefix | quote }}
-            - name: CM_DATABASE_URL
-              value: "postgresql://cm-service@cm-service-pg-rw/cm-service"
-            - name: CM_DATABASE_ECHO
-              value: {{ .Values.config.databaseEcho | quote }}
-            - name: CM_LOG_PROFILE
-              value: {{ .Values.config.logProfile | quote }}
-            - name: CM_LOG_LEVEL
-              value: {{ .Values.config.logLevel | quote }}
+                  name: cm-service
+                  key: internalDatabasePassword
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -51,7 +47,7 @@ spec:
               protocol: "TCP"
           readinessProbe:
             httpGet:
-              path: "/"
+              path: "/healthz"
               port: "http"
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
@@ -61,16 +57,17 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          # TODO: we hopefully do not actually need this mounted on the API
           volumeMounts:
-            - mountPath: "/output"
+            {{- with .Values.config.outputVolume }}
+            - mountPath: {{ .mountPath }}
               name: "output-volume"
-              {{- with .Values.config.outputVolume.subPath }}
-              subPath: {{ . }}
-              {{- end }}
+              subPath: {{ .subPath }}
+            {{- end }}
       volumes:
         - name: output-volume
           persistentVolumeClaim:
-            claimName: cm-service-output
+            claimName: {{ .Chart.Name }}-output
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

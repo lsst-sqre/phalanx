@@ -1,19 +1,19 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "cm-service"
+  name: {{ .Chart.Name }}
   labels:
-    {{- include "cm-service.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   loginRedirect: true
   scopes:
     all:
       - "exec:internal-tools"
-  service: "cm-service"
+  service: {{ .Chart.Name }}
 template:
   metadata:
-    name: "cm-service"
+    name: {{ .Chart.Name }}
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -27,13 +27,20 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: "cm-service"
+                  name: {{ .Chart.Name }}
                   port:
-                    number: 8080
+                    name: "http"
+            - path: "/docs"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: {{ .Chart.Name }}
+                  port:
+                    name: "http"
             - path: "/web_app"
               pathType: "Prefix"
               backend:
                 service:
-                  name: "cm-service"
+                  name: {{ .Chart.Name }}
                   port:
-                    number: 8080
+                    name: "http"
