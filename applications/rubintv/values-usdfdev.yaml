@@ -33,11 +33,9 @@ rubintv:
     script: rubintv_worker.py -a rubintv -p 8080 -l usdf
     env:
     - name: S3_ENDPOINT_URL
-      value: *s3E
+      value: "https://sdfembs3.sdf.slac.stanford.edu"
     - name: DAF_BUTLER_REPOSITORY_INDEX
       value: "s3://rubin-summit-users/data-repos.yaml"
-    - name: DAF_BUTLER_REPOSITORY
-      value: "/sdf/group/rubin/repo/ir2/butler.yaml"
     - name: DEPLOY_BRANCH
       value: *dbE
     pvcMountpoint:
