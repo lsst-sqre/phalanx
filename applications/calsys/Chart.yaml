@@ -50,6 +50,46 @@ dependencies:
   alias: gcheaderservice1
   version: 1.0.0
   condition: gcheaderservice1.enabled
+  repository: file://../../charts/csc  
+- name: csc
+  alias: linearstage101
+  version: 1.0.0
+  condition: linearstage101.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage101-sim
+  version: 1.0.0
+  condition: linearstage101-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage102
+  version: 1.0.0
+  condition: linearstage102.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage102-sim
+  version: 1.0.0
+  condition: linearstage102-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage103
+  version: 1.0.0
+  condition: linearstage103.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage103-sim
+  version: 1.0.0
+  condition: linearstage103-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage104
+  version: 1.0.0
+  condition: linearstage104.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: linearstage104-sim
+  version: 1.0.0
+  condition: linearstage104-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: simulation-gencam
