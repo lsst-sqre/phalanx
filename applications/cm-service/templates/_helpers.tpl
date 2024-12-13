@@ -1,16 +1,16 @@
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "cm-service.chart" -}}
+{{- define "application.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "cm-service.labels" -}}
-helm.sh/chart: {{ include "cm-service.chart" . }}
-{{ include "cm-service.selectorLabels" . }}
+{{- define "application.labels" -}}
+helm.sh/chart: {{ include "application.chart" . }}
+{{ include "application.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -20,7 +20,7 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "cm-service.selectorLabels" -}}
-app.kubernetes.io/name: "cm-service"
+{{- define "application.selectorLabels" -}}
+app.kubernetes.io/name: {{ .Chart.Name }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
