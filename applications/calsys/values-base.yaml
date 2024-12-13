@@ -83,6 +83,14 @@ gcheaderservice1:
       cpu: 14m
       memory: 130Mi
 
+ledprojector-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ledprojector
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
 linearstage101-sim:
   enabled: true
   image:
@@ -143,3 +151,12 @@ simulation-gencam:
     requests:
       cpu: 12m
       memory: 120Mi
+
+tunablelaser-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/tunablelaser
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
