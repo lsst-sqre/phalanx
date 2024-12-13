@@ -85,6 +85,13 @@ spec:
                   name: "wobbly-kafka"
                   key: "securityProtocol"
             {{- end }}
+            {{- if .Values.config.slackAlerts }}
+            - name: "WOBBLY_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "wobbly"
+                  key: "slack-webhook"
+            {{- end }}
           envFrom:
             - configMapRef:
                 name: "wobbly"

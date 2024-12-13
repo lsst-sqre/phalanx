@@ -36,6 +36,9 @@ config:
   services:
     - "vo-cutouts"
 
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: true
+
   # -- Whether to automatically update the Wobbly database schema
   updateSchema: false
 
