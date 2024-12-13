@@ -17,6 +17,13 @@ atbuilding-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 100Mi
 
 atdome-sim:
   enabled: true
