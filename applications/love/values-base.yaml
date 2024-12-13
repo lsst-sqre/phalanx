@@ -485,7 +485,7 @@ love-producer:
     csc: LaserTracker:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ledprojector
-    csc: LedProjector:0 --log-level 10
+    csc: LEDProjector:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: linearstage101
     csc: LinearStage:101 --log-level 10
