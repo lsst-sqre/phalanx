@@ -5,7 +5,58 @@ cbp-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+
+electrometer101-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1 101
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+
+electrometer102-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1 102
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
     
+electrometer201-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1 201
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  
 gcheaderservice1:
   enabled: true
   image:
