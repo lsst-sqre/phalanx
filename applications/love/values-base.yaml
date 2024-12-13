@@ -379,6 +379,9 @@ love-producer:
   - name: ataos
     csc: ATAOS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: atbuilding
+    csc: ATBuilding:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atcamera
     csc: ATCamera:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -441,6 +444,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cbp
     csc: CBP:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: dream
+    csc: DREAM:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cleanroomess109
     csc: ESS:109 --log-level 10
