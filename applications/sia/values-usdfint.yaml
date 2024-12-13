@@ -1,0 +1,10 @@
+config:
+
+  # Data (Butler) Collections
+  butlerDataCollections:
+    - config: "https://raw.githubusercontent.com/lsst-dm/dax_obscore/refs/heads/main/configs/embargo-sia.yaml"
+      label: "LSST.Embargo"
+      name: "embargo"
+      butler_type: "REMOTE"
+      repository: "https://usdf-rsp-int.slac.stanford.edu/api/butler/repo/embargo/butler.yaml"
+      datalink_url: "https://usdf-rsp-int.slac.stanford.edu/api/datalink/links?ID=butler%3A//embargo/{id}"
