@@ -411,7 +411,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.1.0"
+      tag: "8.2.0"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -460,8 +460,7 @@ jupyterhub:
             key: "hub.config.CryptKeeper.keys"
 
     # -- Additional volumes to make available to JupyterHub
-    # @default -- The `hub-config` `ConfigMap`, the Gafaelfawr token,
-    # and the revised page template.
+    # @default -- The `hub-config` `ConfigMap` and the Gafaelfawr token
     extraVolumes:
       - name: "hub-config"
         configMap:
