@@ -24,6 +24,8 @@ Deployment for the Environmental Awareness Systems CSCs
 | dimm1.enabled | bool | `false` | Enable the DIMM:1 CSC |
 | dimm2-sim.enabled | bool | `false` | Enable the DIMM:2 simulator CSC |
 | dimm2.enabled | bool | `false` | Enable the DIMM:2 CSC |
+| dream-sim.enabled | bool | `false` | Enable the DREAM simulator CSC |
+| dream.enabled | bool | `false` | Enable the DREAM CSC |
 | dsm1-sim.enabled | bool | `false` | Enable the DSM:1 simulator CSC |
 | dsm1.enabled | bool | `false` | Enable the DSM:1 CSC |
 | dsm2-sim.enabled | bool | `false` | Enable the DSM:2 simulator CSC |
