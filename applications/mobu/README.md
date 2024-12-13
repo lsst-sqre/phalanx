@@ -17,6 +17,11 @@ Continuous integration testing
 | config.githubCiApp | string | disabled. | Configuration for the GitHub refresh app integration. See https://mobu.lsst.io/operations/github_ci_app.html#add-phalanx-configuration |
 | config.githubRefreshApp | string | disabled. | Configuration for the GitHub refresh app integration. See https://mobu.lsst.io/operations/github_refresh_app.html#add-phalanx-configuration |
 | config.logLevel | string | `"INFO"` | Log level. Set to 'DEBUG' to include the output from all flocks in the main mobu log. |
+| config.metrics.application | string | `"mobu"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
+| config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
 | config.profile | string | `"production"` | One of 'production' or 'development'. 'production' configures structured JSON logging, and 'development' configures unstructured human readable logging. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
