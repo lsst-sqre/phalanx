@@ -29,6 +29,7 @@ IVOA UWS database storage
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/wobbly"` | URL path prefix |
 | config.services | list | See `values.yaml` | Services allowed to use Wobbly for their backend |
+| config.slackAlerts | bool | `true` | Whether to send Slack alerts for unexpected failures |
 | config.updateSchema | bool | `false` | Whether to automatically update the Wobbly database schema |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
