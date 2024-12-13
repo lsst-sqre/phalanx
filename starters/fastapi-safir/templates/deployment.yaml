@@ -26,6 +26,14 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
+          {{- if .Values.config.slackAlerts }}
+          env:
+            - name: "<CHARTENVPREFIX>_SLACK_WEBHOOK"
+              valueFrom:
+                secretKeyRef:
+                  name: "<CHARTNAME>"
+                  key: "slack-webhook"
+          {{- end }}
           envFrom:
             - configMapRef:
                 name: "<CHARTNAME>"
