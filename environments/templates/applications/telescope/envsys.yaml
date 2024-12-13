@@ -1,0 +1,53 @@
+{{- if (index .Values "applications" "envsys") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "envsys"
+spec:
+  finalizers:
+    - "kubernetes"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "envsys"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "envsys"
+    server: "https://kubernetes.default.svc"
+  project: "telescope"
+  source:
+    path: "applications/envsys"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.controlSystem.appNamespace"
+          value: "envsys"
+        - name: "global.controlSystem.imageTag"
+          value: {{ .Values.controlSystem.imageTag | quote }}
+        - name: "global.controlSystem.siteTag"
+          value: {{ .Values.controlSystem.siteTag | quote }}
+        - name: "global.controlSystem.topicName"
+          value: {{ .Values.controlSystem.topicName | quote }}
+        - name: "global.controlSystem.kafkaBrokerAddress"
+          value: {{ .Values.controlSystem.kafkaBrokerAddress | quote }}
+        - name: "global.controlSystem.kafkaTopicReplicationFactor"
+          value: {{ .Values.controlSystem.kafkaTopicReplicationFactor | quote }}
+        - name: "global.controlSystem.schemaRegistryUrl"
+          value: {{ .Values.controlSystem.schemaRegistryUrl | quote }}
+        - name: "global.controlSystem.s3EndpointUrl"
+          value: {{ .Values.controlSystem.s3EndpointUrl | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+{{- end -}}
