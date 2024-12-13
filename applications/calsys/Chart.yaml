@@ -16,3 +16,13 @@ dependencies:
   version: 1.0.0
   condition: simulation-gencam.enabled
   repository: file://../../charts/csc
+- name: csc
+  alias: cbp
+  version: 1.0.0
+  condition: cbp.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: cbp-sim
+  version: 1.0.0
+  condition: cbp-sim.enabled
+  repository: file://../../charts/csc
