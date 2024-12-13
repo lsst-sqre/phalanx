@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "cm-service-worker"
+  name: {{ .Chart.Name }}-worker
   labels:
-    {{- include "cm-service.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.worker.replicaCount }}
   selector:
     matchLabels:
-      {{- include "cm-service.selectorLabels" . | nindent 6 }}
+      {{- include "application.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: "worker"
   template:
     metadata:
@@ -17,7 +17,7 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "cm-service.selectorLabels" . | nindent 8 }}
+        {{- include "application.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "worker"
     spec:
       {{- with .Values.worker.affinity }}
@@ -26,9 +26,28 @@ spec:
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "cm-service-worker"
+        - name: "{{ .Chart.Name }}-worker"
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-htcondor-env
+          env:
+            - name: DB__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cm-service
+                  key: internalDatabasePassword
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           securityContext:
@@ -57,22 +76,17 @@ spec:
               subPath: {{ . }}
               {{- end }}
             {{- end }}
-            {{- with .Values.worker.htcondor.scheddAddress }}
-            - mountPath: {{ .mountPath }}
-              name: "condor-schedd-volume"
-              readOnly: true
-            {{- end }}
       volumes:
         - name: output-volume
           persistentVolumeClaim:
-            claimName: cm-service-output
+            claimName: {{ .Chart.Name }}-output
         - name: tmp-volume
           emptyDir:
             sizeLimit: 500Mi
         {{- with .Values.worker.htcondor.config }}
         - name: condor-config-volume
           configMap:
-            name: cm-service-config-worker
+            name: {{ $.Chart.Name }}-config-worker
             items:
               - key: config
                 path: condor-config
@@ -80,15 +94,7 @@ spec:
         {{- with .Values.worker.htcondor.fsRemoteDir }}
         - name: condor-remote-volume
           persistentVolumeClaim:
-            claimName: cm-service-htcondor
-        {{- end }}
-        {{- with .Values.worker.htcondor.scheddAddress }}
-        - name: condor-schedd-volume
-          configMap:
-            name: cm-service-config-worker
-            items:
-              - key: scheddAddress
-                path: schedd-address
+            claimName: {{ $.Chart.Name }}-htcondor
         {{- end }}
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:

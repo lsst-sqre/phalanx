@@ -1,7 +1,8 @@
 config:
   logLevel: "INFO"
   logProfile: "development"
-  databaseEcho: true
+  db:
+    echo: true
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-prod"
