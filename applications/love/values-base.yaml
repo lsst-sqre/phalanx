@@ -439,6 +439,9 @@ love-producer:
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: cbp
+    csc: CBP:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cleanroomess109
     csc: ESS:109 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
