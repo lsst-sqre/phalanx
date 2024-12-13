@@ -26,11 +26,7 @@ spec:
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- if .Values.config.serviceAccount }}
       serviceAccountName: "<CHARTNAME>"
-      {{- else }}
-      automountServiceAccountToken: false
-      {{- end }}
       containers:
         - name: "worker"
           env:
