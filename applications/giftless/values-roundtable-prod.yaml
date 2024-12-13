@@ -1,7 +1,5 @@
 image:
-  pullPolicy: "Always"
-  repository: "docker.io/lsstsqre/giftless"
-  tag: "upstream"
+  tag: "tickets-dm-42598"
 server:
   readonly:
     replicas: 3

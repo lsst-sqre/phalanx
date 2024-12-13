@@ -19,7 +19,7 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the giftless image |
-| image.repository | string | `"docker.io/datopian/giftless"` | Giftless image to use |
+| image.repository | string | `"ghcr.io/datopian/giftless"` | Giftless image to use |
 | image.tag | string | The appVersion of the chart | Tag of giftless image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
 | ingress.hostname | object | Must be overridden in environment-specific values file | FQDNs of giftless ingresses |
