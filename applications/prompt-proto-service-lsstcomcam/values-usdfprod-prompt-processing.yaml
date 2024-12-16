@@ -67,9 +67,7 @@ prompt-proto-service:
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
     topic: rubin-summit-notification
-    # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
-    # and files can take up to 20 seconds to arrive. Scheduler delay associated
-    # with CWFS engineering data, should not apply to other cameras.
+    # Copied over from LATISS, works well empirically
     imageTimeout: 110
 
   apdb:
