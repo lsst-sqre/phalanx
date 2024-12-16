@@ -12,7 +12,7 @@ electrometer101-sim:
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
-    RUN_ARG: 101 --simulate
+    RUN_ARG: 101 --simulate 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -29,7 +29,7 @@ electrometer102-sim:
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
-    RUN_ARG: 102 --simulate
+    RUN_ARG: 102 --simulate 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -46,7 +46,7 @@ electrometer201-sim:
     repository: ts-dockerhub.lsst.org/electrometer
     pullPolicy: Always
   env:
-    RUN_ARG: 201 --simulate
+    RUN_ARG: 201 --simulate 1
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
