@@ -5,7 +5,7 @@ controller:
         nodeSelectorTerms:
           - matchExpressions:
              - key: node-role.kubernetes.io/crowdstrike
-               operator: Equals
+               operator: In
                values:
                - "true"
   config:
