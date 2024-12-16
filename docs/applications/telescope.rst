@@ -13,7 +13,7 @@ Argo CD project: ``telescope``
    auxtel/index
    calsys/index
    control-system-test/index
-   eas/index
+   envsys/index
    love/index
    obsenv-management/index
    obssys/index
