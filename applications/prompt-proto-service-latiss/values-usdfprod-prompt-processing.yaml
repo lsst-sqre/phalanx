@@ -33,8 +33,10 @@ prompt-proto-service:
         - {survey: cwfs, pipelines: []}
         - {survey: cwfs-focus-sweep, pipelines: []}
         - {survey: spec-survey, pipelines: []}
-        - {survey: BLOCK-271, pipelines: []}  # photon transfer curve calibrations
-        - {survey: BLOCK-295, pipelines: []}  # the daily calibration sequence as of May 27, 2024
+        # photon transfer curve calibrations
+        - {survey: BLOCK-271, pipelines: []}
+        # the daily calibration sequence as of May 27, 2024
+        - {survey: BLOCK-295, pipelines: []}
         - {survey: "", pipelines: []}
       preprocessing: |-
         - survey: BLOCK-306
