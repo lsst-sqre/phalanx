@@ -255,6 +255,7 @@ love-manager:
       pullPolicy: IfNotPresent
     config: |
       timeout 60
+      save ""
   viewBackup:
     enabled: true
     image:
