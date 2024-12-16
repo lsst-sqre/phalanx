@@ -366,10 +366,20 @@ class Environment(EnvironmentBaseConfig):
         """Return all enabled applications in sorted order."""
         return sorted(self.applications.values(), key=lambda a: a.name)
 
-    def all_secrets(self) -> list[Secret]:
-        """Return all secrets regardless of application."""
+    def all_secrets(self, exclude: set[str] | None = None) -> list[Secret]:
+        """Return all secrets regardless of application.
+
+        Parameters
+        ----------
+        exclude
+            Applications whose secrets should be excluded.
+        """
+        if not exclude:
+            exclude = set()
         secrets: list[Secret] = []
         for application in self.all_applications():
+            if application.name in exclude:
+                continue
             secrets.extend(application.secrets.values())
         return secrets
 
