@@ -5,7 +5,7 @@ cbp:
 electrometer101:
   # -- Enable the Electrometer:101 CSC
   enabled: false
-  
+
 electrometer102:
   # -- Enable the Electrometer:102 CSC
   enabled: false
@@ -13,7 +13,7 @@ electrometer102:
 electrometer201:
   # -- Enable the Electrometer:201 CSC
   enabled: false
-  
+
 gcheaderservice1:
   # -- Enable the GCHeaderService:1 CSC
   enabled: false
@@ -41,11 +41,11 @@ linearstage104:
 simulation-gencam:
   # -- Enabled the GenericCamera:1 CSC
   enabled: false
-  
+
 tunablelaser:
   # -- Enabled the TunableLaser:0 CSC
   enabled: false
-  
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

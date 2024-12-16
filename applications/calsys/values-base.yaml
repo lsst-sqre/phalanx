@@ -39,7 +39,7 @@ electrometer102-sim:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
-    
+
 electrometer201-sim:
   enabled: true
   image:
@@ -56,7 +56,7 @@ electrometer201-sim:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
-  
+
 gcheaderservice1:
   enabled: true
   image:
@@ -114,7 +114,7 @@ linearstage103-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 103 --simulate
-  
+
 linearstage104-sim:
   enabled: true
   image:
@@ -159,4 +159,3 @@ tunablelaser-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
-

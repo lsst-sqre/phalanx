@@ -50,7 +50,7 @@ dependencies:
   alias: gcheaderservice1
   version: 1.0.0
   condition: gcheaderservice1.enabled
-  repository: file://../../charts/csc  
+  repository: file://../../charts/csc
 - name: csc
   alias: ledprojector
   version: 1.0.0

@@ -17,6 +17,7 @@ Deployment for the Auxiliary Telescope CSCs
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
+| atbuilding.enabled | bool | `false` | Enable the ATBuilding CSC |
 | atdome-sim.enabled | bool | `false` | Enable the ATDome simulator CSC |
 | atdome.enabled | bool | `false` | Enable the ATDome CSC |
 | athexapod-sim.enabled | bool | `false` | Enable the ATHexapod simulator CSC |
