@@ -1,21 +1,18 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "wobbly"
+  name: "wobbly-admin"
   labels:
     {{- include "wobbly.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
-  onlyServices:
-    {{- range .Values.config.services }}
-    - {{ . | quote }}
-    {{- end }}
   scopes:
-    all: []
+    all:
+      - "exec:admin"
   service: "wobbly"
 template:
   metadata:
-    name: "wobbly"
+    name: "wobbly-admin"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
