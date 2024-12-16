@@ -1,4 +1,13 @@
 controller:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+             - key: node-role.kubernetes.io/crowdstrike
+               operator: In
+               values:
+               - ""
   config:
     logLevel: "DEBUG"
     images:
@@ -9,6 +18,15 @@ controller:
       pin:
         - "w_2024_50"
     lab:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node-role.kubernetes.io/crowdstrike
+                    operator: In
+                    values:
+                      - ''
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
