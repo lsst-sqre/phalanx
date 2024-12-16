@@ -79,7 +79,13 @@ podAnnotations: {}
 
 # -- Resource limits and requests for the wobbly deployment pod
 # @default -- See `values.yaml`
-resources: {}
+resources:
+  limits:
+    cpu: "500m"
+    memory: "250Mi"
+  requests:
+    cpu: "100m"
+    memory: "150Mi"
 
 # -- Tolerations for the wobbly deployment pod
 tolerations: []
