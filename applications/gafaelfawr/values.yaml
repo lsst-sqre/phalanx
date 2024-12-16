@@ -22,7 +22,7 @@ resources:
     memory: "300Mi"
   requests:
     cpu: "100m"
-    memory: "150Mi"
+    memory: "175Mi"
 
 # -- Affinity rules for the Gafaelfawr frontend pod
 affinity: {}
@@ -403,7 +403,7 @@ operator:
       memory: "500Mi"
     requests:
       cpu: "10m"
-      memory: "150Mi"
+      memory: "165Mi"
 
   # -- Annotations for the token management pod
   podAnnotations: {}
@@ -453,7 +453,7 @@ redis:
       memory: "40Mi"
     requests:
       cpu: "50m"
-      memory: "6Mi"
+      memory: "15Mi"
 
   # -- Pod annotations for the Redis pod
   podAnnotations: {}
