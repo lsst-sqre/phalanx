@@ -1,5 +1,3 @@
-image:
-  tag: "tickets-dm-42598"
 server:
   readonly:
     replicas: 3
