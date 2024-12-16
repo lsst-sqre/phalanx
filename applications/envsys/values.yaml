@@ -70,6 +70,14 @@ dimm2-sim:
   # -- Enable the DIMM:2 simulator CSC
   enabled: false
 
+dream:
+  # -- Enable the DREAM CSC
+  enabled: false
+
+dream-sim:
+  # -- Enable the DREAM simulator CSC
+  enabled: false
+
 dsm1:
   # -- Enable the DSM:1 CSC
   enabled: false
@@ -84,6 +92,14 @@ dsm2:
 
 dsm2-sim:
   # -- Enable the DSM:2 simulator CSC
+  enabled: false
+
+eas:
+  # -- Enable the EAS CSC
+  enabled: false
+
+eas-sim:
+  # -- Enable the EAS simulator CSC
   enabled: false
 
 epm1:

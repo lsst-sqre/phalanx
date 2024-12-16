@@ -140,6 +140,14 @@ dimm2-sim:
       cpu: 230m
       memory: 1070Mi
 
+dream-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/dream
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
 dsm1-sim:
   enabled: true
   image:
@@ -171,6 +179,14 @@ dsm2-sim:
     limits:
       cpu: 100m
       memory: 900Mi
+
+eas-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/eas
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
 
 epm1-sim:
   enabled: true

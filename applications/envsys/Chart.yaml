@@ -1,5 +1,5 @@
 apiVersion: v2
-name: eas
+name: envsys
 version: 1.0.0
 description: Deployment for the Environmental Awareness Systems CSCs
 dependencies:
@@ -125,6 +125,16 @@ dependencies:
   alias: dsm2-sim
   version: 1.0.0
   condition: dsm2-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: eas
+  version: 1.0.0
+  condition: eas.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: eas-sim
+  version: 1.0.0
+  condition: eas-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: epm1

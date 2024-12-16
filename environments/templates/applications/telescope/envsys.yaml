@@ -1,8 +1,8 @@
-{{- if (index .Values "applications" "eas") -}}
+{{- if (index .Values "applications" "envsys") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "eas"
+  name: "envsys"
 spec:
   finalizers:
     - "kubernetes"
@@ -10,17 +10,17 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "eas"
+  name: "envsys"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "eas"
+    namespace: "envsys"
     server: "https://kubernetes.default.svc"
   project: "telescope"
   source:
-    path: "applications/eas"
+    path: "applications/envsys"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:
@@ -32,7 +32,7 @@ spec:
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
         - name: "global.controlSystem.appNamespace"
-          value: "eas"
+          value: "envsys"
         - name: "global.controlSystem.imageTag"
           value: {{ .Values.controlSystem.imageTag | quote }}
         - name: "global.controlSystem.siteTag"

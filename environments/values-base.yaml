@@ -15,7 +15,7 @@ applications:
   calsys: true
   consdb: true
   control-system-test: true
-  eas: true
+  envsys: true
   exposurelog: true
   love: true
   mobu: true
