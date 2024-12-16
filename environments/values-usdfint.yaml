@@ -6,7 +6,7 @@ butlerServerRepositories:
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: "secret/rubin/usdf-rsp-int"
 
-targetRevision: u/pav/cs-int
+targetRevision: "u/pav/cs-int"
 
 applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
