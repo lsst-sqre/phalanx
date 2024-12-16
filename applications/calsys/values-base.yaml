@@ -1,3 +1,62 @@
+cbp-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/cbp
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+electrometer101-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101 --simulate
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+
+electrometer102-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 102 --simulate
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+
+electrometer201-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 201 --simulate
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+
 gcheaderservice1:
   enabled: true
   image:
@@ -23,6 +82,46 @@ gcheaderservice1:
     requests:
       cpu: 14m
       memory: 130Mi
+
+ledprojector-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ledprojector
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+
+linearstage101-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101 --simulate
+
+linearstage102-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 102 --simulate
+
+linearstage103-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103 --simulate
+
+linearstage104-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 104 --simulate
 
 simulation-gencam:
   enabled: true
@@ -52,3 +151,11 @@ simulation-gencam:
     requests:
       cpu: 12m
       memory: 120Mi
+
+tunablelaser-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/tunablelaser
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
