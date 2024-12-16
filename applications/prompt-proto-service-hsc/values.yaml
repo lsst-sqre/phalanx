@@ -106,7 +106,7 @@ prompt-proto-service:
     # -- Username for sending alerts to the alert stream
     username: "kafka-admin"
     # -- Server address for the alert stream
-    server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+    server: "usdf-alert-stream-dev.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
     # @default -- None, must be set
     topic: ""
