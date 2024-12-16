@@ -615,6 +615,13 @@ def secrets() -> None:
     help="Path to root of Phalanx configuration.",
 )
 @click.option(
+    "--exclude",
+    "-e",
+    default=[],
+    multiple=True,
+    help="Ignore Vault entries for the given applications.",
+)
+@click.option(
     "--secrets",
     type=click.Path(path_type=Path),
     default=None,
@@ -622,7 +629,11 @@ def secrets() -> None:
 )
 @_report_usage_errors
 def secrets_audit(
-    environment: str, *, config: Path | None, secrets: Path | None
+    environment: str,
+    *,
+    config: Path | None,
+    exclude: list[str],
+    secrets: Path | None,
 ) -> None:
     """Audit secrets for an environment.
 
@@ -644,7 +655,7 @@ def secrets_audit(
     static_secrets = StaticSecrets.from_path(secrets) if secrets else None
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
-    report = secrets_service.audit(environment, static_secrets)
+    report = secrets_service.audit(environment, set(exclude), static_secrets)
     if report:
         sys.stdout.write(report)
         sys.exit(1)
@@ -799,6 +810,13 @@ def secrets_static_template(environment: str, *, config: Path | None) -> None:
     help="Delete any unexpected secrets in Vault.",
 )
 @click.option(
+    "--exclude",
+    "-e",
+    default=[],
+    multiple=True,
+    help="Ignore Vault entries for the given applications.",
+)
+@click.option(
     "--regenerate",
     default=False,
     is_flag=True,
@@ -816,6 +834,7 @@ def secrets_sync(
     *,
     config: Path | None,
     delete: bool,
+    exclude: list[str],
     regenerate: bool,
     secrets: Path | None,
 ) -> None:
@@ -840,7 +859,11 @@ def secrets_sync(
     factory = Factory(config)
     secrets_service = factory.create_secrets_service()
     secrets_service.sync(
-        environment, static_secrets, regenerate=regenerate, delete=delete
+        environment,
+        set(exclude),
+        static_secrets,
+        regenerate=regenerate,
+        delete=delete,
     )
 
 
