@@ -61,11 +61,11 @@ strimzi-kafka:
     enableSaramaLogging: true
     resources:
       requests:
-        cpu: 200m
-        memory: 64Mi
-      limits:
         cpu: 500m
         memory: 128Mi
+      limits:
+        cpu: 1500m
+        memory: 384Mi
   kraft:
     enabled: true
   kafkaController:
