@@ -164,3 +164,4 @@ app-metrics:
   enabled: true
   apps:
     - gafaelfawr
+    - mobu
