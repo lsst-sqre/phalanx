@@ -4,7 +4,19 @@ controller:
   config:
     logLevel: "DEBUG"
     fileserver:
+      affinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node_pool"
+                  operator: "In"
+                  values:
+                    - "user-lab-pool"
       enabled: true
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -16,6 +28,14 @@ controller:
         repository: "sciplat"
         image: "sciplat-lab"
     lab:
+      affinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: "node_pool"
+                  operator: "In"
+                  values:
+                    - "user-lab-pool"
       env:
         AUTO_REPO_SPECS: "https://github.com/lsst-sqre/system-test@prod,https://github.com/rubin-dp0/tutorial-notebooks@prod"
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
@@ -42,6 +62,10 @@ controller:
           secretKey: "butler-hmac-idf-creds.json"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:
