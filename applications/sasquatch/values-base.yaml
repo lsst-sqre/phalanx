@@ -222,6 +222,8 @@ telegraf-kafka-consumer:
       debug: true
     lsstcam:
       enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]

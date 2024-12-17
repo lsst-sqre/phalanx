@@ -99,10 +99,10 @@ atmcs-sim:
     RUN_ARG: --simulate
   resources:
     limits:
-      cpu: 80m
+      cpu: 600m
       memory: 1200Mi
     requests:
-      cpu: 8m
+      cpu: 60m
       memory: 400Mi
 
 atoods:
