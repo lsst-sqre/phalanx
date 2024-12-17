@@ -54,15 +54,22 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | controller.config.lab.env | object | See `values.yaml` | Environment variables to set for every user lab |
 | controller.config.lab.extraAnnotations | object | `{}` | Extra annotations to add to user lab pods |
 | controller.config.lab.files | object | See `values.yaml` | Files to be mounted as ConfigMaps inside the user lab pod. `contents` contains the file contents. Set `modify` to true to make the file writable in the pod. |
+| controller.config.lab.homedirPrefix | string | `"/home"` | Prefix of home directory path to add before the username. This is the path inside the container, not the path of the volume. |
+| controller.config.lab.homedirSchema | string | `"username"` | Schema for home directory construction. Choose between `username` (paths like `/home/rachel`) and `initialThenUsername` (paths like `/home/r/rachel`). |
+| controller.config.lab.homedirSuffix | string | `""` | Portion of the home directory path after the username. This is intended for environments that want the JupyterLab home directory to be a subdirectory of the user's home directory in some external environment. |
 | controller.config.lab.initContainers | list | `[]` | Containers run as init containers with each user pod. Each should set `name`, `image` (a Docker image and pull policy specification), and `privileged`, and may contain `volumeMounts` (similar to the main `volumeMountss` configuration). If `privileged` is true, the container will run as root with all capabilities. Otherwise it will run as the user. |
+| controller.config.lab.jupyterlabConfigDir | string | `"/opt/lsst/software/jupyterlab"` | Path inside the lab container where custom JupyterLab configuration is stored |
+| controller.config.lab.labStartCommand | list | `["/opt/lsst/software/jupyterlab/runlab.sh"]` | Command executed in the container to start the lab |
 | controller.config.lab.namespacePrefix | string | `"nublado"` | Prefix for namespaces for user labs. To this will be added a dash (`-`) and the user's username. |
 | controller.config.lab.nodeSelector | object | `{}` | Node selector rules for user lab pods |
 | controller.config.lab.nss.baseGroup | string | See `values.yaml` | Base `/etc/group` file for lab containers |
 | controller.config.lab.nss.basePasswd | string | See `values.yaml` | Base `/etc/passwd` file for lab containers |
 | controller.config.lab.pullSecret | string | Do not use a pull secret | Pull secret to use for labs. Set to the string `pull-secret` to use the normal pull secret from Vault. |
+| controller.config.lab.runtimeMountsDir | string | `"/opt/lsst/software/jupyterlab"` | Directory in the lab under which runtime information such as tokens, environment variables, and container information will be mounted |
 | controller.config.lab.secrets | list | `[]` | Secrets to set in the user pods. Each should have a `secretKey` key pointing to a secret in the same namespace as the controller (generally `nublado-secret`) and `secretRef` pointing to a field in that key. |
-| controller.config.lab.sizes | list | See `values.yaml` (specifies `small`, `medium`, and | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. `large` with `small` as the default) |
+| controller.config.lab.sizes | list | See `values.yaml` | Available lab sizes. Sizes must be chosen from `fine`, `diminutive`, `tiny`, `small`, `medium`, `large`, `huge`, `gargantuan`, and `colossal` in that order. Each should specify the maximum CPU equivalents and memory. SI suffixes for memory are supported. Sizes will be shown in the order defined here, and the first defined size will be the default. |
 | controller.config.lab.spawnTimeout | int | `600` | How long to wait for Kubernetes to spawn a lab in seconds. This should generally be shorter than the spawn timeout set in JupyterHub. |
+| controller.config.lab.tmpSource | string | `"memory"` | Select where `/tmp` in the lab will come from. Choose between `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at 25% of the available memory). |
 | controller.config.lab.tolerations | list | `[]` | Tolerations for user lab pods |
 | controller.config.lab.volumeMounts | list | `[]` | Volumes that should be mounted in lab pods. |
 | controller.config.lab.volumes | list | `[]` | Volumes that will be in lab pods or init containers. This supports NFS, HostPath, and PVC volume types (differentiated in source.type). |
@@ -107,13 +114,13 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.hub.loadRoles.server.scopes | list | `["self"]` | Default scopes for the user's lab, overridden to allow the lab to delete itself (which we use for our added menu items) |
 | jupyterhub.hub.networkPolicy.enabled | bool | `false` | Whether to enable the default `NetworkPolicy` (currently, the upstream one does not work correctly) |
 | jupyterhub.hub.resources | object | See `values.yaml` | Resource limits and requests |
-| jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` |
+| jupyterhub.ingress.enabled | bool | `false` | Whether to enable the default ingress. Should always be disabled since we install our own `GafaelfawrIngress` to avoid repeating the global hostname and manually configuring authentication |
 | jupyterhub.prePuller.continuous.enabled | bool | `false` | Whether to run the JupyterHub continuous prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.prePuller.hook.enabled | bool | `false` | Whether to run the JupyterHub hook prepuller (the Nublado controller does its own prepulling) |
 | jupyterhub.proxy.chp.networkPolicy.interNamespaceAccessLabels | string | `"accept"` | Enable access to the proxy from other namespaces, since we put each user's lab environment in its own namespace |
+| jupyterhub.proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
 | jupyterhub.proxy.service.type | string | `"ClusterIP"` | Only expose the proxy to the cluster, overriding the default of exposing the proxy directly to the Internet |
 | jupyterhub.scheduling.userPlaceholder.enabled | bool | `false` | Whether to spawn placeholder pods representing fake users to force autoscaling in advance of running out of resources |
 | jupyterhub.scheduling.userScheduler.enabled | bool | `false` | Whether the user scheduler should be enabled |
-| proxy.chp.resources | object | See `values.yaml` | Resource limits and requests for proxy pod |
-| proxy.ingress.annotations | object | Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
+| proxy.ingress.annotations | object | See `values.yaml` | Additional annotations to add to the proxy ingress (also used to talk to JupyterHub and all user labs) |
 | secrets.templateSecrets | bool | `false` | Whether to use the new secrets management mechanism. If enabled, the Vault nublado secret will be split into a nublado secret for JupyterHub and a nublado-lab-secret secret used as a source for secret values for the user's lab. |
