@@ -209,6 +209,25 @@ controller:
           #cacher_dir = /tmp
           cacher_dir = /data/idds
 
+      # -- Path inside the lab container where custom JupyterLab configuration
+      # is stored
+      jupyterlabConfigDir: "/opt/lsst/software/jupyterlab"
+
+      # -- Prefix of home directory path to add before the username. This is
+      # the path inside the container, not the path of the volume.
+      homedirPrefix: "/home"
+
+      # -- Schema for home directory construction. Choose between `username`
+      # (paths like `/home/rachel`) and `initialThenUsername` (paths like
+      # `/home/r/rachel`).
+      homedirSchema: "username"
+
+      # -- Portion of the home directory path after the username. This is
+      # intended for environments that want the JupyterLab home directory to
+      # be a subdirectory of the user's home directory in some external
+      # environment.
+      homedirSuffix: ""
+
       # -- Containers run as init containers with each user pod. Each should
       # set `name`, `image` (a Docker image and pull policy specification),
       # and `privileged`, and may contain `volumeMounts` (similar to the main
@@ -216,6 +235,10 @@ controller:
       # will run as root with all capabilities. Otherwise it will run as the
       # user.
       initContainers: []
+
+      # -- Command executed in the container to start the lab
+      labStartCommand:
+        - "/opt/lsst/software/jupyterlab/runlab.sh"
 
       # -- Prefix for namespaces for user labs. To this will be added a dash
       # (`-`) and the user's username.
@@ -289,6 +312,11 @@ controller:
       # @default -- Do not use a pull secret
       pullSecret: null
 
+      # -- Directory in the lab under which runtime information such as
+      # tokens, environment variables, and container information will be
+      # mounted
+      runtimeMountsDir: "/opt/lsst/software/jupyterlab"
+
       # -- Secrets to set in the user pods. Each should have a `secretKey` key
       # pointing to a secret in the same namespace as the controller
       # (generally `nublado-secret`) and `secretRef` pointing to a field in
@@ -301,8 +329,7 @@ controller:
       # maximum CPU equivalents and memory. SI suffixes for memory are
       # supported. Sizes will be shown in the order defined here, and the
       # first defined size will be the default.
-      # @default -- See `values.yaml` (specifies `small`, `medium`, and
-      # `large` with `small` as the default)
+      # @default -- See `values.yaml`
       sizes:
         - size: "small"
           cpu: 1.0
@@ -317,6 +344,11 @@ controller:
       # -- How long to wait for Kubernetes to spawn a lab in seconds. This
       # should generally be shorter than the spawn timeout set in JupyterHub.
       spawnTimeout: 600
+
+      # -- Select where `/tmp` in the lab will come from. Choose between
+      # `disk` (node-local ephemeral storage) and `memory` (tmpfs capped at
+      # 25% of the available memory).
+      tmpSource: "memory"
 
       # -- Tolerations for user lab pods
       tolerations: []
@@ -369,39 +401,31 @@ hub:
     # takes over 60 seconds for reasons we don't understand.
     startup: 90
 
-# JupyterHub proxy configuration handled directly by this chart rather than by
-# Zero to JupyterHub.
-proxy:
-  chp:
-
-    # -- Resource limits and requests for proxy pod
-    # @default -- See `values.yaml`
-    resources:
-      limits:
-        cpu: "150m"
-        memory: "200Mi"
-      requests:
-        cpu: "5m"
-        memory: "30Mi"
-
-  ingress:
-    # -- Additional annotations to add to the proxy ingress (also used to talk
-    # to JupyterHub and all user labs)
-    # @default -- Increase `proxy-read-timeout` and `proxy-send-timeout` to 5m
-    annotations:
-      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"  # 5 minutes
-      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"  # 5 minutes
-
-# Configuration for Nublado secrets management.
-secrets:
-  # -- Whether to use the new secrets management mechanism. If enabled, the
-  # Vault nublado secret will be split into a nublado secret for JupyterHub
-  # and a nublado-lab-secret secret used as a source for secret values for the
-  # user's lab.
-  templateSecrets: false
-
 # Configuration for the Zero to JupyterHub subchart.
 jupyterhub:
+  cull:
+    # -- Enable the lab culler.
+    enabled: true
+
+    # -- Default idle timeout before the lab is automatically deleted in
+    # seconds
+    # @default -- 432000 (5 days)
+    timeout: 432000
+
+    # -- How frequently to check for idle labs in seconds
+    # @default -- 300 (5 minutes)
+    every: 300
+
+    # -- Whether to log out the user (from JupyterHub) when culling their lab
+    users: false
+
+    # -- Whether to remove named servers when culling their lab
+    removeNamedServers: true
+
+    # -- Maximum age of a lab regardless of activity
+    # @default -- 2160000 (25 days)
+    maxAge: 2160000
+
   hub:
     # -- Whether to require metrics requests to be authenticated
     authenticatePrometheus: false
@@ -488,6 +512,12 @@ jupyterhub:
         # delete itself (which we use for our added menu items)
         scopes: ["self"]
 
+  ingress:
+    # -- Whether to enable the default ingress. Should always be disabled
+    # since we install our own `GafaelfawrIngress` to avoid repeating the
+    # global hostname and manually configuring authentication
+    enabled: false
+
   prePuller:
     continuous:
       # -- Whether to run the JupyterHub continuous prepuller (the Nublado
@@ -511,43 +541,15 @@ jupyterhub:
         # each user's lab environment in its own namespace
         interNamespaceAccessLabels: "accept"
 
-        # This currently causes Minikube deployment in GitHub Actions to fail.
-        # We want it sometime but it's not critical; it will help with
-        # scale-down.
-        # pdb:
-        #   enabled: true
-        #   minAvailable: 1
-
-  # Rather than using the JupyterHub-provided ingress, which requires us to
-  # repeat the global host name and manually configure authentication, we
-  # instead install our own GafaelfawrIngress.
-  ingress:
-    # -- Whether to enable the default ingress. Should always be disabled
-    # since we install our own `GafaelfawrIngress`
-    enabled: false
-
-  cull:
-    # -- Enable the lab culler.
-    enabled: true
-
-    # -- Default idle timeout before the lab is automatically deleted in
-    # seconds
-    # @default -- 432000 (5 days)
-    timeout: 432000
-
-    # -- How frequently to check for idle labs in seconds
-    # @default -- 300 (5 minutes)
-    every: 300
-
-    # -- Whether to log out the user (from JupyterHub) when culling their lab
-    users: false
-
-    # -- Whether to remove named servers when culling their lab
-    removeNamedServers: true
-
-    # -- Maximum age of a lab regardless of activity
-    # @default -- 2160000 (25 days)
-    maxAge: 2160000
+      # -- Resource limits and requests for proxy pod
+      # @default -- See `values.yaml`
+      resources:
+        limits:
+          cpu: "150m"
+          memory: "200Mi"
+        requests:
+          cpu: "5m"
+          memory: "30Mi"
 
   scheduling:
     userScheduler:
@@ -615,6 +617,25 @@ cloudsql:
 
   # -- Tolerations for the Cloud SQL Auth Proxy pod
   tolerations: []
+
+# JupyterHub proxy configuration handled directly by this chart rather than by
+# Zero to JupyterHub.
+proxy:
+  ingress:
+    # -- Additional annotations to add to the proxy ingress (also used to talk
+    # to JupyterHub and all user labs)
+    # @default -- See `values.yaml`
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"  # 5 minutes
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"  # 5 minutes
+
+# Configuration for Nublado secrets management.
+secrets:
+  # -- Whether to use the new secrets management mechanism. If enabled, the
+  # Vault nublado secret will be split into a nublado secret for JupyterHub
+  # and a nublado-lab-secret secret used as a source for secret values for the
+  # user's lab.
+  templateSecrets: false
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
