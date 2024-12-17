@@ -4,8 +4,6 @@ appOfAppsName: "science-platform"
 vaultUrl: "https://vault.slac.stanford.edu"
 vaultPathPrefix: "secret/rubin/usdf-rapid-analysis"
 
-targetRevision: "u/pav/RA-phalanx"
-
 applications:
   # This environment uses an ingress managed in a separate Kubernetes cluster,
   # despite that configuration not being officially supported by Phalanx.
