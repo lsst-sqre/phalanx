@@ -27,6 +27,18 @@ Create chart name and version as used by the chart label.
 {{- end -}}
 
 {{/*
+Create image name from information
+*/}}
+{{- define "helpers.makeImage" -}}
+{{- if kindIs "float64" .rev }}
+{{- $rev := int .rev -}}
+{{- printf "%s:%s.%03d" .repo .tag $rev }}
+{{- else }}
+{{- printf "%s:%s" .repo .tag }}
+{{- end }}
+{{- end }}
+
+{{/*
 Create the CSC name by removing sim tag.
 */}}
 {{- define "csc.name" -}}

@@ -10,8 +10,8 @@ isPrimary: true
 image:
   # -- The Docker registry name of the container image to use for the CSC
   repository: lsstts/test
-  # -- The tag of the container image to use for the CSC
-  tag:
+  # -- (int) The cycle revision to add to the image tag
+  revision:
   # -- The policy to apply when pulling an image for deployment
   pullPolicy: IfNotPresent
 # -- The list of pull secrets needed for the images.

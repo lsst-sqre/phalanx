@@ -25,8 +25,8 @@ spec:
     spec:
       containers:
       - name: {{ include "love-manager-producer.fullname" $ }}-{{ $manager_producer.name }}
-        {{- $imageTag := $manager_producer.image.tag | default $.Values.global.controlSystem.imageTag }}
-        image: "{{ $manager_producer.image.repository }}:{{ $imageTag }}"
+        {{- $image := dict "repo" $manager_producer.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" $manager_producer.image.revision }}
+        image: {{ include "helpers.makeImage" $image }}
         imagePullPolicy: {{ $manager_producer.image.pullPolicy }}
         ports:
         - containerPort: {{ $.Values.manager.producers_ports.container }}
