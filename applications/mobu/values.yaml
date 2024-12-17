@@ -52,6 +52,28 @@ config:
   # -- Prefix for mobu's API routes.
   pathPrefix: "/mobu"
 
+  metrics:
+    # -- Whether to enable sending metrics
+    enabled: false
+
+    # -- Name under which to log metrics. Generally there is no reason to
+    # change this.
+    application: "mobu"
+
+    events:
+      # -- Topic prefix for events. It may sometimes be useful to change this
+      # in development environments.
+      topicPrefix: "lsst.square.metrics.events"
+
+    schemaManager:
+      # -- URL of the Confluent-compatible schema registry server
+      # @default -- Sasquatch in the local cluster
+      registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+      # -- Suffix to add to all registered subjects. This is sometimes useful
+      # for experimentation during development.
+      suffix: ""
+
 # -- Resource limits and requests for the mobu frontend pod
 # @default -- See `values.yaml`
 resources:

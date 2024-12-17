@@ -42,6 +42,14 @@ tests:
               - org1
               - org2
             logLevel: INFO
+            metrics:
+              application: mobu
+              enabled: false
+              events:
+                topicPrefix: lsst.square.metrics.events
+              schemaManager:
+                registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
+                suffix: ""
             pathPrefix: /mobu
             profile: production
             slackAlerts: true

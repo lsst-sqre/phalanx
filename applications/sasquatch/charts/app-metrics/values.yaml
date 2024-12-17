@@ -13,7 +13,13 @@ globalAppConfig:
       - "username"
   mobu:
     influxTags:
-      - "type"
+      - "sync"
+      - "success"
+      - "flock"
+      - "business"
+      - "username"
+      - "notebook"
+      - "repo"
   wobbly:
     influxTags:
       - "service"
