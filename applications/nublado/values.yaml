@@ -463,6 +463,7 @@ jupyterhub:
       url: "postgresql://nublado3@postgres.postgres/jupyterhub"
 
     # -- Security context for JupyterHub container
+    # @default -- See `values.yaml`
     containerSecurityContext:
       runAsUser: 1000
       runAsGroup: 1000

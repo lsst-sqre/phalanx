@@ -100,7 +100,7 @@ JupyterHub and custom spawner for the Rubin Science Platform
 | jupyterhub.cull.users | bool | `false` | Whether to log out the user (from JupyterHub) when culling their lab |
 | jupyterhub.hub.authenticatePrometheus | bool | `false` | Whether to require metrics requests to be authenticated |
 | jupyterhub.hub.baseUrl | string | `"/nb"` | Base URL on which JupyterHub listens |
-| jupyterhub.hub.containerSecurityContext | object | `{"allowPrivilegeEscalation":false,"runAsGroup":1000,"runAsUser":1000}` | Security context for JupyterHub container |
+| jupyterhub.hub.containerSecurityContext | object | See `values.yaml` | Security context for JupyterHub container |
 | jupyterhub.hub.db.password | string | Comes from nublado-secret | Database password (not used) |
 | jupyterhub.hub.db.type | string | `"postgres"` | Type of database to use |
 | jupyterhub.hub.db.upgrade | bool | `false` | Whether to automatically update DB schema at Hub start |
