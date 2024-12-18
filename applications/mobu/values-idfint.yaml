@@ -1,4 +1,6 @@
 config:
+  metrics:
+    enabled: true
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
