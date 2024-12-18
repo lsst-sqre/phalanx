@@ -1,6 +1,3 @@
-config:
-  metrics:
-    enabled: true
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"
