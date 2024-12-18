@@ -219,7 +219,7 @@ atptg:
   resources:
     limits:
       cpu: 900m
-      memory: 900Mi
+      memory: 2000Mi
     requests:
       cpu: 90m
       memory: 265Mi
