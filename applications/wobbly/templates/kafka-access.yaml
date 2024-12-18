@@ -2,7 +2,7 @@
 apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
-  name: "gafaelfawr-kafka"
+  name: "wobbly-kafka"
 spec:
   kafka:
     name: "sasquatch"
