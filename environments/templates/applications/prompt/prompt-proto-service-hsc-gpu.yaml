@@ -35,6 +35,8 @@ spec:
           value: "https://{{ .Values.fqdn }}"
         - name: "global.vaultSecretsPath"
           value: {{ .Values.vaultPathPrefix | quote }}
+        - name: "global.external_rev_id"
+          value: $ARGOCD_APP_REVISION_SHORT
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"

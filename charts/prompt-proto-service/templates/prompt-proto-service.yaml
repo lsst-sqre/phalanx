@@ -69,6 +69,8 @@ spec:
           value: {{ .Values.apdb.config }}
         - name: KAFKA_CLUSTER
           value: {{ .Values.imageNotifications.kafkaClusterAddress }}
+        - name: MANAGED_REVISION
+          value: {{ .Values.global.external_rev_id }}
         - name: RAW_MICROSERVICE
           value: {{ .Values.raw_microservice }}
         - name: SASQUATCH_URL
