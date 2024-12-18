@@ -5,7 +5,7 @@ version: 1.0.0
 description: "IVOA UWS database storage"
 sources:
   - https://github.com/lsst-sqre/wobbly
-appVersion: 0.1.0
+appVersion: 0.2.0
 
 annotations:
   phalanx.lsst.io/docs: |

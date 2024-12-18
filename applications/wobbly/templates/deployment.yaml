@@ -61,7 +61,7 @@ spec:
                   name: "wobbly"
                   key: "database-password"
             {{- if .Values.config.slackAlerts }}
-            - name: "CUTOUT_SLACK_WEBHOOK"
+            - name: "WOBBLY_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "wobbly"
@@ -84,13 +84,6 @@ spec:
                 secretKeyRef:
                   name: "wobbly-kafka"
                   key: "securityProtocol"
-            {{- end }}
-            {{- if .Values.config.slackAlerts }}
-            - name: "WOBBLY_SLACK_WEBHOOK"
-              valueFrom:
-                secretKeyRef:
-                  name: "wobbly"
-                  key: "slack-webhook"
             {{- end }}
           envFrom:
             - configMapRef:
@@ -147,14 +140,14 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
-      tolerations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
         runAsGroup: 1000
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.config.metrics.enabled }}
       volumes:
         - name: "kafka"
