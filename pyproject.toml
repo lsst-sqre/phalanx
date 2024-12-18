@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Intended Audience :: Developers",
     "Operating System :: POSIX",
 ]
@@ -44,16 +45,13 @@ Source = "https://github.com/lsst-sqre/phalanx"
 [build-system]
 requires = [
     "setuptools>=61",
-    "wheel",
     "setuptools_scm[toml]>=6.2"
 ]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools_scm]
-
 [tool.black]
 line-length = 79
-target-version = ["py312"]
+target-version = ["py313"]
 
 [tool.coverage.run]
 parallel = true
@@ -128,3 +126,5 @@ extend = "ruff-shared.toml"
 [tool.ruff.lint.isort]
 known-first-party = ["phalanx", "tests"]
 split-on-trailing-comma = false
+
+[tool.setuptools_scm]

@@ -1,6 +1,6 @@
 [project]
 title = "Phalanx"
-copyright = "2020-2023 Association of Universities for Research in Astronomy, Inc. (AURA)"
+copyright = "2020-2024 Association of Universities for Research in Astronomy, Inc. (AURA)"
 base_url = "https://phalanx.lsst.io"
 github_url = "https://github.com/lsst-sqre/phalanx"
 github_default_branch = "main"
@@ -32,6 +32,8 @@ nitpick_ignore = [
     ["py:class", "pydantic.utils.Representation"],
     ["py:obj", "ComputedFieldInfo"],
     ["py:obj", "pydantic.BaseModel.model_dict"],
+    # See https://github.com/sphinx-doc/sphinx/issues/13178
+    ["py:class", "pathlib._local.Path"],
 ]
 nitpick_ignore_regex = [
     # Bug in Sphinx

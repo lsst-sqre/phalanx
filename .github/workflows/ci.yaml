@@ -1,5 +1,12 @@
 name: CI
 
+env:
+  # Current supported Python version. For applications, there is generally no
+  # reason to support multiple Python versions, so all actions are run with
+  # this version. Quote the version to avoid interpretation as a floating
+  # point number.
+  PYTHON_VERSION: "3.13"
+
 "on":
   merge_group: {}
   pull_request: {}
@@ -24,7 +31,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
@@ -38,6 +45,7 @@ jobs:
         python:
           - "3.11"
           - "3.12"
+          - "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -71,7 +79,7 @@ jobs:
 
       - uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           tox-envs: phalanx-lint-change
           tox-requirements: requirements/tox.txt
           cache-key-prefix: helm
@@ -134,7 +142,7 @@ jobs:
         if: steps.filter.outputs.minikube == 'true'
         timeout-minutes: 15
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           tox-envs: install
           tox-requirements: requirements/tox.txt
           tox-posargs: >-
