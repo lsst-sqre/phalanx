@@ -1,0 +1,8 @@
+config:
+  metrics:
+    enabled: true
+  updateSchema: true
+cloudsql:
+  enabled: true
+  instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
+  serviceAccount: "wobbly@science-platform-stable-6994.iam.gserviceaccount.com"
