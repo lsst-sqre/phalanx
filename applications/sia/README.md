@@ -13,6 +13,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 | affinity | object | `{}` | Affinity rules for the sia deployment pod |
 | config.butlerDataCollections | list | `[]` | List of data (Butler) Collections Expected attributes: `config`, `label`, `name`, `butler_type`, `repository` & `datalink_url` |
 | config.directButlerEnabled | bool | `false` | Whether direct butler access is enabled |
+| config.enableSentry | bool | `false` | True to enable capture of trace and other diagnostics to Sentry.io. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/api/sia"` | URL path prefix |
@@ -22,7 +23,7 @@ Simple Image Access (SIA) IVOA Service using Butler
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the sia image |
+| image.pullPolicy | string | `"Always"` | Pull policy for the sia image |
 | image.repository | string | `"ghcr.io/lsst-sqre/sia"` | Image to use in the sia deployment |
 | image.tag | string | The appVersion of the chart | Tag of image to use |
 | ingress.annotations | object | `{}` | Additional annotations for the ingress rule |

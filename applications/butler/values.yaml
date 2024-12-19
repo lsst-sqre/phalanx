@@ -105,3 +105,6 @@ config:
   # be exposed.  For example, if the service should be exposed at
   # `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler`
   pathPrefix: "/api/butler"
+
+  # -- True to enable capture of trace and other diagnostics to Sentry.io.
+  enableSentry: false
