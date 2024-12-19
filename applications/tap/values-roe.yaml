@@ -1,7 +1,7 @@
 cadc-tap:
   tapSchema:
     image:
-      repository: "stvoutsin/tap-schema-roe"
+      repository: "lsstuk/tap-schema-roe"
       tag: "2.3.0"
 
   config:
