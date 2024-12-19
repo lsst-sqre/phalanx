@@ -79,10 +79,10 @@ mtheaderservice:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 300m
+      cpu: 2000m
       memory: 2000Mi
     requests:
-      cpu: 30m
+      cpu: 200m
       memory: 500Mi
 
 mtm1m3-sim:
@@ -137,10 +137,10 @@ mtoods:
     secretFilename: postgres-credentials.txt
   resources:
     limits:
-      cpu: 50m
+      cpu: 1000m
       memory: 700Mi
     requests:
-      cpu: 5m
+      cpu: 10m
       memory: 345Mi
   configfile:
     path: /etc
