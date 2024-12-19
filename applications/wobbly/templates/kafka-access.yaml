@@ -3,6 +3,8 @@ apiVersion: access.strimzi.io/v1alpha1
 kind: KafkaAccess
 metadata:
   name: "wobbly-kafka"
+  labels:
+    {{- include "wobbly.labels" . | nindent 4 }}
 spec:
   kafka:
     name: "sasquatch"

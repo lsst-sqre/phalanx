@@ -2,14 +2,14 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: "gafaelfawr"
-  labels:
-    {{- include "gafaelfawr.labels" . | nindent 4 }}
   {{- if .Values.config.updateSchema }}
   annotations:
     helm.sh/hook: "pre-install,pre-upgrade"
     helm.sh/hook-delete-policy: "before-hook-creation"
     helm.sh/hook-weight: "0"
   {{- end }}
+  labels:
+    {{- include "gafaelfawr.labels" . | nindent 4 }}
 data:
   gafaelfawr.yaml: |
     {{- toYaml .Values.config | nindent 4 }}
