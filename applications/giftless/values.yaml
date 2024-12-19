@@ -32,7 +32,7 @@ affinity: {}
 # be set in the individual environment values files.
 image:
   # -- Giftless image to use
-  repository: docker.io/datopian/giftless
+  repository: ghcr.io/datopian/giftless
   # -- Pull policy for the giftless image
   pullPolicy: "IfNotPresent"
   # -- Tag of giftless image to use
