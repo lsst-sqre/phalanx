@@ -129,7 +129,7 @@ atoods:
     serverPath: /auxtel
   resources:
     limits:
-      cpu: 75m
+      cpu: 100m
       memory: 1000Mi
     requests:
       cpu: 25m
