@@ -70,11 +70,11 @@ controller:
             type: "nfs"
             serverPath: "/repo/LSSTComCam"
             server: "comcam-archiver.tu.lsst.org"
-        # - name: "auxtel"
-        #   source:
-        #     type: "nfs"
-        #     serverPath: "/auxtel/lsstdata/TTS/auxtel"
-        #     server: "nfs-auxtel.tu.lsst.org"
+        - name: "auxtel"
+          source:
+            type: "nfs"
+            serverPath: "/auxtel/lsstdata"
+            server: "nfs-auxtel.tu.lsst.org"
         - name: "comcam"
           source:
             type: "nfs"
@@ -96,7 +96,8 @@ controller:
         - containerPath: "/repo/LSSTComCam"
           volumeName: "lsstcomcam"
         # - containerPath: "/data/lsstdata/TTS/auxtel"
-        #   volumeName: "auxtel"
+        - containerPath: "/data/lsstdata/auxtel"
+          volumeName: "auxtel"
         - containerPath: "/data/lsstdata/TTS/comcam"
           volumeName: "comcam"
 
