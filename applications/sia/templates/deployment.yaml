@@ -83,6 +83,17 @@ spec:
             - name: "GOOGLE_APPLICATION_CREDENTIALS"
               value: "/tmp/secrets/butler-gcs-idf-creds.json"
             {{- end }}
+            {{ if .Values.config.enableSentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: "sia"
+                  key: "sentry-dsn"
+            - name: SENTRY_RELEASE
+              value: {{ .Chart.Name }}@{{ .Chart.AppVersion }}
+            - name: SENTRY_ENVIRONMENT
+              value: {{ .Values.global.host }}
+            {{ end }}
           {{- if .Values.config.directButlerEnabled }}
           volumeMounts:
             - name: "secrets"

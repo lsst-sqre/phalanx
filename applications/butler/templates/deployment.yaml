@@ -66,9 +66,23 @@ spec:
             # to live, so we just have Butler server host them.)
             - name: DAF_BUTLER_SERVER_STATIC_FILES_PATH
               value: "/opt/lsst/butler/config"
+            - name: DAF_BUTLER_SERVER_THREAD_POOL_SIZE
+              value: "3"
             {{ if .Values.config.pguser }}
             - name: PGUSER
               value: {{ .Values.config.pguser | quote }}
+            {{ end }}
+            {{ if .Values.config.enableSentry }}
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: "butler"
+                  key: "sentry-dsn"
+            - name: SENTRY_RELEASE
+              value: {{ .Chart.Name }}@{{ .Chart.AppVersion }}
+            - name: SENTRY_ENVIRONMENT
+              value: {{ .Values.global.host }}
+
             {{ end }}
           volumeMounts:
             - name: "butler-secrets"
