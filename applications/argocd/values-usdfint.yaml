@@ -64,4 +64,4 @@ argo-cd:
   server:
     ingress:
       hostname: "usdf-rsp-int.slac.stanford.edu"
-    tls: false
+      tls: false
