@@ -45,6 +45,13 @@ uws-api-server:
     exportPath: "/auxtel/lsstdata/BTS/auxtel"
     subPath: ""
     readOnly: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
 
 atocps:
   enabled: true
@@ -54,3 +61,10 @@ atocps:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi

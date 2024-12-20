@@ -147,6 +147,13 @@ dream-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 96Mi
 
 dsm1-sim:
   enabled: true
@@ -187,6 +194,13 @@ eas-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 150m
+      memory: 375Mi
+    requests:
+      cpu: 15m
+      memory: 125Mi
 
 epm1-sim:
   enabled: true
