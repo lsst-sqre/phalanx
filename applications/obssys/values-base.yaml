@@ -51,6 +51,13 @@ atqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1700Mi
+    requests:
+      cpu: 100m
+      memory: 580Mi
 
 atscheduler:
   classifier: scheduler2
@@ -86,6 +93,13 @@ atscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2500m
+      memory: 10000Mi
+    requests:
+      cpu: 250m
+      memory: 3100Mi
 
 mtqueue:
   classifier: scriptqueue1
@@ -140,6 +154,13 @@ mtqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 300m
+      memory: 1500Mi
+    requests:
+      cpu: 30m
+      memory: 430Mi
 
 mtscheduler:
   classifier: scheduler1
@@ -175,6 +196,13 @@ mtscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2700m
+      memory: 7000Mi
+    requests:
+      cpu: 270m
+      memory: 2100Mi
 
 ocsqueue:
   classifier: scriptqueue3
@@ -229,6 +257,13 @@ ocsqueue:
           matchLabels:
             csc-class: scriptqueue
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1500Mi
+    requests:
+      cpu: 50m
+      memory: 430Mi
 
 ocsscheduler:
   classifier: scheduler3
@@ -264,8 +299,22 @@ ocsscheduler:
           matchLabels:
             csc-class: scheduler
         topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2600m
+      memory: 7000Mi
+    requests:
+      cpu: 260m
+      memory: 2100Mi
 
 watcher:
   image:
     repository: ts-dockerhub.lsst.org/watcher
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 2400m
+      memory: 1500Mi
+    requests:
+      cpu: 240m
+      memory: 445Mi
