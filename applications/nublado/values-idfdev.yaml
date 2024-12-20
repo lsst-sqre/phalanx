@@ -5,13 +5,14 @@ controller:
     logLevel: "DEBUG"
     fileserver:
       affinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: "node_pool"
-                  operator: "In"
-                  values:
-                    - "user-lab-pool"
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "node_pool"
+                    operator: "In"
+                    values:
+                      - "user-lab-pool"
       enabled: true
       tolerations:
         - key: "nublado.lsst.io/permitted"
