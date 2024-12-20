@@ -17,6 +17,13 @@ love-commander:
     enabled: true
     port: 5000
     type: ClusterIP
+  resources:
+    requests:
+      cpu: 50m
+      memory: 230Mi
+    limits:
+      cpu: 500m
+      memory: 800Mi
 
 love-manager:
   manager:
@@ -256,12 +263,26 @@ love-manager:
     config: |
       timeout 60
       save ""
+    resources:
+      requests:
+        cpu: 250m
+        memory: 300Mi
+      limits:
+        cpu: 2500m
+        memory: 1000Mi
   viewBackup:
     enabled: true
     image:
       repository: ts-dockerhub.lsst.org/love-view-backup
       pullPolicy: Always
     schedule: 0 12 * * *
+    resources:
+      requests:
+        cpu: 5m
+        memory: 1Mi
+      limits:
+        cpu: 100m
+        memory: 5Mi
 
 love-nginx:
   image:
@@ -291,6 +312,13 @@ love-nginx:
     storageClass: rook-ceph-block
     accessMode: ReadWriteOnce
     claimSize: 2Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 70Mi
+    limits:
+      cpu: 500m
+      memory: 300Mi
   nginxConfig: |
     server {
       listen 80;
