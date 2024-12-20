@@ -4,6 +4,12 @@ controller:
   config:
     fileserver:
       enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -43,6 +49,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        node_pool: "user-lab-pool"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -65,6 +73,10 @@ controller:
         - size: huge
           cpu: 8.0
           memory: 32Gi
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:
