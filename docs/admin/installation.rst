@@ -26,6 +26,8 @@ These can be run repeatedly to reinstall Phalanx over an existing deployment.
    Be aware that this will invalidate any existing AppRole for that environment.
 
 #. Set the environment variables ``VAULT_ROLE_ID`` and ``VAULT_SECRET_ID`` to the Role ID and Secret ID printed out by that command.
+   Don't store these anywhere
+   If you repeat the installation from scratch, just generate new role and secret IDs.
 
 #. Ensure that your default Kubernetes cluster for :command:`kubectl` and :command:`helm` is set to point to the Kubernetes cluster into which you want to install the Phalanx environment.
    You can verify this with :command:`kubectl config current-context`.
@@ -50,9 +52,14 @@ These can be run repeatedly to reinstall Phalanx over an existing deployment.
 #. If you are deploying on Google Cloud Platform, consider converting the dynamically-assigned IP address to a static IP.
    You can do this in the GCP console under :menuselection:`VPC Network -> IP addresses`.
 
+#. If you are doing a complete reinstallation of a Phalanx instance (e.g. Kubernetes has been completely destroyed and the cluster recreated), you may wish to run ``phalanx secrets sync --regenerate`` in order to recreate any randomly-generated secrets, rather than using the set from the previous installation.
+
 #. Debug any problems during installation.
    The most common source of problems are errors or missing configuration in the :file:`values-{environment}.yaml` files you created for each application.
    You can safely run the installer repeatedly as you debug and fix issues.
+
+   * If you get a message indicating that ``argocd`` plaintext login has failed, the actual error is that your local ``argocd`` executable is obsolete.
+     Update ``argocd`` and try again.
 
 Using a Vault token rather than AppRole
 =======================================
