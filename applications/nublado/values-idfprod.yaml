@@ -28,6 +28,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        node_pool: "user-lab-pool"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -47,6 +49,10 @@ controller:
         - size: large
           cpu: 4.0
           memory: 16Gi
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:
