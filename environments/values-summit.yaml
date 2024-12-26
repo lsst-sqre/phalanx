@@ -7,6 +7,7 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/summit"
 
 applications:
+  auxtel: true
   consdb: true
   exposurelog: true
   mobu: true

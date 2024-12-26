@@ -89,3 +89,8 @@ dependencies:
   version: 1.0.0
   condition: atspectrograph-sim.enabled
   repository: file://../../charts/csc
+- name: csc
+  alias: pmd
+  version: 1.0.0
+  condition: pmd.enabled
+  repository: file://../../charts/csc
