@@ -1,0 +1,240 @@
+ataos:
+  image:
+    repository: ts-dockerhub.lsst.org/ataos
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 450m
+      memory: 600Mi
+    requests:
+      cpu: 45m
+      memory: 200Mi
+
+atbuilding:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atbuilding
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 100Mi
+
+atdome:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atdome
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 170m
+      memory: 300Mi
+    requests:
+      cpu: 17m
+      memory: 100Mi
+
+atdometrajectory:
+  image:
+    repository: ts-dockerhub.lsst.org/atdometrajectory
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 350m
+      memory: 300Mi
+    requests:
+      cpu: 35m
+      memory: 100Mi
+
+atheaderservice:
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance ls
+    CAMERA: at
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 800m
+      memory: 700Mi
+    requests:
+      cpu: 80m
+      memory: 250Mi
+
+athexapod:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/athexapod
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 90m
+      memory: 300Mi
+    requests:
+      cpu: 9m
+      memory: 95Mi
+
+atmcs:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atmcs_sim
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 600m
+      memory: 1200Mi
+    requests:
+      cpu: 60m
+      memory: 400Mi
+
+atoods:
+  image:
+    repository: ts-dockerhub.lsst.org/atoods
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+  butlerSecret:
+    containerPath: /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: postgres-credentials.txt
+  nfsMountpoint:
+  - name: auxtel-gen3-butler
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-oods-data
+    containerPath: /data
+    readOnly: false
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel
+  resources:
+    limits:
+      cpu: 100m
+      memory: 1000Mi
+    requests:
+      cpu: 25m
+      memory: 325Mi
+  configfile:
+    path: /etc
+    filename: atoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
+      ingester:
+          imageStagingDirectory: /data/staging/auxtel/oods
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.Latiss
+                  class:
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
+                  stagingDirectory: /data/lsstdata/base/auxtel/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/base/auxtel/oods/gen3butler/badfiles
+                  repoDirectory: /repo/LATISS
+                  collections:
+                      - LATISS/raw/all
+                  cleanCollections:
+                      - collection: LATISS/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 90
+                      - collenction: LATISS/runs/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 90
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              - /data/lsstdata/base/auxtel/oods/gen3butler/raw
+              - /data/repo/LATISS/LATISS/runs/quickLook
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/base/auxtel/oods/gen3butler/badfiles
+              - /data/staging/auxtel/oods
+              - /data/staging/auxtel/forwarder
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 30
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
+
+atpneumatics:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/at_pneumatics_sim
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 90Mi
+
+atptg:
+  image:
+    repository: ts-dockerhub.lsst.org/ptkernel
+    pullPolicy: Always
+  env:
+    TELESCOPE: AT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 900m
+      memory: 2000Mi
+    requests:
+      cpu: 90m
+      memory: 265Mi
+
+atspectrograph:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atspec
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 95Mi
+
+pmd:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/pmd
+    pullPolicy: Always
