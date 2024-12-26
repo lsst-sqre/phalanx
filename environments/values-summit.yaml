@@ -8,6 +8,7 @@ vaultPathPrefix: "secret/phalanx/summit"
 
 applications:
   auxtel: true
+  calsys: true
   consdb: true
   exposurelog: true
   mobu: true
