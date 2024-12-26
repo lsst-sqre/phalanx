@@ -1,0 +1,207 @@
+cbp:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/cbp
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 110m
+      memory: 300Mi
+    requests:
+      cpu: 11m
+      memory: 100Mi
+
+electrometer101:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 110Mi
+
+electrometer102:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 102
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 100m
+      memory: 350Mi
+    requests:
+      cpu: 10m
+      memory: 115Mi
+
+electrometer201:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/electrometer
+    pullPolicy: Always
+  env:
+    RUN_ARG: 201
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 110Mi
+
+gcheaderservice1:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    CAMERA: gc1
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 140m
+      memory: 400Mi
+    requests:
+      cpu: 14m
+      memory: 130Mi
+
+ledprojector:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ledprojector
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 110Mi
+
+linearstage101:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 130Mi
+
+linearstage102:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 102
+  resources:
+    limits:
+      cpu: 150m
+      memory: 330Mi
+    requests:
+      cpu: 15m
+      memory: 130Mi
+
+linearstage103:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 103
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 130Mi
+
+linearstage104:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/linearstage
+    pullPolicy: Always
+  env:
+    RUN_ARG: 104
+  resources:
+    limits:
+      cpu: 100m
+      memory: 330Mi
+    requests:
+      cpu: 10m
+      memory: 130Mi
+
+tunablelaser:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/tunablelaser
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 100Mi
+
+atmonochromator:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atmonochromator
+    pullPolicy: Always
+
+atwhitelight:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atwhitelight
+    pullPolicy: Always
