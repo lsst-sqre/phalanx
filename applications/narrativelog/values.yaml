@@ -13,7 +13,7 @@ replicaCount: 1
 
 image:
   # -- narrativelog image to use
-  repository: lsstsqre/narrativelog
+  repository: ghcr.io/lsst-ts/narrativelog
   # -- Pull policy for the narrativelog image
   pullPolicy: Always
   # -- Tag of exposure image to use
