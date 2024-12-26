@@ -1,3 +1,15 @@
+atmonochromator:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atmonochromator
+    pullPolicy: Always
+
+atwhitelight:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atwhitelight
+    pullPolicy: Always
+
 cbp:
   enabled: true
   image:
@@ -193,15 +205,3 @@ tunablelaser:
     requests:
       cpu: 12m
       memory: 100Mi
-
-atmonochromator:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/atmonochromator
-    pullPolicy: Always
-
-atwhitelight:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/atwhitelight
-    pullPolicy: Always
