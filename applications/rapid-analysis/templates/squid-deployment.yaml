@@ -1,0 +1,72 @@
+{{- if .Values.squid.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rapid-analysis.squid.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rapid-analysis.squid.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.squid.replicas | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "rapid-analysis.squid.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if .Values.squid.podAnnotations }}
+      annotations:
+        {{- toYaml .Values.squid.podAnnotations | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rapid-analysis.squid.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+      - name: perm-fixer
+        image: busybox
+        # This command will change the owner of the /var/log/squid directory to the user with UID 13
+        # which is the used user to run the Squid proxy
+        command: ["sh", "-c", "chown -R 13:13 /var/log/squid"]
+        volumeMounts:
+        - name: squid-volume
+          mountPath: /var/log/squid
+      containers:
+      - name: squid
+        image: "{{ .Values.squid.image.repository }}:{{ .Values.squid.image.tag }}"
+        imagePullPolicy: {{ .Values.squid.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.squid.port }}
+            name: squid-proxy
+            protocol: TCP
+        env:
+        {{- range $env_var, $env_value := .Values.redis.env }}
+          - name: {{ $env_var }}
+            value: {{ $env_value | quote }}
+        {{- end }}
+        {{- range $env := .Values.redis.envSecrets }}
+          - name: {{ $env.name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $env.secretName }}
+                key: {{ $env.secretKey }}
+        {{- end }}
+        {{- with $.Values.redis.resources }}
+        resources:
+          {{- toYaml $.Values.redis.resources | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+          - name: squid-conf
+            mountPath: /etc/squid/squid.conf
+            subPath: squid.conf
+          - name: squid-volume
+            mountPath: /var/log/squid
+      volumes:
+        - name: squid-conf
+          configMap:
+            name: squid-config
+            items:
+            - key: squid.conf
+              path: squid.conf
+        - name: squid-volume
+          persistentVolumeClaim:
+            claimName: squid-pvc
+{{- end }}
