@@ -1,0 +1,54 @@
+{{- if .Values.squid.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rapid-analysis.squid.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rapid-analysis.squid.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.squid.replicas | default 1 }}
+  selector:
+    matchLabels:
+      {{- include "rapid-analysis.squid.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "rapid-analysis.squid.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: squid
+        image: "{{ .Values.squid.image.repository }}:{{ .Values.squid.image.tag }}"
+        imagePullPolicy: {{ .Values.squid.image.pullPolicy }}
+        ports:
+          - containerPort: {{ .Values.squid.port }}
+            name: squid-proxy
+            protocol: TCP
+        env:
+        {{- range $env_var, $env_value := .Values.redis.env }}
+          - name: {{ $env_var }}
+            value: {{ $env_value | quote }}
+        {{- end }}
+        {{- range $env := .Values.redis.envSecrets }}
+          - name: {{ $env.name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $env.secretName }}
+                key: {{ $env.secretKey }}
+        {{- end }}
+        {{- with $.Values.redis.resources }}
+        resources:
+          {{- toYaml $.Values.redis.resources | nindent 10 }}
+        {{- end }}
+        volumeMounts:
+          - name: squid-conf
+            mountPath: /etc/squid/squid.conf
+            subPath: squid.conf
+      volumes:
+        - name: squid-conf
+          configMap:
+            name: squid-config
+            items:
+            - key: squid
+              path: squid.conf
+{{- end }}
