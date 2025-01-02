@@ -1,0 +1,18 @@
+test42:
+  image:
+    repository: ts-dockerhub.lsst.org/test
+    pullPolicy: Always
+  env:
+    RUN_ARG: 42
+  resources:
+    limits:
+      cpu: 150m
+      memory: 300Mi
+    requests:
+      cpu: 15m
+      memory: 95Mi
+
+integration-testing:
+  enabled: true
+  envEfd: summit_efd
+  s3Bucket: rubinobs-lfa-cp
