@@ -18,6 +18,7 @@ spec:
           labels:
             {{- include "backup.selectorLabels" . | nindent 12 }}
         spec:
+          serviceAccountName: sasquatch-backup
           restartPolicy: OnFailure
           securityContext:
             runAsNonRoot: true
