@@ -371,7 +371,6 @@ backup:
   persistence:
     size: 100Ti
     storageClass: wekafs--sdf-k8s01
-  items:
-    chronograf: false
-    kapacitor: false
-    influxdbEnterprise: true
+  backupItems:
+    - name: influxdb-enterprise
+      enabled: true

@@ -24,13 +24,14 @@ persistence:
   # @default -- "" (empty string) to use the cluster default storage class
   storageClass: ""
 
-items:
-  # -- Whether to backup Chronograf
-  chronograf: false
-  # -- Whether to backup Kapacitor
-  kapacitor: false
-  # -- Whether to backup InfluxDB Enterprise
-  influxdbEnterprise: false
+# -- List of items to backup, must match the names in the sasquatch backup script
+backupItems:
+  - name: "influxdb-enterprise"
+    enabled: false
+  - name: "chronograf"
+    enabled: false
+  - name: "kapacitor"
+    enabled: false
 
 # -- Affinity rules for the backups deployment pod
 affinity: {}

@@ -169,7 +169,8 @@ backup:
   persistence:
     size: 500Gi
     storageClass: standard
-  items:
-    chronograf: false
-    kapacitor: false
-    influxdbEnterprise: true
+  backupItems:
+    - name: "influxdb-enterprise"
+      enabled: true
+    - name: "chronograf"
+      enabled: true
