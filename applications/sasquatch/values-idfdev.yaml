@@ -174,3 +174,5 @@ backup:
       enabled: true
     - name: "chronograf"
       enabled: true
+    - name: "kapacitor"
+      enabled: true
