@@ -4,7 +4,7 @@ Replicates data from the APDB to the PPDB
 
 ## Source Code
 
-* <https://github.com/lsst/dax_ppdb.git>
+* <https://github.com/lsst/dax_ppdb>
 
 ## Values
 
