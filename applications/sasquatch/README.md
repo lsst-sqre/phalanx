@@ -108,12 +108,10 @@ Rubin Observatory's telemetry service
 | app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retention_days":7},{"enabled":false,"name":"kapacitor","retention_days":7},{"enabled":false,"name":"influxdb-enterprise-incremental"}]` | List of items to backup, must match the names in the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |
-| backup.items.chronograf | bool | `false` | Whether to backup Chronograf |
-| backup.items.influxdbEnterprise | bool | `false` | Whether to backup InfluxDB Enterprise |
-| backup.items.kapacitor | bool | `false` | Whether to backup Kapacitor |
 | backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
 | backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |

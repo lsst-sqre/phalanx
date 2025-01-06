@@ -163,12 +163,15 @@ app-metrics:
 
 backup:
   enabled: true
-  image:
-    pullPolicy: "Always"
   persistence:
     size: 500Gi
     storageClass: standard
-  items:
-    chronograf: false
-    kapacitor: false
-    influxdbEnterprise: true
+  backupItems:
+    - name: "chronograf"
+      enabled: true
+      retention_days: 3
+    - name: "kapacitor"
+      enabled: true
+      retention_days: 3
+    - name: "influxdb-enterprise-incremental"
+      enabled: true
