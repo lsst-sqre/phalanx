@@ -129,10 +129,10 @@ atoods:
     serverPath: /auxtel
   resources:
     limits:
-      cpu: 100m
+      cpu: 400m
       memory: 1000Mi
     requests:
-      cpu: 25m
+      cpu: 40m
       memory: 325Mi
   configfile:
     path: /etc
