@@ -7,7 +7,7 @@ Once you have :doc:`created the configuration for your new environment <create-e
 If you are setting up an environment that will be running a 1Password Connect server for itself, you will need to take special bootstrapping steps.
 See :px-app-bootstrap:`onepassword-connect` for more information.
 
-.. attention::
+.. warning::
 
    Before starting this process, ensure that you have met the :doc:`requirements to run Phalanx <requirements>`.
 
