@@ -1,0 +1,305 @@
+lasertracker1:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/lasertracker
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 360Mi
+    requests:
+      cpu: 20m
+      memory: 120Mi
+
+mtaircompressor1:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtaircompressor
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1 --state disabled
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
+
+mtaircompressor2:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtaircompressor
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2 --state disabled
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
+
+mtaos:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtaos
+    pullPolicy: Always
+  butlerSecret:
+    containerPath: /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: postgres-credentials.txt
+  nfsMountpoint:
+  - name: comcam-gen3-data
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-gen3-data-temp
+    containerPath: /data/lsstdata/base/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata/base/comcam
+  - name: comcam-data
+    containerPath: /readonly/lsstdata/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /project
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1500Mi
+    requests:
+      cpu: 30m
+      memory: 430Mi
+
+mtcamhexapod:
+  enabled: true
+  classifier: mthexapod1
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 400Mi
+    requests:
+      cpu: 50m
+      memory: 125Mi
+
+mtdome:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtdome
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 900m
+      memory: 300Mi
+    requests:
+      cpu: 90m
+      memory: 100Mi
+
+mtdometrajectory:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtdometrajectory
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 250m
+      memory: 400Mi
+    requests:
+      cpu: 25m
+      memory: 115Mi
+
+mtheaderservice:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+    TSTAND_HEADERSERVICE: LEVEL3_CLEANROOM
+    CAMERA: mt
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 200m
+      memory: 500Mi
+
+mtm1m3:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtm1m3_sim
+    pullPolicy: Always
+  env:
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 10000Mi
+    requests:
+      cpu: 100m
+      memory: 1000Mi
+
+mtm2:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/m2
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 850m
+      memory: 1500Mi
+    requests:
+      cpu: 85m
+      memory: 420Mi
+
+mtm2hexapod:
+  enabled: true
+  classifier: mthexapod2
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
+  resources:
+    limits:
+      cpu: 400m
+      memory: 400Mi
+    requests:
+      cpu: 40m
+      memory: 125Mi
+
+mtmount:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtmount
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1000Mi
+    requests:
+      cpu: 50m
+      memory: 300Mi
+
+mtoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtoods
+    pullPolicy: Always
+  env:
+    CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
+    AWS_ACCESS_KEY_ID: oods-lsstcam
+    AWS_ENDPOINT_URL: https://s3-butler.cp.lsst.org
+  envSecrets:
+  - name: AWS_SECRET_ACCESS_KEY
+    key: oods-lsstcam-secret-key
+  butlerSecret:
+    containerPath: /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: postgres-credentials.txt
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 700Mi
+    requests:
+      cpu: 10m
+      memory: 345Mi
+  configfile:
+    path: /etc
+    filename: mtoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingester:
+          kafka:
+              brokers:
+                  - sasquatch-kafka-brokers.sasquatch:9092
+              topics:
+                - lsst.s3.raw.lsstcam
+              group_id: MTOODS-S3
+              max_messages: 250
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.LsstCam
+                  class:
+                      import : lsst.ctrl.oods.messageAttendant
+                      name : MessageAttendant
+                  repoDirectory : s3://rubinobs-butler-lsstcam
+                  collections:
+                      - LSSTCam/raw/all
+                  cleanCollections:
+                      - collection: LSSTCam/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 5
+                      - collection: LSSTCam/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 2
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+
+mtptg:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ptkernel
+    pullPolicy: Always
+  env:
+    TELESCOPE: MT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 1200m
+      memory: 6000Mi
+    requests:
+      cpu: 120m
+      memory: 1500Mi
+
+mtrotator:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtrotator
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 400m
+      memory: 600Mi
+    requests:
+      cpu: 40m
+      memory: 150Mi
