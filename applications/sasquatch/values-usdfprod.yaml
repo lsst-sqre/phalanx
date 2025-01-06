@@ -372,5 +372,5 @@ backup:
     size: 100Ti
     storageClass: wekafs--sdf-k8s01
   backupItems:
-    - name: influxdb-enterprise
+    - name: influxdb-enterprise-incremental
       enabled: true

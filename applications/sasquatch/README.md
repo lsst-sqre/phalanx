@@ -108,7 +108,7 @@ Rubin Observatory's telemetry service
 | app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
-| backup.backupItems | list | `[{"enabled":false,"name":"influxdb-enterprise"},{"enabled":false,"name":"chronograf"},{"enabled":false,"name":"kapacitor"}]` | List of items to backup, must match the names in the sasquatch backup script |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retention_days":7},{"enabled":false,"name":"kapacitor","retention_days":7},{"enabled":false,"name":"influxdb-enterprise-incremental"}]` | List of items to backup, must match the names in the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |

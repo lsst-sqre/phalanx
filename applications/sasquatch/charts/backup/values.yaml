@@ -26,11 +26,13 @@ persistence:
 
 # -- List of items to backup, must match the names in the sasquatch backup script
 backupItems:
-  - name: "influxdb-enterprise"
-    enabled: false
   - name: "chronograf"
     enabled: false
+    retention_days: 7
   - name: "kapacitor"
+    enabled: false
+    retention_days: 7
+  - name: "influxdb-enterprise-incremental"
     enabled: false
 
 # -- Affinity rules for the backups deployment pod

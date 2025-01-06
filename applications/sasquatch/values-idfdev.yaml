@@ -170,9 +170,11 @@ backup:
     size: 500Gi
     storageClass: standard
   backupItems:
-    - name: "influxdb-enterprise"
-      enabled: true
     - name: "chronograf"
       enabled: true
+      retention_days: 3
     - name: "kapacitor"
+      enabled: true
+      retention_days: 3
+    - name: "influxdb-enterprise-incremental"
       enabled: true
