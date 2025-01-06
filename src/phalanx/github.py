@@ -6,7 +6,7 @@ Actions and, if so, add additional GitHub-specific markers to the output to
 improve display in GitHub Actions logs.
 
 See `GitHub's documentation
-<https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions>`__
+<https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/workflow-commands-for-github-actions>`__
 for other possibly useful commands that could be added.
 """
 
