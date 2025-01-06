@@ -30,6 +30,10 @@ mtaircompressor2-sim:
   # -- Enable the MTAirCompressor:2 simulator CSC
   enabled: false
 
+mtaos:
+  # -- Enable the MTAOS CSC
+  enabled: false
+
 mtcamhexapod:
   # -- Enable the MTHexapod:1 CSC
   enabled: false
@@ -42,6 +46,10 @@ mtdome:
   # -- Enable the MTDome CSC
   enabled: false
 
+mtdometrajectory:
+  # -- Enable the MTDomeTrajectory CSC
+  enabled: false
+
 mtdome-sim:
   # -- Enable the MTDome simulator CSC
   enabled: false
@@ -50,11 +58,11 @@ mtheaderservice:
   # -- Enable the MTHeaderService CSC
   enabled: false
 
-m1m3:
+mtm1m3:
   # -- Enable the MTM1M3 hardware simulator CSC
   enabled: false
 
-m1m3-sim:
+mtm1m3-sim:
   # -- Enable the MTM1M3 simulator CSC
   enabled: false
 
@@ -84,6 +92,14 @@ mtmount:
 
 mtmount-sim:
   # -- Enable the MTMount simulator CSC
+  enabled: false
+
+mtoods:
+  # -- Enable the MTOODS CSC
+  enabled: false
+
+mtptg:
+# -- Enable the MTPtg CSC
   enabled: false
 
 mtrotator:
