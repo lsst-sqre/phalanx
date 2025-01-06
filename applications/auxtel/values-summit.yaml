@@ -233,7 +233,7 @@ atspectrograph:
       cpu: 12m
       memory: 95Mi
 
-pmd:
+pmd1:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/pmd
