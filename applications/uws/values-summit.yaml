@@ -1,5 +1,3 @@
-csc_shared:
-  secretsOnly: true
 uws-api-server:
   targetCluster: "summit"
   hostname: summit-lsp.lsst.codes
@@ -54,3 +52,19 @@ uws-api-server:
     exportPath: "/comcam/lsstdata/base/comcam"
     subPath: ""
     readOnly: true
+
+atocps:
+  enabled: true
+  classifier: ocps1
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
