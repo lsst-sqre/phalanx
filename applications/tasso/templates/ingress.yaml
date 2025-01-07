@@ -29,3 +29,10 @@ template:
                   name: "tasso"
                   port:
                     number: 8080
+            - path: "/webapp"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "tasso"
+                  port:
+                    number: 8080
