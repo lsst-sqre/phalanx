@@ -8,16 +8,16 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: 39
-      recommendedTag: "recommended_c0039"
+      cycle: null
+      recommendedTag: "recommended_k0003"
     lab:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        LSST_DDS_INTERFACE: "net1"
-        LSST_DDS_PARTITION_PREFIX: "summit"
+        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-brokers.sasquatch:9092"
+        LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
+        LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         LSST_SITE: "summit"
+        LSST_TOPIC_SUBNAME: "sal"
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
@@ -32,6 +32,8 @@ controller:
               volumeName: "home"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
       volumes:
