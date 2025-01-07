@@ -153,43 +153,11 @@ dream:
       cpu: 10m
       memory: 96Mi
 
-dsm1:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/dsm
-    pullPolicy: Always
-  env:
-    CSC_INDEX: 1
-    RUN_ARG: 1 --state enabled
-  resources:
-    requests:
-      cpu: 14m
-      memory: 90Mi
-    limits:
-      cpu: 140m
-      memory: 900Mi
-
-dsm2:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/dsm
-    pullPolicy: Always
-  env:
-    CSC_INDEX: 2
-    RUN_ARG: 2 --state enabled
-  resources:
-    requests:
-      cpu: 10m
-      memory: 90Mi
-    limits:
-      cpu: 100m
-      memory: 900Mi
-
 earthquake-ess302:
   enabled: true
   classifier: ess302
   image:
-    repository: ts-dockerhub.lsst.org/epm
+    repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
     RUN_ARG: 302
@@ -213,22 +181,6 @@ eas:
     requests:
       cpu: 15m
       memory: 125Mi
-
-epm1:
-  enabled: true
-  classifier: epm1
-  image:
-    repository: ts-dockerhub.lsst.org/epm
-    pullPolicy: Always
-  env:
-    RUN_ARG: 1
-  resources:
-    requests:
-      cpu: 19m
-      memory: 90Mi
-    limits:
-      cpu: 190m
-      memory: 900Mi
 
 epm301:
   enabled: true
