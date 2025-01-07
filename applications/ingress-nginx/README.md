@@ -14,6 +14,7 @@ Ingress controller
 |-----|------|---------|-------------|
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | ingress-nginx.controller.allowSnippetAnnotations | bool | `true` | Allow Ingress resources to add NGINX configuration snippets. This is required by Gafaelfawr. |
+| ingress-nginx.controller.config.annotations-risk-level | string | `"Critical"` | Level of dangerous annotations allowed. Must be set to `Critical` to allow snippets. |
 | ingress-nginx.controller.config.compute-full-forwarded-for | string | `"true"` | Put the complete path in `X-Forwarded-For`, not just the last hop, so that the client IP will be exposed to Gafaelfawr |
 | ingress-nginx.controller.config.proxy-body-size | string | `"100m"` | Maximum size of the client request body (needs to be large enough to allow table uploads) |
 | ingress-nginx.controller.config.server-snippet | string | See `values.yaml` | Add additional per-server configuration used by Gafaelfawr to report errors from the authorization layer |
