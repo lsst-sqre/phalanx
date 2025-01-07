@@ -95,31 +95,6 @@ electrometer201:
       cpu: 10m
       memory: 110Mi
 
-gcheaderservice1:
-  enabled: true
-  image:
-    repository: ts-dockerhub.lsst.org/headerservice
-    pullPolicy: Always
-  env:
-    CAMERA: gc1
-    URL_SPEC: --lfa_mode s3 --s3instance cp
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  resources:
-    limits:
-      cpu: 140m
-      memory: 400Mi
-    requests:
-      cpu: 14m
-      memory: 130Mi
-
 ledprojector:
   enabled: true
   image:
@@ -192,6 +167,35 @@ linearstage104:
     requests:
       cpu: 10m
       memory: 130Mi
+
+simulation-gencam:
+  enabled: true
+  classifier: genericcamera1
+  image:
+    repository: ts-dockerhub.lsst.org/genericcamera
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  service:
+    enabled: true
+    port: 5013
+    type: LoadBalancer
+  resources:
+    limits:
+      cpu: 120m
+      memory: 360Mi
+    requests:
+      cpu: 12m
+      memory: 120Mi
 
 tunablelaser:
   enabled: true

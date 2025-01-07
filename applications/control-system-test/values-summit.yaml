@@ -11,8 +11,3 @@ test42:
     requests:
       cpu: 15m
       memory: 95Mi
-
-integration-testing:
-  enabled: true
-  envEfd: summit_efd
-  s3Bucket: rubinobs-lfa-cp
