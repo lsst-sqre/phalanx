@@ -17,24 +17,19 @@ Deployment for the Auxiliary Telescope CSCs
 | global.controlSystem.topicName | string | Set by ArgoCD | Topic name tag for the control system deployment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
-| ataos.enabled | bool | `false` | Enable the ATAOS CSC |
 | atbuilding.enabled | bool | `false` | Enable the ATBuilding CSC |
 | atdome-sim.enabled | bool | `false` | Enable the ATDome simulator CSC |
 | atdome.enabled | bool | `false` | Enable the ATDome CSC |
-| atdometrajectory.enabled | bool | `false` | Enable the ATDomeTrajectory CSC |
-| atheaderservice.enabled | bool | `false` | Enable the ATHeaderService CSC |
 | athexapod-sim.enabled | bool | `false` | Enable the ATHexapod simulator CSC |
 | athexapod.enabled | bool | `false` | Enable the ATHexapod CSC |
 | atmcs-sim.enabled | bool | `false` | Enable the ATMCS simulator CSC |
 | atmcs.enabled | bool | `false` | Enable the ATMCS CSC |
-| atoods.enabled | bool | `false` | Enable the ATOODS CSC |
 | atpneumatics-sim.enabled | bool | `false` | Enable the ATPneumatics simulator CSC |
 | atpneumatics.enabled | bool | `false` | Enable the ATPneumatics CSC |
-| atptg.enabled | bool | `false` | Enable the ATPtg CSC |
 | atspectrograph-sim.enabled | bool | `false` | Enable the ATSpectograph simulator CSC |
 | atspectrograph.enabled | bool | `false` | Enable the ATSpectrograph CSC |
 | hexapod-sim.enabled | bool | `false` | Enable the hexapod controller simulator |
-| pmd1.enabled | bool | `false` | Enable the ATSpectograph simulator CSC |
+| pmd1.enabled | bool | `false` | Enable the PMD1 CSC |
 | hexapod-sim.affinity | object | `{}` | This specifies the scheduling constraints of the pod |
 | hexapod-sim.image | object | `{"pullPolicy":"Always","repository":"ts-dockerhub.lsst.org/hexapod_simulator","tag":"latest"}` | This section holds the configuration of the container image |
 | hexapod-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |

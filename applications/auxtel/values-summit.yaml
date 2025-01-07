@@ -103,7 +103,6 @@ atoods:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
   env:
-    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
     containerPath: /home/saluser/.lsst
@@ -157,11 +156,11 @@ atoods:
                       - collection: LATISS/raw/all
                         filesOlderThan:
                             <<: *interval
-                            days: 90
+                            days: 30
                       - collenction: LATISS/runs/quickLook
                         filesOlderThan:
                             <<: *interval
-                            days: 90
+                            days: 7
                   scanInterval:
                       <<: *interval
                       hours: 1
