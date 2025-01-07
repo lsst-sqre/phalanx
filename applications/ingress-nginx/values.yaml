@@ -7,6 +7,10 @@ ingress-nginx:
     allowSnippetAnnotations: true
 
     config:
+      # -- Level of dangerous annotations allowed. Must be set to `Critical`
+      # to allow snippets.
+      annotations-risk-level: "Critical"
+
       # -- Put the complete path in `X-Forwarded-For`, not just the last hop,
       # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
