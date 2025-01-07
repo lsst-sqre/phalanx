@@ -372,5 +372,11 @@ backup:
     size: 100Ti
     storageClass: wekafs--sdf-k8s01
   backupItems:
+    - name: chronograf
+      enabled: true
+      retention_days: 7
+    - name: kapacitor
+      enabled: true
+      retention_days: 7
     - name: influxdb-enterprise-incremental
       enabled: true
