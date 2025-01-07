@@ -123,6 +123,13 @@ gis:
   image:
     repository: ts-dockerhub.lsst.org/gis
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 10m
+      memory: 300Mi
+    requests:
+      cpu: 1m
+      memory: 97Mi
 
 mtqueue:
   classifier: scriptqueue1
