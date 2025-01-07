@@ -13,3 +13,10 @@ cloudsql:
 redis:
   persistence:
     storageClass: "wekafs--sdf-k8s01"
+  resources:
+    # The redis disk cache is 8Gi, so we need to use at least that much memory
+    # to be efficient. The limit is set to 3x the disk cache to avoid OOM kills.
+    requests:
+      memory: "8Gi"
+    limits:
+      memory: "24Gi"
