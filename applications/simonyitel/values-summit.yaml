@@ -1,3 +1,223 @@
+ccheaderservice:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+    CAMERA: cc
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 200m
+      memory: 500Mi
+
+ccheaderservice-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    URL_SPEC: --lfa_mode s3 --s3instance cp --playback
+    CAMERA: cc
+    HEADERSERVICE_PLAYLIST_DIR: /header_service
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: ccs-data
+    containerPath: /header_service
+    readOnly: true
+    server: nfs1.cp.lsst.org
+    serverPath: /scratch/header_service
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 200m
+      memory: 500Mi
+
+ccoods:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/ccoods
+    pullPolicy: Always
+  env:
+    CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
+  butlerSecret:
+    containerPath: &bS-cP /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: postgres-credentials.txt
+  nfsMountpoint:
+  - name: comcam-gen3-butler
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-oods-data
+    containerPath: /data
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 700Mi
+    requests:
+      cpu: 10m
+      memory: 345Mi
+  configfile:
+    path: /etc
+    filename: ccoods.yaml
+    content: |
+      defaultInterval: &interval
+          days: 0
+          hours: 0
+          minutes: 0
+          seconds: 0
+
+      ingester:
+          imageStagingDirectory: /data/staging/comcam/oods
+          butlers:
+              - butler:
+                  instrument: lsst.obs.lsst.LsstComCam
+                  class:
+                      import : lsst.ctrl.oods.gen3ButlerIngester
+                      name : Gen3ButlerIngester
+                  stagingDirectory : /data/lsstdata/base/comcam/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/base/comcam/oods/gen3butler/badfiles
+                  repoDirectory : /repo/LSSTComCam
+                  collections:
+                      - LSSTComCam/raw/all
+                      - LSSTComCamSim/raw/all
+                  cleanCollections:
+                      - LSSTComCam/raw/all
+                      - LSSTComCamSim/raw/all
+                      - LSSTComCamSim/quickLook
+                  scanInterval:
+                      <<: *interval
+                      hours: 1
+                  filesOlderThan:
+                      <<: *interval
+                      days: 90
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              -  /data/lsstdata/base/comcam/oods/gen3butler/raw
+              -  /data/repo/LSSTComCam/LSSTComCamSim/quickLook
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/base/comcam/oods/gen3butler/badfiles
+              - /data/staging/comcam/oods
+              - /data/staging/comcam/forwarder
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 31
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
+
+gcheaderservice101:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    CAMERA: gc101
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 140m
+      memory: 400Mi
+    requests:
+      cpu: 14m
+      memory: 130Mi
+
+gcheaderservice102:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    CAMERA: gc102
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 140m
+      memory: 400Mi
+    requests:
+      cpu: 14m
+      memory: 130Mi
+
+gcheaderservice103:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/headerservice
+    pullPolicy: Always
+  env:
+    CAMERA: gc103
+    URL_SPEC: --lfa_mode s3 --s3instance cp
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 140m
+      memory: 400Mi
+    requests:
+      cpu: 14m
+      memory: 130Mi
+
 lasertracker1:
   enabled: true
   image:
@@ -44,7 +264,6 @@ mtaircompressor2:
       memory: 100Mi
 
 mtaos:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
@@ -97,6 +316,22 @@ mtcamhexapod:
       cpu: 50m
       memory: 125Mi
 
+mtcamhexapod-sim:
+  enabled: false
+  classifier: mthexapod1
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 400Mi
+    requests:
+      cpu: 50m
+      memory: 125Mi
+
 mtdome:
   enabled: true
   image:
@@ -112,8 +347,22 @@ mtdome:
       cpu: 90m
       memory: 100Mi
 
+mtdome-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/mtdome
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 1
+  resources:
+    limits:
+      cpu: 900m
+      memory: 300Mi
+    requests:
+      cpu: 90m
+      memory: 100Mi
+
 mtdometrajectory:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtdometrajectory
     pullPolicy: Always
@@ -151,8 +400,8 @@ mtheaderservice:
       cpu: 200m
       memory: 500Mi
 
-mtm1m3:
-  enabled: true
+mtm1m3-sim:
+  enabled: false
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
     pullPolicy: Always
@@ -180,6 +429,21 @@ mtm2:
       cpu: 85m
       memory: 420Mi
 
+mtm2-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/m2
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 850m
+      memory: 1500Mi
+    requests:
+      cpu: 85m
+      memory: 420Mi
+
 mtm2hexapod:
   enabled: true
   classifier: mthexapod2
@@ -188,6 +452,22 @@ mtm2hexapod:
     pullPolicy: Always
   env:
     RUN_ARG: 2
+  resources:
+    limits:
+      cpu: 400m
+      memory: 400Mi
+    requests:
+      cpu: 40m
+      memory: 125Mi
+
+mtm2hexapod-sim:
+  enabled: false
+  classifier: mthexapod2
+  image:
+    repository: ts-dockerhub.lsst.org/mthexapod
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate 2
   resources:
     limits:
       cpu: 400m
@@ -211,8 +491,37 @@ mtmount:
       cpu: 50m
       memory: 300Mi
 
+mtmount-ccw-only:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/mtmount
+    pullPolicy: Always
+  env:
+    CCW_ONLY: yes
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1000Mi
+    requests:
+      cpu: 50m
+      memory: 300Mi
+
+mtmount-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/mtmount
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1000Mi
+    requests:
+      cpu: 50m
+      memory: 300Mi
+
 mtoods:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
@@ -275,7 +584,6 @@ mtoods:
                       hours: 1
 
 mtptg:
-  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/ptkernel
     pullPolicy: Always
@@ -296,6 +604,21 @@ mtrotator:
   image:
     repository: ts-dockerhub.lsst.org/mtrotator
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 400m
+      memory: 600Mi
+    requests:
+      cpu: 40m
+      memory: 150Mi
+
+mtrotator-sim:
+  enabled: false
+  image:
+    repository: ts-dockerhub.lsst.org/mtrotator
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
   resources:
     limits:
       cpu: 400m

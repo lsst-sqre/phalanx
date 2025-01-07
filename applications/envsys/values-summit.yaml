@@ -163,11 +163,11 @@ earthquake-ess302:
     RUN_ARG: 302
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 4m
+      memory: 103Mi
     limits:
-      cpu: 190m
-      memory: 900Mi
+      cpu: 40m
+      memory: 310Mi
 
 eas:
   enabled: true
@@ -207,11 +207,11 @@ hvac:
     RUN_ARG: --state enabled
   resources:
     requests:
-      cpu: 19m
-      memory: 90Mi
+      cpu: 15m
+      memory: 120Mi
     limits:
-      cpu: 190m
-      memory: 900Mi
+      cpu: 150m
+      memory: 30000Mi
 
 m1m3-ess113:
   enabled: true

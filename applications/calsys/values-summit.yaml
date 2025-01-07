@@ -3,12 +3,26 @@ atmonochromator:
   image:
     repository: ts-dockerhub.lsst.org/atmonochromator
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 97Mi
 
 atwhitelight:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/atwhitelight
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 80m
+      memory: 384Mi
+    requests:
+      cpu: 8m
+      memory: 128Mi
 
 cbp:
   enabled: true
