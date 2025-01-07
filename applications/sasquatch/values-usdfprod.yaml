@@ -63,7 +63,7 @@ strimzi-kafka:
                   operator: In
                   values:
                     - sdfk8sn004
-                    - sdfk8sn005
+                    - sdfk8sn003
                     - sdfk8sn007
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
