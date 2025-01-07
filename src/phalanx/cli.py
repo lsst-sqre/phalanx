@@ -419,6 +419,35 @@ def application_update_shared_chart_version(
     storage.update_shared_chart_version(chart, version)
 
 
+@application.group()
+def telescope() -> None:
+    """Commands specific to the telescope project."""
+
+
+@telescope.command("check-revs")
+@click.argument("environment")
+@click.option(
+    "-c",
+    "--config",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Path to root of Phalanx configuration.",
+)
+@_report_usage_errors
+def check_telescope_revisions(
+    environment: str, *, config: Path | None
+) -> None:
+    """Check revisions on control-system applications.
+
+    This function will flag application specific revisions.
+    """
+    if not config:
+        config = _find_config()
+    factory = Factory(config)
+    storage = factory.create_config_storage()
+    storage.check_telescope_revisions(environment)
+
+
 @main.group()
 def environment() -> None:
     """Commands for Phalanx environment configuration."""
