@@ -69,6 +69,7 @@
 | applications.strimzi | bool | `false` | Enable the strimzi application |
 | applications.strimzi-access-operator | bool | `false` | Enable the strimzi-access-operator application |
 | applications.tap | bool | `false` | Enable the tap application |
+| applications.tasso | bool | `false` | Enable the tasso application |
 | applications.telegraf | bool | `false` | Enable the telegraf application |
 | applications.telegraf-ds | bool | `false` | Enable the telegraf-ds application |
 | applications.templatebot | bool | `false` | Enable the templatebot application |

@@ -1,0 +1,8 @@
+apiVersion: v2
+appVersion: 0.1.0
+description: Cutout labeling service
+name: tasso
+sources:
+- https://github.com/lsst-dm/tasso
+type: application
+version: 1.0.0
