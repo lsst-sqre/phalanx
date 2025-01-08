@@ -14,6 +14,7 @@ tests:
           path: "data['config.yaml']"
           value: |
             autostart: []
+            availableServices: []
             githubCiApp: null
             githubRefreshApp: null
             logLevel: INFO
