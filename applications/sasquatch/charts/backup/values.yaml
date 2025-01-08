@@ -34,6 +34,9 @@ backupItems:
     retention_days: 7
   - name: "influxdb-enterprise-incremental"
     enabled: false
+  - name: "influxdb-oss"
+    enabled: false
+    retention_days: 3
 
 # -- Affinity rules for the backups deployment pod
 affinity: {}
