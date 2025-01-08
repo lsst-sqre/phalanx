@@ -1,3 +1,31 @@
+audio-broadcaster:
+  image:
+    repository: ts-dockerhub.lsst.org/audio_broadcaster
+    pullPolicy: Always
+  ingress:
+    hostname: summit-lsp.lsst.codes
+    httpPath: /audio-broadcaster
+    pathType: Exact
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+      nginx.ingress.kubernetes.io/rewrite-target: /audio_feed
+  env:
+    WEBSERVER_PORT: 8888
+  microphones:
+  - name: auxtel1
+    host: auxtel-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: dynalene1
+    host: dynalene-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: mtdome1
+    host: mtdome-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: tma1
+    host: tma-rpi-audio01.cp.lsst.org
+    port: 4444
+
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
