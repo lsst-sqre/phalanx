@@ -7,7 +7,7 @@ replicaCount: 1
 
 image:
   # -- Image to use in the tasso deployment
-  repository: "ghcr.io/lsst-sqre/tasso"
+  repository: "ghcr.io/lsst-dm/tasso"
 
   # -- Pull policy for the tasso image
   pullPolicy: "IfNotPresent"
