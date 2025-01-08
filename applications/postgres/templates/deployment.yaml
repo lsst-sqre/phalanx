@@ -110,6 +110,17 @@ spec:
                   name: "postgres"
                   key: "timessquare_password"
             {{- end }}
+            {{- with .Values.cmservice_db }}
+            - name: "VRO_DB_CMSERVICE_USER"
+              value: {{ .user | quote }}
+            - name: "VRO_DB_CMSERVICE_DB"
+              value: {{ .db | quote }}
+            - name: "VRO_DB_CMSERVICE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: "postgres"
+                  key: "cmservice_password"
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           ports:
