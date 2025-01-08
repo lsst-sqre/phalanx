@@ -30,6 +30,12 @@ config:
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false
 
+  # -- database connection url
+  databaseUrl: ""
+
+  # -- database schema
+  databaseSchema: "tasso"
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

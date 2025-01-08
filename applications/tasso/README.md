@@ -11,6 +11,8 @@ Cutout labeling service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the tasso deployment pod |
+| config.databaseSchema | string | `"tasso"` | database schema |
+| config.databaseUrl | string | `""` | database connection url |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
 | config.pathPrefix | string | `"/tasso"` | URL path prefix |
