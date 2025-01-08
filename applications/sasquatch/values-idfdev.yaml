@@ -175,3 +175,6 @@ backup:
       retention_days: 3
     - name: "influxdb-enterprise-incremental"
       enabled: true
+    - name: "influxdb-oss"
+      enabled: true
+      retention_days: 3
