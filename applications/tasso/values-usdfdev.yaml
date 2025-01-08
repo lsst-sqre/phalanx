@@ -8,3 +8,5 @@ image:
 
 config:
   logLevel: "DEBUG"
+
+  databaseUrl: "postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu/lsst-devl"
