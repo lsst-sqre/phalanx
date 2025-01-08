@@ -32,3 +32,8 @@ applications:
   telegraf: true
   telegraf-ds: true
   uws: true
+
+controlSystem:
+  imageTag: "k0003"
+  siteTag: "summit"
+  s3EndpointUrl: "https://s3.cp.lsst.org"
