@@ -10,6 +10,8 @@ dependencies:
   alias: love-commander
   version: 1.0.0
   repository: file://../../charts/csc
+- name: audio-broadcaster
+  version: 1.0.0
 - name: love-manager
   version: 1.0.0
 - name: love-nginx

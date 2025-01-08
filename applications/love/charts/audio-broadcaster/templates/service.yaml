@@ -1,0 +1,21 @@
+{{- range $index, $mic := .Values.microphones }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  nameOverride: {{ $.Values.fullnameOverride }}
+  name: {{ include "audio-broadcaster.fullname" $ }}-service-{{ add $index 1 }}
+  namespace: {{ $.Values.namespace }}
+  labels:
+    {{- include "audio-broadcaster.labels" $ | nindent 4 }}
+spec:
+  selector:
+    app.kubernetes.io/instance: {{ include "audio-broadcaster.fullname" $ }}-{{ add $index 1 }}
+  type: {{ $.Values.serviceType }}
+  ports:
+    - port: {{ $.Values.ports.container }}
+      targetPort: {{ $.Values.env.WEBSERVER_PORT }}
+      {{- if ne $.Values.serviceType "ClusterIP" }}
+      nodePort: {{ $.Values.ports.node }}
+      {{- end }}
+{{- end }}
