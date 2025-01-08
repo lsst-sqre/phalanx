@@ -1,0 +1,30 @@
+image:
+  pullPolicy: "Always"
+  tag: "tickets-dm-48332"
+config:
+  registries:
+   - category: "pkg.dev"
+     registry: "https://us-central1-docker.pkg.dev"
+     owner: "rubin-shared-services-71ec"
+     namespace: "sciplat"
+     repository: "sciplat-lab"
+     keep:
+       untagged:
+         number: 4
+       semver: null
+       rsp:
+         release:
+           age: "1096d"
+         weekly:
+           number: 78
+         daily:
+           number: 25
+         releaseCandidate:
+           number: 5
+         experimental:
+           age: "30d"
+         unknown:
+           age: "7d"
+     image_version_class: "rsp"
+     dry_run: True
+     debug: True

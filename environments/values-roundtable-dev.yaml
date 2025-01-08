@@ -17,6 +17,7 @@ applications:
   monitoring: true
   onepassword-connect: true
   ook: true
+  reaper: true
   sasquatch: true
   squarebot: true
   sqrbot-sr: false

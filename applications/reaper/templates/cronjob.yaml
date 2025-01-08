@@ -1,0 +1,54 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reaper
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          {{- with .Values.cronjob.tolerations }}
+          tolerations:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          {{- with .Values.cronjob.affinity }}
+          affinity:
+{{ toYaml . | indent 12 }}
+          {{- end }}
+          containers:
+          - name: reaper
+            image: "{{ .Values.cronjob.image.repository }}:{{ .Values.cronjob.image.tag | default .Chart.AppVersion }}"
+            imagePullPolicy: "{{ .Values.cronjob.image.pullPolicy }}"
+            {{- with .Values.cronjob.resources }}
+            resources:
+{{ toYaml . | indent 14 }}
+            {{- end }}
+            securityContext:
+              allowPrivilegeEscalation: false
+              runAsNonRoot: true
+              runAsUser: 1000
+              runAsGroup: 1000
+              capabilities:
+                drop:
+                  - all
+              readOnlyRootFilesystem: true
+            env:
+              - name: "GHCR_TOKEN"
+                valueFrom:
+                  secretKeyRef:
+                    name: "reaper"
+                    key:  "ghcr-token"
+              - name: "DOCKERHUB_USER"
+                valueFrom:
+                  secretKeyRef:
+                    name: "reaper"
+                    key: "dockerhub-user"
+              - name: "DOCKERHUB_PASSWORD"
+                valueFrom:
+                  secretKeyRef:
+                    name: "reaper"
+                    key: "dockerhub-password"
