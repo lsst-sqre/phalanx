@@ -52,6 +52,7 @@ tests:
           path: "data['config.yaml']"
           value: |
             autostart: []
+            availableServices: []
             githubCiApp:
               acceptedGithubOrgs:
               - org1
