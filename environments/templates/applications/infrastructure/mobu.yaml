@@ -31,4 +31,8 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+      valuesObject:
+        config:
+          availableServices:
+            {{- include "enabledServicesYamlList" . | nindent 12 }}
 {{- end -}}
