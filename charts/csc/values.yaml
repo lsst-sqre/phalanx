@@ -40,6 +40,12 @@ configfile: {}
 # _dbUser_ (The username for the Butler backend database),
 # _secretFilename_ (The expected secret file name to copy)
 butlerSecret: {}
+# -- This key specifies the secret files needing to have permissions fixed.
+# If this section is used, it must contain the following attributes:
+# _containerPath_ (The directory location for the secrets),
+# _filenames_ (A list of secret file names),
+# _specialInstructions_ (OPTIONAL: A set of shell commads to add to the permission fixing)
+secretFixup: {}
 # -- This key allows for the specification of a pod security context for volumes.
 # If this section is used, it must contain the following attributes:
 # _user_ (The user id for the volumes)

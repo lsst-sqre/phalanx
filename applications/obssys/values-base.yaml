@@ -1,3 +1,14 @@
+x-butler-secret:
+  &butler-secret
+  butlerSecret:
+    containerPath: &bs-cp /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
+
 atqueue:
   classifier: scriptqueue2
   image:
@@ -19,10 +30,7 @@ atqueue:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
-  butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
-    dbUser: &bS-dbU oods
-    secretFilename: &bS-sFn postgres-credentials.txt
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -122,10 +130,7 @@ mtqueue:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
-  butlerSecret:
-    containerPath: *bS-cP
-    dbUser: *bS-dbU
-    secretFilename: *bS-sFn
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -225,10 +230,7 @@ ocsqueue:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
-  butlerSecret:
-    containerPath: *bS-cP
-    dbUser: *bS-dbU
-    secretFilename: *bS-sFn
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS

@@ -1,3 +1,14 @@
+x-butler-secret:
+  &butler-secret
+  butlerSecret:
+    containerPath: &bs-cp /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
+
 atqueue:
   classifier: scriptqueue2
   image:
@@ -7,10 +18,7 @@ atqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
-  butlerSecret:
-    containerPath: &bS-cP /home/saluser/.lsst
-    dbUser: &bS-dbU oods
-    secretFilename: &bS-sFn postgres-credentials.txt
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -94,10 +102,7 @@ mtqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
-  butlerSecret:
-    containerPath: *bS-cP
-    dbUser: *bS-dbU
-    secretFilename: *bS-sFn
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -181,10 +186,7 @@ ocsqueue:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
-  butlerSecret:
-    containerPath: *bS-cP
-    dbUser: *bS-dbU
-    secretFilename: *bS-sFn
+  <<: *butler-secret
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS

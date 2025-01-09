@@ -1,3 +1,14 @@
+x-butler-secret:
+  &butler-secret
+  butlerSecret:
+    containerPath: &bs-cp /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
+
 lasertracker1-sim:
   enabled: true
   image:
@@ -47,10 +58,7 @@ mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
-  butlerSecret:
-    containerPath: /home/saluser/.lsst
-    dbUser: oods
-    secretFilename: postgres-credentials.txt
+  <<: *butler-secret
   nfsMountpoint:
   - name: scratch
     containerPath: /scratch
@@ -208,10 +216,7 @@ mtoods:
   envSecrets:
   - name: AWS_SECRET_ACCESS_KEY
     key: oods-lsstcam-secret-key
-  butlerSecret:
-    containerPath: /home/saluser/.lsst
-    dbUser: oods
-    secretFilename: postgres-credentials.txt
+  <<: *butler-secret
   resources:
     limits:
       cpu: 1000m
