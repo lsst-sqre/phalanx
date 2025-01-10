@@ -10,5 +10,9 @@ gafaelfawr_db:
 timessquare_db:
   user: "timessquare"
   db: "timessquare"
+rubintv_db:
+  user: "rubintv"
+  db: "rubintv"
+
 
 postgresStorageClass: 'wekafs--sdf-k8s01'
