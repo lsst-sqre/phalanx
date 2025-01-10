@@ -194,7 +194,7 @@ backup:
   backupItems:
     - name: "chronograf"
       enabled: true
-      retention_days: 7
+      retentionDays: 7
     - name: "kapacitor"
       enabled: true
-      retention_days: 7
+      retentionDays: 7

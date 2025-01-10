@@ -24,19 +24,19 @@ persistence:
   # @default -- "" (empty string) to use the cluster default storage class
   storageClass: ""
 
-# -- List of items to backup, must match the names in the sasquatch backup script
+# -- List of items to backup using the sasquatch backup script
 backupItems:
   - name: "chronograf"
     enabled: false
-    retention_days: 7
+    retentionDays: 7
   - name: "kapacitor"
     enabled: false
-    retention_days: 7
+    retentionDays: 7
   - name: "influxdb-enterprise-incremental"
     enabled: false
   - name: "influxdb-oss"
     enabled: false
-    retention_days: 3
+    retentionDays: 3
 
 # -- Affinity rules for the backups deployment pod
 affinity: {}
