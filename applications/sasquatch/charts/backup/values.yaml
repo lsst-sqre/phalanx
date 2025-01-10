@@ -38,6 +38,14 @@ backupItems:
     enabled: false
     retentionDays: 3
 
+# -- List of items to restore using the sasquatch restore script
+# name must match an item in backupItems
+# backupDate must be in the "YYYY-MM-DD" format
+restoreItems:
+  - name: "influxdb-oss"
+    enabled: false
+    backupDate: ""
+
 # -- Affinity rules for the backups deployment pod
 affinity: {}
 

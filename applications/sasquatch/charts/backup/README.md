@@ -16,5 +16,6 @@ Backup Sasquatch data
 | persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | resources | object | `{}` | Resource limits and requests for the backups deployment pod |
+| restoreItems | list | `[{"backupDate":"","enabled":false,"name":"influxdb-oss"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupDate must be in the "YYYY-MM-DD" format |
 | schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | tolerations | list | `[]` | Tolerations for the backups deployment pod |
