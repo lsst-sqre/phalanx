@@ -153,7 +153,6 @@ mtm1m3-sim:
   resources:
     limits:
       cpu: 1000m
-      memory: 10000Mi
     requests:
       cpu: 100m
       memory: 1000Mi
@@ -275,7 +274,6 @@ mtptg:
   resources:
     limits:
       cpu: 1200m
-      memory: 6000Mi
     requests:
       cpu: 120m
       memory: 1500Mi
