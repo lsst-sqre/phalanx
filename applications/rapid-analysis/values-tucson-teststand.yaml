@@ -205,13 +205,6 @@ comcamWorkerSet:
       memory: 8G
 comcamGather2aSet:
   name: LSSTComCam/runStep2aWorker.py
-  resources:
-    requests:
-      cpu: 1m
-      memory: 2G
-    limits:
-      cpu: 1
-      memory: 4G
   mounts:
   - comcam-data
   - comcam-gen3-data
