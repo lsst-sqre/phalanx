@@ -39,6 +39,13 @@ spec:
             {{- if (not .Values.frontend.debug) }}
             - name: "SAFIR_PROFILE"
               value: "production"
+            - name: "PG_USER"
+              value: "rubintv"
+            - name: "PG_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "rubintv.fullname" . }}-secrets
+                  key: "sqlDatabasePassword"
             {{- end }}
             {{- with .Values.frontend.env }}
             {{- toYaml . | nindent 12 }}
