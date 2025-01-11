@@ -8,7 +8,7 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/dm48279T3-config.py"
+  apdbConfig: "/sdf/group/rubin/user/sullii/tickets/DM-48279/dm48279T4-config.py"
 
   # -- PPDB config file resource
   ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-6.yaml"
