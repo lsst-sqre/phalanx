@@ -108,7 +108,7 @@ Rubin Observatory's telemetry service
 | app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
 | backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
-| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
 | backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
 | backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
 | backup.image.tag | string | The appVersion of the chart | Tag of image to use |
@@ -117,7 +117,7 @@ Rubin Observatory's telemetry service
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restoreItems | list | `[{"backupDate":"","enabled":false,"name":"influxdb-oss"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupDate must be in the "YYYY-MM-DD" format |
+| backup.restoreItems | list | `[{"backupDate":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupDate must be in the "YYYY-MM-DD" format |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |

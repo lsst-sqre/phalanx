@@ -178,10 +178,10 @@ backup:
       retentionDays: 3
     - name: "influxdb-enterprise-incremental"
       enabled: true
-    - name: "influxdb-oss"
+    - name: "influxdb-oss-full"
       enabled: true
       retentionDays: 3
   restoreItems:
-    - name: "influxdb-oss"
+    - name: "influxdb-oss-full"
       enabled: true
       backupDate: "2025-01-10"

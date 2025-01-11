@@ -34,7 +34,7 @@ backupItems:
     retentionDays: 7
   - name: "influxdb-enterprise-incremental"
     enabled: false
-  - name: "influxdb-oss"
+  - name: "influxdb-oss-full"
     enabled: false
     retentionDays: 3
 
@@ -42,7 +42,7 @@ backupItems:
 # name must match an item in backupItems
 # backupDate must be in the "YYYY-MM-DD" format
 restoreItems:
-  - name: "influxdb-oss"
+  - name: "influxdb-oss-full"
     enabled: false
     backupDate: ""
 
