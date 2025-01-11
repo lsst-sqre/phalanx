@@ -117,7 +117,7 @@ Rubin Observatory's telemetry service
 | backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
 | backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
 | backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
-| backup.restoreItems | list | `[{"backupDate":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupDate must be in the "YYYY-MM-DD" format |
+| backup.restoreItems | list | `[{"backupTimestamp":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupTimestamp must be in the YYYYMMDDTHHMMSSZ format |
 | backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
 | backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
