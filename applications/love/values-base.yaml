@@ -4,6 +4,7 @@ love-commander:
     pullPolicy: Always
   env:
     S3_INSTANCE: ls
+    COMMAND_TIMEOUTS: 20
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
