@@ -130,8 +130,6 @@ jobs:
         if: steps.filter.outputs.minikube == 'true'
         uses: medyagh/setup-minikube@latest
         with:
-          minikube-version: "v1.34.0"
-          kubernetes-version: "v1.31.4"
           cpus: max
           memory: 5500m  # Linux virtual machines have 7GB of RAM
 
