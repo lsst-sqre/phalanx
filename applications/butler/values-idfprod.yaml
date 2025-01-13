@@ -1,3 +1,5 @@
+autoscaling:
+  minReplicas: 3
 config:
   dp02ClientServerIsDefault: true
   dp02PostgresUri: postgresql://postgres@10.163.0.3/idfdp02

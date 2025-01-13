@@ -11,10 +11,10 @@ Server for Butler data abstraction service
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the butler deployment pod |
-| autoscaling.enabled | bool | `false` | Enable autoscaling of butler deployment |
-| autoscaling.maxReplicas | int | `100` | Maximum number of butler deployment pods |
+| autoscaling.enabled | bool | `true` | Enable autoscaling of butler deployment |
+| autoscaling.maxReplicas | int | `10` | Maximum number of butler deployment pods  Each replica can have 40 database connections, so we need to make sure the combined connections are under the postgres connection limit. (Which is configurable, but currently set to 400 at the IDF.) |
 | autoscaling.minReplicas | int | `1` | Minimum number of butler deployment pods |
-| autoscaling.targetCPUUtilizationPercentage | int | `80` | Target CPU utilization of butler deployment pods |
+| autoscaling.targetCPUUtilizationPercentage | int | `25` | Target CPU utilization of butler deployment pods  Butler CPU usage is very low in normal operation because most things are I/O bound.  CPU usage can start creeping up if we have many queries running simultaneously (due to serialization overhead and spatial postprocessing.) In this case the thread pool and database connection pool are probably oversubscribed long before we hit 100% cpu usage, so we want to get more replicas up at fairly low CPU usage. |
 | config.additionalS3EndpointUrls | object | No additional URLs | Endpoint URLs for additional S3 services used by the Butler, as a mapping from profile name to URL. |
 | config.dp02ClientServerIsDefault | bool | `false` | True if the 'dp02' Butler repository alias should use client/server Butler.  False if it should use DirectButler. |
 | config.dp02PostgresUri | string | No configuration file for DP02 will be generated. | Postgres connection string pointing to the registry database hosting Data Preview 0.2 data. |
