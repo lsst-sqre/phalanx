@@ -24,9 +24,9 @@ def test_environments() -> None:
         for v in sorted(root_path.glob("values-*.yaml"))
     ]
     for environment_name in environments:
-        assert (
-            environment_name in seen_dir
-        ), f"{environment_name} not documented in docs/environments"
-        assert (
-            environment_name in seen_index
-        ), f"{environment_name} not linked in docs/environments/index.rst"
+        assert environment_name in seen_dir, (
+            f"{environment_name} not documented in docs/environments"
+        )
+        assert environment_name in seen_index, (
+            f"{environment_name} not linked in docs/environments/index.rst"
+        )

@@ -352,9 +352,9 @@ fastavro==1.10.0 \
     # via
     #   dataclasses-avroschema
     #   python-schema-registry-client
-faststream==0.5.33 \
-    --hash=sha256:24b3b48dff4195c63141864fae24608c4e3e08c9172faccc74b0c46d6d88f665 \
-    --hash=sha256:d40761c9f5db9b2cee69748832c4ead20d61805c439d3fbe3107fe4c9a066b2d
+faststream==0.5.34 \
+    --hash=sha256:84615968c5768ebaa89b72ae66b53e5302c08e7d18b341ef5193e54cb6ba8623 \
+    --hash=sha256:aa7f61d6968a68f13ebf755cce9e8bf11b00717c28b2ef66e896b5d652a6c6a2
     # via safir
 gidgethub==5.3.0 \
     --hash=sha256:4dd92f2252d12756b13f9dd15cde322bfb0d625b6fb5d680da1567ec74b462c0 \
@@ -484,9 +484,9 @@ pycparser==2.22 ; platform_python_implementation != 'PyPy' \
     --hash=sha256:491c8be9c040f5390f5bf44a5b07752bd07f56edf992381b05c701439eec10f6 \
     --hash=sha256:c3702b6d3dd8c7abc1afa565d7e63d53a1d0bd86cdc24edd75470f4de499cfcc
     # via cffi
-pydantic==2.10.4 \
-    --hash=sha256:597e135ea68be3a37552fb524bc7d0d66dcf93d395acd93a00682f1efcb8ee3d \
-    --hash=sha256:82f12e9723da6de4fe2ba888b5971157b3be7ad914267dea8f05f82b28254f06
+pydantic==2.10.5 \
+    --hash=sha256:278b38dbbaec562011d659ee05f63346951b3a248a6f3642e1bc68894ea2b4ff \
+    --hash=sha256:4dd4e322dbe55472cb7ca7e73f4b63574eecccf2835ffa2af9021ce113c83c53
     # via
     #   phalanx (pyproject.toml)
     #   fast-depends
