@@ -94,6 +94,10 @@ mtrotator-sim:
   # -- Enable the MTRotator simulator CSC
   enabled: false
 
+mtvms-m1m3-sim:
+  # -- Enable the MTVMS:1 simulator CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

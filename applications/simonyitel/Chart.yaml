@@ -143,3 +143,8 @@ dependencies:
   version: 1.0.0
   condition: mtrotator-sim.enabled
   repository: file://../../charts/csc
+- name: csc
+  alias: mtvms-m1m3-sim
+  version: 1.0.0
+  condition: mtvms-m1m3-sim.enabled
+  repository: file://../../charts/csc

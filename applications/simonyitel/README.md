@@ -41,3 +41,4 @@ Deployment for the Simonyi Survey Telescope CSCs
 | mtmount.enabled | bool | `false` | Enable the MTMount CSC |
 | mtrotator-sim.enabled | bool | `false` | Enable the MTRotator simulator CSC |
 | mtrotator.enabled | bool | `false` | Enable the MTRotator CSC |
+| mtvms-m1m3-sim.enabled | bool | `false` | Enable the MTVMS:1 simulator CSC |
