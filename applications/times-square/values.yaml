@@ -119,6 +119,10 @@ config:
   # @default -- None, must be set
   databaseUrl: ""
 
+  # -- Whether to run the database migration job
+  # @default -- false to disable schema upgrades
+  updateSchema: false
+
   # -- URL for Redis html / noteburst job cache database
   # @default -- Points to embedded Redis
   redisCacheUrl: "redis://times-square-redis:6379/0"
