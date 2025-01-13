@@ -296,3 +296,7 @@ redis:
     limits:
       cpu: 1
       memory: 50Gi
+squid:
+  enabled: true
+  podAnnotations:
+    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
