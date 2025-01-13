@@ -23,6 +23,7 @@ Deployment for the Simonyi Survey Telescope CSCs
 | lasertracker1.enabled | bool | `false` | Enable the LaserTracker:1 CSC |
 | m1m3-sim.enabled | bool | `false` | Enable the MTM1M3 simulator CSC |
 | m1m3.enabled | bool | `false` | Enable the MTM1M3 hardware simulator CSC |
+| m1m3ts-sim.enabled | bool | `false` | Enable the MTM1M3TS simulator CSC |
 | mtaircompressor1-sim.enabled | bool | `false` | Enable the MTAirCompressor:1 simulator CSC |
 | mtaircompressor1.enabled | bool | `false` | Enable the MTAirCompressor:1 CSC |
 | mtaircompressor2-sim.enabled | bool | `false` | Enable the MTAirCompressor:2 simulator CSC |

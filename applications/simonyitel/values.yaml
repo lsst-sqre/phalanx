@@ -58,6 +58,10 @@ m1m3-sim:
   # -- Enable the MTM1M3 simulator CSC
   enabled: false
 
+m1m3ts-sim:
+  # -- Enable the MTM1M3TS simulator CSC
+  enabled: false
+
 mtm2:
   # -- Enable the MTM2 CSC
   enabled: false

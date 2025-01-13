@@ -157,6 +157,12 @@ mtm1m3-sim:
       cpu: 100m
       memory: 1000Mi
 
+mtm1m3ts-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/mtm1m3ts_sim
+    pullPolicy: Always
+
 mtm2-sim:
   enabled: true
   image:

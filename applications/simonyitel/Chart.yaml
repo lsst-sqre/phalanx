@@ -90,6 +90,11 @@ dependencies:
   condition: mtm1m3-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: mtm1m3ts-sim
+  version: 1.0.0
+  condition: mtm1m3ts-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: mtm2
   version: 1.0.0
   condition: mtm2.enabled
