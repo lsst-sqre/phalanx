@@ -234,6 +234,13 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
       debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
     obsenv:
       enabled: true
       database: "lsst.obsenv"
