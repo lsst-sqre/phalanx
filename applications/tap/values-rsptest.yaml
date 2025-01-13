@@ -1,10 +1,14 @@
-config:
-  gcsBucket: "async-test"
-  gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
-  gcsBucketType: "S3"
-  jvmMaxHeapSize: "31G"
+cadc-tap:
+  tapSchema:
+    image:
+      repository: "lsstuk/tap-schema-roe"
+      tag: "2.3.0"
 
-qserv:
-  host: "192.41.122.79:30040"
-  mock:
-    enabled: false
+  config:
+    gcsBucket: "async-test"
+    gcsBucketUrl: "https://somerville.ed.ac.uk:6780"
+    gcsBucketType: "S3"
+    jvmMaxHeapSize: "31G"
+
+    qserv:
+      host: "192.41.122.85:30040"

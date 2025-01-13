@@ -3,20 +3,18 @@ redis:
     enabled: false
 
 config:
-  updateSchema: false
   internalDatabase: true
-  #databaseUrl: "postgresql://gafaelfawr@postgres.postgres/gafaelfawr"
+
+  oidcServer:
+    enabled: true
+
+  updateSchema: false
 
   github:
     clientId: "c4a5727c5788cc2d346e"
 
-  # Allow access by GitHub team.
   groupMapping:
     "exec:admin":
-      - github:
-          organization: "lsp-uk"
-          team: "dev"
-    "exec:notebook":
       - github:
           organization: "lsp-uk"
           team: "dev"
@@ -24,26 +22,14 @@ config:
       - github:
           organization: "lsp-uk"
           team: "dev"
+    "exec:notebook":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
     "exec:portal":
       - github:
           organization: "lsp-uk"
           team: "dev"
-    # "exec:user":
-    #   - github:
-    #       organization: "lsp-uk"
-    #       team: "dev"
-    # "read:workspace":
-    #   - github:
-    #       organization: "lsp-uk"
-    #       team: "dev"
-    # "read:workspace/user":
-    #   - github:
-    #       organization: "lsp-uk"
-    #       team: "dev"
-    # "write:workspace/user":
-    #   - github:
-    #       organization: "lsp-uk"
-    #       team: "dev"
     "read:image":
       - github:
           organization: "lsp-uk"
@@ -56,3 +42,4 @@ config:
   initialAdmins:
     - "gpfrancis"
     - "aibsen"
+    - "davedavemckay"
