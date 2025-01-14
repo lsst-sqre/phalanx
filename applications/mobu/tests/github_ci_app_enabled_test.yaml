@@ -75,4 +75,6 @@ tests:
                 suffix: ""
             pathPrefix: /mobu
             profile: production
+            sentryEnvironment: null
+            sentryTracesSampleConfig: 0
             slackAlerts: true

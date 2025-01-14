@@ -25,6 +25,8 @@ Continuous integration testing
 | config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/mobu"` | Prefix for mobu's API routes. |
 | config.profile | string | `"production"` | One of 'production' or 'development'. 'production' configures structured JSON logging, and 'development' configures unstructured human readable logging. |
+| config.sentryEnvironment | string | `nil` | The environment to report to Sentry |
+| config.sentryTracesSampleConfig | float | `0` | Sentry tracing config: a float to specify a percentage, or "errors" to send all transactions with errors. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
