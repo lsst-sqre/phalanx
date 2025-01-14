@@ -28,6 +28,8 @@ tests:
                 suffix: ""
             pathPrefix: /mobu
             profile: production
+            sentryEnvironment: null
+            sentryTracesSampleConfig: 0
             slackAlerts: true
   - it: "Should not inject GitHub CI app secrets into the Deployment env"
     template: "deployment.yaml"
