@@ -162,6 +162,9 @@ cloudsql:
     # -- Cloud SQL Auth Proxy tag to use
     tag: "1.37.3"
 
+    # -- Tag suffix to use for the proxy for schema updates
+    schemaUpdateTagSuffix: "-alpine"
+
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
