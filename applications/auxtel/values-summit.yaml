@@ -105,9 +105,13 @@ atoods:
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
-    containerPath: /home/saluser/.lsst
+    containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
-    secretFilename: postgres-credentials.txt
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
