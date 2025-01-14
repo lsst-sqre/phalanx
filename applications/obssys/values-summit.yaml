@@ -80,7 +80,7 @@ atqueue:
   resources:
     limits:
       cpu: 1000m
-      memory: 1700Mi
+      memory: 10Gi
     requests:
       cpu: 100m
       memory: 580Mi
@@ -217,7 +217,7 @@ mtqueue:
   resources:
     limits:
       cpu: 1000m
-      memory: 1500Mi
+      memory: 10Gi
     requests:
       cpu: 100m
       memory: 430Mi
@@ -334,7 +334,7 @@ ocsqueue:
   resources:
     limits:
       cpu: 1000m
-      memory: 1500Mi
+      memory: 10Gi
     requests:
       cpu: 100m
       memory: 430Mi
