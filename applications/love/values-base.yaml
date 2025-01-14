@@ -583,6 +583,9 @@ love-producer:
       limits:
         cpu: 500m
         memory: 600Mi
+  - name: mtm1m3ts
+    csc: MTM1M3TS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtm2
     csc: MTM2:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -604,6 +607,9 @@ love-producer:
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+  - name: mtvmsm1m3
+    csc: MTVMS:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
