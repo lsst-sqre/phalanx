@@ -30,24 +30,24 @@ prompt-proto-service:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml
         - survey: BLOCK-T17  # daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml']
-        - {survey: cwfs, pipelines: []}
-        - {survey: cwfs-focus-sweep, pipelines: []}
         - {survey: spec-survey, pipelines: []}
         # photon transfer curve calibrations
         - {survey: BLOCK-271, pipelines: []}
         # the daily calibration sequence as of May 27, 2024
         - {survey: BLOCK-295, pipelines: []}
         - {survey: "", pipelines: []}
+        # Ignore anything else
+        - {pipelines: []}
       preprocessing: |-
         - survey: BLOCK-306
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
         - {survey: BLOCK-T17, pipelines: []}
-        - {survey: cwfs, pipelines: []}
-        - {survey: cwfs-focus-sweep, pipelines: []}
         - {survey: spec-survey, pipelines: []}
         - {survey: BLOCK-271, pipelines: []}
         - {survey: BLOCK-295, pipelines: []}
         - {survey: "", pipelines: []}
+        # No preprocessing for anything else
+        - {pipelines: []}
     calibRepo: s3://rubin-summit-users
 
   s3:
