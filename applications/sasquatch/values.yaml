@@ -36,7 +36,7 @@ influxdb:
 
   image:
     # -- InfluxDB image tag
-    tag: "1.8.10"
+    tag: "1.11.8"
 
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
@@ -77,6 +77,12 @@ influxdb:
     # -- Path for the ingress
     # @default -- `"/influxdb(/\|$)(.*)"`
     path: "/influxdb(/|$)(.*)"
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1500
+    runAsGroup: 1500
+    fsGroup: 1500
 
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
