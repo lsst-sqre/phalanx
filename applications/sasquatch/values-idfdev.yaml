@@ -163,9 +163,6 @@ app-metrics:
 
 backup:
   enabled: true
-  image:
-    tag: tickets-DM-48369
-    pullPolicy: Always
   persistence:
     size: 500Gi
     storageClass: standard

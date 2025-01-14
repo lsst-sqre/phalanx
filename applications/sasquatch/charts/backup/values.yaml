@@ -10,7 +10,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: "1.2.0"
+  tag: "1.3.0"
 
 # -- Schedule for executing the sasquatch backup script
 # @default -- "0 3 * * *"
