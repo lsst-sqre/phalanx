@@ -51,7 +51,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
 | influxdb.config.logging.level | string | `"debug"` | Logging level |
 | influxdb.enabled | bool | `true` | Whether InfluxDB is enabled |
-| influxdb.image.tag | string | `"1.8.10"` | InfluxDB image tag |
+| influxdb.image.tag | string | `"1.11.8"` | InfluxDB image tag |
 | influxdb.ingress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
 | influxdb.ingress.className | string | `"nginx"` | Ingress class to use |
 | influxdb.ingress.enabled | bool | `false` | Whether to enable the InfluxDB ingress |
@@ -62,6 +62,10 @@ Rubin Observatory's telemetry service
 | influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
 | influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
+| influxdb.securityContext.fsGroup | int | `1500` |  |
+| influxdb.securityContext.runAsGroup | int | `1500` |  |
+| influxdb.securityContext.runAsNonRoot | bool | `true` |  |
+| influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
