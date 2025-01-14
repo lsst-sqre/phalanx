@@ -15,8 +15,6 @@ scripts:
   - auxtel-gen3-data
   - allsky-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -34,15 +32,11 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runImExaminer.py
   mounts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runIsrRunner.py
   mounts:
   - auxtel-data
@@ -58,15 +52,11 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runMonitor.py
   mounts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -79,22 +69,16 @@ scripts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runNightReporter.py
   mounts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/auxTel/runSpecExaminer.py
   mounts:
   - auxtel-data
   - auxtel-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -120,15 +104,11 @@ scripts:
 #   - comcam-data
 #   - comcam-gen3-data
 #   - project-shared
-#   podAnnotations:
-#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 # - name: LSSTComCamSim/runPlotter.py
 #   mounts:
 #   - comcam-data
 #   - comcam-gen3-data
 #   - project-shared
-#   podAnnotations:
-#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 #   resources:
 #     requests:
 #       cpu: 0.5
@@ -144,8 +124,6 @@ scripts:
 #   - comcam-data
 #   - comcam-gen3-data
 #   - project-shared
-#   podAnnotations:
-#     k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 #   resources:
 #     requests:
 #       cpu: 32
@@ -158,8 +136,6 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.5
@@ -172,8 +148,6 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 0.25
@@ -186,8 +160,6 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: LSSTComCam/runOneOffPostIsr.py
   mounts:
   - comcam-data
@@ -203,8 +175,6 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: .5
@@ -219,8 +189,6 @@ scripts:
   mounts:
   - allsky-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 1.0
@@ -231,13 +199,9 @@ scripts:
 - name: summit/misc/runStarTracker.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerCatchup.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 1.0
@@ -248,28 +212,18 @@ scripts:
 - name: summit/misc/runStarTrackerFast.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerMetadata.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerNightReport.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runStarTrackerWide.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: summit/misc/runTmaTelemetry.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: 1
@@ -280,8 +234,6 @@ scripts:
 - name: summit/misc/runSoarSeeingUploader.py
   mounts:
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   resources:
     requests:
       cpu: .5
@@ -317,15 +269,11 @@ scripts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: LSSTComCam/runPlotter.py
   mounts:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 ###
 ### LSSTCam pods
 ###
@@ -341,14 +289,10 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 - name: LSSTCam/runPlotter.py
   mounts:
   - lsstcam-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
 ###
 ### ComCamSim StatefulSets
 ###
@@ -445,8 +389,6 @@ comcamGather2aAosSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
   replicas: 4
   resources:
     requests:
@@ -564,5 +506,3 @@ redis:
       memory: 50Gi
 squid:
   enabled: true
-  podAnnotations:
-    k8s.v1.cni.cncf.io/networks: "kube-system/lhn"
