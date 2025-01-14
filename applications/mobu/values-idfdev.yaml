@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-48101-sentry-take3
+  pullPolicy: Always
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
