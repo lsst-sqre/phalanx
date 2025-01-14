@@ -169,12 +169,16 @@ backup:
   backupItems:
     - name: "chronograf"
       enabled: true
-      retention_days: 3
+      retentionDays: 3
     - name: "kapacitor"
       enabled: true
-      retention_days: 3
+      retentionDays: 3
     - name: "influxdb-enterprise-incremental"
       enabled: true
-    - name: "influxdb-oss"
+    - name: "influxdb-oss-full"
       enabled: true
-      retention_days: 3
+      retentionDays: 3
+  restoreItems:
+    - name: "influxdb-oss-full"
+      enabled: true
+      backupTimestamp: "20250113T030120Z"
