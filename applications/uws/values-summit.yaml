@@ -80,9 +80,9 @@ ccocps:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 500Mi
     requests:
-      cpu: 10m
+      cpu: 1m
       memory: 100Mi
 
 raocps:
@@ -101,7 +101,7 @@ raocps:
   resources:
     limits:
       cpu: 100m
-      memory: 300Mi
+      memory: 500Mi
     requests:
-      cpu: 10m
+      cpu: 1m
       memory: 100Mi

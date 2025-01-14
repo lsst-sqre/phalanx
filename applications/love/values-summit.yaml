@@ -25,6 +25,13 @@ audio-broadcaster:
   - name: tma1
     host: tma-rpi-audio01.cp.lsst.org
     port: 4444
+  resources:
+    requests:
+      cpu: 5m
+      memory: 100Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi
 
 love-commander:
   image:

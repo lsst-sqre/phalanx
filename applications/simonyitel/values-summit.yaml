@@ -28,11 +28,11 @@ ccheaderservice:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 2000m
-      memory: 2000Mi
+      cpu: 1000m
+      memory: 1500Mi
     requests:
-      cpu: 200m
-      memory: 500Mi
+      cpu: 100m
+      memory: 300Mi
 
 ccheaderservice-sim:
   enabled: false
@@ -60,11 +60,11 @@ ccheaderservice-sim:
     serverPath: /scratch/header_service
   resources:
     limits:
-      cpu: 2000m
-      memory: 2000Mi
+      cpu: 1000m
+      memory: 1500Mi
     requests:
-      cpu: 200m
-      memory: 500Mi
+      cpu: 100m
+      memory: 300Mi
 
 ccoods:
   enabled: true
@@ -87,11 +87,11 @@ ccoods:
     serverPath: /comcam
   resources:
     limits:
-      cpu: 1000m
-      memory: 700Mi
+      cpu: 100m
+      memory: 4000Mi
     requests:
-      cpu: 10m
-      memory: 345Mi
+      cpu: 1m
+      memory: 800Mi
   configfile:
     path: /etc
     filename: ccoods.yaml
@@ -170,11 +170,11 @@ gcheaderservice101:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 140m
-      memory: 400Mi
+      cpu: 2000m
+      memory: 700Mi
     requests:
-      cpu: 14m
-      memory: 130Mi
+      cpu: 200m
+      memory: 232Mi
 
 gcheaderservice102:
   enabled: true
@@ -195,11 +195,11 @@ gcheaderservice102:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 140m
-      memory: 400Mi
+      cpu: 2000m
+      memory: 700Mi
     requests:
-      cpu: 14m
-      memory: 130Mi
+      cpu: 200m
+      memory: 236Mi
 
 gcheaderservice103:
   enabled: true
@@ -220,11 +220,11 @@ gcheaderservice103:
     key: aws-secret-access-key
   resources:
     limits:
-      cpu: 140m
-      memory: 400Mi
+      cpu: 2000m
+      memory: 700Mi
     requests:
-      cpu: 14m
-      memory: 130Mi
+      cpu: 200m
+      memory: 225Mi
 
 lasertracker1:
   enabled: true
