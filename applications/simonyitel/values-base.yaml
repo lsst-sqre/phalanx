@@ -305,4 +305,4 @@ mtvms-m1m3-sim:
     repository: ts-dockerhub.lsst.org/vms_sim
     pullPolicy: Always
   env:
-    RUN_ARG: 1
+    RUN_ARG: M1M3
