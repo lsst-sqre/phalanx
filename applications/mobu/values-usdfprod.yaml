@@ -1,4 +1,5 @@
 config:
+  sentryTracesSampleConfig: errors
   autostart:
     - name: "firefighter"
       count: 1
