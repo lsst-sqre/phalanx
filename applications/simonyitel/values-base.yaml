@@ -162,6 +162,12 @@ mtm1m3ts-sim:
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3ts_sim
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 400m
+    requests:
+      cpu: 40m
+      memory: 32Mi
 
 mtm2-sim:
   enabled: true
@@ -306,3 +312,9 @@ mtvms-m1m3-sim:
     pullPolicy: Always
   env:
     RUN_ARG: M1M3
+  resources:
+    limits:
+      cpu: 250m
+    requests:
+      cpu: 25m
+      memory: 20Mi
