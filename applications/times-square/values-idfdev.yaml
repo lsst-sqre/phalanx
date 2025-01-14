@@ -3,6 +3,7 @@ image:
 ingress:
   defaultScope: "exec:admin"
 config:
+  updateSchema: true
   logLevel: "DEBUG"
   databaseUrl: "postgresql://times-square@localhost/times-square"
   githubAppId: "196798"
