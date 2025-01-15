@@ -3,6 +3,7 @@ ingress:
 
 config:
   siteName: "Rubin Science Platform @ data-int"
+  docsBaseUrl: "https://rsp.lsst.io/v/idfint"
   semaphoreUrl: "https://data-int.lsst.cloud/semaphore"
   coManageRegistryUrl: "https://id-int.lsst.cloud"
   apiAspectPageMdx: |
