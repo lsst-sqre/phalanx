@@ -1,2 +1,3 @@
 config:
   siteName: "Rubin Science Platform @ Summit"
+  docsBaseUrl: "https://rsp.lsst.io/v/summit"
