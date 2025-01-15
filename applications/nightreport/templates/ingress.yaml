@@ -9,8 +9,9 @@ config:
   {{- if .Values.ingress.auth.enabled }}
   loginRedirect: false
   scopes:
-    all:
+    any:
       - "exec:internal-tools"
+      - "exec:notebook"
   service: "nightreport"
   {{- else }}
   scopes:
