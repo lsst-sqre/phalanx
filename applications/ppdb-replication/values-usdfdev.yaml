@@ -42,3 +42,6 @@ config:
       storageClassName: sdf-group-rubin
     - name: sdf-data-rubin
       storageClassName: sdf-data-rubin
+
+image:
+  tag: tickets-DM-44098
