@@ -13,6 +13,9 @@ config:
         storageClass: "standard-rwo"
   ssotap: "ssotap"
 
+image:
+  tag: "portal-2025.2_b1"
+
 resources:
   limits:
     memory: "30Gi"
