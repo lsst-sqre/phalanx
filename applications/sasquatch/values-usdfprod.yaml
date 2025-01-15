@@ -63,7 +63,7 @@ strimzi-kafka:
                   operator: In
                   values:
                     - sdfk8sn004
-                    - sdfk8sn005
+                    - sdfk8sn003
                     - sdfk8sn007
       podAntiAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -347,6 +347,10 @@ chronograf:
   ingress:
     enabled: true
     hostname: usdf-rsp.slac.stanford.edu
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+      nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
@@ -361,3 +365,18 @@ chronograf:
 
 kapacitor:
   influxURL: http://sasquatch-influxdb-enterprise-data.sasquatch:8086
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Ti
+    storageClass: wekafs--sdf-k8s01
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7
+    - name: influxdb-enterprise-incremental
+      enabled: true

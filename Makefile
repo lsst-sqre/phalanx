@@ -6,7 +6,6 @@ help:
 	@echo "make linkcheck - Check for broken links in documentation"
 	@echo "make update - Update pinned dependencies and run make init"
 	@echo "make update-deps - Update pinned dependencies"
-	@echo "make update-deps-no-hashes - Pin dependencies without hashes"
 
 .PHONY: clean
 clean:
@@ -41,11 +40,11 @@ update-deps:
 	pip install --upgrade pip uv
 	uv pip install --upgrade pre-commit
 	pre-commit autoupdate
-	uv pip compile --upgrade --universal --generate-hashes		\
+	uv pip compile -p 3.11 --upgrade --universal --generate-hashes	\
 	    --output-file requirements/main.txt pyproject.toml
-	uv pip compile --upgrade --universal --generate-hashes		\
+	uv pip compile -p 3.11 --upgrade --universal --generate-hashes	\
 	    --output-file requirements/dev.txt requirements/dev.in
-	uv pip compile --upgrade --universal --generate-hashes		\
+	uv pip compile -p 3.11 --upgrade --universal --generate-hashes	\
 	    --output-file requirements/tox.txt requirements/tox.in
 
 # Useful for testing against a Git version of Safir.

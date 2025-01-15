@@ -6,15 +6,13 @@ metadata:
     {{- include "<CHARTNAME>.labels" . | nindent 4 }}
 data:
   <CHARTENVPREFIX>_ARQ_QUEUE_URL: "redis://<CHARTNAME>-redis.{{ .Release.Namespace }}"
-  {{- if .Values.cloudsql.enabled }}
-  <CHARTENVPREFIX>_DATABASE_URL: "postgresql://<CHARTNAME>@localhost/<CHARTNAME>"
-  {{- end }}
   <CHARTENVPREFIX>_GRACE_PERIOD: {{ .Values.config.gracePeriod | quote }}
   <CHARTENVPREFIX>_LIFETIME: {{ .Values.config.lifetime | quote }}
+  <CHARTENVPREFIX>_LOG_LEVEL: {{ .Values.config.loglevel | quote }}
+  <CHARTENVPREFIX>_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
+  <CHARTENVPREFIX>_PROFILE: {{ .Values.config.logProfile | quote }}
   <CHARTENVPREFIX>_SERVICE_ACCOUNT: {{ required "config.serviceAccount must be set" .Values.config.serviceAccount | quote }}
   <CHARTENVPREFIX>_STORAGE_URL: {{ required "config.storageBucketUrl must be set" .Values.config.storageBucketUrl | quote }}
   <CHARTENVPREFIX>_SYNC_TIMEOUT: {{ .Values.config.syncTimeout | quote }}
   <CHARTENVPREFIX>_TIMEOUT: {{ .Values.config.timeout | quote }}
-  <CHARTENVPREFIX>_LOG_LEVEL: {{ .Values.config.loglevel | quote }}
-  <CHARTENVPREFIX>_PATH_PREFIX: {{ .Values.config.pathPrefix | quote }}
-  <CHARTENVPREFIX>_PROFILE: {{ .Values.config.logProfile | quote }}
+  <CHARTENVPREFIX>_WOBBLY_URL: "{{ .Values.global.baseUrl }}/wobbly"

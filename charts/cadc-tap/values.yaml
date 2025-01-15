@@ -99,7 +99,7 @@ config:
   tapSchemaAddress: "cadc-tap-schema-db:3306"
 
   # -- Datalink payload URL
-  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/v3.3.0/datalink-snippets.zip"
+  datalinkPayloadUrl: "https://github.com/lsst/sdm_schemas/releases/download/v4.0.0/datalink-snippets.zip"
 
   # -- Name of GCS bucket in which to store results
   gcsBucket: "async-results.lsst.codes"
@@ -167,7 +167,7 @@ tapSchema:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of TAP schema image
-    tag: "v3.3.0"
+    tag: "v4.0.0"
 
   # -- Resource limits and requests for the TAP schema database pod
   # @default -- See `values.yaml`
@@ -234,7 +234,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.2"
+    tag: "1.37.3"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

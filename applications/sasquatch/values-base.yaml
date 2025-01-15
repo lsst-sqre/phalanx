@@ -61,11 +61,11 @@ strimzi-kafka:
     enableSaramaLogging: true
     resources:
       requests:
-        cpu: 200m
-        memory: 64Mi
-      limits:
         cpu: 500m
         memory: 128Mi
+      limits:
+        cpu: 1500m
+        memory: 384Mi
   kraft:
     enabled: true
   kafkaController:
@@ -146,7 +146,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.ATAOS", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     maintel:
       enabled: true
@@ -164,7 +164,7 @@ telegraf-kafka-consumer:
       enabled: true
       database: "efd"
       topicRegexps: |
-        [ "lsst.sal.DIMM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+        [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
     latiss:
       enabled: true
@@ -222,9 +222,24 @@ telegraf-kafka-consumer:
       debug: true
     lsstcam:
       enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      debug: true
+    calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      debug: true
+    mtvms:
+      enabled: true
+      database: "efd"
+      timestamp_field: "private_efdStamp"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
       debug: true
     obsenv:
       enabled: true

@@ -42,4 +42,4 @@ argo-cd:
     ingress:
       hostname: "k8s.slac.stanford.edu"
       path: "/usdf-prompt-processing/argo-cd"
-    tls: false
+      tls: false

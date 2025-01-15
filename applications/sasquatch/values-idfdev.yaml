@@ -159,3 +159,26 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - wobbly
+
+backup:
+  enabled: true
+  persistence:
+    size: 500Gi
+    storageClass: standard
+  backupItems:
+    - name: "chronograf"
+      enabled: true
+      retentionDays: 3
+    - name: "kapacitor"
+      enabled: true
+      retentionDays: 3
+    - name: "influxdb-enterprise-incremental"
+      enabled: true
+    - name: "influxdb-oss-full"
+      enabled: true
+      retentionDays: 3
+  restoreItems:
+    - name: "influxdb-oss-full"
+      enabled: true
+      backupTimestamp: "20250113T030120Z"

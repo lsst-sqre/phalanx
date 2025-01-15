@@ -36,7 +36,7 @@ influxdb:
 
   image:
     # -- InfluxDB image tag
-    tag: "1.8.10"
+    tag: "1.11.8"
 
   persistence:
     # -- Whether to use persistent volume claims. By default, `storageClass`
@@ -77,6 +77,12 @@ influxdb:
     # -- Path for the ingress
     # @default -- `"/influxdb(/\|$)(.*)"`
     path: "/influxdb(/|$)(.*)"
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1500
+    runAsGroup: 1500
+    fsGroup: 1500
 
   # See https://docs.influxdata.com/influxdb/v1.8/administration/config
   config:
@@ -181,7 +187,11 @@ chronograf:
     repository: "quay.io/influxdb/chronograf"
 
     # -- Docker tag to use for Chronograf
-    tag: 1.10.5
+    tag: 1.10.6
+
+  updateStrategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
 
   persistence:
     # -- Whether to enable persistence for Chronograf data
@@ -239,6 +249,10 @@ kapacitor:
     # -- Tag to use for Kapacitor
     tag: 1.7.6
 
+  strategy:
+    # -- Deployment strategy, use recreate with persistence enabled
+    type: "Recreate"
+
   persistence:
     # -- Whether to enable Kapacitor data persistence
     enabled: true
@@ -276,6 +290,10 @@ squareEvents:
   # -- Enable the Square Events subchart with topic and user configurations
   enabled: false
 
+backup:
+  # -- Whether to enable Sasquatch backups
+  enabled: false
+
 global:
   # -- Base URL for the environment
   # @default -- Set by Argo CD
@@ -290,7 +308,8 @@ global:
   vaultSecretsPath: ""
 
 app-metrics:
-  # -- Enable the app-metrics subchart with topic, user, and telegraf configurations
+  # -- Enable the app-metrics subchart with topic, user, and telegraf
+  # configurations
   enabled: false
 
   # -- The apps to create configuration for.

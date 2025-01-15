@@ -4,4 +4,4 @@ version: 1.0.0
 description: Git-LFS server with GCS S3 backend, with Rubin-specific auth
 sources:
   - https://github.com/datopian/giftless
-appVersion: 0.5.0
+appVersion: v0.6.2

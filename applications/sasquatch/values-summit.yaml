@@ -523,3 +523,16 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Gi
+    storageClass: rook-ceph-block
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7

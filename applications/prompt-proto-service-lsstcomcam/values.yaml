@@ -41,6 +41,11 @@ prompt-proto-service:
     # -- The "short" name of the instrument
     name: LSSTComCam
     pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
+
       # -- YAML-formatted config describing which pipeline(s) should be run for which visits' raws.
       # Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples.
       # @default -- None, must be set
@@ -65,9 +70,6 @@ prompt-proto-service:
     refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
     patchesPerImage: 16
-    # -- The maximum number of datasets of a given type the service might load if the filter is unknown.
-    # Should be greater than or equal to the number of filters that have e.g. flats or transmission curves.
-    maxFilters: 20
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -88,6 +90,8 @@ prompt-proto-service:
     # -- Topic where raw image arrival notifications appear
     # @default -- None, must be set
     topic: ""
+    # -- Kafka consumer offset reset setting for image arrival notifications
+    consumerOffsetReset: "latest"
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
     imageTimeout: 20
 
@@ -101,7 +105,7 @@ prompt-proto-service:
     # -- Username for sending alerts to the alert stream
     username: "kafka-admin"
     # -- Server address for the alert stream
-    server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+    server: "usdf-alert-stream-dev.lsst.cloud:9094"
     # -- Topic name where alerts will be sent
     topic: ""
 
@@ -131,10 +135,10 @@ prompt-proto-service:
     cpuLimit: 1
     # -- The storage space reserved for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageRequest: "5Gi"
+    ephemeralStorageRequest: "8Gi"
     # -- The maximum storage space allowed for each container (mostly local Butler).
     # This allocation is for the full pod (see `containerConcurrency`)
-    ephemeralStorageLimit: "5Gi"
+    ephemeralStorageLimit: "8Gi"
     # -- GPUs enabled.
     gpu: false
     # -- The number of GPUs to request for the full pod (see `containerConcurrency`).

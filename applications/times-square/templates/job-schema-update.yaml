@@ -1,0 +1,150 @@
+{{- if .Values.config.updateSchema -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "times-square-schema-update"
+  annotations:
+  annotations:
+    helm.sh/hook: "pre-install,pre-upgrade"
+    helm.sh/hook-delete-policy: "hook-succeeded"
+    helm.sh/hook-weight: "1"
+  labels:
+    {{- include "times-square.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "times-square.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: "schema-update"
+        times-square-redis-client: "true"
+    spec:
+      {{- if .Values.cloudsql.enabled }}
+      serviceAccountName: "times-square"
+      {{- else }}
+      automountServiceAccountToken: false
+      {{- end }}
+      containers:
+        {{- if .Values.cloudsql.enabled }}
+        - name: "cloud-sql-proxy"
+          # Running the sidecar as normal causes it to keep running and thus
+          # the Pod never exits, the Job never finishes, and the hook blocks
+          # the sync. Have the main pod signal the sidecar by writing to a
+          # file on a shared emptyDir file system, and use a simple watcher
+          # loop in shell in the sidecar container to terminate the proxy when
+          # the main container finishes.
+          #
+          # Based on https://stackoverflow.com/questions/41679364/
+          command:
+            - "/bin/sh"
+            - "-c"
+          args:
+            - |
+              /cloud_sql_proxy -ip_address_types=PRIVATE -log_debug_stdout=true -structured_logs=true -instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432 &
+              PID=$!
+              while true; do
+                if [[ -f "/lifecycle/main-terminated" ]]; then
+                  kill $PID
+                  exit 0
+                fi
+                sleep 1
+              done
+          image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}{{ .Values.cloudsql.image.schemaUpdateTagSuffix }}"
+          imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+          {{- with .Values.cloudsql.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+          volumeMounts:
+            - name: "lifecycle"
+              mountPath: "/lifecycle"
+        {{- end }}
+        - name: "times-square"
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              times-square update-db-schema
+              touch /lifecycle/main-terminated
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - "all"
+            readOnlyRootFilesystem: true
+          envFrom:
+            - configMapRef:
+                name: {{ include "times-square.fullname" . }}
+          env:
+            - name: "TS_GAFAELFAWR_TOKEN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-gafaelfawr-token
+                  key: "token"
+            - name: "TS_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_DATABASE_PASSWORD"
+            - name: "TS_GITHUB_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_WEBHOOK_SECRET"
+            - name: "TS_GITHUB_WEBHOOK_SECRET"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_WEBHOOK_SECRET"
+            - name: "TS_GITHUB_APP_PRIVATE_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_GITHUB_APP_PRIVATE_KEY"
+            - name: "TS_SLACK_WEBHOOK_URL"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SLACK_WEBHOOK_URL"
+          volumeMounts:
+            - name: "lifecycle"
+              mountPath: "/lifecycle"
+      restartPolicy: "Never"
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+      volumes:
+        - name: "lifecycle"
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

@@ -14,18 +14,18 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 |-----|------|---------|-------------|
 | prompt-proto-service.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | prompt-proto-service.affinity | object | `{}` | Affinity rules for the prompt processing pods |
-| prompt-proto-service.alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
+| prompt-proto-service.alerts.server | string | `"usdf-alert-stream-dev.lsst.cloud:9094"` | Server address for the alert stream |
 | prompt-proto-service.alerts.topic | string | `""` | Topic name where alerts will be sent |
 | prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-proto-service.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| prompt-proto-service.cache.maxFilters | int | `20` | The maximum number of datasets of a given type the service might load if the filter is unknown. Should be greater than or equal to the number of filters that have e.g. flats or transmission curves. |
 | prompt-proto-service.cache.patchesPerImage | int | `16` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | prompt-proto-service.cache.refcatsPerImage | int | `6` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-proto-service.containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-proto-service.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
+| prompt-proto-service.imageNotifications.consumerOffsetReset | string | `"latest"` | Kafka consumer offset reset setting for image arrival notifications |
 | prompt-proto-service.imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
@@ -37,8 +37,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.instrument.skymap | string | `"lsst_cells_v1"` | Skymap to use with the instrument |
 | prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
-| prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
-| prompt-proto-service.knative.ephemeralStorageRequest | string | `"5Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| prompt-proto-service.knative.ephemeralStorageLimit | string | `"8Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
+| prompt-proto-service.knative.ephemeralStorageRequest | string | `"8Gi"` | The storage space reserved for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
 | prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.idleTimeout | int | `900` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |

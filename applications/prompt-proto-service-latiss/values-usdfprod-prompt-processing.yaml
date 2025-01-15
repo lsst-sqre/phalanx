@@ -14,10 +14,14 @@ prompt-proto-service:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 4.9.0
+    tag: 4.11.1
 
   instrument:
     pipelines:
+      # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
+      # if the result (including any comments) is longer than 72 characters.
+      # The config will get corrupted after template substitution.
+      # Block-style mappings can have lines of any length.
       main: |-
         - survey: BLOCK-306  # photographic imaging
           pipelines:
@@ -26,33 +30,35 @@ prompt-proto-service:
           - ${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr.yaml
         - survey: BLOCK-T17  # daytime checkout
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Isr-cal.yaml']
-        - {survey: cwfs, pipelines: []}
-        - {survey: cwfs-focus-sweep, pipelines: []}
         - {survey: spec-survey, pipelines: []}
-        - {survey: BLOCK-271, pipelines: []}  # photon transfer curve calibrations
-        - {survey: BLOCK-295, pipelines: []}  # the daily calibration sequence as of May 27, 2024
+        # photon transfer curve calibrations
+        - {survey: BLOCK-271, pipelines: []}
+        # the daily calibration sequence as of May 27, 2024
+        - {survey: BLOCK-295, pipelines: []}
         - {survey: "", pipelines: []}
+        # Ignore anything else
+        - {pipelines: []}
       preprocessing: |-
         - survey: BLOCK-306
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LATISS/Preprocessing.yaml']
         - {survey: BLOCK-T17, pipelines: []}
-        - {survey: cwfs, pipelines: []}
-        - {survey: cwfs-focus-sweep, pipelines: []}
         - {survey: spec-survey, pipelines: []}
         - {survey: BLOCK-271, pipelines: []}
         - {survey: BLOCK-295, pipelines: []}
         - {survey: "", pipelines: []}
+        # No preprocessing for anything else
+        - {pipelines: []}
     calibRepo: s3://rubin-summit-users
 
   s3:
     imageBucket: rubin-summit
-    endpointUrl: https://s3dfrgw.slac.stanford.edu
+    endpointUrl: https://sdfembs3.sdf.slac.stanford.edu
 
-  raw_microservice: http://172.24.5.144:8080/presence
+  raw_microservice: http://172.24.5.158:8080/presence
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing-2-kafka-bootstrap.kafka:9092
-    topic: rubin-prompt-processing-prod
+    topic: rubin-summit-notification
     # Scheduler adds an extra 60-80-second delay for first visit in a sequence,
     # and files can take up to 20 seconds to arrive. Scheduler delay associated
     # with CWFS engineering data, should not apply to other cameras.

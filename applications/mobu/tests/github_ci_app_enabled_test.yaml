@@ -52,6 +52,7 @@ tests:
           path: "data['config.yaml']"
           value: |
             autostart: []
+            availableServices: []
             githubCiApp:
               acceptedGithubOrgs:
               - org1
@@ -64,6 +65,14 @@ tests:
               - bot-mobu-ci-user-2
             githubRefreshApp: null
             logLevel: INFO
+            metrics:
+              application: mobu
+              enabled: false
+              events:
+                topicPrefix: lsst.square.metrics.events
+              schemaManager:
+                registryUrl: http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081
+                suffix: ""
             pathPrefix: /mobu
             profile: production
             slackAlerts: true

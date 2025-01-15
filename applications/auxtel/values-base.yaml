@@ -2,6 +2,28 @@ ataos:
   image:
     repository: ts-dockerhub.lsst.org/ataos
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 450m
+      memory: 600Mi
+    requests:
+      cpu: 45m
+      memory: 200Mi
+
+atbuilding-sim:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/atbuilding
+    pullPolicy: Always
+  env:
+    RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 100Mi
 
 atdome-sim:
   enabled: true
@@ -10,11 +32,25 @@ atdome-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 170m
+      memory: 300Mi
+    requests:
+      cpu: 17m
+      memory: 100Mi
 
 atdometrajectory:
   image:
     repository: ts-dockerhub.lsst.org/atdometrajectory
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 350m
+      memory: 300Mi
+    requests:
+      cpu: 35m
+      memory: 100Mi
 
 atheaderservice:
   image:
@@ -33,12 +69,26 @@ atheaderservice:
     key: aws-access-key-id
   - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
+  resources:
+    limits:
+      cpu: 800m
+      memory: 700Mi
+    requests:
+      cpu: 80m
+      memory: 250Mi
 
 athexapod-sim:
   enabled: true
   image:
     repository: ts-dockerhub.lsst.org/athexapod
     pullPolicy: Always
+  resources:
+    limits:
+      cpu: 90m
+      memory: 300Mi
+    requests:
+      cpu: 9m
+      memory: 95Mi
 
 atmcs-sim:
   enabled: true
@@ -47,6 +97,13 @@ atmcs-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 600m
+      memory: 1200Mi
+    requests:
+      cpu: 60m
+      memory: 400Mi
 
 atoods:
   image:
@@ -56,9 +113,13 @@ atoods:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
-    containerPath: /home/saluser/.lsst
+    containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
-    secretFilename: postgres-credentials.txt
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
   nfsMountpoint:
   - name: auxtel-gen3-butler
     containerPath: /repo/LATISS
@@ -70,6 +131,13 @@ atoods:
     readOnly: false
     server: nfs-auxtel.ls.lsst.org
     serverPath: /auxtel
+  resources:
+    limits:
+      cpu: 400m
+      memory: 1000Mi
+    requests:
+      cpu: 40m
+      memory: 325Mi
   configfile:
     path: /etc
     filename: atoods.yaml
@@ -80,25 +148,31 @@ atoods:
           minutes: 0
           seconds: 0
 
+      ingesterClass:
+          ingesterType: lsst.ctrl.oods.fileIngester
+          ingesterName: FileIngester
       ingester:
           imageStagingDirectory: /data/staging/auxtel/oods
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.Latiss
                   class:
-                      import : lsst.ctrl.oods.gen3ButlerIngester
-                      name : Gen3ButlerIngester
-                  stagingDirectory : /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
+                      import: lsst.ctrl.oods.fileAttendant
+                      name: FileAttendant
+                  stagingDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
                   badFileDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/badfiles
-                  repoDirectory : /repo/LATISS
+                  repoDirectory: /repo/LATISS
                   collections:
                       - LATISS/raw/all
+                  cleanCollections:
+                      - collection: LATISS/raw/all
+                        filesOlderThan:
+                            <<: *interval
+                            days: 30
                   scanInterval:
                       <<: *interval
                       hours: 1
-                  filesOlderThan:
-                      <<: *interval
-                      days: 30
+
           batchSize: 20
           scanInterval:
               <<: *interval
@@ -118,7 +192,7 @@ atoods:
               hours: 1
           filesOlderThan:
               <<: *interval
-              days: 31
+              days: 30
           directoriesEmptyForMoreThan:
               <<: *interval
               days: 2
@@ -130,6 +204,13 @@ atpneumatics-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 90Mi
 
 atptg:
   image:
@@ -137,6 +218,14 @@ atptg:
     pullPolicy: Always
   env:
     TELESCOPE: AT
+    LSST_KAFKA_TLM_FLUSH_MS: 0
+    LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+  resources:
+    limits:
+      cpu: 900m
+    requests:
+      cpu: 90m
+      memory: 265Mi
 
 atspectrograph-sim:
   enabled: true
@@ -145,6 +234,13 @@ atspectrograph-sim:
     pullPolicy: Always
   env:
     RUN_ARG: --simulate
+  resources:
+    limits:
+      cpu: 120m
+      memory: 300Mi
+    requests:
+      cpu: 12m
+      memory: 95Mi
 
 hexapod-sim:
   enabled: true

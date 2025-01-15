@@ -17,6 +17,13 @@ love-commander:
     enabled: true
     port: 5000
     type: ClusterIP
+  resources:
+    requests:
+      cpu: 50m
+      memory: 230Mi
+    limits:
+      cpu: 500m
+      memory: 800Mi
 
 love-manager:
   manager:
@@ -255,12 +262,27 @@ love-manager:
       pullPolicy: IfNotPresent
     config: |
       timeout 60
+      save ""
+    resources:
+      requests:
+        cpu: 250m
+        memory: 300Mi
+      limits:
+        cpu: 2500m
+        memory: 1000Mi
   viewBackup:
     enabled: true
     image:
       repository: ts-dockerhub.lsst.org/love-view-backup
       pullPolicy: Always
     schedule: 0 12 * * *
+    resources:
+      requests:
+        cpu: 5m
+        memory: 10Mi
+      limits:
+        cpu: 100m
+        memory: 50Mi
 
 love-nginx:
   image:
@@ -290,6 +312,13 @@ love-nginx:
     storageClass: rook-ceph-block
     accessMode: ReadWriteOnce
     claimSize: 2Gi
+  resources:
+    requests:
+      cpu: 50m
+      memory: 70Mi
+    limits:
+      cpu: 500m
+      memory: 300Mi
   nginxConfig: |
     server {
       listen 80;
@@ -379,6 +408,9 @@ love-producer:
   - name: ataos
     csc: ATAOS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: atbuilding
+    csc: ATBuilding:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atcamera
     csc: ATCamera:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -439,6 +471,12 @@ love-producer:
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: cbp
+    csc: CBP:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: dream
+    csc: DREAM:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cleanroomess109
     csc: ESS:109 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -454,6 +492,18 @@ love-producer:
   - name: dsm2
     csc: DSM:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: eas
+    csc: EAS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: electrometer101
+    csc: Electrometer:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: electrometer102
+    csc: Electrometer:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: electrometer201
+    csc: Electrometer:201 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: epm1
     csc: EPM:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -465,6 +515,21 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: lasertracker1
     csc: LaserTracker:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ledprojector
+    csc: LEDProjector:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: linearstage101
+    csc: LinearStage:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: linearstage102
+    csc: LinearStage:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: linearstage103
+    csc: LinearStage:103 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: linearstage104
+    csc: LinearStage:104 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: love
     csc: LOVE:0 --log-level 10
@@ -478,6 +543,9 @@ love-producer:
   - name: m2ess112
     csc: ESS:112 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtheaderservice
+    csc: MTHeaderService:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m2hexapod
     csc: MTHexapod:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -489,6 +557,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtaos
     csc: MTAOS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtcamera
+    csc: MTCamera:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtdome
     csc: MTDome:0 --log-level 10
@@ -512,11 +583,17 @@ love-producer:
       limits:
         cpu: 500m
         memory: 600Mi
+  - name: mtm1m3ts
+    csc: MTM1M3TS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtm2
     csc: MTM2:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtmount
     csc: MTMount:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtoods
+    csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtptg
     csc: MTPtg:0 --log-level 10
@@ -530,6 +607,9 @@ love-producer:
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+  - name: mtvmsm1m3
+    csc: MTVMS:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -547,6 +627,9 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess110
     csc: ESS:110 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: tunablelaser
+    csc: TunableLaser:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: watcher
     csc: Watcher:0 --log-level 10

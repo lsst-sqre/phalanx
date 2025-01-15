@@ -11,6 +11,6 @@ applications:
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
-  prompt-proto-service-lsstcomcam: true
+  prompt-proto-service-lsstcomcam: false
   prompt-proto-service-lsstcomcamsim: false
   vault-secrets-operator: false

@@ -36,10 +36,11 @@ argo-cd:
         g, ebellm@slac.stanford.edu, role:admin
         g, parejko@slac.stanford.edu, role:admin
         g, elhoward@slac.stanford.edu, role:admin
+        g, eiger@slac.stanford.edu, role:admin
       scopes: "[email]"
 
   server:
     ingress:
       hostname: "k8s.slac.stanford.edu"
       path: "/usdf-prompt-processing-dev/argo-cd"
-    tls: false
+      tls: false

@@ -5,6 +5,12 @@ controller:
     logLevel: "DEBUG"
     fileserver:
       enabled: true
+      nodeSelector:
+        node_pool: "user-lab-pool"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
@@ -33,6 +39,8 @@ controller:
           volumeMounts:
             - containerPath: "/home"
               volumeName: "home"
+      nodeSelector:
+        node_pool: "user-lab-pool"
       secrets:
         - secretName: "nublado-lab-secret"
           secretKey: "aws-credentials.ini"
@@ -42,6 +50,10 @@ controller:
           secretKey: "butler-hmac-idf-creds.json"
         - secretName: "nublado-lab-secret"
           secretKey: "postgres-credentials.txt"
+      tolerations:
+        - key: "nublado.lsst.io/permitted"
+          operator: "Exists"
+          effect: "NoExecute"
       volumes:
         - name: "home"
           source:

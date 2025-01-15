@@ -13,4 +13,4 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: 2.5.0
 
-instruments: "LATISS LSSTComCam"
+instruments: "LATISS"

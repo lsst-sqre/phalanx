@@ -32,14 +32,14 @@ spec:
                 port:
                   number: 8080
           - path: "/.well-known/jwks.json"
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: "gafaelfawr"
                 port:
                   number: 8080
           - path: "/.well-known/openid-configuration"
-            pathType: Exact
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: "gafaelfawr"

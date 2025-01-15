@@ -45,22 +45,26 @@ argo-cd:
         g, rra@slac.stanford.edu, role:admin
         g, ytl@slac.stanford.edu, role:admin
         g, cslater@slac.stanford.edu, role:admin
+        g, svoutsin@slac.stanford.edu, role:admin
+        g, ebellm@slac.stanford.edu, role:admin
 
+        g, bbrond@slac.stanford.edu, role:developer
         g, dirving@slac.stanford.edu, role:developer
         g, fritzm@slac.stanford.edu, role:developer
+        g, gmegias@slac.stanford.edu, role:developer
         g, hchiang2@slac.stanford.edu, role:developer
         g, jeremym@slac.stanford.edu, role:developer
+        g, kadrlica@slac.stanford.edu, role:developer
+        g, koike@slac.stanford.edu, role:developer
         g, mfl@slac.stanford.edu, role:developer
         g, mreuter@slac.stanford.edu, role:developer
         g, neilsen@slac.stanford.edu, role:developer
         g, omullan@slac.stanford.edu, role:developer
+        g, salnikov@slac.stanford.edu, role:developer
         g, saranda@slac.stanford.edu, role:developer
         g, smart@slac.stanford.edu, role:developer
         g, spothi@slac.stanford.edu, role:developer
-        g, bbrond@slac.stanford.edu, role:developer
         g, vbecker@slac.stanford.edu, role:developer
-        g, gmegias@slac.stanford.edu, role:developer
-        g, salnikov@slac.stanford.edu, role:developer
       scopes: "[email]"
 
   server:

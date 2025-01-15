@@ -19,7 +19,6 @@ Event-driven processing of camera images
 | alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| cache.maxFilters | int | `20` | The maximum number of datasets of a given type the service might load if the filter is unknown. Should be greater than or equal to the number of filters that have e.g. flats or transmission curves. |
 | cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
@@ -29,6 +28,7 @@ Event-driven processing of camera images
 | image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
+| imageNotifications.consumerOffsetReset | string | `"latest"` | Kafka consumer offset reset setting for image arrival notifications |
 | imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |

@@ -25,3 +25,4 @@ Argo CD project: ``rubin``
    rubintv-dev/index
    s3proxy/index
    schedview-snapshot/index
+   tasso/index

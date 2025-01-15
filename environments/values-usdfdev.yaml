@@ -38,4 +38,5 @@ applications:
   squareone: true
   strimzi: true
   tap: true
+  tasso: true
   times-square: true

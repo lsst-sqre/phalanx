@@ -1,0 +1,62 @@
+# Default values for backups.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  # -- Image to use in the backups deployment
+  repository: "ghcr.io/lsst-sqre/sasquatch"
+  # -- Pull policy for the backups image
+  pullPolicy: "IfNotPresent"
+
+  # -- Tag of image to use
+  # @default -- The appVersion of the chart
+  tag: "1.3.0"
+
+# -- Schedule for executing the sasquatch backup script
+# @default -- "0 3 * * *"
+schedule: "0 3 * * *"
+
+persistence:
+  # -- Size of the data store to request, if enabled
+  # @default -- "100Gi"
+  size: "100Gi"
+  # -- Storage class to use for the backups
+  # @default -- "" (empty string) to use the cluster default storage class
+  storageClass: ""
+
+# -- List of items to backup using the sasquatch backup script
+backupItems:
+  - name: "chronograf"
+    enabled: false
+    retentionDays: 7
+  - name: "kapacitor"
+    enabled: false
+    retentionDays: 7
+  - name: "influxdb-enterprise-incremental"
+    enabled: false
+  - name: "influxdb-oss-full"
+    enabled: false
+    retentionDays: 3
+
+# -- List of items to restore using the sasquatch restore script
+# name must match an item in backupItems
+# backupTimestamp must be in the YYYYMMDDTHHMMSSZ format
+restoreItems:
+  - name: "influxdb-oss-full"
+    enabled: false
+    backupTimestamp: ""
+
+# -- Affinity rules for the backups deployment pod
+affinity: {}
+
+# -- Node selection rules for the backups deployment pod
+nodeSelector: {}
+
+# -- Annotations for the backups deployment pod
+podAnnotations: {}
+
+# -- Resource limits and requests for the backups deployment pod
+resources: {}
+
+# -- Tolerations for the backups deployment pod
+tolerations: []

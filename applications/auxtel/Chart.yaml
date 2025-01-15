@@ -14,6 +14,16 @@ dependencies:
   version: 1.0.0
   repository: file://../../charts/csc
 - name: csc
+  alias: atbuilding
+  version: 1.0.0
+  condition: atbuilding.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: atbuilding-sim
+  version: 1.0.0
+  condition: atbuilding-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: atdome
   version: 1.0.0
   condition: atdome.enabled

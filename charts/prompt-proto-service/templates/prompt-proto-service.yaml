@@ -29,6 +29,8 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
         name: user-container
         env:
+        - name: PLATFORM
+          value: knative
         - name: WORKER_COUNT
           value: {{ .Values.containerConcurrency | toString | quote }}
         - name: WORKER_RESTART_FREQ
@@ -55,6 +57,8 @@ spec:
           value: {{ .Values.s3.imageBucket }}
         - name: BUCKET_TOPIC
           value: {{ .Values.imageNotifications.topic }}
+        - name: BUCKET_NOTIFICATION_KAFKA_OFFSET_RESET
+          value: {{ .Values.imageNotifications.consumerOffsetReset }}
         - name: IMAGE_TIMEOUT
           value: {{ .Values.imageNotifications.imageTimeout | toString | quote }}
         - name: CALIB_REPO
@@ -119,8 +123,6 @@ spec:
           value: {{ .Values.cache.refcatsPerImage | toString | quote }}
         - name: PATCHES_PER_IMAGE
           value: {{ .Values.cache.patchesPerImage | toString | quote }}
-        - name: FILTERS_WITH_CALIBS
-          value: {{ .Values.cache.maxFilters | toString | quote }}
         - name: DEBUG_CACHE_CALIBS
           value: {{ if .Values.debug.cacheCalibs }}'1'{{ else }}'0'{{ end }}
         - name: DEBUG_EXPORT_OUTPUTS

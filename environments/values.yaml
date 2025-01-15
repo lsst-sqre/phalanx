@@ -66,8 +66,8 @@ applications:
   # -- Eanble the datalinker application
   datalinker: false
 
-  # -- Enable the eas control system application
-  eas: false
+  # -- Enable the envsys control system application
+  envsys: false
 
   # -- Enable the exposurelog application
   exposurelog: false
@@ -77,6 +77,9 @@ applications:
 
   # -- Enable the filestore-backup application
   filestore-backup: false
+
+  # -- Enable the flink application
+  flink: false
 
   # -- Enable the Gafaelfawr application. This is required by Phalanx since
   # most other applications use `GafaelfawrIngress`
@@ -228,6 +231,9 @@ applications:
   # -- Enable the tap application
   tap: false
 
+  # -- Enable the tasso application
+  tasso: false
+
   # -- Enable the telegraf application
   telegraf: false
 
@@ -258,6 +264,10 @@ applications:
 
   # -- Enable the vo-cutouts application
   vo-cutouts: false
+
+  # -- Enable the wobbly application, required if the environment will be
+  # running any Safir-based UWS services
+  wobbly: false
 
 # -- Add labels for application namespaces.
 namespaceLabels: {}

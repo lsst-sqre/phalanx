@@ -27,6 +27,9 @@ config:
   # -- URL path prefix
   pathPrefix: "/<CHARTNAME>"
 
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

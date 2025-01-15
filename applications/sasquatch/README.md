@@ -20,11 +20,12 @@ Rubin Observatory's telemetry service
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | app-metrics.apps | list | `[]` | The apps to create configuration for. |
 | app-metrics.enabled | bool | `false` | Enable the app-metrics subchart with topic, user, and telegraf configurations |
+| backup.enabled | bool | `false` | Whether to enable Sasquatch backups |
 | chronograf.enabled | bool | `true` | Whether Chronograf is enabled |
 | chronograf.env | object | See `values.yaml` | Additional environment variables for Chronograf |
 | chronograf.envFromSecret | string | `"sasquatch"` | Name of secret to use. The keys `generic_client_id`, `generic_client_secret`, and `token_secret` should be set. |
 | chronograf.image.repository | string | `"quay.io/influxdb/chronograf"` | Docker image to use for Chronograf |
-| chronograf.image.tag | string | `"1.10.5"` | Docker tag to use for Chronograf |
+| chronograf.image.tag | string | `"1.10.6"` | Docker tag to use for Chronograf |
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
@@ -33,6 +34,7 @@ Rubin Observatory's telemetry service
 | chronograf.persistence.enabled | bool | `true` | Whether to enable persistence for Chronograf data |
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
 | chronograf.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Chronograf |
+| chronograf.updateStrategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | influxdb-enterprise.enabled | bool | `false` | Whether to use influxdb-enterprise |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
@@ -49,7 +51,7 @@ Rubin Observatory's telemetry service
 | influxdb.config.http.max-row-limit | int | `0` | Maximum number of rows the system can return from a non-chunked query (0 is unlimited) |
 | influxdb.config.logging.level | string | `"debug"` | Logging level |
 | influxdb.enabled | bool | `true` | Whether InfluxDB is enabled |
-| influxdb.image.tag | string | `"1.8.10"` | InfluxDB image tag |
+| influxdb.image.tag | string | `"1.11.8"` | InfluxDB image tag |
 | influxdb.ingress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
 | influxdb.ingress.className | string | `"nginx"` | Ingress class to use |
 | influxdb.ingress.enabled | bool | `false` | Whether to enable the InfluxDB ingress |
@@ -60,6 +62,10 @@ Rubin Observatory's telemetry service
 | influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
 | influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
+| influxdb.securityContext.fsGroup | int | `1500` |  |
+| influxdb.securityContext.runAsGroup | int | `1500` |  |
+| influxdb.securityContext.runAsNonRoot | bool | `true` |  |
+| influxdb.securityContext.runAsUser | int | `1500` |  |
 | influxdb.setDefaultUser.enabled | bool | `true` | Whether the default InfluxDB user is set |
 | influxdb.setDefaultUser.user.existingSecret | string | `"sasquatch"` | Use `influxdb-user` and `influxdb-password` keys from this secret |
 | kafdrop.enabled | bool | `true` | Whether Kafdrop is enabled |
@@ -74,6 +80,7 @@ Rubin Observatory's telemetry service
 | kapacitor.persistence.enabled | bool | `true` | Whether to enable Kapacitor data persistence |
 | kapacitor.persistence.size | string | `"100Gi"` | Size of storage to request if enabled |
 | kapacitor.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Kapacitor |
+| kapacitor.strategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
 | rest-proxy.enabled | bool | `false` | Whether to enable the REST proxy |
 | squareEvents.enabled | bool | `false` | Enable the Square Events subchart with topic and user configurations |
 | strimzi-kafka.connect.enabled | bool | `true` | Whether Kafka Connect is enabled |
@@ -94,8 +101,8 @@ Rubin Observatory's telemetry service
 | app-metrics.globalAppConfig | object | See `values.yaml` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden.  See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
 | app-metrics.globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | app-metrics.image.pullPolicy | string | `"Always"` | Image pull policy |
-| app-metrics.image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| app-metrics.image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| app-metrics.image.repo | string | `"ghcr.io/lsst-sqre/telegraf"` | Telegraf image repository |
+| app-metrics.image.tag | string | `"nightly-alpine-2025-01-09"` | Telegraf image tag |
 | app-metrics.imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | app-metrics.influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | app-metrics.nodeSelector | object | `{}` | Node labels for pod assignment |
@@ -104,6 +111,19 @@ Rubin Observatory's telemetry service
 | app-metrics.replicaCount | int | `3` | Number of Telegraf replicas. Multiple replicas increase availability. |
 | app-metrics.resources | object | See `values.yaml` | Kubernetes resources requests and limits |
 | app-metrics.tolerations | list | `[]` | Tolerations for pod assignment |
+| backup.affinity | object | `{}` | Affinity rules for the backups deployment pod |
+| backup.backupItems | list | `[{"enabled":false,"name":"chronograf","retentionDays":7},{"enabled":false,"name":"kapacitor","retentionDays":7},{"enabled":false,"name":"influxdb-enterprise-incremental"},{"enabled":false,"name":"influxdb-oss-full","retentionDays":3}]` | List of items to backup using the sasquatch backup script |
+| backup.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the backups image |
+| backup.image.repository | string | `"ghcr.io/lsst-sqre/sasquatch"` | Image to use in the backups deployment |
+| backup.image.tag | string | The appVersion of the chart | Tag of image to use |
+| backup.nodeSelector | object | `{}` | Node selection rules for the backups deployment pod |
+| backup.persistence.size | string | "100Gi" | Size of the data store to request, if enabled |
+| backup.persistence.storageClass | string | "" (empty string) to use the cluster default storage class | Storage class to use for the backups |
+| backup.podAnnotations | object | `{}` | Annotations for the backups deployment pod |
+| backup.resources | object | `{}` | Resource limits and requests for the backups deployment pod |
+| backup.restoreItems | list | `[{"backupTimestamp":"","enabled":false,"name":"influxdb-oss-full"}]` | List of items to restore using the sasquatch restore script name must match an item in backupItems backupTimestamp must be in the YYYYMMDDTHHMMSSZ format |
+| backup.schedule | string | "0 3 * * *" | Schedule for executing the sasquatch backup script |
+| backup.tolerations | list | `[]` | Tolerations for the backups deployment pod |
 | influxdb-enterprise.bootstrap.auth.secretName | string | `"sasquatch"` | Enable authentication of the data nodes using this secret, by creating a username and password for an admin account. The secret must contain keys `username` and `password`. |
 | influxdb-enterprise.bootstrap.ddldml.configMap | string | Do not run DDL or DML | A config map containing DDL and DML that define databases, retention policies, and inject some data.  The keys `ddl` and `dml` must exist, even if one of them is empty.  DDL is executed before DML to ensure databases and retention policies exist. |
 | influxdb-enterprise.bootstrap.ddldml.resources | object | `{}` | Kubernetes resources and limits for the bootstrap job |
@@ -200,7 +220,7 @@ Rubin Observatory's telemetry service
 | kafdrop.host | string | `"localhost"` | The hostname to report for the RMI registry (used for JMX) |
 | kafdrop.image.pullPolicy | string | `"IfNotPresent"` | Image pull policy |
 | kafdrop.image.repository | string | `"obsidiandynamics/kafdrop"` | Kafdrop Docker image repository |
-| kafdrop.image.tag | string | `"4.0.2"` | Kafdrop image version |
+| kafdrop.image.tag | string | `"4.1.0"` | Kafdrop image version |
 | kafdrop.ingress.annotations | object | `{}` | Additional ingress annotations |
 | kafdrop.ingress.enabled | bool | `false` | Whether to enable the ingress |
 | kafdrop.ingress.hostname | string | None, must be set if ingress is enabled | Ingress hostname |

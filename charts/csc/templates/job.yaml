@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: {{ include "csc.class" . }}
-          {{- $imageTag := .Values.image.tag | default $.Values.global.controlSystem.imageTag }}
-          image: "{{ .Values.image.repository }}:{{ $imageTag }}"
+          {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           stdin: true
           tty: true
@@ -57,7 +57,7 @@ spec:
             - name: PGUSER
               value: {{ .Values.butlerSecret.dbUser | quote }}
           {{- end }}
-          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.butlerSecret (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
+          {{- $volumeTest := or .Values.entrypoint (or .Values.configfile (or .Values.secretFixup (or .Values.pvcMountpoint .Values.nfsMountpoint))) }}
           {{- if $volumeTest }}
           volumeMounts:
           {{- if .Values.entrypoint }}
@@ -70,9 +70,9 @@ spec:
               mountPath: {{ .Values.configfile.path }}/{{ .Values.configfile.filename }}
               subPath: {{ .Values.configfile.filename }}
           {{- end }}
-          {{- if .Values.butlerSecret }}
+          {{- if .Values.secretFixup }}
             - name: {{ include "chart.name" $ }}-file-secrets
-              mountPath: {{ .Values.butlerSecret.containerPath }}
+              mountPath: {{ .Values.secretFixup.containerPath }}
           {{- end }}
           {{- if .Values.pvcMountpoint }}
           {{- range $values := .Values.pvcMountpoint }}
@@ -92,25 +92,28 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- if .Values.butlerSecret }}
+      {{- if .Values.secretFixup }}
       initContainers:
-      {{- if .Values.butlerSecret }}
-        - name: {{ include "chart.name" $ }}-butler-perm-fixer
+        - name: {{ include "chart.name" $ }}-perm-fixer
           image: "alpine:latest"
           command:
             - "/bin/ash"
             - "-c"
             - |
-              cp /secrets-raw/{{ .Values.butlerSecret.secretFilename }} /secrets
+              {{- range .Values.secretFixup.filenames }}
+              cp /secrets-raw/{{ . }} /secrets
+              {{- end }}
               chown 73006:73006 /secrets/*
               chmod 0600 /secrets/*
+              {{- if .Values.secretFixup.specialInstructions }}
+              {{- toYaml .Values.secretFixup.specialInstructions | nindent 14 }}
+              {{- end }}
           volumeMounts:
             - name: {{ include "chart.name" $ }}-raw-file-secrets
               mountPath: /secrets-raw
               readOnly: true
             - name: {{ include "chart.name" $ }}-file-secrets
               mountPath: /secrets
-      {{- end }}
       {{- end }}
       {{- if .Values.securityContext }}
       securityContext:
@@ -139,7 +142,7 @@ spec:
               - key: {{ .Values.configfile.filename }}
                 path: {{ .Values.configfile.filename }}
       {{- end }}
-      {{- if .Values.butlerSecret }}
+      {{- if .Values.secretFixup }}
         - name: {{ include "chart.name" $ }}-file-secrets
           emptyDir: {}
         - name: {{ include "chart.name" $ }}-raw-file-secrets

@@ -17,12 +17,12 @@ IVOA TAP service
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases on Google Cloud |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.tag | string | `"1.37.2"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.tag | string | `"1.37.3"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
-| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/v3.3.0/datalink-snippets.zip"` | Datalink payload URL |
+| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/v4.0.0/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://tap-files.lsst.codes"` | Base URL for results stored in GCS bucket |
@@ -70,7 +70,7 @@ IVOA TAP service
 | tapSchema.affinity | object | `{}` | Affinity rules for the TAP schema database pod |
 | tapSchema.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP schema image |
 | tapSchema.image.repository | string | `"lsstsqre/tap-schema-mock"` | TAP schema image to ue. This must be overridden by each environment with the TAP schema for that environment. |
-| tapSchema.image.tag | string | `"v3.3.0"` | Tag of TAP schema image |
+| tapSchema.image.tag | string | `"v4.0.0"` | Tag of TAP schema image |
 | tapSchema.nodeSelector | object | `{}` | Node selection rules for the TAP schema database pod |
 | tapSchema.podAnnotations | object | `{}` | Annotations for the TAP schema database pod |
 | tapSchema.resources | object | See `values.yaml` | Resource limits and requests for the TAP schema database pod |

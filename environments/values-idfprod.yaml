@@ -35,3 +35,4 @@ applications:
   telegraf-ds: true
   times-square: true
   vo-cutouts: true
+  wobbly: true

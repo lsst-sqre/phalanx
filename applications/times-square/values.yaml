@@ -119,6 +119,10 @@ config:
   # @default -- None, must be set
   databaseUrl: ""
 
+  # -- Whether to run the database migration job
+  # @default -- false to disable schema upgrades
+  updateSchema: false
+
   # -- URL for Redis html / noteburst job cache database
   # @default -- Points to embedded Redis
   redisCacheUrl: "redis://times-square-redis:6379/0"
@@ -156,7 +160,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.2"
+    tag: "1.37.3"
 
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"

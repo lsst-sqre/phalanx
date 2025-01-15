@@ -3,6 +3,12 @@
 # Declare variables to be passed into your templates.
 
 config:
+  # -- Grace period in seconds to wait for worker jobs to finish
+  gracePeriod: 60
+
+  # -- Lifetime of job results in Safir `parse_timedelta` format
+  lifetime: "30d"
+
   # -- Choose from the text form of Python logging levels
   loglevel: "INFO"
 
@@ -13,21 +19,14 @@ config:
   # -- URL path prefix for the API
   pathPrefix: "/api/<CHARTNAME>"
 
-  # -- URL for the PostgreSQL database if Cloud SQL is not in use
-  # @default -- None, must be set if `cloudsql.enabled` is false
-  databaseUrl: null
-
-  # -- Grace period in seconds to wait for worker jobs to finish
-  gracePeriod: 60
-
-  # -- Lifetime of job results in Safir `parse_timedelta` format
-  lifetime: "30d"
-
   # -- Google service account with an IAM binding to the Kubernetes service
-  # account for the application. Must have the `cloudsql.client` role, access
-  # to write to the GCS bucket, and ability to sign URLs as itself
+  # account for the application. Must have access to write to the GCS bucket
+  # and ability to sign URLs as itself
   # @default -- None, must be set
   serviceAccount: null
+
+  # -- Whether to send Slack alerts for unexpected failures
+  slackAlerts: false
 
   # -- URL for the GCS bucket for results (must start with `s3` or `gs`)
   # @default -- None, must be set
@@ -75,35 +74,6 @@ frontend:
 
   # -- Tolerations for the <CHARTNAME> frontend pod
   tolerations: []
-
-cloudsql:
-  # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
-  # on Google Cloud
-  enabled: false
-
-  image:
-    # -- Cloud SQL Auth Proxy image to use
-    repository: "gcr.io/cloudsql-docker/gce-proxy"
-
-    # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.2"
-
-    # -- Pull policy for Cloud SQL Auth Proxy images
-    pullPolicy: "IfNotPresent"
-
-  # -- Instance connection name for a Cloud SQL PostgreSQL instance
-  # @default -- None, must be set if Cloud SQL is used
-  instanceConnectionName: null
-
-  # -- Resource limits and requests for the Cloud SQL Proxy container
-  # @default -- See `values.yaml`
-  resources:
-    limits:
-      cpu: "100m"
-      memory: "20Mi"
-    requests:
-      cpu: "5m"
-      memory: "7Mi"
 
 worker:
   # -- Number of <CHARTNAME> worker pods to start

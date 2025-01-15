@@ -1,5 +1,12 @@
 name: CI
 
+env:
+  # Current supported Python version. For applications, there is generally no
+  # reason to support multiple Python versions, so all actions are run with
+  # this version. Quote the version to avoid interpretation as a floating
+  # point number.
+  PYTHON_VERSION: "3.13"
+
 "on":
   merge_group: {}
   pull_request: {}
@@ -24,7 +31,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Run pre-commit
         uses: pre-commit/action@v3.0.1
@@ -38,6 +45,7 @@ jobs:
         python:
           - "3.11"
           - "3.12"
+          - "3.13"
 
     steps:
       - uses: actions/checkout@v4
@@ -71,7 +79,7 @@ jobs:
 
       - uses: lsst-sqre/run-tox@v1
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           tox-envs: phalanx-lint-change
           tox-requirements: requirements/tox.txt
           cache-key-prefix: helm
@@ -110,19 +118,18 @@ jobs:
       - name: Download installer dependencies
         if: steps.filter.outputs.minikube == 'true'
         run: |
-          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.15.4/vault_1.15.4_linux_amd64.zip
+          curl -sSL -o /tmp/vault.zip https://releases.hashicorp.com/vault/1.18.3/vault_1.18.3_linux_amd64.zip
           unzip /tmp/vault.zip
           sudo mv vault /usr/local/bin/vault
           sudo chmod +x /usr/local/bin/vault
-          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.8.6/argocd-linux-amd64
+          sudo curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.13.3/argocd-linux-amd64
           sudo chmod +x /usr/local/bin/argocd
           sudo apt-get install socat
 
       - name: Setup Minikube
         if: steps.filter.outputs.minikube == 'true'
-        uses: medyagh/setup-minikube@v0.0.18
+        uses: medyagh/setup-minikube@latest
         with:
-          kubernetes-version: "v1.27.3"
           cpus: max
           memory: 5500m  # Linux virtual machines have 7GB of RAM
 
@@ -134,7 +141,7 @@ jobs:
         if: steps.filter.outputs.minikube == 'true'
         timeout-minutes: 15
         with:
-          python-version: "3.12"
+          python-version: ${{ env.PYTHON_VERSION }}
           tox-envs: install
           tox-requirements: requirements/tox.txt
           tox-posargs: >-

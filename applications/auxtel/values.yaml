@@ -2,6 +2,10 @@ hexapod-sim:
   # -- Enable the hexapod controller simulator
   enabled: false
 
+atbuilding:
+  # -- Enable the ATBuilding CSC
+  enabled: false
+
 atdome:
   # -- Enable the ATDome CSC
   enabled: false

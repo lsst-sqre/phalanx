@@ -16,8 +16,8 @@ Kafka topics, users, and a telegraf connector for metrics events.
 | globalAppConfig | object | See `values.yaml` | app-metrics configuration in any environment in which the subchart is enabled. This should stay globally specified here, and it shouldn't be overridden.  See [here](https://sasquatch.lsst.io/user-guide/app-metrics.html#configuration) for the structure of this value. |
 | globalInfluxTags | list | `["application"]` | Keys in an every event sent by any app that should be recorded in InfluxDB as "tags" (vs. "fields"). These will be concatenated with the `influxTags` from `globalAppConfig` |
 | image.pullPolicy | string | `"Always"` | Image pull policy |
-| image.repo | string | `"docker.io/library/telegraf"` | Telegraf image repository |
-| image.tag | string | `"1.30.2-alpine"` | Telegraf image tag |
+| image.repo | string | `"ghcr.io/lsst-sqre/telegraf"` | Telegraf image repository |
+| image.tag | string | `"nightly-alpine-2025-01-09"` | Telegraf image tag |
 | imagePullSecrets | list | `[]` | Secret names to use for Docker pulls |
 | influxdb.url | string | `"http://sasquatch-influxdb.sasquatch:8086"` | URL of the InfluxDB v1 instance to write to |
 | nodeSelector | object | `{}` | Node labels for pod assignment |

@@ -15,4 +15,5 @@ Guides
 .. toctree::
    :maxdepth: 1
 
+   db-migrations
    values
