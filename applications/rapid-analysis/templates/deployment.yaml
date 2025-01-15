@@ -16,12 +16,7 @@ spec:
   template:
     metadata:
       {{- if or $.Values.podAnnotations $script.podAnnotations }}
-      {{- $podAnnotations := "" }}
-      {{- if $script.podAnnotations }}
-      {{- $podAnnotations = $script.podAnnotations }}
-      {{- else }}
-      {{- $podAnnotations = $.Values.podAnnotations }}
-      {{- end }}
+      {{- $podAnnotations := $script.podAnnotations | default $.Values.podAnnotations }}
       annotations:
         {{- toYaml $podAnnotations | nindent 8 }}
       {{- end }}
@@ -130,12 +125,7 @@ spec:
               mountPath: {{ $.Values.butlerSecret.containerPath }}
           {{- end }}
           {{- if or $.Values.resources $script.resources }}
-          {{- $resources := "" }}
-          {{- if $script.resources }}
-          {{- $resources = $script.resources }}
-          {{- else }}
-          {{- $resources = $.Values.resources }}
-          {{- end }}
+          {{- $resources := $script.resources | default $.Values.resources }}
           resources:
             {{- toYaml $resources | nindent 12 }}
           {{- end }}
@@ -210,32 +200,17 @@ spec:
             defaultMode: 0600
       {{- end }}
       {{- if or $.Values.nodeSelector $script.nodeSelector }}
-      {{- $nodeSelector := "" }}
-      {{- if $script.nodeSelector }}
-      {{- $nodeSelector = $script.nodeSelector }}
-      {{- else }}
-      {{- $nodeSelector = $.Values.nodeSelector }}
-      {{- end }}
+      {{- $nodeSelector := $script.nodeSelector | default $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml $nodeSelector | nindent 8 }}
       {{- end }}
       {{- if or $.Values.affinity $script.affinity }}
-      {{- $affinity := "" }}
-      {{- if $script.affinity }}
-      {{- $affinity = $script.affinity }}
-      {{- else }}
-      {{- $affinity = $.Values.affinity }}
-      {{- end }}
+      {{- $affinity := $script.affinity | default $.Values.affinity }}
       affinity:
         {{- toYaml $affinity | nindent 8 }}
       {{- end }}
       {{- if or $.Values.tolerations $script.tolerations }}
-      {{- $tolerations := "" }}
-      {{- if $script.tolerations }}
-      {{- $tolerations = $script.tolerations }}
-      {{- else }}
-      {{- $tolerations = $.Values.tolerations }}
-      {{- end }}
+      {{- $tolerations := $script.tolerations | default $.Values.tolerations }}
       tolerations:
         {{- toYaml $tolerations | nindent 8 }}
       {{- end }}
