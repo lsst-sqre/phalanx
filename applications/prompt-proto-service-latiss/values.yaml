@@ -7,10 +7,10 @@ prompt-proto-service:
     autoscaling.knative.dev/max-scale: "30"  # Continuous observing maxes out at 12 concurrent requests
     autoscaling.knative.dev/target-utilization-percentage: "60"
     autoscaling.knative.dev/target-burst-capacity: "-1"
-    queue.sidecar.serving.knative.dev/cpu-resource-request: "1"
-    queue.sidecar.serving.knative.dev/cpu-resource-limit: "2"
-    queue.sidecar.serving.knative.dev/memory-resource-request: "1Gi"
-    queue.sidecar.serving.knative.dev/memory-resource-limit: "2Gi"
+    queue.sidecar.serving.knative.dev/cpu-resource-request: "25m"
+    queue.sidecar.serving.knative.dev/cpu-resource-limit: "1000m"
+    queue.sidecar.serving.knative.dev/memory-resource-request: "400Mi"
+    queue.sidecar.serving.knative.dev/memory-resource-limit: "800Mi"
     queue.sidecar.serving.knative.dev/ephemeral-storage-resource-request: "400Mi"
     queue.sidecar.serving.knative.dev/ephemeral-storage-resource-limit: "450Mi"
     # Update this field if using latest or static image tag in dev
