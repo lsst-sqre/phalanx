@@ -19,6 +19,7 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | config.apiAspectPageMdx | string | See `values.yaml` | MDX content for the `/api-aspect` page |
 | config.coManageRegistryUrl | string | `nil` | URL to the COmanage registry, if the environment uses COmanage for identity. @default null disables the COmanage integration |
+| config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
 | config.docsPageMdx | string | See `values.yaml` | MDX content for the `/docs` page |
 | config.emailVerifiedPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/thanks-for-verifying` page |
 | config.pendingApprovalPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-approval` page |

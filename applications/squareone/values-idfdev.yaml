@@ -7,6 +7,7 @@ ingress:
 
 config:
   siteName: "Rubin Science Platform @ data-dev"
+  docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"

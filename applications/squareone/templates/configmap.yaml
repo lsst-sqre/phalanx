@@ -9,6 +9,7 @@ data:
     siteName: {{ .Values.config.siteName | quote }}
     baseUrl: {{ .Values.global.baseUrl | quote }}
     siteDescription: {{ .Values.config.siteDescription | quote }}
+    docsBaseUrl: {{ .Values.config.docsBaseUrl | quote }}
     {{- if .Values.config.semaphoreUrl }}
     semaphoreUrl: {{ .Values.config.semaphoreUrl | quote }}
     {{- end}}

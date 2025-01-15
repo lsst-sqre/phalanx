@@ -65,6 +65,9 @@ config:
   siteDescription: |
     Access Rubin Observatory Legacy Survey of Space and Time data.
 
+  # -- Base URL for user documentation (excludes trailing slash)
+  docsBaseUrl: "https://rsp.lsst.io"
+
   # -- URL to the Semaphore (user notifications) API service.
   # @default null disables the Semaphore integration
   semaphoreUrl: null
