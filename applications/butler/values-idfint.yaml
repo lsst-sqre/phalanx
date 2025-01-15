@@ -1,3 +1,5 @@
+autoscaling:
+  minReplicas: 3
 config:
   dp02ClientServerIsDefault: true
   dp02PostgresUri: postgresql://postgres@sqlproxy-butler-int.sqlproxy-cross-project:5432/dp02
