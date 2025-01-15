@@ -8,10 +8,10 @@ config:
   logProfile: "development"
 
   # -- APDB config file resource
-  apdbConfig: "/sdf/group/rubin/user/sullii/tickets/DM-48279/dm48279T6-config.py"
+  apdbConfig: "/sdf/group/rubin/user/sullii/tickets/DM-48279/dm48279-config.py"
 
   # -- PPDB config file resource
-  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-7.yaml"
+  ppdbConfig: "/sdf/group/rubin/user/jeremym/ppdb-replication/config/ppdb-replication-test-8.yaml"
 
   # -- APDB index URI
   apdbIndexUri: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
