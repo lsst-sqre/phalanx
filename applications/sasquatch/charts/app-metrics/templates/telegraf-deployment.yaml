@@ -4,7 +4,7 @@ kind: Deployment
 metadata:
   name: sasquatch-telegraf-app-metrics
   labels:
-    app.kubernetes.io/name: sasquatch-telegraf-app-metrics
+    app.kubernetes.io/name: sasquatch-telegraf
     app.kubernetes.io/instance: sasquatch-telegraf-app-metrics
     app.kubernetes.io/part-of: sasquatch
 spec:
