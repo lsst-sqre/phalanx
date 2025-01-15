@@ -7,7 +7,7 @@ metadata:
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   {{- if .Values.ingress.auth.enabled }}
-  loginRedirect: true
+  loginRedirect: false
   scopes:
     all:
       - "exec:internal-tools"
