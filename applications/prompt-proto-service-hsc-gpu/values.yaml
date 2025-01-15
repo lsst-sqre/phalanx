@@ -65,7 +65,7 @@ prompt-proto-service:
     # -- A factor by which to multiply `baseSize` for refcat datasets.
     refcatsPerImage: 4
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 4
+    patchesPerImage: 6
 
   s3:
     # -- Bucket containing the incoming raw images
