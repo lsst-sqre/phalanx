@@ -314,10 +314,10 @@ love-manager:
     resources:
       requests:
         cpu: 5m
-        memory: 10Mi
+        memory: 100Mi
       limits:
         cpu: 100m
-        memory: 50Mi
+        memory: 500Mi
 
 love-nginx:
   image:
