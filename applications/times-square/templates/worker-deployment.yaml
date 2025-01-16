@@ -102,6 +102,11 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_SLACK_WEBHOOK_URL"
+            - name: "TS_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SENTRY_DSN"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

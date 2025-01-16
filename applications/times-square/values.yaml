@@ -146,6 +146,9 @@ config:
   # -- Default execution timeout for notebooks in seconds
   defaultExecutionTimeout: "300" # 5 minutes
 
+  # Sentry tracing sample rate
+  sentryTracesSampleRate: 0.0
+
   worker:
     # -- Enable liveness checks for the arq queue
     enableLivenessCheck: true
@@ -228,6 +231,10 @@ global:
   # -- Base URL for the environment
   # @default -- Set by times-square Argo CD Application
   baseUrl: ""
+
+  # -- Name of enviroment
+  # @default -- Set by times-square Argo CD Application
+  enviromentName: ""
 
   # -- Host name for ingress
   # @default -- Set by times-square Argo CD Application
