@@ -238,6 +238,8 @@ kafka-connect-manager:
         repairerConnector: false
         topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
 
+# This set of connectors is used to write to the InfluxDB OSS instance,
+# they will go away once the InfluxDB Enterprise instance is fully operational
 telegraf-kafka-consumer-oss:
   enabled: true
   kafkaConsumers:
@@ -249,6 +251,125 @@ telegraf-kafka-consumer-oss:
       timestamp_field: "timestamp"
       topicRegexps: |
         [ "lsst.backpack" ]
+    # CSC connectors
+    oss-maintel:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+      debug: true
+    oss-mtmount:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTMount" ]
+      debug: true
+    oss-comcam:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      debug: true
+    oss-eas:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      debug: true
+    oss-m1m3:
+      enabled: true
+      metric_batch_size: 2500
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3" ]
+      debug: true
+    oss-m2:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      debug: true
+    oss-obssys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      debug: true
+    oss-ocps:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.OCPS" ]
+      debug: true
+    oss-pmd:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.PMD" ]
+      debug: true
+    oss-calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      debug: true
+    oss-mtaircompressor:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTAirCompressor" ]
+      debug: true
+    oss-genericcamera:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      debug: true
+    oss-gis:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.GIS" ]
+      debug: true
+    oss-mtvms:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
+    oss-lsstcam:
+      enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      debug: true
+    oss-auxtel:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+      debug: true
+    oss-latiss:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+      debug: true
+    oss-test:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+      debug: true
+    oss-lasertracker:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.LaserTracker" ]
+      debug: true
+    # CCS connectors (experimental) data is being written on separate databases for now
     oss-atcamera:
       enabled: true
       replicaCount: 1
