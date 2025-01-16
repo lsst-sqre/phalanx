@@ -19,7 +19,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-proto-service.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| prompt-proto-service.cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
+| prompt-proto-service.cache.patchesPerImage | int | `6` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
 | prompt-proto-service.cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-proto-service.containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
