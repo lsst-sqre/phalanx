@@ -243,14 +243,6 @@ kafka-connect-manager:
 telegraf-kafka-consumer-oss:
   enabled: true
   kafkaConsumers:
-    oss-backpack:
-      enabled: true
-      replicaCount: 1
-      database: "lsst.backpack"
-      timestamp_format: "unix"
-      timestamp_field: "timestamp"
-      topicRegexps: |
-        [ "lsst.backpack" ]
     # CSC connectors
     oss-maintel:
       enabled: true
@@ -400,6 +392,7 @@ telegraf-kafka-consumer-oss:
         [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
+    # Application connectors
     oss-obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -417,6 +410,15 @@ telegraf-kafka-consumer-oss:
         [ "lsst.cp" ]
       tags: |
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
+      debug: true
+    oss-backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
       debug: true
 
 telegraf-kafka-consumer:
