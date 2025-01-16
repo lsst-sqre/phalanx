@@ -121,7 +121,7 @@ spec:
           {{- end }}
           {{- end }}
           {{- if $.Values.butlerSecret }}
-            - name: {{ $.Release.Name }}-butler-secret
+            - name: butler-secret
               mountPath: {{ $.Values.butlerSecret.containerPath }}
           {{- end }}
           {{- if or $.Values.resources $script.resources }}
@@ -131,7 +131,7 @@ spec:
           {{- end }}
       {{- if $.Values.butlerSecret }}
       initContainers:
-        - name: {{ $.Release.Name }}-butler-secret-perm-fixer
+        - name: butler-secret-perm-fixer
           image: "alpine:latest"
           command:
             - "/bin/ash"
@@ -146,10 +146,10 @@ spec:
               chown 73006:73006 /secrets/*
               chmod 0600 /secrets/*
           volumeMounts:
-            - name: {{ $.Release.Name }}-raw-butler-secret
+            - name: raw-butler-secret
               mountPath: /secrets-raw
               readOnly: true
-            - name: {{ $.Release.Name }}-butler-secret
+            - name: butler-secret
               mountPath: /secrets
             - name: rubintv-aws-creds
               mountPath: /secrets-rubintv
@@ -192,9 +192,9 @@ spec:
       {{- end }}
       {{- end }}
       {{- if $.Values.butlerSecret }}
-        - name: {{ $.Release.Name }}-butler-secret
+        - name: butler-secret
           emptyDir: {}
-        - name: {{ $.Release.Name }}-raw-butler-secret
+        - name: raw-butler-secret
           secret:
             secretName: butler-secret
             defaultMode: 0600
