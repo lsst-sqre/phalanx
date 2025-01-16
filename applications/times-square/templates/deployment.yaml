@@ -75,11 +75,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: http
           resources:
             {{- toYaml .Values.resources.timesSquare | nindent 12 }}
@@ -117,6 +117,11 @@ spec:
                 secretKeyRef:
                   name: {{ template "times-square.fullname" . }}-secret
                   key: "TS_SLACK_WEBHOOK_URL"
+            - name: "TS_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "times-square.fullname" . }}-secret
+                  key: "TS_SENTRY_DSN"
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
