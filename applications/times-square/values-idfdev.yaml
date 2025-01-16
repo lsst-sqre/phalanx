@@ -1,4 +1,5 @@
 image:
+  tag: tickets-DM-48476-yolo-sentry
   pullPolicy: Always
 ingress:
   defaultScope: "exec:admin"
