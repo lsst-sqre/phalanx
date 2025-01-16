@@ -155,100 +155,130 @@ influxdb-enterprise:
         memory: 256Gi
         cpu: 16
 
-kafka-connect-manager:
-  influxdbSink:
-    # Based on the kafka producers configuration for the Summit
-    # https://github.com/lsst-ts/argocd-csc/blob/main/apps/kafka-producers/values-summit.yaml
-    connectors:
-      auxtel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATAOS|.*ATBuilding|.*ATDome|.*ATDomeTrajectory|.*ATHexapod|.*ATPneumatics|.*ATPtg|.*ATMCS"
-      maintel:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAOS|.*MTDome|.*MTDomeTrajectory|.*MTPtg"
-      mtmount:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTMount"
-        tasksMax: "8"
-      comcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*CCCamera|.*CCHeaderService|.*CCOODS"
-      eas:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*DIMM|.*DREAM|.*DSM|.*EAS|.*EPM|.*ESS|.*HVAC|.*WeatherForecast"
-      latiss:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATCamera|.*ATHeaderService|.*ATOODS|.*ATSpectrograph"
-      m1m3:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTM1M3"
-        tasksMax: "8"
-      m2:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTHexapod|.*MTM2|.*MTRotator"
-      obssys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*Scheduler|.*Script|.*ScriptQueue|.*Watcher"
-      ocps:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*OCPS"
-      test:
-        enabled: true
-        topicsRegex: "lsst.sal.Test"
-      pmd:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*PMD"
-      calsys:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*ATMonochromator|.*ATWhiteLight|.*CBP|.*Electrometer|.*FiberSpectrograph|.*LEDProjector|.*LinearStage|.*TunableLaser"
-      mtaircompressor:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTAirCompressor"
-      genericcamera:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GCHeaderService|.*GenericCamera"
-      gis:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*GIS"
-      mtvms:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*MTVMS"
-      lasertracker:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: ".*LaserTracker"
-      lsstcam:
-        enabled: true
-        repairerConnector: false
-        topicsRegex: "lsst.sal.MTCamera|lsst.sal.MTHeaderService|lsst.sal.MTOODS"
-
+# This set of connectors is used to write to the InfluxDB OSS instance,
+# they will go away once the InfluxDB Enterprise instance is fully operational
 telegraf-kafka-consumer-oss:
   enabled: true
   kafkaConsumers:
-    oss-backpack:
+    # CSC connectors
+    oss-maintel:
       enabled: true
-      replicaCount: 1
-      database: "lsst.backpack"
-      timestamp_format: "unix"
-      timestamp_field: "timestamp"
+      database: "efd"
       topicRegexps: |
-        [ "lsst.backpack" ]
+        [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
+      debug: true
+    oss-mtmount:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTMount" ]
+      debug: true
+    oss-comcam:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
+      debug: true
+    oss-eas:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+         [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
+      debug: true
+    oss-m1m3:
+      enabled: true
+      metric_batch_size: 2500
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTM1M3" ]
+      debug: true
+    oss-m2:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
+      debug: true
+    oss-obssys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
+      debug: true
+    oss-ocps:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.OCPS" ]
+      debug: true
+    oss-pmd:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.PMD" ]
+      debug: true
+    oss-calsys:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
+      debug: true
+    oss-mtaircompressor:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTAirCompressor" ]
+      debug: true
+    oss-genericcamera:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
+      debug: true
+    oss-gis:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.GIS" ]
+      debug: true
+    oss-mtvms:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTVMS" ]
+      debug: true
+    oss-lsstcam:
+      enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
+      debug: true
+    oss-auxtel:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
+      debug: true
+    oss-latiss:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
+      debug: true
+    oss-test:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.Test" ]
+      debug: true
+    oss-lasertracker:
+      enabled: true
+      database: "efd"
+      topicRegexps: |
+        [ "lsst.sal.LaserTracker" ]
+      debug: true
+    # CCS connectors (experimental) data is being written on separate databases for now
     oss-atcamera:
       enabled: true
       replicaCount: 1
@@ -279,6 +309,7 @@ telegraf-kafka-consumer-oss:
         [ "Agent", "Aspic", "Axis", "Canbus", "Cip", "Clamp", "Cold", "Controller", "Cryo", "Gateway", "Hardware", "Hip", "Hook", "Latch", "Location", "Ps", "RTD", "Raft", "Reb", "Segment", "Sensor", "Socket", "Source", "Truck" ]
       topicRegexps: |
         [ "lsst.MTCamera" ]
+    # Application connectors
     oss-obsenv:
       enabled: true
       database: "lsst.obsenv"
@@ -297,12 +328,41 @@ telegraf-kafka-consumer-oss:
       tags: |
         [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
       debug: true
+    oss-backpack:
+      enabled: true
+      replicaCount: 1
+      database: "lsst.backpack"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.backpack" ]
+      debug: true
 
+# This set of connectors is used to write to the InfluxDB Enterprise instance
 telegraf-kafka-consumer:
   enabled: true
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
+    # Application connectors
+    obsenv:
+      enabled: true
+      database: "lsst.obsenv"
+      timestamp_format: "unix_ms"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.obsenv" ]
+      debug: true
+    cp:
+      enabled: true
+      database: "lsst.cp"
+      timestamp_format: "unix"
+      timestamp_field: "timestamp"
+      topicRegexps: |
+        [ "lsst.cp" ]
+      tags: |
+        [ "dataset_tag", "band", "instrument", "skymap", "detector", "physical_filter", "tract", "exposure", "patch", "visit", "run", "pipeline" ]
+      debug: true
     backpack:
       enabled: true
       replicaCount: 1
@@ -316,28 +376,24 @@ telegraf-kafka-consumer:
     maintel:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAOS", "lsst.sal.MTDome", "lsst.sal.MTDomeTrajectory", "lsst.sal.MTPtg" ]
       debug: true
     mtmount:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
     comcam:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
       debug: true
     eas:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
          [ "lsst.sal.DIMM", "lsst.sal.DREAM", "lsst.sal.DSM", "lsst.sal.EAS", "lsst.sal.EPM", "lsst.sal.ESS", "lsst.sal.HVAC", "lsst.sal.WeatherForecast" ]
       debug: true
@@ -345,105 +401,92 @@ telegraf-kafka-consumer:
       enabled: true
       metric_batch_size: 2500
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
       debug: true
     m2:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTHexapod", "lsst.sal.MTM2", "lsst.sal.MTRotator" ]
       debug: true
     obssys:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Scheduler", "lsst.sal.Script", "lsst.sal.ScriptQueue", "lsst.sal.Watcher" ]
       debug: true
     ocps:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.OCPS" ]
       debug: true
     pmd:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.PMD" ]
       debug: true
     calsys:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATMonochromator", "lsst.sal.ATWhiteLight", "lsst.sal.CBP", "lsst.sal.Electrometer", "lsst.sal.FiberSpectrograph", "lsst.sal.LEDProjector", "lsst.sal.LinearStage", "lsst.sal.TunableLaser" ]
       debug: true
     mtaircompressor:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTAirCompressor" ]
       debug: true
     genericcamera:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GCHeaderService", "lsst.sal.GenericCamera" ]
       debug: true
     gis:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.GIS" ]
       debug: true
     mtvms:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTVMS" ]
       debug: true
     lsstcam:
       enabled: true
+      metric_batch_size: 250
+      max_undelivered_messages: 5000
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.MTCamera", "lsst.sal.MTHeaderService", "lsst.sal.MTOODS" ]
       debug: true
     auxtel:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATAOS", "lsst.sal.ATBuilding", "lsst.sal.ATDome", "lsst.sal.ATDomeTrajectory", "lsst.sal.ATHexapod", "lsst.sal.ATPneumatics", "lsst.sal.ATPtg", "lsst.sal.ATMCS" ]
       debug: true
     latiss:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.ATCamera", "lsst.sal.ATHeaderService", "lsst.sal.ATOODS", "lsst.sal.ATSpectrograph" ]
       debug: true
     test:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.Test" ]
       debug: true
     lasertracker:
       enabled: true
       database: "efd"
-      timestamp_field: "private_efdStamp"
       topicRegexps: |
         [ "lsst.sal.LaserTracker" ]
       debug: true
