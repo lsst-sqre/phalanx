@@ -7,6 +7,7 @@ config:
   databaseUrl: "postgresql://times-square@localhost/times-square"
   githubAppId: "952880"
   enableGitHubApp: "True"
+  sentryTracesSampleRate: 1
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-int-dc5d:us-central1:science-platform-int-8f439af2"

@@ -5,6 +5,7 @@ config:
   databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
   githubAppId: "1112177"
   enableGitHubApp: "True"
+  sentryTracesSampleRate: 1
 cloudsql:
   enabled: false
 redis:
