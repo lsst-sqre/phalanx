@@ -3,6 +3,7 @@ csc_shared:
 uws-api-server:
   targetCluster: "summit"
   hostname: summit-lsp.lsst.codes
+  ttlSecondsAfterFinished: 7200
   image:
     tag: latest
   logLevel: INFO
