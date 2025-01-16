@@ -4,6 +4,7 @@ replicaCount:
 image:
   pullPolicy: Always
 config:
+  updateSchema: true
   logLevel: "DEBUG"
   databaseUrl: "postgresql://timessquare@postgres.postgres/timessquare"
   githubAppId: "327289"
