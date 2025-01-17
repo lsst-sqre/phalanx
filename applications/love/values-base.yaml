@@ -429,6 +429,13 @@ love-producer:
   - name: atmcs
     csc: ATMCS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 300Mi
+      limits:
+        cpu: 1000m
+        memory: 900Mi
   - name: atocps
     csc: OCPS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
