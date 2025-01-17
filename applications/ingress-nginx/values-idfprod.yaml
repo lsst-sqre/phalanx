@@ -1,7 +1,4 @@
 ingress-nginx:
   controller:
-    config:
-      large-client-header-buffers: "4 64k"
-      proxy-buffer-size: "64k"
     service:
       loadBalancerIP: "35.202.181.164"

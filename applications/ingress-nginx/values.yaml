@@ -15,9 +15,20 @@ ingress-nginx:
       # so that the client IP will be exposed to Gafaelfawr
       compute-full-forwarded-for: "true"
 
+      # -- Size and number of the buffers used to read HTTP headers from
+      # clients. Increase this from its default size in case clients send
+      # large cookies.
+      large-client-header-buffers: "4 64k"
+
       # -- Maximum size of the client request body (needs to be large enough
       # to allow table uploads)
       proxy-body-size: "100m"
+
+      # -- Maximum size of the buffer used to read HTTP headers from the
+      # backend or auth subrequest handler. This needs to be larger than the
+      # default because Gafaelfawr reflects all of the user's cookies other
+      # than the Gafaelfawr one.
+      proxy-buffer-size: "64k"
 
       # -- Redirect all non-SSL access to SSL
       ssl-redirect: "true"
