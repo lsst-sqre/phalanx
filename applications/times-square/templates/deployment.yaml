@@ -62,11 +62,14 @@ spec:
         {{- end }}
         - name: {{ .Chart.Name }}
           securityContext:
-            allowPrivilegeEscalation: false
+            runAsNonRoot: false
+            runAsUser: 0
+            runAsGroup: 0
+            privileged: true
             capabilities:
               drop:
                 - all
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
