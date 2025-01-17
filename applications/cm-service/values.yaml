@@ -131,7 +131,29 @@ worker:
   # -- Tolerations for the worker pods
   tolerations: []
 
+  butler:
+    # -- If specified, location for htcondor config file to be injected into worker containers
+    mountPath: null
+
+    # -- URL of a Butler Registry Database
+    dbUrl: null
+
+    # -- Name of a user to use with the Butler Registry Database
+    dbUsername: null
+
   htcondor:
+
+    host:
+
+      # -- Name of the HTCondor Host
+      default: null
+
+      # -- If specified, name of the HTCondor Collector Host
+      collector: null
+
+      # -- If specified, name of the HTCondor Schedd Host
+      schedd: null
+
     config:
       # -- If specified, location for htcondor config file to be injected into worker containers
       mountPath: null

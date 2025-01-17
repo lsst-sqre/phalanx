@@ -69,6 +69,11 @@ spec:
               name: "condor-config-volume"
               readOnly: true
             {{- end }}
+            {{- with .Values.worker.butler }}
+            - mountPath: {{ .mountPath }}
+              name: "butler-auth-volume"
+              readOnly: true
+            {{- end }}
             {{- with .Values.worker.htcondor.fsRemoteDir }}
             - mountPath: {{ .mountPath }}
               name: "condor-remote-volume"
@@ -83,19 +88,21 @@ spec:
         - name: tmp-volume
           emptyDir:
             sizeLimit: 500Mi
-        {{- with .Values.worker.htcondor.config }}
         - name: condor-config-volume
           configMap:
             name: {{ $.Chart.Name }}-config-worker
             items:
               - key: config
                 path: condor-config
-        {{- end }}
-        {{- with .Values.worker.htcondor.fsRemoteDir }}
         - name: condor-remote-volume
           persistentVolumeClaim:
             claimName: {{ $.Chart.Name }}-htcondor
-        {{- end }}
+        - name: butler-auth-volume
+          configMap:
+            name: {{ $.Chart.Name }}-config-worker
+            items:
+              - key: butlerAuth
+                path: db-auth.yaml
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

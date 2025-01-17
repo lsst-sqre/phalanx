@@ -6,6 +6,7 @@ metadata:
     {{- include "application.labels" . | nindent 4 }}
 data:
   ASGI__PREFIX: {{ .Values.config.pathPrefix | quote }}
+  BUTLER__MOCK: "1"
   {{- with .Values.config.db }}
   DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
   DB__ECHO: {{ .echo | quote }}
@@ -21,5 +22,7 @@ metadata:
     {{- include "application.labels" . | nindent 4 }}
 data:
   CONDOR_CONFIG: /home/lsstsvc1/.config/condor/condor-config
+  DAF_BUTLER_PASSWORD: placeholder_for_secret
   HTCONDOR__condor_submit_bin: /opt/htcondor/bin/condor_submit
   HTCONDOR__condor_q_bin: /opt/htcondor/bin/condor_q
+  HTCONDOR__alias_path: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}

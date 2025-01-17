@@ -15,6 +15,10 @@ worker:
   image:
     tag: "tickets-DM-48099-release"
     pullPolicy: Always
+  butler:
+    mountPath: "/home/lsstsvc1/.config/butler"
+    dbUrl: "postgresql://usdf-butler.slac.stanford.edu:5432/lsstdb1"
+    dbUsername: rubin
   htcondor:
     config:
       mountPath: "/home/lsstsvc1/.config/condor"
