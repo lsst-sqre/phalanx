@@ -9,6 +9,7 @@ data:
   SAFIR_PROFILE: {{ .Values.config.profile | quote }}
   SAFIR_LOG_LEVEL: {{ .Values.config.logLevel | quote }}
   TS_ENVIRONMENT_URL: {{ .Values.global.baseUrl | quote }}
+  TS_ENVIRONMENT_NAME: {{ .Values.global.environmentName | quote }}
   TS_PATH_PREFIX: {{ .Values.ingress.path }}
   TS_DATABASE_URL: {{ required "config.databaseUrl must be set" .Values.config.databaseUrl | quote }}
   TS_REDIS_URL: {{ required "config.redisCacheUrl must be set" .Values.config.redisCacheUrl | quote }}
@@ -18,3 +19,4 @@ data:
   TS_GITHUB_ORGS: {{ .Values.config.githubOrgs | quote }}
   TS_CHECK_RUN_TIMEOUT: {{ .Values.config.githubCheckRunTimeout | quote }}
   TS_DEFAULT_EXECUTION_TIMEOUT: {{ .Values.config.defaultExecutionTimeout | quote }}
+  TS_SENTRY_TRACES_SAMPLE_RATE: {{ .Values.config.sentryTracesSampleRate | quote }}
