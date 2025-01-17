@@ -96,7 +96,7 @@ atmcs-sim:
     repository: ts-dockerhub.lsst.org/atmcs_sim
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate
+    RUN_ARG: --simulate --loglevel 10
   resources:
     limits:
       cpu: 600m
@@ -203,7 +203,7 @@ atpneumatics-sim:
     repository: ts-dockerhub.lsst.org/at_pneumatics_sim
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate
+    RUN_ARG: --simulate --loglevel 10
   resources:
     limits:
       cpu: 120m
