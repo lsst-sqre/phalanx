@@ -115,7 +115,9 @@ Common environment variables
     secretKeyRef:
       name: "gafaelfawr"
       key: "redis-password"
-- name: "GAFAELFAWR_REDIS_URL"
+- name: "GAFAELFAWR_REDIS_EPHEMERAL_URL"
+  value: "redis://gafaelfawr-redis-ephemeral.{{ .Release.Namespace }}:6379/0"
+- name: "GAFAELFAWR_REDIS_PERSISTENT_URL"
   value: "redis://gafaelfawr-redis.{{ .Release.Namespace }}:6379/0"
 - name: "GAFAELFAWR_SESSION_SECRET"
   valueFrom:

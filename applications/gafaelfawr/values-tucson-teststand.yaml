@@ -1,4 +1,4 @@
-redis:
+redisPersistent:
   persistence:
     storageClass: "rook-ceph-block"
 

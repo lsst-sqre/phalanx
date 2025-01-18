@@ -1,7 +1,7 @@
 replicaCount: 2
 
 # Use the CSI storage class so that we can use snapshots.
-redis:
+redisPersistent:
   persistence:
     storageClass: "wekafs--sdf-k8s01"
 

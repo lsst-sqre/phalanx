@@ -103,18 +103,28 @@ Authentication and identity system
 | operator.resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr Kubernetes operator. The limits are artificially higher since the operator pod is also where we manually run `gafaelfawr audit --fix`, which requires more CPU and memory. |
 | operator.tolerations | list | `[]` | Tolerations for the token management pod |
 | podAnnotations | object | `{}` | Annotations for the Gafaelfawr frontend pod |
-| redis.affinity | object | `{}` | Affinity rules for the Redis pod |
-| redis.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
-| redis.config.secretName | string | `"gafaelfawr"` | Name of secret containing Redis password (do not change) |
-| redis.nodeSelector | object | `{}` | Node selection rules for the Redis pod |
-| redis.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
-| redis.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
-| redis.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
-| redis.persistence.storageClass | string | `""` | Class of storage to request |
-| redis.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
-| redis.podAnnotations | object | `{}` | Pod annotations for the Redis pod |
-| redis.resources | object | See `values.yaml` | Resource limits and requests for the Redis pod |
-| redis.tolerations | list | `[]` | Tolerations for the Redis pod |
+| redisEphemeral.affinity | object | `{}` | Affinity rules for the ephemeral Redis pod |
+| redisEphemeral.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
+| redisEphemeral.config.secretName | string | `"gafaelfawr"` | Name of secret containing Redis password (do not change) |
+| redisEphemeral.fullnameOverride | string | `"gafaelfawr-redis-ephemeral"` | Override the name of the resources (do not change) |
+| redisEphemeral.nodeSelector | object | `{}` | Node selection rules for the ephemeral Redis pod |
+| redisEphemeral.persistence.enabled | bool | `false` | Whether to persist Redis storage of ephemeral data. This should always be false. |
+| redisEphemeral.podAnnotations | object | `{}` | Pod annotations for the ephemeral Redis pod |
+| redisEphemeral.resources | object | See `values.yaml` | Resource limits and requests for the ephemeral Redis pod |
+| redisEphemeral.tolerations | list | `[]` | Tolerations for the ephemeral Redis pod |
+| redisPersistent.affinity | object | `{}` | Affinity rules for the persistent Redis pod |
+| redisPersistent.config.secretKey | string | `"redis-password"` | Key inside secret from which to get the Redis password (do not change) |
+| redisPersistent.config.secretName | string | `"gafaelfawr"` | Name of secret containing Redis password (do not change) |
+| redisPersistent.fullnameOverride | string | `"gafaelfawr-redis"` | Override the name of the resources (do not change) |
+| redisPersistent.nodeSelector | object | `{}` | Node selection rules for the persistent Redis pod |
+| redisPersistent.persistence.accessMode | string | `"ReadWriteOnce"` | Access mode of storage to request |
+| redisPersistent.persistence.enabled | bool | `true` | Whether to persist Redis storage and thus tokens. Setting this to false will use `emptyDir` and reset all tokens on every restart. Only use this for a test deployment. |
+| redisPersistent.persistence.size | string | `"1Gi"` | Amount of persistent storage to request |
+| redisPersistent.persistence.storageClass | string | `""` | Class of storage to request |
+| redisPersistent.persistence.volumeClaimName | string | `""` | Use an existing PVC, not dynamic provisioning. If this is set, the size, storageClass, and accessMode settings are ignored. |
+| redisPersistent.podAnnotations | object | `{}` | Pod annotations for the persistent Redis pod |
+| redisPersistent.resources | object | See `values.yaml` | Resource limits and requests for the persistent Redis pod |
+| redisPersistent.tolerations | list | `[]` | Tolerations for the persistent Redis pod |
 | replicaCount | int | `1` | Number of web frontend pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the Gafaelfawr frontend pod |
 | tolerations | list | `[]` | Tolerations for the Gafaelfawr frontend pod |

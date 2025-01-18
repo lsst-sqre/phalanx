@@ -1,5 +1,5 @@
 replicaCount: 2
-redis:
+redisPersistent:
   persistence:
     enabled: false
 

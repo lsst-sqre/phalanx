@@ -1,5 +1,5 @@
 # Reset token storage on every Redis restart.
-redis:
+redisPersistent:
   persistence:
     enabled: false
   resources: {}
