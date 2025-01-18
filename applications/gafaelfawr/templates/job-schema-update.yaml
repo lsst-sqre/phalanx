@@ -21,6 +21,7 @@ spec:
         {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "schema-update"
         gafaelfawr-redis-client: "true"
+        gafaelfawr-redis-ephemeral-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
       serviceAccountName: "gafaelfawr"

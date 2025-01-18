@@ -23,6 +23,7 @@ spec:
         {{- include "gafaelfawr.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "operator"
         gafaelfawr-redis-client: "true"
+        gafaelfawr-redis-ephemeral-client: "true"
     spec:
       serviceAccountName: "gafaelfawr-operator"
       containers:
