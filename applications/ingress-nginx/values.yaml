@@ -41,6 +41,12 @@ ingress-nginx:
       # @default -- See `values.yaml`
       server-snippet: |
         set $auth_error_body '';
+        set $auth_ratelimit_limit '';
+        set $auth_ratelimit_remaining '';
+        set $auth_ratelimit_reset '';
+        set $auth_ratelimit_resource '';
+        set $auth_ratelimit_used '';
+        set $auth_retry_after '';
         set $auth_status '';
         set $auth_www_authenticate '';
         location @autherror {
@@ -49,6 +55,16 @@ ingress-nginx:
             add_header Cache-Control "no-cache, must-revalidate" always;
             add_header WWW-Authenticate $auth_www_authenticate always;
             return 400 $auth_error_body;
+          }
+          if ($auth_status = 429) {
+            add_header Cache-Control "no-cache, must-revalidate" always;
+            add_header Retry-After $auth_retry_after always;
+            add_header X-RateLimit-Limit $auth_ratelimit_limit always;
+            add_header X-RateLimit-Remaining $auth_ratelimit_remaining always;
+            add_header X-RateLimit-Reset $auth_ratelimit_reset always;
+            add_header X-RateLimit-Resource $auth_ratelimit_resource always;
+            add_header X-RateLimit-Used $auth_ratelimit_used always;
+            return 429 $auth_error_body;
           }
           add_header Cache-Control "no-cache, must-revalidate" always;
           add_header WWW-Authenticate $auth_www_authenticate always;
