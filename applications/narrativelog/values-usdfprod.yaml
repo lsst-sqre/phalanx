@@ -3,3 +3,6 @@ config:
 db:
   host: usdf-summitdb.slac.stanford.edu
   user: usdf
+ingress:
+  auth:
+    enabled: true

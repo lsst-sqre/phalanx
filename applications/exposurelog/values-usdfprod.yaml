@@ -15,3 +15,6 @@ env:
     value: "/var/secrets/butler/postgres-credentials.txt"
   - name: PGUSER
     value: "rubin"
+ingress:
+  auth:
+    enabled: true
