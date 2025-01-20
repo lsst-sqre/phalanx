@@ -429,6 +429,13 @@ love-producer:
   - name: atmcs
     csc: ATMCS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 100m
+        memory: 300Mi
+      limits:
+        cpu: 1000m
+        memory: 900Mi
   - name: atocps
     csc: OCPS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -447,6 +454,13 @@ love-producer:
   - name: atscriptqueue
     csc: ScriptQueue:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -607,6 +621,13 @@ love-producer:
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: mtvmsm1m3
     csc: MTVMS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -616,6 +637,13 @@ love-producer:
   - name: ocsscriptqueue
     csc: ScriptQueue:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: tmaess001
     csc: ESS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
