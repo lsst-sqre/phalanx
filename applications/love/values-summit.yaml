@@ -492,6 +492,13 @@ love-producer:
   - name: atscriptqueue
     csc: ScriptQueue:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -664,12 +671,26 @@ love-producer:
   - name: mtscriptqueue
     csc: ScriptQueue:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscriptqueue
     csc: ScriptQueue:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/queue/ws/subscription
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 500m
+        memory: 500Mi
   - name: pmd1
     csc: PMD:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
