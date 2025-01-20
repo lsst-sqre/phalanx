@@ -24,3 +24,12 @@ Selector labels
 app.kubernetes.io/name: "sasquatch-backpack"
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+
+{{/*
+Common environment variables
+*/}}
+{{- define "gafaelfawr.envVars" -}}
+- name: "BACKPACK_REDIS_URL"
+  value: "redis://backpack-redis.{{ .Release.Namespace }}:6379/0"
+{{- end }}
