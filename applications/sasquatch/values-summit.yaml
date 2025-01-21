@@ -1,6 +1,12 @@
 strimzi-kafka:
+  cluster:
+    monitorLabel:
+      lsst.io/monitor: "true"
   kafka:
     config:
+      auto.create.topics.enable: false
+      log.cleaner.min.compaction.lag.ms: 604800000
+      log.message.timestamp.type: LogAppendTime
       log.retention.minutes: 10080
       offsets.retention.minutes: 10080
     storage:
@@ -34,6 +40,18 @@ strimzi-kafka:
       limits:
         memory: 32Gi
         cpu: 4
+    metricsConfig:
+      enabled: true
+  kafkaExporter:
+    enabled: true
+    enableSaramaLogging: true
+    resources:
+      requests:
+        cpu: 500m
+        memory: 128Mi
+      limits:
+        cpu: 1500m
+        memory: 384Mi
   kraft:
     enabled: true
   kafkaController:
@@ -67,6 +85,10 @@ strimzi-kafka:
         nginx.ingress.kubernetes.io/rewrite-target: /$2
       hostname: summit-lsp.lsst.codes
       path: /schema-registry(/|$)(.*)
+  connect:
+    config:
+      key.converter: org.apache.kafka.connect.json.JsonConverter
+      key.converter.schemas.enable: false
   cruiseControl:
     enabled: true
   brokerStorage:
@@ -524,6 +546,7 @@ telegraf-kafka-consumer:
 
 
 kafdrop:
+  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: summit-lsp.lsst.codes
