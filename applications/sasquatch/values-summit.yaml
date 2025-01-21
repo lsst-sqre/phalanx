@@ -1,4 +1,7 @@
 strimzi-kafka:
+  cluster:
+    monitorLabel:
+      lsst.io/monitor: "true"
   kafka:
     config:
       auto.create.topics.enable: false

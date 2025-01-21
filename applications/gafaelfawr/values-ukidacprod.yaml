@@ -1,0 +1,50 @@
+redis:
+  persistence:
+    enabled: false
+
+config:
+  internalDatabase: true
+
+  oidcServer:
+    enabled: true
+
+  updateSchema: false
+
+  github:
+    clientId: "10172b4db1b67ee31620"
+
+
+# Support generating user metadata for CADC authentication code.
+#  cadcBaseUuid: "4cb5f948-aad9-466c-837b-5eae565b0a77"
+
+# Allow access by GitHub team.
+  groupMapping:
+    "exec:admin":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:internal-tools":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:notebook":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "exec:portal":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "read:image":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+    "read:tap":
+      - github:
+          organization: "lsp-uk"
+          team: "dev"
+
+  initialAdmins:
+    - "gpfrancis"
+    - "aibsen"
+    - "davedavemckay"

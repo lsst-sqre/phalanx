@@ -1,0 +1,17 @@
+config:
+  autostart:
+    - name: "tap"
+      count: 1
+      users:
+        - username: "bot-mobu-recommended"
+          uidnumber: 74768
+          gidnumber: 74768
+      scopes: ["read:tap"]
+      business:
+        type: "TAPQueryRunner"
+        options:
+          queries:
+            - "SELECT TOP 10 * FROM  video.hsc_g_f"
+            - "SELECT TOP 10 * FROM  TAP_SCHEMA.tables"
+            - "SELECT TOP 10 * FROM  viking.hsc_g_f"
+        restart: true
