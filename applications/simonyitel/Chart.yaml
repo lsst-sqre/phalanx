@@ -81,11 +81,6 @@ dependencies:
   condition: mtcamhexapod-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtcamhexapod-sim
-  version: 1.0.0
-  condition: mtcamhexapod-sim.enabled
-  repository: file://../../charts/csc
-- name: csc
   alias: mtdome
   version: 1.0.0
   condition: mtdome.enabled
@@ -115,19 +110,9 @@ dependencies:
   condition: mtm1m3-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtm1m3ts-sim
-  version: 1.0.0
-  condition: mtm1m3ts-sim.enabled
-  repository: file://../../charts/csc
-- name: csc
   alias: mtm2
   version: 1.0.0
   condition: mtm2.enabled
-  repository: file://../../charts/csc
-- name: csc
-  alias: mtm2-sim
-  version: 1.0.0
-  condition: mtm2-sim.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: mtm2-sim
