@@ -53,7 +53,7 @@ atheaderservice:
     repository: ts-dockerhub.lsst.org/headerservice
     pullPolicy: Always
   env:
-    URL_SPEC: --lfa_mode s3 --s3instance ls
+    URL_SPEC: --lfa_mode s3 --s3instance cp
     CAMERA: at
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
