@@ -17,6 +17,11 @@ dependencies:
   condition: ccocps.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: raocps
+  version: 1.0.0
+  condition: raocps.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: mtocps
   version: 1.0.0
   condition: mtocps.enabled
