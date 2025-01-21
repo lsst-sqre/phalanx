@@ -33,7 +33,6 @@ spec:
                   key: db_password
             - name: QUICKLOOK_db_url
               value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
-            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
             {{- include "quicklook.butler-settings.env" . | nindent 12 }}
           ports:
