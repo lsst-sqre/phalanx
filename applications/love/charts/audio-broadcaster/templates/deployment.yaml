@@ -1,5 +1,5 @@
 {{- range $index, $mic := .Values.microphones }}
-{{ $appName := printf "%s-%d" $.Release.Name (add $index 1) | trunc 63 | trimSuffix "-" }}
+{{ $appName := printf "audio-broadcaster-%d" (add $index 1) | trunc 63 | trimSuffix "-" }}
 ---
 apiVersion: apps/v1
 kind: Deployment
