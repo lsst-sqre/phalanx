@@ -368,6 +368,9 @@ kapacitor:
 
 backup:
   enabled: true
+  image:
+    tag: "tickets-DM-48454"
+    pullPolicy: Always
   persistence:
     size: 100Ti
     storageClass: wekafs--sdf-k8s01
@@ -380,3 +383,6 @@ backup:
       retentionDays: 7
     - name: influxdb-enterprise-incremental
       enabled: true
+    - name: schemas
+      enabled: true
+      retentionDays: 7

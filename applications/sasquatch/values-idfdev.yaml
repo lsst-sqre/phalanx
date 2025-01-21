@@ -163,6 +163,9 @@ app-metrics:
 
 backup:
   enabled: true
+  image:
+    tag: "tickets-DM-48454"
+    pullPolicy: Always
   persistence:
     size: 500Gi
     storageClass: standard
@@ -176,6 +179,9 @@ backup:
     - name: "influxdb-enterprise-incremental"
       enabled: true
     - name: "influxdb-oss-full"
+      enabled: true
+      retentionDays: 3
+    - name: "schemas"
       enabled: true
       retentionDays: 3
   restoreItems:
