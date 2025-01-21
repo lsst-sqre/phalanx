@@ -50,7 +50,7 @@ spec:
 #            - name: "PROPS_OP_hips_defHipsSources_source"
 #              value: "lsst"
             - name: "PROPS_OP_hips_defHipsSources_label"
-              value: "'Rubin Featured XXXX'"
+              value: "'Rubin_Featured_XXXX'"
 #            - name: "PROPS_OP_hips_adhocMocSource_label"
 #              value: "Rubin Featured MOC"
 #            - name: "PROPS_OP_hips_adhocMocSource_sources_0"
