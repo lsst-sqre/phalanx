@@ -14,7 +14,8 @@ image:
   repository: "ipac/suit"
 
   # -- Pull policy for the Portal image
-  pullPolicy: "IfNotPresent"
+  #pullPolicy: "IfNotPresent"
+  pullPolicy: "Always"
 
   # -- Tag of Portal image to use
   # @default -- The appVersion of the chart
