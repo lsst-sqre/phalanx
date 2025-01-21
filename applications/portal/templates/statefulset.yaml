@@ -47,8 +47,9 @@ spec:
               value: {{ .Values.global.host | quote }}
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
-            - "PROPS_OP_hips_defHipsSources_source" = "lsst"
-            - "PROPS_OP_hips_defHipsSources_label" = "Rubin Featured"
+            - name: "PROPS_OP_hips_defHipsSources_source"
+              value: "lsst"
+            - name: PROPS_OP_hips_defHipsSources_label = "Rubin Featured"
             - "PROPS_OP_hips_adhocMocSource_label" = "Rubin Featured MOC"
             - "PROPS_OP_hips_adhocMocSource_sources_0" = "temp://lsst/dp02_dc2/hips/images/color_gri"
             - "PROPS_OP_hips_adhocMocSource_sources_1" = "temp://lsst/dp02_dc2/hips/images/band_u"
