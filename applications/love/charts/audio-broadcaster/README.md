@@ -9,10 +9,9 @@ Helm chart for the audio-broadcaster.
 | affinity | object | `{}` | Affinity rules for the ts_audio_broadcaster pods |
 | env | object | `{"WEBSERVER_PORT":8888}` | This section holds a set of key, value pairs for environmental variables |
 | fullnameOverride | string | `""` | Specify the deployed application name specifically. Overrides all other names. |
-| image.nexus3 | string | `"pull-secret"` | The tag name for the Nexus3 Docker repository secrets if private images need to be pulled |
 | image.pullPolicy | string | `"IfNotPresent"` | The pull policy on the ts_audio_broadcaster image |
 | image.repository | string | `"lsstts/audio_broadcaster"` | The ts_audio_broadcaster image to use |
-| image.tag | string | `"develop"` | The tag to use for the ts_audio_broadcaster image |
+| image.revision | int | `nil` | The cycle revision to add to the image tag |
 | ingress.annotations | object | `{}` | Annotations for the ts_audio_broadcaster ingress |
 | ingress.className | string | `"nginx"` | Assign the Ingress class name |
 | ingress.hostname | string | `"audio-broadcaster.local"` | Hostname for the ts_audio_broadcaster ingress |
