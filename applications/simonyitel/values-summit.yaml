@@ -345,8 +345,6 @@ mtdome:
   image:
     repository: ts-dockerhub.lsst.org/mtdome
     pullPolicy: Always
-  env:
-    RUN_ARG: 1
   resources:
     limits:
       cpu: 900m
