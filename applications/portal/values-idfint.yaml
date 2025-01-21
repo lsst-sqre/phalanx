@@ -14,7 +14,7 @@ config:
   ssotap: "ssotap"
 
 image:
-  tag: "portal-against-pre-1-2025.1_b1"
+  tag: "portal-against-pre-2-2025.1_b1"
 
 resources:
   limits:
