@@ -529,6 +529,7 @@ mtmount-sim:
       memory: 300Mi
 
 mtoods:
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
