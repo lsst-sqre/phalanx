@@ -25,7 +25,8 @@ spec:
     spec:
       containers:
         - name: {{ $appName }}
-          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           ports:
           - containerPort: {{ $.Values.env.WEBSERVER_PORT }}
@@ -42,10 +43,8 @@ spec:
           resources:
             {{- toYaml $.Values.resources | nindent 12 }}
           {{- end }}
-      {{- if $.Values.image.nexus3 }}
       imagePullSecrets:
-        - name: {{ $.Values.image.nexus3 }}
-      {{- end }}
+        - name: pull-secret
       {{- with $.Values.nodeSelector }}
       nodeSelector:
         {{- toYaml $ | nindent 8 }}

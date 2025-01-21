@@ -86,6 +86,10 @@ mtmount-sim:
   # -- Enable the MTMount simulator CSC
   enabled: false
 
+mtoods:
+  # -- Enable the MTOODS simulator CSC
+  enabled: false
+
 mtrotator:
   # -- Enable the MTRotator CSC
   enabled: false
