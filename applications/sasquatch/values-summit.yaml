@@ -201,7 +201,7 @@ telegraf-kafka-consumer-oss:
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
       debug: true
-    oss-eas:
+    oss-envsys:
       enabled: true
       database: "efd"
       topicRegexps: |
@@ -413,7 +413,7 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.CCCamera", "lsst.sal.CCHeaderService", "lsst.sal.CCOODS" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
       database: "efd"
       topicRegexps: |
