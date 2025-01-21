@@ -533,8 +533,6 @@ mtoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
-    AWS_ACCESS_KEY_ID: oods-lsstcam
-    AWS_ENDPOINT_URL: https://s3-butler.cp.lsst.org
   <<: *butler-secret
   resources:
     limits:
