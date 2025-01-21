@@ -69,23 +69,18 @@ spec:
               value: "temp://lsst/dp02_dc2/hips/images/band_y"
             - name: "PROPS_OP_hips_adhocMocSource_sources_7"
               value: "ivo://CDS/P/2MASS/color"
-            - name: "PROPS_OP_coverage_hipsSourceURL"
-              value: >-
-                {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
-                {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
-                {{- end }}
-            - name: "PROPS_OP_coverage_hipsSource360URL"
-              value: >-
-                {{- if .Values.config.hipsUrl }}
-                       "{{ .Values.config.hipsUrl }}"
-                {{- else }}
-                       "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
-                {{- end }}
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
                 $'{
+                   "coverage":  {
+                      {{- if .Values.config.hipsUrl }}
+                      "hipsSourceURL" : "{{ .Values.config.hipsUrl }}",
+                      "hipsSource360URL" : "{{ .Values.config.hipsUrl }}"
+                      {{- else }}
+                      "hipsSourceURL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri",
+                      "hipsSource360URL" : "{{ .Values.global.baseUrl }}/api/hips/images/color_gri"
+                      {{- end }}
+                   },
                    "tap" : {
                       "additional": {
                           "services": [
@@ -121,6 +116,22 @@ spec:
                             }
                             {{- end }}
                           ]
+                      }
+                   },
+                   "hips": {
+                      "defHipsSources": {"source": "lsst", "label": "Rubin Featured"},
+                      "adhocMocSource": {
+                          "sources": [
+                              "temp://lsst/dp02_dc2/hips/images/color_gri",
+                              "temp://lsst/dp02_dc2/hips/images/band_u",
+                              "temp://lsst/dp02_dc2/hips/images/band_g",
+                              "temp://lsst/dp02_dc2/hips/images/band_r",
+                              "temp://lsst/dp02_dc2/hips/images/band_i",
+                              "temp://lsst/dp02_dc2/hips/images/band_z",
+                              "temp://lsst/dp02_dc2/hips/images/band_y",
+                              "ivo://CDS/P/2MASS/color"
+                          ],
+                          "label": "Rubin Featured MOC"
                       }
                    },
                    "searchActionsCmdMask": [
