@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: {{ $appName }}
-          {{- $image := dict "repo" .Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" .Values.image.revision }}
+          {{- $image := dict "repo" $.Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" $.Values.image.revision }}
           image: {{ include "helpers.makeImage" $image }}
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           ports:
