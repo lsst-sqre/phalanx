@@ -25,7 +25,6 @@ spec:
               value: http://fov-quicklook-coordinator:9501
             - name: QUICKLOOK_frontend_app_prefix
               value: {{ .Values.config.pathPrefix | quote }}
-            {{- include "fov-quicklook.env.s3_tile" . | nindent 12 }}
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
           ports:
             - containerPort: 9500
