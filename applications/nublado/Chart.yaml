@@ -10,7 +10,7 @@ appVersion: 8.2.0
 dependencies:
   - name: jupyterhub
     # This is the Zero To Jupyterhub version (and quay.io/jupyterhub/k8s-hub)
-    version: "4.0.0"
+    version: "4.1.0"
     repository: https://jupyterhub.github.io/helm-chart/
 
 annotations:
