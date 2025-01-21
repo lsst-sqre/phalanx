@@ -535,9 +535,6 @@ mtoods:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
     AWS_ACCESS_KEY_ID: oods-lsstcam
     AWS_ENDPOINT_URL: https://s3-butler.cp.lsst.org
-  envSecrets:
-  - name: AWS_SECRET_ACCESS_KEY
-    key: oods-lsstcam-secret-key
   <<: *butler-secret
   resources:
     limits:
@@ -546,6 +543,17 @@ mtoods:
     requests:
       cpu: 10m
       memory: 345Mi
+  nfsMountpoint:
+  - name: lsstcam-gen3-butler
+    containerPath: /repo/LSSTCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /lsstcam/repo/LSSTCam
+  - name: lsstcam-oods-data
+    containerPath: /data
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /lsstcam
   configfile:
     path: /etc
     filename: mtoods.yaml
@@ -557,34 +565,47 @@ mtoods:
           seconds: 0
 
       ingester:
-          kafka:
-              brokers:
-                  - sasquatch-kafka-brokers.sasquatch:9092
-              topics:
-                - lsst.s3.raw.lsstcam
-              group_id: MTOODS-S3
-              max_messages: 250
+          imageStagingDirectory: /data/staging/maintel/oods
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.LsstCam
                   class:
-                      import : lsst.ctrl.oods.messageAttendant
-                      name : MessageAttendant
-                  repoDirectory : s3://rubinobs-butler-lsstcam
+                      import : lsst.ctrl.oods.gen3ButlerIngester
+                      name : Gen3ButlerIngester
+                  stagingDirectory : /data/lsstdata/base/maintel/oods/gen3butler/raw
+                  badFileDirectory: /data/lsstdata/base/maintel/oods/gen3butler/badfiles
+                  repoDirectory : /repo/LSSTCam
                   collections:
                       - LSSTCam/raw/all
-                  cleanCollections:
-                      - collection: LSSTCam/raw/all
-                        filesOlderThan:
-                            <<: *interval
-                            days: 5
-                      - collection: LSSTCam/quickLook
-                        filesOlderThan:
-                            <<: *interval
-                            days: 2
                   scanInterval:
                       <<: *interval
                       hours: 1
+                  filesOlderThan:
+                      <<: *interval
+                      days: 2
+          batchSize: 20
+          scanInterval:
+              <<: *interval
+              seconds: 2
+
+      cacheCleaner:
+          # ONLY clean out empty directories here, never files
+          clearEmptyDirectories:
+              - /data/lsstdata/base/maintel/oods/gen3butler/raw
+              - /data/staging/maintel/camera
+          # clean out empty directories and old files from these directories
+          clearEmptyDirectoriesAndOldFiles:
+              - /data/lsstdata/base/maintel/oods/gen3butler/badfiles
+              - /data/staging/maintel/oods
+          scanInterval:
+              <<: *interval
+              hours: 1
+          filesOlderThan:
+              <<: *interval
+              days: 31
+          directoriesEmptyForMoreThan:
+              <<: *interval
+              days: 2
 
 mtptg:
   image:
