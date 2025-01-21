@@ -526,6 +526,18 @@ love-producer:
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: cccamera
+    csc: CCCamera:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccheaderservice
+    csc: CCHeaderService:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccocps
+    csc: OCPS:2 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccoods
+    csc: CCOODS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cbp
     csc: CBP:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -568,11 +580,32 @@ love-producer:
   - name: epm301
     csc: EPM:301 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: fiberspectrograph3
+    csc: FiberSpectrograph:3 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: gcheaderservice1
     csc: GCHeaderService:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice101
+    csc: GCHeaderService:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice102
+    csc: GCHeaderService:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice103
+    csc: GCHeaderService:103 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: genericcamera1
     csc: GenericCamera:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera101
+    csc: GenericCamera:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera102
+    csc: GenericCamera:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera103
+    csc: GenericCamera:103 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: gis
     csc: GIS:0 --log-level 10
@@ -650,6 +683,9 @@ love-producer:
       limits:
         cpu: 500m
         memory: 600Mi
+  - name: mtm1m3ts
+    csc: MTM1M3TS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtm2
     csc: MTM2:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -693,6 +729,9 @@ love-producer:
         memory: 500Mi
   - name: pmd1
     csc: PMD:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: raocps
+    csc: OCPS:101 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10
