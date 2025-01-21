@@ -47,8 +47,7 @@ spec:
               value: {{ .Values.global.host | quote }}
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
-            - name: "PROPS_OP_hips_defHipsSources_label"
-              value: "'Rubin XXX Featured_XXXX'"
+            - name: PROPS_OP_hips_defHipsSources_label = "'XXX Rubin XXX Featured_XXXX'"
             - name: "PROPS_FIREFLY_OPTIONS"
               value: >-
                 $'{
