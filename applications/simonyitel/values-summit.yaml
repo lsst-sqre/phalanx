@@ -486,8 +486,6 @@ mtmount:
   image:
     repository: ts-dockerhub.lsst.org/mtmount
     pullPolicy: Always
-  env:
-    RUN_ARG: --simulate
   resources:
     limits:
       cpu: 500m
