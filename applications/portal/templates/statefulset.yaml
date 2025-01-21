@@ -48,7 +48,7 @@ spec:
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
             - name: "PROPS_OP_hips_defHipsSources_label"
-              value: "'XXX Rubin XXX Featured_XXXX'"
+              value: "'XXXXXXXXXX Rubin XXX Featured_XXXX'"
 #            - name: "PROPS_OP_hips_adhocMocSource_label"
 #              value: "Rubin Featured MOC"
 #            - name: "PROPS_OP_hips_adhocMocSource_sources_0"
