@@ -22,6 +22,7 @@ spec:
             {{- include "gafaelfawr.selectorLabels" . | nindent 12 }}
             app.kubernetes.io/component: "audit"
             gafaelfawr-redis-client: "true"
+            gafaelfawr-redis-ephemeral-client: "true"
         spec:
           restartPolicy: "Never"
           automountServiceAccountToken: false
