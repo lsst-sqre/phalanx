@@ -88,7 +88,7 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_sources_6
               value: temp://lsst/dp02_dc2/hips/images/band_y
             - name: PROPS_OP_hips_adhocMocSource_sources_7
-              value: ivo://CDS/P/2MASS/color'"
+              value: ivo://CDS/P/2MASS/color
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
