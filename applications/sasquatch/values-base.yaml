@@ -138,6 +138,13 @@ influxdb:
   ingress:
     enabled: true
     hostname: base-lsp.lsst.codes
+  resources:
+    requests:
+      memory: 16Gi
+      cpu: 8
+    limits:
+      memory: 16Gi
+      cpu: 8
 
 telegraf-kafka-consumer:
   enabled: true
