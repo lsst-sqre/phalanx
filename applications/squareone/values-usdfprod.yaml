@@ -3,5 +3,6 @@ config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://usdf-rsp.slac.stanford.edu/semaphore"
   timesSquareUrl: "https://usdf-rsp.slac.stanford.edu/times-square/api"
+  docsBaseUrl: "https://rsp.lsst.io/v/usdfprod"
 ingress:
   timesSquareScope: "exec:notebook"

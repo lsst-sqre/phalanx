@@ -5,6 +5,7 @@ ingress:
 
 config:
   siteName: "Rubin Science Platform"
+  docsBaseUrl: "https://rsp.lsst.io"
   semaphoreUrl: "https://data.lsst.cloud/semaphore"
   coManageRegistryUrl: "https://id.lsst.cloud"
   plausibleDomain: "data.lsst.cloud"
