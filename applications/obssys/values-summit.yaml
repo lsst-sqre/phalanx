@@ -79,10 +79,10 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 2500m
+      cpu: 5000m
       memory: 10Gi
     requests:
-      cpu: 500m
+      cpu: 1000m
       memory: 580Mi
 
 atscheduler:
