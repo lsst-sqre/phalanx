@@ -22,6 +22,9 @@
       "type": ["string", "null"],
       "default": null
     },
+    "debug": {
+      "$ref": "#/definitions/debug"
+    },
     "global": {},
     "coordinator": {
       "type": "object",
@@ -162,6 +165,21 @@
           "required": ["cpu", "memory"]
         }
       }
+    },
+    "debug": {
+      "type": "object",
+      "properties": {
+        "jupyter": {
+          "type": "boolean"
+        },
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "jupyter",
+        "username"
+      ]
     }
   }
 }
