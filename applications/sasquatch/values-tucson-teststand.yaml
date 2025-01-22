@@ -98,7 +98,7 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
       database: "efd"
       metric_batch_size: 100
