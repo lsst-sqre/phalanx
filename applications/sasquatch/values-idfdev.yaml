@@ -120,7 +120,7 @@ telegraf-kafka-consumer:
         [ "lsst.Test.*" ]
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --topic.deleteEnabled=true --topic.createEnabled=true"
+  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=true --topic.createEnabled=true"
   ingress:
     enabled: true
     hostname: data-dev.lsst.cloud
