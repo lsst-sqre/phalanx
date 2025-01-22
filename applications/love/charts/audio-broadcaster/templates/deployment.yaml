@@ -1,0 +1,60 @@
+{{- range $index, $mic := .Values.microphones }}
+{{ $appName := printf "audio-broadcaster-%d" (add $index 1) | trunc 63 | trimSuffix "-" }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $appName }}
+  labels:
+    {{- include "audio-broadcaster.labels" $ | nindent 4 }}
+spec:
+  replicas: {{ $.Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "audio-broadcaster.selectorLabels" $ | nindent 6 }}
+      app.kubernetes.io/instance: {{ include "audio-broadcaster.fullname" $ }}-{{ add $index 1 }}
+  template:
+    metadata:
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "audio-broadcaster.selectorLabels" $ | nindent 8 }}
+        app.kubernetes.io/instance: {{ include "audio-broadcaster.fullname" $ }}-{{ add $index 1 }}
+    spec:
+      containers:
+        - name: {{ $appName }}
+          {{- $image := dict "repo" $.Values.image.repository "tag" $.Values.global.controlSystem.imageTag "rev" $.Values.image.revision }}
+          image: {{ include "helpers.makeImage" $image }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          ports:
+          - containerPort: {{ $.Values.env.WEBSERVER_PORT }}
+          env:
+            - name: MICROPHONE_SERVER_HOST
+              value: {{ $mic.host | quote }}
+            - name: MICROPHONE_SERVER_PORT
+              value: {{ $mic.port | quote }}
+          {{- range $env_var, $env_value := $.Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          {{- with $.Values.resources }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- end }}
+      imagePullSecrets:
+        - name: pull-secret
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml $ | nindent 8 }}
+      {{- end }}
+{{- end }}

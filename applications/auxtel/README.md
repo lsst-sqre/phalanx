@@ -29,6 +29,7 @@ Deployment for the Auxiliary Telescope CSCs
 | atspectrograph-sim.enabled | bool | `false` | Enable the ATSpectograph simulator CSC |
 | atspectrograph.enabled | bool | `false` | Enable the ATSpectrograph CSC |
 | hexapod-sim.enabled | bool | `false` | Enable the hexapod controller simulator |
+| pmd1.enabled | bool | `false` | Enable the PMD1 CSC |
 | hexapod-sim.affinity | object | `{}` | This specifies the scheduling constraints of the pod |
 | hexapod-sim.image | object | `{"pullPolicy":"Always","repository":"ts-dockerhub.lsst.org/hexapod_simulator","tag":"latest"}` | This section holds the configuration of the container image |
 | hexapod-sim.image.pullPolicy | string | `"Always"` | The policy to apply when pulling an image for deployment |

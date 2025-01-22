@@ -1,0 +1,55 @@
+# -- Set the replica count for the ts_audio_broadcasters
+replicaCount: 1
+# -- The overall namespace for the ts_audio_broadcaster
+namespace: love
+image:
+  # -- The ts_audio_broadcaster image to use
+  repository: lsstts/audio_broadcaster
+  # -- (int) The cycle revision to add to the image tag
+  revision:
+  # -- The pull policy on the ts_audio_broadcaster image
+  pullPolicy: IfNotPresent
+# -- Service type specification
+serviceType: ClusterIP
+ports:
+  # -- Container port for the ts_audio_broadcaster service
+  container: 80
+  # -- Node port for the ts_audio_broadcaster service
+  node: 30000
+ingress:
+  # -- Hostname for the ts_audio_broadcaster ingress
+  hostname: audio-broadcaster.local
+  # -- Path name associated with the ts_audio_broadcaster ingress
+  httpPath: /
+  # -- Set the Kubernetes path type for the ts_audio_broadcaster ingress
+  pathType: Exact
+  # -- Assign the Ingress class name
+  className: nginx
+  # -- Annotations for the ts_audio_broadcaster ingress
+  annotations: {}
+# -- This section holds a set of key, value pairs for environmental variables
+env:
+  WEBSERVER_PORT: 8888
+# -- This sections sets the list of producers to use.
+# The microphones should be specified like:
+# _name_:
+# _host_: _Microphone host_
+# _port_: _Microphone port_
+# Example: auxtel1:
+# host: localhost
+# port: 4444
+microphones: []
+# -- This allows the specification of pod annotations.
+podAnnotations: {}
+# -- Resource specifications for the ts_audio_broadcaster pods
+resources: {}
+# -- Node selection rules for the ts_audio_broadcaster pods
+nodeSelector: {}
+# -- Toleration specifications for the ts_audio_broadcaster pods
+tolerations: []
+# -- Affinity rules for the ts_audio_broadcaster pods
+affinity: {}
+# -- Adds an extra string to the release name.
+nameOverride: ""
+# -- Specify the deployed application name specifically. Overrides all other names.
+fullnameOverride: ""

@@ -12,9 +12,29 @@ dependencies:
   condition: ccheaderservice.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: ccheaderservice-sim
+  version: 1.0.0
+  condition: ccheaderservice-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: ccoods
   version: 1.0.0
   condition: ccoods.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: gcheaderservice101
+  version: 1.0.0
+  condition: gcheaderservice101.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: gcheaderservice102
+  version: 1.0.0
+  condition: gcheaderservice102.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: gcheaderservice103
+  version: 1.0.0
+  condition: gcheaderservice103.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: lasertracker1
@@ -90,11 +110,6 @@ dependencies:
   condition: mtm1m3-sim.enabled
   repository: file://../../charts/csc
 - name: csc
-  alias: mtm1m3ts-sim
-  version: 1.0.0
-  condition: mtm1m3ts-sim.enabled
-  repository: file://../../charts/csc
-- name: csc
   alias: mtm2
   version: 1.0.0
   condition: mtm2.enabled
@@ -118,6 +133,11 @@ dependencies:
   alias: mtmount
   version: 1.0.0
   condition: mtmount.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: mtmount-ccw-only
+  version: 1.0.0
+  condition: mtmount-ccw-only.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: mtmount-sim

@@ -50,11 +50,11 @@ mtheaderservice:
   # -- Enable the MTHeaderService CSC
   enabled: false
 
-m1m3:
+mtm1m3:
   # -- Enable the MTM1M3 hardware simulator CSC
   enabled: false
 
-m1m3-sim:
+mtm1m3-sim:
   # -- Enable the MTM1M3 simulator CSC
   enabled: false
 
@@ -84,6 +84,10 @@ mtmount:
 
 mtmount-sim:
   # -- Enable the MTMount simulator CSC
+  enabled: false
+
+mtoods:
+  # -- Enable the MTOODS simulator CSC
   enabled: false
 
 mtrotator:

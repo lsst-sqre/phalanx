@@ -1,5 +1,3 @@
-csc_shared:
-  secretsOnly: true
 uws-api-server:
   targetCluster: "summit"
   hostname: summit-lsp.lsst.codes
@@ -54,3 +52,56 @@ uws-api-server:
     exportPath: "/comcam/lsstdata/base/comcam"
     subPath: ""
     readOnly: true
+
+atocps:
+  enabled: true
+  classifier: ocps1
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 100Mi
+
+ccocps:
+  enabled: true
+  classifier: ocps2
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 1m
+      memory: 100Mi
+
+raocps:
+  enabled: true
+  classifier: ocps101
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101
+    REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
+    REDIS_PORT: 6379
+  envSecrets:
+  - name: REDIS_PASSWORD
+    key: redis-password
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 1m
+      memory: 100Mi

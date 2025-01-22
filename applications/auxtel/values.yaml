@@ -46,6 +46,10 @@ atspectrograph-sim:
   # -- Enable the ATSpectograph simulator CSC
   enabled: false
 
+pmd1:
+  # -- Enable the PMD1 CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

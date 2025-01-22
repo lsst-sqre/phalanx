@@ -1,9 +1,44 @@
+audio-broadcaster:
+  image:
+    repository: ts-dockerhub.lsst.org/audio_broadcaster
+    pullPolicy: Always
+  ingress:
+    hostname: summit-lsp.lsst.codes
+    httpPath: /audio-broadcaster
+    pathType: Exact
+    className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+      nginx.ingress.kubernetes.io/rewrite-target: /audio_feed
+  env:
+    WEBSERVER_PORT: 8888
+  microphones:
+  - name: auxtel1
+    host: auxtel-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: dynalene1
+    host: dynalene-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: mtdome1
+    host: mtdome-rpi-audio01.cp.lsst.org
+    port: 4444
+  - name: tma1
+    host: tma-rpi-audio01.cp.lsst.org
+    port: 4444
+  resources:
+    requests:
+      cpu: 5m
+      memory: 100Mi
+    limits:
+      cpu: 50m
+      memory: 500Mi
+
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
     pullPolicy: Always
   env:
-    S3_INSTANCE: ls
+    S3_INSTANCE: cp
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -32,19 +67,18 @@ love-manager:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
-        DB_HOST: postgresdb01.ls.lsst.org
-        LOVE_SITE: base
-        NIGHTREPORT_MAIL_ADDRESS: saranda@lsst.org
+        SERVER_URL: summit-lsp.lsst.codes
+        OLE_API_HOSTNAME: summit-lsp.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.cp.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.cp.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.cp.lsst.org
+        DB_HOST: postgresdb01.cp.lsst.org
+        LOVE_SITE: summit
       autoscaling:
         enabled: true
-        minReplicas: 2
-        maxReplicas: 25
-        targetCPUUtilizationPercentage: 50
+        minReplicas: 10
+        maxReplicas: 50
+        targetCPUUtilizationPercentage: 80
         scaleDownPolicy:
           policies:
           - type: Pods
@@ -72,12 +106,12 @@ love-manager:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
+        LOVE_SITE: summit
+        SERVER_URL: summit-lsp.lsst.codes
+        OLE_API_HOSTNAME: summit-lsp.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.cp.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.cp.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.cp.lsst.org
         COMMANDER_HOSTNAME: love-commander-service
         COMMANDER_PORT: 5000
         DB_HOST: postgresdb01.ls.lsst.org
@@ -135,15 +169,15 @@ love-manager:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
+        LOVE_SITE: summit
+        SERVER_URL: summit-lsp.lsst.codes
+        OLE_API_HOSTNAME: summit-lsp.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.cp.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.cp.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.cp.lsst.org
         COMMANDER_HOSTNAME: love-commander-service
         COMMANDER_PORT: 5000
-        DB_HOST: postgresdb01.ls.lsst.org
+        DB_HOST: postgresdb01.cp.lsst.org
         DB_ENGINE: postgresql
         DB_NAME: love
         DB_PORT: 5432
@@ -198,15 +232,15 @@ love-manager:
         repository: ts-dockerhub.lsst.org/love-manager
         pullPolicy: Always
       env:
-        LOVE_SITE: base
-        SERVER_URL: base-lsp.lsst.codes
-        OLE_API_HOSTNAME: base-lsp.lsst.codes
-        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.ls.lsst.org
-        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.ls.lsst.org
-        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.ls.lsst.org
+        LOVE_SITE: summit
+        SERVER_URL: summit-lsp.lsst.codes
+        OLE_API_HOSTNAME: summit-lsp.lsst.codes
+        AUTH_LDAP_1_SERVER_URI: ldap://ipa1.cp.lsst.org
+        AUTH_LDAP_2_SERVER_URI: ldap://ipa2.cp.lsst.org
+        AUTH_LDAP_3_SERVER_URI: ldap://ipa3.cp.lsst.org
         COMMANDER_HOSTNAME: love-commander-service
         COMMANDER_PORT: 5000
-        DB_HOST: postgresdb01.ls.lsst.org
+        DB_HOST: postgresdb01.cp.lsst.org
         DB_ENGINE: postgresql
         DB_NAME: love
         DB_PORT: 5432
@@ -291,7 +325,7 @@ love-nginx:
     tag: 1.25.1
     pullPolicy: Always
   ingress:
-    hostname: base-lsp.lsst.codes
+    hostname: summit-lsp.lsst.codes
     httpPath: /love
     annotations:
       nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -370,26 +404,33 @@ love-nginx:
       location /love/manager/media {
           alias /usr/src/love-manager/media;
       }
-      location /love/simcam {
-          proxy_pass http://simulation-gencam-service.calsys:5013/;
-          proxy_set_header Host $host/love;
+      location /love/startrackera {
+          proxy_pass http://azar03.cp.lsst.org:5101;
+      }
+      location /love/startrackerb {
+          proxy_pass http://azar03.cp.lsst.org:5102;
+      }
+      location /love/startrackerc {
+          proxy_pass http://azar03.cp.lsst.org:5103;
       }
     }
   loveConfig: |
     {
       "alarms": {
-        "minSeveritySound": "mute",
-        "minSeverityNotification": "mute"
+        "minSeveritySound": "serious",
+        "minSeverityNotification": "warning"
       },
       "camFeeds": {
-        "simcam": "/love/simcam"
+        "starTrackerA": "/love/startrackera",
+        "starTrackerB": "/love/startrackerb",
+        "starTrackerC": "/love/startrackerc"
       },
       "efd": {
-        "defaultEfdInstance": "base_efd",
-        "urlStatus": "https://base-lsp.lsst.codes/influxdb/health"
+        "defaultEfdInstance": "summit_efd",
+        "urlStatus": "https://summit-lsp.lsst.codes/influxdb/health"
       },
       "sal": {
-          "urlStatus": "https://base-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
+          "urlStatus": "https://summit-lsp.lsst.codes/sasquatch-rest-proxy/brokers",
           "expectedBrokerList": [6, 7, 8]
       }
     }
@@ -430,13 +471,9 @@ love-producer:
   - name: atmcs
     csc: ATMCS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-    resources:
-      requests:
-        cpu: 100m
-        memory: 300Mi
-      limits:
-        cpu: 1000m
-        memory: 900Mi
+  - name: atmonochromator
+    csc: ATMonochromator:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: atocps
     csc: OCPS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -465,6 +502,9 @@ love-producer:
   - name: atspectrograph
     csc: ATSpectrograph:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: atwhitelight
+    csc: ATWhiteLight:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: auxteless201
     csc: ESS:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -485,6 +525,18 @@ love-producer:
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: camerahexapod
     csc: MTHexapod:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: cccamera
+    csc: CCCamera:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccheaderservice
+    csc: CCHeaderService:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccocps
+    csc: OCPS:2 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: ccoods
+    csc: CCOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: cbp
     csc: CBP:0 --log-level 10
@@ -507,6 +559,9 @@ love-producer:
   - name: dsm2
     csc: DSM:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: earthquakeess302
+    csc: ESS:302 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: eas
     csc: EAS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -522,11 +577,41 @@ love-producer:
   - name: epm1
     csc: EPM:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: epm301
+    csc: EPM:301 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: fiberspectrograph3
+    csc: FiberSpectrograph:3 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: gcheaderservice1
     csc: GCHeaderService:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice101
+    csc: GCHeaderService:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice102
+    csc: GCHeaderService:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gcheaderservice103
+    csc: GCHeaderService:103 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: genericcamera1
     csc: GenericCamera:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera101
+    csc: GenericCamera:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera102
+    csc: GenericCamera:102 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: genericcamera103
+    csc: GenericCamera:103 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: gis
+    csc: GIS:0 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: hvac
+    csc: HVAC:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: lasertracker1
     csc: LaserTracker:1 --log-level 10
@@ -629,9 +714,6 @@ love-producer:
       limits:
         cpu: 500m
         memory: 500Mi
-  - name: mtvmsm1m3
-    csc: MTVMS:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: ocsscheduler
     csc: Scheduler:3 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
@@ -645,6 +727,12 @@ love-producer:
       limits:
         cpu: 500m
         memory: 500Mi
+  - name: pmd1
+    csc: PMD:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: raocps
+    csc: OCPS:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
