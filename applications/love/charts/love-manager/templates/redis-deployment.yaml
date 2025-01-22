@@ -28,7 +28,7 @@ spec:
         {{- $data := dict "env" .Values.redis.envSecrets "secret" true }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         volumeMounts:
-          - mountPath: /data/redis.conf
+          - mountPath: /data
             readOnly: true
             name: redis-conf
         {{- with $.Values.redis.resources }}
