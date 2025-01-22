@@ -47,28 +47,28 @@ spec:
               value: {{ .Values.global.host | quote }}
             - name: "PROPS_lsst__hips__masterUrl"
               value: "{{ .Values.global.baseUrl }}/api/hips/list"
-            -  name: PROPS_OP_searchActionsCmdMask_0
-               value: "tableTapUpload"
-            -  name: PROPS_OP_searchActionsCmdMask_1
-               value: "tableHiPS"
-            -  name: PROPS_OP_searchActionsCmdMask_2
-               value: "tapRadius"
-            -  name: PROPS_OP_searchActionsCmdMask_3
-               value: "tapArea"
-            -  name: PROPS_OP_searchActionsCmdMask_4
-               value: "tableTapRadius"
-            -  name: PROPS_OP_searchActionsCmdMask_5
-               value: "HiPS"
-            -  name: PROPS_OP_searchActionsCmdMask_6
-               value: "lsstObsCoreTap"
-            -  name: PROPS_OP_searchActionsCmdMask_7
-               value: lsstTruthSummaryRadius
-            -  name: PROPS_OP_searchActionsCmdMask_8
-               value: lsstTruthSummaryArea
-            -  name: PROPS_OP_searchActionsCmdMask_9
-               value: "lsstObsCoreTapTable"
-            -  name: PROPS_OP_searchActionsCmdMask_10
-               value: lsstTruthSummaryRadiusTable
+            - name: PROPS_OP_searchActionsCmdMask_0
+              value: tableTapUpload
+            - name: PROPS_OP_searchActionsCmdMask_1
+              value: tableHiPS
+            - name: PROPS_OP_searchActionsCmdMask_2
+              value: tapRadius
+            - name: PROPS_OP_searchActionsCmdMask_3
+              value: tapArea
+            - name: PROPS_OP_searchActionsCmdMask_4
+              value: tableTapRadius
+            - name: PROPS_OP_searchActionsCmdMask_5
+              value: HiPS
+            - name: PROPS_OP_searchActionsCmdMask_6
+              value: lsstObsCoreTap
+            - name: PROPS_OP_searchActionsCmdMask_7
+              value: lsstTruthSummaryRadius
+            - name: PROPS_OP_searchActionsCmdMask_8
+              value: lsstTruthSummaryArea
+            - name: PROPS_OP_searchActionsCmdMask_9
+              value: lsstObsCoreTapTable
+            - name: PROPS_OP_searchActionsCmdMask_10
+              value: lsstTruthSummaryRadiusTable
             - name: PROPS_OP_hips_defHipsSources_label
               value: "'Rubin Featured'"
             - name: PROPS_OP_hips_adhocMocSource_label
