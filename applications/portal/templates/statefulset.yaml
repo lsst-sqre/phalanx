@@ -74,7 +74,7 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_label
               value: "'Rubin Featured MOC'"
             - name: PROPS_OP_hips_adhocMocSource_sources_0
-              value: "'temp://lsst/dp02_dc2/hips/images/color_gri'"
+              value: temp://lsst/dp02_dc2/hips/images/color_gri
             - name: PROPS_OP_hips_adhocMocSource_sources_1
               value: "'temp://lsst/dp02_dc2/hips/images/band_u'"
             - name: PROPS_OP_hips_adhocMocSource_sources_2
