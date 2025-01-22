@@ -1,0 +1,12 @@
+image:
+  repository: ts-dockerhub.lsst.org/nightreport
+  tag: c0039
+  pullPolicy: Always
+config:
+  site_id: usdfprod
+db:
+  host: usdf-summitdb.slac.stanford.edu
+  user: usdf
+ingress:
+  auth:
+    enabled: true
