@@ -10,3 +10,7 @@ config:
   logLevel: "DEBUG"
 
   databaseUrl: "postgresql://rubin@usdf-prompt-processing-dev.slac.stanford.edu/lsst-devl"
+
+s3:
+  imageBucket: rubin-ap-cutouts
+  endpointUrl: https://s3dfrgw.slac.stanford.edu

@@ -57,3 +57,8 @@ update-deps-no-hashes:
 	    --output-file requirements/dev.txt requirements/dev.in
 	uv pip compile --upgrade --universal				\
 	    --output-file requirements/tox.txt requirements/tox.in
+
+.PHONY: lint
+lint:
+	tox -e lint
+	phalanx application lint tasso
