@@ -76,19 +76,19 @@ spec:
             - name: PROPS_OP_hips_adhocMocSource_sources_0
               value: temp://lsst/dp02_dc2/hips/images/color_gri
             - name: PROPS_OP_hips_adhocMocSource_sources_1
-              value: "'temp://lsst/dp02_dc2/hips/images/band_u'"
+              value: temp://lsst/dp02_dc2/hips/images/band_u
             - name: PROPS_OP_hips_adhocMocSource_sources_2
-              value: "'temp://lsst/dp02_dc2/hips/images/band_g'"
+              value: temp://lsst/dp02_dc2/hips/images/band_g
             - name: PROPS_OP_hips_adhocMocSource_sources_3
-              value: "'temp://lsst/dp02_dc2/hips/images/band_r'"
+              value: temp://lsst/dp02_dc2/hips/images/band_r
             - name: PROPS_OP_hips_adhocMocSource_sources_4
-              value: "'temp://lsst/dp02_dc2/hips/images/band_i'"
+              value: temp://lsst/dp02_dc2/hips/images/band_i
             - name: PROPS_OP_hips_adhocMocSource_sources_5
-              value: "'temp://lsst/dp02_dc2/hips/images/band_z'"
+              value: temp://lsst/dp02_dc2/hips/images/band_z
             - name: PROPS_OP_hips_adhocMocSource_sources_6
-              value: "'temp://lsst/dp02_dc2/hips/images/band_y'"
+              value: temp://lsst/dp02_dc2/hips/images/band_y
             - name: PROPS_OP_hips_adhocMocSource_sources_7
-              value: "'ivo://CDS/P/2MASS/color'"
+              value: ivo://CDS/P/2MASS/color'"
             - name: "PROPS_OP_coverage_hipsSourceURL"
               value: >-
                 {{- if .Values.config.hipsUrl }}
