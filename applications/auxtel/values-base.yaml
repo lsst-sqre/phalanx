@@ -111,7 +111,12 @@ atoods:
     pullPolicy: Always
   env:
     DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    AWS_ACCESS_KEY_ID: oods-latiss
+    AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+  envSecrets:
+  - name: AWS_SECRET_ACCESS_KEY
+    key: oods-latiss-secret-key
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -120,17 +125,6 @@ atoods:
     containerPath: *bs-cp
     filenames:
     - *bs-fn
-  nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel
   resources:
     limits:
       cpu: 400m
@@ -148,54 +142,36 @@ atoods:
           minutes: 0
           seconds: 0
 
-      ingesterClass:
-          ingesterType: lsst.ctrl.oods.fileIngester
-          ingesterName: FileIngester
       ingester:
-          imageStagingDirectory: /data/staging/auxtel/oods
+          kafka:
+              brokers:
+                  - sasquatch-kafka-brokers.sasquatch:9092
+              topics:
+                - lsst.s3.raw.latiss
+              group_id: ATOODS-S3
+              max_messages: 250
+
           butlers:
               - butler:
                   instrument: lsst.obs.lsst.Latiss
                   class:
-                      import: lsst.ctrl.oods.fileAttendant
-                      name: FileAttendant
-                  stagingDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
-                  badFileDirectory: /data/lsstdata/BTS/auxtel/oods/gen3butler/badfiles
-                  repoDirectory: /repo/LATISS
+                      import : lsst.ctrl.oods.messageAttendant
+                      name : MessageAttendant
+                  repoDirectory : s3://rubinobs-butler-latiss
                   collections:
                       - LATISS/raw/all
                   cleanCollections:
                       - collection: LATISS/raw/all
                         filesOlderThan:
                             <<: *interval
-                            days: 30
+                            days: 20
+                      - collection: LATISS/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 5
                   scanInterval:
                       <<: *interval
                       hours: 1
-
-          batchSize: 20
-          scanInterval:
-              <<: *interval
-              seconds: 2
-
-      cacheCleaner:
-          # ONLY clean out empty directories here, never files
-          clearEmptyDirectories:
-              - /data/lsstdata/BTS/auxtel/oods/gen3butler/raw
-          # clean out empty directories and old files from these directories
-          clearEmptyDirectoriesAndOldFiles:
-              - /data/lsstdata/BTS/auxtel/oods/gen3butler/badfiles
-              - /data/staging/auxtel/oods
-              - /data/staging/auxtel/forwarder
-          scanInterval:
-              <<: *interval
-              hours: 1
-          filesOlderThan:
-              <<: *interval
-              days: 30
-          directoriesEmptyForMoreThan:
-              <<: *interval
-              days: 2
 
 atpneumatics-sim:
   enabled: true
