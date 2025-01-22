@@ -72,4 +72,3 @@ metadata:
 spec:
   {{- include "quicklook.ingress.spec" . | nindent 2 }}
 {{- end }}
-
