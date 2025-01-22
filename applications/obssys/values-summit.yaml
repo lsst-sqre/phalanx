@@ -140,10 +140,10 @@ gis:
       chmod 0644 /secrets/*.*
   resources:
     limits:
-      cpu: 10m
+      cpu: 300m
       memory: 300Mi
     requests:
-      cpu: 1m
+      cpu: 30m
       memory: 97Mi
 
 mtqueue:
