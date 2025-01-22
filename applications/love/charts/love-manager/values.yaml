@@ -77,6 +77,10 @@ manager:
       REDIS_CONFIG_EXPIRY: 5
       # -- The connection capacity for the redis service
       REDIS_CONFIG_CAPACITY: 5000
+      # -- The SMTP user for the LOVE manager frontend
+      SMTP_USER: loveapplication
+      # -- The mail address to forward the nightly report to
+      NIGHTREPORT_MAIL_ADDRESS: rubin-night-log@lists.lsst.org
     envSecrets:
       # -- The LOVE manager frontend secret secret key name
       SECRET_KEY: manager-secret-key
@@ -100,6 +104,8 @@ manager:
       REDIS_PASS: redis-pass
       # -- The LOVE manager jira API token secret key name
       JIRA_API_TOKEN: jira-api-token
+      # -- The LOVE manager smtp email password secret key name
+      SMTP_PASSWORD: smtp-email-password
     # -- Set the default number of LOVE manager frontend pod replicas
     replicas: 1
     autoscaling:
