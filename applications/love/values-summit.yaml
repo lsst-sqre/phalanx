@@ -30,7 +30,7 @@ audio-broadcaster:
       cpu: 5m
       memory: 100Mi
     limits:
-      cpu: 500m
+      cpu: 50m
       memory: 500Mi
 
 love-commander:
