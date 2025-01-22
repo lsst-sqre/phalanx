@@ -98,7 +98,7 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
       database: "efd"
       metric_batch_size: 100
@@ -189,7 +189,6 @@ telegraf-kafka-consumer:
       memory: "1Gi"
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: tucson-teststand.lsst.codes

@@ -47,7 +47,7 @@ existingSecret: ""
 
 # -- Command line arguments to Kafdrop
 # @default -- See `values.yaml`
-cmdArgs: "--message.format=AVRO --topic.deleteEnabled=false --topic.createEnabled=false"
+cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
 
 service:
   # -- Additional annotations to add to the service
