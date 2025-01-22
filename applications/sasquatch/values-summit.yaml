@@ -546,7 +546,6 @@ telegraf-kafka-consumer:
 
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: summit-lsp.lsst.codes
