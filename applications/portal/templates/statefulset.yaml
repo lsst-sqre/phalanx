@@ -62,13 +62,13 @@ spec:
             -  name: PROPS_OP_searchActionsCmdMask_6
                value: "lsstObsCoreTap"
             -  name: PROPS_OP_searchActionsCmdMask_7
-               value: "lsstTruthSummaryRadius"
+               value: lsstTruthSummaryRadius
             -  name: PROPS_OP_searchActionsCmdMask_8
-               value: "lsstTruthSummaryArea"
+               value: lsstTruthSummaryArea
             -  name: PROPS_OP_searchActionsCmdMask_9
                value: "lsstObsCoreTapTable"
             -  name: PROPS_OP_searchActionsCmdMask_10
-               value: "lsstTruthSummaryRadiusTable"
+               value: lsstTruthSummaryRadiusTable
             - name: PROPS_OP_hips_defHipsSources_label
               value: "'Rubin Featured'"
             - name: PROPS_OP_hips_adhocMocSource_label
