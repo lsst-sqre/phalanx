@@ -1,0 +1,69 @@
+{{- if .Values.debug.jupyter }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fov-quicklook-debug
+  labels:
+    app: jupyter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      containers:
+      - name: jupyter
+        image: jupyter/base-notebook:latest
+        command: ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--ServerApp.base_url={{ .Values.config.pathPrefix }}/debug", "--ServerApp.token=''", "--ServerApp.password=''"]
+        ports:
+        - containerPort: 8888
+        env:
+        - name: JUPYTER_ENABLE_LAB
+          value: "yes"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fov-quicklook-debug
+  labels:
+    app: jupyter
+spec:
+  selector:
+    app: jupyter
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: fov-quicklook-debug
+config:
+  username: {{ .Values.debug.username | quote }}
+  scopes:
+    all:
+      - "exec:notebook"
+  service: service
+  loginRedirect: true
+  # baseUrl: {{ .Values.global.baseUrl | quote }}
+template:
+  metadata:
+    name: fov-quicklook-debug
+  spec:
+    rules:
+      - host: {{ .Values.global.host | quote }}
+        http:
+          paths:
+            - path: {{ .Values.config.pathPrefix }}/debug
+              pathType: Prefix
+              backend:
+                service:
+                  name: fov-quicklook-debug
+                  port:
+                    number: 8888
+{{- end }}
