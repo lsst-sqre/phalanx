@@ -128,6 +128,7 @@ atscheduler:
       memory: 3100Mi
 
 gis:
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/gis
     pullPolicy: Always
