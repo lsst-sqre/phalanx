@@ -1,5 +1,5 @@
 ---
-{{- if eq .Values.serviceType "ClusterIP" }}
+{{- if and (eq .Values.serviceType "ClusterIP") (gt (len .Values.microphones) 0) }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
