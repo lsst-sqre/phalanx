@@ -80,4 +80,4 @@ generator:
     # -- Work directory type for the generator
     medium: Memory
   # -- Number of replicas for the generator
-  replicas: 8
+  replicas: 9
