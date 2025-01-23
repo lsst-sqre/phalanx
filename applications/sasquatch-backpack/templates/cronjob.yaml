@@ -18,6 +18,7 @@ spec:
             - -d
             - "10"
             - "0"
+            - "--post"
             envFrom:
             - configMapRef:
                 name: sasquatch-backpack
