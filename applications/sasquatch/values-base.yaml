@@ -256,6 +256,13 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.obsenv" ]
       debug: true
+  resources:
+    limits:
+      cpu: "2"
+      memory: "8Gi"
+    requests:
+      cpu: "2"
+      memory: "8Gi"
 
 kafdrop:
   ingress:
