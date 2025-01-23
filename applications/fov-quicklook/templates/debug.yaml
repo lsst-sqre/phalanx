@@ -24,6 +24,23 @@ spec:
         env:
         - name: JUPYTER_ENABLE_LAB
           value: "yes"
+        {{- include "fov-quicklook.env.s3_repository" . | nindent 8 }}
+        {{- with .Values.butler_settings }}
+        {{- range .envs }}
+        - name: {{ .name }}
+          value: {{ .value | quote }}
+        {{- end }}
+        volumeMounts:
+        {{- .volume_mounts | toYaml | nindent 8 }}
+        {{- end }}
+        - name: secret-volume
+          mountPath: /secret
+          readOnly: true
+      volumes:
+      {{- .Values.butler_settings.volumes | toYaml | nindent 6 }}
+      - name: secret-volume
+        secret:
+          secretName: fov-quicklook
 ---
 apiVersion: v1
 kind: Service

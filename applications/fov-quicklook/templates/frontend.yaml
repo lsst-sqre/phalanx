@@ -25,7 +25,12 @@ spec:
               value: http://fov-quicklook-coordinator:9501
             - name: QUICKLOOK_frontend_app_prefix
               value: {{ .Values.config.pathPrefix | quote }}
+            - name: QUICKLOOK_admin_page
+              value: {{ .Values.admin_page | quote }}
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
+            {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
+          volumeMounts:
+            {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
           ports:
             - containerPort: 9500
           resources: {{ toYaml .Values.frontend.resources | nindent 12 }}
@@ -33,6 +38,8 @@ spec:
             runAsNonRoot: true
             runAsUser: 1000
             runAsGroup: 1000
+      volumes:
+        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
 ---
 apiVersion: v1
 kind: Service
@@ -72,3 +79,4 @@ metadata:
 spec:
   {{- include "quicklook.ingress.spec" . | nindent 2 }}
 {{- end }}
+
