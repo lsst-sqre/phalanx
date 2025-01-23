@@ -34,7 +34,9 @@ spec:
             - name: QUICKLOOK_db_url
               value: postgresql://quicklook:$(DB_PASSWORD)@fov-quicklook-db:5432/quicklook
             {{- include "fov-quicklook.env.s3_repository" . | nindent 12 }}
-            {{- include "quicklook.butler-settings.env" . | nindent 12 }}
+            {{- include "fov-quicklook.butler-settings.env" . | nindent 12 }}
+          volumeMounts:
+            {{- .Values.butler_settings.volume_mounts | toYaml | nindent 12 }}
           ports:
             - containerPort: 9501
           securityContext:
@@ -42,11 +44,8 @@ spec:
             runAsUser: 1000
             runAsGroup: 1000
           resources: {{ toYaml .Values.coordinator.resources | nindent 12 }}
-          volumeMounts:
-            {{- include "quicklook.butler-settings.volumeMounts" . | nindent 12 }}
       volumes:
-        {{- include "quicklook.butler-settings.volumes" . | nindent 8 }}
-
+        {{- .Values.butler_settings.volumes | toYaml | nindent 8 }}
 ---
 apiVersion: v1
 kind: Service
