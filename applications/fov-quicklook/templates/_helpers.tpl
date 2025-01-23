@@ -15,7 +15,8 @@
 
 {{- define "quicklook.ingress.spec" -}}
 rules:
-  - http:
+  - host: {{ .Values.global.host | quote }}
+    http:
       paths:
         - path: {{ .Values.config.pathPrefix }}
           pathType: Prefix
