@@ -17,6 +17,7 @@ dependencies:
 - name: csc
   alias: gis
   version: 1.0.0
+  condition: gis.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: mtqueue
