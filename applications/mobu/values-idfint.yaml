@@ -38,7 +38,7 @@ config:
           idle_time: 5
         restart: true
     - name: "scale-test-empty-notebook"
-      count: 100
+      count: 300
       user_spec:
         username_prefix: "bot-mobu-scale-notebook"
       scopes:
