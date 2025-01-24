@@ -566,9 +566,6 @@ rest-proxy:
       - lsst.backpack
       - lsst.obsenv
       - lsst.cp
-      - lsst.ATCamera
-      - lsst.CCCamera
-      - lsst.MTCamera
 
 chronograf:
   persistence:
