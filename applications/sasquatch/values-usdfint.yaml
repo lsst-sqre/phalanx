@@ -178,7 +178,7 @@ backup:
   enabled: true
   persistence:
     size: 100Gi
-    storageClass: rook-ceph-block
+    storageClass: wekafs--sdf-k8s01
   backupItems:
     - name: chronograf
       enabled: true
