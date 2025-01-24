@@ -1,5 +1,5 @@
 image:
-  tag: tickets-48587-mobu-scale-test
+  tag: tickets-DM-48587-mobu-scale-test
   pullPolicy: Always
 config:
   metrics:
@@ -24,7 +24,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scale-test-emptyloop"
-      count: 2000
+      count: 3000
       user_spec:
         username_prefix: "bot-mobu-scale"
       scopes:
