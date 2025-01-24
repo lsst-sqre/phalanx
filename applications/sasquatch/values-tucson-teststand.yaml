@@ -202,11 +202,8 @@ rest-proxy:
     "access.control.allow.origin": https://tucson-teststand.lsst.codes/love
   kafka:
     topics:
-      - test.next-visit
     topicPrefixes:
-      - test
       - lsst.obsenv
-      - lsst.dm
 
 chronograf:
   persistence:
