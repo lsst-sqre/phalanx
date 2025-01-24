@@ -558,14 +558,15 @@ rest-proxy:
   configurationOverrides:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
+    topics:
+      - lsst.backpack.usgs_earthquake_data
+      - lsst.obsenv.action
+      - lsst.obsenv.summary
     topicPrefixes:
       - lsst.dm
       - lsst.backpack
       - lsst.obsenv
       - lsst.cp
-      - lsst.ATCamera
-      - lsst.CCCamera
-      - lsst.MTCamera
 
 chronograf:
   persistence:

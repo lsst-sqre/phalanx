@@ -271,10 +271,9 @@ rest-proxy:
     "access.control.allow.origin": https://base-lsp.lsst.codes/love
   kafka:
     topics:
-      - test.next-visit
+      - lsst.obsenv.action
+      - lsst.obsenv.summary
     topicPrefixes:
-      - test
-      - lsst.dm
       - lsst.obsenv
 
 chronograf:
