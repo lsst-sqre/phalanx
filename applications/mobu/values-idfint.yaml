@@ -24,7 +24,7 @@ config:
       - "read:tap"
   autostart:
     - name: "scale-test-emptyloop"
-      count: 1
+      count: 1000
       user_spec:
         username_prefix: "bot-mobu-scale"
       scopes:
