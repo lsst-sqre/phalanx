@@ -6,7 +6,6 @@ metadata:
     {{- include "application.labels" . | nindent 4 }}
 data:
   ASGI__PREFIX: {{ .Values.config.pathPrefix | quote }}
-  BUTLER__MOCK: "1"
   {{- with .Values.config.db }}
   DB__URL: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
   DB__ECHO: {{ .echo | quote }}
@@ -17,12 +16,24 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: "{{ .Chart.Name }}-butler-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  DAF_BUTLER_REPOSITORIES: {{ toJson .Values.config.butler.repositories | quote }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: "{{ .Chart.Name }}-htcondor-env"
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  CONDOR_CONFIG: /home/lsstsvc1/.config/condor/condor-config
-  DAF_BUTLER_PASSWORD: placeholder_for_secret
+  DAEMON__allocate_resources: "1"
+  HTCONDOR__schedd_host: sdfiana012.sdf.slac.stanford.edu
+  HTCONDOR__collector_host: sdfiana012.sdf.slac.stanford.edu
+  HTCONDOR__condor_home: /opt/htcondor
   HTCONDOR__condor_submit_bin: /opt/htcondor/bin/condor_submit
   HTCONDOR__condor_q_bin: /opt/htcondor/bin/condor_q
-  HTCONDOR__alias_path: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}
+  HTCONDOR__working_directory: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}
+  HTCONDOR__fs_remote_dir: /sdf/group/rubin/services/htcondor/shared

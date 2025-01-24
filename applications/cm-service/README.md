@@ -10,6 +10,10 @@ Campaign Management for Rubin Data Release Production
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| config.butler.repositories | object | `{}` | A mapping of butler repository names to their URIs that will be known to the service. |
+| config.butler.storage | string | `"1Gi"` | Minimum storage requested in the butler remote area PVC |
+| config.butler.storageClassName | string | `nil` | If specified, name of storage class requested in butler remote area PVC |
+| config.butler.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted as butler remote area |
 | config.db.echo | bool | `false` | Whether to echo SQLAlchemy generated SQL to the log |
 | config.db.hostname | string | `""` | Name of the database host |
 | config.db.name | string | `"cmservice"` | Name of the database to use for the application |
@@ -39,9 +43,6 @@ Campaign Management for Rubin Data Release Production
 | ingress.annotations | object | `{}` | Additional annotations for the frontend ingress rule |
 | internalDB | bool | `false` | Whether to use the internal (phalanx) database |
 | worker.affinity | object | `{}` | Affinity rules for the worker pods |
-| worker.butler.dbUrl | string | `nil` | URL of a Butler Registry Database |
-| worker.butler.dbUsername | string | `nil` | Name of a user to use with the Butler Registry Database |
-| worker.butler.mountPath | string | `nil` | If specified, location for htcondor config file to be injected into worker containers |
 | worker.htcondor.config.contents | string | `nil` | If specified, contents of htcondor config file to be injected into worker containers |
 | worker.htcondor.config.mountPath | string | `nil` | If specified, location for htcondor config file to be injected into worker containers |
 | worker.htcondor.fsRemoteDir.storage | string | `"1Gi"` | Minimum storage requested in the condor remote area PVC |

@@ -9,9 +9,3 @@ data:
   config: |
     {{- .contents | nindent 4 }}
   {{- end }}
-  {{- with .Values.worker.butler }}
-  butlerAuth: |
-    - url: {{ .dbUrl }}
-      username: {{ .dbUsername }}
-      password: ${env:DAF_BUTLER_PASSWORD}
-  {{- end }}

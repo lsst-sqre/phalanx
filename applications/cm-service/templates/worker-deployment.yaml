@@ -6,6 +6,7 @@ metadata:
     {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.worker.replicaCount }}
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       {{- include "application.selectorLabels" . | nindent 6 }}
@@ -20,6 +21,11 @@ spec:
         {{- include "application.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "worker"
     spec:
+      securityContext:
+        runAsUser: 17951
+        runAsGroup: 1126
+        fsGroup: 1126
+        runAsNonRoot: true
       {{- with .Values.worker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -37,12 +43,20 @@ spec:
             httpGet:
               path: "/healthz"
               port: "http"
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
           envFrom:
             - configMapRef:
                 name: {{ .Chart.Name }}-env
             - configMapRef:
+                name: {{ .Chart.Name }}-butler-env
+            - configMapRef:
                 name: {{ .Chart.Name }}-htcondor-env
           env:
+            - name: BUTLER__AUTHENTICATION_FILE
+              value: "/var/run/secrets/db-auth.yaml"
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -55,54 +69,48 @@ spec:
             capabilities:
               drop:
                 - "all"
-            readOnlyRootFilesystem: true
+            # readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: "/output"
-              name: "output-volume"
-              {{- with .Values.config.outputVolume.subPath }}
-              subPath: {{ . }}
-              {{- end }}
+            {{- with .Values.config.outputVolume }}
+            - mountPath: {{ .mountPath }}
+              name: output-volume
+              subPath: {{ .subPath }}
+            {{- end }}
+            {{- with .Values.config.butler }}
+            - mountPath: {{ .mountPath }}
+              name: butler-repo-volume
+              subPath: {{ .subPath }}
+            {{- end }}
             - mountPath: "/tmp"
               name: "tmp-volume"
-            {{- with .Values.worker.htcondor.config }}
-            - mountPath: {{ .mountPath }}
-              name: "condor-config-volume"
-              readOnly: true
-            {{- end }}
-            {{- with .Values.worker.butler }}
-            - mountPath: {{ .mountPath }}
-              name: "butler-auth-volume"
-              readOnly: true
-            {{- end }}
             {{- with .Values.worker.htcondor.fsRemoteDir }}
             - mountPath: {{ .mountPath }}
-              name: "condor-remote-volume"
-              {{- with .subPath }}
-              subPath: {{ . }}
-              {{- end }}
+              name: condor-remote-volume
+              subPath: {{ .subPath }}
             {{- end }}
+            - name: butler-registry-volume
+              mountPath: "/var/run/secrets"
+              readonly: true
       volumes:
         - name: output-volume
           persistentVolumeClaim:
             claimName: {{ .Chart.Name }}-output
+        - name: butler-repo-volume
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}-butler
         - name: tmp-volume
           emptyDir:
             sizeLimit: 500Mi
-        - name: condor-config-volume
-          configMap:
-            name: {{ $.Chart.Name }}-config-worker
-            items:
-              - key: config
-                path: condor-config
         - name: condor-remote-volume
           persistentVolumeClaim:
             claimName: {{ $.Chart.Name }}-htcondor
-        - name: butler-auth-volume
-          configMap:
-            name: {{ $.Chart.Name }}-config-worker
+        - name: butler-registry-volume
+          secret:
+            secretName: cm-service-butler
             items:
-              - key: butlerAuth
+              - key: butler-registry
                 path: db-auth.yaml
+                mode: 0600
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

@@ -42,6 +42,20 @@ config:
   # -- URL path prefix
   pathPrefix: "/cm-service"
 
+  butler:
+    # -- If specified, name of storage class requested in butler remote area PVC
+    storageClassName: null
+
+    # -- Minimum storage requested in the butler remote area PVC
+    storage: 1Gi
+
+    # -- If specified, sub-path within bound PV to be mounted as butler remote area
+    subPath: null
+
+    # -- A mapping of butler repository names to their URIs that will be known to the service.
+    repositories: {}
+
+
 image:
   # -- Image to use for frontend containers
   repository: "ghcr.io/lsst-dm/cm-service"
@@ -130,16 +144,6 @@ worker:
 
   # -- Tolerations for the worker pods
   tolerations: []
-
-  butler:
-    # -- If specified, location for htcondor config file to be injected into worker containers
-    mountPath: null
-
-    # -- URL of a Butler Registry Database
-    dbUrl: null
-
-    # -- Name of a user to use with the Butler Registry Database
-    dbUsername: null
 
   htcondor:
 

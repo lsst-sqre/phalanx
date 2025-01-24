@@ -1,6 +1,12 @@
+# service writes artifacts that eventually resolve to the path
+#   /sdf/group/rubin/shared/campaigns/users/usdf-cm-dev/<production>/<campaign>/
+# outputVolume: mounted at the container's path /output
+#  sdf-data-rubin == /sdf/group/rubin
+#  sdf-group-rubin == /sdf/group/rubin
+---
 internalDB: true
 config:
-  logLevel: "INFO"
+  logLevel: "DEBUG"
   logProfile: "development"
   db:
     hostname: "postgres.postgres"
@@ -8,20 +14,25 @@ config:
   outputVolume:
     storageClassName: "sdf-data-rubin"
     subPath: "shared/campaigns/users/usdf-cm-dev"
+    mountPath: "/sdf/group/rubin/shared/campaigns/users/usdf-cm-dev"
+  butler:
+    storageClassName: "sdf-data-rubin"
+    subPath: "repo/main"
+    mountPath: "/sdf/group/rubin/repo/main"
+    repositories:
+      "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
+      "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
+
 image:
-  tag: "tickets-DM-48099-release"
+  tag: "tickets-DM-48560-resources"
   pullPolicy: Always
 worker:
   image:
-    tag: "tickets-DM-48099-release"
+    tag: "tickets-DM-48560-resources"
     pullPolicy: Always
-  butler:
-    mountPath: "/home/lsstsvc1/.config/butler"
-    dbUrl: "postgresql://usdf-butler.slac.stanford.edu:5432/lsstdb1"
-    dbUsername: rubin
   htcondor:
     config:
-      mountPath: "/home/lsstsvc1/.config/condor"
+      mountPath: "/usr/local/etc"
       contents: |
         CONDOR_HOST = sdfiana012.sdf.slac.stanford.edu
         COLLECTOR_HOST = sdfiana012.sdf.slac.stanford.edu

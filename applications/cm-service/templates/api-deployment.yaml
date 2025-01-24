@@ -6,6 +6,7 @@ metadata:
     {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       {{- include "application.selectorLabels" . | nindent 6 }}
@@ -31,6 +32,8 @@ spec:
             - configMapRef:
                 name: {{ .Chart.Name }}-env
           env:
+            - name: BUTLER__MOCK
+              value: "1"
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -54,12 +57,13 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
+          # TODO: we hopefully do not actually need this mounted on the API
           volumeMounts:
-            - mountPath: "/output"
+            {{- with .Values.config.outputVolume }}
+            - mountPath: {{ .mountPath }}
               name: "output-volume"
-              {{- with .Values.config.outputVolume.subPath }}
-              subPath: {{ . }}
-              {{- end }}
+              subPath: {{ .subPath }}
+            {{- end }}
       volumes:
         - name: output-volume
           persistentVolumeClaim:
