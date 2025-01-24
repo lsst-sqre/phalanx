@@ -14,7 +14,11 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
+<<<<<<< HEAD:applications/nublado/values-ukidacprod.yaml
             tag: "8.8.0"
+=======
+            tag: "8.3.0"
+>>>>>>> fad194e61 (Update to Nublado 8.3.0):applications/nublado/values-roe.yaml
           privileged: true
           volumeMounts:
             - containerPath: "/home"
