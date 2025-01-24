@@ -36,6 +36,16 @@ config:
   # -- database schema
   databaseSchema: "tasso"
 
+s3:
+  # -- Bucket containing the incoming raw images
+  # @default -- None, must be set
+  imageBucket: ""
+  # -- S3 endpoint containing `imageBucket`
+  # @default -- None, must be set
+  endpointUrl: ""
+  # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
+  disableBucketValidation: 0
+
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}

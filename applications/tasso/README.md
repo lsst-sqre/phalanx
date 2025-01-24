@@ -28,4 +28,7 @@ Cutout labeling service
 | podAnnotations | object | `{}` | Annotations for the tasso deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the tasso deployment pod |
+| s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
+| s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
+| s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
 | tolerations | list | `[]` | Tolerations for the tasso deployment pod |
