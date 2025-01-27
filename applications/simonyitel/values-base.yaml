@@ -151,6 +151,7 @@ mtm1m3-sim:
   env:
     LSST_KAFKA_TLM_FLUSH_MS: 0
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
+    LSST_KAFKA_MAX_QUEUE_MSG: 200
   resources:
     limits:
       cpu: 1000m
