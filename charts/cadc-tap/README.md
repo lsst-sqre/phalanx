@@ -22,7 +22,7 @@ IVOA TAP service
 | cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set | The Google service account that has an IAM binding to the `cadc-tap` Kubernetes service accounts and has the `cloudsql.client` role, access |
 | config.backend | string | None, must be set to `pg` or `qserv` | What type of backend are we connecting to? |
-| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/tickets-DM-46957/datalink-snippets.zip"` | Datalink payload URL |
+| config.datalinkPayloadUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/w.2025.03/datalink-snippets.zip"` | Datalink payload URL |
 | config.gcsBucket | string | `"async-results.lsst.codes"` | Name of GCS bucket in which to store results |
 | config.gcsBucketType | string | `"GCS"` | GCS bucket type (GCS or S3) |
 | config.gcsBucketUrl | string | `"https://tap-files.lsst.codes"` | Base URL for results stored in GCS bucket |
