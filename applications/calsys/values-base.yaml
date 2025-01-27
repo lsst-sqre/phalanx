@@ -20,6 +20,7 @@ electrometer101-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 101 --simulate 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -44,6 +45,7 @@ electrometer102-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 102 --simulate 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -68,6 +70,7 @@ electrometer201-sim:
     pullPolicy: Always
   env:
     RUN_ARG: 201 --simulate 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -94,6 +97,7 @@ gcheaderservice1:
     CAMERA: gc1
     TSTAND_HEADERSERVICE: BASE
     URL_SPEC: --lfa_mode s3 --s3instance ls
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -194,6 +198,7 @@ simulation-gencam:
     pullPolicy: Always
   env:
     RUN_ARG: 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id

@@ -125,6 +125,7 @@ mtheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance ls
     TSTAND_HEADERSERVICE: BASE
     CAMERA: mt
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id

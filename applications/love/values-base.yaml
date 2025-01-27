@@ -4,6 +4,7 @@ love-commander:
     pullPolicy: Always
   env:
     S3_INSTANCE: ls
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
