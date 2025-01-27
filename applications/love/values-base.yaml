@@ -4,6 +4,7 @@ love-commander:
     pullPolicy: Always
   env:
     S3_INSTANCE: ls
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -607,6 +608,13 @@ love-producer:
   - name: mtmount
     csc: MTMount:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+    resources:
+      requests:
+        cpu: 30m
+        memory: 100Mi
+      limits:
+        cpu: 300m
+        memory: 300Mi
   - name: mtoods
     csc: MTOODS:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription

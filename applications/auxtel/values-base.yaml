@@ -60,6 +60,7 @@ atheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance ls
     TSTAND_HEADERSERVICE: BASE
     CAMERA: at
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -96,7 +97,7 @@ atmcs-sim:
     repository: ts-dockerhub.lsst.org/atmcs_sim
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate --loglevel 10
+    RUN_ARG: --simulate
   resources:
     limits:
       cpu: 600m
@@ -114,6 +115,7 @@ atoods:
     AWS_ACCESS_KEY_ID: oods-latiss
     AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_SECRET_ACCESS_KEY
     key: oods-latiss-secret-key
@@ -179,7 +181,7 @@ atpneumatics-sim:
     repository: ts-dockerhub.lsst.org/at_pneumatics_sim
     pullPolicy: Always
   env:
-    RUN_ARG: --simulate --loglevel 10
+    RUN_ARG: --simulate
   resources:
     limits:
       cpu: 120m
