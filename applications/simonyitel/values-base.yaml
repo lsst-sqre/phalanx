@@ -225,6 +225,7 @@ mtoods:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
     AWS_ACCESS_KEY_ID: oods-lsstcam
     AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_SECRET_ACCESS_KEY
     key: oods-lsstcam-secret-key
