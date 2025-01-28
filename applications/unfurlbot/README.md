@@ -16,6 +16,8 @@ Squarebot backend that unfurls Jira issues.
 | config.jiraUrl | string | `"https://rubinobs.atlassian.net/"` | Jira base URL |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.redisUrl | string | `"redis://unfurlbot-redis:6379/0"` | URL to the local redis instance |
+| config.slackDebounceTime | string | `"600"` | Time (second) before an unfurl can be made to the same channel/thread for a given token |
+| config.slackTriggerMessageTtl | string | `"60"` | Time (seconds) after which a triggering Slack message is considered stale and ignored. |
 | config.topics.slackAppMention | string | `"lsst.square-events.squarebot.slack.app.mention"` | Kafka topic name for the Slack `app_mention` events |
 | config.topics.slackMessageChannels | string | `"lsst.square-events.squarebot.slack.message.channels"` | Kafka topic name for the Slack `message.channels` events (public channels) |
 | config.topics.slackMessageGroups | string | `"lsst.square-events.squarebot.slack.message.groups"` | Kafka topic name for the Slack `message.groups` events (private channels) |

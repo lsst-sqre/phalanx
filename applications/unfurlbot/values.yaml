@@ -43,6 +43,12 @@ config:
     # direct messages)
     slackMessageMpim: "lsst.square-events.squarebot.slack.message.mpim"
 
+  # -- Time (seconds) after which a triggering Slack message is considered stale and ignored.
+  slackTriggerMessageTtl: "60"
+
+  # -- Time (second) before an unfurl can be made to the same channel/thread for a given token
+  slackDebounceTime: "600"
+
   # -- Jira base URL
   jiraUrl: "https://rubinobs.atlassian.net/"
 
