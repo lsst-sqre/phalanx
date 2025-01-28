@@ -37,10 +37,7 @@ spec:
                 name: gai-helpers
                 key: "OPENAI_API_KEY"
           - name: GRPC_HOST
-            valueFrom:
-              secretKeyRef:
-                name: gai-helpers
-                key: weaviate-grpc.gai-helpers.svc.cluster.local
+            value: weaviate-grpc.gai-helpers.svc.cluster.local
           - name: HTTP_HOST
             valueFrom:
               secretKeyRef:
