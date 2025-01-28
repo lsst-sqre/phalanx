@@ -559,7 +559,6 @@ rest-proxy:
     "access.control.allow.origin": https://summit-lsp.lsst.codes/love,http://love01.cp.lsst.org
   kafka:
     topics:
-      - lsst.backpack.usgs_earthquake_data
       - lsst.obsenv.action
       - lsst.obsenv.summary
     topicPrefixes:
