@@ -48,6 +48,13 @@ spec:
           env:
             - name: "SQUAREONE_CONFIG_PATH"
               value: "/etc/squareone/squareone.config.yaml"
+            {{- if .Values.config.enableSentry }}
+            - name: "SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "squareone.fullname" . }}-secret
+                  key: "sentry-dsn"
+            {{- end }}
           volumeMounts:
             - name: "config"
               mountPath: "/etc/squareone"
