@@ -40,7 +40,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: gai-helpers
-                key: "GRPC_HOST"
+                key: weaviate-grpc.gai-helpers.svc.cluster.local
           - name: HTTP_HOST
             valueFrom:
               secretKeyRef:
