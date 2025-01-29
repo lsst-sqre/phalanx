@@ -38,4 +38,3 @@ controlSystem:
   imageTag: "k0004"
   siteTag: "base"
   s3EndpointUrl: "https://s3.ls.lsst.org"
-  kafkaBrokerAddress: sasquatch-kafka-bootstrap.sasquatch:9092
