@@ -7,6 +7,10 @@ metadata:
 data:
   cadc-registry.properties: |
     ivo://ivoa.net/sso#OpenID = {{ .Values.global.baseUrl }}
+
+    # Ignore this, it's only here to satisfy the availability check.
+    ivo://ivoa.net/std/CDP#proxy-1.0 = ivo://cadc.nrc.ca/cred
+    ivo://ivoa.net/sso#tls-with-password = {{ .Values.global.baseUrl }}
   catalina.properties: |
     # tomcat properties
     tomcat.connector.connectionTimeout=20000
