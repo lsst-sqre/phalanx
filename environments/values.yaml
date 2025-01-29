@@ -290,7 +290,7 @@ controlSystem:
   topicName: sal
 
   # -- Kafka broker address for the control system deployment
-  kafkaBrokerAddress: sasquatch-kafka-brokers.sasquatch:9092
+  kafkaBrokerAddress: sasquatch-kafka-bootstrap.sasquatch:9092
 
   # -- Kafka topic replication factor for control system topics
   kafkaTopicReplicationFactor: 3

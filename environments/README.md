@@ -83,7 +83,7 @@
 | butlerServerRepositories | object | None, must be set | Butler repositories that can be accessed via Butler server, as a dictionary from repository label to URI. |
 | controlSystem.appNamespace | string | None, must be set | Application namespacce for the control system deployment |
 | controlSystem.imageTag | string | None, must be set | Image tag for the control system deployment |
-| controlSystem.kafkaBrokerAddress | string | `"sasquatch-kafka-brokers.sasquatch:9092"` | Kafka broker address for the control system deployment |
+| controlSystem.kafkaBrokerAddress | string | `"sasquatch-kafka-bootstrap.sasquatch:9092"` | Kafka broker address for the control system deployment |
 | controlSystem.kafkaTopicReplicationFactor | int | `3` | Kafka topic replication factor for control system topics |
 | controlSystem.s3EndpointUrl | string | None, must be set: "" | S3 endpoint (LFA) for the control system deployment |
 | controlSystem.schemaRegistryUrl | string | `"http://sasquatch-schema-registry.sasquatch:8081"` | Schema registry URL for the control system deployment |
