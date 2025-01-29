@@ -8,3 +8,6 @@ config:
       butler_type: "REMOTE"
       repository: "https://data-int.lsst.cloud/api/butler/repo/dp02/butler.yaml"
       datalink_url: "https://data-int.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"
+
+  enableSentry: true
+  sentryTracesSampleRate: 1
