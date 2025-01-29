@@ -10,7 +10,7 @@ argo-cd:
 
   configs:
     cm:
-      url: "https://k8s.slac.stanford.edu/usdf-prompt-processing/argo-cd"
+      url: "https://usdfprod-prompt-processing.slac.stanford.edu/argo-cd"
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
@@ -21,9 +21,6 @@ argo-cd:
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
-    params:
-      server.basehref: "/usdf-prompt-processing/argo-cd"
-      server.rootpath: "/usdf-prompt-processing/argo-cd"
     rbac:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin
@@ -40,6 +37,4 @@ argo-cd:
 
   server:
     ingress:
-      hostname: "k8s.slac.stanford.edu"
-      path: "/usdf-prompt-processing/argo-cd"
-      tls: false
+      hostname: "usdfprod-prompt-processing.slac.stanford.edu"
