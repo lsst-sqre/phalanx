@@ -23,6 +23,7 @@ Guides
 
    bootstrap
    manage-schema
+   quotas
    recreate-token
    add-oidc-client
    github-organizations
