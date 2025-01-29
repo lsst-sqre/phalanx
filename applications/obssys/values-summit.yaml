@@ -391,8 +391,7 @@ watcher:
     key: squadcast-escalation-key
   resources:
     limits:
-      cpu: 2400m
-      memory: 1500Mi
+      cpu: 3000m
     requests:
-      cpu: 240m
+      cpu: 1000m
       memory: 445Mi
