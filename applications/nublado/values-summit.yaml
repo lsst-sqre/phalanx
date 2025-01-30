@@ -13,7 +13,7 @@ controller:
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-brokers.sasquatch:9092"
+        LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-bootstrap.sasquatch:9092"
         LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
         LSST_SCHEMA_REGISTRY_URL: "http://sasquatch-schema-registry.sasquatch:8081"
         LSST_SITE: "summit"
