@@ -1,6 +1,5 @@
 image:
   pullPolicy: Always
-  # tag: tickets-DM-34723
 
 ingress:
   timesSquareScope: "exec:admin"
@@ -25,3 +24,7 @@ config:
     - [data-int.lsst.cloud](https://data-int.lsst.cloud) — for Rubin RSP developers
 
     Don't forget to check the <Link href="/docs">documentation</Link>.
+
+  enableSentry: true
+  sentryTracesSampleRate: 1.0
+  sentryReplaysOnErrorSampleRate: 1.0
