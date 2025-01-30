@@ -44,4 +44,4 @@ config:
       storageClassName: sdf-data-rubin
 
 image:
-  tag: tickets-DM-44098
+  tag: main
