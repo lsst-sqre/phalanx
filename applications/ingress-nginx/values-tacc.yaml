@@ -1,0 +1,20 @@
+ingress-nginx:
+  controller:
+    config:
+      error-log-level: "error"
+      large-client-header-buffers: "4 64k"
+      proxy-buffer-size: "64k"
+    service:
+      externalTrafficPolicy: null
+      type: ClusterIP
+      enableHttp: true
+      enableHttps: true
+      ports:
+        http: 80
+        https: 443
+      targetPorts:
+        http: http
+        https: https
+    hostNetwork: true
+    dnsPolicy: ClusterFirst
+    kind: DaemonSet
