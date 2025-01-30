@@ -89,7 +89,7 @@ config:
       pullPolicy: "IfNotPresent"
 
       # -- Tag of TAP image to use
-      tag: "2.5.0"
+      tag: "2.6.0"
 
     # -- Whether the Qserv database is password protected
     # @default -- false
@@ -200,7 +200,7 @@ uws:
     pullPolicy: "IfNotPresent"
 
     # -- Tag of UWS database image to use
-    tag: "2.5.0"
+    tag: "2.6.0"
 
   # -- Resource limits and requests for the UWS database pod
   # @default -- See `values.yaml`
