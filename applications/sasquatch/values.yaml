@@ -125,10 +125,10 @@ influxdb:
 
       # -- Maximum number of running queries allowed on the instance (0 is
       # unlimited)
-      max-concurrent-queries: 1000
+      max-concurrent-queries: 500
 
       # -- Maximum duration a query is allowed to run before it is killed
-      query-timeout: "30s"
+      query-timeout: "15s"
 
       # -- Maximum duration a query can run before InfluxDB logs it as a slow
       # query

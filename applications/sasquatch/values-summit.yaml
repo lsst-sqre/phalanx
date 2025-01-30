@@ -115,6 +115,8 @@ strimzi-kafka:
         value: "true"
         effect: "NoSchedule"
 influxdb:
+  image:
+    tag: "1.8.10"
   persistence:
     storageClass: rook-ceph-block
     size: 5Ti
