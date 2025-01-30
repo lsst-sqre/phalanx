@@ -51,56 +51,56 @@ config:
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "exec:admin":
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "exec:internal-tools":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "exec:notebook":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "read:image":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "exec:portal":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "read:tap":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
     "write:files":
       - github:
           organization: "lsst-sqre"
           team: "square"
       - github:
           organization: "lsst-sqre"
-          team: "tacc"
+          team: "tacc-spherex"
 
   initialAdmins:
     - "afausti"
