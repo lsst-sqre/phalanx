@@ -25,7 +25,7 @@ config:
   logProfile: "production"
 
   # -- URL path prefix
-  pathPrefix: "/tasso"
+  pathPrefix: "/tasso-api"
 
   # -- Whether to send Slack alerts for unexpected failures
   slackAlerts: false

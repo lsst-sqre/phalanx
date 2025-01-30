@@ -15,7 +15,7 @@ Cutout labeling service
 | config.databaseUrl | string | `""` | database connection url |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.pathPrefix | string | `"/tasso"` | URL path prefix |
+| config.pathPrefix | string | `"/tasso-api"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
