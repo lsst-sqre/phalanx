@@ -1,9 +1,9 @@
-fqdn: "tacc.lsst.cloud"
-name: "tacc"
+fqdn: "tacc-spherex.lsst.cloud"
+name: "tacc-spherex"
 appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
-  vaultTitle: "RSP tacc.lsst.cloud"
+  vaultTitle: "RSP tacc-spherex.lsst.cloud"
 vaultPathPrefix: "secret/phalanx/tacc"
 applications:
   squareone: true
