@@ -4,7 +4,7 @@ appOfAppsName: "science-platform"
 onepassword:
   connectUrl: "https://roundtable-dev.lsst.cloud/1password"
   vaultTitle: "RSP tacc-spherex.lsst.cloud"
-vaultPathPrefix: "secret/phalanx/tacc"
+vaultPathPrefix: "secret/phalanx/tacc-spherex"
 applications:
   squareone: true
   nublado: true
