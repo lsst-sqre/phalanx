@@ -103,12 +103,15 @@ strimzi-kafka:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: kubernetes.io/hostname
+                - key: kafka-broker
                   operator: In
                   values:
-                    - yagan17
-                    - yagan18
-                    - yagan19
+                    - "true"
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
 influxdb:
   persistence:
     storageClass: rook-ceph-block
