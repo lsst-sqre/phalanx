@@ -129,8 +129,8 @@ Users who are not a member of that group will continue to have unlimited access 
 Also, members of the ``g_limited`` group will not be allowed to spawn new notebooks, because their ``spawn`` flag is set to false instead of the default of true.
 Note that ``cpu`` and ``memory`` are also set because they are required fields, but are set to 0.0 so they don't add anything to the quota.
 
-Bypas groups
-------------
+Bypass groups
+-------------
 
 Finally, some groups can be allowed to bypass all quota limits.
 This is done with the ``bypass`` key.
