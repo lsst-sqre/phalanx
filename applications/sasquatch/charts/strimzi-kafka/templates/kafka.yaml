@@ -5,6 +5,10 @@ metadata:
   name: controller
   labels:
     strimzi.io/cluster: {{ .Values.cluster.name }}
+  {{- with .Values.kafkaController.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.kafka.replicas }}
   roles:

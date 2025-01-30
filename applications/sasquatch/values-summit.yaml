@@ -56,6 +56,8 @@ strimzi-kafka:
     enabled: true
   kafkaController:
     enabled: true
+    annotations:
+      strimzi.io/next-node-ids: "(3,4,5)"
     resources:
       requests:
         memory: 8Gi
@@ -103,13 +105,18 @@ strimzi-kafka:
         requiredDuringSchedulingIgnoredDuringExecution:
           nodeSelectorTerms:
             - matchExpressions:
-                - key: kubernetes.io/hostname
+                - key: kafka-broker
                   operator: In
                   values:
-                    - yagan17
-                    - yagan18
-                    - yagan19
+                    - "true"
+    tolerations:
+      - key: "kafka-broker"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
 influxdb:
+  image:
+    tag: "1.8.10"
   persistence:
     storageClass: rook-ceph-block
     size: 5Ti
