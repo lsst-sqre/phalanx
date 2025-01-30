@@ -1,7 +1,7 @@
 argo-cd:
   configs:
     cm:
-      url: "https://tacc.lsst.cloud/argo-cd"
+      url: "https://tacc-spherex.lsst.cloud/argo-cd"
       dex.config: |
         # Auth using GitHub.
         # See https://dexidp.io/docs/connectors/github/
@@ -31,4 +31,4 @@ argo-cd:
 
   server:
     ingress:
-      hostname: "tacc.lsst.cloud"
+      hostname: "tacc-spherex.lsst.cloud"
