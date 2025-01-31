@@ -35,16 +35,16 @@ config:
         options:
           idle_time: 5
         restart: true
-    - name: "tap-scale"
-      count: 100
-      user_spec:
-        username_prefix: "bot-mobu-scale-tap"
-      scopes: ["read:tap"]
-      business:
-        type: "TAPQuerySetRunner"
-        options:
-          query_set: "dp0.2"
-        restart: true
+    # - name: "tap-scale"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-tap"
+    #   scopes: ["read:tap"]
+    #   business:
+    #     type: "TAPQuerySetRunner"
+    #     options:
+    #       query_set: "dp0.2"
+    #     restart: true
     # - name: "scale-test-empty-notebook"
     #   count: 300
     #   user_spec:
