@@ -1,6 +1,7 @@
 config:
   metrics:
     enabled: true
+  sentryTracesSampleConfig: errors
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre

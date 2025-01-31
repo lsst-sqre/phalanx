@@ -1,4 +1,5 @@
 config:
+  sentryTracesSampleConfig: errors
   autostart:
     - name: "gitlfs"
       count: 1

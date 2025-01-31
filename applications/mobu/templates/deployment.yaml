@@ -43,6 +43,13 @@ spec:
                 secretKeyRef:
                   name: {{ template "mobu.fullname" . }}-gafaelfawr-token
                   key: "token"
+            - name: "MOBU_SENTRY_ENVIRONMENT"
+              value: {{ .Values.global.environmentName }}
+            - name: "MOBU_SENTRY_DSN"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "mobu.fullname" . }}-secret
+                  key: "sentry-dsn"
             {{- if .Values.config.githubRefreshApp }}
             - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
               valueFrom:
