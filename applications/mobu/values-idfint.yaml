@@ -45,20 +45,20 @@ config:
     #     options:
     #       query_set: "dp0.2"
     #     restart: true
-    # - name: "scale-test-empty-notebook"
-    #   count: 300
-    #   user_spec:
-    #     username_prefix: "bot-mobu-scale-notebook"
-    #   scopes:
-    #     - "exec:notebook"
-    #     - "exec:portal"
-    #     - "read:image"
-    #     - "read:tap"
-    #   business:
-    #     type: "NotebookRunner"
-    #     options:
-    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
-    #       repo_ref: "main"
-    #       idle_time: 0
-    #       delete_lab: false
-    #     restart: true
+    - name: "scale-test-empty-notebook"
+      count: 1000
+      user_spec:
+        username_prefix: "bot-mobu-scale-notebook"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst-sqre/scaletest.git"
+          repo_ref: "main"
+          idle_time: 0
+          delete_lab: false
+        restart: true
