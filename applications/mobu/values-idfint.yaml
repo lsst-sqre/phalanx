@@ -1,6 +1,3 @@
-image:
-  tag: tickets-DM-48587-mobu-scale-test
-  pullPolicy: Always
 config:
   metrics:
     enabled: true
