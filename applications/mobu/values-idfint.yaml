@@ -35,20 +35,30 @@ config:
         options:
           idle_time: 5
         restart: true
-    - name: "scale-test-empty-notebook"
-      count: 300
+    - name: "tap"
+      count: 20
       user_spec:
-        username_prefix: "bot-mobu-scale-notebook"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
+        username_prefix: "bot-mobu-scale-tap"
+      scopes: ["read:tap"]
       business:
-        type: "NotebookRunner"
+        type: "TAPQuerySetRunner"
         options:
-          repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "main"
-          idle_time: 0
-          delete_lab: false
+          query_set: "dp0.2"
         restart: true
+    # - name: "scale-test-empty-notebook"
+    #   count: 300
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   business:
+    #     type: "NotebookRunner"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "main"
+    #       idle_time: 0
+    #       delete_lab: false
+    #     restart: true
