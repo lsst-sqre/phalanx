@@ -35,8 +35,8 @@ config:
         options:
           idle_time: 5
         restart: true
-    - name: "tap"
-      count: 20
+    - name: "tap-scale"
+      count: 100
       user_spec:
         username_prefix: "bot-mobu-scale-tap"
       scopes: ["read:tap"]
