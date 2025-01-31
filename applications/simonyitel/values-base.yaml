@@ -252,7 +252,7 @@ mtoods:
       ingester:
           kafka:
               brokers:
-                  - sasquatch-kafka-brokers.sasquatch:9092
+                  - sasquatch-kafka-bootstrap.sasquatch:9092
               topics:
                 - lsst.s3.raw.lsstcam
               group_id: MTOODS-S3
