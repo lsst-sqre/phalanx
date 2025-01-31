@@ -38,4 +38,5 @@ Continuous integration testing
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |
 | resources | object | See `values.yaml` | Resource limits and requests for the mobu frontend pod |
+| terminationGracePeriodSeconds | string | See `values.yaml` | Number of seconds for k8s to send SIGKILL after sending SIGTERM |
 | tolerations | list | `[]` | Tolerations for the mobu frontend pod |

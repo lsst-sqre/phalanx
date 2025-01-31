@@ -1,0 +1,21 @@
+suite: terminationGracePeriod set
+tests:
+  - it: "Should set terminationGracePeriod in the deployment pod spec"
+    template: "deployment.yaml"
+    set:
+      terminationGracePeriodSeconds: 500
+      global:
+        host: "example.com"
+    asserts:
+      - equal:
+          path: "spec.template.spec.terminationGracePeriodSeconds"
+          value: 500
+  - it: "Should set terminationGracePeriod in the deployment pod spec"
+    template: "deployment.yaml"
+    set:
+      terminationGracePeriodSeconds: null
+      global:
+        host: "example.com"
+    asserts:
+      - notExists:
+          path: "spec.template.spec.terminationGracePeriodSeconds"
