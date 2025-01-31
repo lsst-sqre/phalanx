@@ -90,6 +90,10 @@ resources:
     cpu: "50m"
     memory: "1Gi"
 
+# -- Number of seconds for k8s to send SIGKILL after sending SIGTERM
+# @default -- See `values.yaml`
+terminationGracePeriodSeconds: null
+
 # -- Annotations for the mobu frontend pod
 podAnnotations: {}
 

@@ -23,6 +23,9 @@ spec:
         {{- include "mobu.selectorLabels" . | nindent 8 }}
     spec:
       automountServiceAccountToken: false
+      {{- if .Values.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.terminationGracePeriodSeconds }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           env:
