@@ -2,7 +2,7 @@ config:
   site_id: usdfprod
   butler_uri_1: s3://embargo@rubin-summit-users/butler.yaml
 db:
-  host: usdf-summitdb.slac.stanford.edu
+  host: usdf-summitdb-replica.slac.stanford.edu
   user: usdf
 env:
   - name: AWS_SHARED_CREDENTIALS_FILE
