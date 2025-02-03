@@ -19,10 +19,10 @@ image:
 resources:
   limits:
     cpu: "1"
-    memory: "300Mi"
+    memory: "400Mi"
   requests:
     cpu: "100m"
-    memory: "175Mi"
+    memory: "210Mi"
 
 # -- Affinity rules for the Gafaelfawr frontend pod
 affinity: {}
@@ -375,10 +375,10 @@ maintenance:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "1Gi"
     requests:
       cpu: "100m"
-      memory: "150Mi"
+      memory: "175Mi"
 
   # -- Annotations for Gafaelfawr maintenance and audit pods
   podAnnotations: {}
@@ -400,10 +400,10 @@ operator:
   resources:
     limits:
       cpu: "500m"
-      memory: "500Mi"
+      memory: "1Gi"
     requests:
       cpu: "10m"
-      memory: "165Mi"
+      memory: "175Mi"
 
   # -- Annotations for the token management pod
   podAnnotations: {}
@@ -486,10 +486,10 @@ redis:
   resources:
     limits:
       cpu: "1"
-      memory: "40Mi"
+      memory: "200Mi"
     requests:
       cpu: "50m"
-      memory: "15Mi"
+      memory: "100Mi"
 
   # -- Affinity rules for the persistent Redis pod
   affinity: {}

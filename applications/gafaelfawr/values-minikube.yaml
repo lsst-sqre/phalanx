@@ -56,3 +56,9 @@ config:
     - "jonathansick"
     - "rra"
     - "stvoutsin"
+
+operator:
+  resources: {}
+
+redis-ephemeral:
+  resources: {}
