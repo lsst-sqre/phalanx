@@ -100,6 +100,11 @@ spec:
             - "/bin/ash"
             - "-c"
             - |
+              {{- if .Values.s3Credentials }}
+              {{- range .Values.s3Credentials }}
+              cat /secrets-raw/{{ . }} >> /secrets-raw/aws-credentials.ini
+              {{- end }}
+              {{- end }}
               {{- range .Values.secretFixup.filenames }}
               cp /secrets-raw/{{ . }} /secrets
               {{- end }}
