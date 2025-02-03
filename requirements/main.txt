@@ -90,9 +90,9 @@ casefy==1.0.0 \
     --hash=sha256:bc99428475c2089c5f6a21297b4cfe4e83dff132cf3bb06655ddcb90632af1ed \
     --hash=sha256:c89f96fb0fbd13691073b7a65c1e668e81453247d647479a3db105e86d7b0df9
     # via dataclasses-avroschema
-certifi==2024.12.14 \
-    --hash=sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56 \
-    --hash=sha256:b650d30f370c2b724812bee08008be0c4163b163ddaec3f2546c1caf65f191db
+certifi==2025.1.31 \
+    --hash=sha256:3d5da6925056f6f18f119200434a4780a94263f10d1c21d032a6f6b2baa20651 \
+    --hash=sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe
     # via
     #   httpcore
     #   httpx
@@ -303,8 +303,9 @@ cryptography==44.0.0 \
     #   phalanx (pyproject.toml)
     #   pyjwt
     #   safir
-dacite==1.8.1 \
-    --hash=sha256:cc31ad6fdea1f49962ea42db9421772afe01ac5442380d9a99fcf3d188c61afe
+dacite==1.9.1 \
+    --hash=sha256:50e97b408f9fdc5619f341c5415c4ad1cf771a3dbd85626cda44db78ee45df8c \
+    --hash=sha256:55a5ac04207d34a92d7951d2d1ccaa642bf340b29db6399848a1e41ff6e0f48f
     # via dataclasses-avroschema
 dataclasses-avroschema==0.65.7 \
     --hash=sha256:62b874f020b57294f65e7aced4a634757502e1b410bdb1d6f8e0515eb3fc5c3e \
@@ -314,9 +315,9 @@ fast-depends==2.4.12 \
     --hash=sha256:9393e6de827f7afa0141e54fa9553b737396aaf06bd0040e159d1f790487b16d \
     --hash=sha256:9e5d110ddc962329e46c9b35e5fe65655984247a13ee3ca5a33186db7d2d75c2
     # via faststream
-fastapi==0.115.7 \
-    --hash=sha256:0f106da6c01d88a6786b3248fb4d7a940d071f6f488488898ad5d354b25ed015 \
-    --hash=sha256:eb6a8c8bf7f26009e8147111ff15b5177a0e19bb4a45bc3486ab14804539d21e
+fastapi==0.115.8 \
+    --hash=sha256:0ce9111231720190473e222cdf0f07f7206ad7e53ea02beb1d2dc36e2f0741e9 \
+    --hash=sha256:753a96dd7e036b34eeef8babdfcfe3f28ff79648f86551eb36bfc1b0bf4a8cbf
     # via safir
 fastavro==1.10.0 \
     --hash=sha256:0a678153b5da1b024a32ec3f611b2e7afd24deac588cb51dd1b0019935191a6d \
