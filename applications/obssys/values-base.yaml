@@ -1,5 +1,7 @@
-x-butler-secret:
-  &butler-secret
+x-butler-lfa-combo: &butler-lfa-combo
+  s3Credentials:
+  - lfa-credentials.ini
+  - butler-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -8,6 +10,7 @@ x-butler-secret:
     containerPath: *bs-cp
     filenames:
     - *bs-fn
+    - aws-credentials.ini
 
 atqueue:
   classifier: scriptqueue2
@@ -20,29 +23,10 @@ atqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/BTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/lsstdata/BTS/auxtel
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -122,29 +106,10 @@ mtqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/BTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/lsstdata/BTS/auxtel
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -224,29 +189,10 @@ ocsqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: USER_USER_PASS
-    key: user-user-pass
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
-  - name: auxtel-gen3-butler
-    containerPath: /repo/LATISS
-    readOnly: false
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/repo/LATISS
-  - name: auxtel-gen3-oods
-    containerPath: /data/lsstdata/BTS/auxtel
-    readOnly: true
-    server: nfs-auxtel.ls.lsst.org
-    serverPath: /auxtel/lsstdata/BTS/auxtel
   - name: project-shared
     containerPath: /project
     readOnly: false
