@@ -9,9 +9,6 @@ ingress-nginx:
         value: "qserv"
         effect: "NoSchedule"
 
-    config:
-      large-client-header-buffers: "4 64k"
-      proxy-buffer-size: "64k"
     service:
       externalIPs:
         - 134.158.237.2

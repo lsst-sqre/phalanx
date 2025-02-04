@@ -23,7 +23,7 @@ spec:
         times-square-redis-client: "true"
     spec:
       {{- if .Values.cloudsql.enabled }}
-      serviceAccountName: "times-square"
+      serviceAccountName: {{ include "times-square.serviceAccountName" . }}
       {{- else }}
       automountServiceAccountToken: false
       {{- end }}

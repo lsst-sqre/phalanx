@@ -10,6 +10,7 @@ config:
     all:
       - "read:image"
   service: "tasso"
+  loginRedirect: true
 template:
   metadata:
     name: "tasso"
@@ -29,7 +30,7 @@ template:
                   name: "tasso"
                   port:
                     number: 8080
-            - path: "/webapp"
+            - path: "/tasso"
               pathType: "Prefix"
               backend:
                 service:

@@ -2,8 +2,6 @@ ingress-nginx:
   controller:
     kind: DaemonSet
     config:
-      large-client-header-buffers: "4 64k"
-      proxy-buffer-size: "64k"
       use-proxy-protocol: "false"
       enable-health-monitor: "false"
     service:

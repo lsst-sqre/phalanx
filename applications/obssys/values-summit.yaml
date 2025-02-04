@@ -1,0 +1,397 @@
+x-butler-secret:
+  &butler-secret
+  butlerSecret:
+    containerPath: &bs-cp /home/saluser/.lsst
+    dbUser: oods
+    secretFilename: &bs-fn postgres-credentials.txt
+  secretFixup:
+    containerPath: *bs-cp
+    filenames:
+    - *bs-fn
+
+atqueue:
+  classifier: scriptqueue2
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 2 --state enabled
+    USER_USERNAME: user
+    IMAGE_SERVER_URL: http://ccs.lsst.org
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  <<: *butler-secret
+  nfsMountpoint:
+  - name: auxtel-gen3-data
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-data-temp
+    containerPath: /data/lsstdata/base/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata/base/auxtel
+  - name: auxtel-data
+    containerPath: /readonly/lsstdata/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata
+  - name: comcam-gen3-data
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-gen3-data-temp
+    containerPath: /data/lsstdata/base/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata/base/comcam
+  - name: comcam-data
+    containerPath: /readonly/lsstdata/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 5000m
+      memory: 10Gi
+    requests:
+      cpu: 1000m
+      memory: 580Mi
+
+atscheduler:
+  classifier: scheduler2
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 2
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2500m
+      memory: 10000Mi
+    requests:
+      cpu: 250m
+      memory: 3100Mi
+
+gis:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/gis
+    pullPolicy: Always
+  secretFixup:
+    containerPath: /home/saluser/.store
+    filenames:
+    - id_gis_bastion
+    - id_gis_bastion.pub
+    specialInstructions: >-
+      chmod 0644 /secrets/*.*
+  resources:
+    limits:
+      cpu: 300m
+      memory: 300Mi
+    requests:
+      cpu: 30m
+      memory: 97Mi
+
+mtqueue:
+  classifier: scriptqueue1
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 1 --state enabled
+    USER_USERNAME: user
+    IMAGE_SERVER_URL: http://ccs.lsst.org
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  <<: *butler-secret
+  nfsMountpoint:
+  - name: auxtel-gen3-data
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-data-temp
+    containerPath: /data/lsstdata/base/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata/base/auxtel
+  - name: auxtel-data
+    containerPath: /readonly/lsstdata/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata
+  - name: comcam-gen3-data
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-gen3-data-temp
+    containerPath: /data/lsstdata/base/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata/base/comcam
+  - name: comcam-data
+    containerPath: /readonly/lsstdata/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2500m
+      memory: 10Gi
+    requests:
+      cpu: 500m
+      memory: 430Mi
+
+mtscheduler:
+  classifier: scheduler1
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 1
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2700m
+      memory: 7000Mi
+    requests:
+      cpu: 270m
+      memory: 2100Mi
+
+ocsqueue:
+  classifier: scriptqueue3
+  image:
+    repository: ts-dockerhub.lsst.org/scriptqueue
+    pullPolicy: Always
+  env:
+    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+    RUN_ARG: 3 --state enabled
+    IMAGE_SERVER_URL: http://ccs.lsst.org
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  <<: *butler-secret
+  nfsMountpoint:
+  - name: auxtel-gen3-data
+    containerPath: /repo/LATISS
+    readOnly: false
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/repo/LATISS
+  - name: auxtel-gen3-data-temp
+    containerPath: /data/lsstdata/base/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata/base/auxtel
+  - name: auxtel-data
+    containerPath: /readonly/lsstdata/auxtel
+    readOnly: true
+    server: nfs-auxtel.cp.lsst.org
+    serverPath: /auxtel/lsstdata
+  - name: comcam-gen3-data
+    containerPath: /repo/LSSTComCam
+    readOnly: false
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/repo/LSSTComCam
+  - name: comcam-gen3-data-temp
+    containerPath: /data/lsstdata/base/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata/base/comcam
+  - name: comcam-data
+    containerPath: /readonly/lsstdata/comcam
+    readOnly: true
+    server: nfs3.cp.lsst.org
+    serverPath: /comcam/lsstdata
+  - name: project-shared
+    containerPath: /project
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /project
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scriptqueue
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2500m
+      memory: 10Gi
+    requests:
+      cpu: 500m
+      memory: 430Mi
+
+ocsscheduler:
+  classifier: scheduler3
+  image:
+    repository: ts-dockerhub.lsst.org/scheduler
+    pullPolicy: Always
+  env:
+    INDEX: 3
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
+  - name: MYS3_ACCESS_KEY
+    key: aws-access-key-id
+  - name: MYS3_SECRET_KEY
+    key: aws-secret-access-key
+  nfsMountpoint:
+  - name: rubin-sim-data
+    containerPath: /home/saluser/rubin_sim_data
+    readOnly: false
+    server: nfs1.cp.lsst.org
+    serverPath: /scratch/scheduler
+  - name: obs-env
+    containerPath: /net/obs-env
+    readOnly: true
+    server: nfs-obsenv.cp.lsst.org
+    serverPath: /obs-env
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchLabels:
+            csc-class: scheduler
+        topologyKey: "kubernetes.io/hostname"
+  resources:
+    limits:
+      cpu: 2600m
+      memory: 7000Mi
+    requests:
+      cpu: 260m
+      memory: 2100Mi
+
+watcher:
+  image:
+    repository: ts-dockerhub.lsst.org/watcher
+    pullPolicy: Always
+  envSecrets:
+  - name: ESCALATION_KEY
+    key: squadcast-escalation-key
+  resources:
+    limits:
+      cpu: 3000m
+    requests:
+      cpu: 1000m
+      memory: 445Mi

@@ -2,4 +2,8 @@ replicaCount: 3
 config:
   siteName: "Rubin Science Platform"
   semaphoreUrl: "https://usdf-rsp-int.slac.stanford.edu/semaphore"
+  docsBaseUrl: "https://rsp.lsst.io/v/usdfint"
   timesSquareUrl: "https://usdf-rsp-int.slac.stanford.edu/times-square/api"
+  enableSentry: true
+  sentryTracesSampleRate: 1.0
+  sentryReplaysOnErrorSampleRate: 1.0

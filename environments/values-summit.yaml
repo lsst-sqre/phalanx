@@ -7,21 +7,33 @@ onepassword:
 vaultPathPrefix: "secret/phalanx/summit"
 
 applications:
+  auxtel: true
+  calsys: true
   consdb: true
+  control-system-test: true
+  envsys: true
   exposurelog: true
+  love: true
   mobu: true
   narrativelog: true
   nightreport: true
   nublado: true
   obsenv-management: true
+  obssys: true
   portal: true
   rapid-analysis: true
   rubintv: true
   rubintv-dev: true
   sasquatch: true
   sasquatch-backpack: true
+  simonyitel: true
   squareone: true
   strimzi: true
   telegraf: true
   telegraf-ds: true
   uws: true
+
+controlSystem:
+  imageTag: "k0003"
+  siteTag: "summit"
+  s3EndpointUrl: "https://s3.cp.lsst.org"

@@ -26,17 +26,37 @@ spec:
       automountServiceAccountToken: false
       containers:
         - name: {{ .Chart.Name }}
-          {{- if .Values.config.slackAlerts }}
           env:
+            {{- if .Values.config.slackAlerts }}
             - name: "TASSO_SLACK_WEBHOOK"
               valueFrom:
                 secretKeyRef:
                   name: "tasso"
                   key: "slack-webhook"
-          {{- end }}
+            {{- end }}
+            - name: "S3_ENDPOINT_URL"
+              value: {{ .Values.s3.endpointUrl}}
+            - name: "IMAGE_BUCKET"
+              value: {{ .Values.s3.imageBucket }}
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "AWS_ACCESS_KEY_ID"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: "s3"
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "AWS_SECRET_ACCESS_KEY"
+            - name: "TASSO_DATABASE_PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: {{ template "tasso.fullname" . }}-secret
+                  key: "TASSO_DATABASE_PASSWORD"
           envFrom:
             - configMapRef:
-                name: "tasso"
+                name: {{ include "tasso.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

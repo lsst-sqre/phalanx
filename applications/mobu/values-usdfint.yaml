@@ -1,4 +1,5 @@
 config:
+  sentryTracesSampleConfig: errors
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre

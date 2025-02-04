@@ -10,6 +10,10 @@ mtocps:
   # -- Enable the OCPS:3 CSC
   enabled: false
 
+raocps:
+  # -- Enable the OCPS:101 CSC
+  enabled: false
+
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:

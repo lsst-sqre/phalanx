@@ -19,6 +19,7 @@ atqueue:
     RUN_ARG: 2 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
@@ -61,10 +62,10 @@ atqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 1000m
+      cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 580Mi
 
 atscheduler:
@@ -74,6 +75,7 @@ atscheduler:
     pullPolicy: Always
   env:
     INDEX: 2
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -119,6 +121,7 @@ mtqueue:
     RUN_ARG: 1 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
@@ -161,10 +164,10 @@ mtqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 1000m
+      cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 430Mi
 
 mtscheduler:
@@ -174,6 +177,7 @@ mtscheduler:
     pullPolicy: Always
   env:
     INDEX: 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -219,6 +223,7 @@ ocsqueue:
     RUN_ARG: 3 --state enabled
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://lsstcam-mcm.ls.lsst.org
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: USER_USER_PASS
     key: user-user-pass
@@ -261,10 +266,10 @@ ocsqueue:
         topologyKey: "kubernetes.io/hostname"
   resources:
     limits:
-      cpu: 1000m
+      cpu: 2500m
       memory: 10Gi
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 430Mi
 
 ocsscheduler:
@@ -274,6 +279,7 @@ ocsscheduler:
     pullPolicy: Always
   env:
     INDEX: 3
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id

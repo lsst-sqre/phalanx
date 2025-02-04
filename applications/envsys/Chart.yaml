@@ -127,6 +127,11 @@ dependencies:
   condition: dsm2-sim.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: earthquake-ess302
+  version: 1.0.0
+  condition: earthquake-ess302.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: eas
   version: 1.0.0
   condition: eas.enabled
@@ -145,6 +150,16 @@ dependencies:
   alias: epm1-sim
   version: 1.0.0
   condition: epm1-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm301
+  version: 1.0.0
+  condition: epm301.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: hvac
+  version: 1.0.0
+  condition: hvac.enabled
   repository: file://../../charts/csc
 - name: csc
   alias: m1m3-ess113

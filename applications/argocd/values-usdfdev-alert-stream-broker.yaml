@@ -10,19 +10,17 @@ argo-cd:
 
   configs:
     cm:
-      url: "https://k8s.slac.stanford.edu/usdf-alert-stream-broker-dev/argo-cd"
+      url: "https://usdf-alert-stream-broker-dev.slac.stanford.edu/argo-cd"
       oidc.config: |
         name: SLAC
         issuer: https://dex.slac.stanford.edu
         clientID: vcluster--usdf-alert-stream-broker-dev
         clientSecret: $dex.clientSecret
-        # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
+        # Optional set of OIDC scopes to request. If omitted, defaults to:
+        # ["openid", "profile", "email", "groups"]
         requestedScopes: ["openid", "profile", "email", "groups"]
         # Optional set of OIDC claims to request on the ID token.
         requestedIDTokenClaims: {"groups": {"essential": true}}
-    params:
-      server.basehref: "/usdf-alert-stream-broker-dev/argo-cd"
-      server.rootpath: "/usdf-alert-stream-broker-dev/argo-cd"
     rbac:
       policy.csv: |
         g, ytl@slac.stanford.edu, role:admin
@@ -38,6 +36,4 @@ argo-cd:
 
   server:
     ingress:
-      hostname: "k8s.slac.stanford.edu"
-      path: "/usdf-alert-stream-broker-dev/argo-cd"
-      tls: false
+      hostname: "usdf-alert-stream-broker-dev.slac.stanford.edu"

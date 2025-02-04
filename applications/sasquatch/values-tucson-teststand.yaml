@@ -98,7 +98,7 @@ telegraf-kafka-consumer:
       topicRegexps: |
         [ "lsst.sal.MTMount" ]
       debug: true
-    eas:
+    envsys:
       enabled: true
       database: "efd"
       metric_batch_size: 100
@@ -189,7 +189,6 @@ telegraf-kafka-consumer:
       memory: "1Gi"
 
 kafdrop:
-  cmdArgs: "--message.format=AVRO --message.keyFormat=DEFAULT --topic.deleteEnabled=false --topic.createEnabled=false"
   ingress:
     enabled: true
     hostname: tucson-teststand.lsst.codes
@@ -203,11 +202,10 @@ rest-proxy:
     "access.control.allow.origin": https://tucson-teststand.lsst.codes/love
   kafka:
     topics:
-      - test.next-visit
+      - lsst.obsenv.action
+      - lsst.obsenv.summary
     topicPrefixes:
-      - test
       - lsst.obsenv
-      - lsst.dm
 
 chronograf:
   persistence:
@@ -230,3 +228,16 @@ chronograf:
 kapacitor:
   persistence:
     storageClass: rook-ceph-block
+
+backup:
+  enabled: true
+  persistence:
+    size: 100Gi
+    storageClass: rook-ceph-block
+  backupItems:
+    - name: chronograf
+      enabled: true
+      retentionDays: 7
+    - name: kapacitor
+      enabled: true
+      retentionDays: 7

@@ -1,0 +1,33 @@
+replicaCount: 3
+
+config:
+  worker:
+    workerCount: 3
+    # There are 20 bot accounts allocated to noteburst.
+    identities:
+      - username: "bot-noteburst01"
+      - username: "bot-noteburst02"
+      - username: "bot-noteburst03"
+      - username: "bot-noteburst04"
+      - username: "bot-noteburst05"
+      - username: "bot-noteburst06"
+      - username: "bot-noteburst07"
+      - username: "bot-noteburst08"
+      - username: "bot-noteburst09"
+      - username: "bot-noteburst10"
+      - username: "bot-noteburst11"
+      - username: "bot-noteburst12"
+      - username: "bot-noteburst13"
+      - username: "bot-noteburst14"
+      - username: "bot-noteburst15"
+      - username: "bot-noteburst16"
+      - username: "bot-noteburst17"
+      - username: "bot-noteburst18"
+      - username: "bot-noteburst19"
+      - username: "bot-noteburst20"
+    imageSelector: "weekly"
+
+# Use SSD for Redis storage.
+redis:
+  persistence:
+    storageClass: "wekafs--sdf-k8s01"

@@ -19,10 +19,10 @@ image:
 resources:
   limits:
     cpu: "1"
-    memory: "300Mi"
+    memory: "400Mi"
   requests:
     cpu: "100m"
-    memory: "175Mi"
+    memory: "210Mi"
 
 # -- Affinity rules for the Gafaelfawr frontend pod
 affinity: {}
@@ -316,7 +316,7 @@ cloudsql:
     repository: "gcr.io/cloudsql-docker/gce-proxy"
 
     # -- Cloud SQL Auth Proxy tag to use
-    tag: "1.37.3"
+    tag: "1.37.4"
 
     # -- Tag suffix to use for the proxy for schema updates
     schemaUpdateTagSuffix: "-alpine"
@@ -375,10 +375,10 @@ maintenance:
   resources:
     limits:
       cpu: "1"
-      memory: "300Mi"
+      memory: "1Gi"
     requests:
       cpu: "100m"
-      memory: "150Mi"
+      memory: "175Mi"
 
   # -- Annotations for Gafaelfawr maintenance and audit pods
   podAnnotations: {}
@@ -400,10 +400,10 @@ operator:
   resources:
     limits:
       cpu: "500m"
-      memory: "500Mi"
+      memory: "1Gi"
     requests:
       cpu: "10m"
-      memory: "165Mi"
+      memory: "175Mi"
 
   # -- Annotations for the token management pod
   podAnnotations: {}
@@ -416,6 +416,42 @@ operator:
 
   # -- Affinity rules for the token management pod
   affinity: {}
+
+redis-ephemeral:
+  config:
+    # -- Name of secret containing Redis password (do not change)
+    secretName: "gafaelfawr"
+
+    # -- Key inside secret from which to get the Redis password (do not
+    # change)
+    secretKey: "redis-password"
+
+  persistence:
+    # -- Whether to persist Redis storage of ephemeral data. This should
+    # always be false.
+    enabled: false
+
+  # -- Resource limits and requests for the ephemeral Redis pod
+  # @default -- See `values.yaml`
+  resources:
+    limits:
+      cpu: "1"
+      memory: "40Mi"
+    requests:
+      cpu: "50m"
+      memory: "15Mi"
+
+  # -- Affinity rules for the ephemeral Redis pod
+  affinity: {}
+
+  # -- Node selection rules for the ephemeral Redis pod
+  nodeSelector: {}
+
+  # -- Pod annotations for the ephemeral Redis pod
+  podAnnotations: {}
+
+  # -- Tolerations for the ephemeral Redis pod
+  tolerations: []
 
 redis:
   config:
@@ -445,27 +481,27 @@ redis:
     # size, storageClass, and accessMode settings are ignored.
     volumeClaimName: ""
 
-  # -- Resource limits and requests for the Redis pod
+  # -- Resource limits and requests for the persistent Redis pod
   # @default -- See `values.yaml`
   resources:
     limits:
       cpu: "1"
-      memory: "40Mi"
+      memory: "200Mi"
     requests:
       cpu: "50m"
-      memory: "15Mi"
+      memory: "100Mi"
 
-  # -- Pod annotations for the Redis pod
-  podAnnotations: {}
+  # -- Affinity rules for the persistent Redis pod
+  affinity: {}
 
-  # -- Node selection rules for the Redis pod
+  # -- Node selection rules for the persistent Redis pod
   nodeSelector: {}
 
-  # -- Tolerations for the Redis pod
-  tolerations: []
+  # -- Pod annotations for the persistent Redis pod
+  podAnnotations: {}
 
-  # -- Affinity rules for the Redis pod
-  affinity: {}
+  # -- Tolerations for the persistent Redis pod
+  tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

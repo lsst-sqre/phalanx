@@ -19,7 +19,8 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
 | cloudsql.image.resources | object | see `values.yaml` | Resource requests and limits for Cloud SQL pod |
-| cloudsql.image.tag | string | `"1.37.3"` | Cloud SQL Auth Proxy tag to use |
+| cloudsql.image.schemaUpdateTagSuffix | string | `"-alpine"` | Tag suffix to use for the proxy for schema updates |
+| cloudsql.image.tag | string | `"1.37.4"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | `""` | Instance connection name for a Cloud SQL PostgreSQL instance |
 | cloudsql.serviceAccount | string | `""` | The Google service account that has an IAM binding to the `times-square` Kubernetes service accounts and has the `cloudsql.client` role |
 | config.databaseUrl | string | None, must be set | URL for the PostgreSQL database |
@@ -33,10 +34,12 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
 | config.redisCacheUrl | string | Points to embedded Redis | URL for Redis html / noteburst job cache database |
 | config.redisQueueUrl | string | Points to embedded Redis | URL for Redis arq queue database |
+| config.sentryTracesSampleRate | float | `0` |  |
 | config.updateSchema | bool | false to disable schema upgrades | Whether to run the database migration job |
 | config.worker.enableLivenessCheck | bool | `true` | Enable liveness checks for the arq queue |
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by times-square Argo CD Application | Base URL for the environment |
+| global.enviromentName | string | Set by times-square Argo CD Application | Name of enviroment |
 | global.host | string | Set by times-square Argo CD Application | Host name for ingress |
 | global.vaultSecretsPathPrefix | string | Set by times-square Argo CD Application | Base path for Vault secrets |
 | image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the times-square image |

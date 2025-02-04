@@ -21,16 +21,27 @@ ingress:
 
 autoscaling:
   # -- Enable autoscaling of butler deployment
-  enabled: false
+  enabled: true
 
   # -- Minimum number of butler deployment pods
   minReplicas: 1
 
   # -- Maximum number of butler deployment pods
-  maxReplicas: 100
+  #
+  # Each replica can have 40 database connections, so we need to make sure the
+  # combined connections are under the postgres connection limit. (Which is
+  # configurable, but currently set to 400 at the IDF.)
+  maxReplicas: 10
 
   # -- Target CPU utilization of butler deployment pods
-  targetCPUUtilizationPercentage: 80
+  #
+  # Butler CPU usage is very low in normal operation because most things are
+  # I/O bound.  CPU usage can start creeping up if we have many queries running
+  # simultaneously (due to serialization overhead and spatial postprocessing.)
+  # In this case the thread pool and database connection pool are probably
+  # oversubscribed long before we hit 100% cpu usage, so we want to get more
+  # replicas up at fairly low CPU usage.
+  targetCPUUtilizationPercentage: 25
   # targetMemoryUtilizationPercentage: 80
 
 # -- Annotations for the butler deployment pod
@@ -45,7 +56,7 @@ resources:
     # 40 threads in the thread pool running large queries costing ~35MB each.
     memory: "1.5Gi"
   requests:
-    cpu: "15m"
+    cpu: "1"
     # Butler server uses around 200MB idle at startup, but under dynamic usage
     # Python seems to want to hold onto another couple hundred megabytes of
     # heap.

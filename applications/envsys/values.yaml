@@ -94,6 +94,10 @@ dsm2-sim:
   # -- Enable the DSM:2 simulator CSC
   enabled: false
 
+earthquake-ess302:
+  # -- Enable ESS:302 CSC
+  enabled: false
+
 eas:
   # -- Enable the EAS CSC
   enabled: false
@@ -108,6 +112,14 @@ epm1:
 
 epm1-sim:
   # -- Enable the EPM:1 simulator CSC
+  enabled: false
+
+epm301:
+  # -- Enable the EPM:301 CSC
+  enabled: false
+
+hvac:
+  # -- Enable the HVAC CSC
   enabled: false
 
 m1m3-ess113:
@@ -180,6 +192,10 @@ tma-ess110:
 
 tma-ess110-sim:
   # -- Enable the ESS:110 simulator CSC
+  enabled: false
+
+weatherforecast:
+  # -- Enable the WeatherForecast CSC
   enabled: false
 
 # The following will be set by parameters injected by Argo CD and should not

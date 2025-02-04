@@ -15,7 +15,7 @@ Cutout labeling service
 | config.databaseUrl | string | `""` | database connection url |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
-| config.pathPrefix | string | `"/tasso"` | URL path prefix |
+| config.pathPrefix | string | `"/tasso-api"` | URL path prefix |
 | config.slackAlerts | bool | `false` | Whether to send Slack alerts for unexpected failures |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
@@ -28,4 +28,7 @@ Cutout labeling service
 | podAnnotations | object | `{}` | Annotations for the tasso deployment pod |
 | replicaCount | int | `1` | Number of web deployment pods to start |
 | resources | object | See `values.yaml` | Resource limits and requests for the tasso deployment pod |
+| s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
+| s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
+| s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
 | tolerations | list | `[]` | Tolerations for the tasso deployment pod |

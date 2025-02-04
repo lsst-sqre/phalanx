@@ -47,6 +47,13 @@ config:
   # connection
   pgUser: "rubin"
 
+  # -- Whether to send trace and telemetry information to Sentry. This traces
+  # every call and therefore should only be enabled in non-production
+  # environments.
+  enableSentry: false
+
+  # Sentry tracing sample rate
+  sentryTracesSampleRate: 0.0
 
 ingress:
   # -- Additional annotations for the ingress rule

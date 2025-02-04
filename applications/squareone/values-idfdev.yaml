@@ -1,12 +1,12 @@
 image:
   pullPolicy: Always
-  # tag: tickets-DM-34723
 
 ingress:
   timesSquareScope: "exec:admin"
 
 config:
   siteName: "Rubin Science Platform @ data-dev"
+  docsBaseUrl: "https://rsp.lsst.io/v/idfdev"
   semaphoreUrl: "https://data-dev.lsst.cloud/semaphore"
   timesSquareUrl: "https://data-dev.lsst.cloud/times-square/api"
   coManageRegistryUrl: "https://id-dev.lsst.cloud"
@@ -24,3 +24,7 @@ config:
     - [data-int.lsst.cloud](https://data-int.lsst.cloud) — for Rubin RSP developers
 
     Don't forget to check the <Link href="/docs">documentation</Link>.
+
+  enableSentry: true
+  sentryTracesSampleRate: 1.0
+  sentryReplaysOnErrorSampleRate: 1.0

@@ -65,6 +65,9 @@ config:
   siteDescription: |
     Access Rubin Observatory Legacy Survey of Space and Time data.
 
+  # -- Base URL for user documentation (excludes trailing slash)
+  docsBaseUrl: "https://rsp.lsst.io"
+
   # -- URL to the Semaphore (user notifications) API service.
   # @default null disables the Semaphore integration
   semaphoreUrl: null
@@ -329,6 +332,30 @@ config:
     <Link href="../support"><a>contact us</a></Link> to have the confirmation
     email resent.
 
+  # -- Enable Sentry
+  # @default -- See `values.yaml`
+  enableSentry: false
+
+  # -- Sentry DSN
+  # @default -- See `values.yaml`
+  sentryDsn: null
+
+  # -- Sentry traces sample rate
+  # @default -- See `values.yaml`
+  sentryTracesSampleRate: 0
+
+  # -- Sentry replays sample rate
+  # @default -- See `values.yaml`
+  sentryReplaysSessionSampleRate: 0
+
+  # -- Sentry error replays sample rate
+  # @default -- See `values.yaml`
+  sentryReplaysOnErrorSampleRate: 0
+
+  # -- Sentry debug mode
+  # @default -- See `values.yaml`
+  sentryDebug: false
+
 # Global parameters are set by parameters injected by the Argo CD Application
 # and should not be set in the individual environment values files.
 global:
@@ -343,3 +370,7 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD Application
   vaultSecretsPathPrefix: ""
+
+  # -- Name of the Phalanx environment
+  # @default -- Set by Argo CD Application
+  environmentName: ""

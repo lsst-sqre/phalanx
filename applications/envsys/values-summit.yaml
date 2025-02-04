@@ -1,0 +1,375 @@
+auxtel-ess201:
+  enabled: true
+  classifier: ess201
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 201
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+auxtel-ess202:
+  enabled: true
+  classifier: ess202
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 202
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+auxtel-ess203:
+  enabled: true
+  classifier: ess203
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 203
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+auxtel-ess204:
+  enabled: true
+  classifier: ess204
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 204
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+calibhill-ess301:
+  enabled: true
+  classifier: ess301
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 301
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+camera-ess111:
+  enabled: true
+  classifier: ess111
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 111
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+cleanroom-ess109:
+  enabled: true
+  classifier: ess109
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 109
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+dimm1:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/dimm
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
+
+dimm2:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/dimm
+    pullPolicy: Always
+  env:
+    RUN_ARG: 2
+  resources:
+    requests:
+      cpu: 23m
+      memory: 107Mi
+    limits:
+      cpu: 230m
+      memory: 1070Mi
+
+dream:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/dream
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 10m
+      memory: 96Mi
+
+earthquake-ess302:
+  enabled: true
+  classifier: ess302
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 302
+  resources:
+    requests:
+      cpu: 4m
+      memory: 103Mi
+    limits:
+      cpu: 40m
+      memory: 310Mi
+
+eas:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/eas
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 150m
+      memory: 375Mi
+    requests:
+      cpu: 15m
+      memory: 125Mi
+
+epm301:
+  enabled: true
+  classifier: epm301
+  image:
+    repository: ts-dockerhub.lsst.org/epm
+    pullPolicy: Always
+  env:
+    RUN_ARG: 301
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+hvac:
+  enabled: true
+  image:
+    repository: ts-dockerhub.lsst.org/hvac
+    pullPolicy: Always
+  env:
+    RUN_ARG: --state enabled
+  resources:
+    requests:
+      cpu: 15m
+      memory: 120Mi
+    limits:
+      cpu: 150m
+      memory: 30000Mi
+
+m1m3-ess113:
+  enabled: true
+  classifier: ess113
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 113
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m2-ess106:
+  enabled: true
+  classifier: ess106
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 106
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+m2-ess112:
+  enabled: true
+  classifier: ess112
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 112
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+mtdome-ess107:
+  enabled: true
+  classifier: ess107
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 107
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+mtdome-ess108:
+  enabled: true
+  classifier: ess108
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 108
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess001:
+  enabled: true
+  classifier: ess1
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 1
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess104:
+  enabled: true
+  classifier: ess104
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 104
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess105:
+  enabled: true
+  classifier: ess105
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 105
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+tma-ess110:
+  enabled: true
+  classifier: ess110
+  image:
+    repository: ts-dockerhub.lsst.org/ess
+    pullPolicy: Always
+  env:
+    RUN_ARG: 110
+  resources:
+    requests:
+      cpu: 19m
+      memory: 90Mi
+    limits:
+      cpu: 190m
+      memory: 900Mi
+
+weatherforecast:
+  image:
+    repository: ts-dockerhub.lsst.org/weatherforecast
+    pullPolicy: Always
+  env:
+    RUN_ARG: --state enabled
+  envSecrets:
+  - name: METEOBLUE_API_KEY
+    key: meteoblue-api-key
+  resources:
+    requests:
+      cpu: 9m
+      memory: 95Mi
+    limits:
+      cpu: 90m
+      memory: 950Mi

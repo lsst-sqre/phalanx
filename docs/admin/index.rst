@@ -33,6 +33,7 @@ Administrators operate infrastructure, manage secrets, and are involved in the d
    audit-secrets
    update-pull-secret
    migrating-secrets
+   set-quotas
 
 .. toctree::
    :caption: Troubleshooting

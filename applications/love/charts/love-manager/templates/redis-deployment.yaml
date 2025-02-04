@@ -19,7 +19,7 @@ spec:
       - name: {{ include "love-manager.redis.fullname" . }}
         image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
         imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
-        command: [ "redis-server", "/data/redis.conf", "--appendonly", "yes", "--requirepass", "$(REDIS_PASS)" ]
+        command: [ "redis-server", "/data/redis.conf", "--requirepass", "$(REDIS_PASS)" ]
         ports:
           - containerPort: {{ .Values.redis.port }}
         env:
@@ -28,7 +28,7 @@ spec:
         {{- $data := dict "env" .Values.redis.envSecrets "secret" true }}
         {{- include "helpers.envFromList" $data | indent 10 }}
         volumeMounts:
-          - mountPath: /data/redis.conf
+          - mountPath: /data
             readOnly: true
             name: redis-conf
         {{- with $.Values.redis.resources }}
