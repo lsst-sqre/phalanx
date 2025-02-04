@@ -34,7 +34,6 @@ applications:
   schedview-snapshot: true
   semaphore: true
   sia: true
-  siav2: false
   ssotap: true
   squareone: true
   strimzi: true
