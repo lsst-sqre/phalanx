@@ -1,6 +1,0 @@
-apiVersion: v2
-appVersion: 0.1.0
-description: Simple Image Access v2 service
-name: siav2
-type: application
-version: 1.0.0
