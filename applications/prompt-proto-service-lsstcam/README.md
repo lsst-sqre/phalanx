@@ -19,8 +19,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-proto-service.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| prompt-proto-service.cache.patchesPerImage | int | `4` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
-| prompt-proto-service.cache.refcatsPerImage | int | `4` | A factor by which to multiply `baseSize` for refcat datasets. |
+| prompt-proto-service.cache.patchesPerImage | int | `16` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
+| prompt-proto-service.cache.refcatsPerImage | int | `6` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-proto-service.containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
@@ -30,11 +30,11 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-proto-service.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
-| prompt-proto-service.instrument.name | string | `""` | The "short" name of the instrument |
+| prompt-proto-service.instrument.name | string | `"LSSTCam"` | The "short" name of the instrument |
 | prompt-proto-service.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-proto-service.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-proto-service.instrument.preloadPadding | int | `50` | Number of arcseconds to pad the spatial region in preloading. |
-| prompt-proto-service.instrument.skymap | string | `""` | Skymap to use with the instrument |
+| prompt-proto-service.instrument.skymap | string | `"lsst_cells_v1"` | Skymap to use with the instrument |
 | prompt-proto-service.knative.cpuLimit | int | `1` | The maximum cpu cores for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.cpuRequest | int | `1` | The cpu cores requested for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.ephemeralStorageLimit | string | `"5Gi"` | The maximum storage space allowed for each container (mostly local Butler). This allocation is for the full pod (see `containerConcurrency`) |
