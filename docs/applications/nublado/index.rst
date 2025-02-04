@@ -25,6 +25,7 @@ Guides
    bootstrap
    upgrade
    major-upgrade
+   clean-up-labs
    block-spawns
    updating-recommended
    troubleshoot
