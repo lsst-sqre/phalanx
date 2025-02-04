@@ -1,0 +1,24 @@
+strimzi-kafka:
+  users:
+    kafdrop:
+      enabled: true
+  kraft:
+    enabled: true
+  kafkaController:
+    enabled: true
+  kafka:
+    storage:
+      size: 100Gi
+      storageClassName: wekafs--sdf-k8s01
+  topics:
+    lsstcomcam:
+      enabled: true
+      partitions: 50
+      replicas: 3
+      retention: 300000
+kafdrop:
+  ingress:
+    enabled: false
+  kafka:
+    broker: prompt-processing-kafka-kafka-bootstrap.prompt-processing-kafka:9092
+  schemaregistry: http://10.106.68.124:8081

@@ -274,6 +274,13 @@ spec:
         type: allow
         host: "*"
         operation: Read
+      - resource:
+          type: topic
+          name: "test.next-visit-job"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
 {{- end }}
 {{- if .Values.users.consdb.enabled }}
 ---

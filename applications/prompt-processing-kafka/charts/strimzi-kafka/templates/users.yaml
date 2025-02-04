@@ -1,0 +1,174 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: fan-out-producer
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: prompt-processing-kafka-secret
+          key: fan-out-producer-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      {{- if .Values.topics.hsc.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-hsc-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+      {{- if .Values.topics.latiss.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-latiss-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcomcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}
+      {{- if .Values.topics.lsstcomcamsim.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+      {{- end }}  
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: fan-out-consumer
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: prompt-processing-kafka-secret
+          key: fan-out-consumer-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "fanned-out-comcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- if .Values.topics.hsc.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-hsc-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+      {{- if .Values.topics.latiss.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-latiss-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcomcam.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcam-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+      {{- if .Values.topics.lsstcomcamsim.enabled }}
+      - resource:
+          type: topic
+          name: "fanned-out-lsstcomcamsim-events"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: Read
+      {{- end }}
+{{- if .Values.users.kafdrop.enabled }}
+---
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaUser
+metadata:
+  name: kafdrop
+  labels:
+    strimzi.io/cluster: {{ .Values.cluster.name }}
+spec:
+  authentication:
+    type: scram-sha-512
+    password:
+      valueFrom:
+        secretKeyRef:
+          name: prompt-processing-kafka-secret
+          key: kafdrop-password
+  authorization:
+    type: simple
+    acls:
+      - resource:
+          type: group
+          name: "*"
+          patternType: literal
+        operation: All
+      - resource:
+          type: topic
+          name: "*"
+          patternType: literal
+        type: allow
+        host: "*"
+        operation: All
+{{- end }}
