@@ -4,8 +4,18 @@
 Upgrading Nublado
 #################
 
-Most of the time, upgrading Nublado can be done simply by syncing the application in Argo CD.
-There will be a brief outage for spawning new pods, but users with existing pods should be able to continue working.
+Routine upgrades
+================
+
+There is currently a sequencing problem when syncing Nublado.
+If it is synced in the obvious way, both JupyterHub and the Nublado controller restart at the same time.
+If JupyterHub comes up first and the Nublado controller is unresponsive, it will decide that all running labs are invalid, making them inaccessible and forcing them to be shut down and respawned.
+
+This is worth avoiding by syncing everything *except* the ``nublado-controller`` deployment first, and then syncing ``nublado-controller`` once JupyterHub is back up.
+This ensures that the Nublado controller is running during the critical startup phase of JupyterHub.
+
+Schema updates
+==============
 
 Occasionally, new versions of JupyterHub will require a schema update.
 Automatic schema updates are off by default, so JupyterHub will refuse to start if a database schema update is required.
