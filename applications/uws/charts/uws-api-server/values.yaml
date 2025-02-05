@@ -39,6 +39,11 @@ job:
     runAsGroup: 202
     # -- Set the filesystem GID for the mounted volumes in the UWS job container
     fsGroup: 202
+# -- Configuration for S3 Butler storage
+# The object must have the following attributes defined:
+# _endpointURL_ (The URL for the S3 Butler storage)
+# _containerPath_ (The directory location in the container for the S3 Butler credentials)
+s3ButlerStorage: {}
 # -- Configuration for Postgres backed butlers
 # The object must have the following attributes defined:
 # _secretName_ (A label that points to the VaultSecret for the postgres credentials)

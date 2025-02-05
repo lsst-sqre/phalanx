@@ -27,3 +27,8 @@ data:
       dbUser: "{{ .Values.butlerPg.dbUser }}"
       secretName: "{{ .Values.butlerPg.secretName }}"
     {{- end }}
+    {{- if .Values.s3ButlerStorage }}
+    s3ButlerStorage:
+      endpointURL: "{{ .Values.s3ButlerStorage.endpointURL }}"
+      containerPath: "{{ .Values.s3ButlerStorage.containerPath }}"
+    {{- end }}
