@@ -38,6 +38,24 @@ spec:
           env:
             - name: EXTERNAL_INSTANCE_URL
               value: {{ .Values.global.baseUrl | quote }}
+            {{- if .Values.controller.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "nublado-kafka"
+                  key: "securityProtocol"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/nublado-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/nublado-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/nublado-kafka/ca.crt"
+            {{- end }}
             {{- if .Values.controller.slackAlerts }}
             - name: "NUBLADO_SLACK_WEBHOOK"
               valueFrom:
@@ -66,6 +84,20 @@ spec:
               mountPath: "/etc/secrets"
               readOnly: true
             {{- end }}
+            {{- if .Values.controller.config.metrics.enabled }}
+            - name: "kafka"
+              mountPath: "/etc/nublado-kafka/ca.crt"
+              readOnly: true
+              subPath: "ssl.truststore.crt"
+            - name: "kafka"
+              mountPath: "/etc/nublado-kafka/user.crt"
+              readOnly: true
+              subPath: "ssl.keystore.crt"
+            - name: "kafka"
+              mountPath: "/etc/nublado-kafka/user.key"
+              readOnly: true
+              subPath: "ssl.keystore.key"
+            {{- end }}
             - name: "podinfo"
               mountPath: "/etc/podinfo"
       {{- with .Values.controller.nodeSelector }}
@@ -82,14 +114,19 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
+        - name: "config"
+          configMap:
+            name: "nublado-controller-config"
         {{- if eq "docker" .Values.controller.config.images.source.type }}
         - name: "docker-creds"
           secret:
             secretName: "pull-secret"
         {{- end }}
-        - name: "config"
-          configMap:
-            name: "nublado-controller-config"
+        {{- if .Values.controller.config.metrics.enabled }}
+        - name: "kafka"
+          secret:
+            secretName: "nublado-kafka"
+        {{- end }}
         - name: "podinfo"
           downwardAPI:
             items:
