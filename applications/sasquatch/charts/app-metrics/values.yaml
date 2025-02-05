@@ -20,6 +20,9 @@ globalAppConfig:
       - "username"
       - "notebook"
       - "repo"
+  nublado:
+    influxTags:
+      - "username"
   wobbly:
     influxTags:
       - "service"
