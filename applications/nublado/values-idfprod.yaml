@@ -76,6 +76,8 @@ controller:
           volumeName: "project"
         - containerPath: "/scratch"
           volumeName: "scratch"
+    metrics:
+      enabled: true
 
 jupyterhub:
   hub:
