@@ -36,9 +36,10 @@ IVOA TAP service
 | config.qserv.host | string | `"mock-db:3306"` (the mock QServ) | QServ hostname:port to connect to |
 | config.qserv.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the TAP image |
 | config.qserv.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-service"` | TAP image to use |
-| config.qserv.image.tag | string | `"2.8.0"` | Tag of TAP image to use |
+| config.qserv.image.tag | string | `"2.9.0"` | Tag of TAP image to use |
 | config.qserv.jdbcParams | string | `""` | Extra JDBC connection parameters |
 | config.qserv.passwordEnabled | bool | false | Whether the Qserv database is password protected |
+| config.sentryEnabled | bool | `false` | Whether Sentry is enabled in this environment |
 | config.serviceName | string | None, must be set | Name of the service from Gafaelfawr's perspective, used for metrics reporting |
 | config.tapSchemaAddress | string | `"cadc-tap-schema-db:3306"` | Address to a MySQL database containing TAP schema data |
 | config.vaultSecretName | string | `""` | Vault secret name, this is appended to the global path to find the vault secrets associated with this deployment. |
@@ -79,7 +80,7 @@ IVOA TAP service
 | uws.affinity | object | `{}` | Affinity rules for the UWS database pod |
 | uws.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the UWS database image |
 | uws.image.repository | string | `"ghcr.io/lsst-sqre/lsst-tap-uws-db"` | UWS database image to use |
-| uws.image.tag | string | `"2.8.0"` | Tag of UWS database image to use |
+| uws.image.tag | string | `"2.9.0"` | Tag of UWS database image to use |
 | uws.nodeSelector | object | `{}` | Node selection rules for the UWS database pod |
 | uws.podAnnotations | object | `{}` | Annotations for the UWS databse pod |
 | uws.resources | object | See `values.yaml` | Resource limits and requests for the UWS database pod |

@@ -10,6 +10,9 @@ cadc-tap:
     # -- Name of the service from Gafaelfawr's perspective
     serviceName: "ssotap"
 
+    # -- Whether Sentry is enabled in this environment
+    sentryEnabled: false
+
     pg:
       # -- Postgres hostname:port to connect to
       host: "usdf-pg-catalogs.slac.stanford.edu:5432"
