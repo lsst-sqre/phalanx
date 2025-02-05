@@ -165,6 +165,7 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - nublado
     - wobbly
 
 backup:
