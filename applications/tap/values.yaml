@@ -13,6 +13,9 @@ cadc-tap:
     # -- Name of the service from Gafaelfawr's perspective
     serviceName: "tap"
 
+    # -- Whether Sentry is enabled in this environment
+    sentryEnabled: false
+
   serviceAccount:
     # -- Name of the Kubernetes `ServiceAccount`, used for CloudSQL access
     name: "tap"
