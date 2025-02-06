@@ -16,6 +16,7 @@ template:
     name: "{{ template "times-square.fullname" . }}-templates"
     {{- with .Values.ingress.annotations }}
     annotations:
+      nginx.ingress.kubernetes.io/use-regex: "true"
       {{- toYaml . | nindent 6 }}
     {{- end }}
   spec:
@@ -23,7 +24,14 @@ template:
       - host: {{ required "global.host must be set" .Values.global.host | quote }}
         http:
           paths:
-            - path: "{{- .Values.ingress.path -}}/v1/github/rendered/lsst-sqre/nublado-seeds/"
+            - path: "{{- .Values.ingress.path -}}/v1/pages/.*/rendered"
+              pathType: "ImplementationSpecific"
+              backend:
+                service:
+                  name: {{ template "times-square.fullname" . }}
+                  port:
+                    number: {{ .Values.service.port }}
+            - path: "{{- .Values.ingress.path -}}/v1/github"
               pathType: "Prefix"
               backend:
                 service:
