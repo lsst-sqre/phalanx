@@ -25,7 +25,6 @@ applications:
   sasquatch: true
   semaphore: true
   sia: true
-  siav2: false
   squareone: true
   strimzi: true
   strimzi-access-operator: true
