@@ -107,14 +107,12 @@ atoods:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
   env:
-    DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
-    AWS_ACCESS_KEY_ID: oods-latiss
-    AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
+    LSST_RESOURCES_S3_PROFILE_oods-latiss: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_SECRET_ACCESS_KEY
-    key: oods-latiss-secret-key
+  s3Credentials:
+  - oods-latiss-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -123,6 +121,7 @@ atoods:
     containerPath: *bs-cp
     filenames:
     - *bs-fn
+    - aws-credentials.ini
   resources:
     limits:
       cpu: 400m
@@ -155,7 +154,7 @@ atoods:
                   class:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
-                  repoDirectory : s3://rubinobs-butler-latiss
+                  repoDirectory : s3://oods-latiss@rubinobs-butler-latiss
                   collections:
                       - LATISS/raw/all
                   cleanCollections:
