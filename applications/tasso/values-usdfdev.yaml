@@ -4,7 +4,7 @@ image:
 
   # -- Tag of image to use
   # @default -- The appVersion of the chart
-  tag: tickets-DM-45694
+  tag: main
 
 config:
   logLevel: "DEBUG"
