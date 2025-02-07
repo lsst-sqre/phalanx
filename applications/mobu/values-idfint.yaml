@@ -5,7 +5,7 @@ resources:
   limits:
     cpu: "2"
     # memory: "3.5Gi"
-    memory: "5Gi"
+    memory: "80Gi"
   requests:
     cpu: "50m"
     memory: "1Gi"
