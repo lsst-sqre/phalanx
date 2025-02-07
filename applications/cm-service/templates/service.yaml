@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "cm-service"
+  name: {{ .Chart.Name }}
   labels:
-    {{- include "cm-service.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   type: "ClusterIP"
   ports:
@@ -12,5 +12,5 @@ spec:
       protocol: "TCP"
       name: "http"
   selector:
-    {{- include "cm-service.selectorLabels" . | nindent 4 }}
+    {{- include "application.selectorLabels" . | nindent 4 }}
     app.kubernetes.io/component: "frontend"

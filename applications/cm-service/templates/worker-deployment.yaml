@@ -1,14 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "cm-service-worker"
+  name: {{ .Chart.Name }}-worker
   labels:
-    {{- include "cm-service.labels" . | nindent 4 }}
+    {{- include "application.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.worker.replicaCount }}
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
-      {{- include "cm-service.selectorLabels" . | nindent 6 }}
+      {{- include "application.selectorLabels" . | nindent 6 }}
       app.kubernetes.io/component: "worker"
   template:
     metadata:
@@ -17,18 +18,50 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-        {{- include "cm-service.selectorLabels" . | nindent 8 }}
+        {{- include "application.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: "worker"
     spec:
+      securityContext:
+        runAsUser: 17951
+        runAsGroup: 1126
+        fsGroup: 1126
+        runAsNonRoot: true
       {{- with .Values.worker.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       automountServiceAccountToken: false
       containers:
-        - name: "cm-service-worker"
+        - name: "{{ .Chart.Name }}-worker"
           image: "{{ .Values.worker.image.repository }}:{{ .Values.worker.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          imagePullPolicy: {{ .Values.worker.image.pullPolicy }}
+          ports:
+            - name: "http"
+              containerPort: 8080
+              protocol: "TCP"
+          readinessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+          livenessProbe:
+            httpGet:
+              path: "/healthz"
+              port: "http"
+          envFrom:
+            - configMapRef:
+                name: {{ .Chart.Name }}-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-butler-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-htcondor-env
+          env:
+            - name: BUTLER__AUTHENTICATION_FILE
+              value: "/var/run/secrets/db-auth.yaml"
+            - name: DB__PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cm-service
+                  key: internalDatabasePassword
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
           securityContext:
@@ -36,60 +69,48 @@ spec:
             capabilities:
               drop:
                 - "all"
-            readOnlyRootFilesystem: true
+            # readOnlyRootFilesystem: true
           volumeMounts:
-            - mountPath: "/output"
-              name: "output-volume"
-              {{- with .Values.config.outputVolume.subPath }}
-              subPath: {{ . }}
-              {{- end }}
+            {{- with .Values.config.outputVolume }}
+            - mountPath: {{ .mountPath }}
+              name: output-volume
+              subPath: {{ .subPath }}
+            {{- end }}
+            {{- with .Values.config.butler }}
+            - mountPath: {{ .mountPath }}
+              name: butler-repo-volume
+              subPath: {{ .subPath }}
+            {{- end }}
             - mountPath: "/tmp"
               name: "tmp-volume"
-            {{- with .Values.worker.htcondor.config }}
-            - mountPath: {{ .mountPath }}
-              name: "condor-config-volume"
-              readOnly: true
-            {{- end }}
             {{- with .Values.worker.htcondor.fsRemoteDir }}
             - mountPath: {{ .mountPath }}
-              name: "condor-remote-volume"
-              {{- with .subPath }}
-              subPath: {{ . }}
-              {{- end }}
+              name: condor-remote-volume
+              subPath: {{ .subPath }}
             {{- end }}
-            {{- with .Values.worker.htcondor.scheddAddress }}
-            - mountPath: {{ .mountPath }}
-              name: "condor-schedd-volume"
-              readOnly: true
-            {{- end }}
+            - name: butler-registry-volume
+              mountPath: "/var/run/secrets"
+              readonly: true
       volumes:
         - name: output-volume
           persistentVolumeClaim:
-            claimName: cm-service-output
+            claimName: {{ .Chart.Name }}-output
+        - name: butler-repo-volume
+          persistentVolumeClaim:
+            claimName: {{ .Chart.Name }}-butler
         - name: tmp-volume
           emptyDir:
             sizeLimit: 500Mi
-        {{- with .Values.worker.htcondor.config }}
-        - name: condor-config-volume
-          configMap:
-            name: cm-service-config-worker
-            items:
-              - key: config
-                path: condor-config
-        {{- end }}
-        {{- with .Values.worker.htcondor.fsRemoteDir }}
         - name: condor-remote-volume
           persistentVolumeClaim:
-            claimName: cm-service-htcondor
-        {{- end }}
-        {{- with .Values.worker.htcondor.scheddAddress }}
-        - name: condor-schedd-volume
-          configMap:
-            name: cm-service-config-worker
+            claimName: {{ $.Chart.Name }}-htcondor
+        - name: butler-registry-volume
+          secret:
+            secretName: cm-service-butler
             items:
-              - key: scheddAddress
-                path: schedd-address
-        {{- end }}
+              - key: butler-registry
+                path: db-auth.yaml
+                mode: 0600
       {{- with .Values.worker.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
