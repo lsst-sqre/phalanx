@@ -215,8 +215,8 @@ chronograf:
     className: "nginx"
 
     # -- Path for the ingress
-    # @default -- `"/chronograf(/\|$)"`
-    path: "/chronograf(/|$)"
+    # @default -- `"/chronograf"`
+    path: "/chronograf"
 
   # -- Additional environment variables for Chronograf
   # @default -- See `values.yaml`

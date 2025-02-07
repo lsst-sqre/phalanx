@@ -29,7 +29,7 @@ Rubin Observatory's telemetry service
 | chronograf.ingress.className | string | `"nginx"` | Ingress class to use |
 | chronograf.ingress.enabled | bool | `false` | Whether to enable the Chronograf ingress |
 | chronograf.ingress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
-| chronograf.ingress.path | string | `"/chronograf(/\|$)"` | Path for the ingress |
+| chronograf.ingress.path | string | `"/chronograf"` | Path for the ingress |
 | chronograf.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
 | chronograf.persistence.enabled | bool | `true` | Whether to enable persistence for Chronograf data |
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
