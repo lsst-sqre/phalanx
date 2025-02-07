@@ -1,6 +1,14 @@
 image:
   tag: tickets-DM-48587-scale-test-in-progress
   pullPolicy: Always
+resources:
+  limits:
+    cpu: "2"
+    # memory: "3.5Gi"
+    memory: "5Gi"
+  requests:
+    cpu: "50m"
+    memory: "1Gi"
 terminationGracePeriodSeconds: 3600
 config:
   metrics:
@@ -24,20 +32,6 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "scale-test-emptyloop"
-      count: 3000
-      user_spec:
-        username_prefix: "bot-mobu-scale"
-      scopes:
-        - "exec:notebook"
-        - "exec:portal"
-        - "read:image"
-        - "read:tap"
-      business:
-        type: "EmptyLoop"
-        options:
-          idle_time: 5
-        restart: true
     # - name: "tap-scale"
     #   count: 100
     #   user_spec:
