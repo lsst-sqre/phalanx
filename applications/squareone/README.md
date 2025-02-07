@@ -18,10 +18,12 @@ Squareone is the homepage UI for the Rubin Science Platform.
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | config.apiAspectPageMdx | string | See `values.yaml` | MDX content for the `/api-aspect` page |
+| config.appLinks | list | `[{"href":"/argo-cd/","internal":false,"label":"Argo CD"}]` | App menu items |
 | config.coManageRegistryUrl | string | `nil` | URL to the COmanage registry, if the environment uses COmanage for identity. @default null disables the COmanage integration |
 | config.docsBaseUrl | string | `"https://rsp.lsst.io"` | Base URL for user documentation (excludes trailing slash) |
 | config.docsPageMdx | string | See `values.yaml` | MDX content for the `/docs` page |
 | config.emailVerifiedPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/thanks-for-verifying` page |
+| config.enableAppsMenu | bool | `false` | Enable the App menu |
 | config.enableSentry | bool | See `values.yaml` | Enable Sentry |
 | config.pendingApprovalPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-approval` page |
 | config.pendingVerificationPageMdx | string | See `values.yaml` | MDX content for the `/enrollment/pending-confirmation` |
