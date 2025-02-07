@@ -28,10 +28,10 @@ uws-api-server:
     subPath: ""
     readOnly: false
   - name: home
-    server: nfs-jhome.ls.lsst.org
+    server: nfs-rsphome.ls.lsst.org
     claimName: home-pvc
-    mountPath: "/jhome"
-    exportPath: "/jhome"
+    mountPath: "/rsphome"
+    exportPath: "/rsphome"
     subPath: ""
     readOnly: false
   resources:
