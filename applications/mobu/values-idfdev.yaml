@@ -1,13 +1,22 @@
 image:
-  tag: tickets-DM-48101-sentry-take3
+  tag: tickets-DM-48587-scale-test-in-progress
   pullPolicy: Always
+terminationGracePeriodSeconds: 3600
+resources:
+  limits:
+    cpu: "2"
+    memory: "3.5Gi"
+  requests:
+    cpu: "50m"
+    memory: "1Gi"
 config:
   logLevel: DEBUG
   logMonkeysToFile: false
   profile: development
   metrics:
     enabled: true
-  sentryTracesSampleConfig: errors
+  sentryTracesSampleConfig: 0
+  logMonkeysToFile: False
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
@@ -26,29 +35,17 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "dfuchs-test"
-      count: 1
-      users:
-        - username: "bot-mobu-dfuchs-test"
-      scopes:
-        - "exec:notebook"
-      business:
-        type: "NotebookRunnerCounting"
-        options:
-          repo_url: "https://github.com/lsst-sqre/dfuchs-test-mobu.git"
-          repo_ref: "main"
-        restart: true
-    - name: "recommended"
-      count: 1
-      users:
-        - username: "bot-mobu-recommended"
+    - name: "scale-test-emptyloop"
+      count: 5
+      user_spec:
+        username_prefix: "bot-mobu-scale"
       scopes:
         - "exec:notebook"
         - "exec:portal"
         - "read:image"
         - "read:tap"
       business:
-        type: "NotebookRunnerCounting"
+        type: "EmptyLoop"
         options:
           repo_url: "https://github.com/lsst-sqre/system-test.git"
           repo_ref: "prod"
@@ -106,3 +103,30 @@ config:
         options:
           query_set: "dp02"
         restart: true
+    # - name: "tap-scale"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-tap"
+    #   scopes: ["read:tap"]
+    #   business:
+    #     type: "TAPQuerySetRunner"
+    #     options:
+    #       query_set: "dp0.2"
+    #     restart: true
+    # - name: "scale-test-empty-notebook"
+    #   count: 1000
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-notebook"
+    #   scopes:
+    #     - "exec:notebook"
+    #     - "exec:portal"
+    #     - "read:image"
+    #     - "read:tap"
+    #   business:
+    #     type: "NotebookRunner"
+    #     options:
+    #       repo_url: "https://github.com/lsst-sqre/scaletest.git"
+    #       repo_ref: "main"
+    #       idle_time: 0
+    #       delete_lab: false
+    #     restart: true
