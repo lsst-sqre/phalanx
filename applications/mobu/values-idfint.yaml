@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-48587-scale-test-in-progress
+  pullPolicy: Always
 terminationGracePeriodSeconds: 3600
 config:
   metrics:
