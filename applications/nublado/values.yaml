@@ -36,10 +36,10 @@ controller:
   resources:
     limits:
       cpu: "1"
-      memory: "200Mi"
+      memory: "400Mi"
     requests:
       cpu: "0.05"
-      memory: "120Mi"
+      memory: "200Mi"
 
   # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
   # set in the corresponding Nublado Vault secret.
