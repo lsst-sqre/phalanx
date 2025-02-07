@@ -49,8 +49,10 @@ Script name
 Deployment name
 */}}
 {{- define "rapid-analysis.deploymentName" -}}
-{{- $name := regexSplit "/" .Values.script.name -1 | last | trimSuffix ".py" | kebabcase }}
-{{- $cameraName := regexSplit "/" .Values.script.name -1 | rest | first | lower }}
+{{- $values := regexSplit "/" .Values.script.name -1 }}
+{{- $name := $values | last | trimSuffix ".py" | kebabcase }}
+{{- if eq 2 (len $values) }}
+{{- $cameraName := $values | first | lower }}
 {{- $camera := "" }}
 {{- if eq $cameraName "auxtel" }}
 {{- $camera = "at"}}
@@ -60,6 +62,18 @@ Deployment name
 {{- $camera = $cameraName}}
 {{- end }}
 {{- printf "s-%s-%s" $camera $name }}
+{{- else if eq 3 (len $values) }}
+{{- $cameraName := $values | rest | first | lower }}
+{{- $camera := "" }}
+{{- if eq $cameraName "auxtel" }}
+{{- $camera = "at"}}
+{{- else if eq $cameraName "comcam" }}
+{{- $camera = "cc"}}
+{{- else }}
+{{- $camera = $cameraName}}
+{{- end }}
+{{- printf "s-%s-%s" $camera $name }}
+{{- end }}
 {{- end }}
 
 
@@ -72,7 +86,21 @@ app.kubernetes.io/instance: {{ include "rapid-analysis.name" . }}
 {{- $values := regexSplit "/" .Values.script.name -1 }}
 {{- if eq 1 (len $values) }}
 all: misc
+{{- else if eq 2 (len $values) }}
+{{- $all_label := lower (index $values 0) }}
+{{- $script := index $values 1 }}
+{{- if contains "Isr" $script }}
+isr: {{ $all_label }}
+{{- end }}
+all: {{ $all_label }}
+{{- if has $all_label (list "auxtel" "comcam" "bot" "ts8") }}
+camera: {{ $all_label }}
 {{- else }}
+{{- if contains "StarTracker" $script }}
+camera: startracker
+{{- end }}
+{{- end }}
+{{- else if eq 3 (len $values) }}
 {{- $all_label := lower (index $values 1) }}
 {{- $script := index $values 2 }}
 {{- if contains "Isr" $script }}
