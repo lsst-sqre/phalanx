@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
         - name: "alert-database-ingester"
-          image: "{{ .Values.ingester.image.repository }}:{{ .Values.ingester.image.tag }}"
+          image: "lsstdm/alert_database_ingester:tickets-DM-44907"
+          imagePullPolicy: "{{ .Values.ingester.image.imagePullPolicy}}"
           volumeMounts:
             - name: "kafka-client-secret"
               mountPath: "/etc/kafka-client-secret"
@@ -25,7 +26,7 @@ spec:
             - name: "kafka-server-ca-cert"
               mountPath: "/etc/kafka-server-ca-cert"
               readOnly: True
-            {{- if .Values.ingester.gcp.outsideGCP }}
+            {{- if .Values.ingester.s3.usdf }}
             - mountPath: /var/secrets/google
               name: alert-stream-broker-secrets
             {{- end }}
@@ -39,9 +40,9 @@ spec:
             - "--tls-server-ca-crt-location=/etc/kafka-server-ca-cert/ca.crt"
             - "--kafka-auth-mechanism=mtls"
             - "--schema-registry-address={{ required "A schema registry URL is required " .Values.ingester.schemaRegistryURL }}"
-            - "--gcp-project={{ required "A GCP project is required " .Values.storage.gcp.project }}"
-            - "--gcp-bucket-alerts={{ required "A GCP bucket name is required " .Values.storage.gcp.alertBucket }}"
-            - "--gcp-bucket-schemas={{ required "A GCP bucket name is required " .Values.storage.gcp.schemaBucket }}"
+            - "--endpoint-url={{ required "An s3 endpoint url is required " .Values.storage.s3.endpointURL }}"
+            - "--bucket-alerts={{ required "An alert bucket name is required " .Values.storage.s3.alertBucket }}"
+            - "--bucket-schemas={{ required "A schema bucket name is required " .Values.storage.s3.schemaBucket }}"
             {{- if eq .Values.ingester.logLevel "debug" }}
             - "--debug"
             {{- end }}
@@ -49,9 +50,19 @@ spec:
             - "--verbose"
             {{- end }}
           env:
-          {{- if .Values.ingester.gcp.outsideGCP }}
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /var/secrets/google/google_service_account_file
+          {{- if .Values.ingester.s3.usdf }}
+            - name: "AWS_ENDPOINT_URL"
+              value: {{ .Values.storage.s3.endpointURL }}
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: alert-stream-broker-secrets
+                  key: "AWS_ACCESS_KEY_ID"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: alert-stream-broker-secrets
+                  key: "AWS_SECRET_ACCESS_KEY"
           {{- end }}
 
 
@@ -62,7 +73,7 @@ spec:
         - name: "kafka-server-ca-cert"
           secret:
             secretName: "{{ .Values.ingester.kafka.cluster}}-cluster-ca-cert"
-        {{- if .Values.ingester.gcp.outsideGCP }}
+        {{- if .Values.ingester.s3.usdf }}
         - name: alert-stream-broker-secrets
           secret:
             defaultMode: 420

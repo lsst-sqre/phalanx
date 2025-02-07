@@ -33,10 +33,10 @@ spec:
             - "alertdb"
             - "--listen-host=0.0.0.0"
             - "--listen-port=3000"
-            - "--backend=google-cloud"
-            - "--gcp-project={{ required "A GCP project is required " .Values.storage.gcp.project }}"
-            - "--gcp-bucket-alerts={{ required "A GCP bucket name is required " .Values.storage.gcp.alertBucket }}"
-            - "--gcp-bucket-schemas={{ required "A GCP bucket name is required " .Values.storage.gcp.schemaBucket }}"
+            - "--backend=s3-remote"
+            - "--endpoint-url={{ required "An endpoint URL is required " .Values.storage.s3.endpointURL }}"
+            - "--bucket-alerts={{ required "An alert bucket name is required " .Values.storage.s3.alertBucket }}"
+            - "--bucket-schemas={{ required "A schema bucket name is required " .Values.storage.s3.schemaBucket }}"
             {{- if eq .Values.ingester.logLevel "debug" }}
             - "--debug"
             {{- end }}
@@ -45,13 +45,23 @@ spec:
             {{- end }}
 
           env:
-          {{- if .Values.ingester.gcp.outsideGCP }}
-          - name: GOOGLE_APPLICATION_CREDENTIALS
-            value: /var/secrets/google/google_service_account_file
+          {{- if .Values.ingester.s3.usdf }}
+            - name: "AWS_ENDPOINT_URL"
+              value: {{ .Values.storage.s3.endpointURL}}
+            - name: "AWS_ACCESS_KEY_ID"
+              valueFrom:
+                secretKeyRef:
+                  name: alert-stream-broker-secrets
+                  key: "AWS_ACCESS_KEY_ID"
+            - name: "AWS_SECRET_ACCESS_KEY"
+              valueFrom:
+                secretKeyRef:
+                  name: alert-stream-broker-secrets
+                  key: "AWS_SECRET_ACCESS_KEY"
           {{- end }}
 
           volumeMounts:
-          {{- if .Values.ingester.gcp.outsideGCP }}
+          {{- if .Values.ingester.s3.usdf }}
           - mountPath: /var/secrets/google
             name: alert-stream-broker-secrets
           {{- end }}
@@ -59,7 +69,7 @@ spec:
       serviceAccountName: "{{ .Values.server.serviceAccountName }}"
 
       volumes:
-      {{- if .Values.ingester.gcp.outsideGCP }}
+      {{- if .Values.ingester.s3.usdf }}
       - name: alert-stream-broker-secrets
         secret:
           defaultMode: 420

@@ -10,8 +10,8 @@ fullnameOverride: ""
 ingester:
   image:
     repository: lsstdm/alert_database_ingester
-    tag: v2.0.2
-    imagePullPolicy: IfNotPresent
+    tag: tickets-DM-44907
+    imagePullPolicy: Always
 
   kafka:
     # -- Name of a Strimzi Kafka cluster to connect to.
@@ -33,13 +33,14 @@ ingester:
   # -- URL of a schema registry instance
   schemaRegistryURL: ""
 
-  gcp:
+  s3:
     # -- Name of a service account which has credentials granting access to the
     # alert database's backing storage buckets.
     serviceAccountName: ""
-    # -- Project ID which has the above GCP IAM service account
-    projectID: ""
-    outsideGCP: true
+    schemaBucket: "alert-archive"
+    alertBucket: "alert-archive"
+    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    usdf: true
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
   # service account!) which is used by the alert database ingester.
@@ -52,15 +53,17 @@ ingester:
 server:
   image:
     repository: lsstdm/alert_database_server
-    tag: v2.1.0
-    imagePullPolicy: IfNotPresent
+    tag: tickets-DM-44907
+    imagePullPolicy: Always
 
-  gcp:
+  s3:
     # -- Name of a service account which has credentials granting access to the
     # alert database's backing storage buckets.
     serviceAccountName: ""
     # -- Project ID which has the above GCP IAM service account
-    projectID: ""
+    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
+    schemaBucket: "alert-archive"
+    alertBucket: "alert-archive"
 
   # -- The name of the Kubernetes ServiceAccount (*not* the Google Cloud IAM
   # service account!) which is used by the alert database server.
@@ -76,13 +79,12 @@ server:
 
 
 storage:
-  gcp:
-    # -- Name of a GCP project that has a bucket for database storage
-    project: ""
-    # -- Name of a Google Cloud Storage bucket in GCP with alert data
-    alertBucket: ""
-    # -- Name of a Google Cloud Storage bucket in GCP with schema data
-    schemaBucket: ""
+  s3:
+    # -- Name of a s3 storage bucket with alert data
+    alertBucket: "alert-archive"
+    # -- Name of a s3 storage bucket with schema data
+    schemaBucket: "alert-archive"
+    endpointURL: "https://sdfembs3.sdf.slac.stanford.edu/"
 
 ingress:
   # -- Whether to create an ingress
