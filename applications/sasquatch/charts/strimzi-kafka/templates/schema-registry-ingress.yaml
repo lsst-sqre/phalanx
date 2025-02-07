@@ -16,7 +16,7 @@ spec:
       http:
         paths:
           - path: {{ .Values.registry.ingress.path }}
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: sasquatch-schema-registry
