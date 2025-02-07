@@ -13,7 +13,7 @@ terminationGracePeriodSeconds: 3600
 config:
   metrics:
     enabled: true
-  sentryTracesSampleConfig: errors
+  sentryTracesSampleConfig: 0
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
