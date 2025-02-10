@@ -303,13 +303,13 @@ cryptography==44.0.0 \
     #   phalanx (pyproject.toml)
     #   pyjwt
     #   safir
-dacite==1.9.1 \
-    --hash=sha256:50e97b408f9fdc5619f341c5415c4ad1cf771a3dbd85626cda44db78ee45df8c \
-    --hash=sha256:55a5ac04207d34a92d7951d2d1ccaa642bf340b29db6399848a1e41ff6e0f48f
+dacite==1.9.2 \
+    --hash=sha256:053f7c3f5128ca2e9aceb66892b1a3c8936d02c686e707bee96e19deef4bc4a0 \
+    --hash=sha256:6ccc3b299727c7aa17582f0021f6ae14d5de47c7227932c47fec4cdfefd26f09
     # via dataclasses-avroschema
-dataclasses-avroschema==0.65.7 \
-    --hash=sha256:62b874f020b57294f65e7aced4a634757502e1b410bdb1d6f8e0515eb3fc5c3e \
-    --hash=sha256:e59a8a962e1956533a9083468a08dd3958553738e3f87f6bc516fe525901302f
+dataclasses-avroschema==0.65.8 \
+    --hash=sha256:3d1202756692fabf2f59862eaeab95367b4c444dfaff64ae21091362b5c2d60c \
+    --hash=sha256:6b5393c68a29eabe0a6bc652eae8e3a21de65f3231637da1f8a52553ef77fb20
     # via safir
 fast-depends==2.4.12 \
     --hash=sha256:9393e6de827f7afa0141e54fa9553b737396aaf06bd0040e159d1f790487b16d \
