@@ -135,6 +135,9 @@ strimzi-kafka:
         effect: "NoSchedule"
 
 influxdb:
+  ingress:
+    enabled: false
+    hostname: base-lsp.lsst.codes
   persistence:
     storageClass: rook-ceph-block
   resources:

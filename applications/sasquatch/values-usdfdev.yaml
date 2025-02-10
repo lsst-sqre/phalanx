@@ -31,11 +31,15 @@ strimzi-kafka:
 
 influxdb:
   ingress:
-    enabled: true
+    enabled: false
     hostname: usdf-rsp-dev.slac.stanford.edu
   persistence:
     enabled: true
     size: 15Ti
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: usdf-rsp-dev.slac.stanford.edu
 
 kafka-connect-manager:
   influxdbSink:
