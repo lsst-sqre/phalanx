@@ -137,9 +137,6 @@ strimzi-kafka:
 influxdb:
   persistence:
     storageClass: rook-ceph-block
-  ingress:
-    enabled: true
-    hostname: base-lsp.lsst.codes
   resources:
     requests:
       memory: 16Gi
@@ -147,6 +144,10 @@ influxdb:
     limits:
       memory: 16Gi
       cpu: 8
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: base-lsp.lsst.codes
 
 telegraf-kafka-consumer:
   enabled: true
