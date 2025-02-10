@@ -35,6 +35,10 @@ Rubin Observatory's telemetry service
 | chronograf.persistence.size | string | `"100Gi"` | Size of data store to request, if enabled |
 | chronograf.resources | object | See `values.yaml` | Kubernetes resource requests and limits for Chronograf |
 | chronograf.updateStrategy.type | string | `"Recreate"` | Deployment strategy, use recreate with persistence enabled |
+| customInfluxDBIngress.annotations | object | See `values.yaml` | Annotations to add to the ingress |
+| customInfluxDBIngress.enabled | bool | `false` | Whether to enable the custom ingress for InfluxDB OSS |
+| customInfluxDBIngress.hostname | string | None, must be set if the ingress is enabled | Hostname of the ingress |
+| customInfluxDBIngress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | influxdb-enterprise.enabled | bool | `false` | Whether to use influxdb-enterprise |
 | influxdb.config.continuous_queries.enabled | bool | `false` | Whether continuous queries are enabled |
 | influxdb.config.coordinator.log-queries-after | string | `"15s"` | Maximum duration a query can run before InfluxDB logs it as a slow query |
