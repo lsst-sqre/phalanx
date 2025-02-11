@@ -6,13 +6,13 @@ redis:
     # -- Whether to persist Redis storage and thus tokens. Setting this to
     # false will use `emptyDir` and reset all tokens on every restart. Only
     # use this for a test deployment.
-    enabled: false
+    enabled: true
 
     # -- Amount of persistent storage to request
     size: "1Gi"
 
     # -- Class of storage to request
-    storageClass: ""
+    storageClass: "standard"
 
     # -- Access mode of storage to request
     accessMode: "ReadWriteOnce"
