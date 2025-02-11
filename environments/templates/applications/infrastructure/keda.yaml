@@ -1,0 +1,37 @@
+{{- if (index .Values "applications" "keda") -}}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: "keda"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: "keda"
+  namespace: "argocd"
+  finalizers:
+    - "resources-finalizer.argocd.argoproj.io"
+spec:
+  destination:
+    namespace: "keda"
+    server: "https://kubernetes.default.svc"
+  project: "infrastructure"
+  source:
+    path: "applications/keda"
+    repoURL: {{ .Values.repoUrl | quote }}
+    targetRevision: {{ .Values.targetRevision | quote }}
+    helm:
+      parameters:
+        - name: "global.host"
+          value: {{ .Values.fqdn | quote }}
+        - name: "global.baseUrl"
+          value: "https://{{ .Values.fqdn }}"
+        - name: "global.vaultSecretsPath"
+          value: {{ .Values.vaultPathPrefix | quote }}
+      valueFiles:
+        - "values.yaml"
+        - "values-{{ .Values.name }}.yaml"
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+{{- end -}}

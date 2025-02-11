@@ -27,6 +27,7 @@
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
+| applications.keda | bool | `false` | Enable the keda application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |

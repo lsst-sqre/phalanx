@@ -1,0 +1,11 @@
+resources:
+  operator:
+    limits:
+      cpu: 1
+    requests:
+      cpu: 1
+  metricServer:
+    limits:
+      cpu: 1
+    requests:
+      cpu: 1
