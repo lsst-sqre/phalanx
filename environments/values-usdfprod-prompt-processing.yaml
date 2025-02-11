@@ -9,7 +9,6 @@ applications:
   ingress-nginx: false
   next-visit-fan-out: true
   prompt-redis: true
-  prompt-keda-latiss: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
