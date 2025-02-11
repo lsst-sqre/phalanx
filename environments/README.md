@@ -47,6 +47,7 @@
 | applications.production-tools | bool | `false` | Enable the production-tools application |
 | applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
 | applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
+| applications.prompt-keda-lsstcomcamsim | bool | `false` | Enable the prompt-keda-lsstcomcamsim application |
 | applications.prompt-proto-service-hsc | bool | `false` | Enable the prompt-proto-service-hsc application |
 | applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
 | applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
