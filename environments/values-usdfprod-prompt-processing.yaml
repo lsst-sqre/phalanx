@@ -8,6 +8,8 @@ applications:
   gafaelfawr: false
   ingress-nginx: false
   next-visit-fan-out: true
+  next-visit-fan-out-keda: true
+  prompt-keda-latiss: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
