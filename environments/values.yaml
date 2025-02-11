@@ -156,6 +156,9 @@ applications:
   # -- Enable the ppdb-replication application
   ppdb-replication: false
 
+  # -- Enable the prompt-keda-hsc application
+  prompt-keda-hsc: false
+
   # -- Enable the rubintv application
   rubintv: false
 
