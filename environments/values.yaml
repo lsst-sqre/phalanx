@@ -162,11 +162,14 @@ applications:
   # -- Enable the prompt-keda-hsc application
   prompt-keda-hsc: false
 
-   # -- Enable the prompt-keda-latiss application
+  # -- Enable the prompt-keda-latiss application
   prompt-keda-latiss: false
 
-    # -- Enable the prompt-keda-lsstcomcamsim application
+  # -- Enable the prompt-keda-lsstcomcamsim application
   prompt-keda-lsstcomcamsim: false
+
+  # -- Enable the prompt-redis application
+  prompt-redis: false
 
   # -- Enable the rubintv application
   rubintv: false
