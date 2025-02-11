@@ -45,7 +45,7 @@ strimzi-kafka:
 
 influxdb:
   ingress:
-    enabled: true
+    enabled: false
     hostname: data.lsst.cloud
   resources:
     requests:
@@ -54,6 +54,10 @@ influxdb:
     limits:
       memory: 8Gi
       cpu: 1
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: data.lsst.cloud
 
 telegraf-kafka-consumer:
   enabled: true

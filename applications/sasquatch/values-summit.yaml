@@ -121,7 +121,7 @@ influxdb:
     storageClass: rook-ceph-block
     size: 5Ti
   ingress:
-    enabled: true
+    enabled: false
     hostname: summit-lsp.lsst.codes
   resources:
     requests:
@@ -130,6 +130,10 @@ influxdb:
     limits:
       memory: 128Gi
       cpu: 16
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: summit-lsp.lsst.codes
 
 influxdb-enterprise:
   enabled: true
