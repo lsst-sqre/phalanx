@@ -10,7 +10,6 @@ prompt-keda:
 
   instrument:
     # -- The "short" name of the instrument
-    # @default -- None, must be set
     name: HSC
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
@@ -69,21 +68,21 @@ prompt-keda:
     # -- Kafka consumer offset reset setting for image arrival notifications
     consumerOffsetReset: "latest"
     # -- Timeout to wait after expected script completion for raw image arrival (seconds).
-    imageTimeout: 20
+    imageTimeout: '20'
 
   apdb:
-    # -- URL to a serialized APDB configuration, or the "label:" prefix followed
-    # by the indexed name of such a config.
+    # -- URL to a serialized APDB configuration, or the "label:" prefix
+    # followed by the indexed name of such a config.
     # @default -- None, must be set
     config: ""
 
   alerts:
     # -- Username for sending alerts to the alert stream
-    username: "kafka-admin"
+    username: ""
     # -- Server address for the alert stream
-    server: "usdf-alert-stream-dev.lsst.cloud:9094"
+    server: ""
     # -- Topic name where alerts will be sent
-    # @default -- alert-stream-test
+    # @default -- None, must be set
     topic: ""
 
   registry:
@@ -126,6 +125,8 @@ prompt-keda:
       streamName: instrument:hsc
       # Redis Consumer Group name
       consumerGroup: hsc_consumer_group
+      # Time to wait for fanned out messages before spawning new pod.
+      msgListenTimeout: 900
       # Lag count at which scaler triggers
       activationLagCount: "1"
       #  Number of lagging entries in the consumer group, alternative to pendingEntriesCount scaler trigger
@@ -169,7 +170,7 @@ prompt-keda:
   # -- Affinity rules for the Prompt Processing Pod
   affinity: {}
 
-  # -- Node selection rules for the Prompt Porcessing pod
+  # -- Node selection rules for the Prompt Processing pod
   nodeSelector: {}
 
   # -- Tolerations for the Prompt Processing pod

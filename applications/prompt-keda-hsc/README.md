@@ -14,9 +14,9 @@ KEDA Prompt Processing instance for HSC
 |-----|------|---------|-------------|
 | prompt-keda.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
 | prompt-keda.affinity | object | `{}` | Affinity rules for the Prompt Processing Pod |
-| prompt-keda.alerts.server | string | `"usdf-alert-stream-dev.lsst.cloud:9094"` | Server address for the alert stream |
-| prompt-keda.alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
-| prompt-keda.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
+| prompt-keda.alerts.server | string | `""` | Server address for the alert stream |
+| prompt-keda.alerts.topic | string | None, must be set | Topic name where alerts will be sent |
+| prompt-keda.alerts.username | string | `""` | Username for sending alerts to the alert stream |
 | prompt-keda.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-keda.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | prompt-keda.cache.patchesPerImage | int | `6` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
@@ -27,11 +27,11 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
 | prompt-keda.image.tag | string | `"latest"` | Overrides the image tag whose default is the chart appVersion. |
 | prompt-keda.imageNotifications.consumerOffsetReset | string | `"latest"` | Kafka consumer offset reset setting for image arrival notifications |
-| prompt-keda.imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
+| prompt-keda.imageNotifications.imageTimeout | string | `"20"` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-keda.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-keda.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-keda.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
-| prompt-keda.instrument.name | string | None, must be set | The "short" name of the instrument |
+| prompt-keda.instrument.name | string | `"HSC"` | The "short" name of the instrument |
 | prompt-keda.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
 | prompt-keda.instrument.pipelines.preprocessing | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run before which visits' raw arrival. |
 | prompt-keda.instrument.preloadPadding | int | `42` | Number of arcseconds to pad the spatial region in preloading. |
@@ -44,13 +44,14 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.keda.redisStreams.consumerGroup | string | `"hsc_consumer_group"` |  |
 | prompt-keda.keda.redisStreams.host | string | `"prompt-redis.prompt-redis"` |  |
 | prompt-keda.keda.redisStreams.lagCount | string | `"1"` |  |
+| prompt-keda.keda.redisStreams.msgListenTimeout | int | `900` |  |
 | prompt-keda.keda.redisStreams.pendingEntriesCount | string | `"1"` |  |
 | prompt-keda.keda.redisStreams.streamName | string | `"instrument:hsc"` |  |
 | prompt-keda.keda.scalingStrategy | string | `"eager"` |  |
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
-| prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Porcessing pod |
+| prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Processing pod |
 | prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
 | prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
