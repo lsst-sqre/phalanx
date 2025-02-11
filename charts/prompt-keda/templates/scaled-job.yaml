@@ -118,7 +118,7 @@ spec:
               - name: AP_KAFKA_PRODUCER_USERNAME
                 value: {{ .Values.alerts.username}}
               - name: AP_KAFKA_SERVER
-                value: {{ .Values.alerts.server}}s
+                value: {{ .Values.alerts.server}}
               - name: AP_KAFKA_TOPIC
                 value: {{ .Values.alerts.topic}}
               - name: LOCAL_REPOS
@@ -134,7 +134,7 @@ spec:
               - name: DEBUG_EXPORT_OUTPUTS
                 value: {{ if .Values.debug.exportOutputs }}'1'{{ else }}'0'{{ end }}
               - name: REDIS_STREAM_HOST
-                value: {{ .Values.keda.redisStreams.address}}
+                value: {{ .Values.keda.redisStreams.host}}
               - name: REDIS_STREAM_NAME
                 value: {{ .Values.keda.redisStreams.streamName}}
               - name: REDIS_STREAM_CONSUMER_GROUP
@@ -220,6 +220,6 @@ spec:
         port: "6379"
         stream: {{ .Values.keda.redisStreams.streamName}}
         consumerGroup: {{ .Values.keda.redisStreams.consumerGroup}}
-        activationLagCount: {{ .Values.keda.redisStreams.activationLagCount}}
-        lagCount: {{ .Values.keda.redisStreams.lagCount}}
-        pendingEntriesCount: {{ .Values.keda.redisStreams.pendingEntriesCount}}
+        activationLagCount: {{ .Values.keda.redisStreams.activationLagCount | toString | quote}}
+        lagCount: {{ .Values.keda.redisStreams.lagCount| toString | quote}}
+        pendingEntriesCount: {{ .Values.keda.redisStreams.pendingEntriesCount | toString | quote}}
