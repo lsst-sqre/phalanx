@@ -21,3 +21,4 @@ Argo CD project: ``prompt``
    prompt-proto-service-lsstcamimsim/index
    prompt-proto-service-lsstcomcam/index
    prompt-proto-service-lsstcomcamsim/index
+   prompt-redis/index
