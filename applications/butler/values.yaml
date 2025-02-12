@@ -116,3 +116,8 @@ config:
   # be exposed.  For example, if the service should be exposed at
   # `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler`
   pathPrefix: "/api/butler"
+
+  # -- If true, borrow the S3 and Postgres secrets set up in Nublado for
+  # end-users.  Otherwise, use secrets specifically set up for the Butler
+  # server.
+  shareNubladoSecrets: true
