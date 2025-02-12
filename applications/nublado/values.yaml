@@ -457,7 +457,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.4.0"
+      tag: "8.4.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
