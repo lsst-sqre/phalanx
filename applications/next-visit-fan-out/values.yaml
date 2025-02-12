@@ -281,6 +281,11 @@ detectorConfig:
     188: True
   LSSTCam-imSim:
     <<: *LSSTCam
+  LSSTCam-imSim-TEST-496960:
+    95: True
+  LSSTCam-imSim-TEST-496989:
+    95: True
+    105: True
   HSC:
     0: True
     1: True
