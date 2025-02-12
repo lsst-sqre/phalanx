@@ -22,6 +22,7 @@ Server for Butler data abstraction service
 | config.pguser | string | Use values specified in per-repository Butler config files. | Postgres username used to connect to the Butler DB |
 | config.repositories | object | `{}` | Mapping from Butler repository label to Butler configuration URI for repositories which will be hosted by this server. |
 | config.s3EndpointUrl | string | `""` | URL for the primary S3 service where files for datasets are stored by Butler. |
+| config.shareNubladoSecrets | bool | `true` | If true, borrow the S3 and Postgres secrets set up in Nublado for end-users.  Otherwise, use secrets specifically set up for the Butler server. |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
