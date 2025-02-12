@@ -14,5 +14,6 @@ Argo CD project: ``prompt``
    prompt-proto-service-hsc-gpu/index
    prompt-proto-service-latiss/index
    prompt-proto-service-lsstcam/index
+   prompt-proto-service-lsstcamimsim/index
    prompt-proto-service-lsstcomcam/index
    prompt-proto-service-lsstcomcamsim/index
