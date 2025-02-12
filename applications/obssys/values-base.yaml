@@ -10,7 +10,6 @@ x-butler-lfa-combo: &butler-lfa-combo
     containerPath: *bs-cp
     filenames:
     - *bs-fn
-    - aws-credentials.ini
 
 atqueue:
   classifier: scriptqueue2
