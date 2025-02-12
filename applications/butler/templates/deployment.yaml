@@ -49,8 +49,6 @@ spec:
               value: "/opt/lsst/butler/secrets/aws-credentials.ini"
             - name: PGPASSFILE
               value: "/opt/lsst/butler/secrets/postgres-credentials.txt"
-            - name: GOOGLE_APPLICATION_CREDENTIALS
-              value: "/opt/lsst/butler/secrets/butler-gcs-creds.json"
             - name: S3_ENDPOINT_URL
               value: {{ .Values.config.s3EndpointUrl | quote }}
             {{- range $name, $url := .Values.config.additionalS3EndpointUrls }}
