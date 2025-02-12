@@ -49,6 +49,7 @@
 | applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
 | applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
 | applications.prompt-proto-service-lsstcam | bool | `false` | Enable the prompt-proto-service-lsstcam application |
+| applications.prompt-proto-service-lsstcamimsim | bool | `false` | Enable the prompt-proto-service-lsstcamimsim application |
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |

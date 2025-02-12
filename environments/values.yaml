@@ -201,6 +201,9 @@ applications:
   # -- Enable the prompt-proto-service-lsstcam application
   prompt-proto-service-lsstcam: false
 
+  # -- Enable the prompt-proto-service-lsstcamimsim application
+  prompt-proto-service-lsstcamimsim: false
+
   # -- Enable the prompt-proto-service-lsstcomcam application
   prompt-proto-service-lsstcomcam: false
 
