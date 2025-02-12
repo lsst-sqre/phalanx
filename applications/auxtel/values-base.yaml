@@ -121,7 +121,6 @@ atoods:
     containerPath: *bs-cp
     filenames:
     - *bs-fn
-    - aws-credentials.ini
   resources:
     limits:
       cpu: 400m

@@ -8,7 +8,6 @@ x-butler-secret:
     containerPath: *bs-cp
     filenames:
     - *bs-fn
-    - aws-credentials.ini
 
 lasertracker1-sim:
   enabled: true
