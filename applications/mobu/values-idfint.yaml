@@ -97,3 +97,13 @@ config:
         options:
           query_set: "dp0.2"
         restart: true
+    - name: "sia"
+      count: 1
+      users:
+        - username: "bot-mobu-sia"
+      scopes: ["read:image"]
+      business:
+        type: "SIAQuerySetRunner"
+        options:
+          query_set: "dp02"
+        restart: true
