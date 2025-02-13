@@ -24,6 +24,7 @@ Kubernetes Event Driven Autoscaling
 | prometheus.metricServer.port | int | `8000` | HTTP port used for exposing metrics server prometheus metrics |
 | prometheus.operator.enabled | bool | `true` | Enable KEDA Operator prometheus metrics expose |
 | prometheus.operator.port | int | `8000` | Port used for exposing KEDA Operator prometheus metrics |
+| rbac.create | bool | `false` | Specifies whether RBAC should be used |
 | resources.metricServer | object | `{"limits":{"cpu":1,"memory":"1000Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Manage [resource request & limits] of KEDA metrics apiserver pod |
 | resources.operator | object | `{"limits":{"cpu":1,"memory":"1000Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Manage [resource request & limits] of KEDA operator pod |
 | resources.webhooks | object | `{"limits":{"cpu":1,"memory":"1000Mi"},"requests":{"cpu":"100m","memory":"100Mi"}}` | Manage [resource request & limits] of KEDA admission webhooks pod |

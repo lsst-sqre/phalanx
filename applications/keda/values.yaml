@@ -75,6 +75,10 @@ affinity: {}
 # -- priorityClassName for all KEDA components
 priorityClassName: ""
 
+rbac:
+  # -- Specifies whether RBAC should be used
+  create: false
+
 prometheus:
   metricServer:
     # -- Enable metric server Prometheus metrics expose
