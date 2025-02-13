@@ -1,0 +1,15 @@
+config:
+  worker:
+    workerCount: 1
+    identities:
+      - username: "bot-noteburst001"
+      - username: "bot-noteburst002"
+      - username: "bot-noteburst003"
+      - username: "bot-noteburst004"
+      - username: "bot-noteburst005"
+      - username: "bot-noteburst006"
+
+# Use SSD for Redis storage.
+redis:
+  persistence:
+    storageClass: "premium-rwo"
