@@ -3,6 +3,7 @@ fqdn: "data-dev.lsst.cloud"
 appOfAppsName: "science-platform"
 butlerServerRepositories:
   dp02: "https://data-dev.lsst.cloud/api/butler/repo/dp02/butler.yaml"
+  dp1: "https://data-dev.lsst.cloud/api/butler/repo/dp1/butler.yaml"
 gcp:
   projectId: "science-platform-dev-7696"
   region: "us-central1"

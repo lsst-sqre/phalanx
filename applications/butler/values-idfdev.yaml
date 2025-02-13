@@ -9,4 +9,5 @@ config:
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02: "file:///opt/lsst/butler/public/config/dp02.yaml"
+    dp1: "file:///opt/lsst/butler/config/dp1.yaml"
   shareNubladoSecrets: false
