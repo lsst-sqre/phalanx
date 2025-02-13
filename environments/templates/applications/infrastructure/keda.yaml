@@ -15,7 +15,7 @@ spec:
   destination:
     namespace: "keda"
     server: "https://kubernetes.default.svc"
-  project: "prompt"
+  project: "infrastructure"
   source:
     path: "applications/keda"
     repoURL: {{ .Values.repoUrl | quote }}
@@ -31,4 +31,7 @@ spec:
       valueFiles:
         - "values.yaml"
         - "values-{{ .Values.name }}.yaml"
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
 {{- end -}}
