@@ -19,6 +19,7 @@ applications:
   ghostwriter: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
   portal: true
   sasquatch: true
