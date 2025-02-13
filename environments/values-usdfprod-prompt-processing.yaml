@@ -7,7 +7,9 @@ applications:
   cert-manager: false
   gafaelfawr: false
   ingress-nginx: false
+  keda: true
   next-visit-fan-out: true
+  prompt-processing-redis: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
