@@ -111,6 +111,7 @@ atoods:
     LSST_RESOURCES_S3_PROFILE_oods-latiss: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+    AWS_PROFILE: oods-latiss
   s3Credentials:
   - oods-latiss-credentials.ini
   butlerSecret:
