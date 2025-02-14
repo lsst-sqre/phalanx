@@ -10,4 +10,4 @@ config:
       datalink_url: "https://data-dev.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"
 
   enableSentry: true
-  sentryTracesSampleRate: 1
+  sentryTracesSampleRate: 0
