@@ -9,5 +9,5 @@ config:
       repository: "https://data-dev.lsst.cloud/api/butler/repo/dp02/butler.yaml"
       datalink_url: "https://data-dev.lsst.cloud/api/datalink/links?ID=butler%3A//dp02/{id}"
 
-  enableSentry: true
+  enableSentry: false
   sentryTracesSampleRate: 0
