@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 image:
-  # -- Image to use in the PP deployment
+  # -- Image to use in the Prompt Processing deployment
   repository: ghcr.io/lsst-dm/prompt-service
-  # -- Pull policy for the PP image
-  # @default -- `IfNotPresent` in prod, `Always` in dev
+  # -- Pull policy for the Prompt Processing image
+  # @default -- `IfNotPresent` in prod, `Always` in dev.  Set to `IfNotPresent` for scale testing in dev.
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
   tag: latest
@@ -82,11 +82,10 @@ apdb:
 
 alerts:
   # -- Username for sending alerts to the alert stream
-  username: "kafka-admin"
+  username: ""
   # -- Server address for the alert stream
-  server: "usdf-alert-stream-dev-broker-0.lsst.cloud:9094"
+  server: ""
   # -- Topic name where alerts will be sent
-  # @default -- alert-stream-test
   topic: ""
 
 registry:
@@ -161,15 +160,18 @@ resources:
     ephemeral-storage: 5Gi
     memory: 8Gi
 
-
 # -- Kubernetes YAML configs for extra container volume(s).
 # Any volumes required by other config options are automatically handled by the Helm chart.
 additionalVolumeMounts: []
 
+# -- Pod annotations for the Prompt Processing Pod
+podAnnotations: {}
+
+# -- Affinity rules for the Prompt Processing Pod
 affinity: {}
 
-imagePullSecrets: []
-
+# -- Node selection rules for the Prompt Porcessing pod
 nodeSelector: {}
 
+# -- Tolerations for the Prompt Processing pod
 tolerations: []
