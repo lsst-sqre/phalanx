@@ -39,3 +39,7 @@ prompt-keda:
 
   keda:
     maxReplicaCount: 150
+
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }
