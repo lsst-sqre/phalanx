@@ -165,7 +165,10 @@ resources:
 additionalVolumeMounts: []
 
 # -- Pod annotations for the Prompt Processing Pod
-podAnnotations: {}
+podAnnotations: {
+  prometheus.io/port: "8000",
+  prometheus.io/scrape: "true"
+}
 
 # -- Affinity rules for the Prompt Processing Pod
 affinity: {}

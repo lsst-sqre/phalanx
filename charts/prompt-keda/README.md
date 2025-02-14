@@ -51,7 +51,7 @@ Event-driven processing of camera images
 | logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selection rules for the Prompt Porcessing pod |
-| podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
+| podAnnotations | object | `{"prometheus.io/port":"8000","prometheus.io/scrape":"true"}` | Pod annotations for the Prompt Processing Pod |
 | raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | resources | object | See `values.yaml` | Kubernetes resource requests and limits |

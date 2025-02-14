@@ -11,9 +11,10 @@ spec:
     backoffLimit: 0
     template:
       metadata:
+      {{- with .Values.podAnnotations }}
         annotations:
-          prometheus.io/port: "8000"
-          prometheus.io/scrape: "true"
+          {{- toYaml . | nindent 10 }}
+      {{- end }}
       spec:
         initContainers:
           - name: init-db-auth
