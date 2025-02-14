@@ -88,12 +88,7 @@ jupyterhub:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
       upgrade: true
 
-hub:
-  internalDatabase: false
-
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-stable-6994:us-central1:science-platform-stable-0c29612b"
   serviceAccount: "nublado@science-platform-stable-6994.iam.gserviceaccount.com"
-secrets:
-  templateSecrets: true

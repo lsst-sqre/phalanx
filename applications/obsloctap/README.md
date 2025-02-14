@@ -13,7 +13,7 @@ Publish observing schedule
 | config.obsplanLimit | int | `1000` | limit for obsplan query |
 | config.obsplanTimeSpan | int | `24` | time span, if a time is provided in the query how man hours to look back |
 | config.persistentVolumeClaims | list | `[]` | PersistentVolumeClaims to create. |
-| config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
+| config.separateSecrets | bool | `true` | Whether to use the new secrets management scheme |
 | config.volume_mounts | list | `[]` | Mount points for additional volumes |
 | config.volumes | list | `[]` | Additional volumes to attach |
 | environment | object | `{}` | Environment variables (e.g. butler configuration/auth parms) for panel |

@@ -20,7 +20,6 @@ IVOA DataLink-based service and data discovery
 | config.pathPrefix | string | `"/api/datalink"` | URL path prefix for DataLink and related APIs |
 | config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE if datalinker is using a direct Butler connection (`useButlerServer` is false) |
 | config.s3EndpointUrl | string | `"https://storage.googleapis.com"` | S3 endpoint URL (must be set if using S3) |
-| config.separateSecrets | bool | `false` | Whether to use the new secrets management scheme |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.storageBackend | string | `"GCS"` | Storage backend to use (either `GCS` or `S3`) |
 | config.tapMetadataUrl | string | `"https://github.com/lsst/sdm_schemas/releases/download/1.2.0/datalink-columns.zip"` | URL containing TAP schema metadata used to construct queries |

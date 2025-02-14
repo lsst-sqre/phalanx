@@ -4,8 +4,6 @@ rubintv:
   imagePullSecrets:
   - name: pull-secret
 
-  separateSecrets: true
-
   frontend:
     debug: true
     env:
@@ -56,6 +54,3 @@ rubintv:
       limits:
         cpu: 1.0
         memory: 2.5G
-
-global:
-  tsVaultSecretsPath: ""
