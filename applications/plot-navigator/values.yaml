@@ -24,7 +24,7 @@ config:
   persistentVolumeClaims: []
 
   # -- Whether to use the new secrets management scheme
-  separateSecrets: false
+  separateSecrets: true
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

@@ -58,9 +58,6 @@ config:
   # -- S3 endpoint URL (must be set if using S3)
   s3EndpointUrl: "https://storage.googleapis.com"
 
-  # -- Whether to use the new secrets management scheme
-  separateSecrets: false
-
   # -- User to use from the PGPASSFILE if datalinker is using a direct Butler
   # connection (`useButlerServer` is false)
   pgUser: "rubin"
