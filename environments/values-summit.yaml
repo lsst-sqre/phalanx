@@ -5,6 +5,9 @@ onepassword:
   connectUrl: "https://roundtable.lsst.cloud/1password"
   vaultTitle: "RSP summit-lsp.lsst.codes"
 vaultPathPrefix: "secret/phalanx/summit"
+namespaceLabels:
+  sasquatch:
+    lsst.io/discover: 'true'
 
 applications:
   auxtel: true
