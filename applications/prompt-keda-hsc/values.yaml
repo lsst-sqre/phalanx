@@ -163,10 +163,14 @@ prompt-keda:
   # Any volumes required by other config options are automatically handled by the Helm chart.
   additionalVolumeMounts: []
 
+  # -- Pod annotations for the Prompt Processing Pod
+  podAnnotations: {}
+
+  # -- Affinity rules for the Prompt Processing Pod
   affinity: {}
 
-  imagePullSecrets: []
-
+  # -- Node selection rules for the Prompt Porcessing pod
   nodeSelector: {}
 
+  # -- Tolerations for the Prompt Processing pod
   tolerations: []

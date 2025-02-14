@@ -13,7 +13,7 @@ KEDA Prompt Processing instance for HSC
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | prompt-keda.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
-| prompt-keda.affinity | object | `{}` |  |
+| prompt-keda.affinity | object | `{}` | Affinity rules for the Prompt Processing Pod |
 | prompt-keda.alerts.server | string | `"usdf-alert-stream-dev.lsst.cloud:9094"` | Server address for the alert stream |
 | prompt-keda.alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
 | prompt-keda.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
@@ -30,7 +30,6 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | prompt-keda.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-keda.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
-| prompt-keda.imagePullSecrets | list | `[]` |  |
 | prompt-keda.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-keda.instrument.name | string | None, must be set | The "short" name of the instrument |
 | prompt-keda.instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
@@ -51,7 +50,8 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `5` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
-| prompt-keda.nodeSelector | object | `{}` |  |
+| prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Porcessing pod |
+| prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
 | prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-keda.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
@@ -62,4 +62,4 @@ KEDA Prompt Processing instance for HSC
 | prompt-keda.sasquatch.auth_env | bool | `true` | If set, this application's Vault secret must contain a `sasquatch_token` key containing the authentication token for `sasquatch.endpointUrl`. Leave unset to attempt anonymous access. |
 | prompt-keda.sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | prompt-keda.sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
-| prompt-keda.tolerations | list | `[]` |  |
+| prompt-keda.tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
