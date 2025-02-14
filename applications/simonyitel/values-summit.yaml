@@ -17,6 +17,7 @@ ccheaderservice:
   env:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     CAMERA: cc
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -43,6 +44,7 @@ ccheaderservice-sim:
     URL_SPEC: --lfa_mode s3 --s3instance cp --playback
     CAMERA: cc
     HEADERSERVICE_PLAYLIST_DIR: /header_service
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -71,6 +73,7 @@ ccoods:
   image:
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
+    revision: 0
   env:
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
   <<: *butler-secret
@@ -159,6 +162,7 @@ gcheaderservice101:
   env:
     CAMERA: gc101
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -184,6 +188,7 @@ gcheaderservice102:
   env:
     CAMERA: gc102
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -209,6 +214,7 @@ gcheaderservice103:
   env:
     CAMERA: gc103
     URL_SPEC: --lfa_mode s3 --s3instance cp
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -389,6 +395,7 @@ mtheaderservice:
     URL_SPEC: --lfa_mode s3 --s3instance cp
     TSTAND_HEADERSERVICE: LEVEL3_CLEANROOM
     CAMERA: mt
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -529,8 +536,10 @@ mtoods:
   image:
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
+    revision: 0
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   <<: *butler-secret
   resources:
     limits:
