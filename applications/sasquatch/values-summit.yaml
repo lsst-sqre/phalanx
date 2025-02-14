@@ -56,8 +56,6 @@ strimzi-kafka:
     enabled: true
   kafkaController:
     enabled: true
-    annotations:
-      strimzi.io/next-node-ids: "(3,4,5)"
     resources:
       requests:
         memory: 8Gi
