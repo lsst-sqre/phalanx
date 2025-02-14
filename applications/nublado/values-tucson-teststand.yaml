@@ -100,14 +100,8 @@ controller:
         - containerPath: "/data/lsstdata/TTS/comcam"
           volumeName: "comcam"
 
-hub:
-  internalDatabase: false
-
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.tu.lsst.org/nublado3"
-
-secrets:
-  templateSecrets: true

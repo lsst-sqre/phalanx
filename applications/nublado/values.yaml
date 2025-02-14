@@ -399,7 +399,7 @@ hub:
   # -- Whether to use the cluster-internal PostgreSQL server instead of an
   # external server. This is not used directly by the Nublado chart, but
   # controls how the database password is managed.
-  internalDatabase: true
+  internalDatabase: false
 
   # -- Minimum remaining token lifetime when spawning a lab. The token cannot
   # be renewed, so it should ideally live as long as the lab does. If the
@@ -658,7 +658,7 @@ secrets:
   # Vault nublado secret will be split into a nublado secret for JupyterHub
   # and a nublado-lab-secret secret used as a source for secret values for the
   # user's lab.
-  templateSecrets: false
+  templateSecrets: true
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
