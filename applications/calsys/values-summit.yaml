@@ -44,6 +44,7 @@ electrometer101:
     pullPolicy: Always
   env:
     RUN_ARG: 101
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -68,6 +69,7 @@ electrometer102:
     pullPolicy: Always
   env:
     RUN_ARG: 102
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -92,6 +94,7 @@ electrometer201:
     pullPolicy: Always
   env:
     RUN_ARG: 201
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
@@ -188,6 +191,7 @@ simulation-gencam:
   image:
     repository: ts-dockerhub.lsst.org/genericcamera
     pullPolicy: Always
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   env:
     RUN_ARG: 1
   envSecrets:
