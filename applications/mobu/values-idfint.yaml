@@ -55,7 +55,7 @@ config:
         type: "NotebookRunner"
         options:
           repo_url: "https://github.com/lsst-sqre/scaletest.git"
-          repo_ref: "main"
+          repo_ref: "no-code"
           idle_time: 0
           delete_lab: false
         restart: true
