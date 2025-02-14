@@ -38,7 +38,8 @@ prompt-keda:
     auth_env: false
 
   keda:
-    maxReplicaCount: 250
+    minReplicaCount: 50
+    maxReplicaCount: 400
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
