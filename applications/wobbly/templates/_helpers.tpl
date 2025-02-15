@@ -24,3 +24,32 @@ Selector labels
 app.kubernetes.io/name: "wobbly"
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Cloud SQL Auth Proxy sidecar container
+*/}}
+{{- define "wobbly.cloudsqlSidecar" -}}
+- name: "cloud-sql-proxy"
+  command:
+    - "/cloud_sql_proxy"
+    - "-ip_address_types=PRIVATE"
+    - "-log_debug_stdout=true"
+    - "-structured_logs=true"
+    - "-instances={{ required "cloudsql.instanceConnectionName must be specified" .Values.cloudsql.instanceConnectionName }}=tcp:5432"
+  image: "{{ .Values.cloudsql.image.repository }}:{{ .Values.cloudsql.image.tag }}"
+  imagePullPolicy: {{ .Values.cloudsql.image.pullPolicy | quote }}
+  {{- with .Values.cloudsql.resources }}
+  resources:
+    {{- toYaml . | nindent 12 }}
+  {{- end }}
+  restartPolicy: "Always"
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - "all"
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 65532
+    runAsGroup: 65532
+{{- end }}
