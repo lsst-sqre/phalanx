@@ -96,6 +96,11 @@ config:
   # @default -- No configuration file for DP02 will be generated.
   dp02PostgresUri: ""
 
+  # -- Postgres connection string pointing to the registry database hosting
+  # Data Preview 1 data.
+  # @default -- No configuration file for DP1 will be generated.
+  dp1PostgresUri: ""
+
   # -- True if the 'dp02' Butler repository alias should use client/server
   # Butler.  False if it should use DirectButler.
   dp02ClientServerIsDefault: false
@@ -116,3 +121,8 @@ config:
   # be exposed.  For example, if the service should be exposed at
   # `https://data.lsst.cloud/api/butler`, this should be set to `/api/butler`
   pathPrefix: "/api/butler"
+
+  # -- If true, borrow the S3 and Postgres secrets set up in Nublado for
+  # end-users.  Otherwise, use secrets specifically set up for the Butler
+  # server.
+  shareNubladoSecrets: true
