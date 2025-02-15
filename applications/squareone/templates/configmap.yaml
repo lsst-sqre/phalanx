@@ -37,3 +37,6 @@ data:
     sentryReplaysSessionSampleRate: {{ .Values.config.sentryReplaysSessionSampleRate }}
     sentryReplaysOnErrorSampleRate: {{ .Values.config.sentryReplaysOnErrorSampleRate }}
     sentryDebug: {{ .Values.config.sentryDebug }}
+    enableAppsMenu: {{ .Values.config.enableAppsMenu }}
+    appLinks:
+      {{- toYaml .Values.config.appLinks | nindent 6 }}
