@@ -13,7 +13,7 @@ controller:
       recommendedTag: "recommended_k0004"
     lab:
       env:
-        AWS_SHARED_CRDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_SITE: "base"
         LSST_TOPIC_SUBNAME: "sal"
