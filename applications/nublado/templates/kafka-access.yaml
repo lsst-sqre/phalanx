@@ -1,0 +1,16 @@
+{{- if .Values.controller.config.metrics.enabled -}}
+apiVersion: access.strimzi.io/v1alpha1
+kind: KafkaAccess
+metadata:
+  name: "nublado-kafka"
+spec:
+  kafka:
+    name: "sasquatch"
+    namespace: "sasquatch"
+    listener: "tls"
+  user:
+    kind: "KafkaUser"
+    apiGroup: "kafka.strimzi.io"
+    name: "app-metrics-nublado"
+    namespace: "sasquatch"
+{{- end }}

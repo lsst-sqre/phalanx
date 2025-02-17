@@ -19,11 +19,11 @@ applications:
   ghostwriter: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
   portal: true
   sasquatch: true
   sia: true
-  siav2: false
   ssotap: true
   production-tools: true
   sasquatch-backpack: true

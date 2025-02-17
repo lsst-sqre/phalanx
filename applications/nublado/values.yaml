@@ -36,10 +36,10 @@ controller:
   resources:
     limits:
       cpu: "1"
-      memory: "200Mi"
+      memory: "400Mi"
     requests:
       cpu: "0.05"
-      memory: "120Mi"
+      memory: "200Mi"
 
   # -- Whether to enable Slack alerts. If set to true, `slack_webhook` must be
   # set in the corresponding Nublado Vault secret.
@@ -371,13 +371,35 @@ controller:
       #   readOnly: true
       #   volumeName: "project"
 
+    metrics:
+      # -- Whether to enable sending metrics
+      enabled: false
+
+      # -- Name under which to log metrics. Generally there is no reason to
+      # change this.
+      application: "nublado"
+
+      events:
+        # -- Topic prefix for events. It may sometimes be useful to change this
+        # in development environments.
+        topicPrefix: "lsst.square.metrics.events"
+
+      schemaManager:
+        # -- URL of the Confluent-compatible schema registry server
+        # @default -- Sasquatch in the local cluster
+        registryUrl: "http://sasquatch-schema-registry.sasquatch.svc.cluster.local:8081"
+
+        # -- Suffix to add to all registered subjects. This is sometimes useful
+        # for experimentation during development.
+        suffix: ""
+
 # JupyterHub configuration handled directly by this chart rather than by Zero
 # to JupyterHub.
 hub:
   # -- Whether to use the cluster-internal PostgreSQL server instead of an
   # external server. This is not used directly by the Nublado chart, but
   # controls how the database password is managed.
-  internalDatabase: true
+  internalDatabase: false
 
   # -- Minimum remaining token lifetime when spawning a lab. The token cannot
   # be renewed, so it should ideally live as long as the lab does. If the
@@ -435,7 +457,7 @@ jupyterhub:
       name: "ghcr.io/lsst-sqre/nublado-jupyterhub"
 
       # -- Tag of image to use for JupyterHub
-      tag: "8.3.0"
+      tag: "8.4.1"
 
     # -- Resource limits and requests
     # @default -- See `values.yaml`
@@ -636,7 +658,7 @@ secrets:
   # Vault nublado secret will be split into a nublado secret for JupyterHub
   # and a nublado-lab-secret secret used as a source for secret values for the
   # user's lab.
-  templateSecrets: false
+  templateSecrets: true
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.

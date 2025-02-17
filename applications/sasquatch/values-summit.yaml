@@ -56,8 +56,6 @@ strimzi-kafka:
     enabled: true
   kafkaController:
     enabled: true
-    annotations:
-      strimzi.io/next-node-ids: "(3,4,5)"
     resources:
       requests:
         memory: 8Gi
@@ -121,7 +119,7 @@ influxdb:
     storageClass: rook-ceph-block
     size: 5Ti
   ingress:
-    enabled: true
+    enabled: false
     hostname: summit-lsp.lsst.codes
   resources:
     requests:
@@ -130,6 +128,10 @@ influxdb:
     limits:
       memory: 128Gi
       cpu: 16
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: summit-lsp.lsst.codes
 
 influxdb-enterprise:
   enabled: true

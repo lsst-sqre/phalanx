@@ -16,7 +16,7 @@ imagePullSecrets: []
 # Each entry is of the form: { name: pull-secret-name }
 
 # -- Whether to use the new secrets management scheme
-separateSecrets: false
+separateSecrets: true
 
 frontend:
   # -- If set to true, enable more verbose logging.
@@ -202,7 +202,6 @@ redis:
   # -- Affinity rules for the Redis pod
   affinity: {}
 
-
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
 global:
@@ -217,6 +216,3 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
-
-  # -- Relative path for tsVault secrets
-  tsVaultSecretsPath: ""

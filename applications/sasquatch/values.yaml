@@ -160,6 +160,23 @@ influxdb:
       memory: 96Gi
       cpu: 8
 
+customInfluxDBIngress:
+  # -- Whether to enable the custom ingress for InfluxDB OSS
+  enabled: false
+
+  # -- Hostname of the ingress
+  # @default -- None, must be set if the ingress is enabled
+  hostname: ""
+
+  # -- Annotations to add to the ingress
+  # @default -- See `values.yaml`
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+
+  # -- Path for the ingress
+  # @default -- `"/influxdb(/\|$)(.*)"`
+  path: "/influxdb(/|$)(.*)"
+
 influxdb-enterprise:
   # -- Whether to use influxdb-enterprise
   enabled: false
@@ -215,8 +232,8 @@ chronograf:
     className: "nginx"
 
     # -- Path for the ingress
-    # @default -- `"/chronograf(/\|$)"`
-    path: "/chronograf(/|$)"
+    # @default -- `"/chronograf"`
+    path: "/chronograf"
 
   # -- Additional environment variables for Chronograf
   # @default -- See `values.yaml`

@@ -29,7 +29,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.3.0"
+            tag: "8.4.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -100,14 +100,8 @@ controller:
         - containerPath: "/data/lsstdata/TTS/comcam"
           volumeName: "comcam"
 
-hub:
-  internalDatabase: false
-
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.tu.lsst.org/nublado3"
-
-secrets:
-  templateSecrets: true

@@ -108,6 +108,3 @@ global:
   # -- Base path for Vault secrets
   # @default -- Set by Argo CD
   vaultSecretsPath: ""
-
-  # -- Relative path for tsVault secrets
-  tsVaultSecretsPath: ""

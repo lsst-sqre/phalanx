@@ -5,6 +5,7 @@ environment:
   BUCKET_URL: "https://s3dfrgw.slac.stanford.edu/"
 
 config:
+  separateSecrets: false
   persistentVolumeClaims:
     - name: sdf-group-rubin
       storageClassName: sdf-group-rubin

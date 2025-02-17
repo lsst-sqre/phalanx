@@ -70,6 +70,8 @@ spec:
           env:
             - name: "SIA_BUTLER_DATA_COLLECTIONS"
               value: {{ .Values.config.butlerDataCollections | toJson | quote }}
+            - name: "SIA_ENVIRONMENT_NAME"
+              value: {{ .Values.global.host }}
             {{- if .Values.config.slackAlerts }}
             - name: "SIA_SLACK_WEBHOOK"
               valueFrom:
@@ -95,8 +97,6 @@ spec:
                   key: "sentry-dsn"
             - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
               value: {{ .Values.config.sentryTracesSampleRate | quote }}
-            - name: "SIA_ENVIRONMENT_NAME"
-              value: {{ .Values.global.host }}
             {{- end }}
           {{- if .Values.config.directButlerEnabled }}
           volumeMounts:

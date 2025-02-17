@@ -32,7 +32,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.3.0"
+            tag: "8.4.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -97,14 +97,8 @@ controller:
         - containerPath: "/data/lsstdata/BTS/auxtel"
           volumeName: "auxtel"
 
-hub:
-  internalDatabase: false
-
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.ls.lsst.org/nublado3"
-
-secrets:
-  templateSecrets: true

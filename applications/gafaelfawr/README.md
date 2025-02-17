@@ -13,18 +13,17 @@ Authentication and identity system
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the Gafaelfawr frontend pod |
-| cloudsql.affinity | object | `{}` | Affinity rules for the Cloud SQL Proxy pod |
+| cloudsql.affinity | object | `{}` | Affinity rules for the standalone Cloud SQL Proxy pod |
 | cloudsql.enabled | bool | `false` | Enable the Cloud SQL Auth Proxy, used with Cloud SQL databases on Google Cloud. This will be run as a sidecar for the main Gafaelfawr pods, and as a separate service (behind a `NetworkPolicy`) for other, lower-traffic services. |
 | cloudsql.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for Cloud SQL Auth Proxy images |
 | cloudsql.image.repository | string | `"gcr.io/cloudsql-docker/gce-proxy"` | Cloud SQL Auth Proxy image to use |
-| cloudsql.image.schemaUpdateTagSuffix | string | `"-alpine"` | Tag suffix to use for the proxy for schema updates |
 | cloudsql.image.tag | string | `"1.37.4"` | Cloud SQL Auth Proxy tag to use |
 | cloudsql.instanceConnectionName | string | None, must be set if Cloud SQL Auth Proxy is enabled | Instance connection name for a Cloud SQL PostgreSQL instance |
-| cloudsql.nodeSelector | object | `{}` | Node selection rules for the Cloud SQL Proxy pod |
-| cloudsql.podAnnotations | object | `{}` | Annotations for the Cloud SQL Proxy pod |
-| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy pod |
+| cloudsql.nodeSelector | object | `{}` | Node selection rules for the standalone Cloud SQL Proxy pod |
+| cloudsql.podAnnotations | object | `{}` | Annotations for the standalone Cloud SQL Proxy pod |
+| cloudsql.resources | object | See `values.yaml` | Resource limits and requests for the Cloud SQL Proxy container |
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
-| cloudsql.tolerations | list | `[]` | Tolerations for the Cloud SQL Proxy pod |
+| cloudsql.tolerations | list | `[]` | Tolerations for the standalone Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
 | config.baseInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr` and port 8080. |
 | config.cilogon.clientId | string | `nil` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |

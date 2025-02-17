@@ -28,7 +28,7 @@ controller:
         - name: "inithome"
           image:
             repository: "ghcr.io/lsst-sqre/nublado-inithome"
-            tag: "8.3.0"
+            tag: "8.4.1"
           privileged: true
           volumeMounts:
             - containerPath: "/home"
@@ -69,11 +69,7 @@ jupyterhub:
   hub:
     db:
       url: "postgresql://nublado@cloud-sql-proxy.nublado/nublado"
-hub:
-  internalDatabase: false
 cloudsql:
   enabled: true
   instanceConnectionName: "science-platform-demo-9e05:us-central1:science-platform-demo-a4dbbf96"
   serviceAccount: "nublado@science-platform-demo-9e05.iam.gserviceaccount.com"
-secrets:
-  templateSecrets: true

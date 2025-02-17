@@ -20,12 +20,12 @@ applications:
   ghostwriter: true
   hips: true
   mobu: true
+  noteburst: true
   nublado: true
   portal: true
   sasquatch: true
   semaphore: true
   sia: true
-  siav2: false
   squareone: true
   strimzi: true
   strimzi-access-operator: true

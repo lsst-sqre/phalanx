@@ -54,7 +54,7 @@ strimzi-kafka:
 
 influxdb:
   ingress:
-    enabled: true
+    enabled: false
     hostname: data-dev.lsst.cloud
   resources:
     requests:
@@ -63,6 +63,10 @@ influxdb:
     limits:
       memory: 16Gi
       cpu: 2
+
+customInfluxDBIngress:
+  enabled: true
+  hostname: data-dev.lsst.cloud
 
 influxdb-enterprise:
   enabled: true
@@ -159,6 +163,7 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - nublado
     - wobbly
 
 backup:

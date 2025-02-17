@@ -6,5 +6,3 @@ config:
   site_id: summit
 db:
   host: postgresdb01.cp.lsst.org
-global:
-  tsVaultSecretsPath: ""

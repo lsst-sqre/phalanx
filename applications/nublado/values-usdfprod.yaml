@@ -136,3 +136,9 @@ jupyterhub:
   cull:
     timeout: 432000  # 5 days
     maxAge: 691200  # 8 days
+
+hub:
+  internalDatabase: true
+
+secrets:
+  templateSecrets: false
