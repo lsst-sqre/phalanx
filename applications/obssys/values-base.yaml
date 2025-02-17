@@ -24,6 +24,12 @@ atqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_PROFILE: butler
+  envSecrets:
+  - name: AWS_ACCESS_KEY_ID
+    key: aws-access-key-id
+  - name: AWS_SECRET_ACCESS_KEY
+    key: aws-secret-access-key
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
