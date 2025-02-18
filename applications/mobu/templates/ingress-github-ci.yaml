@@ -2,7 +2,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ template "mobu.fullname" . }}-github-ci
+  name: "mobu-github-ci"
   labels:
     {{- include "mobu.labels" . | nindent 4 }}
 config:
@@ -11,7 +11,7 @@ config:
     anonymous: true
 template:
   metadata:
-    name: {{ template "mobu.fullname" . }}-github-ci
+    name: "mobu-github-ci"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -25,7 +25,7 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: {{ template "mobu.fullname" . }}
+                  name: "mobu"
                   port:
                     number: 8080
 {{- end }}

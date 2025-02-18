@@ -28,7 +28,6 @@ Continuous integration testing
 | config.sentryEnvironment | string | `nil` | The environment to report to Sentry |
 | config.sentryTracesSampleConfig | float | `0` | Sentry tracing config: a float to specify a percentage, or "errors" to send all transactions with errors. |
 | config.slackAlerts | bool | `true` | Whether to send alerts and status to Slack. |
-| fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
@@ -36,9 +35,8 @@ Continuous integration testing
 | image.repository | string | `"ghcr.io/lsst-sqre/mobu"` | mobu image to use |
 | image.tag | string | The appVersion of the chart | Tag of mobu image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| nameOverride | string | `""` | Override the base name for resources |
 | nodeSelector | object | `{}` | Node selector rules for the mobu frontend pod |
 | podAnnotations | object | `{}` | Annotations for the mobu frontend pod |
 | resources | object | See `values.yaml` | Resource limits and requests for the mobu frontend pod |
-| terminationGracePeriodSeconds | string | See `values.yaml` | Number of seconds for k8s to send SIGKILL after sending SIGTERM |
+| terminationGracePeriodSeconds | string | Use the Kubernetes default | Number of seconds for Kubernetes to send SIGKILL after sending SIGTERM |
 | tolerations | list | `[]` | Tolerations for the mobu frontend pod |

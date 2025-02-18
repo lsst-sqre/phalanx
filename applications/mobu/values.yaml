@@ -1,11 +1,5 @@
 # Default values for mobu.
 
-# -- Override the base name for resources
-nameOverride: ""
-
-# -- Override the full name for resources (includes the release name)
-fullnameOverride: ""
-
 image:
   # -- mobu image to use
   repository: "ghcr.io/lsst-sqre/mobu"
@@ -43,6 +37,18 @@ config:
   # @default -- disabled.
   githubCiApp: null
 
+  # -- Log level. Set to 'DEBUG' to include the output from all flocks in the
+  # main mobu log.
+  logLevel: INFO
+
+  # -- Prefix for mobu's API routes.
+  pathPrefix: "/mobu"
+
+  # -- One of 'production' or 'development'. 'production' configures structured
+  # JSON logging, and 'development' configures unstructured human readable
+  # logging.
+  profile: production
+
   # -- The environment to report to Sentry
   sentryEnvironment: null
 
@@ -50,20 +56,8 @@ config:
   # send all transactions with errors.
   sentryTracesSampleConfig: 0.0
 
-  # -- Log level. Set to 'DEBUG' to include the output from all flocks in the
-  # main mobu log.
-  logLevel: INFO
-
-  # -- One of 'production' or 'development'. 'production' configures structured
-  # JSON logging, and 'development' configures unstructured human readable
-  # logging.
-  profile: production
-
   # -- Whether to send alerts and status to Slack.
   slackAlerts: true
-
-  # -- Prefix for mobu's API routes.
-  pathPrefix: "/mobu"
 
   metrics:
     # -- Whether to enable sending metrics
@@ -97,21 +91,21 @@ resources:
     cpu: "50m"
     memory: "1Gi"
 
-# -- Number of seconds for k8s to send SIGKILL after sending SIGTERM
-# @default -- See `values.yaml`
-terminationGracePeriodSeconds: null
-
-# -- Annotations for the mobu frontend pod
-podAnnotations: {}
+# -- Affinity rules for the mobu frontend pod
+affinity: {}
 
 # -- Node selector rules for the mobu frontend pod
 nodeSelector: {}
 
+# -- Annotations for the mobu frontend pod
+podAnnotations: {}
+
+# -- Number of seconds for Kubernetes to send SIGKILL after sending SIGTERM
+# @default -- Use the Kubernetes default
+terminationGracePeriodSeconds: null
+
 # -- Tolerations for the mobu frontend pod
 tolerations: []
-
-# -- Affinity rules for the mobu frontend pod
-affinity: {}
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
