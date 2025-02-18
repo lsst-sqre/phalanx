@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: butler
+  name: butler-public
 data:
 # WARNING! The files in this configmap are served publicly on the internet via unauthenticated HTTP.
 # DO NOT PUT ANY SENSITIVE INFORMATION IN THESE FILES.
@@ -81,4 +81,5 @@ data:
     {{- end }}
     dp02-direct: {{ $dp02Direct }}
     dp02-remote: {{ $dp02Remote }}
+    dp1: "{{.Values.global.baseUrl}}{{.Values.config.pathPrefix}}/repo/dp1/butler.yaml"
 {{- end }}
