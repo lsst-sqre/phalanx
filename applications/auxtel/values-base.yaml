@@ -112,6 +112,7 @@ atoods:
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   s3Credentials:
+  - lfa-credentials.ini
   - oods-latiss-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
