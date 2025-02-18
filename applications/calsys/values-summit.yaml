@@ -191,9 +191,9 @@ simulation-gencam:
   image:
     repository: ts-dockerhub.lsst.org/genericcamera
     pullPolicy: Always
-    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   env:
     RUN_ARG: 1
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   envSecrets:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
