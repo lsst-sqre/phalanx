@@ -55,7 +55,6 @@ ingress:
 server:
   # -- Turn on debugging mode
   debug: false
-  # -- Values for readonly server
   readonly:
     # -- Number of replicas for readonly server
     replicas: 1
@@ -63,7 +62,8 @@ server:
     processes: 2
     # -- Number of threads per readonly process
     threads: 2
-  # -- Values for readwrite server
+    # -- Socket listen queue depth
+    queue: 1024
   readwrite:
     # -- Number of replicas for readwrite server
     replicas: 1
@@ -71,6 +71,8 @@ server:
     processes: 2
     # -- Number of threads per readwrite process
     threads: 2
+    # -- Socket listen queue depth
+    queue: 1024
 
 # -- Configuration for giftless server
 config:
