@@ -9,7 +9,7 @@ set:
     host: "example.com"
 tests:
   - it: "Should create an anonymous ingress"
-    template: "ingress-github-refresh-app.yaml"
+    template: "ingress-github-refresh.yaml"
     asserts:
       - containsDocument:
           kind: "GafaelfawrIngress"

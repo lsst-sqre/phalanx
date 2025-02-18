@@ -15,7 +15,7 @@ set:
     host: "example.com"
 tests:
   - it: "Should create an anonymous ingress"
-    template: "ingress-github-ci-app.yaml"
+    template: "ingress-github-ci.yaml"
     asserts:
       - containsDocument:
           kind: "GafaelfawrIngress"
