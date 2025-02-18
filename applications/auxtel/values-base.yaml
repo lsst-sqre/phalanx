@@ -108,10 +108,9 @@ atoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
-    LSST_RESOURCES_S3_PROFILE_oods-latiss: https://s3-butler.ls.lsst.org
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-    AWS_PROFILE: oods-latiss
   s3Credentials:
   - oods-latiss-credentials.ini
   butlerSecret:
@@ -154,21 +153,21 @@ atoods:
                   class:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
-                  repoDirectory : s3://oods-latiss@rubinobs-butler-latiss
+                  repoDirectory : s3://butler@rubinobs-butler-latiss
                   collections:
                       - LATISS/raw/all
                   cleanCollections:
                       - collection: LATISS/raw/all
                         filesOlderThan:
                             <<: *interval
-                            minutes: 20
+                            hours: 1
                       - collection: LATISS/quickLook
                         filesOlderThan:
                             <<: *interval
                             days: 5
                   scanInterval:
                       <<: *interval
-                      minutes: 10
+                      minutes: 20
 
 atpneumatics-sim:
   enabled: true
