@@ -66,4 +66,6 @@ prompt-keda:
 
   logLevel: timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.resources=DEBUG
 
-  fullnameOverride: "prompt-keda-latiss"
+  podAnnotations: {
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
+  }
