@@ -227,10 +227,11 @@ mtoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
-    LSST_RESOURCES_S3_PROFILE_oods-lsstcam: https://s3-butler.ls.lsst.org
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
   s3Credentials:
+  - lfa-credentials.ini
   - oods-lsstcam-credentials.ini
   <<: *butler-secret
   resources:
@@ -264,7 +265,7 @@ mtoods:
                   class:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
-                  repoDirectory : s3://oods-lsstcam@rubinobs-butler-lsstcam
+                  repoDirectory : s3://butler@rubinobs-butler-lsstcam
                   collections:
                       - LSSTCam/raw/all
                   cleanCollections:
