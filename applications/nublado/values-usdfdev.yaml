@@ -140,6 +140,3 @@ jupyterhub:
 
 hub:
   internalDatabase: true
-
-secrets:
-  templateSecrets: true

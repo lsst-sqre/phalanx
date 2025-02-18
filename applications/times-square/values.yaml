@@ -165,14 +165,11 @@ cloudsql:
     # -- Cloud SQL Auth Proxy tag to use
     tag: "1.37.4"
 
-    # -- Tag suffix to use for the proxy for schema updates
-    schemaUpdateTagSuffix: "-alpine"
-
     # -- Pull policy for Cloud SQL Auth Proxy images
     pullPolicy: "IfNotPresent"
 
     # -- Resource requests and limits for Cloud SQL pod
-    # @default -- see `values.yaml`
+    # @default -- See `values.yaml`
     resources:
       limits:
         cpu: "1"

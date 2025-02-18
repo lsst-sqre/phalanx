@@ -137,14 +137,8 @@ controller:
         - containerPath: "/data/lsstdata/base/maintel"
           volumeName: "lsstdata-base-lsstcam"
 
-hub:
-  internalDatabase: false
-
 jupyterhub:
   hub:
     db:
       upgrade: true
       url: "postgresql://nublado3@postgresdb01.cp.lsst.org/nublado3"
-
-secrets:
-  templateSecrets: true

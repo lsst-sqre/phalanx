@@ -26,7 +26,6 @@ Night report log service
 | fullnameOverride | string | `""` | Override the full name for resources (includes the release name) |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.host | string | Set by Argo CD | Host name for ingress |
-| global.tsVaultSecretsPath | string | `""` | Relative path for tsVault secrets |
 | global.vaultSecretsPath | string | Set by Argo CD | Base path for Vault secrets |
 | image.pullPolicy | string | `"Always"` | Pull policy for the nightreport image |
 | image.repository | string | `"lsstts/nightreport"` | nightreport image to use |
