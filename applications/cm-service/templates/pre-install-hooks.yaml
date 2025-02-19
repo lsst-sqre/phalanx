@@ -22,9 +22,9 @@ spec:
           env:
             - name: DB__URL
               value: "postgresql://{{ .username }}@{{ .hostname }}:{{ .port }}/{{ .name }}"
-{{- end }}
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cm-service
-                  key: internalDatabasePassword
+                  name: {{ .secret_name }}
+                  key: {{ .secret_key }}
+{{- end }}
