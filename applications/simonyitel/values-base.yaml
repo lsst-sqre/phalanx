@@ -266,6 +266,7 @@ mtoods:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
                   repoDirectory : s3://butler@rubinobs-butler-lsstcam
+                  s3profile: butler
                   collections:
                       - LSSTCam/raw/all
                   cleanCollections:

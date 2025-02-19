@@ -155,6 +155,7 @@ atoods:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
                   repoDirectory : s3://butler@rubinobs-butler-latiss
+                  s3profile: butler
                   collections:
                       - LATISS/raw/all
                   cleanCollections:
