@@ -8,6 +8,7 @@ config:
   githubCiApp:
     acceptedGithubOrgs:
       - lsst-sqre
+      - lsst
     users:
       - username: bot-mobu-ci-user-1
       - username: bot-mobu-ci-user-2
