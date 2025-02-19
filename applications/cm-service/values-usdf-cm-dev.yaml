@@ -1,8 +1,10 @@
 # service writes artifacts that eventually resolve to the path
-#   /sdf/group/rubin/shared/campaigns/users/usdf-cm-dev/<production>/<campaign>/
+#   /sdf/group/rubin/shared/campaigns/users/usdf-cm-dev/<campaign>/
 # outputVolume: mounted at the container's path /output
-#  sdf-data-rubin == /sdf/group/rubin
+# storageClass Identities
+#  sdf-data-rubin == /sdf/data/rubin
 #  sdf-group-rubin == /sdf/group/rubin
+#  /sdf/data/rubin/shared == /sdf/group/rubin/shared via symlink
 ---
 internalDB: true
 config:
@@ -29,13 +31,19 @@ config:
       storageClassName: "sdf-group-rubin"
       subPath: "services/htcondor/shared"
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
+  panda:
+    url: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+    monitor_url: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
+    behind_lb: "1"
+    verify_host: "1"
+    use_native_httplib: "1"
 
 image:
-  tag: "0.2.0"
-  pullPolicy: IfNotPresent
+  tag: "tickets-DM-48690-butler_pool"
+  pullPolicy: Always
 
 daemon:
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.2.0"
-    pullPolicy: IfNotPresent
+    tag: "tickets-DM-48690-butler_pool"
+    pullPolicy: Always

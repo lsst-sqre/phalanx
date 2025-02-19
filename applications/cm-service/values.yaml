@@ -72,6 +72,26 @@ config:
       # -- If specified, sub-path within bound PV to be mounted as condor fs-remote
       subPath: null
 
+  panda:
+
+    # -- URL of a panda host, used for base, tls, and cache URLs
+    url: null
+
+    # -- URL of a panda monitor host
+    monitor_url: null
+
+    # -- PanDA host TLS verification
+    verify_host: "1"
+
+    # -- PanDA host behind load balancer
+    behind_lb: "0"
+
+    # -- PanDA Use Native HTTPLib instead of Curl
+    use_native_httplib: "1"
+
+    # -- PanDA Virtual Organization Name for oidc
+    virtual_organization: Rubin
+
 image:
   # -- Image to use for frontend containers
   repository: "ghcr.io/lsst-dm/cm-service"
