@@ -274,10 +274,6 @@ mtoods:
                         filesOlderThan:
                             <<: *interval
                             days: 5
-                      - collection: LSSTCam/quickLook
-                        filesOlderThan:
-                            <<: *interval
-                            days: 2
                   scanInterval:
                       <<: *interval
                       hours: 1
