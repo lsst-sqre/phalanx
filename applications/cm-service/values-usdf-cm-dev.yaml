@@ -28,13 +28,22 @@ config:
       storageClassName: "sdf-group-rubin"
       subPath: "services/htcondor/shared"
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
+  panda:
+    url: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+    monitor_url: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
+    behind_lb: "1"
+    verify_host: "1"
+    use_native_httplib: "1"
 
 image:
-  tag: "0.2.0"
-  pullPolicy: IfNotPresent
+  tag: "tickets-DM-48690-butler_pool"
+  pullPolicy: Always
 
 daemon:
+  security:
+    uid: 17951
+    gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.2.0"
-    pullPolicy: IfNotPresent
+    tag: "tickets-DM-48690-butler_pool"
+    pullPolicy: Always
