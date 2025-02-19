@@ -50,6 +50,8 @@ spec:
                 secretKeyRef:
                   name: "mobu"
                   key: "sentry-dsn"
+            - name: "SENTRY_RELEASE"
+              value: {{ .Values.image.tag | default .Chart.AppVersion }}
             {{- if .Values.config.githubRefreshApp }}
             - name: "MOBU_GITHUB_REFRESH_APP_WEBHOOK_SECRET"
               valueFrom:
