@@ -14,22 +14,22 @@ spec:
     requests:
       storage: {{ .storage }}
   {{- end }}
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ $.Chart.Name }}-butler
-  labels:
-    {{- include "application.labels" $ | nindent 4 }}
-spec:
-  {{- with .Values.config.butler }}
-  storageClassName: {{ .storageClassName }}
-  accessModes:
-    - ReadWriteMany
-  resources:
-    requests:
-      storage: {{ .storage }}
-  {{- end }}
+# ---
+# apiVersion: v1
+# kind: PersistentVolumeClaim
+# metadata:
+#   name: {{ $.Chart.Name }}-butler
+#   labels:
+#     {{- include "application.labels" $ | nindent 4 }}
+# spec:
+#   {{- with .Values.config.butler }}
+#   storageClassName: {{ .storageClassName }}
+#   accessModes:
+#     - ReadWriteMany
+#   resources:
+#     requests:
+#       storage: {{ .storage }}
+#   {{- end }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
