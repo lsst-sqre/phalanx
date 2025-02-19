@@ -40,12 +40,12 @@ update-deps:
 	pip install --upgrade pip uv
 	uv pip install --upgrade pre-commit
 	pre-commit autoupdate
-	uv pip compile --python-version 3.11 --upgrade --universal	\
+	uv pip compile --python-version 3.12 --upgrade --universal	\
 	    --generate-hashes --output-file requirements/main.txt	\
 	    pyproject.toml
-	uv pip compile --python-version 3.11 --upgrade --universal	\
+	uv pip compile --python-version 3.12 --upgrade --universal	\
 	    --generate-hashes --output-file requirements/dev.txt	\
 	    requirements/dev.in
-	uv pip compile --python-version 3.11 --upgrade --universal	\
+	uv pip compile --python-version 3.12 --upgrade --universal	\
 	    --generate-hashes --output-file requirements/tox.txt	\
 	    requirements/tox.in
