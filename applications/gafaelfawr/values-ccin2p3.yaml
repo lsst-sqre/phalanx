@@ -68,7 +68,7 @@ config:
     #     encrypt = true
 
   oidcServer:
-    enabled: true
+    enabled: false
 
   # initialAdmins:
   #   - "mainetti"
