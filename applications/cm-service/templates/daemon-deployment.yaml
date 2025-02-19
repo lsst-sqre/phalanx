@@ -54,6 +54,8 @@ spec:
                 name: {{ .Chart.Name }}-butler-env
             - configMapRef:
                 name: {{ .Chart.Name }}-htcondor-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-panda-env
           env:
             - name: BUTLER__AUTHENTICATION_FILE
               value: "/var/run/secrets/db-auth.yaml"
@@ -62,6 +64,16 @@ spec:
                 secretKeyRef:
                   name: cm-service
                   key: internalDatabasePassword
+            - name: PANDA__ID_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cm-service-panda
+                  key: id-token
+            - name: PANDA__REFRESH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: cm-service-panda
+                  key: refresh-token
           resources:
             {{- toYaml .Values.daemon.resources | nindent 12 }}
           securityContext:
