@@ -9,10 +9,10 @@ applications:
   ingress-nginx: false
   keda: true
   next-visit-fan-out: true
-  prompt-redis: true
   prompt-proto-service-hsc: false
   prompt-proto-service-latiss: true
   prompt-proto-service-lsstcam: false
   prompt-proto-service-lsstcomcam: false
   prompt-proto-service-lsstcomcamsim: false
+  prompt-redis: true
   vault-secrets-operator: false
