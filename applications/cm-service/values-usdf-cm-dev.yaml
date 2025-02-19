@@ -15,12 +15,15 @@ config:
     subPath: "shared/campaigns/users/usdf-cm-dev"
     mountPath: "/sdf/group/rubin/shared/campaigns/users/usdf-cm-dev"
   butler:
+    dbAuth:
+      secretName: "cm-service"
+      secretKey: "butler-authn"
     storageClassName: "sdf-data-rubin"
     subPath: "repo/main"
     mountPath: "/sdf/group/rubin/repo/main"
     repositories:
       "/repo/main": "/sdf/group/rubin/repo/main/butler.yaml"
-      "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
+      # "/repo/main+sasquatch_dev": "/sdf/group/rubin/repo/main/butler+sasquatch_dev.yaml"
   htcondor:
     scheddHost: sdfiana012.sdf.slac.stanford.edu
     collectorHost: sdfiana012.sdf.slac.stanford.edu
@@ -28,13 +31,22 @@ config:
       storageClassName: "sdf-group-rubin"
       subPath: "services/htcondor/shared"
       mountPath: "/sdf/group/rubin/services/htcondor/shared"
+  panda:
+    url: "https://usdf-panda-server.slac.stanford.edu:8443/server/panda"
+    monitor_url: "https://usdf-panda-bigmon.slac.stanford.edu:8443/"
+    behind_lb: "1"
+    verify_host: "1"
+    use_native_httplib: "1"
 
 image:
-  tag: "0.2.0"
+  tag: "0.3.0"
   pullPolicy: IfNotPresent
 
 daemon:
+  security:
+    uid: 17951
+    gid: 1126
   image:
     repository: "ghcr.io/lsst-dm/cm-worker"
-    tag: "0.2.0"
+    tag: "0.3.0"
     pullPolicy: IfNotPresent

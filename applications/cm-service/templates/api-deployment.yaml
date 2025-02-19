@@ -37,8 +37,8 @@ spec:
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cm-service
-                  key: internalDatabasePassword
+                  name: {{ .Values.config.db.secret_name }}
+                  key: {{ .Values.config.db.secret_key }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:

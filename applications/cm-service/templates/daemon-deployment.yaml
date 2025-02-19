@@ -22,10 +22,10 @@ spec:
         app.kubernetes.io/component: "daemon"
     spec:
       securityContext:
-        runAsUser: 17951
-        runAsGroup: 1126
-        fsGroup: 1126
-        runAsNonRoot: true
+        runAsUser: {{ .Values.daemon.security.uid }}
+        runAsGroup: {{ .Values.daemon.security.gid }}
+        fsGroup: {{ .Values.daemon.security.gid }}
+        runAsNonRoot: {{ gt (int .Values.daemon.security.uid) 0 | ternary "true" "false" }}
       {{- with .Values.daemon.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
@@ -54,14 +54,24 @@ spec:
                 name: {{ .Chart.Name }}-butler-env
             - configMapRef:
                 name: {{ .Chart.Name }}-htcondor-env
+            - configMapRef:
+                name: {{ .Chart.Name }}-panda-env
           env:
-            - name: BUTLER__AUTHENTICATION_FILE
-              value: "/var/run/secrets/db-auth.yaml"
+            - name: LSST_DB_AUTH_CREDENTIALS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.butler.dbAuth.secretName }}
+                  key: {{ .Values.config.butler.dbAuth.secretKey }}
             - name: DB__PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: cm-service
-                  key: internalDatabasePassword
+                  name: {{ .Values.config.db.secret_name }}
+                  key: {{ .Values.config.db.secret_key }}
+            - name: PANDA__REFRESH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.config.panda.secretName }}
+                  key: {{ .Values.config.panda.refreshTokenSecretKey }}
           resources:
             {{- toYaml .Values.daemon.resources | nindent 12 }}
           securityContext:
@@ -88,9 +98,6 @@ spec:
               name: condor-remote-volume
               subPath: {{ .subPath }}
             {{- end }}
-            - name: butler-registry-volume
-              mountPath: "/var/run/secrets"
-              readonly: true
       volumes:
         - name: output-volume
           persistentVolumeClaim:
@@ -104,13 +111,6 @@ spec:
         - name: condor-remote-volume
           persistentVolumeClaim:
             claimName: {{ $.Chart.Name }}-htcondor
-        - name: butler-registry-volume
-          secret:
-            secretName: cm-service-butler
-            items:
-              - key: butler-registry
-                path: db-auth.yaml
-                mode: 0600
       {{- with .Values.daemon.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

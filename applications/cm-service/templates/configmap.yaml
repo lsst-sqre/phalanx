@@ -20,7 +20,9 @@ metadata:
   labels:
     {{- include "application.labels" . | nindent 4 }}
 data:
-  DAF_BUTLER_REPOSITORIES: {{ toJson .Values.config.butler.repositories | quote }}
+  {{- with .Values.config.butler}}
+  DAF_BUTLER_REPOSITORIES: {{ toJson .repositories | quote }}
+  {{- end }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -37,3 +39,17 @@ data:
   HTCONDOR__condor_q_bin: /opt/htcondor/bin/condor_q
   HTCONDOR__working_directory: /sdf/group/rubin/{{ .Values.config.outputVolume.subPath }}
   HTCONDOR__fs_remote_dir: /sdf/group/rubin/services/htcondor/shared
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Chart.Name }}-panda-env"
+  labels:
+    {{- include "application.labels" . | nindent 4 }}
+data:
+  PANDA__tls_url: {{ .Values.config.panda.url }}
+  PANDA__monitor_url: {{ .Values.config.panda.monitor_url }}
+  PANDA__virtual_organization: {{ .Values.config.panda.virtual_organization }}
+  PANDA__verify_host: {{ .Values.config.panda.verify_host | quote }}
+  PANDA__behind_lb: {{ .Values.config.panda.behind_lb |quote }}
+  PANDA__use_native_httplib: {{ .Values.config.panda.use_native_httplib |quote }}
