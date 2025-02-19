@@ -29,6 +29,12 @@ Campaign Management for Rubin Data Release Production
 | config.outputVolume.storage | string | `"1Gi"` | Minimum storage requested in service output area PVC |
 | config.outputVolume.storageClassName | string | `nil` | If specified, name of storage class requested in service output area PVC |
 | config.outputVolume.subPath | string | `nil` | If specified, sub-path within bound PV to be mounted at service output area |
+| config.panda.behind_lb | string | `"0"` | PanDA host behind load balancer |
+| config.panda.monitor_url | string | `nil` | URL of a panda monitor host |
+| config.panda.url | string | `nil` | URL of a panda host, used for base, tls, and cache URLs |
+| config.panda.use_native_httplib | string | `"1"` | PanDA Use Native HTTPLib instead of Curl |
+| config.panda.verify_host | string | `"1"` | PanDA host TLS verification |
+| config.panda.virtual_organization | string | `"Rubin"` | PanDA Virtual Organization Name for oidc |
 | config.pathPrefix | string | `"/cm-service"` | URL path prefix |
 | daemon.affinity | object | `{}` | Affinity rules for the daemon pods |
 | daemon.image.pullPolicy | string | `"IfNotPresent"` | Pull policy for the daemon image |
