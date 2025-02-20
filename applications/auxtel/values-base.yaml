@@ -162,10 +162,10 @@ atoods:
                       - collection: LATISS/raw/all
                         filesOlderThan:
                             <<: *interval
-                            hours: 1
+                            days: 20
                   scanInterval:
                       <<: *interval
-                      minutes: 20
+                      hours: 1
 
 atpneumatics-sim:
   enabled: true
