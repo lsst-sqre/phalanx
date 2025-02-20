@@ -6,7 +6,7 @@ import json
 import secrets
 from base64 import b64encode
 from datetime import UTC, datetime
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any, Literal, Self
 
@@ -81,7 +81,7 @@ class ConditionalSecretCopyRules(SecretCopyRules, ConditionalMixin):
     """Possibly conditional rules for copying a secret value from another."""
 
 
-class SecretGenerateType(str, Enum):
+class SecretGenerateType(StrEnum):
     """Type of secret for generated secrets."""
 
     password = "password"
