@@ -1,6 +1,7 @@
 {
   "$defs": {
     "ControlSystemConfig": {
+      "additionalProperties": false,
       "description": "Configuration for the Control System.",
       "properties": {
         "appNamespace": {
@@ -112,6 +113,7 @@
       "type": "object"
     },
     "GCPMetadata": {
+      "additionalProperties": false,
       "description": "Google Cloud Platform hosting metadata.\n\nHolds information about where in Google Cloud Platform this Phalanx\nenvironment is hosted. This supports generating documentation that\nincludes this metadata, making it easier for administrators to know what\noptions to pass to :command:`gcloud` to do things such as get Kubernetes\ncredentials.",
       "properties": {
         "projectId": {
@@ -139,6 +141,7 @@
       "type": "object"
     },
     "OnepasswordConfig": {
+      "additionalProperties": false,
       "description": "Configuration for 1Password static secrets source.",
       "properties": {
         "connectUrl": {
