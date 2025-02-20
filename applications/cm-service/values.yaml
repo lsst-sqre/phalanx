@@ -1,11 +1,26 @@
 # Default values for cm-service.
-# This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+
+# -- Whether to use the internal (phalanx) database
+internalDB: false
 
 config:
 
-  # -- Whether to echo SQLAlchemy generated SQL to the log
-  databaseEcho: false
+  db:
+    # -- Name of the database host
+    hostname: ""
+
+    # -- Name of the database user to use for the application
+    username: "cmservice"
+
+    # -- Name of the database to use for the application
+    name: "cmservice"
+
+    # -- Whether to echo SQLAlchemy generated SQL to the log
+    echo: false
+
+    # -- Port number of the database host
+    port: 5432
 
   # -- Logging level (`DEBUG`, `INFO`, `WARNING`, `ERROR`, or `CRITICAL`)
   logLevel: "INFO"
@@ -24,7 +39,38 @@ config:
     subPath: null
 
   # -- URL path prefix
-  pathPrefix: "/cm-service/v1"
+  pathPrefix: "/cm-service"
+
+  butler:
+    # -- If specified, name of storage class requested in butler remote area PVC
+    storageClassName: null
+
+    # -- Minimum storage requested in the butler remote area PVC
+    storage: 1Gi
+
+    # -- If specified, sub-path within bound PV to be mounted as butler remote area
+    subPath: null
+
+    # -- A mapping of butler repository names to their URIs that will be known to the service.
+    repositories: {}
+
+  htcondor:
+
+    # -- Name of an htcondor collector host
+    collectorHost: null
+
+    # -- If specified, name of an htcondor schedd host
+    scheddHost: null
+
+    fsRemoteDir:
+      # -- If specified, name of storage class requested for condor fs-remote PVC
+      storageClassName: null
+
+      # -- Minimum storage requested in the condor fs-remote PVC
+      storage: 1Gi
+
+      # -- If specified, sub-path within bound PV to be mounted as condor fs-remote
+      subPath: null
 
 image:
   # -- Image to use for frontend containers
@@ -44,6 +90,17 @@ ingress:
 frontend:
   # -- Number of frontend pods to start
   replicaCount: 1
+
+  image:
+    # -- Image to use for frontend containers
+    repository: "ghcr.io/lsst-dm/cm-service"
+
+    # -- Pull policy for the frontend image
+    pullPolicy: "IfNotPresent"
+
+    # -- Tag of frontend image to use
+    # @default -- The appVersion of the chart
+    tag: null
 
   # -- Resource limits and requests for the frontend pods
   # @default -- See `values.yaml`
@@ -67,22 +124,22 @@ frontend:
   # -- Tolerations for the frontend pods
   tolerations: []
 
-worker:
-  # -- Number of worker pods to start
+daemon:
+  # -- Number of daemon pods to start
   replicaCount: 1
 
   image:
-    # -- Image to use for worker containers
-    repository: "ghcr.io/lsst-dm/cm-service-worker"
+    # -- Image to use for daemon containers
+    repository: "ghcr.io/lsst-dm/cm-daemon"
 
-    # -- Pull policy for the worker image
+    # -- Pull policy for the daemon image
     pullPolicy: "IfNotPresent"
 
-    # -- Tag of worker image to use
+    # -- Tag of daemon image to use
     # @default -- The appVersion of the chart
     tag: null
 
-  # -- Resource limits and requests for the worker pods
+  # -- Resource limits and requests for the daemon pods
   # @default -- See `values.yaml`
   resources:
     limits:
@@ -92,42 +149,17 @@ worker:
       cpu: "0.1"
       memory: "550Mi"
 
-  # -- Affinity rules for the worker pods
+  # -- Affinity rules for the daemon pods
   affinity: {}
 
-  # -- Node selection rules for the worker pods
+  # -- Node selection rules for the daemon pods
   nodeSelector: {}
 
-  # -- Annotations for the worker pods
+  # -- Annotations for the daemon pods
   podAnnotations: {}
 
-  # -- Tolerations for the worker pods
+  # -- Tolerations for the daemon pods
   tolerations: []
-
-  htcondor:
-    config:
-      # -- If specified, location for htcondor config file to be injected into worker containers
-      mountPath: null
-
-      # -- If specified, contents of htcondor config file to be injected into worker containers
-      contents: null
-
-    fsRemoteDir:
-      # -- If specified, name of storage class requested in condor remote area PVC
-      storageClassName: null
-
-      # -- Minimum storage requested in the condor remote area PVC
-      storage: 1Gi
-
-      # -- If specified, sub-path within bound PV to be mounted as condor remote area
-      subPath: null
-
-    scheddAddress:
-      # -- If specified, contents of htcondor schedd address file to be injected into worker pods
-      mountPath: null
-
-      # -- If specified, location for htcondor schedd address file to be injected into worker pods
-      contents: null
 
 # The following will be set by parameters injected by Argo CD and should not
 # be set in the individual environment values files.
