@@ -15,24 +15,18 @@ strimzi-kafka:
       tls:
         enabled: true
       bootstrap:
-        loadBalancerIP: "139.229.180.2"
+        loadBalancerIP: "139.229.180.91"
         host: sasquatch-summit-kafka-bootstrap.lsst.codes
       brokers:
         - broker: 6
-          loadBalancerIP: "139.229.180.8"
+          loadBalancerIP: "139.229.180.92"
           host: sasquatch-summit-kafka-6.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
         - broker: 7
-          loadBalancerIP: "139.229.180.9"
+          loadBalancerIP: "139.229.180.93"
           host: sasquatch-summit-kafka-7.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
         - broker: 8
-          loadBalancerIP: "139.229.180.10"
+          loadBalancerIP: "139.229.180.94"
           host: sasquatch-summit-kafka-8.lsst.codes
-          annotations:
-            metallb.universe.tf/address-pool: lhn
     resources:
       requests:
         memory: 32Gi
