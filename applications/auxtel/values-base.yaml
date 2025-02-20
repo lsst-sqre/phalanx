@@ -216,8 +216,8 @@ hexapod-sim:
   enabled: true
   resources:
     limits:
-      cpu: 100m
-      memory: 500Mi
+      cpu: 1000m
+      memory: 5000Mi
     requests:
-      cpu: 20m
-      memory: 200Mi
+      cpu: 200m
+      memory: 2000Mi
