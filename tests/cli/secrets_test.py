@@ -5,14 +5,13 @@ from __future__ import annotations
 import os
 import re
 from base64 import b64decode, b64encode
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import bcrypt
 import click
 import yaml
 from cryptography.fernet import Fernet
-from safir.datetime import current_datetime
 
 from phalanx.factory import Factory
 from phalanx.models.gafaelfawr import Token
@@ -456,7 +455,7 @@ def test_sync_regenerate(
 
     # Check whether mtime secrets are generated properly.
     mtime = datetime.fromisoformat(argocd["admin.passwordMtime"])
-    now = current_datetime()
+    now = datetime.now(tz=UTC)
     assert now - timedelta(seconds=5) <= mtime <= now
 
 

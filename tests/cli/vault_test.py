@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import re
 from base64 import b64encode
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import jinja2
 import yaml
-from safir.datetime import current_datetime
 
 from phalanx.constants import (
     VAULT_APPROLE_SECRET_TEMPLATE,
@@ -253,7 +252,7 @@ def test_create_write_token(
     assert result.exit_code == 0
     token = VaultToken.model_validate(yaml.safe_load(result.output))
     assert token.display_name == display_name
-    expires = current_datetime() + lifetime
+    expires = datetime.now(tz=UTC) + lifetime
     assert token.expires
     assert expires - timedelta(seconds=5) <= token.expires <= expires
     assert token.policies == [f"{vault_path}/write"]
