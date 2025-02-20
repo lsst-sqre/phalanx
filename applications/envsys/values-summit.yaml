@@ -164,10 +164,10 @@ earthquake-ess302:
   resources:
     requests:
       cpu: 4m
-      memory: 103Mi
+      memory: 500Mi
     limits:
       cpu: 40m
-      memory: 310Mi
+      memory: 1500Mi
 
 eas:
   enabled: true
