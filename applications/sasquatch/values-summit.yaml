@@ -86,6 +86,7 @@ strimzi-kafka:
       hostname: summit-lsp.lsst.codes
       path: /schema-registry(/|$)(.*)
   connect:
+    enabled: false
     config:
       key.converter: org.apache.kafka.connect.json.JsonConverter
       key.converter.schemas.enable: false
