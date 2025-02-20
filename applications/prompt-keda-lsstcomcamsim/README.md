@@ -13,7 +13,7 @@ K Prompt Processing instance for LSSTComCamSim
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | prompt-keda.additionalVolumeMounts | list | `[]` | Kubernetes YAML configs for extra container volume(s). Any volumes required by other config options are automatically handled by the Helm chart. |
-| prompt-keda.affinity | object | `{}` |  |
+| prompt-keda.affinity | object | `{}` | Affinity rules for the Prompt Processing Pod |
 | prompt-keda.alerts.server | string | `"usdf-alert-stream-dev-broker-0.lsst.cloud:9094"` | Server address for the alert stream |
 | prompt-keda.alerts.topic | string | alert-stream-test | Topic name where alerts will be sent |
 | prompt-keda.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
@@ -51,7 +51,7 @@ K Prompt Processing instance for LSSTComCamSim
 | prompt-keda.keda.successfulJobsHistoryLimit | int | `25` |  |
 | prompt-keda.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |
 | prompt-keda.nameOverride | string | `""` | Override the base name for resources |
-| prompt-keda.nodeSelector | object | `{}` | Node selection rules for the Prompt Porcessing pod |
+| prompt-keda.nodeSelector | object | `{}` |  |
 | prompt-keda.podAnnotations | object | `{}` | Pod annotations for the Prompt Processing Pod |
 | prompt-keda.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |

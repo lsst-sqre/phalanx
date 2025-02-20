@@ -11,6 +11,7 @@ applications:
   next-visit-fan-out: true
   prompt-keda-hsc: true
   prompt-keda-latiss: true
+  prompt-keda-lsstcamimsim: true
   prompt-keda-lsstcomcamsim: true
   prompt-proto-service-hsc: true
   prompt-proto-service-hsc-gpu: true
