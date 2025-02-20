@@ -1,3 +1,6 @@
+image:
+  pullPolicy: Always
+  tag: tickets-DM-49009
 config:
   logLevel: DEBUG
   profile: development
