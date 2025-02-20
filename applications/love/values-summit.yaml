@@ -65,7 +65,7 @@ love-manager:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-manager
-        revision: 001
+        revision: 0
         pullPolicy: Always
       env:
         SERVER_URL: summit-lsp.lsst.codes
@@ -334,7 +334,7 @@ love-nginx:
     frontend:
       image:
         repository: ts-dockerhub.lsst.org/love-frontend-k8s
-        revision: 001
+        revision: 0
         pullPolicy: Always
     manager:
       image:
