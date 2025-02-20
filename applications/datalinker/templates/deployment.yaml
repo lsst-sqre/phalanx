@@ -66,6 +66,8 @@ spec:
                 secretKeyRef:
                   name: "datalinker-gafaelfawr-token"
                   key: "token"
+            - name: "DAF_BUTLER_REPOSITORIES"
+              value: {{ .Values.global.butlerServerRepositories | b64dec | quote }}
           ports:
             - name: "http"
               containerPort: 8080
