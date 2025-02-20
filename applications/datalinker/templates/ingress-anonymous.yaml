@@ -1,7 +1,7 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: {{ include "datalinker.fullname" . }}-anonymous
+  name: "datalinker-anonymous"
   labels:
     {{- include "datalinker.labels" . | nindent 4 }}
 config:
@@ -10,7 +10,7 @@ config:
     anonymous: true
 template:
   metadata:
-    name: {{ include "datalinker.fullname" . }}-anonymous
+    name: "datalinker-anonymous"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -24,6 +24,6 @@ template:
               pathType: "Exact"
               backend:
                 service:
-                  name: {{ include "datalinker.fullname" . }}
+                  name: "datalinker"
                   port:
                     number: 8080
