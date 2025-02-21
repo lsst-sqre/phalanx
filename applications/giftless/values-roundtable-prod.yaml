@@ -1,6 +1,6 @@
 server:
   readonly:
-    replicas: 3
+    replicas: 5
 ingress:
   hostname:
     readonly: "git-lfs.lsst.cloud"
