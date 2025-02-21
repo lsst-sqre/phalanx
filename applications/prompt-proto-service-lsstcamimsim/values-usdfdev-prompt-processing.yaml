@@ -37,7 +37,7 @@ prompt-proto-service:
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
-    topic: or5-notification
+    topic: or5-ppdev-notification
 
   apdb:
     config: s3://rubin-summit-users/apdb_config/cassandra/pp_apdb_lsstcamimsim-dev.yaml
