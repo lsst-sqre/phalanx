@@ -62,4 +62,4 @@ productionTools:
       readOnly: true
 
 image:
-  tag: v0.2.2
+  tag: v0.3
