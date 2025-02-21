@@ -1,6 +1,9 @@
 server:
   readonly:
-    replicas: 3
+    replicas: 5
+    queue: 8192
+  readwrite:
+    queue: 8192
 ingress:
   hostname:
     readonly: "git-lfs.lsst.cloud"
