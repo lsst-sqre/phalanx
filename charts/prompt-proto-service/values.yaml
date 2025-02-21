@@ -186,7 +186,7 @@ initializer:
   timeout: 120
   # -- Maximum number of times to attempt initializing the central repo.
   # If the initializer fails, the PP service cannot run!
-  retries: 6
+  retries: 1
 
   # -- Time after which to remove old initializer pods (seconds).
   cleanup_delay: 3600
