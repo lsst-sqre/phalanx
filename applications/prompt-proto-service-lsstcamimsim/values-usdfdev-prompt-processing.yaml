@@ -25,6 +25,7 @@ prompt-proto-service:
         - survey: SURVEY
           pipelines: ['${PROMPT_PROCESSING_DIR}/pipelines/LSSTCam-imSim/Preprocessing.yaml']
     calibRepo: s3://repo-test-users/or5
+    skymap: "lsst_cells_v1"
 
   s3:
     imageBucket: repo-test
@@ -36,7 +37,7 @@ prompt-proto-service:
 
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
-    topic: prompt-processing-dev
+    topic: or5-notification
 
   apdb:
     config: s3://rubin-pp-dev-users/apdb_config/cassandra/pp_apdb_lsstcamimsim-dev.yaml
