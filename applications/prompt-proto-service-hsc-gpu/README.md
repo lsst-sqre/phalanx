@@ -37,7 +37,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.initializer.resources.ephemeralStorageRequest | string | `"10Mi"` | The storage space reserved for the initializer (mostly code). |
 | prompt-proto-service.initializer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the initializer. |
 | prompt-proto-service.initializer.resources.memoryRequest | string | `"500Mi"` | The minimum memory to request for the initializer. |
-| prompt-proto-service.initializer.retries | int | `6` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
+| prompt-proto-service.initializer.retries | int | `0` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
 | prompt-proto-service.initializer.timeout | int | `120` | Maximum time for a single attempt to initialize the central repo (seconds). |
 | prompt-proto-service.instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | prompt-proto-service.instrument.name | string | `"HSC"` | The "short" name of the instrument |
