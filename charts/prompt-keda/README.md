@@ -30,6 +30,15 @@ Event-driven processing of camera images
 | imageNotifications.imageTimeout | int | `20` | Timeout to wait after expected script completion for raw image arrival (seconds). |
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
+| initializer.cleanup_delay | int | `3600` | Time after which to remove old initializer pods (seconds). |
+| initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
+| initializer.podAnnotations | object | See the `values.yaml` file. | Pod annotations for the init-output Job |
+| initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |
+| initializer.resources.cpuRequest | int | `1` | The cpu cores requested for the initializer. |
+| initializer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the initializer. |
+| initializer.resources.memoryRequest | string | `"512Mi"` | The minimum memory to request for the initializer. |
+| initializer.retries | int | `6` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |
+| initializer.timeout | int | `120` | Maximum time for a single attempt to initialize the central repo (seconds). |
 | instrument.calibRepo | string | None, must be set | URI to the shared repo used for calibrations, templates, and pipeline outputs. If `registry.centralRepoFile` is set, this URI points to a local redirect instead of the central repo itself. |
 | instrument.name | string | None, must be set | The "short" name of the instrument |
 | instrument.pipelines.main | string | None, must be set | YAML-formatted config describing which pipeline(s) should be run for which visits' raws. Fields are still in flux; see [the source code](https://github.com/lsst-dm/prompt_processing/blob/main/python/activator/config.py) for examples. |
