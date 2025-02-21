@@ -47,6 +47,7 @@ argo-cd:
         g, cslater@slac.stanford.edu, role:admin
         g, svoutsin@slac.stanford.edu, role:admin
         g, ebellm@slac.stanford.edu, role:admin
+        g, sierrav@slac.stanford.edu, role:admin
 
         g, bbrond@slac.stanford.edu, role:developer
         g, fritzm@slac.stanford.edu, role:developer
