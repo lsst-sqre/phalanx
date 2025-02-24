@@ -1,6 +1,9 @@
+image:
+  tag: tickets-dfuchs-testing
+  pullPolicy: Always
 config:
   logLevel: DEBUG
-  profile: development
+  logMonkeysToFile: false
   metrics:
     enabled: true
   sentryTracesSampleConfig: errors
