@@ -202,7 +202,7 @@ eas-sim:
       cpu: 15m
       memory: 125Mi
 
-ess303-sim:
+epm-ess303-sim:
   enabled: true
   classifier: ess303
   image:

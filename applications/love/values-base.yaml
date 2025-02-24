@@ -516,7 +516,7 @@ love-producer:
   - name: electrometer201
     csc: Electrometer:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: ess303
+  - name: epm-ess303
     csc: ESS:303 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: gcheaderservice1
