@@ -173,10 +173,6 @@ initializer:
     cpuRequest: 1
     # -- The maximum cpu cores for the initializer.
     cpuLimit: 1
-    # -- The storage space reserved for the initializer (mostly Middleware scratch).
-    ephemeralStorageRequest: "10Mi"
-    # -- The maximum storage space allowed for the initializer (mostly Middleware scratch).
-    ephemeralStorageLimit: "100Mi"
     # -- The minimum memory to request for the initializer.
     memoryRequest: "500Mi"
     # -- The maximum memory limit for the initializer.

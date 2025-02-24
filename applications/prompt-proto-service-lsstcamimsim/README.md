@@ -33,8 +33,6 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
 | prompt-proto-service.initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |
 | prompt-proto-service.initializer.resources.cpuRequest | int | `1` | The cpu cores requested for the initializer. |
-| prompt-proto-service.initializer.resources.ephemeralStorageLimit | string | `"100Mi"` | The maximum storage space allowed for the initializer (mostly code). |
-| prompt-proto-service.initializer.resources.ephemeralStorageRequest | string | `"10Mi"` | The storage space reserved for the initializer (mostly code). |
 | prompt-proto-service.initializer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the initializer. |
 | prompt-proto-service.initializer.resources.memoryRequest | string | `"500Mi"` | The minimum memory to request for the initializer. |
 | prompt-proto-service.initializer.retries | int | `0` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |

@@ -36,8 +36,6 @@ Event-driven processing of camera images
 | initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
 | initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |
 | initializer.resources.cpuRequest | int | `1` | The cpu cores requested for the initializer. |
-| initializer.resources.ephemeralStorageLimit | string | `"100Mi"` | The maximum storage space allowed for the initializer (mostly Middleware scratch). |
-| initializer.resources.ephemeralStorageRequest | string | `"10Mi"` | The storage space reserved for the initializer (mostly Middleware scratch). |
 | initializer.resources.memoryLimit | string | `"1Gi"` | The maximum memory limit for the initializer. |
 | initializer.resources.memoryRequest | string | `"500Mi"` | The minimum memory to request for the initializer. |
 | initializer.retries | int | `0` | Maximum number of times to attempt initializing the central repo. If the initializer fails, the PP service cannot run! |

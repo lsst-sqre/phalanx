@@ -62,8 +62,6 @@ spec:
         - name: SERVICE_LOG_LEVELS
           value: {{ .Values.logLevel }}
         volumeMounts:
-        - mountPath: /tmp-butler
-          name: ephemeral
         - mountPath: /app/lsst-credentials
           name: db-auth-credentials-file
           readOnly: true
@@ -81,16 +79,11 @@ spec:
         resources:
           requests:
             cpu: {{ .Values.initializer.resources.cpuRequest | toString | quote}}
-            ephemeral-storage: {{ .Values.initializer.resources.ephemeralStorageRequest }}
             memory: {{ .Values.initializer.resources.memoryRequest }}
           limits:
             cpu: {{ .Values.initializer.resources.cpuLimit | toString | quote}}
-            ephemeral-storage: {{ .Values.initializer.resources.ephemeralStorageLimit }}
             memory: {{ .Values.initializer.resources.memoryLimit }}
       volumes:
-      - name: ephemeral
-        emptyDir:
-          sizeLimit: {{ .Values.initializer.resources.ephemeralStorageLimit }}
       - name: db-auth-mount
         # Temporary mount for db-auth.yaml; cannot be read directly because it's owned by root
         secret:
