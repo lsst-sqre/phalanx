@@ -5,6 +5,8 @@ replicaCount: 3
 
 config:
   logLevel: "DEBUG"
+  metrics:
+    enabled: true
   worker:
     workerCount: 1
     identities:

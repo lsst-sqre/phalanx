@@ -163,6 +163,7 @@ app-metrics:
   apps:
     - gafaelfawr
     - mobu
+    - noteburst
     - nublado
     - wobbly
 

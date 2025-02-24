@@ -351,6 +351,11 @@ chronograf:
       nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
       nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
 
+app-metrics:
+  enabled: true
+  apps:
+    - noteburst
+
   env:
     GENERIC_NAME: "OIDC"
     GENERIC_AUTH_URL: https://usdf-rsp.slac.stanford.edu/auth/openid/login
