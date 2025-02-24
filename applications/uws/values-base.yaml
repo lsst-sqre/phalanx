@@ -34,6 +34,20 @@ uws-api-server:
     exportPath: "/rsphome"
     subPath: ""
     readOnly: false
+  - name: repo-latiss
+    server: nfs-auxtel.ls.lsst.org
+    claimName: repo-latiss-pvc
+    mountPath: "/repo/LATISS"
+    exportPath: "/auxtel/repo/LATISS"
+    subPath: ""
+    readOnly: false
+  - name: data-auxtel
+    server: nfs-auxtel.ls.lsst.org
+    claimName: data-auxtel-pvc
+    mountPath: "/data/lsstdata/BTS/auxtel"
+    exportPath: "/auxtel/lsstdata/BTS/auxtel"
+    subPath: ""
+    readOnly: true
   resources:
     limits:
       cpu: 100m
