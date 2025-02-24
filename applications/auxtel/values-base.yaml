@@ -163,6 +163,10 @@ atoods:
                         filesOlderThan:
                             <<: *interval
                             days: 20
+                      - collection: LATISS/quickLook
+                        filesOlderThan:
+                            <<: *interval
+                            days: 2
                   scanInterval:
                       <<: *interval
                       hours: 1
