@@ -177,7 +177,9 @@ spec:
       - name: s3-credentials-file
         secret:
           secretName: {{ template "prompt-proto-service.fullname" . }}-secret
-          key: s3-credentials-file
+          items:
+          - key: s3_credentials_file
+            path: credentials
       {{- end }}
       {{- if .Values.registry.centralRepoFile }}
       - name: central-repo-file
