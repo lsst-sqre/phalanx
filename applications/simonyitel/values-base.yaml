@@ -157,6 +157,7 @@ mtm1m3-sim:
     LSST_KAFKA_MAX_QUEUE_MS: 100
     LSST_KAFKA_PREFIX: lsst.sal
     LSST_KAFKA_BROKER_PORT: 9092
+    LSST_KAFKA_HOST: sasquatch-kafka-bootstrap.sasquatch
   resources:
     limits:
       cpu: 1000m
