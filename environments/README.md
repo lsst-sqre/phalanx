@@ -34,6 +34,7 @@
 | applications.monitoring | bool | `false` | Enable the monitoring application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
+| applications.next-visit-fan-out-keda | bool | `false` | Enable the next-visit-fan-out-keda application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
