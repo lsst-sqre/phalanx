@@ -1,6 +1,6 @@
 image:
   repository: ts-dockerhub.lsst.org/rapid-analysis
-  tag: c0039
+  tag: c0040
   pullPolicy: Always
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
