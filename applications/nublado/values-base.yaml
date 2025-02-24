@@ -12,13 +12,9 @@ controller:
       cycle: null
       recommendedTag: "recommended_k0004"
     lab:
-      extraAnnotations:
-        k8s.v1.cni.cncf.io/networks: "kube-system/dds"
       env:
-        AWS_SHARED_CRDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
-        LSST_DDS_INTERFACE: "net1"
-        LSST_DDS_PARTITION_PREFIX: "base"
         LSST_SITE: "base"
         LSST_TOPIC_SUBNAME: "sal"
         LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"

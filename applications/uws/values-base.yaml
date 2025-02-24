@@ -7,8 +7,11 @@ uws-api-server:
   ttlSecondsAfterFinished: 3600
   butlerPg:
     secretName: uws
-    containerPath: /home/lsst/.lsst
+    containerPath: &cp /home/lsst/.lsst
     dbUser: oods
+  s3ButlerStorage:
+    endpointURL: https://s3-butler.ls.lsst.org
+    containerPath: *cp
   workingVolume:
     name: job-files
     server: nfs-scratch.ls.lsst.org
@@ -25,10 +28,10 @@ uws-api-server:
     subPath: ""
     readOnly: false
   - name: home
-    server: nfs-jhome.ls.lsst.org
+    server: nfs-rsphome.ls.lsst.org
     claimName: home-pvc
-    mountPath: "/jhome"
-    exportPath: "/jhome"
+    mountPath: "/rsphome"
+    exportPath: "/rsphome"
     subPath: ""
     readOnly: false
   - name: repo-latiss

@@ -58,6 +58,12 @@ mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
+  env:
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - butler-credentials.ini
   <<: *butler-secret
   nfsMountpoint:
   - name: scratch
@@ -130,10 +136,6 @@ mtheaderservice:
   - name: AWS_ACCESS_KEY_ID
     key: aws-access-key-id
   - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  - name: MYS3_ACCESS_KEY
-    key: aws-access-key-id
-  - name: MYS3_SECRET_KEY
     key: aws-secret-access-key
   resources:
     limits:
@@ -225,12 +227,12 @@ mtoods:
     pullPolicy: Always
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
-    AWS_ACCESS_KEY_ID: oods-lsstcam
-    AWS_ENDPOINT_URL: https://s3-butler.ls.lsst.org
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_SECRET_ACCESS_KEY
-    key: oods-lsstcam-secret-key
+  s3Credentials:
+  - lfa-credentials.ini
+  - oods-lsstcam-credentials.ini
   <<: *butler-secret
   resources:
     limits:
@@ -263,7 +265,8 @@ mtoods:
                   class:
                       import : lsst.ctrl.oods.messageAttendant
                       name : MessageAttendant
-                  repoDirectory : s3://rubinobs-butler-lsstcam
+                  repoDirectory : s3://butler@rubinobs-butler-lsstcam
+                  s3profile: butler
                   collections:
                       - LSSTCam/raw/all
                   cleanCollections:

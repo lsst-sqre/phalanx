@@ -46,6 +46,8 @@ butlerSecret: {}
 # _filenames_ (A list of secret file names),
 # _specialInstructions_ (OPTIONAL: A set of shell commads to add to the permission fixing)
 secretFixup: {}
+# -- This key contains a list of S3 (AWS) credential files to merge into a single aws-credentials.ini file.
+s3Credentials: []
 # -- This key allows for the specification of a pod security context for volumes.
 # If this section is used, it must contain the following attributes:
 # _user_ (The user id for the volumes)
