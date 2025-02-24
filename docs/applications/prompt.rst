@@ -10,6 +10,7 @@ Argo CD project: ``prompt``
    :maxdepth: 1
 
    next-visit-fan-out/index
+   next-visit-fan-out-keda/index
    prompt-keda-hsc/index
    prompt-keda-latiss/index
    prompt-keda-lsstcamimsim/index
