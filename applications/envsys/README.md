@@ -33,9 +33,9 @@ Deployment for the Environmental Awareness Systems CSCs
 | earthquake-ess302.enabled | bool | `false` | Enable ESS:302 CSC |
 | eas-sim.enabled | bool | `false` | Enable the EAS simulator CSC |
 | eas.enabled | bool | `false` | Enable the EAS CSC |
-| epm1-sim.enabled | bool | `false` | Enable the EPM:1 simulator CSC |
-| epm1.enabled | bool | `false` | Enable the EPM:1 CSC |
 | epm301.enabled | bool | `false` | Enable the EPM:301 CSC |
+| ess303-sim.enabled | bool | `false` | Enable the EPM:1 simulator CSC |
+| ess303.enabled | bool | `false` | Enable the EPM:1 CSC |
 | global.baseUrl | string | Set by Argo CD | Base URL for the environment |
 | global.controlSystem.appNamespace | string | Set by ArgoCD | Application namespace for the control system deployment |
 | global.controlSystem.imageTag | string | Set by ArgoCD | Image tag for the control system deployment |
