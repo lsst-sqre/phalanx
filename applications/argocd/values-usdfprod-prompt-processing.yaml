@@ -38,3 +38,4 @@ argo-cd:
   server:
     ingress:
       hostname: "usdfprod-prompt-processing.slac.stanford.edu"
+      tls: false
