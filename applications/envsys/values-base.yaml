@@ -209,7 +209,7 @@ epm-ess303-sim:
     repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 1 --simulate
+    RUN_ARG: 303 --simulate
   resources:
     requests:
       cpu: 19m
