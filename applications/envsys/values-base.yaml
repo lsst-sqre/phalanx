@@ -202,9 +202,9 @@ eas-sim:
       cpu: 15m
       memory: 125Mi
 
-epm1-sim:
+ess303-sim:
   enabled: true
-  classifier: epm1
+  classifier: ess303
   image:
     repository: ts-dockerhub.lsst.org/epm
     pullPolicy: Always

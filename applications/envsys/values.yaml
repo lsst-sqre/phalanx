@@ -106,11 +106,11 @@ eas-sim:
   # -- Enable the EAS simulator CSC
   enabled: false
 
-epm1:
+ess303:
   # -- Enable the EPM:1 CSC
   enabled: false
 
-epm1-sim:
+ess303-sim:
   # -- Enable the EPM:1 simulator CSC
   enabled: false
 
