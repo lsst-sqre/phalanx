@@ -157,6 +157,16 @@ dependencies:
   condition: epm301.enabled
   repository: file://../../charts/csc
 - name: csc
+  alias: epm-ess303
+  version: 1.0.0
+  condition: epm-ess303.enabled
+  repository: file://../../charts/csc
+- name: csc
+  alias: epm-ess303-sim
+  version: 1.0.0
+  condition: epm-ess303-sim.enabled
+  repository: file://../../charts/csc
+- name: csc
   alias: hvac
   version: 1.0.0
   condition: hvac.enabled
