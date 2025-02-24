@@ -155,6 +155,7 @@ mtm1m3-sim:
     LSST_KAFKA_CMDEVT_FLUSH_MS: 0
     LSST_KAFKA_MAX_QUEUE_MSG: 200
     LSST_KAFKA_MAX_QUEUE_MS: 100
+    LSST_KAFKA_PREFIX: lsst.sal
   resources:
     limits:
       cpu: 1000m
