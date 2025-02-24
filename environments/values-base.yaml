@@ -25,6 +25,7 @@ applications:
   obsenv-management: true
   obssys: true
   portal: true
+  rapid-analysis: true
   rubintv: true
   sasquatch: true
   simonyitel: true
