@@ -5,4 +5,4 @@ config:
   dp02PostgresUri: postgresql://butler@dp02.rsp-sql-stable.internal:5432/dp02
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
-    dp02: "file:///opt/lsst/butler/public/config/dp02.yaml"
+    dp02: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
