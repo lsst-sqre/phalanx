@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "rolex2.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "rolex2.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "rolex2.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "rolex2.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      {{- if .Values.nfsMountpoint }}
+      {{- range $values := .Values.nfsMountpoint }}
+        - name: {{ $values.name }}
+          nfs:
+            path: {{ $values.serverPath }}
+            readOnly: {{ $values.readOnly }}
+            server: {{ $values.server }}
+      {{- end }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          {{- range $env_var, $env_value := .Values.env }}
+            - name: {{ $env_var }}
+              value: {{ $env_value | quote }}
+          {{- end }}
+          volumeMounts:
+          {{- if .Values.nfsMountpoint }}
+          {{- range $values := .Values.nfsMountpoint }}
+            - name: {{ $values.name }}
+              mountPath: {{ $values.containerPath }}
+              readOnly: {{ $values.readOnly }}
+          {{- end}}
+          {{- end}}
+          {{- with $.Values.resources }}
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.timeoutSeconds }}
+            periodSeconds: {{ .Values.periodSeconds }}
+            httpGet:
+              path: {{ .Values.service.path }}
+              port: {{ .Values.service.port }}
+          readinessProbe:
+            initialDelaySeconds: {{ .Values.initialDelaySeconds }}
+            timeoutSeconds: {{ .Values.timeoutSeconds }}
+            periodSeconds: {{ .Values.periodSeconds }}
+            httpGet:
+              path: {{ .Values.service.path }}
+              port: {{ .Values.service.port }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
