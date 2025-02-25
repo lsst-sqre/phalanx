@@ -80,7 +80,7 @@ data:
     # Cloud Storage, and s3:// to access Weka S3 at USDF.
     {{ include "butler.dp02_config" (dict
        "postgresUri" .Values.config.dp02PostgresUri
-       "fileDatastoreRoot" "s3://rubin-dp02-products/dc2/"
+       "fileDatastoreRoot" "s3://rubin-dp02-products/"
        "rawDatastoreRoot" "s3://rubin-dp02-raw/"
        "dp01DatastoreRoot" "s3://rubin-dp02-dp01/"
        "userDatastoreRoot" "gs://butler-us-central1-dp02-user/"
@@ -93,7 +93,7 @@ data:
     {{ if .Values.config.dp02UseSlacDatastore }}
     {{ include "butler.dp02_config" (dict
        "postgresUri" .Values.config.dp02PostgresUri
-       "fileDatastoreRoot" "s3://slac@rubin-dp02-products/dc2/"
+       "fileDatastoreRoot" "s3://slac@rubin-dp02-products/"
        "rawDatastoreRoot" "s3://slac@rubin-dp02-raw/"
        "dp01DatastoreRoot" "s3://slac@rubin-dp02-dp01/"
        "userDatastoreRoot" "s3://butler-us-central1-dp02-user/"
