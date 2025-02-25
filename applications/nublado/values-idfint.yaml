@@ -27,7 +27,7 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         GOOGLE_APPLICATION_CREDENTIALS: "/opt/lsst/software/jupyterlab/secrets/butler-gcs-idf-creds.json"
         DAF_BUTLER_REPOSITORY_INDEX: "https://data-int.lsst.cloud/api/butler/configs/idf-repositories.yaml"
-        S3_ENDPOINT_URL: "https://storage.googleapis.com"
+        S3_ENDPOINT_URL: "https://sdfdatas3.slac.stanford.edu"
         IDDS_CONFIG: "/opt/lsst/software/jupyterlab/panda/idds.cfg.client.template"
         PANDA_AUTH: "oidc"
         PANDA_VERIFY_HOST: "off"
