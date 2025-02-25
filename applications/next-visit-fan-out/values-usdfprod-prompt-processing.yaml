@@ -2,7 +2,7 @@ knative:
   maxMessages: 1000 # Kubernetes can't support more pods yet
 
 kafka:
-  schemaRegistryUrl: http://10.100.109.205:8081
+  schemaRegistryUrl: http://10.104.61.102:8081
   sasquatchAddress: 10.96.121.181:9094
   consumerGroup: next-visit-fan-out-1
   nextVisitTopic: lsst.sal.ScriptQueue.logevent_nextVisit
