@@ -68,19 +68,19 @@ controller:
       volumes:
         - name: "home"
           source:
-            type: nfs
-            serverPath: "/share1/home"
-            server: "10.87.86.26"
+            serverPath: "/home-share"
+            server: "10.234.16.4"
+            type: "nfs"
         - name: "project"
           source:
-            type: nfs
-            serverPath: "/share1/project"
-            server: "10.87.86.26"
+            serverPath: "/project-share"
+            server: "10.234.16.4"
+            type: "nfs"
         - name: "scratch"
           source:
-            type: nfs
-            serverPath: "/share1/scratch"
-            server: "10.87.86.26"
+            serverPath: "/scratch-share"
+            server: "10.234.16.4"
+            type: "nfs"
       volumeMounts:
         - containerPath: "/home"
           volumeName: "home"
