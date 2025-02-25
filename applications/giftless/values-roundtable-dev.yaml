@@ -1,5 +1,11 @@
 server:
   debug: true
+  readonly:
+    processes: 6
+    timeout: 600
+  readwrite:
+    processes: 4
+    timeout: 600
 ingress:
   hostname:
     readonly: "git-lfs-dev.lsst.cloud"
