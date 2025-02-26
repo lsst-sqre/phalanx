@@ -27,12 +27,14 @@
 | applications.hips | bool | `false` | Enable the HiPS application |
 | applications.ingress-nginx | bool | `true` | Enable the ingress-nginx application. This is required for all environments, but is still configurable because currently USDF uses an unsupported configuration with ingress-nginx deployed in a different cluster. |
 | applications.jira-data-proxy | bool | `false` | Enable the jira-data-proxy application |
+| applications.keda | bool | `false` | Enable the keda application |
 | applications.livetap | bool | `false` | Enable the livetap application |
 | applications.love | bool | `false` | Enable the love control system application |
 | applications.mobu | bool | `false` | Enable the mobu application |
 | applications.monitoring | bool | `false` | Enable the monitoring application |
 | applications.narrativelog | bool | `false` | Enable the narrativelog application |
 | applications.next-visit-fan-out | bool | `false` | Enable the next-visit-fan-out application |
+| applications.next-visit-fan-out-keda | bool | `false` | Enable the next-visit-fan-out-keda application |
 | applications.noteburst | bool | `false` | Enable the noteburst application (required by times-square) |
 | applications.nublado | bool | `false` | Enable the nublado application (v3 of the Notebook Aspect) |
 | applications.obsenv-management | bool | `false` | Enable the obsenv-management application |
@@ -45,6 +47,10 @@
 | applications.postgres | bool | `false` | Enable the in-cluster PostgreSQL server. Use of this server is discouraged in favor of using infrastructure SQL, but will remain supported for use cases such as minikube test deployments. |
 | applications.ppdb-replication | bool | `false` | Enable the ppdb-replication application |
 | applications.production-tools | bool | `false` | Enable the production-tools application |
+| applications.prompt-keda-hsc | bool | `false` | Enable the prompt-keda-hsc application |
+| applications.prompt-keda-latiss | bool | `false` | Enable the prompt-keda-latiss application |
+| applications.prompt-keda-lsstcamimsim | bool | `false` | Enable the prompt-keda-lsstcamimsim application |
+| applications.prompt-keda-lsstcomcamsim | bool | `false` | Enable the prompt-keda-lsstcomcamsim application |
 | applications.prompt-proto-service-hsc | bool | `false` | Enable the prompt-proto-service-hsc application |
 | applications.prompt-proto-service-hsc-gpu | bool | `false` | Enable the prompt-proto-service-hsc-gpu application |
 | applications.prompt-proto-service-latiss | bool | `false` | Enable the prompt-proto-service-latiss application |
@@ -52,6 +58,7 @@
 | applications.prompt-proto-service-lsstcamimsim | bool | `false` | Enable the prompt-proto-service-lsstcamimsim application |
 | applications.prompt-proto-service-lsstcomcam | bool | `false` | Enable the prompt-proto-service-lsstcomcam application |
 | applications.prompt-proto-service-lsstcomcamsim | bool | `false` | Enable the prompt-proto-service-lsstcomcamsim application |
+| applications.prompt-redis | bool | `false` | Enable the prompt-redis application |
 | applications.rubintv | bool | `false` | Enable the rubintv application |
 | applications.rubintv-dev | bool | `false` | Enable the rubintv-dev application |
 | applications.s3proxy | bool | `false` | Enable the s3proxy application |
