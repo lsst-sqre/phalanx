@@ -36,6 +36,8 @@ prompt-proto-service:
     auth_env: False
     aws_profile: embargo
 
+  raw_microservice: http://172.24.5.224:8080/presence
+
   imageNotifications:
     kafkaClusterAddress: prompt-processing2-kafka-bootstrap.kafka:9092
     topic: or5-ppdev-notification
