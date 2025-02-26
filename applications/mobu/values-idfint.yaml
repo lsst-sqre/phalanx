@@ -5,6 +5,7 @@ config:
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
+      - lsst
   githubCiApp:
     acceptedGithubOrgs:
       - lsst-sqre
@@ -85,6 +86,23 @@ config:
             image_class: "latest-weekly"
           repo_url: "https://github.com/rubin-dp0/tutorial-notebooks.git"
           repo_ref: "prod"
+          max_executions: 1
+          working_directory: "notebooks/tutorial-notebooks"
+        restart: true
+    - name: "tutorial-new-repo"
+      count: 1
+      users:
+        - username: "bot-mobu-tutorial-new-repo"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      business:
+        type: "NotebookRunner"
+        options:
+          repo_url: "https://github.com/lsst/tutorial-notebooks.git"
+          repo_ref: "tickets/SP-1846"
           max_executions: 1
           working_directory: "notebooks/tutorial-notebooks"
         restart: true
