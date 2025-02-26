@@ -8,7 +8,7 @@ obsloctap:
 
     # -- Tag of image to use
     # @default -- The appVersion of the chart
-    tag: "tickets-dm-44729"
+    tag: "tickets-DM-44729"
 
 consumekafka:
   image:
@@ -20,7 +20,7 @@ consumekafka:
 
     # -- Tag of image to use
     # @default -- The appVersion of the chart
-    tag: "tickets-dm-44729`"
+    tag: "tickets-DM-44729"
 
 # -- Environment variables (e.g. butler configuration/auth parms) for panel
 environment: {}
