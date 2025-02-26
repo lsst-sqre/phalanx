@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "obsloctap-consumekafka"
+  name: "consumekafka"
   labels:
     {{- include "obsloctap.labels" . | nindent 4 }}
 spec:
@@ -21,7 +21,7 @@ spec:
     spec:
       automountServiceAccountToken: false
       containers:
-        - name: "obsloctap-consumekafka"
+        - name: "consumekafka"
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
