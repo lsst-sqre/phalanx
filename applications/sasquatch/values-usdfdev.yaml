@@ -190,6 +190,11 @@ chronograf:
     PUBLIC_URL: https://usdf-rsp-dev.slac.stanford.edu/
     STATUS_FEED_URL: https://raw.githubusercontent.com/lsst-sqre/rsp_broadcast/main/jsonfeeds/usdfdev.json
 
+app-metrics:
+  enabled: true
+  apps:
+    - noteburst
+
 backup:
   enabled: true
   persistence:

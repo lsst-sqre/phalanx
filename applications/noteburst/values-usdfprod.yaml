@@ -1,6 +1,8 @@
 replicaCount: 3
 
 config:
+  metrics:
+    enabled: true
   worker:
     workerCount: 3
     # There are 20 bot accounts allocated to noteburst.

@@ -20,6 +20,9 @@ globalAppConfig:
       - "username"
       - "notebook"
       - "repo"
+  noteburst:
+    influxTags:
+      - "username"
   nublado:
     influxTags:
       - "username"
