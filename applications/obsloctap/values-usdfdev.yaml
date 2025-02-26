@@ -7,8 +7,6 @@ environment:
   EFD: "usdf-efd"
   database_schema: "obsloctap_dev"
   vaultUrl: "https://vault.slac.stanford.edu"
-  vaultPathPrefix: secret/rubin/usdf-butler/postgres
-  obsloctapVaultPrefix: secret/rubin/usdf-butler/postgres
 
 config:
   separateSecrets: false
