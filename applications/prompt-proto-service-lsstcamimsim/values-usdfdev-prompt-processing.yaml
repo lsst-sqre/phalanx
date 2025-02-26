@@ -1,6 +1,7 @@
 prompt-proto-service:
 
   podAnnotations:
+    edu.stanford.slac.sdf.project/usdf-embargo: "true"
     # Update this field if using latest or static image tag in dev
     revision: "1"
 
