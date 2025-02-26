@@ -210,7 +210,7 @@ tunablelaser-sim:
   resources:
     limits:
       cpu: 120m
-      memory: 300Mi
+      memory: 3000Mi
     requests:
       cpu: 12m
       memory: 100Mi
