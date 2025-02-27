@@ -160,6 +160,12 @@ prompt-keda:
       memoryRequest: "512Mi"
       # -- The maximum memory limit for the initializer.
       memoryLimit: "1Gi"
+    cron:
+      # -- Time zone in which day_obs is computed.
+      day_obs_tz: -12
+      # -- Whether or not to pause daily initializer runs.
+      # This makes it impossible to run Prompt Processing, but avoids repo clutter if the telescope is offline.
+      suspend: false
 
     # -- Maximum time for a single attempt to initialize the central repo (seconds).
     timeout: 120
