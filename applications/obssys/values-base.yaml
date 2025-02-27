@@ -24,6 +24,9 @@ atqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  envSecrets:
+  - name: USER_USER_PASS
+    secretKey: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
@@ -103,6 +106,9 @@ mtqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  envSecrets:
+  - name: USER_USER_PASS
+    secretKey: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
@@ -182,6 +188,9 @@ ocsqueue:
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
     LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  envSecrets:
+  - name: USER_USER_PASS
+    secretKey: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
