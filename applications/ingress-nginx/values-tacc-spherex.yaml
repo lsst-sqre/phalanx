@@ -5,18 +5,13 @@ ingress-nginx:
       large-client-header-buffers: "4 64k"
       proxy-buffer-size: "64k"
     service:
-      externalTrafficPolicy: null
-      type: ClusterIP
-      enableHttp: true
-      enableHttps: true
-      ports:
-        http: 80
-        https: 443
-      targetPorts:
-        http: http
-        https: https
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
+      type: NodePort
+      nodePorts:
+        http: 30080
+        https: 30443
+      externalTrafficPolicy: Local
+    hostNetwork: false  # Disabling hostNetwork
+    dnsPolicy: ClusterFirst
     kind: Deployment
     replicas: 1
     nodeSelector:
