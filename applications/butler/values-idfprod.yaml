@@ -6,5 +6,6 @@ config:
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
     dp02: "file:///opt/lsst/butler/public/config/dp02-server.yaml"
+  shareNubladoSecrets: false
   additionalS3EndpointUrls:
     slac: "https://sdfdatas3.slac.stanford.edu"
