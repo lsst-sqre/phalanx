@@ -63,6 +63,7 @@ Rubin Observatory's telemetry service
 | influxdb.ingress.path | string | `"/influxdb(/\|$)(.*)"` | Path for the ingress |
 | influxdb.ingress.tls | bool | `false` | Whether to obtain TLS certificates for the ingress hostname |
 | influxdb.initScripts.enabled | bool | `false` | Whether to enable the InfluxDB custom initialization script |
+| influxdb.livenessProbe.initialDelaySeconds | int | `60` | Liveness probe initial delay in seconds |
 | influxdb.persistence.enabled | bool | `true` | Whether to use persistent volume claims. By default, `storageClass` is undefined, choosing the default provisioner (standard on GKE). |
 | influxdb.persistence.size | string | 1TiB for teststand deployments | Persistent volume size |
 | influxdb.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
