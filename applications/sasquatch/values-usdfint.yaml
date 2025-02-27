@@ -25,6 +25,15 @@ strimzi-kafka:
   kafkaController:
     enabled: true
 
+app-metrics:
+  enabled: true
+  apps:
+    - gafaelfawr
+    - mobu
+    - noteburst
+    - nublado
+    - wobbly
+
 influxdb:
   ingress:
     enabled: false
