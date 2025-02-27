@@ -15,7 +15,7 @@ ingress-nginx:
       targetPorts:
         http: http
         https: https
-    hostNetwork: false
+    hostNetwork: True
     dnsPolicy: ClusterFirst
     kind: DaemonSet
     containerPort:
