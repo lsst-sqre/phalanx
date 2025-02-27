@@ -42,4 +42,8 @@ prompt-proto-service:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
 
+  initializer:
+    cron:
+      suspend: true
+
   fullnameOverride: "prompt-proto-service-hsc-gpu"
