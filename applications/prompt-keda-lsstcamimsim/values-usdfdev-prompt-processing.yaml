@@ -1,6 +1,6 @@
 prompt-keda:
   image:
-    pullPolicy: Always  # TODO.  Change to IfNotPresent for load testing.
+    pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: latest
 
