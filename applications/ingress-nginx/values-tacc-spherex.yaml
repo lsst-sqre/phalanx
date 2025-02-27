@@ -7,15 +7,9 @@ ingress-nginx:
     service:
       type: ClusterIP
       externalTrafficPolicy: null
-    hostNetwork: false
-    dnsPolicy: ClusterFirst
+    hostNetwork: true
+    dnsPolicy: ClusterFirstWithHostNet
     kind: Deployment
     replicas: 1
     nodeSelector:
       kubernetes.io/hostname: worker01
-    containerPort:
-      http: 80
-      https: 443
-    hostPort:
-      http: 80
-      https: 443
