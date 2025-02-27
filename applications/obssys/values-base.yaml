@@ -26,7 +26,7 @@ atqueue:
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
-    secretKey: user-user-pass
+    key: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
@@ -108,7 +108,7 @@ mtqueue:
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
-    secretKey: user-user-pass
+    key: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
@@ -190,7 +190,7 @@ ocsqueue:
     AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
   envSecrets:
   - name: USER_USER_PASS
-    secretKey: user-user-pass
+    key: user-user-pass
   <<: *butler-lfa-combo
   nfsMountpoint:
   - name: project-shared
