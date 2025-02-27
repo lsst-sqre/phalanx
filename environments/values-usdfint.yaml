@@ -27,4 +27,5 @@ applications:
   ssotap: true
   squareone: true
   strimzi: true
+  strimzi-access-operator: true
   tap: true
