@@ -31,6 +31,8 @@ KEDA Prompt Processing instance for LATISS
 | prompt-keda.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-keda.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-keda.initializer.cleanup_delay | int | `3600` | Time after which to remove old initializer pods (seconds). |
+| prompt-keda.initializer.cron.day_obs_tz | int | `-12` | Time zone in which day_obs is computed. |
+| prompt-keda.initializer.cron.suspend | bool | `false` | Whether or not to pause daily initializer runs. This makes it impossible to run Prompt Processing, but avoids repo clutter if the telescope is offline. |
 | prompt-keda.initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
 | prompt-keda.initializer.podAnnotations | object | See the `values.yaml` file. | Pod annotations for the init-output Job |
 | prompt-keda.initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |
