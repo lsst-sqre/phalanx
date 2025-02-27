@@ -47,4 +47,8 @@ prompt-proto-service:
     # Dev processes very old images, set to ~20 years
     expiration: 600_000_000.0
 
+  initializer:
+    cron:
+      suspend: true
+
   fullnameOverride: "prompt-proto-service-lsstcomcam"
