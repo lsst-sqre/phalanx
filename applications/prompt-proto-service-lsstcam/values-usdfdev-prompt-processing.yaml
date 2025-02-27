@@ -25,4 +25,8 @@ prompt-proto-service:
   alerts:
     topic: "alert-stream-test"
 
+  initializer:
+    cron:
+      suspend: true
+
   fullnameOverride: "prompt-proto-service-lsstcam"
