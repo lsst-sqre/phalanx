@@ -185,6 +185,7 @@ telegraf-kafka-consumer:
       debug: true
     m1m3:
       enabled: true
+      metric_batch_size: 2500
       database: "efd"
       topicRegexps: |
         [ "lsst.sal.MTM1M3" ]
