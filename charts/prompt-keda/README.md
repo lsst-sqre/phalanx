@@ -31,6 +31,8 @@ Event-driven processing of camera images
 | imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | initializer.cleanup_delay | int | `3600` | Time after which to remove old initializer pods (seconds). |
+| initializer.cron.day_obs_tz | int | `-12` | Time zone in which day_obs is computed. |
+| initializer.cron.suspend | bool | `false` | Whether or not to pause daily initializer runs. This makes it impossible to run Prompt Processing, but avoids repo clutter if the telescope is offline. |
 | initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
 | initializer.podAnnotations | object | See the `values.yaml` file. | Pod annotations for the init-output Job |
 | initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |

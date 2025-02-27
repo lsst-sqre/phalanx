@@ -30,6 +30,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.imageNotifications.kafkaClusterAddress | string | None, must be set | Hostname and port of the Kafka provider |
 | prompt-proto-service.imageNotifications.topic | string | None, must be set | Topic where raw image arrival notifications appear |
 | prompt-proto-service.initializer.cleanup_delay | int | `3600` | Time after which to remove old initializer pods (seconds). |
+| prompt-proto-service.initializer.cron.day_obs_tz | int | `-12` | Time zone in which day_obs is computed. |
+| prompt-proto-service.initializer.cron.suspend | bool | `false` | Whether or not to pause daily initializer runs. This makes it impossible to run Prompt Processing, but avoids repo clutter if the telescope is offline. |
 | prompt-proto-service.initializer.image.repository | string | `"ghcr.io/lsst-dm/prompt-init"` | Image to use for the PP initializer |
 | prompt-proto-service.initializer.podAnnotations | object | See the `values.yaml` file. | Pod annotations for the init-output Job |
 | prompt-proto-service.initializer.resources.cpuLimit | int | `1` | The maximum cpu cores for the initializer. |
