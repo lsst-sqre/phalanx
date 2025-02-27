@@ -19,8 +19,7 @@ ingress-nginx:
     dnsPolicy: ClusterFirst
     kind: DaemonSet
     containerPort:
-      http: 80
-      https: 443
-    hostPort:
-      http: 80
-      https: 443
+      - containerPort: 80
+        hostPort: 80
+      - containerPort: 443
+        hostPort: 443
