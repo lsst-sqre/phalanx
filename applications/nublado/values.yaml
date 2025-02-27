@@ -175,6 +175,8 @@ controller:
         NO_ACTIVITY_TIMEOUT: "432000"  # 5 days
         RSP_SITE_TYPE: "science"
         TAP_ROUTE: "/api/tap"
+        TUTORIAL_NOTEBOOKS_URL: "https://github.com/lsst/tutorial-notebooks@main"
+        TUTORIAL_NOTEBOOKS_DIR: "/opt/lsst/software/notebooks-at-build-time/tutorial-notebooks"
 
       # -- Extra annotations to add to user lab pods
       extraAnnotations: {}
