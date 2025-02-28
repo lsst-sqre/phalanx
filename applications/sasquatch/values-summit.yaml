@@ -29,11 +29,11 @@ strimzi-kafka:
           host: sasquatch-summit-kafka-8.lsst.codes
     resources:
       requests:
-        memory: 32Gi
-        cpu: 4
+        memory: 256Gi
+        cpu: 64
       limits:
-        memory: 32Gi
-        cpu: 4
+        memory: 256Gi
+        cpu: 64
     metricsConfig:
       enabled: true
   kafkaExporter:
