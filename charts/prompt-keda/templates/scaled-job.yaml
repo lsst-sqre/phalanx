@@ -108,6 +108,10 @@ spec:
               - name: AWS_SHARED_CREDENTIALS_FILE
                 value: /app/s3/credentials
               {{- end }}
+              {{- if .Values.s3.aws_profile }}
+              - name: AWS_PROFILE
+                value: {{.Values.s3.aws_profile }}
+              {{- end }}
               - name: LSST_DB_AUTH
                 value: /app/lsst-credentials/db-auth.yaml
               - name: AP_KAFKA_PRODUCER_PASSWORD
@@ -181,7 +185,9 @@ spec:
           - name: s3-credentials-file
             secret:
               secretName: {{ template "prompt-keda.fullname" . }}-secret
-              key: s3-credentials-file
+              items:
+                - key: s3_credentials_file
+                  path: credentials
           {{- end }}
           {{- if .Values.registry.centralRepoFile }}
           - name: central-repo-file
