@@ -153,6 +153,15 @@ config:
     # -- Enable liveness checks for the arq queue
     enableLivenessCheck: true
 
+  htmlKeyMigration:
+    enabled: false
+
+    # -- Whether to run the HTML key migration job as a dry-run only
+    dryRun: true
+
+    # -- The name of the page to migrate, if set
+    page: ""
+
 cloudsql:
   # -- Enable the Cloud SQL Auth Proxy sidecar, used with Cloud SQL databases
   # on Google Cloud
