@@ -5,6 +5,9 @@ prompt-keda:
     # Overrides the image tag whose default is the chart appVersion.
     tag: 5.1.0
 
+  worker:
+    restart: 15
+
   instrument:
     pipelines:
       # IMPORTANT: don't use flow-style mappings (i.e., {}) in pipelines specs
