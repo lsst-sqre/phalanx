@@ -88,6 +88,93 @@ scripts:
     limits:
       cpu: 1.0
       memory: 4G
+###
+### LSSTCam pods
+###
+- name: LSSTCam/runButlerWatcher.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runHeadNode.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runMetadataServer.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+- name: LSSTCam/runPlotter.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+###
+### LSSTCam StatefulSets
+###
+lsstcamWorkerSet:
+  name: LSSTCam/runSfmRunner.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 1
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G  # we should check this value
+lsstcamAosWorkerSet:
+  name: LSSTCam/runAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 36
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 4G
+    limits:
+      cpu: 1.0
+      memory: 8G
+lsstcamGather2aSet:
+  name: LSSTCam/runStep2aWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGather2aAosSet:
+  name: LSSTCam/runStep2aAosWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 4
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "4G"
+    limits:
+      cpu: 1.0
+      memory: "8G"
+lsstcamGatherRollupSet:
+  name: LSSTCam/runNightlyWorker.py
+  mounts:
+  - lsstcam-data
+  - project-shared
+  replicas: 5
+  resources:
+    requests:
+      cpu: 1.0
+      memory: "12G"
+    limits:
+      cpu: 1.0
+      memory: "24G"
 # TODO: remove google credentials
 credentialFile: google_write_creds
 vaultPrefixPath: secret/k8s_operator/base-lsp.lsst.codes
