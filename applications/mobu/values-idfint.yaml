@@ -31,7 +31,7 @@ config:
       - "read:tap"
   autostart:
     - name: "tap-scale"
-      count: 100
+      count: 1
       user_spec:
         username_prefix: "bot-mobu-scale-tap"
       scopes: ["read:tap"]
