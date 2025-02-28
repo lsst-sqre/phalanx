@@ -65,3 +65,5 @@ KEDA Prompt Processing instance for LATISS
 | prompt-keda.sasquatch.endpointUrl | string | `""` | Url of the Sasquatch proxy server to upload metrics to. Leave blank to disable upload. This is a preliminary implementation of Sasquatch support, and this parameter may be deprecated if we instead support `SasquatchDatastore` in the future. |
 | prompt-keda.sasquatch.namespace | string | `"lsst.prompt"` | Namespace in the Sasquatch system with which to associate metrics. |
 | prompt-keda.tolerations | list | `[]` | Tolerations for the Prompt Processing pod |
+| prompt-keda.worker.grace_period | int | `45` | When Kubernetes shuts down a pod, the time its workers have to abort processing and save intermediate results (seconds). |
+| prompt-keda.worker.restart | int | `0` | The number of requests to process before rebooting a worker. If 0, workers process requests indefinitely. |
