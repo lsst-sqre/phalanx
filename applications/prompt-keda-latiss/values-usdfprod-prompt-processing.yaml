@@ -3,7 +3,7 @@ prompt-keda:
   image:
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: latest
+    tag: 5.1.0
 
   instrument:
     pipelines:
