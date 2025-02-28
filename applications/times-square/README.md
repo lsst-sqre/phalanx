@@ -28,6 +28,9 @@ An API service for managing and rendering parameterized Jupyter notebooks.
 | config.githubAppId | string | `""` | GitHub application ID |
 | config.githubCheckRunTimeout | string | `"900"` | Timeout for GitHub check runs in seconds |
 | config.githubOrgs | string | `"lsst,lsst-sqre,lsst-dm,lsst-ts,lsst-sitcom,lsst-pst"` | GitHub organizations that can sync repos to Times Square (comma-separated). |
+| config.htmlKeyMigration.dryRun | bool | `true` | Whether to run the HTML key migration job as a dry-run only |
+| config.htmlKeyMigration.enabled | bool | `false` |  |
+| config.htmlKeyMigration.page | string | `""` | The name of the page to migrate, if set |
 | config.logLevel | string | `"INFO"` | Logging level: "DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL" |
 | config.name | string | `"times-square"` | Name of the service. |
 | config.profile | string | `"production"` | Run profile: "production" or "development" |
