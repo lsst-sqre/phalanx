@@ -6,6 +6,7 @@ env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
   DEPLOY_BRANCH: deploy-bts
   LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.ls.lsst.org
+  AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
 siteTag: bts
 location: BTS
 scripts:
