@@ -1,6 +1,3 @@
-image:
-  tag: tickets-DM-48941
-  pullPolicy: Always
 resources:
   limits:
     cpu: "2"
@@ -14,6 +11,7 @@ config:
   metrics:
     enabled: true
   sentryTracesSampleConfig: 0
+  logMonkeysToFile: False
   githubRefreshApp:
     acceptedGithubOrgs:
       - lsst-sqre
