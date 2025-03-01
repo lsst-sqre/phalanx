@@ -103,7 +103,6 @@ atoods:
   image:
     repository: ts-dockerhub.lsst.org/atoods
     pullPolicy: Always
-    revision: 0
   env:
     CTRL_OODS_CONFIG_FILE: /etc/atoods.yaml
   butlerSecret:
