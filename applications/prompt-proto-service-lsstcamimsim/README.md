@@ -19,8 +19,8 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.alerts.username | string | `"kafka-admin"` | Username for sending alerts to the alert stream |
 | prompt-proto-service.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-proto-service.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
-| prompt-proto-service.cache.patchesPerImage | int | `16` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
-| prompt-proto-service.cache.refcatsPerImage | int | `12` | A factor by which to multiply `baseSize` for refcat datasets. |
+| prompt-proto-service.cache.patchesPerImage | int | `12` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
+| prompt-proto-service.cache.refcatsPerImage | int | `6` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-proto-service.containerConcurrency | int | `1` | The number of Knative requests that can be handled simultaneously by one container |
 | prompt-proto-service.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
 | prompt-proto-service.image.repository | string | `"ghcr.io/lsst-dm/prompt-service"` | Image to use in the PP deployment |
@@ -43,7 +43,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.knative.gpu | bool | `false` | GPUs enabled. |
 | prompt-proto-service.knative.gpuRequest | int | `0` | The number of GPUs to request for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.idleTimeout | int | `0` | Maximum time that a container can send nothing to Knative (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
-| prompt-proto-service.knative.memoryLimit | string | `"8Gi"` | The maximum memory limit for the full pod (see `containerConcurrency`). |
+| prompt-proto-service.knative.memoryLimit | string | `"12Gi"` | The maximum memory limit for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.memoryRequest | string | `"2Gi"` | The minimum memory to request for the full pod (see `containerConcurrency`). |
 | prompt-proto-service.knative.responseStartTimeout | int | `0` | Maximum time that a container can send nothing to Knative after initial submission (seconds). This is only useful if the container runs async workers. If 0, idle timeout is ignored. |
 | prompt-proto-service.logLevel | string | log prompt_processing at DEBUG, other LSST code at INFO, and third-party code at WARNING. | Requested logging levels in the format of [Middleware's \-\-log-level argument](https://pipelines.lsst.io/v/daily/modules/lsst.daf.butler/scripts/butler.html#cmdoption-butler-log-level). |

@@ -66,9 +66,9 @@ prompt-proto-service:
     # The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache.
     baseSize: 3
     # -- A factor by which to multiply `baseSize` for refcat datasets.
-    refcatsPerImage: 12
+    refcatsPerImage: 6
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 16
+    patchesPerImage: 12
 
   s3:
     # -- Bucket containing the incoming raw images
@@ -150,7 +150,7 @@ prompt-proto-service:
     # -- The minimum memory to request for the full pod (see `containerConcurrency`).
     memoryRequest: "2Gi"
     # -- The maximum memory limit for the full pod (see `containerConcurrency`).
-    memoryLimit: "8Gi"
+    memoryLimit: "12Gi"
     # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
     # This parameter adds extra time to that minimum (seconds).
     extraTimeout: 10
