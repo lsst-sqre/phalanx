@@ -20,7 +20,7 @@ KEDA Prompt Processing instance for LSSTCam-imSim.
 | prompt-keda.apdb.config | string | None, must be set | URL to a serialized APDB configuration, or the "label:" prefix followed by the indexed name of such a config. |
 | prompt-keda.cache.baseSize | int | `3` | The default number of datasets of each type to keep. The pipeline only needs one of most dataset types (one bias, one flat, etc.), so this is roughly the number of visits that fit in the cache. |
 | prompt-keda.cache.patchesPerImage | int | `12` | A factor by which to multiply `baseSize` for templates and other patch-based datasets. |
-| prompt-keda.cache.refcatsPerImage | int | `12` | A factor by which to multiply `baseSize` for refcat datasets. |
+| prompt-keda.cache.refcatsPerImage | int | `6` | A factor by which to multiply `baseSize` for refcat datasets. |
 | prompt-keda.debug.exportOutputs | bool | `true` | Whether or not pipeline outputs should be exported to the central repo. This flag does not turn off APDB writes or alert generation; those must be handled at the pipeline level or by setting up an alternative destination. |
 | prompt-keda.fullnameOverride | string | `"prompt-keda-lsstcamimsim"` | Override the full name for resources (includes the release name) |
 | prompt-keda.image.pullPolicy | string | `IfNotPresent` in prod, `Always` in dev | Pull policy for the PP image |
