@@ -73,7 +73,6 @@ ccoods:
   image:
     repository: ts-dockerhub.lsst.org/ccoods
     pullPolicy: Always
-    revision: 0
   env:
     CTRL_OODS_CONFIG_FILE: /etc/ccoods.yaml
   <<: *butler-secret
@@ -536,7 +535,6 @@ mtoods:
   image:
     repository: ts-dockerhub.lsst.org/mtoods
     pullPolicy: Always
-    revision: 0
   env:
     CTRL_OODS_CONFIG_FILE: /etc/mtoods.yaml
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
