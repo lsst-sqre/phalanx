@@ -50,7 +50,7 @@ prompt-keda:
 
   keda:
     minReplicaCount: 10
-    maxReplicaCount: 2000
+    maxReplicaCount: 1500
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
