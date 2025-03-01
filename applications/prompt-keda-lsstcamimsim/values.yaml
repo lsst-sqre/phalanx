@@ -152,12 +152,12 @@ prompt-keda:
   resources:
     requests:
       cpu: '1'
-      ephemeral-storage: 5Gi
+      ephemeral-storage: 8Gi
       memory: 2Gi
     limits:
       cpu: '1'
-      ephemeral-storage: 5Gi
-      memory: 8Gi
+      ephemeral-storage: 8Gi
+      memory: 12Gi
 
 
   # -- Kubernetes YAML configs for extra container volume(s).

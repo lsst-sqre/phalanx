@@ -150,7 +150,7 @@ prompt-proto-service:
     # -- The minimum memory to request for the full pod (see `containerConcurrency`).
     memoryRequest: "2Gi"
     # -- The maximum memory limit for the full pod (see `containerConcurrency`).
-    memoryLimit: "8Gi"
+    memoryLimit: "12Gi"
     # -- To acommodate scheduling problems, Knative waits for a request for twice `worker.timeout`.
     # This parameter adds extra time to that minimum (seconds).
     extraTimeout: 10
