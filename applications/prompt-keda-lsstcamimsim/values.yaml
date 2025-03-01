@@ -40,7 +40,7 @@ prompt-keda:
     # -- A factor by which to multiply `baseSize` for refcat datasets.
     refcatsPerImage: 12
     # -- A factor by which to multiply `baseSize` for templates and other patch-based datasets.
-    patchesPerImage: 16
+    patchesPerImage: 12
 
   s3:
     # -- Bucket containing the incoming raw images
