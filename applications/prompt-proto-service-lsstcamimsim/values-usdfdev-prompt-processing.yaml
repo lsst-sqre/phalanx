@@ -10,7 +10,7 @@ prompt-proto-service:
 
   # HACK: disable autoscaling as workaround for DM-41829
   worker:
-    restart: 15
+    restart: 7  # See comments on DM-49255
 
   image:
     pullPolicy: IfNotPresent
