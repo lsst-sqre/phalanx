@@ -8,8 +8,8 @@ controller:
       numReleases: 0
       numWeeklies: 3
       numDailies: 2
-      cycle: null
-      recommendedTag: "recommended_k0003"
+      cycle: 40
+      recommendedTag: "recommended_c0040"
     lab:
       env:
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
