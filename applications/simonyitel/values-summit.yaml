@@ -248,26 +248,14 @@ mtaos:
   image:
     repository: ts-dockerhub.lsst.org/mtaos
     pullPolicy: Always
-  butlerSecret:
-    containerPath: /home/saluser/.lsst
-    dbUser: oods
-    secretFilename: postgres-credentials.txt
+  env:
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+    AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
+  s3Credentials:
+  - butler-credentials.ini
+  <<: *butler-secret
   nfsMountpoint:
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
