@@ -1,5 +1,7 @@
-x-butler-secret:
-  &butler-secret
+x-butler-lfa-combo: &butler-lfa-combo
+  s3Credentials:
+  - lfa-credentials.ini
+  - butler-credentials.ini
   butlerSecret:
     containerPath: &bs-cp /home/saluser/.lsst
     dbUser: oods
@@ -20,12 +22,9 @@ atqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://ccs.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -152,12 +151,9 @@ mtqueue:
     USER_USERNAME: user
     IMAGE_SERVER_URL: http://ccs.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS
@@ -263,12 +259,9 @@ ocsqueue:
     RUN_ARG: 3 --state enabled
     IMAGE_SERVER_URL: http://ccs.lsst.org
     AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
-  envSecrets:
-  - name: AWS_ACCESS_KEY_ID
-    key: aws-access-key-id
-  - name: AWS_SECRET_ACCESS_KEY
-    key: aws-secret-access-key
-  <<: *butler-secret
+    LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
+    AWS_SHARED_CREDENTIALS_FILE: /home/saluser/.lsst/aws-credentials.ini
+  <<: *butler-lfa-combo
   nfsMountpoint:
   - name: auxtel-gen3-data
     containerPath: /repo/LATISS

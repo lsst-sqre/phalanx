@@ -7,8 +7,11 @@ uws-api-server:
   logLevel: INFO
   butlerPg:
     secretName: uws
-    containerPath: /home/lsst/.lsst
+    containerPath: &cp /home/lsst/.lsst
     dbUser: oods
+  s3ButlerStorage:
+    endpointURL: https://s3-butler.cp.lsst.org
+    containerPath: *cp
   workingVolume:
     name: job-files
     server: nfs1.cp.lsst.org
