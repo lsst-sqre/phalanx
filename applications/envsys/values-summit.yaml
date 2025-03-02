@@ -182,14 +182,14 @@ eas:
       cpu: 15m
       memory: 125Mi
 
-epm301:
+epm-ess303:
   enabled: true
-  classifier: epm301
+  classifier: ess303
   image:
-    repository: ts-dockerhub.lsst.org/epm
+    repository: ts-dockerhub.lsst.org/ess
     pullPolicy: Always
   env:
-    RUN_ARG: 301
+    RUN_ARG: 303
   resources:
     requests:
       cpu: 19m
