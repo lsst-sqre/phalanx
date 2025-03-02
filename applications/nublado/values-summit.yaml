@@ -12,6 +12,7 @@ controller:
       recommendedTag: "recommended_c0040"
     lab:
       env:
+        AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-bootstrap.sasquatch:9092"
         LSST_KAFKA_PASSFILE: "/opt/lsst/software/jupyterlab/secrets/kafka_credentials.txt"
@@ -21,6 +22,7 @@ controller:
         PGPASSFILE: "/opt/lsst/software/jupyterlab/secrets/postgres-credentials.txt"
         PGUSER: "oods"
         RSP_SITE_TYPE: "telescope"
+        S3_ENDPOINT_URL: "https://s3-butler.cp.lsst.org"
       initContainers:
         - name: "inithome"
           image:
@@ -32,6 +34,8 @@ controller:
               volumeName: "home"
       pullSecret: "pull-secret"
       secrets:
+        - secretName: "nublado-lab-secret"
+          secretKey: "aws-credentials.ini"
         - secretName: "nublado-lab-secret"
           secretKey: "kafka_credentials.txt"
         - secretName: "nublado-lab-secret"
