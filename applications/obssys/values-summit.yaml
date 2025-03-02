@@ -41,21 +41,6 @@ atqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -170,21 +155,6 @@ mtqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false
@@ -278,21 +248,6 @@ ocsqueue:
     readOnly: true
     server: nfs-auxtel.cp.lsst.org
     serverPath: /auxtel/lsstdata
-  - name: comcam-gen3-data
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-gen3-data-temp
-    containerPath: /data/lsstdata/base/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata/base/comcam
-  - name: comcam-data
-    containerPath: /readonly/lsstdata/comcam
-    readOnly: true
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/lsstdata
   - name: project-shared
     containerPath: /project
     readOnly: false

@@ -74,17 +74,6 @@ ccoods:
   - lfa-credentials.ini
   - oods-comcam-credentials.ini
   <<: *butler-secret
-  nfsMountpoint:
-  - name: comcam-gen3-butler
-    containerPath: /repo/LSSTComCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam/repo/LSSTComCam
-  - name: comcam-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /comcam
   resources:
     limits:
       cpu: 100m
@@ -503,17 +492,6 @@ mtoods:
     requests:
       cpu: 10m
       memory: 345Mi
-  nfsMountpoint:
-  - name: lsstcam-gen3-butler
-    containerPath: /repo/LSSTCam
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /lsstcam/repo/LSSTCam
-  - name: lsstcam-oods-data
-    containerPath: /data
-    readOnly: false
-    server: nfs3.cp.lsst.org
-    serverPath: /lsstcam
   configfile:
     path: /etc
     filename: mtoods.yaml
