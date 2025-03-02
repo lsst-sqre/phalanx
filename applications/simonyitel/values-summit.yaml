@@ -414,7 +414,7 @@ mtheaderservice:
       memory: 500Mi
 
 mtm1m3-sim:
-  enabled: false
+  enabled: true
   image:
     repository: ts-dockerhub.lsst.org/mtm1m3_sim
     pullPolicy: Always
