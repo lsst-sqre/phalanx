@@ -44,7 +44,7 @@ atqueue:
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
@@ -83,7 +83,7 @@ atscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env
@@ -158,7 +158,7 @@ mtqueue:
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
@@ -197,7 +197,7 @@ mtscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env
@@ -251,7 +251,7 @@ ocsqueue:
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   - name: obs-env
     containerPath: /net/obs-env
@@ -290,7 +290,7 @@ ocsscheduler:
   - name: rubin-sim-data
     containerPath: /home/saluser/rubin_sim_data
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/scheduler
   - name: obs-env
     containerPath: /net/obs-env

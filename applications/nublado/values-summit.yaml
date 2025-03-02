@@ -50,12 +50,12 @@ controller:
           source:
             type: "nfs"
             serverPath: "/project"
-            server: "nfs1.cp.lsst.org"
+            server: "nfs-project.cp.lsst.org"
         - name: "scratch"
           source:
             type: "nfs"
             serverPath: "/scratch"
-            server: "nfs1.cp.lsst.org"
+            server: "nfs-scratch.cp.lsst.org"
         - name: "latiss"
           source:
             type: "nfs"
@@ -66,11 +66,6 @@ controller:
             type: "nfs"
             serverPath: "/obs-env"
             server: "nfs-obsenv.cp.lsst.org"
-        - name: "lsstdata-other"
-          source:
-            type: "nfs"
-            serverPath: "/lsstdata"
-            server: "nfs1.cp.lsst.org"
         - name: "lsstdata-auxtel"
           source:
             type: "nfs"
@@ -92,8 +87,6 @@ controller:
           volumeName: "latiss"
         - containerPath: "/net/obs-env"
           volumeName: "obs-env"
-        - containerPath: "/readonly/lsstdata/other"
-          volumeName: "lsstdata-other"
         - containerPath: "/readonly/lsstdata/auxtel"
           volumeName: "lsstdata-auxtel"
         - containerPath: "/data/lsstdata/base/auxtel"

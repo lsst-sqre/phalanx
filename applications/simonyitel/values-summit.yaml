@@ -50,7 +50,7 @@ ccheaderservice-sim:
   - name: ccs-data
     containerPath: /header_service
     readOnly: true
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     serverPath: /scratch/header_service
   resources:
     limits:
@@ -248,7 +248,7 @@ mtaos:
   - name: project-shared
     containerPath: /project
     readOnly: false
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     serverPath: /project
   resources:
     limits:

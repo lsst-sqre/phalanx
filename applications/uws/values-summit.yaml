@@ -14,14 +14,14 @@ uws-api-server:
     containerPath: *cp
   workingVolume:
     name: job-files
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     exportPath: "/scratch"
     claimName: uws-server-pvc
     mountPath: "/uws"
     subPath: "uws"
   volumes:
   - name: project
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     claimName: project-pvc
     mountPath: "/project"
     exportPath: "/project"
