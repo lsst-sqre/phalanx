@@ -578,11 +578,8 @@ love-producer:
   - name: electrometer201
     csc: Electrometer:201 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: epm1
-    csc: EPM:1 --log-level 10
-    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
-  - name: epm301
-    csc: EPM:301 --log-level 10
+  - name: epm-ess303
+    csc: ESS:303 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: fiberspectrograph3
     csc: FiberSpectrograph:3 --log-level 10
