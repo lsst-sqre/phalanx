@@ -5,6 +5,7 @@ image:
 location: SUMMIT
 env:
   DAF_BUTLER_REPOSITORY_INDEX: /project/data-repos.yaml
+  LSST_RESOURCES_S3_PROFILE_butler: https://s3-butler.cp.lsst.org
 scripts:
 ###
 ### AuxTel pods
