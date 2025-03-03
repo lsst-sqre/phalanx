@@ -32,13 +32,16 @@ vault:
       enabled: true
       replicas: 3
 
+    readinessProbe:
+      timeoutSeconds: 10
+
     # -- Resource requests and limits for vault server pod
     # @default -- See `values.yaml`
 
     resources:
       limits:
         cpu: "1"
-        memory: "350Mi"
+        memory: "700Mi"
       requests:
         cpu: "50m"
         memory: "35Mi"
