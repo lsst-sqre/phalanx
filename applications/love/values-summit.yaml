@@ -36,6 +36,7 @@ audio-broadcaster:
 love-commander:
   image:
     repository: ts-dockerhub.lsst.org/love-commander
+    revision: 0
     pullPolicy: Always
   env:
     S3_INSTANCE: cp
@@ -101,6 +102,7 @@ love-manager:
     - name: general
       image:
         repository: ts-dockerhub.lsst.org/love-manager
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -164,6 +166,7 @@ love-manager:
     - name: queue
       image:
         repository: ts-dockerhub.lsst.org/love-manager
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -227,6 +230,7 @@ love-manager:
     - name: m1m3
       image:
         repository: ts-dockerhub.lsst.org/love-manager
+        revision: 0
         pullPolicy: Always
       env:
         LOVE_SITE: summit
@@ -335,6 +339,7 @@ love-nginx:
     manager:
       image:
         repository: ts-dockerhub.lsst.org/love-manager-static
+        revision: 0
         pullPolicy: Always
       command:
       - /bin/sh
@@ -436,6 +441,7 @@ love-nginx:
 love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
+    revision: 0
     pullPolicy: Always
   resources:
     requests:
