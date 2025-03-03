@@ -7,18 +7,21 @@ uws-api-server:
   logLevel: INFO
   butlerPg:
     secretName: uws
-    containerPath: /home/lsst/.lsst
+    containerPath: &cp /home/lsst/.lsst
     dbUser: oods
+  s3ButlerStorage:
+    endpointURL: https://s3-butler.cp.lsst.org
+    containerPath: *cp
   workingVolume:
     name: job-files
-    server: nfs1.cp.lsst.org
+    server: nfs-scratch.cp.lsst.org
     exportPath: "/scratch"
     claimName: uws-server-pvc
     mountPath: "/uws"
     subPath: "uws"
   volumes:
   - name: project
-    server: nfs1.cp.lsst.org
+    server: nfs-project.cp.lsst.org
     claimName: project-pvc
     mountPath: "/project"
     exportPath: "/project"
@@ -31,25 +34,11 @@ uws-api-server:
     exportPath: "/auxtel/repo/LATISS"
     subPath: ""
     readOnly: false
-  - name: repo-comcam
-    server: nfs3.cp.lsst.org
-    claimName: repo-comcam-pvc
-    mountPath: "/repo/LSSTComCam"
-    exportPath: "/comcam/repo/LSSTComCam"
-    subPath: ""
-    readOnly: false
   - name: data-auxtel
     server: nfs-auxtel.cp.lsst.org
     claimName: data-auxtel-pvc
     mountPath: "/data/lsstdata/base/auxtel"
     exportPath: "/auxtel/lsstdata/base/auxtel"
-    subPath: ""
-    readOnly: true
-  - name: data-comcam
-    server: nfs3.cp.lsst.org
-    claimName: data-comcam-pvc
-    mountPath: "/data/lsstdata/base/comcam"
-    exportPath: "/comcam/lsstdata/base/comcam"
     subPath: ""
     readOnly: true
 
@@ -59,7 +48,6 @@ atocps:
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
-    revision: 0
   env:
     RUN_ARG: 1
   resources:
@@ -76,7 +64,6 @@ ccocps:
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
-    revision: 0
   env:
     RUN_ARG: 2
   resources:
@@ -93,7 +80,6 @@ raocps:
   image:
     repository: ts-dockerhub.lsst.org/dmocps
     pullPolicy: Always
-    revision: 0
   env:
     RUN_ARG: 101
     REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
