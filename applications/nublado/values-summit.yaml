@@ -65,7 +65,7 @@ controller:
           source:
             type: "nfs"
             serverPath: "/obs-env"
-            server: "nfs-obsenv.cp.lsst.org"
+            server: "nfs-obs-env.cp.lsst.org"
         - name: "lsstdata-auxtel"
           source:
             type: "nfs"
