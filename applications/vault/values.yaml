@@ -44,4 +44,4 @@ vault:
         memory: "700Mi"
       requests:
         cpu: "50m"
-        memory: "35Mi"
+        memory: "120Mi"
