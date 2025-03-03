@@ -1,3 +1,6 @@
+image:
+  tag: tickets-DM-49148-more-app-metrics
+  pullPolicy: Always
 config:
   logLevel: "DEBUG"
   metrics:
