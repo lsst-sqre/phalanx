@@ -12,7 +12,7 @@ controller:
       releaseCandidate:
         cutoffVersion: "28.0.0"
       experimental:
-        age: "1m"
+        age: "3w"
     fileserver:
       enabled: true
       nodeSelector:
