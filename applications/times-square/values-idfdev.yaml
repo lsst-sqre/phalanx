@@ -11,7 +11,7 @@ config:
   defaultExecutionTimeout: "60" # 1 minute
   sentryTracesSampleRate: 1
   htmlKeyMigration:
-    enabled: true
+    enabled: false
     dryRun: false
 cloudsql:
   enabled: true
