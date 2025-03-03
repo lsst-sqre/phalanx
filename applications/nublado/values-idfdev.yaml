@@ -2,6 +2,17 @@ controller:
   googleServiceAccount: "nublado-controller@science-platform-dev-7696.iam.gserviceaccount.com"
   slackAlerts: true
   config:
+    dropdownMenu:
+      release:
+        cutoffVersion: "27.0.0"
+      weekly:
+        number: 78
+      daily:
+        number: 25
+      releaseCandidate:
+        cutoffVersion: "28.0.0"
+      experimental:
+        age: "3w"
     logLevel: "DEBUG"
     fileserver:
       enabled: true
