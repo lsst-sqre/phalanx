@@ -49,7 +49,7 @@ atqueue:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -88,7 +88,7 @@ atscheduler:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -163,7 +163,7 @@ mtqueue:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -202,7 +202,7 @@ mtscheduler:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -256,7 +256,7 @@ ocsqueue:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:
@@ -295,7 +295,7 @@ ocsscheduler:
   - name: obs-env
     containerPath: /net/obs-env
     readOnly: true
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
     serverPath: /obs-env
   affinity:
     podAntiAffinity:

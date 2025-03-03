@@ -6,7 +6,7 @@ obsenv-api:
   config:
     logLevel: "DEBUG"
   nfsMount:
-    server: nfs-obsenv.cp.lsst.org
+    server: nfs-obs-env.cp.lsst.org
 
 obsenv-ui:
   image:
