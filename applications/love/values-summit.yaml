@@ -638,11 +638,17 @@ love-producer:
   - name: m1m3ess113
     csc: ESS:113 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: m1m3mtvms1
+    csc: MTVMS:1 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m2ess106
     csc: ESS:106 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: m2ess112
     csc: ESS:112 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: m2mtvms2
+    csc: MTVMS:2 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: mtheaderservice
     csc: MTHeaderService:0 --log-level 10
