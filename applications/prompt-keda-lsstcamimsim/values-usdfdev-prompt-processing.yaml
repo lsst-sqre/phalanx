@@ -51,6 +51,7 @@ prompt-keda:
   keda:
     minReplicaCount: 10
     maxReplicaCount: 1500
+    failedJobsHistoryLimit: 100
 
   podAnnotations: {
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
