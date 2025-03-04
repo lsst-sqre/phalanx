@@ -36,22 +36,22 @@ spec:
             - name: "database"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
+                  name: obsloctap
                   key: "database"
             - name: "database_user"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
+                  name: obsloctap
                   key: "username"
             - name: "database_url"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
+                  name: obsloctap
                   key: "url"
             - name: "database_password"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
+                  name: obsloctap
                   key: "password"
             - name: "INSTRUMENT"
               value: "LSSTCam"
