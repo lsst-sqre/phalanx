@@ -133,7 +133,7 @@ customInfluxDBIngress:
   hostname: summit-lsp.lsst.codes
 
 influxdb-enterprise:
-  enabled: true
+  enabled: false
   license:
     secret:
       name: sasquatch
@@ -370,7 +370,7 @@ telegraf-kafka-consumer-oss:
 
 # This set of connectors is used to write to the InfluxDB Enterprise instance
 telegraf-kafka-consumer:
-  enabled: true
+  enabled: false
   influxdb:
     url: "http://sasquatch-influxdb-enterprise-data.sasquatch:8086"
   kafkaConsumers:
