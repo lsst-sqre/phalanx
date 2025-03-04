@@ -11,6 +11,7 @@ controller:
     lab:
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
+        AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         DAX_APDB_INDEX_URI: "/sdf/group/rubin/shared/apdb_config/apdb-index.yaml"
         HUB_ROUTE: "/nb/hub"
