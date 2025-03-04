@@ -82,6 +82,8 @@ prompt-proto-service:
     auth_env: true
     # -- Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used.
     disableBucketValidation: 0
+    # -- If set, configure S3 checksum options.
+    checksum: WHEN_REQUIRED
 
   imageNotifications:
     # -- Hostname and port of the Kafka provider

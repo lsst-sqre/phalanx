@@ -104,6 +104,10 @@ spec:
         - name: AWS_PROFILE
           value: {{.Values.s3.aws_profile }}
         {{- end }}
+        {{- if .Values.s3.checksum }}
+        - name: AWS_REQUEST_CHECKSUM_CALCULATION
+          value: {{.Values.s3.checksum}}
+        {{- end }}
         - name: LSST_DB_AUTH
           value: /app/lsst-credentials/db-auth.yaml
         - name: AP_KAFKA_PRODUCER_PASSWORD
