@@ -51,6 +51,7 @@ Prompt Proto Service is an event driven service for processing camera images. Th
 | prompt-proto-service.raw_microservice | string | `""` | The URI to a microservice that maps image metadata to a file location. If empty, Prompt Processing does not use a microservice. |
 | prompt-proto-service.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-proto-service.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
+| prompt-proto-service.s3.checksum | string | `"WHEN_REQUIRED"` | If set, configure S3 checksum options. |
 | prompt-proto-service.s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-proto-service.s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | prompt-proto-service.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |

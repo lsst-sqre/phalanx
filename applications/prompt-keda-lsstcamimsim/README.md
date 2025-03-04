@@ -57,6 +57,7 @@ KEDA Prompt Processing instance for LSSTCam-imSim.
 | prompt-keda.registry.centralRepoFile | bool | `false` | If set, this application's Vault secret must contain a `central_repo_file` key containing a remote Butler configuration, and `instrument.calibRepo` is the local path where this file is mounted. |
 | prompt-keda.resources | object | See `values.yaml` | Kubernetes resource requests and limits |
 | prompt-keda.s3.auth_env | bool | `true` | If set, get S3 credentials from this application's Vault secret. |
+| prompt-keda.s3.checksum | string | `"WHEN_REQUIRED"` | If set, configure S3 checksum options. |
 | prompt-keda.s3.disableBucketValidation | int | `0` | Set this to disable validation of S3 bucket names, allowing Ceph multi-tenant colon-separated names to be used. |
 | prompt-keda.s3.endpointUrl | string | None, must be set | S3 endpoint containing `imageBucket` |
 | prompt-keda.s3.imageBucket | string | None, must be set | Bucket containing the incoming raw images |
