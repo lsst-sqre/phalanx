@@ -509,22 +509,22 @@ nfsMountpoint:
 - name: comcam-data
   containerPath: /repo/LSSTComCam
   readOnly: false
-  server: nfs3.cp.lsst.org
+  server: nfs-comcam.cp.lsst.org
   serverPath: /comcam/repo/LSSTComCam
 - name: comcam-gen3-data
   containerPath: /data/lsstdata/base/comcam
   readOnly: true
-  server: nfs3.cp.lsst.org
+  server: nfs-comcam.cp.lsst.org
   serverPath: /comcam/lsstdata/base/comcam
 - name: lsstcam-data
   containerPath: /repo/LSSTCam
   readOnly: false
-  server: nfs3.cp.lsst.org
+  server: nfs-lsstcam.cp.lsst.org
   serverPath: /lsstcam/repo/LSSTCam
 - name: lsstcam-gen3-data
   containerPath: /data/lsstdata/base/maintel
   readOnly: true
-  server: nfs3.cp.lsst.org
+  server: nfs-lsstcam.cp.lsst.org
   serverPath: /lsstcam/lsstdata/base/maintel
 - name: allsky-data
   containerPath: /data/allsky
@@ -534,7 +534,7 @@ nfsMountpoint:
 - name: project-shared
   containerPath: /project
   readOnly: false
-  server: nfs1.cp.lsst.org
+  server: nfs-project.cp.lsst.org
   serverPath: /project
 resources:
   requests:
