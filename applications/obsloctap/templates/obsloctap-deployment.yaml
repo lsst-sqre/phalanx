@@ -57,22 +57,19 @@ spec:
             - name: "database"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
                   key: "database"
             - name: "database_user"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
                   key: "username"
             - name: "database_url"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
                   key: "url"
             - name: "database_password"
               valueFrom:
                 secretKeyRef:
-                  name: obsloctap-postgres
+                  name: obsloctap
                   key: "password"
             - name: "KAFKA_BOOTSTRAP"
               value: "{{ .Values.kafka.bootstrap }}"
