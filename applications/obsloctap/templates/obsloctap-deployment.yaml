@@ -40,8 +40,8 @@ spec:
               drop:
                 - "all"
             readOnlyRootFilesystem: true
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.obsloctap.image.repository }}:{{ .Values.obsloctap.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.obsloctap.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 8080
@@ -57,14 +57,17 @@ spec:
             - name: "database"
               valueFrom:
                 secretKeyRef:
+                  name: obsloctap
                   key: "database"
             - name: "database_user"
               valueFrom:
                 secretKeyRef:
+                  name: obsloctap
                   key: "username"
             - name: "database_url"
               valueFrom:
                 secretKeyRef:
+                  name: obsloctap
                   key: "url"
             - name: "database_password"
               valueFrom:
