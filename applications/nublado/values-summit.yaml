@@ -12,6 +12,7 @@ controller:
       recommendedTag: "recommended_c0040"
     lab:
       env:
+        AWS_REQUEST_CHECKSUM_CALCULATION: WHEN_REQUIRED
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         DAF_BUTLER_REPOSITORY_INDEX: "/project/data-repos.yaml"
         LSST_KAFKA_BROKER_ADDR: "sasquatch-kafka-bootstrap.sasquatch:9092"
