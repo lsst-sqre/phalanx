@@ -8,7 +8,7 @@ config:
   oidcServer:
     enabled: true
 
-  updateSchema: false
+  updateSchema: true
 
   github:
     clientId: "c4a5727c5788cc2d346e"
