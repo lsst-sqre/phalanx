@@ -41,11 +41,6 @@ spec:
         operations:
           - Describe
           - DescribeConfigs
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.camera.enabled }}
 ---
@@ -97,11 +92,6 @@ spec:
         operations:
           - Describe
           - DescribeConfigs
-  quotas:
-    producerByteRate: 20971520
-    consumerByteRate: 20971520
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.replicator.enabled }}
 ---
@@ -134,11 +124,6 @@ spec:
         type: allow
         host: "*"
         operation: All
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.kafkaConnectManager.enabled }}
 ---
@@ -166,11 +151,6 @@ spec:
         type: allow
         host: "*"
         operation: Read
-  quotas:
-    producerByteRate: 1073741824
-    consumerByteRate: 1073741824
-    requestPercentage: 90
-    controllerMutationRate: 1000
 {{- end }}
 {{- if .Values.users.kafdrop.enabled }}
 ---
