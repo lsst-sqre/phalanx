@@ -11,7 +11,6 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` | Affinity rules for the giftless frontend pod |
-| config | object | `{"bucketName":"","serviceAccountReadonly":"","serviceAccountReadwrite":"","storageProjectName":""}` | Configuration for giftless server |
 | config.bucketName | string | Must be overridden in environment-specific values file | Bucket name for GCS LFS Object Storage bucket |
 | config.serviceAccountReadonly | string | Must be overridden in environment-specific values file | Read-only service account name for GCS LFS Object Storage bucket |
 | config.serviceAccountReadwrite | string | Must be overridden in environment-specific values file | Read-write service account name for GCS LFS Object Storage bucket |
@@ -22,7 +21,6 @@ Git-LFS server with GCS S3 backend, with Rubin-specific auth
 | image.repository | string | `"ghcr.io/datopian/giftless"` | Giftless image to use |
 | image.tag | string | The appVersion of the chart | Tag of giftless image to use |
 | ingress.annotations | object | `{}` | Additional annotations to add to the ingress |
-| ingress.hostname | object | Must be overridden in environment-specific values file | FQDNs of giftless ingresses |
 | ingress.hostname.readonly | string | Must be overridden in environment-specific values file | FQDN for the read-only giftless ingress |
 | ingress.hostname.readwrite | string | Must be overridden in environment-specific values file | FQDN for the read-write giftless ingress |
 | nameOverride | string | `""` | Override the base name for resources |
