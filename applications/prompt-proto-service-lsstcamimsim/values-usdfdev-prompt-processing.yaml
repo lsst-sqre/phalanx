@@ -2,8 +2,8 @@ prompt-proto-service:
 
   podAnnotations:
     # HACK: disable autoscaling as workaround for DM-41829
-    autoscaling.knative.dev/min-scale: "1500"
-    autoscaling.knative.dev/max-scale: "1500"
+    autoscaling.knative.dev/min-scale: "750"
+    autoscaling.knative.dev/max-scale: "750"
     edu.stanford.slac.sdf.project/usdf-embargo: "true"
     # Update this field if using latest or static image tag in dev
     revision: "1"
@@ -58,5 +58,16 @@ prompt-proto-service:
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
+
+  knative:
+    # Resources for 2 workers
+    cpuRequest: 1
+    cpuLimit: 2
+    ephemeralStorageRequest: "16Gi"
+    ephemeralStorageLimit: "16Gi"
+    memoryRequest: "4Gi"
+    memoryLimit: "24Gi"
+
+  containerConcurrency: 2
 
   fullnameOverride: "prompt-proto-service-lsstcamimsim"
