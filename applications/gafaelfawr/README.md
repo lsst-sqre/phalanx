@@ -25,6 +25,7 @@ Authentication and identity system
 | cloudsql.serviceAccount | string | None, must be set if Cloud SQL Auth Proxy is enabled | The Google service account that has an IAM binding to the `gafaelfawr` Kubernetes service account and has the `cloudsql.client` role |
 | cloudsql.tolerations | list | `[]` | Tolerations for the standalone Cloud SQL Proxy pod |
 | config.afterLogoutUrl | string | Top-level page of this Phalanx environment | Where to send the user after they log out |
+| config.allowSubdomains | bool | `false` | Whether to expose cookies to subdomains. DO NOT SET TO TRUE unless all subdomains of the environment base URL are guaranteed to only reference services protected by Gafaelfawr. |
 | config.baseInternalUrl | string | FQDN under `svc.cluster.local` | URL for direct connections to the Gafaelfawr service, bypassing the Ingress. Must use a service name of `gafaelfawr` and port 8080. |
 | config.cilogon.clientId | string | `nil` | CILogon client ID. One and only one of this, `config.github.clientId`, or `config.oidc.clientId` must be set. |
 | config.cilogon.enrollmentUrl | string | Login fails with an error | Where to send the user if their username cannot be found in LDAP |
@@ -75,7 +76,6 @@ Authentication and identity system
 | config.oidcServer.keyId | string | `"gafaelfawr"` | Key ID (`kid` claim) of generated ID tokens, and the key ID served with the OAuth key metadata |
 | config.proxies | list | [`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`] | List of netblocks used for internal Kubernetes IP addresses, used to determine the true client IP for logging |
 | config.quota | object | `{}` | Quota settings (see [Quotas](https://gafaelfawr.lsst.io/user-guide/helm.html#quotas)). |
-| config.realm | string | Hostname of this Phalanx environment | Authentication realm for HTTP `WWW-Authenticate` headers. |
 | config.slackAlerts | bool | `false` | Whether to send certain serious alerts to Slack. If `true`, the `slack-webhook` secret must also be set. |
 | config.tokenLifetime | string | `"30d"` | Session lifetime. Use `w`, `d`, `h`, `m`, and `s` for time intervals. For example, `1d6h23m` is one day, six hours, 23 minutes. |
 | config.updateSchema | bool | `false` | Whether to automatically update the Gafaelfawr database schema |

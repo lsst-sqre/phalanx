@@ -41,6 +41,11 @@ config:
   # @default -- Top-level page of this Phalanx environment
   afterLogoutUrl: null
 
+  # -- Whether to expose cookies to subdomains. DO NOT SET TO TRUE unless all
+  # subdomains of the environment base URL are guaranteed to only reference
+  # services protected by Gafaelfawr.
+  allowSubdomains: false
+
   # -- URL for direct connections to the Gafaelfawr service, bypassing the
   # Ingress. Must use a service name of `gafaelfawr` and port 8080.
   # @default -- FQDN under `svc.cluster.local`
@@ -73,10 +78,6 @@ config:
     - "10.0.0.0/8"
     - "172.16.0.0/12"
     - "192.168.0.0/16"
-
-  # -- Authentication realm for HTTP `WWW-Authenticate` headers.
-  # @default -- Hostname of this Phalanx environment
-  realm: null
 
   # -- Whether to send certain serious alerts to Slack. If `true`, the
   # `slack-webhook` secret must also be set.
