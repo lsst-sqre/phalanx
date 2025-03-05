@@ -55,6 +55,8 @@ prompt-proto-service:
   alerts:
     topic: "alerts-simulated"
 
+  logLevel: "timer.lsst.activator=DEBUG lsst.diaPipe=VERBOSE lsst.rbClassify=VERBOSE lsst.daf.butler=VERBOSE"
+
   sasquatch:
     endpointUrl: https://usdf-rsp-dev.slac.stanford.edu/sasquatch-rest-proxy
     auth_env: false
