@@ -49,11 +49,11 @@ strimzi-kafka:
           host: sasquatch-base-kafka-2.lsst.codes
     resources:
       requests:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
       limits:
-        memory: 48Gi
-        cpu: 4
+        memory: 128Gi
+        cpu: 32
     metricsConfig:
       enabled: true
   kafkaExporter:
@@ -62,10 +62,10 @@ strimzi-kafka:
     resources:
       requests:
         cpu: 500m
-        memory: 128Mi
+        memory: 512Mi
       limits:
         cpu: 1500m
-        memory: 384Mi
+        memory: 1Gi
   kraft:
     enabled: true
   kafkaController:
