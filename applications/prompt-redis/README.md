@@ -2,10 +2,6 @@
 
 Redis cluster for prompt processing
 
-## Source Code
-
-* <https://github.com/lsst-sqre/prompt-redis>
-
 ## Values
 
 | Key | Type | Default | Description |

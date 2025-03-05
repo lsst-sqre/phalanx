@@ -2,8 +2,6 @@ apiVersion: v2
 appVersion: 0.1.0
 description: Redis cluster for prompt processing
 name: prompt-redis
-sources:
-- https://github.com/lsst-sqre/prompt-redis
 type: application
 version: 1.0.0
 
