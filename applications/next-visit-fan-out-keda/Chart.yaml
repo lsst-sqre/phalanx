@@ -2,7 +2,5 @@ apiVersion: v2
 appVersion: 0.1.0
 description: Temporary application for processing next visit events with keda.
 name: next-visit-fan-out-keda
-sources:
-- https://github.com/lsst-sqre/next-visit-fan-out-keda
 type: application
 version: 1.0.0

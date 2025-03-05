@@ -2,10 +2,6 @@
 
 Temporary application for processing next visit events with keda.
 
-## Source Code
-
-* <https://github.com/lsst-sqre/next-visit-fan-out-keda>
-
 ## Values
 
 | Key | Type | Default | Description |
