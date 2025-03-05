@@ -22,6 +22,11 @@ data:
 
     # Add custom templates.
     c.JupyterHub.template_paths = [ "/usr/local/etc/jupyterhub/templates" ]
+    {{- if .Values.hub.useSubdomains }}
+
+    # Use separate hostnames for each user lab.
+    c.JupyterHub.subdomain_host = "nb.{{ .Values.global.host }}"
+    {{- end }}
 
     # Enable stored auth state.
     c.Authenticator.enable_auth_state = True
