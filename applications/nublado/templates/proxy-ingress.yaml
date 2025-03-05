@@ -5,7 +5,6 @@ metadata:
   labels:
     {{- include "nublado.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
   authCacheDuration: "5m"
   loginRedirect: true
   scopes:
@@ -17,9 +16,14 @@ config:
 template:
   metadata:
     name: "proxy"
-    {{- with .Values.proxy.ingress.annotations }}
+    {{- if (or .Values.hub.useSubdomains .Values.proxy.ingress.annotations) }}
     annotations:
+      {{- if .Values.hub.useSubdomains }}
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- end }}
+      {{- with .Values.proxy.ingress.annotations }}
       {{- toYaml . | nindent 6 }}
+      {{- end }}
     {{- end }}
   spec:
     rules:
@@ -33,3 +37,62 @@ template:
                   name: "proxy-public"
                   port:
                     name: "http"
+      {{- if .Values.hub.useSubdomains }}
+      - host: "nb.{{ .Values.global.host }}"
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "proxy-public"
+                  port:
+                    name: "http"
+      {{- end }}
+    {{- if .Values.hub.useSubdomains }}
+    tls:
+      - hosts:
+          - "nb.{{ .Values.global.host }}"
+        secretName: "nublado-tls"
+    {{- end }}
+{{- if .Values.hub.useSubdomains }}
+---
+apiVersion: gafaelfawr.lsst.io/v1alpha1
+kind: GafaelfawrIngress
+metadata:
+  name: "proxy-labs"
+  labels:
+    {{- include "nublado.labels" . | nindent 4 }}
+config:
+  authCacheDuration: "5m"
+  loginRedirect: true
+  scopes:
+    all:
+      - "exec:notebook"
+  service: "nublado"
+  userDomain: true
+template:
+  metadata:
+    name: "proxy-labs"
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt-dns"
+      {{- with .Values.proxy.ingress.annotations }}
+      {{- toYaml . | nindent 6 }}
+      {{- end }}
+  spec:
+    rules:
+      - host: "*.nb.{{ .Values.global.host }}"
+        http:
+          paths:
+            - path: "/"
+              pathType: "Prefix"
+              backend:
+                service:
+                  name: "proxy-public"
+                  port:
+                    name: "http"
+    tls:
+      - hosts:
+          - "*.nb.{{ .Values.global.host }}"
+        secretName: "nublado-lab-tls"
+{{- end }}
