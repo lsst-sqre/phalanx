@@ -145,7 +145,7 @@ spec:
             - "-c"
             - |
               cp -RL /secrets-raw/* /secrets
-              cat /secrets/aws-credentials.ini > new-aws-credentials.ini
+              cat /secrets-rubintv/aws-credentials.ini > new-aws-credentials.ini
               printf "\n" >> new-aws-credentials.ini
               cat /secrets-rubintv/aws_credentials.ini >> new-aws-credentials.ini
               printf "\n" >> new-aws-credentials.ini
