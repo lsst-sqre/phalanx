@@ -71,3 +71,24 @@ atocps:
     requests:
       cpu: 10m
       memory: 100Mi
+
+raocps:
+  enabled: true
+  classifier: ocps101
+  image:
+    repository: ts-dockerhub.lsst.org/dmocps
+    pullPolicy: Always
+  env:
+    RUN_ARG: 101
+    REDIS_HOST: redis-service.rapid-analysis.svc.cluster.local
+    REDIS_PORT: 6379
+  envSecrets:
+  - name: REDIS_PASSWORD
+    key: redis-password
+  resources:
+    limits:
+      cpu: 100m
+      memory: 500Mi
+    requests:
+      cpu: 1m
+      memory: 100Mi
