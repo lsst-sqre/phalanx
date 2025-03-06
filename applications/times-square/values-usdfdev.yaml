@@ -11,7 +11,7 @@ config:
   sentryTracesSampleRate: 1
   htmlKeyMigration:
     enabled: true
-    dryRun: true
+    dryRun: false
 cloudsql:
   enabled: false
 redis:
