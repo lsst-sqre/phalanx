@@ -16,8 +16,8 @@ config:
     enabled: true
 
   oidc:
-    clientId: "rubin01"
-    audience: "tacc"
+    clientId: "rsp-tacc"
+    audience: "rsp-tacc"
     loginUrl: "https://tacc.staging.tapis.io/v3/oauth2/authorize"
     tokenUrl: "https://tacc.staging.tapis.io/v3/oauth2/tokens"
     issuer: "https://tacc.staging.tapis.io/v3/tokens"
