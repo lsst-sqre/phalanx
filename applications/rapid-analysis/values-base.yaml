@@ -116,7 +116,7 @@ lsstcamWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 189
+  replicas: 189  # 1 deep for now
   resources:
     requests:
       cpu: 1.0
@@ -129,7 +129,7 @@ lsstcamAosWorkerSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 36
+  replicas: 16  # 4 deep for corner chips
   resources:
     requests:
       cpu: 1.0
@@ -155,7 +155,7 @@ lsstcamGather2aAosSet:
   mounts:
   - lsstcam-data
   - project-shared
-  replicas: 4
+  replicas: 5
   resources:
     requests:
       cpu: 1.0
