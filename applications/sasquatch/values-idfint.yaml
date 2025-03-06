@@ -171,6 +171,7 @@ app-metrics:
     - mobu
     - noteburst
     - nublado
+    - sia
     - wobbly
 
 backup:

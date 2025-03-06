@@ -16,6 +16,11 @@ Simple Image Access (SIA) IVOA Service using Butler
 | config.enableSentry | bool | `false` | Whether to send trace and telemetry information to Sentry. This traces every call and therefore should only be enabled in non-production environments. |
 | config.logLevel | string | `"INFO"` | Logging level |
 | config.logProfile | string | `"production"` | Logging profile (`production` for JSON, `development` for human-friendly) |
+| config.metrics.application | string | `"sia"` | Name under which to log metrics. Generally there is no reason to change this. |
+| config.metrics.enabled | bool | `false` | Whether to enable sending metrics |
+| config.metrics.events.topicPrefix | string | `"lsst.square.metrics.events"` | Topic prefix for events. It may sometimes be useful to change this in development environments. |
+| config.metrics.schemaManager.registryUrl | string | Sasquatch in the local cluster | URL of the Confluent-compatible schema registry server |
+| config.metrics.schemaManager.suffix | string | `""` | Suffix to add to all registered subjects. This is sometimes useful for experimentation during development. |
 | config.pathPrefix | string | `"/api/sia"` | URL path prefix |
 | config.pgUser | string | `"rubin"` | User to use from the PGPASSFILE if sia is using a direct Butler connection |
 | config.sentryTracesSampleRate | float | `0` |  |
