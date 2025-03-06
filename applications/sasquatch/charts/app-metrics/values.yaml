@@ -26,6 +26,10 @@ globalAppConfig:
   nublado:
     influxTags:
       - "username"
+  sia:
+    influxTags:
+      - "success"
+      - "duration"
   wobbly:
     influxTags:
       - "service"

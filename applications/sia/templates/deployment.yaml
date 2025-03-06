@@ -98,6 +98,24 @@ spec:
             - name: "SIA_SENTRY_TRACES_SAMPLE_RATE"
               value: {{ .Values.config.sentryTracesSampleRate | quote }}
             {{- end }}
+            {{- if .Values.config.metrics.enabled }}
+            - name: "KAFKA_BOOTSTRAP_SERVERS"
+              valueFrom:
+                secretKeyRef:
+                  name: "sia-kafka"
+                  key: "bootstrapServers"
+            - name: "KAFKA_SECURITY_PROTOCOL"
+              valueFrom:
+                secretKeyRef:
+                  name: "sia-kafka"
+                  key: "securityProtocol"
+            - name: "KAFKA_CLIENT_CERT_PATH"
+              value: "/etc/sia-kafka/user.crt"
+            - name: "KAFKA_CLIENT_KEY_PATH"
+              value: "/etc/sia-kafka/user.key"
+            - name: "KAFKA_CLUSTER_CA_PATH"
+              value: "/etc/sia-kafka/ca.crt"
+            {{- end }}
           {{- if .Values.config.directButlerEnabled }}
           volumeMounts:
             - name: "secrets"
