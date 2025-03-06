@@ -649,6 +649,9 @@ love-producer:
       limits:
         cpu: 500m
         memory: 500Mi
+  - name: raocps
+    csc: OCPS:101 --log-level 10
+    WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
   - name: tmaess001
     csc: ESS:1 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
