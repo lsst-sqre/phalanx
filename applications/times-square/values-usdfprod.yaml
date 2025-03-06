@@ -6,9 +6,6 @@ config:
   githubAppId: "1112177"
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
-  htmlKeyMigration:
-    enabled: false
-    dryRun: true
 cloudsql:
   enabled: false
 redis:
