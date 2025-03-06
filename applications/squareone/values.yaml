@@ -164,7 +164,7 @@ config:
           </Card>
         </a>
 
-        <a href="https://dm.lsst.org/sdm_schemas/browser/dp03.html">
+        <a href="https://sdm-schemas.lsst.io/dp03.html">
           <Card>
             ### DP0.3 Catalog Schema
 
@@ -197,7 +197,7 @@ config:
         </a>
 
 
-        <a href="https://dm.lsst.org/sdm_schemas/browser/dp02.html">
+        <a href="https://sdm-schemas.lsst.io/dp02.html">
           <Card>
             ### DP0.2 Catalog Schema
 
