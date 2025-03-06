@@ -209,8 +209,8 @@ tunablelaser-sim:
     RUN_ARG: --simulate
   resources:
     limits:
-      cpu: 120m
-      memory: 3000Mi
+      cpu: "2"
+      memory: 1000Mi
     requests:
-      cpu: 12m
-      memory: 100Mi
+      cpu: 50m
+      memory: 200Mi
