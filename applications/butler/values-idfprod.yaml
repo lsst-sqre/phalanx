@@ -2,6 +2,7 @@ autoscaling:
   minReplicas: 3
 config:
   dp02ClientServerIsDefault: true
+  dp02UseSlacDatastore: true
   dp02PostgresUri: postgresql://butler@dp02.rsp-sql-stable.internal:5432/dp02
   s3EndpointUrl: "https://storage.googleapis.com"
   repositories:
