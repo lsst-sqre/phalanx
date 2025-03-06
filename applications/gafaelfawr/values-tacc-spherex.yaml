@@ -6,22 +6,22 @@ config:
   logLevel: "DEBUG"
   slackAlerts: false
 
-  github:
-    clientId: "Ov23liKfYDkoJPekZaON"
+  #github:
+  #  clientId: "Ov23liKfYDkoJPekZaON"
 
   databaseUrl: "postgresql://gafaelfawr@129.114.35.51/gafaelfawr01"
   updateSchema: true
 
   oidcServer:
-    enabled: false
+    enabled: true
 
-  #oidc:
-  #  clientId: rsp-tacc
-  #  audience: "tacc"
-  #  loginUrl: "https://tacc.tapis.io/v3/oauth2/authorize"
-  #  tokenUrl: "https://tacc.tapis.io/v3/oauth2/tokens"
-  #  issuer: "https://tacc.tapis.io/v3/tokens"
-  #  usernameClaim: "name"
+  oidc:
+    clientId: "rubin01"
+    audience: "tacc"
+    loginUrl: "https://tacc.staging.tapis.io/v3/oauth2/authorize"
+    tokenUrl: "https://tacc.staging.tapis.io/v3/oauth2/tokens"
+    issuer: "https://tacc.staging.tapis.io/v3/tokens"
+    usernameClaim: "name"
 
   #ldap:
   #  url: ldap://ldap.tacc.utexas.edu
@@ -110,3 +110,5 @@ config:
     - "jonathansick"
     - "rra"
     - "stvoutsin"
+    - "mpackard"
+    - "kprice"
