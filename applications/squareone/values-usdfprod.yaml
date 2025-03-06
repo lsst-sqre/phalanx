@@ -7,5 +7,10 @@ config:
   enableSentry: true
   sentryTracesSampleRate: 1.0
   sentryReplaysOnErrorSampleRate: 1.0
+  enableAppsMenu: true
+  appLinks:
+    - label: "Times Square"
+      href: "/times-square/"
+      internal: true
 ingress:
   timesSquareScope: "exec:notebook"
