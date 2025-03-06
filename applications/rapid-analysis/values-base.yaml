@@ -108,6 +108,13 @@ scripts:
   mounts:
   - lsstcam-data
   - project-shared
+  resources:
+    requests:
+      cpu: 1.0
+      memory: 6G
+    limits:
+      cpu: 1.0
+      memory: 12G
 ###
 ### LSSTCam StatefulSets
 ###
