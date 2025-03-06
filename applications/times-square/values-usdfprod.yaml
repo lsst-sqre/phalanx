@@ -7,7 +7,7 @@ config:
   enableGitHubApp: "True"
   sentryTracesSampleRate: 1
   htmlKeyMigration:
-    enabled: true
+    enabled: false
     dryRun: true
 cloudsql:
   enabled: false
