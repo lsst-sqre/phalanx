@@ -1,5 +1,5 @@
 image:
-  tag: tickets-DM-48587-scale-test-2025-02-28
+  tag: tickets-DM-48587-scale-test-2025-03-07
   pullPolicy: Always
 resources:
   limits:
