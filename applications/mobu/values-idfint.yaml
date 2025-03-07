@@ -33,15 +33,34 @@ config:
       - "read:image"
       - "read:tap"
   autostart:
-    - name: "tap-scale"
+    # - name: "tap-scale"
+    #   count: 100
+    #   user_spec:
+    #     username_prefix: "bot-mobu-scale-tap"
+    #   scopes: ["read:tap"]
+    #   business:
+    #     type: "TAPQuerySetRunner"
+    #     options:
+    #       query_set: "dp0.2"
+    #     restart: true
+    - name: "scale-test-tap-notebook"
       count: 100
       user_spec:
-        username_prefix: "bot-mobu-scale-tap"
-      scopes: ["read:tap"]
+        username_prefix: "bot-mobu-scale-notebook"
+      scopes:
+        - "exec:notebook"
+        - "exec:portal"
+        - "read:image"
+        - "read:tap"
+      start_batch_size: 50
+      start_batch_wait: "1m"
       business:
-        type: "TAPQuerySetRunner"
+        type: "NotebookRunnerCounting"
         options:
-          query_set: "dp0.2"
+          repo_url: "https://github.com/lsst-sqre/scaletest.git"
+          repo_ref: "u/fe/tap"
+          idle_time: 0
+          delete_lab: false
         restart: true
     # - name: "scale-test-empty-notebook"
     #   count: 1000
