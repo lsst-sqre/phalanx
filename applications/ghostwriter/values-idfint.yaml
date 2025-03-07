@@ -14,4 +14,4 @@ mapping:
   - source_prefix: "/system-test/"
     target: "${base_url}/notebooks/github.com/lsst-sqre/system-test/${path}"
   - source_prefix: "/tutorials/"
-    target: "${base_url}/notebooks/github.com/rubin-dp0/tutorial-notebooks/${path}"
+    target: "${base_url}/notebooks/github.com/lsst/tutorial-notebooks/${path}"
