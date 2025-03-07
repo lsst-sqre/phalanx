@@ -42,6 +42,7 @@ config:
         type: "TAPQuerySetRunner"
         options:
           query_set: "dp0.2"
+          sync: false
         restart: true
     # - name: "scale-test-tap-notebook"
     #   count: 100
