@@ -680,8 +680,38 @@ love-producer:
   - name: mtdometrajectory
     csc: MTDomeTrajectory:0 --log-level 10
     WEBSOCKET_HOST: love-nginx-service/love/manager/producers/ws/subscription
+  - name: mtm1m3-telemetry-01
+    csc: MTM1M3:0 --log-level 10 --periodic-data tel_forceActuatorData tel_inclinometerData tel_outerLoopData tel_accelerometerData tel_hardpointActuatorData tel_imsData tel_forceActuatorPressure tel_gyroData tel_powerSupplyData tel_pidData tel_hardpointMonitorData tel_appliedAzimuthForces tel_appliedAccelerationForces tel_appliedBalanceForces tel_appliedCylinderForces tel_appliedElevationForces tel_appliedThermalForces tel_appliedVelocityForces
+    WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
+    resources:
+      requests:
+        cpu: 10m
+        memory: 200Mi
+      limits:
+        cpu: 100m
+        memory: 600Mi
+  - name: mtm1m3-telemetry-02
+    csc: MTM1M3:0 --log-level 10 --periodic-data tel_appliedForces
+    WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
+    resources:
+      requests:
+        cpu: 10m
+        memory: 200Mi
+      limits:
+        cpu: 100m
+        memory: 600Mi
+  - name: mtm1m3-event-01
+    csc: MTM1M3:0 --log-level 10 --asynchronous-data evt_forceSetpointWarning evt_hardpointActuatorState evt_appliedStaticForces evt_cellLightStatus evt_gyroSettings evt_forceActuatorInfo evt_hardpointMonitorState evt_interlockWarning evt_displacementSensorSettings evt_ilcWarning evt_inclinometerSettings evt_hardpointActuatorSettings evt_boosterValveStatus evt_raisingLoweringInfo evt_gyroWarning evt_preclippedCylinderForces evt_preclippedForces evt_preclippedActiveOpticForces evt_forceActuatorForceWarning evt_inclinometerSensorWarning evt_powerStatus evt_powerWarning evt_displacementSensorWarning evt_enabledForceActuators evt_pidSettings evt_airSupplyWarning evt_cellLightWarning evt_hardpointTestStatus evt_forceActuatorBumpTestStatus evt_pidInfo evt_preclippedBalanceForces evt_forceActuatorSettings evt_preclippedStaticForces evt_accelerometerWarning evt_preclippedThermalForces evt_hardpointMonitorInfo evt_preclippedVelocityForces evt_forceActuatorWarning evt_positionControllerSettings evt_accelerometerSettings evt_hardpointActuatorWarning evt_forceControllerState evt_commandRejectionWarning evt_preclippedAzimuthForces evt_interlockStatus evt_powerSupplyStatus evt_preclippedElevationForces evt_boosterValveSettings evt_hardpointActuatorInfo evt_forceActuatorState evt_airSupplyStatus evt_slewControllerSettings evt_forceActuatorFollowingErrorCounter evt_appliedActiveOpticForces evt_appliedOffsetForces evt_hardpointMonitorWarning evt_preclippedAccelerationForces evt_preclippedOffsetForces
+    WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
+    resources:
+      requests:
+        cpu: 10m
+        memory: 200Mi
+      limits:
+        cpu: 100m
+        memory: 600Mi
   - name: mtm1m3
-    csc: MTM1M3:0 --log-level 10
+    csc: MTM1M3:0 --log-level 10 --asynchronous-data evt_heartbeat evt_summaryState evt_logMessage evt_errorCode evt_logLevel evt_simulationMode evt_configurationApplied evt_configurationsAvailable evt_softwareVersions evt_detailedState
     WEBSOCKET_HOST: love-nginx-service/love/manager/m1m3/ws/subscription
     resources:
       requests:
