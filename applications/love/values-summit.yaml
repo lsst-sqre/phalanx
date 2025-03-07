@@ -441,7 +441,7 @@ love-nginx:
 love-producer:
   image:
     repository: ts-dockerhub.lsst.org/love-producer
-    revision: 0
+    revision: 1
     pullPolicy: Always
   resources:
     requests:
