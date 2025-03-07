@@ -42,7 +42,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: rubin-rag
-                key: "HTTP_HOST"          
+                key: "HTTP_HOST"
           image: "{{ .Values.image.repository }}:main"
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
           ports:
