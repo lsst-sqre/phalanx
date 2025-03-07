@@ -26,7 +26,7 @@ controller:
                   - key: node-role.kubernetes.io/crowdstrike
                     operator: In
                     values:
-                      - ''
+                    - ''
       env:
         AWS_SHARED_CREDENTIALS_FILE: "/opt/lsst/software/jupyterlab/secrets/aws-credentials.ini"
         AWS_REQUEST_CHECKSUM_CALCULATION: "WHEN_REQUIRED"
