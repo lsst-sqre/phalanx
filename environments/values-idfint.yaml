@@ -26,7 +26,6 @@ applications:
   sasquatch: true
   sia: true
   ssotap: true
-  production-tools: true
   sasquatch-backpack: true
   semaphore: true
   sqlproxy-cross-project: true

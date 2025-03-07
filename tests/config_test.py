@@ -12,7 +12,10 @@ import yaml
 from phalanx.factory import Factory
 from phalanx.models.applications import Project
 
-_ALLOW_NO_SECRETS = ("next-visit-fan-out",)
+_ALLOW_DISABLED = {"production-tools"}
+"""Temporary whitelist of applications not enabled anywhere."""
+
+_ALLOW_NO_SECRETS = {"next-visit-fan-out"}
 """Temporary whitelist of applications that haven't added secrets.yaml."""
 
 
@@ -168,7 +171,9 @@ def test_applications_enabled() -> None:
     for application in config.applications:
         name = application.name
         active = set(application.active_environments)
-        assert active, f"Application {name} is not enabled in any environment"
+        if not active and name not in _ALLOW_DISABLED:
+            msg = f"Application {name} is not enabled in any environment"
+            assert active, msg
         configured = set(config_storage.get_application_environments(name))
         for env in active:
             msg = f"Application {name} enabled for {env} but not configured"
