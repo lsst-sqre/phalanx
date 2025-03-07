@@ -348,7 +348,7 @@ comcamWorkerSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 63
+  replicas: 9
   resources:
     requests:
       cpu: 1.0
@@ -362,7 +362,7 @@ comcamAosWorkerSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 36
+  replicas: 9
   resources:
     requests:
       cpu: 1.0
@@ -376,7 +376,7 @@ comcamGather2aSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 5
+  replicas: 1
   resources:
     requests:
       cpu: 1.0
@@ -390,7 +390,7 @@ comcamGather2aAosSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 4
+  replicas: 1
   resources:
     requests:
       cpu: 1.0
@@ -404,7 +404,7 @@ comcamGatherRollupSet:
   - comcam-data
   - comcam-gen3-data
   - project-shared
-  replicas: 5
+  replicas: 1
   resources:
     requests:
       cpu: 1.0
