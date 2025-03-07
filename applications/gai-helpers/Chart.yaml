@@ -1,9 +1,9 @@
 apiVersion: v2
 appVersion: 0.1.0
 description: RAG helpers for documentation searches
-name: gai-helpers
+name: rubin-rag
 sources:
-- https://github.com/lsst-sqre/gai-helpers
+- https://github.com/lsst-sqre/rubin-rag
 type: application
 version: 1.0.0
 dependencies:

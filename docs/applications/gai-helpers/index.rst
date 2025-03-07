@@ -1,10 +1,10 @@
-.. px-app:: gai-helpers
+.. px-app:: rubin-rag
 
 ####################################################
-gai-helpers — RAG helpers for documentation searches
+rubin-rag — RAG helpers for documentation searches
 ####################################################
 
-.. jinja:: gai-helpers
+.. jinja:: rubin-rag
    :file: applications/_summary.rst.jinja
 
 Guides

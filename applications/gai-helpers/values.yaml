@@ -1,4 +1,4 @@
-# Default values for gai-helpers.
+# Default values for rubin-rag.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -6,10 +6,10 @@
 replicaCount: 1
 
 image:
-  # -- Image to use in the gai-helpers deployment
-  repository: "ghcr.io/gmegh/gai-helpers"
+  # -- Image to use in the rubin-rag deployment
+  repository: "ghcr.io/lsst-dm/rubin-rag"
 
-  # -- Pull policy for the gai-helpers image
+  # -- Pull policy for the rubin-rag image
   pullPolicy: "Always"
 
   # -- Tag of image to use
@@ -25,26 +25,26 @@ config:
   logProfile: "production"
 
   # -- URL path prefix
-  pathPrefix: "/gai-helpers"
+  pathPrefix: "/rubin-rag"
 
 ingress:
   # -- Additional annotations for the ingress rule
   annotations: {}
 
-# -- Affinity rules for the gai-helpers deployment pod
+# -- Affinity rules for the rubin-rag deployment pod
 affinity: {}
 
-# -- Node selection rules for the gai-helpers deployment pod
+# -- Node selection rules for the rubin-rag deployment pod
 nodeSelector: {}
 
-# -- Annotations for the gai-helpers deployment pod
+# -- Annotations for the rubin-rag deployment pod
 podAnnotations: {}
 
-# -- Resource limits and requests for the gai-helpers deployment pod
+# -- Resource limits and requests for the rubin-rag deployment pod
 # @default -- See `values.yaml`
 resources: {}
 
-# -- Tolerations for the gai-helpers deployment pod
+# -- Tolerations for the rubin-rag deployment pod
 tolerations: []
 
 # The following will be set by parameters injected by Argo CD and should not
@@ -78,4 +78,4 @@ weaviate:
     AUTHORIZATION_ADMINLIST_ENABLED: 'true'
     AUTHORIZATION_ADMINLIST_USERS: 'admin'
   envSecrets:
-    AUTHENTICATION_APIKEY_ALLOWED_KEYS: gai-helpers
+    AUTHENTICATION_APIKEY_ALLOWED_KEYS: rubin-rag

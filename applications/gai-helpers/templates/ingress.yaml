@@ -1,9 +1,9 @@
 apiVersion: gafaelfawr.lsst.io/v1alpha1
 kind: GafaelfawrIngress
 metadata:
-  name: "gai-helpers"
+  name: "rubin-rag"
   labels:
-    {{- include "gai-helpers.labels" . | nindent 4 }}
+    {{- include "rubin-rag.labels" . | nindent 4 }}
 config:
   baseUrl: {{ .Values.global.baseUrl | quote }}
   scopes:
@@ -12,7 +12,7 @@ config:
   loginRedirect: true
 template:
   metadata:
-    name: "gai-helpers"
+    name: "rubin-rag"
     {{- with .Values.ingress.annotations }}
     annotations:
       {{- toYaml . | nindent 6 }}
@@ -26,6 +26,6 @@ template:
               pathType: "Prefix"
               backend:
                 service:
-                  name: "gai-helpers"
+                  name: "rubin-rag"
                   port:
                     number: 8501

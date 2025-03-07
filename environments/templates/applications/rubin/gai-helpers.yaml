@@ -1,23 +1,23 @@
-{{- if (index .Values "applications" "gai-helpers") -}}
+{{- if (index .Values "applications" "rubin-rag") -}}
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: "gai-helpers"
+  name: "rubin-rag"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: "gai-helpers"
+  name: "rubin-rag"
   namespace: "argocd"
   finalizers:
     - "resources-finalizer.argocd.argoproj.io"
 spec:
   destination:
-    namespace: "gai-helpers"
+    namespace: "rubin-rag"
     server: "https://kubernetes.default.svc"
   project: "rubin"
   source:
-    path: "applications/gai-helpers"
+    path: "applications/rubin-rag"
     repoURL: {{ .Values.repoUrl | quote }}
     targetRevision: {{ .Values.targetRevision | quote }}
     helm:

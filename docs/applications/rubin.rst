@@ -14,7 +14,7 @@ Argo CD project: ``rubin``
    consdb/index
    exposurelog/index
    fastapi-bootcamp/index
-   gai-helpers/index
+   rubin-rag/index
    narrativelog/index
    nightreport/index
    obsloctap/index

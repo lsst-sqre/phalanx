@@ -1,11 +1,11 @@
-```{px-app-values} gai-helpers
+```{px-app-values} rubin-rag
 ```
 
-# gai-helpers Helm values reference
+# rubin-rag Helm values reference
 
-Helm values reference table for the {px-app}`gai-helpers` application.
+Helm values reference table for the {px-app}`rubin-rag` application.
 
-```{include} ../../../applications/gai-helpers/README.md
+```{include} ../../../applications/rubin-rag/README.md
 ---
 start-after: "## Values"
 ---
