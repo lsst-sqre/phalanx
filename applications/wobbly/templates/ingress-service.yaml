@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "wobbly.labels" . | nindent 4 }}
 config:
-  baseUrl: {{ .Values.global.baseUrl | quote }}
+  allowCookies: false
   onlyServices:
     {{- range .Values.config.services }}
     - {{ . | quote }}
